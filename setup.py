@@ -32,21 +32,15 @@ It adds a number of optional extensions:
 
 setup(
     name='pymdownx',
-
     version='1.0.0',
-
     keywords='markdown extensions',
     description='Markdown extensions for Python Markdown.',
     long_description=LONG_DESC,
-
     author='Isaac Muse',
     author_email='Isaac.Muse [at] gmail.com',
-
     url='https://github.com/facelessuser/pymdown-extensions',
-
     packages=find_packages(),
     install_requires=['Markdown>=2.5.2'],
-
     license='MIT License',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
