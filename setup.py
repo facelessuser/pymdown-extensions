@@ -31,7 +31,7 @@ It adds a number of optional extensions:
 '''
 
 setup(
-    name='pymdownx',
+    name='pymdown-extensions',
     version='1.0.0',
     keywords='markdown extensions',
     description='Markdown extensions for Python Markdown.',
