@@ -9,7 +9,7 @@ extensions = [
     'pymdownx.githubemoji',
     'pymdownx.tasklist',
     'pymdownx.headeranchor',
-    'pymdownx.nestedfences',
+    'pymdownx.superfences',
     'markdown.extensions.nl2br'
 ]
 
