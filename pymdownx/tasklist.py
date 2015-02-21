@@ -57,9 +57,9 @@ class TasklistTreeprocessor(Treeprocessor):
     def run(self, root):
         """ Find list items that start with [ ] or [x] or [X] """
 
-        parent_map = dict((c, p) for p in root.getiterator() for c in p)
+        parent_map = dict((c, p) for p in root.iter() for c in p)
         task_items = []
-        lilinks = root.getiterator('li')
+        lilinks = root.iter('li')
         for li in lilinks:
             if li.text is None or li.text == "":
                 if not self.sub_paragraph(li):

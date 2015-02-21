@@ -40,7 +40,7 @@ setup(
     author_email='Isaac.Muse [at] gmail.com',
     url='https://github.com/facelessuser/pymdown-extensions',
     packages=find_packages(),
-    install_requires=['Markdown>=2.5.2'],
+    install_requires=['Markdown>=2.6.0'],
     license='MIT License',
     classifiers=[
         'Development Status :: 5 - Production/Stable',

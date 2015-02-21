@@ -16,7 +16,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
-from markdown.extensions.headerid import slugify, stashedHTML2text, itertext, unique
+from markdown.extensions.toc import slugify, stashedHTML2text, unique
 
 LINK = (
     '<a '
@@ -34,7 +34,7 @@ class HeaderAnchorTreeprocessor(Treeprocessor):
 
         # Get a list of id attributes
         used_ids = set()
-        for tag in root.getiterator():
+        for tag in root.iter():
             if "id" in tag.attrib:
                 used_ids.add(tag.attrib["id"])
 
@@ -43,7 +43,7 @@ class HeaderAnchorTreeprocessor(Treeprocessor):
                 if "id" in tag.attrib:
                     id = tag.get('id')
                 else:
-                    id = stashedHTML2text(''.join(itertext(tag)), self.md)
+                    id = stashedHTML2text(''.join(tag.itertext()), self.md)
                     id = unique(self.config['slugify'](id, self.config['sep']), used_ids)
                     tag.set('id', id)
                 tag.text = self.markdown.htmlStash.store(
