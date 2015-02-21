@@ -85,11 +85,12 @@ class InlineHilitePattern(Pattern):
                     self.guess_lang = ext.config['guess_lang'][0]
                     self.css_class = ext.config['css_class'][0]
                     self.style = ext.config['pygments_style'][0]
+                    self.use_pygments = ext.config['use_pygments'][0]
                     break
             self.checked_for_codehilite = True
 
     def codehilite(self, lang, src):
-        if codehilite.pygments and pygments:
+        if codehilite.pygments and pygments and self.use_pygments:
             try:
                 lexer = get_lexer_by_name(lang)
             except ValueError:
