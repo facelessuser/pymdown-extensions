@@ -76,9 +76,16 @@ class InlineHilitePattern(Pattern):
         self.markdown = md
         self.checked_for_codehilite = False
 
-    def get_codehilite_settings(self):
+    def get_settings(self):
         # Check for code hilite extension
         if not self.checked_for_codehilite:
+            self.guess_lang = self.config['guess_lang']
+            self.css_class = self.config['css_class']
+            self.style = self.config['pygments_style']
+            self.noclasses = self.config['noclasses']
+            self.use_pygments = self.config['use_pygments']
+            self.use_codehilite_settings = self.config['use_codehilite_settings']
+            self.style_plain_text = self.config['style_plain_text']
             if codehilite and self.use_codehilite_settings:
                 for ext in self.markdown.registeredExtensions:
                     if isinstance(ext, codehilite.CodeHiliteExtension):
@@ -92,7 +99,8 @@ class InlineHilitePattern(Pattern):
             self.checked_for_codehilite = True
 
     def codehilite(self, lang, src):
-        if pygments and self.use_pygments:
+        process_text = self.style_plain_text or lang != 'text'
+        if pygments and self.use_pygments and process_text:
             try:
                 lexer = get_lexer_by_name(lang)
             except ValueError:
@@ -116,8 +124,9 @@ class InlineHilitePattern(Pattern):
             txt = txt.replace('<', '&lt;')
             txt = txt.replace('>', '&gt;')
             txt = txt.replace('"', '&quot;')
-            classes = [self.css_class] if self.css_class else []
-            if lang:
+
+            classes = [self.css_class] if self.css_class and process_text else []
+            if lang and process_text:
                 classes.append('language-%s' % lang)
             class_str = ''
             if len(classes):
@@ -129,13 +138,7 @@ class InlineHilitePattern(Pattern):
     def handleMatch(self, m):
         lang = m.group('lang') if m.group('lang') else 'text'
         src = m.group('code').strip()
-        self.guess_lang = self.config['guess_lang']
-        self.css_class = self.config['css_class']
-        self.style = self.config['pygments_style']
-        self.noclasses = self.config['noclasses']
-        self.use_pygments = self.config['use_pygments']
-        self.use_codehilite_settings = self.config['use_codehilite_settings']
-        self.get_codehilite_settings()
+        self.get_settings()
         return self.codehilite(lang, src)
 
 
@@ -154,6 +157,14 @@ class InlineHiliteExtension(Extension):
             'guess_lang': [
                 True,
                 "Automatic language detection - Default: True"
+            ],
+            'style_plain_text': [
+                False,
+                "Process inline code even when a language is not specified "
+                "or langauge is specified as 'text'. "
+                "When 'False', no classes will be added to 'text' code blocks"
+                "and no scoping will performed. The content will just be escaped."
+                "- Default: False"
             ],
             'css_class': [
                 "inlinehilite",
