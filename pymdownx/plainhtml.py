@@ -19,7 +19,6 @@ from markdown.postprocessors import Postprocessor
 import re
 
 
-# Strip out id, class, on<word>, and style attributes for a simple html output
 RE_TAG_HTML = re.compile(
     r'''(?x)
     (?:
@@ -32,25 +31,25 @@ RE_TAG_HTML = re.compile(
     re.DOTALL | re.UNICODE
 )
 
-RE_TAG_BAD_ATTR = re.compile(
-    r'''(?x)
-    (?P<attr>
-        (?:
-            \s+(?:id|class|style|on[\w]+)
-            (?:\s*=\s*(?:"[^"]*"|'[^']*'))
-        )*
-    )
-    ''',
-    re.DOTALL | re.UNICODE
+TAG_BAD_ATTR = r'''(?x)
+(?P<attr>
+    (?:
+        \s+(?:%s)
+        (?:\s*=\s*(?:"[^"]*"|'[^']*'))
+    )*
 )
+'''
 
 
-def repl(m):
+def repl(m, attributes, strip_comments):
     if m.group('comments'):
-        tag = ''
+        tag = '' if strip_comments else m.group('comments')
     else:
         tag = m.group('open')
-        tag += RE_TAG_BAD_ATTR.sub('', m.group('attr'))
+        if attributes is not None:
+            tag += attributes.sub('', m.group('attr'))
+        else:
+            tag += m.group('attr')
         tag += m.group('close')
     return tag
 
@@ -58,15 +57,51 @@ def repl(m):
 class PlainHtmlPostprocessor(Postprocessor):
     def run(self, text):
         """ Strip out ids and classes for a simplified HTML output """
+        attr_str = self.config.get('strip_attributes', 'id class style').strip()
+        attributes = [re.escape(a) for a in attr_str.split(' ')] if attr_str else []
+        if self.config.get('strip_js_on_attributes', True):
+            attributes.append(r'on[\w]+')
+        if len(attributes):
+            re_attributes = re.compile(
+                TAG_BAD_ATTR % '|'.join(attributes),
+                re.DOTALL | re.UNICODE
+            )
+        else:
+            re_attributes = None
+        strip_comments = self.config.get('strip_comments', True)
 
-        return RE_TAG_HTML.sub(repl, text)
+        return RE_TAG_HTML.sub(
+            lambda m: repl(m, re_attributes, strip_comments),
+            text
+        )
 
 
 class PlainHtmlExtension(Extension):
+    def __init__(self, *args, **kwargs):
+        self.config = {
+            'strip_comments': [
+                True,
+                "Strip HTML comments at the end of processing. "
+                "- Default: True"
+            ],
+            'strip_attributes': [
+                'id class style',
+                "A string of attributes separated by spaces."
+                "- Default: 'id class style']"
+            ],
+            'strip_js_on_attributes': [
+                True,
+                "Strip JavaScript script attribues with the pattern on*. "
+                " - Default: True"
+            ]
+        }
+        super(PlainHtmlExtension, self).__init__(*args, **kwargs)
+
     def extendMarkdown(self, md, md_globals):
         """ Strip unwanted attributes to give a plain HTML """
 
         plainhtml = PlainHtmlPostprocessor(md)
+        plainhtml.config = self.getConfigs()
         md.postprocessors.add("plain-html", plainhtml, "_end")
         md.registerExtension(self)
 
