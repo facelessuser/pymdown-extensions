@@ -89,7 +89,6 @@ class InlineHilitePattern(Pattern):
             if codehilite and self.use_codehilite_settings:
                 for ext in self.markdown.registeredExtensions:
                     if isinstance(ext, codehilite.CodeHiliteExtension):
-                        ext.config
                         self.guess_lang = ext.config['guess_lang'][0]
                         self.css_class = ext.config['css_class'][0]
                         self.style = ext.config['pygments_style'][0]
