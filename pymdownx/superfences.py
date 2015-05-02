@@ -8,7 +8,7 @@ Algorithm has been rewritten to allow for fenced blocks in blockquotes,
 lists, etc.  And also , allow for special UML fences like 'flow' for flowcharts
 and `sequence` for sequence diagrams.
 
-Modified: 2014 Isaac Muse <isaacmuse@gmail.com>
+Modified: 2014 - 2015 Isaac Muse <isaacmuse@gmail.com>
 ---
 
 Fenced Code Extension for Python Markdown
