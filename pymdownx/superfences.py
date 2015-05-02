@@ -32,7 +32,10 @@ from __future__ import unicode_literals
 from markdown.extensions import Extension
 from markdown.preprocessors import Preprocessor
 from markdown.blockprocessors import CodeBlockProcessor
-from markdown.extensions.codehilite import CodeHilite, CodeHiliteExtension, parse_hl_lines
+try:
+    from markdown.extensions.codehilite import CodeHilite, CodeHiliteExtension, parse_hl_lines
+except:
+    CodeHilite = None
 from markdown import util
 import re
 
@@ -189,10 +192,11 @@ class SuperFencesBlockPreprocessor(Preprocessor):
     def check_codehilite(self):
         """ Check for code hilite extension """
         if not self.checked_for_codehilite:
-            for ext in self.markdown.registeredExtensions:
-                if isinstance(ext, CodeHiliteExtension):
-                    self.codehilite_conf = ext.config
-                    break
+            if CodeHilite:
+                for ext in self.markdown.registeredExtensions:
+                    if isinstance(ext, CodeHiliteExtension):
+                        self.codehilite_conf = ext.config
+                        break
             self.checked_for_codehilite = True
 
     def clear(self):
@@ -341,7 +345,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         If config is not empty, then the codehlite extension
         is enabled, so we call into to highlight the code.
         """
-        if self.codehilite_conf:
+        if CodeHilite and self.codehilite_conf:
             code = CodeHilite(
                 source,
                 linenums=self.codehilite_conf['linenums'][0],
