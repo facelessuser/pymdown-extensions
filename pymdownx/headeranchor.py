@@ -35,19 +35,19 @@ LINK = (
 
 class HeaderAnchorTreeprocessor(Treeprocessor):
     def __init__(self, md):
-        def __init__(self, md):
-            super(HeaderAnchorTreeprocessor, self).__init__(md)
-            self.check_for_toc = False
+        super(HeaderAnchorTreeprocessor, self).__init__(md)
+        self.check_for_toc = False
 
     def get_settings(self):
         # Check for code hilite extension
         if not self.check_for_toc:
             self.slugify = self.config['slugify']
-            self.sep = self.config['sep']
-            self.use_toc_slugify = self.config['use_toc_slugify']
-            if TocExtension and self.use_toc_slugify:
+            self.separator = self.config['separator']
+            self.use_toc_settings = self.config['use_toc_settings']
+            if TocExtension and self.use_toc_settings:
                 for ext in self.markdown.registeredExtensions:
                     if isinstance(ext, TocExtension):
+                        self.separator = ext.config['separator'][0]
                         self.slugify = ext.config['slugify'][0]
                         break
             self.check_for_toc = True
@@ -69,7 +69,7 @@ class HeaderAnchorTreeprocessor(Treeprocessor):
                     id = tag.get('id')
                 else:
                     id = stashedHTML2text(''.join(tag.itertext()), self.md)
-                    id = unique(self.slugify(id, self.sep), used_ids)
+                    id = unique(self.slugify(id, self.separator), used_ids)
                     tag.set('id', id)
                 tag.text = self.markdown.htmlStash.store(
                     LINK % {"id": id},
@@ -81,9 +81,15 @@ class HeaderAnchorTreeprocessor(Treeprocessor):
 class HeaderAnchorExtension(Extension):
     def __init__(self, *args, **kwargs):
         self.config = {
-            'sep': ['-', "Separator to use when creating header ids - Default: '-'"],
+            'separator': ['-', "Separator to use when creating header ids - Default: '-'"],
             'slugify': [slugify, 'Callable to generate anchors'],
-            'use_toc_slugify': [True, "Use markdown.extensions.toc's 'slugify' method - Default: True"]
+            'use_toc_settings': [
+                True,
+                "Use markdown.extensions.toc's settings. "
+                "When 'True', 'slugify' and 'separator' "
+                "will be read from the current toc instance settings "
+                "(if available). - Default: True"
+            ]
         }
         self.configured = False
         super(HeaderAnchorExtension, self).__init__(*args, **kwargs)
