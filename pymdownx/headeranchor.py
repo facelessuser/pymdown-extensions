@@ -16,7 +16,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
-from markdown.extensions.toc import slugify, stashedHTML2text, unique
+try:
+    from markdown.extensions.toc import slugify, stashedHTML2text, unique, TocExtension
+except:
+    # Cannot find markdown extension, let's revert to compatibility layer
+    from .pymd_compat import slugify, stashedHTML2text, unique
+    TocExtension = None
 
 LINK = (
     '<a '
@@ -29,8 +34,28 @@ LINK = (
 
 
 class HeaderAnchorTreeprocessor(Treeprocessor):
+    def __init__(self, md):
+        def __init__(self, md):
+            super(HeaderAnchorTreeprocessor, self).__init__(md)
+            self.check_for_toc = False
+
+    def get_settings(self):
+        # Check for code hilite extension
+        if not self.check_for_toc:
+            self.slugify = self.config['slugify']
+            self.sep = self.config['sep']
+            self.use_toc_slugify = self.config['use_toc_slugify']
+            if TocExtension and self.use_toc_slugify:
+                for ext in self.markdown.registeredExtensions:
+                    if isinstance(ext, TocExtension):
+                        self.slugify = ext.config['slugify'][0]
+                        break
+            self.check_for_toc = True
+
     def run(self, root):
         """ Add header anchors """
+
+        self.get_settings()
 
         # Get a list of id attributes
         used_ids = set()
@@ -44,7 +69,7 @@ class HeaderAnchorTreeprocessor(Treeprocessor):
                     id = tag.get('id')
                 else:
                     id = stashedHTML2text(''.join(tag.itertext()), self.md)
-                    id = unique(self.config['slugify'](id, self.config['sep']), used_ids)
+                    id = unique(self.slugify(id, self.sep), used_ids)
                     tag.set('id', id)
                 tag.text = self.markdown.htmlStash.store(
                     LINK % {"id": id},
@@ -57,7 +82,8 @@ class HeaderAnchorExtension(Extension):
     def __init__(self, *args, **kwargs):
         self.config = {
             'sep': ['-', "Separator to use when creating header ids - Default: '-'"],
-            'slugify': [slugify, 'Callable to generate anchors']
+            'slugify': [slugify, 'Callable to generate anchors'],
+            'use_toc_slugify': [True, "Use markdown.extensions.toc's 'slugify' method - Default: True"]
         }
         self.configured = False
         super(HeaderAnchorExtension, self).__init__(*args, **kwargs)
