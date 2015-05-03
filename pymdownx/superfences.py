@@ -354,7 +354,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 style=self.codehilite_conf['pygments_style'][0],
                 lang=language,
                 noclasses=self.codehilite_conf['noclasses'][0],
-                hl_lines=parse_hl_lines(self.hl_lines)
+                hl_lines=parse_hl_lines(self.hl_lines),
+                use_pygments=self.codehilite_conf['use_pygments'][0]
             ).hilite()
         else:
             lang = self.CLASS_ATTR % language if language else ''
