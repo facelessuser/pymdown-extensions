@@ -243,7 +243,7 @@ class CriticViewPreprocessor(Preprocessor):
         elif m.group('com_open'):
             return ''
         elif m.group('sub_open'):
-            return m.group('sub_ins_text') if accept else ('sub_del_text')
+            return m.group('sub_ins_text') if accept else m.group('sub_del_text')
         else:
             return m.group(0)
 
