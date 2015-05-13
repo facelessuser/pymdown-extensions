@@ -28,7 +28,6 @@ extensions = [
     'pymdownx.progressbar',
     'pymdownx.headeranchor',
     'pymdownx.superfences',
-    'pymdownx.inlinehilite',
     'pymdownx.math'
 ]
 
