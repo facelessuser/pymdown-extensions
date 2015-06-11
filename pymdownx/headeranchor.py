@@ -1,17 +1,27 @@
 """
+Header Anchor.
+
 pymdownx.headeranchor
 An extension for Python Markdown.
 Github header anchors
 
 MIT license.
 
-Copyright (c) 2014 Isaac Muse <isaacmuse@gmail.com>
+Copyright (c) 2014 - 2015 Isaac Muse <isaacmuse@gmail.com>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions
+of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
@@ -34,12 +44,18 @@ LINK = (
 
 
 class HeaderAnchorTreeprocessor(Treeprocessor):
+
+    """Find header tags and add anchors."""
+
     def __init__(self, md):
+        """Initialize."""
+
         super(HeaderAnchorTreeprocessor, self).__init__(md)
         self.check_for_toc = False
 
     def get_settings(self):
-        # Check for code hilite extension
+        """Check for code hilite extension and gather its settings."""
+
         if not self.check_for_toc:
             self.slugify = self.config['slugify']
             self.separator = self.config['separator']
@@ -53,7 +69,7 @@ class HeaderAnchorTreeprocessor(Treeprocessor):
             self.check_for_toc = True
 
     def run(self, root):
-        """ Add header anchors """
+        """Add header anchors."""
 
         self.get_settings()
 
@@ -79,7 +95,12 @@ class HeaderAnchorTreeprocessor(Treeprocessor):
 
 
 class HeaderAnchorExtension(Extension):
+
+    """HeaderAnchor extension."""
+
     def __init__(self, *args, **kwargs):
+        """Initialize."""
+
         self.config = {
             'separator': ['-', "Separator to use when creating header ids - Default: '-'"],
             'slugify': [slugify, 'Callable to generate anchors'],
@@ -95,7 +116,7 @@ class HeaderAnchorExtension(Extension):
         super(HeaderAnchorExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
-        """Add HeaderAnchorTreeprocessor to Markdown instance"""
+        """Add HeaderAnchorTreeprocessor to Markdown instance."""
 
         self.md = md
         processor = HeaderAnchorTreeprocessor(md)
@@ -105,7 +126,8 @@ class HeaderAnchorExtension(Extension):
         md.registerExtension(self)
 
     def reset(self):
-        """ Ensure this is always after toc """
+        """Ensure this is always after toc."""
+
         if not self.configured and 'toc' in self.md.treeprocessors.keys():
             self.configured = True
             processor = self.md.treeprocessors["header-anchor"]
@@ -114,4 +136,6 @@ class HeaderAnchorExtension(Extension):
 
 
 def makeExtension(*args, **kwargs):
+    """Return extension."""
+
     return HeaderAnchorExtension(*args, **kwargs)

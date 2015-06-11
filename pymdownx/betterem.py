@@ -1,16 +1,26 @@
 """
+Better Emphasis.
+
 pymdownx.betterem
 Add inteligent handling of to em and strong notations
 
 MIT license.
 
-Copyright (c) 2014 Isaac Muse <isaacmuse@gmail.com>
+Copyright (c) 2014 - 2015 Isaac Muse <isaacmuse@gmail.com>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions
+of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
 """
 from __future__ import absolute_import
 from __future__ import unicode_literals
@@ -66,10 +76,14 @@ SMART_UNDER_EM = r'(?<!\w)(_)(?![\s_])%s(?<!\s)\2(?!\w)' % SMART_UNDER_CONTENT
 SMART_STAR_STRONG_EM = r'(?:(?<=_)|(?<![\w\*]))(\*{3})(?![\s\*])%s(?<!\s)\2(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT
 # ***strong,em*strong**
 SMART_STAR_STRONG_EM2 = \
-    r'(?:(?<=_)|(?<![\w\*]))(\*{3})(?![\s\*])%s(?<!\s)\*(?:(?=_)|(?![\w\*]))%s(?<!\s)\*{2}(?:(?=_)|(?![\w\*]))' % (SMART_STAR_MIXED_CONTENT, SMART_STAR_CONTENT)
+    r'(?:(?<=_)|(?<![\w\*]))(\*{3})(?![\s\*])%s(?<!\s)\*(?:(?=_)|(?![\w\*]))%s(?<!\s)\*{2}(?:(?=_)|(?![\w\*]))' % (
+        SMART_STAR_MIXED_CONTENT, SMART_STAR_CONTENT
+    )
 # ***em,strong**em*
 SMART_STAR_EM_STRONG = \
-    r'(?:(?<=_)|(?<![\w\*]))(\*{3})(?![\s\*])%s(?<!\s)\*{2}(?:(?=_)|(?![\w\*]))%s(?<!\s)\*(?:(?=_)|(?![\w\*]))' % (SMART_STAR_MIXED_CONTENT, SMART_STAR_CONTENT)
+    r'(?:(?<=_)|(?<![\w\*]))(\*{3})(?![\s\*])%s(?<!\s)\*{2}(?:(?=_)|(?![\w\*]))%s(?<!\s)\*(?:(?=_)|(?![\w\*]))' % (
+        SMART_STAR_MIXED_CONTENT, SMART_STAR_CONTENT
+    )
 # **strong**
 SMART_STAR_STRONG = r'(?:(?<=_)|(?<![\w\*]))(\*{2})(?![\s\*])%s(?<!\s)\2(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT
 # SMART *em*
@@ -81,9 +95,12 @@ smart_enable_keys = [
 
 
 class BetterEmExtension(Extension):
-    """ Add extension to Markdown class."""
+
+    """Add extension to Markdown class."""
 
     def __init__(self, *args, **kwargs):
+        """Initialize."""
+
         self.config = {
             'smart_enable': ["underscore", "Treat connected words intelligently - Default: all"]
         }
@@ -96,13 +113,15 @@ class BetterEmExtension(Extension):
         super(BetterEmExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
-        """ Modify inline patterns. """
+        """Modify inline patterns."""
 
         self.md = md
         md.registerExtension(self)
 
     def make_better(self):
         """
+        Configure all the pattern rules.
+
         This should work with the default smart_strong package enabled or disabled.
         """
 
@@ -137,11 +156,14 @@ class BetterEmExtension(Extension):
         self.md.inlinePatterns["emphasis2"] = SimpleTagPattern(under_emphasis, 'em')
 
     def reset(self):
-        """ Wait to make sure smart_strong hasn't overwritten us. """
+        """Wait to make sure smart_strong hasn't overwritten us."""
+
         if not self.configured:
             self.configured = True
             self.make_better()
 
 
 def makeExtension(*args, **kwargs):
+    """Return extension."""
+
     return BetterEmExtension(*args, **kwargs)

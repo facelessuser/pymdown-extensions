@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+"""Setup pymdown-extensions."""
 
 from setuptools import setup, find_packages
 

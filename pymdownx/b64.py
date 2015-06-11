@@ -1,18 +1,27 @@
 """
-pymdownx.b64
+B64.
+
 An extension for Python Markdown.
 Given an absolute base path, this extension searches for img tags,
 and if the images are local, will embed the images in base64.
 
 MIT license.
 
-Copyright (c) 2014 Isaac Muse <isaacmuse@gmail.com>
+Copyright (c) 2014 - 2015 Isaac Muse <isaacmuse@gmail.com>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions
+of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
@@ -70,7 +79,7 @@ RE_TAG_LINK_ATTR = re.compile(
 
 
 def repl_path(m, base_path):
-    """ Replace path with b64 encoded data """
+    """Replace path with b64 encoded data."""
 
     path = url2pathname(m.group('path')[1:-1])
     link = m.group(0)
@@ -102,13 +111,15 @@ def repl_path(m, base_path):
                                 file_types[b64_ext],
                                 base64.b64encode(f.read()).decode('ascii')
                             )
-                    except:
+                    except Exception:
                         pass
                     break
     return link
 
 
 def repl(m, base_path):
+    """Replace."""
+
     if m.group('comments'):
         tag = m.group('comments')
     else:
@@ -119,8 +130,11 @@ def repl(m, base_path):
 
 
 class B64Postprocessor(Postprocessor):
+
+    """Post processor for B64."""
+
     def run(self, text):
-        """ Find and replace paths with base64 encoded file. """
+        """Find and replace paths with base64 encoded file."""
 
         basepath = self.config['base_path']
         if basepath:
@@ -129,7 +143,12 @@ class B64Postprocessor(Postprocessor):
 
 
 class B64Extension(Extension):
+
+    """B64 extension."""
+
     def __init__(self, *args, **kwargs):
+        """Initialize."""
+
         self.config = {
             'base_path': ["", "Base path for b64 to use to resolve paths Default: \"\""]
         }
@@ -140,7 +159,7 @@ class B64Extension(Extension):
         super(B64Extension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
-        """Add B64Treeprocessor to Markdown instance"""
+        """Add B64Treeprocessor to Markdown instance."""
 
         b64 = B64Postprocessor(md)
         b64.config = self.getConfigs()
@@ -149,4 +168,6 @@ class B64Extension(Extension):
 
 
 def makeExtension(*args, **kwargs):
+    """Return extension."""
+
     return B64Extension(*args, **kwargs)

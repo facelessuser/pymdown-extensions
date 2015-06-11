@@ -1,17 +1,27 @@
 """
+Critic.
+
 pymdownx.critic
 Parses critic markup and outputs the file in a more visual HTML.
 Must be the last extension loaded.
 
 MIT license.
 
-Copyright (c) 2014 Isaac Muse <isaacmuse@gmail.com>
+Copyright (c) 2014 - 2015 Isaac Muse <isaacmuse@gmail.com>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions
+of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
 """
 from __future__ import absolute_import
 from __future__ import unicode_literals
@@ -29,12 +39,12 @@ CRITIC_PLACEHOLDER = CRITIC_KEY % r'[0-9]+'
 SINGLE_CRITIC_PLACEHOLDER = r'%(stx)s(?P<key>%(key)s)%(etx)s' % {
     "key": CRITIC_PLACEHOLDER, "stx": STX, "etx": ETX
 }
-CRITIC_PLACEHOLDERS = r"""(?x)
+CRITIC_PLACEHOLDERS = r'''(?x)
 (?:
     (?P<block>\<p\>(?P<block_keys>(?:%(stx)s%(key)s%(etx)s)+)\</p\>) |
     %(single)s
 )
-""" % {
+''' % {
     "key": CRITIC_PLACEHOLDER, "single": SINGLE_CRITIC_PLACEHOLDER,
     "stx": STX, "etx": ETX
 }
@@ -79,30 +89,35 @@ RE_BLOCK_SEP = re.compile(r'^\n{2,}$')
 
 
 class CriticStash(object):
-    """
-    Critic Stash
-    """
+
+    """Stach critic marks until ready."""
 
     def __init__(self, stash_key):
+        """Initialize."""
+
         self.stash_key = stash_key
         self.stash = {}
         self.count = 0
 
     def __len__(self):
+        """Get length of stash."""
         return len(self.stash)
 
     def get(self, key, default=None):
-        """ Get the specified item from the stash """
+        """Get the specified item from the stash."""
+
         code = self.stash.get(key, default)
         return code
 
     def remove(self, key):
-        """ Remove the specified item from the stash """
+        """Remove the specified item from the stash."""
+
         del self.stash[key]
 
     def store(self, code):
         """
         Store the code in the stash with the placeholder.
+
         Return placeholder.
         """
         key = self.stash_key % str(self.count)
@@ -111,21 +126,24 @@ class CriticStash(object):
         return STX + key + ETX
 
     def clear(self):
-        """ Clear the stash """
+        """Clear the stash."""
+
         self.stash = {}
         self.count = 0
 
 
 class CriticsPostprocessor(Postprocessor):
+
+    """Handle cleanup on postprocess for viewing critic marks."""
+
     def __init__(self, critic_stash):
+        """Initialize."""
+
         super(CriticsPostprocessor, self).__init__()
         self.critic_stash = critic_stash
 
     def subrestore(self, m):
-        """
-        Replace all critic tags in the paragraph block
-        <p>(critic del close)(critic ins close)</p> etc.
-        """
+        """Replace all critic tags in the paragraph block <p>(critic del close)(critic ins close)</p> etc."""
         content = None
         key = m.group('key')
         if key is not None:
@@ -133,13 +151,16 @@ class CriticsPostprocessor(Postprocessor):
         return content
 
     def block_edit(self, m):
+        """Handle block edits."""
+
         if 'break' in m.group(4).split(' '):
             return m.group(0)
         else:
             return m.group(1) + m.group(2) + m.group(4) + ' block' + m.group(5)
 
     def restore(self, m):
-        """ Replace placeholders with actual critic tags """
+        """Replace placeholders with actual critic tags."""
+
         content = None
         if m.group('block_keys') is not None:
             content = RE_CRITIC_SUB_PLACEHOLDER.sub(
@@ -154,20 +175,27 @@ class CriticsPostprocessor(Postprocessor):
         return content if content is not None else m.group(0)
 
     def run(self, text):
-        """ Replace critic placeholders """
+        """Replace critic placeholders."""
+
         text = RE_CRITIC_PLACEHOLDER.sub(self.restore, text)
 
         return text
 
 
 class CriticViewPreprocessor(Preprocessor):
+
+    """Handle viewing critic marks in Markdown content."""
+
     def __init__(self, critic_stash):
+        """Initialize."""
+
         super(CriticViewPreprocessor, self).__init__()
         self.critic_stash = critic_stash
         self.escape_stash = CriticStash(ESCAPES_KEY)
 
     def _ins(self, text):
-        """ Handle critic inserts """
+        """Handle critic inserts."""
+
         if RE_BLOCK_SEP.match(text):
             return '\n\n%s\n\n' % self.critic_stash.store('<ins class="critic break">&nbsp;</ins>')
         return (
@@ -177,7 +205,8 @@ class CriticViewPreprocessor(Preprocessor):
         )
 
     def _del(self, text):
-        """ Hanlde critic deletes """
+        """Hanlde critic deletes."""
+
         if RE_BLOCK_SEP.match(text):
             return self.critic_stash.store('<del class="critic break">&nbsp;</del>')
         return (
@@ -187,7 +216,8 @@ class CriticViewPreprocessor(Preprocessor):
         )
 
     def _mark(self, text):
-        """ Handle critic marks """
+        """Handle critic marks."""
+
         return (
             self.critic_stash.store('<mark class="critic">') +
             text +
@@ -195,7 +225,8 @@ class CriticViewPreprocessor(Preprocessor):
         )
 
     def _comment(self, text):
-        """ Handle critic comments """
+        """Handle critic comments."""
+
         return (
             self.critic_stash.store(
                 '<span class="critic comment">' +
@@ -205,10 +236,7 @@ class CriticViewPreprocessor(Preprocessor):
         )
 
     def critic_view(self, m):
-        """
-        Insert appropriate HTML to tags to visualize
-        Critic marks.
-        """
+        """Insert appropriate HTML to tags to visualize Critic marks."""
 
         if m.group('ins_open'):
             return self._ins(m.group('ins_text'))
@@ -228,10 +256,10 @@ class CriticViewPreprocessor(Preprocessor):
 
     def critic_parse(self, m):
         """
-        Normal critic parser.  Either removes accepted
-        or rejected crtic marks and replaces with the opposite.
-        Comments are removed and marks are replaced with their
-        content.
+        Normal critic parser.
+
+        Either removes accepted or rejected crtic marks and replaces with the opposite.
+        Comments are removed and marks are replaced with their content.
         """
         accept = self.config["mode"] == 'accept'
         if m.group('ins_open'):
@@ -248,7 +276,8 @@ class CriticViewPreprocessor(Preprocessor):
             return m.group(0)
 
     def html_escape(self, txt, strip_nl=False):
-        """ basic html escaping """
+        """basic html escaping."""
+
         txt = txt.replace('&', '&amp;')
         txt = txt.replace('<', '&lt;')
         txt = txt.replace('>', '&gt;')
@@ -257,18 +286,20 @@ class CriticViewPreprocessor(Preprocessor):
         return txt
 
     def critic_escape(self, m):
-        """ Remove escaped critic marks """
+        """Remove escaped critic marks."""
+
         return self.escape_stash.store(m.group('critic'))
 
     def restore_escape(self, m):
-        """ Restore escaped critic marks """
+        """Restore escaped critic marks."""
+
         stash = self.escape_stash.get(m.group(1))
         if stash is not None:
             self.escape_stash.remove(m.group(1))
         return stash if stash is not None else m.group(0)
 
     def run(self, lines):
-        """ Process critic marks """
+        """Process critic marks."""
 
         # Determine processor type to use
         if self.config['mode'] == "view":
@@ -290,7 +321,12 @@ class CriticViewPreprocessor(Preprocessor):
 
 
 class CriticExtension(Extension):
+
+    """Critic extension."""
+
     def __init__(self, *args, **kwargs):
+        """Initialize."""
+
         self.config = {
             'mode': ['view', "Critic mode to run in ('view', 'accept', or 'reject') - Default: view "],
             'raw_view': [False, "Raw view keeps the output as the raw markup for view mode - Default False"]
@@ -304,12 +340,14 @@ class CriticExtension(Extension):
         self.configured = False
 
     def extendMarkdown(self, md, md_globals):
-        """ Register the extension """
+        """Register the extension."""
+
         self.md = md
         md.registerExtension(self)
 
     def insert_critic(self):
-        """ Insert the critic pre and post processor """
+        """Insert the critic pre and post processor."""
+
         self.critic_stash = CriticStash(CRITIC_KEY)
         post = CriticsPostprocessor(self.critic_stash)
         critic = CriticViewPreprocessor(self.critic_stash)
@@ -319,6 +357,8 @@ class CriticExtension(Extension):
 
     def reset(self):
         """
+        Try and make sure critic is handled first after "normalize_whitespace".
+
         Wait to until after all extensions have been loaded
         so we can be as sure as we can that this is the first
         thing run after "normalize_whitespace"
@@ -332,4 +372,6 @@ class CriticExtension(Extension):
 
 
 def makeExtension(*args, **kwargs):
+    """Return extension."""
+
     return CriticExtension(*args, **kwargs)

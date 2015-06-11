@@ -1,4 +1,8 @@
 """
+Inline Hilite.
+
+pymdownx.inlinehilite
+
 ---
 pymdownx.inlinehilite
 Inline codehilite variant
@@ -12,7 +16,7 @@ a language specifier like so:
             - or -
     `#!javascript var test = 0;`
 
-Modified: 2014 Isaac Muse <isaacmuse@gmail.com>
+Modified: 2014 - 2015 Isaac Muse <isaacmuse@gmail.com>
 ---
 
 CodeHilite Extension for Python-Markdown
@@ -58,12 +62,17 @@ BACKTICK_CODE_RE = r'''(?x)
 
 
 class InlineCodeHtmlFormatter(HtmlFormatter):
+
+    """Format the code blocks."""
+
     def wrap(self, source, outfile):
-        """ Overload wrap """
+        """Overload wrap."""
+
         return self._wrap_code(source)
 
     def _wrap_code(self, source):
-        """ Return source wrapped in simple inline <code> block """
+        """Return source wrapped in simple inline <code> block."""
+
         yield 0, '<code class="%s">' % self.cssclass
         for i, t in source:
             yield i, t.strip()
@@ -71,13 +80,19 @@ class InlineCodeHtmlFormatter(HtmlFormatter):
 
 
 class InlineHilitePattern(Pattern):
+
+    """Handle the inline code patterns."""
+
     def __init__(self, pattern, md):
+        """Initialize."""
+
         Pattern.__init__(self, pattern)
         self.markdown = md
         self.checked_for_codehilite = False
 
     def get_settings(self):
-        # Check for code hilite extension
+        """Check for code hilite extension and gather its settings."""
+
         if not self.checked_for_codehilite:
             self.guess_lang = self.config['guess_lang']
             self.css_class = self.config['css_class']
@@ -98,6 +113,8 @@ class InlineHilitePattern(Pattern):
             self.checked_for_codehilite = True
 
     def codehilite(self, lang, src):
+        """Syntax highlite the inline code block."""
+
         process_text = self.style_plain_text or lang != 'text'
         if pygments and self.use_pygments and process_text:
             try:
@@ -135,6 +152,8 @@ class InlineHilitePattern(Pattern):
         return placeholder
 
     def handleMatch(self, m):
+        """Handle the pattern match."""
+
         lang = m.group('lang') if m.group('lang') else 'text'
         src = m.group('code').strip()
         self.get_settings()
@@ -142,9 +161,12 @@ class InlineHilitePattern(Pattern):
 
 
 class InlineHiliteExtension(Extension):
-    """Adds inline-hilite extension to Markdown class."""
+
+    """Add inline-hilite extension to Markdown class."""
 
     def __init__(self, *args, **kwargs):
+        """Initialize."""
+
         self.config = {
             'use_codehilite_settings': [
                 True,
@@ -190,11 +212,14 @@ class InlineHiliteExtension(Extension):
         super(InlineHiliteExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
-        """ Add support for :::language`code` code hiliting """
+        """Add support for :::language`code` code hiliting."""
+
         inline_hilite = InlineHilitePattern(BACKTICK_CODE_RE, md)
         inline_hilite.config = self.getConfigs()
         md.inlinePatterns['backtick'] = inline_hilite
 
 
 def makeExtension(*args, **kwargs):
+    """Return extension."""
+
     return InlineHiliteExtension(*args, **kwargs)

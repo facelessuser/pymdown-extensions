@@ -1,4 +1,6 @@
 """
+Path Converter.
+
 pymdownx.pathconverter
 An extension for Python Markdown.
 
@@ -15,13 +17,21 @@ references that are relative and converts them to absolute paths.
 
 MIT license.
 
-Copyright (c) 2014 Isaac Muse <isaacmuse@gmail.com>
+Copyright (c) 2014 - 2015 Isaac Muse <isaacmuse@gmail.com>
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions
+of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
@@ -73,9 +83,10 @@ RE_TAG_LINK_ATTR = re.compile(
 
 def parse_url(url):
     """
-    Parse the url and
-    try to determine if the following is a file path or
-    (as we will call anything else) a url
+    Parse the url.
+
+    Try to determine if the following is a file path or
+    (as we will call anything else) a url.
     """
 
     is_url = False
@@ -120,12 +131,12 @@ def parse_url(url):
 
 
 def repl_relative(m, base_path, relative_path):
-    """ Replace path with relative path """
+    """Replace path with relative path."""
 
     link = m.group(0)
     try:
         scheme, netloc, path, params, query, fragment, is_url, is_absolute = parse_url(m.group('path')[1:-1])
-    except:
+    except Exception:
         # Parsing crashed an burned; no need to continue.
         return link
 
@@ -174,11 +185,12 @@ def repl_relative(m, base_path, relative_path):
 
 
 def repl_absolute(m, base_path):
-    """ Replace path with absolute path """
+    """Replace path with absolute path."""
+
     link = m.group(0)
     try:
         scheme, netloc, path, params, query, fragment, is_url, is_absolute = parse_url(m.group('path')[1:-1])
-    except:
+    except Exception:
         return link
 
     path = url2pathname(path)
@@ -192,6 +204,8 @@ def repl_absolute(m, base_path):
 
 
 def repl(m, base_path, rel_path=None):
+    """Replace."""
+
     if m.group('comments'):
         tag = m.group('comments')
     else:
@@ -205,8 +219,11 @@ def repl(m, base_path, rel_path=None):
 
 
 class PathConverterPostprocessor(Postprocessor):
+
+    """Post process to find tag lings to convert."""
+
     def run(self, text):
-        """ Finds and converts paths. """
+        """Find and convert paths."""
 
         basepath = self.config['base_path']
         relativepath = self.config['relative_path']
@@ -220,7 +237,12 @@ class PathConverterPostprocessor(Postprocessor):
 
 
 class PathConverterExtension(Extension):
+
+    """PathConverter extension."""
+
     def __init__(self, *args, **kwargs):
+        """Initialize."""
+
         self.config = {
             'base_path': ["", "Base path used to find files - Default: \"\""],
             'relative_path': ["", "Path that files will be relative to (not needed if using absolute) - Default: \"\""],
@@ -236,7 +258,7 @@ class PathConverterExtension(Extension):
         super(PathConverterExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
-        """Add PathConverterPostprocessor to Markdown instance"""
+        """Add PathConverterPostprocessor to Markdown instance."""
 
         rel_path = PathConverterPostprocessor(md)
         rel_path.config = self.getConfigs()
@@ -245,4 +267,6 @@ class PathConverterExtension(Extension):
 
 
 def makeExtension(*args, **kwargs):
+    """Return extension."""
+
     return PathConverterExtension(*args, **kwargs)

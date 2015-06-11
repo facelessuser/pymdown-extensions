@@ -1,5 +1,6 @@
 """
----
+Superfences.
+
 pymdownx.superfences
 Neseted Fenced Code Blocks
 
@@ -8,7 +9,7 @@ Algorithm has been rewritten to allow for fenced blocks in blockquotes,
 lists, etc.  And also , allow for special UML fences like 'flow' for flowcharts
 and `sequence` for sequence diagrams.
 
-Modified: 2014 Isaac Muse <isaacmuse@gmail.com>
+Modified: 2014 - 2015 Isaac Muse <isaacmuse@gmail.com>
 ---
 
 Fenced Code Extension for Python Markdown
@@ -63,7 +64,8 @@ RE_FENCE = re.compile(
 
 
 def _escape(txt):
-    """ basic html escaping """
+    """basic html escaping."""
+
     txt = txt.replace('&', '&amp;')
     txt = txt.replace('<', '&lt;')
     txt = txt.replace('>', '&gt;')
@@ -72,6 +74,8 @@ def _escape(txt):
 
 
 def extendSuperFences(md, name, language, formatter):
+    """Extend superfences with the given name, language, and formatter."""
+
     if not hasattr(md, "superfences"):
         md.superfences = []
     md.superfences.append(
@@ -84,39 +88,59 @@ def extendSuperFences(md, name, language, formatter):
 
 
 class CodeStash(object):
+
     """
+    Stash code for later retrieval.
+
     Store original fenced code here in case we were
     too greedy and need to restore in an indented code
     block.
     """
 
     def __init__(self):
+        """Initialize."""
+
         self.stash = {}
 
     def __len__(self):
+        """Length of stash."""
+
         return len(self.stash)
 
     def get(self, key, default=None):
+        """Get the code from the key."""
+
         code = self.stash.get(key, default)
         return code
 
     def remove(self, key):
+        """Remove the stashed code."""
+
         del self.stash[key]
 
     def store(self, key, code, indent_level):
+        """Store the code in the stash."""
+
         self.stash[key] = (code, indent_level)
 
     def clear_stash(self):
+        """Clear the stash."""
+
         self.stash = {}
 
 
 def uml_format(source, language, css_class):
+    """Format for UML blocks."""
+
     return '<pre class="%s"><code>%s</code></pre>' % (css_class, _escape(source))
 
 
 class SuperFencesCodeExtension(Extension):
 
+    """Superfences code block extension."""
+
     def __init__(self, *args, **kwargs):
+        """Initialize."""
         self.config = {
             'disable_indented_code_blocks': [False, "Disable indented code blocks - Default: False"],
             'nested': [True, "Use nested fences - Default: True"],
@@ -127,7 +151,8 @@ class SuperFencesCodeExtension(Extension):
         super(SuperFencesCodeExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
-        """ Add FencedBlockPreprocessor to the Markdown instance. """
+        """Add FencedBlockPreprocessor to the Markdown instance."""
+
         md.registerExtension(self)
         config = self.getConfigs()
         sf_entry = {
@@ -145,6 +170,13 @@ class SuperFencesCodeExtension(Extension):
         self.markdown = md
 
     def patch_fenced_rule(self):
+        """
+        Patch Python Markdown with our own fenced block extension.
+
+        if the Python Markdown's 'fenced_code' extension was already configured,
+        we will replace it.
+        """
+
         config = self.getConfigs()
         fenced = SuperFencesBlockPreprocessor(self.markdown)
         indented_code = SuperFencesCodeBlockProcessor(self)
@@ -160,10 +192,15 @@ class SuperFencesCodeExtension(Extension):
             self.markdown.preprocessors.add('fenced_code_block', fenced, pos)
 
     def reset(self):
-        # People should use superfences **or** fenced_code,
-        # but to make it easy on people who include all of
-        # "extra", we will patch fenced_code after fenced_code
-        # has been loaded.
+        """
+        Ensure superfences is used over fenced_code extension.
+
+        People should use superfences **or** fenced_code,
+        but to make it easy on people who include all of
+        "extra", we will patch fenced_code after fenced_code
+        has been loaded.
+        """
+
         if not self.configured:
             self.patch_fenced_rule()
             self.configured = True
@@ -175,22 +212,35 @@ class SuperFencesCodeExtension(Extension):
 
 
 class SuperFencesBlockPreprocessor(Preprocessor):
+
+    """
+    Preprocessor to find fenced code blocks.
+
+    Because this is done as a preprocessor, it might be too greedy.
+    We will stash the blocks code and restore if we mistakenly processed
+    text from an indented code block.
+    """
+
     fence_start = re.compile(NESTED_FENCE_START)
     CODE_WRAP = '<pre><code%s>%s</code></pre>'
     CLASS_ATTR = ' class="%s"'
 
     def __init__(self, md):
+        """Initialize."""
+
         super(SuperFencesBlockPreprocessor, self).__init__(md)
         self.markdown = md
         self.checked_for_codehilite = False
         self.codehilite_conf = {}
 
     def rebuild_block(self, lines):
-        """ Deindent the fenced block lines """
+        """Deindent the fenced block lines."""
+
         return '\n'.join([line[self.ws_len:] for line in lines]) + '\n'
 
     def check_codehilite(self):
-        """ Check for code hilite extension """
+        """Check for code hilite extension to get its config."""
+
         if not self.checked_for_codehilite:
             if CodeHilite:
                 for ext in self.markdown.registeredExtensions:
@@ -200,7 +250,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             self.checked_for_codehilite = True
 
     def clear(self):
-        """ Reset the class variables. """
+        """Reset the class variables."""
+
         self.ws = None
         self.ws_len = 0
         self.fence = None
@@ -213,7 +264,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         self.fence_end = None
 
     def eval(self, m, start, end):
-        """ Evaluate a normal fence """
+        """Evaluate a normal fence."""
+
         if m.group(0).strip() == '':
             # Empty line is okay
             self.empty_lines += 1
@@ -230,7 +282,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             self.code.append(m.group(0))
 
     def eval_quoted(self, m, quote_level, start, end):
-        """ Evaluate fence inside a blockquote """
+        """Evaluate fence inside a blockquote."""
+
         if quote_level > self.quote_level:
             # Quote level exceeds the starting quote level
             self.clear()
@@ -255,7 +308,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 self.code.append(m.group(0))
 
     def process_nested_block(self, m, start, end):
-        """ Process the contents of the nested block """
+        """Process the contents of the nested block."""
+
         self.last = m.group(0)
         code = None
         for entry in reversed(self.markdown.superfences):
@@ -268,7 +322,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         self.clear()
 
     def search(self, lines):
-        """ Search for non-nested fenced blocks """
+        """Search for non-nested fenced blocks."""
+
         text = "\n".join(lines)
         while 1:
             m = RE_FENCE.search(text)
@@ -286,7 +341,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         return text.split("\n")
 
     def search_nested(self, lines):
-        """ Search for nested fenced blocks """
+        """Search for nested fenced blocks."""
+
         count = 0
         for line in lines:
             if self.fence is None:
@@ -342,8 +398,10 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
     def highlight(self, source, language):
         """
+        Syntax highlight the code block.
+
         If config is not empty, then the codehlite extension
-        is enabled, so we call into to highlight the code.
+        is enabled, so we call into it to highlight the code.
         """
         if CodeHilite and self.codehilite_conf:
             code = CodeHilite(
@@ -365,6 +423,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
     def _store(self, source, code, start, end, obj):
         """
         Store the fenced blocks in teh stack to be replaced when done iterating.
+
         Store the original text in case we need to restore if we are too greedy.
         """
         # Save the fenced blocks to add once we are done iterating the lines
@@ -380,7 +439,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             )
 
     def run(self, lines):
-        """ Search for fenced blocks """
+        """Search for fenced blocks."""
+
         self.check_codehilite()
         self.clear()
         self.stack = []
@@ -397,7 +457,9 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
 
 class SuperFencesCodeBlockProcessor(CodeBlockProcessor):
-    """ Process code blocks. """
+
+    """Process idented code blocks to see if we accidentaly processed its content as a fenced block."""
+
     FENCED_BLOCK_RE = re.compile(
         r'^([\> ]*)%s(%s)%s$' % (
             util.HTML_PLACEHOLDER[0],
@@ -407,11 +469,13 @@ class SuperFencesCodeBlockProcessor(CodeBlockProcessor):
     )
 
     def test(self, parent, block):
-        """ Test method that is one day to be deprecated """
+        """Test method that is one day to be deprecated."""
+
         return True
 
     def reindent(self, text, pos, level):
-        """ Reindent the code to where it is supposed to be """
+        """Reindent the code to where it is supposed to be."""
+
         if text is None:
             return None
         indented = []
@@ -421,7 +485,8 @@ class SuperFencesCodeBlockProcessor(CodeBlockProcessor):
         return '\n'.join(indented)
 
     def revert_greedy_fences(self, block):
-        """ Revert a prematurely converted fenced block """
+        """Revert a prematurely converted fenced block."""
+
         new_block = []
         for line in block.split('\n'):
             m = self.FENCED_BLOCK_RE.match(line)
@@ -444,7 +509,8 @@ class SuperFencesCodeBlockProcessor(CodeBlockProcessor):
         return '\n'.join(new_block)
 
     def run(self, parent, blocks):
-        """ Look for and parse code block """
+        """Look for and parse code block."""
+
         handled = False
 
         if not self.config.get("disable_indented_code_blocks", False):
@@ -457,4 +523,6 @@ class SuperFencesCodeBlockProcessor(CodeBlockProcessor):
 
 
 def makeExtension(*args, **kwargs):
+    """Return extension."""
+
     return SuperFencesCodeExtension(*args, **kwargs)
