@@ -2,6 +2,7 @@
 import requests
 import json
 
+
 def get_github_emoji():
     """Get Github's usable emoji."""
 
