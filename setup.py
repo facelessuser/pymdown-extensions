@@ -42,8 +42,8 @@ setup(
     url='https://github.com/facelessuser/pymdown-extensions',
     packages=find_packages(),
     install_requires=[
-        'Markdown>=2.6.0',
-        'requests>=2.70'
+        'Markdown>=2.6.0,<3',
+        'requests>=2.7.0'
     ],
     license='MIT License',
     classifiers=[
