@@ -193,9 +193,8 @@ def repl_absolute(m, base_path):
     except Exception:
         return link
 
-    path = url2pathname(path)
-
     if (not is_absolute and not is_url):
+        path = url2pathname(path)
         temp = normpath(join(base_path, path))
         if exists(temp):
             path = pathname2url(temp.replace("\\", "/"))
