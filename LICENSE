@@ -44,7 +44,7 @@ All changes Copyright 2008-2014 The Python Markdown Project
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 
 ------------------------------
-inlinehilite is derived from Python Markdown's codehilite extension.
+inlinehilite.py is derived from Python Markdown's codehilite extension.
 
 CodeHilite Extension for Python-Markdown
 ========================================
@@ -53,4 +53,16 @@ See <https://pythonhosted.org/Markdown/extensions/code_hilite.html>
 for documentation.
 Original code Copyright 2006-2008 [Waylan Limberg](http://achinghead.com/).
 All changes Copyright 2008-2014 The Python Markdown Project
+License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
+
+------------------------------
+extrarawhtml.py is a literal copy and paste from Python Markdown's extra extension.
+It basicaly splits out the raw html markdown parsing into a seprate extension that can
+be used even if it is not desired to use all of 'extra'.
+
+Python-Markdown Extra Extension
+===============================
+See <https://pythonhosted.org/Markdown/extensions/extra.html>
+for documentation.
+Copyright The Python Markdown Project
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
