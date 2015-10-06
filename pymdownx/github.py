@@ -40,6 +40,9 @@ extensions = [
 extension_configs = {
     "pymdownx.tilde": {
         "subscript": False
+    },
+    "pymdownx.betterem": {
+        "smart_enable": "all"
     }
 }
 
