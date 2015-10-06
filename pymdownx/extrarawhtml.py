@@ -1,5 +1,5 @@
 """
-ExtraRawHtml
+ExtraRawHtml.
 
 Split out extra raw html parsing from Python Markdown.
 
