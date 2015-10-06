@@ -1,0 +1,54 @@
+site_name: PyMdown Extensions Documentation
+repo_url: https://github.com/facelessuser/pymdown-extensions
+site_description: A Collection of Useful Extensions for Python Markdown
+copyright: Copyright &copy; 2014 - 2015 <a href="https://github.com/facelessuser">Isaac Muse</a>
+pages:
+  - Home: index.md
+  - Installation: installation.md
+  - Usage Notes: usage_notes.md
+  - Extensions:
+    - B64: extensions/b64.md
+    - BetterEm: extensions/betterem.md
+    - Caret: extensions/caret.md
+    - Critic: extensions/critic.md
+    - Extra: extensions/extra.md
+    - ExtraRawHtml: extensions/extrarawhtml.md
+    - Github: extensions/github.md
+    - GithubEmoji: extensions/githubemoji.md
+    - HeaderAnchor: extensions/headeranchor.md
+    - InlineHilite: extensions/inlinehilite.md
+    - MagicLink: extensions/magiclink.md
+    - Mark: extensions/mark.md
+    - Math: extensions/math.md
+    - PathConverter: extensions/pathconverter.md
+    - PlainHtml: extensions/plainhtml.md
+    - ProgressBar: extensions/progressbar.md
+    - PyMdown: extensions/pymdown.md
+    - SmartSymbols: extensions/smartsymbols.md
+    - SuperFences: extensions/superfences.md
+    - Tasklist: extensions/tasklist.md
+    - Tilde: extensions/tilde.md
+  - Contributing &amp; Suppport: contributing.md
+  - License: license.md
+theme: readthedocs
+theme_dir: doc_theme
+markdown_extensions:
+  - markdown.extensions.toc
+  - markdown.extensions.admonition
+  - markdown.extensions.smarty
+  - markdown.extensions.nl2br
+  - markdown.extensions.codehilite:
+      guess_lang: false
+  - pymdownx.extra
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.tilde
+  - pymdownx.caret
+  - pymdownx.smartsymbols
+  - pymdownx.githubemoji
+  - pymdownx.tasklist
+  - pymdownx.progressbar
+  - pymdownx.headeranchor
+  - pymdownx.math
+  - pymdownx.mark
+  - pymdownx.critic
