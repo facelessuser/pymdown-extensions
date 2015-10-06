@@ -113,19 +113,9 @@ class BetterEmExtension(Extension):
     def extendMarkdown(self, md, md_globals):
         """Modify inline patterns."""
 
-        # If using extra and pymdownx together,
-        # we can prevent duplicate registration
-        # by checking if we already applied betterem
-        is_better = False
-        for ext in md.registeredExtensions:
-            if isinstance(ext, BetterEmExtension):
-                is_better = True
-                break
-
-        if not is_better:
-            # Not better yet, so let's make it better
-            md.registerExtension(self)
-            self.make_better(md)
+        # Not better yet, so let's make it better
+        md.registerExtension(self)
+        self.make_better(md)
 
     def make_better(self, md):
         """
