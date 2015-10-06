@@ -41,6 +41,8 @@ extensions = [
     'pymdownx.math'
 ]
 
+extension_configs = {}
+
 
 class PyMdownExtension(Extension):
 
@@ -49,7 +51,7 @@ class PyMdownExtension(Extension):
     def extendMarkdown(self, md, md_globals):
         """Register extension instances."""
 
-        md.registerExtensions(extensions, self.config)
+        md.registerExtensions(extensions, extension_configs)
 
 
 def makeExtension(*args, **kwargs):
