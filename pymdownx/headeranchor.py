@@ -28,7 +28,7 @@ from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
 try:
     from markdown.extensions.toc import slugify, stashedHTML2text, unique, TocExtension
-except:
+except Exception:
     # Cannot find markdown extension, let's revert to compatibility layer
     from .pymd_compat import slugify, stashedHTML2text, unique
     TocExtension = None
@@ -82,13 +82,13 @@ class HeaderAnchorTreeprocessor(Treeprocessor):
         for tag in root.getiterator():
             if tag.tag in ('h1', 'h2', 'h3', 'h4', 'h5', 'h6'):
                 if "id" in tag.attrib:
-                    id = tag.get('id')
+                    id_attr = tag.get('id')
                 else:
-                    id = stashedHTML2text(''.join(tag.itertext()), self.md)
-                    id = unique(self.slugify(id, self.separator), used_ids)
-                    tag.set('id', id)
+                    id_attr = stashedHTML2text(''.join(tag.itertext()), self.md)
+                    id_attr = unique(self.slugify(id_attr, self.separator), used_ids)
+                    tag.set('id', id_attr)
                 tag.text = self.markdown.htmlStash.store(
-                    LINK % {"id": id},
+                    LINK % {"id": id_attr},
                     safe=True
                 ) + tag.text if tag.text is not None else ''
         return root
@@ -130,9 +130,7 @@ class HeaderAnchorExtension(Extension):
 
         if not self.configured and 'toc' in self.md.treeprocessors.keys():
             self.configured = True
-            processor = self.md.treeprocessors["header-anchor"]
-            del self.md.treeprocessors["header-anchor"]
-            self.md.treeprocessors.add("header-anchor", processor, ">toc")
+            self.md.treeprocessors.link("header-anchor", ">toc")
 
 
 def makeExtension(*args, **kwargs):

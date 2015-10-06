@@ -102,27 +102,37 @@ class BetterEmExtension(Extension):
         """Initialize."""
 
         self.config = {
-            'smart_enable': ["underscore", "Treat connected words intelligently - Default: all"]
+            'smart_enable': ["underscore", "Treat connected words intelligently - Default: underscore"]
         }
 
         if "smart_enable" in kwargs and kwargs["smart_enable"] not in smart_enable_keys:
             del kwargs["smart_enable"]
-
-        self.configured = False
 
         super(BetterEmExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
         """Modify inline patterns."""
 
-        self.md = md
-        md.registerExtension(self)
+        # If using extra and pymdownx together,
+        # we can prevent duplicate registration
+        # by checking if we already applied betterem
+        is_better = False
+        for ext in md.registeredExtensions:
+            if isinstance(ext, BetterEmExtension):
+                is_better = True
+                break
 
-    def make_better(self):
+        if not is_better:
+            # Not better yet, so let's make it better
+            md.registerExtension(self)
+            self.make_better(md)
+
+    def make_better(self, md):
         """
         Configure all the pattern rules.
 
-        This should work with the default smart_strong package enabled or disabled.
+        This should be used instead of smart_strong package.
+        pymdownx.extra should be used in place of makrdown.extensions.extra.
         """
 
         config = self.getConfigs()
@@ -143,24 +153,17 @@ class BetterEmExtension(Extension):
         star_emphasis = SMART_STAR_EM if enable_star else STAR_EM
         under_emphasis = SMART_UNDER_EM if enable_under else UNDER_EM
 
-        self.md.inlinePatterns["strong_em"] = DoubleTagPattern(star_strong_em, 'strong,em')
-        self.md.inlinePatterns.add("strong_em2", DoubleTagPattern(under_strong_em, 'strong,em'), '>strong_em')
-        self.md.inlinePatterns.link("em_strong", ">strong_em2")
-        self.md.inlinePatterns["em_strong"] = DoubleTagPattern(star_em_strong, 'em,strong')
-        self.md.inlinePatterns.add('em_strong2', DoubleTagPattern(under_em_strong, 'em,strong'), '>em_strong')
-        self.md.inlinePatterns.add('strong_em3', DoubleTagPattern(star_strong_em2, 'strong,em'), '>em_strong2')
-        self.md.inlinePatterns.add('strong_em4', DoubleTagPattern(under_strong_em2, 'strong,em'), '>strong_em3')
-        self.md.inlinePatterns["strong"] = SimpleTagPattern(star_strong, 'strong')
-        self.md.inlinePatterns.add("strong2", SimpleTagPattern(under_strong, 'strong'), '>strong')
-        self.md.inlinePatterns["emphasis"] = SimpleTagPattern(star_emphasis, 'em')
-        self.md.inlinePatterns["emphasis2"] = SimpleTagPattern(under_emphasis, 'em')
-
-    def reset(self):
-        """Wait to make sure smart_strong hasn't overwritten us."""
-
-        if not self.configured:
-            self.configured = True
-            self.make_better()
+        md.inlinePatterns["strong_em"] = DoubleTagPattern(star_strong_em, 'strong,em')
+        md.inlinePatterns.add("strong_em2", DoubleTagPattern(under_strong_em, 'strong,em'), '>strong_em')
+        md.inlinePatterns.link("em_strong", ">strong_em2")
+        md.inlinePatterns["em_strong"] = DoubleTagPattern(star_em_strong, 'em,strong')
+        md.inlinePatterns.add('em_strong2', DoubleTagPattern(under_em_strong, 'em,strong'), '>em_strong')
+        md.inlinePatterns.add('strong_em3', DoubleTagPattern(star_strong_em2, 'strong,em'), '>em_strong2')
+        md.inlinePatterns.add('strong_em4', DoubleTagPattern(under_strong_em2, 'strong,em'), '>strong_em3')
+        md.inlinePatterns["strong"] = SimpleTagPattern(star_strong, 'strong')
+        md.inlinePatterns.add("strong2", SimpleTagPattern(under_strong, 'strong'), '>strong')
+        md.inlinePatterns["emphasis"] = SimpleTagPattern(star_emphasis, 'em')
+        md.inlinePatterns["emphasis2"] = SimpleTagPattern(under_emphasis, 'em')
 
 
 def makeExtension(*args, **kwargs):

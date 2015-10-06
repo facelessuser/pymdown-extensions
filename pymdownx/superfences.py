@@ -35,7 +35,7 @@ from markdown.preprocessors import Preprocessor
 from markdown.blockprocessors import CodeBlockProcessor
 try:
     from markdown.extensions.codehilite import CodeHilite, CodeHiliteExtension, parse_hl_lines
-except:
+except Exception:
     CodeHilite = None
 from markdown import util
 import re
@@ -147,27 +147,46 @@ class SuperFencesCodeExtension(Extension):
             'uml_flow': [True, "Enable flowcharts - Default: True"],
             'uml_sequence': [True, "Enable sequence diagrams - Default: True"]
         }
-        self.configured = False
         super(SuperFencesCodeExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
         """Add FencedBlockPreprocessor to the Markdown instance."""
 
-        md.registerExtension(self)
-        config = self.getConfigs()
-        sf_entry = {
-            "name": "superfences",
-            "test": lambda language: True,
-            "formatter": None
-        }
-        if not hasattr(md, "superfences"):
-            md.superfences = []
-        md.superfences.insert(0, sf_entry)
-        if config.get("uml_flow", True):
-            extendSuperFences(md, "flow", "flow", lambda s, l, c="uml-flowchart": uml_format(s, l, c))
-        if config.get("uml_sequence", True):
-            extendSuperFences(md, "sequence", "sequence", lambda s, l, c="uml-sequence-diagram": uml_format(s, l, c))
-        self.markdown = md
+        # If using extra and pymdownx together,
+        # we can prevent duplicate registration
+        # by checking if we already applied superfences
+        is_super = False
+        for ext in md.registeredExtensions:
+            if isinstance(ext, SuperFencesCodeExtension):
+                is_super = True
+                break
+
+        if not is_super:
+            # Not super yet, so let's make it super
+            md.registerExtension(self)
+            config = self.getConfigs()
+            sf_entry = {
+                "name": "superfences",
+                "test": lambda language: True,
+                "formatter": None
+            }
+            if not hasattr(md, "superfences"):
+                md.superfences = []
+            md.superfences.insert(0, sf_entry)
+            if config.get("uml_flow", True):
+                extendSuperFences(
+                    md, "flow", "flow",
+                    lambda s, l, c="uml-flowchart": uml_format(s, l, c)
+                )
+            if config.get("uml_sequence", True):
+                extendSuperFences(
+                    md, "sequence", "sequence",
+                    lambda s, l, c="uml-sequence-diagram": uml_format(s, l, c)
+                )
+            self.markdown = md
+            self.patch_fenced_rule()
+            for entry in self.markdown.superfences:
+                entry["stash"] = CodeStash()
 
     def patch_fenced_rule(self):
         """
@@ -185,11 +204,7 @@ class SuperFencesCodeExtension(Extension):
         indented_code.markdown = self.markdown
         self.markdown.superfences[0]["formatter"] = fenced.highlight
         self.markdown.parser.blockprocessors['code'] = indented_code
-        if 'fenced_code_block' in self.markdown.preprocessors.keys():
-            self.markdown.preprocessors['fenced_code_block'] = fenced
-        else:
-            pos = ">critic" if ['critic'] in self.markdown.preprocessors.keys() else ">normalize_whitespace"
-            self.markdown.preprocessors.add('fenced_code_block', fenced, pos)
+        self.markdown.preprocessors.add('fenced_code_block', fenced, ">normalize_whitespace")
 
     def reset(self):
         """
@@ -201,14 +216,8 @@ class SuperFencesCodeExtension(Extension):
         has been loaded.
         """
 
-        if not self.configured:
-            self.patch_fenced_rule()
-            self.configured = True
-            for entry in self.markdown.superfences:
-                entry["stash"] = CodeStash()
-        else:
-            for entry in self.markdown.superfences:
-                entry["stash"].clear_stash()
+        for entry in self.markdown.superfences:
+            entry["stash"].clear_stash()
 
 
 class SuperFencesBlockPreprocessor(Preprocessor):

@@ -344,16 +344,12 @@ class CriticExtension(Extension):
 
         self.md = md
         md.registerExtension(self)
-
-    def insert_critic(self):
-        """Insert the critic pre and post processor."""
-
         self.critic_stash = CriticStash(CRITIC_KEY)
         post = CriticsPostprocessor(self.critic_stash)
         critic = CriticViewPreprocessor(self.critic_stash)
         critic.config = self.getConfigs()
-        self.md.preprocessors.add('critic', critic, ">normalize_whitespace")
-        self.md.postprocessors.add("critic-post", post, "<raw_html")
+        md.preprocessors.add('critic', critic, ">normalize_whitespace")
+        md.postprocessors.add("critic-post", post, "<raw_html")
 
     def reset(self):
         """
@@ -366,9 +362,9 @@ class CriticExtension(Extension):
 
         if not self.configured:
             self.configured = True
-            self.insert_critic()
-        else:
-            self.critic_stash.clear()
+            self.md.preprocessors.link('critic', '>normalize_whitespace')
+            self.md.postprocessors.link('critic-post', '<raw_html')
+        self.critic_stash.clear()
 
 
 def makeExtension(*args, **kwargs):
