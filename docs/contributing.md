@@ -39,6 +39,9 @@ Feel free to use a virtual environment if you are concerned about installing any
 
 ### Running Validation Tests
 
+Currently only linting is performed on the code.  This is done with [flake8](https://gitlab.com/pycqa/flake8).  In the future, unit tests will also be performed, but for now, just running `flake8 .` from the projects root should be sufficient.
+
+<!--
 1. Make sure that `tox` is intalled:
 
     ```
@@ -52,6 +55,7 @@ Feel free to use a virtual environment if you are concerned about installing any
     ```
 
     Tox should install necessary dependencies and run the tests.
+-->
 
 ## Documentation Improvements
 A ton of time has been spent not only creating and supporting this tool and related extensions, but also spent making this documentation.  If you feel it is still lacking, show your appreciation for the tool and/or extensions by helping to improve the documentation.  Help with documentation is always appreciated and can be done via pull requests.  There shouldn't be any need to run validation tests if only updating documentation.
