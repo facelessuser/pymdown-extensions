@@ -18,7 +18,6 @@ import re
 
 
 class ExtraRawHtmExtension(Extension):
-
     """Add raw HTML extensions to Markdown class."""
 
     def extendMarkdown(self, md, md_globals):

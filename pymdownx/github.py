@@ -48,7 +48,6 @@ extension_configs = {
 
 
 class GithubExtension(Extension):
-
     """Add various extensions to Markdown class."""
 
     def extendMarkdown(self, md, md_globals):

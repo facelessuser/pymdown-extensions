@@ -42,7 +42,6 @@ RE_SUP = r'(\^)([^\^ ]+?|\^)\2'
 
 
 class InsertSubExtension(Extension):
-
     """Adds insert extension to Markdown class."""
 
     def __init__(self, *args, **kwargs):

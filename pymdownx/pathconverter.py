@@ -218,7 +218,6 @@ def repl(m, base_path, rel_path=None):
 
 
 class PathConverterPostprocessor(Postprocessor):
-
     """Post process to find tag lings to convert."""
 
     def run(self, text):
@@ -236,7 +235,6 @@ class PathConverterPostprocessor(Postprocessor):
 
 
 class PathConverterExtension(Extension):
-
     """PathConverter extension."""
 
     def __init__(self, *args, **kwargs):

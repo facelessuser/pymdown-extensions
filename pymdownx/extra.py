@@ -45,7 +45,6 @@ extra_extension_configs = {}
 
 
 class ExtraExtension(Extension):
-
     """Add various extensions to Markdown class."""
 
     def extendMarkdown(self, md, md_globals):

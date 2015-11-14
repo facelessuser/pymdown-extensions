@@ -73,7 +73,7 @@ def _escape(txt):
     return txt
 
 
-def extendSuperFences(md, name, language, formatter):
+def extend_super_fences(md, name, language, formatter):
     """Extend superfences with the given name, language, and formatter."""
 
     if not hasattr(md, "superfences"):
@@ -88,7 +88,6 @@ def extendSuperFences(md, name, language, formatter):
 
 
 class CodeStash(object):
-
     """
     Stash code for later retrieval.
 
@@ -136,7 +135,6 @@ def uml_format(source, language, css_class):
 
 
 class SuperFencesCodeExtension(Extension):
-
     """Superfences code block extension."""
 
     def __init__(self, *args, **kwargs):
@@ -164,12 +162,12 @@ class SuperFencesCodeExtension(Extension):
             md.superfences = []
         md.superfences.insert(0, sf_entry)
         if config.get("uml_flow", True):
-            extendSuperFences(
+            extend_super_fences(
                 md, "flow", "flow",
                 lambda s, l, c="uml-flowchart": uml_format(s, l, c)
             )
         if config.get("uml_sequence", True):
-            extendSuperFences(
+            extend_super_fences(
                 md, "sequence", "sequence",
                 lambda s, l, c="uml-sequence-diagram": uml_format(s, l, c)
             )
@@ -211,7 +209,6 @@ class SuperFencesCodeExtension(Extension):
 
 
 class SuperFencesBlockPreprocessor(Preprocessor):
-
     """
     Preprocessor to find fenced code blocks.
 
@@ -456,7 +453,6 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
 
 class SuperFencesCodeBlockProcessor(CodeBlockProcessor):
-
     """Process idented code blocks to see if we accidentaly processed its content as a fenced block."""
 
     FENCED_BLOCK_RE = re.compile(

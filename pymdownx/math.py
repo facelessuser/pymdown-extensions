@@ -58,7 +58,6 @@ def escape(txt):
 
 
 class InlineMathJaxPattern(Pattern):
-
     """Mathjax inline pattern handler."""
 
     def __init__(self, pattern, md):
@@ -83,7 +82,6 @@ class InlineMathJaxPattern(Pattern):
 
 
 class BlockMathJaxProcessor(BlockProcessor):
-
     """Mathjax block processor to find $$mathjax$$ content."""
 
     RE_MATH_BLOCK = re.compile(
@@ -125,7 +123,6 @@ class BlockMathJaxProcessor(BlockProcessor):
 
 
 class MathExtension(Extension):
-
     """Adds delete extension to Markdown class."""
 
     def extendMarkdown(self, md, md_globals):

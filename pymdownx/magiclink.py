@@ -50,7 +50,6 @@ RE_LINK = r'''(?x)(?i)
 
 
 class MagiclinkPattern(LinkPattern):
-
     """Convert html, ftp links to clickable links."""
 
     def handleMatch(self, m):
@@ -68,7 +67,6 @@ class MagiclinkPattern(LinkPattern):
 
 
 class MagicMailPattern(LinkPattern):
-
     """Convert emails to clickable email links."""
 
     def handleMatch(self, m):
@@ -83,7 +81,6 @@ class MagicMailPattern(LinkPattern):
 
 
 class MagiclinkExtension(Extension):
-
     """Add Easylink extension to Markdown class."""
 
     def extendMarkdown(self, md, md_globals):

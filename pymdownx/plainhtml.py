@@ -67,7 +67,6 @@ def repl(m, attributes, strip_comments):
 
 
 class PlainHtmlPostprocessor(Postprocessor):
-
     """Post processor to strip out unwanted content."""
 
     def run(self, text):
@@ -93,7 +92,6 @@ class PlainHtmlPostprocessor(Postprocessor):
 
 
 class PlainHtmlExtension(Extension):
-
     """PlainHtml extension."""
 
     def __init__(self, *args, **kwargs):

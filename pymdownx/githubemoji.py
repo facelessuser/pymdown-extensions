@@ -1060,7 +1060,6 @@ def update_emoji():
 
 
 class SimpleEmojiPattern(Pattern):
-
     """Return element of type `tag` with a text attribute of group(3) of a Pattern."""
 
     def __init__(self, pattern, css_class='emoji'):
@@ -1089,7 +1088,6 @@ class SimpleEmojiPattern(Pattern):
 
 
 class GithubEmojiExtension(Extension):
-
     """Add emoji extension to Markdown class."""
 
     def __init__(self, *args, **kwargs):

@@ -130,7 +130,6 @@ def repl(m, base_path):
 
 
 class B64Postprocessor(Postprocessor):
-
     """Post processor for B64."""
 
     def run(self, text):
@@ -143,7 +142,6 @@ class B64Postprocessor(Postprocessor):
 
 
 class B64Extension(Extension):
-
     """B64 extension."""
 
     def __init__(self, *args, **kwargs):

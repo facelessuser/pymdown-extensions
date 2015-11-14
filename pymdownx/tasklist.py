@@ -38,7 +38,6 @@ def get_checkbox(state):
 
 
 class TasklistTreeprocessor(Treeprocessor):
-
     """Tasklist Treeprocessor that finds lists with checkboxes."""
 
     def inline(self, li):
@@ -102,7 +101,6 @@ class TasklistTreeprocessor(Treeprocessor):
 
 
 class TasklistExtension(Extension):
-
     """Tasklist extension."""
 
     def extendMarkdown(self, md, md_globals):

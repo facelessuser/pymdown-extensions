@@ -62,7 +62,6 @@ BACKTICK_CODE_RE = r'''(?x)
 
 
 class InlineCodeHtmlFormatter(HtmlFormatter):
-
     """Format the code blocks."""
 
     def wrap(self, source, outfile):
@@ -80,7 +79,6 @@ class InlineCodeHtmlFormatter(HtmlFormatter):
 
 
 class InlineHilitePattern(Pattern):
-
     """Handle the inline code patterns."""
 
     def __init__(self, pattern, md):
@@ -161,7 +159,6 @@ class InlineHilitePattern(Pattern):
 
 
 class InlineHiliteExtension(Extension):
-
     """Add inline-hilite extension to Markdown class."""
 
     def __init__(self, *args, **kwargs):

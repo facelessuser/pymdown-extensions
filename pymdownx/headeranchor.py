@@ -44,7 +44,6 @@ LINK = (
 
 
 class HeaderAnchorTreeprocessor(Treeprocessor):
-
     """Find header tags and add anchors."""
 
     def __init__(self, md):
@@ -95,7 +94,6 @@ class HeaderAnchorTreeprocessor(Treeprocessor):
 
 
 class HeaderAnchorExtension(Extension):
-
     """HeaderAnchor extension."""
 
     def __init__(self, *args, **kwargs):

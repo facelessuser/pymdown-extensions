@@ -36,7 +36,6 @@ RE_MARK = RE_MARK_BASE
 
 
 class MarkExtension(Extension):
-
     """Add the mark extension to Markdown class."""
 
     def __init__(self, *args, **kwargs):

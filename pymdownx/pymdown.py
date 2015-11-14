@@ -45,7 +45,6 @@ extension_configs = {}
 
 
 class PyMdownExtension(Extension):
-
     """Add various extensions to Markdown class."""
 
     def extendMarkdown(self, md, md_globals):

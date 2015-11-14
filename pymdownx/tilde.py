@@ -41,7 +41,6 @@ RE_SUB = r'(~)([^~ ]+?|~)\2'
 
 
 class DeleteSubExtension(Extension):
-
     """Add delete and/or subscript extension to Markdown class."""
 
     def __init__(self, *args, **kwargs):

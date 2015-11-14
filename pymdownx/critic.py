@@ -89,7 +89,6 @@ RE_BLOCK_SEP = re.compile(r'^\n{2,}$')
 
 
 class CriticStash(object):
-
     """Stach critic marks until ready."""
 
     def __init__(self, stash_key):
@@ -133,7 +132,6 @@ class CriticStash(object):
 
 
 class CriticsPostprocessor(Postprocessor):
-
     """Handle cleanup on postprocess for viewing critic marks."""
 
     def __init__(self, critic_stash):
@@ -183,7 +181,6 @@ class CriticsPostprocessor(Postprocessor):
 
 
 class CriticViewPreprocessor(Preprocessor):
-
     """Handle viewing critic marks in Markdown content."""
 
     def __init__(self, critic_stash):
@@ -321,7 +318,6 @@ class CriticViewPreprocessor(Preprocessor):
 
 
 class CriticExtension(Extension):
-
     """Critic extension."""
 
     def __init__(self, *args, **kwargs):

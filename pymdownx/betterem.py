@@ -95,7 +95,6 @@ smart_enable_keys = [
 
 
 class BetterEmExtension(Extension):
-
     """Add extension to Markdown class."""
 
     def __init__(self, *args, **kwargs):

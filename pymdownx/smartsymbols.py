@@ -108,7 +108,6 @@ ARR = {
 
 
 class SmartSymbolsPattern(HtmlPattern):
-
     """Smart symbols patterns handler."""
 
     def __init__(self, pattern, replace, md):
@@ -128,7 +127,6 @@ class SmartSymbolsPattern(HtmlPattern):
 
 
 class SmartSymbolsExtension(Extension):
-
     """Smart Symbols extension."""
 
     def __init__(self, *args, **kwargs):

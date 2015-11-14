@@ -130,7 +130,6 @@ try:
     from markdown.extensions.attr_list import AttrListTreeprocessor
 
     class ProgressBarTreeProcessor(AttrListTreeprocessor):
-
         """Used for AttrList compatibility."""
 
         def run(self, elem):
@@ -146,7 +145,6 @@ except:
 
 
 class ProgressBarPattern(Pattern):
-
     """Pattern handler for the progress bars."""
 
     def __init__(self, pattern):
@@ -229,7 +227,6 @@ class ProgressBarPattern(Pattern):
 
 
 class ProgressBarExtension(Extension):
-
     """Add progressbar extension to Markdown class."""
 
     def __init__(self, *args, **kwargs):
