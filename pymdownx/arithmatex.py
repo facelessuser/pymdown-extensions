@@ -1,7 +1,7 @@
 r"""
-Math.
+Arithmatex.
 
-pymdownx.math
+pymdownx.arithmatex
 Extension that preserves the following for MathJax use:
 $$
   Display Equations
@@ -57,8 +57,8 @@ def escape(txt):
     return txt
 
 
-class InlineMathJaxPattern(Pattern):
-    """Mathjax inline pattern handler."""
+class InlineArithmatexPattern(Pattern):
+    """Arithmatex inline pattern handler."""
 
     def __init__(self, pattern, md):
         """Initialize."""
@@ -81,7 +81,7 @@ class InlineMathJaxPattern(Pattern):
         )
 
 
-class BlockMathJaxProcessor(BlockProcessor):
+class BlockArithmatexProcessor(BlockProcessor):
     """Mathjax block processor to find $$mathjax$$ content."""
 
     RE_MATH_BLOCK = re.compile(
@@ -122,7 +122,7 @@ class BlockMathJaxProcessor(BlockProcessor):
         return handled
 
 
-class MathExtension(Extension):
+class ArithmatexExtension(Extension):
     """Adds delete extension to Markdown class."""
 
     def extendMarkdown(self, md, md_globals):
@@ -133,14 +133,14 @@ class MathExtension(Extension):
             md.ESCAPED_CHARS.append('$')
 
         md.inlinePatterns.add(
-            "mathjax-inline",
-            InlineMathJaxPattern(RE_MATH, md),
+            "arithmatex-inline",
+            InlineArithmatexPattern(RE_MATH, md),
             ">backtick"
         )
 
         md.parser.blockprocessors.add(
-            'mathjax-block',
-            BlockMathJaxProcessor(md),
+            'arithmatex-block',
+            BlockArithmatexProcessor(md),
             "<code"
         )
 
@@ -148,4 +148,4 @@ class MathExtension(Extension):
 def makeExtension(*args, **kwargs):
     """Return extension."""
 
-    return MathExtension(*args, **kwargs)
+    return ArithmatexExtension(*args, **kwargs)

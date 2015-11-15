@@ -7,6 +7,7 @@ pages:
   - Installation: installation.md
   - Usage Notes: usage_notes.md
   - Extensions:
+    - Arithmatex: extensions/arithmatex.md
     - B64: extensions/b64.md
     - BetterEm: extensions/betterem.md
     - Caret: extensions/caret.md
@@ -19,7 +20,6 @@ pages:
     - InlineHilite: extensions/inlinehilite.md
     - MagicLink: extensions/magiclink.md
     - Mark: extensions/mark.md
-    - Math: extensions/math.md
     - PathConverter: extensions/pathconverter.md
     - PlainHtml: extensions/plainhtml.md
     - ProgressBar: extensions/progressbar.md
@@ -49,6 +49,6 @@ markdown_extensions:
   - pymdownx.tasklist
   - pymdownx.progressbar
   - pymdownx.headeranchor
-  - pymdownx.math
+  - pymdownx.arithmatex
   - pymdownx.mark
   - pymdownx.critic

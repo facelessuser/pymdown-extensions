@@ -24,4 +24,4 @@ Extensions:
 | [progressbar](./progressbar.md)  | | pymdownx.progressbar |
 | [headeranchor](./headeranchor.md)| | pymdownx.headeranchor |
 | [superfences](./superfences.md)  | | pymdownx.superfences |
-| [math](./math.md)                | | pymdownx.math |
+| [arithmatex](./arithmatex.md)    | | pymdownx.arithmatex |

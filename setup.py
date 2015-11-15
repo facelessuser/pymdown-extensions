@@ -20,7 +20,7 @@ It adds a number of optional extensions:
 - pymdownx.inlinehilite
 - pymdownx.magiclink
 - pymdownx.mark
-- pymdownx.math
+- pymdownx.arithmatex
 - pymdownx.pathconverter
 - pymdownx.plainhtml
 - pymdownx.progressbar

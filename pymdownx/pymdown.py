@@ -38,7 +38,7 @@ extensions = [
     'pymdownx.progressbar',
     'pymdownx.headeranchor',
     'pymdownx.superfences',
-    'pymdownx.math'
+    'pymdownx.arithmatex'
 ]
 
 extension_configs = {}
