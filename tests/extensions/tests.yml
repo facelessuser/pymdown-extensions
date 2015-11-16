@@ -9,6 +9,14 @@ betterem (reverse):
     pymdownx.betterem:
       smart_enable: asterisk
 
+githubemoji:
+  extensions:
+    pymdownx.githubemoji:
+
+progressbar:
+  extensions:
+    pymdownx.progressbar:
+
 magiclink:
   extensions:
     pymdownx.magiclink:

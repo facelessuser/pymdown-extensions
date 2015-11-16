@@ -1,0 +1,21 @@
+[=0% "0%"]{: .candystripe-animate}
+
+[=5% "5%"]{: .candystripe-animate}
+
+[=25% "25%"]{: .candystripe-animate}
+
+[=45% "45%"]{: .candystripe-animate}
+
+[=65% "65%"]{: .candystripe-animate}
+
+[=85% "85%"]{: .candystripe-animate}
+
+[=100% "100%"]{: .candystripe-animate}
+
+[= 212.2/537 "212.2/537 Testing division"]
+
+[=== 50%]
+
+Before[= 50% "I'm a block!"]After
+
+[= 50% "Glossy"]{: .candystripe-animate .gloss}

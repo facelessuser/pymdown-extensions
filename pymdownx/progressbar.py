@@ -163,6 +163,7 @@ class ProgressBarPattern(Pattern):
                 add_classes
             )
         )
+        classes.sort()
         el = util.etree.Element("div")
         el.set('class', ' '.join(classes))
         bar = util.etree.SubElement(el, 'div')
