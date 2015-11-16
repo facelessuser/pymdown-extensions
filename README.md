@@ -1,4 +1,5 @@
 [![Unix Build Status][travis-image]][travis-link]
+[![Coverage Status][codecov-image]][codecov-link]
 [![Code Health][landscape-image]][landscape-link]
 [![Requirements Status][requires-image]][requires-link]
 ![License][license-image-mit]
@@ -12,6 +13,8 @@ Extension documentation is found at the PyMdown site: http://facelessuser.github
 # License
 License is MIT except for a few exceptions that are licensed as BSD.  See LICENSE for more info.
 
+[codecov-image]: https://img.shields.io/codecov/c/github/facelessuser/pymdown-extensions/master.svg
+[codecov-link]: https://codecov.io/github/facelessuser/pymdown-extensions
 [travis-image]: https://img.shields.io/travis/facelessuser/pymdown-extensions/master.svg?label=Unix%20Build
 [travis-link]: https://travis-ci.org/facelessuser/pymdown-extensions
 [landscape-image]: https://landscape.io/github/facelessuser/pymdown-extensions/master/landscape.svg?style=flat
