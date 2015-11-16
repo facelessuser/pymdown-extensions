@@ -31,6 +31,6 @@ SmartSymbols adds syntax for creating special characters such as trademarks, arr
 | `-->`         | -->        |
 | `<--`         | <--        |
 | `<-->`        | <-->       |
-| `!=`          | !=         |
+| `=/=`         | =/=        |
 | `1/4, etc.`   | 1/4, etc.  |
 | `1st 2nd etc.`|1st 2nd etc.|

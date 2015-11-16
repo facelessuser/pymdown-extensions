@@ -17,7 +17,7 @@ Really simple plugin to add support for:
         left   = <--
         right  = -->
         both   = <-->
-    not equal  = !=
+    not equal  = =/=
        (maybe this could be =/= in the future as this might be more
         intuitive to non-programmers)
 
@@ -49,7 +49,7 @@ RE_TRADE = ("smart-trademark", r'\(tm\)', r'&trade;')
 RE_COPY = ("smart-copyright", r'\(c\)', r'&copy;')
 RE_REG = ("smart-registered", r'\(r\)', r'&reg;')
 RE_PLUSMINUS = ("smart-plus-minus", r'\+/-', r'&plusmn;')
-RE_NOT_EQUAL = ("smart-not-equal", r'!=', r'&ne;')
+RE_NOT_EQUAL = ("smart-not-equal", r'=/=', r'&ne;')
 RE_CARE_OF = ("smart-care-of", r'\bc/o\b', r'&#8453;')
 RE_ORDINAL_NUMBERS = (
     "smart-ordinal-numbers",
