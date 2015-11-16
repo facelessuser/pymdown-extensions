@@ -1,8 +1,13 @@
 __default__: {}
 
-betterem:
+betterem (normal):
   extensions:
     pymdownx.betterem:
+
+betterem (reverse):
+  extensions:
+    pymdownx.betterem:
+      smart_enable: asterisk
 
 magiclink:
   extensions:

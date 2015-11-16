@@ -1,0 +1,34 @@
+
+Test: _ Won't highlight _
+
+Test: _Will highlight_
+
+Test: ___I'm italic and bold_ I am just bold.__
+
+Test: ___I'm bold and italic!__ I am just italic._
+
+Test: ***A lot of asterisks************is okay***
+
+Test: **This will all be bold **because of the placement of the center asterisk.**
+
+Test: **This will all be bold ** because of the placement of the center asterisk.**
+
+Test: **This will NOT all be bold** because of the placement of the center asterisk.**
+
+Test: **This will all be bold* because of the token is less than that of the surrounding.**
+
+Test: _All will _ be italic_
+
+Test: _All will _be italic_
+
+Test: _All will not_ be italic_
+
+Test: _All will not __ be italic_
+
+Test: __All will _ be bold__
+
+Test: _All will _be bold__
+
+Test: __All will not___ be bold__
+
+Test: __All will not ___ be bold__
