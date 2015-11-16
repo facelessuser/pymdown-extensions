@@ -35,6 +35,8 @@ http://a.b-c.de
 
 http://223.255.255.254
 
+www.google.com
+
 # Should Fail
 
 http://
