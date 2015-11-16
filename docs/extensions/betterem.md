@@ -49,8 +49,8 @@ BetterEm will allow non-smart emphasis to contain "floating" like tokens.
 |------|---------|
 | `*All will * be italic*` | *All will * be italic* |
 | `*All will *be italic*`  | *All will *be italic*  |
-| `*All not all will* be italic*` | *All will not* be italic* |
-| `*All not all will ** be italic*` | *All will not ** be italic* |
+| `*All will not* be italic*` | *All will not* be italic* |
+| `*All will not ** be italic*` | *All will not ** be italic* |
 | `**All will * be bold**` | **All will * be bold** |
 | `*All will *be bold**`  | **All will *be bold**  |
 | `**All will not*** be bold**` | **All will not*** be bold** |
