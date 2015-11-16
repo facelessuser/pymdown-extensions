@@ -1,0 +1,34 @@
+
+Test: * Won't highlight *
+
+Test: *Will highlight*
+
+Test: ***I'm italic and bold* I am just bold.**
+
+Test: ***I'm bold and italic!** I am just italic.*
+
+Test: ___A lot of underscores____________is okay___
+
+Test: __This will all be bold __because of the placement of the center underscores.__
+
+Test: __This will all be bold __ because of the placement of the center underscores.__
+
+Test: __This will NOT all be bold__ because of the placement of the center underscores.__
+
+Test: __This will all be bold_ because of the token is less than that of the surrounding.__
+
+Test: *All will * be italic*
+
+Test: *All will *be italic*
+
+Test: *All will not* be italic*
+
+Test: *All will not ** be italic*
+
+Test: **All will * be bold**
+
+Test: *All will *be bold**
+
+Test: **All will not*** be bold**
+
+Test: **All will not *** be bold**

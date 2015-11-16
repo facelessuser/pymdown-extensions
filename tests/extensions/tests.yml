@@ -1,0 +1,9 @@
+__default__: {}
+
+betterem:
+  extensions:
+    pymdownx.betterem:
+
+magiclink:
+  extensions:
+    pymdownx.magiclink:

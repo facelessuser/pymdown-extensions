@@ -1,0 +1,109 @@
+<h3>Should Pass</h3>
+<p><a href="http://foo.com/blah_blah">http://foo.com/blah_blah</a></p>
+<p><a href="http://foo.com/blah_blah/">http://foo.com/blah_blah/</a></p>
+<p><a href="http://foo.com/blah_blah_(wikipedia">http://foo.com/blah_blah_(wikipedia</a>)</p>
+<p><a href="http://foo.com/blah_blah_(wikipedia)_(again">http://foo.com/blah_blah_(wikipedia)_(again</a>)</p>
+<p><a href="http://www.example.com/wpstyle/?p=364">http://www.example.com/wpstyle/?p=364</a></p>
+<p><a href="https://www.example.com/foo/?bar=baz&amp;inga=42&amp;quux">https://www.example.com/foo/?bar=baz&amp;inga=42&amp;quux</a></p>
+<p><a href="http://142.42.1.1/">http://142.42.1.1/</a></p>
+<p><a href="http://142.42.1.1:8080/">http://142.42.1.1:8080/</a></p>
+<p><a href="http://foo.com/blah_(wikipedia)#cite-1">http://foo.com/blah_(wikipedia)#cite-1</a></p>
+<p><a href="http://foo.com/blah_(wikipedia)_blah#cite-1">http://foo.com/blah_(wikipedia)_blah#cite-1</a></p>
+<p><a href="http://foo.com/(something)?after=parens">http://foo.com/(something)?after=parens</a></p>
+<p><a href="http://code.google.com/events/#&amp;product=browser">http://code.google.com/events/#&amp;product=browser</a></p>
+<p><a href="http://j.mp">http://j.mp</a></p>
+<p><a href="ftp://foo.bar/baz">ftp://foo.bar/baz</a></p>
+<p><a href="http://foo.bar/?q=Test%20URL-encoded%20stuff">http://foo.bar/?q=Test%20URL-encoded%20stuff</a></p>
+<p><a href="http://1337.net">http://1337.net</a></p>
+<p><a href="http://a.b-c.de">http://a.b-c.de</a></p>
+<p><a href="http://223.255.255.254">http://223.255.255.254</a></p>
+<h1>Should Fail</h1>
+<p>http://</p>
+<p>http://.</p>
+<p>http://..</p>
+<p>http://../</p>
+<p>http://?</p>
+<p>http://??</p>
+<p>http://??/</p>
+<p>http://#</p>
+<p>http://##</p>
+<p>http://##/</p>
+<p><a href="http://foo.bar?q=Spaces">http://foo.bar?q=Spaces</a> should be encoded</p>
+<p>//</p>
+<p>//a</p>
+<p>///a</p>
+<p>///</p>
+<p>http:///a</p>
+<p>foo.com</p>
+<p>rdar://1234</p>
+<p>h://test</p>
+<p>http:// shouldfail.com</p>
+<p>:// should fail</p>
+<p><a href="http://foo.bar/foo(bar)baz">http://foo.bar/foo(bar)baz</a> quux</p>
+<p>http://-error-.invalid/</p>
+<p>http://-a.b.co</p>
+<p>http://3628126748</p>
+<h1>These should be valid</h1>
+<p><a href="mailto:first.last@test.org">first.last@test.org</a></p>
+<p><a href="mailto:1234567890123456789012345678901234567890123456789012345678901234@test.org">1234567890123456789012345678901234567890123456789012345678901234@test.org</a></p>
+<p><a href="mailto:first.last@x23456789012345678901234567890123456789012345678901234567890123.test.org">first.last@x23456789012345678901234567890123456789012345678901234567890123.test.org</a></p>
+<p><a href="mailto:first.last@3com.com">first.last@3com.com</a></p>
+<p><a href="mailto:first.last@123.test.org">first.last@123.test.org</a></p>
+<p><a href="mailto:user+mailbox@test.org">user+mailbox@test.org</a></p>
+<p><a href="mailto:_somename@test.org">_somename@test.org</a></p>
+<p><a href="mailto:dclo@us.ibm.com">dclo@us.ibm.com</a></p>
+<p><a href="mailto:peter.piper@test.org">peter.piper@test.org</a></p>
+<p><a href="mailto:test@test.org">test@test.org</a></p>
+<p><a href="mailto:TEST@test.org">TEST@test.org</a></p>
+<p><a href="mailto:1234567890@test.org">1234567890@test.org</a></p>
+<p><a href="mailto:test+test@test.org">test+test@test.org</a></p>
+<p><a href="mailto:test-test@test.org">test-test@test.org</a></p>
+<p><a href="mailto:test.test@test.org">test.test@test.org</a></p>
+<p><a href="mailto:test@example.test.org">test@example.test.org</a></p>
+<p><a href="mailto:test@example.example.test.org">test@example.example.test.org</a></p>
+<p><a href="mailto:_Yosemite.Sam@test.org">_Yosemite.Sam@test.org</a></p>
+<p><a href="mailto:Ima.Fool@test.org">Ima.Fool@test.org</a></p>
+<p><a href="mailto:name.lastname@domain.com">name.lastname@domain.com</a></p>
+<p><a href="mailto:a@bar.com">a@bar.com</a></p>
+<p><a href="mailto:a-b@bar.com">a-b@bar.com</a></p>
+<p><a href="mailto:+@b.c">+@b.c</a></p>
+<p><a href="mailto:+@b.com">+@b.com</a></p>
+<p><a href="mailto:a@b.co-foo.uk">a@b.co-foo.uk</a></p>
+<p><a href="mailto:valid@about.museum">valid@about.museum</a></p>
+<p><a href="mailto:shaitan@my-domain.thisisminekthx">shaitan@my-domain.thisisminekthx</a></p>
+<p><a href="mailto:test@test.com">test@test.com</a></p>
+<p><a href="mailto:test@xn--example.com">test@xn--example.com</a></p>
+<p><a href="mailto:test@example.com">test@example.com</a></p>
+<h1>These should be invalid</h1>
+<p><a href="mailto:first.last@sub.do">first.last@sub.do</a>,com</p>
+<p>first.last</p>
+<p>.<a href="mailto:first.last@test.org">first.last@test.org</a></p>
+<p>first.last.@test.org</p>
+<p>first..<a href="mailto:last@test.org">last@test.org</a></p>
+<p>first.last@</p>
+<p>abc@def@test.org</p>
+<p>@test.org</p>
+<p>doug@</p>
+<p>.<a href="mailto:dot@test.org">dot@test.org</a></p>
+<p>dot.@test.org</p>
+<p>two..<a href="mailto:dot@test.org">dot@test.org</a></p>
+<p>hello <a href="mailto:world@test.org">world@test.org</a></p>
+<p>test.test.org</p>
+<p>test@@test.org</p>
+<p>[test]@test.org</p>
+<p>()[]\;:,&gt;&lt;@test.org</p>
+<p>test@.</p>
+<p>test@example.</p>
+<p>test@.org</p>
+<p>NotAnEmail</p>
+<p>.@</p>
+<p>@bar.com</p>
+<p>@@bar.com</p>
+<p>aaa.com</p>
+<p>aaa@.com</p>
+<p>aaa@.123</p>
+<p><a href="mailto:a@bar.com">a@bar.com</a>.</p>
+<p>-@..com</p>
+<p>-@a..com</p>
+<p>invalid@about.museum-</p>
+<p>test@...........com</p>
