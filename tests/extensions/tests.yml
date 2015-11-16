@@ -1,5 +1,9 @@
 __default__: {}
 
+arithmatex:
+  extensions:
+    pymdownx.arithmatex:
+
 betterem (normal):
   extensions:
     pymdownx.betterem:
@@ -48,6 +52,15 @@ progressbar:
 smartsymbols:
   extensions:
     pymdownx.smartsymbols:
+
+superfences (no indent blocks):
+  extensions:
+    pymdownx.superfences:
+      disable_indented_code_blocks: true
+
+superfences (normal):
+  extensions:
+    pymdownx.superfences:
 
 tasklist:
   extensions:

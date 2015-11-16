@@ -1,0 +1,59 @@
+<h1>Neseted Fences:</h1>
+<pre><code>This will not be parsed
+as a normal indented code block.
+It will be parsed as a fenced block.
+</code></pre>
+
+<pre><code>This will still be parsed
+as a fenced code block.
+</code></pre>
+
+<ul>
+<li>
+<p>This is a list that contains multiple code blocks.</p>
+<ul>
+<li>
+<p>Here is an indented block</p>
+<pre><code>This will not be parsed
+as a normal indented code block.
+It will be parsed and a fenced block.
+</code></pre>
+
+</li>
+<li>
+<p>Here is a fenced code block:</p>
+<pre><code>This will still be parsed
+as a fenced code block.
+</code></pre>
+
+<blockquote>
+<pre><code>Blockquotes?
+Not a problem!
+</code></pre>
+
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h1>UML Flow Charts</h1>
+<pre class="uml-flowchart"><code>st=&gt;start: Start:&gt;http://www.google.com[blank]
+e=&gt;end:&gt;http://www.google.com
+op1=&gt;operation: My Operation
+sub1=&gt;subroutine: My Subroutine
+cond=&gt;condition: Yes
+or No?:&gt;http://www.google.com
+io=&gt;inputoutput: catch something...
+
+st-&gt;op1-&gt;cond
+cond(yes)-&gt;io-&gt;e
+cond(no)-&gt;sub1(right)-&gt;op1
+</code></pre>
+
+<h1>UML Sequence Diagrams</h1>
+<pre class="uml-sequence-diagram"><code>Title: Here is a title
+A-&gt;B: Normal line
+B--&gt;C: Dashed line
+C-&gt;&gt;D: Open arrow
+D--&gt;&gt;A: Dashed open arrow
+</code></pre>
