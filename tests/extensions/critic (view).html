@@ -1,0 +1,31 @@
+<p>Here is some <del class="critic"><em>incorrect</em></del> Markdown.  I am adding this<ins class="critic"> here.</ins>.  Here is some more <del class="critic">text
+that I am removing</del>text.  And here is even more <ins class="critic">text that I
+am </ins>adding.<del class="critic break">&nbsp;</del><ins class="critic">  </ins>Paragraph was deleted and replaced with some spaces.<del class="critic">  </del></p>
+<ins class="critic break">&nbsp;</ins>
+<p>Spaces were removed and a paragraph was added.</p>
+<p>And here is a comment on <mark class="critic">some
+==text== </mark><span class="critic comment">This works quite well. I just wanted to comment on it.</span>. Substitutions <del class="critic">is</del><ins class="critic">are</ins> great!</p>
+<p>Escape {&gt;&gt;This text is preserved&lt;&lt;}.</p>
+<p>General block handling.</p>
+<del class="critic block">
+<ul>
+<li>test</li>
+<li>test</li>
+<li>test<ul>
+<li>test</li>
+</ul>
+</li>
+<li>test</li>
+</ul>
+</del>
+<ins class="critic block">
+<ul>
+<li>test<ul>
+<li>test</li>
+</ul>
+</li>
+<li>test</li>
+<li>test</li>
+<li>test</li>
+</ul>
+</ins>

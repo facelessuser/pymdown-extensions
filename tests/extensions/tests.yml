@@ -13,6 +13,21 @@ caret:
   extensions:
     pymdownx.caret:
 
+critic (accept):
+  extensions:
+    pymdownx.critic:
+      mode: accept
+
+critic (reject):
+  extensions:
+    pymdownx.critic:
+      mode: reject
+
+critic (view):
+  extensions:
+    pymdownx.critic:
+      mode: view
+
 githubemoji:
   extensions:
     pymdownx.githubemoji:
