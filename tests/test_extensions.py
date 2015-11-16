@@ -39,7 +39,7 @@ def generate_html(testfile, extension, extension_config, force_update_all):
         print('Updated: %s' % expected_html)
         markdown.markdownFromFile(
             input=testfile, output=expected_html, encoding='utf-8',
-            extensions=extension, extension_config=extension_config
+            extensions=extension, extension_configs=extension_config
         )
 
 
@@ -51,7 +51,7 @@ def check_markdown(testfile, extension, extension_config):
         source = f.read()
 
     results = markdown.Markdown(
-        extensions=extension, extension_config=extension_config
+        extensions=extension, extension_configs=extension_config
     ).convert(source)
 
     try:
