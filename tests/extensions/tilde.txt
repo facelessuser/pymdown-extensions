@@ -1,0 +1,7 @@
+CH~3~CH~2~OH
+
+Text~subscript~
+
+Text~subscript failed~
+
+Text~subscript\ success~

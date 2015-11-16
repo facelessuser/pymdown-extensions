@@ -1,0 +1,13 @@
+Test: == Won't mark ==
+
+Test: ==Will mark==
+
+Test: ==A lot of equals=============is okay==
+
+Test: ==This will all be marked ==because of the placement of the center equal signs.==
+
+Test: ==This will all be marked == because of the placement of the center equal sings.==
+
+Test: ==This will NOT all be marked== because of the placement of the center equal sings.==
+
+Test: ==This will all be marked= because of the token is less than that of the surrounding.==

@@ -9,14 +9,35 @@ betterem (reverse):
     pymdownx.betterem:
       smart_enable: asterisk
 
+caret:
+  extensions:
+    pymdownx.caret:
+
 githubemoji:
   extensions:
     pymdownx.githubemoji:
 
-progressbar:
-  extensions:
-    pymdownx.progressbar:
-
 magiclink:
   extensions:
     pymdownx.magiclink:
+
+mark:
+  extensions:
+    pymdownx.mark:
+
+progressbar:
+  extensions:
+    pymdownx.progressbar:
+    markdown.extensions.attr_list:
+
+smartsymbols:
+  extensions:
+    pymdownx.smartsymbols:
+
+tasklist:
+  extensions:
+    pymdownx.tasklist:
+
+tilde:
+  extensions:
+    pymdownx.tilde:

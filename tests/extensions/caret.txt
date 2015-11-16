@@ -1,0 +1,7 @@
+x^2^ + y^2^ = 4
+
+Text^superscript^
+
+Text^superscript failed^
+
+Text^superscript\ success^
