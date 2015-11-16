@@ -89,10 +89,6 @@ SMART_STAR_STRONG = r'(?:(?<=_)|(?<![\w\*]))(\*{2})(?![\s\*])%s(?<!\s)\2(?:(?=_)
 # SMART *em*
 SMART_STAR_EM = r'(?:(?<=_)|(?<![\w\*]))(\*)(?![\s\*])%s(?<!\s)\2(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT
 
-smart_enable_keys = [
-    "all", "asterisk", "underscore", "none"
-]
-
 
 class BetterEmExtension(Extension):
     """Add extension to Markdown class."""
@@ -103,9 +99,6 @@ class BetterEmExtension(Extension):
         self.config = {
             'smart_enable': ["underscore", "Treat connected words intelligently - Default: underscore"]
         }
-
-        if "smart_enable" in kwargs and kwargs["smart_enable"] not in smart_enable_keys:
-            del kwargs["smart_enable"]
 
         super(BetterEmExtension, self).__init__(*args, **kwargs)
 
