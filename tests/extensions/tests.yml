@@ -4,6 +4,11 @@ arithmatex:
   extensions:
     pymdownx.arithmatex:
 
+b64:
+  extensions:
+    pymdownx.b64:
+      base_path: '{{BASE}}'
+
 betterem (normal):
   extensions:
     pymdownx.betterem:
@@ -32,6 +37,10 @@ critic (view):
     pymdownx.critic:
       mode: view
 
+extrarawhtml:
+  extensions:
+    pymdownx.extrarawhtml:
+
 githubemoji:
   extensions:
     pymdownx.githubemoji:
@@ -51,6 +60,12 @@ magiclink:
 mark:
   extensions:
     pymdownx.mark:
+
+pathconverter:
+  extensions:
+    pymdownx.pathconverter:
+      base_path: '{{BASE}}'
+      relative_path: '{{RELATIVE}}'
 
 plainhtml:
   extensions:

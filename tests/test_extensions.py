@@ -94,6 +94,14 @@ def test_extensions():
                             test_cfg['extensions'] = {}
                         for k, v in cfg.get(key, {}).items():
                             for k1, v1 in v.items():
+                                if v1 is not None:
+                                    for k2, v2 in v1.items():
+                                        if isinstance(v2, str):
+                                            v1[k2] = v2.replace(
+                                                '{{BASE}}', os.path.join(CURRENT_DIR, 'extensions')
+                                            ).replace(
+                                                '{{RELATIVE}}', os.path.join(CURRENT_DIR)
+                                            )
                                 test_cfg[k][k1] = v1
                         yield compare_results, test_cfg, os.path.join(directory, testfile)
 

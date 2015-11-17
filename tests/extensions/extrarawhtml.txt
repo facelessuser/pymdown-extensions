@@ -1,0 +1,7 @@
+<div>
+This will **not** be processed.
+</div>
+
+<div markdown="1">
+This **will** be processed.
+</div>
