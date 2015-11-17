@@ -36,6 +36,14 @@ githubemoji:
   extensions:
     pymdownx.githubemoji:
 
+headeranchor:
+  extensions:
+    pymdownx.headeranchor:
+
+inlinehilite:
+  extensions:
+    pymdownx.inlinehilite:
+
 magiclink:
   extensions:
     pymdownx.magiclink:
@@ -43,6 +51,10 @@ magiclink:
 mark:
   extensions:
     pymdownx.mark:
+
+plainhtml:
+  extensions:
+    pymdownx.plainhtml:
 
 progressbar:
   extensions:
