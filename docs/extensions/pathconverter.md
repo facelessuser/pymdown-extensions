@@ -16,5 +16,5 @@ PathConverter is also intelligent enough to only operate on the file portion of 
 |-----------|------|---------|-------------|
 | base_path | string | '' | A string indicating an absolute base path to be used to find referenced files. |
 | relative_path | string | '' | A string indicating an absolute path that the references are to be relative to (not used when `absolute` is set `True`). |
-| absolute | bool | True | Determines whether paths are converted to absolute or relative. |
+| absolute | bool | False | Determines whether paths are converted to absolute or relative. |
 | tags | string | 'a script img link' | Tags (separated by spaces) that are searched to find `href` and `src` attributes. |

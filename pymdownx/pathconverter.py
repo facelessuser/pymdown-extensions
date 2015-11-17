@@ -243,7 +243,7 @@ class PathConverterExtension(Extension):
         self.config = {
             'base_path': ["", "Base path used to find files - Default: \"\""],
             'relative_path': ["", "Path that files will be relative to (not needed if using absolute) - Default: \"\""],
-            'absolute': [True, "Paths are absolute by default; disable for relative - Default: True"],
+            'absolute': [False, "Paths are absolute by default; disable for relative - Default: False"],
             'tags': ["img script a link", "tags to convert src and/or href in - Default: 'img scripts a link'"]
         }
 
