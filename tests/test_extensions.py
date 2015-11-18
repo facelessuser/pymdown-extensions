@@ -1,6 +1,5 @@
 """Test extension libraries."""
 from __future__ import unicode_literals
-import yaml
 import os
 import markdown
 import difflib
