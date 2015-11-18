@@ -60,10 +60,10 @@ UNDER_EM = r'(_)(?!\s)%s(?<!\s)\2' % UNDER_CONTENT
 # Smart rules for when "smart underscore" is enabled
 # SMART: ___strong,em___
 SMART_UNDER_STRONG_EM = r'(?<!\w)(_{3})(?![\s_])%s(?<!\s)\2(?!\w)' % SMART_UNDER_CONTENT
-# ___strong,em_strong__
+# ___strong,em_ strong__
 SMART_UNDER_STRONG_EM2 = \
     r'(?<!\w)(_{3})(?![\s_])%s(?<!\s)_(?!\w)%s(?<!\s)_{2}(?!\w)' % (SMART_UNDER_MIXED_CONTENT, SMART_UNDER_CONTENT)
-# ___em,strong__em_
+# ___em,strong__ em_
 SMART_UNDER_EM_STRONG = \
     r'(?<!\w)(_{3})(?![\s_])%s(?<!\s)_{2}(?!\w)%s(?<!\s)_(?!\w)' % (SMART_UNDER_MIXED_CONTENT, SMART_UNDER_CONTENT)
 # __strong__
@@ -74,12 +74,12 @@ SMART_UNDER_EM = r'(?<!\w)(_)(?![\s_])%s(?<!\s)\2(?!\w)' % SMART_UNDER_CONTENT
 # Smart rules for when "smart asterisk" is enabled
 # SMART: ***strong,em***
 SMART_STAR_STRONG_EM = r'(?:(?<=_)|(?<![\w\*]))(\*{3})(?![\s\*])%s(?<!\s)\2(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT
-# ***strong,em*strong**
+# ***strong,em* strong**
 SMART_STAR_STRONG_EM2 = \
     r'(?:(?<=_)|(?<![\w\*]))(\*{3})(?![\s\*])%s(?<!\s)\*(?:(?=_)|(?![\w\*]))%s(?<!\s)\*{2}(?:(?=_)|(?![\w\*]))' % (
         SMART_STAR_MIXED_CONTENT, SMART_STAR_CONTENT
     )
-# ***em,strong**em*
+# ***em,strong** em*
 SMART_STAR_EM_STRONG = \
     r'(?:(?<=_)|(?<![\w\*]))(\*{3})(?![\s\*])%s(?<!\s)\*{2}(?:(?=_)|(?![\w\*]))%s(?<!\s)\*(?:(?=_)|(?![\w\*]))' % (
         SMART_STAR_MIXED_CONTENT, SMART_STAR_CONTENT

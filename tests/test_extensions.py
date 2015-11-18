@@ -7,6 +7,7 @@ import difflib
 import codecs
 import nose
 import copy
+from . import util
 
 CURRENT_DIR = os.path.dirname(__file__)
 
@@ -85,18 +86,18 @@ def test_extensions():
             cfg_path = os.path.join(directory, 'tests.yml')
             if os.path.exists(cfg_path):
                 with codecs.open(cfg_path, 'r', encoding='utf-8') as f:
-                    cfg = yaml.load(f.read())
+                    cfg = util.yaml_load(f.read())
                 for testfile in os.listdir(directory):
                     if testfile.endswith('.txt'):
                         key = os.path.splitext(testfile)[0]
                         test_cfg = copy.deepcopy(cfg['__default__'])
                         if 'extensions' not in test_cfg:
-                            test_cfg['extensions'] = {}
-                        for k, v in cfg.get(key, {}).items():
+                            test_cfg['extensions'] = util.OrderedDict()
+                        for k, v in cfg.get(key, util.OrderedDict()).items():
                             for k1, v1 in v.items():
                                 if v1 is not None:
                                     for k2, v2 in v1.items():
-                                        if isinstance(v2, str):
+                                        if isinstance(v2, util.string_type):
                                             v1[k2] = v2.replace(
                                                 '{{BASE}}', os.path.join(CURRENT_DIR, 'extensions')
                                             ).replace(
