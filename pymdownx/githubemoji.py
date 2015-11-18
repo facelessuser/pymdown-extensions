@@ -27,7 +27,11 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import Pattern
 from markdown import util
-import requests
+try:  # pragma: no cover
+    import requests
+    USE_REQUESTS = True
+except Exception:  # pragma: no cover
+    USE_REQUESTS = False
 import json
 import re
 import copy
@@ -1024,7 +1028,7 @@ URL_EMOJI = {
 # --end--
 
 
-def get_github_emoji():
+def get_github_emoji():  # pragma: no cover
     """Get Github's usable emoji."""
 
     try:
@@ -1038,7 +1042,7 @@ def get_github_emoji():
     return json.loads(resp.text)
 
 
-def update_emoji():
+def update_emoji():  # pragma: no cover
     """Update the emoji pattern in memory."""
 
     global RE_EMOJI
@@ -1111,7 +1115,7 @@ class GithubEmojiExtension(Extension):
 
     def extendMarkdown(self, md, md_globals):
         """Add support for <del>test</del> tags as ~~test~~."""
-        if not self.getConfigs()['offline']:
+        if not self.getConfigs()['offline'] and USE_REQUESTS:  # pragma: no cover
             update_emoji()
         css_class = self.getConfigs()["css_class"]
         md.inlinePatterns.add("github-emoji", SimpleEmojiPattern(RE_EMOJI, css_class), "<not_strong")
@@ -1123,7 +1127,7 @@ def makeExtension(*args, **kwargs):
     return GithubEmojiExtension(*args, **kwargs)
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     # Update the emoji pattern in this file.
 
     import codecs
