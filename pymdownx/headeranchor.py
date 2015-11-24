@@ -26,6 +26,8 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
+import unicodedata
+import re
 try:
     from markdown.extensions.toc import slugify, stashedHTML2text, unique, TocExtension
 except Exception:
@@ -41,6 +43,21 @@ LINK = (
     '<span class="headeranchor"></span>'
     '</a>'
 )
+
+
+RE_TAGS = re.compile(r'''</?[^>]*>''', re.UNICODE)
+RE_WORD = re.compile(r'''[^\w\- ]''', re.UNICODE)
+
+
+def slugify(text, sep):
+    """Custom slugify."""
+
+    if text is None:
+        return ''
+    # Normalize, Strip html tags, strip leading and trailing whitespace, and lower
+    tag_id = RE_TAGS.sub('', unicodedata.normalize('NFKD', text)).strip().lower()
+    # Remove non word characters, non spaces, and non dashes, and convert spaces to dashes.
+    return RE_WORD.sub('', tag_id).replace(' ', sep)
 
 
 class HeaderAnchorTreeprocessor(Treeprocessor):

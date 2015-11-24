@@ -33,7 +33,8 @@ pages:
 theme: readthedocs
 theme_dir: doc_theme
 markdown_extensions:
-  - markdown.extensions.toc
+  - markdown.extensions.toc:
+      slugify: !!python/name:pymdownx.headeranchor.slugify
   - markdown.extensions.admonition
   - markdown.extensions.smarty
   - markdown.extensions.nl2br
@@ -48,7 +49,8 @@ markdown_extensions:
   - pymdownx.githubemoji
   - pymdownx.tasklist
   - pymdownx.progressbar
-  - pymdownx.headeranchor
+  - pymdownx.headeranchor:
+      slugify: !!python/name:pymdownx.headeranchor.slugify
   - pymdownx.arithmatex
   - pymdownx.mark
   - pymdownx.critic
