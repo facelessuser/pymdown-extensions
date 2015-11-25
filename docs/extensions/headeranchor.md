@@ -16,7 +16,7 @@ By default, HeaderAnchor will use [Toc&rsquo;s](https://pythonhosted.org/Markdow
 | use_toc_settings | bool | True | This specifies whether HeaderAnchor should get its settings from Toc.  This affects `slugify` and `separator`. |
 
 ## Alternate Slugify
-In order to get slugs closer to like GFM&rsquo;s slugs (in regards to unicode chars), a slugify has been included at `pymdownx.headerancor.unicode_slugify`.  You can use this overrides Toc's and HeaderAnchor's slugify; it is good to override both if you are using both.
+In order to get slugs closer to like GFM&rsquo;s slugs (in regards to unicode chars), a slugify has been included at `pymdownx.headerancor.slugify`.  You can use this overrides Toc's and HeaderAnchor's slugify; it is good to override both if you are using both.
 
 ## CSS
 This is the CSS used for rendering the header anchors in this document. While Font Awesome is used, you can substitute it with [Octicons](https://octicons.github.com/) for even more of a GFM feel, or use something else entirely.
