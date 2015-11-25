@@ -49,7 +49,7 @@ RE_TAGS = re.compile(r'''</?[^>]*>''', re.UNICODE)
 RE_WORD = re.compile(r'''[^\w\- ]''', re.UNICODE)
 
 
-def slugify(text, sep):
+def unicode_slugify(text, sep):
     """Custom slugify."""
 
     if text is None:

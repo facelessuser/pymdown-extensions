@@ -34,7 +34,7 @@ theme: readthedocs
 theme_dir: doc_theme
 markdown_extensions:
   - markdown.extensions.toc:
-      slugify: !!python/name:pymdownx.headeranchor.slugify
+      slugify: !!python/name:pymdownx.headeranchor.unicode_slugify
   - markdown.extensions.admonition
   - markdown.extensions.smarty
   - markdown.extensions.nl2br
@@ -50,7 +50,7 @@ markdown_extensions:
   - pymdownx.tasklist
   - pymdownx.progressbar
   - pymdownx.headeranchor:
-      slugify: !!python/name:pymdownx.headeranchor.slugify
+      slugify: !!python/name:pymdownx.headeranchor.unicode_slugify
   - pymdownx.arithmatex
   - pymdownx.mark
   - pymdownx.critic
