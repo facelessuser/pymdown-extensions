@@ -106,6 +106,7 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import Pattern, dequote
 from markdown import util
+from markdown.extensions.attr_list import AttrListTreeprocessor
 
 RE_PROGRESS = r'''(?x)
 \[={1,}\s*                                                         # Opening
@@ -126,22 +127,17 @@ CLASS_20PLUS = "progress-20plus"
 CLASS_0PLUS = "progress-0plus"
 
 
-try:
-    from markdown.extensions.attr_list import AttrListTreeprocessor
+class ProgressBarTreeProcessor(AttrListTreeprocessor):
+    """Used for AttrList compatibility."""
 
-    class ProgressBarTreeProcessor(AttrListTreeprocessor):
-        """Used for AttrList compatibility."""
+    def run(self, elem):
+        """Inline check for attrs at start of tail."""
 
-        def run(self, elem):
-            """Inline check for attrs at start of tail."""
-
-            if elem.tail:
-                m = self.INLINE_RE.match(elem.tail)
-                if m:
-                    self.assign_attrs(elem, m.group(1))
-                    elem.tail = elem.tail[m.end():]
-except:
-    ProgressBarTreeProcessor = None
+        if elem.tail:
+            m = self.INLINE_RE.match(elem.tail)
+            if m:
+                self.assign_attrs(elem, m.group(1))
+                elem.tail = elem.tail[m.end():]
 
 
 class ProgressBarPattern(Pattern):
@@ -174,7 +170,7 @@ class ProgressBarPattern(Pattern):
         p.text = label
         if alist is not None:
             el.tail = alist
-            if ProgressBarTreeProcessor and 'attr_list' in self.markdown.treeprocessors.keys():
+            if 'attr_list' in self.markdown.treeprocessors.keys():
                 ProgressBarTreeProcessor(self.markdown).run(el)
         return el
 

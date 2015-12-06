@@ -33,10 +33,7 @@ from __future__ import unicode_literals
 from markdown.extensions import Extension
 from markdown.preprocessors import Preprocessor
 from markdown.blockprocessors import CodeBlockProcessor
-try:
-    from markdown.extensions.codehilite import CodeHilite, CodeHiliteExtension, parse_hl_lines
-except Exception:
-    CodeHilite = None
+from markdown.extensions.codehilite import CodeHilite, CodeHiliteExtension, parse_hl_lines
 from markdown import util
 import re
 
@@ -198,10 +195,7 @@ class SuperFencesCodeExtension(Extension):
         """
         Ensure superfences is used over fenced_code extension.
 
-        People should use superfences **or** fenced_code,
-        but to make it easy on people who include all of
-        "extra", we will patch fenced_code after fenced_code
-        has been loaded.
+        People should use superfences **or** fenced_code.
         """
 
         for entry in self.markdown.superfences:
@@ -238,11 +232,10 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         """Check for code hilite extension to get its config."""
 
         if not self.checked_for_codehilite:
-            if CodeHilite:
-                for ext in self.markdown.registeredExtensions:
-                    if isinstance(ext, CodeHiliteExtension):
-                        self.codehilite_conf = ext.config
-                        break
+            for ext in self.markdown.registeredExtensions:
+                if isinstance(ext, CodeHiliteExtension):
+                    self.codehilite_conf = ext.config
+                    break
             self.checked_for_codehilite = True
 
     def clear(self):
@@ -399,7 +392,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         If config is not empty, then the codehlite extension
         is enabled, so we call into it to highlight the code.
         """
-        if CodeHilite and self.codehilite_conf:
+        if self.codehilite_conf:
             code = CodeHilite(
                 source,
                 linenums=self.codehilite_conf['linenums'][0],

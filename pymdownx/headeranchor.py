@@ -28,12 +28,7 @@ from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
 import unicodedata
 import re
-try:
-    from markdown.extensions.toc import slugify, stashedHTML2text, unique, TocExtension
-except Exception:
-    # Cannot find markdown extension, let's revert to compatibility layer
-    from .pymd_compat import slugify, stashedHTML2text, unique
-    TocExtension = None
+from markdown.extensions.toc import slugify, stashedHTML2text, unique, TocExtension
 
 LINK = (
     '<a '
@@ -76,7 +71,7 @@ class HeaderAnchorTreeprocessor(Treeprocessor):
             self.slugify = self.config['slugify']
             self.separator = self.config['separator']
             self.use_toc_settings = self.config['use_toc_settings']
-            if TocExtension and self.use_toc_settings:
+            if self.use_toc_settings:
                 for ext in self.markdown.registeredExtensions:
                     if isinstance(ext, TocExtension):
                         self.separator = ext.config['separator'][0]

@@ -25,17 +25,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 -----------------------------
-pymd_compat.py uses code directly from Python Markdown's toc extension.
-
-Table of Contents Extension for Python-Markdown
- ===============================================
-See <https://pythonhosted.org/Markdown/extensions/toc.html>
-for documentation.
-Oringinal code Copyright 2008 [Jack Miller](http://codezen.org)
-All changes Copyright 2008-2014 The Python Markdown Project
-License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
-
------------------------------
 superfences.py is derived from Python Markdown's fenced_code extension.
 
 Fenced Code Extension for Python Markdown
@@ -61,7 +50,7 @@ License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 
 ------------------------------
 extrarawhtml.py is a literal copy and paste from Python Markdown's extra extension.
-It basicaly splits out the raw html markdown parsing into a seprate extension that can
+It basically splits out the raw html markdown parsing into a seprate extension that can
 be used even if it is not desired to use all of 'extra'.
 
 Python-Markdown Extra Extension

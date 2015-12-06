@@ -39,10 +39,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import Pattern
-try:
-    from markdown.extensions import codehilite
-except:
-    codehilite = None
+from markdown.extensions import codehilite
 # import traceback
 try:
     from pygments import highlight
@@ -99,7 +96,7 @@ class InlineHilitePattern(Pattern):
             self.use_pygments = self.config['use_pygments']
             self.use_codehilite_settings = self.config['use_codehilite_settings']
             self.style_plain_text = self.config['style_plain_text']
-            if codehilite and self.use_codehilite_settings:
+            if self.use_codehilite_settings:
                 for ext in self.markdown.registeredExtensions:
                     if isinstance(ext, codehilite.CodeHiliteExtension):
                         self.guess_lang = ext.config['guess_lang'][0]
