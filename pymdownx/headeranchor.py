@@ -28,7 +28,15 @@ from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
 import unicodedata
 import re
+import sys
 from markdown.extensions.toc import slugify, stashedHTML2text, unique, TocExtension
+
+PY3 = sys.version_info >= (3, 0) and sys.version_info < (4, 0)
+
+if PY3:
+    from urllib.parse import quote  # noqa
+else:
+    from urllib import quote  # noqa
 
 LINK = (
     '<a '
@@ -45,7 +53,7 @@ RE_WORD = re.compile(r'''[^\w\- ]''', re.UNICODE)
 
 
 def uslugify(text, sep):
-    """Custom slugify."""
+    """Unicode slugify (utf-8)."""
 
     if text is None:
         return ''
@@ -53,6 +61,20 @@ def uslugify(text, sep):
     tag_id = RE_TAGS.sub('', unicodedata.normalize('NFKD', text)).strip().lower()
     # Remove non word characters, non spaces, and non dashes, and convert spaces to dashes.
     return RE_WORD.sub('', tag_id).replace(' ', sep)
+
+
+def uslugify_encoded(text, sep):
+    """Custom slugify (percent encoded)."""
+
+    if text is None:
+        return ''
+    # Strip html tags and lower
+    tag_id = RE_TAGS.sub('', text).lower()
+    # Remove non word characters or non spaces and dashes
+    # Then convert spaces to dashes
+    tag_id = RE_WORD.sub('', tag_id).replace(' ', sep)
+    # Encode anything that needs to be
+    return quote(tag_id.encode('utf-8'))
 
 
 class HeaderAnchorTreeprocessor(Treeprocessor):
