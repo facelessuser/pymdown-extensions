@@ -109,14 +109,14 @@ from markdown import util
 from markdown.extensions.attr_list import AttrListTreeprocessor
 
 RE_PROGRESS = r'''(?x)
-\[={1,}\s*                                                         # Opening
+\[={1,}\s*                                                          # Opening
 (?:
-  (?P<percent>100(?:.0+)?|[1-9]?[0-9](?:.\d+)?)% |                 # Percent
-  (?:(?P<frac_num>\d+(?:.\d+)?)\s*/\s*(?P<frac_den>\d+(?:.\d+)?))  # Fraction
+  (?P<percent>100(?:.0+)?|[1-9]?[0-9](?:\.\d+)?)% |                 # Percent
+  (?:(?P<frac_num>\d+(?:\.\d+)?)\s*/\s*(?P<frac_den>\d+(?:\.\d+)?)) # Fraction
 )
-(?P<title>\s+(?P<quote>['"]).*?(?P=quote))?\s*                     # Title
-\]                                                                 # Closing
-(?P<attr_list>\{\:?([^\}]*)\})?                                    # Optional attr list
+(?P<title>\s+(?P<quote>['"]).*?(?P=quote))?\s*                      # Title
+\]                                                                  # Closing
+(?P<attr_list>\{\:?([^\}]*)\})?                                     # Optional attr list
 '''
 
 CLASS_100PLUS = "progress-100plus"
@@ -190,21 +190,21 @@ class ProgressBarPattern(Pattern):
         else:
             try:
                 num = float(m.group('frac_num'))
-            except:
+            except Exception:  # pragma: no cover
                 num = 0.0
             try:
                 den = float(m.group('frac_den'))
-            except:
-                den = 1.0
+            except Exception:  # pragma: no cover
+                den = 0.0
             if den == 0.0:
-                den = 1.0
-
-            value = (num / den) * 100.0
-
-            if value > 100.0:
-                value = 100.0
-            elif value < 0.0:
                 value = 0.0
+            else:
+                value = (num / den) * 100.0
+
+        # We can never get a value < 0,
+        # but we must check for > 100.
+        if value > 100.0:
+            value = 100.0
 
         if level_class:
             if value >= 100.0:
@@ -246,7 +246,7 @@ class ProgressBarExtension(Extension):
     def extendMarkdown(self, md, md_globals):
         """Add the progress bar pattern handler."""
 
-        if "=" not in md.ESCAPED_CHARS:
+        if "=" not in md.ESCAPED_CHARS:  # pragma: no cover
             md.ESCAPED_CHARS.append('=')
         progress = ProgressBarPattern(RE_PROGRESS)
         progress.config = self.getConfigs()
