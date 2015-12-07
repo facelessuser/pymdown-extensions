@@ -62,11 +62,10 @@ class TasklistTreeprocessor(Treeprocessor):
             if first.tag == "p" and first.text is not None:
                 m = RE_CHECKBOX.match(first.text)
                 if m is not None:
-                    li.text = self.markdown.htmlStash.store(
+                    first.text = self.markdown.htmlStash.store(
                         get_checkbox(m.group('state')),
                         safe=True
-                    )
-                    first.text = m.group('line')
+                    ) + m.group('line')
                     found = True
         return found
 
