@@ -46,8 +46,25 @@ githubemoji:
     pymdownx.githubemoji:
 
 headeranchor:
+  css:
+    - headeranchor.css
+  extensions:
+    markdown.extensions.attr_list:
+    pymdownx.headeranchor:
+
+headeranchor-unicode:
+  css:
+    - headeranchor.css
   extensions:
     pymdownx.headeranchor:
+      slugify: !!python/name:pymdownx.headeranchor.uslugify
+
+headeranchor-unicode-encode:
+  css:
+    - headeranchor.css
+  extensions:
+    pymdownx.headeranchor:
+      slugify: !!python/name:pymdownx.headeranchor.uslugify_encoded
 
 inlinehilite:
   extensions:
@@ -72,6 +89,8 @@ plainhtml:
     pymdownx.plainhtml:
 
 progressbar:
+  css:
+    - progressbar.css
   extensions:
     pymdownx.progressbar:
     markdown.extensions.attr_list:

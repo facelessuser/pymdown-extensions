@@ -19,3 +19,9 @@
 Before[= 50% "I'm a block!"]After
 
 [= 50% "Glossy"]{: .candystripe-animate .gloss}
+
+[= 0%]
+
+[= 3/0 "Divide by 0"]
+
+[= 300/100 "Greater than 0"]
