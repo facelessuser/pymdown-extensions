@@ -47,7 +47,7 @@ try:
     from pygments.formatters import find_formatter_class
     HtmlFormatter = find_formatter_class('html')
     pygments = True
-except ImportError:
+except ImportError:  # pragma: no cover
     pygments = False
 
 BACKTICK_CODE_RE = r'''(?x)
@@ -110,7 +110,9 @@ class InlineHilitePattern(Pattern):
     def codehilite(self, lang, src):
         """Syntax highlite the inline code block."""
 
-        process_text = self.style_plain_text or lang != 'text'
+        process_text = self.style_plain_text or lang or self.guess_lang
+        if not lang and self.style_plain_text and not self.guess_lang:
+            lang = 'text'
         if pygments and self.use_pygments and process_text:
             try:
                 lexer = get_lexer_by_name(lang)
@@ -120,7 +122,7 @@ class InlineHilitePattern(Pattern):
                         lexer = guess_lexer(src)
                     else:
                         lexer = get_lexer_by_name('text')
-                except ValueError:
+                except ValueError:  # pragma: no cover
                     lexer = get_lexer_by_name('text')
 
             formatter = InlineCodeHtmlFormatter(
@@ -149,7 +151,7 @@ class InlineHilitePattern(Pattern):
     def handleMatch(self, m):
         """Handle the pattern match."""
 
-        lang = m.group('lang') if m.group('lang') else 'text'
+        lang = m.group('lang') if m.group('lang') else ''
         src = m.group('code').strip()
         self.get_settings()
         return self.codehilite(lang, src)
