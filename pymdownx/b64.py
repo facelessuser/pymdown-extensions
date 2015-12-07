@@ -106,14 +106,11 @@ def repl_path(m, base_path):
                 ext = splitext(file_name)[1].lower()
                 for b64_ext in file_types:
                     if ext in b64_ext:
-                        try:
-                            with open(file_name, "rb") as f:
-                                link = " src=\"data:%s;base64,%s\"" % (
-                                    file_types[b64_ext],
-                                    base64.b64encode(f.read()).decode('ascii')
-                                )
-                        except Exception:
-                            pass
+                        with open(file_name, "rb") as f:
+                            link = " src=\"data:%s;base64,%s\"" % (
+                                file_types[b64_ext],
+                                base64.b64encode(f.read()).decode('ascii')
+                            )
                         break
     except Exception:
         # Parsing crashed and burned; no need to continue.
