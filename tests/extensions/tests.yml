@@ -69,6 +69,33 @@ headeranchor-unicode-encode:
 inlinehilite:
   extensions:
     pymdownx.inlinehilite:
+      style_plain_text: true
+      guess_lang: false
+
+inlinehilite_codehilite:
+  extensions:
+    markdown.extensions.codehilite:
+      guess_lang: false
+    pymdownx.inlinehilite:
+      style_plain_text: true
+
+inlinehilite_guess:
+  extensions:
+    pymdownx.inlinehilite:
+      style_plain_text: true
+      guess_lang: true
+
+inlinehilite_no_pygments:
+  extensions:
+    pymdownx.inlinehilite:
+      guess_lang: false
+      use_pygments: false
+
+inlinehilite_plaintext:
+  extensions:
+    pymdownx.inlinehilite:
+      style_plain_text: false
+      guess_lang: false
 
 magiclink:
   extensions:

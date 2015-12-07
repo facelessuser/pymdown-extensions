@@ -1,0 +1,1 @@
+Lets test inline highlight guessing `import module`.

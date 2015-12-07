@@ -1,0 +1,1 @@
+Lets test inline highlight with no pygments `#!python import module`.
