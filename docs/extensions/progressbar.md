@@ -203,22 +203,4 @@ The general HTML structure of the progress bar is as follows:
     inset 0 4px 12px rgba(255, 255, 255, .7),
     inset 0 -12px 0 rgba(0, 0, 0, .05);
 }
-
-@media print {
-  .markdown-body .progress,
-  .markdown-body .progress-bar {
-    -moz-box-shadow: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-  }
-
-  .markdown-body .progress {
-    border: 1px solid #ddd;
-  }
-
-  .markdown-body .progress-bar {
-    height: 22px;
-    border-right: 1px solid #ddd;
-  }
-}
 ```

@@ -49,6 +49,10 @@ The CSS below sets the header tags to be `relative`, and the `headeranchor-link`
 
 ```css
 /* Header Anchors */
+.markdown-body {
+    padding-left: 30px;
+}
+
 .markdown-body .headeranchor-link {
   position: absolute;
   top: 0;
