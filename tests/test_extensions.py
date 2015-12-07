@@ -10,24 +10,40 @@ from . import util
 
 CURRENT_DIR = os.path.dirname(__file__)
 
+CSS_LINK = '<link rel="stylesheet" type="text/css" href="%s"/>'
+WRAPPER = '''<!DOCTYPE html>
+<head>
+<meta charset="utf-8">
+%s
+</head>
+<body>
+<div class="markdown-body">
+%%s
+</div>
+</body>
+'''
+
 
 def compare_results(cfg, testfile, update=False, force_update_all=False):
     """Compare test reslts."""
 
     extension = []
     extension_config = {}
+    wrapper = "%s"
     for k, v in cfg['extensions'].items():
         extension.append(k)
         if v:
             extension_config[k] = v
+    if 'css' in cfg and len(cfg['css']):
+        wrapper = WRAPPER % '\n'.join([CSS_LINK % css for css in cfg['css']])
 
     if update:
-        generate_html(testfile, extension, extension_config, force_update_all)
+        generate_html(testfile, extension, extension_config, wrapper, force_update_all)
     else:
-        check_markdown(testfile, extension, extension_config)
+        check_markdown(testfile, extension, extension_config, wrapper)
 
 
-def generate_html(testfile, extension, extension_config, force_update_all):
+def generate_html(testfile, extension, extension_config, wrapper, force_update_all):
     """Generate html from markdown."""
 
     expected_html = os.path.splitext(testfile)[0] + '.html'
@@ -37,20 +53,23 @@ def generate_html(testfile, extension, extension_config, force_update_all):
         os.path.getmtime(expected_html) < os.path.getmtime(testfile)
     ):
         print('Updated: %s' % expected_html)
-        markdown.markdownFromFile(
-            input=testfile, output=expected_html, encoding='utf-8',
+        with codecs.open(testfile, 'r', encoding='utf-8') as f:
+            source = f.read()
+        results = wrapper % markdown.Markdown(
             extensions=extension, extension_configs=extension_config
-        )
+        ).convert(source)
+        with codecs.open(expected_html, 'w', encoding='utf-8') as f:
+            f.write(results)
 
 
-def check_markdown(testfile, extension, extension_config):
+def check_markdown(testfile, extension, extension_config, wrapper):
     """Check the markdown."""
 
     expected_html = os.path.splitext(testfile)[0] + '.html'
     with codecs.open(testfile, 'r', encoding='utf-8') as f:
         source = f.read()
 
-    results = markdown.Markdown(
+    results = wrapper % markdown.Markdown(
         extensions=extension, extension_configs=extension_config
     ).convert(source)
 
@@ -92,7 +111,13 @@ def test_extensions():
                         test_cfg = copy.deepcopy(cfg['__default__'])
                         if 'extensions' not in test_cfg:
                             test_cfg['extensions'] = util.OrderedDict()
+                        if 'css' not in test_cfg:
+                            test_cfg['css'] = []
                         for k, v in cfg.get(key, util.OrderedDict()).items():
+                            if k == 'css':
+                                for css in v:
+                                    test_cfg[k].append(css)
+                                continue
                             for k1, v1 in v.items():
                                 if v1 is not None:
                                     for k2, v2 in v1.items():
