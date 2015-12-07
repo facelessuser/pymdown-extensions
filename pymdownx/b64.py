@@ -81,39 +81,44 @@ RE_TAG_LINK_ATTR = re.compile(
 def repl_path(m, base_path):
     """Replace path with b64 encoded data."""
 
-    path = url2pathname(m.group('path')[1:-1])
     link = m.group(0)
-    absolute = False
-    re_win_drive = re.compile(r"(^[A-Za-z]{1}:(?:\\|/))")
+    try:
+        path = url2pathname(m.group('path')[1:-1])
+        absolute = False
+        re_win_drive = re.compile(r"(^[A-Za-z]{1}:(?:\\|/))")
 
-    # Format the link
-    if path.startswith('file://'):
-        path = path.replace('file://', '', 1)
-        if _PLATFORM == "windows" and not path.startswith('//'):
-            path = path.lstrip("/")
-        absolute = True
-    elif _PLATFORM == "windows" and re_win_drive.match(path) is not None:
-        absolute = True
+        # Format the link
+        if path.startswith('file://'):
+            path = path.replace('file://', '', 1)
+            if _PLATFORM == "windows" and not path.startswith('//'):
+                path = path.lstrip("/")
+            absolute = True
+        elif _PLATFORM == "windows" and re_win_drive.match(path) is not None:
+            absolute = True
 
-    if not path.startswith(exclusion_list):
-        if absolute:
-            file_name = normpath(path)
-        else:
-            file_name = normpath(join(base_path, path))
+        if not path.startswith(exclusion_list):
+            if absolute:
+                file_name = normpath(path)
+            else:
+                file_name = normpath(join(base_path, path))
 
-        if exists(file_name):
-            ext = splitext(file_name)[1].lower()
-            for b64_ext in file_types:
-                if ext in b64_ext:
-                    try:
-                        with open(file_name, "rb") as f:
-                            link = " src=\"data:%s;base64,%s\"" % (
-                                file_types[b64_ext],
-                                base64.b64encode(f.read()).decode('ascii')
-                            )
-                    except Exception:
-                        pass
-                    break
+            if exists(file_name):
+                ext = splitext(file_name)[1].lower()
+                for b64_ext in file_types:
+                    if ext in b64_ext:
+                        try:
+                            with open(file_name, "rb") as f:
+                                link = " src=\"data:%s;base64,%s\"" % (
+                                    file_types[b64_ext],
+                                    base64.b64encode(f.read()).decode('ascii')
+                                )
+                        except Exception:
+                            pass
+                        break
+    except Exception:
+        # Parsing crashed and burned; no need to continue.
+        pass
+
     return link
 
 

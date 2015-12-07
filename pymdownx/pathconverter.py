@@ -136,50 +136,50 @@ def repl_relative(m, base_path, relative_path):
     link = m.group(0)
     try:
         scheme, netloc, path, params, query, fragment, is_url, is_absolute = parse_url(m.group('path')[1:-1])
-    except Exception:
-        # Parsing crashed an burned; no need to continue.
-        return link
 
-    if not is_url:
-        # Get the absolute path of the file or return
-        # if we can't resolve the path
-        path = url2pathname(path)
-        abs_path = None
-        if (not is_absolute):
-            # Convert current relative path to absolute
-            temp = normpath(join(base_path, path))
-            if exists(temp):
-                abs_path = temp.replace("\\", "/")
-        elif exists(path):
-            abs_path = path
+        if not is_url:
+            # Get the absolute path of the file or return
+            # if we can't resolve the path
+            path = url2pathname(path)
+            abs_path = None
+            if (not is_absolute):
+                # Convert current relative path to absolute
+                temp = normpath(join(base_path, path))
+                if exists(temp):
+                    abs_path = temp.replace("\\", "/")
+            elif exists(path):
+                abs_path = path
 
-        if abs_path is not None:
-            convert = False
-            # Determine if we should convert the relative path
-            # (or see if we can realistically convert the path)
-            if (_PLATFORM == "windows"):
-                # Make sure basepath starts with same drive location as target
-                # If they don't match, we will stay with absolute path.
-                if (base_path.startswith('//') and base_path.startswith('//')):
-                    convert = True
-                else:
-                    base_drive = RE_WIN_DRIVE_PATH.match(base_path)
-                    path_drive = RE_WIN_DRIVE_PATH.match(abs_path)
-                    if (
-                        (base_drive and path_drive) and
-                        base_drive.group('drive').lower() == path_drive.group('drive').lower()
-                    ):
+            if abs_path is not None:
+                convert = False
+                # Determine if we should convert the relative path
+                # (or see if we can realistically convert the path)
+                if (_PLATFORM == "windows"):
+                    # Make sure basepath starts with same drive location as target
+                    # If they don't match, we will stay with absolute path.
+                    if (base_path.startswith('//') and base_path.startswith('//')):
                         convert = True
-            else:
-                # OSX and Linux
-                convert = True
+                    else:
+                        base_drive = RE_WIN_DRIVE_PATH.match(base_path)
+                        path_drive = RE_WIN_DRIVE_PATH.match(abs_path)
+                        if (
+                            (base_drive and path_drive) and
+                            base_drive.group('drive').lower() == path_drive.group('drive').lower()
+                        ):
+                            convert = True
+                else:
+                    # OSX and Linux
+                    convert = True
 
-            # Convert the path, url encode it, and format it as a link
-            if convert:
-                path = pathname2url(relpath(abs_path, relative_path).replace('\\', '/'))
-            else:
-                path = pathname2url(abs_path)
-            link = '%s"%s"' % (m.group('name'), urlunparse((scheme, netloc, path, params, query, fragment)))
+                # Convert the path, url encode it, and format it as a link
+                if convert:
+                    path = pathname2url(relpath(abs_path, relative_path).replace('\\', '/'))
+                else:
+                    path = pathname2url(abs_path)
+                link = '%s"%s"' % (m.group('name'), urlunparse((scheme, netloc, path, params, query, fragment)))
+    except Exception:
+        # Parsing crashed and burned; no need to continue.
+        pass
 
     return link
 
@@ -190,15 +190,17 @@ def repl_absolute(m, base_path):
     link = m.group(0)
     try:
         scheme, netloc, path, params, query, fragment, is_url, is_absolute = parse_url(m.group('path')[1:-1])
-    except Exception:
-        return link
 
-    if (not is_absolute and not is_url):
-        path = url2pathname(path)
-        temp = normpath(join(base_path, path))
-        if exists(temp):
-            path = pathname2url(temp.replace("\\", "/"))
-            link = '%s"%s"' % (m.group('name'), urlunparse((scheme, netloc, path, params, query, fragment)))
+        if (not is_absolute and not is_url):
+            path = url2pathname(path)
+            temp = normpath(join(base_path, path))
+            if exists(temp):
+                path = pathname2url(temp.replace("\\", "/"))
+                link = '%s"%s"' % (m.group('name'), urlunparse((scheme, netloc, path, params, query, fragment)))
+    except Exception:
+        # Parsing crashed and burned; no need to continue.
+        pass
+
     return link
 
 
