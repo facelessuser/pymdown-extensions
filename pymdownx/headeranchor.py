@@ -69,7 +69,7 @@ def uslugify_encoded(text, sep):
     if text is None:
         return ''
     # Strip html tags and lower
-    tag_id = RE_TAGS.sub('', text).lower()
+    tag_id = RE_TAGS.sub('', unicodedata.normalize('NFKD', text)).lower()
     # Remove non word characters or non spaces and dashes
     # Then convert spaces to dashes
     tag_id = RE_WORD.sub('', tag_id).replace(' ', sep)
