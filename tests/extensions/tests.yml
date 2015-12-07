@@ -109,6 +109,8 @@ superfences (normal):
     pymdownx.superfences:
 
 tasklist:
+  css:
+    - tasklist.css
   extensions:
     pymdownx.tasklist:
 
