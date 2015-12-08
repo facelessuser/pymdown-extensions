@@ -7,9 +7,9 @@ from setuptools import setup, find_packages
 LONG_DESC = '''
 This is an extension pack for Python Markdown.
 
-It was written for the the PyMdown project: https://github.com/facelessuser/PyMdown
-
 It adds a number of optional extensions:
+
+- pymdownx.arithmatex
 - pymdownx.b64
 - pymdownx.betterem
 - pymdownx.caret
@@ -20,7 +20,6 @@ It adds a number of optional extensions:
 - pymdownx.inlinehilite
 - pymdownx.magiclink
 - pymdownx.mark
-- pymdownx.arithmatex
 - pymdownx.pathconverter
 - pymdownx.plainhtml
 - pymdownx.progressbar
@@ -29,13 +28,17 @@ It adds a number of optional extensions:
 - pymdownx.superfences
 - pymdownx.tasklist
 - pymdownx.tilde
+
+Support
+=======
+https://github.com/facelessuser/pymdown-extensions/issues
 '''
 
 setup(
     name='pymdown-extensions',
     version='1.0.0',
     keywords='markdown extensions',
-    description='Markdown extensions for Python Markdown.',
+    description='Extensions pack for Python Markdown.',
     long_description=LONG_DESC,
     author='Isaac Muse',
     author_email='Isaac.Muse [at] gmail.com',
