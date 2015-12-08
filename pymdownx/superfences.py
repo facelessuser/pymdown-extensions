@@ -262,13 +262,9 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         elif len(m.group(1)) != self.ws_len and m.group(2) != '':
             # Not indented enough
             self.clear()
-        elif self.fence_end.match(m.group(0)) is not None:
+        elif self.fence_end.match(m.group(0)) is not None and not m.group(2).startswith(' '):
             # End of fence
-            if m.group(2).startswith(' '):
-                # End fence was indented too much
-                self.clear()
-            else:
-                self.process_nested_block(m, start, end)
+            self.process_nested_block(m, start, end)
         else:
             # Content line
             self.empty_lines = 0

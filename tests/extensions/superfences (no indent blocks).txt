@@ -67,6 +67,14 @@ as a fenced code block.
     ````
     ```
 
+- Fenced block with indented child fence:
+
+    ```
+        ```
+        Fenced block containing fenced syntax.
+        ```
+    ```
+
 # UML Flow Charts
 
 ```flow
