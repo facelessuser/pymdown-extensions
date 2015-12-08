@@ -1,0 +1,11 @@
+recursive-include pymdownx *.py
+recursive-include docs *
+recursive-include tests *.txt *.html *.yml *.py *.css
+include setup.py
+include setup.cfg
+include run_tests.py
+include tox.ini
+include .coveragerc
+include LICENSE.md
+include README.md
+include MANIFEST
