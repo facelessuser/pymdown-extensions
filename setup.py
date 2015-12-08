@@ -5,40 +5,24 @@
 from setuptools import setup, find_packages
 
 LONG_DESC = '''
-This is an extension pack for Python Markdown.
-
-It adds a number of optional extensions:
-
-- pymdownx.arithmatex
-- pymdownx.b64
-- pymdownx.betterem
-- pymdownx.caret
-- pymdownx.critic
-- pymdownx.github
-- pymdownx.githubemoji
-- pymdownx.headeranchor
-- pymdownx.inlinehilite
-- pymdownx.magiclink
-- pymdownx.mark
-- pymdownx.pathconverter
-- pymdownx.plainhtml
-- pymdownx.progressbar
-- pymdownx.pymdown
-- pymdownx.smartsymbols
-- pymdownx.superfences
-- pymdownx.tasklist
-- pymdownx.tilde
-
+PyMdown Extensions (pymdownx) is a collection of extensions for `Python Markdown`_.
+It should work for Python Markdown versions 2.6.0 and greater.
+You can check out the list of available extensions and learn more about them by `reading the docs`_.
+.. _`Python Markdown`: http://daringfireball.net/projects/markdown/
+.. _`reading the docs`: http://facelessuser.github.io/pymdown-extensions/
 Support
 =======
-https://github.com/facelessuser/pymdown-extensions/issues
+Help and support is available here at the repositories `bug tracker`_.
+Please read about `support and contributing`_ before creating issues.
+.. _`bug tracker`: https://github.com/facelessuser/pymdown-extensions/issues
+.. _`support and contributing`: http://facelessuser.github.io/pymdown-extensions/contributing/
 '''
 
 setup(
     name='pymdown-extensions',
     version='1.0.0',
     keywords='markdown extensions',
-    description='Extensions pack for Python Markdown.',
+    description='Extension pack for Python Markdown.',
     long_description=LONG_DESC,
     author='Isaac Muse',
     author_email='Isaac.Muse [at] gmail.com',
