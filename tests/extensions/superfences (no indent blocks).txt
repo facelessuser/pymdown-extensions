@@ -11,6 +11,11 @@ This will still be parsed
 as a fenced code block.
 ```
 
+- 
+    ```
+    This will work.
+    ```
+
 - This is a list that contains multiple code blocks.
 
     - Here is an indented block
@@ -30,8 +35,37 @@ as a fenced code block.
 
         > ```
         > Blockquotes?
+
         > Not a problem!
         > ```
+
+- Fenced block with lesser child fence.
+
+    ````
+        ```
+        Fenced block containing fenced syntax.
+        ```
+    ````
+
+    ````
+    ```
+    Fenced block containing fenced syntax.
+    ```
+    ````
+
+- Fenced block with greater child fence:
+
+    ```
+        ````
+        Fenced block containing fenced syntax.
+        ````
+    ```
+
+    ```
+    ````
+    Fenced block containing fenced syntax.
+    ````
+    ```
 
 # UML Flow Charts
 

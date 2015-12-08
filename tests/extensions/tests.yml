@@ -126,10 +126,19 @@ smartsymbols:
   extensions:
     pymdownx.smartsymbols:
 
+superfences (failures):
+  extensions:
+    pymdownx.superfences:
+
 superfences (no indent blocks):
   extensions:
     pymdownx.superfences:
       disable_indented_code_blocks: true
+
+superfences (no nesting):
+  extensions:
+    pymdownx.superfences:
+      nested: false
 
 superfences (normal):
   extensions:

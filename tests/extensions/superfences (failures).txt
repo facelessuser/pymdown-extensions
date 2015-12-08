@@ -1,0 +1,21 @@
+- Test bad indentation 1:
+
+        ```
+    Here is some text.
+        ```
+
+- Test bad indentation 2:
+
+    ```
+Here is some text.
+    ```
+
+- Test bad indentation 3:
+
+    ```
+    Here is some text.
+        ```
+
+- ```
+    This will not work.
+    ```
