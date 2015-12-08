@@ -132,6 +132,8 @@ superfences (failures):
 
 superfences (no indent blocks):
   extensions:
+    markdown.extensions.codehilite:
+      guess_lang: false
     pymdownx.superfences:
       disable_indented_code_blocks: true
 
@@ -142,6 +144,8 @@ superfences (no nesting):
 
 superfences (normal):
   extensions:
+    markdown.extensions.codehilite:
+      guess_lang: false
     pymdownx.superfences:
 
 tasklist:
