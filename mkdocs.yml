@@ -29,6 +29,7 @@ pages:
     - Tasklist: extensions/tasklist.md
     - Tilde: extensions/tilde.md
   - Contributing &amp; Suppport: contributing.md
+  - Changelog: changelog.md
   - License: license.md
 theme: readthedocs
 theme_dir: doc_theme
