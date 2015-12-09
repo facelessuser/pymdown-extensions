@@ -66,8 +66,16 @@ When using the UML diagram features, you must provide the necessary JavaScript f
 - [underscore.js](http://underscorejs.org/)
 - [sequece-diagram.js](http://bramp.github.io/js-sequence-diagrams/)
 
+All of these libraries can be included using a CDN (you can use the version of your choice):
 
-Simply including the libraries above is not enough as these libraries need to be pointed at the elements they need to convert.  If using the PyMdown application, and not just the extension, PyMdown provides scripts `uml-converter.js`, `flow-loader.js`, and `sequence-loader.js` that can be used to target the HTML elements and execute the appropriate library on their content to create the desired diagrams.  The scripts do not have to be used, and you can modify them or write your own to suite your needs; it is provided for convenience.
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.4.2/flowchart.min.js"></script>
+```
+
+Simply including the libraries above is not enough as these libraries need to be pointed at the elements they need to convert.  Here we are going to show some examples (`uml-converter.js`, `flow-loader.js`, and `sequence-loader.js`) that can be used to target the HTML elements and execute the appropriate library on their content to create the desired diagrams.  The scripts do not have to be used, and you can modify them or write your own to suite your needs; it is provided for convenience.
 
 ```js
 /* uml-converter.js */

@@ -11,14 +11,14 @@ GFM has a nice feature that detects and auto-generates links.  This extension ad
 ```
 This requires no special syntax.
 
-Just paste links directly in the document like this: https://github.com/facelessuser/PyMdown.
+Just paste links directly in the document like this: https://github.com/facelessuser/pymdown-extensions.
 
 Or even an email address fake.email@email.com.
 ```
 
 This requires no special syntax.
 
-Just paste links directly in the document like this: https://github.com/facelessuser/PyMdown.
+Just paste links directly in the document like this: https://github.com/facelessuser/pymdown-extensions.
 
 Or even an email address fake.email@email.com.
 

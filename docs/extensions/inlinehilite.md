@@ -22,7 +22,7 @@ By default, InlineHilite will use CodeHilite's settings if it is being used, but
 | use_codehilite_settings | bool | True | Determine whether CodeHilite's settings should be used, or if InlineHilite should use a different set. |
 | guess_lang | bool | True | If ignoring CodeHilite's settings, determine whether InlineHilite should try to guess a code block's language if not specified. |
 | css_class | string | 'inlinehilite' | If ignoring CodeHilite's settings, this is the class name that will be injected into code tags when they are processed. |
-| pygments_style | string | 'default' | If ignoring CodeHilite's settings, this is the pygments style to use.  When using Python Markdown, this really only has an effect when using `noclasses`.  But when paired with the PyMdown tool, PyMdown will actually include the relevant CSS. |
+| pygments_style | string | 'default' | If ignoring CodeHilite's settings, this is the pygments style to use.  When using Python Markdown, this really only has an effect when using `noclasses`. |
 | noclasses | bool | False | If ignoring CodeHilite's settings, this will cause the styles to directly be written to the tag's style attribute instead of requiring a stylesheet. |
 | use_pygments | bool | True | If Pygments is available, and if ignoring CodeHilite's settings, this will control whether Pygements is used on the code block, or if the block's content will just be escaped and prepped for a JavaScript syntax highlighter. |
 
