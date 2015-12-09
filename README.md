@@ -2,6 +2,7 @@
 [![Coverage Status][codecov-image]][codecov-link]
 [![Code Health][landscape-image]][landscape-link]
 [![Requirements Status][requires-image]][requires-link]
+[![pypi-version][pypi-image]][pypi-link]
 ![License][license-image-mit]
 ![License][license-image-bsd]
 # PyMdown Extra Extensions
@@ -21,5 +22,7 @@ License is MIT except for a few exceptions that are licensed as BSD.  See LICENS
 [landscape-link]: https://landscape.io/github/facelessuser/pymdown-extensions/master
 [requires-image]: https://img.shields.io/requires/github/facelessuser/pymdown-extensions/master.svg
 [requires-link]: https://requires.io/github/facelessuser/pymdown-extensions/requirements/?branch=master
+[pypi-image]: https://img.shields.io/pypi/v/nine.svg
+[pypi-link]: https://pypi.python.org/pypi/pymdown-extensions
 [license-image-mit]: https://img.shields.io/badge/license-MIT-blue.svg
 [license-image-bsd]: https://img.shields.io/badge/license-BSD-blue.svg
