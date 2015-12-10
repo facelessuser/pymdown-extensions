@@ -33,4 +33,5 @@ Check out the individual extension document pages for more info on the available
 | [b64](extensions/b64.md)                                 | pymdownx.b64 |
 | [critic](extensions/critic.md)                           | pymdownx.critic |
 | [github](extensions/github.md)                           | pymdownx.github |
+| [hardbreak](extensions/hardbreak.md)                     | pymdownx.hardbreak |
 | [plainhtml](extensions/plainhtml.md)                     | pymdownx.plainhtml |

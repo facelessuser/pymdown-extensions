@@ -45,6 +45,17 @@ githubemoji:
   extensions:
     pymdownx.githubemoji:
 
+hardbreak:
+  extensions:
+    markdown.extensions.attr_list:
+    pymdownx.hardbreak:
+
+hardbreak_pandoc:
+  extensions:
+    markdown.extensions.attr_list:
+    pymdownx.hardbreak:
+      leading_space: false
+
 headeranchor:
   css:
     - headeranchor.css
