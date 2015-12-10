@@ -24,7 +24,7 @@ Please read about `support and contributing`_ before creating issues.
 
 setup(
     name='pymdown-extensions',
-    version='1.0.0',
+    version='1.0.1',
     keywords='markdown extensions',
     description='Extension pack for Python Markdown.',
     long_description=LONG_DESC,
