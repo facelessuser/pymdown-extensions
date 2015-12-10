@@ -3,6 +3,8 @@
 """Setup pymdown-extensions."""
 
 from setuptools import setup, find_packages
+import os
+import imp
 
 LONG_DESC = '''
 PyMdown Extensions (pymdownx) is a collection of extensions for `Python Markdown`_.
@@ -22,9 +24,30 @@ Please read about `support and contributing`_ before creating issues.
 .. _`support and contributing`: http://facelessuser.github.io/pymdown-extensions/contributing/
 '''
 
+
+def get_version():
+    """Get version and version_info without importing the entire module."""
+
+    devstatus = {
+        'alpha': '3 - Alpha',
+        'beta': '4 - Beta',
+        'rc': '4 - Beta',
+        'final': '5 - Production/Stable'
+    }
+    path = os.path.join(os.path.dirname(__file__), 'pymdownx')
+    fp, pathname, desc = imp.find_module('__version__', [path])
+    try:
+        v = imp.load_module('__version__', fp, pathname, desc)
+        return v.version, devstatus[v.version_info[3]]
+    finally:
+        fp.close()
+
+VER, DEVSTATUS = get_version()
+
+
 setup(
     name='pymdown-extensions',
-    version='1.0.1',
+    version=VER,
     keywords='markdown extensions',
     description='Extension pack for Python Markdown.',
     long_description=LONG_DESC,
@@ -37,7 +60,7 @@ setup(
     ],
     license='MIT License',
     classifiers=[
-        'Development Status :: 5 - Production/Stable',
+        'Development Status :: %s' % DEVSTATUS,
         'Environment :: Console',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
