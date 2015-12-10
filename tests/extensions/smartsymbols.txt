@@ -10,6 +10,10 @@ right arrow -->
 left arrow <--
 double arrow <-->
 
+Good: 1st 2nd 3rd 11th 12th 13th 15th 32nd 103rd
+
+Bad: 1th 2th 3th 2rd 1nd 22th 33th 41nd 53nd
+
 Fraction 1/2
 Fraction 1/4
 Fraction 3/4

@@ -53,7 +53,12 @@ RE_NOT_EQUAL = ("smart-not-equal", r'=/=', r'&ne;')
 RE_CARE_OF = ("smart-care-of", r'\bc/o\b', r'&#8453;')
 RE_ORDINAL_NUMBERS = (
     "smart-ordinal-numbers",
-    r'''\b(?P<leading>(?:[1-9][0-9]*)?)(?P<tail>1st|2nd|3rd|[04-9]th)\b''',
+    r'''(?x)
+    \b
+    (?P<leading>(?:[1-9][0-9]*)?)
+    (?P<tail>(?<=1)(?:1|2|3)th|1st|2nd|3rd|[04-9]th)
+    \b
+    ''',
     lambda m: '%s%s<sup>%s</sup>' % (
         m.group('leading') if m.group('leading') else '',
         m.group('tail')[:-2], m.group('tail')[1:]
