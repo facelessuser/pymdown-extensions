@@ -31,7 +31,7 @@ def get_version():
     devstatus = {
         'alpha': '3 - Alpha',
         'beta': '4 - Beta',
-        'rc': '4 - Beta',
+        'candidate': '4 - Beta',
         'final': '5 - Production/Stable'
     }
     path = os.path.join(os.path.dirname(__file__), 'pymdownx')
