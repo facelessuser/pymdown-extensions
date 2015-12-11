@@ -8,4 +8,4 @@ include tox.ini
 include .coveragerc
 include LICENSE.md
 include README.md
-include MANIFEST
+include MANIFEST.in
