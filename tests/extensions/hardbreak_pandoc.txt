@@ -16,9 +16,6 @@ line`
 foo\
 {: #bar}
 
-<a href="foo\
-bar">link</a>
-
 ###### Headers are Unaffected\
 Last line in paragraph is also unaffected.\
 
