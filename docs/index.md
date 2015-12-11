@@ -18,6 +18,7 @@ Check out the individual extension document pages for more info on the available
 | &nbsp;&nbsp;[betterem](extensions/betterem.md)           | pymdownx.betterem |
 | &nbsp;&nbsp;[caret](extensions/caret.md)                 | pymdownx.caret |
 | &nbsp;&nbsp;[githubemoji](extensions/githubemoji.md)     | pymdownx.githubemoji |
+| &nbsp;&nbsp;[hardbreak](extensions/hardbreak.md)         | pymdownx.hardbreak |
 | &nbsp;&nbsp;[headeranchor](extensions/headeranchor.md)   | pymdownx.headeranchor |
 | &nbsp;&nbsp;[magiclink](extensions/magiclink.md)         | pymdownx.magiclink |
 | &nbsp;&nbsp;[mark](extensions/mark.md)                   | pymdownx.mark |
@@ -33,5 +34,4 @@ Check out the individual extension document pages for more info on the available
 | [b64](extensions/b64.md)                                 | pymdownx.b64 |
 | [critic](extensions/critic.md)                           | pymdownx.critic |
 | [github](extensions/github.md)                           | pymdownx.github |
-| [hardbreak](extensions/hardbreak.md)                     | pymdownx.hardbreak |
 | [plainhtml](extensions/plainhtml.md)                     | pymdownx.plainhtml |

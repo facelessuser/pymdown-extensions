@@ -40,7 +40,7 @@ class HardBreakExtension(Extension):
         """Initialize."""
 
         self.config = {
-            'leading_space': [True, "Require leading space before escaped newline - Default: True"]
+            'leading_space': [True, "Require one or more leading spaces before escaped newline - Default: True"]
         }
 
         super(HardBreakExtension, self).__init__(*args, **kwargs)

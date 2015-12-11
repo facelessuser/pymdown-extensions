@@ -1,5 +1,5 @@
-# No New Line \
-Will have newline. \
+# No New Line          \
+Will have newline.     \
 Will not have newline. \\
 Will not have newline.\
 Normal line
@@ -15,9 +15,6 @@ line`
 
 foo \
 {: #bar}
-
-<a href="foo \
-bar">link</a>
 
 ###### Headers are Unaffected \
 Last line in paragraph is also unaffected. \
