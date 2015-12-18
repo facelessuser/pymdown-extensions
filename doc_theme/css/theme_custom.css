@@ -7,6 +7,18 @@
   padding: 2px 5px;
 }
 
+.rst-content a code, .rst-content a tt {
+    color: #2980B9;
+}
+
+.rst-content a:hover code, .rst-content a:hover tt {
+    color: #3091d1;
+}
+
+.rst-content a:visited code, .rst-content a:visited tt {
+    color: #9B59B6;
+}
+
 .rst-content div.codehilite {
   margin-bottom: 24px;
   overflow: auto;
@@ -39,6 +51,11 @@
 }
 
 /* Block Quotes */
+.rst-content blockquote {
+  border-left: 4px solid #ddd;
+  padding-left: 12px;
+}
+
 .rst-content cite.quote {
   display: block;
   text-align: right;
