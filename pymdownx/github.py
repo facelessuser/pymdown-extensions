@@ -34,7 +34,6 @@ extensions = [
     'pymdownx.tasklist',
     'pymdownx.headeranchor',
     'pymdownx.superfences',
-    'markdown.extensions.nl2br'
 ]
 
 extension_configs = {
