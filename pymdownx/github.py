@@ -24,6 +24,7 @@ DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
+import warnings
 
 extensions = [
     'markdown.extensions.tables',
@@ -33,7 +34,10 @@ extensions = [
     'pymdownx.githubemoji',
     'pymdownx.tasklist',
     'pymdownx.headeranchor',
-    'pymdownx.superfences',
+    'pymdownx.superfences'
+]
+
+legacy_extensions = [
     'markdown.extensions.nl2br'
 ]
 
@@ -46,14 +50,43 @@ extension_configs = {
     }
 }
 
+legacy_extension_configs = {}
+
 
 class GithubExtension(Extension):
     """Add various extensions to Markdown class."""
 
+    def __init__(self, *args, **kwargs):
+        """Initialize."""
+
+        self.config = {
+            'no_nl2br': [
+                False,
+                "Don't use nl2br extension.  Latest Github Flavored Markdown"
+                " no longer uses the equivalent of nl2br.  In the future, this will be"
+                " defaulted to 'True'. - Default: False"
+            ]
+        }
+        super(GithubExtension, self).__init__(*args, **kwargs)
+
     def extendMarkdown(self, md, md_globals):
         """Register extension instances."""
 
-        md.registerExtensions(extensions, extension_configs)
+        no_nl2br = self.getConfigs()["no_nl2br"]
+        if not no_nl2br:
+            warnings.warn(
+                "The pymdown.github extension has added a new config "
+                "'no_nl2br' which will be defaulted to 'True' in the future."
+                "\nThis is to be compliant with recent Github Flavored Markdown.",
+                FutureWarning
+            )
+
+        exts = extensions if no_nl2br else extensions + legacy_extensions
+        exts_config = extension_configs.copy()
+        if not no_nl2br:
+            exts_config.update(legacy_extension_configs)
+
+        md.registerExtensions(exts, exts_config)
 
 
 def makeExtension(*args, **kwargs):

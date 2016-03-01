@@ -17,7 +17,7 @@ Extensions that get loaded:
 | Extension | Options | Name   |
 |-----------|---------|--------|
 | [Tables](https://pythonhosted.org/Markdown/extensions/tables.html) | | markdown.extensions.tables |
-| [New&nbsp;Line&nbsp;to&nbsp;Break](https://pythonhosted.org/Markdown/extensions/nl2br.html) | | markdown.extensions.nl2b |
+| [New&nbsp;Line&nbsp;to&nbsp;Break](https://pythonhosted.org/Markdown/extensions/nl2br.html)[^nl2br] | | markdown.extensions.nl2b |
 | [magiclink](./magiclink.md)      | | pymdownx.magiclink |
 | [betterem](./betterem.md)        | `#!python {"smart_enable": 'all' }` | pymdownx.betterem |
 | [tilde](./tilde.md)              | `#!python {"subscript": False }` | pymdownx.tilde |
@@ -26,4 +26,10 @@ Extensions that get loaded:
 | [headeranchor](./headeranchor.md)| | pymdownx.headeranchor |
 | [superfences](./superfences.md) | | pymdownx.superfences |
 
+## Options
+| Option    | Type | Default |Description |
+|-----------|------|---------|------------|
+| no_nl2br | bool | False | Don't use `nl2br` extension.  Latest Github Flavored Markdown no longer uses the equivalent of `nl2br`.  In the future, this will be defaulted to 'True'. |
+
 *[GFM]:  Github Flavored Markdown
+[^nl2br]: `nl2br` will not be loaded by default in the future.

@@ -41,6 +41,16 @@ extrarawhtml:
   extensions:
     pymdownx.extrarawhtml:
 
+github:
+  extensions:
+    pymdownx.github:
+      no_nl2br: true
+
+github_legacy:
+  extensions:
+    pymdownx.github:
+      no_nl2br: false
+
 githubemoji:
   extensions:
     pymdownx.githubemoji:
