@@ -1,0 +1,7 @@
+http://foo.com/blah_blah_(wikipedia)_(again)
+
+https://www.example.com/foo/?bar=baz&inga=42&quux
+
+ftp://foo.bar/baz
+
+mailto@unaffected.org

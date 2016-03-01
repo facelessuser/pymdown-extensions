@@ -57,11 +57,14 @@ class MagiclinkPattern(LinkPattern):
         """Handle URL matches."""
 
         el = util.etree.Element("a")
+        el.text = m.group(2)
         if m.group("www"):
             href = "http://%s" % m.group(2)
         else:
             href = m.group(2)
-        el.text = m.group(2)
+            if self.config['hide_protocol']:
+                el.text = el.text[el.text.find("://") + 3:]
+
         el.set("href", self.sanitize_url(self.unescape(href.strip())))
 
         return el
@@ -84,10 +87,24 @@ class MagicMailPattern(LinkPattern):
 class MagiclinkExtension(Extension):
     """Add Easylink extension to Markdown class."""
 
+    def __init__(self, *args, **kwargs):
+        """Initialize."""
+
+        self.config = {
+            'hide_protocol': [
+                False,
+                "If 'True', links are displayed without the initial ftp://, http:// or https://"
+                "- Default: False"
+            ]
+        }
+        super(MagiclinkExtension, self).__init__(*args, **kwargs)
+
     def extendMarkdown(self, md, md_globals):
         """Add support for turning html links and emails to link tags."""
 
-        md.inlinePatterns.add("magic-link", MagiclinkPattern(RE_LINK, md), "<not_strong")
+        link_pattern = MagiclinkPattern(RE_LINK, md)
+        link_pattern.config = self.getConfigs()
+        md.inlinePatterns.add("magic-link", link_pattern, "<not_strong")
         md.inlinePatterns.add("magic-mail", MagicMailPattern(RE_MAIL, md), "<not_strong")
 
 
