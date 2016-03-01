@@ -1,4 +1,4 @@
-http://foo.com/blah_blah_(wikipedia)_(again)
+http://foo.com/blah_blah_wikipedia_again
 
 https://www.example.com/foo/?bar=baz&inga=42&quux
 
