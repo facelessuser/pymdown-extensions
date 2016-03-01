@@ -1,7 +1,7 @@
 site_name: PyMdown Extensions Documentation
 repo_url: https://github.com/facelessuser/pymdown-extensions
 site_description: A Collection of Useful Extensions for Python Markdown
-copyright: Copyright &copy; 2014 - 2015 <a href="https://github.com/facelessuser">Isaac Muse</a>
+copyright: Copyright &copy; 2014 - 2016 <a href="https://github.com/facelessuser">Isaac Muse</a>
 pages:
   - Home: index.md
   - Installation: installation.md
