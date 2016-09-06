@@ -43,7 +43,7 @@ We have two classes to work with:
 | Classes | Description |
 |---------|-------------|
 | headeranchor-link | This is attached to the actual anchor tag that links to the header. |
-| headeranchor | This is the header anchor character you see.  In this case, it is the [link characer from Font Awesome](http://fortawesome.github.io/Font-Awesome/icon/link/). |
+| headeranchor | This is the header anchor character you see.  In this case, it is the [link character from Font Awesome](http://fortawesome.github.io/Font-Awesome/icon/link/). |
 
 The CSS below sets the header tags to be `relative`, and the `headeranchor-link` class to be `absolute`.  We then attach a `:before` pseudo element to the `headeranchor` class with the desired character and position.  We play a little bit with padding and margin so when you hover over the header or where the link is supposed to be, the link appears and is accessible without causing the header position to change.
 
