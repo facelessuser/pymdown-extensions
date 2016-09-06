@@ -273,7 +273,7 @@ class CriticViewPreprocessor(Preprocessor):
             return m.group(0)
 
     def html_escape(self, txt, strip_nl=False):
-        """basic html escaping."""
+        """Basic html escaping."""
 
         txt = txt.replace('&', '&amp;')
         txt = txt.replace('<', '&lt;')

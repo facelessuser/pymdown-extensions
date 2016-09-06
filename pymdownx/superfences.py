@@ -61,7 +61,7 @@ RE_FENCE = re.compile(
 
 
 def _escape(txt):
-    """basic html escaping."""
+    """Basic html escaping."""
 
     txt = txt.replace('&', '&amp;')
     txt = txt.replace('<', '&lt;')
