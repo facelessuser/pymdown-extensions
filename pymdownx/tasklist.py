@@ -34,7 +34,7 @@ RE_CHECKBOX = re.compile(r"^(?P<checkbox> *\[(?P<state>(?:x|X| ){1})\] +)(?P<lin
 def get_checkbox(state):
     """Get checkbox tag."""
 
-    return '<input type="checkbox" disabled%s> ' % (' checked' if state.lower() == 'x' else '')
+    return '<input type="checkbox" disabled%s><label></label> ' % (' checked' if state.lower() == 'x' else '')
 
 
 class TasklistTreeprocessor(Treeprocessor):
