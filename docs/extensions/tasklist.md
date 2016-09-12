@@ -6,6 +6,12 @@ Github style tasklists.
 ## Overview
 The Tasklist extension adds GFM style checkbox lists.  They follow the same syntax as GFM.
 
+## Options
+
+| Option    | Type | Default | Description |
+|-----------|------|---------|-------------|
+| custom_checkbox | bool | False | Inserts an empty `label` tag after the `input` tag to allow styling the checkbox with CSS. |
+
 ## Examples
 
 ```
@@ -37,12 +43,15 @@ Task List
 - [ ] item 3
 
 # CSS
-The HTML structure of tasklists is as follows:
+The HTML structure of tasklists is found below.  It should be noted that there is an empty label tag after the input. 
+The empty tag is only included when `custom_checkbox` is set to `true`, and it is included to facilitate more advanced 
+styling with webfonts, images, etc.
 
 ```html
 <ul class="task-list">
     <li class="task-list-item">
-        <input type="checkbox" disabled="" checked="">
+        <!-- label tag is optional and is only included when 'custom_checkbox' is 'true' -->
+        <input type="checkbox" disabled="" checked=""><label></label>
         item 1
     </li>
 </ul>
@@ -65,5 +74,53 @@ In order to style these we mainly remove the list type style and adjust the marg
   vertical-align: middle;
 }
 ```
+
+If custom checkbox icons are desired, they can be configured as shown below. The example will utilize Unicode check marks.
+
+```css
+.markdown-body .task-list-item {
+  position: relative;
+}
+
+.markdown-body .task-list-item input[type="checkbox"] {
+  opacity: 0;
+}
+
+.markdown-body .task-list-item input[type="checkbox"] + label {
+  display: block;
+  position: absolute;
+  top: 4px;
+  left: -24px;
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  background: #CCC;
+}
+
+.markdown-body .task-list-item input[type="checkbox"]:checked + label::before {
+  display: block;
+  margin-top: -4px;
+  margin-left: 2px;
+  font-size: 1.2em;
+  line-height: 1;
+  border-radius: 2px;
+  content: "✔";
+  color: #1EBB52;
+}
+```
+
+<div class="custom-task-list" markdown="1">
+- [X] item 1
+    * [X] item A
+    * [ ] item B
+        more text
+        + [x] item a
+        + [ ] item b
+        + [x] item c
+    * [X] item C
+- [ ] item 2
+- [ ] item 3
+</div>
+
 
 *[GFM]: Github Flavored Markdown

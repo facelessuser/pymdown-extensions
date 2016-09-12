@@ -31,10 +31,13 @@ import re
 RE_CHECKBOX = re.compile(r"^(?P<checkbox> *\[(?P<state>(?:x|X| ){1})\] +)(?P<line>.*)")
 
 
-def get_checkbox(state):
+def get_checkbox(state, custom_checkbox=False):
     """Get checkbox tag."""
 
-    return '<input type="checkbox" disabled%s><label></label> ' % (' checked' if state.lower() == 'x' else '')
+    return '<input type="checkbox" disabled%s>%s ' % (
+        (' checked' if state.lower() == 'x' else ''),
+        ('<label></label>' if custom_checkbox else '')
+    )
 
 
 class TasklistTreeprocessor(Treeprocessor):
@@ -47,7 +50,7 @@ class TasklistTreeprocessor(Treeprocessor):
         m = RE_CHECKBOX.match(li.text)
         if m is not None:
             li.text = self.markdown.htmlStash.store(
-                get_checkbox(m.group('state')),
+                get_checkbox(m.group('state'), self.custom_checkbox),
                 safe=True
             ) + m.group('line')
             found = True
@@ -63,7 +66,7 @@ class TasklistTreeprocessor(Treeprocessor):
                 m = RE_CHECKBOX.match(first.text)
                 if m is not None:
                     first.text = self.markdown.htmlStash.store(
-                        get_checkbox(m.group('state')),
+                        get_checkbox(m.group('state'), self.custom_checkbox),
                         safe=True
                     ) + m.group('line')
                     found = True
@@ -72,6 +75,7 @@ class TasklistTreeprocessor(Treeprocessor):
     def run(self, root):
         """Find list items that start with [ ] or [x] or [X]."""
 
+        self.custom_checkbox = bool(self.config["custom_checkbox"])
         parent_map = dict((c, p) for p in root.iter() for c in p)
         task_items = []
         lilinks = root.iter('li')
@@ -102,11 +106,26 @@ class TasklistTreeprocessor(Treeprocessor):
 class TasklistExtension(Extension):
     """Tasklist extension."""
 
+    def __init__(self, *args, **kwargs):
+        """Initialize."""
+
+        self.config = {
+            'custom_checkbox': [
+                False,
+                "Add an empty label tag after the input tag to allow for custom styling - Default: False"
+            ],
+            'delete': [True, "Enable delete - Default: True"],
+            'subscript': [True, "Enable subscript - Default: True"]
+        }
+
+        super(TasklistExtension, self).__init__(*args, **kwargs)
+
     def extendMarkdown(self, md, md_globals):
         """Add GithubChecklistsTreeprocessor to Markdown instance."""
 
-        ghckl = TasklistTreeprocessor(md)
-        md.treeprocessors.add("task-list", ghckl, ">inline")
+        tasklist = TasklistTreeprocessor(md)
+        tasklist.config = self.getConfigs()
+        md.treeprocessors.add("task-list", tasklist, ">inline")
         md.registerExtension(self)
 
 

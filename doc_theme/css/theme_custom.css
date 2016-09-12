@@ -158,6 +158,40 @@
   vertical-align: middle;
 }
 
+.rst-content .task-list input[type="checkbox"] + label {
+  display: inline;
+}
+
+.rst-content .custom-task-list .task-list-item {
+  position: relative;
+}
+
+.rst-content .custom-task-list .task-list-item input[type="checkbox"] {
+  opacity: 0;
+}
+
+.rst-content .custom-task-list .task-list-item input[type="checkbox"] + label {
+  display: block;
+  position: absolute;
+  top: 4px;
+  left: -24px;
+  width: 14px;
+  height: 14px;
+  border-radius: 2px;
+  background: #CCC;
+}
+
+.rst-content .custom-task-list .task-list-item input[type="checkbox"]:checked + label::before {
+  display: block;
+  margin-top: -4px;
+  margin-left: 2px;
+  font-size: 1.2em;
+  line-height: 1;
+  border-radius: 2px;
+  content: "✔";
+  color: #1EBB52;
+}
+
 .rst-content li>p {
   margin: 12px 0;
 }

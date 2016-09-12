@@ -48,7 +48,8 @@ markdown_extensions:
   - pymdownx.caret
   - pymdownx.smartsymbols
   - pymdownx.githubemoji
-  - pymdownx.tasklist
+  - pymdownx.tasklist:
+      custom_checkbox: true
   - pymdownx.progressbar
   - pymdownx.headeranchor:
       slugify: !!python/name:pymdownx.headeranchor.uslugify

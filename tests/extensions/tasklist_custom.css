@@ -1,0 +1,38 @@
+.markdown-body .task-list-item {
+  list-style-type: none;
+}
+
+.markdown-body .task-list-item input {
+  margin: 0 4px 0.25em -20px;
+  vertical-align: middle;
+}
+
+.markdown-body .task-list-item {
+  position: relative;
+}
+
+.markdown-body .task-list-item input[type="checkbox"] {
+  opacity: 0;
+}
+
+.markdown-body .task-list-item input[type="checkbox"] + label {
+  display: block;
+  position: absolute;
+  top: 4px;
+  left: -24px;
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  background: #CCC;
+}
+
+.markdown-body .task-list-item input[type="checkbox"]:checked + label::before {
+  display: block;
+  margin-top: -4px;
+  margin-left: 2px;
+  font-size: 1.2em;
+  line-height: 1;
+  border-radius: 2px;
+  content: "✔";
+  color: #1EBB52;
+}

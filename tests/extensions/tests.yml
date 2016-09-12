@@ -170,6 +170,13 @@ tasklist:
   extensions:
     pymdownx.tasklist:
 
+tasklist (custom):
+  css:
+    - tasklist_custom.css
+  extensions:
+    pymdownx.tasklist:
+      custom_checkbox: true
+
 tilde:
   extensions:
     pymdownx.tilde:
