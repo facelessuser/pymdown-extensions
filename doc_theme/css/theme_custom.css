@@ -153,39 +153,45 @@
   list-style-type: none !important;
 }
 
-.rst-content .task-list-item input {
+.rst-content .task-list-item input[type="checkbox"] {
   margin: 0 4px 0.25em -20px;
   vertical-align: middle;
 }
 
-.rst-content .task-list input[type="checkbox"] + label {
-  display: inline;
+.rst-content .task-list-control {
+  display: inline; /* Ensure label is inline incase theme sets it to block.*/
 }
 
-.rst-content .custom-task-list .task-list-item {
+.rst-content .custom-task-list .task-list-control {
   position: relative;
+  display: inline-block;
+  color: #555;
+  cursor: pointer;
 }
 
-.rst-content .custom-task-list .task-list-item input[type="checkbox"] {
-  opacity: 0;
-}
-
-.rst-content .custom-task-list .task-list-item input[type="checkbox"] + label {
-  display: block;
+.rst-content .custom-task-list .task-list-control input[type="checkbox"] {
   position: absolute;
-  top: 4px;
-  left: -24px;
-  width: 14px;
-  height: 14px;
-  border-radius: 2px;
-  background: #CCC;
+  opacity: 0;
+  z-index: -1; /* Put the input behind the label so it doesn't overlay text */
 }
 
-.rst-content .custom-task-list .task-list-item input[type="checkbox"]:checked + label::before {
+.rst-content .custom-task-list .task-list-indicator {
+  position: absolute;
+  top: -8px;
+  left: -18px;
+  display: block;
+  width:  14px;
+  height: 14px;
+  color: #eee;
+  background-color: #eee;
+  border-radius: .25rem;
+}
+
+.rst-content .custom-task-list .task-list-control input[type="checkbox"]:checked + .task-list-indicator::before {
   display: block;
   margin-top: -4px;
   margin-left: 2px;
-  font-size: 1.2em;
+  font-size: 16px;
   line-height: 1;
   border-radius: 2px;
   content: "✔";

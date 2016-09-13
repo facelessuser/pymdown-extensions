@@ -2,35 +2,41 @@
   list-style-type: none;
 }
 
-.markdown-body .task-list-item input {
+.markdown-body .task-list-item input[type="checkbox"] {
   margin: 0 4px 0.25em -20px;
   vertical-align: middle;
 }
 
-.markdown-body .task-list-item {
+.markdown-body .task-list-control {
   position: relative;
+  display: inline-block;
+  color: #555;
+  cursor: pointer;
 }
 
-.markdown-body .task-list-item input[type="checkbox"] {
-  opacity: 0;
-}
-
-.markdown-body .task-list-item input[type="checkbox"] + label {
-  display: block;
+.markdown-body .task-list-control input[type="checkbox"] {
   position: absolute;
-  top: 4px;
-  left: -24px;
-  width: 16px;
-  height: 16px;
-  border-radius: 2px;
-  background: #CCC;
+  opacity: 0;
+  z-index: -1; /* Put the input behind the label so it doesn't overlay text */
 }
 
-.markdown-body .task-list-item input[type="checkbox"]:checked + label::before {
+.markdown-body .task-list-indicator {
+  position: absolute;
+  top: -8px;
+  left: -18px;
+  display: block;
+  width:  14px;
+  height: 14px;
+  color: #eee;
+  background-color: #eee;
+  border-radius: .25rem;
+}
+
+.markdown-body .task-list-control input[type="checkbox"]:checked + .task-list-indicator::before {
   display: block;
   margin-top: -4px;
   margin-left: 2px;
-  font-size: 1.2em;
+  font-size: 16px;
   line-height: 1;
   border-radius: 2px;
   content: "✔";
