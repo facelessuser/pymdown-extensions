@@ -6,7 +6,7 @@
 ![License][license-image-mit]
 ![License][license-image-bsd]
 # PyMdown Extra Extensions
-Extensions for [Python Markdown](https://pythonhosted.org/Markdown/).  Written for the [PyMdown project](https://github.com/facelessuser/PyMdown).
+Extensions for [Python Markdown](https://pythonhosted.org/Markdown/).
 
 # Documentation
 Extension documentation is found at the PyMdown site: http://facelessuser.github.io/pymdown-extensions/.

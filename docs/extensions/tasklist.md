@@ -141,7 +141,6 @@ the control is checked.  This can be adapted to use webfonts, images, etc.
   margin-left: 2px;
   font-size: 16px;
   line-height: 1;
-  border-radius: 2px;
   content: "✔";
   color: #1EBB52;
 }
