@@ -1,3 +1,4 @@
 PyYAML>=3.10
-nose
+pytest
+pytest-cov
 coverage

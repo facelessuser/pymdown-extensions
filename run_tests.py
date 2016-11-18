@@ -14,8 +14,8 @@ def main():
 
     # Format and Viewing
     if args.update or args.force_update:
-        for cmd, config, test in tests.test_extensions():
-            cmd(config, test, True, args.force_update)
+        for config, test in tests.test_extensions():
+            tests.compare_results(config, test, True, args.force_update)
     else:
         tests.run()
 

@@ -35,4 +35,5 @@ def _version():
 
     return ''.join((main, prerel, postrel))
 
+
 version = _version()

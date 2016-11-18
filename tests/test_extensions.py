@@ -4,7 +4,7 @@ import os
 import markdown
 import difflib
 import codecs
-import nose
+import pytest
 import copy
 from . import util
 
@@ -95,8 +95,8 @@ def check_markdown(testfile, extension, extension_config, wrapper):
         )
 
 
-def test_extensions():
-    """Test extensions."""
+def gather_test_params():
+    """Gather the test parameters."""
 
     for filename in os.listdir(CURRENT_DIR):
         directory = os.path.join(CURRENT_DIR, filename)
@@ -128,10 +128,23 @@ def test_extensions():
                                                 '{{RELATIVE}}', os.path.join(CURRENT_DIR)
                                             )
                                 test_cfg[k][k1] = v1
-                        yield compare_results, test_cfg, os.path.join(directory, testfile)
+                        yield test_cfg, os.path.join(directory, testfile)
+
+
+def pytest_generate_tests(metafunc):
+    """Generate tests."""
+
+    if "compare" in metafunc.funcargnames:
+        metafunc.parametrize("compare", gather_test_params())
+
+
+def test_extensions(compare):
+    """Test extensions."""
+
+    compare_results(*compare)
 
 
 def run():
-    """Run nosetests."""
+    """Run pytest."""
 
-    nose.main()
+    pytest.main()
