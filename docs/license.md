@@ -27,35 +27,34 @@ SOFTWARE.
 -----------------------------
 superfences.py is derived from Python Markdown's fenced_code extension.
 
-Fenced Code Extension for Python Markdown
- =========================================
-This extension adds Fenced Code Blocks to Python-Markdown.
+Fenced Code Extension for Python Markdown  
+ =========================================  
+This extension adds Fenced Code Blocks to Python-Markdown.  
 See <https://pythonhosted.org/Markdown/extensions/fenced_code_blocks.html>
 for documentation.
-Original code Copyright 2007-2008 [Waylan Limberg](http://achinghead.com/).
-All changes Copyright 2008-2014 The Python Markdown Project
+Original code Copyright 2007-2008 [Waylan Limberg](http://achinghead.com/).  
+All changes Copyright 2008-2014 The Python Markdown Project  
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 
 ------------------------------
 inlinehilite.py is derived from Python Markdown's codehilite extension.
 
-CodeHilite Extension for Python-Markdown
- ========================================
-Adds code/syntax highlighting to standard Python-Markdown code blocks.
+CodeHilite Extension for Python-Markdown  
+ ========================================  
+Adds code/syntax highlighting to standard Python-Markdown code blocks.  
 See <https://pythonhosted.org/Markdown/extensions/code_hilite.html>
-for documentation.
-Original code Copyright 2006-2008 [Waylan Limberg](http://achinghead.com/).
-All changes Copyright 2008-2014 The Python Markdown Project
+for documentation.  
+Original code Copyright 2006-2008 [Waylan Limberg](http://achinghead.com/).  
+All changes Copyright 2008-2014 The Python Markdown Project  
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 
 ------------------------------
-extrarawhtml.py is a literal copy and paste from Python Markdown's extra extension.
-It basically splits out the raw html markdown parsing into a seprate extension that can
-be used even if it is not desired to use all of 'extra'.
+extrarawhtml.py is a literal copy and paste from Python Markdown's extra extension.  
+It basically splits out the raw html markdown parsing into a seprate extension that can be used even if it is not desired to use all of 'extra'.
 
-Python-Markdown Extra Extension
- ===============================
+Python-Markdown Extra Extension  
+ ===============================  
 See <https://pythonhosted.org/Markdown/extensions/extra.html>
-for documentation.
-Copyright The Python Markdown Project
+for documentation.  
+Copyright The Python Markdown Project  
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)

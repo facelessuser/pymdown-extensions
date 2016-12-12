@@ -25,3 +25,4 @@ Extensions:
 | [headeranchor](./headeranchor.md)| | pymdownx.headeranchor |
 | [superfences](./superfences.md)  | | pymdownx.superfences |
 | [arithmatex](./arithmatex.md)    | | pymdownx.arithmatex |
+| [hardbreak](./hardbreak.md)      | | pymdownx.hardbreak |

@@ -1,0 +1,23 @@
+# No New Line\
+Will have newline.\
+Will have newline. \
+Will not have newline.\\
+Normal line
+
+Will have **new\
+line**.
+
+`Will not have new\
+line`
+
+- Test test.\
+    More text.
+
+foo\
+{: #bar}
+
+###### Headers are Unaffected\
+Last line in paragraph is also unaffected.\
+
+c:\Some\path\\
+and c:\Some\other\path\\

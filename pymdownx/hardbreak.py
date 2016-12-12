@@ -1,13 +1,11 @@
 """
-PyMdown.
+HardBreak.
 
-pymdownx.pymdown
-Import all of the pymdown plugins
-(except for those that wouldn't regularly be used).
+pymdownx.hardbreak
 
 MIT license.
 
-Copyright (c) 2014 - 2015 Isaac Muse <isaacmuse@gmail.com>
+Copyright (c) 2015 Isaac Muse <isaacmuse@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
 documentation files (the "Software"), to deal in the Software without restriction, including without limitation
@@ -24,37 +22,38 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
-from markdown import Extension
+from markdown.extensions import Extension
+from markdown.inlinepatterns import SubstituteTagPattern
 
-extensions = [
-    'pymdownx.magiclink',
-    'pymdownx.betterem',
-    'pymdownx.tilde',
-    'pymdownx.caret',
-    'pymdownx.mark',
-    'pymdownx.smartsymbols',
-    'pymdownx.githubemoji',
-    'pymdownx.tasklist',
-    'pymdownx.progressbar',
-    'pymdownx.headeranchor',
-    'pymdownx.superfences',
-    'pymdownx.arithmatex',
-    'pymdownx.hardbreak'
-]
-
-extension_configs = {}
+HARDBREAK_RE = r'%s\\\n'
+LEADING_SPACE_RE = r' +'
 
 
-class PyMdownExtension(Extension):
-    """Add various extensions to Markdown class."""
+class HardBreakExtension(Extension):
+    """
+    HardBreak extension.
+
+    Inserts a hard line break if the newline is escaped.
+    """
+
+    def __init__(self, *args, **kwargs):
+        """Initialize."""
+
+        self.config = {
+            'leading_space': [True, "Require one or more leading spaces before escaped newline - Default: True"]
+        }
+
+        super(HardBreakExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
-        """Register extension instances."""
+        """Extend markdown object with hardbreak."""
 
-        md.registerExtensions(extensions, extension_configs)
+        config = self.getConfigs()
+        regex = HARDBREAK_RE % (LEADING_SPACE_RE if config.get('leading_space', True) else '')
+        md.inlinePatterns.add('hardbreak', SubstituteTagPattern(regex, 'br'), '>linebreak')
 
 
 def makeExtension(*args, **kwargs):
     """Return extension."""
 
-    return PyMdownExtension(*args, **kwargs)
+    return HardBreakExtension(*args, **kwargs)
