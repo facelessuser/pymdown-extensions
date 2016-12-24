@@ -56,3 +56,5 @@ target/
 tools/emoji.md
 
 site/*
+
+tools/tags/*

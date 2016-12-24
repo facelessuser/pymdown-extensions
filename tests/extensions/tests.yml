@@ -44,7 +44,6 @@ extrarawhtml:
 github:
   extensions:
     pymdownx.github:
-      no_nl2br: true
 
 github_legacy:
   extensions:
@@ -54,6 +53,59 @@ github_legacy:
 githubemoji:
   extensions:
     pymdownx.githubemoji:
+
+gemoji (png):
+  extensions:
+    pymdownx.emoji:
+      emoji_index: gemoji
+      unicode_alt: false
+      options:
+        attributes:
+          align: absmiddle
+          height: 20px
+          width: 20px
+
+gemoji (entities):
+  extensions:
+    pymdownx.emoji:
+      emoji_index: gemoji
+      emoji_generator: !!python/name:pymdownx.emoji.to_html_entities
+
+emoji1 (awesome):
+  extensions:
+    pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_awesome
+
+emoji1 (entities):
+  extensions:
+    pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_html_entities
+      remove_variation_selector: True
+
+emoji1 (png):
+  css:
+    - https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/css/emojione.min.css
+  extensions:
+    pymdownx.emoji:
+
+emoji1 (png sprite):
+  css:
+    - https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/sprites/emojione.sprites.css
+  extensions:
+    pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_png_sprite
+
+emoji1 (svg):
+  css:
+    - https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/css/emojione.min.css
+  extensions:
+    pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+
+emoji1 (svg sprite):
+  extensions:
+    pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg_sprite
 
 headeranchor:
   css:

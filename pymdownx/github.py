@@ -31,7 +31,7 @@ extensions = [
     'pymdownx.magiclink',
     'pymdownx.betterem',
     'pymdownx.tilde',
-    'pymdownx.githubemoji',
+    'pymdownx.emoji',
     'pymdownx.tasklist',
     'pymdownx.headeranchor',
     'pymdownx.superfences'
@@ -47,6 +47,17 @@ extension_configs = {
     },
     "pymdownx.betterem": {
         "smart_enable": "all"
+    },
+    "pymdownx.emoji": {
+        "emoji_index": "gemoji",
+        "unicode_alt": False,
+        "options": {
+            "attributes": {
+                "align": "absmiddle",
+                "height": "20px",
+                "width": "20px"
+            }
+        }
     }
 }
 
@@ -61,7 +72,7 @@ class GithubExtension(Extension):
 
         self.config = {
             'no_nl2br': [
-                False,
+                True,
                 "Don't use nl2br extension.  Latest Github Flavored Markdown"
                 " no longer uses the equivalent of nl2br.  In the future, this will be"
                 " defaulted to 'True'. - Default: False"
@@ -75,9 +86,9 @@ class GithubExtension(Extension):
         no_nl2br = self.getConfigs()["no_nl2br"]
         if not no_nl2br:
             warnings.warn(
-                "The pymdown.github extension has added a new config "
-                "'no_nl2br' which will be defaulted to 'True' in the future."
-                "\nThis is to be compliant with recent Github Flavored Markdown.",
+                "The pymdown.github extension does not enable nl2br anymore by default."
+                "\nThis is to be compliant with recent Github Flavored Markdown."
+                "\n'no_nl2br' is deprecated and will be removed in a future version.",
                 FutureWarning
             )
 
