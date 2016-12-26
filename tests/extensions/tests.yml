@@ -57,7 +57,7 @@ githubemoji:
 gemoji (png):
   extensions:
     pymdownx.emoji:
-      emoji_index: gemoji
+      emoji_index: !!python/name:pymdownx.emoji.gemoji
       unicode_alt: false
       options:
         attributes:
@@ -68,7 +68,7 @@ gemoji (png):
 gemoji (entities):
   extensions:
     pymdownx.emoji:
-      emoji_index: gemoji
+      emoji_index: !!python/name:pymdownx.emoji.gemoji
       emoji_generator: !!python/name:pymdownx.emoji.to_html_entities
 
 emoji1 (awesome):

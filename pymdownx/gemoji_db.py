@@ -40,6 +40,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 """
 version = "v3.0.0"
+name = "gemoji"
 emoji = {
     ":+1:": {
         "name": "thumbs up",
@@ -7346,3 +7347,7 @@ aliases = {
     ":walking:": ":walking_man:",
     ":waxing_gibbous_moon:": ":moon:"
 }
+
+
+def get_emoji_map():
+    return {"name": name, "emoji": emoji, "aliases": alias}

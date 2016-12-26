@@ -1,11 +1,13 @@
 """Emojione autogen.
 
 Generated from emojione source. Do not edit by hand.
+
 MIT license.
 
 Copyright (c) http://www.emojione.com
 """
 version = "v2.2.7"
+name = "emojione"
 emoji = {
     ":100:": {
         "name": "hundred points symbol",

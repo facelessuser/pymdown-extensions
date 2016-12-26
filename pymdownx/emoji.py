@@ -49,28 +49,49 @@ def add_attriubtes(options, attributes):
             attributes[k] = v
 
 
+def emojione():
+    """Emojione index."""
+
+    from . import emoji1_db as emoji_map
+    return {"name": emoji_map.name, "emoji": emoji_map.emoji, "aliases": emoji_map.aliases}
+
+
+def gemoji():
+    """gemoji_index index."""
+
+    from . import gemoji_db as emoji_map
+    return {"name": emoji_map.name, "emoji": emoji_map.emoji, "aliases": emoji_map.aliases}
+
+
 ###################
 # Converters
 ###################
-def to_png(self, shortname, alias, uc, alt, title):
+def to_png(index, shortname, alias, uc, alt, title, options, md):
     """Return png element."""
 
-    if self.index_name == 'gemoji':
-        is_unicode = uc is not None
-        classes = self.options.get('classes', 'gemoji')
-
-        # In genral we can use the alias, but github specific images don't have one for each alias.
-        # We can tell we have a github specific if there is no Unicode value.
-        src = "%s%s.png" % (
-            self.options.get('image_path', GITHUB_UNICODE_CDN if is_unicode else GITHUB_CDN),
-            uc if is_unicode else shortname[1:-1]
-        )
+    if index == 'gemoji':
+        def_image_path = GITHUB_UNICODE_CDN
+        def_non_std_image_path = GITHUB_CDN
+        def_classes = 'gemoji'
     else:
-        classes = self.options.get('classes', 'emojione')
-        src = "%s%s.png" % (
-            self.options.get('image_path', EMOJIONE_PNG_CDN),
-            uc
-        )
+        def_image_path = EMOJIONE_PNG_CDN
+        def_non_std_image_path = EMOJIONE_PNG_CDN
+        def_classes = 'emojione'
+
+    is_unicode = uc is not None
+    classes = options.get('classes', def_classes)
+
+    # In genral we can use the alias, but github specific images don't have one for each alias.
+    # We can tell we have a github specific if there is no Unicode value.
+    if is_unicode:
+        image_path = options.get('image_path', def_image_path)
+    else:
+        image_path = options.get('non_standard_image_path', def_non_std_image_path)
+
+    src = "%s%s.png" % (
+        image_path,
+        uc if is_unicode else shortname[1:-1]
+    )
 
     attributes = {
         "class": classes,
@@ -81,19 +102,19 @@ def to_png(self, shortname, alias, uc, alt, title):
     if title:
         attributes['title'] = title
 
-    add_attriubtes(self.options, attributes)
+    add_attriubtes(options, attributes)
 
     return util.etree.Element("img", attributes)
 
 
-def to_svg(self, shortname, alias, uc, alt, title):
+def to_svg(index, shortname, alias, uc, alt, title, options, md):
     """Return svg element."""
 
     attributes = {
-        "class": self.options.get('classes', 'emojione'),
+        "class": options.get('classes', 'emojione'),
         "alt": alt,
         "src": "%s%s.svg" % (
-            self.options.get('image_path', EMOJIONE_SVG_CDN),
+            options.get('image_path', EMOJIONE_SVG_CDN),
             uc
         )
     }
@@ -101,17 +122,17 @@ def to_svg(self, shortname, alias, uc, alt, title):
     if title:
         attributes['title'] = title
 
-    add_attriubtes(self.options, attributes)
+    add_attriubtes(options, attributes)
 
     return util.etree.Element("img", attributes)
 
 
-def to_png_sprite(self, shortname, alias, uc, alt, title):
+def to_png_sprite(index, shortname, alias, uc, alt, title, options, md):
     """Return png sprite element."""
 
     attributes = {
         "class": '%(class)s-%(unicode)s' % {
-            "class": self.options.get('classes', 'emojione emojione'),
+            "class": options.get('classes', 'emojione emojione'),
             "unicode": uc
         }
     }
@@ -119,7 +140,7 @@ def to_png_sprite(self, shortname, alias, uc, alt, title):
     if title:
         attributes['title'] = title
 
-    add_attriubtes(self.options, attributes)
+    add_attriubtes(options, attributes)
 
     el = util.etree.Element("span", attributes)
     el.text = alt
@@ -127,36 +148,36 @@ def to_png_sprite(self, shortname, alias, uc, alt, title):
     return el
 
 
-def to_svg_sprite(self, shortname, alias, uc, alt, title):
+def to_svg_sprite(index, shortname, alias, uc, alt, title, options, md):
     """Return svg sprite element."""
 
     html = EMOJIONE_SVG_SPRITE_TAG % {
-        "classes": self.options.get('classes', 'emojione'),
+        "classes": options.get('classes', 'emojione'),
         "alt": alt,
-        "sprite": self.options.get('image_path', './../assets/sprites/emojione.sprites.svg'),
+        "sprite": options.get('image_path', './../assets/sprites/emojione.sprites.svg'),
         "unicode": uc
     }
 
-    return self.markdown.htmlStash.store(html, safe=True)
+    return md.htmlStash.store(html, safe=True)
 
 
-def to_awesome(self, shortname, alias, uc, alt, title):
+def to_awesome(index, shortname, alias, uc, alt, title, options, md):
     """
     Return "awesome style element for "font-awesome" format.
 
     See: https://github.com/Ranks/emojione/tree/master/lib/emojione-awesome.
     """
 
-    classes = '%s-%s' % (self.options.get('classes', 'e1a'), shortname[1:-1])
+    classes = '%s-%s' % (options.get('classes', 'e1a'), shortname[1:-1])
     attributes = {"class": classes}
-    add_attriubtes(self.options, attributes)
+    add_attriubtes(options, attributes)
     return util.etree.Element("i", attributes)
 
 
-def to_html_entities(self, shortname, alias, uc, alt, title):
+def to_html_entities(index, shortname, alias, uc, alt, title, options, md):
     """Return html entities."""
 
-    return self.markdown.htmlStash.store(alt, safe=True)
+    return md.htmlStash.store(alt, safe=True)
 
 
 ###################
@@ -165,16 +186,13 @@ def to_html_entities(self, shortname, alias, uc, alt, title):
 class EmojiPattern(Pattern):
     """Return element of type `tag` with a text attribute of group(3) of a Pattern."""
 
-    def __init__(self, pattern, index, generator, remove_var_sel, unicode_alt, title, options, md):
+    def __init__(
+        self, pattern, index, generator, remove_var_sel,
+        unicode_alt, title, options, md
+    ):
         """Initialize."""
 
-        if index == 'gemoji':
-            import pymdownx.gemoji_db
-            self.emoji_index = pymdownx.gemoji_db
-        elif index == 'emojione':
-            import pymdownx.emoji1_db
-            self.emoji_index = pymdownx.emoji1_db
-        self.index_name = index
+        self._set_index(index)
         self.markdown = md
         self.unicode_alt = unicode_alt
         self.remove_var_sel = remove_var_sel
@@ -182,6 +200,11 @@ class EmojiPattern(Pattern):
         self.generator = generator
         self.options = options
         Pattern.__init__(self, pattern)
+
+    def _set_index(self, index):
+        """Set the index."""
+
+        self.emoji_index = index()
 
     def _remove_variation_selector(self, value):
         """Remove variation selectors."""
@@ -236,7 +259,7 @@ class EmojiPattern(Pattern):
     def _get_alt(self, shortname, uc_alt):
         """Get alt form."""
 
-        if self.index_name == 'gemoji' and uc_alt is None:
+        if self.emoji_index['name'] == 'gemoji' and uc_alt is None:
             alt = shortname
         else:
             alt = self._get_entity(uc_alt)
@@ -246,19 +269,20 @@ class EmojiPattern(Pattern):
         """Hanlde emoji pattern matches."""
 
         el = m.group(2)
-        shortname = self.emoji_index.aliases.get(el, None)
+
+        shortname = self.emoji_index['aliases'].get(el, None)
         if shortname is None:
             shortname = el
             alias = None
         else:
             alias = el
 
-        emoji = self.emoji_index.emoji.get(shortname, None)
+        emoji = self.emoji_index['emoji'].get(shortname, None)
         if emoji:
             uc, uc_alt = self._get_unicode(emoji)
             title = self._get_title(el, emoji)
             alt = self._get_alt(el, uc_alt)
-            el = self.generator(self, shortname, alias, uc, alt, title)
+            el = self.generator(self.emoji_index['name'], shortname, alias, uc, alt, title, self.options, self.markdown)
 
         return el
 
@@ -271,8 +295,8 @@ class EmojiExtension(Extension):
 
         self.config = {
             'emoji_index': [
-                "emojione",
-                "Emoji to use (emojione or gemoji). - Default: 'emojione'"
+                emojione,
+                "Function that returns the desired emoji index. - Default: 'pymdownx.emoji.emojione'"
             ],
             'emoji_generator': [
                 to_png,
@@ -311,7 +335,10 @@ class EmojiExtension(Extension):
 
         md.inlinePatterns.add(
             "emoji",
-            EmojiPattern(RE_EMOJI, emoji_index, generator, remove_var_sel, unicode_alt, title, options, md),
+            EmojiPattern(
+                RE_EMOJI, emoji_index, generator, remove_var_sel,
+                unicode_alt, title, options, md
+            ),
             "<not_strong"
         )
 

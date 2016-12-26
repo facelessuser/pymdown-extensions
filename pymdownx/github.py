@@ -25,6 +25,7 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import unicode_literals
 from markdown import Extension
 import warnings
+from . import emoji
 
 extensions = [
     'markdown.extensions.tables',
@@ -49,7 +50,7 @@ extension_configs = {
         "smart_enable": "all"
     },
     "pymdownx.emoji": {
-        "emoji_index": "gemoji",
+        "emoji_index": emoji.gemoji,
         "unicode_alt": False,
         "options": {
             "attributes": {
