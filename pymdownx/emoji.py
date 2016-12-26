@@ -72,14 +72,12 @@ def to_png(index, shortname, alias, uc, alt, title, options, md):
     if index == 'gemoji':
         def_image_path = GITHUB_UNICODE_CDN
         def_non_std_image_path = GITHUB_CDN
-        def_classes = 'gemoji'
     else:
         def_image_path = EMOJIONE_PNG_CDN
         def_non_std_image_path = EMOJIONE_PNG_CDN
-        def_classes = 'emojione'
 
     is_unicode = uc is not None
-    classes = options.get('classes', def_classes)
+    classes = options.get('classes', index)
 
     # In genral we can use the alias, but github specific images don't have one for each alias.
     # We can tell we have a github specific if there is no Unicode value.
@@ -111,7 +109,7 @@ def to_svg(index, shortname, alias, uc, alt, title, options, md):
     """Return svg element."""
 
     attributes = {
-        "class": options.get('classes', 'emojione'),
+        "class": options.get('classes', index),
         "alt": alt,
         "src": "%s%s.svg" % (
             options.get('image_path', EMOJIONE_SVG_CDN),
@@ -132,7 +130,7 @@ def to_png_sprite(index, shortname, alias, uc, alt, title, options, md):
 
     attributes = {
         "class": '%(class)s-%(unicode)s' % {
-            "class": options.get('classes', 'emojione emojione'),
+            "class": options.get('classes', '%s %s' % (index, index)),
             "unicode": uc
         }
     }
@@ -152,7 +150,7 @@ def to_svg_sprite(index, shortname, alias, uc, alt, title, options, md):
     """Return svg sprite element."""
 
     html = EMOJIONE_SVG_SPRITE_TAG % {
-        "classes": options.get('classes', 'emojione'),
+        "classes": options.get('classes', index),
         "alt": alt,
         "sprite": options.get('image_path', './../assets/sprites/emojione.sprites.svg'),
         "unicode": uc
@@ -221,28 +219,26 @@ class EmojiPattern(Pattern):
         Get Unicode and Unicode alt.
 
         Unicode: This is the stripped down form of the Unicode, no joining chars and no variation chars.
-            Unicode is not always valid.  If there is no alternative form, Unicode can be counted on as
-            valid.  For the most part, this should be used to reference files, or create classes, but
-            for inserting actual Unicode, you should use alt.
+            Unicode code points are not always valid.  If this is present and there is no 'unicode_alt',
+            Unicode code points can be counted on as valid.  For the most part, the returned `uc` should
+            be used to reference image files, or create classes, but for inserting actual Unicode, 'uc_alt'
+            should be used.
 
-        Unicode Alt: When not blank, this will always be valid.  This is what you would use to insert an
-            actual Unicode char. This contains not just the needed characters, but the formatting as well.
-            Joining characters and variation characters will be present. If you don't want variation chars,
-            enable the global 'remove_variation_selector' option.
+        Unicode Alt: When present, this will always be valid Unicode points.  This contains not just the
+            needed characters to identify the Unicode emoji, but the formatting as well. Joining characters
+            and variation characters will be present. If you don't want variation chars, enable the global
+            'remove_variation_selector' option.
 
         If using gemoji, it is possible you will get no Unicode and no Unicode alt.  This occurs with emoji
-        like :octocat:.  It's not a real emoji.  But it is provided by gememoji anyways.
+        like :octocat:.  :octocat: is not a real emoji and has no Unicode code points, but it is provided by
+        gememoji as an emoji anyways.
         """
 
-        uc = emoji['unicode'] if emoji['unicode'] != '' else None
+        uc = emoji.get('unicode')
+        uc_alt = emoji.get('unicode_alt', uc)
+        if uc_alt and self.remove_var_sel:
+            uc_alt = self._remove_variation_selector(uc_alt)
 
-        if emoji['unicode_alt'] != '':
-            if self.remove_var_sel:
-                uc_alt = self._remove_variation_selector(emoji["unicode_alt"])
-            else:
-                uc_alt = emoji["unicode_alt"]
-        else:
-            uc_alt = uc
         return uc, uc_alt
 
     def _get_title(self, shortname, emoji):
@@ -259,30 +255,30 @@ class EmojiPattern(Pattern):
     def _get_alt(self, shortname, uc_alt):
         """Get alt form."""
 
-        if self.emoji_index['name'] == 'gemoji' and uc_alt is None:
-            alt = shortname
-        else:
-            alt = self._get_entity(uc_alt)
-        return alt
+        return shortname if uc_alt is None else self._get_entity(uc_alt)
 
     def handleMatch(self, m):
         """Hanlde emoji pattern matches."""
 
         el = m.group(2)
 
-        shortname = self.emoji_index['aliases'].get(el, None)
-        if shortname is None:
-            shortname = el
-            alias = None
-        else:
-            alias = el
-
+        shortname = self.emoji_index['aliases'].get(el, el)
+        alias = None if shortname == el else el
         emoji = self.emoji_index['emoji'].get(shortname, None)
         if emoji:
             uc, uc_alt = self._get_unicode(emoji)
             title = self._get_title(el, emoji)
             alt = self._get_alt(el, uc_alt)
-            el = self.generator(self.emoji_index['name'], shortname, alias, uc, alt, title, self.options, self.markdown)
+            el = self.generator(
+                self.emoji_index['name'],
+                shortname,
+                alias,
+                uc,
+                alt,
+                title,
+                self.options,
+                self.markdown
+            )
 
         return el
 

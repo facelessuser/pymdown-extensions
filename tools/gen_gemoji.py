@@ -36,19 +36,20 @@ else:
 
 
 def get_unicode(value):
-    """Get alternate Unicode form or return the original."""
+    """Get Unicode."""
 
-    return '-'.join(
+    uc = '-'.join(
         ['%04x' % get_ord(point) for point in get_code_points(value['emoji']) if get_ord(point) not in U_EXTRA]
     )
 
-
-def get_unicode_alt(value):
-    """Get Unicode."""
-
-    return '-'.join(
+    uc_alt = '-'.join(
         ['%04x' % get_ord(point) for point in get_code_points(value['emoji'])]
     )
+
+    if uc == uc_alt:
+        uc_alt = None
+
+    return uc, uc_alt
 
 
 def get_gemoji_specific(value):
@@ -69,11 +70,19 @@ def parse(repo, tag):
     for v in emojis:
         short = v['aliases'][0]
         shortnames.add(':%s:' % short)
-        emoji_db[':%s:' % short] = {
-            'name': v.get('description', short),
-            'unicode': get_unicode(v) if 'emoji' in v else '',
-            'unicode_alt': get_unicode_alt(v) if 'emoji' in v else ''
-        }
+        if 'emoji' in v:
+            uc, uc_alt = get_unicode(v)
+            emoji_db[':%s:' % short] = {
+                'name': v.get('description', short),
+                'unicode': uc
+            }
+            if uc_alt:
+                emoji_db[':%s:' % short]['unicode_alt'] = uc_alt
+        else:
+            emoji_db[':%s:' % short] = {
+                'name': v.get('description', short)
+            }
+
         for alias in v['aliases'][1:]:
             aliases[':%s:' % alias] = ':%s:' % short
 
