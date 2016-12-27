@@ -232,13 +232,6 @@ def to_awesome(index, shortname, alias, uc, alt, title, options, md):
 def to_unicode(index, shortname, alias, uc, alt, title, options, md):
     """Return html entities."""
 
-    is_unicode = uc is not None
-
-    if is_unicode and options.get('html_entities', False):
-        alt = ''.join(
-            [util.AMP_SUBSTITUTE + ('#x%04x;' % get_ord(point)) for point in get_code_points(alt)]
-        )
-
     return md.htmlStash.store(alt, safe=True)
 
 
@@ -250,13 +243,14 @@ class EmojiPattern(Pattern):
 
     def __init__(
         self, pattern, index, generator, remove_var_sel,
-        unicode_alt, title, options, md
+        alt, title, options, md
     ):
         """Initialize."""
 
         self._set_index(index)
         self.markdown = md
-        self.unicode_alt = unicode_alt
+        self.unicode_alt = alt in ('unicode', 'html_entity')
+        self.encoded_alt = alt == 'html_entity'
         self.remove_var_sel = remove_var_sel
         self.title = title
         self.generator = generator
@@ -337,7 +331,15 @@ class EmojiPattern(Pattern):
     def _get_alt(self, shortname, uc_alt):
         """Get alt form."""
 
-        return shortname if uc_alt is None else self._get_unicode_char(uc_alt)
+        if uc_alt is None or not self.unicode_alt:
+            alt = shortname
+        else:
+            alt = self._get_unicode_char(uc_alt)
+            if self.encoded_alt:
+                alt = ''.join(
+                    [util.AMP_SUBSTITUTE + ('#x%04x;' % get_ord(point)) for point in get_code_points(alt)]
+                )
+        return alt
 
     def handleMatch(self, m):
         """Hanlde emoji pattern matches."""
@@ -386,9 +388,11 @@ class EmojiExtension(Extension):
                 "'short' which shows the shortname (:short:), or 'none' which shows no title. "
                 "- Default: 'short'"
             ],
-            'unicode_alt': [
-                True,
-                "Insert Unicode as the alt form (done as HTML entities currently). - Default: True"
+            'alt': [
+                'unicode',
+                "Control alt form. 'short' sets alt to the shortname (:short:), 'uniocde' sets "
+                "alt to the raw Unicode value, and 'entity' sets alt to the HTML entity. "
+                "- Default: 'unicode'"
             ],
             'remove_variation_selector': [
                 False,
@@ -407,7 +411,7 @@ class EmojiExtension(Extension):
         emoji_index = self.getConfigs()["emoji_index"]
         generator = self.getConfigs()['emoji_generator']
         title = self.getConfigs()['title']
-        unicode_alt = self.getConfigs()['unicode_alt']
+        alt = self.getConfigs()['alt']
         options = self.getConfigs()['options']
         remove_var_sel = self.getConfigs()['remove_variation_selector']
 
@@ -415,7 +419,7 @@ class EmojiExtension(Extension):
             "emoji",
             EmojiPattern(
                 RE_EMOJI, emoji_index, generator, remove_var_sel,
-                unicode_alt, title, options, md
+                alt, title, options, md
             ),
             "<not_strong"
         )

@@ -51,7 +51,7 @@ extension_configs = {
     },
     "pymdownx.emoji": {
         "emoji_index": emoji.gemoji,
-        "unicode_alt": False,
+        "alt": "unicode",
         "options": {
             "attributes": {
                 "align": "absmiddle",

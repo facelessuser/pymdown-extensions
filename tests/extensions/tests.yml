@@ -58,7 +58,7 @@ gemoji (png):
   extensions:
     pymdownx.emoji:
       emoji_index: !!python/name:pymdownx.emoji.gemoji
-      unicode_alt: false
+      alt: short
       options:
         attributes:
           align: absmiddle
@@ -70,8 +70,7 @@ gemoji (entities):
     pymdownx.emoji:
       emoji_index: !!python/name:pymdownx.emoji.gemoji
       emoji_generator: !!python/name:pymdownx.emoji.to_unicode
-      options:
-        html_entities: True
+      alt: html_entity
 
 emoji1 (awesome):
   extensions:
@@ -82,9 +81,8 @@ emoji1 (entities):
   extensions:
     pymdownx.emoji:
       emoji_generator: !!python/name:pymdownx.emoji.to_unicode
+      alt: html_entity
       remove_variation_selector: True
-      options:
-        html_entities: True
 
 emoji1 (png):
   css:
