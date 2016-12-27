@@ -12,6 +12,7 @@ pages:
     - BetterEm: extensions/betterem.md
     - Caret: extensions/caret.md
     - Critic: extensions/critic.md
+    - Emoji: extensions/emoji.md
     - Extra: extensions/extra.md
     - ExtraRawHtml: extensions/extrarawhtml.md
     - Github: extensions/github.md
@@ -47,7 +48,11 @@ markdown_extensions:
   - pymdownx.tilde
   - pymdownx.caret
   - pymdownx.smartsymbols
-  - pymdownx.githubemoji
+  - pymdownx.emoji:
+      options:
+        attributes:
+          height: 20px
+          width: 20px
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.progressbar
@@ -64,3 +69,4 @@ extra_javascript:
   - https://cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js
   - https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.4.2/flowchart.min.js
   - https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
+  - https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/css/emojione.min.css

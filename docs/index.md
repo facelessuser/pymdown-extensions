@@ -17,7 +17,7 @@ Check out the individual extension document pages for more info on the available
 | &nbsp;&nbsp;[arithmatex](extensions/arithmatex.md)       | pymdownx.arithmatex |
 | &nbsp;&nbsp;[betterem](extensions/betterem.md)           | pymdownx.betterem |
 | &nbsp;&nbsp;[caret](extensions/caret.md)                 | pymdownx.caret |
-| &nbsp;&nbsp;[githubemoji](extensions/githubemoji.md)     | pymdownx.githubemoji |
+| &nbsp;&nbsp;[emoji](extensions/emoji.md)                 | pymdownx.githubemoji |
 | &nbsp;&nbsp;[headeranchor](extensions/headeranchor.md)   | pymdownx.headeranchor |
 | &nbsp;&nbsp;[magiclink](extensions/magiclink.md)         | pymdownx.magiclink |
 | &nbsp;&nbsp;[mark](extensions/mark.md)                   | pymdownx.mark |
