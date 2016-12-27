@@ -41,7 +41,7 @@ def parse(repo, tag):
     for test in ('png', 'png sprite', 'svg', 'svg sprite', 'awesome', 'entities'):
         with open('../tests/extensions/emoji1 (%s).txt' % test, 'w') as f:
             f.write('# Emojis\n')
-            for emoji in shortnames:
+            for emoji in sorted(shortnames):
                 f.write(''.join('%s %s<br>\n' % (emoji[1:-1], emoji)))
             f.write('\n')
 
@@ -49,6 +49,7 @@ def parse(repo, tag):
     with open('../pymdownx/emoji1_db.py', 'w') as f:
         # Dump emoji db to file and strip out PY2 unicode specifiers
         f.write('"""Emojione autogen.\n\nGenerated from emojione source. Do not edit by hand.\n%s"""\n' % LICENSE)
+        f.write('from __future__ import unicode_literals\n')
         f.write('version = "%s"\n' % tag)
         f.write('name = "emojione"\n')
         f.write('emoji = %s\n' % json.dumps(emoji_db, sort_keys=True, indent=4, separators=(',', ': ')))

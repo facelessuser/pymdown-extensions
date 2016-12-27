@@ -6,6 +6,7 @@ MIT license.
 
 Copyright (c) http://www.emojione.com
 """
+from __future__ import unicode_literals
 version = "v2.2.7"
 name = "emojione"
 emoji = {

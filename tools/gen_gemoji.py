@@ -3,25 +3,47 @@ import sys
 import os
 import json
 current_dir = os.path.dirname(os.path.abspath(__file__))
-PY27 = sys.version_info >= (2, 7) and sys.version_info < (2, 8)
 
 U_JOIN = 0x200d
 U_VARIATION_SELECTOR_16 = 0xfe0f
 U_EXTRA = (U_JOIN, U_VARIATION_SELECTOR_16)
 
-if PY27:
+if sys.maxunicode == 0xFFFF:
     # For ease of supporting, just require uniseq for both narrow and wide PY27.
-    import uniseg.codepoint
 
     def get_code_points(s):
         """Get the Unicode code points."""
 
-        return list(uniseg.codepoint.code_points(s))
+        pt = []
+        def is_full_point(p, point):
+            """
+            Check if we have a full code point.
+
+            Surrogates are stored in point.
+            """
+            v = ord(p)
+            if 0xD800 <= v <= 0xDBFF:
+                del point[:]
+                point.append(p)
+                return False
+            if point and 0xDC00 <= v <= 0xDFFF:
+                point.append(p)
+                return True
+            del point[:]
+            return True
+
+        return [(''.join(pt) if pt else c) for c in s if is_full_point(c, pt)]
 
     def get_ord(c):
         """Get Unicode ord."""
 
-        return uniseg.codepoint.ord(c)
+        if len(c) == 2:
+            high, low = [ord(p) for p in c]
+            ordinal = (high - 0xD800) * 0x400 + low - 0xDC00 + 0x10000
+        else:
+            ordinal = ord(c)
+
+        return ordinal
 
 else:
     def get_code_points(s):
@@ -90,7 +112,7 @@ def parse(repo, tag):
     for test in ('png', 'entities'):
         with open('../tests/extensions/gemoji (%s).txt' % test, 'w') as f:
             f.write('# Emojis\n')
-            for emoji in shortnames:
+            for emoji in sorted(shortnames):
                 f.write(''.join('%s %s<br>\n' % (emoji[1:-1], emoji)))
             f.write('\n')
 
@@ -101,6 +123,7 @@ def parse(repo, tag):
     with open('../pymdownx/gemoji_db.py', 'w') as f:
         # Dump emoji db to file and strip out PY2 unicode specifiers
         f.write('"""Gemoji autogen.\n\nGenerated from gemoji source. Do not edit by hand.\n\n%s"""\n' % license)
+        f.write('from __future__ import unicode_literals\n')
         f.write('version = "%s"\n' % tag)
         f.write('name = "gemoji"\n')
         f.write('emoji = %s\n' % json.dumps(emoji_db, sort_keys=True, indent=4, separators=(',', ': ')))
