@@ -15,6 +15,7 @@ if sys.maxunicode == 0xFFFF:
         """Get the Unicode code points."""
 
         pt = []
+
         def is_full_point(p, point):
             """
             Check if we have a full code point.

@@ -55,6 +55,7 @@ if IS_NARROW:
         """Get the Unicode code points."""
 
         pt = []
+
         def is_full_point(p, point):
             """
             Check if we have a full code point.
@@ -271,8 +272,6 @@ class EmojiPattern(Pattern):
         """Get the Unicode char."""
         if IS_NARROW:
             if value > 0xFFFF:
-                high = uchr(int((value - 0x10000) / (0x400)) + 0xD800)
-                low = uchr((value - 0x10000) % 0x400 + 0xDC00)
                 c = ''.join(
                     [
                         uchr(int((value - 0x10000) / (0x400)) + 0xD800),
