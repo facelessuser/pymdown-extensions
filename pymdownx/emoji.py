@@ -26,6 +26,15 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import Pattern
 from markdown import util
+import sys
+
+PY3 = sys.version_info >= (3, 0)
+IS_NARROW = sys.maxunicode == 0xFFFF
+
+if PY3:
+    uchr = chr
+else:
+    uchr = unichr
 
 RE_EMOJI = r'(:[+\-\w]+:)'
 EMOJIONE_SVG_SPRITE_TAG = (
@@ -38,6 +47,54 @@ EMOJIONE_SVG_CDN = 'https://cdn.jsdelivr.net/emojione/assets/svg/'
 EMOJIONE_PNG_CDN = 'https://cdn.jsdelivr.net/emojione/assets/png/'
 GITHUB_UNICODE_CDN = 'https://assets-cdn.github.com/images/icons/emoji/unicode/'
 GITHUB_CDN = 'https://assets-cdn.github.com/images/icons/emoji/'
+
+if IS_NARROW:
+    # For ease of supporting, just require uniseq for both narrow and wide PY27.
+
+    def get_code_points(s):
+        """Get the Unicode code points."""
+
+        pt = []
+        def is_full_point(p, point):
+            """
+            Check if we have a full code point.
+
+            Surrogates are stored in point.
+            """
+            v = ord(p)
+            if 0xD800 <= v <= 0xDBFF:
+                del point[:]
+                point.append(p)
+                return False
+            if point and 0xDC00 <= v <= 0xDFFF:
+                point.append(p)
+                return True
+            del point[:]
+            return True
+
+        return [(''.join(pt) if pt else c) for c in s if is_full_point(c, pt)]
+
+    def get_ord(c):
+        """Get Unicode ord."""
+
+        if len(c) == 2:
+            high, low = [ord(p) for p in c]
+            ordinal = (high - 0xD800) * 0x400 + low - 0xDC00 + 0x10000
+        else:
+            ordinal = ord(c)
+
+        return ordinal
+
+else:
+    def get_code_points(s):
+        """Get the Unicode code points."""
+
+        return [c for c in s]
+
+    def get_ord(c):
+        """Get Unicode ord."""
+
+        return ord(c)
 
 
 def add_attriubtes(options, attributes):
@@ -172,8 +229,15 @@ def to_awesome(index, shortname, alias, uc, alt, title, options, md):
     return util.etree.Element("i", attributes)
 
 
-def to_html_entities(index, shortname, alias, uc, alt, title, options, md):
+def to_unicode(index, shortname, alias, uc, alt, title, options, md):
     """Return html entities."""
+
+    is_unicode = uc is not None
+
+    if is_unicode and options.get('html_entities', False):
+        alt = ''.join(
+            [util.AMP_SUBSTITUTE + ('#x%04x;' % get_ord(point)) for point in get_code_points(alt)]
+        )
 
     return md.htmlStash.store(alt, safe=True)
 
@@ -209,10 +273,28 @@ class EmojiPattern(Pattern):
 
         return value.replace('-' + UNICODE_VARIATION_SELECTOR_16, '')
 
-    def _get_entity(self, value):
-        """Get the HTML entity."""
+    def _get_char(self, value):
+        """Get the Unicode char."""
+        if IS_NARROW:
+            if value > 0xFFFF:
+                high = uchr(int((value - 0x10000) / (0x400)) + 0xD800)
+                low = uchr((value - 0x10000) % 0x400 + 0xDC00)
+                c = ''.join(
+                    [
+                        uchr(int((value - 0x10000) / (0x400)) + 0xD800),
+                        uchr((value - 0x10000) % 0x400 + 0xDC00)
+                    ]
+                )
+            else:
+                c = uchr(value)
+        else:
+            c = uchr(value)
+        return c
 
-        return ''.join(["%s#x%s;" % (util.AMP_SUBSTITUTE, c) for c in value.split('-')])
+    def _get_unicode_char(self, value):
+        """Get the Unicode char."""
+
+        return ''.join([self._get_char(int(c, 16)) for c in value.split('-')])
 
     def _get_unicode(self, emoji):
         """
@@ -255,7 +337,7 @@ class EmojiPattern(Pattern):
     def _get_alt(self, shortname, uc_alt):
         """Get alt form."""
 
-        return shortname if uc_alt is None else self._get_entity(uc_alt)
+        return shortname if uc_alt is None else self._get_unicode_char(uc_alt)
 
     def handleMatch(self, m):
         """Hanlde emoji pattern matches."""

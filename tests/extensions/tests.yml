@@ -69,7 +69,9 @@ gemoji (entities):
   extensions:
     pymdownx.emoji:
       emoji_index: !!python/name:pymdownx.emoji.gemoji
-      emoji_generator: !!python/name:pymdownx.emoji.to_html_entities
+      emoji_generator: !!python/name:pymdownx.emoji.to_unicode
+      options:
+        html_entities: True
 
 emoji1 (awesome):
   extensions:
@@ -79,8 +81,10 @@ emoji1 (awesome):
 emoji1 (entities):
   extensions:
     pymdownx.emoji:
-      emoji_generator: !!python/name:pymdownx.emoji.to_html_entities
+      emoji_generator: !!python/name:pymdownx.emoji.to_unicode
       remove_variation_selector: True
+      options:
+        html_entities: True
 
 emoji1 (png):
   css:
