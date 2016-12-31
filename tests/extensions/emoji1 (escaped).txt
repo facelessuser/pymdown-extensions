@@ -1,0 +1,6 @@
+# Emojis
+\:
+:smile:<br>
+\:smile:<br>
+\\:smile:<br>
+\\\:smile:<br>

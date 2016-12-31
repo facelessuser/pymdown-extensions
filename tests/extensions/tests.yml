@@ -82,6 +82,10 @@ emoji1 (no title):
     pymdownx.emoji:
       title: none
 
+emoji1 (escaped):
+  extensions:
+    pymdownx.emoji:
+
 emoji1 (awesome):
   extensions:
     pymdownx.emoji:

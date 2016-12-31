@@ -36,7 +36,7 @@ if PY3:
 else:
     uchr = unichr
 
-RE_EMOJI = r'(:[+\-\w]+:)'
+RE_EMOJI = r'(\\)?(:[+\-\w]+:)'
 EMOJIONE_SVG_SPRITE_TAG = (
     '<svg class="%(classes)s"><description>%(alt)s</description>'
     '<use xlink:href="%(sprite)s#emoji-%(unicode)s"></use></svg>'
@@ -345,7 +345,14 @@ class EmojiPattern(Pattern):
     def handleMatch(self, m):
         """Hanlde emoji pattern matches."""
 
-        el = m.group(2)
+        if m.group(2):
+            return '%s%s%s%s%s%s%s' % (
+                util.STX, ord(':'), util.ETX,
+                m.group(3)[1:-1],
+                util.STX, ord(':'), util.ETX
+            )
+
+        el = m.group(3)
 
         shortname = self.emoji_index['aliases'].get(el, el)
         alias = None if shortname == el else el
