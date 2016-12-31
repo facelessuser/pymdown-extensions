@@ -35,7 +35,7 @@ extensions = [
     'pymdownx.caret',
     'pymdownx.mark',
     'pymdownx.smartsymbols',
-    'pymdownx.githubemoji',
+    'pymdownx.emoji',
     'pymdownx.tasklist',
     'pymdownx.progressbar',
     'pymdownx.headeranchor',
