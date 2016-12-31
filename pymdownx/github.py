@@ -26,6 +26,7 @@ from __future__ import unicode_literals
 from markdown import Extension
 import warnings
 from . import emoji
+from .util import PymdownxDeprecationWarning
 
 extensions = [
     'markdown.extensions.tables',
@@ -90,7 +91,7 @@ class GithubExtension(Extension):
                 "The pymdown.github extension does not enable nl2br anymore by default."
                 "\nThis is to be compliant with recent Github Flavored Markdown."
                 "\n'no_nl2br' is deprecated and will be removed in a future version.",
-                FutureWarning
+                PymdownxDeprecationWarning
             )
 
         exts = extensions if no_nl2br else extensions + legacy_extensions

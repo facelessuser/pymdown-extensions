@@ -25,6 +25,8 @@ DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
+from .util import PymdownxDeprecationWarning
+import warnings
 
 extensions = [
     'pymdownx.magiclink',
@@ -49,6 +51,13 @@ class PyMdownExtension(Extension):
 
     def extendMarkdown(self, md, md_globals):
         """Register extension instances."""
+
+        warnings.warn(
+            "The pymdownx.pymdown extension has been deprecated."
+            "\nIt is encouraged for users to include the extensions individually as needed."
+            "\nThis extension will be be removed in a future version.",
+            PymdownxDeprecationWarning
+        )
 
         md.registerExtensions(extensions, extension_configs)
 
