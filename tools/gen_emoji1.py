@@ -41,8 +41,12 @@ def parse(repo, tag):
     for test in ('png', 'png sprite', 'svg', 'svg sprite', 'awesome', 'entities'):
         with open('../tests/extensions/emoji1 (%s).txt' % test, 'w') as f:
             f.write('# Emojis\n')
+            count = 0
             for emoji in sorted(shortnames):
                 f.write(''.join('%s %s<br>\n' % (emoji[1:-1], emoji)))
+                count += 1
+                if test != 'png' and count == 10:
+                    break
             f.write('\n')
 
     # Write out essential info

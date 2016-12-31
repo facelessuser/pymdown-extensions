@@ -69,7 +69,7 @@ pymdownx.emoji.gemoji
 
 ## Default Emoji Generators
 
-Emoji provides six default emoji generators.  All the generators can be used with the `emojione` index, but only two will work well with the `gemoji` index: `pymdownx.emoji.to_png` and `pymdownx.emoji.to_unicode`. They can be used by passing in one of the functions below via the `emoji_generator` parameter.  Pass the actual function reference, not a string. If you need to create your own, just check out [Custom Emoji Generators](#custom-emoji-generators).
+Emoji provides six default emoji generators.  All the generators can be used with the `emojione` index, but only two will work well with the `gemoji` index: `pymdownx.emoji.to_png` and `pymdownx.emoji.to_alt`. They can be used by passing in one of the functions below via the `emoji_generator` parameter.  Pass the actual function reference, not a string. If you need to create your own, just check out [Custom Emoji Generators](#custom-emoji-generators).
 
 pymdownx.emoji.to_png
 : 
@@ -145,27 +145,17 @@ pymdownx.emoji.to_awesome
     | Option | Type | Default | Description |
     | ------ | ---- | ------- | ----------- |
     | classes | str | 'e1a' | Classes to apply to the svg element where the classes are inserted as "class" in the following template: `'%(class)s-%(shortname)s'`. |
-    | attributes | dict | \{} | A dictionary containing tag attributes as key value string pairs. The dict keys are the attribute names and dict values are the attribute values. | 
+    | attributes | dict | \{} | A dictionary containing tag attributes as key value string pairs. The dict keys are the attribute names and dict values are the attribute values. |
 
-pymdownx.emoji.to_unicode
+pymdownx.emoji.to_alt
 : 
-    The global setting `alt` **must** be set to `unicode` or `html_entity` for this to work as expected.  This generator supports both Gemoji and EmojiOne.  The generator outputs the alt value directly to the document (which will be the Unicode value if the global setting `alt`settting is set to `unicode`).  You can optionally encode the Unicode as HTML entities if the global `alt` setting is set to `html_entity`. If the current emoji is not a Unicode emoji (like Gemoji's `:octocat:`) the short name will be passed to the document instead.
+    This generator supports both Gemoji and EmojiOne.  The generator outputs the alt value directly to the document.  This can be Unicode character output or HTML entities or even just the short name depending on what the global setting 'alt' is set to.
 
     ```html
     😃
     ```
 
-    --or--
-
-    ```html
-    &#x1f604;
-    ```
-
-    **Generator Specific Options**
-
-    | Option | Type | Default | Description |
-    | ------ | ---- | ------- | ----------- |
-    | html_entities | bool | False | Encode the Unicode characters as HTML entities. |
+    There are no generator specific options.
 
 ## Custom Emoji Generators
 Each different kind of output is controlled by a different emoji generator function, but all generator functions have the same format. The format is shown below in case you need to create your own custom output generator.

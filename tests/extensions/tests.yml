@@ -69,7 +69,7 @@ gemoji (entities):
   extensions:
     pymdownx.emoji:
       emoji_index: !!python/name:pymdownx.emoji.gemoji
-      emoji_generator: !!python/name:pymdownx.emoji.to_unicode
+      emoji_generator: !!python/name:pymdownx.emoji.to_alt
       alt: html_entity
 
 emoji1 (awesome):
@@ -80,7 +80,7 @@ emoji1 (awesome):
 emoji1 (entities):
   extensions:
     pymdownx.emoji:
-      emoji_generator: !!python/name:pymdownx.emoji.to_unicode
+      emoji_generator: !!python/name:pymdownx.emoji.to_alt
       alt: html_entity
       remove_variation_selector: True
 

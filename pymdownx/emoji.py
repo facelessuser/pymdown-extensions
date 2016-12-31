@@ -47,6 +47,8 @@ EMOJIONE_SVG_CDN = 'https://cdn.jsdelivr.net/emojione/assets/svg/'
 EMOJIONE_PNG_CDN = 'https://cdn.jsdelivr.net/emojione/assets/png/'
 GITHUB_UNICODE_CDN = 'https://assets-cdn.github.com/images/icons/emoji/unicode/'
 GITHUB_CDN = 'https://assets-cdn.github.com/images/icons/emoji/'
+VALID_TITLE = ('long', 'short', 'none')
+VALID_ALT = ('short', 'unicode', 'html_entity')
 
 if IS_NARROW:
     # For ease of supporting, just require uniseq for both narrow and wide PY27.
@@ -230,7 +232,7 @@ def to_awesome(index, shortname, alias, uc, alt, title, options, md):
     return util.etree.Element("i", attributes)
 
 
-def to_unicode(index, shortname, alias, uc, alt, title, options, md):
+def to_alt(index, shortname, alias, uc, alt, title, options, md):
     """Return html entities."""
 
     return md.htmlStash.store(alt, safe=True)
@@ -390,7 +392,7 @@ class EmojiExtension(Extension):
             'alt': [
                 'unicode',
                 "Control alt form. 'short' sets alt to the shortname (:short:), 'uniocde' sets "
-                "alt to the raw Unicode value, and 'entity' sets alt to the HTML entity. "
+                "alt to the raw Unicode value, and 'html_entity' sets alt to the HTML entity. "
                 "- Default: 'unicode'"
             ],
             'remove_variation_selector': [
@@ -413,6 +415,9 @@ class EmojiExtension(Extension):
         alt = self.getConfigs()['alt']
         options = self.getConfigs()['options']
         remove_var_sel = self.getConfigs()['remove_variation_selector']
+
+        assert title in VALID_TITLE, "Invalid 'title' option!"
+        assert alt in VALID_ALT, "Invalid 'alt' option!"
 
         md.inlinePatterns.add(
             "emoji",
