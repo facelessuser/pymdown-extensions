@@ -4,6 +4,10 @@ PyMdown extensions.
 ---
 
 ## Overview
+
+!!! warning "Deprecated"
+    This is extension is deprecated and will be removed in the future.  It is advised individually include the desired extensions instead of relying on pymdownx.pymdown to include them.
+
 The PyMdown extension is a convenience extension to load up the following extensions with their default settings. It currently provides no other additional features.
 
 !!! Caution "Reminder"
@@ -19,7 +23,7 @@ Extensions:
 | [caret](./caret.md)              | | pymdownx.caret |
 | [mark](./mark.md)                | | pymdownx.mark |
 | [smartsymbols](./smartsymbols.md)| | pymdownx.smartsymbols |
-| [githubemoji](./githubemoji.md)  | | pymdownx.githubemoji |
+| [emoji](./emoji.md)              | | pymdownx.emoji |
 | [tasklist](./tasklist.md)        | | pymdownx.tasklist |
 | [progressbar](./progressbar.md)  | | pymdownx.progressbar |
 | [headeranchor](./headeranchor.md)| | pymdownx.headeranchor |
