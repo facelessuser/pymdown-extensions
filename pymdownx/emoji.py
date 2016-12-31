@@ -50,7 +50,7 @@ GITHUB_CDN = 'https://assets-cdn.github.com/images/icons/emoji/'
 VALID_TITLE = ('long', 'short', 'none')
 VALID_ALT = ('short', 'unicode', 'html_entity')
 
-if IS_NARROW:
+if IS_NARROW:  # pragma: no cover
     # For ease of supporting, just require uniseq for both narrow and wide PY27.
 
     def get_code_points(s):
@@ -272,7 +272,7 @@ class EmojiPattern(Pattern):
 
     def _get_char(self, value):
         """Get the Unicode char."""
-        if IS_NARROW:
+        if IS_NARROW:  # pragma: no cover
             if value > 0xFFFF:
                 c = ''.join(
                     [

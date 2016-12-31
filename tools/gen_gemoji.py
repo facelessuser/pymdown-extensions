@@ -119,7 +119,6 @@ def parse(repo, tag):
                 count += 1
                 if test != 'png' and count == 10:
                     break
-            f.write('\n')
 
     with open(os.path.join(current_dir, 'tags', repo, repo, 'LICENSE'), 'r') as f:
         license = f.read()

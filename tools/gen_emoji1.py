@@ -38,7 +38,7 @@ def parse(repo, tag):
             aliases[alias] = v['shortname']
 
     # Save test files
-    for test in ('png', 'png sprite', 'svg', 'svg sprite', 'awesome', 'entities'):
+    for test in ('png', 'png sprite', 'svg', 'svg sprite', 'awesome', 'entities', 'long title', 'no title'):
         with open('../tests/extensions/emoji1 (%s).txt' % test, 'w') as f:
             f.write('# Emojis\n')
             count = 0
@@ -47,7 +47,6 @@ def parse(repo, tag):
                 count += 1
                 if test != 'png' and count == 10:
                     break
-            f.write('\n')
 
     # Write out essential info
     with open('../pymdownx/emoji1_db.py', 'w') as f:

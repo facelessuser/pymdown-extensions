@@ -72,6 +72,16 @@ gemoji (entities):
       emoji_generator: !!python/name:pymdownx.emoji.to_alt
       alt: html_entity
 
+emoji1 (long title):
+  extensions:
+    pymdownx.emoji:
+      title: long
+
+emoji1 (no title):
+  extensions:
+    pymdownx.emoji:
+      title: none
+
 emoji1 (awesome):
   extensions:
     pymdownx.emoji:
