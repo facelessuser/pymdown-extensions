@@ -3,6 +3,14 @@ Changes between versions.
 
 ---
 
+## 1.3.0
+> Released Jan X, 2017
+
+- **NEW**: New emoji extension that aims to replace githubemoji.  By default it is configured for EmojiOne and Gemoji (Github's emoji).
+- **NEW**: Githubemoji is deprecated. Please use the emoji extension instead.
+- **NEW**: Pymdown extension is deprecated.  Pymdown extension was just a wrapper, please configure the desired individual extension(s) instead of relying on pymdown.
+- **NEW**: Github extension now turns off nl2br by default in order properly emulate recent changes in GFM.  `no_nl2br` option is deprecated and will be removed in the future as it no longer reflects GFM behavior.
+
 ## 1.2.0
 > Released Nov 1, 2016
 
