@@ -4,7 +4,7 @@ Changes between versions.
 ---
 
 ## 1.3.0
-> Released Jan X, 2017
+> Released Jan 1, 2017
 
 - **NEW**: New emoji extension that aims to replace githubemoji.  By default it is configured for EmojiOne and Gemoji (Github's emoji).
 - **NEW**: Githubemoji is deprecated. Please use the emoji extension instead.
