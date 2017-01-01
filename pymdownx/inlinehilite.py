@@ -16,7 +16,7 @@ a language specifier like so:
             - or -
     `#!javascript var test = 0;`
 
-Modified: 2014 - 2015 Isaac Muse <isaacmuse@gmail.com>
+Modified: 2014 - 2017 Isaac Muse <isaacmuse@gmail.com>
 ---
 
 CodeHilite Extension for Python-Markdown

@@ -4,7 +4,7 @@
 
 The MIT License (MIT) (Except where stated below)
 
-Copyright (c) 2014 - 2015 Isaac Muse
+Copyright (c) 2014 - 2017 Isaac Muse
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
