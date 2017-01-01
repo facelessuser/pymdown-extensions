@@ -13,24 +13,25 @@ Check out the individual extension document pages for more info on the available
 
 | Extension                                                | Name   |
 |----------------------------------------------------------|--------|
-| [pymdown](extensions/pymdown.md)                         | pymdownx.pymdown |
-| &nbsp;&nbsp;[arithmatex](extensions/arithmatex.md)       | pymdownx.arithmatex |
-| &nbsp;&nbsp;[betterem](extensions/betterem.md)           | pymdownx.betterem |
-| &nbsp;&nbsp;[caret](extensions/caret.md)                 | pymdownx.caret |
-| &nbsp;&nbsp;[emoji](extensions/emoji.md)                 | pymdownx.githubemoji |
-| &nbsp;&nbsp;[headeranchor](extensions/headeranchor.md)   | pymdownx.headeranchor |
-| &nbsp;&nbsp;[magiclink](extensions/magiclink.md)         | pymdownx.magiclink |
-| &nbsp;&nbsp;[mark](extensions/mark.md)                   | pymdownx.mark |
-| &nbsp;&nbsp;[progressbar](extensions/progressbar.md)     | pymdownx.progressbar |
-| &nbsp;&nbsp;[smartsymbols](extensions/smartsymbols.md)   | pymdownx.smartsymbols |
-| &nbsp;&nbsp;[superfences](extensions/superfences.md)     | pymdownx.superfences |
-| &nbsp;&nbsp;[tasklist](extensions/tasklist.md)           | pymdownx.tasklist |
-| &nbsp;&nbsp;[tilde](extensions/tilde.md)                 | pymdownx.tilde |
+| [arithmatex](extensions/arithmatex.md)                   | pymdownx.arithmatex |
+| [b64](extensions/b64.md)                                 | pymdownx.b64 |
+| [betterem](extensions/betterem.md)                       | pymdownx.betterem |
+| [caret](extensions/caret.md)                             | pymdownx.caret |
+| [critic](extensions/critic.md)                           | pymdownx.critic |
+| [emoji](extensions/emoji.md)                             | pymdownx.emoji |
 | [extra](extensions/extra.md)                             | pymdownx.extra |
-| &nbsp;&nbsp;[extrarawhtml](extensions/extrarawhtml.md)   | pymdownx.extrarawhtml |
+| [extrarawhtml](extensions/extrarawhtml.md)               | pymdownx.extrarawhtml |
+| [github](extensions/github.md)                           | pymdownx.github |
+| [githubemoji (**deprecated**)](extensions/githubemoji.md)| pymdownx.githubemoji |
+| [headeranchor](extensions/headeranchor.md)               | pymdownx.headeranchor |
+| [magiclink](extensions/magiclink.md)                     | pymdownx.magiclink |
+| [mark](extensions/mark.md)                               | pymdownx.mark |
+| [progressbar](extensions/progressbar.md)                 | pymdownx.progressbar |
+| [smartsymbols](extensions/smartsymbols.md)               | pymdownx.smartsymbols |
+| [superfences](extensions/superfences.md)                 | pymdownx.superfences |
+| [tasklist](extensions/tasklist.md)                       | pymdownx.tasklist |
+| [tilde](extensions/tilde.md)                             | pymdownx.tilde |
 | [inlinehilite](extensions/inlinehilite.md)               | pymdownx.inlinehilite |
 | [pathconverter](extensions/pathconverter.md)             | pymdownx.pathconverter |
-| [b64](extensions/b64.md)                                 | pymdownx.b64 |
-| [critic](extensions/critic.md)                           | pymdownx.critic |
-| [github](extensions/github.md)                           | pymdownx.github |
 | [plainhtml](extensions/plainhtml.md)                     | pymdownx.plainhtml |
+| [pymdown (**deprecated**)](extensions/pymdown.md)        | pymdownx.pymdown |

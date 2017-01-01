@@ -29,7 +29,9 @@ Extensions that get loaded:
 ## Options
 | Option    | Type | Default |Description |
 |-----------|------|---------|------------|
-| no_nl2br | bool | False | Don't use `nl2br` extension.  Latest Github Flavored Markdown no longer uses the equivalent of `nl2br`.  In the future, this will be defaulted to 'True'. |
+| no_nl2br | bool | True | Don't use `nl2br` extension. |
+
+!!! warning "Deprecated"
+    `no_nl2br` is deprecated in version `1.3.0` and will be removed in the future as Github's GFM (which we are emulating) no longer converts new lines to `<br>`.
 
 *[GFM]:  Github Flavored Markdown
-[^nl2br]: `nl2br` will not be loaded by default in the future.
