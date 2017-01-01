@@ -8,7 +8,7 @@
 Extensions for [Python Markdown](https://pythonhosted.org/Markdown/).
 
 # Documentation
-Extension documentation is found at the PyMdown site: http://facelessuser.github.io/pymdown-extensions/.
+Extension documentation is found here: http://facelessuser.github.io/pymdown-extensions/.
 
 # License
 License is MIT except for a few exceptions.  See [LICENSE](https://github.com/facelessuser/pymdown-extensions/blob/master/LICENSE.md) for more info.
