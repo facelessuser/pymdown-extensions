@@ -10,7 +10,7 @@ All features can be turned on or off.
 
 SuperFences relies on the [CodeHilite](https://pythonhosted.org/Markdown/extensions/code_hilite.html) extension for syntax highlighting, so CodeHilite is expected to be installed and configured if syntax highlighting desired.  If CodeHilite is not configured or installed, SuperFences will just escape in such a way that a JavaScript highlighter could be used.
 
-!!! Caution "Reminder"
+!!! danger "Reminder"
     Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this extension!
 
 ### Nested Fenced Blocks
@@ -272,7 +272,7 @@ cond(yes)->io->e
 cond(no)->sub1(right)->op1
 ```
 
-## UML Sequence Diagrams
+### UML Sequence Diagrams
 ````
 ```sequence
 Title: Here is a title

@@ -5,7 +5,7 @@
 
 The PyMdown extension is a convenience extension to load up the following extensions with their default settings. It currently provides no other additional features.
 
-!!! warning "Reminder"
+!!! danger "Reminder"
     Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this extension!
 
 Extensions:

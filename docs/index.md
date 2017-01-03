@@ -3,7 +3,7 @@ PyMdown Extensions provides a handful of extensions for use with Python Markdown
 
 Check out the individual extension document pages for more info on the available extensions.
 
-!!! warning "Reminder"
+!!! danger "Reminder"
     Please read the [Usage Notes](usage_notes.md) for information on extension compatibility and general notes to be aware of when using these extensions.
 
 | Extension                                                | Name   |

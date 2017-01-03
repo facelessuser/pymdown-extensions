@@ -5,7 +5,7 @@ PyMdown's `extra` is just like Python Markdown's extra except `smartstrong` is r
 
 This extension is a convenience extension, and it currently provides no other additional features.  But remember **don't use `pymdownx.extra` while also using `markdown.extensions.extra`**!
 
-!!! warning "Reminder"
+!!! danger "Reminder"
     Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this extension!
 
 Extensions:
