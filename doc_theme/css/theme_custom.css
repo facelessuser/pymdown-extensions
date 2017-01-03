@@ -238,6 +238,9 @@
 .md-typeset h5,
 .md-typeset h6 {
   position: relative;
+}
+
+.md-typeset h1 {
   z-index: -1;
 }
 
