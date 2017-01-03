@@ -1,8 +1,3 @@
-# PyMdown {: .doctitle}
-PyMdown extensions.
-
----
-
 ## Overview
 
 !!! warning "Deprecated"

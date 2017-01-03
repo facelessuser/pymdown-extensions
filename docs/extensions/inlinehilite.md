@@ -1,8 +1,3 @@
-# InlineHilite {: .doctitle}
-Inline syntax highlighting.
-
----
-
 ## Overview
 InlineHilite extends [CodeHilite](https://pythonhosted.org/Markdown/extensions/code_hilite.html) to add inline code highlighting.  Borrowing from CodeHilite's existing syntax, InlineHilite utilizes the following syntax to insert inline  highlighted code: `` `:::language mycode` `` or `` `#!language mycode` ``.  We will call these specifiers mock shebangs.
 

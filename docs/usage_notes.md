@@ -1,8 +1,3 @@
-# Extension Usage Notes {: .doctitle}
-Notes about compatibility and usage.
-
----
-
 ## Incompatible Extensions
 PyMdown Extensions includes three extensions that are meant to **replace** their counterpart in the default Python Markdown extensions.  You need to either use the PyMdown Extensions version or use the Python Markdown version; **they cannot be loaded at the same time**.
 

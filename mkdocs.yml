@@ -1,9 +1,9 @@
 site_name: PyMdown Extensions Documentation
 repo_url: https://github.com/facelessuser/pymdown-extensions
 site_description: A Collection of Useful Extensions for Python Markdown
-copyright: Copyright &copy; 2014 - 2016 <a href="https://github.com/facelessuser">Isaac Muse</a>
+copyright: Copyright &copy; 2014 - 2017 <a href="https://github.com/facelessuser">Isaac Muse</a>
 pages:
-  - Home: index.md
+  - PyMdown Extensions: index.md
   - Installation: installation.md
   - Usage Notes: usage_notes.md
   - Extensions:
@@ -32,22 +32,22 @@ pages:
   - Contributing &amp; Suppport: contributing.md
   - Changelog: changelog.md
   - License: license.md
-theme: readthedocs
+theme: material
 theme_dir: doc_theme
 markdown_extensions:
   - markdown.extensions.toc:
       slugify: !!python/name:pymdownx.headeranchor.uslugify
-  - markdown.extensions.admonition
-  - markdown.extensions.smarty
-  - markdown.extensions.nl2br
+  - markdown.extensions.admonition:
+  - markdown.extensions.smarty:
+  - markdown.extensions.nl2br:
   - markdown.extensions.codehilite:
       guess_lang: false
-  - pymdownx.extra
-  - pymdownx.inlinehilite
-  - pymdownx.magiclink
-  - pymdownx.tilde
-  - pymdownx.caret
-  - pymdownx.smartsymbols
+  - pymdownx.extra:
+  - pymdownx.inlinehilite:
+  - pymdownx.magiclink:
+  - pymdownx.tilde:
+  - pymdownx.caret:
+  - pymdownx.smartsymbols:
   - pymdownx.emoji:
       options:
         attributes:
@@ -55,12 +55,22 @@ markdown_extensions:
           width: 20px
   - pymdownx.tasklist:
       custom_checkbox: true
-  - pymdownx.progressbar
+  - pymdownx.progressbar:
   - pymdownx.headeranchor:
       slugify: !!python/name:pymdownx.headeranchor.uslugify
-  - pymdownx.arithmatex
-  - pymdownx.mark
-  - pymdownx.critic
+  - pymdownx.arithmatex:
+  - pymdownx.mark:
+  - pymdownx.critic:
+extra:
+  palette:
+    primary: blue
+    accent: cyan
+  font:
+    text: Roboto
+    code: Roboto Mono
+  social:
+    - type: github
+      link: https://github.com/facelessuser
 extra_css:
   - css/theme_custom.css
 extra_javascript:
@@ -68,5 +78,4 @@ extra_javascript:
   - https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js
   - https://cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js
   - https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.4.2/flowchart.min.js
-  - https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML
-  - https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/css/emojione.min.css
+  - js/uml.js

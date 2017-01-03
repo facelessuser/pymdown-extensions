@@ -1,8 +1,3 @@
-# SuperFences {: .doctitle}
-Better fenced blocks.
-
----
-
 ## Overview
 SuperFences provides 4 features:
 

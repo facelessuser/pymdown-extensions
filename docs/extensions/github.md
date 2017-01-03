@@ -1,8 +1,3 @@
-# Github {: .doctitle}
-Simulation of Github Flavored Markdown.
-
----
-
 ## Overview
 The Github extension is a convenience extension to load up and configure the minimum extensions needed to get a GFM feel.  It is not a 1:1 emulation, but some aspects are pretty close.  I don't really have a desire to to make it exact, but the feel is nice if you like GFM feel; some things may differ slightly.
 

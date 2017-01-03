@@ -1,8 +1,3 @@
-# Tasklist {: .doctitle}
-Github style tasklists.
-
----
-
 ## Overview
 The Tasklist extension adds GFM style checkbox lists.  They follow the same syntax as GFM.
 
@@ -42,7 +37,7 @@ Task List
 - [ ] item 2
 - [ ] item 3
 
-# CSS
+## CSS
 The default HTML structure of tasklists is found below:
 
 ```html
@@ -88,13 +83,7 @@ In order to style these we mainly remove the list type style and adjust the marg
 }
 ```
 
-If custom checkbox icons are desired, custom styles can be used to give a unique look to the checkmarks.  Below is a 
-very simple example that creates a light gray square with rounded corners and displays a green Unicode check mark when 
-the control is checked.  This can be adapted to use webfonts, images, etc.
-
-!!! note "Note"
-    It can be noted that the `task-list-control` class is forced to inline in this example, but that is only because 
-    the MkDocs theme used for this document set labels to blocks.  Normally this would not be needed.
+If custom checkbox icons are desired, custom styles can be used to give a unique look to the checkmarks.  Below is a very simple CSS example that creates a light gray square with rounded corners and displays a green Unicode check mark when the control is checked.  This can be adapted to use webfonts, images, etc.
 
 ```css
 .markdown-body .task-list-item {
@@ -145,19 +134,5 @@ the control is checked.  This can be adapted to use webfonts, images, etc.
   color: #1EBB52;
 }
 ```
-
-<div class="custom-task-list" markdown="1">
-- [X] item 1
-    * [X] item A
-    * [ ] item B
-        more text
-        + [x] item a
-        + [ ] item b
-        + [x] item c
-    * [X] item C
-- [ ] item 2
-- [ ] item 3
-</div>
-
 
 *[GFM]: Github Flavored Markdown

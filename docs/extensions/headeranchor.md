@@ -1,8 +1,3 @@
-# HeaderAnchor {: .doctitle}
-Github style header anchors.
-
----
-
 ## Overview
 HeaderAnchor adds anchors to headers in the style of GFM&rsquo;s header anchors. The header anchors in this document were all generated with this extension.
 
@@ -25,7 +20,7 @@ In order to get slugs closer to like GFM&rsquo;s slugs (in regards to Unicode ch
 If you aren't encoding your HTML as UTF-8, or prefer the safer percent encoded Unicode slugs, you can use `uslugify_encoded` which will percent encode non-ASCII word chars.  You can use this to override Toc's and HeaderAnchor's slugify; it is good to override both if you are using both.
 
 ## CSS
-This is the CSS used for rendering the header anchors in this document. While Font Awesome is used, you can substitute it with [Octicons](https://octicons.github.com/) for even more of a GFM feel, or use something else entirely.
+This is the example CSS for rendering the header anchors. While Font Awesome is used in this example, you can substitute it with [Octicons](https://octicons.github.com/) for even more of a GFM feel, or use something else entirely.
 
 The HTML tags with classes are set like this:
 

@@ -1,7 +1,3 @@
-# License {: .doctitle}
-
----
-
 The MIT License (MIT) (Except where stated below)
 
 Copyright (c) 2014 - 2017 Isaac Muse

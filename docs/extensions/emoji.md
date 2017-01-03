@@ -1,9 +1,4 @@
-# Emoji {: .doctitle}
-Easy emoji insertion.
-
----
-
-# Overview
+## Overview
 The Emoji extension adds support for inserting emojis or special emoji tags linked to images that are either local or on a CDN via the syntax `:emoji:`.  Currently the Emoji extension adds support for two different emoji syntax short names. The first index is from [Gemoji](https://github.com/github/gemoji).  Gemoji is Github's open source solution that provides emojis in GFM.  The second is from [EmojiOne](https://github.com/Ranks/emojione) which is another open source emoji solution.
 
 An emoji index is built for Gemoji and EmojiOne from the respective repository sources.  The index contains the emoji's names, shortnames, values, etc.; everything needed to insert emoji or specially crafted HTML elements to reference emoji images.
@@ -260,7 +255,7 @@ The Emoji extension might not always have indexes built from the latest repos, w
 
 Nothing is fool proof.  If they make a breaking change to the files that the script parses, or the location of the files, the auto-update tool may need to be updated itself (hopefully this would be a rare occurrence).  If such a change does occur, and you are feeling brave, a pull request would be appreciated, but in time, they will be resolved regardless.
 
-#Examples
+## Examples
 Current examples are all rendered with EmojiOne.
 
 ```
@@ -272,3 +267,5 @@ You can also escape `:` characters to escape the emoji: \:smile:.
 EmojiOne :smile: emojis are very useful :thumbsup:.
 
 You can also escape `:` characters to escape the emoji: \:smile:.
+
+*[GFM]:  Github Flavored Markdown

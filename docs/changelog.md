@@ -1,8 +1,3 @@
-# Changelog {: .doctitle}
-Changes between versions.
-
----
-
 ## 1.3.0
 > Released Jan 1, 2017
 

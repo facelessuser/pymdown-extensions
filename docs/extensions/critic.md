@@ -1,8 +1,3 @@
-# Critic {: .doctitle}
-Process and visualize Critic Markup.
-
----
-
 ## Overview
 Critic is an extension that adds handling and support of [Critic Markup](http://criticmarkup.com/).  This extension runs before all other extensions to parse the critic edits.  It allows for the removal or acceptance of the critic modifications and modifies the source to reflect the rejection or approval (highlights and comments are stripped in both cases).  It also allows for visually displaying the changes in HTML output ([mileage may vary](#limitations-with-previewing-critic-markup)).
 
@@ -110,7 +105,7 @@ Critic renders the CriticMarkup with the following classes.
 | block   | Applied to critic HTML tags that are detected as surrounding a block region. |
 | comment | A CriticMarkup comment. |
 
-This is the CSS used for this page.
+Here is some example CSS you can use for rendering the visualization.
 
 ```css
 /* Critic Markup */

@@ -1,8 +1,3 @@
-# Installation {: .doctitle}
-Installation of PyMdown Extensions.
-
----
-
 ## Overview
 Pymdown Extensions is built on top of a few requirements.  If installing, the requirements will be installed automatically unless the requirement is optional.
 

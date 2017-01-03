@@ -1,8 +1,3 @@
-# GithubEmoji {: .doctitle}
-Github Emoji syntax.
-
----
-
 ## Overview
 
 !!! warning "Deprecated"
@@ -18,12 +13,5 @@ GithubEmoji adds support for GFM emojis.  Using GFM&rsquo;s emoji syntax, this e
 
 !!! note "Note"
     Since 'online' calls through the Github API are done anonymously, Github will limit the caller to approximately 60 calls in an hour.  There are no plans at this time to add [OAuth support](https://developer.github.com/v3/oauth/).
-
-## Examples
-```
-Github :octocat: emojis are very useful :thumbsup:.
-```
-
-Github :octocat: emojis are very useful :thumbsup:.
 
 *[GFM]:  Github Flavored Markdown

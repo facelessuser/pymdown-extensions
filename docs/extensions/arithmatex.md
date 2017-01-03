@@ -1,8 +1,25 @@
-# Arithmatex {: .doctitle}
-Syntax for MathJax support.
-
----
-
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    config: ["MMLorHTML.js"],
+    extensions: ["tex2jax.js"],
+    jax: ["input/TeX"],
+    tex2jax: {
+        inlineMath: [ ["\\(","\\)"] ],
+        displayMath: [ ["\\[","\\]"] ]
+    },
+    TeX: {
+        TagSide: "right",
+        TagIndent: ".8em",
+        MultLineWidth: "85%",
+        equationNumbers: {
+            autoNumber: "AMS",
+        }
+    },
+    displayAlign: 'left',
+    showProcessingMessages: false,
+    messageStyle: 'none'
+});
+</script>
 ## Overview
 The Arithmatex extension searches for `#!tex $...$` or `#!tex $$...$$` and formats them so that [MathJax](http://www.mathjax.org/) can detect them in the HTML output.
 
