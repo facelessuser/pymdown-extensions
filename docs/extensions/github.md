@@ -4,7 +4,7 @@ The Github extension is a convenience extension to load up and configure the min
 !!! Tip "Tip"
     For code highlighting, you will also need to load the `markdown.extensions.codehilite` extension yourself as well with `guess_lang=False` and your preferred Pygments style (if available or use some other JavaScript highlighter).  Though there is no Github style included with this extension, you are most likely able to find a suitable theme online by searching.  I do have older Github styles found at the [pymdown-styles](https://github.com/facelessuser/pymdown-styles/tree/master/pymdown_styles) repo; it contains the original Pygments Github style (github) and the Github 2014 style (github2014) which Github used before they ditched Pygments for their own in-house highlighter.
 
-!!! Caution "Reminder"
+!!! warning "Reminder"
     Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this extension!
 
 Extensions that get loaded:
