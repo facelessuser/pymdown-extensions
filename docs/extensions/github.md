@@ -12,7 +12,7 @@ Extensions that get loaded:
 | Extension | Options | Name   |
 |-----------|---------|--------|
 | [Tables](https://pythonhosted.org/Markdown/extensions/tables.html) | | markdown.extensions.tables |
-| [New&nbsp;Line&nbsp;to&nbsp;Break](https://pythonhosted.org/Markdown/extensions/nl2br.html)[^nl2br] | | markdown.extensions.nl2b |
+| [New&nbsp;Line&nbsp;to&nbsp;Break](https://pythonhosted.org/Markdown/extensions/nl2br.html) | | markdown.extensions.nl2b |
 | [magiclink](./magiclink.md)      | | pymdownx.magiclink |
 | [betterem](./betterem.md)        | `#!python {"smart_enable": 'all' }` | pymdownx.betterem |
 | [tilde](./tilde.md)              | `#!python {"subscript": False }` | pymdownx.tilde |
