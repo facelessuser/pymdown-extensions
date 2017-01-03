@@ -11,6 +11,16 @@
   border-bottom: 1px dotted rgba(0, 0, 0, 0.26);
 }
 
+/*Inline fixes*/
+.md-typeset a {
+  word-wrap: break-word;
+}
+
+.md-typeset code, .md-typeset tt {
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
 /* Progress Bars */
 .md-typeset .progress {
   display: block;
