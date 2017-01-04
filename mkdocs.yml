@@ -39,6 +39,7 @@ markdown_extensions:
       slugify: !!python/name:pymdownx.headeranchor.uslugify
   - markdown.extensions.admonition:
   - markdown.extensions.smarty:
+      smart_quotes: false
   - markdown.extensions.nl2br:
   - markdown.extensions.codehilite:
       guess_lang: false

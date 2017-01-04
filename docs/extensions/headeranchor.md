@@ -1,20 +1,20 @@
 ## Overview
-HeaderAnchor adds anchors to headers in the style of GFM&rsquo;s header anchors (anchors that appear to the left of the headers when the cursor hovers over the header). The header anchors in this document were all generated with this extension.
+HeaderAnchor adds anchors to headers in the style of GFM's header anchors (anchors that appear to the left of the headers when the cursor hovers over the header). The header anchors in this document were all generated with this extension.
 
 ## Options
-By default, HeaderAnchor will use [Toc&rsquo;s](https://pythonhosted.org/Markdown/extensions/toc.html) settings (if Toc is being used), but HeaderAnchor can be run without Toc.  HeaderAnchor can also be run along side Toc and ignore Toc&rsquo;s settings; though it is advised to keep Toc and HeaderAnchor's settings in sync to ensure header links properly link.
+By default, HeaderAnchor will use [Toc's](https://pythonhosted.org/Markdown/extensions/toc.html) settings (if Toc is being used), but HeaderAnchor can be run without Toc.  HeaderAnchor can also be run along side Toc and ignore Toc's settings; though it is advised to keep Toc and HeaderAnchor's settings in sync to ensure header links properly link.
 
 | Option    | Type | Default |Description |
 |-----------|------|---------|------------|
-| separator | string | '-' | If not using Toc, or ignoring Toc&rsquo;s settings, this will specify the word separator used. |
-| slugify | function | Default method | If not using Toc, or ignoring Toc&rsquo;s settings, this will specify the function to generate anchors based on header text.  By Default, this will use Toc&rsquo;s default, fallback slugify method, but if for any reason Toc is not installed, HeaderAnchor will fall back to an equivalent method. |
+| separator | string | '-' | If not using Toc, or ignoring Toc's settings, this will specify the word separator used. |
+| slugify | function | Default method | If not using Toc, or ignoring Toc's settings, this will specify the function to generate anchors based on header text.  By Default, this will use Toc's default, fallback slugify method, but if for any reason Toc is not installed, HeaderAnchor will fall back to an equivalent method. |
 | use_toc_settings | bool | True | This specifies whether HeaderAnchor should get its settings from Toc.  This affects `slugify` and `separator`. |
 
 ## Alternate Slugify
 Python Markdown's default slugify strips out Unicode chars. To better handle Unicode, a couple of optional slugify options have been provided.
 
 ### uslugify
-In order to get slugs closer to like GFM&rsquo;s slugs (in regards to Unicode chars), a slugify has been included at `pymdownx.headerancor.uslugify`.  This assumes you are encoding your HTML as UTF-8.  UTF-8 Unicode should be okay in your slugs in modern browsers.  You can use this to override Toc's and/or HeaderAnchor's slugify.
+In order to get slugs closer to like GFM's slugs (in regards to Unicode chars), a slugify has been included at `pymdownx.headerancor.uslugify`.  This assumes you are encoding your HTML as UTF-8.  UTF-8 Unicode should be okay in your slugs in modern browsers.  You can use this to override Toc's and/or HeaderAnchor's slugify.
 
 ### uslugify_encoded
 If you aren't encoding your HTML as UTF-8, or prefer the safer percent encoded Unicode slugs, you can use `uslugify_encoded` which will percent encode non-ASCII word chars.  You can use this to override Toc's and/or HeaderAnchor's slugify.

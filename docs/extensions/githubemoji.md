@@ -3,7 +3,7 @@
 !!! warning "Deprecated"
     This extension has been deprecated in version `1.3.0`.  Users are encouraged to use the [Emoji extension](./emoji.md) instead.  This extension will be removed at some time in the future.
 
-GithubEmoji adds support for GFM emojis.  Using GFM&rsquo;s emoji syntax, this extension will create image links to Github's emoji assets.  It adds support for all of Github's supported emojis (at the time of writing this).
+GithubEmoji adds support for GFM emojis.  Using GFM's emoji syntax, this extension will create image links to Github's emoji assets.  It adds support for all of Github's supported emojis (at the time of writing this).
 
 ## Options
 | Option    | Type | Default |Description |
