@@ -1,5 +1,5 @@
 ## Overview
-GFM has a nice feature that detects and auto-generates links.  This extension adds similar functionality to Python Markdown allowing you to just type or paste links; no special syntax required.  It auto-links HTML, FTP, and email links.
+MagicLink adds scans for URLs and generates proper HTML links.  No special syntax is required, you just type or paste links.  MagicLink auto-link HTML, FTP, and email links.
 
 ## Examples
 

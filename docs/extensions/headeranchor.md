@@ -1,26 +1,26 @@
 ## Overview
-HeaderAnchor adds anchors to headers in the style of GFM&rsquo;s header anchors. The header anchors in this document were all generated with this extension.
+HeaderAnchor adds anchors to headers in the style of GFM&rsquo;s header anchors (anchors that appear to the left of the headers when the cursor hovers over the header). The header anchors in this document were all generated with this extension.
 
 ## Options
 By default, HeaderAnchor will use [Toc&rsquo;s](https://pythonhosted.org/Markdown/extensions/toc.html) settings (if Toc is being used), but HeaderAnchor can be run without Toc.  HeaderAnchor can also be run along side Toc and ignore Toc&rsquo;s settings; though it is advised to keep Toc and HeaderAnchor's settings in sync to ensure header links properly link.
 
 | Option    | Type | Default |Description |
 |-----------|------|---------|------------|
-| separator | string | '-' | If ignoring Toc&rsquo;s settings, this will specify the word separator used. |
-| slugify | function | Default method | If ignoring Toc&rsquo;s settings, this will specify the function to generate anchors based on header text.  By Default, this will use Toc&rsquo;s default, fallback slugify method, but if for any reason Toc is not installed, HeaderAnchor will fall back to an equivalent method. |
+| separator | string | '-' | If not using Toc, or ignoring Toc&rsquo;s settings, this will specify the word separator used. |
+| slugify | function | Default method | If not using Toc, or ignoring Toc&rsquo;s settings, this will specify the function to generate anchors based on header text.  By Default, this will use Toc&rsquo;s default, fallback slugify method, but if for any reason Toc is not installed, HeaderAnchor will fall back to an equivalent method. |
 | use_toc_settings | bool | True | This specifies whether HeaderAnchor should get its settings from Toc.  This affects `slugify` and `separator`. |
 
 ## Alternate Slugify
 Python Markdown's default slugify strips out Unicode chars. To better handle Unicode, a couple of optional slugify options have been provided.
 
 ### uslugify
-In order to get slugs closer to like GFM&rsquo;s slugs (in regards to Unicode chars), a slugify has been included at `pymdownx.headerancor.uslugify`.  This assumes you are encoding your HTML as UTF-8.  UTF-8 Unicode should be okay in your slugs in modern browsers.  You can use this to override Toc's and HeaderAnchor's slugify; it is good to override both if you are using both.
+In order to get slugs closer to like GFM&rsquo;s slugs (in regards to Unicode chars), a slugify has been included at `pymdownx.headerancor.uslugify`.  This assumes you are encoding your HTML as UTF-8.  UTF-8 Unicode should be okay in your slugs in modern browsers.  You can use this to override Toc's and/or HeaderAnchor's slugify.
 
 ### uslugify_encoded
-If you aren't encoding your HTML as UTF-8, or prefer the safer percent encoded Unicode slugs, you can use `uslugify_encoded` which will percent encode non-ASCII word chars.  You can use this to override Toc's and HeaderAnchor's slugify; it is good to override both if you are using both.
+If you aren't encoding your HTML as UTF-8, or prefer the safer percent encoded Unicode slugs, you can use `uslugify_encoded` which will percent encode non-ASCII word chars.  You can use this to override Toc's and/or HeaderAnchor's slugify.
 
 ## CSS
-This is the example CSS for rendering the header anchors. While Font Awesome is used in this example, you can substitute it with [Octicons](https://octicons.github.com/) for even more of a GFM feel, or use something else entirely.
+Here we will show some example CSS for rendering the header anchors. While Font Awesome is used in this example, you can substitute it with [Octicons](https://octicons.github.com/) for even more of a GFM feel, or use something else entirely.
 
 The HTML tags with classes are set like this:
 
@@ -40,7 +40,7 @@ We have two classes to work with:
 | headeranchor-link | This is attached to the actual anchor tag that links to the header. |
 | headeranchor | This is the header anchor character you see.  In this case, it is the [link character from Font Awesome](http://fortawesome.github.io/Font-Awesome/icon/link/). |
 
-The CSS below sets the header tags to be `relative`, and the `headeranchor-link` class to be `absolute`.  We then attach a `:before` pseudo element to the `headeranchor` class with the desired character and position.  We play a little bit with padding and margin so when you hover over the header or where the link is supposed to be, the link appears and is accessible without causing the header position to change.
+The CSS below sets the header tags to be `relative`, and the `headeranchor-link` class to be `absolute`.  We then attach a `:before` pseudo element to the `headeranchor` class with the desired character and position.  We play a little bit with padding and margin so when you hover over the header or where the link is supposed to be, the link appears and is accessible without causing the header position to change. Depending on document themes or other CSS, you may need to modify this or other CSS if it doesn't work.
 
 ```css
 /* Header Anchors */

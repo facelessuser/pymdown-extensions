@@ -5,9 +5,11 @@ The Tasklist extension adds GFM style checkbox lists.  They follow the same synt
 
 | Option    | Type | Default | Description |
 |-----------|------|---------|-------------|
-| custom_checkbox | bool | False | Inserts an empty `label` tag after the `input` tag to allow styling the checkbox with CSS. |
+| custom_checkbox | bool | False | Generate tasklists in such a way as to allow for styling the checkbox with CSS. |
 
 ## Examples
+
+Example tasklists results are generated with `custom_checkbox` enabled.
 
 ```
 Task List
@@ -66,7 +68,7 @@ If `custom_checkbox` is enabled the structure will be as follows:
 | Classes | Description |
 |---------|-------------|
 | task-list | Attached to either the `ul` or `ol` tag and represents the entire list element. |
-| task-list-item | This is attached the `li` tag and represents a an item in the list. |
+| task-list-item | This is attached the `li` tag and represents an item in the list. |
 | task-list-control | This is attached to the `label` tag and represents the control object. |
 | task-list-indicator | This is attached to the `span` directly following the input and is used to style the visual indicator. |
 

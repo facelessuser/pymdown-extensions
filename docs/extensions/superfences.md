@@ -8,13 +8,13 @@ SuperFences provides 4 features:
 
 All features can be turned on or off.
 
-SuperFences relies on the [CodeHilite](https://pythonhosted.org/Markdown/extensions/code_hilite.html) extension for syntax highlighting, so CodeHilite is expected to be installed and configured if syntax highlighting desired.  If CodeHilite is not configured or installed, SuperFences will just escape in such a way that a JavaScript highlighter could be used.
+SuperFences relies on the [CodeHilite](https://pythonhosted.org/Markdown/extensions/code_hilite.html) extension for syntax highlighting, so CodeHilite is expected to be installed and configured if syntax highlighting is desired.  If CodeHilite is not configured or installed, SuperFences will just escape in such a way that a JavaScript highlighter *could* be used.
 
 !!! danger "Reminder"
     Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this extension!
 
 ### Nested Fenced Blocks
-Fenced blocks requires all nested fence content to be at least at the indentation levels of the fences (blank lines excluded).  The opening and closing fence markers must be indented at the same level.  If you are using a fenced block inside a blockquote, at least the first line of the fenced block needs to have the appropriate number of `>` characters signifying the quote depth.
+Fenced blocks require all nested fence content to be at least at the indentation levels of the fences (blank lines excluded).  The opening and closing fence markers must be indented at the same level.  If you are using a fenced block inside a blockquote, at the very least, the first line of the fenced block needs to have the appropriate number of `>` characters signifying the quote depth.
 
 ````
 > ```
@@ -70,7 +70,7 @@ All of these libraries can be included using a CDN (you can use the version of y
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.4.2/flowchart.min.js"></script>
 ```
 
-Simply including the libraries above is not enough as these libraries need to be pointed at the elements they need to convert.  Here we are going to show some examples (`uml-converter.js`, `flow-loader.js`, and `sequence-loader.js`) that can be used to target the HTML elements and execute the appropriate library on their content to create the desired diagrams.  The scripts do not have to be used, and you can modify them or write your own to suite your needs; it is provided for convenience.
+Simply including the libraries above is not enough as these libraries need to be pointed at the elements they need to convert.  We are going to show some examples (`uml-converter.js`, `flow-loader.js`, and `sequence-loader.js`) that can be used to target the HTML elements and execute the appropriate library on their content to create the desired diagrams.  The scripts do not have to be used, and you can modify them or write your own to suite your needs; it is provided for convenience.
 
 ```js
 /* uml-converter.js */
@@ -151,19 +151,19 @@ Simply including the libraries above is not enough as these libraries need to be
 })(document)
 ```
 
-UML flowcharts and sequence diagrams will be rendered as HTML `<pre><code>` tags before the JavaScript libraries are run on them.  They will be assigned CSS classes `uml-flowchart` and `uml-sequence-diagram` respectively for flowcharts and sequence diagrams.
+UML flowcharts and sequence diagrams will be rendered as HTML `<pre><code>` tags before the JavaScript libraries are run on them.  They will be assigned the CSS classes `uml-flowchart` and `uml-sequence-diagram` respectively for flowcharts and sequence diagrams.
 
 ## Limitations
-This extension suffers from the same issues that the original fenced block extension suffers from.  Normally Python Markdown does not parse content inside HTML tags unless they are marked with the attribute `markdown='1'` etc.  But since this is run as a preprocessor, it is not aware of the HTML blocks.  So be aware of this.
+This extension suffers from the same issues that the original fenced block extension suffers from.  Normally Python Markdown does not parse content inside HTML tags unless they are marked with the attribute `markdown='1'`.  But since this is run as a preprocessor, it is not aware of the HTML blocks.
 
-SuperFences is made to work with the default extensions out of the box.  It will probably not work with other extensions such as Grid Tables since that extension allows for characters to obscure the blocks like blockquote syntax does (though this has been designed to work with blockquotes).  Ideally fenced blocks needs to be handled as a block parser, but there is much work to be done on Python Markdown's internal block handlers before this is possible.
+SuperFences is made to work with the default extensions out of the box.  It will probably not work with other extensions such as Grid Tables, since that extension allows for characters to obscure the blocks like the blockquote syntax does (though this has been designed to work with blockquotes).  Ideally fenced blocks need to be handled by a block parser, but there is much work to be done on Python Markdown's internal block handlers before this is possible.
 
 SuperFences works best when following the guidelines.  If the guidelines are not followed, odd results may be encountered.
 
-For the reasons above, the nested fences feature really is just a workaround.  But for a lot of people (including myself), this functionality is more than sufficient.
+For the reasons above, the nested fences feature really is just a workaround.  But for a lot of people, this functionality is more than sufficient.
 
 ## Options
-General syntax highlighting settings are configured via CodeHilite which should be installed and configured.
+General syntax highlighting settings are configured via CodeHilite which should installed and enabled in order to get the highlighting.
 
 | Option    | Type | Default | Description |
 |-----------|------|---------|-------------|

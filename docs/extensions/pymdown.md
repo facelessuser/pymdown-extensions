@@ -1,7 +1,7 @@
 ## Overview
 
 !!! warning "Deprecated"
-    This is extension is deprecated in version `1.3.0` and will be removed in the future.  It is advised individually include the desired extensions instead of relying on pymdownx.pymdown to include them.
+    This is extension is deprecated in version `1.3.0` and will be removed in the future.  It is advised individually include the desired extensions instead of relying on `pymdownx.pymdown` to include them.
 
 The PyMdown extension is a convenience extension to load up the following extensions with their default settings. It currently provides no other additional features.
 

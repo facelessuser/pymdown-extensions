@@ -1,5 +1,5 @@
 ## Overview
-SmartSymbols adds syntax for creating special characters such as trademarks, arrows, fractions, etc.  It basically allows for more "smarty-pants" type replacements.  It is meant to be used along side the Python Markdown's `smarty` extension.
+SmartSymbols adds syntax for creating special characters such as trademarks, arrows, fractions, etc.  It basically allows for more "smarty-pants" like replacements.  It is meant to be used along side Python Markdown's `smarty` extension not to replace.
 
 ## Options
 | Option          | Type | Default | Description |
