@@ -5,17 +5,7 @@
   overflow: auto;
 }
 
-/* Abbreviations */
-.md-typeset abbr {
-  cursor: help;
-  border-bottom: 1px dotted rgba(0, 0, 0, 0.26);
-}
-
-/*Inline fixes*/
-.md-typeset a {
-  word-wrap: break-word;
-}
-
+/* Inline */
 .md-typeset code, .md-typeset tt {
   white-space: pre-wrap;
   word-wrap: break-word;
