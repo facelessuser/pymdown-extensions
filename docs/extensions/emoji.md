@@ -1,7 +1,13 @@
 ## Overview
-The Emoji extension adds support for inserting emojis or special emoji tags linked to images that are either local or on a CDN via the syntax `:emoji:`.  Currently, the Emoji extension adds support for two different emoji providers. The first emoji provider is [Gemoji](https://github.com/github/gemoji).  Gemoji is Github's open source solution that provides emojis for GFM.  The second provider is [EmojiOne](https://github.com/Ranks/emojione) which is another open source emoji solution.
+The Emoji extension adds support for inserting emojis via simple short names enclosed within colons: `:short_name:`.  This is accomplished by using a short name index to map easy to remember names to the Unicode data. The Unicode data is then converted into actual Unicode emoji characters and/or special HTML elements that represent the emoji.
 
-An emoji index is built for both Gemoji and EmojiOne from their respective repository source.  The indexes contain the emoji's names, shortnames, values, etc.; everything needed to insert emoji or specially crafted HTML elements to reference emoji images.
+There are a number of familiar emoji short name conventions that people may be aware of, and they differ slightly.  At the present, Emoji chooses to focus on two specific short name conventions. The first convention is from [Gemoji](https://github.com/github/gemoji) which is Github's open source solution that provides emojis in GFM.  The second is from [EmojiOne](https://github.com/Ranks/emojione) which is another open source emoji solution.
+
+The short name indexes simply provide easy to remember names mapped to the Unicode data. Custom emojis (like Gemoji's `:octocat:`) wold have no Unicode data associated with them and would only provide a long name.  While it may be thought that an index like Gemoji is only for Github emoji images, you could easily map EmojiOne images to the Gemoji short names and vice versa. You could even map [Twemoji](https://github.com/twitter/twemoji) images to EmojiOne if desired.
+
+Emoji provides various output formats that take the Unicode data associated with a short name (or the short name itself in the case of a custom emoji) and generates an HTML output. Most hosted emoji images follow the same pattern and are named after their Unicode code points separated by hyphens (minus things like zero width joiners and variation selectors).  This is true with EmojiOne, Github, and Twemoji, to name a few.  The default output `to_png` could theoretically be used with the EmojiOne index to output valid PNG images for EmojiOne, Github, or Twemoji (assuming appropriate CDN or local source images were provided). With that said, some output formats may lend themselves better to assets that are available from a specific provider. For instance, EmojiOne provides SVG, PNG, and sprite assets, while others provide only PNG images.
+
+As previously mentioned, short name indexes are sourced from EmojiOne's and Gemoji's latest official tags. The index contains the emoji names, shortnames, values, etc.; everything needed to insert Unicode emoji characters or specially crafted HTML elements.
 
 !!! warning "EmojiOne and Gemoji licensing"
     Pymdown Extensions has no affiliation with EmojiOne or Gemoji.  The indexes generated from their sources are covered under their respective licensing.  When using their images or CSS, please see their licensing terms to ensure proper usage and attributions.
@@ -12,7 +18,7 @@ An emoji index is built for both Gemoji and EmojiOne from their respective repos
 ## Options
 | Option    | Type | Default |Description |
 |-----------|------|---------|------------|
-| emoji_index | function | pymdownx.emoji.emojione | A function that returns the index to use when parsing `:emoji:` syntax. See [Default Emoji Indexes](#default-emoji-indexes) to see the provided indexes. |
+| emoji_index | function | pymdownx.emoji.emojione | A function that returns the index to use when parsing `:short_name:` syntax. See [Default Emoji Indexes](#default-emoji-indexes) to see the provided indexes. |
 | emoji_generator | function | pymdownx.emoji.to_png | A function that takes the emoji info and constructs the desired emoji ouput. See [Default Emoji Generators](#default-emoji-generators) to see the provided generators. |
 | title | str | 'short' | Specifies the title format that is fed into the emoji generator function.  Can either be `long` which is the long description of the emoji, `short` which is the short name (`:short:`), or `none` which will simply pass `None`. |
 | alt | str | 'unicode' | Specifies the format for the alt value that is passed to the emoji generator function. If `alt` is set to `short`, the short name will be passed to the generator.  If `alt` is set to `unicode` the Unicode characters are passed to the generator.  Lastly, if `alt` is set to `html_entity`, the Unicode characters are passed encoded as HTML entities. |
@@ -64,11 +70,11 @@ pymdownx.emoji.gemoji
 
 ## Default Emoji Generators
 
-Emoji provides six default emoji generators.  All the generators can be used with the `emojione` index, but only two will work well with the `gemoji` index: `pymdownx.emoji.to_png` and `pymdownx.emoji.to_alt`. They can be used by passing in one of the functions below via the `emoji_generator` parameter.  Pass the actual function reference, not a string. If you need to create your own, just check out [Custom Emoji Generators](#custom-emoji-generators).
+Emoji provides six default emoji generators.  All the generators can be used with the `emojione` index, but only two will work well with the `gemoji` index: `pymdownx.emoji.to_png` and `pymdownx.emoji.to_alt`. You can select a generator to use by passing in one of the functions below via the `emoji_generator` parameter.  Pass the actual function reference, not a string. If you need to create your own, just check out [Custom Emoji Generators](#custom-emoji-generators).
 
 pymdownx.emoji.to_png
 : 
-    This generator was written to do PNG outputs for both Gemoji and EmojiOne.  This outputs the emoji as a PNG image in the form of:
+    This is a general purpose generator and, by default, provides an EmojiOne CDN and Github CDN path(s).  The PNG output form is as follows:
 
     ```html
     <img alt="😄" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/png/1f604.png" title=":smile:" />
@@ -79,13 +85,13 @@ pymdownx.emoji.to_png
     | Option | Type | Default | Description |
     | ------ | ---- | ------- | ----------- |
     | classes | str| Name of the index used | Specifies the class(es) to be used in the img element. |
-    | image_path | str | CDN for the default index used | This can be either a local path, or it can be a CDN.  By default, an appropriate CDN is provided for EmojiOne and Gemoji depending on which index is being used. |
-    | non_standard_image_path | str | CDN for the default index used | This can be either a local path, or it can be a CDN. Currently, only Gemoji's non-standard emojis take advantage of this as the Github CDN alters the path slightly for its non-Unicode emoji.  By default, an appropriate CDN is provided for Gemoji. |
+    | image_path | str | CDN for the default index used | This can be either a local path or a CDN containing the assets.  By default, an appropriate CDN is provided for EmojiOne and Gemoji depending on which index is being used. |
+    | non_standard_image_path | str | CDN for the default index used | This can be either a local path, or a CDN containing the assets. Currently, only Gemoji's non-standard emojis take advantage of this as the Github CDN alters the path slightly for its non-Unicode emoji.  By default, an appropriate CDN is provided for Gemoji. |
     | attributes | dict | \{} | A dictionary containing tag attributes as key value string pairs. The dict keys are the attribute names and dict values are the attribute values. |
 
 pymdownx.emoji.to_svg
 : 
-    This generator was written to output EmojiOne SVG images.  This outputs the emoji as a SVG image in the form of:
+    This generator was written to output EmojiOne SVG images. The SVG image outputs as:
 
     ```html
     <img alt="😄" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f604.svg" title=":smile:" />
@@ -96,7 +102,7 @@ pymdownx.emoji.to_svg
     | Option | Type | Default | Description |
     | ------ | ---- | ------- | ----------- |
     | classes | str| Name of the index used | Specifies the class(es) to be used in the img element. The default will match the name of the index used. |
-    | image_path | str | A CDN for EmojiOne images | This can be either a local path, or it can be a CDN.  By default, an appropriate CDN is provided for EmojiOne. |
+    | image_path | str | A CDN for EmojiOne images | This can be either a local path or a CDN containing the assets.  By default, an appropriate CDN is provided for EmojiOne. |
     | attributes | dict | \{} | A dictionary containing tag attributes as key value string pairs. The dict keys are the attribute names and dict values are the attribute values. |
 
 pymdownx.emoji.to_png_sprite
@@ -162,7 +168,7 @@ emoji_index = {
     # for different indexes if required.
     "name": "myindex",
 
-    # The actual index.  An dictionary of all the emoji.
+    # The actual index.  A dictionary of all the emoji.
     # Different emoji shortnames with the same Unicode data
     # can be mentioned under aliases.
     "emoji": {
@@ -244,7 +250,7 @@ markdown_extensions:
 ```
 
 ## Emoji Index Updates
-The Emoji extension might not always have indexes built from the latest repos, we try to keep the indexes updated with new releases, but if they fall out of date, you can open an issue on the repo to alert the maintainer(s) and they will update them when someone gets a chance.  Pull requests are also welcome.  The process for updating the indexes is automated, so it is fairly easy to do for a pull request.
+The Emoji extension might at times be behind on having indexes built from the latest repos. We try to keep the indexes updated with new releases, but if they fall out of date, you can open an issue on the repo to alert the maintainer(s) and they will update them when someone gets a chance.  Pull requests are also welcome.  The process for updating the indexes is automated, so it is fairly easy to do for a pull request.
 
 1. Ensure you have `requests` installed: `pip install requests`.
 2. Fork the repo and checkout to your machine.
