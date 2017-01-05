@@ -1,7 +1,7 @@
 ## Overview
 PlainHtml is a simple extension that is run at the end of post-processing.  It searches the final output stripping things like `style`, `id`, `class`, and `on<name>` attributes from HTML tags.  It also removes HTML comments.  If you have no desire to see these, this can strip them out.  Though it does its best to be loaded at the very end of the process, it helps to include this one last when loading up your extensions.  If needed, plain HTML can also be configured to strip out just comments or just attributes etc.
 
-As comments aren't stripped until the end, depending on how comments are inserted, it can possibly affect parsing, so be careful how you generally insert comments.
+Because comments aren't stripped until the end in a post-processing step, they are present throughout the entire Markdown conversion process and could possibly affect parsing, so be careful how you generally insert comments.
 
 !!! caution "Warning"
     This is not meant to be a sanitizer for HTML.  This is just meant to try and strip out style, script, classes, etc. to provide a plain HTML output for the times this is desired; this is not meant as a security extension.  If you want something to secure the output, you should consider running a sanitizer like [bleach](https://pypi.python.org/pypi/bleach).
