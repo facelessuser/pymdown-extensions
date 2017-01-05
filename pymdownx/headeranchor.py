@@ -27,7 +27,7 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
 from markdown.extensions.toc import slugify, stashedHTML2text, unique, TocExtension
-from .slugs import uslugify, uslugify_encoded
+from .slugs import uslugify, uslugify_encoded  # noqa
 from .util import PymdownxDeprecationWarning
 import warnings
 
