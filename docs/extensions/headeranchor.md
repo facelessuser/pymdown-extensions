@@ -1,6 +1,10 @@
 ## Overview
 HeaderAnchor adds anchors to headers in the style of GFM's header anchors (anchors that appear to the left of the headers when the cursor hovers over the header). The header anchors in this document were all generated with this extension.
 
+!!! warning "Deprecated"
+    This extension has been deprecated in version `1.4.0`.  The same effect can be accomplished using
+    `markdown.extensions.toc` with `permalinks` and some custom CSS.  It doesn't make sense to continue supporting this as nothing is really gained by specifically doing anchors Github's way.
+
 ## Options
 By default, HeaderAnchor will use [Toc's](https://pythonhosted.org/Markdown/extensions/toc.html) settings (if Toc is being used), but HeaderAnchor can be run without Toc.  HeaderAnchor can also be run along side Toc and ignore Toc's settings; though it is advised to keep Toc and HeaderAnchor's settings in sync to ensure header links properly link.
 
@@ -13,11 +17,14 @@ By default, HeaderAnchor will use [Toc's](https://pythonhosted.org/Markdown/exte
 ## Alternate Slugify
 Python Markdown's default slugify strips out Unicode chars. To better handle Unicode, a couple of optional slugify options have been provided.
 
+!!! note "Note"
+    This extension has been deprecated. But for legacy compatibility, you can still reference slugs at `pymdownx.headeranchor`, but slugs are actually found at `pymdownx.slugs` moving forward.
+
 ### uslugify
-In order to get slugs closer to like GFM's slugs (in regards to Unicode chars), a slugify has been included at `pymdownx.headerancor.uslugify`.  This assumes you are encoding your HTML as UTF-8.  UTF-8 Unicode should be okay in your slugs in modern browsers.  You can use this to override Toc's and/or HeaderAnchor's slugify.
+In order to get slugs closer to like GFM's slugs (in regards to Unicode chars), a slugify has been included at `pymdownx.slugs.uslugify`.  This assumes you are encoding your HTML as UTF-8.  UTF-8 Unicode should be okay in your slugs in modern browsers.  You can use this to override Toc's and/or HeaderAnchor's slugify.
 
 ### uslugify_encoded
-If you aren't encoding your HTML as UTF-8, or prefer the safer percent encoded Unicode slugs, you can use `uslugify_encoded` which will percent encode non-ASCII word chars.  You can use this to override Toc's and/or HeaderAnchor's slugify.
+If you aren't encoding your HTML as UTF-8, or prefer the safer percent encoded Unicode slugs, you can use `pymdownx.slugs.uslugify_encoded` which will percent encode non-ASCII word chars.  You can use this to override Toc's and/or HeaderAnchor's slugify.
 
 ## CSS
 Here we will show some example CSS for rendering the header anchors. While Material Icon font is used in this example, you can substitute it with [Octicons](https://octicons.github.com/) for even more of a GFM feel, or use something else entirely.
@@ -40,7 +47,7 @@ We have two classes to work with:
 | headeranchor-link | This is attached to the actual anchor tag that links to the header. |
 | headeranchor | This is the span we attach the anchor character to. |
 
-The CSS below is what this document is using.
+The CSS below is an example.
 
 ```css
 /* Header Anchors */

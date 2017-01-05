@@ -35,7 +35,6 @@ extensions = [
     'pymdownx.tilde',
     'pymdownx.emoji',
     'pymdownx.tasklist',
-    'pymdownx.headeranchor',
     'pymdownx.superfences'
 ]
 
@@ -89,8 +88,9 @@ class GithubExtension(Extension):
         if not no_nl2br:
             warnings.warn(
                 "The pymdown.github extension does not enable nl2br anymore by default."
-                "\nThis is to be compliant with recent Github Flavored Markdown."
-                "\n'no_nl2br' is deprecated and will be removed in a future version.",
+                "\nThis is to ensure compliance with recent Github Flavored Markdown."
+                "\n'no_nl2br' is deprecated and will be removed in a future version."
+                "\nPlease manually include markdown.extensions.nl2br if you wish to continue using.",
                 PymdownxDeprecationWarning
             )
 

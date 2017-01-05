@@ -26,17 +26,10 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
-import unicodedata
-import re
-import sys
 from markdown.extensions.toc import slugify, stashedHTML2text, unique, TocExtension
-
-PY3 = sys.version_info >= (3, 0) and sys.version_info < (4, 0)
-
-if PY3:
-    from urllib.parse import quote  # noqa
-else:
-    from urllib import quote  # noqa
+from .slugs import uslugify, uslugify_encoded
+from .util import PymdownxDeprecationWarning
+import warnings
 
 LINK = (
     '<a '
@@ -46,35 +39,6 @@ LINK = (
     '<span class="headeranchor"></span>'
     '</a>'
 )
-
-
-RE_TAGS = re.compile(r'''</?[^>]*>''', re.UNICODE)
-RE_WORD = re.compile(r'''[^\w\- ]''', re.UNICODE)
-
-
-def uslugify(text, sep):
-    """Unicode slugify (utf-8)."""
-
-    if text is None:
-        return ''
-    # Normalize, Strip html tags, strip leading and trailing whitespace, and lower
-    tag_id = RE_TAGS.sub('', unicodedata.normalize('NFKD', text)).strip().lower()
-    # Remove non word characters, non spaces, and non dashes, and convert spaces to dashes.
-    return RE_WORD.sub('', tag_id).replace(' ', sep)
-
-
-def uslugify_encoded(text, sep):
-    """Custom slugify (percent encoded)."""
-
-    if text is None:
-        return ''
-    # Strip html tags and lower
-    tag_id = RE_TAGS.sub('', unicodedata.normalize('NFKD', text)).lower()
-    # Remove non word characters or non spaces and dashes
-    # Then convert spaces to dashes
-    tag_id = RE_WORD.sub('', tag_id).replace(' ', sep)
-    # Encode anything that needs to be
-    return quote(tag_id.encode('utf-8'))
 
 
 class HeaderAnchorTreeprocessor(Treeprocessor):
@@ -149,6 +113,12 @@ class HeaderAnchorExtension(Extension):
 
     def extendMarkdown(self, md, md_globals):
         """Add HeaderAnchorTreeprocessor to Markdown instance."""
+
+        warnings.warn(
+            "The pymdownx.headeranchor Extension is deprecated. Please use the markdown.extensions.toc with permalinks."
+            "\n The same end results can be accomplished with CSS applied to permalinks.",
+            PymdownxDeprecationWarning
+        )
 
         self.md = md
         processor = HeaderAnchorTreeprocessor(md)

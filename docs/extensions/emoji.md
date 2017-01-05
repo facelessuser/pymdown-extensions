@@ -26,7 +26,7 @@ As previously mentioned, short name indexes are sourced from EmojiOne's and Gemo
 | options | dict | \{} | Options that are specific to emoji generator functions.  Supported parameters can vary from function to function. |
 
 !!! tip "Legacy GithubEmoji Emulation"
-    The Emoji extension was actually created to replace the now deprecated [GithubEmoji](./githubemoji.md) extension. Emoji was written to be much more flexible.  If you have a desire to configure the output to be like the legacy GithubEmoji extension, you can use the settings below. To learn more about the settings used, continue reading the documentation.
+    The Emoji extension was actually created to replace the now deprecated [GithubEmoji](./githubemoji.md) extension. Emoji was written to be much more flexible.  If you have a desire to configure the output to be like the legacy GithubEmoji extension, you can use the settings below. This shows the full setup. To learn more about the settings used, continue reading the documentation.
 
     ```python
     import pymdownx.emoji
@@ -40,7 +40,9 @@ As previously mentioned, short name indexes are sourced from EmojiOne's and Gemo
                 "align": "absmiddle",
                 "height": "20px",
                 "width": "20px"
-            }
+            },
+            "image_path": "https://assets-cdn.github.com/images/icons/emoji/unicode/",
+            "non_standard_image_path": "https://assets-cdn.github.com/images/icons/emoji/"
         }
     }
     ```

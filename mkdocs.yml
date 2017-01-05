@@ -29,6 +29,7 @@ pages:
     - SuperFences: extensions/superfences.md
     - Tasklist: extensions/tasklist.md
     - Tilde: extensions/tilde.md
+  - Miscellaneous Extras: miscellaneous_extras.md
   - Contributing &amp; Suppport: contributing.md
   - Changelog: changelog.md
   - License: license.md
@@ -36,7 +37,8 @@ theme: material
 theme_dir: doc_theme
 markdown_extensions:
   - markdown.extensions.toc:
-      slugify: !!python/name:pymdownx.headeranchor.uslugify
+      slugify: !!python/name:pymdownx.slugs.uslugify
+      permalink: 
   - markdown.extensions.admonition:
   - markdown.extensions.smarty:
       smart_quotes: false
@@ -57,10 +59,12 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.progressbar:
-  - pymdownx.headeranchor:
   - pymdownx.arithmatex:
   - pymdownx.mark:
   - pymdownx.critic:
+  - pymdownx.plainhtml:
+      strip_attributes: ''
+
 extra:
   palette:
     primary: blue

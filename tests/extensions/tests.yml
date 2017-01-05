@@ -135,14 +135,14 @@ headeranchor-unicode:
     - headeranchor.css
   extensions:
     pymdownx.headeranchor:
-      slugify: !!python/name:pymdownx.headeranchor.uslugify
+      slugify: !!python/name:pymdownx.slugs.uslugify
 
 headeranchor-unicode-encode:
   css:
     - headeranchor.css
   extensions:
     pymdownx.headeranchor:
-      slugify: !!python/name:pymdownx.headeranchor.uslugify_encoded
+      slugify: !!python/name:pymdownx.slugs.uslugify_encoded
 
 inlinehilite:
   extensions:

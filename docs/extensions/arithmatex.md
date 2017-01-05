@@ -1,3 +1,9 @@
+<!-- TODO: Remove
+     This injection of the MathJax config is a workaround that is required
+     due to the interaction with the pre-release of mkdocs-material theme.
+     This will be moved to a more appropriate place as soon as  mkdocs-material
+     makes the needed adjustments !
+-->
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
     config: ["MMLorHTML.js"],

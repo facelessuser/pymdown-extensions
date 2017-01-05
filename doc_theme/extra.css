@@ -11,6 +11,27 @@
   word-wrap: break-word;
 }
 
+/* Critic Block */
+.md-typeset .critic.block {
+  display: block;
+  margin: 0;
+  padding: .02em;
+}
+
+/* Header Anchors */
+.md-typeset .headerlink {
+  vertical-align: middle;
+  font-family: "Material Icons";
+  top: .1rem;
+}
+
+@media (min-width: 74.9375em) {
+  .md-typeset .headerlink {
+    float: left;
+    margin-left: -2.4rem;
+  }
+}
+
 /* Progress Bars */
 .md-typeset .progress {
   display: block;
@@ -166,73 +187,4 @@
     height: 22px;
     border-right: 1px solid #ddd;
   }
-}
-
-/* Critic Block */
-.md-typeset .critic.block {
-  display: block;
-  margin: 0;
-  padding: .02em;
-}
-
-/* Header Anchors */
-.md-typeset .headeranchor-link {
-  opacity: 0;
-  float: left;
-  margin-top:  -.5rem;
-  padding-right: 4px;
-  margin-left: -2.4rem;
-  text-decoration: none;
-}
-
-.md-typeset .headeranchor-link:not(:hover) {
-  color: rgba(0, 0, 0, 0.26);
-}
-
-.md-typeset .headeranchor-link:focus {
-  outline: none;
-}
-
-.md-typeset h1:target .headeranchor-link,
-.md-typeset h2:target .headeranchor-link,
-.md-typeset h3:target .headeranchor-link,
-.md-typeset h4:target .headeranchor-link,
-.md-typeset h5:target .headeranchor-link,
-.md-typeset h6:target .headeranchor-link {
-  opacity: 1;
-  text-decoration: none;
-  -webkit-transform:translateY(.5rem);
-  transform:translateY(.5rem);
-}
-
-.md-typeset h1:hover .headeranchor-link,
-.md-typeset h2:hover .headeranchor-link,
-.md-typeset h3:hover .headeranchor-link,
-.md-typeset h4:hover .headeranchor-link,
-.md-typeset h5:hover .headeranchor-link,
-.md-typeset h6:hover .headeranchor-link {
-  opacity: 1;
-  text-decoration: none;
-  -webkit-transform:translateY(.5rem);
-  transform:translateY(.5rem);
-  -webkit-transition: color .25s,opacity .125s .25s,-webkit-transform .25s .25s;
-  transition: color .25s,opacity .125s .25s,-webkit-transform .25s .25s;
-  transition: transform .25s .25s,color .25s,opacity .125s .25s;
-  transition: transform .25s .25s,color .25s,opacity .125s .25s,-webkit-transform .25s .25s;
-}
-
-.md-typeset .headeranchor {
-  vertical-align: middle;
-  font: normal normal 2rem "Material Icons";
-  line-height: 1;
-  display: inline-block;
-  text-decoration: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
-
-.md-typeset .headeranchor:before {
-  content: '\E157';
 }

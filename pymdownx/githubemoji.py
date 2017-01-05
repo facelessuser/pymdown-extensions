@@ -35,6 +35,7 @@ except Exception:  # pragma: no cover
 import json
 import re
 import copy
+from .util import PymdownxDeprecationWarning
 import warnings
 
 RE_ASSET = re.compile(r'(?P<image>.*?/(?P<name>[^/]+?)\.png)(?:\?(?P<version>.+))?')
@@ -1810,8 +1811,8 @@ class GithubEmojiExtension(Extension):
         }
 
         warnings.warn(
-            "The pymdownx.githubemoji Extension is pending deprecation. Use the pymdownx.emoji Extension instead.",
-            PendingDeprecationWarning
+            "The pymdownx.githubemoji Extension is deprecated. Please use the pymdownx.emoji Extension instead.",
+            PymdownxDeprecationWarning
         )
 
         super(GithubEmojiExtension, self).__init__(*args, **kwargs)
