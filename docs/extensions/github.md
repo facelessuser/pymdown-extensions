@@ -20,7 +20,7 @@ Extensions that get loaded by default:
 | [superfences](./superfences.md) | | pymdownx.superfences |
 
 !!! warning "Deprecated"
-    HeaderAnchor is no longer included starting in version `1.4.0` as it wasn't really part of the GFM syntax, and HeaderAnchor is now deprecated.  HeaderAnchor is an unnecessary extension, and the same end result can be achieved with `markdown.extensions.toc` (with the `permalink` option enabled) and some custom CSS.  This extension was more about the syntax than it was about styling.  In the short term, you can manually include the `pymdownx.headeranchor` extension in addition to `pymdownx.github`. But in the future, the HeaderAnchor extension will be removed from Pymdown Extensions.
+    HeaderAnchor is no longer included starting in version `1.4.0` as it wasn't really part of the GFM syntax, and HeaderAnchor is now deprecated.  HeaderAnchor is an unnecessary extension, and the same end result can be achieved with `markdown.extensions.toc` (with the `permalink` option enabled) and some custom CSS.  This extension was more about the syntax than it was about styling.  If you are not ready to give up the extension, you can manually include the `pymdownx.headeranchor` extension in addition to `pymdownx.github`. But in the future, the HeaderAnchor extension will be removed from Pymdown Extensions.
 
 ### Github Emoji Configuration
 This is the full, default setup used to get Github emoji images.  This is valid at the time of writing this. Github constantly tweaks how they do things, so in time this may render differently than what they actually do. But this should provide emojis for as long as the CDNs are valid.
