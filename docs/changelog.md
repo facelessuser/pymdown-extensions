@@ -1,5 +1,5 @@
 ## 1.4.0
-> Released Jan X, 2017
+> Released Jan 5, 2017
 
 - **NEW**: HeaderAnchor extension is now deprecated.  It will be removed in a future version.
 - **NEW**: HeaderAnchor is no longer included in the Github extension.
