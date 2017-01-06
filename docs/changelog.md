@@ -3,6 +3,8 @@
 
 - **NEW**: HeaderAnchor extension is now deprecated.  It will be removed in a future version.
 - **NEW**: HeaderAnchor is no longer included in the Github extension.
+- **NEW**: Slugify functions are moved to `pymdownx.slug` in preparation of HeaderAnchor removal.
+- **FIX**: GithubEmoji is not "pending" deprecation, but is actually deprecated.
 
 ## 1.3.0
 > Released Jan 1, 2017

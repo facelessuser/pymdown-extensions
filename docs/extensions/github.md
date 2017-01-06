@@ -28,18 +28,20 @@ This is the full, default setup used to get Github emoji images.  This is valid 
 ```python
 import pymdownx.emoji
 
-github_emulation_parameters = {
-    "emoji_index": pymdownx.emoji.gemoji,
-    "emoji_generator": pymdownx.emoji.to_png,
-    "alt": "short",
-    "options": {
-        "attributes": {
-            "align": "absmiddle",
-            "height": "20px",
-            "width": "20px"
-        },
-        "image_path": "https://assets-cdn.github.com/images/icons/emoji/unicode/",
-        "non_standard_image_path": "https://assets-cdn.github.com/images/icons/emoji/"
+extension_configs = {
+    "pymdownx.emoji": {
+        "emoji_index": pymdownx.emoji.gemoji,
+        "emoji_generator": pymdownx.emoji.to_png,
+        "alt": "short",
+        "options": {
+            "attributes": {
+                "align": "absmiddle",
+                "height": "20px",
+                "width": "20px"
+            },
+            "image_path": "https://assets-cdn.github.com/images/icons/emoji/unicode/",
+            "non_standard_image_path": "https://assets-cdn.github.com/images/icons/emoji/"
+        }
     }
 }
 ```
