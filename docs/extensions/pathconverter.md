@@ -1,9 +1,15 @@
 ## Overview
-PathConverter is an extension that can convert paths to absolute or relative paths for links and images.  PathConverter takes a base path (an absolute path used as a reference for locating images and referenced files) and a relative path (an absolute path that the links will be relative to after conversion if not running in absolute mode) and then converts paths for the `href` and/or `src` attributes in `a`, `script`, `img`, and `link` tags.
+PathConverter is an extension that can convert local reference paths to absolute or relative paths for links and images. It was originally written for a project that wanted to preview the markdown by rendering it in a temporary location. This extension allowed the paths to be converted to work from the temporary location. This context is important when trying to understand why this extension was created. It's actual usage is limited to situations like this, so it isn't something that would get used in most normal scenarios.
 
-PathConverter will only operate on file paths that can be confirmed to exist on the system it is run on.  Relative mode is the more useful mode as it can be used to render HTML for use in an actual website.
+PathConverter takes an absolute base path. The base path is the Markdown content's assumed location at time of conversion.  The path is used as a reference for locating images and referenced files relative to the Markdown content.  Essentially, the references in the Markdown file would currently be relative to this base path at conversion time. If a reference can be found, the path is eligible for conversion.  In the case of **absolute** mode, the relative Markdown paths would be converted to absolute paths.
 
-PathConverter is also intelligent enough to only operate on the file portion of the a path link.  Consider the following scenario:  `path/to/file.html#header-to-jump-to`.  In the example, `path/to/file.html` will be converted, but `#header-to-jump-to` will be left unaltered.
+If PathConverter is in **relative** mode, the extension will also need a relative path.  The relative path must be an absolute path to the location the HTML is assumed to live after conversion.  If references can be confirmed to exist during conversion (based on the base path), those references will be converted to relative paths that align to the provided relative path parameter. The idea is that a Markdown file could be found in a location that is not meant to be its final location. References within the Markdown source would link to the images relative to the base path, but they would then be converted to be relative to it's new location -- the relative path.
+
+Currently PathConverter will search desired tags for `href` and `src` attributes. By default, only `a`, `script`, `img`, and `link` tags are searched.
+
+PathConverter is also intelligent enough to only operate on the file portion of the reference link.  Consider the following scenario:  `path/to/file.html#header-to-jump-to`.  In the example, `path/to/file.html` will be converted, but `#header-to-jump-to` will be left unaltered.
+
+As mentioned before, the use cases for something like this are limited, but if you have a situation that lends well to something like this, PathConverter can help.
 
 ## Options
 
