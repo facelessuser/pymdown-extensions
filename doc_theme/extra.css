@@ -25,7 +25,7 @@
   top: .1rem;
 }
 
-@media (min-width: 74.9375em) {
+@media only screen and (min-width: 74.9376em) {
   .md-typeset .headerlink {
     float: left;
     margin-left: -2.4rem;
