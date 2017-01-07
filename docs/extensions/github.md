@@ -19,7 +19,7 @@ Extensions that get loaded by default:
 | [tasklist](./tasklist.md) | | pymdownx.tasklist |
 | [superfences](./superfences.md) | | pymdownx.superfences |
 
-!!! warning "Deprecated"
+!!! warning "Output Change"
     HeaderAnchor is no longer included starting in version `1.4.0` as it wasn't really part of the GFM syntax, and HeaderAnchor is now deprecated.  HeaderAnchor is an unnecessary extension, and the same end result can be achieved with `markdown.extensions.toc` (with the `permalink` option enabled) and some custom CSS.  This extension was more about the syntax than it was about styling.  If you are not ready to give up the extension, you can manually include the `pymdownx.headeranchor` extension in addition to `pymdownx.github`. But in the future, the HeaderAnchor extension will be removed from Pymdown Extensions.
 
 ### Github Emoji Configuration
@@ -51,7 +51,7 @@ extension_configs = {
 |-----------|------|---------|------------|
 | no_nl2br | bool | True | If `False`, this includes the [nl2br](https://pythonhosted.org/Markdown/extensions/nl2br.html) extension. |
 
-!!! warning "Deprecated"
+!!! warning "Deprecated Option"
     In version `1.3.0`, the setting `no_nl2br` is now `True` by default and the setting is deprecated and will be removed in the future. Github's GFM (which we are emulating) no longer converts new lines to `<br>`.  If you prefer having nl2br enabled, you can enable the `markdown.extensions.nl2br` extension separately.
 
 *[GFM]:  Github Flavored Markdown

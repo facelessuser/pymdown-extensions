@@ -1,9 +1,10 @@
 ## Overview
-HeaderAnchor adds anchors to headers in the style of GFM's header anchors (anchors that appear to the left of the headers when the cursor hovers over the header). The header anchors in this document were all generated with this extension.
 
-!!! warning "Deprecated"
+!!! warning "Deprecated Extension"
     This extension has been deprecated in version `1.4.0`.  The same effect can be accomplished using
     `markdown.extensions.toc` with `permalinks` and some custom CSS.  It doesn't make sense to continue supporting this as nothing is really gained by specifically doing anchors Github's way.
+
+HeaderAnchor adds anchors to headers in the style of GFM's header anchors (anchors that appear to the left of the headers when the cursor hovers over the header). The header anchors in this document were all generated with this extension.
 
 ## Options
 By default, HeaderAnchor will use [Toc's](https://pythonhosted.org/Markdown/extensions/toc.html) settings (if Toc is being used), but HeaderAnchor can be run without Toc.  HeaderAnchor can also be run along side Toc and ignore Toc's settings; though it is advised to keep Toc and HeaderAnchor's settings in sync to ensure header links properly link.
