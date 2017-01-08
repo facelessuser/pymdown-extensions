@@ -5,7 +5,7 @@
 [![Requirements Status][requires-image]][requires-link]
 [![pypi-version][pypi-image]][pypi-link]
 ![License][license-image-mit]
-# PyMdown Extra Extensions
+# PyMdown Extensions
 Extensions for [Python Markdown](https://pythonhosted.org/Markdown/).
 
 # Documentation
@@ -18,9 +18,9 @@ License is MIT except for a few exceptions.  See [LICENSE](https://github.com/fa
 [codecov-link]: https://codecov.io/github/facelessuser/pymdown-extensions
 [travis-image]: https://img.shields.io/travis/facelessuser/pymdown-extensions/master.svg?label=Unix%20Build
 [travis-link]: https://travis-ci.org/facelessuser/pymdown-extensions
-[landscape-image]: https://landscape.io/github/facelessuser/pymdown-extensions/master/landscape.svg?style=flat
 [appveyor-image]: https://img.shields.io/appveyor/ci/facelessuser/pymdown-extensions/master.svg?label=Windows%20Build
-[appveyor-link]: https://ci.appveyor.com/project/facelessuser/pymdown
+[appveyor-link]: https://ci.appveyor.com/project/facelessuser/pymdown-extensions
+[landscape-image]: https://landscape.io/github/facelessuser/pymdown-extensions/master/landscape.svg?style=flat
 [landscape-link]: https://landscape.io/github/facelessuser/pymdown-extensions/master
 [requires-image]: https://img.shields.io/requires/github/facelessuser/pymdown-extensions/master.svg
 [requires-link]: https://requires.io/github/facelessuser/pymdown-extensions/requirements/?branch=master
