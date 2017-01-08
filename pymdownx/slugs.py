@@ -38,8 +38,6 @@ RE_WORD = re.compile(r'''[^\w\- ]''', re.UNICODE)
 def uslugify(text, sep):
     """Unicode slugify (utf-8)."""
 
-    if text is None:
-        return ''
     # Normalize, Strip html tags, strip leading and trailing whitespace, and lower
     tag_id = RE_TAGS.sub('', unicodedata.normalize('NFKD', text)).strip().lower()
     # Remove non word characters, non spaces, and non dashes, and convert spaces to dashes.
@@ -49,8 +47,6 @@ def uslugify(text, sep):
 def uslugify_encoded(text, sep):
     """Custom slugify (percent encoded)."""
 
-    if text is None:
-        return ''
     # Strip html tags and lower
     tag_id = RE_TAGS.sub('', unicodedata.normalize('NFKD', text)).lower()
     # Remove non word characters or non spaces and dashes
