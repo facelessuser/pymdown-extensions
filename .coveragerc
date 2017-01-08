@@ -1,0 +1,7 @@
+[run]
+omit=
+    pymdownx/pymdown.py
+
+[report]
+omit=
+    pymdownx/pymdown.py

@@ -59,7 +59,7 @@ class HeaderAnchorTreeprocessor(Treeprocessor):
             self.use_toc_settings = self.config['use_toc_settings']
             if self.use_toc_settings:
                 for ext in self.markdown.registeredExtensions:
-                    if isinstance(ext, TocExtension):
+                    if isinstance(ext, TocExtension):  # pragma: no cover
                         self.separator = ext.config['separator'][0]
                         self.slugify = ext.config['slugify'][0]
                         break
@@ -130,7 +130,7 @@ class HeaderAnchorExtension(Extension):
     def reset(self):
         """Ensure this is always after toc."""
 
-        if not self.configured and 'toc' in self.md.treeprocessors.keys():
+        if not self.configured and 'toc' in self.md.treeprocessors.keys():  # pragma: no cover
             self.configured = True
             self.md.treeprocessors.link("header-anchor", ">toc")
 
