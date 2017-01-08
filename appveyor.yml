@@ -26,6 +26,6 @@ test_script:
   - "%PYTHON%/Scripts/tox --version"
   - "%PYTHON%/Scripts/tox"
 after_test:
-  - if "%TOXENV%" != "lint" "%PYTHON%/Scripts/codecov"
+  - if not ("%TOXENV%" == "lint") "%PYTHON%/Scripts/codecov"
 matrix:
   fast_finish: true
