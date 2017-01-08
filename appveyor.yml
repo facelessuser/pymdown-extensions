@@ -21,11 +21,11 @@ install:
   - "%PYTHON%/Scripts/pip.exe install codecov"
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
 test_script:
-  - "%PYTHON%/Scripts/pip --version"
-  - "%PYTHON%/Scripts/virtualenv.exe --version"
-  - "%PYTHON%/Scripts/tox --version"
-  - "%PYTHON%/Scripts/tox"
+  - pip --version
+  - virtualenv --version
+  - tox --version
+  - tox
 after_test:
-  - if not ("%TOXENV%" == "lint") "%PYTHON%/Scripts/codecov"
+  - if not ("%TOXENV%" == "lint") codecov
 matrix:
   fast_finish: true
