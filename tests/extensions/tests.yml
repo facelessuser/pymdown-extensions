@@ -37,6 +37,10 @@ critic (view):
     pymdownx.critic:
       mode: view
 
+extra:
+  extensions:
+    pymdownx.extra:
+
 extrarawhtml:
   extensions:
     pymdownx.extrarawhtml:

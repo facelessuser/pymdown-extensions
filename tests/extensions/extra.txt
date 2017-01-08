@@ -1,0 +1,17 @@
+| Col1 | Col2 |
+| ---- | ---- |
+| Abbreviations | abr |
+| Emphasis | **emphasis works** |
+| Footnote[^1] | |
+| Attr List | **Test**{: style="color: red;"} |
+
+<div markdown="1">
+This **will** be processed.
+</div>
+
+Definition
+: Some text
+
+*[abr]:  abbreviations
+
+[^1]: This is a footnote.
