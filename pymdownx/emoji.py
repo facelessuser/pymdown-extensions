@@ -27,6 +27,7 @@ from markdown import Extension
 from markdown.inlinepatterns import Pattern
 from markdown import util
 import sys
+import copy
 
 PY3 = sys.version_info >= (3, 0)
 IS_NARROW = sys.maxunicode == 0xFFFF
@@ -420,7 +421,7 @@ class EmojiExtension(Extension):
         assert alt in VALID_ALT, "Invalid 'alt' option!"
 
         if ":" not in md.ESCAPED_CHARS:
-            md.ESCAPED_CHARS.append(':')
+            md.ESCAPED_CHARS = copy.copy(md.ESCAPED_CHARS) + [':']
 
         md.inlinePatterns.add(
             "emoji",

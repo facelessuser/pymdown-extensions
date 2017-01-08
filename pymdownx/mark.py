@@ -26,6 +26,7 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import SimpleTagPattern
+import copy
 
 RE_SMART_CONTENT = r'((?:[^\=]|\=(?=[^\W_]|\=|\s)|(?<=\s)\=+?(?=\s))+?\=*?)'
 RE_DUMB_CONTENT = r'((?:[^\=]|(?<!\=)\=(?=[^\W_]|\=))+?)'
@@ -51,7 +52,7 @@ class MarkExtension(Extension):
         """Add support for <mark>test</mark> tags as ==test==."""
 
         if "=" not in md.ESCAPED_CHARS:
-            md.ESCAPED_CHARS.append('=')
+            md.ESCAPED_CHARS = copy.copy(md.ESCAPED_CHARS) + ['=']
         config = self.getConfigs()
 
         if config.get('smart_mark', True):

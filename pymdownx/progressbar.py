@@ -107,6 +107,7 @@ from markdown import Extension
 from markdown.inlinepatterns import Pattern, dequote
 from markdown import util
 from markdown.extensions.attr_list import AttrListTreeprocessor
+import copy
 
 RE_PROGRESS = r'''(?x)
 \[={1,}\s*                                                          # Opening
@@ -247,7 +248,7 @@ class ProgressBarExtension(Extension):
         """Add the progress bar pattern handler."""
 
         if "=" not in md.ESCAPED_CHARS:  # pragma: no cover
-            md.ESCAPED_CHARS.append('=')
+            md.ESCAPED_CHARS = copy.copy(md.ESCAPED_CHARS) + ['$']
         progress = ProgressBarPattern(RE_PROGRESS)
         progress.config = self.getConfigs()
         progress.markdown = md

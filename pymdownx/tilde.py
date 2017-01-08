@@ -27,6 +27,7 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import SimpleTagPattern, DoubleTagPattern
+import copy
 
 RE_SMART_CONTENT = r'((?:[^~]|~(?=[^\W_]|~|\s)|(?<=\s)~+?(?=\s))+?~*?)'
 RE_CONTENT = r'((?:[^~]|(?<!~)~(?=[^\W_]|~))+?)'
@@ -63,9 +64,9 @@ class DeleteSubExtension(Extension):
         smart = bool(config.get('smart_delete', True))
 
         if "~" not in md.ESCAPED_CHARS and (delete or subscript):
-            md.ESCAPED_CHARS.append('~')
+            md.ESCAPED_CHARS = copy.copy(md.ESCAPED_CHARS) + ['~']
         if " " not in md.ESCAPED_CHARS and subscript:
-            md.ESCAPED_CHARS.append(' ')
+            md.ESCAPED_CHARS = copy.copy(md.ESCAPED_CHARS) + [' ']
 
         delete_rule = RE_SMART_DEL if smart else RE_DEL
         sub_del_rule = RE_SMART_SUB_DEL if smart else RE_SUB_DEL
