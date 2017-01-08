@@ -22,6 +22,11 @@ caret:
   extensions:
     pymdownx.caret:
 
+caret (no insert):
+  extensions:
+    pymdownx.caret:
+      insert: false
+
 critic (accept):
   extensions:
     pymdownx.critic:
@@ -252,3 +257,8 @@ tasklist (custom):
 tilde:
   extensions:
     pymdownx.tilde:
+
+tilde (no delete):
+  extensions:
+    pymdownx.tilde:
+      delete: false
