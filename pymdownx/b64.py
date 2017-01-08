@@ -27,6 +27,7 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.postprocessors import Postprocessor
 from os.path import exists, normpath, splitext, join
+from .pathconverter import parse_url
 import sys
 import base64
 import re
@@ -38,22 +39,11 @@ if PY3:
 else:
     from urllib import url2pathname
 
-if sys.platform.startswith('win'):
-    _PLATFORM = "windows"
-elif sys.platform == "darwin":
-    _PLATFORM = "osx"
-else:
-    _PLATFORM = "linux"
-
 file_types = {
     (".png",): "image/png",
     (".jpg", ".jpeg"): "image/jpeg",
     (".gif",): "image/gif"
 }
-
-exclusion_list = (
-    'https://', 'http://', 'ftp://', 'ftps://', '#', 'mailto:', 'tel:', 'news:', 'data:'
-)
 
 RE_TAG_HTML = re.compile(
     r'''(?xus)
@@ -83,35 +73,28 @@ def repl_path(m, base_path):
 
     link = m.group(0)
     try:
-        path = url2pathname(m.group('path')[1:-1])
-        absolute = False
-        re_win_drive = re.compile(r"(^[A-Za-z]{1}:(?:\\|/))")
+        scheme, netloc, path, params, query, fragment, is_url, is_absolute = parse_url(m.group('path')[1:-1])
+        if not is_url:
+            path = url2pathname(path)
+            if scheme == 'file' and sys.platform.startswith('win') and not path.startswith('//'):
+                path = path.lstrip()
 
-        # Format the link
-        if path.startswith('file://'):
-            path = path.replace('file://', '', 1)
-            if _PLATFORM == "windows" and not path.startswith('//'):
-                path = path.lstrip("/")
-            absolute = True
-        elif _PLATFORM == "windows" and re_win_drive.match(path) is not None:
-            absolute = True
+        if is_absolute:
+            file_name = normpath(path)
+        else:
+            file_name = normpath(join(base_path, path))
 
-        if not path.startswith(exclusion_list):
-            if absolute:
-                file_name = normpath(path)
-            else:
-                file_name = normpath(join(base_path, path))
+        if exists(file_name):
+            ext = splitext(file_name)[1].lower()
+            for b64_ext in file_types:
+                if ext in b64_ext:
+                    with open(file_name, "rb") as f:
+                        link = " src=\"data:%s;base64,%s\"" % (
+                            file_types[b64_ext],
+                            base64.b64encode(f.read()).decode('ascii')
+                        )
+                    break
 
-            if exists(file_name):
-                ext = splitext(file_name)[1].lower()
-                for b64_ext in file_types:
-                    if ext in b64_ext:
-                        with open(file_name, "rb") as f:
-                            link = " src=\"data:%s;base64,%s\"" % (
-                                file_types[b64_ext],
-                                base64.b64encode(f.read()).decode('ascii')
-                            )
-                        break
     except Exception:
         # Parsing crashed and burned; no need to continue.
         pass
