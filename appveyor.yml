@@ -25,6 +25,6 @@ test_script:
   - "%PYTHON%/Scripts/tox --version"
   - "%PYTHON%/Scripts/tox"
 after_test:
-  - codecov
+  - "%PYTHON%/Scripts/codecov"
 matrix:
   fast_finish: true

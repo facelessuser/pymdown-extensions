@@ -36,7 +36,7 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.postprocessors import Postprocessor
-from os.path import exists, normpath, join, relpath
+from os.path import normpath, join, relpath
 import re
 import sys
 
