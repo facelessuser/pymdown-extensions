@@ -145,12 +145,8 @@ def repl_relative(m, base_path, relative_path):
             if (not is_absolute):
                 # Convert current relative path to absolute
                 temp = normpath(join(base_path, path))
-                if exists(temp):
-                    abs_path = temp.replace("\\", "/")
-            elif exists(path):
-                abs_path = path
+                abs_path = temp.replace("\\", "/")
 
-            if abs_path is not None:
                 convert = False
                 # Determine if we should convert the relative path
                 # (or see if we can realistically convert the path)
@@ -194,9 +190,8 @@ def repl_absolute(m, base_path):
         if (not is_absolute and not is_url):
             path = url2pathname(path)
             temp = normpath(join(base_path, path))
-            if exists(temp):
-                path = pathname2url(temp.replace("\\", "/"))
-                link = '%s"%s"' % (m.group('name'), urlunparse((scheme, netloc, path, params, query, fragment)))
+            path = pathname2url(temp.replace("\\", "/"))
+            link = '%s"%s"' % (m.group('name'), urlunparse((scheme, netloc, path, params, query, fragment)))
     except Exception:
         # Parsing crashed and burned; no need to continue.
         pass
@@ -248,11 +243,6 @@ class PathConverterExtension(Extension):
             'absolute': [False, "Paths are absolute by default; disable for relative - Default: False"],
             'tags': ["img script a link", "tags to convert src and/or href in - Default: 'img scripts a link'"]
         }
-
-        if "base_path" in kwargs and not exists(kwargs["base_path"]):
-            del kwargs["base_path"]
-        if "relative_path" in kwargs and not exists(kwargs['relative_path']):
-            del kwargs["relative_path"]
 
         super(PathConverterExtension, self).__init__(*args, **kwargs)
 
