@@ -1,4 +1,3 @@
-
 Test: _ Won't highlight _
 
 Test: _Will highlight_
@@ -15,7 +14,7 @@ Test: **This will all be bold ** because of the placement of the center asterisk
 
 Test: **This will NOT all be bold** because of the placement of the center asterisk.**
 
-Test: **This will all be bold* because of the token is less than that of the surrounding.**
+Test: **This will all be bold* because the token is less than that of the surrounding.**
 
 Test: _All will _ be italic_
 
@@ -27,7 +26,7 @@ Test: _All will not __ be italic_
 
 Test: __All will _ be bold__
 
-Test: _All will _be bold__
+Test: _All will _be italic__
 
 Test: __All will not___ be bold__
 
