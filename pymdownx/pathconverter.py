@@ -48,15 +48,7 @@ else:
     from urllib import pathname2url, url2pathname
     from urlparse import urlparse, urlunparse
 
-if sys.platform.startswith('win'):
-    _PLATFORM = "windows"
-elif sys.platform == "darwin":
-    _PLATFORM = "osx"
-else:
-    _PLATFORM = "linux"
-
-RE_PATH = re.compile(r'file|[A-Za-z]')
-RE_WIN_DRIVE = re.compile(r"[A-Za-z]:?")
+RE_WIN_DRIVE = re.compile(r"^[A-Za-z]{1}:?$")
 RE_WIN_DRIVE_PATH = re.compile(r"(^(?P<drive>[A-Za-z]{1}):(?:\\|/))")
 RE_URL = re.compile('(http|ftp)s?|data|mailto|tel|news')
 
@@ -99,34 +91,27 @@ def parse_url(url):
     elif scheme == '' and netloc == '' and path == '':
         # Maybe just a url fragment
         is_url = True
-    elif scheme == '' or RE_PATH.match(scheme):
-        if _PLATFORM == "windows":
-            if scheme == 'file' and RE_WIN_DRIVE.match(netloc):
-                # file://c:/path
-                path = netloc + path
-                netloc = ''
-                scheme = ''
-                is_absolute = True
-            elif RE_WIN_DRIVE.match(scheme):
-                # c:/path
-                path = '%s:%s' % (scheme, path)
-                scheme = ''
-                is_absolute = True
-            elif scheme != '' or netloc != '':
-                # Unknown url scheme
-                is_url = True
-            elif path.startswith('//'):
-                # //Some/Network/location
-                is_absolute = True
-        else:
-            if scheme not in ('', 'file') and netloc != '':
-                # A non-nix filepath or strange url
-                is_url = True
-            else:
-                # Check if nix path is absolute or not
-                if path.startswith('/'):
-                    is_absolute = True
-                scheme = ''
+    elif scheme == 'file' and RE_WIN_DRIVE.match(netloc):
+        # file://c:/path
+        path = netloc + path
+        netloc = ''
+        scheme = ''
+        is_absolute = True
+    elif scheme == 'file':
+        # file:///path
+        is_absolute = True
+    elif RE_WIN_DRIVE.match(scheme):
+        # c:/path
+        path = '%s:%s' % (scheme, path)
+        scheme = ''
+        is_absolute = True
+    elif scheme != '' and netloc != '':
+        # A non-filepath or strange url
+        is_url = True
+    elif path.startswith(('/', '\\')):
+        # //Some/Network/location or /root path
+        is_absolute = True
+
     return (scheme, netloc, path, params, query, fragment, is_url, is_absolute)
 
 
@@ -147,31 +132,8 @@ def repl_relative(m, base_path, relative_path):
                 temp = normpath(join(base_path, path))
                 abs_path = temp.replace("\\", "/")
 
-                convert = False
-                # Determine if we should convert the relative path
-                # (or see if we can realistically convert the path)
-                if (_PLATFORM == "windows"):
-                    # Make sure basepath starts with same drive location as target
-                    # If they don't match, we will stay with absolute path.
-                    if (base_path.startswith('//') and base_path.startswith('//')):
-                        convert = True
-                    else:
-                        base_drive = RE_WIN_DRIVE_PATH.match(base_path)
-                        path_drive = RE_WIN_DRIVE_PATH.match(abs_path)
-                        if (
-                            (base_drive and path_drive) and
-                            base_drive.group('drive').lower() == path_drive.group('drive').lower()
-                        ):
-                            convert = True
-                else:
-                    # OSX and Linux
-                    convert = True
-
                 # Convert the path, url encode it, and format it as a link
-                if convert:
-                    path = pathname2url(relpath(abs_path, relative_path).replace('\\', '/'))
-                else:
-                    path = pathname2url(abs_path)
+                path = pathname2url(relpath(abs_path, relative_path).replace('\\', '/'))
                 link = '%s"%s"' % (m.group('name'), urlunparse((scheme, netloc, path, params, query, fragment)))
     except Exception:
         # Parsing crashed and burned; no need to continue.

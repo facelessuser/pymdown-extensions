@@ -1,1 +1,12 @@
+<!-- <img alt="picture" src="./bg.png" /> -->
 ![picture](./bg.png)
+[file link windows abs](file:///c:/path/file.html)
+[file link windows abs2](file://c:/path/file.html)
+[file link abs](file:///path/file.html)
+[absolute](/absolute)
+[link](http://www.google.com)
+[fragment](#fragment)
+[windows path abs](c:/path/file.html)
+[windows network path](//network/path/file.html)
+[strange link](strange://odd/link/file.html)
+[strange link 2](strange://www.odd.com/link/file.html)
