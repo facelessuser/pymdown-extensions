@@ -1,0 +1,30 @@
+build: false
+environment:
+  matrix:
+    - PYTHON: "C:/Python27"
+      TOXENV: "py27-unittests"
+    - PYTHON: "C:/Python33"
+      TOXENV: "py33-unittests"
+    - PYTHON: "C:/Python34"
+      TOXENV: "py34-unittests"
+    - PYTHON: "C:/Python35"
+      TOXENV: "py35-unittests"
+    - PYTHON: "C:/Python27"
+      TOXENV: "lint"
+init:
+  - "ECHO %TOXENV%"
+  - "ECHO %PYTHON%"
+  - ps: "ls C:/Python*"
+install:
+  - "%PYTHON%/Scripts/pip.exe install virtualenv"
+  - "%PYTHON%/Scripts/pip.exe install tox"
+  - "%PYTHON%/Scripts/pip.exe install codecov"
+test_script:
+  - "%PYTHON%/Scripts/pip --version"
+  - "%PYTHON%/Scripts/virtualenv.exe --version"
+  - "%PYTHON%/Scripts/tox --version"
+  - "%PYTHON%/Scripts/tox"
+after_test:
+  - codecov
+matrix:
+  fast_finish: true
