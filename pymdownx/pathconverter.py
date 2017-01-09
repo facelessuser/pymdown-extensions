@@ -135,7 +135,7 @@ def repl_relative(m, base_path, relative_path):
                 # Convert the path, url encode it, and format it as a link
                 path = pathname2url(relpath(abs_path, relative_path).replace('\\', '/'))
                 link = '%s"%s"' % (m.group('name'), urlunparse((scheme, netloc, path, params, query, fragment)))
-    except Exception:
+    except Exception:  # pragma: no cover
         # Parsing crashed and burned; no need to continue.
         pass
 
