@@ -1,0 +1,21 @@
+<!-- Test comment -->
+
+<!-- 
+Test comment
+ -->
+
+<span id="some-id">
+    <span class="some classes">
+        <span style="color: #333; background-color: #888;"></span>
+        <span onclick="do_some_js_stuff();"></span>
+    </span>
+</span>
+
+<a href="#somelink">link</a>
+<span
+    id="some-id"
+    class="some classes"
+    style="color: #5dbede;"
+    onclick="do_some_js_stuff();">
+       Some text
+</span>
