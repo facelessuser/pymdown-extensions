@@ -17,9 +17,7 @@ if PY3:
 else:
     uchr = unichr
 
-if IS_NARROW:  # pragma: no cover
-    # For ease of supporting, just require uniseq for both narrow and wide PY27.
-
+if IS_NARROW:
     def get_code_points(s):
         """Get the Unicode code points."""
 
