@@ -223,6 +223,11 @@ smartsymbols:
   extensions:
     pymdownx.smartsymbols:
 
+smartsymbols (with smarty):
+  extensions:
+    markdown.extensions.smarty:
+    pymdownx.smartsymbols:
+
 superfences (failures):
   extensions:
     pymdownx.superfences:
