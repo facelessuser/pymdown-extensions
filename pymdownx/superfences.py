@@ -98,7 +98,7 @@ class CodeStash(object):
 
         self.stash = {}
 
-    def __len__(self):
+    def __len__(self):  # pragma: no cover
         """Length of stash."""
 
         return len(self.stash)
@@ -464,8 +464,6 @@ class SuperFencesCodeBlockProcessor(CodeBlockProcessor):
     def reindent(self, text, pos, level):
         """Reindent the code to where it is supposed to be."""
 
-        if text is None:
-            return None
         indented = []
         for line in text.split('\n'):
             index = pos - level
