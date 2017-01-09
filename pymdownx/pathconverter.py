@@ -36,21 +36,9 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.postprocessors import Postprocessor
-from os.path import normpath, join, relpath
+from . import util
+import os
 import re
-import sys
-
-PY3 = sys.version_info >= (3, 0)
-if PY3:
-    from urllib.request import pathname2url, url2pathname
-    from urllib.parse import urlparse, urlunparse
-else:
-    from urllib import pathname2url, url2pathname
-    from urlparse import urlparse, urlunparse
-
-RE_WIN_DRIVE = re.compile(r"^[A-Za-z]{1}:?$")
-RE_WIN_DRIVE_PATH = re.compile(r"(^(?P<drive>[A-Za-z]{1}):(?:\\|/))")
-RE_URL = re.compile('(http|ftp)s?|data|mailto|tel|news')
 
 RE_TAG_HTML = r'''(?xus)
     (?:
@@ -73,68 +61,26 @@ RE_TAG_LINK_ATTR = re.compile(
 )
 
 
-def parse_url(url):
-    """
-    Parse the url.
-
-    Try to determine if the following is a file path or
-    (as we will call anything else) a url.
-    """
-
-    is_url = False
-    is_absolute = False
-    scheme, netloc, path, params, query, fragment = urlparse(url)
-
-    if RE_URL.match(scheme):
-        # Clearly a url
-        is_url = True
-    elif scheme == '' and netloc == '' and path == '':
-        # Maybe just a url fragment
-        is_url = True
-    elif scheme == 'file' and RE_WIN_DRIVE.match(netloc):
-        # file://c:/path
-        path = netloc + path
-        netloc = ''
-        scheme = ''
-        is_absolute = True
-    elif scheme == 'file':
-        # file:///path
-        is_absolute = True
-    elif RE_WIN_DRIVE.match(scheme):
-        # c:/path
-        path = '%s:%s' % (scheme, path)
-        scheme = ''
-        is_absolute = True
-    elif scheme != '' and netloc != '':
-        # A non-filepath or strange url
-        is_url = True
-    elif path.startswith(('/', '\\')):
-        # //Some/Network/location or /root path
-        is_absolute = True
-
-    return (scheme, netloc, path, params, query, fragment, is_url, is_absolute)
-
-
 def repl_relative(m, base_path, relative_path):
     """Replace path with relative path."""
 
     link = m.group(0)
     try:
-        scheme, netloc, path, params, query, fragment, is_url, is_absolute = parse_url(m.group('path')[1:-1])
+        scheme, netloc, path, params, query, fragment, is_url, is_absolute = util.parse_url(m.group('path')[1:-1])
 
         if not is_url:
             # Get the absolute path of the file or return
             # if we can't resolve the path
-            path = url2pathname(path)
+            path = util.url2pathname(path)
             abs_path = None
             if (not is_absolute):
                 # Convert current relative path to absolute
-                temp = normpath(join(base_path, path))
+                temp = os.path.normpath(os.path.join(base_path, path))
                 abs_path = temp.replace("\\", "/")
 
                 # Convert the path, url encode it, and format it as a link
-                path = pathname2url(relpath(abs_path, relative_path).replace('\\', '/'))
-                link = '%s"%s"' % (m.group('name'), urlunparse((scheme, netloc, path, params, query, fragment)))
+                path = util.pathname2url(os.path.relpath(abs_path, relative_path).replace('\\', '/'))
+                link = '%s"%s"' % (m.group('name'), util.urlunparse((scheme, netloc, path, params, query, fragment)))
     except Exception:  # pragma: no cover
         # Parsing crashed and burned; no need to continue.
         pass
@@ -147,14 +93,14 @@ def repl_absolute(m, base_path):
 
     link = m.group(0)
     try:
-        scheme, netloc, path, params, query, fragment, is_url, is_absolute = parse_url(m.group('path')[1:-1])
+        scheme, netloc, path, params, query, fragment, is_url, is_absolute = util.parse_url(m.group('path')[1:-1])
 
         if (not is_absolute and not is_url):
-            path = url2pathname(path)
-            temp = normpath(join(base_path, path))
-            path = pathname2url(temp.replace("\\", "/"))
-            link = '%s"%s"' % (m.group('name'), urlunparse((scheme, netloc, path, params, query, fragment)))
-    except Exception:
+            path = util.url2pathname(path)
+            temp = os.path.normpath(os.path.join(base_path, path))
+            path = util.pathname2url(temp.replace("\\", "/"))
+            link = '%s"%s"' % (m.group('name'), util.urlunparse((scheme, netloc, path, params, query, fragment)))
+    except Exception:  # pragma: no cover
         # Parsing crashed and burned; no need to continue.
         pass
 

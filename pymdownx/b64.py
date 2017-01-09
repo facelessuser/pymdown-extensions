@@ -26,18 +26,11 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.postprocessors import Postprocessor
-from os.path import exists, normpath, splitext, join
-from .pathconverter import parse_url
-import sys
+from . import util
+import os
 import base64
 import re
 # import traceback
-
-PY3 = sys.version_info >= (3, 0)
-if PY3:
-    from urllib.request import url2pathname
-else:
-    from urllib import url2pathname
 
 RE_SLASH_WIN_DRIVE = re.compile(r"^/[A-Za-z]{1}:/.*")
 
@@ -75,9 +68,9 @@ def repl_path(m, base_path):
 
     link = m.group(0)
     try:
-        scheme, netloc, path, params, query, fragment, is_url, is_absolute = parse_url(m.group('path')[1:-1])
+        scheme, netloc, path, params, query, fragment, is_url, is_absolute = util.parse_url(m.group('path')[1:-1])
         if not is_url:
-            path = url2pathname(path).replace('\\', '/')
+            path = util.url2pathname(path).replace('\\', '/')
             # Adjust /c:/ to c:/.
             # If some 'nix OS is using a folder formated like a windows drive,
             # too bad :).
@@ -85,12 +78,12 @@ def repl_path(m, base_path):
                 path = path[1:]
 
         if is_absolute:
-            file_name = normpath(path)
+            file_name = os.path.normpath(path)
         else:
-            file_name = normpath(join(base_path, path))
+            file_name = os.path.normpath(os.path.join(base_path, path))
 
-        if exists(file_name):
-            ext = splitext(file_name)[1].lower()
+        if os.path.exists(file_name):
+            ext = os.path.splitext(file_name)[1].lower()
             for b64_ext in file_types:
                 if ext in b64_ext:
                     with open(file_name, "rb") as f:

@@ -8,14 +8,22 @@ Copyright (c) 2017 Isaac Muse <isaacmuse@gmail.com>
 from __future__ import unicode_literals
 import sys
 import copy
+import re
 
 PY3 = sys.version_info >= (3, 0)
-IS_NARROW = sys.maxunicode == 0xFFFF
 
 if PY3:
     uchr = chr
+    from urllib.request import pathname2url, url2pathname
+    from urllib.parse import urlparse, urlunparse
 else:
     uchr = unichr
+    from urllib import pathname2url, url2pathname
+    from urlparse import urlparse, urlunparse
+
+RE_WIN_DRIVE = re.compile(r"^[A-Za-z]{1}:?$")
+RE_URL = re.compile('(http|ftp)s?|data|mailto|tel|news')
+IS_NARROW = sys.maxunicode == 0xFFFF
 
 if IS_NARROW:
     def get_code_points(s):
@@ -97,6 +105,54 @@ def escape_chars(md, echrs):
         if ec not in escaped:
             escaped.append(ec)
     md.ESCAPED_CHARS = escaped
+
+
+def parse_url(url):
+    """
+    Parse the url.
+
+    Try to determine if the following is a file path or
+    (as we will call anything else) a url.
+
+    We return it slightly modified and combine the path parts.
+
+    We also assume if we see something like c:/ it is a Windows path.
+    We don't bother checking if this **is** a Windows system, but
+    'nix users really shouldn't be creating weird names like c: for their folder.
+    """
+
+    is_url = False
+    is_absolute = False
+    scheme, netloc, path, params, query, fragment = urlparse(url)
+
+    if RE_URL.match(scheme):
+        # Clearly a url
+        is_url = True
+    elif scheme == '' and netloc == '' and path == '':
+        # Maybe just a url fragment
+        is_url = True
+    elif scheme == 'file' and RE_WIN_DRIVE.match(netloc):
+        # file://c:/path
+        path = netloc + path
+        netloc = ''
+        scheme = ''
+        is_absolute = True
+    elif scheme == 'file':
+        # file:///path
+        is_absolute = True
+    elif RE_WIN_DRIVE.match(scheme):
+        # c:/path
+        path = '%s:%s' % (scheme, path)
+        scheme = ''
+        is_absolute = True
+    elif scheme != '' and netloc != '':
+        # A non-filepath or strange url
+        is_url = True
+    elif path.startswith(('/', '\\')):
+        # //Some/Network/location or /root path
+        is_absolute = True
+
+    return (scheme, netloc, path, params, query, fragment, is_url, is_absolute)
 
 
 class PymdownxDeprecationWarning(UserWarning):
