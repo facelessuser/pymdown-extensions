@@ -39,8 +39,12 @@ EMOJIONE_SVG_CDN = 'https://cdn.jsdelivr.net/emojione/assets/svg/'
 EMOJIONE_PNG_CDN = 'https://cdn.jsdelivr.net/emojione/assets/png/'
 GITHUB_UNICODE_CDN = 'https://assets-cdn.github.com/images/icons/emoji/unicode/'
 GITHUB_CDN = 'https://assets-cdn.github.com/images/icons/emoji/'
-VALID_TITLE = ('long', 'short', 'none')
-VALID_ALT = ('short', 'unicode', 'html_entity')
+NO_TITLE = 'none'
+LONG_TITLE = 'long'
+SHORT_TITLE = 'short'
+VALID_TITLE = (LONG_TITLE, SHORT_TITLE, NO_TITLE)
+UNICODE_ENTITY = 'html_entity'
+UNICODE_ALT = ('unicode', UNICODE_ENTITY)
 
 
 def add_attriubtes(options, attributes):
@@ -195,10 +199,10 @@ class EmojiPattern(Pattern):
 
         self._set_index(index)
         self.markdown = md
-        self.unicode_alt = alt in ('unicode', 'html_entity')
-        self.encoded_alt = alt == 'html_entity'
+        self.unicode_alt = alt in UNICODE_ALT
+        self.encoded_alt = alt == UNICODE_ENTITY
         self.remove_var_sel = remove_var_sel
-        self.title = title
+        self.title = title if title in VALID_TITLE else NO_TITLE
         self.generator = generator
         self.options = options
         Pattern.__init__(self, pattern)
@@ -248,9 +252,9 @@ class EmojiPattern(Pattern):
     def _get_title(self, shortname, emoji):
         """Get the title."""
 
-        if self.title == 'long':
+        if self.title == LONG_TITLE:
             title = emoji['name']
-        elif self.title == 'short':
+        elif self.title == SHORT_TITLE:
             title = shortname
         else:
             title = None
@@ -342,9 +346,6 @@ class EmojiExtension(Extension):
         alt = self.getConfigs()['alt']
         options = self.getConfigs()['options']
         remove_var_sel = self.getConfigs()['remove_variation_selector']
-
-        assert title in VALID_TITLE, "Invalid 'title' option!"
-        assert alt in VALID_ALT, "Invalid 'alt' option!"
 
         util.escape_chars(md, [':'])
 
