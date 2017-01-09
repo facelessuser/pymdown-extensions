@@ -14,6 +14,7 @@ Check out the individual extension document pages for more info on the available
 | [caret](extensions/caret.md)                               | pymdownx.caret |
 | [critic](extensions/critic.md)                             | pymdownx.critic |
 | [emoji](extensions/emoji.md)                               | pymdownx.emoji |
+| [escapeall](extensions/escapeall.md)                       | pymdownx.escapeall |
 | [extra](extensions/extra.md)                               | pymdownx.extra |
 | [extrarawhtml](extensions/extrarawhtml.md)                 | pymdownx.extrarawhtml |
 | [github](extensions/github.md)                             | pymdownx.github |

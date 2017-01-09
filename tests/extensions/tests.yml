@@ -42,6 +42,10 @@ critic (view):
     pymdownx.critic:
       mode: view
 
+escapeall:
+  extensions:
+    pymdownx.escapeall:
+
 extra:
   extensions:
     pymdownx.extra:

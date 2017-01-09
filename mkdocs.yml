@@ -13,6 +13,7 @@ pages:
     - Caret: extensions/caret.md
     - Critic: extensions/critic.md
     - Emoji: extensions/emoji.md
+    - EscapeAll: extensions/escapeall.md
     - Extra: extensions/extra.md
     - ExtraRawHtml: extensions/extrarawhtml.md
     - Github: extensions/github.md
@@ -56,6 +57,7 @@ markdown_extensions:
         attributes:
           height: 20px
           width: 20px
+  - pymdownx.escapeall:
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.progressbar:
