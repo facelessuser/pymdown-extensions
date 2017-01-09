@@ -42,63 +42,6 @@ critic (view):
     pymdownx.critic:
       mode: view
 
-escapeall:
-  extensions:
-    pymdownx.escapeall:
-
-extra:
-  extensions:
-    pymdownx.extra:
-
-extrarawhtml:
-  extensions:
-    pymdownx.extrarawhtml:
-
-github:
-  extensions:
-    pymdownx.github:
-
-github_legacy:
-  extensions:
-    pymdownx.github:
-      no_nl2br: false
-
-githubemoji:
-  extensions:
-    pymdownx.githubemoji:
-
-gemoji (png):
-  extensions:
-    pymdownx.emoji:
-      emoji_index: !!python/name:pymdownx.emoji.gemoji
-      alt: short
-      options:
-        attributes:
-          align: absmiddle
-          height: 20px
-          width: 20px
-
-gemoji (entities):
-  extensions:
-    pymdownx.emoji:
-      emoji_index: !!python/name:pymdownx.emoji.gemoji
-      emoji_generator: !!python/name:pymdownx.emoji.to_alt
-      alt: html_entity
-
-emoji1 (long title):
-  extensions:
-    pymdownx.emoji:
-      title: long
-
-emoji1 (no title):
-  extensions:
-    pymdownx.emoji:
-      title: none
-
-emoji1 (escaped):
-  extensions:
-    pymdownx.emoji:
-
 emoji1 (awesome):
   extensions:
     pymdownx.emoji:
@@ -110,6 +53,20 @@ emoji1 (entities):
       emoji_generator: !!python/name:pymdownx.emoji.to_alt
       alt: html_entity
       remove_variation_selector: True
+
+emoji1 (escaped):
+  extensions:
+    pymdownx.emoji:
+
+emoji1 (long title):
+  extensions:
+    pymdownx.emoji:
+      title: long
+
+emoji1 (no title):
+  extensions:
+    pymdownx.emoji:
+      title: none
 
 emoji1 (png):
   css:
@@ -135,6 +92,49 @@ emoji1 (svg sprite):
   extensions:
     pymdownx.emoji:
       emoji_generator: !!python/name:pymdownx.emoji.to_svg_sprite
+
+escapeall:
+  extensions:
+    pymdownx.escapeall:
+
+extra:
+  extensions:
+    pymdownx.extra:
+
+extrarawhtml:
+  extensions:
+    pymdownx.extrarawhtml:
+
+gemoji (entities):
+  extensions:
+    pymdownx.emoji:
+      emoji_index: !!python/name:pymdownx.emoji.gemoji
+      emoji_generator: !!python/name:pymdownx.emoji.to_alt
+      alt: html_entity
+
+gemoji (png):
+  extensions:
+    pymdownx.emoji:
+      emoji_index: !!python/name:pymdownx.emoji.gemoji
+      alt: short
+      options:
+        attributes:
+          align: absmiddle
+          height: 20px
+          width: 20px
+
+github:
+  extensions:
+    pymdownx.github:
+
+github_legacy:
+  extensions:
+    pymdownx.github:
+      no_nl2br: false
+
+githubemoji:
+  extensions:
+    pymdownx.githubemoji:
 
 headeranchor:
   css:
