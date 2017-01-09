@@ -26,7 +26,7 @@ DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
-from markdown.inlinepatterns import SimpleTagPattern, DoubleTagPattern
+from markdown.inlinepatterns import SimpleTagPattern, DoubleTagPattern, SimpleTextPattern
 from . import util
 
 RE_SMART_CONTENT = r'((?:[^~]|~(?=[^\W_]|~|\s)|(?<=\s)~+?(?=\s))+?~*?)'
@@ -39,6 +39,8 @@ RE_SMART_SUB_DEL = r'(~{3})(?!\s)%s(?<!\s)\2' % RE_SMART_CONTENT
 RE_SUB_DEL2 = r'(~{3})(?!\s)([^~]+?)(?<!\s)~{2}([^~ ]+?)~'
 RE_SMART_SUB_DEL2 = r'(~{3})(?!\s)%s(?<!\s)~{2}(?:(?=_)|(?![\w~]))([^~ ]+?)~' % RE_SMART_CONTENT
 RE_SUB = r'(~)([^~ ]+?|~)\2'
+
+RE_NOT_TILDE = r'((^| )(~)( |$))'
 
 
 class DeleteSubExtension(Extension):
@@ -77,12 +79,14 @@ class DeleteSubExtension(Extension):
 
         if delete:
             md.inlinePatterns.add("del", SimpleTagPattern(delete_rule, "del"), "<not_strong")
+            md.inlinePatterns.add('not_tilde', SimpleTextPattern(RE_NOT_TILDE), "<del")
             if subscript:
                 md.inlinePatterns.add("sub_del", DoubleTagPattern(sub_del_rule, "sub,del"), "<del")
                 md.inlinePatterns.add("sub_del2", DoubleTagPattern(sub_del2_rule, "sub,del"), "<del")
                 md.inlinePatterns.add("sub", SimpleTagPattern(sub_rule, "sub"), ">del" if smart else "<del")
         elif subscript:
             md.inlinePatterns.add("sub", SimpleTagPattern(sub_rule, "sub"), "<not_strong")
+            md.inlinePatterns.add('not_tilde', SimpleTextPattern(RE_NOT_TILDE), "<sub")
 
 
 def makeExtension(*args, **kwargs):

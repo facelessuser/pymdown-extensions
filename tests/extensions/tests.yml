@@ -283,6 +283,11 @@ tilde:
   extensions:
     pymdownx.tilde:
 
+tilde (dumb):
+  extensions:
+    pymdownx.tilde:
+      smart_delete: false
+
 tilde (no delete):
   extensions:
     pymdownx.tilde:
