@@ -98,7 +98,7 @@ class CriticStash(object):
         self.stash = {}
         self.count = 0
 
-    def __len__(self):
+    def __len__(self):  # pragma: no cover
         """Get length of stash."""
         return len(self.stash)
 
@@ -248,8 +248,6 @@ class CriticViewPreprocessor(Preprocessor):
             return self._mark(m.group('mark_text'))
         elif m.group('com_open'):
             return self._comment(m.group('com_text'))
-        else:
-            return m.group(0)
 
     def critic_parse(self, m):
         """
@@ -269,8 +267,6 @@ class CriticViewPreprocessor(Preprocessor):
             return ''
         elif m.group('sub_open'):
             return m.group('sub_ins_text') if accept else m.group('sub_del_text')
-        else:
-            return m.group(0)
 
     def html_escape(self, txt, strip_nl=False):
         """Basic html escaping."""
@@ -327,9 +323,6 @@ class CriticExtension(Extension):
             'mode': ['view', "Critic mode to run in ('view', 'accept', or 'reject') - Default: view "],
             'raw_view': [False, "Raw view keeps the output as the raw markup for view mode - Default False"]
         }
-
-        if "mode" in kwargs and kwargs["mode"] not in ('view', 'accept', 'reject'):
-            del kwargs["mode"]
 
         super(CriticExtension, self).__init__(*args, **kwargs)
 
