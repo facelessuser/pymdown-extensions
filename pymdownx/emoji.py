@@ -25,17 +25,9 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import Pattern
-from markdown import util
+from markdown import util as md_util
+from . import util
 import sys
-import copy
-
-PY3 = sys.version_info >= (3, 0)
-IS_NARROW = sys.maxunicode == 0xFFFF
-
-if PY3:
-    uchr = chr
-else:
-    uchr = unichr
 
 RE_EMOJI = r'(:[+\-\w]+:)'
 EMOJIONE_SVG_SPRITE_TAG = (
@@ -50,55 +42,6 @@ GITHUB_UNICODE_CDN = 'https://assets-cdn.github.com/images/icons/emoji/unicode/'
 GITHUB_CDN = 'https://assets-cdn.github.com/images/icons/emoji/'
 VALID_TITLE = ('long', 'short', 'none')
 VALID_ALT = ('short', 'unicode', 'html_entity')
-
-if IS_NARROW:  # pragma: no cover
-    # For ease of supporting, just require uniseq for both narrow and wide PY27.
-
-    def get_code_points(s):
-        """Get the Unicode code points."""
-
-        pt = []
-
-        def is_full_point(p, point):
-            """
-            Check if we have a full code point.
-
-            Surrogates are stored in point.
-            """
-            v = ord(p)
-            if 0xD800 <= v <= 0xDBFF:
-                del point[:]
-                point.append(p)
-                return False
-            if point and 0xDC00 <= v <= 0xDFFF:
-                point.append(p)
-                return True
-            del point[:]
-            return True
-
-        return [(''.join(pt) if pt else c) for c in s if is_full_point(c, pt)]
-
-    def get_ord(c):
-        """Get Unicode ord."""
-
-        if len(c) == 2:
-            high, low = [ord(p) for p in c]
-            ordinal = (high - 0xD800) * 0x400 + low - 0xDC00 + 0x10000
-        else:
-            ordinal = ord(c)
-
-        return ordinal
-
-else:
-    def get_code_points(s):
-        """Get the Unicode code points."""
-
-        return [c for c in s]
-
-    def get_ord(c):
-        """Get Unicode ord."""
-
-        return ord(c)
 
 
 def add_attriubtes(options, attributes):
@@ -163,7 +106,7 @@ def to_png(index, shortname, alias, uc, alt, title, options, md):
 
     add_attriubtes(options, attributes)
 
-    return util.etree.Element("img", attributes)
+    return md_util.etree.Element("img", attributes)
 
 
 def to_svg(index, shortname, alias, uc, alt, title, options, md):
@@ -183,7 +126,7 @@ def to_svg(index, shortname, alias, uc, alt, title, options, md):
 
     add_attriubtes(options, attributes)
 
-    return util.etree.Element("img", attributes)
+    return md_util.etree.Element("img", attributes)
 
 
 def to_png_sprite(index, shortname, alias, uc, alt, title, options, md):
@@ -201,7 +144,7 @@ def to_png_sprite(index, shortname, alias, uc, alt, title, options, md):
 
     add_attriubtes(options, attributes)
 
-    el = util.etree.Element("span", attributes)
+    el = md_util.etree.Element("span", attributes)
     el.text = alt
 
     return el
@@ -230,7 +173,7 @@ def to_awesome(index, shortname, alias, uc, alt, title, options, md):
     classes = '%s-%s' % (options.get('classes', 'e1a'), shortname[1:-1])
     attributes = {"class": classes}
     add_attriubtes(options, attributes)
-    return util.etree.Element("i", attributes)
+    return md_util.etree.Element("i", attributes)
 
 
 def to_alt(index, shortname, alias, uc, alt, title, options, md):
@@ -271,26 +214,10 @@ class EmojiPattern(Pattern):
 
         return value.replace('-' + UNICODE_VARIATION_SELECTOR_16, '')
 
-    def _get_char(self, value):
-        """Get the Unicode char."""
-        if IS_NARROW:  # pragma: no cover
-            if value > 0xFFFF:
-                c = ''.join(
-                    [
-                        uchr(int((value - 0x10000) / (0x400)) + 0xD800),
-                        uchr((value - 0x10000) % 0x400 + 0xDC00)
-                    ]
-                )
-            else:
-                c = uchr(value)
-        else:
-            c = uchr(value)
-        return c
-
     def _get_unicode_char(self, value):
         """Get the Unicode char."""
 
-        return ''.join([self._get_char(int(c, 16)) for c in value.split('-')])
+        return ''.join([util.get_char(int(c, 16)) for c in value.split('-')])
 
     def _get_unicode(self, emoji):
         """
@@ -339,7 +266,7 @@ class EmojiPattern(Pattern):
             alt = self._get_unicode_char(uc_alt)
             if self.encoded_alt:
                 alt = ''.join(
-                    [util.AMP_SUBSTITUTE + ('#x%04x;' % get_ord(point)) for point in get_code_points(alt)]
+                    [md_util.AMP_SUBSTITUTE + ('#x%04x;' % util.get_ord(point)) for point in util.get_code_points(alt)]
                 )
         return alt
 
@@ -420,8 +347,7 @@ class EmojiExtension(Extension):
         assert title in VALID_TITLE, "Invalid 'title' option!"
         assert alt in VALID_ALT, "Invalid 'alt' option!"
 
-        if ":" not in md.ESCAPED_CHARS:
-            md.ESCAPED_CHARS = copy.copy(md.ESCAPED_CHARS) + [':']
+        util.escape_chars(md, [':'])
 
         md.inlinePatterns.add(
             "emoji",

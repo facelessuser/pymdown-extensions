@@ -28,7 +28,7 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import SimpleTagPattern, DoubleTagPattern
-import copy
+from . import util
 
 RE_SMART_CONTENT = r'((?:[^\^]|\^(?=[^\W_]|\^|\s)|(?<=\s)\^+?(?=\s))+?\^*?)'
 RE_CONTENT = r'((?:[^\^]|(?<!\^)\^(?=[^\W_]|\^))+?)'
@@ -64,10 +64,12 @@ class InsertSubExtension(Extension):
         superscript = bool(config.get('superscript', True))
         smart = bool(config.get('smart_insert', True))
 
-        if "^" not in md.ESCAPED_CHARS and (insert or superscript):
-            md.ESCAPED_CHARS = copy.copy(md.ESCAPED_CHARS) + ['^']
-        if " " not in md.ESCAPED_CHARS and superscript:
-            md.ESCAPED_CHARS = copy.copy(md.ESCAPED_CHARS) + [' ']
+        escape_chars = []
+        if insert or superscript:
+            escape_chars.append('^')
+        if superscript:
+            escape_chars.append(' ')
+        util.escape_chars(md, escape_chars)
 
         ins_rule = RE_SMART_INS if smart else RE_INS
         sup_ins_rule = RE_SUP_INS

@@ -41,8 +41,8 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import Pattern
 from markdown.blockprocessors import BlockProcessor
+from . import util
 import re
-import copy
 
 RE_MATH = r'((?<!\\)(?:\\{2})*)([$])(?!\s)((?:\\.|[^$])+?)(?<!\s)(\3)'
 RE_DOLLAR_ESCAPE = re.compile(r'\\.')
@@ -130,8 +130,7 @@ class ArithmatexExtension(Extension):
         """Extend the inline and block processor objects."""
 
         md.registerExtension(self)
-        if "$" not in md.ESCAPED_CHARS:
-            md.ESCAPED_CHARS = copy.copy(md.ESCAPED_CHARS) + ['$']
+        util.escape_chars(md, ['$'])
 
         md.inlinePatterns.add(
             "arithmatex-inline",

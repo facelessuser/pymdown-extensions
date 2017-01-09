@@ -105,9 +105,9 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import Pattern, dequote
-from markdown import util
+from markdown import util as md_util
 from markdown.extensions.attr_list import AttrListTreeprocessor
-import copy
+from . import util
 
 RE_PROGRESS = r'''(?x)
 \[={1,}\s*                                                          # Opening
@@ -161,12 +161,12 @@ class ProgressBarPattern(Pattern):
             )
         )
         classes.sort()
-        el = util.etree.Element("div")
+        el = md_util.etree.Element("div")
         el.set('class', ' '.join(classes))
-        bar = util.etree.SubElement(el, 'div')
+        bar = md_util.etree.SubElement(el, 'div')
         bar.set('class', "progress-bar")
         bar.set('style', 'width:%s%%' % width)
-        p = util.etree.SubElement(bar, 'p')
+        p = md_util.etree.SubElement(bar, 'p')
         p.set('class', 'progress-label')
         p.text = label
         if alist is not None:
@@ -247,8 +247,7 @@ class ProgressBarExtension(Extension):
     def extendMarkdown(self, md, md_globals):
         """Add the progress bar pattern handler."""
 
-        if "=" not in md.ESCAPED_CHARS:  # pragma: no cover
-            md.ESCAPED_CHARS = copy.copy(md.ESCAPED_CHARS) + ['$']
+        util.escape_chars(md, ['='])
         progress = ProgressBarPattern(RE_PROGRESS)
         progress.config = self.getConfigs()
         progress.markdown = md
