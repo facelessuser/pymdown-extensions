@@ -59,7 +59,7 @@ class MarkExtension(Extension):
             md.inlinePatterns.add("mark", SimpleTagPattern(RE_SMART_MARK, "mark"), "<not_strong")
         else:
             md.inlinePatterns.add("mark", SimpleTagPattern(RE_MARK, "mark"), "<not_strong")
-        md.inlinePatterns.add('not_mark', SimpleTextPattern(RE_NOT_MARK, "not_mark"), "<mark")
+        md.inlinePatterns.add('not_mark', SimpleTextPattern(RE_NOT_MARK), "<mark")
 
 
 def makeExtension(*args, **kwargs):
