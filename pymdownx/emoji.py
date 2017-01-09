@@ -27,7 +27,6 @@ from markdown import Extension
 from markdown.inlinepatterns import Pattern
 from markdown import util as md_util
 from . import util
-import sys
 
 RE_EMOJI = r'(:[+\-\w]+:)'
 EMOJIONE_SVG_SPRITE_TAG = (

@@ -28,7 +28,6 @@ from markdown.inlinepatterns import Pattern
 from markdown.postprocessors import Postprocessor
 from markdown import util as md_util
 import re
-import copy
 from . import util
 
 ESCAPE_RE = r'\\(.)'
@@ -36,7 +35,7 @@ UNESCAPE_PATTERN = re.compile('%s(\d+)%s' % (md_util.STX, md_util.ETX))
 
 
 class EscapeAllPattern(Pattern):
-    """ Return an escaped character. """
+    """Return an escaped character."""
 
     def handleMatch(self, m):
         """Convert the char to an escaped character."""
