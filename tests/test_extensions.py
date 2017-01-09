@@ -7,6 +7,10 @@ import codecs
 import pytest
 import copy
 from . import util
+import warnings
+from pymdownx.util import PymdownxDeprecationWarning
+
+warnings.simplefilter('ignore', PymdownxDeprecationWarning)
 
 CURRENT_DIR = os.path.dirname(__file__)
 
