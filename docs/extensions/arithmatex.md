@@ -7,11 +7,13 @@ The Arithmatex extension searches for `#!tex $...$` or `#!tex $$...$$` and prese
 
 The Arithmatex extension actually converts the dollar notation to a more reliable notation in the HTML.  So the conversion is as follows: `#!tex $...$` --> `#!tex \(...\)` and `#!tex $$...$$` --> `#!tex \[...\]`.  Keep this in mind when configuring MathJax for your document.
 
+Arithmatex requires you to provide the MathJax library and provide and configure it to your liking.  The recommended way of including MathJax is to use the CDN.  Below in this example, we are selecting the default `TeX-MML-AM_CHTML` configuration. This is what *this* documentation site is currently using.
 
 ```html
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 ```
 
+If you need to configure or tweak the settings further, make sure to load your configuration tweaks **before** you load the `MathJax.js` file. Below is an example of the configuration that we use to tweak the MathJax in this page.  We include this snippet **before** we include `MathJax.js`.
 
 ```js
 window.MathJax = {
