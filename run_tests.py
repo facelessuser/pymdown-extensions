@@ -1,6 +1,10 @@
 """Run the unittests or update unitest compare files."""
 import tests.test_extensions as tests
 import argparse
+import warnings
+from pymdownx.util import PymdownxDeprecationWarning
+
+warnings.simplefilter('ignore', PymdownxDeprecationWarning)
 
 
 def main():
