@@ -39,6 +39,8 @@ if PY3:
 else:
     from urllib import url2pathname
 
+RE_SLASH_WIN_DRIVE = re.compile(r"^/[A-Za-z]{1}:/.*")
+
 file_types = {
     (".png",): "image/png",
     (".jpg", ".jpeg"): "image/jpeg",
@@ -75,9 +77,12 @@ def repl_path(m, base_path):
     try:
         scheme, netloc, path, params, query, fragment, is_url, is_absolute = parse_url(m.group('path')[1:-1])
         if not is_url:
-            path = url2pathname(path)
-            if scheme == 'file' and sys.platform.startswith('win') and not path.startswith('//'):
-                path = path.lstrip()
+            path = url2pathname(path).replace('\\', '/')
+            # Adjust /c:/ to c:/.
+            # If some 'nix OS is using a folder formated like a windows drive,
+            # too bad :).
+            if scheme == 'file' and RE_SLASH_WIN_DRIVE.match(path):
+                path = path[1:]
 
         if is_absolute:
             file_name = normpath(path)
@@ -95,7 +100,7 @@ def repl_path(m, base_path):
                         )
                     break
 
-    except Exception:
+    except Exception:  # pragma: no cover
         # Parsing crashed and burned; no need to continue.
         pass
 
@@ -135,9 +140,6 @@ class B64Extension(Extension):
         self.config = {
             'base_path': ["", "Base path for b64 to use to resolve paths Default: \"\""]
         }
-
-        if "base_path" in kwargs and not exists(kwargs["base_path"]):
-            del kwargs["base_path"]
 
         super(B64Extension, self).__init__(*args, **kwargs)
 

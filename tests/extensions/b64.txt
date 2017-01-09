@@ -1,3 +1,5 @@
 <!-- ![picture](./bg.png) -->
 ![picture](./bg.png)
-![picture](./bg.png?v2)
+![picture with cache busting](./bg.png?v2)
+<!-- Just want to test code coverage where /c:/ gets stripped to c:/ -->
+![Some windows path link](file:///c:/does_not_exist.png)
