@@ -14,12 +14,12 @@ PY3 = sys.version_info >= (3, 0)
 
 if PY3:
     uchr = chr
-    from urllib.request import pathname2url, url2pathname
-    from urllib.parse import urlparse, urlunparse
+    from urllib.request import pathname2url, url2pathname  # noqa
+    from urllib.parse import urlparse, urlunparse  # noqa
 else:
     uchr = unichr
-    from urllib import pathname2url, url2pathname
-    from urlparse import urlparse, urlunparse
+    from urllib import pathname2url, url2pathname  # noqa
+    from urlparse import urlparse, urlunparse  # noqa
 
 RE_WIN_DRIVE = re.compile(r"^[A-Za-z]{1}:?$")
 RE_URL = re.compile('(http|ftp)s?|data|mailto|tel|news')
