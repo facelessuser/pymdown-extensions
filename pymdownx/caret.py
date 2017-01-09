@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
-from markdown.inlinepatterns import SimpleTagPattern, DoubleTagPattern
+from markdown.inlinepatterns import SimpleTagPattern, DoubleTagPattern, SimpleTextPattern
 from . import util
 
 RE_SMART_CONTENT = r'((?:[^\^]|\^(?=[^\W_]|\^|\s)|(?<=\s)\^+?(?=\s))+?\^*?)'
@@ -40,6 +40,8 @@ RE_SMART_SUP_INS = r'(\^{3})(?!\s)%s(?<!\s)\2' % RE_SMART_CONTENT
 RE_SUP_INS2 = r'(\^{3})(?!\s)([^\^]+?)(?<!\s)\^{2}([^\^ ]+?)\^'
 RE_SMART_SUP_INS2 = r'(\^{3})(?!\s)%s(?<!\s)\^{2}(?:(?=_)|(?![\w\^]))([^\^ ]+?)\^' % RE_SMART_CONTENT
 RE_SUP = r'(\^)([^\^ ]+?|\^)\2'
+
+RE_NOT_CARET = r'((^| )(\^)( |$))'
 
 
 class InsertSubExtension(Extension):
@@ -78,12 +80,14 @@ class InsertSubExtension(Extension):
 
         if insert:
             md.inlinePatterns.add("ins", SimpleTagPattern(ins_rule, "ins"), "<not_strong")
+            md.inlinePatterns.add('not_caret', SimpleTextPattern(RE_NOT_CARET), "<ins")
             if superscript:
                 md.inlinePatterns.add("sup_ins", DoubleTagPattern(sup_ins_rule, "sup,ins"), "<ins")
                 md.inlinePatterns.add("sup_ins2", DoubleTagPattern(sup_ins2_rule, "sup,ins"), "<ins")
                 md.inlinePatterns.add("sup", SimpleTagPattern(sup_rule, "sup"), ">ins" if smart else "<ins")
         elif superscript:
             md.inlinePatterns.add("sup", SimpleTagPattern(sup_rule, "sup"), "<not_strong")
+            md.inlinePatterns.add('not_caret', SimpleTextPattern(RE_NOT_CARET), "<sup")
 
 
 def makeExtension(*args, **kwargs):
