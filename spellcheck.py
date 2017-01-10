@@ -4,8 +4,6 @@ import subprocess
 import os
 import sys
 
-LINUX_WORKAROUND = '--local-data-dir=/usr/lib/aspell'
-
 
 def console(cmd, input_file=None):
     """Call with arguments."""
@@ -55,40 +53,36 @@ def build_docs():
     print(console([sys.executable, '-m', 'mkdocs', 'build', '--clean']))
 
 
-def compile_dictionary(linux_workaround):
+def compile_dictionary():
     """Compile user dictionary."""
     print("Compiling Custom Dictionary...")
-
-    cmd = ['aspell', '--lang=en']
-    if linux_workaround:
-        cmd.append(LINUX_WORKAROUND)
-    cmd.extend(['create', 'master', './tmp'])
-    print(console(cmd, '.dictionary'))
+    print(console(['aspell', '--lang=en', 'create', 'master', './tmp'], '.dictionary'))
 
 
-def check_spelling(linux_workaround):
+def check_spelling():
     """Check spelling."""
     print('Spell Checking...')
 
     fail = False
-    cmd = [
-        'aspell',
-        'list',
-        '--lang=en',
-        '--mode=html',
-        '--add-html-skip=code',
-        '--add-html-skip=pre',
-        '--extra-dicts=./tmp'
-    ]
-    if linux_workaround:
-        cmd.append(LINUX_WORKAROUND)
 
     for base, dirs, files in os.walk('site'):
         # Remove child folders based on exclude rules
         for f in files:
             if f.endswith('.html'):
                 file_name = os.path.join(base, f)
-                wordlist = console(cmd, file_name).decode('utf-8')
+                wordlist = console(
+                    [
+                        'aspell',
+                        'list',
+                        '--lang=en',
+                        '--mode=html',
+                        '--add-html-skip=code',
+                        '--add-html-skip=pre',
+                        '--extra-dicts=./tmp'
+                    ],
+                    file_name
+                ).decode('utf-8')
+
                 words = [w for w in sorted(set(wordlist.split('\n'))) if w]
 
                 if words:
@@ -102,22 +96,12 @@ def check_spelling(linux_workaround):
     return fail
 
 
-def main(linux_workaround):
+def main():
     """Main."""
     build_docs()
-    compile_dictionary(linux_workaround)
-    return check_spelling(linux_workaround)
+    compile_dictionary()
+    return check_spelling()
 
 
 if __name__ == "__main__":
-    import argparse
-
-    parser = argparse.ArgumentParser(prog='spellcheck', description='Spell Check with aspell.')
-    # Flag arguments
-    parser.add_argument(
-        '--linux-workaround',
-        action='store_true',
-        default=False, help="Fix for 'Error: The language \"en\" is not known' on some Linux systems."
-    )
-    args = parser.parse_args()
-    sys.exit(main(args.linux_workaround))
+    sys.exit(main())
