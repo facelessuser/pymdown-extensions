@@ -27,10 +27,21 @@ caret (dumb):
     pymdownx.caret:
       smart_insert: false
 
+caret (dumb no sup):
+  extensions:
+    pymdownx.caret:
+      smart_insert: false
+      superscript: false
+
 caret (no insert):
   extensions:
     pymdownx.caret:
       insert: false
+
+caret (no sup):
+  extensions:
+    pymdownx.caret:
+      superscript: false
 
 critic (accept):
   extensions:
@@ -294,7 +305,18 @@ tilde (dumb):
     pymdownx.tilde:
       smart_delete: false
 
+tilde (dumb no sub):
+  extensions:
+    pymdownx.tilde:
+      smart_delete: false
+      subscript: false
+
 tilde (no delete):
   extensions:
     pymdownx.tilde:
       delete: false
+
+tilde (no sub):
+  extensions:
+    pymdownx.tilde:
+      subscript: false

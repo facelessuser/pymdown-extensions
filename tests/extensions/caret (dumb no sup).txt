@@ -1,0 +1,11 @@
+Test: ^^ Won't insert ^^
+
+Test: ^^Will insert^^
+
+Test: \^\^Escaped\^\^
+
+Test: ^^All will ^ be insert^^
+
+Test: ^^All will^^^ not be insert^^
+
+Test: ^^All will ^^^ not be insert^^

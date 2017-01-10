@@ -1,0 +1,11 @@
+Test: ~~ Won't delete ~~
+
+Test: ~~Will delete~~
+
+Test: \~\~Escaped\~\~
+
+Test: ~~All will ~ be deleted~~
+
+Test: ~~All will~~~ not be deleted~~
+
+Test: ~~All will ~~~ not be deleted~~
