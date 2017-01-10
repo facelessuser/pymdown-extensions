@@ -133,23 +133,30 @@ def parse_url(url):
         is_url = True
     elif scheme == 'file' and RE_WIN_DRIVE.match(netloc):
         # file://c:/path
-        path = netloc + path
+        path = '/' + (netloc + path).replace('\\', '/')
         netloc = ''
-        scheme = ''
+        scheme = 'file'
         is_absolute = True
     elif scheme == 'file':
         # file:///path
         is_absolute = True
     elif RE_WIN_DRIVE.match(scheme):
         # c:/path
-        path = '%s:%s' % (scheme, path)
-        scheme = ''
+        path = '/%s:%s' % (scheme, path.replace('\\', '/'))
+        scheme = 'file'
+        netloc = ''
+        is_absolute = True
+    elif scheme == '' and netloc != '' and url.startswith('//'):
+        # //file/path
+        path = '//' + netloc + path
+        scheme = 'file'
+        netloc = ''
         is_absolute = True
     elif scheme != '' and netloc != '':
         # A non-filepath or strange url
         is_url = True
     elif path.startswith(('/', '\\')):
-        # //Some/Network/location or /root path
+        # /root path
         is_absolute = True
 
     return (scheme, netloc, path, params, query, fragment, is_url, is_absolute)
