@@ -11,25 +11,28 @@
   word-wrap: break-word;
 }
 
-/* Critic Block */
-.md-typeset .critic.block {
-  display: block;
-  margin: 0;
-  padding: .02em;
-}
-
 /* Header Anchors */
 .md-typeset .headerlink {
   vertical-align: middle;
-  font-family: "Material Icons";
-  top: .1rem;
+  font: normal normal 2rem "Material Icons";
 }
+
+.md-typeset h2 .headerlink {margin-top: -.4rem;}
+.md-typeset h3 .headerlink {margin-top: -.3rem;}
+.md-typeset h4 .headerlink {margin-top: -.2rem;}
+.md-typeset h5 .headerlink,
+.md-typeset h6 .headerlink {margin-top: -.2rem;}
 
 @media only screen and (min-width: 76.1876em) {
   .md-typeset .headerlink {
     float: left;
     margin-left: -2.4rem;
   }
+  .md-typeset h2 .headerlink {margin-top: .6rem;}
+  .md-typeset h3 .headerlink {margin-top: .4rem;}
+  .md-typeset h4 .headerlink {margin-top: .2rem;}
+  .md-typeset h5 .headerlink,
+  .md-typeset h6 .headerlink {margin-top: 0;}
 }
 
 /* Progress Bars */
