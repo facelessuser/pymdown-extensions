@@ -19,7 +19,7 @@ addons:
     packages:
       - aspell
 install:
-  - pip install tox
+  - pip install tox-travis
   - pip install codecov
 script:
   - tox
