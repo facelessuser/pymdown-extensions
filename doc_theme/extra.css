@@ -19,7 +19,7 @@
 
 .md-typeset h2 .headerlink {margin-top: -.4rem;}
 .md-typeset h3 .headerlink {margin-top: -.3rem;}
-.md-typeset h4 .headerlink {margin-top: -.2rem;}
+.md-typeset h4 .headerlink,
 .md-typeset h5 .headerlink,
 .md-typeset h6 .headerlink {margin-top: -.2rem;}
 
