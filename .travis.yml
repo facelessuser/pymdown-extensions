@@ -18,6 +18,7 @@ addons:
   apt:
     packages:
       - aspell
+      - aspell-en
 install:
   - pip install tox
   - pip install codecov
