@@ -1,20 +1,103 @@
 <ul>
-<li>
-<p>Test bad indentation 1:</p>
-<pre><code>```
+<li>Test bad indentation 1:<pre><code>```
 </code></pre>
 <p>Here is some text.
     ```</p>
 </li>
+</ul>
+<hr />
+<ul>
 <li>
 <p>Test bad indentation 2:</p>
 <p><code>Here is some text.</code></p>
 </li>
+</ul>
+<hr />
+<ul>
 <li>
 <p>Test bad indentation 3:</p>
 <p><code>Here is some text.</code></p>
 </li>
+</ul>
+<hr />
+<ul>
 <li>
-<p><code>This will not work.</code></p>
+<p>Test bad indentation 4:</p>
+<p><code>Here is some text.</code></p>
 </li>
 </ul>
+<hr />
+<ul>
+<li><code>This will not work.</code></li>
+</ul>
+<hr />
+<blockquote>
+<p>```
+  Test</p>
+</blockquote>
+<p>will break.
+  ```</p>
+<hr />
+<ul>
+<li>
+<p>Test bad indentation blockquote</p>
+<blockquote>
+<p><code>Test
+ will break</code></p>
+</blockquote>
+</li>
+</ul>
+<hr />
+<ul>
+<li>
+<p>Test block quote exceeding start level</p>
+<blockquote>
+<p>```
+Test</p>
+<blockquote>
+<p>will
+break
+```</p>
+</blockquote>
+</blockquote>
+</li>
+</ul>
+<hr />
+<ul>
+<li>
+<p>Unexpected block quote</p>
+<p>```
+Test
+will</p>
+<blockquote>
+<p>break
+```</p>
+</blockquote>
+</li>
+</ul>
+<hr />
+<ul>
+<li>
+<p>Block quote unalignment</p>
+<blockquote>
+<p><code>Test
+Will
+ break</code></p>
+</blockquote>
+</li>
+</ul>
+<hr />
+<ul>
+<li>
+<p>Block quote unalignment</p>
+<blockquote>
+<p><code>Test
+ Will
+ break</code></p>
+</blockquote>
+</li>
+</ul>
+<hr />
+<p>Catch a converted block not in stash</p>
+<pre><code>wzxhzdk:999999
+</code></pre>

@@ -4,11 +4,15 @@
     Here is some text.
         ```
 
+---
+
 - Test bad indentation 2:
 
     ```
 Here is some text.
     ```
+
+---
 
 - Test bad indentation 3:
 
@@ -16,6 +20,73 @@ Here is some text.
     Here is some text.
         ```
 
+---
+
+- Test bad indentation 4:
+
+    ```
+    Here is some text.
+```
+
+---
+
 - ```
     This will not work.
     ```
+
+---
+
+> ```
+  Test
+
+  will break.
+  ```
+
+---
+
+- Test bad indentation blockquote
+
+    > ```
+    > Test
+>  will break
+    > ```
+
+---
+
+- Test block quote exceeding start level
+
+    > ```
+    > Test
+    >>will
+    >>break
+    >>```
+
+---
+
+- Unexpected block quote
+
+    ```
+    Test
+    will
+>   break
+    ```
+
+---
+
+- Block quote unalignment
+
+    >```
+     Test
+Will
+     break
+     ```
+
+---
+
+- Block quote unalignment
+
+    >```
+     Test
+     Will
+     break
+```

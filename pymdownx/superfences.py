@@ -70,20 +70,6 @@ def _escape(txt):
     return txt
 
 
-def extend_super_fences(md, name, language, formatter):
-    """Extend superfences with the given name, language, and formatter."""
-
-    if not hasattr(md, "superfences"):
-        md.superfences = []
-    md.superfences.append(
-        {
-            "name": name,
-            "test": lambda l, language=language: language == l,
-            "formatter": formatter
-        }
-    )
-
-
 class CodeStash(object):
     """
     Stash code for later retrieval.
@@ -136,6 +122,8 @@ class SuperFencesCodeExtension(Extension):
 
     def __init__(self, *args, **kwargs):
         """Initialize."""
+
+        self.superfences = []
         self.config = {
             'disable_indented_code_blocks': [False, "Disable indented code blocks - Default: False"],
             'nested': [True, "Use nested fences - Default: True"],
@@ -144,33 +132,49 @@ class SuperFencesCodeExtension(Extension):
         }
         super(SuperFencesCodeExtension, self).__init__(*args, **kwargs)
 
+    def extend_super_fences(self, name, language, formatter):
+        """Extend superfences with the given name, language, and formatter."""
+
+        self.superfences.append(
+            {
+                "name": name,
+                "test": lambda l, language=language: language == l,
+                "formatter": formatter
+            }
+        )
+
     def extendMarkdown(self, md, md_globals):
         """Add FencedBlockPreprocessor to the Markdown instance."""
 
         # Not super yet, so let's make it super
         md.registerExtension(self)
         config = self.getConfigs()
-        sf_entry = {
-            "name": "superfences",
-            "test": lambda language: True,
-            "formatter": None
-        }
-        if not hasattr(md, "superfences"):
-            md.superfences = []
-        md.superfences.insert(0, sf_entry)
+
+        # Default fenced blocks
+        self.superfences.insert(
+            0,
+            {
+                "name": "superfences",
+                "test": lambda language: True,
+                "formatter": None
+            }
+        )
+
+        # UML blocks
         if config.get("uml_flow", True):
-            extend_super_fences(
-                md, "flow", "flow",
+            self.extend_super_fences(
+                "flow", "flow",
                 lambda s, l, c="uml-flowchart": uml_format(s, l, c)
             )
         if config.get("uml_sequence", True):
-            extend_super_fences(
-                md, "sequence", "sequence",
+            self.extend_super_fences(
+                "sequence", "sequence",
                 lambda s, l, c="uml-sequence-diagram": uml_format(s, l, c)
             )
+
         self.markdown = md
         self.patch_fenced_rule()
-        for entry in self.markdown.superfences:
+        for entry in self.superfences:
             entry["stash"] = CodeStash()
 
     def patch_fenced_rule(self):
@@ -185,9 +189,11 @@ class SuperFencesCodeExtension(Extension):
         fenced = SuperFencesBlockPreprocessor(self.markdown)
         indented_code = SuperFencesCodeBlockProcessor(self)
         fenced.config = config
+        fenced.extension = self
         indented_code.config = config
         indented_code.markdown = self.markdown
-        self.markdown.superfences[0]["formatter"] = fenced.highlight
+        indented_code.extension = self
+        self.superfences[0]["formatter"] = fenced.highlight
         self.markdown.parser.blockprocessors['code'] = indented_code
         self.markdown.preprocessors.add('fenced_code_block', fenced, ">normalize_whitespace")
 
@@ -198,7 +204,7 @@ class SuperFencesCodeExtension(Extension):
         People should use superfences **or** fenced_code.
         """
 
-        for entry in self.markdown.superfences:
+        for entry in self.superfences:
             entry["stash"].clear_stash()
 
 
@@ -301,7 +307,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
         self.last = m.group(0)
         code = None
-        for entry in reversed(self.markdown.superfences):
+        for entry in reversed(self.extension.superfences):
             if entry["test"](self.lang):
                 code = entry["formatter"](self.rebuild_block(self.code), self.lang)
                 break
@@ -319,7 +325,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             if m:
                 self.lang = m.group('lang')
                 self.hl_lines = m.group('hl_lines')
-                for entry in reversed(self.markdown.superfences):
+                for entry in reversed(self.extension.superfences):
                     if entry["test"](self.lang):
                         code = entry["formatter"](m.group('code'), self.lang)
                         break
@@ -411,7 +417,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
     def _store(self, source, code, start, end, obj):
         """
-        Store the fenced blocks in teh stack to be replaced when done iterating.
+        Store the fenced blocks in the stack to be replaced when done iterating.
 
         Store the original text in case we need to restore if we are too greedy.
         """
@@ -480,7 +486,7 @@ class SuperFencesCodeBlockProcessor(CodeBlockProcessor):
                 key = m.group(2)
                 indent_level = len(m.group(1))
                 original = None
-                for entry in self.markdown.superfences:
+                for entry in self.extension.superfences:
                     stash = entry["stash"]
                     original, pos = stash.get(key)
                     if original is not None:
