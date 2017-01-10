@@ -13,7 +13,7 @@ matrix:
     - python: 2.7
       env: TOXENV=lint
     - python: 2.7
-      env: TOXENV=travis-spelling
+      env: TOXENV=spelling
 addons:
   apt:
     packages:
