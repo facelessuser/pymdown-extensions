@@ -1,0 +1,2 @@
+mkdocs
+https://github.com/squidfunk/mkdocs-material/archive/2dbf60affd8db8298cd4233002da62429f6427be.zip

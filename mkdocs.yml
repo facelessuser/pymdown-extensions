@@ -31,7 +31,7 @@ pages:
     - Tasklist: extensions/tasklist.md
     - Tilde: extensions/tilde.md
   - Miscellaneous Extras: miscellaneous_extras.md
-  - Contributing &amp; Suppport: contributing.md
+  - Contributing &amp; Support: contributing.md
   - Changelog: changelog.md
   - License: license.md
 theme: material

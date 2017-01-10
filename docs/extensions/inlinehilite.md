@@ -19,7 +19,7 @@ By default, InlineHilite will use CodeHilite's settings if it is being used, but
 | css_class | string | 'inlinehilite' | If ignoring CodeHilite's settings, this is the class name that will be injected into code tags when they are processed. |
 | pygments_style | string | 'default' | If CodeHilite is not used, or if ignoring CodeHilite's settings, this will be the Pygments' style to use.  When using Pygments, this really only has an effect when used with `noclasses`. |
 | noclasses | bool | False | If CodeHilite is not used, or if ignoring CodeHilite's settings, this will cause the styles to directly be written to the tag's style attribute instead of requiring a stylesheet. |
-| use_pygments | bool | True | If CodeHilite is not used, or if ignoring CodeHilite's settings, this will control whether Pygements (if available) is used on the code block, or if the block's content will just be escaped and prepped for a JavaScript syntax highlighter. |
+| use_pygments | bool | True | If CodeHilite is not used, or if ignoring CodeHilite's settings, this will control whether Pygments (if available) is used on the code block, or if the block's content will just be escaped and prepped for a JavaScript syntax highlighter. |
 
 ## Example
 

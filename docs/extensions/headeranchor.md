@@ -114,5 +114,5 @@ The CSS below is an example.
 }
 ```
 
-*[GFM]: Github Flavored Markdown
+*[GFM]: GitHub Flavored Markdown
 *[Toc]: Table of Contents

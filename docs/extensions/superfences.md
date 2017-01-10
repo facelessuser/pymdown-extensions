@@ -59,7 +59,7 @@ When using the UML diagram features, you must provide the necessary JavaScript f
 
 - [raphael.js](http://raphaeljs.com/)
 - [underscore.js](http://underscorejs.org/)
-- [sequece-diagram.js](http://bramp.github.io/js-sequence-diagrams/)
+- [sequence-diagram.js](http://bramp.github.io/js-sequence-diagrams/)
 
 All of these libraries can be included using a CDN (you can use the version of your choice):
 

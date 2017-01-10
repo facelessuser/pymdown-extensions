@@ -278,4 +278,4 @@ EmojiOne :smile: emojis are very useful :thumbsup:.
 
 You can also escape `:` characters to escape the emoji: \:smile:.
 
-*[GFM]:  Github Flavored Markdown
+*[GFM]:  GitHub Flavored Markdown

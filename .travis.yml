@@ -12,6 +12,12 @@ matrix:
       env: TOXENV=py35-unittests
     - python: 2.7
       env: TOXENV=lint
+    - python: 2.7
+      env: TOXENV=spelling
+addons:
+  apt:
+    packages:
+      - aspell
 install:
   - pip install tox
   - pip install codecov

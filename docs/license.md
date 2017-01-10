@@ -46,7 +46,7 @@ License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 
 ------------------------------
 extrarawhtml.py is a literal copy and paste from Python Markdown's extra extension.
-It basically splits out the raw html markdown parsing into a seprate extension that can
+It basically splits out the raw html markdown parsing into a separate extension that can
 be used even if it is not desired to use all of 'extra'.
 
 Python-Markdown Extra Extension

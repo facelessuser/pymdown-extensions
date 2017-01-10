@@ -34,7 +34,7 @@ Feel free to use a virtual environment if you are concerned about installing any
 
 ### Running Validation Tests
 
-1. Make sure that `tox` is intalled:
+1. Make sure that `tox` is installed:
 
     ```
     pip install tox

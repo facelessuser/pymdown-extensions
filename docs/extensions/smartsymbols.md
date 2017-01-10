@@ -4,7 +4,7 @@ SmartSymbols adds syntax for creating special characters such as trademarks, arr
 ## Options
 | Option          | Type | Default | Description |
 |-----------------|------|---------|-------------|
-| trademark       | bool | True | Add syntax for tradmark symbol.   |
+| trademark       | bool | True | Add syntax for trademark symbol.   |
 | copyright       | bool | True | Add syntax for copyright symbol.  |
 | registered      | bool | True | Add syntax for registered symbol. |
 | care_of         | bool | True | Add syntax for care / of.         |

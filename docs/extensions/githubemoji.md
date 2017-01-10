@@ -14,4 +14,4 @@ GithubEmoji adds support for GFM emojis.  Using GFM's emoji syntax, this extensi
 !!! note "Note"
     Since 'online' calls through the Github API are done anonymously, Github will limit the caller to approximately 60 calls in an hour.  There are no plans at this time to add [OAuth support](https://developer.github.com/v3/oauth/).
 
-*[GFM]:  Github Flavored Markdown
+*[GFM]:  GitHub Flavored Markdown
