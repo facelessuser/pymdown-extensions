@@ -21,7 +21,8 @@ else:
     from urllib import pathname2url, url2pathname  # noqa
     from urlparse import urlparse, urlunparse  # noqa
 
-RE_WIN_DRIVE = re.compile(r"^[A-Za-z]{1}:?$")
+RE_WIN_DRIVE_LETTER = re.compile(r"^[A-Za-z]$")
+RE_WIN_DRIVE_PATH = re.compile(r"^[A-Za-z]:(?:\\.*)?$")
 RE_URL = re.compile('(http|ftp)s?|data|mailto|tel|news')
 IS_NARROW = sys.maxunicode == 0xFFFF
 
@@ -131,16 +132,20 @@ def parse_url(url):
     elif scheme == '' and netloc == '' and path == '':
         # Maybe just a url fragment
         is_url = True
-    elif scheme == 'file' and RE_WIN_DRIVE.match(netloc):
-        # file://c:/path
+    elif scheme == 'file' and (RE_WIN_DRIVE_PATH.match(netloc)):
+        # file://c:/path or file://c:\path
         path = '/' + (netloc + path).replace('\\', '/')
         netloc = ''
-        scheme = 'file'
         is_absolute = True
+    elif scheme == 'file' and netloc.startswith('\\'):
+        # file://\c:\path or file://\\path
+        path = (netloc + path).replace('\\', '/')
+        netloc = ''
+        is_absolute
     elif scheme == 'file':
         # file:///path
         is_absolute = True
-    elif RE_WIN_DRIVE.match(scheme):
+    elif RE_WIN_DRIVE_LETTER.match(scheme):
         # c:/path
         path = '/%s:%s' % (scheme, path.replace('\\', '/'))
         scheme = 'file'
