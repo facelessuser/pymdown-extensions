@@ -59,4 +59,4 @@ site/*
 
 tools/tags/*
 
-tmp
+tmp*

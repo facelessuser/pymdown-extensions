@@ -5,7 +5,19 @@ The Arithmatex extension searches for `#!tex $...$` or `#!tex $$...$$` and prese
 
 `#!tex $$...$$` is the *block* form.  When using `#!tex $$`, the block must start with `#!tex $$` and end with `#!tex $$`; a block contains no empty lines.
 
-The Arithmatex extension actually converts the dollar notation to a more reliable notation in the HTML.  So the conversion is as follows: `#!tex $...$` --> `#!tex \(...\)` and `#!tex $$...$$` --> `#!tex \[...\]`.  Keep this in mind when configuring MathJax for your document.
+The Arithmatex extension actually converts the dollar notation to a more reliable notation in the HTML.  So the conversion is as follows: `#!tex $...$` --> `#!tex \(...\)` and `#!tex $$...$$` --> `#!tex \[...\]`.  Keep this in mind when configuring MathJax for your document.  If a different conversion is desired, see [Options](#options) below to learn how to configure it.
+
+## Options
+
+| Option    | Type | Default | Description |
+|-----------|------|---------|-------------|
+| tex_inline_wrap | \(string\) | `#!python ['\\(', '\\)']` | An array containing the opening and closing portion of the wrap. |
+| tex_block_wrap | \[string\] | `#!python ['\\(', '\\)']` | An array containing the opening and closing portion of the wrap. |
+
+!!! warning "Wrapping Format"
+    The wrapping options are **not** run through an HTML escaper, so make sure you escape whatever requires escaping.  The reason we don't escape the wrap strings is so you can inject an HTML tag wrapper if desired.  Most people don't need to insert HTML, but as an example, when these docs are run through CI and spell checked, math is wrapped with `<nospell></nospell>` tags which are filtered out to avoid spell checking the content. So there are practical applications.
+
+## Loading MathJax
 
 Arithmatex requires you to provide the MathJax library and provide and configure it to your liking.  The recommended way of including MathJax is to use the CDN.  Below in this example, we are selecting the default `TeX-MML-AM_CHTML` configuration. This is what *this* documentation site is currently using.
 

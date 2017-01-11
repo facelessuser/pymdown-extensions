@@ -2,7 +2,10 @@
 I have $3.00 and you have $5.00.
 
 # Dolloar Sign Escape
-\$test\$
+\$E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j\$
+
+# Use Dollar sign
+$\$3.00 + \$5.00 = \$8.00$
 
 # Equations
 
@@ -20,3 +23,37 @@ $$
     $$
 
 - Inline equations: $p(x|y) = \frac{p(y|x)p(x)}{p(y)}$.
+
+# Code
+
+```
+$$
+    \begin{align}
+        p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
+        p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
+    \end{align}
+$$
+```
+
+
+# Indented Code
+
+    $$
+        \begin{align}
+            p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
+            p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
+        \end{align}
+    $$
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ["\\(","\\)"] ],
+        displayMath: [ ["\\[","\\]"] ]
+    },
+    displayAlign: 'left',
+    showProcessingMessages: false,
+    messageStyle: 'none'
+});
+</script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>

@@ -45,7 +45,6 @@ from . import util
 import re
 
 RE_MATH = r'((?<!\\)(?:\\{2})*)([$])(?!\s)((?:\\.|[^$])+?)(?<!\s)(\3)'
-RE_DOLLAR_ESCAPE = re.compile(r'\\.')
 
 
 def escape(txt):
@@ -61,9 +60,10 @@ def escape(txt):
 class InlineArithmatexPattern(Pattern):
     """Arithmatex inline pattern handler."""
 
-    def __init__(self, pattern, md):
+    def __init__(self, pattern, wrap, md):
         """Initialize."""
 
+        self.wrap = wrap[0] + '%s' + wrap[1]
         Pattern.__init__(self, pattern)
         self.markdown = md
 
@@ -72,12 +72,9 @@ class InlineArithmatexPattern(Pattern):
 
         # Use the more reliable patterns to avoid '$'
         # false positives.
-        math = "\\(%s\\)" % RE_DOLLAR_ESCAPE.sub(
-            lambda m: '$' if m.group(0) == "\\$" else m.group(0),
-            m.group(4)
-        )
+        math = m.group(4)
         return m.group(2) + self.markdown.htmlStash.store(
-            escape(math),
+            self.wrap % escape(math),
             safe=True
         )
 
@@ -89,9 +86,10 @@ class BlockArithmatexProcessor(BlockProcessor):
         r'(?s)^(?P<dollar>[$]{2})(?P<math>.*?)(?P=dollar)[ ]*$'
     )
 
-    def __init__(self, md):
+    def __init__(self, wrap, md):
         """Initialize."""
 
+        self.wrap = wrap[0] + '%s' + wrap[1]
         BlockProcessor.__init__(self, md.parser)
         self.markdown = md
 
@@ -111,12 +109,9 @@ class BlockArithmatexProcessor(BlockProcessor):
             block = blocks.pop(0)
             # Use the more reliable patterns to avoid '$'
             # false positives.
-            math = "\\[%s\\]" % RE_DOLLAR_ESCAPE.sub(
-                lambda m: '$' if m.group(0) == "\\$" else m.group(0),
-                m.group('math')
-            )
+            math = m.group('math')
             block = self.markdown.htmlStash.store(
-                escape(math),
+                self.wrap % escape(math),
                 safe=True
             )
             blocks.insert(0, block)
@@ -126,23 +121,42 @@ class BlockArithmatexProcessor(BlockProcessor):
 class ArithmatexExtension(Extension):
     """Adds delete extension to Markdown class."""
 
+    def __init__(self, *args, **kwargs):
+        """Initialize."""
+
+        self.config = {
+            'tex_inline_wrap': [
+                ["\\(", "\\)"],
+                "Wrap inline content with the provided text ['open', 'close'] - Default: ['', '']"
+            ],
+            'tex_block_wrap': [
+                ["\\[", "\\]"],
+                "Wrap blick content with the provided text ['open', 'close'] - Default: ['', '']"
+            ]
+        }
+
+        super(ArithmatexExtension, self).__init__(*args, **kwargs)
+
     def extendMarkdown(self, md, md_globals):
         """Extend the inline and block processor objects."""
 
         md.registerExtension(self)
         util.escape_chars(md, ['$'])
 
-        md.inlinePatterns.add(
-            "arithmatex-inline",
-            InlineArithmatexPattern(RE_MATH, md),
-            ">backtick"
-        )
+        config = self.getConfigs()
 
-        md.parser.blockprocessors.add(
-            'arithmatex-block',
-            BlockArithmatexProcessor(md),
-            "<code"
+        inline = InlineArithmatexPattern(
+            RE_MATH,
+            config.get('tex_inline_wrap', ''),
+            md
         )
+        md.inlinePatterns.add("arithmatex-inline", inline, ">backtick")
+
+        block = BlockArithmatexProcessor(
+            config.get('tex_block_wrap', ''),
+            md
+        )
+        md.parser.blockprocessors.add('arithmatex-block', block, "<code")
 
 
 def makeExtension(*args, **kwargs):
