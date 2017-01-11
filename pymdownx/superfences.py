@@ -181,8 +181,8 @@ class SuperFencesCodeExtension(Extension):
         """
         Patch Python Markdown with our own fenced block extension.
 
-        if the Python Markdown's 'fenced_code' extension was already configured,
-        we will replace it.
+        We don't attempt to protect against a user loading the `fenced_code` extension with this.
+        Most likely they will have issues, but they shouldn't have loaded them together in the first place :).
         """
 
         config = self.getConfigs()
@@ -198,11 +198,7 @@ class SuperFencesCodeExtension(Extension):
         self.markdown.preprocessors.add('fenced_code_block', fenced, ">normalize_whitespace")
 
     def reset(self):
-        """
-        Ensure superfences is used over fenced_code extension.
-
-        People should use superfences **or** fenced_code.
-        """
+        """Clear the stash."""
 
         for entry in self.superfences:
             entry["stash"].clear_stash()
@@ -379,7 +375,9 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                         # Looks like we got a blockquote line
                         # when not in a blockquote.
                         self.clear()
-                else:
+                else:  # pragma: no cover
+                    # I am 99.9999% sure we will never hit this line.
+                    # But I am too chicken to pull it out :).
                     self.clear()
             count += 1
 
@@ -494,7 +492,12 @@ class SuperFencesCodeBlockProcessor(CodeBlockProcessor):
                         new_block.append(code)
                         stash.remove(key)
                         break
-                if original is None:
+                if original is None:  # pragma: no cover
+                    # Too much work to test this. This is just a fall back in case
+                    # we find a placeholder, and we went to revert it and it wasn't in our stash.
+                    # Most likely this would be caused by someone else. We just want to put it
+                    # back in the block if we can't revert it.  Maybe we can do a more directed
+                    # unit test in the future.
                     new_block.append(line)
             else:
                 new_block.append(line)
