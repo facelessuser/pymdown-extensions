@@ -1,8 +1,12 @@
 """Spell check with aspell."""
-from os import environ
+from __future__ import unicode_literals
 import subprocess
 import os
 import sys
+import yaml
+import codecs
+
+PY3 = sys.version_info >= (3, 0)
 
 
 def console(cmd, input_file=None):
@@ -10,9 +14,6 @@ def console(cmd, input_file=None):
 
     returncode = None
     output = None
-
-    env = environ.copy()
-    env['LC_ALL'] = 'en_US'
 
     if sys.platform.startswith('win'):
         startupinfo = subprocess.STARTUPINFO()
@@ -23,8 +24,7 @@ def console(cmd, input_file=None):
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             stdin=subprocess.PIPE,
-            shell=False,
-            env=env
+            shell=False
         )
     else:
         process = subprocess.Popen(
@@ -32,8 +32,7 @@ def console(cmd, input_file=None):
             stdout=subprocess.PIPE,
             stderr=subprocess.STDOUT,
             stdin=subprocess.PIPE,
-            shell=False,
-            env=env
+            shell=False
         )
 
     if input_file is not None:
@@ -42,21 +41,114 @@ def console(cmd, input_file=None):
     output = process.communicate()
     returncode = process.returncode
 
-    assert returncode == 0, "Runtime Error: %s" % output[0].rstrip()
+    assert returncode == 0, "Runtime Error: %s" % (
+        output[0].rstrip().decode('utf-8') if PY3 else output[0]
+    )
 
-    return output[0]
+    return output[0].decode('utf-8') if PY3 else output[0]
+
+
+def yaml_dump(data, stream=None, dumper=yaml.Dumper, **kwargs):
+    """Special dumper wrapper to modify the yaml dumper."""
+
+    class Dumper(dumper):
+        """Custom dumper."""
+
+    if not PY3:
+        # Unicode
+        Dumper.add_representer(
+            unicode,
+            lambda dumper, value: dumper.represent_scalar(u'tag:yaml.org,2002:str', value)
+        )
+
+    return yaml.dump(data, stream, Dumper, **kwargs)
+
+
+def yaml_load(source, loader=yaml.Loader):
+    """
+    Wrap PyYaml's loader so we can extend it to suit our needs.
+    Load all strings as unicode.
+    http://stackoverflow.com/a/2967461/3609487
+    """
+
+    def construct_yaml_str(self, node):
+        """
+        Override the default string handling function to always return
+        unicode objects.
+        """
+        return self.construct_scalar(node)
+
+    class Loader(loader):
+        """
+        Define a custom loader derived from the global loader to leave the
+        global loader unaltered.
+        """
+
+    # Attach our unicode constructor to our custom loader ensuring all strings
+    # will be unicode on translation.
+    Loader.add_constructor('tag:yaml.org,2002:str', construct_yaml_str)
+
+    return yaml.load(source, Loader)
+
+
+def patch_doc_config(config_file):
+    """Patch the config file to wrap arithmatex with a tag aspell can ignore."""
+
+    output = 'tmp-mkdocs.yml'
+    nospell = {
+        'tex_inline_wrap': ['<nospell>\\(', '</nospell>\\)'],
+        'tex_block_wrap': ['<nospell>\\[', '</nospell>\\]']
+    }
+    with open(config_file, 'rb') as f:
+        config = yaml_load(f)
+
+    index = 0
+    for extension in config.get('markdown_extensions', []):
+        if isinstance(extension, str if PY3 else unicode) and extension == 'pymdownx.arithmatex':
+            config['markdown_extensions'][index] = {'pymdownx.arithmatex': nospell}
+            break
+        elif isinstance(extension, dict) and 'pymdownx.arithmatex' in extension:
+            extension['pymdownx.arithmatex'] = nospell
+            break
+        index += 1
+
+    with codecs.open(output,"w",encoding="utf-8") as f:
+        yaml_dump(
+            config, f,
+            width=None,
+            indent=4,
+            allow_unicode=True,
+            default_flow_style=False
+        )
+    return output
 
 
 def build_docs():
     """Build docs with MkDocs."""
     print('Building Docs...')
-    print(console([sys.executable, '-m', 'mkdocs', 'build', '--clean']))
+    print(
+        console(
+            [sys.executable, '-m', 'mkdocs', 'build', '--clean', '-f', patch_doc_config('mkdocs.yml')]
+        )
+    )
 
 
 def compile_dictionary():
     """Compile user dictionary."""
     print("Compiling Custom Dictionary...")
-    print(console(['aspell', '--lang=en', 'create', 'master', './tmp'], '.dictionary'))
+    print(
+        console(
+            [
+                'aspell',
+                '--lang=en',
+                '--encoding=utf-8',
+                'create',
+                'master',
+                './tmp'
+            ],
+            '.dictionary'
+        )
+    )
 
 
 def check_spelling():
@@ -76,12 +168,14 @@ def check_spelling():
                         'list',
                         '--lang=en',
                         '--mode=html',
+                        '--encoding=utf-8',
                         '--add-html-skip=code',
                         '--add-html-skip=pre',
+                        '--add-html-skip=nospell',
                         '--extra-dicts=./tmp'
                     ],
                     file_name
-                ).decode('utf-8')
+                )
 
                 words = [w for w in sorted(set(wordlist.split('\n'))) if w]
 
