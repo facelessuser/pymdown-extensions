@@ -131,7 +131,7 @@ class B64Extension(Extension):
         """Initialize."""
 
         self.config = {
-            'base_path': ["", "Base path for b64 to use to resolve paths Default: \"\""]
+            'base_path': ["", "Base path for b64 to use to resolve paths - Default: \"\""]
         }
 
         super(B64Extension, self).__init__(*args, **kwargs)
