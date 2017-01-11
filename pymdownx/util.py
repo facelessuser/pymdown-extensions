@@ -141,7 +141,7 @@ def parse_url(url):
         # file://\c:\path or file://\\path
         path = (netloc + path).replace('\\', '/')
         netloc = ''
-        is_absolute
+        is_absolute = True
     elif scheme == 'file':
         # file:///path
         is_absolute = True
