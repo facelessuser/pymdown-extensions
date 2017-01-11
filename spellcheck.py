@@ -57,7 +57,7 @@ def yaml_dump(data, stream=None, dumper=yaml.Dumper, **kwargs):
     if not PY3:
         # Unicode
         Dumper.add_representer(
-            unicode,
+            unicode,  # noqa
             lambda dumper, value: dumper.represent_scalar(u'tag:yaml.org,2002:str', value)
         )
 
@@ -104,7 +104,7 @@ def patch_doc_config(config_file):
 
     index = 0
     for extension in config.get('markdown_extensions', []):
-        if isinstance(extension, str if PY3 else unicode) and extension == 'pymdownx.arithmatex':
+        if isinstance(extension, str if PY3 else unicode) and extension == 'pymdownx.arithmatex':  # noqa
             config['markdown_extensions'][index] = {'pymdownx.arithmatex': nospell}
             break
         elif isinstance(extension, dict) and 'pymdownx.arithmatex' in extension:
@@ -112,7 +112,7 @@ def patch_doc_config(config_file):
             break
         index += 1
 
-    with codecs.open(output,"w",encoding="utf-8") as f:
+    with codecs.open(output,"w", encoding="utf-8") as f:
         yaml_dump(
             config, f,
             width=None,
