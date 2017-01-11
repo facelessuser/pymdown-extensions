@@ -67,22 +67,16 @@ def yaml_dump(data, stream=None, dumper=yaml.Dumper, **kwargs):
 def yaml_load(source, loader=yaml.Loader):
     """
     Wrap PyYaml's loader so we can extend it to suit our needs.
-    Load all strings as unicode.
-    http://stackoverflow.com/a/2967461/3609487
+
+    Load all strings as unicode: http://stackoverflow.com/a/2967461/3609487.
     """
 
     def construct_yaml_str(self, node):
-        """
-        Override the default string handling function to always return
-        unicode objects.
-        """
+        """Override the default string handling function to always return Unicode objects."""
         return self.construct_scalar(node)
 
     class Loader(loader):
-        """
-        Define a custom loader derived from the global loader to leave the
-        global loader unaltered.
-        """
+        """Define a custom loader to leave the global loader unaltered."""
 
     # Attach our unicode constructor to our custom loader ensuring all strings
     # will be unicode on translation.
@@ -112,7 +106,7 @@ def patch_doc_config(config_file):
             break
         index += 1
 
-    with codecs.open(output,"w", encoding="utf-8") as f:
+    with codecs.open(output, "w", encoding="utf-8") as f:
         yaml_dump(
             config, f,
             width=None,
