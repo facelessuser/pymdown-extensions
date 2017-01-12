@@ -8,6 +8,13 @@ import codecs
 
 PY3 = sys.version_info >= (3, 0)
 
+USER_DICT = '.dictionary'
+BUILD_DIR = os.path.join('.', 'build', 'docs')
+MKDOCS_CFG = 'mkdocs.yml'
+COMPILED_DICT = os.path.join(BUILD_DIR, 'dictionary.bin')
+MKDOCS_SPELL = os.path.join(BUILD_DIR, MKDOCS_CFG)
+MKDOCS_BUILD = os.path.join(BUILD_DIR, 'site')
+
 
 def console(cmd, input_file=None):
     """Call with arguments."""
@@ -88,7 +95,6 @@ def yaml_load(source, loader=yaml.Loader):
 def patch_doc_config(config_file):
     """Patch the config file to wrap arithmatex with a tag aspell can ignore."""
 
-    output = 'tmp-mkdocs.yml'
     nospell = {
         'tex_inline_wrap': ['<nospell>\\(', '</nospell>\\)'],
         'tex_block_wrap': ['<nospell>\\[', '</nospell>\\]']
@@ -106,7 +112,7 @@ def patch_doc_config(config_file):
             break
         index += 1
 
-    with codecs.open(output, "w", encoding="utf-8") as f:
+    with codecs.open(MKDOCS_SPELL, "w", encoding="utf-8") as f:
         yaml_dump(
             config, f,
             width=None,
@@ -114,7 +120,7 @@ def patch_doc_config(config_file):
             allow_unicode=True,
             default_flow_style=False
         )
-    return output
+    return MKDOCS_SPELL
 
 
 def build_docs():
@@ -122,13 +128,20 @@ def build_docs():
     print('Building Docs...')
     print(
         console(
-            [sys.executable, '-m', 'mkdocs', 'build', '--clean', '-f', patch_doc_config('mkdocs.yml')]
+            [
+                sys.executable,
+                '-m', 'mkdocs', 'build', '--clean',
+                '-d', MKDOCS_BUILD,
+                '-f', patch_doc_config(MKDOCS_CFG)
+            ]
         )
     )
 
 
 def compile_dictionary():
     """Compile user dictionary."""
+    if os.path.exists(COMPILED_DICT):
+        os.remove(COMPILED_DICT)
     print("Compiling Custom Dictionary...")
     print(
         console(
@@ -138,9 +151,9 @@ def compile_dictionary():
                 '--encoding=utf-8',
                 'create',
                 'master',
-                './tmp'
+                COMPILED_DICT
             ],
-            '.dictionary'
+            USER_DICT
         )
     )
 
@@ -151,7 +164,7 @@ def check_spelling():
 
     fail = False
 
-    for base, dirs, files in os.walk('site'):
+    for base, dirs, files in os.walk(MKDOCS_BUILD):
         # Remove child folders based on exclude rules
         for f in files:
             if f.endswith('.html'):
@@ -166,7 +179,7 @@ def check_spelling():
                         '--add-html-skip=code',
                         '--add-html-skip=pre',
                         '--add-html-skip=nospell',
-                        '--extra-dicts=./tmp'
+                        '--extra-dicts=%s' % COMPILED_DICT
                     ],
                     file_name
                 )
@@ -186,6 +199,8 @@ def check_spelling():
 
 def main():
     """Main."""
+    if not os.path.exists(BUILD_DIR):
+        os.makedirs(BUILD_DIR)
     build_docs()
     compile_dictionary()
     return check_spelling()
