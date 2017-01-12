@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 from pymdownx import util
 import unittest
+import pytest
 
 
 class TestUrlParse(unittest.TestCase):
@@ -137,3 +138,9 @@ class TestUrlParse(unittest.TestCase):
         self.assertEqual(path, '..\\file\\path')
         self.assertEqual(is_url, False)
         self.assertEqual(is_absolute, False)
+
+
+def run():
+    """Run pytest."""
+
+    pytest.main(['tests/test_targeted.py'])

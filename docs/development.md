@@ -72,35 +72,51 @@ It should print out the files with the misspelled words if any are found.  If yo
 
 ## Validation Tests
 
-In order to preserve good code health, a test suite has been put together with [pytest][30]. There are currently two kinds of tests: extensions and targeted.
-
-### Extensions
-
-Extension tests are essentially text files containing Markdown. They are found under `tests/extensions`.  `test_extensions.py` scans all the files and converts the files to HTML with the extensions and options defined in `tests/extensions/tests.yml`.  They are then compared to the current stored HTML output.  If the two differ, the test fails.
-
-To run these tests, from the root of the project run the following command:
+In order to preserve good code health, a test suite has been put together with [pytest][30]. There are currently two kinds of tests: syntax and targeted.  To run these tests, you can use the following command:
 
 ```
 python run_tests.py
 ```
 
+### Syntax
+
+Syntax tests are essentially text files containing Markdown. They are found under `tests/extensions`.  `test_syntax.py` scans all the files and converts the files to HTML with the extensions and options defined in `tests/extensions/tests.yml`.  They are then compared to the current stored HTML output.  If the two differ, the test fails.
+
+To run **only** these tests, from the root of the project run the following command:
+
+```
+python run_tests.py --test-target syntax
+```
+
+You could also run them directly with:
+
+```
+py.test tests/test_syntax.py
+```
+
 To update (accept) changes for differing files, and overwrite the old HTML with the new ones:
 
 ```
-python run_tests.py -u
+python run_tests.py --update
 ```
 
-To force all files to be updated, run:
+When tests are run, only the syntax of the Markdown output is compared, so if you change something like the CSS for a specific test (which are used for visual inspection), those kind of changes won't get detected and won't cause the file to get updated with `--update`.  You can force all files to be updated, by running:
 
 ```
-python run_tests.py -fu
+python run_tests.py --update --force
 ```
 
 ### Targeted
 
 Targeted tests are unit tests that target specific areas in the code and exercises them to ensure proper functionality.  These tests are found in `test_targeted.py`.
 
-You can run these tests from the root of the project with:
+You can run **only** these tests from the root of the project with:
+
+```
+python run_tests.py --test-target targeted
+```
+
+You could also run them directly with:
 
 ```
 py.test tests/test_targeted.py

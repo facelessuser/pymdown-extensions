@@ -154,21 +154,21 @@ githubemoji:
 
 headeranchor:
   css:
-    - headeranchor.css
+    - assets/headeranchor.css
   extensions:
     markdown.extensions.attr_list:
     pymdownx.headeranchor:
 
 headeranchor-unicode:
   css:
-    - headeranchor.css
+    - assets/headeranchor.css
   extensions:
     pymdownx.headeranchor:
       slugify: !!python/name:pymdownx.slugs.uslugify
 
 headeranchor-unicode-encode:
   css:
-    - headeranchor.css
+    - assets/headeranchor.css
   extensions:
     pymdownx.headeranchor:
       slugify: !!python/name:pymdownx.slugs.uslugify_encoded
@@ -247,7 +247,7 @@ plainhtml (no attr strip):
 
 progressbar:
   css:
-    - progressbar.css
+    - assets/progressbar.css
   extensions:
     pymdownx.progressbar:
     markdown.extensions.attr_list:
@@ -285,13 +285,13 @@ superfences (normal):
 
 tasklist:
   css:
-    - tasklist.css
+    - assets/tasklist.css
   extensions:
     pymdownx.tasklist:
 
 tasklist (custom):
   css:
-    - tasklist_custom.css
+    - assets/tasklist_custom.css
   extensions:
     pymdownx.tasklist:
       custom_checkbox: true

@@ -1,4 +1,4 @@
-"""Test extension libraries."""
+"""Test extension syntax."""
 from __future__ import unicode_literals
 import os
 import markdown
@@ -151,4 +151,4 @@ def test_extensions(compare):
 def run():
     """Run pytest."""
 
-    pytest.main()
+    pytest.main(['tests/test_syntax.py'])
