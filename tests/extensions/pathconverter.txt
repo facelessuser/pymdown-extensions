@@ -1,3 +1,4 @@
+<!-- ![picture](./assets/bg.png) -->
 ![picture](./assets/bg.png)
 [file link windows abs](file:///c:/path/file.html)
 [file link windows abs2](file://c:/path/file.html)
