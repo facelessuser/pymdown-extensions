@@ -9,6 +9,8 @@ environment:
       TOXENV: "py34-unittests"
     - PYTHON: "C:/Python35"
       TOXENV: "py35-unittests"
+    - PYTHON: "C:/Python36"
+      TOXENV: "py36-unittests"
     - PYTHON: "C:/Python27"
       TOXENV: "lint"
 init:
