@@ -32,6 +32,7 @@ pages:
     - Tilde: extensions/tilde.md
   - Miscellaneous Extras: miscellaneous_extras.md
   - Contributing &amp; Support: contributing.md
+  - Development: development.md
   - Changelog: changelog.md
   - License: license.md
 theme: material

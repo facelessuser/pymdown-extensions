@@ -142,3 +142,9 @@ JavaScript
 underscore's
 tex
 escaper
+aspell
+docstrings
+linter
+pytest
+virtualenv
+plugins

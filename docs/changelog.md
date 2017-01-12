@@ -1,3 +1,15 @@
+## 1.5.0
+> Released Jan X, 2017
+
+- **NEW**: New EscapeAll extension.
+- **NEW**: Arithmatex now has configurable output wrapper.
+- **NEW**: PathConverter no longer verifies existence of path to allow it more flexible usage.
+- **NEW**: PathConverter now only converts relative paths when converting to a relative or absolute location.
+- **NEW**: Improved support for path path identification for PathConverter and B64.
+- **FIX**: Fixed issue where Arithmatex was un-escaping `$` within math region.
+- **FIX**: Fixed issue where plugins would append globally changing the escape list opposed to just in the in the Markdown instance.
+- **FIX**: Fixed logic issue where the `mark`, `caret`, and `tilde` extension weren't quite modeling `betterem` inline behavior.
+
 ## 1.4.0
 > Released Jan 5, 2017
 

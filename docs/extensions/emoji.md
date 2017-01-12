@@ -254,16 +254,7 @@ markdown_extensions:
 ```
 
 ## Emoji Index Updates
-The Emoji extension might at times be behind on having indexes built from the latest repos. We try to keep the indexes updated with new releases, but if they fall out of date, you can open an issue on the repo to alert the maintainer(s) and they will update them when someone gets a chance.  Pull requests are also welcome.  The process for updating the indexes is automated, so it is fairly easy to do for a pull request.
-
-1. Ensure you have `requests` installed: `pip install requests`.
-2. Fork the repo and checkout to your machine.
-3. Navigate to the "tools" directory: `cd pymdown-extensions/tools`.
-4. Call the generator script: `python gen_emoji --gemoji` or `python gen_emoji --emojione`.  It will prompt you to select a tag to download.  Please pull the latest **official** tag.  Please don't pull experimental tags.  This should update the indexes.
-5. Then you want to update the tests.  Step back out to the root of the project: `cd ..`.
-6. Force the tests to update via `python run_tests.py -fu`.
-
-Nothing is fool proof.  If they make a breaking change to the files that the script parses, or the location of the files change, the auto-update tool may need to be updated itself (hopefully this would be a rare occurrence).  If such a change does occur, and you are feeling brave, a pull request would be appreciated, but in time, they will be resolved regardless.
+The Emoji extension might at times be behind on having indexes built from the latest repos. We try to keep the indexes updated with new releases, but if they fall out of date, you can open an issue on the repo to alert the maintainer(s) and they will update them when someone gets a chance.  Pull requests are also welcome.  The process for updating the indexes is automated, so it is fairly easy to do for a pull request.  See [Generating Emoji Indexes](../development.md#generating-emoji-indexes) for more info.
 
 ## Examples
 Current examples are all rendered with EmojiOne.
