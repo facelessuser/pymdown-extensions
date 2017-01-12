@@ -1,9 +1,11 @@
 ## Overview
+
 ProgressBar is an extension that adds support for progress/status bars.  It can take percentages or fractions, and it can optionally generate classes for percentages at 20% levels.  It also works with Python Markdown's built in `attr_list` extension.  Though progress bars are rendered as block items, it accepts attr_list's inline format.
 
 The basic syntax for progress bars is: `[= <percentage or fraction> "optional single or double quoted title"]`.  The opening `[` can be followed by one or more `=` characters. After the `=` char(s) the percentage is specified as either a fraction or percentage and can optionally be followed by a title surrounded in either double quotes or single quotes.
 
 ## Options
+
 | Option    | Type | Default | Description |
 |-----------|------|---------|-------------|
 |level_class| bool | True | Enables or disables the level class feature.  The level class feature adds level classes in increments of 20. |
@@ -42,6 +44,7 @@ The basic syntax for progress bars is: `[= <percentage or fraction> "optional si
 |Animated with Gloss |[= 50% "Glossy"]{: .candystripe-animate .gloss} |
 
 ## CSS
+
 The general HTML structure of the progress bar is as follows:
 
 ```html

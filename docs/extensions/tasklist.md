@@ -1,4 +1,5 @@
 ## Overview
+
 The Tasklist extension adds GFM style checkbox lists.  They follow the same syntax as GFM.
 
 ## Options
@@ -40,6 +41,7 @@ Task List
 - [ ] item 3
 
 ## CSS
+
 The default HTML structure of tasklists is found below:
 
 ```html

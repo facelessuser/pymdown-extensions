@@ -1,4 +1,5 @@
 ## Overview
+
 PathConverter is an extension that can convert local, relative reference paths to absolute or relative paths for links and images. It was originally written for a project that wanted to preview the markdown by rendering it in a temporary location. This extension allowed the paths to be converted to work from the temporary location. This context is important when trying to understand why this extension was created. It's actual usage is limited to situations like this, so it isn't something that would get used in most normal scenarios.
 
 PathConverter takes an absolute base path. The base path is the Markdown content's assumed location at time of conversion.  The path is used as a reference for locating images and referenced files relative to the Markdown content.  Essentially, the references in the Markdown file would currently be relative to this base path at conversion time. The references existence is not verified, but the it is analyze to determine if it is a relative path, and if so, it is eligible for conversion. In the case of **absolute** mode, the relative Markdown references would be converted to absolute paths.

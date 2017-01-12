@@ -1,4 +1,5 @@
 ## Overview
+
 The Arithmatex extension searches for `#!tex $...$` or `#!tex $$...$$` and preserves and formats them so that [MathJax](http://www.mathjax.org/) can detect them in the HTML output.
 
 `#!tex $...$` is the inline form and requires the opening token (`#!tex $`) to be followed by a non-whitespace character, and the closing to be preceded by a non-whitespace character.  This is to help avoid false positives when using the dollar sign in traditional ways such as: I have $2.00 and Bob has $10.00.  The previous statement requires no escaping of the `#!tex $` character.  But when needed, the `#!tex $` character can be escaped using `#!tex \$`.

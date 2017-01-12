@@ -1,4 +1,5 @@
 ## Overview
+
 If you ever have to stop and try to remember, *Can I escape this char?* or *Will backslash escape this?*, you are not alone.  EscapeAll makes `\` escape everything making such questions moot.  Now instead of questioning or looking up what can be escaped, you can expect that `\` will escape the character following it.  So if you need a literal `\`, just escape it: `\\`.
 
 > What about newlines?

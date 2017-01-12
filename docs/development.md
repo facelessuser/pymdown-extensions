@@ -21,6 +21,7 @@ tests        | This contains the various tests that are run in order to ensure c
 tools        | This contains various tools that are necessary during development.
 
 ## Coding Standards
+
 When writing code, the code should roughly conform to PEP8 and PEP257 suggestions.  The PyMdown Extensions project utilizes the flake8 linter (with some additional plugins) to ensure code conforms (give or take some of the rules).  When in doubt follow the formatting hints of existing code when adding or modifying files. existing files.  Listed below are the modules used:
 
 - [flake8][1]
@@ -38,6 +39,7 @@ flake8
 [3]: https://pypi.python.org/pypi/pep8-naming
 
 ## Building Documents
+
 Documents are in Markdown (with with some additional syntax) and converted to HTML via Python Markdown and this extension bundle. If you would like to build and preview the documentation, you must have these packages installed:
 
 - [Python Markdown][10]: the Markdown parser.
@@ -69,9 +71,11 @@ It should print out the files with the misspelled words if any are found.  If yo
 [20]: http://aspell.net/
 
 ## Validation Tests
+
 In order to preserve good code health, a test suite has been put together with [pytest][30]. There are currently two kinds of tests: extensions and targeted.
 
 ### Extensions
+
 Extension tests are essentially text files containing Markdown. They are found under `tests/extensions`.  `test_extensions.py` scans all the files and converts the files to HTML with the extensions and options defined in `tests/extensions/tests.yml`.  They are then compared to the current stored HTML output.  If the two differ, the test fails.
 
 To run these tests, from the root of the project run the following command:
@@ -93,6 +97,7 @@ python run_tests.py -fu
 ```
 
 ### Targeted
+
 Targeted tests are unit tests that target specific areas in the code and exercises them to ensure proper functionality.  These tests are found in `test_targeted.py`.
 
 You can run these tests from the root of the project with:
@@ -104,6 +109,7 @@ py.test tests/test_targeted.py
 [30]: http://doc.pytest.org/en/latest/
 
 ### Running Validation With Tox
+
 [Tox][40] is a great way to run the validation tests, spelling checks, and linting in virtual environments so as not to mess with your current working environment. Tox will use the specified Python version for the given environment and create a virtual environment and install all the needed requirements (minus aspell).  You could also setup your own virtual environments with the virtualenv module without tox, and manually do the same.
 
 First, you need to have tox installed:
@@ -141,6 +147,7 @@ tox -espelling
 [40]: https://pypi.python.org/pypi/tox
 
 ## Code Coverage
+
 When running the validation tests through tox, it is setup to track code coverage via the [coverage][50] module.  Coverage is run on each `pyxx-unittests` environment.  If you've made changes to the code, you can clear the old coverage data:
 
 ```
@@ -154,6 +161,7 @@ You can checkout `tox.ini` to see how this is accomplished.
 [50]: https://coverage.readthedocs.io/en/coverage-4.3.1/
 
 ## Generating Emoji Indexes
+
 The Emoji extension has emoji indexes generated from the source of Gemoji and EmojiOne.  Below is the process for auto-generating these indexes.
 
 1. Ensure you have [requests][60] installed: `pip install requests`.

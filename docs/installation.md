@@ -1,7 +1,9 @@
 ## Overview
+
 Pymdown Extensions is built on top of a few requirements.  If installing, the requirements will be installed automatically unless the requirement is optional.
 
 ## Requirements
+
 In order for PyMdown Extensions to work, there are a couple of prerequisites.
 
 | Name | Required |Details |
@@ -10,6 +12,7 @@ In order for PyMdown Extensions to work, there are a couple of prerequisites.
 | [Pygments 2.0.1+ (optional)][pygments] | No | If Pygments Syntax highlighting is desired, Pygments must be installed.  This can be omitted, and code blocks (if using the CodeHilite extension) will be formatter for use with JavaScript code highlighters. |
 
 ## Installation
+
 Installation is easy with pip:
 
 ```bash

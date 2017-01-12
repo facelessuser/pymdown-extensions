@@ -1,4 +1,5 @@
 ## Available Extensions
+
 PyMdown Extensions provides a handful of extensions for use with Python Markdown.  Keep in mind, the PyMdown extensions were designed to work with the default extensions, so your mileage may vary in regards to compatibility when paired with other 3rd party extensions.
 
 Check out the individual extension document pages for more info on the available extensions.

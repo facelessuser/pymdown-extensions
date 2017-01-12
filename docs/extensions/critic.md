@@ -1,4 +1,5 @@
 ## Overview
+
 Critic is an extension that adds handling and support of [Critic Markup](http://criticmarkup.com/).  This extension runs before all other extensions to parse the critic edits.  It allows for the removal or acceptance of the critic modifications and modifies the source to reflect the rejection or approval (highlights and comments are stripped in both cases).  It also allows for visually displaying the changes in HTML output ([mileage may vary](#limitations-with-previewing-critic-markup)).
 
 ## Options
@@ -8,11 +9,13 @@ Critic is an extension that adds handling and support of [Critic Markup](http://
 | mode | string | view | `view` just parses the markup and displays it in its HTML equivalent rendering.  `accept` strips out the critic markup and replaces them with the suggested changes.  `reject` rejects all the suggestions and strips the critic markup out replacing it with the original. |
 
 ## Limitations with Previewing Critic Markup
+
 Parsing CriticMarkup is very straight forward.  If you need to reject critic marks or accept them, the critic extension will work quite well.  But when trying to render the edits visually **and** trying to convert the document to HTML, things can get ugly.  I think this is the one unfortunate problem with CriticMarkup.  The existence of the critic edits can alter the actual source.  Its a fantastic idea, but it should be understood that when using CriticMarkup beyond inline or block paragraphs, there is a possibility that invalid HTML will be created for the preview (especially in relation to lists or if breaking up Markdown syntax).  I think Fletcher said it best here: http://fletcher.github.io/MultiMarkdown-4/criticmarkup.
 
 The critic extension does its best by employing a preprocessor to inject the critic tags before all other parsing and a post-processor to clean up some of the weird side effects of the injection (only selected odd cases as others are more difficult to fix).  It injects some classes into the edit region's HTML output which allows for CSS styling.  There is probably a lot more post-processing that could be done to fix more issues, but whether this extension will be going further down that road has not yet been decided.
 
 ## Examples
+
 | Markup    |  Example |
 |-----------|--------------|
 | `#!critic-markup \{--delete--}` | {--delete--}|
@@ -96,6 +99,7 @@ General block handling.
 ++}
 
 ## CSS
+
 Critic renders the CriticMarkup with the following classes.
 
 | Classes | Description |

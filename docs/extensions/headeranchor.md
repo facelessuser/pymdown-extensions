@@ -7,6 +7,7 @@
 HeaderAnchor adds anchors to headers in the style of GFM's header anchors (anchors that appear to the left of the headers when the cursor hovers over the header). The header anchors in this document were all generated with this extension.
 
 ## Options
+
 By default, HeaderAnchor will use [Toc's](https://pythonhosted.org/Markdown/extensions/toc.html) settings (if Toc is being used), but HeaderAnchor can be run without Toc.  HeaderAnchor can also be run along side Toc and ignore Toc's settings; though it is advised to keep Toc and HeaderAnchor's settings in sync to ensure header links properly link.
 
 | Option    | Type | Default |Description |
@@ -16,18 +17,22 @@ By default, HeaderAnchor will use [Toc's](https://pythonhosted.org/Markdown/exte
 | use_toc_settings | bool | True | This specifies whether HeaderAnchor should get its settings from Toc.  This affects `slugify` and `separator`. |
 
 ## Alternate Slugify
+
 Python Markdown's default slugify strips out Unicode chars. To better handle Unicode, a couple of optional slugify options have been provided.
 
 !!! note "Note"
     This extension has been deprecated. But for legacy compatibility, you can still reference slugs at `pymdownx.headeranchor`, but slugs are actually found at `pymdownx.slugs` moving forward.
 
 ### uslugify
+
 In order to get slugs closer to like GFM's slugs (in regards to Unicode chars), a slugify has been included at `pymdownx.slugs.uslugify`.  This assumes you are encoding your HTML as UTF-8.  UTF-8 Unicode should be okay in your slugs in modern browsers.  You can use this to override Toc's and/or HeaderAnchor's slugify.
 
 ### uslugify_encoded
+
 If you aren't encoding your HTML as UTF-8, or prefer the safer percent encoded Unicode slugs, you can use `pymdownx.slugs.uslugify_encoded` which will percent encode non-ASCII word chars.  You can use this to override Toc's and/or HeaderAnchor's slugify.
 
 ## CSS
+
 Here we will show some example CSS for rendering the header anchors. While Material Icon font is used in this example, you can substitute it with [Octicons](https://octicons.github.com/) for even more of a GFM feel, or use something else entirely.
 
 The HTML tags with classes are set like this:

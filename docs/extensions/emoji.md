@@ -1,4 +1,5 @@
 ## Overview
+
 The Emoji extension adds support for inserting emojis via simple short names enclosed within colons: `:short_name:`.  This is accomplished by using a short name index to map easy to remember names to the Unicode data. The Unicode data is then converted into actual Unicode emoji characters and/or special HTML elements that represent the emoji.
 
 There are a number of familiar emoji short name conventions that people may be aware of, and they differ slightly.  At the present, Emoji chooses to focus on two specific short name conventions. The first convention is from [Gemoji](https://github.com/github/gemoji) which is Github's open source solution that provides emojis in GFM.  The second is from [EmojiOne](https://github.com/Ranks/emojione) which is another open source emoji solution.
@@ -16,6 +17,7 @@ As previously mentioned, short name indexes are sourced from EmojiOne's and Gemo
     Gemoji: https://github.com/github/gemoji/blob/master/LICENSE
 
 ## Options
+
 | Option    | Type | Default |Description |
 |-----------|------|---------|------------|
 | emoji_index | function | pymdownx.emoji.emojione | A function that returns the index to use when parsing `:short_name:` syntax. See [Default Emoji Indexes](#default-emoji-indexes) to see the provided indexes. |
@@ -50,6 +52,7 @@ As previously mentioned, short name indexes are sourced from EmojiOne's and Gemo
     ```
 
 ## Default Emoji Indexes
+
 By default, Emoji provides two indexes: `emojione` and `gemoji`.  Both indexes are generated from the most recent official release tag source. They can be used by passing in one of the two functions below via the `emoji_index` parameter.  Pass the actual function reference, not a string. If you need to create your own, just check out [Custom Emoji Indexes](#custom-emoji-generators).
 
 pymdownx.emoji.emojione
@@ -163,6 +166,7 @@ pymdownx.emoji.to_alt
     There are no generator specific options.
 
 ## Custom Emoji Indexes
+
 In order to provide a custom index, the Emoji extension must be given a function that returns a suitable emoji index.  No parameters are passed to the function.  The function should simply return the custom index in the following format.
 
 ```python
@@ -225,6 +229,7 @@ emoji_index = {
 ```
 
 ## Custom Emoji Generators
+
 Each different kind of output is controlled by a different emoji generator function, but all generator functions have the same format. The format is shown below in case you need to create your own custom output generator.
 
 def emoji_generator(index, shortname, alias, uc, alt, title, options, md)
@@ -254,9 +259,11 @@ markdown_extensions:
 ```
 
 ## Emoji Index Updates
+
 The Emoji extension might at times be behind on having indexes built from the latest repos. We try to keep the indexes updated with new releases, but if they fall out of date, you can open an issue on the repo to alert the maintainer(s) and they will update them when someone gets a chance.  Pull requests are also welcome.  The process for updating the indexes is automated, so it is fairly easy to do for a pull request.  See [Generating Emoji Indexes](../development.md#generating-emoji-indexes) for more info.
 
 ## Examples
+
 Current examples are all rendered with EmojiOne.
 
 ```

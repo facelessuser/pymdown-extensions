@@ -1,4 +1,5 @@
 ## Overview
+
 InlineHilite is an inline version of [CodeHilite](https://pythonhosted.org/Markdown/extensions/code_hilite.html) which adds inline code highlighting.  Borrowing from CodeHilite's existing syntax, InlineHilite utilizes the following syntax to insert inline highlighted code: `` `:::language mycode` `` or `` `#!language mycode` ``.  We will call these specifiers (` #!language` and ` :::language`) mock shebangs.
 
 When using the colon mock shebang, 3 or more colons can be used.  Mock shebangs must come **immediately** after the opening backtick(s) and must be followed by at least one space.  If you need to escape a mock shebang at the start of a code block, just put a space before it and it will be treated as part of the code.
@@ -9,6 +10,7 @@ When using the colon mock shebang, 3 or more colons can be used.  Mock shebangs 
     If you are using a JavaScript highlighter such as `highlight.js` you will most likely need to construct a JavaScript method to target the inline blocks.  You may also find it useful to tag inline blocks with a different class than the block highlighted code so you can also target and style them with CSS differently.  InlineHilite allows you to have a different `css_class` than what is used by `CodeHilite`.
 
 ## Options
+
 By default, InlineHilite will use CodeHilite's settings if it is being used, but InlineHilite can be run without CodeHilite, and if desired, it can be run along side it and ignore CodeHilite's settings.
 
 | Option    | Type | Default |Description |

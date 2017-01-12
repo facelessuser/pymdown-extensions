@@ -6,6 +6,7 @@
 GithubEmoji adds support for GFM emojis.  Using GFM's emoji syntax, this extension will create image links to Github's emoji assets.  It adds support for all of Github's supported emojis (at the time of writing this).
 
 ## Options
+
 | Option    | Type | Default |Description |
 |-----------|------|---------|------------|
 | css_class | string | 'emoji' | Insert the given class name into the img tag.  To disable class name insertion, provide an empty string. |
