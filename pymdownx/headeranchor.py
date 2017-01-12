@@ -76,7 +76,7 @@ class HeaderAnchorTreeprocessor(Treeprocessor):
             if "id" in tag.attrib:
                 used_ids.add(tag.attrib["id"])
 
-        for tag in root.getiterator():
+        for tag in root.iter():
             if tag.tag in ('h1', 'h2', 'h3', 'h4', 'h5', 'h6'):
                 if "id" in tag.attrib:
                     id_attr = tag.get('id')
