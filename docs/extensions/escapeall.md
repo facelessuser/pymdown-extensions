@@ -19,11 +19,9 @@ EVERYTHING! IT ESCAPES EVERYTHING!
 ```
 \W\e\ \c\a\n\ \e\s\c\a\p\e\ \e\v\e\r\y\t\h\i\n\g\!\ \
 \
-\❤\✓\☀\☆\☂\♞\☯\☭\☢\€\☎\∞\❄\♫\
-\😄
+\❤\😄
 ```
 
 \W\e\ \c\a\n\ \e\s\c\a\p\e\ \e\v\e\r\y\t\h\i\n\g\!\ \
 \
-\❤\✓\☀\☆\☂\♞\☯\☭\☢\€\☎\∞\❄\♫\
-\😄
+\❤\😄
