@@ -28,7 +28,7 @@ WRAPPER = '''<!DOCTYPE html>
 '''
 
 
-def compare_results(cfg, testfile, update=False, force_update_all=False):
+def compare_results(cfg, testfile, update=False):
     """Compare test reslts."""
 
     extension = []
@@ -41,32 +41,10 @@ def compare_results(cfg, testfile, update=False, force_update_all=False):
     if 'css' in cfg and len(cfg['css']):
         wrapper = WRAPPER % '\n'.join([CSS_LINK % css for css in cfg['css']])
 
-    if update:
-        generate_html(testfile, extension, extension_config, wrapper, force_update_all)
-    else:
-        check_markdown(testfile, extension, extension_config, wrapper)
+    check_markdown(testfile, extension, extension_config, wrapper, update)
 
 
-def generate_html(testfile, extension, extension_config, wrapper, force_update_all):
-    """Generate html from markdown."""
-
-    expected_html = os.path.splitext(testfile)[0] + '.html'
-    if (
-        force_update_all or
-        not os.path.exists(expected_html) or
-        os.path.getmtime(expected_html) < os.path.getmtime(testfile)
-    ):
-        print('Updated: %s' % expected_html)
-        with codecs.open(testfile, 'r', encoding='utf-8') as f:
-            source = f.read()
-        results = wrapper % markdown.Markdown(
-            extensions=extension, extension_configs=extension_config
-        ).convert(source)
-        with codecs.open(expected_html, 'w', encoding='utf-8') as f:
-            f.write(results)
-
-
-def check_markdown(testfile, extension, extension_config, wrapper):
+def check_markdown(testfile, extension, extension_config, wrapper, update=False):
     """Check the markdown."""
 
     expected_html = os.path.splitext(testfile)[0] + '.html'
@@ -93,10 +71,17 @@ def check_markdown(testfile, extension, extension_config, wrapper):
         )
     ]
     if diff:
-        raise Exception(
-            'Output from "%s" failed to match expected '
-            'output.\n\n%s' % (testfile, ''.join(diff))
-        )
+        if update:
+            print('Updated: %s' % expected_html)
+            with codecs.open(expected_html, 'w', encoding='utf-8') as f:
+                f.write(results)
+        else:
+            raise Exception(
+                'Output from "%s" failed to match expected '
+                'output.\n\n%s' % (testfile, ''.join(diff))
+            )
+    elif update:
+        print('Skipped: %s' % expected_html)
 
 
 def gather_test_params():
