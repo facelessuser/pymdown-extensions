@@ -40,7 +40,7 @@ Documents are in Markdown (with with some additional syntax) and converted to HT
 
 - [Python Markdown][python-markdown]: the Markdown parser.
 - [MkDocs][mkdocs]: the document site generator.
-- [Material][mkdocs-material]: a material theme for MkDocs (currently locked to [this][mkdocs-material-rev] version until the official release.)
+- [Material][mkdocs-material]: a material theme for MkDocs.
 - pymdown-extensions: this Python Markdown extension bundle.
 
 In order to build and preview the documents, just run the following from the root of the project and you should be able to view the docs at `localhost:8000` in your browser (assuming you have the dependencies installed).

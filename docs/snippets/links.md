@@ -19,7 +19,6 @@
 [mathjax]: http://www.mathjax.org/
 [mkdocs]: https://github.com/mkdocs/mkdocs
 [mkdocs-material]: https://github.com/squidfunk/mkdocs-material
-[mkdocs-material-rev]: https://github.com/squidfunk/mkdocs-material/tree/2dbf60affd8db8298cd4233002da62429f6427be
 [nested-markdown]: https://pythonhosted.org/Markdown/extensions/extra.html#nested-markdown-inside-html-blocks
 [nl2br]: https://pythonhosted.org/Markdown/extensions/nl2br.html
 [octicons]: https://octicons.github.com/
