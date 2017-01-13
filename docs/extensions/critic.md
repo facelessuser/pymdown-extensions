@@ -1,6 +1,6 @@
 ## Overview
 
-Critic is an extension that adds handling and support of [Critic Markup](http://criticmarkup.com/).  This extension runs before all other extensions to parse the critic edits.  It allows for the removal or acceptance of the critic modifications and modifies the source to reflect the rejection or approval (highlights and comments are stripped in both cases).  It also allows for visually displaying the changes in HTML output ([mileage may vary](#limitations-with-previewing-critic-markup)).
+Critic is an extension that adds handling and support of [Critic Markup][critic-markup].  This extension runs before all other extensions to parse the critic edits.  It allows for the removal or acceptance of the critic modifications and modifies the source to reflect the rejection or approval (highlights and comments are stripped in both cases).  It also allows for visually displaying the changes in HTML output ([mileage may vary](#limitations-with-previewing-critic-markup)).
 
 ## Options
 
@@ -16,20 +16,14 @@ The critic extension does its best by employing a preprocessor to inject the cri
 
 ## Examples
 
-| Markup    |  Example |
-|-----------|--------------|
-| `#!critic-markup {--delete--}` | {--delete--}|
-| `#!critic-markup {++insert++}` | {++insert++}|
-| `#!critic-markup {~~delete and replace~>substitutions~~}`| {~~delete and replace~>substitutions~~} |
-| `#!critic-markup {==highlight==}`| {==highlight==}|
-| `#!critic-markup {>>comment<<}` | {==text==}{>>comment<<} |
+---8<--- critic-table.md
 
 Here they are in action:
 
 ```critic-markup
 Here is some {--*incorrect*--} Markdown.  I am adding this{++ here.++}.  Here is some more {--text
-that I am removing--}text.  And here is even more {++text that I
-am ++}adding.{~~
+ that I am removing--}text.  And here is even more {++text that I 
+ am ++}adding.{~~
 
 ~>  ~~}Paragraph was deleted and replaced with some spaces.{~~  ~>
 
@@ -60,6 +54,8 @@ General block handling.
 
 ++}
 ```
+
+---8<--- critic-example.md
 
 ## CSS
 

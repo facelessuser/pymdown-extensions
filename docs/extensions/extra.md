@@ -11,13 +11,15 @@ This extension is a convenience extension, and it currently provides no other ad
 
 Extensions:
 
-| Extension | Options | Name   |
-|-----------|---------|--------|
-| [betterem](./betterem.md)                                                              | | pymdownx.betterem |
-| [superfences](./superfences.md)                                                        | | pymdownx.superfences |
-| [Footnotes](https://pythonhosted.org/Markdown/extensions/footnotes.html)               | | markdown.extensions.footnotes |
-| [Attribute Lists](https://pythonhosted.org/Markdown/extensions/attr_list.html)         | | markdown.extensions.attr_list |
-| [Definition Lists](https://pythonhosted.org/Markdown/extensions/definition_lists.html) | | markdown.extensions.def_list |
-| [Tables](https://pythonhosted.org/Markdown/extensions/tables.html)                     | | markdown.extensions.tables |
-| [Abbreviations](https://pythonhosted.org/Markdown/extensions/abbreviations.html)       | | markdown.extensions.abbr |
-| [extrarawhtml](./extrarawhtml.md)                                                      | | pymdownx.extrarawhtml |
+| Extension | Name   |
+|-----------|--------|
+| [betterem](./betterem.md)          | pymdownx.betterem |
+| [superfences](./superfences.md)    | pymdownx.superfences |
+| [Footnotes](footnotes)             | markdown.extensions.footnotes |
+| [Attribute Lists](attr-list)       | markdown.extensions.attr_list |
+| [Definition Lists](def-list)       | markdown.extensions.def_list |
+| [Tables](tables)                   | markdown.extensions.tables |
+| [Abbreviations](abbreviations)     | markdown.extensions.abbr |
+| [extrarawhtml](./extrarawhtml.md)  | pymdownx.extrarawhtml |
+
+---8<--- links.md

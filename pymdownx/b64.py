@@ -119,8 +119,7 @@ class B64Postprocessor(Postprocessor):
         """Find and replace paths with base64 encoded file."""
 
         basepath = self.config['base_path']
-        if basepath:
-            text = RE_TAG_HTML.sub(lambda m: repl(m, basepath), text)
+        text = RE_TAG_HTML.sub(lambda m: repl(m, basepath), text)
         return text
 
 
@@ -131,7 +130,7 @@ class B64Extension(Extension):
         """Initialize."""
 
         self.config = {
-            'base_path': ["", "Base path for b64 to use to resolve paths - Default: \"\""]
+            'base_path': [".", "Base path for b64 to use to resolve paths - Default: \".\""]
         }
 
         super(B64Extension, self).__init__(*args, **kwargs)

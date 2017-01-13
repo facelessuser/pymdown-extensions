@@ -27,6 +27,7 @@ pages:
     - ProgressBar: extensions/progressbar.md
     - PyMdown: extensions/pymdown.md
     - SmartSymbols: extensions/smartsymbols.md
+    - Snippets: extensions/snippets.md
     - SuperFences: extensions/superfences.md
     - Tasklist: extensions/tasklist.md
     - Tilde: extensions/tilde.md
@@ -63,6 +64,8 @@ markdown_extensions:
   - pymdownx.mark:
   - pymdownx.plainhtml:
       strip_attributes: ''
+  - pymdownx.snippets:
+      base_path: docs/snippets
 
 extra:
   palette:

@@ -10,4 +10,4 @@ In order to handle Unicode characters in slugs better, a slugify has been includ
 
 If you aren't encoding your HTML as UTF-8, or prefer the safer percent encoded Unicode slugs, you can use `pymdownx.slugs.uslugify_encoded` which will percent encode non-ASCII word chars.  You can use this to override Toc's slugify.
 
-*[Toc]: Table of Contents
+---8<--- abbr.md

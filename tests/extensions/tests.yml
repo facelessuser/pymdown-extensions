@@ -261,6 +261,11 @@ smartsymbols (with smarty):
     markdown.extensions.smarty:
     pymdownx.smartsymbols:
 
+snippets:
+  extensions:
+    pymdownx.snippets:
+      base_path: '{{BASE}}/snippets'
+
 superfences (failures):
   extensions:
     pymdownx.superfences:

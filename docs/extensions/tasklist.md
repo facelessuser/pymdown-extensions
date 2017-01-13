@@ -139,4 +139,4 @@ If custom checkbox icons are desired, custom styles can be used to give a unique
 }
 ```
 
-*[GFM]: GitHub Flavored Markdown
+---8<--- abbr.md

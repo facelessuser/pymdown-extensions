@@ -9,7 +9,7 @@ SuperFences provides 4 features:
 
 All features can be turned on or off.
 
-SuperFences relies on the [CodeHilite](https://pythonhosted.org/Markdown/extensions/code_hilite.html) extension for syntax highlighting, so CodeHilite is expected to be installed and configured if syntax highlighting is desired.  If CodeHilite is not configured or installed, SuperFences will just escape in such a way that a JavaScript highlighter *could* be used.
+SuperFences relies on the [CodeHilite][codehilite] extension for syntax highlighting, so CodeHilite is expected to be installed and configured if syntax highlighting is desired.  If CodeHilite is not configured or installed, SuperFences will just escape in such a way that a JavaScript highlighter *could* be used.
 
 !!! danger "Reminder"
     Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this extension!
@@ -55,14 +55,14 @@ When using the UML diagram features, you must provide the necessary JavaScript f
 
 **flowcharts:**
 
-- [raphael.js](http://raphaeljs.com/)
-- [flowchart.js](http://adrai.github.io/flowchart.js/)
+- [raphael.js][raphael-js]
+- [flowchart.js][flowchart-js]
 
 **sequence diagrams:**
 
-- [raphael.js](http://raphaeljs.com/)
-- [underscore.js](http://underscorejs.org/)
-- [sequence-diagram.js](http://bramp.github.io/js-sequence-diagrams/)
+- [raphael.js][raphael-js]
+- [underscore.js][underscore-js]
+- [sequence-diagram.js][sequence-diagram-js]
 
 All of these libraries can be included using a CDN (you can use the version of your choice):
 
@@ -299,64 +299,6 @@ C->>D: Open arrow
 D-->>A: Dashed open arrow
 ```
 
-<!-- We only use UML on this one page, so we are just going to load it here. -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.4.2/flowchart.min.js"></script>
-<script type="text/javascript">
-(function (document) {
-    var convertUML = function(className, converter, settings) {
-        var charts = document.querySelectorAll("pre." + className),
-            arr = [],
-            i, j, maxItem, diagaram, text, curNode;
+---8<--- links.md
 
-        // Is there a settings object?
-        if (settings === void 0) {
-            settings = {};
-        }
-
-        // Make sure we are dealing with an array
-        for(i = 0, maxItem = charts.length; i < maxItem; i++) arr.push(charts[i]);
-
-        // Find the UML source element and get the text
-        for (i = 0, maxItem = arr.length; i < maxItem; i++) {
-            childEl = arr[i].firstChild;
-            parentEl = childEl.parentNode;
-            text = "";
-            for (j = 0; j < childEl.childNodes.length; j++) {
-                curNode = childEl.childNodes[j];
-                whitespace = /^\s*$/;
-                if (curNode.nodeName === "#text" && !(whitespace.test(curNode.nodeValue))) {
-                    text = curNode.nodeValue;
-                    break;
-                }
-            }
-
-            // Do UML conversion and replace source
-            el = document.createElement('div');
-            el.className = className;
-            parentEl.parentNode.insertBefore(el, parentEl);
-            parentEl.parentNode.removeChild(parentEl);
-            diagram = converter.parse(text);
-            diagram.drawSVG(el, settings);
-        }
-    };
-
-    function onReady(fn) {
-        if (document.addEventListener) {
-            document.addEventListener('DOMContentLoaded', fn);
-        } else {
-            document.attachEvent('onreadystatechange', function() {
-                if (document.readyState === 'interactive')
-                    fn();
-            });
-        }
-    }
-
-    onReady(function(){
-        convertUML('uml-flowchart', flowchart);
-        convertUML('uml-sequence-diagram', Diagram, {theme: 'simple'});
-    });
-})(document);
-</script>
+---8<--- uml.md

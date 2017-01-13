@@ -8,7 +8,7 @@ HeaderAnchor adds anchors to headers in the style of GFM's header anchors (ancho
 
 ## Options
 
-By default, HeaderAnchor will use [Toc's](https://pythonhosted.org/Markdown/extensions/toc.html) settings (if Toc is being used), but HeaderAnchor can be run without Toc.  HeaderAnchor can also be run along side Toc and ignore Toc's settings; though it is advised to keep Toc and HeaderAnchor's settings in sync to ensure header links properly link.
+By default, HeaderAnchor will use [Toc's][toc] settings (if Toc is being used), but HeaderAnchor can be run without Toc.  HeaderAnchor can also be run along side Toc and ignore Toc's settings; though it is advised to keep Toc and HeaderAnchor's settings in sync to ensure header links properly link.
 
 | Option    | Type | Default |Description |
 |-----------|------|---------|------------|
@@ -33,7 +33,7 @@ If you aren't encoding your HTML as UTF-8, or prefer the safer percent encoded U
 
 ## CSS
 
-Here we will show some example CSS for rendering the header anchors. While Material Icon font is used in this example, you can substitute it with [Octicons](https://octicons.github.com/) for even more of a GFM feel, or use something else entirely.
+Here we will show some example CSS for rendering the header anchors. While Material Icon font is used in this example, you can substitute it with [Octicons][octicons] for even more of a GFM feel, or use something else entirely.
 
 The HTML tags with classes are set like this:
 
@@ -119,5 +119,4 @@ The CSS below is an example.
 }
 ```
 
-*[GFM]: GitHub Flavored Markdown
-*[Toc]: Table of Contents
+---8<--- refs.md

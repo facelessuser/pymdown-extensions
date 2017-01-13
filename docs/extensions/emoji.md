@@ -2,9 +2,9 @@
 
 The Emoji extension adds support for inserting emojis via simple short names enclosed within colons: `:short_name:`.  This is accomplished by using a short name index to map easy to remember names to the Unicode data. The Unicode data is then converted into actual Unicode emoji characters and/or special HTML elements that represent the emoji.
 
-There are a number of familiar emoji short name conventions that people may be aware of, and they differ slightly.  At the present, Emoji chooses to focus on two specific short name conventions. The first convention is from [Gemoji](https://github.com/github/gemoji) which is Github's open source solution that provides emojis in GFM.  The second is from [EmojiOne](https://github.com/Ranks/emojione) which is another open source emoji solution.
+There are a number of familiar emoji short name conventions that people may be aware of, and they differ slightly.  At the present, Emoji chooses to focus on two specific short name conventions. The first convention is from [Gemoji][gemoji] which is Github's open source solution that provides emojis in GFM.  The second is from [EmojiOne][emojione] which is another open source emoji solution.
 
-The short name indexes simply provide easy to remember names mapped to the Unicode data. Custom emojis (like Gemoji's `:octocat:`) wold have no Unicode data associated with them and would only provide a long name.  While it may be thought that an index like Gemoji is only for Github emoji images, you could easily map EmojiOne images to the Gemoji short names and vice versa. You could even map [Twemoji](https://github.com/twitter/twemoji) images to EmojiOne if desired.
+The short name indexes simply provide easy to remember names mapped to the Unicode data. Custom emojis (like Gemoji's `:octocat:`) wold have no Unicode data associated with them and would only provide a long name.  While it may be thought that an index like Gemoji is only for Github emoji images, you could easily map EmojiOne images to the Gemoji short names and vice versa. You could even map [Twemoji][twemoji] images to EmojiOne if desired.
 
 Emoji provides various output formats that take the Unicode data associated with a short name (or the short name itself in the case of a custom emoji) and generates an HTML output. Most hosted emoji images follow the same pattern and are named after their Unicode code points separated by hyphens (minus things like zero width joiners and variation selectors).  This is true with EmojiOne, Github, and Twemoji, to name a few.  The default output `to_png` could theoretically be used with the EmojiOne index to output valid PNG images for EmojiOne, Github, or Twemoji (assuming appropriate CDN or local source images were provided). With that said, some output formats may lend themselves better to assets that are available from a specific provider. For instance, EmojiOne provides SVG, PNG, and sprite assets, while others provide only PNG images.
 
@@ -144,7 +144,7 @@ pymdownx.emoji.to_svg_sprite
 
 pymdownx.emoji.to_awesome
 : 
-    This generator is another EmojiOne specific output called [Emojione Awesome](https://github.com/Ranks/emojione/tree/master/lib/emojione-awesome).  According to EmojiOne's documentation, it aims to give a font-awesome like interface for EmojiOne.  There isn't currently a CDN link that could be found, but you can provide the CSS in your project locally by [downloading it](https://github.com/Ranks/emojione/blob/master/assets/css/emojione-awesome.css) from their repo.  The output format is:
+    This generator is another EmojiOne specific output called [Emojione Awesome][emojione-awesome].  According to EmojiOne's documentation, it aims to give a font-awesome like interface for EmojiOne.  There isn't currently a CDN link that could be found, but you can provide the CSS in your project locally by [downloading it](emojione-awesome-css) from their repo.  The output format is:
 
     ```html
     <i class="e1a-smile"></i>
@@ -250,7 +250,7 @@ def emoji_generator(index, shortname, alias, uc, alt, title, options, md)
 
 ## Using with MkDocs
 
-This project uses these extensions with [MkDocs](https://github.com/mkdocs/mkdocs) to generate the documentation.  It might not be obvious how to set the index or generator functions in Mkdoc's YAML settings file, but it is actually pretty easy.  The functions are referenced like you would import them in Python except you also append them with a special prefix to let the YAML module know that the setting value is a Python object.  For instance, to specify the `to_svg` generator, you would simply reference it like this: `!!python/name:pymdownx.emoji.to_svg` (or you could use your own custom module).
+This project uses these extensions with [MkDocs][mkdocs] to generate the documentation.  It might not be obvious how to set the index or generator functions in Mkdoc's YAML settings file, but it is actually pretty easy.  The functions are referenced like you would import them in Python except you also append them with a special prefix to let the YAML module know that the setting value is a Python object.  For instance, to specify the `to_svg` generator, you would simply reference it like this: `!!python/name:pymdownx.emoji.to_svg` (or you could use your own custom module).
 
 ```yaml
 markdown_extensions:
@@ -276,4 +276,4 @@ EmojiOne :smile: emojis are very useful :thumbsup:.
 
 You can also escape `:` characters to escape the emoji: \:smile:.
 
-*[GFM]:  GitHub Flavored Markdown
+---8<--- refs.md

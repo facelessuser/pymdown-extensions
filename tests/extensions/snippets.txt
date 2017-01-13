@@ -1,0 +1,7 @@
+---8<--- loop.txt
+---8<--- a.txt
+---8<--- b.txt
+
+- Testing indentation
+
+    ---8<--- b.txt

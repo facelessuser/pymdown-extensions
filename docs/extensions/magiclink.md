@@ -22,6 +22,4 @@ Or even an email address fake.email@email.com.
 
 | Option    | Type | Default |Description |
 |-----------|------|---------|------------|
-| hide_protocol | bool | False | If 'True', links are displayed without the initial ftp://, http:// or https:// |
-
-*[GFM]:  GitHub Flavored Markdown
+| hide_protocol | bool | False | If `True`, links are displayed without the initial ftp://, http:// or https:// |

@@ -10,6 +10,7 @@
 - **FIX**: Fixed issue where Arithmatex was un-escaping `$` within math region.
 - **FIX**: Fixed issue where plugins would append globally changing the escape list opposed to just in the in the Markdown instance.
 - **FIX**: Fixed logic issue where the `mark`, `caret`, and `tilde` extension weren't quite modeling `betterem` inline behavior.
+- **FIX**: Critics shouldn't allow escaping critic marks as it is not in the spec.
 
 ## 1.4.0
 

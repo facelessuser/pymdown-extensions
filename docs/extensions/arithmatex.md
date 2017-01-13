@@ -1,6 +1,6 @@
 ## Overview
 
-The Arithmatex extension searches for `#!tex $...$` or `#!tex $$...$$` and preserves and formats them so that [MathJax](http://www.mathjax.org/) can detect them in the HTML output.
+The Arithmatex extension searches for `#!tex $...$` or `#!tex $$...$$` and preserves and formats them so that [MathJax][mathjax] can detect them in the HTML output.
 
 `#!tex $...$` is the inline form and requires the opening token (`#!tex $`) to be followed by a non-whitespace character, and the closing to be preceded by a non-whitespace character.  This is to help avoid false positives when using the dollar sign in traditional ways such as: I have $2.00 and Bob has $10.00.  The previous statement requires no escaping of the `#!tex $` character.  But when needed, the `#!tex $` character can be escaped using `#!tex \$`.
 
@@ -52,7 +52,7 @@ window.MathJax = {
 };
 ```
 
-Please see the [MathJax](http://www.mathjax.org/) site for more info on using MathJax.
+Please see the [MathJax][mathjax] site for more info on using MathJax.
 
 ## Examples
 
@@ -92,27 +92,6 @@ $$
 
 - Inline equations: $p(x|y) = \frac{p(y|x)p(x)}{p(y)}$.
 
-<!-- We only use MathJax on this one page, so we are just going to load it here. -->
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    tex2jax: {
-        inlineMath: [ ["\\(","\\)"] ],
-        displayMath: [ ["\\[","\\]"] ]
-    },
-    TeX: {
-        TagSide: "right",
-        TagIndent: ".8em",
-        MultLineWidth: "85%",
-        equationNumbers: {
-            autoNumber: "AMS",
-        },
-        unicode: {
-            fonts: "STIXGeneral,'Arial Unicode MS'"
-        }
-    },
-    displayAlign: 'left',
-    showProcessingMessages: false,
-    messageStyle: 'none'
-});
-</script>
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+---8<--- links.md
+
+---8<--- mathjax.md
