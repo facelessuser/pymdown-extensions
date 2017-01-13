@@ -1,8 +1,9 @@
 ## 1.5.0
 
-> Released Jan X, 2017
+> Released Jan 13, 2017
 
 - **NEW**: New EscapeAll extension.
+- **NEW**: New Snippets extension for including external files into a Markdown file.
 - **NEW**: Arithmatex now has configurable output wrapper.
 - **NEW**: PathConverter no longer verifies existence of path to allow it more flexible usage.
 - **NEW**: PathConverter now only converts relative paths when converting to a relative or absolute location.
