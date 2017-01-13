@@ -33,8 +33,6 @@ import re
 STX = '\u0002'
 ETX = '\u0003'
 CRITIC_KEY = "czjqqkd:%s"
-ESCAPES_KEY = "ezkrqkd:%s"
-ESCAPES_PLACEHOLDER = STX + '(' + (ESCAPES_KEY % r'[0-9]+') + ')' + ETX
 CRITIC_PLACEHOLDER = CRITIC_KEY % r'[0-9]+'
 SINGLE_CRITIC_PLACEHOLDER = r'%(stx)s(?P<key>%(key)s)%(etx)s' % {
     "key": CRITIC_PLACEHOLDER, "stx": STX, "etx": ETX
@@ -49,7 +47,7 @@ CRITIC_PLACEHOLDERS = r'''(?x)
     "stx": STX, "etx": ETX
 }
 ALL_CRITICS = r'''(?x)
-(%s(?P<critic>(?P<open>\{)
+((?P<critic>(?P<open>\{)
     (?:
         (?P<ins_open>\+{2})
         (?P<ins_text>.*?)
@@ -78,13 +76,10 @@ ALL_CRITICS = r'''(?x)
 (?P<close>\})))
 '''
 
-RE_CRITIC = re.compile(ALL_CRITICS % '', re.DOTALL)
+RE_CRITIC = re.compile(ALL_CRITICS, re.DOTALL)
 RE_CRITIC_PLACEHOLDER = re.compile(CRITIC_PLACEHOLDERS)
 RE_CRITIC_SUB_PLACEHOLDER = re.compile(SINGLE_CRITIC_PLACEHOLDER)
 RE_CRITIC_BLOCK = re.compile(r'((?:ins|del|mark)\s+)(class=([\'"]))(.*?)(\3)')
-
-RE_CRITIC_ESCAPES = re.compile(ALL_CRITICS % r'(?P<escapes>\\)', re.DOTALL)
-RE_CRITIC_ESCAPE_PLACEHOLDER = re.compile(ESCAPES_PLACEHOLDER)
 RE_BLOCK_SEP = re.compile(r'^\n{2,}$')
 
 
@@ -188,7 +183,6 @@ class CriticViewPreprocessor(Preprocessor):
 
         super(CriticViewPreprocessor, self).__init__()
         self.critic_stash = critic_stash
-        self.escape_stash = CriticStash(ESCAPES_KEY)
 
     def _ins(self, text):
         """Handle critic inserts."""
@@ -278,19 +272,6 @@ class CriticViewPreprocessor(Preprocessor):
         txt = txt.replace("\n", "<br>" if not strip_nl else ' ')
         return txt
 
-    def critic_escape(self, m):
-        """Remove escaped critic marks."""
-
-        return self.escape_stash.store(m.group('critic'))
-
-    def restore_escape(self, m):
-        """Restore escaped critic marks."""
-
-        stash = self.escape_stash.get(m.group(1))
-        if stash is not None:
-            self.escape_stash.remove(m.group(1))
-        return stash if stash is not None else m.group(0)
-
     def run(self, lines):
         """Process critic marks."""
 
@@ -300,15 +281,8 @@ class CriticViewPreprocessor(Preprocessor):
         else:
             processor = self.critic_parse
 
-        # Remove escaped critic marks
-        text = RE_CRITIC_ESCAPES.sub(self.critic_escape, '\n'.join(lines))
-
         # Find and process critic marks
-        text = RE_CRITIC.sub(processor, text)
-
-        # Restore escaped critic marks
-        text = RE_CRITIC_ESCAPE_PLACEHOLDER.sub(self.restore_escape, text)
-        self.escape_stash.clear()
+        text = RE_CRITIC.sub(processor, '\n'.join(lines))
 
         return text.split('\n')
 
