@@ -150,6 +150,8 @@ pymdownx.emoji.to_awesome
     <i class="e1a-smile"></i>
     ```
 
+    **Generator Specific Options**
+
     | Option | Type | Default | Description |
     | ------ | ---- | ------- | ----------- |
     | classes | str | 'e1a' | Class(es) to apply to the svg element where the classes are inserted as "class" in the following template: `'%(class)s-%(shortname)s'`. |
