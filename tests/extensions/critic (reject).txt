@@ -9,8 +9,6 @@ am ++}adding.{~~
 And here is a comment on {==some
 ==text== ==}{>>This works quite well. I just wanted to comment on it.<<}. Substitutions {~~is~>are~~} great!
 
-Escape \{>>This text is preserved<<}.
-
 General block handling.
 
 {--

@@ -18,51 +18,15 @@ The critic extension does its best by employing a preprocessor to inject the cri
 
 | Markup    |  Example |
 |-----------|--------------|
-| `#!critic-markup \{--delete--}` | {--delete--}|
-| `#!critic-markup \{++delete++}` | {++insert++}|
-| `#!critic-markup \{~~delete and replace~>substitutions~~}`| {~~delete and replace~>substitutions~~} |
-| `#!critic-markup \{==highlight==}`| {==highlight==}|
-| `#!critic-markup \{>>comment<<}` | {==text==}{>>comment<<} |
+| `#!critic-markup {--delete--}` | {--delete--}|
+| `#!critic-markup {++insert++}` | {++insert++}|
+| `#!critic-markup {~~delete and replace~>substitutions~~}`| {~~delete and replace~>substitutions~~} |
+| `#!critic-markup {==highlight==}`| {==highlight==}|
+| `#!critic-markup {>>comment<<}` | {==text==}{>>comment<<} |
 
 Here they are in action:
 
 ```critic-markup
-Here is some \{--*incorrect*--} Markdown.  I am adding this\{++ here.++}.  Here is some more \{--text
-that I am removing--}text.  And here is even more \{++text that I
-am ++}adding.\{~~
-
-~>  ~~}Paragraph was deleted and replaced with some spaces.\{~~  ~>
-
-~~}Spaces were removed and a paragraph was added.
-
-And here is a comment on \{==some
-==text== ==}\{>>This works quite well. I just wanted to comment on it.<<}. Substitutions \{~~is~>are~~} great!
-
-Escape \\{>>This text is preserved<<}.
-
-General block handling.
-
-\{--
-
-* test
-* test
-* test
-    * test
-* test
-
---}
-
-\{++
-
-* test
-* test
-* test
-    * test
-* test
-
-++}
-```
-
 Here is some {--*incorrect*--} Markdown.  I am adding this{++ here.++}.  Here is some more {--text
 that I am removing--}text.  And here is even more {++text that I
 am ++}adding.{~~
@@ -73,8 +37,6 @@ am ++}adding.{~~
 
 And here is a comment on {==some
 ==text== ==}{>>This works quite well. I just wanted to comment on it.<<}. Substitutions {~~is~>are~~} great!
-
-Escape \{>>This text is preserved<<}.
 
 General block handling.
 
@@ -97,6 +59,7 @@ General block handling.
 * test
 
 ++}
+```
 
 ## CSS
 
