@@ -184,3 +184,5 @@ Here is some example CSS you can use for rendering the visualization.
   padding: .02em;
 }
 ```
+
+---8<--- links.md
