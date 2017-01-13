@@ -2,7 +2,7 @@
 
 Snippets is an extension to insert markdown or HTML snippets into another markdown file. This is done by placing the following markup: `---8<--- filename.md`.  As you can see, the notation is an ASCII scissor cutting a line followed by the file name.  The dashes can be as few as 2 (`--8<--`) or longer if desired (`--8<---------`); whatever your preference is.  The important thing is that it must reside on a line by itself.  If it is indented, the content will be indented to that level as well.
 
-Snippets can also handle recursive file inclusion.  And if snippets encounters the same file in the current stack, it will avoid re-processing it in order to avoid an infinite loop (or crash on hitting max recursion depth).
+Snippets can also handle recursive file inclusion.  And if Snippets encounters the same file in the current stack, it will avoid re-processing it in order to avoid an infinite loop (or crash on hitting max recursion depth).
 
 Snippets is run as a preprocessor, so if a snippet is found in a fenced code block etc., it will still get processed.  If the specified file cannot be found, the the markup will be left in the file.
 

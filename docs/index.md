@@ -24,6 +24,7 @@ Check out the individual extension document pages for more info on the available
 | [magiclink](extensions/magiclink.md)                       | pymdownx.magiclink |
 | [mark](extensions/mark.md)                                 | pymdownx.mark |
 | [progressbar](extensions/progressbar.md)                   | pymdownx.progressbar |
+| [snippets](extensions/snippets.md)                         | pymdownx.snippets |
 | [smartsymbols](extensions/smartsymbols.md)                 | pymdownx.smartsymbols |
 | [superfences](extensions/superfences.md)                   | pymdownx.superfences |
 | [tasklist](extensions/tasklist.md)                         | pymdownx.tasklist |
