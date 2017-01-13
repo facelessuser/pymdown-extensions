@@ -75,7 +75,7 @@ class SnippetPreprocessor(Preprocessor):
                                 [space + l2 for l2 in self.parse_file([l.rstrip('\n') for l in f], snippet)]
                             )
                             found = True
-                    except Exception:
+                    except Exception:  # pragma: no cover
                         pass
                     if file_name:
                         self.seen.remove(file_name)

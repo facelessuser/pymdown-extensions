@@ -103,7 +103,7 @@ class CriticStash(object):
         code = self.stash.get(key, default)
         return code
 
-    def remove(self, key):
+    def remove(self, key):  # pragma: no cover
         """Remove the specified item from the stash."""
 
         del self.stash[key]
