@@ -56,7 +56,6 @@ class SnippetPreprocessor(Preprocessor):
 
         new_lines = []
         for line in lines:
-            found = False
             m = self.RE_SNIPPETS.match(line)
             if m:
                 space = m.group('space').replace('\t', ' ' * self.tab_length)
@@ -73,7 +72,6 @@ class SnippetPreprocessor(Preprocessor):
                             new_lines.extend(
                                 [space + l2 for l2 in self.parse_file([l.rstrip('\n') for l in f], snippet)]
                             )
-                            found = True
                     except Exception:  # pragma: no cover
                         pass
                     if file_name:
