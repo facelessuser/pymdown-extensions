@@ -38,7 +38,7 @@ class SnippetPreprocessor(Preprocessor):
         ^(?P<space>[ \t]*)
         (?P<all>
             (?P<marker>-{2,}8<-{2,}[ ]+)
-            (?P<snippet>.*)
+            (?P<snippet>(?:"(?:\\"|[^"\n])+?"|'(?:\\'|[^'\n])+?'))(?![ \t])
         )$
         '''
     )
@@ -60,11 +60,10 @@ class SnippetPreprocessor(Preprocessor):
             m = self.RE_SNIPPETS.match(line)
             if m:
                 space = m.group('space').replace('\t', ' ' * self.tab_length)
-                snippet = os.path.join(self.base_path, m.group('snippet').strip())
+                snippet = os.path.join(self.base_path, m.group('snippet')[1:-1].strip())
                 if os.path.exists(snippet):
                     if snippet in self.seen:
                         # This is in the stack and we don't want an infinite loop!
-                        new_lines.append(line)
                         continue
                     elif file_name:
                         # Track this file.
@@ -79,7 +78,9 @@ class SnippetPreprocessor(Preprocessor):
                         pass
                     if file_name:
                         self.seen.remove(file_name)
-            if not found:
+                else:
+                    continue
+            else:
                 new_lines.append(line)
 
         return new_lines

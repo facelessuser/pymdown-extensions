@@ -57,4 +57,4 @@ Option     | Type | Default     | Description
 !!! warning "Deprecated Option"
     In version `1.3.0`, the setting `no_nl2br` is now `True` by default and the setting is deprecated and will be removed in the future. GitHub's GFM (which we are emulating) no longer converts new lines to `<br>`.  If you prefer having New-Line-to-Break enabled, you can enable the `markdown.extensions.nl2br` extension separately.
 
----8<--- refs.md
+--8<-- "refs.md"

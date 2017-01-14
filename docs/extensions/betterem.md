@@ -66,4 +66,4 @@ Usage is the __same__ as usual.  Just keep in mind the _differences_.  Markdown 
 
 Usage is the __same__ as usual.  Just keep in mind the _differences_.  Markdown is un**freaking**believable :smile:.
 
----8<--- abbr.md
+--8<-- "abbr.md"

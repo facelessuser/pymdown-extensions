@@ -92,6 +92,6 @@ $$
 
 - Inline equations: $p(x|y) = \frac{p(y|x)p(x)}{p(y)}$.
 
----8<--- links.md
+---8<--- "links.md"
 
----8<--- mathjax.md
+---8<--- "mathjax.md"

@@ -16,7 +16,7 @@ The Critic extension does its best by employing a preprocessor to inject the cri
 
 ## Examples
 
----8<--- critic-table.md
+--8<-- "critic-table.md"
 
 Here they are in action:
 
@@ -55,7 +55,7 @@ General block handling.
 ++}
 ```
 
----8<--- critic-example.md
+--8<-- "critic-example.md"
 
 ## CSS
 
@@ -185,4 +185,4 @@ Here is some example CSS you can use for rendering the visualization.
 }
 ```
 
----8<--- links.md
+--8<-- "links.md"

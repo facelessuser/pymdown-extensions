@@ -31,4 +31,4 @@ Here is a test. You can verify the result by inspecting the code in your browser
 
 Here is a test. You can verify the result by inspecting the code in your browser.
 
----8<--- links.md
+--8<-- "links.md"

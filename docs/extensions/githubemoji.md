@@ -15,4 +15,4 @@ Option      | Type   | Default        |Description
 !!! note "Note"
     Since 'online' calls through the GitHub API are done anonymously, GitHub will limit the caller to approximately 60 calls in an hour.  There are no plans at this time to add [OAuth support][github-api-oauth].
 
----8<--- refs.md
+--8<-- "refs.md"

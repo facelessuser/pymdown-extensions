@@ -22,4 +22,4 @@ Extension                          | Name
 [Abbreviations](abbreviations)     | `markdown.extensions.abbr`
 [ExtraRawHtml](./extrarawhtml.md)  | `pymdownx.extrarawhtml`
 
----8<--- links.md
+--8<-- "links.md"

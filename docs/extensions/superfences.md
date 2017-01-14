@@ -299,6 +299,6 @@ C->>D: Open arrow
 D-->>A: Dashed open arrow
 ```
 
----8<--- links.md
+--8<-- "links.md"
 
----8<--- uml.md
+--8<-- "uml.md"

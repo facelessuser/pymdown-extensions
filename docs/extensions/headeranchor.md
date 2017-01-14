@@ -119,4 +119,4 @@ The CSS below is an example.
 }
 ```
 
----8<--- refs.md
+--8<-- "refs.md"

@@ -279,4 +279,4 @@ EmojiOne :smile: emojis are very useful :thumbsup:.
 
 You can also escape `:` characters to escape the emoji: \:smile:.
 
----8<--- refs.md
+--8<-- "refs.md"

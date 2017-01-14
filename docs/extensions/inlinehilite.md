@@ -35,4 +35,4 @@ Here is some code: `#!js function pad(v){return ('0'+v).split('').reverse().spli
 
 The mock shebang will be treated like text here: ` #!js var test = 0; `.
 
----8<--- links.md
+--8<-- "links.md"
