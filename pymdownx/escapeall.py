@@ -91,7 +91,6 @@ class EscapeAllExtension(Extension):
         }
         super(EscapeAllExtension, self).__init__(*args, **kwargs)
 
-
     def extendMarkdown(self, md, md_globals):
         """Escape all."""
 
