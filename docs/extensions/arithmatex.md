@@ -2,7 +2,7 @@
 
 The Arithmatex extension searches for `#!tex $...$` or `#!tex $$...$$` and preserves and formats them so that [MathJax][mathjax] can detect them in the HTML output.
 
-`#!tex $...$` is the inline form and requires the opening token (`#!tex $`) to be followed by a non-whitespace character, and the closing to be preceded by a non-whitespace character.  This is to help avoid false positives when using the dollar sign in traditional ways such as: I have $2.00 and Bob has $10.00.  The previous statement requires no escaping of the `#!tex $` character.  But when needed, the `#!tex $` character can be escaped using `#!tex \$`.
+`#!tex $...$` is the inline form and requires the opening token (`#!tex $`) to be followed by a non-whitespace character, and the closing to be preceded by a non-white-space character.  This is to help avoid false positives when using the dollar sign in traditional ways such as: I have $2.00 and Bob has $10.00.  The previous statement requires no escaping of the `#!tex $` character.  But when needed, the `#!tex $` character can be escaped using `#!tex \$`.
 
 `#!tex $$...$$` is the *block* form.  When using `#!tex $$`, the block must start with `#!tex $$` and end with `#!tex $$`; a block contains no empty lines.
 
@@ -10,10 +10,10 @@ The Arithmatex extension actually converts the dollar notation to a more reliabl
 
 ## Options
 
-| Option    | Type | Default | Description |
-|-----------|------|---------|-------------|
-| tex_inline_wrap | \(string\) | `#!python ['\\(', '\\)']` | An array containing the opening and closing portion of the wrap. |
-| tex_block_wrap | \[string\] | `#!python ['\\(', '\\)']` | An array containing the opening and closing portion of the wrap. |
+Option            | Type            | Default                   | Description
+----------------- |---------------- | ------------------------- |------------
+`tex_inline_wrap` | `#!py [string]` | `#!python ['\\(', '\\)']` | An array containing the opening and closing portion of the wrap.
+`tex_block_wrap`  | `#!py [string]` | `#!python ['\\[', '\\]']` | An array containing the opening and closing portion of the wrap.
 
 !!! warning "Wrapping Format"
     The wrapping options are **not** run through an HTML escaper, so make sure you escape whatever requires escaping.  The reason we don't escape the wrap strings is so you can inject an HTML tag wrapper if desired.  Most people don't need to insert HTML, but as an example, when these docs are run through CI and spell checked, math is wrapped with `<nospell></nospell>` tags which are filtered out to avoid spell checking the content. So there are practical applications.

@@ -1,14 +1,14 @@
 ## Overview
 
-Tilde optionally adds two different features which are syntactically built around the `~` character: **delete** which inserts `#!html <del></del>` tags and **subscript** which inserts `#!html <sub></sub>` tags.  Syntax behavior for smart and non-smart variants of **delete** models that of [betterem](betterem.md#differences).
+Tilde optionally adds two different features which are syntactically built around the `~` character: **delete** which inserts `#!html <del></del>` tags and **subscript** which inserts `#!html <sub></sub>` tags.  Syntax behavior for smart and non-smart variants of **delete** models that of [BetterEm](betterem.md#differences).
 
 ## Options
 
-| Option    | Type | Default | Description |
-|-----------|------|---------|-------------|
-| smart_delete | bool | True | Use smart logic with delete characters: `~~delete~~me~~` --> ~~delete~~me~~. |
-| delete | bool | True | Enable delete feature. |
-| subscript | bool | True | Enable subscript feature. |
+Option         | Type | Default     | Description
+-------------- | ---- | ----------- | -----------
+`smart_delete` | bool | `#!py True` | Use smart logic with delete characters: `~~delete~~me~~` --> ~~delete~~me~~.
+`delete`       | bool | `#!py True` | Enable delete feature.
+`subscript`    | bool | `#!py True` | Enable subscript feature.
 
 ## Examples
 

@@ -10,17 +10,17 @@ The PyMdown extension is a convenience extension to load up the following extens
 
 Extensions:
 
-| Extension | Options | Name   |
-|-----------|---------|--------|
-| [magiclink](./magiclink.md)      | | pymdownx.magiclink |
-| [betterem](./betterem.md)        | | pymdownx.betterem |
-| [tilde](./tilde.md)              | | pymdownx.tilde |
-| [caret](./caret.md)              | | pymdownx.caret |
-| [mark](./mark.md)                | | pymdownx.mark |
-| [smartsymbols](./smartsymbols.md)| | pymdownx.smartsymbols |
-| [emoji](./emoji.md)              | | pymdownx.emoji |
-| [tasklist](./tasklist.md)        | | pymdownx.tasklist |
-| [progressbar](./progressbar.md)  | | pymdownx.progressbar |
-| [headeranchor](./headeranchor.md)| | pymdownx.headeranchor |
-| [superfences](./superfences.md)  | | pymdownx.superfences |
-| [arithmatex](./arithmatex.md)    | | pymdownx.arithmatex |
+Extension                        | Name
+-------------------------------- | ----
+[MagicLink](./magiclink.md)      | `pymdownx.magiclink`
+[BetterEm](./betterem.md)        | `pymdownx.betterem`
+[Tilde](./tilde.md)              | `pymdownx.tilde`
+[Caret](./caret.md)              | `pymdownx.caret`
+[Mark](./mark.md)                | `pymdownx.mark`
+[SmartSymbols](./smartsymbols.md)| `pymdownx.smartsymbols`
+[Emoji](./emoji.md)              | `pymdownx.emoji`
+[Tasklist](./tasklist.md)        | `pymdownx.tasklist`
+[ProgressBar](./progressbar.md)  | `pymdownx.progressbar`
+[HeaderAnchor](./headeranchor.md)| `pymdownx.headeranchor`
+[SuperFences](./superfences.md)  | `pymdownx.superfences`
+[Arithmatex](./arithmatex.md)    | `pymdownx.arithmatex`

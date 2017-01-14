@@ -20,6 +20,6 @@ Or even an email address fake.email@email.com.
 
 ## Options
 
-| Option    | Type | Default |Description |
-|-----------|------|---------|------------|
-| hide_protocol | bool | False | If `True`, links are displayed without the initial ftp://, http:// or https:// |
+Option          | Type | Default      | Description
+--------------- | ---- | ------------ | -----------
+`hide_protocol` | bool | `#!py False` | If `True`, links are displayed without the initial `ftp://`, `http://` or `https://`.

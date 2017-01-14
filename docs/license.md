@@ -21,7 +21,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 -----------------------------
-superfences.py is derived from Python Markdown's fenced_code extension.
+`superfences.py` is derived from Python Markdown's fenced_code extension.
 
 Fenced Code Extension for Python Markdown
  =========================================
@@ -33,7 +33,7 @@ All changes Copyright 2008-2014 The Python Markdown Project
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 
 ------------------------------
-inlinehilite.py is derived from Python Markdown's codehilite extension.
+`inlinehilite.py` is derived from Python Markdown's CodeHilite extension.
 
 CodeHilite Extension for Python-Markdown
  ========================================
@@ -45,7 +45,7 @@ All changes Copyright 2008-2014 The Python Markdown Project
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 
 ------------------------------
-extrarawhtml.py is a literal copy and paste from Python Markdown's extra extension.
+`extrarawhtml.py` is a literal copy and paste from Python Markdown's Extra extension.
 It basically splits out the raw html markdown parsing into a separate extension that can
 be used even if it is not desired to use all of 'extra'.
 
@@ -58,7 +58,7 @@ License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 
 ------------------------------
 
-gemoji_db.py is generated from Gemoji's source code: https://github.com/github/gemoji.
+`gemoji_db.py` is generated from Gemoji's source code: https://github.com/github/gemoji.
 
 Copyright (c) 2013 GitHub, Inc.
 
@@ -89,6 +89,6 @@ emoji1_db.py is generated from EmojiOne's source code: https://github.com/Ranks/
 
 EmojiOne Non-Artwork
 
-Applies to the Javascript, JSON, PHP, CSS, HTML files, and everything else not covered under the artwork license above.
+Applies to the JavaScript, JSON, PHP, CSS, HTML files, and everything else not covered under the artwork license above.
 License: MIT
 Complete Legal Terms: http://opensource.org/licenses/MIT

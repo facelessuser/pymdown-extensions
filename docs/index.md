@@ -7,29 +7,29 @@ Check out the individual extension document pages for more info on the available
 !!! danger "Reminder"
     Please read the [Usage Notes](usage_notes.md) for information on extension compatibility and general notes to be aware of when using these extensions.
 
-| Extension                                                  | Name   |
-|------------------------------------------------------------|--------|
-| [arithmatex](extensions/arithmatex.md)                     | pymdownx.arithmatex |
-| [b64](extensions/b64.md)                                   | pymdownx.b64 |
-| [betterem](extensions/betterem.md)                         | pymdownx.betterem |
-| [caret](extensions/caret.md)                               | pymdownx.caret |
-| [critic](extensions/critic.md)                             | pymdownx.critic |
-| [emoji](extensions/emoji.md)                               | pymdownx.emoji |
-| [escapeall](extensions/escapeall.md)                       | pymdownx.escapeall |
-| [extra](extensions/extra.md)                               | pymdownx.extra |
-| [extrarawhtml](extensions/extrarawhtml.md)                 | pymdownx.extrarawhtml |
-| [github](extensions/github.md)                             | pymdownx.github |
-| [githubemoji (**deprecated**)](extensions/githubemoji.md)  | pymdownx.githubemoji |
-| [headeranchor (**deprecated**)](extensions/headeranchor.md)| pymdownx.headeranchor |
-| [magiclink](extensions/magiclink.md)                       | pymdownx.magiclink |
-| [mark](extensions/mark.md)                                 | pymdownx.mark |
-| [progressbar](extensions/progressbar.md)                   | pymdownx.progressbar |
-| [snippets](extensions/snippets.md)                         | pymdownx.snippets |
-| [smartsymbols](extensions/smartsymbols.md)                 | pymdownx.smartsymbols |
-| [superfences](extensions/superfences.md)                   | pymdownx.superfences |
-| [tasklist](extensions/tasklist.md)                         | pymdownx.tasklist |
-| [tilde](extensions/tilde.md)                               | pymdownx.tilde |
-| [inlinehilite](extensions/inlinehilite.md)                 | pymdownx.inlinehilite |
-| [pathconverter](extensions/pathconverter.md)               | pymdownx.pathconverter |
-| [plainhtml](extensions/plainhtml.md)                       | pymdownx.plainhtml |
-| [pymdown (**deprecated**)](extensions/pymdown.md)          | pymdownx.pymdown |
+Extension                                                  | Name
+---------------------------------------------------------- | ----
+[Arithmatex](extensions/arithmatex.md)                     | `pymdownx.arithmatex`
+[B64](extensions/b64.md)                                   | `pymdownx.b64`
+[BetterEm](extensions/betterem.md)                         | `pymdownx.betterem`
+[Caret](extensions/caret.md)                               | `pymdownx.caret`
+[Critic](extensions/critic.md)                             | `pymdownx.critic`
+[Emoji](extensions/emoji.md)                               | `pymdownx.emoji`
+[EscapeAll](extensions/escapeall.md)                       | `pymdownx.escapeall`
+[Extra](extensions/extra.md)                               | `pymdownx.extra`
+[ExtraRawHtml](extensions/extrarawhtml.md)                 | `pymdownx.extrarawhtml`
+[GitHub](extensions/github.md)                             | `pymdownx.github`
+[GitHubEmoji (**deprecated**)](extensions/githubemoji.md)  | `pymdownx.githubemoji`
+[HeaderAnchor (**deprecated**)](extensions/headeranchor.md)| `pymdownx.headeranchor`
+[MagicLink](extensions/magiclink.md)                       | `pymdownx.magiclink`
+[Mark](extensions/mark.md)                                 | `pymdownx.mark`
+[ProgressBar](extensions/progressbar.md)                   | `pymdownx.progressbar`
+[Snippets](extensions/snippets.md)                         | `pymdownx.snippets`
+[SmartSymbols](extensions/smartsymbols.md)                 | `pymdownx.smartsymbols`
+[SuperFences](extensions/superfences.md)                   | `pymdownx.superfences`
+[Tasklist](extensions/tasklist.md)                         | `pymdownx.tasklist`
+[Tilde](extensions/tilde.md)                               | `pymdownx.tilde`
+[InlineHilite](extensions/inlinehilite.md)                 | `pymdownx.inlinehilite`
+[PathConverter](extensions/pathconverter.md)               | `pymdownx.pathconverter`
+[PlainHtml](extensions/plainhtml.md)                       | `pymdownx.plainhtml`
+[PyMdown (**deprecated**)](extensions/pymdown.md)          | `pymdownx.pymdown`

@@ -5,10 +5,9 @@
   overflow: auto;
 }
 
-/* Inline */
-.md-typeset code, .md-typeset tt {
-  white-space: pre-wrap;
-  word-wrap: break-word;
+/* Code in Tables */
+.md-typeset td code {
+    word-break: normal;
 }
 
 /* Header Anchors */

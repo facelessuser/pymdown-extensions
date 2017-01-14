@@ -21,8 +21,8 @@ pages:
     - EscapeAll: extensions/escapeall.md
     - Extra: extensions/extra.md
     - ExtraRawHtml: extensions/extrarawhtml.md
-    - Github: extensions/github.md
-    - GithubEmoji: extensions/githubemoji.md
+    - GitHub: extensions/github.md
+    - GitHubEmoji: extensions/githubemoji.md
     - HeaderAnchor: extensions/headeranchor.md
     - InlineHilite: extensions/inlinehilite.md
     - MagicLink: extensions/magiclink.md

@@ -13,10 +13,10 @@ Snippets is great for situations where you have content you need to insert into 
 
 ## Options
 
-| Option    | Type | Default | Description |
-|-----------|------|---------|-------------|
-| base_path | string | '.' | A string indicating a base path to be used resolve snippet locations. |
-| encoding  | string | `utf-8` | Encoding to use when reading in the snippets. |
+Option      | Type   | Default        | Description
+----------- | ------ | -------------- |------------
+`base_path` | string | `#!py '.'`     | A string indicating a base path to be used resolve snippet locations.
+`encoding`  | string | `#!py 'utf-8'` | Encoding to use when reading in the snippets.
 
 ## Examples
 

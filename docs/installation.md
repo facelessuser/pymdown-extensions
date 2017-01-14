@@ -1,15 +1,15 @@
 ## Overview
 
-Pymdown Extensions is built on top of a few requirements.  If installing, the requirements will be installed automatically unless the requirement is optional.
+PyMdown Extensions is built on top of a few requirements.  If installing, the requirements will be installed automatically unless the requirement is optional.
 
 ## Requirements
 
 In order for PyMdown Extensions to work, there are a couple of prerequisites.
 
-| Name | Required |Details |
-|------|----------|--------|
-| [Python Markdown 2.6.0+][python-markdown] | Yes |Python Markdown must be installed as it is the Markdown parser that is being used. |
-| [Pygments 2.0.1+ (optional)][pygments] | No | If Pygments Syntax highlighting is desired, Pygments must be installed.  This can be omitted, and code blocks (if using the CodeHilite extension) will be formatter for use with JavaScript code highlighters. |
+Name                                      | Required | Details
+----------------------------------------- | -------- | -------
+[Python Markdown 2.6.0+][python-markdown] | Yes      |Python Markdown must be installed as it is the Markdown parser that is being used.
+[Pygments 2.0.1+ (optional)][pygments]    | No       | If Pygments Syntax highlighting is desired, Pygments must be installed.  This can be omitted, and code blocks (if using the CodeHilite extension) will be formatter for use with JavaScript code highlighters.
 
 ## Installation
 

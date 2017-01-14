@@ -54,9 +54,9 @@ BetterEm will allow non-smart emphasis to contain "floating" like tokens.
 
 ## Options
 
-| Option    | Type | Default |Description |
-|-----------|------|---------|------------|
-| smart_enable | string | 'underscore' | A string that specifies whether smart should be enabled for `all`, `asterisk`, `underscore`, or `none`. |
+Option         | Type   | Default             | Description
+-------------- | ------ | ------------------- | -----------
+`smart_enable` | string | `#!py 'underscore'` | A string that specifies whether smart should be enabled for `all`, `asterisk`, `underscore`, or `none`. |
 
 Examples
 
