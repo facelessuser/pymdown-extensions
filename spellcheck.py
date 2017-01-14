@@ -175,7 +175,6 @@ def check_spelling():
                         'list',
                         '--lang=en',
                         '--mode=html',
-                        '--run-together',
                         '--encoding=utf-8',
                         '--add-html-skip=code',
                         '--add-html-skip=pre',
