@@ -2,6 +2,11 @@ site_name: PyMdown Extensions Documentation
 repo_url: https://github.com/facelessuser/pymdown-extensions
 site_description: A Collection of Useful Extensions for Python Markdown
 copyright: Copyright &copy; 2014 - 2017 <a href="https://github.com/facelessuser">Isaac Muse</a>
+
+theme: material
+theme_dir: doc_theme
+strict: true
+
 pages:
   - PyMdown Extensions: index.md
   - Installation: installation.md
@@ -36,8 +41,7 @@ pages:
   - Development: development.md
   - Changelog: changelog.md
   - License: license.md
-theme: material
-theme_dir: doc_theme
+
 markdown_extensions:
   - markdown.extensions.toc:
       slugify: !!python/name:pymdownx.slugs.uslugify

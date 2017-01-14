@@ -31,6 +31,7 @@
 [requests]: https://pypi.python.org/pypi/requests/
 [sequence-diagram-js]: http://bramp.github.io/js-sequence-diagrams/
 [tables]: https://pythonhosted.org/Markdown/extensions/tables.html
+[toc]: https://pythonhosted.org/Markdown/extensions/toc.html
 [tox]: https://pypi.python.org/pypi/tox
 [twemoji]: https://github.com/twitter/twemoji
 [underscore-js]: http://underscorejs.org/
