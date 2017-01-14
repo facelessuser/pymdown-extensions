@@ -112,6 +112,12 @@ emoji1 (svg sprite):
 escapeall:
   extensions:
     pymdownx.escapeall:
+      hardbreak: True
+      nbsp: True
+
+escapeall (ws normal):
+  extensions:
+    pymdownx.escapeall:
 
 extra:
   extensions:
