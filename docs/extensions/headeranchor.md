@@ -2,7 +2,7 @@
 
 !!! warning "Deprecated Extension"
     This extension has been deprecated in version `1.4.0`.  The same effect can be accomplished using
-    `markdown.extensions.toc` with `permalinks` and some custom CSS.  It doesn't make sense to continue supporting this as nothing is really gained by specifically doing anchors Github's way.
+    `markdown.extensions.toc` with `permalinks` and some custom CSS.  It doesn't make sense to continue supporting this as nothing is really gained by specifically doing anchors GitHub's way.
 
 HeaderAnchor adds anchors to headers in the style of GFM's header anchors (anchors that appear to the left of the headers when the cursor hovers over the header). The header anchors in this document were all generated with this extension.
 
@@ -10,11 +10,11 @@ HeaderAnchor adds anchors to headers in the style of GFM's header anchors (ancho
 
 By default, HeaderAnchor will use [Toc's][toc] settings (if Toc is being used), but HeaderAnchor can be run without Toc.  HeaderAnchor can also be run along side Toc and ignore Toc's settings; though it is advised to keep Toc and HeaderAnchor's settings in sync to ensure header links properly link.
 
-| Option    | Type | Default |Description |
-|-----------|------|---------|------------|
-| separator | string | '-' | If not using Toc, or ignoring Toc's settings, this will specify the word separator used. |
-| slugify | function | Default method | If not using Toc, or ignoring Toc's settings, this will specify the function to generate anchors based on header text.  By Default, this will use Toc's default, fallback slugify method, but if for any reason Toc is not installed, HeaderAnchor will fall back to an equivalent method. |
-| use_toc_settings | bool | True | This specifies whether HeaderAnchor should get its settings from Toc.  This affects `slugify` and `separator`. |
+Option             | Type     | Default        |Description
+------------------ | -------- |--------------- |-----------
+`separator`        | string   | `#!py '-'`     | If not using Toc, or ignoring Toc's settings, this will specify the word separator used.
+`slugify`          | function | Default method | If not using Toc, or ignoring Toc's settings, this will specify the function to generate anchors based on header text.  By Default, this will use Toc's default, fallback slugify method, but if for any reason Toc is not installed, HeaderAnchor will fall back to an equivalent method.
+`use_toc_settings` | bool     | `#!py True`    | This specifies whether HeaderAnchor should get its settings from Toc.  This affects `slugify` and `separator`.
 
 ## Alternate Slugify
 
@@ -48,10 +48,10 @@ The HTML tags with classes are set like this:
 
 We have two classes to work with:
 
-| Classes | Description |
-|---------|-------------|
-| headeranchor-link | This is attached to the actual anchor tag that links to the header. |
-| headeranchor | This is the span we attach the anchor character to. |
+Classes             | Description
+--------------------|------------
+`headeranchor-link` | This is attached to the actual anchor tag that links to the header.
+`headeranchor`      | This is the span we attach the anchor character to.
 
 The CSS below is an example.
 
@@ -119,4 +119,4 @@ The CSS below is an example.
 }
 ```
 
----8<--- refs.md
+--8<-- "refs.md"

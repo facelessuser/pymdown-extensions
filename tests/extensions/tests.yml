@@ -112,6 +112,12 @@ emoji1 (svg sprite):
 escapeall:
   extensions:
     pymdownx.escapeall:
+      hardbreak: True
+      nbsp: True
+
+escapeall (ws normal):
+  extensions:
+    pymdownx.escapeall:
 
 extra:
   extensions:
@@ -265,6 +271,12 @@ snippets:
   extensions:
     pymdownx.snippets:
       base_path: '{{BASE}}/snippets'
+
+snippets (block):
+  extensions:
+    pymdownx.snippets:
+      base_path: '{{BASE}}/snippets'
+      # block_mode: true
 
 superfences (failures):
   extensions:

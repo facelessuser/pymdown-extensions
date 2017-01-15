@@ -170,12 +170,12 @@ For the reasons above, the nested fences feature really is just a workaround.  B
 
 General syntax highlighting settings are configured via CodeHilite which should installed and enabled in order to get the highlighting.
 
-| Option    | Type | Default | Description |
-|-----------|------|---------|-------------|
-| disable_indented_code_blocks | bool | False | Disables Python Markdown's indented code block parsing.  This is nice if you only ever use fenced blocks. |
-| nested | bool | True | Use nested fences. |
-| uml_flow | bool | True | Enable flowcharts. |
-| uml_sequence | bool | True | Enable sequence diagrams. |
+Option                         | Type | Default      | Description
+------------------------------ | ---- | ------------ | -----------
+`disable_indented_code_blocks` | bool | `#!py False` | Disables Python Markdown's indented code block parsing.  This is nice if you only ever use fenced blocks.
+`nested`                       | bool | `#!py True`  | Use nested fences.
+`uml_flow`                     | bool | `#!py True`  | Enable flowcharts.
+`uml_sequence`                 | bool | `#!py True`  | Enable sequence diagrams.
 
 ## Examples
 
@@ -299,6 +299,6 @@ C->>D: Open arrow
 D-->>A: Dashed open arrow
 ```
 
----8<--- links.md
+--8<-- "links.md"
 
----8<--- uml.md
+--8<-- "uml.md"

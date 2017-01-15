@@ -13,15 +13,15 @@ When using the colon mock shebang, 3 or more colons can be used.  Mock shebangs 
 
 By default, InlineHilite will use CodeHilite's settings if it is being used, but InlineHilite can be run without CodeHilite, and if desired, it can be run along side it and ignore CodeHilite's settings.
 
-| Option    | Type | Default |Description |
-|-----------|------|---------|------------|
-| style_plain_text | bool | False | By default, InlineHilite will avoid syntax highlighting a code block with no language specified or the `text` language specified.  No classes or style will be applied, but the text will be formatted for a code element.  If this is set true, text blocks will be processed and have classes injected into them even though only the plain text lexer is applied. |
-| use_codehilite_settings | bool | True | Determine whether CodeHilite's settings should be used, or if InlineHilite should use a different set. |
-| guess_lang | bool | True | If CodeHilite is not used, or if ignoring CodeHilite's settings, determine whether InlineHilite should try to guess a code block's language if not specified. |
-| css_class | string | 'inlinehilite' | If ignoring CodeHilite's settings, this is the class name that will be injected into code tags when they are processed. |
-| pygments_style | string | 'default' | If CodeHilite is not used, or if ignoring CodeHilite's settings, this will be the Pygments' style to use.  When using Pygments, this really only has an effect when used with `noclasses`. |
-| noclasses | bool | False | If CodeHilite is not used, or if ignoring CodeHilite's settings, this will cause the styles to directly be written to the tag's style attribute instead of requiring a stylesheet. |
-| use_pygments | bool | True | If CodeHilite is not used, or if ignoring CodeHilite's settings, this will control whether Pygments (if available) is used on the code block, or if the block's content will just be escaped and prepped for a JavaScript syntax highlighter. |
+Option                    | Type   | Default                   | Description
+------------------------- | ------ | ------------------------- | -----------
+`style_plain_text`        | bool   | `#!py False`              | By default, InlineHilite will avoid syntax highlighting a code block with no language specified or the `text` language specified.  No classes or style will be applied, but the text will be formatted for a code element.  If this is set true, text blocks will be processed and have classes injected into them even though only the plain text lexer is applied.
+`use_codehilite_settings` | bool   | `#!py True`               | Determine whether CodeHilite's settings should be used, or if InlineHilite should use a different set.
+`guess_lang`              | bool   | `#!py True`               | If CodeHilite is not used, or if ignoring CodeHilite's settings, determine whether InlineHilite should try to guess a code block's language if not specified.
+`css_class`               | string | `#!python 'inlinehilite'` | If ignoring CodeHilite's settings, this is the class name that will be injected into code tags when they are processed.
+`pygments_style`          | string | `#!python 'default'`      | If CodeHilite is not used, or if ignoring CodeHilite's settings, this will be the Pygments' style to use.  When using Pygments, this really only has an effect when used with `noclasses`.
+`noclasses`               | bool   | `#!py False`              | If CodeHilite is not used, or if ignoring CodeHilite's settings, this will cause the styles to directly be written to the tag's style attribute instead of requiring a stylesheet.
+`use_pygments`            | bool   | `#!py True`               | If CodeHilite is not used, or if ignoring CodeHilite's settings, this will control whether Pygments (if available) is used on the code block, or if the block's content will just be escaped and prepped for a JavaScript syntax highlighter.
 
 ## Example
 
@@ -35,4 +35,4 @@ Here is some code: `#!js function pad(v){return ('0'+v).split('').reverse().spli
 
 The mock shebang will be treated like text here: ` #!js var test = 0; `.
 
----8<--- links.md
+--8<-- "links.md"

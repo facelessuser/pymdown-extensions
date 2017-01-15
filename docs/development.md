@@ -11,14 +11,14 @@ There are a number of files for build, test, and continuous integration in the r
 └── tools
 ```
 
-Directory    | Description
----------    | -----------
-doc_theme    | This contains document theme tweaks for the current theme
-docs         | This contains the source files for the documentation.
-pymdownx     | This contains the source code for all the extensions.
-requirements | This contains files with lists of dependencies required dependencies for continuous integration.
-tests        | This contains the various tests that are run in order to ensure code health.
-tools        | This contains various tools that are necessary during development.
+Directory      | Description
+-------------- | -----------
+`doc_theme`    | This contains document theme tweaks for the current theme
+`docs`         | This contains the source files for the documentation.
+`pymdownx`     | This contains the source code for all the extensions.
+`requirements` | This contains files with lists of dependencies required dependencies for continuous integration.
+`tests`        | This contains the various tests that are run in order to ensure code health.
+`tools`        | This contains various tools that are necessary during development.
 
 ## Coding Standards
 
@@ -41,7 +41,7 @@ Documents are in Markdown (with with some additional syntax) and converted to HT
 - [Python Markdown][python-markdown]: the Markdown parser.
 - [MkDocs][mkdocs]: the document site generator.
 - [Material][mkdocs-material]: a material theme for MkDocs.
-- pymdown-extensions: this Python Markdown extension bundle.
+- PyMdown Extensions: this Python Markdown extension bundle.
 
 In order to build and preview the documents, just run the following from the root of the project and you should be able to view the docs at `localhost:8000` in your browser (assuming you have the dependencies installed).
 
@@ -51,7 +51,7 @@ mkdocs serve
 
 ## Spell Checking Documents
 
-During validation we build the docs and run a spell checker on them.  The spell checker script uses [aspell][aspell].  Currently this project uses the latest aspell.  As the latest aspell is not available on Windows, it is not expected that everyone will install and run aspell locally.  In order to perform the spell check, it is expected you are setup to build the documents, and that you have aspell installed in the your system path. To initiate the spell check run the following command from the root of the project:
+During validation we build the docs and run a spell checker on them.  The spell checker script uses [Aspell][aspell].  Currently this project uses the latest Aspell.  As the latest Aspell is not available on Windows, it is not expected that everyone will install and run Aspell locally.  In order to perform the spell check, it is expected you are setup to build the documents, and that you have Aspell installed in the your system path. To initiate the spell check run the following command from the root of the project:
 
 ```
 python spelling.py
@@ -107,21 +107,21 @@ py.test tests/test_targeted.py
 
 ### Running Validation With Tox
 
-[Tox][tox] is a great way to run the validation tests, spelling checks, and linting in virtual environments so as not to mess with your current working environment. Tox will use the specified Python version for the given environment and create a virtual environment and install all the needed requirements (minus aspell).  You could also setup your own virtual environments with the virtualenv module without tox, and manually do the same.
+[Tox][tox] is a great way to run the validation tests, spelling checks, and linting in virtual environments so as not to mess with your current working environment. Tox will use the specified Python version for the given environment and create a virtual environment and install all the needed requirements (minus Aspell).  You could also setup your own virtual environments with the Virtualenv module without Tox, and manually do the same.
 
-First, you need to have tox installed:
+First, you need to have Tox installed:
 
 ```
 pip install tox
 ```
 
-By running tox, it will walk through all the environments and create them (assuming you have all the python versions on your machine) and run the related tests.  See `tox.ini` to learn more.
+By running Tox, it will walk through all the environments and create them (assuming you have all the python versions on your machine) and run the related tests.  See `tox.ini` to learn more.
 
 ```
 tox
 ```
 
-If you don't have all the Python versions needed to test all the environments, those entries will fail.  You can ignore those.  Spelling will also fail if you don't have the correct version of aspell.
+If you don't have all the Python versions needed to test all the environments, those entries will fail.  You can ignore those.  Spelling will also fail if you don't have the correct version of Aspell.
 
 To target a specific environment to test, you use the `-e` option to select the environment of interest.  To select lint:
 
@@ -143,7 +143,7 @@ tox -espelling
 
 ## Code Coverage
 
-When running the validation tests through tox, it is setup to track code coverage via the [coverage][coverage] module.  Coverage is run on each `pyxx-unittests` environment.  If you've made changes to the code, you can clear the old coverage data:
+When running the validation tests through Tox, it is setup to track code coverage via the [coverage][coverage] module.  Coverage is run on each `pyxx-unittests` environment.  If you've made changes to the code, you can clear the old coverage data:
 
 ```
 coverage erase
@@ -157,7 +157,7 @@ You can checkout `tox.ini` to see how this is accomplished.
 
 The Emoji extension has emoji indexes generated from the source of Gemoji and EmojiOne.  Below is the process for auto-generating these indexes.
 
-1. Ensure you have [requests][requests] installed: `pip install requests`.
+1. Ensure you have [Requests][requests] installed: `pip install requests`.
 2. Fork the repository and checkout to your machine.
 3. Navigate to the root of the project.
 4. Call the generator script: `python tools/gen_emoji.py --gemoji` or `python tools/gen_emoji.py --emojione`.  It will prompt you to select a tag to download.  Please pull the latest **official** tag.  Please don't pull experimental tags.  This should update the indexes.
@@ -166,4 +166,4 @@ The Emoji extension has emoji indexes generated from the source of Gemoji and Em
 
 Nothing is fool proof.  If they make a breaking change to the files that the script parses, or the location of the files change, the auto-update tool may need to be updated itself (hopefully this would be a rare occurrence).  If such a change does occur, and you are feeling brave, a pull request would be appreciated, but in time, they will be resolved regardless.
 
----8<--- links.md
+--8<-- "links.md"

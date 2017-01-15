@@ -1,47 +1,47 @@
 ## Overview
 
-ProgressBar is an extension that adds support for progress/status bars.  It can take percentages or fractions, and it can optionally generate classes for percentages at 20% levels.  It also works with Python Markdown's built in `attr_list` extension.  Though progress bars are rendered as block items, it accepts attr_list's inline format.
+ProgressBar is an extension that adds support for progress/status bars.  It can take percentages or fractions, and it can optionally generate classes for percentages at 20% levels.  It also works with Python Markdown's built in `attr_list` extension.  Though progress bars are rendered as block items, it accepts `attr_list`'s inline format.
 
 The basic syntax for progress bars is: `[= <percentage or fraction> "optional single or double quoted title"]`.  The opening `[` can be followed by one or more `=` characters. After the `=` char(s) the percentage is specified as either a fraction or percentage and can optionally be followed by a title surrounded in either double quotes or single quotes.
 
 ## Options
 
-| Option    | Type | Default | Description |
-|-----------|------|---------|-------------|
-|level_class| bool | True | Enables or disables the level class feature.  The level class feature adds level classes in increments of 20. |
-|add_classes| string | '' | This option accepts a string of classes separated by spaces. |
+Option        | Type   | Default     | Description |
+------------- | ------ | ----------- |-------------|
+`level_class` | bool   | `#!py True` | Enables or disables the level class feature.  The level class feature adds level classes in increments of 20.
+`add_classes` | string | `#!py ''`   | This option accepts a string of classes separated by spaces.
 
 ## Examples
 
 ```
-| Test               | Result                                         |
-|--------------------|------------------------------------------------|
-|Animated: 0%        |[=0% "0%"]{: .candystripe-animate}              |
-|Animated: 5%        |[=5% "5%"]{: .candystripe-animate}              |
-|Animated: 25%       |[=25% "25%"]{: .candystripe-animate}            |
-|Animated: 45%       |[=45% "45%"]{: .candystripe-animate}            |
-|Animated: 65%       |[=65% "65%"]{: .candystripe-animate}            |
-|Animated: 85%       |[=85% "85%"]{: .candystripe-animate}            |
-|Animated: 100%      |[=100% "100%"]{: .candystripe-animate}          |
-|Division Percentage |[= 212.2/537 "212.2/537 Testing division"]      |
-|No Label            |[=== 50%]                                       |
-|Inline              |Before[= 50% "I'm a block!"]After               |
-|Animated with Gloss |[= 50% "Glossy"]{: .candystripe-animate .gloss} |
+Test                | Result
+------------------- | ------
+Animated: 0%        |[=0% "0%"]{: .candystripe-animate}
+Animated: 5%        |[=5% "5%"]{: .candystripe-animate}
+Animated: 25%       |[=25% "25%"]{: .candystripe-animate}
+Animated: 45%       |[=45% "45%"]{: .candystripe-animate}
+Animated: 65%       |[=65% "65%"]{: .candystripe-animate}
+Animated: 85%       |[=85% "85%"]{: .candystripe-animate}
+Animated: 100%      |[=100% "100%"]{: .candystripe-animate}
+Division Percentage |[= 212.2/537 "212.2/537 Testing division"]
+No Label            |[=== 50%]
+Inline              |Before[= 50% "I'm a block!"]After
+Animated with Gloss |[= 50% "Glossy"]{: .candystripe-animate .gloss}
 ```
 
-| Test               | Result                                         |
-|--------------------|------------------------------------------------|
-|Animated: 0%        |[=0% "0%"]{: .candystripe-animate}              |
-|Animated: 5%        |[=5% "5%"]{: .candystripe-animate}              |
-|Animated: 25%       |[=25% "25%"]{: .candystripe-animate}            |
-|Animated: 45%       |[=45% "45%"]{: .candystripe-animate}            |
-|Animated: 65%       |[=65% "65%"]{: .candystripe-animate}            |
-|Animated: 85%       |[=85% "85%"]{: .candystripe-animate}            |
-|Animated: 100%      |[=100% "100%"]{: .candystripe-animate}          |
-|Division Percentage |[= 212.2/537 "212.2/537 Testing division"]      |
-|No Label            |[=== 50%]                                       |
-|Inline              |Before[= 50% "I'm a block!"]After               |
-|Animated with Gloss |[= 50% "Glossy"]{: .candystripe-animate .gloss} |
+Test                | Result
+------------------- | ------
+Animated: 0%        |[=0% "0%"]{: .candystripe-animate}
+Animated: 5%        |[=5% "5%"]{: .candystripe-animate}
+Animated: 25%       |[=25% "25%"]{: .candystripe-animate}
+Animated: 45%       |[=45% "45%"]{: .candystripe-animate}
+Animated: 65%       |[=65% "65%"]{: .candystripe-animate}
+Animated: 85%       |[=85% "85%"]{: .candystripe-animate}
+Animated: 100%      |[=100% "100%"]{: .candystripe-animate}
+Division Percentage |[= 212.2/537 "212.2/537 Testing division"]
+No Label            |[=== 50%]
+Inline              |Before[= 50% "I'm a block!"]After
+Animated with Gloss |[= 50% "Glossy"]{: .candystripe-animate .gloss}
 
 ## CSS
 
@@ -55,12 +55,12 @@ The general HTML structure of the progress bar is as follows:
 </div>
 ```
 
-| Classes | Description |
-|---------|-------------|
-| progress | This is attached to the outer `div` container of the progress bar. |
-| progress-bar | This is attached to the inner `div` whose width is adjusted to give the visual appearance of a bar at the desired percentage. |
-| progress-label | This is attached to the `p` element that will contain the desired label. |
-| progress-<integer\>plus | This is an optional class that indicates the percentage of the progress bar by increments of 20. |
+Classes                  | Description
+------------------------ |------------
+`progress`               | This is attached to the outer `div` container of the progress bar.
+`progress-bar`           | This is attached to the inner `div` whose width is adjusted to give the visual `appearance of a bar at the desired percentage.
+`progress-label`         | This is attached to the `p` element that will contain the desired label.
+`progress-<integer>plus` | This is an optional class that indicates the percentage of the progress bar by increments of 20.
 
 ```css
 /* Progress Bars */

@@ -21,8 +21,8 @@ pages:
     - EscapeAll: extensions/escapeall.md
     - Extra: extensions/extra.md
     - ExtraRawHtml: extensions/extrarawhtml.md
-    - Github: extensions/github.md
-    - GithubEmoji: extensions/githubemoji.md
+    - GitHub: extensions/github.md
+    - GitHubEmoji: extensions/githubemoji.md
     - HeaderAnchor: extensions/headeranchor.md
     - InlineHilite: extensions/inlinehilite.md
     - MagicLink: extensions/magiclink.md
@@ -49,7 +49,6 @@ markdown_extensions:
   - markdown.extensions.admonition:
   - markdown.extensions.smarty:
       smart_quotes: false
-  - markdown.extensions.nl2br:
   - markdown.extensions.codehilite:
       guess_lang: false
   - pymdownx.extra:
@@ -61,6 +60,8 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_generator: !!python/name:pymdownx.emoji.to_svg
   - pymdownx.escapeall:
+      hardbreak: True
+      nbsp: True
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.progressbar:
