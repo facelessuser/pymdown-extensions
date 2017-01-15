@@ -2,7 +2,7 @@
 
 > Released Jan 15, 2017
 
-- **NEW**: EscapeAll has the option to perform more like Pandoc in that you can enable escaped newlines to be hardbreaks, and escaped spaces to be nbsp.
+- **NEW**: EscapeAll has the option to perform more like Pandoc in that you can enable escaped newlines to be `hardbreaks`, and escaped spaces to be `nbsp`.
 - **NEW**: Rework poorly thought out snippets format to require quoting file names with single line format.  Add a block format.  Allow commenting out lines temporarily.  And allow a way to escape them by placing a space after them.
 - **FIX**: Fix documentation issues.
 
