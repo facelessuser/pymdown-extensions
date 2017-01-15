@@ -31,7 +31,7 @@ import re
 from . import util
 
 ESCAPE_RE = r'\\(.)'
-ESCAPE_NO_NL = r'\\([^\n])'
+ESCAPE_NO_NL_RE = r'\\([^\n])'
 HARDBREAK_RE = r'\\\n'
 UNESCAPE_PATTERN = re.compile('%s(\d+)%s' % (md_util.STX, md_util.ETX))
 
@@ -39,11 +39,10 @@ UNESCAPE_PATTERN = re.compile('%s(\d+)%s' % (md_util.STX, md_util.ETX))
 class EscapeAllPattern(Pattern):
     """Return an escaped character."""
 
-    def __init__(self, pattern, nbsp, hardbreak):
+    def __init__(self, pattern, nbsp):
         """Initialize."""
 
         self.nbsp = nbsp
-        self.hardbreak = hardbreak
         Pattern.__init__(self, pattern)
 
     def handleMatch(self, m):
@@ -52,8 +51,6 @@ class EscapeAllPattern(Pattern):
         char = m.group(2)
         if self.nbsp and char == ' ':
             escape = md_util.AMP_SUBSTITUTE + 'nbsp;'
-        elif self.hardbreak and char == '\n':
-            escape = None
         else:
             escape = '%s%s%s' % (md_util.STX, util.get_ord(char), md_util.ETX)
         return escape
@@ -98,8 +95,7 @@ class EscapeAllExtension(Extension):
         config = self.getConfigs()
         hardbreak = config['hardbreak']
         md.inlinePatterns['escape'] = EscapeAllPattern(
-            ESCAPE_NO_NL if hardbreak else ESCAPE_RE, config['nbsp'],
-            hardbreak
+            ESCAPE_NO_NL_RE if hardbreak else ESCAPE_RE, config['nbsp']
         )
         md.postprocessors['unescape'] = EscapeAllPostprocessor(md)
         if config['hardbreak']:
