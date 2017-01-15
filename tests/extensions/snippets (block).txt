@@ -1,0 +1,24 @@
+---8<---
+loop_block.txt
+c.txt
+
+d.txt
+---8<---
+
+---8<--- 
+d.txt
+---8<--- 
+
+- Testing indentation
+
+    ---8<---
+    d.txt
+
+    # Nested Inline
+    --8<-- "a.txt"
+    --8<-- "# b.txt"
+    ---8<---
+
+    # Un-nested Inline
+    --8<-- "a.txt"
+    --8<-- "# b.txt"

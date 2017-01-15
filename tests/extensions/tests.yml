@@ -272,6 +272,12 @@ snippets:
     pymdownx.snippets:
       base_path: '{{BASE}}/snippets'
 
+snippets (block):
+  extensions:
+    pymdownx.snippets:
+      base_path: '{{BASE}}/snippets'
+      # block_mode: true
+
 superfences (failures):
   extensions:
     pymdownx.superfences:
