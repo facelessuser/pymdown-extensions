@@ -136,4 +136,9 @@ def test_extensions(compare):
 def run():
     """Run pytest."""
 
-    pytest.main(['tests/test_syntax.py'])
+    pytest.main(
+        [
+            'tests/test_syntax.py',
+            '-p', 'no:pytest_cov'
+        ]
+    )
