@@ -59,7 +59,7 @@ include.md
 
 ## Formatting Snippets
 
-When inserting your snippet, the content from the snippet has whitespace stripped from the beginning and end. The file in which it is inserted must provide the formatted whitespace.
+When inserting your snippet, it is important to remember that some snippets may need whitespace around them.
 
 ```
 This is the file that is including the snippet.

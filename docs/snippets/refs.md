@@ -1,2 +1,4 @@
---8<-- "links.md"
---8<-- "abbr.md"
+--8<--
+links.md
+abbr.md
+--8<--
