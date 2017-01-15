@@ -59,6 +59,7 @@ Pandoc
 PathConverter
 PHP
 PlainHtml
+plugin
 plugins
 plusminus
 PNG
