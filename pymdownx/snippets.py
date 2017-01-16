@@ -101,7 +101,7 @@ class SnippetPreprocessor(Preprocessor):
                         # Empty path line, insert a blank line
                         new_lines.append('')
                         continue
-                if path.startswith('#'):
+                if path.startswith('; '):
                     # path stats with '#', consider it commented out.
                     # We just removing the line.
                     continue

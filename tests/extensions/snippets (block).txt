@@ -14,11 +14,12 @@ d.txt
     ---8<---
     d.txt
 
-    # Nested Inline
+    ; d.txt
+    # Nested inline won't work
     --8<-- "a.txt"
-    --8<-- "# b.txt"
+    --8<-- "; b.txt"
     ---8<---
 
     # Un-nested Inline
     --8<-- "a.txt"
-    --8<-- "# b.txt"
+    --8<-- "; b.txt"
