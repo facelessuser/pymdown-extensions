@@ -1,6 +1,7 @@
 recursive-include pymdownx *.py
 recursive-include docs *
 recursive-include tests *.txt *.html *.yml *.py *.css
+recursive-exclude site *
 include setup.py
 include setup.cfg
 include run_tests.py
