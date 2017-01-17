@@ -4,6 +4,20 @@ If you ever have to stop and try to remember, *Can I escape this char?* or *Will
 
 There are two special escapes among all of these, and it is the escape of the "space" character and the "newline" character. If `nbsp` is enabled, an escaped space will be converted into a non-breaking space: `#!html &nbsp;`. If `hardbreak` is enabled, an escaped newline will be converted to a hard break `#!html <br>`. The advantage of `hardbreak` is that you can visually see the hard break opposed to Markdown's default method of two spaces at the end of a line.
 
+So in short, EscapeAll escapes all inline characters.
+
+> So all ASCII characters?
+
+It escapes everything.
+
+> What about Unicode?
+
+It escapes everything!
+
+> What about...
+
+EVERYTHING! IT ESCAPES EVERYTHING!
+
 ## Options
 
 Option      | Type | Default | Description
