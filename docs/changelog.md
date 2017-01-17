@@ -1,3 +1,9 @@
+## 1.6.1
+
+> Released Jan 16, 2017
+
+- **FIX**: Don't install tools or tests folder when installing from Pypi.
+
 ## 1.6.0
 
 > Released Jan 15, 2017
