@@ -40,7 +40,7 @@ import re
 NESTED_FENCE_START = r'''(?x)
 (?:^(?P<ws>[\> ]*)(?P<fence>~{3,}|`{3,}))[ ]*           # Fence opening
 (\{?                                                    # Language opening
-\.?(?P<lang>[a-zA-Z0-9_+-]*))?[ ]*                      # Language
+\.?(?P<lang>[\w#.+-]*))?[ ]*                            # Language
 (hl_lines=(?P<quot>"|')(?P<hl_lines>.*?)(?P=quot))?[ ]* # highlight lines
 }?[ ]*$                                                 # Language closing
 '''
@@ -51,7 +51,7 @@ WS = r'^([\> ]{0,%d})(.*)'
 RE_FENCE = re.compile(
     r'''(?xsm)
     (?P<fence>^(?:~{3,}|`{3,}))[ ]*                          # Opening
-    (\{?\.?(?P<lang>[a-zA-Z0-9_+-]*))?[ ]*                   # Optional {, and lang
+    (\{?\.?(?P<lang>[\w#.+-]*))?[ ]*                         # Optional {, and lang
     (hl_lines=(?P<quot>"|')(?P<hl_lines>.*?)(?P=quot))?[ ]*  # Optional highlight lines option
     }?[ ]*\n                                                 # Optional closing }
     (?P<code>.*?)(?<=\n)                                     # Code
