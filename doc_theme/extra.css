@@ -1,3 +1,24 @@
+/* KBD */
+.md-typeset .key-command:before {
+  content: '\2318';
+  padding-right: 0.2rem;
+}
+
+.md-typeset .key-windows:before {
+  content: '\229E';
+  padding-right: 0.2rem;
+}
+
+.md-typeset .key-tab:before {
+  content: '\21B9';
+  padding-right: 0.2rem;
+}
+
+.md-typeset .key-caps-lock:before {
+  content: '\21EA';
+  padding-right: 0.2rem;
+}
+
 /* UML */
 .md-typeset .uml-sequence-diagram,
 .md-typeset .uml-flowchart {
