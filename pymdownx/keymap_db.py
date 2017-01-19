@@ -1,5 +1,6 @@
-"""English US keymap."""
 # -*- coding: utf-8 -*-
+"""English US keymap."""
+from __future__ import unicode_literals
 
 keymap = {
     # Digits
