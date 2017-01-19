@@ -2,23 +2,20 @@
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import Pattern
-from markdown import util as md_util
 from . import util
 from . import keymap_db as keymap
 import re
-import traceback
 
 RE_KBD = r'''(?x)
 \+{2}(
-    (?:(?:[\w\-]+|%(placeholder)s)\+)*?
-    (?:[\w\-]+|%(placeholder)s)
+    (?:(?:[\w\-]+|"(?:\\.|[^"])+"|\'(?:\\.|[^\'])+\')\+)*?
+    (?:[\w\-]+|"(?:\\.|[^"])+"|\'(?:\\.|[^\'])+\')
 )\+{2}
-''' % {'placeholder': md_util.INLINE_PLACEHOLDER % r'[0-9]+'}
-RE_NORMALIZE = re.compile(r'((?<=[a-z\d])[A-Z])')
+'''
 KBD = '<kbd class="%(class)s-key %(key)s">%(name)s</kbd>'
 KBD_SEP = '<span class="%(class)s-sep">%(sep)s</span>'
 KBD_WRAP = '<kbd class="%(class)s">%(keys)s</kbd>'
-CODE_RE = re.compile(r'''<code(?:\s+[\w\-:]+(?:\s*=\s*(?:"[^"]*"|'[^']*'))?)*\s*(?:\/?)>''')
+ESCAPE_RE = re.compile(r'''(?<!\\)(?:\\\\)*\\(.)''')
 
 
 def _escape(txt):
@@ -63,25 +60,8 @@ class KbdPattern(Pattern):
     def process_key(self, key):
         """Process key."""
 
-        if key.startswith(md_util.STX):
-            index = key[1:-1].split(':')[1]
-            try:
-                node = self.markdown.treeprocessors['inline'].stashed_nodes[index]
-                if isinstance(node, md_util.etree.Element):
-                    # Default inline code object
-                    if node.tag == 'code':
-                        value = (None, node.text)
-                    else:
-                        value = None
-                else:
-                    # InlineHilite
-                    index = int(node[1:-1].split(":")[1])
-                    content = self.markdown.htmlStash.rawHtmlBlocks[index]
-                    if content[0].startswith('<code'):
-                        value = (None, CODE_RE.sub('', content[0]))
-            except Exception as e:
-                traceback.print_exc()
-                return None
+        if key.startswith(('"', "'")):
+            value = (None, ESCAPE_RE.sub(r'\1', key[1:-1]))
         else:
             norm_key = self.normalize(key)
             canonical_key = keymap.aliases.get(norm_key, norm_key)
@@ -136,7 +116,7 @@ class KbdExtension(Extension):
         md.inlinePatterns.add(
             "kbd",
             KbdPattern(RE_KBD, self.getConfigs(), md),
-            ">backtick"
+            "<escape"
         )
 
 
