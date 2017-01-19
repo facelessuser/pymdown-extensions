@@ -143,4 +143,9 @@ class TestUrlParse(unittest.TestCase):
 def run():
     """Run pytest."""
 
-    pytest.main(['tests/test_targeted.py'])
+    pytest.main(
+        [
+            'tests/test_targeted.py',
+            '-p', 'no:pytest_cov'
+        ]
+    )

@@ -1,3 +1,17 @@
+## 1.6.1
+
+> Released Jan 16, 2017
+
+- **FIX**: Don't install tools or tests folder when installing from Pypi.
+
+## 1.6.0
+
+> Released Jan 15, 2017
+
+- **NEW**: EscapeAll has the option to perform more like Pandoc in that you can enable escaped newlines to be `hardbreaks`, and escaped spaces to be `nbsp`.
+- **NEW**: Rework poorly thought out snippets format to require quoting file names with single line format.  Add a block format.  Allow commenting out lines temporarily.  And allow a way to escape them by placing a space after them.
+- **FIX**: Fix documentation issues.
+
 ## 1.5.0
 
 > Released Jan 13, 2017

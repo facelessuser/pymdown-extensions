@@ -46,14 +46,14 @@ escaped notation
 --8<--<space>
 ```
 
-If you have a file you want to temporarily ignore, you can comment out the path by appending a `#` to the path.  This works for both single line and block format:
+If you have a file you want to temporarily ignore, you can comment out the path by appending a `; ` to the path (notice the semicolon is followed by a space).  This works for both single line and block format:
 
 ```
---8<-- "# skip.md" 
+--8<-- "; skip.md" 
 
 --8<-- 
 include.md
-# skip.md
+; skip.md
 --8<-- 
 ```
 

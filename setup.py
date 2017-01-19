@@ -55,7 +55,7 @@ setup(
     author='Isaac Muse',
     author_email='Isaac.Muse [at] gmail.com',
     url='https://github.com/facelessuser/pymdown-extensions',
-    packages=find_packages(),
+    packages=find_packages(exclude=['tools', 'tests']),
     install_requires=[
         'Markdown>=2.6.0,<3'
     ],
