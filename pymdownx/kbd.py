@@ -2,119 +2,33 @@
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import Pattern
+from markdown import util as md_util
 from . import util
+from . import keymap_db as keymap
 import re
+import traceback
 
-RE_KBD = r'\+{2}((?:[A-Za-z\d_]+\+)*?[A-Za-z\d_]+)\+{2}'
+RE_KBD = r'''(?x)
+\+{2}(
+    (?:(?:[\w\-]+|%(placeholder)s)\+)*?
+    (?:[\w\-]+|%(placeholder)s)
+)\+{2}
+''' % {'placeholder': md_util.INLINE_PLACEHOLDER % r'[0-9]+'}
 RE_NORMALIZE = re.compile(r'((?<=[a-z\d])[A-Z])')
-KBD = '<kbd class="%(class)s key-%(key)s">%(name)s</kbd>'
-WRAPPED_KBD = '<kbd class="%(class)s">' + KBD + '</kbd>'
+KBD = '<kbd class="%(class)s-key %(key)s">%(name)s</kbd>'
+KBD_SEP = '<span class="%(class)s-sep">%(sep)s</span>'
+KBD_WRAP = '<kbd class="%(class)s">%(keys)s</kbd>'
+CODE_RE = re.compile(r'''<code(?:\s+[\w\-:]+(?:\s*=\s*(?:"[^"]*"|'[^']*'))?)*\s*(?:\/?)>''')
 
-KEY_MAP = {
-    "backspace": "BACKSPACE",
-    "tab": "TAB",
-    "enter": "ENTER",
-    "shift": "SHIFT",
-    "ctrl": "CTRL",
-    "alt": "ALT",
-    "pause": "PAUSE",
-    "break": "BREAK",
-    "caps-lock": "CAPS LOCK",
-    "escape": "ESC",
-    "page-up": "PG UP",
-    "page-down": "PG DN",
-    "end": "END",
-    "home": "HOME",
-    "left-arrow": "\u2190",
-    "up_arrow": "\u2191",
-    "right-arrow": "\u2192",
-    "down-arrow": "\u2193",
-    "insert": "INS",
-    "delete": "DEL",
-    "0": "0",
-    "1": "1",
-    "2": "2",
-    "3": "3",
-    "4": "4",
-    "5": "5",
-    "6": "6",
-    "7": "7",
-    "8": "8",
-    "9": "9",
-    "a": "a",
-    "b": "b",
-    "c": "c",
-    "d": "d",
-    "e": "e",
-    "f": "f",
-    "g": "g",
-    "h": "h",
-    "i": "i",
-    "j": "j",
-    "k": "k",
-    "l": "l",
-    "m": "m",
-    "n": "n",
-    "o": "o",
-    "p": "p",
-    "q": "q",
-    "r": "r",
-    "s": "s",
-    "t": "t",
-    "u": "u",
-    "v": "v",
-    "w": "w",
-    "x": "x",
-    "y": "y",
-    "z": "z",
-    "windows": "WIN",
-    "command": "CMD",
-    "function": "FN",
-    "num0": "NUM 0",
-    "num1": "NUM 1",
-    "num2": "NUM 2",
-    "num3": "NUM 3",
-    "num4": "NUM 4",
-    "num5": "NUM 5",
-    "num6": "NUM 6",
-    "num7": "NUM 7",
-    "num8": "NUM 8",
-    "num9": "NUM 9",
-    "multiply": "*",
-    "add": "+",
-    "subtract": "-",
-    "decimal": ".",
-    "divide": "/",
-    "f1": "F1",
-    "f2": "F2",
-    "f3": "F3",
-    "f4": "F4",
-    "f5": "F5",
-    "f6": "F6",
-    "f7": "F7",
-    "f8": "F8",
-    "f9": "F9",
-    "f10": "F10",
-    "f11": "F11",
-    "f12": "F12",
-    "num-lock": "NUM LOCK",
-    "scroll-lock": "SCROLL LOCK",
-    "semicolon": ":;",
-    "equal-sign": "+=",
-    "comma": "<,",
-    "period": ">.",
-    "forward-slash": "?/",
-    "grave-accent": "`~",
-    "open-bracket": "{[",
-    "back-slash": "\\",
-    "close-braket": "}]",
-    "single-quote": "\"'"
-}
 
-KEY_ALIAS = {
-    "win": "windows",
-    "cmd": "command"
-}
+def _escape(txt):
+    """Basic html escaping."""
+
+    txt = txt.replace('&', '&amp;')
+    txt = txt.replace('<', '&lt;')
+    txt = txt.replace('>', '&gt;')
+    txt = txt.replace('"', '&quot;')
+    return txt
 
 
 class KbdPattern(Pattern):
@@ -123,19 +37,57 @@ class KbdPattern(Pattern):
     def __init__(self, pattern, config, md):
         """Initialize."""
 
+        sep = config['separator']
         self.markdown = md
         self.wrap_kbd = config['wrap_kbd']
-        self.separator = config['separator']
-        self.classes = config['classes']
+        self.classes = config['class']
+        self.separator = (KBD_SEP % {'class': self.classes, 'sep': sep}) if sep else ''
         Pattern.__init__(self, pattern)
+
+    def normalize(self, key):
+        """Normalize the value."""
+
+        norm_key = []
+        last = ''
+        for c in key:
+            if c.isupper():
+                if not last or last == '-':
+                    norm_key.append(c.lower())
+                else:
+                    norm_key.extend(['-', c.lower()])
+            else:
+                norm_key.append(c)
+            last = c
+        return ''.join(norm_key)
 
     def process_key(self, key):
         """Process key."""
 
-        norm_key = RE_NORMALIZE.sub(r'-\1', key).replace('_', '-').lower()
-        canonical_key = KEY_ALIAS.get(norm_key, norm_key)
-        name = KEY_MAP.get(canonical_key, None)
-        return (canonical_key, name) if name else None
+        if key.startswith(md_util.STX):
+            index = key[1:-1].split(':')[1]
+            try:
+                node = self.markdown.treeprocessors['inline'].stashed_nodes[index]
+                if isinstance(node, md_util.etree.Element):
+                    # Default inline code object
+                    if node.tag == 'code':
+                        value = (None, node.text)
+                    else:
+                        value = None
+                else:
+                    # InlineHilite
+                    index = int(node[1:-1].split(":")[1])
+                    content = self.markdown.htmlStash.rawHtmlBlocks[index]
+                    if content[0].startswith('<code'):
+                        value = (None, CODE_RE.sub('', content[0]))
+            except Exception as e:
+                traceback.print_exc()
+                return None
+        else:
+            norm_key = self.normalize(key)
+            canonical_key = keymap.aliases.get(norm_key, norm_key)
+            name = keymap.keymap.get(canonical_key, None)
+            value = (canonical_key, _escape(name)) if name else None
+        return value
 
     def handleMatch(self, m):
         """Hanlde kbd pattern matches."""
@@ -148,14 +100,19 @@ class KbdPattern(Pattern):
         html = []
         for key_class, key_name in keys:
             html.append(
-                (WRAPPED_KBD if self.wrap_kbd else KBD) % {
+                KBD % {
                     'class': self.classes,
-                    'key': key_class,
+                    'key': ('key-' + key_class if key_class else '' ),
                     'name': key_name
                 }
             )
 
-        return self.markdown.htmlStash.store(self.separator.join(html), safe=True)
+        if self.wrap_kbd:
+            kbd = KBD_WRAP % {'class': self.classes, 'keys': self.separator.join(html)}
+        else:
+            kbd = self.separator.join(html)
+
+        return self.markdown.htmlStash.store(kbd, safe=True)
 
 
 class KbdExtension(Extension):
@@ -167,7 +124,7 @@ class KbdExtension(Extension):
         self.config = {
             'separator': ['+', "Provide a separator - Default: \"+\""],
             'wrap_kbd': [False, "Wrap kbds in another kbd according to HTML5 spec - Default: False"],
-            'classes': ['kbd', "Provide classes for the kbd elements - Default: kbd"]
+            'class': ['kbd', "Provide class(es) for the kbd elements - Default: kbd"]
         }
         super(KbdExtension, self).__init__(*args, **kwargs)
 
@@ -179,7 +136,7 @@ class KbdExtension(Extension):
         md.inlinePatterns.add(
             "kbd",
             KbdPattern(RE_KBD, self.getConfigs(), md),
-            "<not_strong"
+            ">backtick"
         )
 
 
