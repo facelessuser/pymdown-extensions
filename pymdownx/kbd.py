@@ -6,14 +6,15 @@ from . import util
 from . import keymap_db as keymap
 import re
 
+
 RE_KBD = r'''(?x)
 \+{2}(
     (?:(?:[\w\-]+|"(?:\\.|[^"])+"|\'(?:\\.|[^\'])+\')\+)*?
     (?:[\w\-]+|"(?:\\.|[^"])+"|\'(?:\\.|[^\'])+\')
 )\+{2}
 '''
-KBD = '<kbd class="%(class)s-key %(key)s">%(name)s</kbd>'
-KBD_SEP = '<span class="%(class)s-sep">%(sep)s</span>'
+KBD_INPUT = '<kbd class="%(class)sinput %(key)s">%(name)s</kbd>'
+KBD_SEP = '<span class="%(class)ssep">%(sep)s</span>'
 KBD_WRAP = '<kbd class="%(class)s">%(keys)s</kbd>'
 ESCAPE_RE = re.compile(r'''(?<!\\)(?:\\\\)*\\(.)''')
 
@@ -38,7 +39,13 @@ class KbdPattern(Pattern):
         self.markdown = md
         self.wrap_kbd = config['wrap_kbd']
         self.classes = config['class']
-        self.separator = (KBD_SEP % {'class': self.classes, 'sep': sep}) if sep else ''
+        self.html_parser = util.HTMLParser()
+        if sep and not self.wrap_kbd:
+            self.separator =  KBD_SEP % {'class': self.classes + ' ', 'sep': sep}
+        elif sep:
+            self.separator =  KBD_SEP % {'class': '', 'sep': sep}
+        else:
+            self.separator = ''
         Pattern.__init__(self, pattern)
 
     def normalize(self, key):
@@ -61,7 +68,7 @@ class KbdPattern(Pattern):
         """Process key."""
 
         if key.startswith(('"', "'")):
-            value = (None, ESCAPE_RE.sub(r'\1', key[1:-1]))
+            value = (None, _escape(self.html_parser.unescape(ESCAPE_RE.sub(r'\1', key[1:-1]))))
         else:
             norm_key = self.normalize(key)
             canonical_key = keymap.aliases.get(norm_key, norm_key)
@@ -80,8 +87,8 @@ class KbdPattern(Pattern):
         html = []
         for key_class, key_name in keys:
             html.append(
-                KBD % {
-                    'class': self.classes,
+                KBD_INPUT % {
+                    'class': self.classes + ' ' if not self.wrap_kbd else '',
                     'key': ('key-' + key_class if key_class else '' ),
                     'name': key_name
                 }
