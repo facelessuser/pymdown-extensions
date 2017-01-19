@@ -117,7 +117,7 @@ class SnippetPreprocessor(Preprocessor):
                     try:
                         with codecs.open(snippet, 'r', encoding=self.encoding) as f:
                             new_lines.extend(
-                                [space + l2 for l2 in self.parse_snippets([l.rstrip('\n') for l in f], snippet)]
+                                [space + l2 for l2 in self.parse_snippets([l.rstrip('\r\n') for l in f], snippet)]
                             )
                     except Exception:  # pragma: no cover
                         pass
