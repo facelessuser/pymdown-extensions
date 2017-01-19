@@ -52,9 +52,9 @@ except ImportError:  # pragma: no cover
 
 BACKTICK_CODE_RE = r'''(?x)
 (?<!\\)(?P<tic>`+)
-((?:\:{3,}|\#!)(?P<lang>[a-zA-Z0-9_+-]*)\s+)? # Optional language
-(?P<code>.+?)                                 # Code
-(?<!`)(?P=tic)(?!`)                           # Closing
+((?:\:{3,}|\#!)(?P<lang>[\w#.+-]*)\s+)? # Optional language
+(?P<code>.+?)                           # Code
+(?<!`)(?P=tic)(?!`)                     # Closing
 '''
 
 
