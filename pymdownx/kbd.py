@@ -6,16 +6,26 @@ from . import util
 from . import keymap_db as keymap
 import re
 
-
 RE_KBD = r'''(?x)
-\+{2}(
-    (?:(?:[\w\-]+|"(?:\\.|[^"])+"|\'(?:\\.|[^\'])+\')\+)*?
-    (?:[\w\-]+|"(?:\\.|[^"])+"|\'(?:\\.|[^\'])+\')
-)\+{2}
+\+{2}
+    # Menu
+    (?::
+        (
+            (?:(?:"(?:\\.|[^"])+"|\'(?:\\.|[^\'])+\')\+)*?
+            (?:"(?:\\.|[^"])+"|\'(?:\\.|[^\'])+\')
+        ) |
+    # Key
+        (
+            (?:(?:[\w\-]+|"(?:\\.|[^"])+"|\'(?:\\.|[^\'])+\')\+)*?
+            (?:[\w\-]+|"(?:\\.|[^"])+"|\'(?:\\.|[^\'])+\')
+        )
+    )
+\+{2}
 '''
-KBD_INPUT = '<kbd class="%(class)sinput %(key)s">%(name)s</kbd>'
-KBD_SEP = '<span class="%(class)ssep">%(sep)s</span>'
-KBD_WRAP = '<kbd class="%(class)s">%(keys)s</kbd>'
+KBD_OUTPUT = '<samp class="%(class)s%(state)s">%(name)s</samp>'
+KBD_INPUT = '<kbd class="%(class)s%(state)s %(key)s">%(name)s</kbd>'
+SEP = '<span class="%(class)s%(state)s-sep">%(sep)s</span>'
+KBD_WRAP = '<kbd class="%(class)s %(state)s">%(keys)s</kbd>'
 ESCAPE_RE = re.compile(r'''(?<!\\)(?:\\\\)*\\(.)''')
 
 
@@ -35,17 +45,37 @@ class KbdPattern(Pattern):
     def __init__(self, pattern, config, md):
         """Initialize."""
 
-        sep = config['separator']
+        ksep = config['keyboard_separator']
+        msep = config['menu_separator']
         self.markdown = md
-        self.wrap_kbd = config['wrap_kbd']
+        self.wrap_kbd = config['strict']
         self.classes = config['class']
         self.html_parser = util.HTMLParser()
-        if sep and not self.wrap_kbd:
-            self.separator =  KBD_SEP % {'class': self.classes + ' ', 'sep': sep}
-        elif sep:
-            self.separator =  KBD_SEP % {'class': '', 'sep': sep}
+
+        # Keyboard separator
+        if ksep and not self.wrap_kbd:
+            self.ksep =  SEP % {'class': self.classes + ' ', 'state': 'keyboard', 'sep': ksep}
+        elif ksep:
+            self.ksep =  SEP % {'class': '', 'state': 'keyboard', 'sep': ksep}
         else:
-            self.separator = ''
+            self.ksep = ''
+
+        # Menu separator
+        if msep and not self.wrap_kbd:
+            self.msep =  SEP % {'class': self.classes + ' ', 'state': 'menu', 'sep': msep}
+        elif msep:
+            self.msep =  SEP % {'class': '', 'state': 'menu', 'sep': msep}
+        else:
+            self.msep = ''
+
+        # Menu format
+        if self.wrap_kbd:
+            self.menu = KBD_OUTPUT
+        else:
+            self.menu = KBD_INPUT
+
+        # Keyboard format
+        self.keyboard = KBD_INPUT
         Pattern.__init__(self, pattern)
 
     def normalize(self, key):
@@ -64,6 +94,11 @@ class KbdPattern(Pattern):
             last = c
         return ''.join(norm_key)
 
+    def process_menu(self, key):
+        """Process menu."""
+
+        return (None, _escape(self.html_parser.unescape(ESCAPE_RE.sub(r'\1', key[1:-1]))))
+
     def process_key(self, key):
         """Process key."""
 
@@ -79,25 +114,33 @@ class KbdPattern(Pattern):
     def handleMatch(self, m):
         """Hanlde kbd pattern matches."""
 
-        keys = [self.process_key(key) for key in m.group(2).split('+')]
+        if m.group(3):
+            is_key = True
+            content = [self.process_key(key) for key in m.group(3).split('+')]
+        else:
+            is_key = False
+            content = [self.process_menu(menu) for menu in m.group(2).split('+')]
 
-        if None in keys:
+        if None in content:
             return
 
         html = []
-        for key_class, key_name in keys:
+        for item_class, item_name in content:
             html.append(
-                KBD_INPUT % {
-                    'class': self.classes + ' ' if not self.wrap_kbd else '',
-                    'key': ('key-' + key_class if key_class else '' ),
-                    'name': key_name
+                (self.keyboard if is_key else self.menu) % {
+                    'class': (self.classes + ' ' if not self.wrap_kbd else ''),
+                    'state': ('keyboard' if is_key else 'menu'),
+                    'key': ('key-' + item_class if item_class else '' ),
+                    'name': item_name
                 }
             )
 
+        separator = self.ksep if is_key else self.msep
+
         if self.wrap_kbd:
-            kbd = KBD_WRAP % {'class': self.classes, 'keys': self.separator.join(html)}
+            kbd = KBD_WRAP % {'class': self.classes, 'keys': separator.join(html)}
         else:
-            kbd = self.separator.join(html)
+            kbd = separator.join(html)
 
         return self.markdown.htmlStash.store(kbd, safe=True)
 
@@ -109,8 +152,9 @@ class KbdExtension(Extension):
         """Initialize."""
 
         self.config = {
-            'separator': ['+', "Provide a separator - Default: \"+\""],
-            'wrap_kbd': [False, "Wrap kbds in another kbd according to HTML5 spec - Default: False"],
+            'keyboard_separator': ['+', "Provide a keyboard separator - Default: \"+\""],
+            'menu_separator': ['\u2192', "Provide a menu separator - Default: \"\u2192\""],
+            'strict': [False, "Format keys and menus according to HTML5 spec - Default: False"],
             'class': ['kbd', "Provide class(es) for the kbd elements - Default: kbd"]
         }
         super(KbdExtension, self).__init__(*args, **kwargs)

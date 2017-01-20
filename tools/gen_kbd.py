@@ -12,7 +12,17 @@ html {
   line-height: 1.6;
   font-size: 1.2rem;
 }
-.kbd.input {
+.kbd.menu {
+  font-family: "Roboto Mono","Courier New",Courier,monospace;
+  padding: 0 .29412em;
+  border-radius: .1rem;
+  font-weight: 400;
+  background-color: #ececec;
+  color: #000;
+  font-size: 85%;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.1), 0 1px 5px 0 rgba(0,0,0,.1), 0 3px 1px -2px rgba(0,0,0,.1);
+}
+.kbd.keyboard {
   font-family: "Roboto Mono","Courier New",Courier,monospace;
   padding: 0 .29412em;
   border-radius: .3rem;
@@ -22,14 +32,14 @@ html {
   font-size: 85%;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.1), 0 1px 5px 0 rgba(0,0,0,.1), 0 3px 1px -2px rgba(0,0,0,.1);
 }
-.kbd.input:before {
+.kbd.keyboard:before {
   color: rgba(255, 255, 255, .7);
   font-size: 85%;
   bottom: 2;
   position: relative;
   bottom: 0.1rem;
 }
-.kbd.sep {
+.kbd.keyboard-sep, .kbd.menu-sep {
     color: #888;
     padding: 0 .2rem;
 }
@@ -61,19 +71,27 @@ combo = [
   '++ctrl+alt+"Special"++'
 ]
 
+menus = [
+  '++:"File"+"Options"+"Toggle Feature"++',
+  '++:"File"++'
+]
+
 
 def main():
     with open('tests/extensions/kbd.txt', 'w') as f:
         f.write(STYLE)
         f.write('# Keys\n')
         for key in sorted(kbd.keymap.keymap.keys()):
-            f.write('++%s++\n' % key)
-        f.write('# Aliases\n')
+            f.write('++%s++<br>\n' % key)
+        f.write('\n# Aliases\n')
         for key in sorted(kbd.keymap.aliases.keys()):
-            f.write('++%s++\n' % key)
-        f.write('# Combos\n')
+            f.write('++%s++<br>\n' % key)
+        f.write('\n# Combos\n')
         for key in combo:
-          f.write(key + '\n')
+          f.write(key + '<br>\n')
+        f.write('\n# Menus\n')
+        for menu in menus:
+          f.write(menu + '<br>\n')
 
 
 if __name__ == "__main__":
