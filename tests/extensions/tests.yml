@@ -4,6 +4,11 @@ arithmatex:
   extensions:
     pymdownx.arithmatex:
 
+arithmatex (script):
+  extensions:
+    pymdownx.arithmatex:
+      insert_as_script: true
+
 b64:
   extensions:
     pymdownx.b64:
