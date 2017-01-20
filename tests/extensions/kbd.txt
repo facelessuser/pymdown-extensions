@@ -5,7 +5,7 @@ html {
   line-height: 1.6;
   font-size: 1.2rem;
 }
-.kbd.menu {
+kbd.kbd.menu {
   font-family: "Roboto Mono","Courier New",Courier,monospace;
   padding: 0 .29412em;
   border-radius: .1rem;
@@ -15,7 +15,7 @@ html {
   font-size: 85%;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.1), 0 1px 5px 0 rgba(0,0,0,.1), 0 3px 1px -2px rgba(0,0,0,.1);
 }
-.kbd.keyboard {
+kbd.kbd.keyboard {
   font-family: "Roboto Mono","Courier New",Courier,monospace;
   padding: 0 .29412em;
   border-radius: .3rem;
@@ -25,33 +25,30 @@ html {
   font-size: 85%;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.1), 0 1px 5px 0 rgba(0,0,0,.1), 0 3px 1px -2px rgba(0,0,0,.1);
 }
-.kbd.keyboard:before {
+kbd.kbd.keyboard:before {
   color: rgba(255, 255, 255, .7);
   font-size: 85%;
   bottom: 2;
   position: relative;
   bottom: 0.1rem;
 }
-.kbd.keyboard-sep, .kbd.menu-sep {
+.kbd.sep {
     color: #888;
     padding: 0 .2rem;
 }
 .key-command:before {
   content: '\2318';
   padding-right: 0.2rem;
-}
-
-.kbd.key-windows:before {
+}</p>
+<p>.kbd.key-windows:before {
   content: '\229E';
   padding-right: 0.2rem;
-}
-
-.kbd.key-tab:before {
+}</p>
+<p>.kbd.key-tab:before {
   content: '\21B9';
   padding-right: 0.2rem;
-}
-
-.kbd.key-caps-lock:before {
+}</p>
+<p>.kbd.key-caps-lock:before {
   content: '\21EA';
   padding-right: 0.2rem;
 }

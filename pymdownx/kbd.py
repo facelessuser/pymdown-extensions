@@ -22,10 +22,10 @@ RE_KBD = r'''(?x)
     )
 \+{2}
 '''
-KBD_OUTPUT = '<samp class="%(class)s%(state)s">%(name)s</samp>'
-KBD_INPUT = '<kbd class="%(class)s%(state)s %(key)s">%(name)s</kbd>'
-SEP = '<span class="%(class)s%(state)s-sep">%(sep)s</span>'
-KBD_WRAP = '<kbd class="%(class)s %(state)s">%(keys)s</kbd>'
+KBD_OUTPUT = '<samp%(class)s>%(name)s</samp>'
+KBD_INPUT = '<kbd%(class)s>%(name)s</kbd>'
+SEP = '<span class="%(class)s%(type)ssep">%(sep)s</span>'
+KBD_WRAP = '<kbd class="%(class)s%(type)s">%(keys)s</kbd>'
 ESCAPE_RE = re.compile(r'''(?<!\\)(?:\\\\)*\\(.)''')
 
 
@@ -48,28 +48,28 @@ class KbdPattern(Pattern):
         ksep = config['keyboard_separator']
         msep = config['menu_separator']
         self.markdown = md
-        self.wrap_kbd = config['strict']
+        self.strict = config['strict']
         self.classes = config['class']
         self.html_parser = util.HTMLParser()
 
         # Keyboard separator
-        if ksep and not self.wrap_kbd:
-            self.ksep =  SEP % {'class': self.classes + ' ', 'state': 'keyboard', 'sep': ksep}
+        if ksep and not self.strict:
+            self.ksep =  SEP % {'class': self.classes + ' ', 'type': 'keyboard ', 'sep': ksep}
         elif ksep:
-            self.ksep =  SEP % {'class': '', 'state': 'keyboard', 'sep': ksep}
+            self.ksep =  SEP % {'class': '', 'type': '', 'sep': ksep}
         else:
             self.ksep = ''
 
         # Menu separator
-        if msep and not self.wrap_kbd:
-            self.msep =  SEP % {'class': self.classes + ' ', 'state': 'menu', 'sep': msep}
+        if msep and not self.strict:
+            self.msep =  SEP % {'class': self.classes + ' ', 'type': 'menu ', 'sep': msep}
         elif msep:
-            self.msep =  SEP % {'class': '', 'state': 'menu', 'sep': msep}
+            self.msep =  SEP % {'class': '', 'type': '', 'sep': msep}
         else:
             self.msep = ''
 
         # Menu format
-        if self.wrap_kbd:
+        if self.strict:
             self.menu = KBD_OUTPUT
         else:
             self.menu = KBD_INPUT
@@ -125,20 +125,31 @@ class KbdPattern(Pattern):
             return
 
         html = []
+        base_classes = []
+        if not self.strict:
+            if self.classes:
+                base_classes.append(self.classes)
+            base_classes.append('keyboard' if is_key else 'menu')
+
         for item_class, item_name in content:
+            classes = base_classes[:]
+            if item_class:
+                classes.append('key-' + item_class)
             html.append(
                 (self.keyboard if is_key else self.menu) % {
-                    'class': (self.classes + ' ' if not self.wrap_kbd else ''),
-                    'state': ('keyboard' if is_key else 'menu'),
-                    'key': ('key-' + item_class if item_class else '' ),
+                    'class': (' class="%s"' % ' '.join(classes)) if classes else '',
                     'name': item_name
                 }
             )
 
         separator = self.ksep if is_key else self.msep
 
-        if self.wrap_kbd:
-            kbd = KBD_WRAP % {'class': self.classes, 'keys': separator.join(html)}
+        if self.strict:
+            kbd = KBD_WRAP % {
+                'class': self.classes + ' ' if self.classes else '',
+                'type': 'keyboard' if is_key else 'menu',
+                'keys': separator.join(html)
+            }
         else:
             kbd = separator.join(html)
 
