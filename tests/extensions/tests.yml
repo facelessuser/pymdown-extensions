@@ -215,6 +215,10 @@ inlinehilite_plaintext:
       style_plain_text: false
       guess_lang: false
 
+kbd:
+  extensions:
+    pymdownx.kbd:
+
 magiclink:
   extensions:
     pymdownx.magiclink:
