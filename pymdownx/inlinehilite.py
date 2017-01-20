@@ -40,6 +40,7 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import Pattern
 from markdown.extensions import codehilite
+from markdown import util
 # import traceback
 try:
     from pygments import highlight
@@ -50,11 +51,16 @@ try:
 except ImportError:  # pragma: no cover
     pygments = False
 
+ESCAPED_BSLASH = '%s%s%s' % (util.STX, ord('\\'), util.ETX)
+DOUBLE_BSLASH = '\\\\'
 BACKTICK_CODE_RE = r'''(?x)
+(?:
+(?<!\\)(?P<escapes>(?:\\{2})+)(?=`+) |  # Process code escapes before code
 (?<!\\)(?P<tic>`+)
 ((?:\:{3,}|\#!)(?P<lang>[\w#.+-]*)\s+)? # Optional language
 (?P<code>.+?)                           # Code
 (?<!`)(?P=tic)(?!`)                     # Closing
+)
 '''
 
 
@@ -151,10 +157,13 @@ class InlineHilitePattern(Pattern):
     def handleMatch(self, m):
         """Handle the pattern match."""
 
-        lang = m.group('lang') if m.group('lang') else ''
-        src = m.group('code').strip()
-        self.get_settings()
-        return self.codehilite(lang, src)
+        if m.group('escapes'):
+            return m.group('escapes').replace(DOUBLE_BSLASH, ESCAPED_BSLASH)
+        else:
+            lang = m.group('lang') if m.group('lang') else ''
+            src = m.group('code').strip()
+            self.get_settings()
+            return self.codehilite(lang, src)
 
 
 class InlineHiliteExtension(Extension):
