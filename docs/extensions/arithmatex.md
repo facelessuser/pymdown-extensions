@@ -14,7 +14,7 @@ For block forms, the block must start with the appropriate opening for the block
 
 If `insert_as_script` is enabled, the math equations will be wrapped in a special MathJax script tag and embedded into the HTML. MathJax can already find these scripts, so there is no need to configure the `tex2jax` extension when setting up MathJax. The tag will be `#!html <script type="math/tex"></script>` for inline and `#!html <script type="math/tex; mode=display"></script>` for block. This is probably the most reliable HTML form, but if MathJax doesn't load, you don't get fallback text.  When `insert_as_script` is enabled, `tex_inline_wrap` and `tex_block_wrap` are ignored.
 
-On output, if `insert_as_script` is `#!py False`, the extension will escape necessary symbols and normalize all output to be wrapped with `#!tex \(...\)` for inline math and `#!tex \[...\]` for block math. So if in your Markdown you used `#!tex $...$`, it will converted to `#!tex \(...\)` in the HTML.  In the case of `#!tex \begin{}...\end{}`, begins and ends will not be replaced, only wrapped`#!tex \[\begin{}...\end{}\]`. If a different wrapper is desired, see [Options](#options) below to learn how to change the wrapper.
+On output, if `insert_as_script` is `#!py False`, the extension will escape necessary symbols and normalize all output to be wrapped in the more reliable `#!tex \(...\)` for inline math and `#!tex \[...\]` for block math. Then the wrapped content will be inserted into a `span` and embedded into the HTML.  The span provides a container to keep MathJax from gathering multiple equations into one by mistake.  So, with the default settings, if in your Markdown you used `#!tex $...$`, it would be converted to `#!tex \(...\)` in the HTML. Blocks would respectively be normalized from `#!tex $$...$$` to `#!tex \[...\]`.  In the case of `#!tex \begin{}...\end{}`, begins and ends will not be replaced, only wrapped`#!tex \[\begin{}...\end{}\]`. Normalization is provided as MathJax disables detection of `#!tex $...$` by default due to detection issues with money notation.  Since Arithmatex provides additional logic to curb issues with `#!tex $`, we allow it in the Markdown. If a different wrapper is desired, see [Options](#options) below to learn how to change the wrapper.
 
 ## Options
 
@@ -26,8 +26,8 @@ Option             | Type            | Default                              | De
 `tex_block_wrap`   | `#!py [string]` | `#!py ['\\[', '\\]']`                | An array containing the opening and closing portion of the wrap.
 `insert_as_script` | bool            | `#!py False`                         | Instead of using the above wrap options, insert the equations in a `math/tex` script. This form is the most reliable in HTML, but if the MathJax script fails to load, the user won't see any indication of the equations.
 
-!!! warning "Wrapping Format"
-    The wrapping options are **not** run through an HTML escaper, only the equation content is escaped, and only when `insert_as_script` is `#!tex False`. So make sure you escape whatever requires escaping in your wrap options.  The reason we don't escape the wrap strings is so you can inject an HTML tag wrapper if desired, like a `#!html <div></div>` with a pattern like `#!py ['<div class="my-class">\\[', '\\]</div>']`. It is just to allow some flexibility.
+!!! danger "Wrapping Format"
+    Version `1.7.0`: Arithmatex, when `insert_as_script` is `#!py False`, now runs the wrap options through an HTML escaper and then everything is wrapped in a `span`. This is to isolate equations and prevent them from bleeding into each other when MathJax parses the HTML. Though this is a more aggressive change, it is to meant to provide more reliable output.
 
 ## Loading MathJax
 

@@ -13,6 +13,12 @@ I have $3.00 and you have $5.00.
 # Use Dollar sign
 $\$3.00 + \$5.00 = \$8.00$
 
+# Keep equations separate
+
+\(3+3\)
+\\(3+3\)
+\\\(3+3\)
+
 # Equations
 
 $$

@@ -13,6 +13,12 @@ $\$3.00 + \$5.00 = \$8.00$
 # Dollar Double escaped escape
 \\\$3+3$
 
+# Keep equations separate
+
+\(3+3\)
+\\(3+3\)
+\\\(3+3\)
+
 # Equations
 
 $$
