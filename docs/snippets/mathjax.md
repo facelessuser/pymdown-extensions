@@ -1,5 +1,8 @@
 <script type="text/x-mathjax-config">
 MathJax.Hub.Config({
+    config: ["MMLorHTML.js"],
+    jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+    extensions: ["tex2jax.js", "MathMenu.js", "MathZoom.js"],
     tex2jax: {
         inlineMath: [ ["\\(","\\)"] ],
         displayMath: [ ["\\[","\\]"] ]
@@ -10,9 +13,6 @@ MathJax.Hub.Config({
         MultLineWidth: "85%",
         equationNumbers: {
             autoNumber: "AMS",
-        },
-        unicode: {
-            fonts: "STIXGeneral,'Arial Unicode MS'"
         }
     },
     displayAlign: 'left',
@@ -20,4 +20,4 @@ MathJax.Hub.Config({
     messageStyle: 'none'
 });
 </script>
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
