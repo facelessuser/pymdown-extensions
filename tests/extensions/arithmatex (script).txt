@@ -10,6 +10,9 @@ $\$3.00 + \$5.00 = \$8.00$
 # Dollar Sign Escaped Escape
 \\$3+3$
 
+# Dollar Double escaped escape
+\\\$3+3$
+
 # Equations
 
 $$

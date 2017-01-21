@@ -7,6 +7,9 @@ I have $3.00 and you have $5.00.
 # Dollar Sign Escaped Escape
 \\$3+3$
 
+# Dollar Double escaped escape
+\\\$3+3$
+
 # Use Dollar sign
 $\$3.00 + \$5.00 = \$8.00$
 
