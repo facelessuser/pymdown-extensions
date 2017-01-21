@@ -1,9 +1,9 @@
 ## 1.7.0
 
-> Released XXX XX, 2017
+> Released Jan 21, 2017
 
 - **NEW**: Arithmatex now supports `\(...\)`, `\[...\]`, and `\begin{}...\end{}`.
-- **NEW**: Arithmatex has option to embed the math code in MathJax script tags.
+- **NEW**: Arithmatex has an option to embed the math code in MathJax script tags.
 - **FIX**: Better handling of escaped Arithmatex inline tokens.
 - **FIX**: Better handling of escaped InlineHilite tokens.
 - **FIX**: Update InlineHilite and SuperFences so that the language option can accept things like `c#` and `.net` etc.
