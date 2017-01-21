@@ -186,6 +186,7 @@ headeranchor-unicode-encode:
 
 inlinehilite:
   extensions:
+    markdown.extensions.attr_list:
     pymdownx.inlinehilite:
       style_plain_text: true
       guess_lang: false
