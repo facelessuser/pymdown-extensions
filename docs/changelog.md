@@ -6,7 +6,7 @@
 - **NEW**: Arithmatex has option to embed the math code in MathJax script tags.
 - **FIX**: Better handling of escaped Arithmatex inline tokens.
 - **FIX**: Better handling of escaped InlineHilite tokens.
-- **FIX**: Update InlineHilte and SupperFences so that the language option can accept things like `c#` and `.net` etc.
+- **FIX**: Update InlineHilite and SuperFences so that the language option can accept things like `c#` and `.net` etc.
 - **FIX**: Snippets now removes carriage returns from imported files to prevent breakage.
 
 ## 1.6.1

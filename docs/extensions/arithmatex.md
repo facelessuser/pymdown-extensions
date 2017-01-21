@@ -33,7 +33,7 @@ Arithmatex requires you to provide the MathJax library and provide and configure
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
 ```
 
-If you want to load one of the pre-defined configurations that MathJax offers, you can do as shown below.  Notice we are using the [TeX-MML-AM_CHTML](http://docs.mathjax.org/en/latest/config-files.html?highlight=TeX-MML-AM_CHTML#the-tex-mml-am-chtml-configuration-file) configuration file.
+If you want to load one of the pre-defined configurations that MathJax offers, you can do as shown below.  Notice we are using the [`TeX-MML-AM_CHTML`](http://docs.mathjax.org/en/latest/config-files.html?highlight=TeX-MML-AM_CHTML#the-tex-mml-am-chtml-configuration-file) configuration file.
 
 ```html
 <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
