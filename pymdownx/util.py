@@ -13,11 +13,11 @@ import re
 PY3 = sys.version_info >= (3, 0)
 
 if PY3:
-    uchr = chr
+    uchr = chr  # noqa
     from urllib.request import pathname2url, url2pathname  # noqa
     from urllib.parse import urlparse, urlunparse  # noqa
 else:
-    uchr = unichr
+    uchr = unichr  # noqa
     from urllib import pathname2url, url2pathname  # noqa
     from urlparse import urlparse, urlunparse  # noqa
 

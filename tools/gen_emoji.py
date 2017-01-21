@@ -21,7 +21,7 @@ PY3 = sys.version_info >= (3, 0) and sys.version_info[0:2] < (4, 0)
 if PY3:
     get_input = input
 else:
-    get_input = raw_input
+    get_input = raw_input  # noqa
 
 
 def url_join(*args):

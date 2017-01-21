@@ -4,14 +4,14 @@ I have $3.00 and you have $5.00.
 # Dollar Sign Escape
 \$E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j\$
 
+# Use Dollar sign
+$\$3.00 + \$5.00 = \$8.00$
+
 # Dollar Sign Escaped Escape
 \\$3+3$
 
 # Dollar Double escaped escape
 \\\$3+3$
-
-# Use Dollar sign
-$\$3.00 + \$5.00 = \$8.00$
 
 # Keep equations separate
 
@@ -65,14 +65,10 @@ $$
 MathJax.Hub.Config({
     config: ["MMLorHTML.js"],
     jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
-    extensions: ["tex2jax.js", "MathMenu.js", "MathZoom.js"],
-    tex2jax: {
-        inlineMath: [ ["\\(","\\)"] ],
-        displayMath: [ ["\\[","\\]"] ]
-    },
+    extensions: ["MathMenu.js", "MathZoom.js"],
     displayAlign: 'left',
     showProcessingMessages: false,
     messageStyle: 'none'
 });
 </script>
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>

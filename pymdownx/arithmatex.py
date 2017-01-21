@@ -3,17 +3,28 @@ Arithmatex.
 
 pymdownx.arithmatex
 Extension that preserves the following for MathJax use:
+
+$Equation$, \(Equation\)
+
 $$
   Display Equations
 $$
 
+\[
+  Display Equations
+\]
+
+\begin{align}
+  Display Equations
+\end{align}
+
 and $Inline MathJax Equations$
 
-Inline equations are converted to the following form for HTML output:
+Inline equations are converted to the following form for HTML output by default:
 
 \(Inline MathJax Equations\)
 
-While block/display equations are converted to the following form for HTML output:
+While block/display equations are converted to the following form for HTML output by default:
 
 \[
   Display Equations
@@ -41,28 +52,23 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import Pattern
 from markdown.blockprocessors import BlockProcessor
+from markdown import util as md_util
 from . import util
 import re
 
-RE_MATH = r'((?<!\\)(?:\\{2})*)([$])(?!\s)((?:\\.|[^$])+?)(?<!\s)(\3)'
-
-
-def escape(txt):
-    """Escape HTML content."""
-
-    txt = txt.replace('&', '&amp;')
-    txt = txt.replace('<', '&lt;')
-    txt = txt.replace('>', '&gt;')
-    txt = txt.replace('"', '&quot;')
-    return txt
+RE_DOLLAR_INLINE = r'(?:(?<!\\)((?:\\{2})+)(?=\$)|(?<!\\)(\$)(?!\s)((?:\\.|[^\$])+?)(?<!\s)(?:\$))'
+RE_BRACKET_INLINE = r'(?:(?<!\\)((?:\\{2})+?)(?=\\\()|(?<!\\)(\\\()((?:\\[^)]|[^\\])+?)(?:\\\)))'
 
 
 class InlineArithmatexPattern(Pattern):
     """Arithmatex inline pattern handler."""
 
-    def __init__(self, pattern, wrap, md):
+    ESCAPED_BSLASH = '%s%s%s' % (md_util.STX, ord('\\'), md_util.ETX)
+
+    def __init__(self, pattern, wrap, script, md):
         """Initialize."""
 
+        self.script = script
         self.wrap = wrap[0] + '%s' + wrap[1]
         Pattern.__init__(self, pattern)
         self.markdown = md
@@ -70,52 +76,81 @@ class InlineArithmatexPattern(Pattern):
     def handleMatch(self, m):
         """Handle notations and switch them to something that will be more detectable in HTML."""
 
-        # Use the more reliable patterns to avoid '$'
-        # false positives.
+        # Handle escapes
+        escapes = m.group(2)
+        if not escapes:
+            escapes = m.group(5)
+        if escapes:
+            return escapes.replace('\\\\', self.ESCAPED_BSLASH)
+
+        # Handle Tex
         math = m.group(4)
-        return m.group(2) + self.markdown.htmlStash.store(
-            self.wrap % escape(math),
-            safe=True
-        )
+        if not math:
+            math = m.group(7)
+        if self.script:
+            el = md_util.etree.Element('script', {'type': 'math/tex'})
+            el.text = md_util.AtomicString(math)
+        else:
+            el = md_util.etree.Element('span')
+            el.text = md_util.AtomicString(self.wrap % math)
+        return el
 
 
 class BlockArithmatexProcessor(BlockProcessor):
     """Mathjax block processor to find $$mathjax$$ content."""
 
-    RE_MATH_BLOCK = re.compile(
-        r'(?s)^(?P<dollar>[$]{2})(?P<math>.*?)(?P=dollar)[ ]*$'
-    )
+    RE_DOLLAR_BLOCK = r'(?P<dollar>[$]{2})(?P<math>.+?)(?P=dollar)'
+    RE_TEX_BLOCK = r'(?P<math2>\\begin\{(?P<env>[a-z]+\*?)\}.+?\\end\{(?P=env)\})'
+    RE_BRACKET_BLOCK = r'\\\[(?P<math3>(?:\\[^\]]|[^\\])+?)\\\]'
 
-    def __init__(self, wrap, md):
+    def __init__(self, config, md):
         """Initialize."""
 
+        self.script = config.get('insert_as_script', False)
+        wrap = config.get('tex_block_wrap', ['\\[', '\\]'])
         self.wrap = wrap[0] + '%s' + wrap[1]
-        BlockProcessor.__init__(self, md.parser)
+
+        allowed_patterns = set(config.get('block_syntax', ['dollar', 'square', 'begin']))
+        pattern = []
+        if 'dollar' in allowed_patterns:
+            pattern.append(self.RE_DOLLAR_BLOCK)
+        if 'square' in allowed_patterns:
+            pattern.append(self.RE_BRACKET_BLOCK)
+        if 'begin' in allowed_patterns:
+            pattern.append(self.RE_TEX_BLOCK)
+
+        self.match = None
+        if pattern:
+            self.pattern = re.compile(r'(?s)^(?:%s)[ ]*$' % '|'.join(pattern))
+        else:
+            self.pattern = None
         self.markdown = md
+
+        BlockProcessor.__init__(self, md.parser)
 
     def test(self, parent, block):
         """Return 'True' for future Python Markdown block compatibility."""
-        return True
+
+        self.match = self.pattern.match(block) if self.pattern is not None else None
+        return self.match is not None
 
     def run(self, parent, blocks):
         """Find and handle block content."""
 
-        handled = False
+        blocks.pop(0)
 
-        m = self.RE_MATH_BLOCK.match(blocks[0])
-
-        if m:
-            handled = True
-            block = blocks.pop(0)
-            # Use the more reliable patterns to avoid '$'
-            # false positives.
-            math = m.group('math')
-            block = self.markdown.htmlStash.store(
-                self.wrap % escape(math),
-                safe=True
-            )
-            blocks.insert(0, block)
-        return handled
+        math = self.match.group('math')
+        if not math:
+            math = self.match.group('math2')
+        if not math:
+            math = self.match.group('math3')
+        if self.script:
+            el = md_util.etree.SubElement(parent, 'script', {'type': 'math/tex; mode=display'})
+            el.text = md_util.AtomicString(math)
+        else:
+            el = md_util.etree.SubElement(parent, 'span')
+            el.text = md_util.AtomicString(self.wrap % math)
+        return True
 
 
 class ArithmatexExtension(Extension):
@@ -132,6 +167,20 @@ class ArithmatexExtension(Extension):
             'tex_block_wrap': [
                 ["\\[", "\\]"],
                 "Wrap blick content with the provided text ['open', 'close'] - Default: ['', '']"
+            ],
+            "block_syntax": [
+                ['dollar', 'square', 'begin'],
+                'Enable block syntax: "dollar" ($$...$$), "square" (\\[...\\]), and '
+                '"begin" (\\begin{env}...\\end{env}). - Default: ["dollar", "square", "begin"]'
+            ],
+            "inline_syntax": [
+                ['dollar', 'round'],
+                'Enable block syntax: "dollar" ($$...$$), "bracket" (\\(...\\)) '
+                ' - Default: ["dollar", "round"]'
+            ],
+            'insert_as_script': [
+                False,
+                "Insert the math Tex notation into a script tag. Overrides wrapping. - Default: False"
             ]
         }
 
@@ -145,18 +194,21 @@ class ArithmatexExtension(Extension):
 
         config = self.getConfigs()
 
-        inline = InlineArithmatexPattern(
-            RE_MATH,
-            config.get('tex_inline_wrap', ''),
-            md
-        )
-        md.inlinePatterns.add("arithmatex-inline", inline, ">backtick")
-
-        block = BlockArithmatexProcessor(
-            config.get('tex_block_wrap', ''),
-            md
-        )
-        md.parser.blockprocessors.add('arithmatex-block', block, "<code")
+        allowed_inline = set(config.get('inline_syntax', ['dollar', 'round']))
+        inline_patterns = []
+        if 'dollar' in allowed_inline:
+            inline_patterns.append(RE_DOLLAR_INLINE)
+        if 'round' in allowed_inline:
+            inline_patterns.append(RE_BRACKET_INLINE)
+        if inline_patterns:
+            inline = InlineArithmatexPattern(
+                '(?:%s)' % '|'.join(inline_patterns),
+                config.get('tex_inline_wrap', ["\\(", "\\)"]),
+                config.get('insert_as_script', False),
+                md
+            )
+            md.inlinePatterns.add("arithmatex-inline", inline, ">backtick")
+        md.parser.blockprocessors.add('arithmatex-block', BlockArithmatexProcessor(config, md), "<code")
 
 
 def makeExtension(*args, **kwargs):

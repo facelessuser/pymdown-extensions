@@ -5,3 +5,13 @@ Another test `:::python import module`.
 Escape mock shebang with a space ` #!python import module`.
 
 Check bad language `#!bad import module`.
+
+`Code`
+
+\`Not code`
+
+\\`Code`
+
+\\\`Not code`
+
+\\\\`Code`

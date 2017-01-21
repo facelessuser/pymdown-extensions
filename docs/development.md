@@ -83,10 +83,22 @@ You could also run them directly with:
 py.test tests/test_syntax.py
 ```
 
-To accept the differences in a test due to a change(s) you made, you can run the following command:
+To run a specific syntax test:
+
+```
+python run_tests.py --test-target syntax --file tests/extensions/arithmatex.txt
+```
+
+To accept the differences in tests due to a change(s) you made, you can run the following command:
 
 ```
 python run_tests.py --update
+```
+
+To update and accept the differences in a single test:
+
+```
+python run_tests.py --update --file tests/extensions/arithmatex.txt
 ```
 
 ### Targeted

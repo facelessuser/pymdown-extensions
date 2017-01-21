@@ -1,3 +1,15 @@
+## 1.7.0
+
+> Released Jan 21, 2017
+
+- **NEW**: Arithmatex now supports `\(...\)`, `\[...\]`, and `\begin{}...\end{}`.
+- **NEW**: Arithmatex has an option to embed the math code in MathJax script tags.
+- **FIX**: Unfortunately the wrap option is now run through an HTML escaper and HTML tags can no longer be fed in this way.  Arithmatex also now wraps "wrapped" content with spans to containerize content and keep one equation from bleeding into the next.
+- **FIX**: Better handling of escaped Arithmatex inline tokens.
+- **FIX**: Better handling of escaped InlineHilite tokens.
+- **FIX**: Update InlineHilite and SuperFences so that the language option can accept things like `c#` and `.net` etc.
+- **FIX**: Snippets now removes carriage returns from imported files to prevent breakage.
+
 ## 1.6.1
 
 > Released Jan 16, 2017
