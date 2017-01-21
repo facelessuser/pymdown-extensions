@@ -4,6 +4,7 @@ import argparse
 from tests import test_syntax
 from tests import test_targeted
 import sys
+import os
 
 
 def main():
@@ -16,8 +17,16 @@ def main():
         '--test-target', '-t', nargs=1, action='store', default="", choices=['syntax', 'targeted'],
         help="Test specific enivronment."
     )
+    parser.add_argument(
+        '--file', '-f', nargs=1, action='store', default="", help="Test or update specific test."
+    )
     args = parser.parse_args()
     sys.argv = sys.argv[0:1]
+
+    if args.file:
+        abs_path = os.path.abspath(args.file[0])
+        if os.path.exists(abs_path):
+            test_syntax.set_target_file(abs_path)
 
     # Format and Viewing
     if args.update:

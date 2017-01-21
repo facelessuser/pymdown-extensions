@@ -12,7 +12,7 @@ from pymdownx.util import PymdownxDeprecationWarning
 
 warnings.simplefilter('ignore', PymdownxDeprecationWarning)
 
-CURRENT_DIR = os.path.dirname(__file__)
+CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
 
 CSS_LINK = '<link rel="stylesheet" type="text/css" href="%s"/>'
 WRAPPER = '''<!DOCTYPE html>
@@ -26,6 +26,15 @@ WRAPPER = '''<!DOCTYPE html>
 </div>
 </body>
 '''
+
+target_file = None
+
+
+def set_target_file(file_name):
+    """Set target test file name."""
+
+    global target_file
+    target_file = file_name
 
 
 def compare_results(cfg, testfile, update=False):
@@ -117,6 +126,9 @@ def gather_test_params():
                                                 '{{RELATIVE}}', os.path.join(CURRENT_DIR)
                                             )
                                 test_cfg[k][k1] = v1
+                        target = os.path.join(directory, testfile)
+                        if target_file is not None and target != target_file:
+                            continue
                         yield test_cfg, os.path.join(directory, testfile)
 
 
