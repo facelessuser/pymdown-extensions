@@ -29,10 +29,6 @@ from markdown import util as md_util
 from . import util
 
 RE_EMOJI = r'(:[+\-\w]+:)'
-EMOJIONE_SVG_SPRITE_TAG = (
-    '<svg class="%(classes)s"><description>%(alt)s</description>'
-    '<use xlink:href="%(sprite)s#emoji-%(unicode)s"></use></svg>'
-)
 SUPPORTED_INDEXES = ('emojione', 'gemoji')
 UNICODE_VARIATION_SELECTOR_16 = 'fe0f'
 EMOJIONE_SVG_CDN = 'https://cdn.jsdelivr.net/emojione/assets/svg/'
@@ -148,22 +144,28 @@ def to_png_sprite(index, shortname, alias, uc, alt, title, options, md):
     add_attriubtes(options, attributes)
 
     el = md_util.etree.Element("span", attributes)
-    el.text = alt
+    el.text = md_util.AtomicString(alt)
 
     return el
 
 
 def to_svg_sprite(index, shortname, alias, uc, alt, title, options, md):
-    """Return svg sprite element."""
+    """
+    Return svg sprite element.
 
-    html = EMOJIONE_SVG_SPRITE_TAG % {
-        "classes": options.get('classes', index),
-        "alt": alt,
-        "sprite": options.get('image_path', './../assets/sprites/emojione.sprites.svg'),
-        "unicode": uc
-    }
+    <svg class="%(classes)s"><description>%(alt)s</description>
+    <use xlink:href="%(sprite)s#emoji-%(unicode)s"></use></svg>
+    """
 
-    return md.htmlStash.store(html, safe=True)
+    xlink_href = '%s#emoji-%s' % (
+        options.get('image_path', './../assets/sprites/emojione.sprites.svg'), uc
+    )
+    svg = md_util.etree.Element("svg", {"class": options.get('classes', index)})
+    desc = md_util.etree.SubElement(svg, 'description')
+    desc.text = md_util.AtomicString(alt)
+    md_util.etree.SubElement(svg, 'use', {'xlink:href': xlink_href})
+
+    return svg
 
 
 def to_awesome(index, shortname, alias, uc, alt, title, options, md):
