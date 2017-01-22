@@ -4,6 +4,12 @@ arithmatex:
   extensions:
     pymdownx.arithmatex:
 
+arithmatex (disable):
+  extensions:
+    pymdownx.arithmatex:
+      block_syntax: []
+      inline_syntax: []
+
 arithmatex (script):
   extensions:
     pymdownx.arithmatex:
