@@ -26,7 +26,9 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import LinkPattern
+from markdown.treeprocessors import Treeprocessor
 from markdown import util
+import re
 
 # Maybe in the future add support for unicoderanges: \u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF
 RE_MAIL = r'''(?x)(?i)
@@ -48,6 +50,105 @@ RE_LINK = r'''(?x)(?i)
     [a-z\d\-_~/#@$*+=]                                                          # allowed end chars
 )
 '''
+
+
+RE_REPO_LINK = re.compile(
+    r'''(?xi)
+    (?:
+        (?P<github>(?P<github_base>https://github.com/(?P<github_user_repo>[^/]+/[^/]+))/
+            (?:issues/(?P<github_issue>\d+)/?|
+               commit/(?P<github_commit>[\da-f]+)/?)) |
+
+        (?P<bitbucket>(?P<bitbucket_base>https://bitbucket.org/(?P<bitbucket_user_repo>[^/]+/[^/]+))/
+            (?:issues/(?P<bitbucket_issue>\d+)(?:/?|/[^/]*/?)|
+               commits/commit/(?P<bitbucket_commit>[\da-f]+)/?)) |
+
+        (?P<gitlab>(?P<gitlab_base>https://gitlab.com/(?P<gitlab_user_repo>[^/]+/[^/]+))/
+            (?:issues/(?P<gitlab_issue>\d+)/? |
+               commit/(?P<gitlab_commit>[\da-f]+)/?))
+    )
+    '''
+)
+
+
+class MagicShortenerTreeprocessor(Treeprocessor):
+    """Treeprocessor that finds repo issue and commit links and shortens them."""
+
+    def shorten(self, link, my_repo, is_commit, user_repo, value, url, hash_size):
+        """Shorten url."""
+
+        if is_commit:
+            # user/repo@`hash`
+            text = '' if my_repo else user_repo + '@'
+            link.text = text
+
+            # Need a root with an element for things to get processed.
+            # Send the `value` through and retreive it from the p element.
+            # Pop it off and add it to the link.
+            el = util.etree.Element('div')
+            p = util.etree.SubElement(el, 'p')
+            p.text = '`%s`' % value[0:hash_size]
+            el = self.markdown.treeprocessors['inline'].run(el)
+            p = list(el)[0]
+            for child in list(p):
+                link.append(child)
+                p.remove(child)
+        else:
+            # user/repo#issue
+            link.text = ('#' + value) if my_repo else (user_repo + '#' + value)
+
+    def run(self, root):
+        """Shorten popular git repository links."""
+
+        base = self.config.get('base_repo_url', '').rstrip('/')
+        hide_protocol = self.config['hide_protocol']
+
+        links = root.iter('a')
+        for link in links:
+            has_child = len(list(link))
+            href = link.attrib.get('href', '')
+            text = link.text
+
+            # We want a normal link.  No subelments, no AtomicString, just a normal string.
+            if has_child or not text or not href or not isinstance(text, util.string_type):
+                continue
+
+            # Make sure the text matches the href.  If needed, add back protocal to be sure.
+            # Not all links will pass through MagicLink, so we try both with and without protocal.
+            if text == href or (hide_protocol and ('https://' + text) == href):
+                m = RE_REPO_LINK.match(href)
+                if m:
+                    # Set provider specific variables
+                    if m.group('github'):
+                        provider = 'github'
+                        hash_size = 7
+                    elif m.group('bitbucket'):
+                        provider = 'bitbucket'
+                        hash_size = 7
+                    elif m.gropu('gitlab'):
+                        provider = 'gitlab'
+                        hash_size = 8
+
+                    # See if these links are from the specified repo.
+                    my_repo = m.group(provider + '_base') == base
+                    if not my_repo and hide_protocol:
+                        my_repo = m.group(provider + '_base') == ('https://' + base)
+
+                    # Gather info about link type
+                    is_commit = m.group(provider + '_commit') is not None
+                    value = m.group(provider + '_commit') if is_commit else m.group(provider + '_issue')
+
+                    # All right, everything set, let's shorten.
+                    self.shorten(
+                        link,
+                        my_repo,
+                        is_commit,
+                        m.group(provider + '_user_repo'),
+                        value,
+                        href,
+                        hash_size
+                    )
+        return root
 
 
 class MagiclinkPattern(LinkPattern):
@@ -95,6 +196,14 @@ class MagiclinkExtension(Extension):
                 False,
                 "If 'True', links are displayed without the initial ftp://, http:// or https://"
                 "- Default: False"
+            ],
+            'repo_url_shortener': [
+                False,
+                "If 'True' repo commit and issue links are shortened - Default: False"
+            ],
+            'base_repo_url': [
+                '',
+                'The base repo url to use - Default: ""'
             ]
         }
         super(MagiclinkExtension, self).__init__(*args, **kwargs)
@@ -102,10 +211,15 @@ class MagiclinkExtension(Extension):
     def extendMarkdown(self, md, md_globals):
         """Add support for turning html links and emails to link tags."""
 
+        config = self.getConfigs()
         link_pattern = MagiclinkPattern(RE_LINK, md)
-        link_pattern.config = self.getConfigs()
+        link_pattern.config = config
         md.inlinePatterns.add("magic-link", link_pattern, "<not_strong")
         md.inlinePatterns.add("magic-mail", MagicMailPattern(RE_MAIL, md), "<not_strong")
+        if config.get('repo_url_shortener', False):
+            shortener = MagicShortenerTreeprocessor(md)
+            shortener.config = self.getConfigs()
+            md.treeprocessors.add("magic-repo-shortener", shortener, "<prettify")
 
 
 def makeExtension(*args, **kwargs):
