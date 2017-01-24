@@ -15,3 +15,5 @@ Check bad language `#!bad import module`.
 \\\`Not code`
 
 \\\\`Code`
+
+Add class `#!python import module`{: .test}

@@ -73,12 +73,12 @@ class InlineCodeHtmlFormatter(HtmlFormatter):
         return self._wrap_code(source)
 
     def _wrap_code(self, source):
-        """Return source wrapped in simple inline <code> block."""
+        """Return source, but do not wrap in inline <code> block."""
 
-        yield 0, '<code class="%s">' % self.cssclass
+        yield 0, ''
         for i, t in source:
             yield i, t.strip()
-        yield 0, '</code>'
+        yield 0, ''
 
 
 class InlineHilitePattern(Pattern):
@@ -133,26 +133,26 @@ class InlineHilitePattern(Pattern):
 
             formatter = InlineCodeHtmlFormatter(
                 style=self.style,
-                cssclass=self.css_class,
                 noclasses=self.noclasses
             )
             code = highlight(src, lexer, formatter)
+            class_str = self.css_class
         else:
             # Just escape and build markup usable by JS highlighting libs
-            txt = src.replace('&', '&amp;')
-            txt = txt.replace('<', '&lt;')
-            txt = txt.replace('>', '&gt;')
-            txt = txt.replace('"', '&quot;')
+            code = src.replace('&', '&amp;')
+            code = code.replace('<', '&lt;')
+            code = code.replace('>', '&gt;')
+            code = code.replace('"', '&quot;')
 
             classes = [self.css_class] if self.css_class and process_text else []
             if lang and process_text:
                 classes.append('language-%s' % lang)
             class_str = ''
             if len(classes):
-                class_str = ' class="%s"' % ' '.join(classes)
-            code = '<code%s>%s</code>' % (class_str, txt)
-        placeholder = self.markdown.htmlStash.store(code, safe=True)
-        return placeholder
+                class_str = ' '.join(classes)
+        el = util.etree.Element('code', {'class': class_str} if class_str else {})
+        el.text = self.markdown.htmlStash.store(code, safe=True)
+        return el
 
     def handleMatch(self, m):
         """Handle the pattern match."""
