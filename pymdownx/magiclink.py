@@ -25,45 +25,46 @@ DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
-from markdown.inlinepatterns import LinkPattern
+from markdown.inlinepatterns import LinkPattern, Pattern
 from markdown.treeprocessors import Treeprocessor
 from markdown import util
 import re
 
 # Maybe in the future add support for unicoderanges: \u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF
-RE_MAIL = r'''(?x)(?i)
+RE_MAIL = r'''(?xi)
 (
     (?<![/-_@\w])(?:[\-+\w]([\w\-+]|\.(?!\.))*) # Local part
     (?<!\.)@(?:[\w\-]+\.)                       # @domain part start
     (?:(?:[\w\-]|(?<!\.)\.(?!\.))*)[a-z]\b      # @domain.end (allow multiple dot names)
-    (?![\d\-_@])                                # Don't allow last char to be followed by these
+    (?![\d\-_@*^~])                             # Don't allow last char to be followed by these
 )
 '''
 
-RE_LINK = r'''(?x)(?i)
+RE_LINK = r'''(?xi)
 (
     \b(?:
         (?:ht|f)tps?://(?:(?:[a-z\d][a-z\d\-_]*(?:\.[a-z\d\-._]+)+)|localhost)| # (http|ftp)://
         (?P<www>w{3}\.)[a-z\d][a-z\d\-_]*(?:\.[a-z\d\-._]+)+                    # www.
     )
     /?[a-z\d\-._?,!'(){}\[\]/+&@%$#=:"|~;]*                                     # url path, fragments, and query stuff
-    [a-z\d\-_~/#@$*+=]                                                          # allowed end chars
+    [a-z\d\-_/#@$+=]                                                          # allowed end chars
 )
 '''
 
+RE_AUTOLINK = r'(?i)<((?:ht|f)tps?://[^>]*)>'
 
 RE_REPO_LINK = re.compile(
     r'''(?xi)
     (?:
-        (?P<github>(?P<github_base>https://github.com/(?P<github_user_repo>[^/]+/[^/]+))/
+        (?P<github>(?P<github_base>https://(?:w{3}\.)?github.com/(?P<github_user_repo>[^/]+/[^/]+))/
             (?:issues/(?P<github_issue>\d+)/?|
                commit/(?P<github_commit>[\da-f]+)/?)) |
 
-        (?P<bitbucket>(?P<bitbucket_base>https://bitbucket.org/(?P<bitbucket_user_repo>[^/]+/[^/]+))/
+        (?P<bitbucket>(?P<bitbucket_base>https://(?:w{3}\.)?bitbucket.org/(?P<bitbucket_user_repo>[^/]+/[^/]+))/
             (?:issues/(?P<bitbucket_issue>\d+)(?:/?|/[^/]*/?)|
                commits/commit/(?P<bitbucket_commit>[\da-f]+)/?)) |
 
-        (?P<gitlab>(?P<gitlab_base>https://gitlab.com/(?P<gitlab_user_repo>[^/]+/[^/]+))/
+        (?P<gitlab>(?P<gitlab_base>https://(?:w{3}\.)?gitlab.com/(?P<gitlab_user_repo>[^/]+/[^/]+))/
             (?:issues/(?P<gitlab_issue>\d+)/? |
                commit/(?P<gitlab_commit>[\da-f]+)/?))
     )
@@ -80,7 +81,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         if is_commit:
             # user/repo@`hash`
             text = '' if my_repo else user_repo + '@'
-            link.text = text
+            link.text = util.AtomicString(text)
 
             # Need a root with an element for things to get processed.
             # Send the `value` through and retreive it from the p element.
@@ -106,16 +107,20 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         links = root.iter('a')
         for link in links:
             has_child = len(list(link))
+            is_magic = link.attrib.get('magiclink')
             href = link.attrib.get('href', '')
             text = link.text
 
-            # We want a normal link.  No subelments, no AtomicString, just a normal string.
-            if has_child or not text or not href or not isinstance(text, util.string_type):
+            if is_magic:
+                del link.attrib['magiclink']
+
+            # We want a normal link.  No subelements embedded in it, just a normal string.
+            if has_child or not text:  # pragma: no cover
                 continue
 
             # Make sure the text matches the href.  If needed, add back protocal to be sure.
             # Not all links will pass through MagicLink, so we try both with and without protocal.
-            if text == href or (hide_protocol and ('https://' + text) == href):
+            if text == href or (is_magic and hide_protocol and ('https://' + text) == href):
                 m = RE_REPO_LINK.match(href)
                 if m:
                     # Set provider specific variables
@@ -125,7 +130,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
                     elif m.group('bitbucket'):
                         provider = 'bitbucket'
                         hash_size = 7
-                    elif m.gropu('gitlab'):
+                    elif m.group('gitlab'):
                         provider = 'gitlab'
                         hash_size = 8
 
@@ -157,17 +162,36 @@ class MagiclinkPattern(LinkPattern):
     def handleMatch(self, m):
         """Handle URL matches."""
 
+        shorten = self.config.get('repo_url_shortener', False)
         el = util.etree.Element("a")
-        el.text = m.group(2)
+        el.text = util.AtomicString(m.group(2))
         if m.group("www"):
             href = "http://%s" % m.group(2)
         else:
             href = m.group(2)
             if self.config['hide_protocol']:
-                el.text = el.text[el.text.find("://") + 3:]
+                el.text = util.AtomicString(el.text[el.text.find("://") + 3:])
 
+        if shorten:
+            el.set('magiclink', '1')
         el.set("href", self.sanitize_url(self.unescape(href.strip())))
+        return el
 
+
+class MagiclinkAutoPattern(Pattern):
+    """Return a link Element given an autolink `<http://example/com>`."""
+
+    def handleMatch(self, m):
+        """Return link optionally without protocal."""
+
+        shorten = self.config.get('repo_url_shortener', False)
+        el = util.etree.Element("a")
+        el.set('href', self.unescape(m.group(2)))
+        el.text = util.AtomicString(m.group(2))
+        if self.config['hide_protocol']:
+            el.text = util.AtomicString(el.text[el.text.find("://") + 3:])
+        if shorten:
+            el.attrib['magiclink'] = '1'
         return el
 
 
@@ -179,7 +203,7 @@ class MagicMailPattern(LinkPattern):
 
         el = util.etree.Element("a")
         href = "mailto:%s" % m.group(2)
-        el.text = m.group(2)
+        el.text = util.AtomicString(m.group(2))
         el.set("href", self.sanitize_url(self.unescape(href.strip())))
 
         return el
@@ -212,13 +236,16 @@ class MagiclinkExtension(Extension):
         """Add support for turning html links and emails to link tags."""
 
         config = self.getConfigs()
+        auto_link_pattern = MagiclinkAutoPattern(RE_AUTOLINK, md)
+        auto_link_pattern.config = config
         link_pattern = MagiclinkPattern(RE_LINK, md)
         link_pattern.config = config
-        md.inlinePatterns.add("magic-link", link_pattern, "<not_strong")
-        md.inlinePatterns.add("magic-mail", MagicMailPattern(RE_MAIL, md), "<not_strong")
+        md.inlinePatterns['autolink'] = auto_link_pattern
+        md.inlinePatterns.add("magic-link", link_pattern, "<entity")
+        md.inlinePatterns.add("magic-mail", MagicMailPattern(RE_MAIL, md), "<entity")
         if config.get('repo_url_shortener', False):
             shortener = MagicShortenerTreeprocessor(md)
-            shortener.config = self.getConfigs()
+            shortener.config = config
             md.treeprocessors.add("magic-repo-shortener", shortener, "<prettify")
 
 
