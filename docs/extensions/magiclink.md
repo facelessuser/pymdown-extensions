@@ -11,8 +11,8 @@ For some extra magic, enable `repo_url_shortener` for shorter concise links for 
 Option                      | Type   | Default      | Description
 --------------------------- | ------ | ------------ | -----------
 `hide_protocol`             | bool   | `#!py False` | If `True`, links are displayed without the initial `ftp://`, `http://` or `https://`.
-`repo_url_shortener`        | bool   | `#!py False` | If `True` Github, Bitbucket, and GitLab commit and issue links are shortened.
-`base_repo_url`             | string | `#!py ''`    | The base repo url for repo links.
+`repo_url_shortener`        | bool   | `#!py False` | If `True` GitHub, Bitbucket, and GitLab commit and issue links are shortened.
+`base_repo_url`             | string | `#!py ''`    | The base repository URL for repository links.
 
 ## Examples
 
@@ -26,8 +26,8 @@ These examples assume the `base_repo_url` of `https://github.com/facelessuser/py
 
 - Process GitHub issue for this project: https://github.com/facelessuser/pymdown-extensions/issues/49.
 - Process GitHub commit for this project: https://github.com/facelessuser/pymdown-extensions/commit/6a09fde5c1cad66c660c3aa7792385c52c49e819.
-- Process GitHub issue for external project: https://github.com/waylan/Python-Markdown/issues/538.
-- Process GitHub commit for external project: https://github.com/waylan/Python-Markdown/commit/594b25d53798c30735da5a9be19c06cc94052a16.
+- Process GitHub issue for external project: https://github.com/fake-user/fake-repository/issues/538.
+- Process GitHub commit for external project: https://github.com/fake-user/fake-repository/commit/594b25d53798c30735da5a9be19c06cc94052a16.
 ```
 
 Links require no special syntax.
@@ -39,7 +39,7 @@ These examples assume the `base_repo_url` of `https://github.com/facelessuser/py
 
 - Process GitHub issue for this project: https://github.com/facelessuser/pymdown-extensions/issues/49.
 - Process GitHub commit for this project: https://github.com/facelessuser/pymdown-extensions/commit/6a09fde5c1cad66c660c3aa7792385c52c49e819.
-- Process GitHub issue for external project: https://github.com/waylan/Python-Markdown/issues/538.
-- Process GitHub commit for external project: https://github.com/waylan/Python-Markdown/commit/594b25d53798c30735da5a9be19c06cc94052a16.
+- Process GitHub issue for external project: https://github.com/fake-user/fake-repository/issues/538.
+- Process GitHub commit for external project: https://github.com/fake-user/fake-repository/commit/594b25d53798c30735da5a9be19c06cc94052a16.
 
 --8<-- "refs.md"
