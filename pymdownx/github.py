@@ -46,9 +46,6 @@ extension_configs = {
     "pymdownx.tilde": {
         "subscript": False
     },
-    "pymdownx.betterem": {
-        "smart_enable": "all"
-    },
     "pymdownx.emoji": {
         "emoji_index": emoji.gemoji,
         "alt": "unicode",
@@ -59,7 +56,8 @@ extension_configs = {
                 "width": "20px"
             }
         }
-    }
+    },
+    "pymdownx.magiclink": {}
 }
 
 legacy_extension_configs = {}
@@ -72,6 +70,14 @@ class GithubExtension(Extension):
         """Initialize."""
 
         self.config = {
+            'repo_url_shortener': [
+                False,
+                "If 'True' repo commit and issue links are shortened - Default: False"
+            ],
+            'base_repo_url': [
+                '',
+                'The base repo url to use - Default: ""'
+            ],
             'no_nl2br': [
                 True,
                 "Don't use nl2br extension.  Latest Github Flavored Markdown"
@@ -84,7 +90,8 @@ class GithubExtension(Extension):
     def extendMarkdown(self, md, md_globals):
         """Register extension instances."""
 
-        no_nl2br = self.getConfigs()["no_nl2br"]
+        config = self.getConfigs()
+        no_nl2br = config["no_nl2br"]
         if not no_nl2br:
             warnings.warn(
                 "The pymdown.github extension does not enable nl2br anymore by default."
@@ -96,6 +103,8 @@ class GithubExtension(Extension):
 
         exts = extensions if no_nl2br else extensions + legacy_extensions
         exts_config = extension_configs.copy()
+        exts_config['pymdownx.magiclink']['repo_url_shortener'] = config['repo_url_shortener']
+        exts_config['pymdownx.magiclink']['base_repo_url'] = config['base_repo_url']
         if not no_nl2br:
             exts_config.update(legacy_extension_configs)
 
