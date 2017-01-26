@@ -10,15 +10,15 @@ The GitHub extension is a convenience extension to load up and configure the min
 
 Extensions that get loaded by default:
 
-Extension | Options | Name   |
-----------|---------|--------|
-[Tables][tables]                | | `markdown.extensions.tables`
-[MagicLink](./magiclink.md)     | | `pymdownx.magiclink`
-[BetterEm](./betterem.md)       | `#!py {"smart_enable": 'all' }` | `pymdownx.betterem`
-[Tilde](./tilde.md)             | `#!py {"subscript": False }` | `pymdownx.tilde`
+Extension                       | Options                                                       | Name
+------------------------------- | ------------------------------------------------------------- | ----------------------------
+[Tables][tables]                |                                                               | `markdown.extensions.tables`
+[MagicLink](./magiclink.md)     |                                                               | `pymdownx.magiclink`
+[BetterEm](./betterem.md)       |                                                               | `pymdownx.betterem`
+[Tilde](./tilde.md)             | `#!py {"subscript": False }`                                  | `pymdownx.tilde`
 [Emoji](./emoji.md)             | see [GitHub Emoji Configuration](#github-emoji-configuration) | `pymdownx.emoji`
-[Tasklist](./tasklist.md)       | | `pymdownx.tasklist`
-[SuperFences](./superfences.md) | | `pymdownx.superfences`
+[Tasklist](./tasklist.md)       |                                                               | `pymdownx.tasklist`
+[SuperFences](./superfences.md) |                                                               | `pymdownx.superfences`
 
 !!! warning "Output Change"
     HeaderAnchor is no longer included starting in version `1.4.0` as it wasn't really part of the GFM syntax, and HeaderAnchor is now deprecated.  HeaderAnchor is an unnecessary extension, and the same end result can be achieved with `markdown.extensions.toc` (with the `permalink` option enabled) and some custom CSS.  This extension was more about the syntax than it was about styling.  If you are not ready to give up the extension, you can manually include the `pymdownx.headeranchor` extension in addition to `pymdownx.github`. But in the future, the HeaderAnchor extension will be removed from PyMdown Extensions.
@@ -50,9 +50,11 @@ extension_configs = {
 
 ## Options
 
-Option     | Type | Default     | Description
----------- | ---- | ----------- | -----------
-`no_nl2br` | bool | `#!py True` | If `False`, this includes the [New-Line-to-Break][nl2br] extension.
+Option               | Type    | Default      | Description
+-------------------- | ------- | ------------ | -----------
+`no_nl2br`           | bool    | `#!py True`  | If `False`, this includes the [New-Line-to-Break][nl2br] extension.
+`repo_url_shortener` | bool    | `#!py False` | If `True` GitHub, Bitbucket, and GitLab commit and issue links are shortened. See [MagicLink](./magiclink.md) for more info.
+`base_repo_url`      | string  | `#!py ''`    | The base repository URL for repository links. See [MagicLink](./magiclink.md) for more info.
 
 !!! warning "Deprecated Option"
     In version `1.3.0`, the setting `no_nl2br` is now `True` by default and the setting is deprecated and will be removed in the future. GitHub's GFM (which we are emulating) no longer converts new lines to `<br>`.  If you prefer having New-Line-to-Break enabled, you can enable the `markdown.extensions.nl2br` extension separately.

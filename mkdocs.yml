@@ -54,6 +54,8 @@ markdown_extensions:
   - pymdownx.extra:
   - pymdownx.inlinehilite:
   - pymdownx.magiclink:
+      repo_url_shortener: true
+      base_repo_url: 'https://github.com/facelessuser/pymdown-extensions'
   - pymdownx.tilde:
   - pymdownx.caret:
   - pymdownx.smartsymbols:
