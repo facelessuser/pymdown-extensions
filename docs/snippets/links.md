@@ -27,7 +27,7 @@
 [pymdown-styles]: https://github.com/facelessuser/pymdown-styles/tree/master/pymdown_styles
 [pytest]: http://doc.pytest.org/en/latest/
 [python-markdown]: https://github.com/waylan/Python-Markdown
-[raphael-js]: http://www.raphaeljs.com/
+[raphael-js]: http://dmitrybaranovskiy.github.io/raphael/
 [requests]: https://pypi.python.org/pypi/requests/
 [sequence-diagram-js]: http://bramp.github.io/js-sequence-diagrams/
 [tables]: https://pythonhosted.org/Markdown/extensions/tables.html
