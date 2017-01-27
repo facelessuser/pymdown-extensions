@@ -27,27 +27,26 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import LinkPattern, Pattern, entities
 from markdown.treeprocessors import Treeprocessor
-from markdown import util
+from markdown import util as md_util
 import re
 
-# Maybe in the future add support for unicoderanges: \u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF
 RE_MAIL = r'''(?xi)
 (
-    (?<![-/\+@\w])(?:[\-+\w]([\w\-+]|\.(?!\.))*)  # Local part
-    (?<!\.)@(?:[\w\-]+\.)                         # @domain part start
-    (?:(?:[\w\-]|(?<!\.)\.(?!\.))*)[a-z]\b        # @domain.end (allow multiple dot names)
-    (?![-@])                                      # Don't allow last char to be followed by these
+    (?<![-/\+@a-z\d_])(?:[-+a-z\d_]([-a-z\d_+]|\.(?!\.))*)  # Local part
+    (?<!\.)@(?:[-a-z\d_]+\.)                                # @domain part start
+    (?:(?:[-a-z\d_]|(?<!\.)\.(?!\.))*)[a-z]\b               # @domain.end (allow multiple dot names)
+    (?![-@])                                                # Don't allow last char to be followed by these
 )
 '''
 
 RE_LINK = r'''(?xi)
 (
     (?:(?<=\b)|(?<=_))(?:
-        (?:ht|f)tps?://(?:(?:[a-z\d][a-z\d\-_]*(?:\.[a-z\d\-._]+)+)|localhost)|  # (http|ftp)://
-        (?P<www>w{3}\.)[a-z\d][a-z\d\-_]*(?:\.[a-z\d\-._]+)+                     # www.
+        (?:ht|f)tps?://(?:(?:[^_\W][-\w]*(?:\.[-\w.]+)+)|localhost)|  # (http|ftp)://
+        (?P<www>w{3}\.)[^_\W][-\w]*(?:\.[-\w.]+)+                     # www.
     )
-    /?[a-z\d\-._?,!'(){}\[\]/+&@%$#=:"|~;]*                                      # url path, fragments, and query stuff
-    [a-z\d\-/#@$+=]                                                              # allowed end chars
+    /?[-\w.?,!'(){}\[\]/+&@%$#=:"|~;]*                                # url path, fragments, and query stuff
+    (?:[^_\W]|[-/#@$+=])                                              # allowed end chars
 )
 '''
 
@@ -81,13 +80,13 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         if is_commit:
             # user/repo@`hash`
             text = '' if my_repo else user_repo + '@'
-            link.text = util.AtomicString(text)
+            link.text = md_util.AtomicString(text)
 
             # Need a root with an element for things to get processed.
             # Send the `value` through and retreive it from the p element.
             # Pop it off and add it to the link.
-            el = util.etree.Element('div')
-            p = util.etree.SubElement(el, 'p')
+            el = md_util.etree.Element('div')
+            p = md_util.etree.SubElement(el, 'p')
             p.text = '`%s`' % value[0:hash_size]
             el = self.markdown.treeprocessors['inline'].run(el)
             p = list(el)[0]
@@ -163,14 +162,14 @@ class MagiclinkPattern(LinkPattern):
         """Handle URL matches."""
 
         shorten = self.config.get('repo_url_shortener', False)
-        el = util.etree.Element("a")
-        el.text = util.AtomicString(m.group(2))
+        el = md_util.etree.Element("a")
+        el.text = md_util.AtomicString(m.group(2))
         if m.group("www"):
             href = "http://%s" % m.group(2)
         else:
             href = m.group(2)
             if self.config['hide_protocol']:
-                el.text = util.AtomicString(el.text[el.text.find("://") + 3:])
+                el.text = md_util.AtomicString(el.text[el.text.find("://") + 3:])
 
         if shorten:
             el.set('magiclink', '1')
@@ -185,11 +184,11 @@ class MagiclinkAutoPattern(Pattern):
         """Return link optionally without protocol."""
 
         shorten = self.config.get('repo_url_shortener', False)
-        el = util.etree.Element("a")
+        el = md_util.etree.Element("a")
         el.set('href', self.unescape(m.group(2)))
-        el.text = util.AtomicString(m.group(2))
+        el.text = md_util.AtomicString(m.group(2))
         if self.config['hide_protocol']:
-            el.text = util.AtomicString(el.text[el.text.find("://") + 3:])
+            el.text = md_util.AtomicString(el.text[el.text.find("://") + 3:])
         if shorten:
             el.attrib['magiclink'] = '1'
         return el
@@ -202,18 +201,18 @@ class MagicMailPattern(LinkPattern):
         """Return entity definition by code, or the code if not defined."""
         entity = entities.codepoint2name.get(code)
         if entity:
-            return "%s%s;" % (util.AMP_SUBSTITUTE, entity)
+            return "%s%s;" % (md_util.AMP_SUBSTITUTE, entity)
         else:
-            return "%s#%d;" % (util.AMP_SUBSTITUTE, code)
+            return "%s#%d;" % (md_util.AMP_SUBSTITUTE, code)
 
     def handleMatch(self, m):
         """Handle email link patterns."""
 
-        el = util.etree.Element("a")
+        el = md_util.etree.Element("a")
         email = self.unescape(m.group(2))
         href = "mailto:%s" % email
-        el.text = util.AtomicString(''.join([self.codepoint2name(ord(c)) for c in email]))
-        el.set("href", ''.join([util.AMP_SUBSTITUTE + '#%d;' % ord(c) for c in href]))
+        el.text = md_util.AtomicString(''.join([self.codepoint2name(ord(c)) for c in email]))
+        el.set("href", ''.join([md_util.AMP_SUBSTITUTE + '#%d;' % ord(c) for c in href]))
         return el
 
 
