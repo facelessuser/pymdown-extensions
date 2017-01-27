@@ -47,7 +47,7 @@ RE_LINK = r'''(?xi)
         (?P<www>w{3}\.)[a-z\d][a-z\d\-_]*(?:\.[a-z\d\-._]+)+                    # www.
     )
     /?[a-z\d\-._?,!'(){}\[\]/+&@%$#=:"|~;]*                                     # url path, fragments, and query stuff
-    [a-z\d\-_/#@$+=]                                                          # allowed end chars
+    [a-z\d\-_/#@$+=]                                                            # allowed end chars
 )
 '''
 
@@ -118,8 +118,8 @@ class MagicShortenerTreeprocessor(Treeprocessor):
             if has_child or not text:  # pragma: no cover
                 continue
 
-            # Make sure the text matches the href.  If needed, add back protocal to be sure.
-            # Not all links will pass through MagicLink, so we try both with and without protocal.
+            # Make sure the text matches the href.  If needed, add back protocol to be sure.
+            # Not all links will pass through MagicLink, so we try both with and without protocol.
             if text == href or (is_magic and hide_protocol and ('https://' + text) == href):
                 m = RE_REPO_LINK.match(href)
                 if m:
@@ -182,7 +182,7 @@ class MagiclinkAutoPattern(Pattern):
     """Return a link Element given an autolink `<http://example/com>`."""
 
     def handleMatch(self, m):
-        """Return link optionally without protocal."""
+        """Return link optionally without protocol."""
 
         shorten = self.config.get('repo_url_shortener', False)
         el = util.etree.Element("a")

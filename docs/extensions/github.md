@@ -1,9 +1,12 @@
 ## Overview
 
-The GitHub extension is a convenience extension to load up and configure the minimum extensions needed to get a GFM feel.  It is not a 1:1 emulation, but some aspects are pretty close.  There is no desire to make it exact, but the feel is nice if you like GFM feel; some things may differ slightly.
+The GitHub extension is a convenience extension to load up and configure the minimum extensions needed to get a GFM feel.  It is not a 1:1 emulation, but some aspects are pretty close.  There is no desire to make it exact, but the feel is nice if you like GFM feel.
 
-!!! Tip "Tip"
+!!! Tip "Code Highlight Tip"
     For code highlighting, you will also need to load the `markdown.extensions.codehilite` extension yourself as well with `guess_lang=False`. You will also need to provide your preferred Pygments style (or configure a JavaScript highlighter).  Though there is no GitHub style included with this extension, you are most likely able to find a suitable theme online by searching. There are GitHub styles found at the [`pymdown-styles`][pymdown-styles] repository; it contains the original Pygments GitHub style (`github`) and the GitHub 2014 style (`github2014`) which GitHub used before they ditched Pygments for their own in-house highlighter.
+
+!!! Tip "Header Slug Tip"
+    The default slugify that Python Markdown uses isn't very much like GitHub's. But, at the time of writing this, the [`uslugify`](../micellaneous_extras.md#uslugify) slugify provided by PyMdown Extensions is pretty close. By passing in the `pymdownx.slugs.uslugify` function via Toc's slugify parameters can alter the slugs to be GitHub like. If GitHub changes their slugs, you can always write your own to be more like theirs.
 
 !!! danger "Reminder"
     Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this extension!
@@ -11,7 +14,7 @@ The GitHub extension is a convenience extension to load up and configure the min
 Extensions that get loaded by default:
 
 Extension                       | Options                                                       | Name
-------------------------------- | ------------------------------------------------------------- | ----------------------------
+------------------------------- | ------------------------------------------------------------- | ----
 [Tables][tables]                |                                                               | `markdown.extensions.tables`
 [MagicLink](./magiclink.md)     |                                                               | `pymdownx.magiclink`
 [BetterEm](./betterem.md)       |                                                               | `pymdownx.betterem`
