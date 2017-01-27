@@ -64,21 +64,22 @@ BACKTICK_CODE_RE = r'''(?x)
 '''
 
 
-class InlineCodeHtmlFormatter(HtmlFormatter):
-    """Format the code blocks."""
+if pygments:
+    class InlineCodeHtmlFormatter(HtmlFormatter):
+        """Format the code blocks."""
 
-    def wrap(self, source, outfile):
-        """Overload wrap."""
+        def wrap(self, source, outfile):
+            """Overload wrap."""
 
-        return self._wrap_code(source)
+            return self._wrap_code(source)
 
-    def _wrap_code(self, source):
-        """Return source, but do not wrap in inline <code> block."""
+        def _wrap_code(self, source):
+            """Return source, but do not wrap in inline <code> block."""
 
-        yield 0, ''
-        for i, t in source:
-            yield i, t.strip()
-        yield 0, ''
+            yield 0, ''
+            for i, t in source:
+                yield i, t.strip()
+            yield 0, ''
 
 
 class InlineHilitePattern(Pattern):
