@@ -24,12 +24,8 @@ DEALINGS IN THE SOFTWARE.
 import sys
 import re
 import unicodedata
+from . import util
 PY3 = sys.version_info >= (3, 0) and sys.version_info < (4, 0)
-
-if PY3:
-    from urllib.parse import quote  # noqa
-else:
-    from urllib import quote  # noqa
 
 RE_TAGS = re.compile(r'''</?[^>]*>''', re.UNICODE)
 RE_WORD = re.compile(r'''[^\w\- ]''', re.UNICODE)
@@ -53,4 +49,4 @@ def uslugify_encoded(text, sep):
     # Then convert spaces to dashes
     tag_id = RE_WORD.sub('', tag_id).replace(' ', sep)
     # Encode anything that needs to be
-    return quote(tag_id.encode('utf-8'))
+    return util.quote(tag_id.encode('utf-8'))
