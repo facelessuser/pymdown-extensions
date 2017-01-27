@@ -2,7 +2,7 @@
 
 > Released Jan XX, 2017
 
-- **NEW**: MagicLink special repository link shortener for GitHub, Gitlab, and Bitbucket.
+- **NEW**: MagicLink special repository link shortener for GitHub, GitLab, and Bitbucket.
 - **FIX**: GitHub asterisk emphasis should never have had smart enabled for it.
 - **FIX**: MagicLink fix for compatibility with `~` and `*`  which are commonly used.
 - **FIX**: InlineHilite now returns a proper `etree` element so that the `attr_list` extension and function properly with it.

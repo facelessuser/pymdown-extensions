@@ -2,16 +2,12 @@
 
 The GitHub extension is a convenience extension to load up and configure the minimum extensions needed to get a GFM feel.  It is not a 1:1 emulation, but some aspects are pretty close.  There is no desire to make it exact, but the feel is nice if you like GFM feel.
 
-!!! Tip "Code Highlight Tip"
-    For code highlighting, you will also need to load the `markdown.extensions.codehilite` extension yourself as well with `guess_lang=False`. You will also need to provide your preferred Pygments style (or configure a JavaScript highlighter).  Though there is no GitHub style included with this extension, you are most likely able to find a suitable theme online by searching. There are GitHub styles found at the [`pymdown-styles`][pymdown-styles] repository; it contains the original Pygments GitHub style (`github`) and the GitHub 2014 style (`github2014`) which GitHub used before they ditched Pygments for their own in-house highlighter.
-
-!!! Tip "Header Slug Tip"
-    The default slugify that Python Markdown uses isn't very much like GitHub's. But, at the time of writing this, the [`uslugify`](../micellaneous_extras.md#uslugify) slugify provided by PyMdown Extensions is pretty close. By passing in the `pymdownx.slugs.uslugify` function via Toc's slugify parameters can alter the slugs to be GitHub like. If GitHub changes their slugs, you can always write your own to be more like theirs.
 
 !!! danger "Reminder"
     Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this extension!
 
-Extensions that get loaded by default:
+
+## Loaded Extensions
 
 Extension                       | Options                                                       | Name
 ------------------------------- | ------------------------------------------------------------- | ----
@@ -22,6 +18,12 @@ Extension                       | Options                                       
 [Emoji](./emoji.md)             | see [GitHub Emoji Configuration](#github-emoji-configuration) | `pymdownx.emoji`
 [Tasklist](./tasklist.md)       |                                                               | `pymdownx.tasklist`
 [SuperFences](./superfences.md) |                                                               | `pymdownx.superfences`
+
+!!! Tip "Code Highlight Tip"
+    For code highlighting, you will also need to load the `markdown.extensions.codehilite` extension yourself as well with `guess_lang=False`. You will also need to provide your preferred Pygments style (or configure a JavaScript highlighter).  Though there is no GitHub style included with this extension, you are most likely able to find a suitable theme online by searching. There are GitHub styles found at the [`pymdown-styles`][pymdown-styles] repository; it contains the original Pygments GitHub style (`github`) and the GitHub 2014 style (`github2014`) which GitHub used before they ditched Pygments for their own in-house highlighter.
+
+!!! Tip "Header Slug Tip"
+    The default slugify that Python Markdown uses isn't very much like GitHub's. But, at the time of writing this, the [`uslugify`](../miscellaneous_extras.md#uslugify) slugify provided by PyMdown Extensions is pretty close. By passing in the `pymdownx.slugs.uslugify` function via Toc's slugify parameters can alter the slugs to be GitHub like. If GitHub changes their slugs, you can always write your own to be more like theirs.
 
 !!! warning "Output Change"
     HeaderAnchor is no longer included starting in version `1.4.0` as it wasn't really part of the GFM syntax, and HeaderAnchor is now deprecated.  HeaderAnchor is an unnecessary extension, and the same end result can be achieved with `markdown.extensions.toc` (with the `permalink` option enabled) and some custom CSS.  This extension was more about the syntax than it was about styling.  If you are not ready to give up the extension, you can manually include the `pymdownx.headeranchor` extension in addition to `pymdownx.github`. But in the future, the HeaderAnchor extension will be removed from PyMdown Extensions.
