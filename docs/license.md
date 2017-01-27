@@ -1,3 +1,5 @@
+## PyMdown Extensions
+
 The MIT License (MIT) (Except where stated below)
 
 Copyright (c) 2014 - 2017 Isaac Muse
@@ -20,9 +22,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
------------------------------
+## SuperFences
+
 `superfences.py` is derived from Python Markdown's fenced_code extension.
 
+```
 Fenced Code Extension for Python Markdown
  =========================================
 This extension adds Fenced Code Blocks to Python-Markdown.
@@ -31,10 +35,13 @@ for documentation.
 Original code Copyright 2007-2008 [Waylan Limberg](http://achinghead.com/).
 All changes Copyright 2008-2014 The Python Markdown Project
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
+```
 
-------------------------------
+## InlineHilite
+
 `inlinehilite.py` is derived from Python Markdown's CodeHilite extension.
 
+```
 CodeHilite Extension for Python-Markdown
  ========================================
 Adds code/syntax highlighting to standard Python-Markdown code blocks.
@@ -43,23 +50,28 @@ for documentation.
 Original code Copyright 2006-2008 [Waylan Limberg](http://achinghead.com/).
 All changes Copyright 2008-2014 The Python Markdown Project
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
+```
 
-------------------------------
+## ExtraRawHtml
+
 `extrarawhtml.py` is a literal copy and paste from Python Markdown's Extra extension.
 It basically splits out the raw html markdown parsing into a separate extension that can
 be used even if it is not desired to use all of 'extra'.
 
+```
 Python-Markdown Extra Extension
  ===============================
 See <https://pythonhosted.org/Markdown/extensions/extra.html>
 for documentation.
 Copyright The Python Markdown Project
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
+```
 
-------------------------------
+## Gemoji Index
 
 `gemoji_db.py` is generated from Gemoji's source code: https://github.com/github/gemoji.
 
+```
 Copyright (c) 2013 GitHub, Inc.
 
 Permission is hereby granted, free of charge, to any person
@@ -82,13 +94,16 @@ HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
+```
 
-------------------------------
+## EmojiOne Index
 
-emoji1_db.py is generated from EmojiOne's source code: https://github.com/Ranks/emojione
+`emoji1_db.py` is generated from EmojiOne's source code: https://github.com/Ranks/emojione
 
+```
 EmojiOne Non-Artwork
 
 Applies to the JavaScript, JSON, PHP, CSS, HTML files, and everything else not covered under the artwork license above.
 License: MIT
 Complete Legal Terms: http://opensource.org/licenses/MIT
+```
