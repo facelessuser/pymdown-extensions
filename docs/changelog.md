@@ -4,7 +4,8 @@
 
 - **NEW**: MagicLink special repository link shortener for GitHub, GitLab, and Bitbucket.
 - **FIX**: GitHub asterisk emphasis should never have had smart enabled for it.
-- **FIX**: MagicLink fix for compatibility with `~` and `*`  which are commonly used.
+- **FIX**: MagicLink fix for compatibility with wrapped symbols like `~`, `*` etc. which are commonly used.
+- **FIX**: MagicLink encodes emails like Python Markdown does for consistency.
 - **FIX**: InlineHilite now returns a proper `etree` element so that the `attr_list` extension and function properly with it.
 
 ## 1.7.0

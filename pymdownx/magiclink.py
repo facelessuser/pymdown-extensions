@@ -25,7 +25,7 @@ DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
-from markdown.inlinepatterns import LinkPattern, Pattern
+from markdown.inlinepatterns import LinkPattern, Pattern, entities
 from markdown.treeprocessors import Treeprocessor
 from markdown import util
 import re
@@ -33,21 +33,21 @@ import re
 # Maybe in the future add support for unicoderanges: \u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF
 RE_MAIL = r'''(?xi)
 (
-    (?<![/-_@\w])(?:[\-+\w]([\w\-+]|\.(?!\.))*) # Local part
-    (?<!\.)@(?:[\w\-]+\.)                       # @domain part start
-    (?:(?:[\w\-]|(?<!\.)\.(?!\.))*)[a-z]\b      # @domain.end (allow multiple dot names)
-    (?![\d\-_@*^~])                             # Don't allow last char to be followed by these
+    (?<![-/\+@\w])(?:[\-+\w]([\w\-+]|\.(?!\.))*)  # Local part
+    (?<!\.)@(?:[\w\-]+\.)                         # @domain part start
+    (?:(?:[\w\-]|(?<!\.)\.(?!\.))*)[a-z]\b        # @domain.end (allow multiple dot names)
+    (?![-@])                                      # Don't allow last char to be followed by these
 )
 '''
 
 RE_LINK = r'''(?xi)
 (
-    \b(?:
-        (?:ht|f)tps?://(?:(?:[a-z\d][a-z\d\-_]*(?:\.[a-z\d\-._]+)+)|localhost)| # (http|ftp)://
-        (?P<www>w{3}\.)[a-z\d][a-z\d\-_]*(?:\.[a-z\d\-._]+)+                    # www.
+    (?:(?<=\b)|(?<=_))(?:
+        (?:ht|f)tps?://(?:(?:[a-z\d][a-z\d\-_]*(?:\.[a-z\d\-._]+)+)|localhost)|  # (http|ftp)://
+        (?P<www>w{3}\.)[a-z\d][a-z\d\-_]*(?:\.[a-z\d\-._]+)+                     # www.
     )
-    /?[a-z\d\-._?,!'(){}\[\]/+&@%$#=:"|~;]*                                     # url path, fragments, and query stuff
-    [a-z\d\-_/#@$+=]                                                            # allowed end chars
+    /?[a-z\d\-._?,!'(){}\[\]/+&@%$#=:"|~;]*                                      # url path, fragments, and query stuff
+    [a-z\d\-/#@$+=]                                                              # allowed end chars
 )
 '''
 
@@ -198,14 +198,22 @@ class MagiclinkAutoPattern(Pattern):
 class MagicMailPattern(LinkPattern):
     """Convert emails to clickable email links."""
 
+    def codepoint2name(self, code):
+        """Return entity definition by code, or the code if not defined."""
+        entity = entities.codepoint2name.get(code)
+        if entity:
+            return "%s%s;" % (util.AMP_SUBSTITUTE, entity)
+        else:
+            return "%s#%d;" % (util.AMP_SUBSTITUTE, code)
+
     def handleMatch(self, m):
         """Handle email link patterns."""
 
         el = util.etree.Element("a")
-        href = "mailto:%s" % m.group(2)
-        el.text = util.AtomicString(m.group(2))
-        el.set("href", self.sanitize_url(self.unescape(href.strip())))
-
+        email = self.unescape(m.group(2))
+        href = "mailto:%s" % email
+        el.text = util.AtomicString(''.join([self.codepoint2name(ord(c)) for c in email]))
+        el.set("href", ''.join([util.AMP_SUBSTITUTE + '#%d;' % ord(c) for c in href]))
         return el
 
 

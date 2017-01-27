@@ -1,0 +1,24 @@
+Magic link mixed with other extensions
+
+~~http://www.google.com~~
+
+**http://www.google.com**
+
+__http://www.google.com__
+
+^^http://www.google.com^^
+
+~~fake.mail@gmail.com~~
+
+**fake.mail@gmail.com**
+
+^^fake.mail@gmail.com^^
+
+==fake.mail@gmail.com==
+
+These aren't guarunteed to work without being enclosed as
+we allow links to trail with = and emails can lead with _.
+
+==<http://www.google.com>==
+
+__<fake.mail@gmail.com>__
