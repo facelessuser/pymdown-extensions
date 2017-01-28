@@ -2,12 +2,12 @@
 
 > Released Jan 27, 2017
 
-- **NEW**: MagicLink special repository link shortener for GitHub, GitLab, and Bitbucket.
-- **FIX**: GitHub asterisk emphasis should never have had smart enabled for it.
+- **NEW**: MagicLink special repository link shortener for GitHub, GitLab, and Bitbucket (https://github.com/facelessuser/pymdown-extensions/issues/49).
+- **FIX**: GitHub asterisk emphasis should never have had smart enabled for it (https://github.com/facelessuser/pymdown-extensions/issues/50).
 - **FIX**: MagicLink fix for compatibility with wrapped symbols like `~`, `*` etc. which are commonly used.
 - **FIX**: MagicLink encodes emails like Python Markdown does for consistency.
-- **FIX**: InlineHilite now returns a proper `etree` element so that the `attr_list` extension and function properly with it.
-- **FIX**: MagicLink doesn't allow Unicode for email and does allow Unicode in a URL.
+- **FIX**: InlineHilite now returns a proper `etree` element so that the `attr_list` extension and function properly with it (https://github.com/facelessuser/pymdown-extensions/issues/48).
+- **FIX**: MagicLink doesn't allow Unicode for email and does allow Unicode in a URL (https://github.com/facelessuser/pymdown-extensions/issues/53).
 
 ## 1.7.0
 
