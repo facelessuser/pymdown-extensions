@@ -6,8 +6,9 @@
 - **FIX**: GitHub asterisk emphasis should never have had smart enabled for it (https://github.com/facelessuser/pymdown-extensions/issues/50).
 - **FIX**: MagicLink fix for compatibility with wrapped symbols like `~`, `*` etc. which are commonly used.
 - **FIX**: MagicLink encodes emails like Python Markdown does for consistency.
-- **FIX**: InlineHilite now returns a proper `etree` element so that the `attr_list` extension and function properly with it (https://github.com/facelessuser/pymdown-extensions/issues/48).
 - **FIX**: MagicLink doesn't allow Unicode for email and does allow Unicode in a URL (https://github.com/facelessuser/pymdown-extensions/issues/53).
+- **FIX**: InlineHilite now returns a proper `etree` element so that the `attr_list` extension and function properly with it (https://github.com/facelessuser/pymdown-extensions/issues/48).
+- **FIX**: InlineHilite will no longer break if Pygments is not installed (https://github.com/facelessuser/pymdown-extensions/commit/478b410a2199d55f3e70b452516511d3810c61a5).
 
 ## 1.7.0
 
