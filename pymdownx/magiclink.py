@@ -25,7 +25,7 @@ DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
-from markdown.inlinepatterns import LinkPattern, Pattern, entities
+from markdown.inlinepatterns import LinkPattern, Pattern
 from markdown.treeprocessors import Treeprocessor
 from markdown import util as md_util
 import re
@@ -197,13 +197,9 @@ class MagiclinkAutoPattern(Pattern):
 class MagicMailPattern(LinkPattern):
     """Convert emails to clickable email links."""
 
-    def codepoint2name(self, code):
+    def email_encode(self, code):
         """Return entity definition by code, or the code if not defined."""
-        entity = entities.codepoint2name.get(code)
-        if entity:
-            return "%s%s;" % (md_util.AMP_SUBSTITUTE, entity)
-        else:
-            return "%s#%d;" % (md_util.AMP_SUBSTITUTE, code)
+        return "%s#%d;" % (md_util.AMP_SUBSTITUTE, code)
 
     def handleMatch(self, m):
         """Handle email link patterns."""
@@ -211,7 +207,7 @@ class MagicMailPattern(LinkPattern):
         el = md_util.etree.Element("a")
         email = self.unescape(m.group(2))
         href = "mailto:%s" % email
-        el.text = md_util.AtomicString(''.join([self.codepoint2name(ord(c)) for c in email]))
+        el.text = md_util.AtomicString(''.join([self.email_encode(ord(c)) for c in email]))
         el.set("href", ''.join([md_util.AMP_SUBSTITUTE + '#%d;' % ord(c) for c in href]))
         return el
 
