@@ -55,7 +55,7 @@ Option                      | Type       | Default              | Description
 
 By default, Emoji provides two indexes: `emojione` and `gemoji`.  Both indexes are generated from the most recent official release tag source. They can be used by passing in one of the two functions below via the `emoji_index` parameter.  Pass the actual function reference, not a string. If you need to create your own, just check out [Custom Emoji Indexes](#custom-emoji-generators).
 
-pymdownx.emoji.emojione
+`pymdownx.emoji.emojione`
 : 
     This is the default function that is used and provides an index using the latest EmojiOne supported emojis (at the time of release).  You can always find out what tag it was built with by doing the following:
 
@@ -65,7 +65,7 @@ pymdownx.emoji.emojione
     'v2.2.7'
     ```
 
-pymdownx.emoji.gemoji
+`pymdownx.emoji.gemoji`
 : 
     This function provides an index of the latest Gemoji supported emoji (at the time of release). You can always find out what tag it was built with by doing the following:
 
@@ -79,7 +79,7 @@ pymdownx.emoji.gemoji
 
 Emoji provides six default emoji generators.  All the generators can be used with the `emojione` index, but only two will work well with the `gemoji` index: `pymdownx.emoji.to_png` and `pymdownx.emoji.to_alt`. You can select a generator to use by passing in one of the functions below via the `emoji_generator` parameter.  Pass the actual function reference, not a string. If you need to create your own, just check out [Custom Emoji Generators](#custom-emoji-generators).
 
-pymdownx.emoji.to_png
+`pymdownx.emoji.to_png`
 : 
     This is a general purpose generator and, by default, provides an EmojiOne CDN and GitHub CDN path(s).  The PNG output form is as follows:
 
@@ -96,7 +96,7 @@ pymdownx.emoji.to_png
     `non_standard_image_path` | string     | CDN for the default index used | This can be either a local path, or a CDN containing the assets. Currently, only Gemoji's non-standard emojis take advantage of this as the GitHub CDN alters the path slightly for its non-Unicode emoji.  By default, an appropriate CDN is provided for Gemoji.
     `attributes`              | dictionary | `#!py {}`                      | A dictionary containing tag attributes as key value string pairs. The dictionary keys are the attribute names and dictionary values are the attribute values.
 
-pymdownx.emoji.to_svg
+`pymdownx.emoji.to_svg`
 : 
     This generator was written to output EmojiOne SVG images. The SVG image outputs as:
 
@@ -112,7 +112,7 @@ pymdownx.emoji.to_svg
     `image_path` | string     | A CDN for EmojiOne images | This can be either a local path or a CDN containing the assets.  By default, an appropriate CDN is provided for EmojiOne.
     `attributes` | dictionary | `#!py {}`                 | A dictionary containing tag attributes as key value string pairs. The dictionary keys are the attribute names and dictionary values are the attribute values.
 
-pymdownx.emoji.to_png_sprite
+`pymdownx.emoji.to_png_sprite`
 : 
     This generator was written to support PNG sprite output for EmojiOne.  It is expected that this will be used in conjunction with the the official EmojiOne CSS.  You can include the CSS from the CDN in your document.  Example CDN for version 2.2.7: `https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/sprites/emojione.sprites.css`. This outputs the emoji as a span in the form below.  The CSS will apply the appropriate mapping in the sprite PNG for the background image of the span.
 
@@ -127,7 +127,7 @@ pymdownx.emoji.to_png_sprite
     `classes`    | string     | Name of the index used | Class(es) used for the span where the classes are inserted as "class" in the following template: `#!py '%(class)s-%(unicode)s'`.
     `attributes` | dictionary | `#!py {}`              | A dictionary containing tag attributes as key value string pairs. The dictionary keys are the attribute names and dictionary values are the attribute values.
 
-pymdownx.emoji.to_svg_sprite
+`pymdownx.emoji.to_svg_sprite`
 : 
     This was written to support EmojiOne SVG sprite output.  The output form was taken directly from an example in the EmojiOne source.  It is expected that the the user will provide a local version of the official SVG sprite and the path to it.  The output is:
 
@@ -142,7 +142,7 @@ pymdownx.emoji.to_svg_sprite
     `classes`    | string | Name of the index used | Class(es) to apply to the `svg` element where the classes are inserted as "class" in the following template: `#!py '%(class)s-%(unicode)s'`.
     `image_path` | string | `#!py ''`              | Path to the SVG sprites.
 
-pymdownx.emoji.to_awesome
+`pymdownx.emoji.to_awesome`
 : 
     This generator is another EmojiOne specific output called [EmojiOne Awesome][emojione-awesome].  According to EmojiOne's documentation, it aims to give a font-awesome like interface for EmojiOne.  There isn't currently a CDN link that could be found, but you can provide the CSS in your project locally by [downloading it](emojione-awesome-css) from their repository.  The output format is:
 
@@ -157,7 +157,7 @@ pymdownx.emoji.to_awesome
     `classes`    | string     | `#!py 'e1a'` | Class(es) to apply to the element where the classes are inserted as "class" in the following template: `#!py '%(class)s-%(shortname)s'`.
     `attributes` | dictionary | `#!py {}`    | A dictionary containing tag attributes as key value string pairs. The dictionary keys are the attribute names and dictionary values are the attribute values.
 
-pymdownx.emoji.to_alt
+`pymdownx.emoji.to_alt`
 : 
     This generator supports both Gemoji and EmojiOne.  The generator outputs the alt value directly to the document.  The output can be Unicode characters, HTML entities, or even just the short name depending on what the global setting of 'alt' is set to.
 
@@ -234,7 +234,7 @@ emoji_index = {
 
 Each different kind of output is controlled by a different emoji generator function, but all generator functions have the same format. The format is shown below in case you need to create your own custom output generator.
 
-def emoji_generator(index, shortname, alias, uc, alt, title, options, md)
+`#!py def emoji_generator(index, shortname, alias, uc, alt, title, options, md)`
 : 
 
     Parameter   | Type       |Description
