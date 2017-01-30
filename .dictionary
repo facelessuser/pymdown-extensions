@@ -9,10 +9,12 @@ bool
 CDN
 CDNs
 Changelog
+cmd
 CodeHilite
 CodeHilite's
 CriticMarkup
 CSS
+Ctrl
 customizable
 docstrings
 Emoji
@@ -20,9 +22,11 @@ emoji
 EmojiOne
 EmojiOne's
 emojis
+Esc
 EscapeAll
 escaper
 ExtraRawHtml
+Fn
 formatter
 Gemoji
 Gemoji's
@@ -42,6 +46,8 @@ JavaScript
 JPEG
 js
 JSON
+KBD
+kbd
 LaTeX
 Limberg
 linter
@@ -55,6 +61,7 @@ namespace
 nd
 nl
 NONINFRINGEMENT
+Num
 OAuth
 Octicons
 online

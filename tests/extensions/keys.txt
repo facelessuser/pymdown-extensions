@@ -1,0 +1,92 @@
+## Keys
+
+++alt++
+
+++arrow-down++
+
+++arrow-left++
+
+++arrow-right++
+
+++arrow-up++
+
+++backslash++
+
+++backspace++
+
+++backtab++
+
+++bar++
+
+++brace-left++
+
+++brace-right++
+
+++bracket-left++
+
+++bracket-right++
+
+++break++
+
+++browser-back++
+
+++browser-favorites++
+
+++browser-forward++
+
+++browser-home++
+
+++browser-refresh++
+
+++browser-search++
+
+++browser-stop++
+
+## Aliases
+++add++
+
+++apps++
+
+++back++
+
+++bksp++
+
+++bktab++
+
+++cancel++
+
+## Combos
+
+++win+shift+s++
+
+++cmd+ctrl+d++
+
+## On the Fly Special Key
+
+++ctrl+alt+"Special"++
+
+## Special Key Added to Key Map
+
+++ctrl+alt+custom++
+
+## Override Original
+
+++option+shift+s++
+
+## Escape Plus
+
+++ctrl+alt+"Special with \+ sign"++
+
+\++ctrl+alt+delete++
+
+\\++ctrl+alt+delete++
+
+\\\++ctrl+alt+delete++
+
+++ctrl+alt+delete\++
+
+++ctrl\+alt+delete++
+
+## Bad Key
+
+++ctrl+alt+bad++

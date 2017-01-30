@@ -16,10 +16,12 @@ if PY3:
     uchr = chr  # noqa
     from urllib.request import pathname2url, url2pathname  # noqa
     from urllib.parse import urlparse, urlunparse, quote  # noqa
+    from html.parser import HTMLParser  # noqa
 else:
     uchr = unichr  # noqa
     from urllib import pathname2url, url2pathname, quote  # noqa
     from urlparse import urlparse, urlunparse  # noqa
+    from HTMLParser import HTMLParser  # noqa
 
 RE_WIN_DRIVE_LETTER = re.compile(r"^[A-Za-z]$")
 RE_WIN_DRIVE_PATH = re.compile(r"^[A-Za-z]:(?:\\.*)?$")
