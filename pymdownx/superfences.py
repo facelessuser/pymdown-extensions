@@ -37,6 +37,15 @@ from markdown.extensions import codehilite
 from markdown import util as md_util
 from . import util
 import re
+try:
+    from pygments import highlight
+    from pygments.lexers import get_lexer_by_name, guess_lexer
+    from pygments.formatters import find_formatter_class
+    HtmlFormatter = find_formatter_class('html')
+    pygments = True
+except ImportError:  # pragma: no cover
+    pygments = False
+
 
 NESTED_FENCE_START = r'''(?x)
 (?:^(?P<ws>[\> ]*)(?P<fence>~{3,}|`{3,}))[ ]*           # Fence opening
@@ -69,61 +78,6 @@ def _escape(txt):
     txt = txt.replace('>', '&gt;')
     txt = txt.replace('"', '&quot;')
     return txt
-
-
-class CodeHiliteExtended(codehilite.CodeHilite):
-    """CodeHiliteExtended."""
-
-    def hilite(self, md):
-        """Override CodeHilite to allow lexer options."""
-
-        self.src = self.src.strip('\n')
-
-        if self.lang is None:
-            self._parseHeader()
-
-        if self.lang is not None:
-            self.lang, lexer_options = util.get_special_lang(md, self.lang)
-        else:
-            lexer_options = {}
-
-        if codehilite.pygments and self.use_pygments:
-            try:
-                lexer = codehilite.get_lexer_by_name(self.lang, **lexer_options)
-            except ValueError:
-                try:
-                    if self.guess_lang:
-                        lexer = codehilite.guess_lexer(self.src)
-                    else:
-                        lexer = codehilite.get_lexer_by_name('text')
-                except ValueError:
-                    lexer = codehilite.get_lexer_by_name('text')
-            formatter = codehilite.get_formatter_by_name(
-                'html',
-                linenos=self.linenums,
-                cssclass=self.css_class,
-                style=self.style,
-                noclasses=self.noclasses,
-                hl_lines=self.hl_lines
-            )
-            return codehilite.highlight(self.src, lexer, formatter)
-        else:
-            # just escape and build markup usable by JS highlighting libs
-            txt = self.src.replace('&', '&amp;')
-            txt = txt.replace('<', '&lt;')
-            txt = txt.replace('>', '&gt;')
-            txt = txt.replace('"', '&quot;')
-            classes = []
-            if self.lang:
-                classes.append('language-%s' % self.lang)
-            if self.linenums:
-                classes.append('linenums')
-            class_str = ''
-            if classes:
-                class_str = ' class="%s"' % ' '.join(classes)
-            return '<pre class="%s"><code%s>%s</code></pre>\n' % (
-                self.css_class, class_str, txt
-            )
 
 
 class CodeStash(object):
@@ -272,7 +226,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
     """
 
     fence_start = re.compile(NESTED_FENCE_START)
-    CODE_WRAP = '<pre><code%s>%s</code></pre>'
+    CODE_WRAP = '<pre%s><code%s>%s</code></pre>'
     CLASS_ATTR = ' class="%s"'
 
     def __init__(self, md):
@@ -286,7 +240,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
     def rebuild_block(self, lines):
         """Deindent the fenced block lines."""
 
-        return '\n'.join([line[self.ws_len:] for line in lines]) + '\n'
+        return '\n'.join([line[self.ws_len:] for line in lines])
 
     def check_codehilite(self):
         """Check for code hilite extension to get its config."""
@@ -454,21 +408,48 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         If config is not empty, then the codehlite extension
         is enabled, so we call into it to highlight the code.
         """
-        if self.codehilite_conf:
-            code = CodeHiliteExtended(
-                source,
-                linenums=self.codehilite_conf['linenums'][0],
-                guess_lang=self.codehilite_conf['guess_lang'][0],
-                css_class=self.codehilite_conf['css_class'][0],
-                style=self.codehilite_conf['pygments_style'][0],
-                lang=language,
-                noclasses=self.codehilite_conf['noclasses'][0],
-                hl_lines=codehilite.parse_hl_lines(self.hl_lines),
-                use_pygments=self.codehilite_conf['use_pygments'][0]
-            ).hilite(self.markdown)
+        if self.lang is not None:
+            self.lang, lexer_options = util.get_special_lang(self.markdown, self.lang)
         else:
+            lexer_options = {}
+
+        if self.codehilite_conf and pygments and self.codehilite_conf['use_pygments'][0]:
+            # Convert with Pygments.
+            try:
+                lexer = get_lexer_by_name(self.lang, **lexer_options)
+            except ValueError:
+                try:
+                    if self.codehilite_conf['guess_lang'][0]:
+                        lexer = guess_lexer(self.src)
+                    else:
+                        lexer = get_lexer_by_name('text')
+                except ValueError:
+                    lexer = get_lexer_by_name('text')
+
+            formatter = HtmlFormatter(
+                linenos=self.codehilite_conf['linenums'][0],
+                cssclass=self.codehilite_conf['css_class'][0],
+                style=self.codehilite_conf['pygments_style'][0],
+                noclasses=self.codehilite_conf['noclasses'][0],
+                hl_lines=codehilite.parse_hl_lines(self.hl_lines)
+            )
+
+            code = highlight(source, lexer, formatter)
+        elif self.codehilite_conf:
+            # Format for a JavaScript Syntax Highlighter by specifying language.
+            classes = []
+            if self.lang:
+                classes.append('language-%s' % self.lang)
+            if self.codehilite_conf['linenums'][0]:
+                classes.append('linenums')
+            class_str = ''
+            if classes:
+                class_str = ' class="%s"' % ' '.join(classes)
+            code = self.CODE_WRAP % (self.codehilite_conf['css_class'][0], class_str, _escape(source))
+        else:
+            # Format as a code block.
             lang = self.CLASS_ATTR % language if language else ''
-            code = self.CODE_WRAP % (lang, _escape(source))
+            code = self.CODE_WRAP % ('', lang, _escape(source))
         return code
 
     def _store(self, source, code, start, end, obj):
