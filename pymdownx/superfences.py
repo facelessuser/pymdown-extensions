@@ -33,8 +33,9 @@ from __future__ import unicode_literals
 from markdown.extensions import Extension
 from markdown.preprocessors import Preprocessor
 from markdown.blockprocessors import CodeBlockProcessor
-from markdown.extensions.codehilite import CodeHilite, CodeHiliteExtension, parse_hl_lines
-from markdown import util
+from markdown.extensions import codehilite
+from markdown import util as md_util
+from . import util
 import re
 
 NESTED_FENCE_START = r'''(?x)
@@ -68,6 +69,61 @@ def _escape(txt):
     txt = txt.replace('>', '&gt;')
     txt = txt.replace('"', '&quot;')
     return txt
+
+
+class CodeHiliteExtended(codehilite.CodeHilite):
+    """CodeHiliteExtended."""
+
+    def hilite(self, md):
+        """Override CodeHilite to allow lexer options."""
+
+        self.src = self.src.strip('\n')
+
+        if self.lang is None:
+            self._parseHeader()
+
+        if self.lang is not None:
+            self.lang, lexer_options = util.get_special_lang(md, self.lang)
+        else:
+            lexer_options = {}
+
+        if codehilite.pygments and self.use_pygments:
+            try:
+                lexer = codehilite.get_lexer_by_name(self.lang, **lexer_options)
+            except ValueError:
+                try:
+                    if self.guess_lang:
+                        lexer = codehilite.guess_lexer(self.src)
+                    else:
+                        lexer = codehilite.get_lexer_by_name('text')
+                except ValueError:
+                    lexer = codehilite.get_lexer_by_name('text')
+            formatter = codehilite.get_formatter_by_name(
+                'html',
+                linenos=self.linenums,
+                cssclass=self.css_class,
+                style=self.style,
+                noclasses=self.noclasses,
+                hl_lines=self.hl_lines
+            )
+            return codehilite.highlight(self.src, lexer, formatter)
+        else:
+            # just escape and build markup usable by JS highlighting libs
+            txt = self.src.replace('&', '&amp;')
+            txt = txt.replace('<', '&lt;')
+            txt = txt.replace('>', '&gt;')
+            txt = txt.replace('"', '&quot;')
+            classes = []
+            if self.lang:
+                classes.append('language-%s' % self.lang)
+            if self.linenums:
+                classes.append('linenums')
+            class_str = ''
+            if classes:
+                class_str = ' class="%s"' % ' '.join(classes)
+            return '<pre class="%s"><code%s>%s</code></pre>\n' % (
+                self.css_class, class_str, txt
+            )
 
 
 class CodeStash(object):
@@ -128,7 +184,8 @@ class SuperFencesCodeExtension(Extension):
             'disable_indented_code_blocks': [False, "Disable indented code blocks - Default: False"],
             'nested': [True, "Use nested fences - Default: True"],
             'uml_flow': [True, "Enable flowcharts - Default: True"],
-            'uml_sequence': [True, "Enable sequence diagrams - Default: True"]
+            'uml_sequence': [True, "Enable sequence diagrams - Default: True"],
+            'extend_pygments_lang': [[], 'Extend pygments language with special language entry - Default: {}']
         }
         super(SuperFencesCodeExtension, self).__init__(*args, **kwargs)
 
@@ -173,6 +230,7 @@ class SuperFencesCodeExtension(Extension):
             )
 
         self.markdown = md
+        util.add_pygments_language_map(md, config['extend_pygments_lang'])
         self.patch_fenced_rule()
         for entry in self.superfences:
             entry["stash"] = CodeStash()
@@ -235,7 +293,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
         if not self.checked_for_codehilite:
             for ext in self.markdown.registeredExtensions:
-                if isinstance(ext, CodeHiliteExtension):
+                if isinstance(ext, codehilite.CodeHiliteExtension):
                     self.codehilite_conf = ext.config
                     break
             self.checked_for_codehilite = True
@@ -397,7 +455,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         is enabled, so we call into it to highlight the code.
         """
         if self.codehilite_conf:
-            code = CodeHilite(
+            code = CodeHiliteExtended(
                 source,
                 linenums=self.codehilite_conf['linenums'][0],
                 guess_lang=self.codehilite_conf['guess_lang'][0],
@@ -405,9 +463,9 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 style=self.codehilite_conf['pygments_style'][0],
                 lang=language,
                 noclasses=self.codehilite_conf['noclasses'][0],
-                hl_lines=parse_hl_lines(self.hl_lines),
+                hl_lines=codehilite.parse_hl_lines(self.hl_lines),
                 use_pygments=self.codehilite_conf['use_pygments'][0]
-            ).hilite()
+            ).hilite(self.markdown)
         else:
             lang = self.CLASS_ATTR % language if language else ''
             code = self.CODE_WRAP % (lang, _escape(source))
@@ -454,9 +512,9 @@ class SuperFencesCodeBlockProcessor(CodeBlockProcessor):
 
     FENCED_BLOCK_RE = re.compile(
         r'^([\> ]*)%s(%s)%s$' % (
-            util.HTML_PLACEHOLDER[0],
-            util.HTML_PLACEHOLDER[1:-1] % r'([0-9]+)',
-            util.HTML_PLACEHOLDER[-1]
+            md_util.HTML_PLACEHOLDER[0],
+            md_util.HTML_PLACEHOLDER[1:-1] % r'([0-9]+)',
+            md_util.HTML_PLACEHOLDER[-1]
         )
     )
 

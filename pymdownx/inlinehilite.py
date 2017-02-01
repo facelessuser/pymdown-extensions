@@ -40,7 +40,8 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import Pattern
 from markdown.extensions import codehilite
-from markdown import util
+from markdown import util as md_util
+from . import util
 # import traceback
 try:
     from pygments import highlight
@@ -51,7 +52,7 @@ try:
 except ImportError:  # pragma: no cover
     pygments = False
 
-ESCAPED_BSLASH = '%s%s%s' % (util.STX, ord('\\'), util.ETX)
+ESCAPED_BSLASH = '%s%s%s' % (md_util.STX, ord('\\'), md_util.ETX)
 DOUBLE_BSLASH = '\\\\'
 BACKTICK_CODE_RE = r'''(?x)
 (?:
@@ -118,11 +119,18 @@ class InlineHilitePattern(Pattern):
         """Syntax highlite the inline code block."""
 
         process_text = self.style_plain_text or lang or self.guess_lang
+
+        if lang:
+            lang, lexer_options = util.get_special_lang(self.markdown, lang)
+        else:
+            lexer_options = {}
+
         if not lang and self.style_plain_text and not self.guess_lang:
             lang = 'text'
+
         if pygments and self.use_pygments and process_text:
             try:
-                lexer = get_lexer_by_name(lang)
+                lexer = get_lexer_by_name(lang, **lexer_options)
             except ValueError:
                 try:
                     if self.guess_lang:
@@ -151,7 +159,7 @@ class InlineHilitePattern(Pattern):
             class_str = ''
             if len(classes):
                 class_str = ' '.join(classes)
-        el = util.etree.Element('code', {'class': class_str} if class_str else {})
+        el = md_util.etree.Element('code', {'class': class_str} if class_str else {})
         el.text = self.markdown.htmlStash.store(code, safe=True)
         return el
 
@@ -213,6 +221,10 @@ class InlineHiliteExtension(Extension):
                 'Use Pygments to Highlight code blocks. '
                 'Disable if using a JavaScript library. '
                 'Default: True'
+            ],
+            'extend_pygments_lang': [
+                [],
+                'Extend pygments language with special language entry - Default: {}'
             ]
         }
         super(InlineHiliteExtension, self).__init__(*args, **kwargs)
@@ -220,8 +232,10 @@ class InlineHiliteExtension(Extension):
     def extendMarkdown(self, md, md_globals):
         """Add support for :::language`code` code hiliting."""
 
+        config = self.getConfigs()
         inline_hilite = InlineHilitePattern(BACKTICK_CODE_RE, md)
-        inline_hilite.config = self.getConfigs()
+        inline_hilite.config = config
+        util.add_pygments_language_map(md, config['extend_pygments_lang'])
         md.inlinePatterns['backtick'] = inline_hilite
 
 

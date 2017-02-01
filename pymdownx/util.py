@@ -9,6 +9,7 @@ from __future__ import unicode_literals
 import sys
 import copy
 import re
+from collections import OrderedDict
 
 PY3 = sys.version_info >= (3, 0)
 
@@ -90,6 +91,28 @@ else:
         """Get the Unicode char."""
 
         return uchr(value)
+
+
+def add_pygments_language_map(md, languages):
+    """Add special language aliases with options."""
+
+    if not hasattr(md, 'pymdownx_hl_lang'):
+        md.pymdownx_hl_lang = {}
+
+    for language in languages:
+        if isinstance(language, (dict, OrderedDict)):
+            name = language.get('name')
+            if name not in md.pymdownx_hl_lang:
+                md.pymdownx_hl_lang[name] = [
+                    language.get('lang'),
+                    language.get('options')
+                ]
+
+
+def get_special_lang(md, lang):
+    """Get special language."""
+
+    return md.pymdownx_hl_lang.get(lang, (lang, {}))
 
 
 def escape_chars(md, echrs):

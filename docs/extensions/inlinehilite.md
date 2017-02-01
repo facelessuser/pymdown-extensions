@@ -9,6 +9,33 @@ When using the colon mock shebang, 3 or more colons can be used.  Mock shebangs 
 
     If you are using a JavaScript highlighter such as `highlight.js` you will most likely need to construct a JavaScript method to target the inline blocks.  You may also find it useful to tag inline blocks with a different class than the block highlighted code so you can also target and style them with CSS differently.  InlineHilite allows you to have a different `css_class` than what is used by `CodeHilite`.
 
+## Pygments Lexer Options
+
+If using Pygments, some lexers have special options.  For instance, the `php` lexer has the option `startinline` which, if enabled, will parse PHP syntax without requiring `#!php <?` at the beginning.  InlineHilite takes the approach of allowing you to create a special Pygments language with options.  So if you wanted to enable `startinline` for `php`, you might create a language name called `php-inline` that maps to `php` with `startinline` enabled.  This is done via the `extend_pygments_lang` option.
+
+`extend_pygments_lang` is an option that takes an array of dictionaries.  Each dictionary contains three keys: `name` which is the new name you are adding, `lang` which is the language the new name maps to, and `options` which is a dictionary of the options you wish to apply.
+
+For example, to create the above mentioned `php-inline` we would feed in the following to `extend_pygments_lang`:
+
+```py
+extended_pygments_lang = [
+    {"name": "php-inline", "lang": "php", "options": {"startinline": True}}
+]
+```
+
+Now we can do this:
+
+````
+`#!php-inline $a = array("foo" => 0, "bar" => 1);`
+````
+
+To get this:
+
+`#!php-inline $a = array("foo" => 0, "bar" => 1);`
+
+!!! Note "Note"
+    When specifying extended languages, they are shared across InlineHilite and SuperFences, so if you specify a language in SuperFences, you don't have to specify it in InlineHilite and vice versa.
+
 ## Options
 
 By default, InlineHilite will use CodeHilite's settings if it is being used, but InlineHilite can be run without CodeHilite, and if desired, it can be run along side it and ignore CodeHilite's settings.
@@ -22,6 +49,7 @@ Option                    | Type   | Default                   | Description
 `pygments_style`          | string | `#!python 'default'`      | If CodeHilite is not used, or if ignoring CodeHilite's settings, this will be the Pygments' style to use.  When using Pygments, this really only has an effect when used with `noclasses`.
 `noclasses`               | bool   | `#!py False`              | If CodeHilite is not used, or if ignoring CodeHilite's settings, this will cause the styles to directly be written to the tag's style attribute instead of requiring a stylesheet.
 `use_pygments`            | bool   | `#!py True`               | If CodeHilite is not used, or if ignoring CodeHilite's settings, this will control whether Pygments (if available) is used on the code block, or if the block's content will just be escaped and prepped for a JavaScript syntax highlighter.
+`extend_pygments_lang`    | list   | `#!py []`                 | A list of extended languages to add.  See [Pygments Lexer Options](#pygments-lexer-options) for more info.
 
 ## Example
 

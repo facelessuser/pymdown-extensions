@@ -166,6 +166,45 @@ SuperFences works best when following the guidelines.  If the guidelines are not
 
 For the reasons above, the nested fences feature really is just a workaround.  But for a lot of people, this functionality is more than sufficient.
 
+## Pygments Lexer Options
+
+If using Pygments, some lexers have special options.  For instance, the `php` lexer has the option `startinline` which, if enabled, will parse PHP syntax without requiring `#!php <?` at the beginning.  SuperFences takes the approach of allowing you to create a special Pygments language with options.  So if you wanted to enable `startinline` for `php`, you might create a language name called `php-inline` that maps to `php` with `startinline` enabled.  This is done via the `extend_pygments_lang` option.
+
+`extend_pygments_lang` is an option that takes an array of dictionaries.  Each dictionary contains three keys: `name` which is the new name you are adding, `lang` which is the language the new name maps to, and `options` which is a dictionary of the options you wish to apply.
+
+For example, to create the above mentioned `php-inline` we would feed in the following to `extend_pygments_lang`:
+
+```py
+extended_pygments_lang = [
+    {"name": "php-inline", "lang": "php", "options": {"startinline": True}}
+]
+```
+
+Now we can do this:
+
+````
+```php-inline
+$a = array("foo" => 0, "bar" => 1);
+foreach ($a as $key => $value) {
+  // comment
+  echo "{$key} => {$value}" . PHP_EOL;
+}
+```
+````
+
+To get this:
+
+```php-inline
+$a = array("foo" => 0, "bar" => 1);
+foreach ($a as $key => $value) {
+  // comment
+  echo "{$key} => {$value}" . PHP_EOL;
+}
+```
+
+!!! Note "Note"
+    When specifying extended languages, they are shared across InlineHilite and SuperFences, so if you specify a language in SuperFences, you don't have to specify it in InlineHilite and vice versa.
+
 ## Options
 
 General syntax highlighting settings are configured via CodeHilite which should installed and enabled in order to get the highlighting.
@@ -176,6 +215,7 @@ Option                         | Type | Default      | Description
 `nested`                       | bool | `#!py True`  | Use nested fences.
 `uml_flow`                     | bool | `#!py True`  | Enable flowcharts.
 `uml_sequence`                 | bool | `#!py True`  | Enable sequence diagrams.
+`extend_pygments_lang`         | list | `#!py []`    | A list of extended languages to add.  See [Pygments Lexer Options](#pygments-lexer-options) for more info.
 
 ## Examples
 

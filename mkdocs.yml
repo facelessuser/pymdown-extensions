@@ -53,6 +53,11 @@ markdown_extensions:
       guess_lang: false
   - pymdownx.extra:
   - pymdownx.inlinehilite:
+      extend_pygments_lang:
+        - name: php-inline
+          lang: php
+          options:
+            startinline: true
   - pymdownx.magiclink:
       repo_url_shortener: true
       base_repo_url: 'https://github.com/facelessuser/pymdown-extensions'
