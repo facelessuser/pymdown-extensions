@@ -3,7 +3,6 @@ Inline Hilite.
 
 pymdownx.inlinehilite
 
----
 pymdownx.inlinehilite
 Inline codehilite variant
 
@@ -16,23 +15,7 @@ a language specifier like so:
             - or -
     `#!javascript var test = 0;`
 
-Modified: 2014 - 2017 Isaac Muse <isaacmuse@gmail.com>
----
-
-CodeHilite Extension for Python-Markdown
-========================================
-
-Adds code/syntax highlighting to standard Python-Markdown code blocks.
-
-See <https://pythonhosted.org/Markdown/extensions/code_hilite.html>
-for documentation.
-
-Original code Copyright 2006-2008 [Waylan Limberg](http://achinghead.com/).
-
-All changes Copyright 2008-2014 The Python Markdown Project
-
-License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
-
+Copyright 2014 - 2017 Isaac Muse <isaacmuse@gmail.com>
 """
 
 from __future__ import absolute_import

@@ -1,4 +1,26 @@
-"""Highlight."""
+"""
+Highlight.
+
+A library for managing code highlighting.
+
+All Changes Copyright 2014-2017 Isaac Muse.
+
+---
+
+CodeHilite Extension for Python-Markdown
+========================================
+
+Adds code/syntax highlighting to standard Python-Markdown code blocks.
+
+See <https://pythonhosted.org/Markdown/extensions/code_hilite.html>
+for documentation.
+
+Original code Copyright 2006-2008 [Waylan Limberg](http://achinghead.com/).
+
+All changes Copyright 2008-2014 The Python Markdown Project
+
+License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
+"""
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from markdown import Extension
@@ -76,6 +98,7 @@ class Highlight(object):
         self, guess_lang=True, pygments_style='default', use_pygments=True,
         noclasses=False, extend_pygments_lang=None, linenums=False
     ):
+        """Initialize."""
 
         self.guess_lang = guess_lang
         self.pygments_style = pygments_style

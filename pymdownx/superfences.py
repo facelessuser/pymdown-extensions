@@ -350,7 +350,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         self.clear()
 
     def parse_hl_lines(self, hl_lines):
-        """Parse the lines to highlight"""
+        """Parse the lines to highlight."""
 
         return list(map(int, hl_lines.strip().split())) if hl_lines else []
 
