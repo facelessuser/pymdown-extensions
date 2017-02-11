@@ -5,6 +5,10 @@
   overflow: auto;
 }
 
+.md-typeset .linenos .special {
+  color: rgba(0,0,0,.40);
+}
+
 /* Code in links */
 .md-typeset a>code {
     margin: 0 .29412em;

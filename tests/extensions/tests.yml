@@ -193,9 +193,11 @@ headeranchor-unicode-encode:
 inlinehilite:
   extensions:
     markdown.extensions.attr_list:
+    pymdownx.highlight:
+      guess_lang: false
     pymdownx.inlinehilite:
       style_plain_text: true
-      guess_lang: false
+      css_class: 'inlinehilite'
 
 inlinehilite_codehilite:
   extensions:
@@ -206,21 +208,25 @@ inlinehilite_codehilite:
 
 inlinehilite_guess:
   extensions:
+    pymdownx.highlight:
     pymdownx.inlinehilite:
       style_plain_text: true
-      guess_lang: true
+      css_class: inlinehilite
 
 inlinehilite_no_pygments:
   extensions:
-    pymdownx.inlinehilite:
+    pymdownx.highlight:
       guess_lang: false
       use_pygments: false
+    pymdownx.inlinehilite:
+      css_class: 'inlinehilite'
 
 inlinehilite_plaintext:
   extensions:
+    pymdownx.highlight:
+      guess_lang: false
     pymdownx.inlinehilite:
       style_plain_text: false
-      guess_lang: false
 
 magiclink:
   extensions:
@@ -308,6 +314,7 @@ snippets (block):
 superfences (failures):
   extensions:
     pymdownx.superfences:
+      highlight_code: false
 
 superfences (no indent blocks):
   extensions:
@@ -320,6 +327,7 @@ superfences (no nesting):
   extensions:
     pymdownx.superfences:
       nested: false
+      highlight_code: false
 
 superfences (normal):
   extensions:

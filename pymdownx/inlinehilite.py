@@ -39,18 +39,8 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import Pattern
-from markdown.extensions import codehilite
 from markdown import util as md_util
-from . import util
-# import traceback
-try:
-    from pygments import highlight
-    from pygments.lexers import get_lexer_by_name, guess_lexer
-    from pygments.formatters import find_formatter_class
-    HtmlFormatter = find_formatter_class('html')
-    pygments = True
-except ImportError:  # pragma: no cover
-    pygments = False
+from . import highlight as hl
 
 ESCAPED_BSLASH = '%s%s%s' % (md_util.STX, ord('\\'), md_util.ETX)
 DOUBLE_BSLASH = '\\\\'
@@ -65,22 +55,14 @@ BACKTICK_CODE_RE = r'''(?x)
 '''
 
 
-if pygments:
-    class InlineCodeHtmlFormatter(HtmlFormatter):
-        """Format the code blocks."""
+def _escape(txt):
+    """Basic html escaping."""
 
-        def wrap(self, source, outfile):
-            """Overload wrap."""
-
-            return self._wrap_code(source)
-
-        def _wrap_code(self, source):
-            """Return source, but do not wrap in inline <code> block."""
-
-            yield 0, ''
-            for i, t in source:
-                yield i, t.strip()
-            yield 0, ''
+    txt = txt.replace('&', '&amp;')
+    txt = txt.replace('<', '&lt;')
+    txt = txt.replace('>', '&gt;')
+    txt = txt.replace('"', '&quot;')
+    return txt
 
 
 class InlineHilitePattern(Pattern):
@@ -91,76 +73,44 @@ class InlineHilitePattern(Pattern):
 
         Pattern.__init__(self, pattern)
         self.markdown = md
-        self.checked_for_codehilite = False
+        self.get_hl_settings = False
 
     def get_settings(self):
         """Check for code hilite extension and gather its settings."""
 
-        if not self.checked_for_codehilite:
-            self.guess_lang = self.config['guess_lang']
-            self.css_class = self.config['css_class']
-            self.style = self.config['pygments_style']
-            self.noclasses = self.config['noclasses']
-            self.use_pygments = self.config['use_pygments']
-            self.use_codehilite_settings = self.config['use_codehilite_settings']
+        if not self.get_hl_settings:
+            self.get_hl_settings = True
             self.style_plain_text = self.config['style_plain_text']
-            if self.use_codehilite_settings:
-                for ext in self.markdown.registeredExtensions:
-                    if isinstance(ext, codehilite.CodeHiliteExtension):
-                        self.guess_lang = ext.config['guess_lang'][0]
-                        self.css_class = ext.config['css_class'][0]
-                        self.style = ext.config['pygments_style'][0]
-                        self.use_pygments = ext.config['use_pygments'][0]
-                        self.noclasses = ext.config['noclasses'][0]
-                        break
-            self.checked_for_codehilite = True
+            config = hl.get_hl_settings(self.markdown, self.config['use_codehilite_settings'])
 
-    def codehilite(self, lang, src):
+            if 'extend_pygments_lang' not in config:
+                self.css_class = config['css_class']
+            else:
+                self.css_class = self.config['css_class']
+
+            self.extend_pygments_lang = config.get('extend_pygments_lang', None)
+            self.guess_lang = config['guess_lang']
+            self.pygments_style = config['pygments_style']
+            self.use_pygments = config['use_pygments']
+            self.noclasses = config['noclasses']
+
+    def highlight_code(self, language, src):
         """Syntax highlite the inline code block."""
 
-        process_text = self.style_plain_text or lang or self.guess_lang
+        process_text = self.style_plain_text or language or self.guess_lang
 
-        if lang:
-            lang, lexer_options = util.get_special_lang(self.markdown, lang)
+        if process_text:
+            el = hl.Highlight(
+                guess_lang=self.guess_lang,
+                pygments_style=self.pygments_style,
+                use_pygments=self.use_pygments,
+                noclasses=self.noclasses,
+                extend_pygments_lang=self.extend_pygments_lang
+            ).highlight(src, language, self.css_class, inline=True)
+            el.text = self.markdown.htmlStash.store(el.text, safe=True)
         else:
-            lexer_options = {}
-
-        if not lang and self.style_plain_text and not self.guess_lang:
-            lang = 'text'
-
-        if pygments and self.use_pygments and process_text:
-            try:
-                lexer = get_lexer_by_name(lang, **lexer_options)
-            except ValueError:
-                try:
-                    if self.guess_lang:
-                        lexer = guess_lexer(src)
-                    else:
-                        lexer = get_lexer_by_name('text')
-                except ValueError:  # pragma: no cover
-                    lexer = get_lexer_by_name('text')
-
-            formatter = InlineCodeHtmlFormatter(
-                style=self.style,
-                noclasses=self.noclasses
-            )
-            code = highlight(src, lexer, formatter)
-            class_str = self.css_class
-        else:
-            # Just escape and build markup usable by JS highlighting libs
-            code = src.replace('&', '&amp;')
-            code = code.replace('<', '&lt;')
-            code = code.replace('>', '&gt;')
-            code = code.replace('"', '&quot;')
-
-            classes = [self.css_class] if self.css_class and process_text else []
-            if lang and process_text:
-                classes.append('language-%s' % lang)
-            class_str = ''
-            if len(classes):
-                class_str = ' '.join(classes)
-        el = md_util.etree.Element('code', {'class': class_str} if class_str else {})
-        el.text = self.markdown.htmlStash.store(code, safe=True)
+            el = md_util.etree.Element('code')
+            el.text = self.markdown.htmlStash.store(_escape(src), safe=True)
         return el
 
     def handleMatch(self, m):
@@ -172,7 +122,7 @@ class InlineHilitePattern(Pattern):
             lang = m.group('lang') if m.group('lang') else ''
             src = m.group('code').strip()
             self.get_settings()
-            return self.codehilite(lang, src)
+            return self.highlight_code(lang, src)
 
 
 class InlineHiliteExtension(Extension):
@@ -189,10 +139,6 @@ class InlineHiliteExtension(Extension):
                 "Inlinehilite will use its own settings. - "
                 "- Default: True"
             ],
-            'guess_lang': [
-                True,
-                "Automatic language detection - Default: True"
-            ],
             'style_plain_text': [
                 False,
                 "Process inline code even when a language is not specified "
@@ -204,27 +150,7 @@ class InlineHiliteExtension(Extension):
             'css_class': [
                 "inlinehilite",
                 "Set class name for wrapper <div> - "
-                "Default: codehilite"
-            ],
-            'pygments_style': [
-                'default',
-                'Pygments HTML Formatter Style '
-                '(Colorscheme) - Default: default'
-            ],
-            'noclasses': [
-                False,
-                'Use inline styles instead of CSS classes - '
-                'Default false'
-            ],
-            'use_pygments': [
-                True,
-                'Use Pygments to Highlight code blocks. '
-                'Disable if using a JavaScript library. '
-                'Default: True'
-            ],
-            'extend_pygments_lang': [
-                [],
-                'Extend pygments language with special language entry - Default: {}'
+                "Default: inlinehilite"
             ]
         }
         super(InlineHiliteExtension, self).__init__(*args, **kwargs)
@@ -235,7 +161,6 @@ class InlineHiliteExtension(Extension):
         config = self.getConfigs()
         inline_hilite = InlineHilitePattern(BACKTICK_CODE_RE, md)
         inline_hilite.config = config
-        util.add_pygments_language_map(md, config['extend_pygments_lang'])
         md.inlinePatterns['backtick'] = inline_hilite
 
 

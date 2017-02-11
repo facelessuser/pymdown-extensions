@@ -24,6 +24,7 @@ pages:
     - GitHub: extensions/github.md
     - GitHubEmoji: extensions/githubemoji.md
     - HeaderAnchor: extensions/headeranchor.md
+    - Highlight: extensions/highlight.md
     - InlineHilite: extensions/inlinehilite.md
     - MagicLink: extensions/magiclink.md
     - Mark: extensions/mark.md
@@ -51,13 +52,23 @@ markdown_extensions:
       smart_quotes: false
   - markdown.extensions.codehilite:
       guess_lang: false
-  - pymdownx.extra:
-  - pymdownx.inlinehilite:
+  - pymdownx.betterem:
+  - markdown.extensions.attr_list:
+  - markdown.extensions.def_list:
+  - markdown.extensions.tables:
+  - markdown.extensions.abbr:
+  - pymdownx.extrarawhtml:
+  - pymdownx.superfences:
+      css_class: codehilite
+  - pymdownx.highlight:
       extend_pygments_lang:
         - name: php-inline
           lang: php
           options:
             startinline: true
+      guess_lang: false
+  - pymdownx.inlinehilite:
+      css_class: codehilite
   - pymdownx.magiclink:
       repo_url_shortener: true
       base_repo_url: 'https://github.com/facelessuser/pymdown-extensions'
