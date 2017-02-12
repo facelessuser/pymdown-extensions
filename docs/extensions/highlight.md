@@ -1,6 +1,6 @@
 ## Overview
 
-Highlight is an extension that adds no additional syntax patterns Python Markdown. Its only purpose is to provide a single place to configure syntax highlighting for code blocks. Both InlineHilite and SuperFences can use Highlight to configure their highlight settings.
+Highlight is an extension that adds no additional syntax patterns to Python Markdown. Its only purpose is to provide a single place to configure syntax highlighting for code blocks. Both InlineHilite and SuperFences can use Highlight to configure their highlight settings.
 
 Both InlineHilite and SuperFences can use Pygments or JavaScript highlighters to do their code syntax highlighting, but all of the settings here affect Pygments highlighting only except `use_pygments`.  If you want to use a JavaScript syntax highlighter, set `use_pygments` to `#!py False` or make sure you don't have Pygments installed.
 

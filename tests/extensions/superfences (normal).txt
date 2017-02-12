@@ -73,6 +73,30 @@ as a fenced code block.
         ```
     ```
 
+- Here is a highlighted code block with line numbers:
+
+    ```python linenums="1"
+    """Some file."""
+    import foo.bar
+    import boo.baz
+    import foo.bar.baz
+    ```
+
+- Here is a highlighted code block with line numbers and line highlighting:
+
+    ```python hl_lines="2 3" linenums="1"
+    """Some file."""
+    import foo.bar
+    import boo.baz
+    import foo.bar.baz
+    ```
+
+- Highlight extended language:
+
+    ```php-inline 
+    $a = array("foo" => 0, "bar" => 1);
+    ```
+
 # UML Flow Charts
 
 ```flow

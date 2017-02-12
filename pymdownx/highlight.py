@@ -37,7 +37,7 @@ except ImportError:  # pragma: no cover
     pygments = False
 try:
     from markdown.extensions.codehilite import CodeHiliteExtension
-except Exception:
+except Exception:  # pragma: no cover 
     CodeHiliteExtension = None
 
 CODE_WRAP = '<pre%s><code%s>%s</code></pre>'
@@ -127,7 +127,7 @@ class Highlight(object):
     def get_lexer(self, src, language):
         """Get the Pygments lexer."""
 
-        if language is not None:
+        if language:
             language, lexer_options = self.get_extended_language(language)
         else:
             lexer_options = {}

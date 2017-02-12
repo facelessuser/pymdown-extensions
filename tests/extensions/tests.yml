@@ -323,16 +323,33 @@ superfences (no indent blocks):
     pymdownx.superfences:
       disable_indented_code_blocks: true
 
+superfences (no highlight):
+  extensions:
+    pymdownx.superfences:
+      highlight_code: false
+
 superfences (no nesting):
   extensions:
     pymdownx.superfences:
       nested: false
       highlight_code: false
 
+superfences (no pygments):
+  extensions:
+    pymdownx.highlight:
+      guess_lang: false
+      use_pygments: false
+    pymdownx.superfences:
+
 superfences (normal):
   extensions:
-    markdown.extensions.codehilite:
+    pymdownx.highlight:
       guess_lang: false
+      extend_pygments_lang:
+        - name: php-inline
+          lang: php
+          options:
+            startinline: true
     pymdownx.superfences:
 
 tasklist:
