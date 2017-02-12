@@ -1,3 +1,9 @@
+## 2.0.0
+
+- **NEW**: SuperFences and InlineHilite can be configured via the new Highlight extension.
+- **NEW**: InlineHilite now has all highlighting features pushed to the Highlight extension.  This removes all the CodeHilite code that used to be in it and instead relocates it to Highlight.
+- **NEW**: Deprecate the nesting option in SuperFences.  Nesting is default and the only acceptable behavior moving forward.  The ability to turn off nesting will be removed in 3.0.
+
 ## 1.8.0
 
 > Released Jan 27, 2017
