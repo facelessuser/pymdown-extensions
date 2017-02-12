@@ -37,7 +37,7 @@ except ImportError:  # pragma: no cover
     pygments = False
 try:
     from markdown.extensions.codehilite import CodeHiliteExtension
-except Exception:  # pragma: no cover 
+except Exception:  # pragma: no cover
     CodeHiliteExtension = None
 
 CODE_WRAP = '<pre%s><code%s>%s</code></pre>'
