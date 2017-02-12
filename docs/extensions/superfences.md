@@ -7,8 +7,6 @@ SuperFences provides 4 features:
 3. Special UML sequence diagram via the `sequence` language specifier.
 4. The ability to disable indented code blocks in favor of only using the fenced variant (off by default).
 
-Out of the box, SuperFences will source its syntax highlight settings from the [CodeHilite][codehilite], but CodeHilite is not needed.
-
 !!! danger "Reminder"
     Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this extension!
 
@@ -49,9 +47,9 @@ Definition
 
 ## Code Highlighting
 
-Code highlighting is handled via Pygments by default if Pygments is installed. If Pygments is not installed, code blocks will be wrapped in code and pre elements and given a class of `language-<specified_language>` (if a language specifier was given) so that a JavaScript highlighter can style them.
+Code highlighting is handled via [Pygments][pygments] by default if Pygments is installed. If Pygments is not installed, code blocks will be wrapped in code and pre elements and given a class of `language-<specified_language>` (if a language specifier was given) so that a JavaScript highlighter can style them.
 
-Highlighting in general is configured via external extensions. You can use `pymdownx.highlight` extension, or the legacy method that uses CodeHilite's settings if it is configured. If you have CodeHilite configured, but still want to configure settings via `pymdownx.highlight`, just disable `use_codehilite_settings` in the options. In the future, it is planned to abandon sourcing settings from CodeHilite, so keep this in mind when selecting which option to use.
+Highlighting in general is configured via external extensions. You can use [`pymdownx.highlight`](./highlight.md) extension, or the legacy method that uses [CodeHilite][codehilite]'s settings if it is configured. If you have CodeHilite configured, but still want to configure settings via `pymdownx.highlight`, just disable `use_codehilite_settings` in the options. In the future, it is planned to abandon sourcing settings from CodeHilite, so keep this in mind when selecting which option to use.
 
 When using fenced code blocks, you can specify a specific a syntax language to highlight with by specifying the language name directly after the opening tokens (either ` ``` ` or `~~~`). So if we wanted to specify Python as the syntax to highlight with, we could use the following syntax below. Please consult your highlighters documentation for recognized language syntax specifiers.
 
@@ -240,7 +238,7 @@ For the reasons above, the nested fences feature really is just a workaround.  B
 
 ## Options
 
-By default, syntax highlighting settings will be sourced from CodeHilite if it is configured and `use_codehilite_settings` is enabled, but SuperFences' highlighting can be configure without and/or independently from CodeHilite. If CodeHilite is not configured, or if `use_codehilite_settings` is disabled, default settings will be used and can be configured via `pymdownx.highlight`.  CodeHilite support will most likely be abandoned in the future, so keep that in mind when configuring.
+By default, syntax highlighting settings will be sourced from [CodeHilite][codehilite] if it is configured and `use_codehilite_settings` is enabled, but SuperFences' highlighting can be configure without and/or independently from CodeHilite. If CodeHilite is not configured, or if `use_codehilite_settings` is disabled, default settings will be used and can be configured via [`pymdownx.highlight`](./highlight.md).  CodeHilite support will most likely be abandoned in the future, so keep that in mind when configuring.
 
 Option                         | Type   | Default              | Description
 ------------------------------ | ------ | -------------------- | -----------

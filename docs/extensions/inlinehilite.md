@@ -5,13 +5,13 @@ InlineHilite is an inline version of [CodeHilite][codehilite] which adds inline 
 When using the colon mock shebang, 3 or more colons can be used.  Mock shebangs must come **immediately** after the opening backtick(s) and must be followed by at least one space.  If you need to escape a mock shebang at the start of a code block, just put a space before it and it will be treated as part of the code.
 
 !!! tip "Tip"
-    If using Pygments, the elements should be highlighted just fine, but you may need to adjust CSS to get the general style of the inline block the way you like it.
+    If using [Pygments][pygments], the elements should be highlighted just fine, but you may need to adjust CSS to get the general style of the inline block the way you like it.
 
-    If you are using a JavaScript highlighter such as `highlight.js` you will most likely need to construct a JavaScript method to target the inline blocks.  You may also find it useful to tag inline blocks with a different class than what is used for block highlighted code so you can also target and style them with CSS differently.  InlineHilite allows you to have a different `css_class` than what is used by block code (if CodeHilite is not used as the settings source).
+    If you are using a JavaScript highlighter such as [`highlight.js`][highlightjs] you will most likely need to construct a JavaScript method to target the inline blocks.  You may also find it useful to tag inline blocks with a different class than what is used for block highlighted code so you can also target and style them with CSS differently.  InlineHilite allows you to have a different `css_class` than what is used by block code (if CodeHilite is not used as the settings source).
 
 ## Options
 
-By default, syntax highlighting settings will be sourced from CodeHilite if it is configured and `use_codehilite_settings` is enabled, but InlineHilite's highlighting can be configure without and/or independently from CodeHilite. If CodeHilite is not configured, or if `use_codehilite_settings` is disabled, default settings will be used and can be configured via `pymdownx.highlight`.  CodeHilite support will most likely be abandoned in the future, so keep that in mind when configuring.
+By default, syntax highlighting settings will be sourced from [CodeHilite][codehilite] if it is configured and `use_codehilite_settings` is enabled, but InlineHilite's highlighting can be configure without and/or independently from CodeHilite. If CodeHilite is not configured, or if `use_codehilite_settings` is disabled, default settings will be used and can be configured via [`pymdownx.highlight`](./highlight.md).  CodeHilite support will most likely be abandoned in the future, so keep that in mind when configuring.
 
 Option                    | Type   | Default                   | Description
 ------------------------- | ------ | ------------------------- | -----------

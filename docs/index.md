@@ -21,6 +21,7 @@ Extension                                                  | Name
 [GitHub](extensions/github.md)                             | `pymdownx.github`
 [GitHubEmoji (**deprecated**)](extensions/githubemoji.md)  | `pymdownx.githubemoji`
 [HeaderAnchor (**deprecated**)](extensions/headeranchor.md)| `pymdownx.headeranchor`
+[Highlight](extensions/highlight.md)                       | `pymdownx.highlight`
 [MagicLink](extensions/magiclink.md)                       | `pymdownx.magiclink`
 [Mark](extensions/mark.md)                                 | `pymdownx.mark`
 [ProgressBar](extensions/progressbar.md)                   | `pymdownx.progressbar`

@@ -16,6 +16,7 @@
 [gemoji]: https://github.com/github/gemoji
 [github-api-emoji]: https://developer.github.com/v3/emojis/
 [github-api-oauth]: https://developer.github.com/v3/oauth/
+[highlightjs]: https://highlightjs.org/
 [mathjax]: http://www.mathjax.org/
 [mkdocs]: https://github.com/mkdocs/mkdocs
 [mkdocs-material]: https://github.com/squidfunk/mkdocs-material
