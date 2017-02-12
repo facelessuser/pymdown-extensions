@@ -73,10 +73,10 @@ import foo.bar
 
 Pygments also has a few additional options in regards to line numbers. One is line step which, if set to a number n > 1, only every n^th^ line number is printed. The other is a setting that can mark line numbers as special with span and class `special`. If special value is set to a number n > 0, every n^th^ line number is given the CSS class `special`.
 
-So to set showing only every other line number, we could do the following. Line options are separated by `:`.  Line number is always the second option, so you must specify line start before line step.
+So to set showing only every other line number, we could do the following. Line options are separated by a space.  Line number is always the second option, so you must specify line start before line step.
 
 ````
-``` linenums="1:2"
+``` linenums="1 2"
 """Some file."""
 import foo.bar
 import boo.baz
@@ -87,7 +87,7 @@ import foo.bar.baz
 To set every other line as special, you must set the third `linenums` option (specify line start and step before it). Special must be a value of n > 0.
 
 ````
-``` linenums="1:1:2"
+``` linenums="1 1 2"
 """Some file."""
 import foo.bar
 import boo.baz

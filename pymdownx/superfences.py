@@ -45,8 +45,8 @@ NESTED_FENCE_START = r'''(?x)
 (hl_lines=(?P<quot>"|')(?P<hl_lines>\d+(?:[ ]+\d+)*)(?P=quot))?[ ]*|  # highlight lines
 (linenums=(?P<quot2>"|')                                              # Line numbers
     (?P<linestart>[\d]+)                                              #   Line number start
-    (?::(?P<linestep>[\d]+))?                                         #   Line step
-    (?::(?P<linespecial>[\d]+))?                                      #   Line special
+    (?:[ ]+(?P<linestep>[\d]+))?                                      #   Line step
+    (?:[ ]+(?P<linespecial>[\d]+))?                                   #   Line special
 (?P=quot2))?[ ]*
 ){,2}
 }?[ ]*$                                                               # Language closing
@@ -57,17 +57,19 @@ WS = r'^([\> ]{0,%d})(.*)'
 
 RE_FENCE = re.compile(
     r'''(?xsm)
-    (?P<fence>^(?:~{3,}|`{3,}))[ ]*                                      # Opening
-    (\{?\.?(?P<lang>[\w#.+-]*))?[ ]*                                     # Optional {, and lang
-    (hl_lines=(?P<quot>"|')(?P<hl_lines>\d+(?:[ ]+\d+)*)(?P=quot))?[ ]*  # Optional highlight lines option
-    (linenums=(?P<quot2>"|')                                             # Line numbers
-        (?P<linestart>[\d]+)                                             #   Line number start
-        (?::(?P<linestep>[\d]+))?                                        #   Line step
-        (?::(?P<linespecial>[\d]+))?                                     #   Line special
+    (?P<fence>^(?:~{3,}|`{3,}))[ ]*                                       # Opening
+    (\{?\.?(?P<lang>[\w#.+-]*))?[ ]*                                      # Optional {, and lang
+    (?:
+    (hl_lines=(?P<quot>"|')(?P<hl_lines>\d+(?:[ ]+\d+)*)(?P=quot))?[ ]*|  # Optional highlight lines option
+    (linenums=(?P<quot2>"|')                                              # Line numbers
+        (?P<linestart>[\d]+)                                              #   Line number start
+        (?:[ ]+(?P<linestep>[\d]+))?                                      #   Line step
+        (?:[ ]+(?P<linespecial>[\d]+))?                                   #   Line special
     (?P=quot2))?[ ]*
-    }?[ ]*\n                                                             # Optional closing }
-    (?P<code>.*?)(?<=\n)                                                 # Code
-    (?P=fence)[ ]*$                                                      # Closing
+    ){,2}
+    }?[ ]*\n                                                              # Optional closing }
+    (?P<code>.*?)(?<=\n)                                                  # Code
+    (?P=fence)[ ]*$                                                       # Closing
     '''
 )
 
