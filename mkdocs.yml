@@ -50,8 +50,6 @@ markdown_extensions:
   - markdown.extensions.admonition:
   - markdown.extensions.smarty:
       smart_quotes: false
-  - markdown.extensions.codehilite:
-      guess_lang: false
   - pymdownx.betterem:
   - markdown.extensions.attr_list:
   - markdown.extensions.def_list:
