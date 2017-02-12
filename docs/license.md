@@ -37,9 +37,9 @@ All changes Copyright 2008-2014 The Python Markdown Project
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 ```
 
-## InlineHilite
+## Highlight
 
-`inlinehilite.py` is derived from Python Markdown's CodeHilite extension.
+`highlight.py` is derived from Python Markdown's CodeHilite extension.
 
 ```
 CodeHilite Extension for Python-Markdown
