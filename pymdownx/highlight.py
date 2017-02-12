@@ -227,13 +227,14 @@ class Highlight(object):
 def get_hl_settings(md, use_codehilite=False):
     """Get the specified extension."""
     target = None
-    for ext in md.registeredExtensions:
-        if isinstance(ext, HighlightExtension):
-            target = ext.getConfigs()
-            break
-    if target is None and CodeHiliteExtension:
+    if use_codehilite and CodeHiliteExtension:
         for ext in md.registeredExtensions:
             if isinstance(ext, CodeHiliteExtension):
+                target = ext.getConfigs()
+                break
+    if target is None:
+        for ext in md.registeredExtensions:
+            if isinstance(ext, HighlightExtension):
                 target = ext.getConfigs()
                 break
     if target is None:
