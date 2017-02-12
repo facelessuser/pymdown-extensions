@@ -50,7 +50,7 @@ DEFAULT_CONFIG = {
         'Default: True'
     ],
     'guess_lang': [
-        True,
+        False,
         "Automatic language detection - Default: True"
     ],
     'pygments_style': [

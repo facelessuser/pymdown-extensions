@@ -194,7 +194,6 @@ inlinehilite:
   extensions:
     markdown.extensions.attr_list:
     pymdownx.highlight:
-      guess_lang: false
     pymdownx.inlinehilite:
       style_plain_text: true
       css_class: 'inlinehilite'
@@ -209,6 +208,7 @@ inlinehilite_codehilite:
 inlinehilite_guess:
   extensions:
     pymdownx.highlight:
+      guess_lang: True
     pymdownx.inlinehilite:
       style_plain_text: true
       css_class: inlinehilite
@@ -216,7 +216,6 @@ inlinehilite_guess:
 inlinehilite_no_pygments:
   extensions:
     pymdownx.highlight:
-      guess_lang: false
       use_pygments: false
     pymdownx.inlinehilite:
       css_class: 'inlinehilite'
@@ -224,7 +223,6 @@ inlinehilite_no_pygments:
 inlinehilite_plaintext:
   extensions:
     pymdownx.highlight:
-      guess_lang: false
     pymdownx.inlinehilite:
       style_plain_text: false
 
@@ -337,14 +335,12 @@ superfences (no nesting):
 superfences (no pygments):
   extensions:
     pymdownx.highlight:
-      guess_lang: false
       use_pygments: false
     pymdownx.superfences:
 
 superfences (normal):
   extensions:
     pymdownx.highlight:
-      guess_lang: false
       extend_pygments_lang:
         - name: php-inline
           lang: php

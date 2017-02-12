@@ -3,13 +3,8 @@ Inline Hilite.
 
 pymdownx.inlinehilite
 
-pymdownx.inlinehilite
-Inline codehilite variant
-
-This is a modification of the original CodeHilite extension.
-It relies on codehilite's config, and adds a processor that
-can highlite backtick regions content if it is preceeded with
-a language specifier like so:
+An alternative inline code extension that highlights code.  Can
+use CodeHilite to source its settings or pymdownx.highlight.
 
     `:::javascript var test = 0;`
             - or -
