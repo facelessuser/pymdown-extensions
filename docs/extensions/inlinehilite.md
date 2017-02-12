@@ -17,7 +17,7 @@ Option                    | Type   | Default                   | Description
 ------------------------- | ------ | ------------------------- | -----------
 `style_plain_text`        | bool   | `#!py False`              | When `guess_lang` is set to `#!py False`, InlineHilite will avoid applying classes to code blocks that do not explicitly set a language. If it is desired to have plain text styled like code, enable this to inject classes so that they can all be styled the same.
 `use_codehilite_settings` | bool   | `#!py True`               | Get applicable highlight settings from CodeHilite (if currently configured). CodeHilite's settings will be applied to `css_class` and additional behavioral options will be applied. Otherwise, use `css_class`, and configure settings via `pymdownx.highlight`.
-`css_class`               | string | `#!python 'inlinehilite'` | Set's the class name that will be injected into inline code tags when they are processed.
+`css_class`               | string | `#!python 'highlight'` | Set's the class name that will be injected into inline code tags when they are processed.
 
 ## Example
 

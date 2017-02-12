@@ -126,7 +126,7 @@ class InlineHiliteExtension(Extension):
                 "- Default: False"
             ],
             'css_class': [
-                "inlinehilite",
+                "highight",
                 "Set class name for wrapper <div> - "
                 "Default: inlinehilite"
             ]
