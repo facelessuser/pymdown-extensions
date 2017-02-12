@@ -19,18 +19,24 @@ Extension                       | Options                                       
 [Tasklist](./tasklist.md)       |                                                               | `pymdownx.tasklist`
 [SuperFences](./superfences.md) |                                                               | `pymdownx.superfences`
 
-!!! Tip "Code Highlight Tip"
-    For code highlighting, you will also need to load the `markdown.extensions.codehilite` extension yourself as well with `guess_lang=False`. You will also need to provide your preferred Pygments style (or configure a JavaScript highlighter).  Though there is no GitHub style included with this extension, you are most likely able to find a suitable theme online by searching. There are GitHub styles found at the [`pymdown-styles`][pymdown-styles] repository; it contains the original Pygments GitHub style (`github`) and the GitHub 2014 style (`github2014`) which GitHub used before they ditched Pygments for their own in-house highlighter.
 
-!!! Tip "Header Slug Tip"
-    The default slugify that Python Markdown uses isn't very much like GitHub's. But, at the time of writing this, the [`uslugify`](../miscellaneous_extras.md#uslugify) slugify provided by PyMdown Extensions is pretty close. By passing in the `pymdownx.slugs.uslugify` function via Toc's slugify parameters can alter the slugs to be GitHub like. If GitHub changes their slugs, you can always write your own to be more like theirs.
+## Code Highlighting
 
-!!! warning "Output Change"
-    HeaderAnchor is no longer included starting in version `1.4.0` as it wasn't really part of the GFM syntax, and HeaderAnchor is now deprecated.  HeaderAnchor is an unnecessary extension, and the same end result can be achieved with `markdown.extensions.toc` (with the `permalink` option enabled) and some custom CSS.  This extension was more about the syntax than it was about styling.  If you are not ready to give up the extension, you can manually include the `pymdownx.headeranchor` extension in addition to `pymdownx.github`. But in the future, the HeaderAnchor extension will be removed from PyMdown Extensions.
+Code highlighting is usually done via Pygments by including either the `pymdownx.highlight` or `markdown.extensions.codehilite` extension and ensuring the following option is set if not by default: `guess_lang=False`. Optionally, you can use either of these extensions and disable Pygments support to use your preferred JavaScript highlighter.
 
-### GitHub Emoji Configuration
+If using Pygments, you will also need to provide your preferred Pygments style. If using a JavaScript highlighter, you will have to read that highlighter's documentation to learn how to setup and style your code blocks appropriately.
 
-This is the full, default setup used to get GitHub emoji images.  This is valid at the time of writing this. GitHub constantly tweaks how they do things, so in time this may render differently than what they actually do. But this should provide emojis for as long as the CDNs are valid.
+For those looking for a GitHub theme, there is no GitHub style included with this extension. You are most likely able to find a suitable theme online by searching. Presently, there are GitHub styles found at the [`pymdown-styles`][pymdown-styles] repository which contains the original Pygments GitHub style (`github`) and the GitHub 2014 style (`github2014`) which GitHub used before they abandoned Pygments for their own in-house highlighter. The listed themes might not always be available, and may not actually be close to current GitHub syntax highlighting.
+
+## GitHub Like Slugs
+
+The default slugify that Python Markdown uses isn't very much like GitHub's as it just removes all Unicode. But, at the time of writing this, the [`uslugify`](../miscellaneous_extras.md#uslugify) slugify provided by PyMdown Extensions is pretty close in the way it handles Unicode in slugs. By passing in the `pymdownx.slugs.uslugify` function via Toc's slugify parameter, you can alter the slugs to be GitHub like. If GitHub changes their slugs, you can always write your own to be more like theirs.
+
+As mentioned before, the GitHub extension does not intend to provide a 1:1 match of GFM. There are small differences that will never be directly addressed. With slugs, there is one difference between GitHub's and PyMdown Extensions `uslugify`, and that is with duplicate headers. GitHub appends a number to duplicate headers with a hyphen: `-1`. Python Markdown (through the Toc extension) appends a number to duplicate headers with an underscore `_1`. Unfortunately, a slug function cannot simply override this duplicate behavior as that behavior is controlled within the Toc extension. There are no plans at this time to write a Toc extension to replace the default one as a 1:1 match in behavior is not the end goal.
+
+## GitHub Emoji Configuration
+
+This is for informational purposes in case you wish to configure GitHub style emojis outside of the GitHub Extension. This is the full, default setup used to get GitHub emoji images.  This is valid at the time of writing this. GitHub uses Gemoji to provide their emoji, but GitHub also constantly tweaks how they do things, so in time this may render differently than what they actually do. This should provide emojis for as long as the CDNs are valid.
 
 ```python
 import pymdownx.emoji
@@ -62,6 +68,6 @@ Option               | Type    | Default      | Description
 `base_repo_url`      | string  | `#!py ''`    | The base repository URL for repository links. See [MagicLink](./magiclink.md) for more info.
 
 !!! warning "Deprecated Option"
-    In version `1.3.0`, the setting `no_nl2br` is now `True` by default and the setting is deprecated and will be removed in the future. GitHub's GFM (which we are emulating) no longer converts new lines to `<br>`.  If you prefer having New-Line-to-Break enabled, you can enable the `markdown.extensions.nl2br` extension separately.
+    In version `1.3.0`, the setting `no_nl2br` is now `True` by default and the setting is deprecated and will be removed in `3.0`. GitHub's GFM (which we are emulating) no longer converts new lines to `<br>`.  If you prefer having New-Line-to-Break enabled, you can enable the `markdown.extensions.nl2br` extension separately.
 
 --8<-- "refs.md"

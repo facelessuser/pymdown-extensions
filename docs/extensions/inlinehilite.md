@@ -1,13 +1,14 @@
 ## Overview
 
-InlineHilite is an inline version of [CodeHilite][codehilite] which adds inline code highlighting.  Borrowing from CodeHilite's existing syntax, InlineHilite utilizes the following syntax to insert inline highlighted code: `` `:::language mycode` `` or `` `#!language mycode` ``.  In CodeHilite, ` #! ` means "use line numbers", but line numbers will not be used in inline code regardless of which form is used; syntax choice is purely personal preference.  We will call these specifiers (` #! ` and ` ::: `) mock shebangs.
+InlineHilite is an inline code highlighter inspired by [CodeHilite][codehilite]. Borrowing from CodeHilite's existing syntax, InlineHilite utilizes the following syntax to insert inline highlighted code: `` `:::language mycode` `` or `` `#!language mycode` ``.  In CodeHilite, ` #! ` means "use line numbers", but line numbers will never be used in inline code regardless of which form is used. Use of one form or the other is purely for personal preference. As this feature is discussed further, we will call these specifiers (` #! ` and ` ::: `) mock shebangs.
 
 When using the colon mock shebang, 3 or more colons can be used.  Mock shebangs must come **immediately** after the opening backtick(s) and must be followed by at least one space.  If you need to escape a mock shebang at the start of a code block, just put a space before it and it will be treated as part of the code.
 
-!!! tip "Tip"
-    If using [Pygments][pygments], the elements should be highlighted just fine, but you may need to adjust CSS to get the general style of the inline block the way you like it.
+## Using JavaScript Highlighters
 
-    If you are using a JavaScript highlighter such as [`highlight.js`][highlightjs] you will most likely need to construct a JavaScript method to target the inline blocks.  You may also find it useful to tag inline blocks with a different class than what is used for block highlighted code so you can also target and style them with CSS differently.  InlineHilite allows you to have a different `css_class` than what is used by block code (if CodeHilite is not used as the settings source).
+If using [Pygments][pygments], the elements will be highlighted without issues, but you may need to adjust CSS to get the general style of the inline block the way you like it.
+
+If you are using a JavaScript highlighter, such as [`highlight.js`][highlightjs], you will most likely need to construct a JavaScript method to target the inline blocks as these may not be targeted out of the box. You may also find it useful to tag inline code with a different class than what is used for block code so you can also process and style them differently. The CSS class used can be configured independently for inline code in the options if using `pymdownx.highight` instead of CodeHilite.
 
 ## Options
 

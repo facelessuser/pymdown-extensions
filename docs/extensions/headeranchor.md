@@ -1,7 +1,7 @@
 ## Overview
 
 !!! warning "Deprecated Extension"
-    This extension has been deprecated in version `1.4.0`.  The same effect can be accomplished using
+    This extension has been deprecated in version `1.4.0` and will be removed in `3.0`.  The same effect can be accomplished using
     `markdown.extensions.toc` with `permalinks` and some custom CSS.  It doesn't make sense to continue supporting this as nothing is really gained by specifically doing anchors GitHub's way.
 
 HeaderAnchor adds anchors to headers in the style of GFM's header anchors (anchors that appear to the left of the headers when the cursor hovers over the header). The header anchors in this document were all generated with this extension.
