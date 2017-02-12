@@ -35,6 +35,8 @@ from markdown.preprocessors import Preprocessor
 from markdown.blockprocessors import CodeBlockProcessor
 from markdown import util as md_util
 from . import highlight as hl
+from .util import PymdownxDeprecationWarning
+import warnings
 import re
 
 NESTED_FENCE_START = r'''(?x)
@@ -197,6 +199,13 @@ class SuperFencesCodeExtension(Extension):
             self.extend_super_fences(
                 "sequence", "sequence",
                 lambda s, l, c="uml-sequence-diagram": uml_format(s, l, c)
+            )
+
+        if not config.get('nested'):
+            warnings.warn(
+                "Disabling nesting has been deprecated. If you want to use no nesting, please use "
+                "Python Markdown's default 'fences' extension instead.",
+                PymdownxDeprecationWarning
             )
 
         self.markdown = md

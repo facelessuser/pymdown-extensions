@@ -243,10 +243,14 @@ By default, syntax highlighting settings will be sourced from [CodeHilite][codeh
 Option                         | Type   | Default              | Description
 ------------------------------ | ------ | -------------------- | -----------
 `disable_indented_code_blocks` | bool   | `#!py False` | Disables Python Markdown's indented code block parsing.  This is nice if you only ever use fenced blocks.
+`nested`                       | bool   | `#!py True`  | Enable fences nested in lists etc.
 `uml_flow`                     | bool   | `#!py True`  | Enable flowcharts.
 `uml_sequence`                 | bool   | `#!py True`  | Enable sequence diagrams.
 `use_codehilite_settings`      | bool   | `#!py True`  | Get applicable highlight settings from CodeHilite (if currently configured). CodeHilite's settings will be applied to `css_class` and additional behavioral options will be applied. Otherwise, use `css_class`, and configure settings via `pymdownx.highlight`.
 `highlight_code`               | bool   | `#!py True`  | Enable or disable code highlighting.
+
+!!! warning "Deprecated Option"
+    In version `2.0.0`, the setting `nested` is deprecated and will be removed in the future. Moving forward, nesting fences under lists and other blocks will be the only acceptable behavior.
 
 ## Examples
 
