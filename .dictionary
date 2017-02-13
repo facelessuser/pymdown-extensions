@@ -69,6 +69,10 @@ plugins
 plusminus
 PNG
 pre
+prepend
+prepended
+prepending
+prepends
 preprocessor
 ProgressBar
 py
@@ -108,7 +112,3 @@ Virtualenv
 Waylan
 whitespace
 YAML
-prepend
-prepends
-prepending
-prepended
