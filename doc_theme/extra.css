@@ -5,11 +5,11 @@
   overflow: auto;
 }
 
+/* Code */
 .md-typeset .linenos .special {
   color: rgba(0,0,0,.40);
 }
 
-/* Code in links */
 .md-typeset a>code {
     margin: 0 .29412em;
     padding: .07353em 0;
@@ -20,7 +20,6 @@
     box-decoration-break: clone;
 }
 
-/* Code in Tables */
 .md-typeset td code {
     word-break: normal;
 }
