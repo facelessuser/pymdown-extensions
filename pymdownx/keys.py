@@ -2,14 +2,85 @@
 Keys.
 
 pymdownx.keys
+Markdown extension for keystroke (user keyboard input) formatting.
 
-MIT license.
+It wraps the syntax `++key+key+key++` (for individual keystrokes with modifiers)
+or `++"string"++` (for continuous keyboard input) into HTML `<kbd>` elements.
 
-Extension to input keys with ease.
+If a key is found in the extension's database, its `<kbd>` element gets a matching class.
+Common synonyms are included, e.g. `++pg-up++` will match as `++page-up++`.
+
+## Config
+
+If `strict` is `True`, the entire series of keystrokes is wrapped into an outer`<kbd>` element, and then,
+each keystroke is wrapped into a separate inner `<kbd>` element, which matches the HTML5 spec.
+If `strict` is `False`, an outer `<span>` is used, which matches the practice on Github or StackOverflow.
+
+The resulting `<kbd>` elements are separated by `separator` (`+` by default, can be `''` or something else).
+
+If `camel_case` is `True`, `++PageUp++` will match the same as `++page-up++`.
+
+The database can be extended or modified with the `key_map` dict.
+
+## Examples
+
+### Input
+
+```markdown
+Press ++Shift+Alt+PgUp++, type in ++"Hello"++ and press ++Enter++.
+```
+
+### Config 1
+
+```yaml
+  pymdownx.keys:
+    camel_case: true
+    strict: false
+    separator: '+'
+```
+
+### Output 1
+
+```html
+<p>Press <span class="keys"><kbd class="key-shift">Shift</kbd><span>+</span><kbd
+class="key-alt">Alt</kbd><span>+</span><kbd class="key-page-up">Page Up</kbd></span>, type in <span
+class="keys"><kbd>Hello</kbd></span> and press <span class="keys"><kbd class="key-enter">Enter</kbd></span>.</p>
+```
+
+### Config 2
+
+```yaml
+  pymdownx.keys:
+    camel_case: true
+    strict: true
+    separator: ''
+```
+
+### Output 2
+
+```html
+<p>Press <kbd class="keys"><kbd class="key-shift">Shift</kbd><kbd class="key-alt">Alt</kbd><kbd
+class="key-page-up">Page Up</kbd></kbd>, type in <kbd class="keys"><kbd>Hello</kbd></kbd> and press <kbd
+class="keys"><kbd class="key-enter">Enter</kbd></kbd>.</p>
+```
 
 Idea by Adam Twardoch and coded by Isaac Muse.
 
 Copyright (c) 2017 Isaac Muse <isaacmuse@gmail.com>
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+documentation files (the "Software"), to deal in the Software without restriction, including without limitation
+the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
+and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions
+of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED
+TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
@@ -94,7 +165,7 @@ class KeysPattern(Pattern):
         return value
 
     def handleMatch(self, m):
-        """Hanlde kbd pattern matches."""
+        """Handle kbd pattern matches."""
 
         if m.group(2):
             return m.group('escapes').replace(DOUBLE_BSLASH, ESCAPED_BSLASH)
@@ -127,7 +198,7 @@ class KeysPattern(Pattern):
 
 
 class KeysExtension(Extension):
-    """Add KBD extension to Markdown class."""
+    """Add `keys`` extension to Markdown class."""
 
     def __init__(self, *args, **kwargs):
         """Initialize."""
@@ -135,14 +206,14 @@ class KeysExtension(Extension):
         self.config = {
             'separator': ['+', "Provide a keyboard separator - Default: \"+\""],
             'strict': [False, "Format keys and menus according to HTML5 spec - Default: False"],
-            'class': ['keys', "Provide class(es) for the kbd elements - Default: kbd"],
-            'camel_case': [False, 'Allow camle case conversion for key names PgDn -> pg-dn - Default: False'],
+            'class': ['keys', "Provide class(es) for the kbd elements - Default: \"keys\""],
+            'camel_case': [False, 'Allow camelCase conversion for key names PgDn -> pg-dn - Default: False'],
             'key_map': [{}, 'Additional keys to include or keys to override - Default: {}']
         }
         super(KeysExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
-        """Add support for emojis."""
+        """Add support for keys."""
 
         util.escape_chars(md, ['+'])
         md.inlinePatterns.add("keys", KeysPattern(RE_KBD, self.getConfigs(), md), "<escape")
