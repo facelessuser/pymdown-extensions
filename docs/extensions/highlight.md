@@ -33,7 +33,7 @@ To get this:
 
 Option                    | Type   | Default                   | Description
 ------------------------- | ------ | ------------------------- | -----------
-`guess_lang`              | bool   | `#!py False`              | Guess what syntax language should be used if no language is specified. This can be particularly tricky with 
+`guess_lang`              | bool   | `#!py False`              | Guess what syntax language should be used if no language is specified. 
 `pygments_style`          | string | `#!python 'default'`      | Set the Pygments' style to use.  This really only has an effect when used with `noclasses`.
 `noclasses`               | bool   | `#!py False`              | This will cause the styles to directly be written to the tag's style attribute instead of requiring a stylesheet.
 `use_pygments`            | bool   | `#!py True`               | Controls whether Pygments (if available) is used to style the code, or if the code will just be escaped and prepped for a JavaScript syntax highlighter.
