@@ -5,7 +5,6 @@ copyright: Copyright &copy; 2014 - 2017 <a href="https://github.com/facelessuser
 
 theme: material
 theme_dir: doc_theme
-strict: true
 
 pages:
   - PyMdown Extensions: index.md
@@ -68,7 +67,7 @@ markdown_extensions:
       css_class: codehilite
   - pymdownx.magiclink:
       repo_url_shortener: true
-      base_repo_url: 'https://github.com/facelessuser/pymdown-extensions'
+      base_repo_url: https://github.com/facelessuser/pymdown-extensions
   - pymdownx.tilde:
   - pymdownx.caret:
   - pymdownx.smartsymbols:

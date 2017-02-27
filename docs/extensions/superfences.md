@@ -141,10 +141,13 @@ cond(no)->sub1(right)->op1
 
 When using the UML diagram features, you must provide the necessary JavaScript files for the HTML output.  The requirements are listed below.
 
-- flowcharts
+flowcharts
+: 
     - [raphael.js][raphael-js]
     - [flowchart.js][flowchart-js]
-- sequence diagrams
+
+sequence diagrams
+: 
     - [raphael.js][raphael-js]
     - [underscore.js][underscore-js]
     - [sequence-diagram.js][sequence-diagram-js]
