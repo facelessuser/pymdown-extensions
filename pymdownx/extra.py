@@ -47,10 +47,17 @@ extra_extension_configs = {}
 class ExtraExtension(Extension):
     """Add various extensions to Markdown class."""
 
+    def __init__(self, *args, **kwargs):
+        """Initialize."""
+
+        self.config = kwargs.pop('configs', {})
+        self.config.update(extra_extension_configs)
+        self.config.update(kwargs)
+
     def extendMarkdown(self, md, md_globals):
         """Register extension instances."""
 
-        md.registerExtensions(extra_extensions, extra_extension_configs)
+        md.registerExtensions(extra_extensions, self.config)
 
 
 def makeExtension(*args, **kwargs):

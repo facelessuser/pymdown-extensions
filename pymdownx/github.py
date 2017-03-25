@@ -42,26 +42,6 @@ legacy_extensions = [
     'markdown.extensions.nl2br'
 ]
 
-extension_configs = {
-    "pymdownx.tilde": {
-        "subscript": False
-    },
-    "pymdownx.emoji": {
-        "emoji_index": emoji.gemoji,
-        "alt": "unicode",
-        "options": {
-            "attributes": {
-                "align": "absmiddle",
-                "height": "20px",
-                "width": "20px"
-            }
-        }
-    },
-    "pymdownx.magiclink": {}
-}
-
-legacy_extension_configs = {}
-
 
 class GithubExtension(Extension):
     """Add various extensions to Markdown class."""
@@ -70,14 +50,6 @@ class GithubExtension(Extension):
         """Initialize."""
 
         self.config = {
-            'repo_url_shortener': [
-                False,
-                "If 'True' repo commit and issue links are shortened - Default: False"
-            ],
-            'base_repo_url': [
-                '',
-                'The base repo url to use - Default: ""'
-            ],
             'no_nl2br': [
                 True,
                 "Don't use nl2br extension.  Latest Github Flavored Markdown"
@@ -85,6 +57,27 @@ class GithubExtension(Extension):
                 " defaulted to 'True'. - Default: False"
             ]
         }
+
+        self.extension_configs = {
+            "pymdownx.tilde": {
+                "subscript": False
+            },
+            "pymdownx.emoji": {
+                "emoji_index": emoji.gemoji,
+                "alt": "unicode",
+                "options": {
+                    "attributes": {
+                        "align": "absmiddle",
+                        "height": "20px",
+                        "width": "20px"
+                    }
+                }
+            }
+        }
+
+        for ext in extensions:
+            if ext in kwargs:
+                self.extension_configs[ext] = kwargs.pop(ext)
         super(GithubExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
@@ -102,13 +95,8 @@ class GithubExtension(Extension):
             )
 
         exts = extensions if no_nl2br else extensions + legacy_extensions
-        exts_config = extension_configs.copy()
-        exts_config['pymdownx.magiclink']['repo_url_shortener'] = config['repo_url_shortener']
-        exts_config['pymdownx.magiclink']['base_repo_url'] = config['base_repo_url']
-        if not no_nl2br:
-            exts_config.update(legacy_extension_configs)
 
-        md.registerExtensions(exts, exts_config)
+        md.registerExtensions(exts, self.extension_configs)
 
 
 def makeExtension(*args, **kwargs):

@@ -22,4 +22,18 @@ Extension                          | Name
 [Abbreviations](abbreviations)     | `markdown.extensions.abbr`
 [ExtraRawHtml](./extrarawhtml.md)  | `pymdownx.extrarawhtml`
 
+## Options
+
+If you wish to configure the individual extensions included via this extensions, you can configure them by placing that sub extension's settings under a setting value that equals the sub extensions name.
+
+```py
+extension_configs = {
+    'pymdownx.extra': {
+        'markdown.extensions.footnotes': {
+            'BACKLINK_TEXT': 'link'
+        }
+    }
+}
+```
+
 --8<-- "links.md"

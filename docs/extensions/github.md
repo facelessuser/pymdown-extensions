@@ -64,10 +64,22 @@ extension_configs = {
 Option               | Type    | Default      | Description
 -------------------- | ------- | ------------ | -----------
 `no_nl2br`           | bool    | `#!py True`  | If `False`, this includes the [New-Line-to-Break][nl2br] extension.
-`repo_url_shortener` | bool    | `#!py False` | If `True` GitHub, Bitbucket, and GitLab commit and issue links are shortened. See [MagicLink](./magiclink.md) for more info.
-`base_repo_url`      | string  | `#!py ''`    | The base repository URL for repository links. See [MagicLink](./magiclink.md) for more info.
+
 
 !!! warning "Deprecated Option"
     In version `1.3.0`, the setting `no_nl2br` is now `True` by default and the setting is deprecated and will be removed in `3.0`. GitHub's GFM (which we are emulating) no longer converts new lines to `<br>`.  If you prefer having New-Line-to-Break enabled, you can enable the `markdown.extensions.nl2br` extension separately.
+
+If you wish to configure the individual extensions included via this extensions, you can configure them by placing that sub extension's settings under a setting value that equals the sub extensions name.
+
+```py
+extension_configs = {
+    'pymdownx.github': {
+        'no_nl2br': True,
+        'pymdownx.tilde': {
+            'subscript': True
+        }
+    }
+}
+```
 
 --8<-- "refs.md"

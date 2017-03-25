@@ -134,6 +134,12 @@ extra:
   extensions:
     pymdownx.extra:
 
+extra (config):
+  extensions:
+    pymdownx.extra:
+      markdown.extensions.footnotes:
+        BACKLINK_TEXT: link
+
 extrarawhtml:
   extensions:
     pymdownx.extrarawhtml:
@@ -159,6 +165,12 @@ gemoji (png):
 github:
   extensions:
     pymdownx.github:
+
+github (config):
+  extensions:
+    pymdownx.github:
+      pymdownx.tilde:
+        subscript: True
 
 github_legacy:
   extensions:
