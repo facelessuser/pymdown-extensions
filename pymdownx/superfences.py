@@ -127,10 +127,16 @@ class CodeStash(object):
         self.stash = {}
 
 
-def uml_format(source, language, css_class):
-    """Format for UML blocks."""
+def fence_code_format(source, language, css_class):
+    """Format source as code blocks."""
 
     return '<pre class="%s"><code>%s</code></pre>' % (css_class, _escape(source))
+
+
+def fence_div_format(source, language, css_class):
+    """Format source as div."""
+
+    return '<div class="%s">%s</div>' % (css_class, _escape(source))
 
 
 class SuperFencesCodeExtension(Extension):
@@ -145,13 +151,18 @@ class SuperFencesCodeExtension(Extension):
             'nested': [True, "Use nested fences - Default: True"],
             'uml_flow': [True, "Enable flowcharts - Default: True"],
             'uml_sequence': [True, "Enable sequence diagrams - Default: True"],
+            'custom_fences': [
+                [
+                    {'name': 'flow', 'class': 'uml-flowchart'},
+                    {'name': 'sequence', 'class': 'uml-sequence-diagram'}
+                ],
+                'Specify custom fences. Default: See documentation.'
+            ],
             'highlight_code': [True, "Highlight code - Default: True"],
             'use_codehilite_settings': [
-                True,
-                "Use codehilite options if available. "
-                "If codehilite not available or this is False,"
-                "SuperFences will use its own settings. - "
-                "- Default: True"
+                None,
+                "Deprecatd and does nothing. "
+                "- Default: None"
             ],
             'css_class': [
                 "highlight",
@@ -161,13 +172,13 @@ class SuperFencesCodeExtension(Extension):
         }
         super(SuperFencesCodeExtension, self).__init__(*args, **kwargs)
 
-    def extend_super_fences(self, name, language, formatter):
+    def extend_super_fences(self, name, formatter):
         """Extend superfences with the given name, language, and formatter."""
 
         self.superfences.append(
             {
                 "name": name,
-                "test": lambda l, language=language: language == l,
+                "test": lambda l, language=name: language == l,
                 "formatter": formatter
             }
         )
@@ -190,16 +201,16 @@ class SuperFencesCodeExtension(Extension):
         )
 
         # UML blocks
-        if config.get("uml_flow", True):
-            self.extend_super_fences(
-                "flow", "flow",
-                lambda s, l, c="uml-flowchart": uml_format(s, l, c)
-            )
-        if config.get("uml_sequence", True):
-            self.extend_super_fences(
-                "sequence", "sequence",
-                lambda s, l, c="uml-sequence-diagram": uml_format(s, l, c)
-            )
+        custom_fences = config.get('custom_fences', [])
+        for custom in custom_fences:
+            name = custom.get('name')
+            class_name = custom.get('class')
+            fence_format = custom.get('format', fence_code_format)
+            if name is not None and class_name is not None:
+                self.extend_super_fences(
+                    name,
+                    lambda s, l, c=class_name, f=fence_format: f(s, l, c)
+                )
 
         if not config.get('nested'):
             warnings.warn(
@@ -272,7 +283,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             self.checked_hl_settings = True
             self.highlight_code = self.config['highlight_code']
 
-            config = hl.get_hl_settings(self.markdown, self.config['use_codehilite_settings'])
+            config = hl.get_hl_settings(self.markdown)
             if 'extend_pygments_lang' not in config:
                 self.css_class = config['css_class']
             else:
@@ -525,8 +536,6 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         self.clear()
         self.stack = []
         self.disabled_indented = self.config.get("disable_indented_code_blocks", False)
-        self.uml_flow = self.config.get("uml_flow", True)
-        self.uml_sequence = self.config.get("uml_sequence", True)
 
         if self.config.get("nested", True):
             lines = self.search_nested(lines)

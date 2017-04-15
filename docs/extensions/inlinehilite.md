@@ -4,6 +4,12 @@ InlineHilite is an inline code highlighter inspired by [CodeHilite][codehilite].
 
 When using the colon mock shebang, 3 or more colons can be used.  Mock shebangs must come **immediately** after the opening backtick(s) and must be followed by at least one space.  If you need to escape a mock shebang at the start of a code block, just put a space before it and it will be treated as part of the code.
 
+## Code Highlighting
+
+Assuming Pygments is installed, code highlighting will be handled by [Pygments][pygments] by default. If Pygments is not installed, code blocks will be wrapped in a `code` element and given a class of `language-<specified_language>` (if a language specifier was given) so that a JavaScript highlighter can style them.
+
+If CodeHilite is configured, it's settings will be used to configure highlighting, but CodeHilite support is deprecated and will be removed in the next major release. It is recommended to instead use [`pymdownx.highlight`](./highlight.md) extension. If `pymdownx.highlight` is included and configured, CodeHilite will be ignored.
+
 ## Using JavaScript Highlighters
 
 If using [Pygments][pygments], the elements will be highlighted without issues, but you may need to adjust CSS to get the general style of the inline block the way you like it.
@@ -12,12 +18,9 @@ If you are using a JavaScript highlighter, such as [`highlight.js`][highlightjs]
 
 ## Options
 
-By default, syntax highlighting settings will be sourced from [CodeHilite][codehilite] if it is configured and `use_codehilite_settings` is enabled, but InlineHilite's highlighting can be configure without and/or independently from CodeHilite. If CodeHilite is not configured, or if `use_codehilite_settings` is disabled, default settings will be used and can be configured via [`pymdownx.highlight`](./highlight.md).  CodeHilite support will most likely be abandoned in the future, so keep that in mind when configuring.
-
 Option                    | Type   | Default                   | Description
 ------------------------- | ------ | ------------------------- | -----------
 `style_plain_text`        | bool   | `#!py False`              | When `guess_lang` is set to `#!py False`, InlineHilite will avoid applying classes to code blocks that do not explicitly set a language. If it is desired to have plain text styled like code, enable this to inject classes so that they can all be styled the same.
-`use_codehilite_settings` | bool   | `#!py True`               | Get applicable highlight settings from CodeHilite (if currently configured). CodeHilite's settings will be applied to `css_class` and additional behavioral options will be applied. Otherwise, use `css_class`, and configure settings via `pymdownx.highlight`.
 `css_class`               | string | `#!python 'highlight'` | Set's the class name that will be injected into inline code tags when they are processed.
 
 ## Example

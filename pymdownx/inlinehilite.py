@@ -59,7 +59,7 @@ class InlineHilitePattern(Pattern):
         if not self.get_hl_settings:
             self.get_hl_settings = True
             self.style_plain_text = self.config['style_plain_text']
-            config = hl.get_hl_settings(self.markdown, self.config['use_codehilite_settings'])
+            config = hl.get_hl_settings(self.markdown)
 
             if 'extend_pygments_lang' not in config:
                 self.css_class = config['css_class']
@@ -111,10 +111,8 @@ class InlineHiliteExtension(Extension):
 
         self.config = {
             'use_codehilite_settings': [
-                True,
-                "Use codehilite options if available. "
-                "If codehilite not available or this is False,"
-                "Inlinehilite will use its own settings. - "
+                None,
+                "Deprecated and does nothing. "
                 "- Default: True"
             ],
             'style_plain_text': [

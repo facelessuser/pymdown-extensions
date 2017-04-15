@@ -2,54 +2,62 @@
 
 SuperFences provides 4 features:
 
-1. The ability to nest fences under blockquotes, lists, or other block elements (this feature is provided as a workaround until a more official and better implementation is provided by the Python Markdown team; see [Limitations](#limitations) for more info).
-2. Special UML flowchart fences via the `flow` language specifier.
-3. Special UML sequence diagrams via the `sequence` language specifier.
+1. The ability to [nest fences](#nested-fence-format) under blockquotes, lists, or other block elements (see [Limitations](#limitations) for more info).
+2. Ability to specify [custom fences](#custom-fences) to provide features like flowcharts, sequence diagrams, or other custom blocks.
 4. The ability to disable indented code blocks in favor of only using the fenced variant (off by default).
 
 !!! danger "Reminder"
     Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this extension!
 
-## Nested Fenced Blocks
+## Nested Fence Format
 
-Fenced blocks require all nested fence content to be at least at the indentation levels of the fences (blank lines excluded).  The opening and closing fence markers must be indented at the same level.  If you are using a fenced block inside a blockquote, at the very least, the first line of the fenced block needs to have the appropriate number of `>` characters signifying the quote depth.
 
-````
-> ```
-  a fenced block
-  ```
-````
+1. Start and end fence boundaries are specified with either 3 or more backticks or tildes.
 
-Keep in mind that too many blank lines will cause a blockquote to terminate, so remember to use `>` markers accordingly if not marking every line.
+2. Start and end fence boundaries must both use matching symbols (backticks or tildes) and must be of the same number of symbols.  If start is 3 backticks, the fence will end with 3 backticks.
 
-````
-> ```
-  a fenced block
+3. Start and end fence boundaries must be aligned to the same indentation level.
 
-> with blank lines
-  ```
-````
+4. Content between fences must be indented at least the same amount as the start and end boundaries.  Empty lines are exempted.
 
-If using a fenced block as the first line of a list, you will have to leave the first line blank, but remember that the list marker must be followed by a space.
+5. If you are using a fenced block inside a blockquote, at the very least, the first line of the fenced block needs to have the appropriate number of `>` characters signifying the quote depth.
 
-````
--<space>
-    ```
-    a fenced block
-    ```
+    ````
+    > ```
+      a fenced block
+      ```
+    ````
 
-Definition
-:<space>
-    ```
-    a fenced block
-    ```
-````
+6. Too many blank lines will cause a blockquote to terminate, so remember to use `>` markers accordingly if not marking every line.
+
+    ````
+    > ```
+      a fenced block
+
+    > with blank lines
+      ```
+    ````
+
+7. If using a fenced block as the first line of a list, you will have to leave the first line blank, but remember that the list marker must be followed by a space.
+
+    ````
+    -<space>
+        ```
+        a fenced block
+        ```
+
+    Definition
+    :<space>
+        ```
+        a fenced block
+        ```
+    ````
 
 ## Code Highlighting
 
-Assuming Pygments is installed, code highlighting will be handled by [Pygments][pygments] by default. If Pygments is not installed, code blocks will be wrapped in code and pre elements and given a class of `language-<specified_language>` (if a language specifier was given) so that a JavaScript highlighter can style them.
+Assuming Pygments is installed, code highlighting will be handled by [Pygments][pygments] by default. If Pygments is not installed, code blocks will be wrapped in `code` and `pre` elements and given a class of `language-<specified_language>` (if a language specifier was given) so that a JavaScript highlighter can style them.
 
-SuperFences will use a set of default settings, but highlighting in general can be customized via external extensions. You can use [`pymdownx.highlight`](./highlight.md) extension, or the legacy method that uses [CodeHilite][codehilite]'s settings if it is configured. If you are using CodeHilite for indented code blocks, but still want to configure fence block settings separately via `pymdownx.highlight`, just disable `use_codehilite_settings` in the options. In the future, it is planned to abandon sourcing settings from CodeHilite, so keep this in mind when selecting which option to use.
+If CodeHilite is configured, it's settings will be used to configure highlighting, but CodeHilite support is deprecated and will be removed in the next major release. It is recommended to instead use [`pymdownx.highlight`](./highlight.md) extension. If `pymdownx.highlight` is included and configured, CodeHilite will be ignored.
 
 When using fenced code blocks, you can specify a specific syntax language to highlight with by specifying the language name directly after the opening tokens (either ` ``` ` or `~~~`). So if we wanted to specify Python as the syntax to highlight with, we could use the following syntax below. Whether using Pygments or some other JavaScript highlighter, please consult your highlighter's documentation for recognized language syntax specifiers.
 
@@ -71,7 +79,7 @@ import foo.bar
 ```
 ````
 
-Pygments also has a few additional options in regards to line numbers. One is "line step" which, if set to a number n > 1, will print only every n^th^ line number. The other is a setting that can mark line numbers as special with a span and class `special`. If the special parameter is set to a number n > 0, every n^th^ line number is given the CSS class `special`.
+Pygments also has a few additional options in regards to line numbers. One is "line step" which, if set to a number n > 1, will print only every n^th^ line number. The other option is a setting that can mark line numbers as "special" with a span and class `special`. If the special parameter is set to a number n > 0, every n^th^ line number is given the CSS class `special`.
 
 So to set showing only every other line number, we could do the following. Line options are separated by a space, and "line step" is always the second option, so you must specify line start before line step.
 
@@ -95,7 +103,7 @@ import foo.bar.baz
 ```
 ````
 
-For JavaScript libraries, a class of `linenums` is written to the block.  This may or may not be leveraged by your chosen highlighter.  It is uncertain at this time whether line number support will for JavaScript highlighters will be enhanced beyond this.
+For JavaScript libraries, a class of `linenums` is written to the block.  This may or may not be leveraged by your chosen highlighter.  It is uncertain at this time whether line number support for JavaScript highlighters will be enhanced beyond this.
 
 ## Highlighting Lines
 
@@ -119,9 +127,35 @@ import foo.bar.baz
 ```
 ````
 
-## UML Diagrams
+## Custom Fences
 
-UML diagrams are recognized when defining a fenced code block with either the language `flow` or `sequence`.
+SuperFences allows defining custom fences for special purposes. For example, SuperFences defines two default custom fences (which can be removed if desired) called `flow` and `sequence`, for flowcharts and sequence diagrams respectively. The default custom fences simply preserve the content between the fences so a JavaScript UML library can convert the content and render the UML. Custom fences are created via the `custom_fences` option.  `custom_fences` takes an array of dictionaries where each dictionary defines a custom fence. The dictionaries requires the following keys:
+
+Keys     | Description
+-------- | -----------
+`name`   | The language name that is specified when using the fence in Markdown.
+`class`  | The class name assigned to the HTML element when converting from Markdown to HTML.
+`format` | A function that formats the HTML output.  Should return a string as HTML.
+
+SuperFences provides two format functions by default, but you can always write your own:
+
+Format\ Function                | Description
+------------------------------- | -----------
+`superfences.fence_code_format` | Places the HTML escaped content of the fence under a `#!html <pre><code>` block.
+`superfences.fence_div_format`  | Places the HTML escaped content of the fence under a `#!html <div>` block.
+
+## UML Diagram Examples
+
+This example illustrates how this document uses the `custom_fences` option to do UML diagrams.  Out of the box, SuperFences use the default settings for `custom_fences` for the purpose of including UML. The settings below show the default settings, which define two new custom languages called `flow` and `sequence`. The `flow` and `sequence` fences will pass the content through the `superfences.fence_code_format` format function which will wrap the content in `#!html <pre><code` blocks and attach the class `uml-flowchart` or `uml-sequence-diagram` to the respective `#!html <pre>` block. `superfences.fence_div_format` could just as easily be used to wrap the content in a `#!html <div>` instead, or a new custom function could have been written and used.
+
+```py
+custom_fences = [
+    {'name': 'flow', 'class': 'uml-flowchart', 'format': superfences.fence_code_format},
+    {'name': 'sequence', 'class': 'uml-sequence-diagram', 'format': superfences.fence_code_format}
+]
+```
+
+As defined above, the custom UML diagrams are recognized when defining a fenced code block with either the language `flow` or `sequence`.  When they are converted, the HTML element containing this content will have the respective classes `uml-flowchart` or `uml-sequence-diagram`. The format function we used in this example only escapes the content to be included in HTML. We will rely on JavaScript libraries to render our flowcharts/diagrams in the browser. Below is an example of defining a flowchart fence.
 
 ````
 ```flow
@@ -139,7 +173,7 @@ cond(no)->sub1(right)->op1
 ```
 ````
 
-When using the UML diagram features, you must provide the necessary JavaScript files for the HTML output.  The requirements are listed below.
+For this example we will use the [flowchart.js][flowchart-js] and [sequence-diagram.js][sequence-diagram-js] JavaScript libraries to render the flow charts in the browser. This extension does not provide these JavaScript libraries; you must provide the necessary JavaScript files for your custom fences. If you wish to follow along with this example to enable UML, see the requirements below.
 
 flowcharts
 : 
@@ -148,107 +182,95 @@ flowcharts
 
 sequence diagrams
 : 
+    Minimum requirements for the latest version available via CDN (at the time of writing this).
+
     - [raphael.js][raphael-js]
     - [underscore.js][underscore-js]
     - [sequence-diagram.js][sequence-diagram-js]
 
-All of these libraries can be included using a CDN (you can use the version of your choice):
+All of the above mentioned libraries can be included using CDNs (you can use the version of your choice):
 
 ```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.4/raphael-min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.4.2/flowchart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script>
 ```
 
-Simply including the libraries above is not enough as these libraries need to be pointed at the elements they need to convert.  UML flowcharts and sequence diagrams will be rendered as HTML under `<pre><code>` tags.  These need to be converted by the included libraries, and they require some code to target them and feed them through the respective library. Flow chart elements are assigned the class `uml-flowchart`, and sequence diagrams are assigned the `uml-sequence-diagram` class.
+Simply including the libraries above is not enough as these libraries need to be pointed at the elements they need to convert.  Also, we need to configure the libraries with the settings we would like.
 
-We are going to show some example scripts to convert the UML diagrams.  These scripts will target the `uml-flowchart` and `uml-sequence-diagram` elements, insert the rendered UML, and remove the original source. The scripts listed below do not have to be used, and you can modify them or write your own to suite your needs; they are provided for convenience.
+As mentioned earlier, our flowchart elements have the `uml-flowchart` class assigned to them, and the sequence diagram elements have the `uml-sequence-diagram` class assigned to them. Below shows an example script to convert the UML diagrams for both flowcharts and sequence diagrams using the listed libraries above. This script will target the elements with the classes `uml-flowchart` and `uml-sequence-diagram`. The script will pass the content to the correct library to render the content.  It will then insert the rendered UML and remove the original source. This is just an example, and you are not required to use the following script. You are free to modify the example script or write your own to suite your specific custom fence.
 
-
-Here is a generalized function that takes the UML class to target, the UML convert to be used, and an object containing the desired configuration for the converter.
+In the below example we create an `onReady` function to execute the conversion when the HTML is loaded.  We create a `convertUML` function that takes the class name to search for, the converter to use, and a settings object to feed into the converter.  We then call `onReady` and feed it a callback function that will execute `convertUML` for flowcharts and for sequence diagrams. Notice that `convertUML` can handle both the `#!html <pre><code>` format or the `#!html <div>` format we mentioned earlier.
 
 ```js
-/* uml-converter.js */
-(function (win, doc) {
-  win.convertUML = function(className, converter, settings) {
-    var charts = doc.querySelectorAll("pre." + className),
-        arr = [],
-        i, j, maxItem, diagaram, text, curNode;
+(function (document) {
+    function convertUML(className, converter, settings) {
+        var charts = document.querySelectorAll("pre." + className + ',div.' + className),
+            arr = [],
+            i, j, maxItem, diagaram, text, curNode,
+            isPre;
 
-    // Is there a settings object?
-    if (settings === void 0) {
-        settings = {};
-    }
-
-    // Make sure we are dealing with an array
-    for(i = 0, maxItem = charts.length; i < maxItem; i++) arr.push(charts[i])
-
-    // Find the UML source element and get the text
-    for (i = 0, maxItem = arr.length; i < maxItem; i++) {
-        childEl = arr[i].firstChild;
-        parentEl = childEl.parentNode;
-        text = "";
-        for (j = 0; j < childEl.childNodes.length; j++) {
-            curNode = childEl.childNodes[j];
-            whitespace = /^\s*$/;
-            if (curNode.nodeName === "#text" && !(whitespace.test(curNode.nodeValue))) {
-                text = curNode.nodeValue;
-                break;
-            }
+        // Is there a settings object?
+        if (settings === void 0) {
+            settings = {};
         }
 
-        // Do UML conversion and replace source
-        el = doc.createElement('div');
-        el.className = className;
-        parentEl.parentNode.insertBefore(el, parentEl);
-        parentEl.parentNode.removeChild(parentEl);
-        diagram = converter.parse(text);
-        diagram.drawSVG(el, settings);
+        // Make sure we are dealing with an array
+        for(i = 0, maxItem = charts.length; i < maxItem; i++) arr.push(charts[i]);
+
+        // Find the UML source element and get the text
+        for (i = 0, maxItem = arr.length; i < maxItem; i++) {
+            isPre = arr[i].tagName.toLowerCase() == 'pre';
+            if (isPre) {
+                // Handles <pre><code>
+                childEl = arr[i].firstChild;
+                parentEl = childEl.parentNode;
+                text = "";
+                for (j = 0; j < childEl.childNodes.length; j++) {
+                    curNode = childEl.childNodes[j];
+                    whitespace = /^\s*$/;
+                    if (curNode.nodeName === "#text" && !(whitespace.test(curNode.nodeValue))) {
+                        text = curNode.nodeValue;
+                        break;
+                    }
+                }
+                // Do UML conversion and replace source
+                el = document.createElement('div');
+                el.className = className;
+                parentEl.parentNode.insertBefore(el, parentEl);
+                parentEl.parentNode.removeChild(parentEl);
+            } else {
+                // Handles <div>
+                el = arr[i];
+                text = el.textContent || el.innerText;
+                if (el.innerText){
+                    el.innerText = '';
+                } else {
+                    el.textContent = '';
+                }
+            }
+            diagram = converter.parse(text);
+            diagram.drawSVG(el, settings);
+        }
+    };
+
+    function onReady(fn) {
+        if (document.addEventListener) {
+            document.addEventListener('DOMContentLoaded', fn);
+        } else {
+            document.attachEvent('onreadystatechange', function() {
+                if (document.readyState === 'interactive')
+                    fn();
+            });
+        }
     }
-  }
-})(window, document)
 
-```
-
-Here we have a function, when the HTML page is ready, that will call the above `convertUML` function to search for `uml-flowchart` elements and run them through the `flowchart` library replacing the source with the rendered UML.
-
-```js
-/* flow-loader.js */
-(function (doc) {
-  function onReady(fn) {
-    if (doc.addEventListener) {
-      doc.addEventListener('DOMContentLoaded', fn);
-    } else {
-      doc.attachEvent('onreadystatechange', function() {
-        if (doc.readyState === 'interactive')
-          fn();
-      });
-    }
-  }
-
-  onReady(function(){convertUML('uml-flowchart', flowchart);});
-})(document)
-```
-
-Here we have a function, when the HTML page is ready, that will call the above `convertUML` function to search for `uml-sequence-diagram` elements and run them through the `Diagram` library replacing the source with the rendered UML. You can see in this example that the `simple` theme is configured via the settings object.
-
-```js
-/* sequence-loader.js */
-(function (doc) {
-  function onReady(fn) {
-    if (doc.addEventListener) {
-      doc.addEventListener('DOMContentLoaded', fn);
-    } else {
-      doc.attachEvent('onreadystatechange', function() {
-        if (doc.readyState === 'interactive')
-          fn();
-      });
-    }
-  }
-
-  onReady(function(){convertUML('uml-sequence-diagram', Diagram, {theme: 'simple'});});
-})(document)
+    onReady(function(){
+        convertUML('uml-flowchart', flowchart);
+        convertUML('uml-sequence-diagram', Diagram, {theme: 'simple'});
+    });
+})(document);
 ```
 
 ## Limitations
@@ -263,15 +285,11 @@ For the reasons above, the nested fences feature really is just a workaround.  B
 
 ## Options
 
-By default, syntax highlighting settings will be sourced from [CodeHilite][codehilite] if it is configured and `use_codehilite_settings` is enabled, but SuperFences' highlighting can be configure without and/or independently from CodeHilite. If CodeHilite is not configured, or if `use_codehilite_settings` is disabled, default settings will be used and can be customized via [`pymdownx.highlight`](./highlight.md).  CodeHilite support will most likely be abandoned in the future, so keep that in mind when configuring.
-
 Option                         | Type   | Default              | Description
 ------------------------------ | ------ | -------------------- | -----------
 `disable_indented_code_blocks` | bool   | `#!py False` | Disables Python Markdown's indented code block parsing.  This is nice if you only ever use fenced blocks.
 `nested`                       | bool   | `#!py True`  | Enable fences nested in lists etc.
-`uml_flow`                     | bool   | `#!py True`  | Enable flowcharts.
-`uml_sequence`                 | bool   | `#!py True`  | Enable sequence diagrams.
-`use_codehilite_settings`      | bool   | `#!py True`  | Get applicable highlight settings from CodeHilite (if currently configured). CodeHilite's settings will be applied to `css_class` and additional behavioral options will be applied. Otherwise, use `css_class`, and configure settings via `pymdownx.highlight`.
+`custom_fences`                | dict   | ``           | Custom fences.
 `highlight_code`               | bool   | `#!py True`  | Enable or disable code highlighting.
 
 !!! warning "Deprecated Option"
