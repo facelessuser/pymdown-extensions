@@ -31,16 +31,16 @@ Option             | Type            | Default                              | De
 
 ## Loading MathJax
 
-Arithmatex requires you to provide the MathJax library and provide and configure it to your liking.  The recommended way of including MathJax is to use the CDN.
+Arithmatex requires you to provide the MathJax library and provide and configure it to your liking.  The recommended way of including MathJax is to use the CDN. Latest version at time of writting this is found below.
 
 ```html
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"></script>
 ```
 
 If you want to load one of the pre-defined configurations that MathJax offers, you can do as shown below.  Notice we are using the [`TeX-MML-AM_CHTML`](http://docs.mathjax.org/en/latest/config-files.html?highlight=TeX-MML-AM_CHTML#the-tex-mml-am-chtml-configuration-file) configuration file.
 
 ```html
-<script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 ```
 
 If you don't include a pre-defined configuration, you will need to provide your own.  But you can also provide a configuration to tweak the pre-defined configuration.  Here we show a simple example of a configuration done in JavaScript.
