@@ -38,10 +38,6 @@ extensions = [
     'pymdownx.superfences'
 ]
 
-legacy_extensions = [
-    'markdown.extensions.nl2br'
-]
-
 
 class GithubExtension(Extension):
     """Add various extensions to Markdown class."""
@@ -49,14 +45,7 @@ class GithubExtension(Extension):
     def __init__(self, *args, **kwargs):
         """Initialize."""
 
-        self.config = {
-            'no_nl2br': [
-                True,
-                "Don't use nl2br extension.  Latest Github Flavored Markdown"
-                " no longer uses the equivalent of nl2br.  In the future, this will be"
-                " defaulted to 'True'. - Default: False"
-            ]
-        }
+        self.config = {}
 
         self.extension_configs = {
             "pymdownx.tilde": {
@@ -83,20 +72,7 @@ class GithubExtension(Extension):
     def extendMarkdown(self, md, md_globals):
         """Register extension instances."""
 
-        config = self.getConfigs()
-        no_nl2br = config["no_nl2br"]
-        if not no_nl2br:
-            warnings.warn(
-                "The pymdown.github extension does not enable nl2br anymore by default."
-                "\nThis is to ensure compliance with recent Github Flavored Markdown."
-                "\n'no_nl2br' is deprecated and will be removed in a future version."
-                "\nPlease manually include markdown.extensions.nl2br if you wish to continue using.",
-                PymdownxDeprecationWarning
-            )
-
-        exts = extensions if no_nl2br else extensions + legacy_extensions
-
-        md.registerExtensions(exts, self.extension_configs)
+        md.registerExtensions(extensions, self.extension_configs)
 
 
 def makeExtension(*args, **kwargs):

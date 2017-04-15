@@ -288,12 +288,8 @@ For the reasons above, the nested fences feature really is just a workaround.  B
 Option                         | Type   | Default              | Description
 ------------------------------ | ------ | -------------------- | -----------
 `disable_indented_code_blocks` | bool   | `#!py False` | Disables Python Markdown's indented code block parsing.  This is nice if you only ever use fenced blocks.
-`nested`                       | bool   | `#!py True`  | Enable fences nested in lists etc.
 `custom_fences`                | dict   | ``           | Custom fences.
 `highlight_code`               | bool   | `#!py True`  | Enable or disable code highlighting.
-
-!!! warning "Deprecated Option"
-    In version `2.0.0`, the setting `nested` is deprecated and will be removed in `3.0`. Moving forward, nesting fences under lists and other blocks will be the only acceptable behavior.
 
 ## Examples
 

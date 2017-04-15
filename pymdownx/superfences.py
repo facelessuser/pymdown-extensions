@@ -148,7 +148,6 @@ class SuperFencesCodeExtension(Extension):
         self.superfences = []
         self.config = {
             'disable_indented_code_blocks': [False, "Disable indented code blocks - Default: False"],
-            'nested': [True, "Use nested fences - Default: True"],
             'uml_flow': [True, "Enable flowcharts - Default: True"],
             'uml_sequence': [True, "Enable sequence diagrams - Default: True"],
             'custom_fences': [
@@ -211,13 +210,6 @@ class SuperFencesCodeExtension(Extension):
                     name,
                     lambda s, l, c=class_name, f=fence_format: f(s, l, c)
                 )
-
-        if not config.get('nested'):
-            warnings.warn(
-                "Disabling nesting has been deprecated. If you want to use no nesting, please use "
-                "Python Markdown's default 'fences' extension instead.",
-                PymdownxDeprecationWarning
-            )
 
         self.markdown = md
         self.patch_fenced_rule()
@@ -393,28 +385,6 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
         return int(linespecial) if linespecial else -1
 
-    def search(self, lines):
-        """Search for non-nested fenced blocks."""
-
-        text = "\n".join(lines)
-        while 1:
-            m = RE_FENCE.search(text)
-            if m:
-                self.lang = m.group('lang')
-                self.hl_lines = m.group('hl_lines')
-                self.linestart = m.group('linestart')
-                self.linestep = m.group('linestep')
-                self.linespecial = m.group('linespecial')
-                for entry in reversed(self.extension.superfences):
-                    if entry["test"](self.lang):
-                        code = entry["formatter"](m.group('code'), self.lang)
-                        break
-                placeholder = self.markdown.htmlStash.store(code, safe=True)
-                text = '%s\n%s\n%s' % (text[:m.start()], placeholder, text[m.end():])
-            else:
-                break
-        return text.split("\n")
-
     def search_nested(self, lines):
         """Search for nested fenced blocks."""
 
@@ -537,10 +507,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         self.stack = []
         self.disabled_indented = self.config.get("disable_indented_code_blocks", False)
 
-        if self.config.get("nested", True):
-            lines = self.search_nested(lines)
-        else:
-            lines = self.search(lines)
+        lines = self.search_nested(lines)
 
         return lines
 

@@ -172,36 +172,6 @@ github (config):
       pymdownx.tilde:
         subscript: True
 
-github_legacy:
-  extensions:
-    pymdownx.github:
-      no_nl2br: false
-
-githubemoji:
-  extensions:
-    pymdownx.githubemoji:
-
-headeranchor:
-  css:
-    - assets/headeranchor.css
-  extensions:
-    markdown.extensions.attr_list:
-    pymdownx.headeranchor:
-
-headeranchor-unicode:
-  css:
-    - assets/headeranchor.css
-  extensions:
-    pymdownx.headeranchor:
-      slugify: !!python/name:pymdownx.slugs.uslugify
-
-headeranchor-unicode-encode:
-  css:
-    - assets/headeranchor.css
-  extensions:
-    pymdownx.headeranchor:
-      slugify: !!python/name:pymdownx.slugs.uslugify_encoded
-
 inlinehilite:
   extensions:
     markdown.extensions.attr_list:
@@ -336,12 +306,6 @@ superfences (no indent blocks):
 superfences (no highlight):
   extensions:
     pymdownx.superfences:
-      highlight_code: false
-
-superfences (no nesting):
-  extensions:
-    pymdownx.superfences:
-      nested: false
       highlight_code: false
 
 superfences (no pygments):
