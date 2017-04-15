@@ -19,6 +19,8 @@ from markdown import Extension
 from markdown.inlinepatterns import Pattern
 from markdown import util as md_util
 from . import highlight as hl
+from .util import PymdownxDeprecationWarning
+import warnings
 
 ESCAPED_BSLASH = '%s%s%s' % (md_util.STX, ord('\\'), md_util.ETX)
 DOUBLE_BSLASH = '\\\\'
@@ -135,6 +137,16 @@ class InlineHiliteExtension(Extension):
         """Add support for :::language`code` code hiliting."""
 
         config = self.getConfigs()
+
+        if config.get('use_codehilite_settings'):  # pragma: no coverage
+            warnings.warn(
+                "'use_codehilite_settings' is deprecated and does nothing.\n"
+                "\nCodeHilite settings will only be used if CodeHilite is configured\n"
+                " and 'pymdownx.highlight' is not configured.\n"
+                "Please discontinue use of this setting as it will be removed in the future.",
+                PymdownxDeprecationWarning
+            )
+
         inline_hilite = InlineHilitePattern(BACKTICK_CODE_RE, md)
         inline_hilite.config = config
         md.inlinePatterns['backtick'] = inline_hilite

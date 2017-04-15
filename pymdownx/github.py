@@ -24,9 +24,7 @@ DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
-import warnings
 from . import emoji
-from .util import PymdownxDeprecationWarning
 
 extensions = [
     'markdown.extensions.tables',

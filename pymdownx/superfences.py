@@ -199,6 +199,15 @@ class SuperFencesCodeExtension(Extension):
             }
         )
 
+        if config.get('use_codehilite_settings'):  # pragma: no coverage
+            warnings.warn(
+                "'use_codehilite_settings' is deprecated and does nothing.\n"
+                "\nCodeHilite settings will only be used if CodeHilite is configured\n"
+                " and 'pymdownx.highlight' is not configured.\n"
+                "Please discontinue use of this setting as it will be removed in the future.",
+                PymdownxDeprecationWarning
+            )
+
         # UML blocks
         custom_fences = config.get('custom_fences', [])
         for custom in custom_fences:
