@@ -28,7 +28,7 @@ Option                      | Type       | Default              | Description
 `options`                   | dictionary | `#!python {}`        | Options that are specific to emoji generator functions.  Supported parameters can vary from function to function.
 
 !!! tip "Legacy GitHubEmoji Emulation"
-    The Emoji extension was actually created to replace the now deprecated [GitHubEmoji](./githubemoji.md) extension. Emoji was written to be much more flexible.  If you have a desire to configure the output to be like the legacy GitHubEmoji extension, you can use the settings below. This shows the full setup. To learn more about the settings used, continue reading the documentation.
+    The Emoji extension was actually created to replace the now retired GitHubEmoji extension. Emoji was written to be much more flexible.  If you have a desire to configure the output to be like the legacy GitHubEmoji extension, you can use the settings below. This shows the full setup. To learn more about the settings used, continue reading the documentation.
 
     ```python
     import pymdownx.emoji

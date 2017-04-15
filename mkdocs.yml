@@ -21,8 +21,6 @@ pages:
     - Extra: extensions/extra.md
     - ExtraRawHtml: extensions/extrarawhtml.md
     - GitHub: extensions/github.md
-    - GitHubEmoji: extensions/githubemoji.md
-    - HeaderAnchor: extensions/headeranchor.md
     - Highlight: extensions/highlight.md
     - InlineHilite: extensions/inlinehilite.md
     - MagicLink: extensions/magiclink.md
@@ -30,7 +28,6 @@ pages:
     - PathConverter: extensions/pathconverter.md
     - PlainHtml: extensions/plainhtml.md
     - ProgressBar: extensions/progressbar.md
-    - PyMdown: extensions/pymdown.md
     - SmartSymbols: extensions/smartsymbols.md
     - Snippets: extensions/snippets.md
     - SuperFences: extensions/superfences.md
