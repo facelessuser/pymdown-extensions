@@ -23,6 +23,9 @@ Option                    | Type   | Default                   | Description
 `style_plain_text`        | bool   | `#!py False`              | When `guess_lang` is set to `#!py False`, InlineHilite will avoid applying classes to code blocks that do not explicitly set a language. If it is desired to have plain text styled like code, enable this to inject classes so that they can all be styled the same.
 `css_class`               | string | `#!python 'highlight'` | Set's the class name that will be injected into inline code tags when they are processed.
 
+!!! warning "Deprecated 3.0.0"
+    The setting `use_codehilite_settings` has been deprecated since `3.0.0` and now does nothing. It is still present to avoid breakage, but will be removed in the future.
+
 ## Example
 
 ```

@@ -1,4 +1,21 @@
+## 3.0.0
+
+> Released Apr XX, 2017
+
+- **NEW**: Added Keys extension.
+- **NEW**: Generalized custom fences (https://github.com/facelessuser/pymdown-extensions/issues/60). `flow` and `sequence` fence are now just custom fences and can be disabled simply by overwriting the `custom_fences` setting.
+- **NEW**: Remove deprecated `no_nl2br` in GitHub extension (https://github.com/facelessuser/pymdown-extensions/issues/24).
+- **NEW**: Remove deprecated HeaderAnchor extension (https://github.com/facelessuser/pymdown-extensions/issues/24).
+- **NEW**: Remove deprecated PyMdown extension (https://github.com/facelessuser/pymdown-extensions/issues/24).
+- **NEW**: Remove deprecated GitHubEmoji extension (https://github.com/facelessuser/pymdown-extensions/issues/24).
+- **NEW**: Remove deprecated `nested` option in SuperFences (https://github.com/facelessuser/pymdown-extensions/issues/24).
+- **NEW**: Wrapper extensions (such as GitHub and Extra) can now allow setting the included sub extensions settings (https://github.com/facelessuser/pymdown-extensions/issues/61). Workaround settings that directly set specific extensions settings has been removed.
+- **NEW**: Deprecated `use_codehilite_settings` in SuperFences and InlineHilite and now does nothing.  The settings will be removed in the future.  If `pymdownx.highlight` is used, it's settings will be used instead of CodeHilite. Eventually, the both SuperFences and InlineHilite will require `pymdownx.highlight` to be used and will have CodeHilite support stripped.
+- **FIX**: Fix MathJax CDN references and usage in documentation.  MathJax CDN is shutting down and must now use Cloudflare CDN (https://github.com/facelessuser/pymdown-extensions/issues/63).
+
 ## 2.0.0
+
+> Released Feb 12, 2017
 
 - **NEW**: SuperFences and InlineHilite can be configured via the new Highlight extension.
 - **NEW**: InlineHilite now has all highlighting features pushed to the Highlight extension.  This removes all the CodeHilite code that used to be in it and instead relocates it to Highlight.
