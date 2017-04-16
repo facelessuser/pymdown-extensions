@@ -1,0 +1,24 @@
+## Keys
+
+++Alt++
+
+++ArrowDown++
+
+++ArrowLeft++
+
+++ArrowRight++
+
+## Aliases
+++Add++
+
+++Apps++
+
+++Back++
+
+## Combos
+
+++Win+Shift+s++
+
+++cmd+ctrl+d++
+
+++Ctrl+Alt+PgDn++

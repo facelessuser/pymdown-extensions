@@ -20,6 +20,7 @@ Extension                                                  | Name
 [ExtraRawHtml](extensions/extrarawhtml.md)                 | `pymdownx.extrarawhtml`
 [GitHub](extensions/github.md)                             | `pymdownx.github`
 [Highlight](extensions/highlight.md)                       | `pymdownx.highlight`
+[Keys](extensions/keys.md)                                 | `pymdownx.keys`
 [MagicLink](extensions/magiclink.md)                       | `pymdownx.magiclink`
 [Mark](extensions/mark.md)                                 | `pymdownx.mark`
 [ProgressBar](extensions/progressbar.md)                   | `pymdownx.progressbar`

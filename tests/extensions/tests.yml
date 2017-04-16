@@ -208,6 +208,19 @@ inlinehilite_plaintext:
     pymdownx.inlinehilite:
       style_plain_text: false
 
+keys:
+  extensions:
+    pymdownx.keys:
+      key_map: {
+        'custom': 'Custom Key',
+        'option': 'Opt'
+      }
+
+keys (camel):
+  extensions:
+    pymdownx.keys:
+      camel_case: true
+
 magiclink:
   extensions:
     pymdownx.magiclink:
