@@ -1,6 +1,6 @@
 ## 3.0.0
 
-> Released Apr XX, 2017
+> Released Apr 16, 2017
 
 - **NEW**: Added Keys extension.
 - **NEW**: Generalized custom fences (https://github.com/facelessuser/pymdown-extensions/issues/60). `flow` and `sequence` fence are now just custom fences and can be disabled simply by overwriting the `custom_fences` setting.
