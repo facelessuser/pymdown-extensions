@@ -302,7 +302,14 @@ snippets (block):
   extensions:
     pymdownx.snippets:
       base_path: '{{BASE}}/snippets'
-      # block_mode: true
+
+superfences (custom):
+  extensions:
+    pymdownx.superfences:
+      custom_fences: 
+        - name: test
+          class: test
+          format: !!python/name:pymdownx.superfences.fence_div_format
 
 superfences (failures):
   extensions:
