@@ -24,6 +24,7 @@ License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from markdown import Extension
+from markdown.treeprocessors import Treeprocessor
 from markdown import util as md_util
 import copy
 from collections import OrderedDict
@@ -247,6 +248,39 @@ def get_hl_settings(md):
     return target
 
 
+class HighlightTreeprocessor(Treeprocessor):
+    """Highlight source code in code blocks."""
+
+    def run(self, root):
+        """Find code blocks and store in htmlStash."""
+
+        blocks = root.iter('pre')
+        for block in blocks:
+            if len(block) == 1 and block[0].tag == 'code':
+                code = Highlight(
+                    guess_lang=self.config['guess_lang'],
+                    pygments_style=self.config['pygments_style'],
+                    use_pygments=self.config['use_pygments'],
+                    noclasses=self.config['noclasses'],
+                    linenums=self.config['linenums'],
+                    extend_pygments_lang=self.config['extend_pygments_lang']
+                )
+                placeholder = self.markdown.htmlStash.store(
+                    code.highlight(
+                        block[0].text,
+                        ''
+                    ),
+                    safe=True
+                )
+
+                # Clear codeblock in etree instance
+                block.clear()
+                # Change to p element which will later
+                # be removed when inserting raw html
+                block.tag = 'p'
+                block.text = placeholder
+
+
 class HighlightExtension(Extension):
     """Configure highlight settins globally."""
 
@@ -257,8 +291,11 @@ class HighlightExtension(Extension):
         super(HighlightExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
-        """Add support for :::language`code` code hiliting."""
+        """Add support for code highlighting."""
 
+        ht = HighlightTreeprocessor(md)
+        ht.config = self.getConfigs()
+        md.treeprocessors.add("indent-highlight", ht, "<inline")
         md.registerExtension(self)
 
 

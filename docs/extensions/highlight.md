@@ -1,8 +1,10 @@
 ## Overview
 
-Highlight is an extension that adds no additional syntax patterns to Python Markdown. Its only purpose is to provide a single place to configure syntax highlighting for code blocks. Both [InlineHilite](./inlinehilite.md) and [SuperFences](./superfences.md) can use Highlight to configure their highlight settings.
+Highlight is an extension that adds support for code highlighting. Its purpose is to provide a single place to configure syntax highlighting for code blocks. Both [InlineHilite](./inlinehilite.md) and [SuperFences](./superfences.md) can use Highlight to configure their highlight settings, but highlight will also run all non-fence code blocks through the highlighter as well.
 
-Both InlineHilite and SuperFences can use [Pygments][pygments] or JavaScript highlighters to do their code syntax highlighting, but all of the settings here affect Pygments highlighting only except `use_pygments`.  If you want to use a JavaScript syntax highlighter, set `use_pygments` to `#!py False` or make sure you don't have Pygments installed.
+The Highlight extension is inspired by [CodeHilite][codehilite], but differs in features. PyMdown Extensions chooses not to implement special language headers for standard Markdown code blocks like CodeHilite does; PyMdown Extensions takes the position that language headers are better suited in fenced code blocks. So standard Markdown code blocks will just be styled as plain text unless `guess_language` is enabled. If you wish to highlight lines and define line numbers per code block, it is advised to use the SuperFences extension. Highlight also provides a feature CodeHilite doesn't, and that is the ability to configure Pygments lexer options by either overriding the language with additional options, or creating an alternate language name with your desired options.
+
+As previously mentioned, both InlineHilite's and SuperFences' highlighting can be controlled by Highlight. Both can use [Pygments][pygments] or JavaScript highlighters to do their code syntax highlighting, but all of the settings here only affect highlighting via Pygments except `use_pygments`.  If you want to use a JavaScript syntax highlighter, set `use_pygments` to `#!py False` or make sure you don't have Pygments installed.
 
 ## Extended Pygments Lexer Options
 
