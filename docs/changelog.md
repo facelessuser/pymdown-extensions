@@ -1,3 +1,10 @@
+## 3.1.0
+
+> Released May X, 2017
+
+- **NEW**: Highlight extension now runs normal indented code blocks through highlighter.
+- **FIX**: When Pygments is disabled, `linenums` class was attached to code blocks even if `linenums` was disabled and not enabled via fence headers.
+
 ## 3.0.0
 
 > Released Apr 16, 2017
