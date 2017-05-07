@@ -206,7 +206,7 @@ class Highlight(object):
         else:
             # Format block code for a JavaScript Syntax Highlighter by specifying language.
             classes = []
-            linenums = self.linenums_style if (self.linenums or linestart) and not inline > 0 else False
+            linenums = self.linenums_style if (self.linenums or linestart >= 0) and not inline > 0 else False
             if language:
                 classes.append('language-%s' % language)
             if linenums:
