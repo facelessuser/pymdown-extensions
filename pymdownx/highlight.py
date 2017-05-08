@@ -222,7 +222,7 @@ class Highlight(object):
             el.text = code
             return el
         else:
-            return code
+            return code.strip()
 
 
 def get_hl_settings(md):
