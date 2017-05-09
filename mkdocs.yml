@@ -98,3 +98,6 @@ extra:
       link: https://github.com/facelessuser
 extra_css:
   - extra.css
+extra_javascript:
+  - https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js
+  - extra.js

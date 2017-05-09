@@ -1,3 +1,81 @@
+/* Clipboard code copy */
+.md-typeset div.codehilite {
+  position: relative;
+  overflow: visible;
+  padding: 0;
+}
+.md-typeset div.codehilite pre{
+  overflow-x: auto;
+  display: block;
+  padding: 1rem 1.2rem .8rem;
+}
+.md-typeset .clippy span {
+  font: normal normal 1.5rem "Material Icons";
+  display: inline-block;
+  position: relative;
+  top: 2px;
+}
+.md-typeset .clippy {
+  display: inline-block;
+  position: absolute;
+  vertical-align: middle;
+  top: 2px;
+  right: 2px;
+  opacity: 0;
+  height: 3.2rem;
+  width: 3.2rem;
+  -webkit-transition: opacity .3s;
+  transition: opacity .3s;
+  background-color: #c4c4c4;
+  color: #fff;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12), 0 3px 1px -2px rgba(0,0,0,.2);
+  border-radius: 1000px;
+  cursor: pointer;
+}
+.md-typeset div.codehilite:hover .clippy {
+  opacity: .4;
+  -webkit-transition: opacity .3s;
+  transition: opacity .3s;
+}
+.md-typeset div.codehilite:hover .clippy:hover {
+  opacity: 1;
+  background-color: #2196f3;
+  -webkit-transition: opacity .1s;
+  transition: opacity .1s;
+}
+.md-typeset .tooltip:after {
+  opacity: 1;
+  z-index:  50;
+  font-size: 1.2rem;
+  visibility: hidden;
+  position: absolute;
+  content: attr(aria-label);
+  padding: 6px 10px;
+  top: 2.8em;
+  left: 50%;
+  transform: translateX(-50%) translateY(-2px);
+  background: grey;
+  color: white;
+  white-space: nowrap;
+  z-index: 2;
+  border-radius: 2px;
+  -webkit-transition: opacity .2s;
+  transition: opacity .2s;
+}
+.md-typeset .tooltip:hover:after {
+  display: block;
+  opacity: .9;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+.md-typeset .tooltip.left:after {
+  top: .3rem;
+  left: 0;
+  transform: translateX(-112%) translateY(0);
+}
+.md-typeset .tooltip.left:hover:after {
+  transform: translateX(-110%) translateY(0);
+}
 /* Keys */
 .md-typeset .keys kbd:before,
 .md-typeset .keys kbd:after {
