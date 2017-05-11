@@ -39,6 +39,7 @@
   right: 0.2rem;
   width: 3.2rem;
   height: 3.2rem;
+  -webkit-transition: opacity 0.3s;
   transition: opacity 0.3s;
   border-radius: 50%;
   background-color: #c4c4c4;
@@ -59,7 +60,9 @@
   top: 0.3rem;
   left: 0;
   padding: 0.6rem 1rem;
+  -webkit-transform: translateX(-112%) translateY(0);
   transform: translateX(-112%) translateY(0);
+  -webkit-transition: opacity 0.2s;
   transition: opacity 0.2s;
   border-radius: 0.2rem;
   background: #404040;
@@ -73,6 +76,7 @@
 }
 .md-typeset .clip-tip:hover::after {
   display: block;
+  -webkit-transform: translateX(-110%) translateY(0);
   transform: translateX(-110%) translateY(0);
   opacity: 0.9;
   visibility: visible;
