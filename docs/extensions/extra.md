@@ -1,4 +1,4 @@
-## Overview
+# Extra
 
 Python Markdown has an `extra` extension that provides features similar to PHP Markdown Extra.  PyMdown Extensions aims to provide not only new features, but to improve behavior in Python Markdown's existing feature set.  Some of these things can be at odds.  Python Markdown's `smartstrong` and `fenced_code` are not compatible with PyMdown Extensions' `betterem` and `superfences`.  `smartstong` should never be loaded at the same time as `betterem`, and `superfences` should not be loaded at the same time as `fenced_code`.  Because of this, it is not possible to use Python Markdown's `extra` and PyMdown's `superfences` and `betterem`. To make this less frustrating, PyMdown Extensions provides it's own implementation of `extra`.
 
@@ -20,7 +20,7 @@ Extension                          | Name
 [Definition Lists](def-list)       | `markdown.extensions.def_list`
 [Tables](tables)                   | `markdown.extensions.tables`
 [Abbreviations](abbreviations)     | `markdown.extensions.abbr`
-[ExtraRawHtml](./extrarawhtml.md)  | `pymdownx.extrarawhtml`
+[ExtraRawHTML](./extrarawhtml.md)  | `pymdownx.extrarawhtml`
 
 ## Options
 

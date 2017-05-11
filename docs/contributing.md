@@ -1,4 +1,4 @@
-## Overview
+# Contributing &amp; Support
 
 Contribution from the community is encouraged and can be done in a variety of ways:
 

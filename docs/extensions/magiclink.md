@@ -1,4 +1,4 @@
-## Overview
+# MagicLink
 
 MagicLink scans for URLs and emails and generates proper HTML links for them.  No special syntax is required, you just type or paste the links and they get converted.  MagicLink auto-links HTML, FTP, and email links.
 

@@ -1,4 +1,4 @@
-## Overview
+# ProgressBar
 
 ProgressBar is an extension that adds support for progress/status bars.  It can take percentages or fractions, and it can optionally generate classes for percentages at 20% levels.  It also works with Python Markdown's built in `attr_list` extension.  Though progress bars are rendered as block items, it accepts `attr_list`'s inline format.
 

@@ -1,4 +1,4 @@
-## Overview
+# Highlight
 
 Highlight is an extension that adds support for code highlighting. Its purpose is to provide a single place to configure syntax highlighting for code blocks. Both [InlineHilite](./inlinehilite.md) and [SuperFences](./superfences.md) can use Highlight to configure their highlight settings, but highlight will also run all non-fence code blocks through the highlighter as well.
 

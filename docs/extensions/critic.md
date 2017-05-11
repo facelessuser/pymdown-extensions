@@ -1,4 +1,4 @@
-## Overview
+# Critic
 
 Critic is an extension that adds handling and support of [Critic Markup][critic-markup].  This extension runs before all other extensions to parse the critic edits.  It allows for the removal or acceptance of the critic modifications and modifies the source to reflect the rejection or approval (highlights and comments are stripped in both cases).  It also allows for visually displaying the changes in HTML output ([mileage may vary](#limitations-with-previewing-critic-markup)).
 

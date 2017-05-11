@@ -1,4 +1,4 @@
-## Overview
+# SuperFences
 
 SuperFences provides 4 features:
 

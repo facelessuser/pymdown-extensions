@@ -19,7 +19,7 @@ pages:
     - Emoji: extensions/emoji.md
     - EscapeAll: extensions/escapeall.md
     - Extra: extensions/extra.md
-    - ExtraRawHtml: extensions/extrarawhtml.md
+    - ExtraRawHTML: extensions/extrarawhtml.md
     - GitHub: extensions/github.md
     - Highlight: extensions/highlight.md
     - InlineHilite: extensions/inlinehilite.md
@@ -27,7 +27,7 @@ pages:
     - MagicLink: extensions/magiclink.md
     - Mark: extensions/mark.md
     - PathConverter: extensions/pathconverter.md
-    - PlainHtml: extensions/plainhtml.md
+    - PlainHTML: extensions/plainhtml.md
     - ProgressBar: extensions/progressbar.md
     - SmartSymbols: extensions/smartsymbols.md
     - Snippets: extensions/snippets.md

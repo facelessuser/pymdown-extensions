@@ -1,4 +1,4 @@
-## Available Extensions
+# PyMdown Extensions
 
 PyMdown Extensions provides a handful of extensions for use with Python Markdown.  Keep in mind, the PyMdown extensions were designed to work with the default extensions, so your mileage may vary in regards to compatibility when paired with other 3rd party extensions.
 
@@ -17,7 +17,7 @@ Extension                                                  | Name
 [Emoji](extensions/emoji.md)                               | `pymdownx.emoji`
 [EscapeAll](extensions/escapeall.md)                       | `pymdownx.escapeall`
 [Extra](extensions/extra.md)                               | `pymdownx.extra`
-[ExtraRawHtml](extensions/extrarawhtml.md)                 | `pymdownx.extrarawhtml`
+[ExtraRawHTML](extensions/extrarawhtml.md)                 | `pymdownx.extrarawhtml`
 [GitHub](extensions/github.md)                             | `pymdownx.github`
 [Highlight](extensions/highlight.md)                       | `pymdownx.highlight`
 [Keys](extensions/keys.md)                                 | `pymdownx.keys`
@@ -31,4 +31,4 @@ Extension                                                  | Name
 [Tilde](extensions/tilde.md)                               | `pymdownx.tilde`
 [InlineHilite](extensions/inlinehilite.md)                 | `pymdownx.inlinehilite`
 [PathConverter](extensions/pathconverter.md)               | `pymdownx.pathconverter`
-[PlainHtml](extensions/plainhtml.md)                       | `pymdownx.plainhtml`
+[PlainHTML](extensions/plainhtml.md)                       | `pymdownx.plainhtml`

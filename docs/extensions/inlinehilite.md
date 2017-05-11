@@ -1,4 +1,4 @@
-## Overview
+# InlineHilite
 
 InlineHilite is an inline code highlighter inspired by [CodeHilite][codehilite]. Borrowing from CodeHilite's existing syntax, InlineHilite utilizes the following syntax to insert inline highlighted code: `` `:::language mycode` `` or `` `#!language mycode` ``.  In CodeHilite, ` #! ` means "use line numbers", but line numbers will never be used in inline code regardless of which form is used. Use of one form or the other is purely for personal preference. As this feature is discussed further, we will call these specifiers (` #! ` and ` ::: `) mock shebangs.
 

@@ -1,4 +1,4 @@
-## Overview
+# PathConverter
 
 PathConverter is an extension that can convert local, relative reference paths to absolute or relative paths for links and images. It was originally written for a project that wanted to preview the markdown by rendering it in a temporary location. This extension allowed the paths to be converted to work from the temporary location. This context is important when trying to understand why this extension was created. It's actual usage is limited to situations like this, so it isn't something that would get used in most normal scenarios.
 

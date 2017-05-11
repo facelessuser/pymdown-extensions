@@ -27,7 +27,7 @@ emojis
 Esc
 EscapeAll
 escaper
-ExtraRawHtml
+ExtraRawHTML
 Fn
 formatter
 Gemoji
@@ -72,7 +72,7 @@ online
 Pandoc
 PathConverter
 PHP
-PlainHtml
+PlainHTML
 plugin
 plugins
 plusminus

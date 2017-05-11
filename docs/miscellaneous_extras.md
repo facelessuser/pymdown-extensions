@@ -1,3 +1,5 @@
+# Miscellaneous Extras
+
 ## Alternate Slugify
 
 Python Markdown's default slugify strips out all Unicode chars. To better handle Unicode, a couple of optional slugify options have been provided. These are very simple slugify options. There are many slugify options out there, some of which are very sophisticated. Some may prefer using one of those, but if you just want something simple, these might fill that requirement.

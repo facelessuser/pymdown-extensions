@@ -1,3 +1,5 @@
+# License
+
 ## PyMdown Extensions
 
 The MIT License (MIT) (Except where stated below)
@@ -52,7 +54,7 @@ All changes Copyright 2008-2014 The Python Markdown Project
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 ```
 
-## ExtraRawHtml
+## ExtraRawHTML
 
 `extrarawhtml.py` is a literal copy and paste from Python Markdown's Extra extension.
 It basically splits out the raw html markdown parsing into a separate extension that can

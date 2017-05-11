@@ -1,4 +1,4 @@
-## Overview
+# Emoji
 
 The Emoji extension adds support for inserting emojis via simple short names enclosed within colons: `:short_name:`.  This is accomplished by using a short name index to map easy to remember names to the Unicode data. The Unicode data is then converted into actual Unicode emoji characters and/or special HTML elements that represent the emoji.
 

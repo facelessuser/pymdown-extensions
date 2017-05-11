@@ -1,3 +1,5 @@
+# Changelog
+
 ## 3.1.0
 
 > Released May 7, 2017
