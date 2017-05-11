@@ -1,84 +1,86 @@
 /* Clipboard code copy */
-.md-typeset div.codehilite {
+.md-typeset .codehilite {
   position: relative;
   overflow: visible;
   padding: 0;
 }
-.md-typeset div.codehilite pre{
+.md-typeset .codehilite[id]::before {
+  display: inline;
+}
+.md-typeset .codehilite pre{
   overflow-x: auto;
   display: block;
   padding: 1rem 1.2rem .8rem;
 }
-.md-typeset .clippy span {
-  font: normal normal 1.5rem "Material Icons";
-  display: inline-block;
-  position: relative;
-  top: 2px;
+.md-typeset pre.codehilite {
+  overflow: visible;
 }
-.md-typeset .clippy {
-  display: inline-block;
-  position: absolute;
-  vertical-align: middle;
-  top: 2px;
-  right: 2px;
-  opacity: 0;
-  height: 3.2rem;
-  width: 3.2rem;
-  -webkit-transition: opacity .3s;
-  transition: opacity .3s;
-  background-color: #c4c4c4;
-  color: #fff;
-  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12), 0 3px 1px -2px rgba(0,0,0,.2);
-  border-radius: 1000px;
-  cursor: pointer;
-}
-.md-typeset div.codehilite:hover .clippy {
-  opacity: .4;
-  -webkit-transition: opacity .3s;
-  transition: opacity .3s;
-}
-.md-typeset div.codehilite:hover .clippy:hover {
-  opacity: 1;
-  background-color: #2196f3;
-  -webkit-transition: opacity .1s;
-  transition: opacity .1s;
-}
-.md-typeset .tooltip:after {
-  opacity: 1;
-  z-index:  50;
-  font-size: 1.2rem;
-  visibility: hidden;
-  position: absolute;
-  content: attr(aria-label);
-  padding: 6px 10px;
-  top: 2.8em;
-  left: 50%;
-  transform: translateX(-50%) translateY(-2px);
-  background: grey;
-  color: white;
-  white-space: nowrap;
-  z-index: 2;
-  border-radius: 2px;
-  -webkit-transition: opacity .2s;
-  transition: opacity .2s;
-}
-.md-typeset .tooltip:hover:after {
+.md-typeset pre.codehilite code {
   display: block;
-  opacity: .9;
-  visibility: visible;
-  transform: translateX(-50%) translateY(0);
+  padding: 1rem 1.2rem 0.8rem;
+  overflow: auto;
 }
-.md-typeset .tooltip.left:after {
-  top: .3rem;
+.md-typeset div.codehilite:hover .clip-btn {
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  opacity: 0.4;
+}
+.md-typeset div.codehilite:hover .clip-btn:hover {
+  -webkit-transition: opacity 0.1s;
+  transition: opacity 0.1s;
+  background-color: #2196f3;
+  opacity: 1;
+}
+.md-typeset .clip-btn {
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12), 0 3px 1px -2px rgba(0,0,0,.2);
+  display: inline-block;
+  position: absolute;
+  top: 0.2rem;
+  right: 0.2rem;
+  width: 3.2rem;
+  height: 3.2rem;
+  transition: opacity 0.3s;
+  border-radius: 50%;
+  background-color: #c4c4c4;
+  color: white;
+  cursor: pointer;
+  opacity: 0;
+}
+.md-typeset .clip-btn .md-icon--clipboard {
+  position: relative;
+  top: 0.1rem;
+  font-size: 1.8rem;
+}
+.md-typeset .clip-btn .md-icon--clipboard::before {
+  content: "assignment";
+}
+.md-typeset .clip-tip::after {
+  position: absolute;
+  top: 0.3rem;
   left: 0;
+  padding: 0.6rem 1rem;
   transform: translateX(-112%) translateY(0);
+  transition: opacity 0.2s;
+  border-radius: 0.2rem;
+  background: #404040;
+  color: white;
+  font-size: 1.28rem;
+  font-weight: 700;
+  white-space: nowrap;
+  content: attr(aria-label);
+  opacity: 1;
+  visibility: hidden;
 }
-.md-typeset .tooltip.left:hover:after {
+.md-typeset .clip-tip:hover::after {
+  display: block;
   transform: translateX(-110%) translateY(0);
+  opacity: 0.9;
+  visibility: visible;
 }
+
 /* Keys */
-.md-typeset .keys kbd:before,
-.md-typeset .keys kbd:after {
+.md-typeset .keys kbd::before,
+.md-typeset .keys kbd::after {
   color: #888;
   font-weight: normal;
   position: relative;
@@ -91,47 +93,47 @@
     color: #888;
     padding: 0 .2rem;
 }
-.md-typeset .keys .key-tab:after {
+.md-typeset .keys .key-tab::after {
   content: '\21B9';
   padding-left: 0.2rem;
 }
-.md-typeset .keys .key-backspace:before {
+.md-typeset .keys .key-backspace::before {
   content: '\2190';
   padding-right: 0.2rem;
 }
-.md-typeset .keys .key-command:before {
+.md-typeset .keys .key-command::before {
   content: '\2318';
   padding-right: 0.2rem;
 }
-.md-typeset .keys .key-windows:before {
+.md-typeset .keys .key-windows::before {
   content: '\229E';
   padding-right: 0.2rem;
 }
-.md-typeset .keys .key-caps-lock:before {
+.md-typeset .keys .key-caps-lock::before {
   content: '\21EA';
   padding-right: 0.2rem;
 }
-.md-typeset .keys .key-num-enter:after {
+.md-typeset .keys .key-num-enter::after {
   content:  '\21B5';
   padding-left: 0.2rem;
 }
-.md-typeset .keys .key-enter:after {
+.md-typeset .keys .key-enter::after {
   content:  '\21A9';
   padding-left: 0.2rem;
 }
-.md-typeset .keys .key-control:before {
+.md-typeset .keys .key-control::before {
   content:  '\2303';
   padding-right: 0.2rem;
 }
-.md-typeset .keys .key-meta:before {
+.md-typeset .keys .key-meta::before {
   content:  '\25C6';
   padding-right: 0.2rem;
 }
-.md-typeset .keys .key-shift:before {
+.md-typeset .keys .key-shift::before {
   content:  '\21E7';
   padding-right: 0.2rem;
 }
-.md-typeset .keys .key-option:before {
+.md-typeset .keys .key-option::before {
   content:  '\2325';
   padding-right: 0.2rem;
 }
