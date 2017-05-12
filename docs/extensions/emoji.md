@@ -121,7 +121,7 @@ Emoji provides six default emoji generators.  All the generators can be used wit
 : 
     This generator was written to support PNG sprite output for EmojiOne.  It is expected that this will be used in conjunction with the the official EmojiOne CSS.  You can include the CSS from the CDN in your document. The CSS comes in three sizes: 32, 64, 128. Make sure to set the correct size in the options to generate the appropriate classes.
 
-    Example CDN for the 3.0 version with 32px pngs: `https://cdn.jsdelivr.net/emojione/assets/3.0/sprites/emojione-sprite-32.min.css`.
+    Example CDN for the 3.0 version with 32px PNGs: `https://cdn.jsdelivr.net/emojione/assets/3.0/sprites/emojione-sprite-32.min.css`.
 
     `to_png_sprite` outputs the emoji as a span in the form below.  The CSS will apply the appropriate mapping in the sprite PNG to the background image of the span.
 
