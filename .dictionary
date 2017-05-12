@@ -77,6 +77,7 @@ plugin
 plugins
 plusminus
 PNG
+PNGs
 pre
 prepend
 prepended
@@ -84,6 +85,7 @@ prepending
 prepends
 preprocessor
 ProgressBar
+px
 py
 Pygments
 PyMdown
@@ -104,6 +106,7 @@ stylesheet
 sublicense
 SuperFences
 SVG
+SVGs
 Tasklist
 th
 Toc

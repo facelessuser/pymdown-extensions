@@ -7,8 +7,8 @@
 [critic-markup]: http://criticmarkup.com/
 [def-list]: https://pythonhosted.org/Markdown/extensions/definition_lists.html
 [emojione]: https://github.com/Ranks/emojione
-[emojione-awesome]: https://github.com/Ranks/emojione/tree/master/lib/emojione-awesome
-[emojione-awesome-css]: https://github.com/Ranks/emojione/blob/master/assets/css/emojione-awesome.css
+[emojione-awesome-css]: https://github.com/Ranks/emojione/blob/master/extras/css/emojione-awesome.css
+[emojione-sprites-svg]: https://github.com/Ranks/emojione/blob/v2.2.7/assets/sprites/emojione.sprites.svg
 [flake8]: https://pypi.python.org/pypi/flake8
 [flake8-docstrings]: https://pypi.python.org/pypi/flake8-docstrings
 [flowchart-js]: http://adrai.github.io/flowchart.js/

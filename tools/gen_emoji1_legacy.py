@@ -12,7 +12,7 @@ Copyright (c) http://www.emojione.com
 def get_unicode_alt(value):
     """Get alternate Unicode form or return the original."""
 
-    return value['code_points']['output']
+    return value['unicode_alt']
 
 
 def parse(repo, tag):
@@ -28,13 +28,13 @@ def parse(repo, tag):
         shortnames.add(v['shortname'])
         emoji_db[v['shortname']] = {
             'name': v['name'],
-            'unicode': v['code_points']['base']
+            'unicode': v['unicode']
         }
         alt = get_unicode_alt(v)
-        if alt and alt != v['code_points']['base']:
+        if alt:
             emoji_db[v['shortname']]['unicode_alt'] = alt
 
-        for alias in v['shortname_alternates']:
+        for alias in v['aliases']:
             aliases[alias] = v['shortname']
 
     # Save test files

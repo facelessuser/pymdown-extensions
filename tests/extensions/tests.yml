@@ -97,13 +97,13 @@ emoji1 (no title):
 
 emoji1 (png):
   css:
-    - https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/css/emojione.min.css
+    - https://cdn.jsdelivr.net/emojione/3.0.3/extras/css/emojione.min.css
   extensions:
     pymdownx.emoji:
 
 emoji1 (png sprite):
   css:
-    - https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/sprites/emojione.sprites.css
+    - https://cdn.jsdelivr.net/emojione/assets/3.0/sprites/emojione-sprite-32.css
   extensions:
     pymdownx.emoji:
       emoji_generator: !!python/name:pymdownx.emoji.to_png_sprite

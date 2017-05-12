@@ -97,7 +97,8 @@ def parse(repo, tag):
             uc, uc_alt = get_unicode(v)
             emoji_db[':%s:' % short] = {
                 'name': v.get('description', short),
-                'unicode': uc
+                'unicode': uc,
+                'category': v['category']
             }
             if uc_alt:
                 emoji_db[':%s:' % short]['unicode_alt'] = uc_alt

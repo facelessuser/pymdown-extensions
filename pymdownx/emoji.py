@@ -32,7 +32,7 @@ RE_EMOJI = r'(:[+\-\w]+:)'
 SUPPORTED_INDEXES = ('emojione', 'gemoji')
 UNICODE_VARIATION_SELECTOR_16 = 'fe0f'
 EMOJIONE_SVG_CDN = 'https://cdn.jsdelivr.net/emojione/assets/svg/'
-EMOJIONE_PNG_CDN = 'https://cdn.jsdelivr.net/emojione/assets/png/'
+EMOJIONE_PNG_CDN = 'https://cdn.jsdelivr.net/emojione/assets/3.0/png/32/'
 GITHUB_UNICODE_CDN = 'https://assets-cdn.github.com/images/icons/emoji/unicode/'
 GITHUB_CDN = 'https://assets-cdn.github.com/images/icons/emoji/'
 NO_TITLE = 'none'
@@ -69,7 +69,7 @@ def gemoji():
 ###################
 # Converters
 ###################
-def to_png(index, shortname, alias, uc, alt, title, options, md):
+def to_png(index, shortname, alias, uc, alt, title, category, options, md):
     """Return png element."""
 
     if index == 'gemoji':
@@ -108,7 +108,7 @@ def to_png(index, shortname, alias, uc, alt, title, options, md):
     return md_util.etree.Element("img", attributes)
 
 
-def to_svg(index, shortname, alias, uc, alt, title, options, md):
+def to_svg(index, shortname, alias, uc, alt, title, category, options, md):
     """Return svg element."""
 
     attributes = {
@@ -128,12 +128,14 @@ def to_svg(index, shortname, alias, uc, alt, title, options, md):
     return md_util.etree.Element("img", attributes)
 
 
-def to_png_sprite(index, shortname, alias, uc, alt, title, options, md):
+def to_png_sprite(index, shortname, alias, uc, alt, title, category, options, md):
     """Return png sprite element."""
 
     attributes = {
-        "class": '%(class)s-%(unicode)s' % {
-            "class": options.get('classes', '%s %s' % (index, index)),
+        "class": '%(class)s-%(size)s-%(category)s _%(unicode)s' % {
+            "class": options.get('classes', index),
+            "size": options.get('size', '32'),
+            "category": (category if category else ''),
             "unicode": uc
         }
     }
@@ -149,7 +151,7 @@ def to_png_sprite(index, shortname, alias, uc, alt, title, options, md):
     return el
 
 
-def to_svg_sprite(index, shortname, alias, uc, alt, title, options, md):
+def to_svg_sprite(index, shortname, alias, uc, alt, title, category, options, md):
     """
     Return svg sprite element.
 
@@ -168,7 +170,7 @@ def to_svg_sprite(index, shortname, alias, uc, alt, title, options, md):
     return svg
 
 
-def to_awesome(index, shortname, alias, uc, alt, title, options, md):
+def to_awesome(index, shortname, alias, uc, alt, title, category, options, md):
     """
     Return "awesome style element for "font-awesome" format.
 
@@ -181,7 +183,7 @@ def to_awesome(index, shortname, alias, uc, alt, title, options, md):
     return md_util.etree.Element("i", attributes)
 
 
-def to_alt(index, shortname, alias, uc, alt, title, options, md):
+def to_alt(index, shortname, alias, uc, alt, title, category, options, md):
     """Return html entities."""
 
     return md.htmlStash.store(alt, safe=True)
@@ -275,6 +277,11 @@ class EmojiPattern(Pattern):
                 )
         return alt
 
+    def _get_category(self, emoji):
+        """Get the category."""
+
+        return emoji.get('category')
+
     def handleMatch(self, m):
         """Hanlde emoji pattern matches."""
 
@@ -287,6 +294,7 @@ class EmojiPattern(Pattern):
             uc, uc_alt = self._get_unicode(emoji)
             title = self._get_title(el, emoji)
             alt = self._get_alt(el, uc_alt)
+            category = self._get_category(emoji)
             el = self.generator(
                 self.emoji_index['name'],
                 shortname,
@@ -294,6 +302,7 @@ class EmojiPattern(Pattern):
                 uc,
                 alt,
                 title,
+                category,
                 self.options,
                 self.markdown
             )

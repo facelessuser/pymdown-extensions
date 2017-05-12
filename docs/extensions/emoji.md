@@ -13,7 +13,7 @@ As previously mentioned, short name indexes are sourced from EmojiOne's and Gemo
 !!! warning "EmojiOne and Gemoji licensing"
     PyMdown Extensions has no affiliation with EmojiOne or Gemoji.  The indexes generated from their sources are covered under their respective licensing.  When using their images or CSS, please see their licensing terms to ensure proper usage and attributions.
 
-    EmojiOne: http://emojione.com/licensing/
+    EmojiOne: https://www.emojione.com/developers/free-license\
     Gemoji: https://github.com/github/gemoji/blob/master/LICENSE
 
 ## Options
@@ -57,13 +57,18 @@ By default, Emoji provides two indexes: `emojione` and `gemoji`.  Both indexes a
 
 `pymdownx.emoji.emojione`
 : 
-    This is the default function that is used and provides an index using the latest EmojiOne supported emojis (at the time of release).  You can always find out what tag it was built with by doing the following:
+    This is the default function that is used, and it provides an index using the latest EmojiOne supported emojis (at the time of release).  You can always find out what tag it was built with by doing the following:
 
     ```python
     >>> import pymdownx.emoji1_db as e1db
     >>> e1db.version
-    'v2.2.7'
+    'v3.0.3'
     ```
+
+!!! warning "EmojiOne Update"
+    Recent EmojiOne 3.0 release dropped fee SVG support. PNG support can still be obtained via CDNs, or in the case of EmojiOne Awesome, by [downloading][emojione-awesome-css] the CSS.
+
+    While EmojiOne only offers 3.0 vector graphics to paying customers now, you can still get SVG support. By default, we still use 2.2.7 SVGs, but you won't get images for emojis added after 2.2.7. If using SVG sprites, you will have to [download][emojione-sprites-svg] the sprite SVG.
 
 `pymdownx.emoji.gemoji`
 : 
@@ -81,10 +86,10 @@ Emoji provides six default emoji generators.  All the generators can be used wit
 
 `pymdownx.emoji.to_png`
 : 
-    This is a general purpose generator and, by default, provides an EmojiOne CDN and GitHub CDN path(s).  The PNG output form is as follows:
+    This is a general purpose generator which provides an EmojiOne CDN and GitHub CDN path(s) out of the box. EmojiOne provides PNGs in size 32, 64, and 128.  The default CDN is the one for size 32: `https://cdn.jsdelivr.net/emojione/assets/3.0/png/32/`. You can change it for a larger PNG size by updating the size in the URL and passing the new URL in through `image_path`. The PNG output form is as follows:
 
     ```html
-    <img alt="😄" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/png/1f604.png" title=":smile:" />
+    <img alt="😄" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/3.0/png/32/1f604.png" title=":smile:" />
     ```
 
     **Generator Specific Options**
@@ -98,7 +103,7 @@ Emoji provides six default emoji generators.  All the generators can be used wit
 
 `pymdownx.emoji.to_svg`
 : 
-    This generator was written to output EmojiOne SVG images. The SVG image outputs as:
+    This generator was written to output EmojiOne SVG images. SVGs are only free for 2.2.7, so the default CDN still references that one. Emoji codes added after 2.2.7 will not find images.  If you've gained access to the 3.0 SVGs, or are keeping the 2.0 SVGs locally, you can point the `image_path` to them as well. The SVG image outputs as:
 
     ```html
     <img alt="😄" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f604.svg" title=":smile:" />
@@ -114,22 +119,27 @@ Emoji provides six default emoji generators.  All the generators can be used wit
 
 `pymdownx.emoji.to_png_sprite`
 : 
-    This generator was written to support PNG sprite output for EmojiOne.  It is expected that this will be used in conjunction with the the official EmojiOne CSS.  You can include the CSS from the CDN in your document.  Example CDN for version 2.2.7: `https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/sprites/emojione.sprites.css`. This outputs the emoji as a span in the form below.  The CSS will apply the appropriate mapping in the sprite PNG for the background image of the span.
+    This generator was written to support PNG sprite output for EmojiOne.  It is expected that this will be used in conjunction with the the official EmojiOne CSS.  You can include the CSS from the CDN in your document. The CSS comes in three sizes: 32, 64, 128. Make sure to set the correct size in the options to generate the appropriate classes.
+
+    Example CDN for the 3.0 version with 32px pngs: `https://cdn.jsdelivr.net/emojione/assets/3.0/sprites/emojione-sprite-32.min.css`.
+
+    `to_png_sprite` outputs the emoji as a span in the form below.  The CSS will apply the appropriate mapping in the sprite PNG to the background image of the span.
 
     ```html
-    <span class="emojione emojione-1f604" title=":smile:">😄</span>
+    <span class="emojione-32-people _1f604" title=":smile:">😄</span>
     ```
 
     **Generator Specific Options**
 
     Option       | Type       | Default                | Description
     ------------ | ---------- | ---------------------- | -----------
-    `classes`    | string     | Name of the index used | Class(es) used for the span where the classes are inserted as "class" in the following template: `#!py '%(class)s-%(unicode)s'`.
+    `classes`    | string     | Name of the index used | Class(es) used for the span where the classes are inserted as "class" in the following template: `#!py '%(class)s-%(size)s-%(category)s _%(unicode)s'`.
+    `size`       | int        | `#!py ''`              | Integer specifying the size for the class above.
     `attributes` | dictionary | `#!py {}`              | A dictionary containing tag attributes as key value string pairs. The dictionary keys are the attribute names and dictionary values are the attribute values.
 
 `pymdownx.emoji.to_svg_sprite`
 : 
-    This was written to support EmojiOne SVG sprite output.  The output form was taken directly from an example in the EmojiOne source.  It is expected that the the user will provide a local version of the official SVG sprite and the path to it.  The output is:
+    This was written to support EmojiOne SVG sprite output.  The output form was taken directly from an example in the EmojiOne source.  It is expected that the the user will provide a local version of the official SVG sprite and the path to it.  Unfortunately there is no free 3.0 SVG sprite, so you will need to [download][emojione-sprites-svg] the old 2.27 one. The output is:
 
     ```html
     <svg class="emojione"><description>😄</description><use xlink:href="./../assets/sprites/emojione.sprites.svg#emoji-1f604"></use></svg>
@@ -144,7 +154,7 @@ Emoji provides six default emoji generators.  All the generators can be used wit
 
 `pymdownx.emoji.to_awesome`
 : 
-    This generator is another EmojiOne specific output called [EmojiOne Awesome][emojione-awesome].  According to EmojiOne's documentation, it aims to give a font-awesome like interface for EmojiOne.  There isn't currently a CDN link that could be found, but you can provide the CSS in your project locally by [downloading it](emojione-awesome-css) from their repository.  The output format is:
+    This generator is another EmojiOne specific output called EmojiOne Awesome. It aims to give a font-awesome like interface for EmojiOne.  There isn't currently a CDN link that could be found, but you can include the CSS in your project locally by [downloading it][emojione-awesome-css] from their repository.  The output format is:
 
     ```html
     <i class="e1a-smile"></i>
@@ -187,6 +197,11 @@ emoji_index = {
 
             # Name is the long name.
             "name": "keycap digit zero",
+
+            # Category of emoji.
+            # Not needed if this is a non-Unicode, custom
+            # emoji with no category
+            "category": "symbol",
 
             # Unicode is the representation of the Unicode
             # code points with variations and joiners striped out.
@@ -234,7 +249,7 @@ emoji_index = {
 
 Each different kind of output is controlled by a different emoji generator function, but all generator functions have the same format. The format is shown below in case you need to create your own custom output generator.
 
-`#!py def emoji_generator(index, shortname, alias, uc, alt, title, options, md)`
+`#!py def emoji_generator(index, shortname, alias, uc, alt, title, category, options, md)`
 : 
 
     Parameter   | Type       |Description
@@ -245,6 +260,7 @@ Each different kind of output is controlled by a different emoji generator funct
     `uc`        | string     | This is a string of the Unicode values for the emoji.  This is used to reference emoji image names or for specifying class names etc., so it may not contain all the code points.  The string returned consists of each Unicode value represented as a hex value separated with hyphens.  Values such as U+200D ZERO WIDTH JOINER and  U+FE0F VARIATION SELECTOR-16 are stripped out.  So the value here will not always be practical for calculating the actual Unicode points of an emoji.  This will be `None` for non-standard emoji that are not Unicode.
     `alt`       | string     | This is the alternative emoji value (or fallback value).  Its format will differ depending on the extension setting `alt`.  This will be returned as either the Unicode characters, HTML entities, or the short name used.  See the `alt` setting for more info.
     `title`     | string     | This is the title that can be used in image elements.  Depending on the global extension setting `title`, this will either return the long name, the short name, or `None`.  See the `title` setting for more info.
+    `category`  | string     | Category of the emoji, or `None` if there is no category.
     `options`   | dictionary | This is a dictionary to specify generator function specific options.  This can be anything, and it is up to the generator function to parse and provide defaults.
     `md`        | class      | This is the Markdown class object.  This is mainly used to access specific things needed from the Markdown class.  If you needed to stash your output, you would do something like: `md.htmlStash.store(alt, safe=True)`.
 

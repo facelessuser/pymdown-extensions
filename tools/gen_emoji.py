@@ -82,7 +82,7 @@ def download_tag(repo, tag, url):
     extract_tag(repo, file_location)
 
 
-def select_tag(repo):
+def select_tag(repo, no_download):
     """Get Github's usable emoji."""
     resp = requests.get(
         url_join(GITHUB_API, 'repos', repo, 'tags'),
@@ -112,7 +112,8 @@ def select_tag(repo):
         if user_input is not None and (user_input < 0 or user_input >= num_tags):
             user_input = None
 
-    download_tag(repo, tags[user_input]['name'], tags[user_input]['zipball_url'])
+    if not no_download:
+        download_tag(repo, tags[user_input]['name'], tags[user_input]['zipball_url'])
     return tags[user_input]['name']
 
 
@@ -121,11 +122,12 @@ if __name__ == "__main__":
     # Flag arguments
     parser.add_argument('--gemoji', action='store_true', default=False, help="Get Gemoji.")
     parser.add_argument('--emojione', action='store_true', default=False, help="Get Emojione.")
+    parser.add_argument('--no-download', action='store_true', default=False, help="Skip download and use local.")
     args = parser.parse_args()
     os.chdir(current_dir)
     if args.gemoji:
-        tag = select_tag(GEMOJI)
+        tag = select_tag(GEMOJI, args.no_download)
         gen_gemoji.parse(GEMOJI.replace('/', '-'), tag)
     if args.emojione:
-        tag = select_tag(EMOJIONE)
+        tag = select_tag(EMOJIONE, args.no_download)
         gen_emoji1.parse(EMOJIONE.replace('/', '-'), tag)
