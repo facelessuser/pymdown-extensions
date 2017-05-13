@@ -357,7 +357,7 @@ class EmojiExtension(Extension):
         config = self.getConfigs()
 
         # To avoid having to do a major release, we'll support the old format until the next major release.
-        if util.get_arg_count(config['emoji_generator']) == LEGACY_ARG_COUNT:
+        if util.get_arg_count(config['emoji_generator']) == LEGACY_ARG_COUNT:  # pragma: no coverage
             legacy_gen = config['emoji_generator']
             config['emoji_generator'] = (
                 lambda index, shortname, alias, uc, alt, title, category, options, md, legacy_gen=legacy_gen:
