@@ -27,6 +27,8 @@ from markdown import Extension
 from markdown.inlinepatterns import Pattern
 from markdown import util as md_util
 from . import util
+from .util import PymdownxDeprecationWarning
+import warnings
 
 RE_EMOJI = r'(:[+\-\w]+:)'
 SUPPORTED_INDEXES = ('emojione', 'gemoji')
@@ -41,6 +43,7 @@ SHORT_TITLE = 'short'
 VALID_TITLE = (LONG_TITLE, SHORT_TITLE, NO_TITLE)
 UNICODE_ENTITY = 'html_entity'
 UNICODE_ALT = ('unicode', UNICODE_ENTITY)
+LEGACY_ARG_COUNT = 8
 
 
 def add_attriubtes(options, attributes):
@@ -195,20 +198,20 @@ def to_alt(index, shortname, alias, uc, alt, title, category, options, md):
 class EmojiPattern(Pattern):
     """Return element of type `tag` with a text attribute of group(3) of a Pattern."""
 
-    def __init__(
-        self, pattern, index, generator, remove_var_sel,
-        alt, title, options, md
-    ):
+    def __init__(self, pattern, config, md):
         """Initialize."""
 
-        self._set_index(index)
+        title = config['title']
+        alt = config['alt']
+
+        self._set_index(config["emoji_index"])
         self.markdown = md
         self.unicode_alt = alt in UNICODE_ALT
         self.encoded_alt = alt == UNICODE_ENTITY
-        self.remove_var_sel = remove_var_sel
+        self.remove_var_sel = config['remove_variation_selector']
         self.title = title if title in VALID_TITLE else NO_TITLE
-        self.generator = generator
-        self.options = options
+        self.generator = config['emoji_generator']
+        self.options = config['options']
         Pattern.__init__(self, pattern)
 
     def _set_index(self, index):
@@ -351,23 +354,26 @@ class EmojiExtension(Extension):
     def extendMarkdown(self, md, md_globals):
         """Add support for emojis."""
 
-        emoji_index = self.getConfigs()["emoji_index"]
-        generator = self.getConfigs()['emoji_generator']
-        title = self.getConfigs()['title']
-        alt = self.getConfigs()['alt']
-        options = self.getConfigs()['options']
-        remove_var_sel = self.getConfigs()['remove_variation_selector']
+        config = self.getConfigs()
+
+        # To avoid having to do a major release, we'll support the old format until the next major release.
+        if util.get_arg_count(config['emoji_generator']) == LEGACY_ARG_COUNT:
+            legacy_gen = config['emoji_generator']
+            config['emoji_generator'] = (
+                lambda index, shortname, alias, uc, alt, title, category, options, md, legacy_gen=legacy_gen:
+                    legacy_gen(index, shortname, alias, uc, alt, title, options, md)
+            )
+            warnings.warn(
+                "'Emoji generators' now take 9 arguments. The 8 argument format is \n"
+                "\ndeprecated and will be removed in the future. Please update your\n"
+                "\ngenerator to the new format to avoid complications in the future.",
+                PymdownxDeprecationWarning
+            )
 
         util.escape_chars(md, [':'])
 
-        md.inlinePatterns.add(
-            "emoji",
-            EmojiPattern(
-                RE_EMOJI, emoji_index, generator, remove_var_sel,
-                alt, title, options, md
-            ),
-            "<not_strong"
-        )
+        emj = EmojiPattern(RE_EMOJI, config, md)
+        md.inlinePatterns.add("emoji", emj, "<not_strong")
 
 
 ###################

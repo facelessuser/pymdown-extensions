@@ -94,6 +94,16 @@ else:
         return uchr(value)
 
 
+def get_arg_count(fn):
+    """Get argument count of function."""
+
+    if PY3:
+        count = fn.__code__.co_argcount
+    else:
+        count = fn.func_code.co_argcount
+    return count
+
+
 def escape_chars(md, echrs):
     """
     Add chars to the escape list.
