@@ -1,0 +1,10 @@
+__default__: {}
+
+smartsymbols:
+  extensions:
+    pymdownx.smartsymbols:
+
+smartsymbols (with smarty):
+  extensions:
+    markdown.extensions.smarty:
+    pymdownx.smartsymbols:

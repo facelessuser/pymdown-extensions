@@ -1,0 +1,37 @@
+__default__: {}
+
+inlinehilite:
+  extensions:
+    markdown.extensions.attr_list:
+    pymdownx.highlight:
+    pymdownx.inlinehilite:
+      style_plain_text: true
+      css_class: 'inlinehilite'
+
+inlinehilite_codehilite:
+  extensions:
+    markdown.extensions.codehilite:
+      guess_lang: false
+    pymdownx.inlinehilite:
+      style_plain_text: true
+
+inlinehilite_guess:
+  extensions:
+    pymdownx.highlight:
+      guess_lang: True
+    pymdownx.inlinehilite:
+      style_plain_text: true
+      css_class: inlinehilite
+
+inlinehilite_no_pygments:
+  extensions:
+    pymdownx.highlight:
+      use_pygments: false
+    pymdownx.inlinehilite:
+      css_class: 'inlinehilite'
+
+inlinehilite_plaintext:
+  extensions:
+    pymdownx.highlight:
+    pymdownx.inlinehilite:
+      style_plain_text: false

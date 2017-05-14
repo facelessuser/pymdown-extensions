@@ -1,0 +1,11 @@
+__default__: {}
+
+extra:
+  extensions:
+    pymdownx.extra:
+
+extra (config):
+  extensions:
+    pymdownx.extra:
+      markdown.extensions.footnotes:
+        BACKLINK_TEXT: link

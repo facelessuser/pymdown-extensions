@@ -1,0 +1,11 @@
+__default__: {}
+
+plainhtml:
+  extensions:
+    pymdownx.plainhtml:
+
+plainhtml (no attr strip):
+  extensions:
+    pymdownx.plainhtml:
+      strip_js_on_attributes: false
+      strip_attributes: ''

@@ -1,0 +1,13 @@
+__default__: {}
+
+pathconverter:
+  extensions:
+    pymdownx.pathconverter:
+      base_path: '{{BASE}}'
+      relative_path: '{{RELATIVE}}'
+
+pathconverter (absolute):
+  extensions:
+    pymdownx.pathconverter:
+      absolute: true
+      base_path: /Some/fake/path

@@ -1,0 +1,8 @@
+__default__: {}
+
+progressbar:
+  css:
+    - ../_assets/progressbar.css
+  extensions:
+    pymdownx.progressbar:
+    markdown.extensions.attr_list:

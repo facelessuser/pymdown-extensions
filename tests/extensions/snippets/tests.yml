@@ -1,0 +1,11 @@
+__default__: {}
+
+snippets:
+  extensions:
+    pymdownx.snippets:
+      base_path: '{{BASE}}/../_snippets'
+
+snippets (block):
+  extensions:
+    pymdownx.snippets:
+      base_path: '{{BASE}}/../_snippets'

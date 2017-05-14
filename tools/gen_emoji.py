@@ -8,6 +8,7 @@ import shutil
 import zipfile
 import gen_emoji1
 import gen_gemoji
+import gen_twemoji
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -15,6 +16,7 @@ GITHUB_API_HEADER = 'application/vnd.github.v3+json'
 GITHUB_API = 'https://api.github.com'
 GEMOJI = 'github/gemoji'
 EMOJIONE = 'Ranks/emojione'
+TWEMOJI = 'twitter/twemoji'
 
 PY3 = sys.version_info >= (3, 0) and sys.version_info[0:2] < (4, 0)
 
@@ -122,6 +124,7 @@ if __name__ == "__main__":
     # Flag arguments
     parser.add_argument('--gemoji', action='store_true', default=False, help="Get Gemoji.")
     parser.add_argument('--emojione', action='store_true', default=False, help="Get Emojione.")
+    parser.add_argument('--twemoji', action='store_true', default=False, help="Get Twemoji.")
     parser.add_argument('--no-download', action='store_true', default=False, help="Skip download and use local.")
     args = parser.parse_args()
     os.chdir(current_dir)
@@ -131,3 +134,6 @@ if __name__ == "__main__":
     if args.emojione:
         tag = select_tag(EMOJIONE, args.no_download)
         gen_emoji1.parse(EMOJIONE.replace('/', '-'), tag)
+    if args.twemoji:
+        tag = select_tag(TWEMOJI, args.no_download)
+        gen_twemoji.parse(TWEMOJI.replace('/', '-'), tag)

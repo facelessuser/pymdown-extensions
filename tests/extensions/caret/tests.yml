@@ -1,0 +1,26 @@
+__default__: {}
+
+caret:
+  extensions:
+    pymdownx.caret:
+
+caret (dumb):
+  extensions:
+    pymdownx.caret:
+      smart_insert: false
+
+caret (dumb no sup):
+  extensions:
+    pymdownx.caret:
+      smart_insert: false
+      superscript: false
+
+caret (no insert):
+  extensions:
+    pymdownx.caret:
+      insert: false
+
+caret (no sup):
+  extensions:
+    pymdownx.caret:
+      superscript: false

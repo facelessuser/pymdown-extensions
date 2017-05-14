@@ -1,0 +1,10 @@
+__default__: {}
+
+mark:
+  extensions:
+    pymdownx.mark:
+
+mark (dumb):
+  extensions:
+    pymdownx.mark:
+      smart_mark: false

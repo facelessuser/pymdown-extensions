@@ -1,0 +1,26 @@
+__default__: {}
+
+tilde:
+  extensions:
+    pymdownx.tilde:
+
+tilde (dumb):
+  extensions:
+    pymdownx.tilde:
+      smart_delete: false
+
+tilde (dumb no sub):
+  extensions:
+    pymdownx.tilde:
+      smart_delete: false
+      subscript: false
+
+tilde (no delete):
+  extensions:
+    pymdownx.tilde:
+      delete: false
+
+tilde (no sub):
+  extensions:
+    pymdownx.tilde:
+      subscript: false

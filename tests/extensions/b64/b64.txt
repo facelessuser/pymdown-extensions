@@ -1,0 +1,4 @@
+<!-- ![picture](../_assets/bg.png) -->
+![picture](../_assets/bg.png)
+![picture with cache busting](../_assets/bg.png?v2)
+![Some windows path link](file:///c:/does_not_exist.png)

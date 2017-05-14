@@ -112,7 +112,7 @@ def parse(repo, tag):
 
     # Save test files
     for test in ('png', 'entities'):
-        with open('../tests/extensions/gemoji (%s).txt' % test, 'w') as f:
+        with open('../tests/extensions/emoji/gemoji (%s).txt' % test, 'w') as f:
             f.write('# Emojis\n')
             count = 0
             for emoji in sorted(shortnames):

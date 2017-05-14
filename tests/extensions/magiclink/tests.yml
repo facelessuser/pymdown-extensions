@@ -1,0 +1,26 @@
+__default__: {}
+
+magiclink:
+  extensions:
+    pymdownx.magiclink:
+      hide_protocol: false
+      repo_url_shortener: true
+      base_repo_url: https://github.com/facelessuser/pymdown-extensions
+
+magiclink_hide_protocol:
+  extensions:
+    pymdownx.magiclink:
+      hide_protocol: true
+      repo_url_shortener: true
+      base_repo_url: https://github.com/facelessuser/pymdown-extensions
+
+magiclink (extensions):
+  extensions:
+    pymdownx.magiclink:
+      hide_protocol: false
+      repo_url_shortener: true
+      base_repo_url: https://github.com/facelessuser/pymdown-extensions
+    pymdownx.betterem:
+    pymdownx.tilde:
+    pymdownx.caret:
+    pymdownx.mark:

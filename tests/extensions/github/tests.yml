@@ -1,0 +1,11 @@
+__default__: {}
+
+github:
+  extensions:
+    pymdownx.github:
+
+github (config):
+  extensions:
+    pymdownx.github:
+      pymdownx.tilde:
+        subscript: True

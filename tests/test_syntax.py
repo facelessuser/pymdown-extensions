@@ -96,40 +96,40 @@ def check_markdown(testfile, extension, extension_config, wrapper, update=False)
 def gather_test_params():
     """Gather the test parameters."""
 
-    for filename in os.listdir(CURRENT_DIR):
-        directory = os.path.join(CURRENT_DIR, filename)
-        if os.path.isdir(directory):
-            cfg_path = os.path.join(directory, 'tests.yml')
-            if os.path.exists(cfg_path):
-                with codecs.open(cfg_path, 'r', encoding='utf-8') as f:
-                    cfg = util.yaml_load(f.read())
-                for testfile in os.listdir(directory):
-                    if testfile.endswith('.txt'):
-                        key = os.path.splitext(testfile)[0]
-                        test_cfg = copy.deepcopy(cfg['__default__'])
-                        if 'extensions' not in test_cfg:
-                            test_cfg['extensions'] = util.OrderedDict()
-                        if 'css' not in test_cfg:
-                            test_cfg['css'] = []
-                        for k, v in cfg.get(key, util.OrderedDict()).items():
-                            if k == 'css':
-                                for css in v:
-                                    test_cfg[k].append(css)
-                                continue
-                            for k1, v1 in v.items():
-                                if v1 is not None:
-                                    for k2, v2 in v1.items():
-                                        if isinstance(v2, util.string_type):
-                                            v1[k2] = v2.replace(
-                                                '{{BASE}}', os.path.join(CURRENT_DIR, 'extensions')
-                                            ).replace(
-                                                '{{RELATIVE}}', os.path.join(CURRENT_DIR)
-                                            )
-                                test_cfg[k][k1] = v1
-                        target = os.path.join(directory, testfile)
-                        if target_file is not None and target != target_file:
-                            continue
-                        yield test_cfg, os.path.join(directory, testfile)
+    for base, dirs, files in os.walk(CURRENT_DIR):
+        [dirs.remove(d) for d in dirs[:] if d.startswith('_')]
+        cfg_path = os.path.join(base, 'tests.yml')
+        if os.path.exists(cfg_path):
+            files.remove('tests.yml')
+            [files.remove(file) for file in files if not file.endswith('.txt')]
+            with codecs.open(cfg_path, 'r', encoding='utf-8') as f:
+                cfg = util.yaml_load(f.read())
+            for testfile in files:
+                key = os.path.splitext(testfile)[0]
+                test_cfg = copy.deepcopy(cfg['__default__'])
+                if 'extensions' not in test_cfg:
+                    test_cfg['extensions'] = util.OrderedDict()
+                if 'css' not in test_cfg:
+                    test_cfg['css'] = []
+                for k, v in cfg.get(key, util.OrderedDict()).items():
+                    if k == 'css':
+                        for css in v:
+                            test_cfg[k].append(css)
+                        continue
+                    for k1, v1 in v.items():
+                        if v1 is not None:
+                            for k2, v2 in v1.items():
+                                if isinstance(v2, util.string_type):
+                                    v1[k2] = v2.replace(
+                                        '{{BASE}}', base
+                                    ).replace(
+                                        '{{RELATIVE}}', CURRENT_DIR
+                                    )
+                        test_cfg[k][k1] = v1
+                target = os.path.join(base, testfile)
+                if target_file is not None and target != target_file:
+                    continue
+                yield test_cfg, os.path.join(base, testfile)
 
 
 def pytest_generate_tests(metafunc):

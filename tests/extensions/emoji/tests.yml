@@ -1,0 +1,70 @@
+__default__: {}
+
+emoji1 (awesome):
+  extensions:
+    pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_awesome
+
+emoji1 (entities):
+  extensions:
+    pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_alt
+      alt: html_entity
+      remove_variation_selector: True
+
+emoji1 (escaped):
+  extensions:
+    pymdownx.emoji:
+
+emoji1 (long title):
+  extensions:
+    pymdownx.emoji:
+      title: long
+
+emoji1 (no title):
+  extensions:
+    pymdownx.emoji:
+      title: none
+
+emoji1 (png):
+  css:
+    - https://cdn.jsdelivr.net/emojione/3.0.3/extras/css/emojione.min.css
+  extensions:
+    pymdownx.emoji:
+
+emoji1 (png sprite):
+  css:
+    - https://cdn.jsdelivr.net/emojione/assets/3.0/sprites/emojione-sprite-32.css
+  extensions:
+    pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_png_sprite
+
+emoji1 (svg):
+  css:
+    - https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/css/emojione.min.css
+  extensions:
+    pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+
+emoji1 (svg sprite):
+  extensions:
+    pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg_sprite
+
+gemoji (entities):
+  extensions:
+    pymdownx.emoji:
+      emoji_index: !!python/name:pymdownx.emoji.gemoji
+      emoji_generator: !!python/name:pymdownx.emoji.to_alt
+      alt: html_entity
+
+gemoji (png):
+  extensions:
+    pymdownx.emoji:
+      emoji_index: !!python/name:pymdownx.emoji.gemoji
+      alt: short
+      options:
+        attributes:
+          align: absmiddle
+          height: 20px
+          width: 20px

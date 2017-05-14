@@ -1,0 +1,11 @@
+__default__: {}
+
+escapeall:
+  extensions:
+    pymdownx.escapeall:
+      hardbreak: True
+      nbsp: True
+
+escapeall (ws normal):
+  extensions:
+    pymdownx.escapeall:

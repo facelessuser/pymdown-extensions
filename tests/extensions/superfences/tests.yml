@@ -1,0 +1,42 @@
+__default__: {}
+
+superfences (custom):
+  extensions:
+    pymdownx.superfences:
+      custom_fences: 
+        - name: test
+          class: test
+          format: !!python/name:pymdownx.superfences.fence_div_format
+
+superfences (failures):
+  extensions:
+    pymdownx.superfences:
+      highlight_code: false
+
+superfences (no indent blocks):
+  extensions:
+    markdown.extensions.codehilite:
+      guess_lang: false
+    pymdownx.superfences:
+      disable_indented_code_blocks: true
+
+superfences (no highlight):
+  extensions:
+    pymdownx.superfences:
+      highlight_code: false
+
+superfences (no pygments):
+  extensions:
+    pymdownx.highlight:
+      use_pygments: false
+    pymdownx.superfences:
+
+superfences (normal):
+  extensions:
+    pymdownx.highlight:
+      extend_pygments_lang:
+        - name: php-inline
+          lang: php
+          options:
+            startinline: true
+    pymdownx.superfences:

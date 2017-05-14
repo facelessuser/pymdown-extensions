@@ -1,0 +1,16 @@
+__default__: {}
+
+arithmatex:
+  extensions:
+    pymdownx.arithmatex:
+
+arithmatex (disable):
+  extensions:
+    pymdownx.arithmatex:
+      block_syntax: []
+      inline_syntax: []
+
+arithmatex (script):
+  extensions:
+    pymdownx.arithmatex:
+      insert_as_script: true
