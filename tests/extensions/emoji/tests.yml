@@ -68,3 +68,33 @@ gemoji (png):
           align: absmiddle
           height: 20px
           width: 20px
+
+twemoji (entities):
+  extensions:
+    pymdownx.emoji:
+      emoji_index: !!python/name:pymdownx.emoji.twemoji
+      emoji_generator: !!python/name:pymdownx.emoji.to_alt
+      alt: html_entity
+
+twemoji (png):
+  extensions:
+    pymdownx.emoji:
+      emoji_index: !!python/name:pymdownx.emoji.twemoji
+      alt: short
+      options:
+        attributes:
+          align: absmiddle
+          height: 20px
+          width: 20px
+
+twemoji (svg):
+  extensions:
+    pymdownx.emoji:
+      emoji_index: !!python/name:pymdownx.emoji.twemoji
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+      alt: short
+      options:
+        attributes:
+          align: absmiddle
+          height: 20px
+          width: 20px
