@@ -1,10 +1,10 @@
 # Emoji
 
-The Emoji extension adds support for inserting emojis via simple short names enclosed within colons: `:short_name:`.  This is accomplished by using a short name index to map easy to remember names to the Unicode data. The Unicode data is then converted into actual Unicode emoji characters and/or special HTML elements that represent the emoji.
+The Emoji extension adds support for inserting emojis via simple short names enclosed within colons: `:short_name:`.  This is accomplished by using a short name index to map easy to remember names to the Unicode data. The Unicode data is then converted into actual Unicode emoji characters and/or special HTML elements (usually images) that represent the emoji.
 
 There are a number of familiar emoji short name conventions that people may be aware of, and they differ slightly.  At the present, Emoji chooses to focus on two specific short name conventions. The first convention is from [Gemoji][gemoji] which is GitHub's open source solution that provides emojis in GFM.  The second is from [EmojiOne][emojione] which is another open source emoji solution.
 
-The short name indexes simply provide easy to remember names mapped to the Unicode data. Custom emojis (like Gemoji's `:octocat:`) wold have no Unicode data associated with them and would only provide a long name.  While it may be thought that an index like Gemoji is only for GitHub emoji images, you could easily map EmojiOne images to the Gemoji short names and vice versa. You could even map [Twemoji][twemoji] images to EmojiOne if desired.
+The short name indexes simply provide easy to remember names mapped to the Unicode data. Custom emojis (like Gemoji's `:octocat:`) would have no Unicode data associated with them and would only provide a long name.  While it may be thought that an index like Gemoji is only for GitHub emoji images, you could easily map EmojiOne images to the Gemoji short names and vice versa.
 
 Emoji provides various output formats that take the Unicode data associated with a short name (or the short name itself in the case of a custom emoji) and generates an HTML output. Most hosted emoji images follow the same pattern and are named after their Unicode code points separated by hyphens (minus things like zero width joiners and variation selectors).  This is true with EmojiOne, GitHub, and Twemoji, to name a few.  The default output `to_png` could theoretically be used with the EmojiOne index to output valid PNG images for EmojiOne, GitHub, or Twemoji (assuming appropriate CDN or local source images were provided). With that said, some output formats may lend themselves better to assets that are available from a specific provider. For instance, EmojiOne provides SVG, PNG, and sprite assets, while others provide only PNG images.
 
@@ -204,13 +204,16 @@ emoji_index = {
             "category": "symbol",
 
             # Unicode is the representation of the Unicode
-            # code points with variations and joiners striped out.
-            # This is used to reference pngs or svgs associated
-            # with the emoji and can also sometimes be used as
-            # part of special class names in the HTML output.
+            # code points, but it is not necessarily valid Unicode
+            # code points. Essentially it is what represents the Unicode
+            # and is used as the image name for pngs and svgs. It is also
+            # sometimes used as part of special class names in the HTML
+            # output (depending on the generator).
             #
-            # Do not include this if the emoji is a custom,
-            # non-Unicode emoji.
+            # In the case of Gemoji and EmojiOne this is the Unicode code
+            # points with variations and joiners striped out.
+            #
+            # Do not include this if the emoji is a custom, non-Unicode emoji.
             "unicode": "0030-20e3",
 
             # This is the full Unicode code points and is
@@ -260,7 +263,7 @@ Each different kind of output is controlled by a different emoji generator funct
     `uc`        | string     | This is a string of the Unicode values for the emoji.  This is used to reference emoji image names or for specifying class names etc., so it may not contain all the code points.  The string returned consists of each Unicode value represented as a hex value separated with hyphens.  Values such as U+200D ZERO WIDTH JOINER and  U+FE0F VARIATION SELECTOR-16 are stripped out.  So the value here will not always be practical for calculating the actual Unicode points of an emoji.  This will be `None` for non-standard emoji that are not Unicode.
     `alt`       | string     | This is the alternative emoji value (or fallback value).  Its format will differ depending on the extension setting `alt`.  This will be returned as either the Unicode characters, HTML entities, or the short name used.  See the `alt` setting for more info.
     `title`     | string     | This is the title that can be used in image elements.  Depending on the global extension setting `title`, this will either return the long name, the short name, or `None`.  See the `title` setting for more info.
-    `category`  | string     | Category of the emoji, or `None` if there is no category.
+    `category`  | string     | Category of the emoji, or `None` if there is no category for the emoji.
     `options`   | dictionary | This is a dictionary to specify generator function specific options.  This can be anything, and it is up to the generator function to parse and provide defaults.
     `md`        | class      | This is the Markdown class object.  This is mainly used to access specific things needed from the Markdown class.  If you needed to stash your output, you would do something like: `md.htmlStash.store(alt, safe=True)`.
 
