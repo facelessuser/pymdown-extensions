@@ -1,0 +1,11 @@
+# Emojis
+100 :100:<br>
+1234 :1234:<br>
+8ball :8ball:<br>
+a :a:<br>
+ab :ab:<br>
+abc :abc:<br>
+abcd :abcd:<br>
+accept :accept:<br>
+aerial_tramway :aerial_tramway:<br>
+airplane :airplane:<br>

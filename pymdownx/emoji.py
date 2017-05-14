@@ -31,10 +31,12 @@ from .util import PymdownxDeprecationWarning
 import warnings
 
 RE_EMOJI = r'(:[+\-\w]+:)'
-SUPPORTED_INDEXES = ('emojione', 'gemoji')
+SUPPORTED_INDEXES = ('emojione', 'gemoji', 'twemoji')
 UNICODE_VARIATION_SELECTOR_16 = 'fe0f'
 EMOJIONE_SVG_CDN = 'https://cdn.jsdelivr.net/emojione/assets/svg/'
 EMOJIONE_PNG_CDN = 'https://cdn.jsdelivr.net/emojione/assets/3.0/png/32/'
+TWEMOJI_SVG_CDN = 'https://twemoji.maxcdn.com/2/svg/'
+TWEMOJI_PNG_CDN = 'https://twemoji.maxcdn.com/2/72x72/'
 GITHUB_UNICODE_CDN = 'https://assets-cdn.github.com/images/icons/emoji/unicode/'
 GITHUB_CDN = 'https://assets-cdn.github.com/images/icons/emoji/'
 NO_TITLE = 'none'
@@ -56,16 +58,23 @@ def add_attriubtes(options, attributes):
 
 
 def emojione():
-    """Emojione index."""
+    """The EmojiOne index."""
 
     from . import emoji1_db as emoji_map
     return {"name": emoji_map.name, "emoji": emoji_map.emoji, "aliases": emoji_map.aliases}
 
 
 def gemoji():
-    """gemoji_index index."""
+    """The Gemoji index."""
 
     from . import gemoji_db as emoji_map
+    return {"name": emoji_map.name, "emoji": emoji_map.emoji, "aliases": emoji_map.aliases}
+
+
+def twemoji():
+    """The Twemoji index."""
+
+    from . import twemoji_db as emoji_map
     return {"name": emoji_map.name, "emoji": emoji_map.emoji, "aliases": emoji_map.aliases}
 
 
@@ -78,6 +87,9 @@ def to_png(index, shortname, alias, uc, alt, title, category, options, md):
     if index == 'gemoji':
         def_image_path = GITHUB_UNICODE_CDN
         def_non_std_image_path = GITHUB_CDN
+    elif index == 'twemoji':
+        def_image_path = TWEMOJI_PNG_CDN
+        def_image_path = TWEMOJI_PNG_CDN
     else:
         def_image_path = EMOJIONE_PNG_CDN
         def_non_std_image_path = EMOJIONE_PNG_CDN
@@ -114,11 +126,16 @@ def to_png(index, shortname, alias, uc, alt, title, category, options, md):
 def to_svg(index, shortname, alias, uc, alt, title, category, options, md):
     """Return svg element."""
 
+    if index == 'twemoji':
+        svg_path = TWEMOJI_SVG_CDN
+    else:
+        svg_path = EMOJIONE_SVG_CDN
+
     attributes = {
         "class": options.get('classes', index),
         "alt": alt,
         "src": "%s%s.svg" % (
-            options.get('image_path', EMOJIONE_SVG_CDN),
+            options.get('image_path', svg_path),
             uc
         )
     }
