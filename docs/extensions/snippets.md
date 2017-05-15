@@ -1,5 +1,7 @@
 # Snippets
 
+## Overview
+
 Snippets is an extension to insert markdown or HTML snippets into another markdown file.  Snippets is great for situations where you have content you need to insert into multiple documents.  For instance, this document keeps all its hyperlinks in a separate file.  Then includes those hyperlinks at the bottom of a document via snippets. If a link needs to be updated, it can be updated in one location instead of updating them in multiple files.
 
 Snippets is run as a preprocessor, so if a snippet is found in a fenced code block etc., it will still get processed.  If the specified file cannot be found, the the markup will be removed.  If you need to show a snippet example in fenced code, please escape it as listed in [Snippets Notation](#snippets-notation).

@@ -1,7 +1,5 @@
 # Installation
 
-PyMdown Extensions is built on top of a few requirements.  If installing, the requirements will be installed automatically unless the requirement is optional.
-
 ## Requirements
 
 In order for PyMdown Extensions to work, there are a couple of prerequisites.

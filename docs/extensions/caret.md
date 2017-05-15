@@ -1,5 +1,7 @@
 # Caret
 
+## Overview
+
 Caret optionally adds two different features which are syntactically built around the `^` character: **insert** which inserts `#!html <ins></ins>` tags and **superscript** which inserts `#!html <sup></sup>` tags.  Syntax behavior for smart and non-smart variants of **insert** models that of [BetterEm](betterem.md#differences).
 
 ## Options

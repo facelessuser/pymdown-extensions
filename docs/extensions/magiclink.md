@@ -1,5 +1,7 @@
 # MagicLink
 
+## Overview
+
 MagicLink scans for URLs and emails and generates proper HTML links for them.  No special syntax is required, you just type or paste the links and they get converted.  MagicLink auto-links HTML, FTP, and email links.
 
 If you happen to have some conflicts with syntax for a specific case, you can always revert to the old auto-link format as well: `<https://www.link.com>`.  Additional MagicLink features should work with this form as well.

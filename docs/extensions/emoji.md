@@ -1,5 +1,7 @@
 # Emoji
 
+## Overview
+
 The Emoji extension adds support for inserting emoji via simple short names enclosed within colons: `:short_name:`.  This is accomplished by using a short name index to map easy to remember names to associated Unicode data. The Unicode data is then converted into actual Unicode emoji characters and/or special HTML elements (usually images) that represent the emoji.
 
 There are a number of emoji short name conventions that people may be aware of. These conventions are always tied to a specific emoji set. These conventions differ because there is no official Unicode short name convention. At the present, Emoji chooses to focus on three specific emoji sets:

@@ -1,5 +1,7 @@
 # Keys
 
+## Overview
+
 Keys is an extension to make entering and styling keyboard key presses easier. Syntactically, Keys is built around the `+` symbol.  A key or combination of key presses is surrounded by `++` with each key press separated with a single `+`.  For instance, if we wanted to represent `Ctrl + Alt + Delete`, we could just format our keys like this: `++ctrl+alt+delete++` --> ++ctrl+alt+delete++.
 
 ## Formatting

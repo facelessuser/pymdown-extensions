@@ -1,5 +1,7 @@
 # Arithmatex
 
+## Overview
+
 Arithmatex is an extension that preserves LaTeX math equations during the Markdown conversion process so that they can be used with [MathJax][mathjax]. It searches for the patterns `#!tex $...$` and `#!tex \(...\)` for inline math, and `#!tex $$...$$`, `#!tex \[...\]`, and `#!tex \begin{}...\end{}` for block math. By default, all formats are enabled, but they each format can individually be disabled if desired.
 
 Keep in mind that some equations can make it through without Arithmatex fine.  Arithmatex is meant to *ensure* they make it through.

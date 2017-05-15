@@ -2,17 +2,34 @@
 
 ## Incompatible Extensions
 
-PyMdown Extensions includes three extensions that are meant to **replace** their counterpart in the default Python Markdown extensions.  You need to either use the PyMdown Extensions version or use the Python Markdown version; **they cannot be loaded at the same time**.
+PyMdown Extensions includes three extensions that are meant to **replace** their counterpart in the default Python Markdown extensions. You don't have to use all of PyMdown's extensions, but if you choose to use one of the packages below, you should use it instead of the Python Markdown one; **they cannot be loaded at the same time**.
+
+Also, you shouldn't include an extension more than once. If you try to include more than one extension at the same time, you may get unexpected results.  Also, be aware of that some of the extensions are convenience extensions that include multiple extensions; be aware of what they include so you do not accidentally re-include them individually.
 
 - `pymdownx.superfences` replaces `markdown.extensions.fenced_code`.
+
 - `pymdownx.betterem` replaces `markdown.extensions.smartstrong`.
-- `pymdownx.extra` replaces `markdown.extensions.extra`.
 
-A few convenience extensions that include multiple extensions in one shot are also provided and should not be mixed.  And none of them should be mixed with `markdown.extensions.extra` or `pymdownx.extra`. This is to prevent multiples of an extension from getting included.
+- `pymdownx.extra` replaces `markdown.extensions.extra`, but remember, `pymdown.extra` is a convenience extension which is just a wrapper and includes a number of extensions. Remember to avoid including this and then including conflicting extensions or doubles of extensions.  Here is the full list of included extensions:
 
-- `pymdownx.github`
-- `pymdownx.pymdown`
+    ```
+    'markdown.extensions.tables',
+    'pymdownx.magiclink',
+    'pymdownx.betterem',
+    'pymdownx.tilde',
+    'pymdownx.emoji',
+    'pymdownx.tasklist',
+    'pymdownx.superfences'
+    ```
 
-## Include Extensions Only Once
+- `pymdownx.github` doesn't replace any extensions and is just a convenience extensions to include most of the extensions needed to get a GitHub-ish feel.  Remember to avoid including this and then including conflicting extensions or doubles of extensions.  Here is the full list of included extensions:
 
-In general, you shouldn't include an extension more than once. If you try to include more than one of the aforementioned convenience extensions at the same time, you will include certain extensions multiple times possibly leading to unexpected results.  Also, be aware of what extensions these convenience extensions include and do not accidentally re-include them individually.
+    ```
+    'markdown.extensions.tables',
+    'pymdownx.magiclink',
+    'pymdownx.betterem',
+    'pymdownx.tilde',
+    'pymdownx.emoji',
+    'pymdownx.tasklist',
+    'pymdownx.superfences'
+    ```

@@ -1,5 +1,7 @@
 # Tasklist
 
+## Overview
+
 The Tasklist extension adds GFM style task lists.  They follow the same syntax as GFM.
 
 ## Options

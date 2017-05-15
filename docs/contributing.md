@@ -1,13 +1,5 @@
 # Contributing &amp; Support
 
-Contribution from the community is encouraged and can be done in a variety of ways:
-
-- Bug reports.
-- Reviewing code.
-- Code patches via pull requests.
-- Answer questions in the issue tracker.
-- Documentation improvements via pull requests.
-
 ## Bug Reports
 
 1. Please **read the documentation** and **search the issue tracker** to try and find the answer to your question **before** posting an issue.
