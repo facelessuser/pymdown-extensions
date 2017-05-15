@@ -1,7 +1,7 @@
 (function (document) {
   function clipboard_init() {
     if (typeof Clipboard !== "undefined" && Clipboard.isSupported()) {
-      var code = document.querySelectorAll("div.codehilite>pre, pre>code"),
+      var code = document.querySelectorAll("div.codehilite>pre,pre.codehilite>code"),
         arr = [],
         i, j, maxItem, pre, btn, icon, parent, clipboard;
 
@@ -14,15 +14,15 @@
         codeId = 'hl_code' + i.toString();
         btn = document.createElement('button');
         icon = document.createElement('i');
-        parent.id = codeId
-        icon.setAttribute("class", "md-icon md-icon--clipboard")
-        btn.appendChild(icon)
-        btn.setAttribute("class", "clip-btn")
-        btn.setAttribute("data-clipboard-target", '#' + codeId + ' pre, #' + codeId + ' code')
-        btn.setAttribute("aria-label", "Copy to Clipboard.")
+        parent.id = codeId;
+        icon.setAttribute("class", "md-icon md-icon--clipboard");
+        btn.appendChild(icon);
+        btn.setAttribute("class", "clip-btn");
+        btn.setAttribute("data-clipboard-target", '#' + codeId + ' pre, #' + codeId + ' code');
+        btn.setAttribute("aria-label", "Copy to Clipboard.");
         btn.addEventListener('mouseleave', function(e){
           e.currentTarget.setAttribute('class','clip-btn');
-          e.currentTarget.setAttribute('aria-label', 'Copy to Clipboard.')
+          e.currentTarget.setAttribute('aria-label', 'Copy to Clipboard.');
         });
         parent.insertBefore(btn, parent.childNodes[0]);
       }
@@ -38,7 +38,7 @@
         e.trigger.setAttribute('class', 'clip-btn clip-tip');
       });
     }
-  };
+  }
 
   function onReady(fn) {
     if (document.addEventListener) {
