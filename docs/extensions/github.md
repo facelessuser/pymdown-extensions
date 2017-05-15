@@ -36,7 +36,7 @@ As mentioned before, the GitHub extension does not intend to provide a 1:1 match
 
 ## GitHub Emoji Configuration
 
-This is for informational purposes in case you wish to configure GitHub style emojis outside of the GitHub Extension. This is the full, default setup used to get GitHub emoji images.  This is valid at the time of writing this. GitHub uses Gemoji to provide their emoji, but GitHub also constantly tweaks how they do things, so in time this may render differently than what they actually do. This should provide emojis for as long as the CDNs are valid.
+This is for informational purposes in case you wish to configure GitHub style emoji outside of the GitHub Extension. This is the full, default setup used to get GitHub emoji images.  This is valid at the time of writing this. GitHub uses Gemoji to provide their emoji, but GitHub also constantly tweaks how they do things, so in time this may render differently than what they actually do. This should provide emoji for as long as the CDNs are valid.
 
 ```python
 import pymdownx.emoji

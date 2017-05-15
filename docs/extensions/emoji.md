@@ -1,20 +1,23 @@
 # Emoji
 
-The Emoji extension adds support for inserting emojis via simple short names enclosed within colons: `:short_name:`.  This is accomplished by using a short name index to map easy to remember names to the Unicode data. The Unicode data is then converted into actual Unicode emoji characters and/or special HTML elements (usually images) that represent the emoji.
+The Emoji extension adds support for inserting emoji via simple short names enclosed within colons: `:short_name:`.  This is accomplished by using a short name index to map easy to remember names to associated Unicode data. The Unicode data is then converted into actual Unicode emoji characters and/or special HTML elements (usually images) that represent the emoji.
 
-There are a number of familiar emoji short name conventions that people may be aware of, and they differ slightly.  At the present, Emoji chooses to focus on two specific short name conventions. The first convention is from [Gemoji][gemoji] which is GitHub's open source solution that provides emojis in GFM.  The second is from [EmojiOne][emojione] which is another open source emoji solution.
+There are a number of emoji short name conventions that people may be aware of. These conventions are always tied to a specific emoji set. These conventions differ because there is no official Unicode short name convention. At the present, Emoji chooses to focus on three specific emoji sets:
 
-The short name indexes simply provide easy to remember names mapped to the Unicode data. Custom emojis (like Gemoji's `:octocat:`) would have no Unicode data associated with them and would only provide a long name.  While it may be thought that an index like Gemoji is only for GitHub emoji images, you could easily map EmojiOne images to the Gemoji short names and vice versa.
+- [Gemoji][gemoji] (<img align="absmiddle" alt=":smile:" class="gemoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f604.png" title=":smile:" width="20px" /> <img align="absmiddle" alt=":heart:" class="gemoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/2764.png" title=":heart:" width="20px" /> <img align="absmiddle" alt=":+1:" class="gemoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44d.png" title=":+1:" width="20px" />): Gemoji is GitHub's open source emoji solution. It contains a lot of common emoji and a couple special, non Unicode emoji (like Gemoji's `:octocat:`). If you are a GitHub user, you are probably familiar with some of the short names associated with it. Their associated CDN contains the emoji in 75x75 PNG format.
+- [EmojiOne][emojione] (:smile: :heart: :thumbsup:): EmojiOne is a very complete, high quality emoji set with support for gender and skin tone modifiers. Their free emoji set includes PNGs in sizes of 32x32, 64x64, and 128x128 which are all available via a CDN. Their older (version 2.2.7) emoji set, which contains less emoji, offers SVG images as well. Emoji supports EmojiOne's newest short name mapping, but it can be used for their older set, but short names for emoji that have been added since the old set will not map to any images if this is done.
+- [Twemoji][twemoji] (<img align="absmiddle" alt=":smile:" class="twemoji" height="20px" src="https://twemoji.maxcdn.com/2/72x72/1f604.png" title=":smile:" width="20px" /> <img align="absmiddle" alt=":heart:" class="twemoji" height="20px" src="https://twemoji.maxcdn.com/2/72x72/2764.png" title=":heart:" width="20px" /> <img align="absmiddle" alt=":thumbsup:" class="twemoji" height="20px" src="https://twemoji.maxcdn.com/2/72x72/1f44d.png" title=":thumbsup:" width="20px" />): Twemoji is Twitter's open source emoji set which also covers a great many emoji with skin tones and gender modifiers. The hosted CDN provides 72x72 PNG emoji or SVG emoji. While Gemoji and EmojiOne have a short name convention, Twemoji does not, and there are currently no 3rd projects that provide short names anywhere close to all the provided emoji. Since EmojiOne has the largest emoji library of the supported sets, we use EmojiOne's short name list for Twemoji. There will be a reasonable attempt to patch in emoji not found in EmojiOne's index, but if EmojiOne is ever significantly behind, we may wait for EmojiOne to catch up.
 
-Emoji provides various output formats that take the Unicode data associated with a short name (or the short name itself in the case of a custom emoji) and generates an HTML output. Most hosted emoji images follow the same pattern and are named after their Unicode code points separated by hyphens (minus things like zero width joiners and variation selectors).  This is true with EmojiOne, GitHub, and Twemoji, to name a few.  The default output `to_png` could theoretically be used with the EmojiOne index to output valid PNG images for EmojiOne, GitHub, or Twemoji (assuming appropriate CDN or local source images were provided). With that said, some output formats may lend themselves better to assets that are available from a specific provider. For instance, EmojiOne provides SVG, PNG, and sprite assets, while others provide only PNG images.
+All short name index creation is automated and is sourced from EmojiOne's or Gemoji's latest official tag. The indexes contain the emoji names, short names, values, etc.; everything needed to insert Unicode emoji characters or specially crafted HTML elements.
 
-As previously mentioned, short name indexes are sourced from EmojiOne's and Gemoji's latest official tags. The index contains the emoji names, shortnames, values, etc.; everything needed to insert Unicode emoji characters or specially crafted HTML elements.
+Depending on your needs, you may have different requirements for how emoji get displayed in your documents. You may want to use PNG images, or maybe you really like SVG images. Maybe you just want to convert short names to the actual Unicode code points.  There are a variety of ways you may want to output emoji, and the Emoji extension has you covered. Emoji provides various output formats that take the Unicode data associated with a short name (or the short name itself in the case of a custom emoji) and generates an HTML output. Not all of the provided output formats will work for each emoji index, but there are a few that should work for all three. Check out [Default Emoji Generators](#default-emoji-generators) or [Custom Emoji Generators](#custom-emoji-generators) to learn more.
 
-!!! warning "EmojiOne and Gemoji licensing"
-    PyMdown Extensions has no affiliation with EmojiOne or Gemoji.  The indexes generated from their sources are covered under their respective licensing.  When using their images or CSS, please see their licensing terms to ensure proper usage and attributions.
+!!! warning "Emoji Image Licensing"
+    PyMdown Extensions has no affiliation with EmojiOne, Gemoji, or Twemoji.  The indexes generated from their sources are covered under their respective licensing.  When using their images or CSS, please see their licensing terms to ensure proper usage and attributions.
 
     EmojiOne: https://www.emojione.com/developers/free-license\
-    Gemoji: https://github.com/github/gemoji/blob/master/LICENSE
+    Gemoji: https://github.com/github/gemoji/blob/master/LICENSE\
+    Twemoji: https://github.com/twitter/twemoji/blob/gh-pages/LICENSE-GRAPHICS
 
 ## Options
 
@@ -24,7 +27,7 @@ Option                      | Type       | Default              | Description
 `emoji_generator`           | function   | `to_png` generator   | A function that takes the emoji info and constructs the desired emoji output. See [Default Emoji Generators](#default-emoji-generators) to see the provided generators.
 `title`                     | string     | `#!python 'short'`   | Specifies the title format that is fed into the emoji generator function.  Can either be `long` which is the long description of the emoji, `short` which is the short name (`:short:`), or `none` which will simply pass `None`.
 `alt`                       | string     | `#!python 'unicode'` | Specifies the format for the alt value that is passed to the emoji generator function. If `alt` is set to `short`, the short name will be passed to the generator.  If `alt` is set to `unicode` the Unicode characters are passed to the generator.  Lastly, if `alt` is set to `html_entity`, the Unicode characters are passed encoded as HTML entities.
-`remove_variation_selector` | bool       | `#!python False`     | Specifies whether variation selectors should be removed from Unicode alt. Currently, only `fe0f` is removed as it is the only one presently found in the current emojis.
+`remove_variation_selector` | bool       | `#!python False`     | Specifies whether variation selectors should be removed from Unicode alt. Currently, only `fe0f` is removed as it is the only one presently found in the current emoji sets.
 `options`                   | dictionary | `#!python {}`        | Options that are specific to emoji generator functions.  Supported parameters can vary from function to function.
 
 !!! tip "Legacy GitHubEmoji Emulation"
@@ -53,11 +56,13 @@ Option                      | Type       | Default              | Description
 
 ## Default Emoji Indexes
 
-By default, Emoji provides two indexes: `emojione` and `gemoji`.  Both indexes are generated from the most recent official release tag source. They can be used by passing in one of the two functions below via the `emoji_index` parameter.  Pass the actual function reference, not a string. If you need to create your own, just check out [Custom Emoji Indexes](#custom-emoji-generators).
+By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  All indexes are generated from the most recent official release tag source (in the case of Twemoji, sort names are acquired from EmojiOne's generated index). They can be used by passing in one of the three functions below via the `emoji_index` parameter.  Pass the actual function reference, not a string. If you need to create your own, just check out [Custom Emoji Indexes](#custom-emoji-generators).
 
 `pymdownx.emoji.emojione`
 : 
-    This is the default function that is used, and it provides an index using the latest EmojiOne supported emojis (at the time of release).  You can always find out what tag it was built with by doing the following:
+    This is the default function that is used, and it provides an index using the latest EmojiOne supported emoji (at the time of release).
+
+    You can always find out what tag it was built with by doing the following:
 
     ```python
     >>> import pymdownx.emoji1_db as e1db
@@ -68,11 +73,13 @@ By default, Emoji provides two indexes: `emojione` and `gemoji`.  Both indexes a
 !!! warning "EmojiOne Update"
     Recent EmojiOne 3.0 release dropped fee SVG support. PNG support can still be obtained via CDNs, or in the case of EmojiOne Awesome, by [downloading][emojione-awesome-css] the CSS.
 
-    While EmojiOne only offers 3.0 vector graphics to paying customers now, you can still get SVG support. By default, we still use 2.2.7 SVGs, but you won't get images for emojis added after 2.2.7. If using SVG sprites, you will have to [download][emojione-sprites-svg] the sprite SVG.
+    While EmojiOne only offers 3.0 vector graphics to paying customers now, you can still get SVG support. By default, we still use 2.2.7 SVGs, but you won't get images for emoji added after 2.2.7. If using SVG sprites, you will have to [download][emojione-sprites-svg] the sprite SVG.
 
 `pymdownx.emoji.gemoji`
 : 
-    This function provides an index of the latest Gemoji supported emoji (at the time of release). You can always find out what tag it was built with by doing the following:
+    This function provides an index of the latest Gemoji supported emoji (at the time of release).
+
+    You can always find out what tag it was built with by doing the following:
 
     ```python
     >>> import pymdownx.gemoji_db as gmdb
@@ -80,16 +87,38 @@ By default, Emoji provides two indexes: `emojione` and `gemoji`.  Both indexes a
     'v3.0.0'
     ```
 
+`pymdownx.emoji.twemoji`
+: 
+    This function provides an index of the latest Twemoji supported emoji (at the time of release).  The associated short names are currently borrowed from EmojiOne's index. These few emoji are currently Twemoji specific two of which are likely to always be as they are not part of the official emoji spec:
+
+    - `:skier_tone1:`
+    - `:skier_tone2:`
+    - `:skier_tone3:`
+    - `:skier_tone4:`
+    - `:skier_tone5:`
+    - `:pirage_flag:`
+    - `:shibuya:`
+
+    You can always find out what tag it was built with by doing the following:
+
+    ```python
+    >>> import pymdownx.twemoji_db as twdb
+    >>> twdb.version
+    'v2.2.5'
+    ```
+
 ## Default Emoji Generators
 
-Emoji provides six default emoji generators.  All the generators can be used with the `emojione` index, but only two will work well with the `gemoji` index: `pymdownx.emoji.to_png` and `pymdownx.emoji.to_alt`. You can select a generator to use by passing in one of the functions below via the `emoji_generator` parameter.  Pass the actual function reference, not a string. If you need to create your own, just check out [Custom Emoji Generators](#custom-emoji-generators).
+Emoji provides six default emoji generators. PNG output and Unicode code point output are supported for all three indexes. SVG output is only supported for Twemoji and the older 2.2.7 EmojiOne set. PNG sprites and the "Font Awesome" like format are only supported by EmojiOne.  SVG sprites is only supported by the 2.2.7 EmojiOne.
+
+You can select a generator to use by passing in one of the functions below via the `emoji_generator` parameter.  Pass the actual function reference, not a string. If you need to create your own, just check out [Custom Emoji Generators](#custom-emoji-generators).
 
 `pymdownx.emoji.to_png`
 : 
-    This is a general purpose generator which provides an EmojiOne CDN and GitHub CDN path(s) out of the box. EmojiOne provides PNGs in size 32, 64, and 128.  The default CDN is the one for size 32: `https://cdn.jsdelivr.net/emojione/assets/3.0/png/32/`. You can change it for a larger PNG size by updating the size in the URL and passing the new URL in through `image_path`. The PNG output form is as follows:
+    This is a general purpose generator which provides EmojiOne, GitHub, and Twemoji CDN path(s) out of the box. Depending on the index you've chosen, you the appropriate CDN will be provided.  If this ever gets out of date, a new CDN can be passed in via `image_path` and/or `non_standard_image_path`. EmojiOne actually has multiple PNGs sizes of 32, 64, and 128, but the default CDN path is the one for size 64: `https://cdn.jsdelivr.net/emojione/assets/3.0/png/64/`. You can change it for a larger or smaller PNG size by updating the size in the URL and passing the new URL in through `image_path`. The PNG output form is as follows:
 
     ```html
-    <img alt="😄" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/3.0/png/32/1f604.png" title=":smile:" />
+    <img alt="😄" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/3.0/png/64/1f604.png" title=":smile:" />
     ```
 
     **Generator Specific Options**
@@ -97,13 +126,13 @@ Emoji provides six default emoji generators.  All the generators can be used wit
     Option                    | Type       | Default                        | Description
     ------------------------- | ---------- | ------------------------------ | -----------
     `classes`                 | string     | Name of the index used         | Specifies the class(es) to be used in the image element.
-    `image_path`              | string     | CDN for the default index used | This can be either a local path or a CDN containing the assets.  By default, an appropriate CDN is provided for EmojiOne and Gemoji depending on which index is being used.
-    `non_standard_image_path` | string     | CDN for the default index used | This can be either a local path, or a CDN containing the assets. Currently, only Gemoji's non-standard emojis take advantage of this as the GitHub CDN alters the path slightly for its non-Unicode emoji.  By default, an appropriate CDN is provided for Gemoji.
+    `image_path`              | string     | CDN for the default index used | This can be either a local path or a CDN containing the assets.  By default, an appropriate CDN is provided for EmojiOne, Gemoji, and Twemoji depending on which index is being used.
+    `non_standard_image_path` | string     | CDN for the default index used | This can be either a local path, or a CDN containing the assets. Currently, only Gemoji's non-standard emoji take advantage of this as the GitHub CDN alters the path slightly for its non-Unicode emoji.  By default, an appropriate CDN is provided for Gemoji.
     `attributes`              | dictionary | `#!py {}`                      | A dictionary containing tag attributes as key value string pairs. The dictionary keys are the attribute names and dictionary values are the attribute values.
 
 `pymdownx.emoji.to_svg`
 : 
-    This generator was written to output EmojiOne SVG images. SVGs are only free for 2.2.7, so the default CDN still references that one. Emoji codes added after 2.2.7 will not find images.  If you've gained access to the 3.0 SVGs, or are keeping the 2.0 SVGs locally, you can point the `image_path` to them as well. The SVG image outputs as:
+    This generator was written to output SVG images and supports EmojiOne and Twemoji. EmojiOne's SVG support is only for the free 2.2.7 release, so the default CDN still references the 2.2.7 release. EmojiOne short names added after 2.2.7 will not find images.  You can of course reference local SVG images as well by pointing `image_path` to them as well. The SVG image outputs as:
 
     ```html
     <img alt="😄" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/svg/1f604.svg" title=":smile:" />
@@ -121,12 +150,12 @@ Emoji provides six default emoji generators.  All the generators can be used wit
 : 
     This generator was written to support PNG sprite output for EmojiOne.  It is expected that this will be used in conjunction with the the official EmojiOne CSS.  You can include the CSS from the CDN in your document. The CSS comes in three sizes: 32, 64, 128. Make sure to set the correct size in the options to generate the appropriate classes.
 
-    Example CDN for the 3.0 version with 32px PNGs: `https://cdn.jsdelivr.net/emojione/assets/3.0/sprites/emojione-sprite-32.min.css`.
+    Example CDN for the 3.0 version with 64px PNGs: `https://cdn.jsdelivr.net/emojione/assets/3.0/sprites/emojione-sprite-64.min.css`.
 
     `to_png_sprite` outputs the emoji as a span in the form below.  The CSS will apply the appropriate mapping in the sprite PNG to the background image of the span.
 
     ```html
-    <span class="emojione-32-people _1f604" title=":smile:">😄</span>
+    <span class="emojione-64-people _1f604" title=":smile:">😄</span>
     ```
 
     **Generator Specific Options**
@@ -134,7 +163,7 @@ Emoji provides six default emoji generators.  All the generators can be used wit
     Option       | Type       | Default                | Description
     ------------ | ---------- | ---------------------- | -----------
     `classes`    | string     | Name of the index used | Class(es) used for the span where the classes are inserted as "class" in the following template: `#!py '%(class)s-%(size)s-%(category)s _%(unicode)s'`.
-    `size`       | int        | `#!py ''`              | Integer specifying the size for the class above.
+    `size`       | int        | `#!py 64`              | Integer specifying the size for the class above.
     `attributes` | dictionary | `#!py {}`              | A dictionary containing tag attributes as key value string pairs. The dictionary keys are the attribute names and dictionary values are the attribute values.
 
 `pymdownx.emoji.to_svg_sprite`
@@ -169,7 +198,7 @@ Emoji provides six default emoji generators.  All the generators can be used wit
 
 `pymdownx.emoji.to_alt`
 : 
-    This generator supports both Gemoji and EmojiOne.  The generator outputs the alt value directly to the document.  The output can be Unicode characters, HTML entities, or even just the short name depending on what the global setting of 'alt' is set to.
+    This generator supports all emoji indexes.  The generator outputs the alt value directly to the document.  The output can be Unicode characters, HTML entities, or even just the short name depending on what the global setting of `alt` is set to.
 
     ```html
     😃
@@ -189,7 +218,7 @@ emoji_index = {
     "name": "myindex",
 
     # The actual index.  A dictionary of all the emoji.
-    # Different emoji shortnames with the same Unicode data
+    # Different emoji short names with the same Unicode data
     # can be mentioned under aliases.
     "emoji": {
         # Key is the short name.
@@ -206,12 +235,15 @@ emoji_index = {
             # Unicode is the representation of the Unicode
             # code points, but it is not necessarily valid Unicode
             # code points. Essentially it is what represents the Unicode
-            # and is used as the image name for pngs and svgs. It is also
+            # and is used as the image name for pngs and svgs. Depending
+            # on the index, it may not be code points alt all. It is also
             # sometimes used as part of special class names in the HTML
             # output (depending on the generator).
             #
             # In the case of Gemoji and EmojiOne this is the Unicode code
-            # points with variations and joiners striped out.
+            # points with variations and joiners striped out. In the case of
+            # Twemoji, it is usually full valid code points though leading
+            # zeros are stripped from the beginning.
             #
             # Do not include this if the emoji is a custom, non-Unicode emoji.
             "unicode": "0030-20e3",
@@ -222,14 +254,17 @@ emoji_index = {
             # same as 'unicode', but it won't hurt anything if it is.
             #
             # Do not include this if the emoji is a custom,
-            # non-Unicode emoji.
+            # non-Unicode emoji. This shows a fully qualified emoji code,
+            # but it could just as easily be "0030-2033" which is also valid.
+            # Some indexes will provide fully qualified, some may not.
             "unicode_alt": "0030-fe0f-20e3"
         },
         # No need to specify 'unicode_alt' as it is the same
         # as 'unicode'.
         ":thumbsup:": {
             "name": "thumbs up sign",
-            "unicode": "1f44d"
+            "unicode": "1f44d",
+            "category": "people"
         },
         # Should not specify any unicode fields
         # as this is not a real unicode emoji.
@@ -250,7 +285,7 @@ emoji_index = {
 
 ## Custom Emoji Generators
 
-Each different kind of output is controlled by a different emoji generator function, but all generator functions have the same format. The format is shown below in case you need to create your own custom output generator.
+Each different kind of output is controlled by a different emoji generator function, but all generator functions have the same input format. The format is shown below in case you need to create your own custom output generator.
 
 `#!py def emoji_generator(index, shortname, alias, uc, alt, title, category, options, md)`
 : 
@@ -259,20 +294,20 @@ Each different kind of output is controlled by a different emoji generator funct
     ----------- | ---------- | ----------
     `index`     | string     | The name of the selected emoji index.
     `shortname` | string     | The current short name.  This may differ from the actual name used in a document as aliases get translated to the main short name.
-    `alias`     | string     | If the name specified in the document was an alias, that alias will be set here, and the main short name will be found under `shortname`.  This will be `None` if the name used was not an alias.
-    `uc`        | string     | This is a string of the Unicode values for the emoji.  This is used to reference emoji image names or for specifying class names etc., so it may not contain all the code points.  The string returned consists of each Unicode value represented as a hex value separated with hyphens.  Values such as U+200D ZERO WIDTH JOINER and  U+FE0F VARIATION SELECTOR-16 are stripped out.  So the value here will not always be practical for calculating the actual Unicode points of an emoji.  This will be `None` for non-standard emoji that are not Unicode.
-    `alt`       | string     | This is the alternative emoji value (or fallback value).  Its format will differ depending on the extension setting `alt`.  This will be returned as either the Unicode characters, HTML entities, or the short name used.  See the `alt` setting for more info.
-    `title`     | string     | This is the title that can be used in image elements.  Depending on the global extension setting `title`, this will either return the long name, the short name, or `None`.  See the `title` setting for more info.
+    `alias`     | string     | If the specified short name is an alias, that alias will be set here, and the main short name will be found under `shortname`.  This will be `None` if the name used was not an alias.
+    `uc`        | string     | This is a string representation of the Unicode, it could technically be anything as this is normally used to reference image files. So while some indexes will have this be code points, it may not contain code points at all or it may strip out code points for simpler image names. So the value here will not always be practical for calculating the actual Unicode points of an emoji.  This will be `None` for non-standard emoji that are not Unicode.
+    `alt`       | string     | This is the alternative emoji value (or fallback value).  Its format will differ depending on the extension setting `alt` and also the index being used. This will be returned as either the full valid Unicode characters or HTML entities, or it will be the short name used.  See the `alt` setting for more info.
+    `title`     | string     | This is the title that can be used in image elements.  Depending on the global extension setting `title`, this will either return the full long description, the short name, or `None`.  See the `title` setting for more info.
     `category`  | string     | Category of the emoji, or `None` if there is no category for the emoji.
     `options`   | dictionary | This is a dictionary to specify generator function specific options.  This can be anything, and it is up to the generator function to parse and provide defaults.
-    `md`        | class      | This is the Markdown class object.  This is mainly used to access specific things needed from the Markdown class.  If you needed to stash your output, you would do something like: `md.htmlStash.store(alt, safe=True)`.
+    `md`        | class      | This is the Markdown class object.  This is mainly used to access specific things needed from the Markdown class when formatting your output.  If you needed to stash your output, you would do something like: `#!py md.htmlStash.store(alt, safe=True)`.
 
-    !!! Warning "Non-Unicode emojis"
-        Keep in mind that Gemoji ships with some non-standard emojis like `:octocat:` that do not have Unicode code points.  `uc` and `alt` are affected by this and will return `None` and the short name respectively instead of strings describing the Unicode points.  For example `:octocat:` will just return `None` for `uc` and `:octocat:` for `alt`.  If you are parsing an index with custom emojis, like Gemoji has, then you need to be aware of this.
+    !!! Warning "Non-Unicode emoji"
+        Keep in mind that Gemoji ships with some non-standard emoji like `:octocat:` that do not have Unicode code points.  `uc` and `alt` are affected by this and will return `None` and the short name respectively instead of strings describing the Unicode points.  For example `:octocat:` will just return `None` for `uc` and `:octocat:` for `alt`.  If you are parsing an index with custom emoji, like Gemoji has, then you need to be aware of this.
 
 ## Using with MkDocs
 
-This project uses these extensions with [MkDocs][mkdocs] to generate the documentation.  It might not be obvious how to set the index or generator functions in Mkdoc's YAML settings file, but it is actually pretty easy.  The functions are referenced like you would import them in Python except you also append them with a special prefix to let the YAML module know that the setting value is a Python object.  For instance, to specify the `to_svg` generator, you would simply reference it like this: `!!python/name:pymdownx.emoji.to_svg` (or you could use your own custom module).
+This project uses these extensions with [MkDocs][mkdocs] to generate the documentation.  It might not be obvious how to set the index or generator functions in Mkdoc's YAML settings file, but it is actually pretty easy.  The functions are referenced like you would import them in Python except you also append them with a special prefix to let the YAML module know that the setting value is a Python object.  For instance, to specify the `to_svg` generator, you would simply reference it like this: `!!python/name:pymdownx.emoji.to_svg` (or you could use your own custom module :wink:).
 
 ```yaml
 markdown_extensions:
@@ -282,19 +317,19 @@ markdown_extensions:
 
 ## Emoji Index Updates
 
-The Emoji extension might at times be behind on having indexes built from the latest repositories. We try to keep the indexes updated with new releases, but if they fall out of date, you can open an issue on the this project's issue page to alert the maintainer(s) and they will update them when someone gets a chance.  Pull requests are also welcome.  The process for updating the indexes is automated, so it is fairly easy to do for a pull request.  See [Generating Emoji Indexes](../development.md#generating-emoji-indexes) for more info.
+The Emoji extension might at times be behind on having indexes built from the latest repositories. We try to keep the indexes updated with new releases, but if they fall out of date, you can open an issue on the this project's issue page to alert the maintainer(s) and they will update them when someone gets a chance.  Pull requests are also welcome.  The process for updating the indexes is automated, so it is fairly easy to do a pull request.  See [Generating Emoji Indexes](../development.md#generating-emoji-indexes) for more info.
 
 ## Examples
 
 Current examples are all rendered with EmojiOne.
 
 ```
-EmojiOne :smile: emojis are very useful :thumbsup:.
+EmojiOne :smile: emoji are very useful :thumbsup:.
 
 You can also escape `:` characters to escape the emoji: \:smile:.
 ```
 
-EmojiOne :smile: emojis are very useful :thumbsup:.
+EmojiOne :smile: emoji are very useful :thumbsup:.
 
 You can also escape `:` characters to escape the emoji: \:smile:.
 

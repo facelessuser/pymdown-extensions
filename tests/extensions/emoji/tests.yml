@@ -34,7 +34,7 @@ emoji1 (png):
 
 emoji1 (png sprite):
   css:
-    - https://cdn.jsdelivr.net/emojione/assets/3.0/sprites/emojione-sprite-32.css
+    - https://cdn.jsdelivr.net/emojione/assets/3.0/sprites/emojione-sprite-64.css
   extensions:
     pymdownx.emoji:
       emoji_generator: !!python/name:pymdownx.emoji.to_png_sprite

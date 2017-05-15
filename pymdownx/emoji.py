@@ -34,7 +34,7 @@ RE_EMOJI = r'(:[+\-\w]+:)'
 SUPPORTED_INDEXES = ('emojione', 'gemoji', 'twemoji')
 UNICODE_VARIATION_SELECTOR_16 = 'fe0f'
 EMOJIONE_SVG_CDN = 'https://cdn.jsdelivr.net/emojione/assets/svg/'
-EMOJIONE_PNG_CDN = 'https://cdn.jsdelivr.net/emojione/assets/3.0/png/32/'
+EMOJIONE_PNG_CDN = 'https://cdn.jsdelivr.net/emojione/assets/3.0/png/64/'
 TWEMOJI_SVG_CDN = 'https://twemoji.maxcdn.com/2/svg/'
 TWEMOJI_PNG_CDN = 'https://twemoji.maxcdn.com/2/72x72/'
 GITHUB_UNICODE_CDN = 'https://assets-cdn.github.com/images/icons/emoji/unicode/'
@@ -154,7 +154,7 @@ def to_png_sprite(index, shortname, alias, uc, alt, title, category, options, md
     attributes = {
         "class": '%(class)s-%(size)s-%(category)s _%(unicode)s' % {
             "class": options.get('classes', index),
-            "size": options.get('size', '32'),
+            "size": options.get('size', '64'),
             "category": (category if category else ''),
             "unicode": uc
         }

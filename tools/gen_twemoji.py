@@ -6,6 +6,48 @@ import copy
 sys.path.append('../pymdownx/')
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
+# Special emoji
+special_emoji = {
+    # An unoffical emoji supported by very few
+    ":pirate_flag:": {
+        "category": "flags",
+        "name": "pirate flag",
+        "unicode": "1f3f4-200d-2620-fe0f"
+    },
+    # Skier skin tones (not supported by EmojiOne yet)
+    ":skier_tone1:": {
+        "category": "activity",
+        "name": "skier: light skin tone",
+        "unicode": "26f7-1f3fb"
+    },
+    ":skier_tone2:": {
+        "category": "activity",
+        "name": "skier: medium-light skin tone",
+        "unicode": "26f7-1f3fc"
+    },
+    ":skier_tone3:": {
+        "category": "activity",
+        "name": "skier: medium skin tone",
+        "unicode": "26f7-1f3fd"
+    },
+    ":skier_tone4:": {
+        "category": "activity",
+        "name": "skier: medium-dark skin tone",
+        "unicode": "26f7-1f3fe"
+    },
+    ":skier_tone5:": {
+        "category": "activity",
+        "name": "skier: dark skin tone",
+        "unicode": "26f7-1f3ff"
+    },
+    # Not many support this one
+    ":shibuya:": {
+        "category": "travel",
+        "name": "Shibuya 109",
+        "unicode": "e50a"
+    }
+}
+
 
 def get_unicode_alt(value):
     """Get alternate Unicode form or return the original."""
@@ -57,6 +99,16 @@ def parse(repo, tag):
         if v in emoji_db:
             aliases[k] = v
 
+    # Copy emoji only found in EmojiOne
+    for k, v in special_emoji.items():
+        if k not in emoji_db and k not in aliases:
+            shortnames.add(k)
+            emoji_db[k] = copy.copy(v)
+            code_point = v.get('unicode_alt', v['unicode'])
+            if code_point in unsupported:
+                index = unsupported.index(code_point)
+                del unsupported[index]
+
     # Save test files
     for test in ('png', 'svg', 'entities'):
         with open('../tests/extensions/emoji/twemoji (%s).txt' % test, 'w') as f:
@@ -78,6 +130,8 @@ def parse(repo, tag):
         f.write('emoji = %s\n' % json.dumps(emoji_db, sort_keys=True, indent=4, separators=(',', ': ')))
         f.write('aliases = %s\n' % json.dumps(aliases, sort_keys=True, indent=4, separators=(',', ': ')))
 
-    print('Unsupported:')
-    for code in unsupported:
-        print(code)
+    # Print unsupported emoji
+    if unsupported:
+        print('Unsupported:')
+        for code in unsupported:
+            print(code)

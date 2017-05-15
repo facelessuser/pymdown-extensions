@@ -1618,6 +1618,7 @@ pig_nose :pig_nose:<br>
 pill :pill:<br>
 pineapple :pineapple:<br>
 ping_pong :ping_pong:<br>
+pirate_flag :pirate_flag:<br>
 pisces :pisces:<br>
 pizza :pizza:<br>
 place_of_worship :place_of_worship:<br>
@@ -1849,6 +1850,7 @@ shark :shark:<br>
 shaved_ice :shaved_ice:<br>
 sheep :sheep:<br>
 shell :shell:<br>
+shibuya :shibuya:<br>
 shield :shield:<br>
 shinto_shrine :shinto_shrine:<br>
 ship :ship:<br>
@@ -1862,6 +1864,11 @@ six :six:<br>
 six_pointed_star :six_pointed_star:<br>
 ski :ski:<br>
 skier :skier:<br>
+skier_tone1 :skier_tone1:<br>
+skier_tone2 :skier_tone2:<br>
+skier_tone3 :skier_tone3:<br>
+skier_tone4 :skier_tone4:<br>
+skier_tone5 :skier_tone5:<br>
 skull :skull:<br>
 skull_crossbones :skull_crossbones:<br>
 sleeping :sleeping:<br>

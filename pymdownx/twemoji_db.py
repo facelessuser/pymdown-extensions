@@ -8109,6 +8109,11 @@ emoji = {
         "name": "ping pong",
         "unicode": "1f3d3"
     },
+    ":pirate_flag:": {
+        "category": "flags",
+        "name": "pirate flag",
+        "unicode": "1f3f4-200d-2620-fe0f"
+    },
     ":pisces:": {
         "category": "symbols",
         "name": "Pisces",
@@ -9266,6 +9271,11 @@ emoji = {
         "name": "spiral shell",
         "unicode": "1f41a"
     },
+    ":shibuya:": {
+        "category": "travel",
+        "name": "Shibuya 109",
+        "unicode": "e50a"
+    },
     ":shield:": {
         "category": "objects",
         "name": "shield",
@@ -9331,6 +9341,31 @@ emoji = {
         "category": "activity",
         "name": "skier",
         "unicode": "26f7"
+    },
+    ":skier_tone1:": {
+        "category": "activity",
+        "name": "skier: light skin tone",
+        "unicode": "26f7-1f3fb"
+    },
+    ":skier_tone2:": {
+        "category": "activity",
+        "name": "skier: medium-light skin tone",
+        "unicode": "26f7-1f3fc"
+    },
+    ":skier_tone3:": {
+        "category": "activity",
+        "name": "skier: medium skin tone",
+        "unicode": "26f7-1f3fd"
+    },
+    ":skier_tone4:": {
+        "category": "activity",
+        "name": "skier: medium-dark skin tone",
+        "unicode": "26f7-1f3fe"
+    },
+    ":skier_tone5:": {
+        "category": "activity",
+        "name": "skier: dark skin tone",
+        "unicode": "26f7-1f3ff"
     },
     ":skull:": {
         "category": "people",
