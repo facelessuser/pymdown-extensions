@@ -4,7 +4,7 @@
   overflow: visible;
   padding: 0;
 }
-.md-typeset .codehilite[id]::before {
+.md-typeset .codehilite[id]:before {
   display: inline;
 }
 .md-typeset .codehilite pre{
@@ -32,6 +32,7 @@
   opacity: 1;
 }
 .md-typeset .clip-btn {
+  overflow: visible;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12), 0 3px 1px -2px rgba(0,0,0,.2);
   display: inline-block;
   position: absolute;
@@ -52,10 +53,10 @@
   top: 0.1rem;
   font-size: 1.8rem;
 }
-.md-typeset .clip-btn .md-icon--clipboard::before {
+.md-typeset .clip-btn .md-icon--clipboard:before {
   content: "assignment";
 }
-.md-typeset .clip-tip::after {
+.md-typeset .clip-tip:after {
   position: absolute;
   top: 0.3rem;
   left: 0;
@@ -74,7 +75,7 @@
   opacity: 1;
   visibility: hidden;
 }
-.md-typeset .clip-tip:hover::after {
+.md-typeset .clip-tip:hover:after {
   display: block;
   -webkit-transform: translateX(-110%) translateY(0);
   transform: translateX(-110%) translateY(0);
@@ -83,8 +84,8 @@
 }
 
 /* Keys */
-.md-typeset .keys kbd::before,
-.md-typeset .keys kbd::after {
+.md-typeset .keys kbd:before,
+.md-typeset .keys kbd:after {
   color: #888;
   font-weight: normal;
   position: relative;
@@ -97,47 +98,47 @@
     color: #888;
     padding: 0 .2rem;
 }
-.md-typeset .keys .key-tab::after {
+.md-typeset .keys .key-tab:after {
   content: '\21B9';
   padding-left: 0.2rem;
 }
-.md-typeset .keys .key-backspace::before {
+.md-typeset .keys .key-backspace:before {
   content: '\2190';
   padding-right: 0.2rem;
 }
-.md-typeset .keys .key-command::before {
+.md-typeset .keys .key-command:before {
   content: '\2318';
   padding-right: 0.2rem;
 }
-.md-typeset .keys .key-windows::before {
+.md-typeset .keys .key-windows:before {
   content: '\229E';
   padding-right: 0.2rem;
 }
-.md-typeset .keys .key-caps-lock::before {
+.md-typeset .keys .key-caps-lock:before {
   content: '\21EA';
   padding-right: 0.2rem;
 }
-.md-typeset .keys .key-num-enter::after {
+.md-typeset .keys .key-num-enter:after {
   content:  '\21B5';
   padding-left: 0.2rem;
 }
-.md-typeset .keys .key-enter::after {
+.md-typeset .keys .key-enter:after {
   content:  '\21A9';
   padding-left: 0.2rem;
 }
-.md-typeset .keys .key-control::before {
+.md-typeset .keys .key-control:before {
   content:  '\2303';
   padding-right: 0.2rem;
 }
-.md-typeset .keys .key-meta::before {
+.md-typeset .keys .key-meta:before {
   content:  '\25C6';
   padding-right: 0.2rem;
 }
-.md-typeset .keys .key-shift::before {
+.md-typeset .keys .key-shift:before {
   content:  '\21E7';
   padding-right: 0.2rem;
 }
-.md-typeset .keys .key-option::before {
+.md-typeset .keys .key-option:before {
   content:  '\2325';
   padding-right: 0.2rem;
 }
