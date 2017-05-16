@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.2.0
+
+> Released May 15, 2017
+
+- **NEW**: Add support for Twemoji 2.3.5.
+- **NEW**: Update to EmojiOne 3.0.2.
+- **NEW**: Emoji generators now also take `category` which is also no included in all indexes.
+- **FIX**: Excessive new lines at end of code blocks.
+
 ## 3.1.0
 
 > Released May 7, 2017
