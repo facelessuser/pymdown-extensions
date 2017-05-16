@@ -91,7 +91,7 @@ By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  
 
 `pymdownx.emoji.twemoji`
 : 
-    This function provides an index of the latest Twemoji supported emoji (at the time of release).  The associated short names are currently borrowed from EmojiOne's index. These few emoji are currently Twemoji specific two of which are likely to always be as they are not part of the official emoji spec:
+    This function provides an index of the latest Twemoji supported emoji (at the time of release).  The associated short names are currently borrowed from EmojiOne's index. These few emoji are currently Twemoji specific, two of which are likely to always be as they are not part of the official emoji spec:
 
     - `:skier_tone1:`
     - `:skier_tone2:`
