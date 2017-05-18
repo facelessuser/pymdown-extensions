@@ -4,7 +4,7 @@ site_description: A Collection of Useful Extensions for Python Markdown
 copyright: Copyright &copy; 2014 - 2017 <a href="https://github.com/facelessuser">Isaac Muse</a>
 
 theme: material
-theme_dir: docs/_theme
+theme_dir: doc_theme
 
 pages:
   - PyMdown Extensions: index.md
@@ -89,7 +89,7 @@ markdown_extensions:
 extra:
   palette:
     primary: light blue
-    accent: cyan
+    accent: light blue
   font:
     text: Roboto
     code: Roboto Mono
