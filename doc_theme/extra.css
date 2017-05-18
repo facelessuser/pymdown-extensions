@@ -50,7 +50,7 @@
 .md-typeset .codehilite:hover .clip-btn:hover {
   -webkit-transition: opacity 0.1s;
   transition: opacity 0.1s;
-  background-color: #2196f3;
+  background-color: #03a9f4;
   opacity: 1;
 }
 .md-typeset .clip-btn .md-icon--clipboard {
