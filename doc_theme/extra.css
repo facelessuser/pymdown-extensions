@@ -1,3 +1,8 @@
+/* Logo */
+.md-header .md-icon.md-icon--home:before {
+  content: "description";
+}
+
 /* Clipboard code copy */
 .md-typeset .codehilite {
   position: relative;
@@ -20,17 +25,6 @@
   padding: 1rem 1.2rem 0.8rem;
   overflow: auto;
 }
-.md-typeset div.codehilite:hover .clip-btn {
-  -webkit-transition: opacity 0.3s;
-  transition: opacity 0.3s;
-  opacity: 0.4;
-}
-.md-typeset div.codehilite:hover .clip-btn:hover {
-  -webkit-transition: opacity 0.1s;
-  transition: opacity 0.1s;
-  background-color: #2196f3;
-  opacity: 1;
-}
 .md-typeset .clip-btn {
   overflow: visible;
   box-shadow: 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12), 0 3px 1px -2px rgba(0,0,0,.2);
@@ -48,6 +42,17 @@
   cursor: pointer;
   opacity: 0;
 }
+.md-typeset .codehilite:hover .clip-btn {
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
+  opacity: 0.4;
+}
+.md-typeset .codehilite:hover .clip-btn:hover {
+  -webkit-transition: opacity 0.1s;
+  transition: opacity 0.1s;
+  background-color: #2196f3;
+  opacity: 1;
+}
 .md-typeset .clip-btn .md-icon--clipboard {
   position: relative;
   top: 0.1rem;
@@ -59,10 +64,10 @@
 .md-typeset .clip-tip:after {
   position: absolute;
   top: 0.3rem;
-  left: 0;
+  left: -0.5rem;
   padding: 0.6rem 1rem;
-  -webkit-transform: translateX(-112%) translateY(0);
-  transform: translateX(-112%) translateY(0);
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
   -webkit-transition: opacity 0.2s;
   transition: opacity 0.2s;
   border-radius: 0.2rem;
@@ -77,8 +82,6 @@
 }
 .md-typeset .clip-tip:hover:after {
   display: block;
-  -webkit-transform: translateX(-110%) translateY(0);
-  transform: translateX(-110%) translateY(0);
   opacity: 0.9;
   visibility: visible;
 }
