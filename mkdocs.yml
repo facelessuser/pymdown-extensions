@@ -4,7 +4,7 @@ site_description: A Collection of Useful Extensions for Python Markdown
 copyright: Copyright &copy; 2014 - 2017 <a href="https://github.com/facelessuser">Isaac Muse</a>
 
 theme: material
-theme_dir: doc_theme
+theme_dir: docs/_theme
 
 pages:
   - PyMdown Extensions: index.md
@@ -82,7 +82,7 @@ markdown_extensions:
   - pymdownx.plainhtml:
       strip_attributes: ''
   - pymdownx.snippets:
-      base_path: docs/snippets
+      base_path: docs/_snippets
   - pymdownx.keys:
       separator: ＋
 
