@@ -88,8 +88,8 @@ markdown_extensions:
 
 extra:
   palette:
-    primary: blue
-    accent: purple
+    primary: light blue
+    accent: cyan
   font:
     text: Roboto
     code: Roboto Mono

@@ -151,6 +151,7 @@
 .md-typeset .uml-flowchart {
   width: 100%;
   overflow: auto;
+  padding: 1rem 1.2rem .8rem;
 }
 
 .md-typeset .uml-sequence-diagram svg,
