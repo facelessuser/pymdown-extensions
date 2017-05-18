@@ -153,6 +153,11 @@
   overflow: auto;
 }
 
+.md-typeset .uml-sequence-diagram svg,
+.md-typeset .uml-flowchart svg {
+  max-width:  initial;
+}
+
 /* Code */
 .md-typeset a>code {
   margin: 0 .29412em;
