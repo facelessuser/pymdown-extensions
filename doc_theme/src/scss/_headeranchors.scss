@@ -1,0 +1,53 @@
+.md-typeset {
+   /* Header Anchors */
+  .headerlink {
+    vertical-align: middle;
+    font: normal normal 2rem "Material Icons";
+
+    @media only screen and (min-width: 76.1876em) {
+      float: left;
+      margin-left: -2.4rem;
+    }
+  }
+
+  h2 {
+    .headerlink {
+      margin-top: -.4rem;
+
+      @media only screen and (min-width: 76.1876em) {
+        margin-top: .6rem;
+      }
+    }
+  }
+
+  h3 {
+    .headerlink {
+      margin-top: -.3rem;
+
+      @media only screen and (min-width: 76.1876em) {
+        margin-top: .4rem;
+      }
+    }
+  }
+
+  h4 {
+    .headerlink {
+      margin-top: -.2rem;
+
+      @media only screen and (min-width: 76.1876em) {
+        margin-top: .2rem;
+      }
+    }
+  }
+  h5,
+  h6 {
+    .headerlink {
+      margin-top: -.2rem;
+  
+
+      @media only screen and (min-width: 76.1876em) {
+        margin-top: 0;
+      }
+    }
+  }
+}

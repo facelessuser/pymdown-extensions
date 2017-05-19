@@ -1,0 +1,38 @@
+{
+  "name": "pymdown-extensions",
+  "version": "3.2.0",
+  "description": "Extensions for Python Markdown",
+  "repository": "https://github.com/facelessuser/pymdown-extensions.git",
+  "author": "Isaac Muse <isaacmuse@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "node_modules/.bin/gulp build --compress",
+    "clean": "node_modules/.bin/gulp clean",
+    "serve": "node_modules/.bin/gulp serve"
+  },
+  "dependencies": {
+    "autoprefixer": "^7.1.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.0.0",
+    "babel-preset-es2015": "^6.24.1",
+    "clipboard": "^1.6.1",
+    "css-mqpacker": "^6.0.0",
+    "gulp": "^3.9.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssnano": "^2.1.2",
+    "gulp-if": "^2.0.2",
+    "gulp-postcss": "^7.0.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.0",
+    "gulp-uglify": "^2.1.2",
+    "material-design-color": "^2.3.2",
+    "material-shadows": "^3.0.1",
+    "modularscale-sass": "^3.0.2",
+    "postcss-pseudo-classes": "^0.2.0",
+    "webpack": "^2.5.1",
+    "webpack-stream": "^3.2.0",
+    "yargs": "^8.0.1"
+  }
+}

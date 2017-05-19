@@ -1,0 +1,17 @@
+.md-typeset {
+  /* Code */
+  a {
+    > code {
+      margin: 0 .29412em;
+      padding: .07353em 0;
+      background-color: rgba(237, 237, 237, .5);
+      border-radius: .2rem;
+      box-shadow: 0.29412em 0 0 rgba(237, 237, 237, .5), -0.29412em 0 0 rgba(237, 237, 237, .5);
+      box-decoration-break: clone;
+    }
+  }
+
+  td code {
+    word-break: normal;
+  }
+}

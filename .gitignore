@@ -60,3 +60,7 @@ site/*
 tools/tags/*
 
 tmp*
+
+node_modules/*
+
+*.js.map

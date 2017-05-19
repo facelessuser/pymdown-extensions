@@ -1,0 +1,98 @@
+.md-typeset {
+  /* Clipboard copy button */
+  .clip-btn {
+    @include z-depth(2);
+
+    overflow: visible;
+    display: inline-block;
+    position: absolute;
+    top: 0.2rem;
+    right: 0.2rem;
+    width: 3.2rem;
+    height: 3.2rem;
+    transition: opacity 0.3s;
+    border-radius: 50%;
+    background-color: #c4c4c4;
+    color: white;
+    cursor: pointer;
+    opacity: 0;
+
+    .md-icon--clipboard {
+      position: relative;
+      top: 0.1rem;
+      font-size: 1.8rem;
+
+      &::before {
+        content: "assignment";
+      }
+    }
+  }
+
+  /* Clipboard code copy */
+  .codehilite {
+    position: relative;
+    overflow: visible;
+    padding: 0;
+
+    &[id]::before {
+      display: inline;
+    }
+
+    &:hover {
+      .clip-btn {
+        transition: opacity 0.3s;
+        opacity: 0.4;
+
+        &:hover {
+          transition: opacity 0.1s;
+          background-color: #03a9f4;
+          opacity: 1;
+        }
+      }
+    }
+
+    pre {
+      overflow-x: auto;
+      display: block;
+      padding: 1rem 1.2rem .8rem;
+    }
+  }
+
+  pre.codehilite {
+    overflow: visible;
+
+    code {
+      display: block;
+      padding: 1rem 1.2rem 0.8rem;
+      overflow: auto;
+    }
+  }
+
+  .clip-tip {
+    &::after {
+      position: absolute;
+      top: 0.3rem;
+      left: -0.5rem;
+      padding: 0.6rem 1rem;
+      transform: translateX(-100%);
+      transition: opacity 0.2s;
+      border-radius: 0.2rem;
+      background: #404040;
+      color: white;
+      font-size: ms(-1);;
+      font-weight: 700;
+      white-space: nowrap;
+      content: attr(aria-label);
+      opacity: 1;
+      visibility: hidden;
+    }
+
+    &:hover {
+      &::after {
+        display: block;
+        opacity: 0.9;
+        visibility: visible;
+      }
+    }
+  }
+}
