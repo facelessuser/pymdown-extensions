@@ -6,6 +6,7 @@
 */
 import yargs from "yargs"
 import gulp from "gulp"
+import gulpsync from "gulp-sync"
 import sass from "gulp-sass"
 import uglify from "gulp-uglify"
 import postcss from "gulp-postcss"
@@ -27,19 +28,23 @@ import eslint from "gulp-eslint"
 /* Argument Flags */
 const args = yargs.argv
 
+/* Create a gulp sync object */
+const gsync = gulpsync(gulp)
+
 /* Paths */
 const config = {
   files: {
-    scss: "./doc_theme/src/scss/*.scss",
-    css: "./doc_theme/*.min.css",
-    es6: "./doc_theme/src/js/*.js",
-    js: ["./doc_theme/*.min.js", "./doc_theme/*.js.map"],
+    scss: "./docs/src/scss/*.scss",
+    css: "./docs/theme/*.min.css",
+    es6: "./docs/src/js/*.js",
+    js: ["./docs/theme/*.min.js", "./docs/theme/*.js.map"],
     vendor: "./node_modules/clipboard/dist/*.js",
     gulp: "gulpfile.babel.js"
   },
   folders: {
     mkdocs: "./site",
-    theme: "./doc_theme"
+    theme: "./docs/theme",
+    src: "./docs/src"
   },
   compress: {
     enabled: args.compress,
@@ -61,7 +66,8 @@ const config = {
   },
   clean: args.clean,
   sourcemaps: args.sourcemaps,
-  webpack: args.webpack
+  webpack: args.webpack,
+  buildmkdocs: args.buildmkdocs
 }
 
 /* Mkdocs server */
@@ -135,7 +141,7 @@ gulp.task("js:build:rollup", () => {
         })
       ],
       "moduleName": "extra",
-      "entry": `${config.folders.theme}/src/js/extra.js`
+      "entry": `${config.folders.src}/js/extra.js`
     }))
     .pipe(concat("extra.min.js"))
     .pipe(gulpif(config.compress.enabled, uglify({compress: config.compress.jsOptions})))
@@ -149,7 +155,7 @@ gulp.task("js:build:webpack", () => {
     .pipe(
       stream(
         {
-          devtool: (config.sourcemaps) ? "source-map" : "",
+          devtool: (config.sourcemaps) ? "inline-source-map" : "",
           entry: "extra.js",
           output: {filename: "extra.min.js"},
           module: {
@@ -180,8 +186,8 @@ gulp.task("js:build:webpack", () => {
           stats: {color: true},
           resolve: {
             modules: [
-              "doc_theme/src/js",
-              "node_modules"
+              `${config.folders.src}/js`,
+              "./node_modules/clipboard/dist"
             ],
             extensions: [
               ".js"
@@ -223,6 +229,13 @@ gulp.task("mkdocs:serve", () => {
     {stdio: "inherit"})
 })
 
+gulp.task("mkdocs:build", () => {
+  const proc = childProcess.spawnSync("mkdocs", ["build"])
+  if (proc.status)
+    throw new Error(`MkDocs error:\n${proc.stderr.toString()}`)
+  return proc
+})
+
 gulp.task("mkdocs:clean", () => {
   return gulp.src(config.folders.mkdocs)
     .pipe(clean())
@@ -231,21 +244,27 @@ gulp.task("mkdocs:clean", () => {
 // ------------------------------
 // Main entry points
 // ------------------------------
-gulp.task("build", [
+gulp.task("build", gsync.sync([
+  // Clean
   config.clean ? "clean" : false,
-  config.webpack ? "js:build:webpack" : "js:build:rollup",
-  "scss:build",
-  config.lint.enabled ? "js:lint" : false,
-  config.lint.enabled ? "scss:lint" : false
-].filter(t => t))
+  // Build JS and CSS
+  [config.webpack ? "js:build:webpack" : "js:build:rollup", "scss:build"],
+  // Lint
+  [config.lint.enabled ? "js:lint" : false, config.lint.enabled ? "scss:lint" : false].filter(t => t),
+  // Build Mkdocs
+  config.buildmkdocs ? "mkdocs:build" : false
+].filter(t => t),
+  "group:build"))
 
-gulp.task("serve", [
+gulp.task("serve", gsync.sync([
+  // Clean
   config.clean ? "clean" : false,
-  "build",
-  "scss:watch",
-  "js:watch",
-  "mkdocs:serve"
-].filter(t => t))
+  // Build JS and CSS
+  [config.webpack ? "js:build:webpack" : "js:build:rollup", "scss:build"],
+  // Watch for changes and start mkdocs
+  ["scss:watch", "js:watch", "mkdocs:serve"]
+].filter(t => t),
+  "group:serve"))
 
 gulp.task("clean", [
   "scss:clean",

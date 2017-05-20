@@ -25,7 +25,7 @@ import cboard from "./cboard"
     }
 
     if (typeof Clipboard !== "undefined" && Clipboard.isSupported()) {
-      cboard()
+      cboard(Clipboard)
     }
   })
 

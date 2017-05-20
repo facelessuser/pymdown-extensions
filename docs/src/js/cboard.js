@@ -1,8 +1,9 @@
 /**
  * Targets code blocks and inserts an overlay that copies text to the clipboard.
+ * @param {object} Clipboard object.
  * @return {void}
  */
-export default function() {
+export default function(Clipboard) {
   if (Clipboard.isSupported()) {
 
     const blocks = document.querySelectorAll("div.codehilite>pre,pre.codehilite>code")
