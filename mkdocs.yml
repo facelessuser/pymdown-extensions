@@ -99,4 +99,5 @@ extra:
 extra_css:
   - extra.min.css
 extra_javascript:
+  - https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js
   - extra.min.js

@@ -1,13 +1,14 @@
 .md-typeset {
+
   /* UML */
   .uml-sequence-diagram,
   .uml-flowchart {
     width: 100%;
     overflow: auto;
-    padding: 1rem 1.2rem .8rem;
+    padding: 1rem 1.2rem 0.8rem;
 
     svg {
-      max-width:  initial;
+      max-width: initial;
     }
   }
 }

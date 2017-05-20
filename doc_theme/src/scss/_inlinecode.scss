@@ -1,12 +1,19 @@
+$md-code-background: hsla(0, 0%, 92.5%, 0.5);
+
 .md-typeset {
+
   /* Code */
   a {
     > code {
-      margin: 0 .29412em;
-      padding: .07353em 0;
-      background-color: rgba(237, 237, 237, .5);
-      border-radius: .2rem;
-      box-shadow: 0.29412em 0 0 rgba(237, 237, 237, .5), -0.29412em 0 0 rgba(237, 237, 237, .5);
+      $correct: 1 / 0.85;
+
+      margin: 0 0.25em * $correct;
+      padding: 0.0625em * $correct 0;
+      background-color: $md-code-background;
+      border-radius: 0.2rem;
+      box-shadow:
+        +0.25em * $correct 0 0 $md-code-background,
+        -0.25em * $correct 0 0 $md-code-background;
       box-decoration-break: clone;
     }
   }

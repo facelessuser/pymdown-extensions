@@ -1,4 +1,5 @@
 .md-typeset {
+
   /* Clipboard copy button */
   .clip-btn {
     @include z-depth(2);
@@ -12,8 +13,8 @@
     height: 3.2rem;
     transition: opacity 0.3s;
     border-radius: 50%;
-    background-color: #c4c4c4;
-    color: white;
+    background-color: $clr-grey-400;
+    color: $clr-white;
     cursor: pointer;
     opacity: 0;
 
@@ -45,7 +46,6 @@
 
         &:hover {
           transition: opacity 0.1s;
-          background-color: #03a9f4;
           opacity: 1;
         }
       }
@@ -54,7 +54,7 @@
     pre {
       overflow-x: auto;
       display: block;
-      padding: 1rem 1.2rem .8rem;
+      padding: 1rem 1.2rem 0.8rem;
     }
   }
 
@@ -77,9 +77,9 @@
       transform: translateX(-100%);
       transition: opacity 0.2s;
       border-radius: 0.2rem;
-      background: #404040;
-      color: white;
-      font-size: ms(-1);;
+      background: $clr-grey-800;
+      color: $clr-white;
+      font-size: ms(-1);
       font-weight: 700;
       white-space: nowrap;
       content: attr(aria-label);
@@ -93,6 +93,35 @@
         opacity: 0.9;
         visibility: visible;
       }
+    }
+  }
+}
+
+// Build primary colors
+@each $name, $color in (
+  "red":         $clr-red-400,
+  "pink":        $clr-pink-500,
+  "purple":      $clr-purple-400,
+  "deep-purple": $clr-deep-purple-400,
+  "indigo":      $clr-indigo-500,
+  "blue":        $clr-blue-500,
+  "light-blue":  $clr-light-blue-500,
+  "cyan":        $clr-cyan-500,
+  "teal":        $clr-teal-500,
+  "green":       $clr-green-500,
+  "light-green": $clr-light-green-600,
+  "lime":        $clr-lime-600,
+  "yellow":      $clr-yellow-800,
+  "amber":       $clr-amber-600,
+  "orange":      $clr-orange-600,
+  "deep-orange": $clr-deep-orange-400,
+  "brown":       $clr-brown-500,
+  "grey":        $clr-grey-600,
+  "blue-grey":   $clr-blue-grey-600
+) {
+  [data-md-color-primary="#{$name}"] {
+    .codehilite:hover .clip-btn:hover {
+      background-color: $color;
     }
   }
 }

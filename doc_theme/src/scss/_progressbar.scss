@@ -1,12 +1,11 @@
-$pb-100:     #a6d796;
-$pb-80:      #c6d796;
-$pb-60:      #d7c896;
-$pb-40:      #d7a796;
-$pb-20:      #d796a6;
-$pb-0:       #c25f77;
-$pg-default: #96c6d7;
-$pb-bg:      #ededed;
-
+$pb-100:     #A6D796;
+$pb-80:      #C6D796;
+$pb-60:      #D7C896;
+$pb-40:      #D7A796;
+$pb-20:      #D796A6;
+$pb-0:       #C25F77;
+$pg-default: #96C6D7;
+$pb-bg:      #EDEDED;
 
 .md-typeset {
 
@@ -19,18 +18,27 @@ $pb-bg:      #ededed;
     border-radius: 3px;
     background-color: $pb-bg;
     position: relative;
-    box-shadow: inset -1px 1px 3px rgba(0, 0, 0, .1);
+    box-shadow: inset -1px 1px 3px rgba(0, 0, 0, 0.1);
   }
 
   .progress-label {
     position: absolute;
     text-align: center;
-    font-weight: bold;
+    font-weight: 700;
     width: 100%;
     margin: 0;
     line-height: 24px !important;
-    color: #333;
-    text-shadow: 1px 1px 0 #fefefe, -1px -1px 0 #fefefe, -1px 1px 0 #fefefe, 1px -1px 0 #fefefe, 0 1px 0 #fefefe, 0 -1px 0 #fefefe, 1px 0 0 #fefefe, -1px 0 0 #fefefe, 1px 1px 2px #000;
+    color: #333333;
+    text-shadow:
+      1px 1px 0 #FEFEFE,
+      -1px -1px 0 #FEFEFE,
+      -1px 1px 0 #FEFEFE,
+      1px -1px 0 #FEFEFE,
+      0 1px 0 #FEFEFE,
+      0 -1px 0 #FEFEFE,
+      1px 0 0 #FEFEFE,
+      -1px 0 0 #FEFEFE,
+      1px 1px 2px #000000;
     white-space: nowrap;
     overflow: hidden;
   }
@@ -40,15 +48,19 @@ $pb-bg:      #ededed;
     float: left;
     border-radius: 3px;
     background-color: $pg-default;
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -1px 0 rgba(0, 0, 0, .1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 -1px 0 rgba(0, 0, 0, 0.1);
     background-size: 30px 30px;
-    background-image: linear-gradient(
-      135deg,
-      rgba(255, 255, 255, .4) 27%, transparent 27%,
-      transparent 52%, rgba(255, 255, 255, .4) 52%,
-      rgba(255, 255, 255, .4) 77%, transparent 77%,
-      transparent
-    );
+    background-image:
+      linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.4) 27%,
+        transparent 27%,
+        transparent 52%,
+        rgba(255, 255, 255, 0.4) 52%,
+        rgba(255, 255, 255, 0.4) 77%,
+        transparent 77%,
+        transparent
+      );
   }
 
   // Build primary colors
@@ -86,9 +98,8 @@ $pb-bg:      #ededed;
   .gloss {
     .progress-bar {
       box-shadow:
-        inset 0 4px 12px rgba(255, 255, 255, .7),
-        inset 0 -12px 0 rgba(0, 0, 0, .05);
+        inset 0 4px 12px rgba(255, 255, 255, 0.7),
+        inset 0 -12px 0 rgba(0, 0, 0, 0.05);
     }
   }
-
 }

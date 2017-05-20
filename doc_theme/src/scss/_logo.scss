@@ -1,7 +1,7 @@
 /* Logo */
 .md-header {
   .md-icon.md-icon--home{
-    &:before {
+    &::before {
       content: "description";
     }
   }
