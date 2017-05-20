@@ -3,23 +3,27 @@ import uml from "./uml"
 import cboard from "./cboard"
 
 (() => {
-  function onReady(fn) {
+  const onReady = function(fn) {
     if (document.addEventListener) {
-      document.addEventListener('DOMContentLoaded', fn)
+      document.addEventListener("DOMContentLoaded", fn)
     } else {
-      document.attachEvent('onreadystatechange', () => {
-        if (document.readyState === 'interactive') {fn()}
+      document.attachEvent("onreadystatechange", () => {
+        if (document.readyState === "interactive") {
+          fn()
+        }
       })
     }
   }
 
   onReady(() => {
     if (typeof flowchart !== "undefined") {
-      uml('uml-flowchart', flowchart)
+      uml(flowchart, "uml-flowchart")
     }
+
     if (typeof Diagram !== "undefined") {
-      uml('uml-sequence-diagram', Diagram, {theme: 'simple'})
+      uml(Diagram, "uml-sequence-diagram", {theme: "simple"})
     }
+
     if (typeof Clipboard !== "undefined" && Clipboard.isSupported()) {
       cboard()
     }

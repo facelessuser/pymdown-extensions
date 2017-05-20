@@ -11,18 +11,18 @@ import uglify from "gulp-uglify"
 import postcss from "gulp-postcss"
 import autoprefixer from "autoprefixer"
 import cssnano from "cssnano"
-import child_process from "child_process"
+import childProcess from "child_process"
 import gulpif from "gulp-if"
 import clean from "gulp-clean"
 import concat from "gulp-concat"
 import mqpacker from "css-mqpacker"
 import stream from "webpack-stream"
 import webpack from "webpack"
-import babel from "gulp-babel"
-import sourcemaps from 'gulp-sourcemaps'
-import rollup from 'gulp-rollup'
-import rollupBabel from 'rollup-plugin-babel'
+import sourcemaps from "gulp-sourcemaps"
+import rollup from "gulp-rollup"
+import rollupBabel from "rollup-plugin-babel"
 import stylelint from "gulp-stylelint"
+import eslint from "gulp-eslint"
 
 /* Argument Flags */
 const args = yargs.argv
@@ -34,25 +34,26 @@ const config = {
     css: "./doc_theme/*.min.css",
     es6: "./doc_theme/src/js/*.js",
     js: ["./doc_theme/*.min.js", "./doc_theme/*.js.map"],
-    vendor: "./node_modules/clipboard/dist/*.js"
+    vendor: "./node_modules/clipboard/dist/*.js",
+    gulp: "gulpfile.babel.js"
   },
   folders: {
     mkdocs: "./site",
-    theme: './doc_theme'
+    theme: "./doc_theme"
   },
   compress: {
     enabled: args.compress,
     jsOptions: {
       warnings: false,
-      screw_ie8: true,
+      screw_ie8: true,    // eslint-disable-line camelcase
       conditionals: true,
       unused: true,
       comparisons: true,
       sequences: true,
-      dead_code: true,
+      dead_code: true,    // eslint-disable-line camelcase
       evaluate: true,
-      if_return: true,
-      join_vars: true
+      if_return: true,    // eslint-disable-line camelcase
+      join_vars: true     // eslint-disable-line camelcase
     }
   },
   lint: {
@@ -60,14 +61,14 @@ const config = {
   },
   clean: args.clean,
   sourcemaps: args.sourcemaps,
-  pack: true
+  webpack: args.webpack
 }
 
 /* Mkdocs server */
 let mkdocs = null
 
 // ------------------------------
-// SASS/SCSS processing 
+// SASS/SCSS processing
 // ------------------------------
 gulp.task("scss:build", () => {
   const processors = [
@@ -83,19 +84,18 @@ gulp.task("scss:build", () => {
       "node_modules/material-shadows"
     ]}).on("error", sass.logError))
     .pipe(postcss(processors))
-    .pipe(concat('extra.min.css'))
+    .pipe(concat("extra.min.css"))
     .pipe(gulp.dest(config.folders.theme))
 })
 
-
 gulp.task("scss:lint", () => {
-    return gulp.src(config.files.scss)
-      .pipe(
-        stylelint({
-          reporters: [
-            { formatter: "string", console: true }
-          ]
-        }))
+  return gulp.src(config.files.scss)
+    .pipe(
+      stylelint({
+        reporters: [
+          {formatter: "string", console: true}
+        ]
+      }))
 })
 
 gulp.task("scss:watch", () => {
@@ -108,51 +108,39 @@ gulp.task("scss:clean", () => {
 })
 
 // ------------------------------
-// JavaScript processing 
+// JavaScript processing
 // ------------------------------
-gulp.task("js:build:transpile", () => {
-  return gulp.src(config.files.es6)
-    .pipe(gulpif(config.sourcemaps, sourcemaps.init()))
-    .pipe(babel({
-      presets: ['es2015']
-    }))
-    .pipe(concat('extra.min.js'))
-    .pipe(gulpif(config.compress.enabled, uglify({compress: config.compress.jsOptions})))
-    .pipe(gulpif(config.sourcemaps, sourcemaps.write(config.folders.theme)))
-    .pipe(gulp.dest(config.folders.theme))
-})
-
-gulp.task('js:build:rollup', () => {
+gulp.task("js:build:rollup", () => {
   return gulp.src(config.files.es6)
     .pipe(gulpif(config.sourcemaps, sourcemaps.init()))
     .pipe(rollup({
       "globals": {
-        'clipboard': 'Clipboard',
-        'flowchart': 'flowchart',
-        'sequence-diagram': 'Diagram'
+        "clipboard": "Clipboard",
+        "flowchart": "flowchart",
+        "sequence-diagram": "Diagram"
       },
       "external": [
-        'clipboard',
-        'flowchart',
-        'sequence-diagram'
+        "clipboard",
+        "flowchart",
+        "sequence-diagram"
       ],
       "format": "iife",
       "plugins": [
         rollupBabel({
           "presets": [
-            ["es2015", { "modules": false }],
+            ["es2015", {"modules": false}]
           ],
           babelrc: false,
           "plugins": ["external-helpers"]
         })
       ],
-      "moduleName": 'extra',
+      "moduleName": "extra",
       "entry": `${config.folders.theme}/src/js/extra.js`
     }))
-    .pipe(concat('extra.min.js'))
+    .pipe(concat("extra.min.js"))
     .pipe(gulpif(config.compress.enabled, uglify({compress: config.compress.jsOptions})))
     .pipe(gulpif(config.sourcemaps, sourcemaps.write(config.folders.theme)))
-    .pipe(gulp.dest(config.folders.theme));
+    .pipe(gulp.dest(config.folders.theme))
 })
 
 gulp.task("js:build:webpack", () => {
@@ -161,29 +149,29 @@ gulp.task("js:build:webpack", () => {
     .pipe(
       stream(
         {
-          devtool: (config.sourcemaps) ? 'source-map' : '',
-          entry: 'extra.js',
-          output: {filename: 'extra.min.js'},
+          devtool: (config.sourcemaps) ? "source-map" : "",
+          entry: "extra.js",
+          output: {filename: "extra.min.js"},
           module: {
             loaders: [
               {
                 test: /\.js$/,
-                loader: 'babel-loader'
+                loader: "babel-loader"
               }
             ]
           },
           plugins: [
-            /* Don't emit assets that include errors */
+            // Don't emit assets that include errors
             new webpack.NoEmitOnErrorsPlugin(),
             new webpack.DefinePlugin({
-              'process.env': {
-                'NODE_ENV': JSON.stringify('production')
+              "process.env": {
+                "NODE_ENV": JSON.stringify("production")
               }
-            }),
+            })
           ].concat(
             config.compress.enabled ? [
               new webpack.optimize.UglifyJsPlugin({
-                sourceMap: config.sourcemaps, 
+                sourceMap: config.sourcemaps,
                 compress: config.compress.jsOptions,
                 output: {comments: false}
               })
@@ -206,6 +194,13 @@ gulp.task("js:build:webpack", () => {
     .pipe(gulp.dest(config.folders.theme))
 })
 
+gulp.task("js:lint", () => {
+  return gulp.src([config.files.es6, config.files.gulp])
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError())
+})
+
 gulp.task("js:watch", () => {
   gulp.watch(config.files.es6, ["js:build:rollup"])
 })
@@ -216,13 +211,13 @@ gulp.task("js:clean", () => {
 })
 
 // ------------------------------
-// MkDocs Server 
+// MkDocs Server
 // ------------------------------
 gulp.task("mkdocs:serve", () => {
   if (mkdocs) {
     mkdocs.kill()
   }
-  mkdocs = child_process.spawn(
+  mkdocs = childProcess.spawn(
     "mkdocs",
     ["serve", "--dev-addr", "0.0.0.0:8000"],
     {stdio: "inherit"})
@@ -238,8 +233,9 @@ gulp.task("mkdocs:clean", () => {
 // ------------------------------
 gulp.task("build", [
   config.clean ? "clean" : false,
+  config.webpack ? "js:build:webpack" : "js:build:rollup",
   "scss:build",
-  config.pack ? "js:build:rollup" : "js:build:transpile",
+  config.lint.enabled ? "js:lint" : false,
   config.lint.enabled ? "scss:lint" : false
 ].filter(t => t))
 

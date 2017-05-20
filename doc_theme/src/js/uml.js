@@ -1,21 +1,26 @@
-export default function(className, converter, settings) {
+/**
+ * Targets special code or div blocks and converts them to UML.
+ * @param {object} converter is the object that transforms the text to UML.
+ * @param {string} className is the name of the class to target.
+ * @param {object} settings is the settings for converter.
+ * @return {void}
+ */
+export default function(converter, className, settings) {
   const blocks = document.querySelectorAll(`pre.${className},div.${className}`)
 
   // Is there a settings object?
-  if (settings === void 0) {
-      settings = {}
-  }
+  const config = (settings === void 0) ? {} : settings
 
   // Find the UML source element and get the text
-  for (let block of blocks) {
-    let text
-    let el
-    if (block.tagName.toLowerCase() == 'pre') {
+  for (const block of blocks) {
+    let text = null
+    let el = null
+    if (block.tagName.toLowerCase() === "pre") {
       // Handles <pre><code>
       const childEl = block.firstChild
       const parentEl = childEl.parentNode
       text = ""
-      for (let child of childEl.childNodes) {
+      for (const child of childEl.childNodes) {
         const whitespace = /^\s*$/
         if (child.nodeName === "#text" && !(whitespace.test(child.nodeValue))) {
           text = child.nodeValue
@@ -23,7 +28,7 @@ export default function(className, converter, settings) {
         }
       }
       // Do UML conversion and replace source
-      el = document.createElement('div')
+      el = document.createElement("div")
       el.className = className
       parentEl.parentNode.insertBefore(el, parentEl)
       parentEl.parentNode.removeChild(parentEl)
@@ -32,12 +37,12 @@ export default function(className, converter, settings) {
       el = block
       text = el.textContent || el.innerText
       if (el.innerText){
-        el.innerText = ''
+        el.innerText = ""
       } else {
-        el.textContent = ''
+        el.textContent = ""
       }
     }
     const diagram = converter.parse(text)
-    diagram.drawSVG(el, settings)
+    diagram.drawSVG(el, config)
   }
 }
