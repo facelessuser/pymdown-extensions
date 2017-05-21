@@ -48,15 +48,15 @@ $pb-gloss-bottom: rgba(0, 0, 0, 0.05);
     line-height: 2.4rem !important;
     color: $pb-label;
     text-shadow:
-      0.05rem 0.05rem 0 $pb-label-emphasis,
-      -0.05rem -0.05rem 0 $pb-label-emphasis,
-      -0.05rem 0.05rem 0 $pb-label-emphasis,
-      0.05rem -0.05rem 0 $pb-label-emphasis,
-      0 0.05rem 0 $pb-label-emphasis,
-      0 -0.05rem 0 $pb-label-emphasis,
-      0.05rem 0 0 $pb-label-emphasis,
-      -0.05rem 0 0 $pb-label-emphasis,
-      0.05rem 0.05rem 0.2rem $pb-label-shadow;
+      0.1rem 0.1rem 0 $pb-label-emphasis,
+      -0.1rem -0.1rem 0 $pb-label-emphasis,
+      -0.1rem 0.1rem 0 $pb-label-emphasis,
+      0.1rem -0.1rem 0 $pb-label-emphasis,
+      0 0.1rem 0 $pb-label-emphasis,
+      0 -0.1rem 0 $pb-label-emphasis,
+      0.1rem 0 0 $pb-label-emphasis,
+      -0.1rem 0 0 $pb-label-emphasis,
+      0.1rem 0.1rem 0.2rem $pb-label-shadow;
     white-space: nowrap;
     overflow: hidden;
   }
