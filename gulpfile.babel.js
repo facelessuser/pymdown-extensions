@@ -24,6 +24,11 @@ import rollup from "gulp-rollup"
 import rollupBabel from "rollup-plugin-babel"
 import stylelint from "gulp-stylelint"
 import eslint from "gulp-eslint"
+import rev from "gulp-rev"
+import revReplace from "gulp-rev-replace"
+import addsrc from "gulp-add-src"
+import rename from "gulp-rename"
+import filter from "gulp-filter"
 
 /* Argument Flags */
 const args = yargs.argv
@@ -31,13 +36,18 @@ const args = yargs.argv
 /* Create a gulp sync object */
 const gsync = gulpsync(gulp)
 
-/* Paths */
+/* Mkdocs server */
+let mkdocs = null
+
+// ------------------------------
+// Configuration
+// ------------------------------
 const config = {
   files: {
     scss: "./docs/src/scss/*.scss",
-    css: "./docs/theme/*.min.css",
+    css: "./docs/theme/*.css",
     es6: "./docs/src/js/*.js",
-    js: ["./docs/theme/*.min.js", "./docs/theme/*.js.map"],
+    js: ["./docs/theme/*.js", "./docs/theme/*.js.map"],
     vendor: "./node_modules/clipboard/dist/*.js",
     gulp: "gulpfile.babel.js"
   },
@@ -67,11 +77,9 @@ const config = {
   clean: args.clean,
   sourcemaps: args.sourcemaps,
   webpack: args.webpack,
-  buildmkdocs: args.buildmkdocs
+  buildmkdocs: args.buildmkdocs,
+  revision: args.revision
 }
-
-/* Mkdocs server */
-let mkdocs = null
 
 // ------------------------------
 // SASS/SCSS processing
@@ -83,6 +91,8 @@ gulp.task("scss:build", () => {
     (config.compress.enabled) ? cssnano : false
   ].filter(t => t)
 
+  const mkdocsConfig = filter(["**/mkdocs.yml"], {restore: true})
+
   return gulp.src(config.files.scss)
     .pipe(sass({includePaths: [
       "node_modules/modularscale-sass/stylesheets",
@@ -90,8 +100,24 @@ gulp.task("scss:build", () => {
       "node_modules/material-shadows"
     ]}).on("error", sass.logError))
     .pipe(postcss(processors))
-    .pipe(concat("extra.min.css"))
+    .pipe(concat("extra.css"))
+
+    // Revisioning: If enabled, we append a hash to the packaged file.
+    // We also copy our current mkdocs.yml and inject the revisioned
+    // file names. Merge manifest to a common location as we will
+    // accumulate other files as well.
+    .pipe(gulpif(config.revision, rev()))
+    .pipe(gulpif(config.revision, addsrc(`${config.folders.src}/mkdocs.yml`)))
+    .pipe(gulpif(config.revision, revReplace({
+      manifest: gulp.src("manifest.json"),
+      replaceInExtensions: [".yml"]
+    })))
+    .pipe(gulpif(config.revision, mkdocsConfig))
+    .pipe(gulpif(config.revision, rename("../../mkdocs.yml")))
+    .pipe(gulpif(config.revision, mkdocsConfig.restore))
     .pipe(gulp.dest(config.folders.theme))
+    .pipe(gulpif(config.revision, rev.manifest("manifest.json", {base: config.folders.theme, merge: true})))
+    .pipe(gulpif(config.revision, gulp.dest(config.folders.theme)))
 })
 
 gulp.task("scss:lint", () => {
@@ -117,6 +143,8 @@ gulp.task("scss:clean", () => {
 // JavaScript processing
 // ------------------------------
 gulp.task("js:build:rollup", () => {
+  const mkdocsConfig = filter(["**/mkdocs.yml"], {restore: true})
+
   return gulp.src(config.files.es6)
     .pipe(gulpif(config.sourcemaps, sourcemaps.init()))
     .pipe(rollup({
@@ -143,13 +171,30 @@ gulp.task("js:build:rollup", () => {
       "moduleName": "extra",
       "entry": `${config.folders.src}/js/extra.js`
     }))
-    .pipe(concat("extra.min.js"))
     .pipe(gulpif(config.compress.enabled, uglify({compress: config.compress.jsOptions})))
     .pipe(gulpif(config.sourcemaps, sourcemaps.write(config.folders.theme)))
+
+    // Revisioning: If enabled, we append a hash to the packaged file.
+    // We also copy our current mkdocs.yml and inject the revisioned
+    // file names. Merge manifest to a common location as we will
+    // accumulate other files as well.
+    .pipe(gulpif(config.revision, rev()))
+    .pipe(gulpif(config.revision, addsrc(`${config.folders.src}/mkdocs.yml`)))
+    .pipe(gulpif(config.revision, revReplace({
+      manifest: gulp.src("manifest.json"),
+      replaceInExtensions: [".yml"]
+    })))
+    .pipe(gulpif(config.revision, mkdocsConfig))
+    .pipe(gulpif(config.revision, rename("../../mkdocs.yml")))
+    .pipe(gulpif(config.revision, mkdocsConfig.restore))
     .pipe(gulp.dest(config.folders.theme))
+    .pipe(gulpif(config.revision, rev.manifest("manifest.json", {base: config.folders.theme, merge: true})))
+    .pipe(gulpif(config.revision, gulp.dest(config.folders.theme)))
 })
 
 gulp.task("js:build:webpack", () => {
+  const mkdocsConfig = filter(["**/mkdocs.yml"], {restore: true})
+
   // Probably overkill for what we need.
   return gulp.src(config.files.es6)
     .pipe(
@@ -157,7 +202,7 @@ gulp.task("js:build:webpack", () => {
         {
           devtool: (config.sourcemaps) ? "inline-source-map" : "",
           entry: "extra.js",
-          output: {filename: "extra.min.js"},
+          output: {filename: "extra.js"},
           module: {
             loaders: [
               {
@@ -197,7 +242,23 @@ gulp.task("js:build:webpack", () => {
         webpack
       )
     )
+
+    // Revisioning: If enabled, we append a hash to the packaged file.
+    // We also copy our current mkdocs.yml and inject the revisioned
+    // file names. Merge manifest to a common location as we will
+    // accumulate other files as well.
+    .pipe(gulpif(config.revision, rev()))
+    .pipe(gulpif(config.revision, addsrc(`${config.folders.src}/mkdocs.yml`)))
+    .pipe(gulpif(config.revision, revReplace({
+      manifest: gulp.src("manifest.json"),
+      replaceInExtensions: [".yml"]
+    })))
+    .pipe(gulpif(config.revision, mkdocsConfig))
+    .pipe(gulpif(config.revision, rename("../../mkdocs.yml")))
+    .pipe(gulpif(config.revision, mkdocsConfig.restore))
     .pipe(gulp.dest(config.folders.theme))
+    .pipe(gulpif(config.revision, rev.manifest("manifest.json", {base: config.folders.theme, merge: true})))
+    .pipe(gulpif(config.revision, gulp.dest(config.folders.theme)))
 })
 
 gulp.task("js:lint", () => {
@@ -217,7 +278,7 @@ gulp.task("js:clean", () => {
 })
 
 // ------------------------------
-// MkDocs Server
+// MkDocs
 // ------------------------------
 gulp.task("mkdocs:serve", () => {
   if (mkdocs) {
@@ -236,6 +297,11 @@ gulp.task("mkdocs:build", () => {
   return proc
 })
 
+gulp.task("mkdocs:setup", () => {
+  gulp.src(`${config.folders.src}/mkdocs.yml`)
+    .pipe(gulp.dest("."))
+})
+
 gulp.task("mkdocs:clean", () => {
   return gulp.src(config.folders.mkdocs)
     .pipe(clean())
@@ -246,11 +312,12 @@ gulp.task("mkdocs:clean", () => {
 // ------------------------------
 gulp.task("build", gsync.sync([
   // Clean
-  config.clean ? "clean" : false,
+  config.clean ? "clean" : ["scss:clean", "js:clean"],
   // Build JS and CSS
-  [config.webpack ? "js:build:webpack" : "js:build:rollup", "scss:build"],
+  config.webpack ? "js:build:webpack" : "js:build:rollup",
+  "scss:build",
   // Lint
-  [config.lint.enabled ? "js:lint" : false, config.lint.enabled ? "scss:lint" : false].filter(t => t),
+  config.lint.enabled ? "lint" : false,
   // Build Mkdocs
   config.buildmkdocs ? "mkdocs:build" : false
 ].filter(t => t),
@@ -258,10 +325,11 @@ gulp.task("build", gsync.sync([
 
 gulp.task("serve", gsync.sync([
   // Clean
-  config.clean ? "clean" : false,
+  ["scss:clean", "js:clean"],
   // Build JS and CSS
   [config.webpack ? "js:build:webpack" : "js:build:rollup", "scss:build"],
   // Watch for changes and start mkdocs
+  "mkdocs:setup",
   ["scss:watch", "js:watch", "mkdocs:serve"]
 ].filter(t => t),
   "group:serve"))
@@ -270,4 +338,9 @@ gulp.task("clean", [
   "scss:clean",
   "js:clean",
   "mkdocs:clean"
+])
+
+gulp.task("lint", [
+  "js:lint",
+  "scss:lint"
 ])
