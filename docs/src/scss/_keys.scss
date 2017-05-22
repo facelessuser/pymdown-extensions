@@ -1,0 +1,56 @@
+.md-typeset {
+
+  /* Keys */
+  .keys {
+    kbd {
+      &::before,
+      &::after {
+        color: $clr-grey-400;
+        font-weight: 400;
+        position: relative;
+        font-family: sans-serif;
+        -webkit-font-smoothing: initial;
+        -moz-osx-font-smoothing: initial;
+        margin: 0;
+      }
+    }
+
+    span {
+      color: $clr-grey-400;
+      padding: 0 0.2rem;
+    }
+
+    // Build primary colors
+    @each $name, $code in (
+      "backspace": "\2190",
+      "command":   "\2318",
+      "windows":   "\229E",
+      "caps-lock": "\21EA",
+      "control":   "\2303",
+      "meta":      "\25C6",
+      "shift":     "\21E7",
+      "option":    "\2325",
+    ) {
+      .key-#{$name} {
+        &::before {
+          content: $code;
+          padding-left: 0.2rem;
+        }
+      }
+    }
+
+    // Build primary colors
+    @each $name, $code in (
+      "tab":       "\21B9",
+      "num-enter": "\21B5",
+      "enter":     "\21A9"
+    ) {
+      .key-#{$name} {
+        &::after {
+          content: $code;
+          padding-left: 0.2rem;
+        }
+      }
+    }
+  }
+}

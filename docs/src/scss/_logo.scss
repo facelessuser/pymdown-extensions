@@ -1,0 +1,8 @@
+/* Logo */
+.md-header {
+  .md-icon.md-icon--home{
+    &::before {
+      content: "description";
+    }
+  }
+}
