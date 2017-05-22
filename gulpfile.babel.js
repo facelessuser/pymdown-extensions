@@ -54,7 +54,8 @@ const config = {
     es6: "./docs/src/js/*.js",
     js: ["./docs/theme/*.js", "./docs/theme/*.js.map"],
     vendor: "./node_modules/clipboard/dist/*.js",
-    gulp: "gulpfile.babel.js"
+    gulp: "gulpfile.babel.js",
+    mkdocsSrc: "./docs/src/mkdocs.yml"
   },
   folders: {
     mkdocs: "./site",
@@ -113,7 +114,7 @@ gulp.task("scss:build:sass", () => {
 })
 
 gulp.task("scss:build", ["scss:build:sass"], () => {
-  return gulp.src(`${config.folders.src}/mkdocs.yml`)
+  return gulp.src(config.files.mkdocsSrc)
     .pipe(gulpif(config.revision, revReplace({
       manifest: gulp.src("manifest.json"),
       replaceInExtensions: [".yml"]
@@ -237,7 +238,7 @@ gulp.task("js:build:webpack", () => {
 })
 
 gulp.task("js:build", [config.webpack ? "js:build:webpack" : "js:build:rollup"], () => {
-  return gulp.src(`${config.folders.src}/mkdocs.yml`)
+  return gulp.src(config.files.mkdocsSrc)
     .pipe(gulpif(config.revision, revReplace({
       manifest: gulp.src("manifest.json"),
       replaceInExtensions: [".yml"]
@@ -272,6 +273,15 @@ gulp.task("mkdocs:serve", () => {
     "mkdocs",
     ["serve", "--dev-addr", "0.0.0.0:8000"],
     {stdio: "inherit"})
+})
+
+gulp.task("mkdocs:update", () => {
+  return gulp.src(config.files.mkdocsSrc)
+    .pipe(gulp.dest("."))
+})
+
+gulp.task("mkdocs:watch", () => {
+  gulp.watch(config.files.mkdocsSrc, ["mkdocs:update"])
 })
 
 gulp.task("mkdocs:build", () => {
@@ -309,7 +319,7 @@ gulp.task("serve", gsync.sync([
   "js:build",
   "scss:build",
   // Watch for changes and start mkdocs
-  ["scss:watch", "js:watch", "mkdocs:serve"]
+  ["scss:watch", "js:watch", "mkdocs:watch", "mkdocs:serve"]
 ].filter(t => t),
   "group:serve"))
 
