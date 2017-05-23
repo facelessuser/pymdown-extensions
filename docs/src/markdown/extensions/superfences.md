@@ -57,9 +57,9 @@ SuperFences provides 4 features:
 
 ## Code Highlighting
 
-Assuming Pygments is installed, code highlighting will be handled by [Pygments][pygments] by default. If Pygments is not installed, code blocks will be wrapped in `code` and `pre` elements and given a class of `language-<specified_language>` (if a language specifier was given) so that a JavaScript highlighter can style them.
+Assuming Pygments is installed, code highlighting will be handled by [Pygments][pygments] by default. If Pygments is not installed, or disabled, code blocks will be created using HTML5 style tags for a JavaScript syntax highlighter: `#!html <pre class="highlight"><code class="language-mylanguage"></code></pre>`. If you disable `highlight_code`, specified languages will be ignored, and the content will be wrapped in a simple `pre` and `code` tags with no classes.
 
-If CodeHilite is configured, it's settings will be used to configure highlighting, but CodeHilite support is deprecated and will be removed in the next major release. It is recommended to instead use [`pymdownx.highlight`](./highlight.md) extension. If `pymdownx.highlight` is included and configured, CodeHilite will be ignored.
+Highlighting can be further controlled if either the `pymdownx.highlight` extension is used or if Python Markdown's CodeHilite is used. If CodeHilite is configured, it's settings will be used to configure highlighting, but CodeHilite support is deprecated and will be removed in the next major release. It is recommended to instead use [`pymdownx.highlight`](./highlight.md) extension. If `pymdownx.highlight` is included and configured, CodeHilite will be ignored.
 
 When using fenced code blocks, you can specify a specific syntax language to highlight with by specifying the language name directly after the opening tokens (either ` ``` ` or `~~~`). So if we wanted to specify Python as the syntax to highlight with, we could use the following syntax below. Whether using Pygments or some other JavaScript highlighter, please consult your highlighter's documentation for recognized language syntax specifiers.
 
@@ -287,8 +287,9 @@ For the reasons above, the nested fences feature really is just a workaround.  B
 
 ## Options
 
-Option                         | Type   | Default              | Description
------------------------------- | ------ | -------------------- | -----------
+Option                         | Type   | Default      | Description
+------------------------------ | ------ | ------------ | -----------
+`css_class`                    | string | `#!py ''`    | Class name is applied to the wrapper element of the code. If configured, this setting will override the `css_class` option of either CodeHilite or Highlight. If nothing is configured here or via CodeHilite or Highlight, the class `highlight` will be used.
 `disable_indented_code_blocks` | bool   | `#!py False` | Disables Python Markdown's indented code block parsing.  This is nice if you only ever use fenced blocks.
 `custom_fences`                | dict   | ``           | Custom fences.
 `highlight_code`               | bool   | `#!py True`  | Enable or disable code highlighting.

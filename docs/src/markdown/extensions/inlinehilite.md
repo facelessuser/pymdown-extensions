@@ -8,9 +8,9 @@ When using the colon mock shebang, 3 or more colons can be used.  Mock shebangs 
 
 ## Code Highlighting
 
-Assuming Pygments is installed, code highlighting will be handled by [Pygments][pygments] by default. If Pygments is not installed, code blocks will be wrapped in a `code` element and given a class of `language-<specified_language>` (if a language specifier was given) so that a JavaScript highlighter can style them.
+Assuming Pygments is installed, code highlighting will be handled by [Pygments][pygments] by default. If Pygments is not installed, or disabled, code blocks will be output for JavaScript syntax highlighters as `#!html <code class="highlight language-mylanguage"></code>`.
 
-If CodeHilite is configured, it's settings will be used to configure highlighting, but CodeHilite support is deprecated and will be removed in the next major release. It is recommended to instead use [`pymdownx.highlight`](./highlight.md) extension. If `pymdownx.highlight` is included and configured, CodeHilite will be ignored.
+Highlighting can be further controlled if either the `pymdownx.highlight` extension is used or if Python Markdown's CodeHilite is used. If CodeHilite is configured, it's settings will be used to configure highlighting, but CodeHilite support is deprecated and will be removed in the next major release. It is recommended to instead use [`pymdownx.highlight`](./highlight.md) extension. If `pymdownx.highlight` is included and configured, CodeHilite will be ignored.
 
 ## Using JavaScript Highlighters
 
@@ -20,10 +20,10 @@ If you are using a JavaScript highlighter, such as [`highlight.js`][highlightjs]
 
 ## Options
 
-Option                    | Type   | Default                   | Description
-------------------------- | ------ | ------------------------- | -----------
-`style_plain_text`        | bool   | `#!py False`              | When `guess_lang` is set to `#!py False`, InlineHilite will avoid applying classes to code blocks that do not explicitly set a language. If it is desired to have plain text styled like code, enable this to inject classes so that they can all be styled the same.
-`css_class`               | string | `#!python 'highlight'` | Set's the class name that will be injected into inline code tags when they are processed.
+Option                    | Type   | Default      | Description
+------------------------- | ------ | ------------ | -----------
+`css_class`               | string | `#!py ''`    | Class name is applied to the wrapper element of the code. If configured, this setting will override the `css_class` option of either CodeHilite or Highlight. If nothing is configured here or via CodeHilite or Highlight, the class `highlight` will be used.
+`style_plain_text`        | bool   | `#!py False` | When `guess_lang` is set to `#!py False`, InlineHilite will avoid applying classes to code blocks that do not explicitly set a language. If it is desired to have plain text styled like code, enable this to inject classes so that they can all be styled the same.
 
 !!! warning "Deprecated 3.0.0"
     The setting `use_codehilite_settings` has been deprecated since `3.0.0` and now does nothing. It is still present to avoid breakage, but will be removed in the future.
