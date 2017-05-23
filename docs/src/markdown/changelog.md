@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.2.1
+
+> Released May X, 2017
+
+- **FIX**: Cannot set Highlight's CSS class.
+
 ## 3.2.0
 
 > Released May 15, 2017

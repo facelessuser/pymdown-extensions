@@ -164,9 +164,10 @@ class SuperFencesCodeExtension(Extension):
                 "- Default: None"
             ],
             'css_class': [
-                "highlight",
-                "Set class name for wrapper element - "
-                "Default: highlight"
+                '',
+                "Set class name for wrapper element. The default of CodeHilite or Highlight will be used"
+                "if nothing is set. - "
+                "Default: ''"
             ]
         }
         super(SuperFencesCodeExtension, self).__init__(*args, **kwargs)
@@ -285,10 +286,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             self.highlight_code = self.config['highlight_code']
 
             config = hl.get_hl_settings(self.markdown)
-            if 'extend_pygments_lang' not in config:
-                self.css_class = config['css_class']
-            else:
-                self.css_class = self.config['css_class']
+            css_class = self.config['css_class']
+            self.css_class = css_class if css_class else config['css_class']
 
             self.extend_pygments_lang = config.get('extend_pygments_lang', None)
             self.guess_lang = config['guess_lang']
