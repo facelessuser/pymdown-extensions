@@ -1,9 +1,82 @@
 .md-typeset {
 
+  /* Normal pre/code style */
+  pre {
+    position: relative;
+    padding: 0;
+    overflow: visible;
+
+    @media only screen and (max-width: 44.9375em) {
+      padding: 0;
+    }
+
+    &[id]::before {
+      display: inline;
+    }
+
+    > code {
+      display: block;
+      padding: 1rem 1.2rem;
+      overflow: auto;
+
+      // [mobile -]: Stretch to whole width
+      @media only screen and (max-width: 44.9375em) {
+        padding: 1rem 1.6rem;
+      }
+    }
+  }
+
+  /* Codehilite Pygments blocks */
+  .codehilite {
+    position: relative;
+    padding: 0;
+    overflow: visible;
+
+    &[id]::before {
+      display: inline;
+    }
+
+    pre,
+    code {
+      display: block;
+      position: static;
+      padding: 1rem 1.2rem 0.8rem;
+      overflow: auto;
+    }
+  }
+
+  > .codehilite {
+
+    @media only screen and (max-width: 44.9375em) {
+      padding: 0;
+    }
+
+    pre,
+    code {
+      @media only screen and (max-width: 44.9375em) {
+        padding: 1rem 1.6rem 0.8rem;
+      }
+    }
+  }
+
+  > .codehilitetable {
+    .codehilite {
+      padding: 0;
+    }
+
+    @media only screen and (max-width: 44.9375em) {
+      .codehilite {
+        padding: 0;
+      }
+
+      .codehilite > pre {
+        padding: 1rem 1.6rem;
+      }
+    }
+  }
+
   /* Clipboard copy button */
   .clip-btn {
-    @include z-depth(2);
-
     overflow: visible;
     display: inline-block;
     position: absolute;
@@ -29,45 +102,24 @@
     }
   }
 
-  /* Clipboard code copy */
+  /* Clipboard hover style */
   .codehilite {
-    position: relative;
-    overflow: visible;
-    padding: 0;
-
-    &[id]::before {
-      display: inline;
-    }
-
     &:hover {
       .clip-btn {
         transition: opacity 0.3s;
         opacity: 0.4;
 
         &:hover {
+          @include z-depth(3);
+
           transition: opacity 0.1s;
           opacity: 1;
         }
       }
     }
-
-    pre {
-      overflow-x: auto;
-      display: block;
-      padding: 1rem 1.2rem 0.8rem;
-    }
   }
 
-  pre.codehilite {
-    overflow: visible;
-
-    code {
-      display: block;
-      padding: 1rem 1.2rem 0.8rem;
-      overflow: auto;
-    }
-  }
-
+  /* Clipboard tooltip */
   .clip-tip {
     &::after {
       position: absolute;

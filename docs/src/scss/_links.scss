@@ -1,0 +1,33 @@
+// Tweak link accents to make hover stand out more
+@each $name, $color in (
+  "red":         $clr-red-a400,
+  "pink":        $clr-pink-a400,
+  "purple":      $clr-purple-a200,
+  "deep-purple": $clr-deep-purple-a200,
+  "indigo":      $clr-indigo-a200,
+  "blue":        $clr-blue-a700,
+  "light-blue":  $clr-light-blue-a200,
+  "cyan":        $clr-cyan-a400,
+  "teal":        $clr-teal-a700,
+  "green":       $clr-green-a700,
+  "light-green": $clr-light-green-a700,
+  "lime":        $clr-lime-a700,
+  "yellow":      $clr-yellow-a700,
+  "amber":       $clr-amber-a700,
+  "orange":      $clr-orange-a400,
+  "deep-orange": $clr-deep-orange-a200
+) {
+  // Color palette
+  [data-md-color-accent="#{$name}"] {
+
+    // Typesetted content
+    .md-typeset {
+
+      // Hovered and active links
+      a:hover,
+      a:active {
+        color: $color;
+      }
+    }
+  }
+}
