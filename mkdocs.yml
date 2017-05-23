@@ -55,15 +55,14 @@ markdown_extensions:
   - markdown.extensions.abbr:
   - pymdownx.extrarawhtml:
   - pymdownx.superfences:
-      css_class: codehilite
   - pymdownx.highlight:
+      css_class: codehilite
       extend_pygments_lang:
         - name: php-inline
           lang: php
           options:
             startinline: true
   - pymdownx.inlinehilite:
-      css_class: codehilite
   - pymdownx.magiclink:
       repo_url_shortener: true
       base_repo_url: https://github.com/facelessuser/pymdown-extensions
@@ -89,8 +88,8 @@ markdown_extensions:
 
 extra:
   palette:
-    primary: light blue
-    accent: light blue
+    primary: blue
+    accent: blue
   font:
     text: Roboto
     code: Roboto Mono

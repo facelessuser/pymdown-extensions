@@ -24,7 +24,7 @@ Directory      | Description
 
 ## Coding Standards
 
-When writing code, the code should roughly conform to PEP8 and PEP257 suggestions.  The PyMdown Extensions project utilizes the flake8 linter (with some additional plugins) to ensure code conforms (give or take some of the rules).  When in doubt follow the formatting hints of existing code when adding or modifying files. existing files.  Listed below are the modules used:
+When writing code, the code should roughly conform to PEP8 and PEP257 suggestions.  The PyMdown Extensions project utilizes the Flake8 linter (with some additional plugins) to ensure code conforms (give or take some of the rules).  When in doubt follow the formatting hints of existing code when adding or modifying files. existing files.  Listed below are the modules used:
 
 - [flake8][flake8]
 - [flake8_docstrings][flake8-docstrings]
@@ -36,7 +36,7 @@ Flake8 can be run directly via the command line from the root of the project.
 flake8
 ```
 
-## Building Documents
+## Building and Editing Documents
 
 Documents are in Markdown (with with some additional syntax) and converted to HTML via Python Markdown and this extension bundle. If you would like to build and preview the documentation, you must have these packages installed:
 
@@ -45,11 +45,30 @@ Documents are in Markdown (with with some additional syntax) and converted to HT
 - [Material][mkdocs-material]: a material theme for MkDocs.
 - PyMdown Extensions: this Python Markdown extension bundle.
 
-In order to build and preview the documents, just run the following from the root of the project and you should be able to view the docs at `localhost:8000` in your browser (assuming you have the dependencies installed).
+In order to build and preview the documents, just run the command below from the root of the project and you should be able to view the documents at `localhost:8000` in your browser. After that, you should be able to update the documents and have your browser preview update live.
 
 ```
 mkdocs serve
 ```
+
+## Editing Document Theme
+
+It isn't expected that people will need to mess with the theme, but if it is needed, a little additional work is required. The documents use the [Material][mkdocs-material] theme for [MkDocs][mkdocs] with some additional local tweaks and additions.  JavaScript additions are provided in `docs/src/js` and are in es2015 syntax and are converted to es5. Stylesheets are located at `docs/src/scss` and are written in SCSS, and are converted to CSS.  All conversions are done in a `Node.js` environment.  In order to get up and running, download and install [`Yarn`](https://yarnpkg.com/). Also, install [`Node.js`](https://nodejs.org/en/) version 6+. From the root of the project, in a terminal, enter the command below.  This command will install all the needed `Node.js` modules.
+
+```
+yarn install
+```
+
+After that you can begin making changes. When ready, you can run the following commands to get a live preview while you make edits, lint your changes, or build the final output.
+
+Yarn\ Commands          | Description
+---------------- | -----------
+`yarn serve`     | Create a live preview at `localhost:8000` that will pick up your changes as you make them.
+`yarn build`     | Build the final output which will package, minimize, and revision the scripts and stylesheets.  It will also update the `mkdocs.yml` file to point to the new revisioned files.
+`yarn lint`      | Run just lint on the files.
+`yarn clean_all` | This will clean out the generated CSS and JavaScript files. It will also cleanup the generated MkDocs' site.
+
+If you need to make changes to the `mkdocs.yml` file, do not update the one in project root directly, but update the one in `docs/src`. The build environment copies the one in `docs/src` to the project root and injects the revisioned script name(s) and stylesheet name(s).
 
 ## Spell Checking Documents
 
