@@ -61,12 +61,10 @@ class InlineHilitePattern(Pattern):
         if not self.get_hl_settings:
             self.get_hl_settings = True
             self.style_plain_text = self.config['style_plain_text']
-            config = hl.get_hl_settings(self.markdown)
 
-            if 'extend_pygments_lang' not in config:
-                self.css_class = config['css_class']
-            else:
-                self.css_class = self.config['css_class']
+            config = hl.get_hl_settings(self.markdown)
+            css_class = self.config['css_class']
+            self.css_class = css_class if css_class else config['css_class']
 
             self.extend_pygments_lang = config.get('extend_pygments_lang', None)
             self.guess_lang = config['guess_lang']
@@ -126,9 +124,10 @@ class InlineHiliteExtension(Extension):
                 "- Default: False"
             ],
             'css_class': [
-                "highight",
-                "Set class name for wrapper <div> - "
-                "Default: inlinehilite"
+                '',
+                "Set class name for wrapper element. The default of CodeHilite or Highlight will be used"
+                "if nothing is set. - "
+                "Default: ''"
             ]
         }
         super(InlineHiliteExtension, self).__init__(*args, **kwargs)

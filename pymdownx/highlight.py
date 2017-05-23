@@ -54,6 +54,10 @@ DEFAULT_CONFIG = {
         False,
         "Automatic language detection - Default: True"
     ],
+    'css_class': [
+        'highlight',
+        "CSS class to apply to wrapper element."
+    ],
     'pygments_style': [
         'default',
         'Pygments HTML Formatter Style '
@@ -268,7 +272,8 @@ class HighlightTreeprocessor(Treeprocessor):
                 placeholder = self.markdown.htmlStash.store(
                     code.highlight(
                         block[0].text,
-                        ''
+                        '',
+                        self.config['css_class']
                     ),
                     safe=True
                 )
