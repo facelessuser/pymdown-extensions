@@ -9,8 +9,8 @@ export default function(Clipboard) {
     const blocks = document.querySelectorAll("div.codehilite>pre,pre.codehilite>code")
 
     // Find the code source element and get the text
-    let i = 0
-    for (const code of blocks) {
+    for (let i = 0; i < blocks.length; i++) {
+      const code = blocks[i]
       const parent = code.parentNode
       const codeId = `hl_code${i}`
       const btn = document.createElement("button")
@@ -27,7 +27,6 @@ export default function(Clipboard) {
         e.currentTarget.setAttribute("aria-label", "Copy to Clipboard.")
       })
       parent.insertBefore(btn, parent.childNodes[0])
-      i += 1
     }
 
     const cBoard = new Clipboard(".clip-btn")
