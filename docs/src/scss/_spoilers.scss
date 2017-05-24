@@ -1,0 +1,27 @@
+.md-typeset {
+  details {
+    display: block;
+
+    &[open] {
+      > summary {
+        &::before {
+          content: "\25BC";
+        }
+      }
+    }
+
+    summary {
+      display: block;
+      cursor: pointer;
+
+      &::before {
+        content: "\25B6";
+        padding-right: 0.5em;
+      }
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+    }
+  }
+}
