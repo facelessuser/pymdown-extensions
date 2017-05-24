@@ -12,7 +12,8 @@ export default function(converter, className, settings) {
   const config = (settings === void 0) ? {} : settings
 
   // Find the UML source element and get the text
-  for (const block of blocks) {
+  for (let i = 0; i < blocks.length; i++) {
+    const block = blocks[i]
     let text = null
     let el = null
     if (block.tagName.toLowerCase() === "pre") {
@@ -20,7 +21,8 @@ export default function(converter, className, settings) {
       const childEl = block.firstChild
       const parentEl = childEl.parentNode
       text = ""
-      for (const child of childEl.childNodes) {
+      for (let j = 0; j < childEl.childNodes.length; j++) {
+        const child = childEl.childNodes[j]
         const whitespace = /^\s*$/
         if (child.nodeName === "#text" && !(whitespace.test(child.nodeValue))) {
           text = child.nodeValue
