@@ -30,14 +30,17 @@ import re
 
 
 class SpoilersProcessor(BlockProcessor):
+    """Spoilers block processor."""
 
     CLASS = 'spoilers'
     START = re.compile(r'(?:^|\n)\?{3}(\+)? ?([\w\-]+)?(?: +"(.*?)") *(?:\n|$)')
 
     def test(self, parent, block):
+        """Test block."""
+
         sibling = self.lastChild(parent)
         return (
-            self.START.search(block) or 
+            self.START.search(block) or
             (
                 block.startswith(' ' * self.tab_length) and sibling is not None and
                 sibling.get('class', '').find(self.CLASS) != -1
@@ -45,6 +48,8 @@ class SpoilersProcessor(BlockProcessor):
         )
 
     def run(self, parent, blocks):
+        """Convert to details/summary block."""
+
         sibling = self.lastChild(parent)
         block = blocks.pop(0)
 
@@ -90,4 +95,6 @@ class SpoilersExtension(Extension):
 
 
 def makeExtension(*args, **kwargs):
+    """Return extension."""
+
     return SpoilersExtension(*args, **kwargs)
