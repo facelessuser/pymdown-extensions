@@ -1,6 +1,7 @@
 .md-typeset {
   details {
     display: block;
+    margin: 1em 0;
 
     &[open] {
       > summary {
@@ -14,6 +15,10 @@
       display: block;
       cursor: pointer;
 
+      &:focus {
+        outline: none;
+      }
+
       &::before {
         content: "\25B6";
         padding-right: 0.5em;
@@ -21,6 +26,16 @@
 
       &::-webkit-details-marker {
         display: none;
+      }
+    }
+
+    &.no-details {
+      > * {
+        display: none;
+      }
+
+      summary {
+        display: block;
       }
     }
   }

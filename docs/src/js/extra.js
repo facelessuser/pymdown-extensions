@@ -1,6 +1,7 @@
 import Clipboard from "clipboard"
 import uml from "./uml"
 import cboard from "./cboard"
+import spoilers from "./spoilers"
 
 (() => {
   const onReady = function(fn) {
@@ -16,6 +17,12 @@ import cboard from "./cboard"
   }
 
   onReady(() => {
+    spoilers()
+
+    if (typeof Clipboard !== "undefined" && Clipboard.isSupported()) {
+      cboard(Clipboard)
+    }
+
     if (typeof flowchart !== "undefined") {
       uml(flowchart, "uml-flowchart")
     }
@@ -23,10 +30,5 @@ import cboard from "./cboard"
     if (typeof Diagram !== "undefined") {
       uml(Diagram, "uml-sequence-diagram", {theme: "simple"})
     }
-
-    if (typeof Clipboard !== "undefined" && Clipboard.isSupported()) {
-      cboard(Clipboard)
-    }
   })
-
 })()

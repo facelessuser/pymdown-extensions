@@ -12,7 +12,7 @@ import re
 class SpoilersProcessor(BlockProcessor):
 
     CLASS = 'spoilers'
-    START = re.compile(r'(?:^|\n)\?\?\?(?:\( *(open|close) *\))? ?([\w\-]+)?(?: +"(.*?)") *(?:\n|$)')
+    START = re.compile(r'(?:^|\n)\?{3}(\+)? ?([\w\-]+)?(?: +"(.*?)") *(?:\n|$)')
 
     def test(self, parent, block):
         sibling = self.lastChild(parent)
@@ -38,9 +38,9 @@ class SpoilersProcessor(BlockProcessor):
 
         if m:
             state = m.group(1)
-            is_open = state is not None and state == 'open'
-            class_name = m.group(2).lower()
-            class_name = '' if class_name is None else class_name + " "
+            is_open = state is not None
+            class_name = m.group(2)
+            class_name = '' if class_name is None else (" " + class_name.lower())
             title = m.group(3)
             if title.strip() == '':
                 title = "Spoiler"
