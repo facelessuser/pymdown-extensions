@@ -144,6 +144,9 @@ var spoilers = function () {
 
 ## Examples
 
+```
+Basic spoilers
+
 ???+ "Open example"
 
     ??? "**Nested** examples 1"
@@ -151,5 +154,42 @@ var spoilers = function () {
 
         And some more content.
 
-    ??? "*More* nesting"
+    ??? "Spoiler!"
+        And more content again.
+
+Spoilers with classes
+
+???+ note "Open example"
+
+    ??? success "**Nested** examples 1"
+        Some content.
+
+        And some more content.
+
+    ??? danger "Spoiler!"
+        And more content again.
+```
+
+Basic spoilers
+
+???+ "Open example"
+
+    ??? "**Nested** examples 1"
+        Some content.
+
+        And some more content.
+
+    ??? "Spoiler!"
+        And more content again.
+
+Spoilers with classes
+
+???+ note "Open example"
+
+    ??? success "**Nested** examples 1"
+        Some content.
+
+        And some more content.
+
+    ??? danger "Spoiler!"
         And more content again.
