@@ -4,7 +4,7 @@
  */
 export default () => {
 
-  const isDetailsSupported = () => {
+  const isDetailsSupported = (() => {
     // https://mathiasbynens.be/notes/html5-details-jquery#comment-35
     // Detect if details is supported in the browser
     const el = document.createElement("details")
@@ -33,21 +33,7 @@ export default () => {
     }
 
     return diff
-  }
-
-  /* Toggle details state */
-  const toggle = e => {
-    const key = e.which
-    if (!key || key === 13 || key === 32) {
-      const details = e.target.parentNode
-      if (details.hasAttribute("open")) {
-        details.setAttribute("open", "open")
-      } else {
-        details.removeAttribute("open")
-      }
-      return false
-    }
-  }
+  })()
 
   if (!isDetailsSupported) {
     const blocks = document.querySelectorAll("details>summary")
@@ -61,10 +47,12 @@ export default () => {
       }
 
       summary.addEventListener("click", e => {
-        toggle(e)
-      })
-      summary.addEventListener("keydown", e => {
-        toggle(e)
+        const node = e.target.parentNode
+        if (node.hasAttribute("open")) {
+          node.removeAttribute("open")
+        } else {
+          node.setAttribute("open", "open")
+        }
       })
     }
   }

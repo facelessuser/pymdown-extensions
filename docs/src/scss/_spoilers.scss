@@ -33,7 +33,7 @@
         display: none;
       }
 
-      summary {
+      &:not([open]) > summary {
         display: block;
       }
     }
@@ -82,13 +82,13 @@
           margin: -1.2rem -1.2rem 0 -1.2rem;
           padding: 0.5rem 3.2rem;
           background-color: $tint;
-          color: white;
+          color: $clr-white;
 
           &::after {
             position: absolute;
             top: 0.5rem;
             right: 1rem;
-            font-family: 'Material Icons';
+            font-family: "Material Icons";
             font-size: 1.5rem;
           }
 
@@ -96,7 +96,7 @@
             position: absolute;
             top: 0.5rem;
             left: 1rem;
-            font-family: 'Material Icons';
+            font-family: "Material Icons";
             content: $icon;
           }
         }
