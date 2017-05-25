@@ -1,5 +1,7 @@
 .md-typeset {
   details {
+
+    /* General consistent styling */
     display: block;
     margin: 1em 0;
 
@@ -15,10 +17,6 @@
       display: block;
       cursor: pointer;
 
-      &:focus {
-        outline: none;
-      }
-
       &::before {
         content: "\25B6";
         padding-right: 0.5em;
@@ -29,8 +27,9 @@
       }
     }
 
+    /* Styling for unsupported details with JavaScript */
     &.no-details {
-      > * {
+      &:not([open]) > * {
         display: none;
       }
 
