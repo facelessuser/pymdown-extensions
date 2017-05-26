@@ -1,16 +1,13 @@
-/* Colors */
-$pg-default: $clr-blue-a400;
-
 /* Stripes */
-$pb-stripe: rgba(255, 255, 255, 0.2);
+$pb-stripe: transparentize($clr-white, 0.2);
 
 .md-typeset {
 
   /* Progress Bars */
-
   .progress-label {
     position: absolute;
     text-align: center;
+    color: transparentize($clr-black, 0.5);
     font-weight: 700;
     width: 100%;
     margin: 0;
@@ -20,10 +17,9 @@ $pb-stripe: rgba(255, 255, 255, 0.2);
   }
 
   .progress-bar {
-    // height: 1.2rem;
     height: 1.2rem;
     float: left;
-    background-color: $pg-default;
+    background-color: $clr-blue-a400;
   }
 
   .progress {
@@ -63,14 +59,13 @@ $pb-stripe: rgba(255, 255, 255, 0.2);
     }
   }
 
-  // Build primary colors
   @each $percent, $color in (
     "100": $clr-green-a400,
-    "80":  $clr-yellow-700,
-    "60":  $clr-orange-a400,
-    "40":  $clr-red-a200,
-    "20":  $clr-red-a400,
-    "0":   $clr-pink-a400
+    "80":  $clr-green-a400,
+    "60":  $clr-yellow-700,
+    "40":  $clr-orange-a400,
+    "20":  $clr-red-a200,
+    "0":   $clr-red-a400
   ) {
     .progress-#{$percent}plus {
       .progress-bar {

@@ -99,7 +99,7 @@ extra:
     - type: github
       link: https://github.com/facelessuser
 extra_css:
-  - extra-78a021c606.css
+  - extra-dc82312ba1.css
 extra_javascript:
   - https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js
   - extra-2c36206460.js

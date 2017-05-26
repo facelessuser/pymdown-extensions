@@ -2,19 +2,19 @@
 
 ## 3.3.0
 
-> Released May X, 2017
+Released May 26, 2017
 
-- **NEW**: Added new Spoilers extension.
+- **NEW**: Added new Spoilers extension (https://github.com/facelessuser/pymdown-extensions/issues/85).
 
 ## 3.2.1
 
-> Released May 23, 2017
+Released May 23, 2017
 
 - **FIX**: Cannot set Highlight's CSS class.
 
 ## 3.2.0
 
-> Released May 15, 2017
+Released May 15, 2017
 
 - **NEW**: Add support for Twemoji 2.3.5.
 - **NEW**: Update to EmojiOne 3.0.2.
@@ -23,14 +23,14 @@
 
 ## 3.1.0
 
-> Released May 7, 2017
+Released May 7, 2017
 
 - **NEW**: Highlight extension now runs normal indented code blocks through highlighter.
 - **FIX**: When Pygments is disabled, `linenums` class was attached to code blocks even if `linenums` was disabled and not enabled via fence headers.
 
 ## 3.0.0
 
-> Released Apr 16, 2017
+Released Apr 16, 2017
 
 - **NEW**: Added Keys extension.
 - **NEW**: Generalized custom fences (https://github.com/facelessuser/pymdown-extensions/issues/60). `flow` and `sequence` fence are now just custom fences and can be disabled simply by overwriting the `custom_fences` setting.
@@ -45,7 +45,7 @@
 
 ## 2.0.0
 
-> Released Feb 12, 2017
+Released Feb 12, 2017
 
 - **NEW**: SuperFences and InlineHilite can be configured via the new Highlight extension.
 - **NEW**: InlineHilite now has all highlighting features pushed to the Highlight extension.  This removes all the CodeHilite code that used to be in it and instead relocates it to Highlight.
@@ -53,7 +53,7 @@
 
 ## 1.8.0
 
-> Released Jan 27, 2017
+Released Jan 27, 2017
 
 - **NEW**: MagicLink special repository link shortener for GitHub, GitLab, and Bitbucket (https://github.com/facelessuser/pymdown-extensions/issues/49).
 - **FIX**: GitHub asterisk emphasis should never have had smart enabled for it (https://github.com/facelessuser/pymdown-extensions/issues/50).
@@ -65,7 +65,7 @@
 
 ## 1.7.0
 
-> Released Jan 21, 2017
+Released Jan 21, 2017
 
 - **NEW**: Arithmatex now supports `\(...\)`, `\[...\]`, and `\begin{}...\end{}`.
 - **NEW**: Arithmatex has an option to embed the math code in MathJax script tags.
@@ -77,13 +77,13 @@
 
 ## 1.6.1
 
-> Released Jan 16, 2017
+Released Jan 16, 2017
 
 - **FIX**: Don't install tools or tests folder when installing from Pypi.
 
 ## 1.6.0
 
-> Released Jan 15, 2017
+Released Jan 15, 2017
 
 - **NEW**: EscapeAll has the option to perform more like Pandoc in that you can enable escaped newlines to be `hardbreaks`, and escaped spaces to be `nbsp`.
 - **NEW**: Rework poorly thought out snippets format to require quoting file names with single line format.  Add a block format.  Allow commenting out lines temporarily.  And allow a way to escape them by placing a space after them.
@@ -91,7 +91,7 @@
 
 ## 1.5.0
 
-> Released Jan 13, 2017
+Released Jan 13, 2017
 
 - **NEW**: New EscapeAll extension.
 - **NEW**: New Snippets extension for including external files into a Markdown file.
@@ -106,7 +106,7 @@
 
 ## 1.4.0
 
-> Released Jan 5, 2017
+Released Jan 5, 2017
 
 - **NEW**: HeaderAnchor extension is now deprecated.  It will be removed in a future version.
 - **NEW**: HeaderAnchor is no longer included in the `pymdownx.github` extension.
@@ -115,7 +115,7 @@
 
 ## 1.3.0
 
-> Released Jan 1, 2017
+Released Jan 1, 2017
 
 - **NEW**: New Emoji extension that aims to replace GitHubEmoji.  By default it is configured for EmojiOne and Gemoji (GitHub's emoji).
 - **NEW**: GitHubEmoji is deprecated. Please use the Emoji extension instead.
@@ -124,13 +124,13 @@
 
 ## 1.2.0
 
-> Released Nov 1, 2016
+Released Nov 1, 2016
 
 - **NEW**: Add option to output task lists in a more customizable way.
 
 ## 1.1.0
 
-> Released Mar 1, 2016
+Released Mar 1, 2016
 
 - **NEW**: Add pypi 3.5 info in setup
 - **NEW**: Add option to MagicLink extension to allow the stripping of link protocols (`http://` etc.).
@@ -138,12 +138,12 @@
 
 ## 1.0.1
 
-> Released Dec 10, 2015
+Released Dec 10, 2015
 
 - **FIX**: Ordinal number 11th, 12th, and 13th
 
 ## 1.0.0
 
-> Released Dec 8, 2015
+Released Dec 8, 2015
 
 - **NEW**: Initial release.
