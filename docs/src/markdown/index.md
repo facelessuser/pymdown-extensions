@@ -26,7 +26,7 @@ Check out documentation on each extension to learn more about how to configure a
     [B64](extensions/b64.md) converts all local images in a document to base64 encoding and embeds them in the document.
 
 ??? summary "BetterEm"
-    [BetterEm](extensions/betterem.md) is a different approach to **emphasis** than Python Markdown's default.
+    [BetterEm](extensions/betterem.md) is a different approach to **emphasis** than Python Markdown's default.  It works similar but handles certain corner cases differently.
 
 ??? summary "Caret"
     [Caret](extensions/caret.md) is an extension that is syntactically built around the `^` character. It adds support for inserting super^scripts^ and adds an easy way to place ^^text^^ in an `#!html <ins>` tag.
@@ -38,10 +38,10 @@ Check out documentation on each extension to learn more about how to configure a
     [Emoji](extensions/emoji.md) makes adding emoji via Markdown easy :smile:.
 
 ??? summary "EscapeAll"
-    [EscapeAll](extensions/escapeall.md) allows the escaping any character, some with additional effects.  Check it out to see why you might want to do this.
+    [EscapeAll](extensions/escapeall.md) allows the escaping of any character, some with additional effects.  Check it out to learn more.
 
 ??? summary "Extra"
-    [Extra](extensions/extra.md) is just like Python Markdown's Extra package, except it replaces certain extensions with PyMdown Extension's extensions.
+    [Extra](extensions/extra.md) is just like Python Markdown's Extra package except it uses PyMdown Extensions to substitute similar extensions.
 
 ??? summary "ExtraRawHTML"
     [ExtraRawHTML](extensions/extrarawhtml.md) exposes Python Markdown's feature of parsing markdown in HTML blocks. No longer do you have to include all of Extra when all you want to do is parse Markdown in HTML blocks.
@@ -56,7 +56,7 @@ Check out documentation on each extension to learn more about how to configure a
     [Keys](extensions/keys.md) makes inserting key inputs into documents as easy as pressing ++ctrl+alt+delete++.
 
 ??? summary "MagicLink"
-    [MagicLink](extensions/magiclink.md) linkafies URL and email without having to wrap them in Markdown syntax.
+    [MagicLink](extensions/magiclink.md) linkafies URL and email links without having to wrap them in Markdown syntax.
 
 ??? summary "Mark"
     [Mark](extensions/mark.md) allows you to ==mark== words easily.
@@ -67,16 +67,16 @@ Check out documentation on each extension to learn more about how to configure a
     [== 75%]{: .success}
 
 ??? summary "SmartSymbols"
-    [SmartSymbols](extensions/smartsymbols.md) inserts special commonly used Unicode characters via simple ASCII representations: `=/=` --> =/=.
+    [SmartSymbols](extensions/smartsymbols.md) inserts commonly used Unicode characters via simple ASCII representations: `=/=` --> =/=.
 
 ??? summary "Snippets"
-    [Snippets](extensions/snippets.md) Insert other Markdown or HTML files into your document.
+    [Snippets](extensions/snippets.md) include other Markdown or HTML snippets into the current Markdown file being parsed.
 
 ??? summary "Spoilers"
     [Spoilers](extensions/spoilers.md) creates collapsible elements with `#!html <details><summary>` tags.
 
 ??? summary "SuperFences"
-    [SuperFences](extensions/superfences.md) is like Python Markdown's fences, but better. Nest fences under lists, admonitions, and other syntaxes. Also create special custom fences like UML.
+    [SuperFences](extensions/superfences.md) is like Python Markdown's fences, but better. Nest fences under lists, admonitions, and other syntaxes. Also create special custom fences for content like UML.
 
 ??? summary "Tasklist"
     [Tasklist](extensions/tasklist.md) allows inserting lists with check boxes.
