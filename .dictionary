@@ -49,6 +49,7 @@ InlineHilite's
 ish
 JavaScript
 JPEG
+jQuery
 js
 JSON
 KBD
@@ -79,6 +80,8 @@ plugins
 plusminus
 PNG
 PNGs
+polyfill
+polyfills
 pre
 prepend
 prepended
