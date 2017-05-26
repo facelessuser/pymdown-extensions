@@ -1,15 +1,14 @@
+/* Details polyfill */
 .md-typeset {
   details {
 
-    /* General consistent styling */
+    /* General common styling */
     display: block;
     margin: 1em 0;
 
     &[open] {
-      > summary {
-        &::before {
-          content: "\25BC";
-        }
+      > summary::before {
+        content: "\25BC";
       }
     }
 
@@ -29,22 +28,24 @@
 
     /* Styling for unsupported details with JavaScript */
     &.no-details {
-      &:not([open]) > * {
-        display: none;
-      }
+      &:not([open]) {
+        > * {
+          display: none;
+        }
 
-      &:not([open]) > summary {
-        display: block;
+        > summary {
+          display: block;
+        }
       }
     }
   }
 }
 
-// Typesetted content
+/* Material styled spoilers */
 .md-typeset {
   details {
     @each $names, $appearance in (
-      note: $clr-light-blue-a400 "edit",
+      note seealso: $clr-blue-a400 "edit",
       summary tldr: $clr-light-blue-a400 "subject",
       tip hint important : $clr-teal-a700 "whatshot",
       success check done: $clr-green-a400 "done",
@@ -67,13 +68,8 @@
           margin-top: 0;
         }
 
-        // Remove spacing on last element
         *:last-child {
           margin-bottom: 0;
-        }
-
-        &::before {
-          content: none;
         }
 
         > summary {
@@ -114,10 +110,8 @@
         &:not([open]) {
           padding-bottom: 0;
 
-          > summary {
-            &::after {
-              content: "keyboard_arrow_left";
-            }
+          > summary::after {
+            content: "keyboard_arrow_left";
           }
         }
       }
