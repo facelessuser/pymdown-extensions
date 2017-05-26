@@ -2,194 +2,160 @@
 
 ## Overview
 
-Spoilers is an extension that hides content until clicked. It uses the HTML5 `#!html<details><summary>` tags to accomplish this.  It supports nesting and you can also force the default state to open.
+Spoilers is an extension that hides content until clicked. It uses the HTML5 `#!html <details><summary>` tags to accomplish this.  It supports nesting and you can also force the default state to be open. And if you want to style some different than others, you can optionally feed in a custom class.
 
 ## Syntax
 
-Spoilers must contain a blank line before they start. Use `???` to start the block.  Follow the start of the block with an optional class and the summary contained in quotes. To force the spoiler to be open by default, append a plus sign after the opening tokens `???+`. Content is placed below the header and must be indented.
-
-Simple spoiler:
-
-```
-??? "Summary"
-    Here's some content.
-```
-
-Spoiler with optional class:
+Spoilers must contain a blank line before they start. Use `???` to start a spoiler or `???+` if you want to start a spoiler whose default state is 'open'.  Follow the start of the block with an optional class and the summary contained in quotes. Content is placed below the header and must be indented.
 
 ```
 ??? optional-class "Summary"
     Here's some content.
 ```
 
-Nested spoilers:
+Spoilers will be output in the format below. The content will always be encapsulated in tags of some kind.
 
-```
-??? "Summary"
-    Here's some content.
-
-    ??? "**Nested**"
-        More content
-```
-
-Spoiler forced open by default:
-
-```
-???+ "open example"
-    content
+```html
+<details class="spoilers my-custom-class"><summary>Text</summary><p>Content</p></details>
 ```
 
 ## Browser Support
 
-Unfortunately, due how new `#!html<details><summary>` tags are, not all browsers support them.  In order to have them supported most browsers, you will have to provide some fallback styling and JavaScript until all browsers catch up.
+Unfortunately, due to how new `#!html <details><summary>` tags are, not all browsers support them yet.  In order to have them supported in all new browsers, you will have to provide some fallback styling and JavaScript until all browsers catch up.
 
-This document uses the following style (or something very close to this) to ensure all browsers get style the elements appropriately:
+This extension's goal is not to provide you with the perfect polyfill (you can design or find you own), but we will show the basic polyfill that is being used in this document.
+
+Here is the basic CSS that is being used.  It is meant to provide a consistent CSS in both browsers that support `#!html <details><summary>` tags and those that do not.
 
 ```css
-.md-typeset details {
+details {
   display: block;
 }
 
-.md-typeset details[open] > summary::before {
+details[open] > summary::before {
   content: "\25BC";
 }
 
-.md-typeset details summary {
-  display: block; cursor: pointer;
+details summary {
+  display: block;
+  cursor: pointer;
 }
 
-.md-typeset details summary:focus {
+details summary:focus {
   outline: none;
 }
 
-.md-typeset details summary::before {
+details summary::before {
   content: "\25B6";
   padding-right: 0.5em;
 }
 
-.md-typeset details summary::-webkit-details-marker {
+details summary::-webkit-details-marker {
   display: none;
 }
 
-.md-typeset details.no-details > * {
+/* Attach the "no-details" class to details tags
+   in browsers that do not support them to get
+   open/show functionality. */
+details.no-details:not([open]) > * {
   display: none;
 }
 
-.md-typeset details.no-details summary {
+details.no-details:not([open]) summary {
   display: block;
 }
 ```
 
-And it uses this JavaScript that will convert `#!html<details><summary>` tags in browsers that do not support them in to working elements.  You would run the code when on content load.
+And below is the JavaScript that will detect browsers that do not support `#!html <details><summary>` tags and apply a `no-details` class to all details in those browsers. It will also attach a click event that will toggle the open state. The CSS above will target the `no-details` class and the `open` attribute to hide/show the content of your `#!html <details>` tag. Just run the code after the HTML content is loaded.
 
 ```js
 /**
  * Converts details/summary tags into working elements in browsers that don't yet support them.
  * @return {void}
  */
-var spoilers = function () {
-  // https://mathiasbynens.be/notes/html5-details-jquery#comment-35
-  // Detect if details is supported in the browser
-  var isDetailsSupported = function (doc) {
-    var el = doc.createElement("details");
-    var fake = void 0,
-        root = void 0,
-        diff = void 0;
+var spoilers = (function () {
+
+  var isDetailsSupported = function () {
+    // https://mathiasbynens.be/notes/html5-details-jquery#comment-35
+    // Detect if details is supported in the browser
+    var el = document.createElement("details");
+    var fake = false;
+
     if (!("open" in el)) {
       return false;
     }
-    root = doc.body || function () {
-      var de = doc.documentElement;
+
+    var root = document.body || function () {
+      var de = document.documentElement;
       fake = true;
-      return de.insertBefore(doc.createElement("body"), de.firstElementChild || de.firstChild);
+      return de.insertBefore(document.createElement("body"), de.firstElementChild || de.firstChild);
     }();
+
     el.innerHTML = "<summary>a</summary>b";
     el.style.display = "block";
     root.appendChild(el);
-    diff = el.offsetHeight;
+    var diff = el.offsetHeight;
     el.open = true;
-    diff = diff != el.offsetHeight;
+    diff = diff !== el.offsetHeight;
     root.removeChild(el);
+
     if (fake) {
       root.parentNode.removeChild(root);
     }
+
     return diff;
-  }(document);
+  }();
 
   if (!isDetailsSupported) {
     var blocks = document.querySelectorAll("details>summary");
     for (var i = 0; i < blocks.length; i++) {
       var summary = blocks[i];
       var details = summary.parentNode;
-      if (!details.hasAttribute("open")) {
-        if (!!!details.className.match(new RegExp("(\\s|^)no-details(\\s|$)"))) {
-          details.className += " no-details";
-        }
+
+      // Apply "no-details" to unsupported details tags
+      if (!details.className.match(new RegExp("(\\s|^)no-details(\\s|$)"))) {
+        details.className += " no-details";
       }
+
       summary.addEventListener("click", function (e) {
-        var details = e.target.parentNode;
-        if (!!details.className.match(new RegExp("(\\s|^)no-details(\\s|$)"))) {
-          var reg = new RegExp("(\\s|^)no-details(\\s|$)");
-          details.className = details.className.replace(reg, " ");
-          details.setAttribute("open", "");
+        var node = e.target.parentNode;
+        if (node.hasAttribute("open")) {
+          node.removeAttribute("open");
         } else {
-          details.className += " no-details";
-          details.removeAttribute("open");
+          node.setAttribute("open", "open");
         }
       });
     }
   }
-};
+});
 ```
+
+There are more elaborate polyfills available that support jQuery, add keyboard events, or even support back to IE8. Feel free to modify what is here or find a solution that fits your needs. 
 
 ## Examples
 
 ```
 Basic spoilers
 
-???+ "Open example"
+???+ "Open spoiler"
 
-    ??? "**Nested** examples 1"
+    ??? "Nested spoiler 1"
+        Some content.
+```
+
+???+ "Open spoiler"
+
+    ??? "Nested spoiler 1"
         Some content.
 
-        And some more content.
+```
+???+ note "Open styled spoiler"
 
-    ??? "Spoiler!"
-        And more content again.
-
-Spoilers with classes
-
-???+ note "Open example"
-
-    ??? success "**Nested** examples 1"
-        Some content.
-
-        And some more content.
-
-    ??? danger "Spoiler!"
+    ??? danger "Nested Spoiler!"
         And more content again.
 ```
 
-Basic spoilers
+???+ note "Open styled spoiler"
 
-???+ "Open example"
-
-    ??? "**Nested** examples 1"
-        Some content.
-
-        And some more content.
-
-    ??? "Spoiler!"
-        And more content again.
-
-Spoilers with classes
-
-???+ note "Open example"
-
-    ??? success "**Nested** examples 1"
-        Some content.
-
-        And some more content.
-
-    ??? danger "Spoiler!"
+    ??? danger "Nested Spoiler!"
         And more content again.
