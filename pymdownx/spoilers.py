@@ -67,8 +67,6 @@ class SpoilersProcessor(BlockProcessor):
             class_name = m.group(2)
             class_name = '' if class_name is None else (" " + class_name.lower())
             title = m.group(3)
-            if title.strip() == '':
-                title = "Spoiler"
 
             div = etree.SubElement(parent, 'details', ({'open': ''} if is_open else {}))
             div.set('class', '%s%s' % (self.CLASS, class_name))
