@@ -5,7 +5,7 @@
  * @param {object} settings is the settings for converter.
  * @return {void}
  */
-export default function(converter, className, settings) {
+export default (converter, className, settings) => {
   const blocks = document.querySelectorAll(`pre.${className},div.${className}`)
 
   // Is there a settings object?

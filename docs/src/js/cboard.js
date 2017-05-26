@@ -3,7 +3,7 @@
  * @param {object} Clipboard object.
  * @return {void}
  */
-export default function(Clipboard) {
+export default Clipboard => {
   if (Clipboard.isSupported()) {
 
     const blocks = document.querySelectorAll("div.codehilite>pre,pre.codehilite>code")

@@ -32,6 +32,7 @@ pages:
     - ProgressBar: extensions/progressbar.md
     - SmartSymbols: extensions/smartsymbols.md
     - Snippets: extensions/snippets.md
+    - Spoilers: extensions/spoilers.md
     - SuperFences: extensions/superfences.md
     - Tasklist: extensions/tasklist.md
     - Tilde: extensions/tilde.md
@@ -85,6 +86,7 @@ markdown_extensions:
       base_path: docs/src/markdown/_snippets
   - pymdownx.keys:
       separator: ＋
+  - pymdownx.spoilers:
 
 extra:
   palette:
@@ -97,7 +99,7 @@ extra:
     - type: github
       link: https://github.com/facelessuser
 extra_css:
-  - extra-c39f7704d7.css
+  - extra-b9e7995759.css
 extra_javascript:
   - https://cdn.jsdelivr.net/clipboard.js/1.6.1/clipboard.min.js
-  - extra-994b0c34be.js
+  - extra-2c36206460.js

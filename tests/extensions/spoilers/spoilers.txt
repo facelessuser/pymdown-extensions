@@ -1,0 +1,10 @@
+??? "spoiler"
+    content
+
+    ???+ "open nested spoiler"
+        content
+
+        more content
+
+??? optional-class "spoiler with class"
+    content

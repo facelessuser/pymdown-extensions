@@ -24,8 +24,9 @@ Extension                                                  | Name
 [MagicLink](extensions/magiclink.md)                       | `pymdownx.magiclink`
 [Mark](extensions/mark.md)                                 | `pymdownx.mark`
 [ProgressBar](extensions/progressbar.md)                   | `pymdownx.progressbar`
-[Snippets](extensions/snippets.md)                         | `pymdownx.snippets`
 [SmartSymbols](extensions/smartsymbols.md)                 | `pymdownx.smartsymbols`
+[Snippets](extensions/snippets.md)                         | `pymdownx.snippets`
+[Spoilers](extensions/spoilers.md)                         | `pymdownx.spoilers`
 [SuperFences](extensions/superfences.md)                   | `pymdownx.superfences`
 [Tasklist](extensions/tasklist.md)                         | `pymdownx.tasklist`
 [Tilde](extensions/tilde.md)                               | `pymdownx.tilde`

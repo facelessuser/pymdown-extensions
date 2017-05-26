@@ -41,6 +41,7 @@ HeaderAnchor
 HeaderAnchor's
 highlighter's
 html
+IE8
 inline
 Inline
 InlineHilite
@@ -48,6 +49,7 @@ InlineHilite's
 ish
 JavaScript
 JPEG
+jQuery
 js
 JSON
 KBD
@@ -78,6 +80,8 @@ plugins
 plusminus
 PNG
 PNGs
+polyfill
+polyfills
 pre
 prepend
 prepended
