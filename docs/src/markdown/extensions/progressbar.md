@@ -74,7 +74,7 @@ Classes                  | Description
 `progress-label`         | This is attached to the `p` element that will contain the desired label.
 `progress-<integer>plus` | This is an optional class that indicates the percentage of the progress bar by increments of 20.
 
-??? summary "Example CSS"
+??? settings "Example CSS"
 
     You are able to style your progress bars as fancy or plain as you want. Do this documents current style, the CSS is pretty plain. You can see it down below.
 

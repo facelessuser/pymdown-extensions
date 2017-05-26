@@ -70,7 +70,7 @@ Classes   | Description
 `block`   | Applied to critic HTML tags that are detected as surrounding a block region.
 `comment` | A CriticMarkup comment.
 
-??? summary "Example CSS"
+??? settings "Example CSS"
 
     Here is some example CSS you can use for rendering the visualization.
 

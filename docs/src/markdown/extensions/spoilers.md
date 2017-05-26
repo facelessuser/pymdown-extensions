@@ -23,114 +23,113 @@ Spoilers will be output in the format below. The content will always be encapsul
 
 Unfortunately, due to how new `#!html <details><summary>` tags are, not all browsers support them yet.  In order to have them supported in all new browsers, you will have to provide some fallback styling and JavaScript until all browsers catch up.
 
-This extension's goal is not to provide you with the perfect polyfill (you can design or find you own), but we will show the basic polyfill that is being used in this document.
+This extension's goal is not to provide you with the perfect polyfill (you can design or find you own), but a basic example is provided to show the basic polyfill that is being used in this document. There are more elaborate polyfills available that support jQuery, add keyboard events, or even support back to IE8. Feel free to modify what is here or find a solution that fits your needs. 
 
-Here is the basic CSS that is being used.  It is meant to provide a consistent CSS in both browsers that support `#!html <details><summary>` tags and those that do not.
+??? settings "Polyfill Example"
+    Here is the basic CSS that is being used.  It is meant to provide a consistent CSS in both browsers that support `#!html <details><summary>` tags and those that do not.
 
-```css
-details {
-  display: block;
-}
-
-details[open] > summary::before {
-  content: "\25BC";
-}
-
-details summary {
-  display: block;
-  cursor: pointer;
-}
-
-details summary:focus {
-  outline: none;
-}
-
-details summary::before {
-  content: "\25B6";
-  padding-right: 0.5em;
-}
-
-details summary::-webkit-details-marker {
-  display: none;
-}
-
-/* Attach the "no-details" class to details tags
-   in browsers that do not support them to get
-   open/show functionality. */
-details.no-details:not([open]) > * {
-  display: none;
-}
-
-details.no-details:not([open]) summary {
-  display: block;
-}
-```
-
-And below is the JavaScript that will detect browsers that do not support `#!html <details><summary>` tags and apply a `no-details` class to all details in those browsers. It will also attach a click event that will toggle the open state. The CSS above will target the `no-details` class and the `open` attribute to hide/show the content of your `#!html <details>` tag. Just run the code after the HTML content is loaded.
-
-```js
-/**
- * Converts details/summary tags into working elements in browsers that don't yet support them.
- * @return {void}
- */
-var spoilers = (function () {
-
-  var isDetailsSupported = function () {
-    // https://mathiasbynens.be/notes/html5-details-jquery#comment-35
-    // Detect if details is supported in the browser
-    var el = document.createElement("details");
-    var fake = false;
-
-    if (!("open" in el)) {
-      return false;
+    ```css
+    details {
+      display: block;
     }
 
-    var root = document.body || function () {
-      var de = document.documentElement;
-      fake = true;
-      return de.insertBefore(document.createElement("body"), de.firstElementChild || de.firstChild);
-    }();
-
-    el.innerHTML = "<summary>a</summary>b";
-    el.style.display = "block";
-    root.appendChild(el);
-    var diff = el.offsetHeight;
-    el.open = true;
-    diff = diff !== el.offsetHeight;
-    root.removeChild(el);
-
-    if (fake) {
-      root.parentNode.removeChild(root);
+    details[open] > summary::before {
+      content: "\25BC";
     }
 
-    return diff;
-  }();
+    details summary {
+      display: block;
+      cursor: pointer;
+    }
 
-  if (!isDetailsSupported) {
-    var blocks = document.querySelectorAll("details>summary");
-    for (var i = 0; i < blocks.length; i++) {
-      var summary = blocks[i];
-      var details = summary.parentNode;
+    details summary:focus {
+      outline: none;
+    }
 
-      // Apply "no-details" to unsupported details tags
-      if (!details.className.match(new RegExp("(\\s|^)no-details(\\s|$)"))) {
-        details.className += " no-details";
-      }
+    details summary::before {
+      content: "\25B6";
+      padding-right: 0.5em;
+    }
 
-      summary.addEventListener("click", function (e) {
-        var node = e.target.parentNode;
-        if (node.hasAttribute("open")) {
-          node.removeAttribute("open");
-        } else {
-          node.setAttribute("open", "open");
+    details summary::-webkit-details-marker {
+      display: none;
+    }
+
+    /* Attach the "no-details" class to details tags
+       in browsers that do not support them to get
+       open/show functionality. */
+    details.no-details:not([open]) > * {
+      display: none;
+    }
+
+    details.no-details:not([open]) summary {
+      display: block;
+    }
+    ```
+
+    And below is the JavaScript that will detect browsers that do not support `#!html <details><summary>` tags and apply a `no-details` class to all details in those browsers. It will also attach a click event that will toggle the open state. The CSS above will target the `no-details` class and the `open` attribute to hide/show the content of your `#!html <details>` tag. Just run the code after the HTML content is loaded.
+
+    ```js
+    /**
+     * Converts details/summary tags into working elements in browsers that don't yet support them.
+     * @return {void}
+     */
+    var spoilers = (function () {
+
+      var isDetailsSupported = function () {
+        // https://mathiasbynens.be/notes/html5-details-jquery#comment-35
+        // Detect if details is supported in the browser
+        var el = document.createElement("details");
+        var fake = false;
+
+        if (!("open" in el)) {
+          return false;
         }
-      });
-    }
-  }
-});
-```
 
-There are more elaborate polyfills available that support jQuery, add keyboard events, or even support back to IE8. Feel free to modify what is here or find a solution that fits your needs. 
+        var root = document.body || function () {
+          var de = document.documentElement;
+          fake = true;
+          return de.insertBefore(document.createElement("body"), de.firstElementChild || de.firstChild);
+        }();
+
+        el.innerHTML = "<summary>a</summary>b";
+        el.style.display = "block";
+        root.appendChild(el);
+        var diff = el.offsetHeight;
+        el.open = true;
+        diff = diff !== el.offsetHeight;
+        root.removeChild(el);
+
+        if (fake) {
+          root.parentNode.removeChild(root);
+        }
+
+        return diff;
+      }();
+
+      if (!isDetailsSupported) {
+        var blocks = document.querySelectorAll("details>summary");
+        for (var i = 0; i < blocks.length; i++) {
+          var summary = blocks[i];
+          var details = summary.parentNode;
+
+          // Apply "no-details" to unsupported details tags
+          if (!details.className.match(new RegExp("(\\s|^)no-details(\\s|$)"))) {
+            details.className += " no-details";
+          }
+
+          summary.addEventListener("click", function (e) {
+            var node = e.target.parentNode;
+            if (node.hasAttribute("open")) {
+              node.removeAttribute("open");
+            } else {
+              node.setAttribute("open", "open");
+            }
+          });
+        }
+      }
+    });
+    ```
 
 ## Examples
 
