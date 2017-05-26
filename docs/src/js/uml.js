@@ -35,7 +35,6 @@ export default (converter, className, settings) => {
           break
         }
       }
-      // Do UML conversion and replace source
     } else {
       // Handles <div>
       text = parentEl.textContent || parentEl.innerText

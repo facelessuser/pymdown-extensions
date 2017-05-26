@@ -205,29 +205,36 @@ As mentioned earlier, our flowchart elements have the `uml-flowchart` class assi
 
 In the below example we create an `onReady` function to execute the conversion when the HTML is loaded.  We create a `convertUML` function that takes the class name to search for, the converter to use, and a settings object to feed into the converter.  We then call `onReady` and feed it a callback function that will execute `convertUML` for flowcharts and for sequence diagrams. Notice that `convertUML` can handle both the `#!html <pre><code>` format or the `#!html <div>` format we mentioned earlier.
 
+The actual `convertUML` function reads UML instructions from our element and sticks it in a div that gets appended to our main HTML content (in this case we look for the the `article` tag, but it could be anything, even `body`). We don't want to do it in place our UML instructions are because it might be under an element that is hiding it with `display: none` (like a `details` tag); it won't render correctly if its parent is not displayed.  After we render the SVG, we insert it back where it belongs throwing away the original element that had the instructions.
+
 ```js
 (function (document) {
     function convertUML(className, converter, settings) {
         var charts = document.querySelectorAll("pre." + className + ',div.' + className),
+            // Change article to whatever element your main Markdown content lives.
+            article = document.querySelectorAll("article"),
             arr = [],
-            i, j, maxItem, diagaram, text, curNode,
-            isPre;
+            i, j, maxItem, diagram, text, curNode,
+            isPre, el, parentEl, childEl;
 
         // Is there a settings object?
         if (settings === void 0) {
             settings = {};
         }
 
-        // Make sure we are dealing with an array
-        for(i = 0, maxItem = charts.length; i < maxItem; i++) arr.push(charts[i]);
-
         // Find the UML source element and get the text
         for (i = 0, maxItem = arr.length; i < maxItem; i++) {
             isPre = arr[i].tagName.toLowerCase() == 'pre';
+            parentEl = arr[i];
+
+            el = document.createElement("div");
+            el.className = className;
+            el.style.visibility = "hidden";
+            el.style.position = "absolute";
+
             if (isPre) {
                 // Handles <pre><code>
-                childEl = arr[i].firstChild;
-                parentEl = childEl.parentNode;
+                childEl = parentEl.firstChild;
                 text = "";
                 for (j = 0; j < childEl.childNodes.length; j++) {
                     curNode = childEl.childNodes[j];
@@ -237,14 +244,8 @@ In the below example we create an `onReady` function to execute the conversion w
                         break;
                     }
                 }
-                // Do UML conversion and replace source
-                el = document.createElement('div');
-                el.className = className;
-                parentEl.parentNode.insertBefore(el, parentEl);
-                parentEl.parentNode.removeChild(parentEl);
             } else {
                 // Handles <div>
-                el = arr[i];
                 text = el.textContent || el.innerText;
                 if (el.innerText){
                     el.innerText = '';
@@ -252,8 +253,22 @@ In the below example we create an `onReady` function to execute the conversion w
                     el.textContent = '';
                 }
             }
+
+            // Insert our new div at the end of our content to get general
+            // typset and page sizes as our parent might be `display:none`
+            // keeping us from getting the right sizes for our SVG.
+            // Our new div will be hidden via "visibility" and take no space
+            // via `poistion: absolute`. When we are all done, use the
+            // original node as a reference to insert our SVG back
+            // into the proper place, and then make our SVG visilbe again.
+            // Lastly, clean up the old node.
+            article[0].appendChild(el),
             diagram = converter.parse(text);
             diagram.drawSVG(el, settings);
+            el.style.visibility = "visible";
+            el.style.position = "static";
+            parentEl.parentNode.insertBefore(el, parentEl);
+            parentEl.parentNode.removeChild(parentEl);
         }
     };
 
