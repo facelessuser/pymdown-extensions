@@ -246,11 +246,11 @@ The actual `convertUML` function reads UML instructions from our element and sti
                 }
             } else {
                 // Handles <div>
-                text = el.textContent || el.innerText;
-                if (el.innerText){
-                    el.innerText = '';
+                text = parentEl.textContent || parentEl.innerText;
+                if (parentEl.innerText){
+                    parentEl.innerText = '';
                 } else {
-                    el.textContent = '';
+                    parentEl.textContent = '';
                 }
             }
 
