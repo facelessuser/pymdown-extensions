@@ -78,6 +78,14 @@ Check out documentation on each extension to learn more about how to configure a
 ??? summary "SuperFences"
     [SuperFences](extensions/superfences.md) is like Python Markdown's fences, but better. Nest fences under lists, admonitions, and other syntaxes. Also create special custom fences for content like UML.
 
+    ```sequence
+    Title: Here is a title
+    A->B: Normal line
+    B-->C: Dashed line
+    C->>D: Open arrow
+    D-->>A: Dashed open arrow
+    ```
+
 ??? summary "Tasklist"
     [Tasklist](extensions/tasklist.md) allows inserting lists with check boxes.
 
