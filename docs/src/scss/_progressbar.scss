@@ -1,43 +1,12 @@
 /* Colors */
-$pb-100:     #A6D796;
-$pb-80:      #C6D796;
-$pb-60:      #D7C896;
-$pb-40:      #D7A796;
-$pb-20:      #D796A6;
-$pb-0:       #C25F77;
-$pg-default: #96C6D7;
-$pb-bg:      #EDEDED;
-
-/* Label */
-$pb-inset-shadow: rgba(0, 0, 0, 0.1);
-$pb-label: #333333;
-$pb-label-emphasis: #FEFEFE;
-$pb-label-shadow: #000000;
-
-/* Meter bevel */
-$pb-top-bevel: rgba(255, 255, 255, 0.5);
-$pb-bottom-bevel: rgba(0, 0, 0, 0.1);
+$pg-default: $clr-blue-a400;
 
 /* Stripes */
-$pb-stripe: rgba(255, 255, 255, 0.4);
-
-/* Gloss */
-$pb-gloss-top: rgba(255, 255, 255, 0.7);
-$pb-gloss-bottom: rgba(0, 0, 0, 0.05);
+$pb-stripe: rgba(255, 255, 255, 0.2);
 
 .md-typeset {
 
   /* Progress Bars */
-  .progress {
-    display: block;
-    width: 30rem;
-    margin: 0.3rem 0;
-    height: 2.4rem;
-    border-radius: 0.3rem;
-    background-color: $pb-bg;
-    position: relative;
-    box-shadow: inset -0.08rem 0.08rem 0.5rem $pb-inset-shadow;
-  }
 
   .progress-label {
     position: absolute;
@@ -45,54 +14,83 @@ $pb-gloss-bottom: rgba(0, 0, 0, 0.05);
     font-weight: 700;
     width: 100%;
     margin: 0;
-    line-height: 2.4rem !important;
-    color: $pb-label;
-    text-shadow:
-      0.1rem 0.1rem 0 $pb-label-emphasis,
-      -0.1rem -0.1rem 0 $pb-label-emphasis,
-      -0.1rem 0.1rem 0 $pb-label-emphasis,
-      0.1rem -0.1rem 0 $pb-label-emphasis,
-      0 0.1rem 0 $pb-label-emphasis,
-      0 -0.1rem 0 $pb-label-emphasis,
-      0.1rem 0 0 $pb-label-emphasis,
-      -0.1rem 0 0 $pb-label-emphasis,
-      0.1rem 0.1rem 0.2rem $pb-label-shadow;
+    line-height: 1.2rem;
     white-space: nowrap;
     overflow: hidden;
   }
 
   .progress-bar {
-    height: 2.4rem;
+    // height: 1.2rem;
+    height: 1.2rem;
     float: left;
-    border-radius: 0.3rem;
     background-color: $pg-default;
-    box-shadow:
-      inset 0 0.08rem 0 $pb-top-bevel,
-      inset 0 -0.08rem 0 $pb-bottom-bevel;
-    background-size: 3rem 3rem;
-    background-image:
-      linear-gradient(
-        135deg,
-        $pb-stripe 27%,
-        transparent 27%,
-        transparent 52%,
-        $pb-stripe 52%,
-        $pb-stripe 77%,
-        transparent 77%,
-        transparent
-      );
+  }
+
+  .progress {
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0;
+    height: 1.2rem;
+    background-color: $clr-grey-200;
+    position: relative;
+
+    &.thin {
+      margin-top: 0.9rem;
+      height: 0.4rem;
+
+      .progress-label {
+        margin-top: -0.4rem;
+      }
+
+      .progress-bar {
+        height: 0.4rem;
+      }
+    }
+
+    &.candystripe .progress-bar {
+      background-size: 2rem 2rem;
+      background-image:
+        linear-gradient(
+          135deg,
+          $pb-stripe 27%,
+          transparent 27%,
+          transparent 52%,
+          $pb-stripe 52%,
+          $pb-stripe 77%,
+          transparent 77%,
+          transparent
+        );
+    }
   }
 
   // Build primary colors
   @each $percent, $color in (
-    "100": $pb-100,
-    "80":  $pb-80,
-    "60":  $pb-60,
-    "40":  $pb-40,
-    "20":  $pb-20,
-    "0":   $pb-0
+    "100": $clr-green-a400,
+    "80":  $clr-yellow-700,
+    "60":  $clr-orange-a400,
+    "40":  $clr-red-a200,
+    "20":  $clr-red-a400,
+    "0":   $clr-pink-a400
   ) {
     .progress-#{$percent}plus {
+      .progress-bar {
+        background-color: $color;
+      }
+    }
+  }
+
+  @each $names, $color in (
+    note seealso: $clr-blue-a400,
+    summary tldr: $clr-light-blue-a400,
+    tip hint important : $clr-teal-a700,
+    success check done: $clr-green-a400,
+    warning caution attention: $clr-orange-a400,
+    failure fail missing: $clr-red-a200,
+    danger error: $clr-red-a400,
+    bug: $clr-pink-a400,
+    quote cite: $clr-grey
+  ) {
+    .progress.#{nth($names, 1)} {
       .progress-bar {
         background-color: $color;
       }
@@ -113,15 +111,6 @@ $pb-gloss-bottom: rgba(0, 0, 0, 0.05);
 
     100% {
       background-position: 6rem 0;
-    }
-  }
-
-  /* Gloss */
-  .gloss {
-    .progress-bar {
-      box-shadow:
-        inset 0 0.4rem 1.2rem $pb-gloss-top,
-        inset 0 -1.2rem 0 $pb-gloss-bottom;
     }
   }
 }

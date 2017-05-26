@@ -70,121 +70,123 @@ Classes   | Description
 `block`   | Applied to critic HTML tags that are detected as surrounding a block region.
 `comment` | A CriticMarkup comment.
 
-Here is some example CSS you can use for rendering the visualization.
+??? summary "Example CSS"
 
-```css
-/* Critic Markup */
-.markdown-body .critic {
-  font-family: inherit;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  border-style: solid;
-  border-width: 1px;
-  padding-top: 0.1em;
-  padding-bottom: 0.1em;
-  text-decoration: none;
-}
+    Here is some example CSS you can use for rendering the visualization.
 
-.markdown-body .critic:before,
-.markdown-body .critic:after {
-  content: '\00a0';
-  padding-top: 0.1em;
-  padding-bottom: 0.1em;
-  font-size: initial;
-}
+    ```css
+    /* Critic Markup */
+    .markdown-body .critic {
+      font-family: inherit;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+      border-style: solid;
+      border-width: 1px;
+      padding-top: 0.1em;
+      padding-bottom: 0.1em;
+      text-decoration: none;
+    }
 
-.markdown-body .block:before,
-.markdown-body .block:after {
-  content: '';
-}
+    .markdown-body .critic:before,
+    .markdown-body .critic:after {
+      content: '\00a0';
+      padding-top: 0.1em;
+      padding-bottom: 0.1em;
+      font-size: initial;
+    }
 
-.markdown-body mark.critic {
-  border-color: #ff8600;
-  background: #ffddaa;
-}
+    .markdown-body .block:before,
+    .markdown-body .block:after {
+      content: '';
+    }
 
-.markdown-body ins.critic {
-  border-color: #00bb00;
-  background: #ddffdd;
-}
+    .markdown-body mark.critic {
+      border-color: #ff8600;
+      background: #ffddaa;
+    }
 
-.markdown-body del.critic {
-  border-color: #dd0000;
-  background: #ffdddd;
-}
+    .markdown-body ins.critic {
+      border-color: #00bb00;
+      background: #ddffdd;
+    }
 
-.markdown-body ins.break,
-.markdown-body del.break {
-  font-size: 0;
-  border: none;
-}
+    .markdown-body del.critic {
+      border-color: #dd0000;
+      background: #ffdddd;
+    }
 
-.markdown-body ins.break:before,
-.markdown-body del.break:before {
-  content: '\00a0\b6\00a0';
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
+    .markdown-body ins.break,
+    .markdown-body del.break {
+      font-size: 0;
+      border: none;
+    }
 
-.markdown-body ins.after,
-.markdown-body del.after {
-  content: '';
-}
+    .markdown-body ins.break:before,
+    .markdown-body del.break:before {
+      content: '\00a0\b6\00a0';
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+    }
 
-.markdown-body ins.break:before {
-  color: #00bb00;
-  border: 1px solid #00bb00;
-  background: #ddffdd;
-}
+    .markdown-body ins.after,
+    .markdown-body del.after {
+      content: '';
+    }
 
-.markdown-body del.break:before {
-  color: #bb0000;
-  border: 1px solid #bb0000;
-  background: #ffdddd;
-}
+    .markdown-body ins.break:before {
+      color: #00bb00;
+      border: 1px solid #00bb00;
+      background: #ddffdd;
+    }
 
-.markdown-body span.critic {
-  background: #ddddff;
-  border: 0;
-  border-top: 1px solid #0000bb;
-  border-bottom: 1px solid #0000bb;
-}
+    .markdown-body del.break:before {
+      color: #bb0000;
+      border: 1px solid #bb0000;
+      background: #ffdddd;
+    }
 
-.markdown-body span.critic:before,
-.markdown-body span.critic:after {
-  font-size: inherit;
-  background: #ddddff;
-  border: 1px solid #0000bb;
-}
+    .markdown-body span.critic {
+      background: #ddddff;
+      border: 0;
+      border-top: 1px solid #0000bb;
+      border-bottom: 1px solid #0000bb;
+    }
 
-.markdown-body span.critic:before {
-  content: '\00a0\bb';
-  border-right: none;
-  -webkit-border-top-left-radius: 3px;
-  -moz-border-top-left-radius: 3px;
-  border-top-left-radius: 3px;
-  -webkit-border-bottom-left-radius: 3px;
-  -moz-border-bottom-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-}
+    .markdown-body span.critic:before,
+    .markdown-body span.critic:after {
+      font-size: inherit;
+      background: #ddddff;
+      border: 1px solid #0000bb;
+    }
 
-.markdown-body span.critic:after {
-  content: '\ab\00a0';
-  border-left: none;
-  -webkit-border-top-right-radius: 3px;
-  -moz-border-top-right-radius: 3px;
-  border-top-right-radius: 3px;
-  -webkit-border-bottom-right-radius: 3px;
-  -moz-border-bottom-right-radius: 3px;
-  border-bottom-right-radius: 3px;
-}
+    .markdown-body span.critic:before {
+      content: '\00a0\bb';
+      border-right: none;
+      -webkit-border-top-left-radius: 3px;
+      -moz-border-top-left-radius: 3px;
+      border-top-left-radius: 3px;
+      -webkit-border-bottom-left-radius: 3px;
+      -moz-border-bottom-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+    }
 
-.markdown-body .block {
-  display: block;
-  padding: .02em;
-}
-```
+    .markdown-body span.critic:after {
+      content: '\ab\00a0';
+      border-left: none;
+      -webkit-border-top-right-radius: 3px;
+      -moz-border-top-right-radius: 3px;
+      border-top-right-radius: 3px;
+      -webkit-border-bottom-right-radius: 3px;
+      -moz-border-bottom-right-radius: 3px;
+      border-bottom-right-radius: 3px;
+    }
+
+    .markdown-body .block {
+      display: block;
+      padding: .02em;
+    }
+    ```
 
 --8<-- "links.md"

@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.3.0
+
+> Released May X, 2017
+
+- **NEW**: Added new Spoilers extension.
+
 ## 3.2.1
 
 > Released May 23, 2017
