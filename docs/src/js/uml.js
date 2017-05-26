@@ -7,7 +7,7 @@
  */
 export default (converter, className, settings) => {
   // Change article to whatever element your main Markdown content lives.
-  const article = document.querySelectorAll('article')
+  const article = document.querySelectorAll("article")
   const blocks = document.querySelectorAll(`pre.${className},div.${className}`)
 
   // Is there a settings object?
