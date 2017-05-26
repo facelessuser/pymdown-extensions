@@ -36,6 +36,7 @@ const args = yargs
   .default("webpack", false)
   .default("buildmkdocs", false)
   .default("revision", false)
+  .default("mkdocs", "mkdocs")
   .argv
 
 /* Create a gulp sync object */
@@ -84,7 +85,8 @@ const config = {
   sourcemaps: args.sourcemaps,
   webpack: args.webpack,
   buildmkdocs: args.buildmkdocs,
-  revision: args.revision
+  revision: args.revision,
+  mkdocsCmd: args.mkdocs
 }
 
 // ------------------------------
@@ -269,9 +271,14 @@ gulp.task("mkdocs:serve", () => {
   if (mkdocs) {
     mkdocs.kill()
   }
+
+  const cmdParts = (`${config.mkdocsCmd} serve --dev-addr=0.0.0.0:8000`).split(/ +/)
+  const cmd = cmdParts[0]
+  const cmdArgs = cmdParts.slice(1, cmdParts.length - 1)
+
   mkdocs = childProcess.spawn(
-    "mkdocs",
-    ["serve", "--dev-addr", "0.0.0.0:8000"],
+    cmd,
+    cmdArgs,
     {stdio: "inherit"})
 })
 
@@ -285,7 +292,11 @@ gulp.task("mkdocs:watch", () => {
 })
 
 gulp.task("mkdocs:build", () => {
-  const proc = childProcess.spawnSync("mkdocs", ["build"])
+  const cmdParts = (`${config.mkdocsCmd} build`).split(/ +/)
+  const cmd = cmdParts[0]
+  const cmdArgs = cmdParts.slice(1, cmdParts.length - 1)
+
+  const proc = childProcess.spawnSync(cmd, cmdArgs)
   if (proc.status)
     throw new Error(`MkDocs error:\n${proc.stderr.toString()}`)
   return proc
