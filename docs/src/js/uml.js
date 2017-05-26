@@ -48,7 +48,7 @@ export default (converter, className, settings) => {
 
     // Insert our new div at the end of our content to get general
     // typset and page sizes as our parent might be `display:none`
-    // keeping us from getting the right size sizes for our SVG.
+    // keeping us from getting the right sizes for our SVG.
     // Our new div will be hidden via "visibility" and take no space
     // via `poistion: absolute`. When we are all done, use the
     // original node as a reference to insert our SVG back
