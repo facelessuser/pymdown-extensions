@@ -41,7 +41,6 @@ HeaderAnchor
 HeaderAnchor's
 highlighter's
 html
-IE8
 inline
 Inline
 InlineHilite
@@ -56,6 +55,7 @@ KBD
 kbd
 LaTeX
 Limberg
+linkafies
 linter
 MagicLink
 MathJax
@@ -115,6 +115,7 @@ sublicense
 SuperFences
 SVG
 SVGs
+syntaxes
 Tasklist
 th
 thumbsup

@@ -53,7 +53,8 @@
       failure fail missing: $clr-red-a200 "clear",
       danger error: $clr-red-a400 "flash_on",
       bug: $clr-pink-a400 "bug_report",
-      quote cite: $clr-grey "format_quote"
+      quote cite: $clr-grey "format_quote",
+      settings: $clr-purple-a700 "settings"
     ) {
       $tint: nth($appearance, 1);
       $icon: nth($appearance, 2);
@@ -61,8 +62,10 @@
       &.#{nth($names, 1)} {
         @include z-depth(2);
 
+        position: relative;
         padding: 1.2rem;
         margin-bottom: 1rem;
+        overflow: hidden;
 
         *:nth-child(2) {
           margin-top: 0;
@@ -80,19 +83,29 @@
           background-color: $tint;
           color: $clr-white;
 
-          &::after {
+          &::after,
+          &::before {
             position: absolute;
-            top: 0.5rem;
-            right: 1rem;
+            top: 0.7rem;
             font-family: "Material Icons";
-            font-size: 1.5rem;
+            font-size: 2rem;
+            font-style: normal;
+            font-variant: normal;
+            font-weight: 400;
+            line-height: 1;
+            text-transform: none;
+            white-space: nowrap;
+            speak: none;
+            word-wrap: normal;
+            direction: ltr;
+          }
+
+          &::after {
+            right: 1rem;
           }
 
           &::before {
-            position: absolute;
-            top: 0.5rem;
             left: 1rem;
-            font-family: "Material Icons";
             content: $icon;
           }
         }
