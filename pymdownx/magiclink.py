@@ -57,14 +57,17 @@ RE_REPO_LINK = re.compile(
     (?:
         (?P<github>(?P<github_base>https://(?:w{3}\.)?github.com/(?P<github_user_repo>[^/]+/[^/]+))/
             (?:issues/(?P<github_issue>\d+)/?|
+               pull/(?P<github_pull>\d+)/?|
                commit/(?P<github_commit>[\da-f]+)/?)) |
 
         (?P<bitbucket>(?P<bitbucket_base>https://(?:w{3}\.)?bitbucket.org/(?P<bitbucket_user_repo>[^/]+/[^/]+))/
-            (?:issues/(?P<bitbucket_issue>\d+)(?:/?|/[^/]*/?)|
+            (?:issues/(?P<bitbucket_issue>\d+)(?:/[^/]+)?/?|
+               pull-requests/(?P<bitbucket_pull>\d+)(?:/[^/]+(?:/diff)?)?/?|
                commits/commit/(?P<bitbucket_commit>[\da-f]+)/?)) |
 
         (?P<gitlab>(?P<gitlab_base>https://(?:w{3}\.)?gitlab.com/(?P<gitlab_user_repo>[^/]+/[^/]+))/
-            (?:issues/(?P<gitlab_issue>\d+)/? |
+            (?:issues/(?P<gitlab_issue>\d+)/?|
+               merge_requests/(?P<gitlab_pull>\d+)/?|
                commit/(?P<gitlab_commit>[\da-f]+)/?))
     )
     '''
@@ -74,10 +77,15 @@ RE_REPO_LINK = re.compile(
 class MagicShortenerTreeprocessor(Treeprocessor):
     """Treeprocessor that finds repo issue and commit links and shortens them."""
 
-    def shorten(self, link, my_repo, is_commit, user_repo, value, url, hash_size):
+    # Repo link types
+    ISSUE = 0
+    PULL = 1
+    COMMIT = 2
+
+    def shorten(self, link, my_repo, link_type, user_repo, value, url, hash_size):
         """Shorten url."""
 
-        if is_commit:
+        if link_type is self.COMMIT:
             # user/repo@`hash`
             text = '' if my_repo else user_repo + '@'
             link.text = md_util.AtomicString(text)
@@ -94,14 +102,53 @@ class MagicShortenerTreeprocessor(Treeprocessor):
                 link.append(child)
                 p.remove(child)
         else:
-            # user/repo#issue
+            # user/repo#(issue|pull)
             link.text = ('#' + value) if my_repo else (user_repo + '#' + value)
+
+    def get_provider(self, match):
+        """Get the provider and hash size."""
+
+        # Set provider specific variables
+        if match.group('github'):
+            provider = 'github'
+            hash_size = 7
+        elif match.group('bitbucket'):
+            provider = 'bitbucket'
+            hash_size = 7
+        elif match.group('gitlab'):
+            provider = 'gitlab'
+            hash_size = 8
+        return provider, hash_size
+
+    def get_type(self, provider, match):
+        """Get the link type."""
+
+        # Gather info about link type
+        if match.group(provider + '_commit') is not None:
+            value = match.group(provider + '_commit')
+            link_type = self.COMMIT
+        elif match.group(provider + '_pull') is not None:
+            value = match.group(provider + '_pull')
+            link_type = self.PULL
+        else:
+            value = match.group(provider + '_issue')
+            link_type = self.ISSUE
+        return value, link_type
+
+    def is_my_repo(self, provider, match):
+        """Check if link is from our specified repo."""
+
+        # See if these links are from the specified repo.
+        my_repo = match.group(provider + '_base') == self.base
+        if not my_repo and self.hide_protocol:
+            my_repo = match.group(provider + '_base') == ('https://' + self.base)
+        return my_repo
 
     def run(self, root):
         """Shorten popular git repository links."""
 
-        base = self.config.get('base_repo_url', '').rstrip('/')
-        hide_protocol = self.config['hide_protocol']
+        self.base = self.config.get('base_repo_url', '').rstrip('/')
+        self.hide_protocol = self.config['hide_protocol']
 
         links = root.iter('a')
         for link in links:
@@ -119,34 +166,18 @@ class MagicShortenerTreeprocessor(Treeprocessor):
 
             # Make sure the text matches the href.  If needed, add back protocol to be sure.
             # Not all links will pass through MagicLink, so we try both with and without protocol.
-            if text == href or (is_magic and hide_protocol and ('https://' + text) == href):
+            if text == href or (is_magic and self.hide_protocol and ('https://' + text) == href):
                 m = RE_REPO_LINK.match(href)
                 if m:
-                    # Set provider specific variables
-                    if m.group('github'):
-                        provider = 'github'
-                        hash_size = 7
-                    elif m.group('bitbucket'):
-                        provider = 'bitbucket'
-                        hash_size = 7
-                    elif m.group('gitlab'):
-                        provider = 'gitlab'
-                        hash_size = 8
-
-                    # See if these links are from the specified repo.
-                    my_repo = m.group(provider + '_base') == base
-                    if not my_repo and hide_protocol:
-                        my_repo = m.group(provider + '_base') == ('https://' + base)
-
-                    # Gather info about link type
-                    is_commit = m.group(provider + '_commit') is not None
-                    value = m.group(provider + '_commit') if is_commit else m.group(provider + '_issue')
+                    provider, hash_size = self.get_provider(m)
+                    my_repo = self.is_my_repo(provider, m)
+                    value, link_type = self.get_type(provider, m)
 
                     # All right, everything set, let's shorten.
                     self.shorten(
                         link,
                         my_repo,
-                        is_commit,
+                        link_type,
                         m.group(provider + '_user_repo'),
                         value,
                         href,

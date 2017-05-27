@@ -8,14 +8,14 @@ If you happen to have some conflicts with syntax for a specific case, you can al
 
 If you don't like seeing `http://` before all your links and want them stripped out, enable `hide_protocol`.
 
-For even more magic, enable `repo_url_shortener` for shorter concise links for popular source code hosts.  Issue links and commit links will be shortened in the style of GFM. Issues are shortened to `user/repo#1` for repositories external to `base_repo_url` and `#1` for internal links.  For commit links, external commits will show as `` user/repo@`abc1234` `` and internal commits will show as `` `abc1234` ``. Currently supports GitHub, GitLab, and Bitbucket.
+For even more magic, enable `repo_url_shortener` for shorter concise links for popular source code hosts.  Issue, pull request, and commit links will be shortened in the style of GFM. Issues are shortened to `user/repo#1` for repositories external to `base_repo_url` and `#1` for internal links.  For commit links, external commits will show as `` user/repo@`abc1234` `` and internal commits will show as `` `abc1234` ``. Currently supports GitHub, GitLab, and Bitbucket.
 
 ## Options
 
 Option                      | Type   | Default      | Description
 --------------------------- | ------ | ------------ | -----------
 `hide_protocol`             | bool   | `#!py False` | If `True`, links are displayed without the initial `ftp://`, `http://` or `https://`.
-`repo_url_shortener`        | bool   | `#!py False` | If `True` GitHub, Bitbucket, and GitLab commit and issue links are shortened.
+`repo_url_shortener`        | bool   | `#!py False` | If `True` GitHub, Bitbucket, and GitLab commit, pull, and issue links are shortened.
 `base_repo_url`             | string | `#!py ''`    | The base repository URL for repository links.
 
 ## Examples
