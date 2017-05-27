@@ -33,7 +33,7 @@ const args = yargs
   .default("lint", false)
   .default("clean", false)
   .default("sourcemaps", false)
-  .default("webpack", false)
+  // .default("webpack", false)
   .default("buildmkdocs", false)
   .default("revision", false)
   .default("mkdocs", "mkdocs")
@@ -83,7 +83,7 @@ const config = {
   },
   clean: args.clean,
   sourcemaps: args.sourcemaps,
-  webpack: args.webpack,
+  webpack: true,  // args.webpack,
   buildmkdocs: args.buildmkdocs,
   revision: args.revision,
   mkdocsCmd: args.mkdocs
