@@ -4,6 +4,7 @@
 
 Released May 26, 2017
 
+- **NEW**: Added support for pull request link shortening in MagicLink (https://github.com/facelessuser/pymdown-extensions/pull/88).
 - **NEW**: Added new Spoilers extension (https://github.com/facelessuser/pymdown-extensions/issues/85).
 
 ## 3.2.1
