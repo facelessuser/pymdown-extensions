@@ -1,6 +1,4 @@
-import Clipboard from "clipboard"
 import uml from "./uml"
-import cboard from "./cboard"
 import spoilers from "./spoilers"
 
 (() => {
@@ -18,10 +16,6 @@ import spoilers from "./spoilers"
 
   onReady(() => {
     spoilers()
-
-    if (typeof Clipboard !== "undefined" && Clipboard.isSupported()) {
-      cboard(Clipboard)
-    }
 
     if (typeof flowchart !== "undefined") {
       uml(flowchart, "uml-flowchart")

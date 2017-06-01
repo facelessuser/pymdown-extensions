@@ -33,7 +33,7 @@ const args = yargs
   .default("lint", false)
   .default("clean", false)
   .default("sourcemaps", false)
-  // .default("webpack", false)
+  .default("webpack", false)
   .default("buildmkdocs", false)
   .default("revision", false)
   .default("mkdocs", "mkdocs")
@@ -54,7 +54,6 @@ const config = {
     css: "./docs/theme/*.css",
     es6: "./docs/src/js/*.js",
     js: ["./docs/theme/*.js", "./docs/theme/*.js.map"],
-    vendor: "./node_modules/clipboard/dist/*.js",
     gulp: "gulpfile.babel.js",
     mkdocsSrc: "./docs/src/mkdocs.yml"
   },
@@ -83,7 +82,7 @@ const config = {
   },
   clean: args.clean,
   sourcemaps: args.sourcemaps,
-  webpack: true,  // args.webpack,
+  webpack: args.webpack,
   buildmkdocs: args.buildmkdocs,
   revision: args.revision,
   mkdocsCmd: args.mkdocs
@@ -151,12 +150,10 @@ gulp.task("js:build:rollup", () => {
     .pipe(gulpif(config.sourcemaps, sourcemaps.init()))
     .pipe(rollup({
       "globals": {
-        "clipboard": "Clipboard",
         "flowchart": "flowchart",
         "sequence-diagram": "Diagram"
       },
       "external": [
-        "clipboard",
         "flowchart",
         "sequence-diagram"
       ],
@@ -220,8 +217,7 @@ gulp.task("js:build:webpack", () => {
           stats: {color: true},
           resolve: {
             modules: [
-              `${config.folders.src}/js`,
-              "./node_modules/clipboard/dist"
+              `${config.folders.src}/js`
             ],
             extensions: [
               ".js"
@@ -256,7 +252,7 @@ gulp.task("js:lint", () => {
 })
 
 gulp.task("js:watch", () => {
-  gulp.watch(config.files.es6, ["js:build:rollup"])
+  gulp.watch(config.files.es6, [config.webpack ? "js:build:webpack" : "js:build:rollup"])
 })
 
 gulp.task("js:clean", () => {

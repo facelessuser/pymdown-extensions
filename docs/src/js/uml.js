@@ -6,6 +6,31 @@
  * @return {void}
  */
 export default (converter, className, settings) => {
+
+  const getFromCode = function(parent) {
+    // Handles <pre><code>
+    let text = ""
+    for (let j = 0; j < parent.childNodes.length; j++) {
+      const subEl = parent.childNodes[j]
+      if (subEl.tagName.toLowerCase() === "code") {
+        for (let k = 0; k < subEl.childNodes.length; k++) {
+          const child = subEl.childNodes[k]
+          const whitespace = /^\s*$/
+          if (child.nodeName === "#text" && !(whitespace.test(child.nodeValue))) {
+            text = child.nodeValue
+            break
+          }
+        }
+      }
+    }
+    return text
+  }
+
+  const getFromDiv = function(parent) {
+    // Handles <div>
+    return parent.textContent || parent.innerText
+  }
+
   // Change article to whatever element your main Markdown content lives.
   const article = document.querySelectorAll("article")
   const blocks = document.querySelectorAll(`pre.${className},div.${className}`)
@@ -15,35 +40,13 @@ export default (converter, className, settings) => {
 
   // Find the UML source element and get the text
   for (let i = 0; i < blocks.length; i++) {
-    const block = blocks[i]
-    let text = null
-    const parentEl = block
+    const parentEl = blocks[i]
     const el = document.createElement("div")
     el.className = className
     el.style.visibility = "hidden"
     el.style.position = "absolute"
 
-    if (block.tagName.toLowerCase() === "pre") {
-      // Handles <pre><code>
-      const childEl = block.firstChild
-      text = ""
-      for (let j = 0; j < childEl.childNodes.length; j++) {
-        const child = childEl.childNodes[j]
-        const whitespace = /^\s*$/
-        if (child.nodeName === "#text" && !(whitespace.test(child.nodeValue))) {
-          text = child.nodeValue
-          break
-        }
-      }
-    } else {
-      // Handles <div>
-      text = parentEl.textContent || parentEl.innerText
-      if (parentEl.innerText){
-        parentEl.innerText = ""
-      } else {
-        parentEl.textContent = ""
-      }
-    }
+    const text = (parentEl.tagName.toLowerCase() === "pre") ? getFromCode(parentEl) : getFromDiv(parentEl)
 
     // Insert our new div at the end of our content to get general
     // typset and page sizes as our parent might be `display:none`
