@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.4.0
+
+Released June 1, 2017
+
+- **NEW**: Renamed Spoilers to Details
+- **NEW**: No longer attach the `spoilers` class to `details` tags.
+- **NEW**: Provide better example of UML script in documents.
+
 ## 3.3.0
 
 Released May 26, 2017
