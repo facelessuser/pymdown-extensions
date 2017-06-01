@@ -1,0 +1,5 @@
+__default__: {}
+
+details:
+  extensions:
+    pymdownx.details:

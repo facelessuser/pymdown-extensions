@@ -1,0 +1,10 @@
+??? "details"
+    content
+
+    ???+ "open nested details"
+        content
+
+        more content
+
+??? optional-class "details with class"
+    content
