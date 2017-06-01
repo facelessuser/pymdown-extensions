@@ -1,5 +1,0 @@
-__default__: {}
-
-spoilers:
-  extensions:
-    pymdownx.spoilers:

@@ -17,6 +17,7 @@ pages:
     - BetterEm: extensions/betterem.md
     - Caret: extensions/caret.md
     - Critic: extensions/critic.md
+    - Details: extensions/details.md
     - Emoji: extensions/emoji.md
     - EscapeAll: extensions/escapeall.md
     - Extra: extensions/extra.md
@@ -32,7 +33,6 @@ pages:
     - ProgressBar: extensions/progressbar.md
     - SmartSymbols: extensions/smartsymbols.md
     - Snippets: extensions/snippets.md
-    - Spoilers: extensions/spoilers.md
     - SuperFences: extensions/superfences.md
     - Tasklist: extensions/tasklist.md
     - Tilde: extensions/tilde.md
@@ -86,7 +86,7 @@ markdown_extensions:
       base_path: docs/src/markdown/_snippets
   - pymdownx.keys:
       separator: ＋
-  - pymdownx.spoilers:
+  - pymdownx.details:
 
 extra:
   palette:

@@ -34,6 +34,12 @@ Check out documentation on each extension to learn more about how to configure a
 ??? summary "Critic"
     [Critic](extensions/critic.md) adds handling and support of [Critic Markup][critic-markup].
 
+??? summary "Details"
+    [Details](extensions/details.md) creates collapsible elements with `#!html <details><summary>` tags.
+
+    ??? note "Click Me!"
+        Thanks!
+
 ??? summary "Emoji"
     [Emoji](extensions/emoji.md) makes adding emoji via Markdown easy :smile:.
 
@@ -71,9 +77,6 @@ Check out documentation on each extension to learn more about how to configure a
 
 ??? summary "Snippets"
     [Snippets](extensions/snippets.md) include other Markdown or HTML snippets into the current Markdown file being parsed.
-
-??? summary "Spoilers"
-    [Spoilers](extensions/spoilers.md) creates collapsible elements with `#!html <details><summary>` tags.
 
 ??? summary "SuperFences"
     [SuperFences](extensions/superfences.md) is like Python Markdown's fences, but better. Nest fences under lists, admonitions, and other syntaxes. Also create special custom fences for content like UML.

@@ -1,5 +1,5 @@
 import uml from "./uml"
-import spoilers from "./spoilers"
+import details from "./details"
 
 (() => {
   const onReady = function(fn) {
@@ -15,7 +15,7 @@ import spoilers from "./spoilers"
   }
 
   onReady(() => {
-    spoilers()
+    details()
 
     if (typeof flowchart !== "undefined") {
       uml(flowchart, "uml-flowchart")

@@ -1,19 +1,19 @@
-# Spoilers
+# Details
 
 ## Overview
 
-Spoilers is an extension that hides content until clicked. It uses the HTML5 `#!html <details><summary>` tags to accomplish this.  It supports nesting and you can also force the default state to be open. And if you want to style some different than others, you can optionally feed in a custom class.
+Details is an extension that creates collapsible elements that hide their content. It uses the HTML5 `#!html <details><summary>` tags to accomplish this.  It supports nesting and you can also force the default state to be open. And if you want to style some different than others, you can optionally feed in a custom class.
 
 ## Syntax
 
-Spoilers must contain a blank line before they start. Use `???` to start a spoiler or `???+` if you want to start a spoiler whose default state is 'open'.  Follow the start of the block with an optional class and the summary contained in quotes. Content is placed below the header and must be indented.
+Details must contain a blank line before they start. Use `???` to start a details block or `???+` if you want to start a details block whose default state is 'open'.  Follow the start of the block with an optional class and the summary contained in quotes. Content is placed below the header and must be indented.
 
 ```
 ??? optional-class "Summary"
     Here's some content.
 ```
 
-Spoilers will be output in the format below. The content will always be encapsulated in tags of some kind.
+Details will be output in the format below. The content will always be encapsulated in tags of some kind.
 
 ```html
 <details class="optional-class"><summary>Text</summary><p>Content</p></details>
@@ -70,11 +70,13 @@ This extension's goal is not to provide you with the perfect polyfill (you can d
     And below is the JavaScript that will detect browsers that do not support `#!html <details><summary>` tags and apply a `no-details` class to all details in those browsers. It will also attach a click event that will toggle the open state. The CSS above will target the `no-details` class and the `open` attribute to hide/show the content of your `#!html <details>` tag. Just run the code after the HTML content is loaded.
 
     ```js
+    (function () {
+    'use strict';
     /**
      * Converts details/summary tags into working elements in browsers that don't yet support them.
      * @return {void}
      */
-    var spoilers = (function () {
+    var details = (function () {
 
       var isDetailsSupported = function () {
         // https://mathiasbynens.be/notes/html5-details-jquery#comment-35
@@ -113,7 +115,7 @@ This extension's goal is not to provide you with the perfect polyfill (you can d
           var summary = blocks[i];
           var details = summary.parentNode;
 
-          // Apply "no-details" to unsupported details tags
+          // Apply "no-details" to for unsupported details tags
           if (!details.className.match(new RegExp("(\\s|^)no-details(\\s|$)"))) {
             details.className += " no-details";
           }
@@ -129,35 +131,55 @@ This extension's goal is not to provide you with the perfect polyfill (you can d
         }
       }
     });
+
+    (function () {
+      var onReady = function onReady(fn) {
+        if (document.addEventListener) {
+          document.addEventListener("DOMContentLoaded", fn);
+        } else {
+          document.attachEvent("onreadystatechange", function () {
+            if (document.readyState === "interactive") {
+              fn();
+            }
+          });
+        }
+      };
+
+      onReady(function () {
+        details();
+      });
+    })();
+
+    }());
     ```
 
 ## Examples
 
-### Basic Spoilers
+### Basic Details
 
 ```
-???+ "Open spoiler"
+???+ "Open details"
 
-    ??? "Nested spoiler"
+    ??? "Nested details"
         Some content.
 ```
 
-???+ "Open spoiler"
+???+ "Open details"
 
-    ??? "Nested spoiler"
+    ??? "Nested details"
         Some content.
 
 
-### Styled Spoilers
+### Styled Details
 
 ```
-???+ note "Open styled spoiler"
+???+ note "Open styled details"
 
-    ??? danger "Nested Spoiler!"
+    ??? danger "Nested details!"
         And more content again.
 ```
 
-???+ note "Open styled spoiler"
+???+ note "Open styled details"
 
-    ??? danger "Nested Spoiler!"
+    ??? danger "Nested details!"
         And more content again.
