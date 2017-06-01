@@ -8,17 +8,29 @@
 
     &[open] {
       > summary::before {
-        content: "\25BC";
+        content: "\f0d7";
       }
     }
 
-    summary {
+    > summary {
       display: block;
       cursor: pointer;
 
       &::before {
-        content: "\25B6";
-        padding-right: 0.5em;
+        display: inline-block;
+        width: 0.75em;
+        font-family: fontawesome;
+        font-size: 1em;
+        font-style: normal;
+        font-variant: normal;
+        font-weight: 400;
+        line-height: 1;
+        text-transform: none;
+        white-space: nowrap;
+        speak: none;
+        word-wrap: normal;
+        direction: ltr;
+        content: "\f0da";
       }
 
       &::-webkit-details-marker {

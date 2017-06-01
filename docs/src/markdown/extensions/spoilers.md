@@ -16,7 +16,7 @@ Spoilers must contain a blank line before they start. Use `???` to start a spoil
 Spoilers will be output in the format below. The content will always be encapsulated in tags of some kind.
 
 ```html
-<details class="spoilers my-custom-class"><summary>Text</summary><p>Content</p></details>
+<details class="optional-class"><summary>Text</summary><p>Content</p></details>
 ```
 
 ## Browser Support
@@ -26,7 +26,7 @@ Unfortunately, due to how new `#!html <details><summary>` tags are, not all brow
 This extension's goal is not to provide you with the perfect polyfill (you can design or find you own), but a basic example is provided to show the basic polyfill that is being used in this document. There are more elaborate polyfills available that support jQuery, add keyboard events, or even support back to IE8. Feel free to modify what is here or find a solution that fits your needs. 
 
 ??? settings "Polyfill Example"
-    Here is the basic CSS that is being used.  It is meant to provide a consistent CSS in both browsers that support `#!html <details><summary>` tags and those that do not.
+    Here is the basic CSS that that can be used.  It is meant to provide a consistent CSS in both browsers that support `#!html <details><summary>` tags and those that do not.
 
     ```css
     details {
@@ -133,19 +133,22 @@ This extension's goal is not to provide you with the perfect polyfill (you can d
 
 ## Examples
 
-```
-Basic spoilers
+### Basic Spoilers
 
+```
 ???+ "Open spoiler"
 
-    ??? "Nested spoiler 1"
+    ??? "Nested spoiler"
         Some content.
 ```
 
 ???+ "Open spoiler"
 
-    ??? "Nested spoiler 1"
+    ??? "Nested spoiler"
         Some content.
+
+
+### Styled Spoilers
 
 ```
 ???+ note "Open styled spoiler"
