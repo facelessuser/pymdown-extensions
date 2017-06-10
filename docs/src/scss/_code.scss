@@ -29,7 +29,7 @@ $md-code-background: hsla(0, 0%, 92.5%, 0.5);
       position: relative;
       background-color: transparent;
 
-      &:before {
+      &::before {
         display: block;
         position: sticky;
         top: 0;
@@ -38,7 +38,7 @@ $md-code-background: hsla(0, 0%, 92.5%, 0.5);
         margin-right: -1.2rem;
         float: right;
         background-color: transparentize($clr-yellow-500, 0.5);
-        content: '\20';
+        content: "\20";
         z-index: -1;
       }
     }
@@ -50,7 +50,7 @@ $md-code-background: hsla(0, 0%, 92.5%, 0.5);
     > {
       .codehilite,
       .highlight {
-        .hll:before {
+        .hll::before {
           left: -1.6rem;
           margin-right: -1.6rem;
         }
