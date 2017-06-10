@@ -6,12 +6,12 @@ $pb-stripe: transparentize($clr-white, 0.2);
   /* Progress Bars */
   .progress-label {
     position: absolute;
-    text-align: center;
-    color: transparentize($clr-black, 0.5);
-    font-weight: 700;
     width: 100%;
     margin: 0;
+    color: transparentize($clr-black, 0.5);
+    font-weight: 700;
     line-height: 1.2rem;
+    text-align: center;
     white-space: nowrap;
     overflow: hidden;
   }
@@ -24,15 +24,15 @@ $pb-stripe: transparentize($clr-white, 0.2);
 
   .progress {
     display: block;
-    width: 100%;
-    margin: 0.5rem 0;
-    height: 1.2rem;
-    background-color: $clr-grey-200;
     position: relative;
+    width: 100%;
+    height: 1.2rem;
+    margin: 0.5rem 0;
+    background-color: $clr-grey-200;
 
     &.thin {
-      margin-top: 0.9rem;
       height: 0.4rem;
+      margin-top: 0.9rem;
 
       .progress-label {
         margin-top: -0.4rem;
@@ -44,7 +44,6 @@ $pb-stripe: transparentize($clr-white, 0.2);
     }
 
     &.candystripe .progress-bar {
-      background-size: 2rem 2rem;
       background-image:
         linear-gradient(
           135deg,
@@ -56,6 +55,7 @@ $pb-stripe: transparentize($clr-white, 0.2);
           transparent 77%,
           transparent
         );
+      background-size: 2rem 2rem;
     }
   }
 
