@@ -26,35 +26,6 @@ $md-code-background: hsla(0, 0%, 92.5%, 0.5);
   .highlight {
     .hll {
       display: inline;
-      position: relative;
-      background-color: transparent;
-
-      &::before {
-        display: block;
-        position: sticky;
-        top: 0;
-        left: -1.2rem;
-        width: 110%;
-        margin-right: -1.2rem;
-        float: right;
-        background-color: transparentize($clr-yellow-500, 0.5);
-        content: "\20";
-        z-index: -1;
-      }
-    }
-  }
-}
-
-@media only screen and (max-width: 44.9375em) {
-  .md-typeset {
-    > {
-      .codehilite,
-      .highlight {
-        .hll::before {
-          left: -1.6rem;
-          margin-right: -1.6rem;
-        }
-      }
     }
   }
 }
