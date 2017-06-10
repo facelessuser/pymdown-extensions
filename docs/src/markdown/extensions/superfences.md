@@ -259,7 +259,7 @@ var uml = (function (converter, className, settings) {
     el.style.visibility = "hidden";
     el.style.position = "absolute";
 
-    var text = parentEl.tagName.toLowerCase() === "pre" ? getFromCode(parentEl) : getFromDiv(parentEl
+    var text = parentEl.tagName.toLowerCase() === "pre" ? getFromCode(parentEl) : getFromDiv(parentEl)
 
     // Insert our new div at the end of our content to get general
     // typset and page sizes as our parent might be `display:none`
