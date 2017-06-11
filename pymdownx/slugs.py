@@ -27,18 +27,37 @@ from . import util
 
 RE_TAGS = re.compile(r'</?[^>]*>', re.UNICODE)
 RE_INVALID_SLUG_CHAR = re.compile(r'[^\w\- ]', re.UNICODE)
+RE_SEP = re.compile(r' ', re.UNICODE)
 
 
-def uslugify(text, sep):
+def uslugify(text, sep, cased=False, percent_encode=False):
     """Unicode slugify (utf-8)."""
 
     # Normalize, Strip html tags, strip leading and trailing whitespace, and lower
-    tag_id = RE_TAGS.sub('', unicodedata.normalize('NFC', text)).strip().lower()
+    slug = RE_TAGS.sub('', unicodedata.normalize('NFC', text)).strip()
+
+    if not cased:
+        slug = slug.lower()
+
     # Remove non word characters, non spaces, and non dashes, and convert spaces to dashes.
-    return RE_INVALID_SLUG_CHAR.sub('', tag_id).replace(' ', sep)
+    slug = RE_SEP.sub(sep, RE_INVALID_SLUG_CHAR.sub('', slug))
+
+    return util.quote(slug.encode('utf-8')) if percent_encode else slug
 
 
 def uslugify_encoded(text, sep):
-    """Custom slugify (percent encoded)."""
+    """Unicode slugify (percent encoded)."""
 
-    return util.quote(uslugify(text, sep).encode('utf-8'))
+    return uslugify(text, sep, percent_encode=True)
+
+
+def uslugify_cased(text, sep):
+    """Unicode slugify cased (keep case) (utf-8)."""
+
+    return uslugify(text, sep, cased=True)
+
+
+def uslugify_cased_encoded(text, sep):
+    """Unicode slugify cased (keep case) (percent encoded)."""
+
+    return uslugify(text, sep, cased=True, percent_encode=True)

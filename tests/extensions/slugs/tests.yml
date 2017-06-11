@@ -9,3 +9,13 @@ uslugify (encoded):
   extensions:
     markdown.extensions.toc:
       slugify: !!python/name:pymdownx.slugs.uslugify_encoded
+
+uslugify (cased):
+  extensions:
+    markdown.extensions.toc:
+      slugify: !!python/name:pymdownx.slugs.uslugify_cased
+
+uslugify (cased-encoded):
+  extensions:
+    markdown.extensions.toc:
+      slugify: !!python/name:pymdownx.slugs.uslugify_cased_encoded

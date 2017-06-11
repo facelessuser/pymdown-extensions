@@ -32,9 +32,13 @@ For those looking for a GitHub theme, there is no GitHub style included with thi
 
 ## GitHub Like Slugs
 
-The default slugify that Python Markdown uses isn't very much like GitHub's as it just removes all Unicode. But, at the time of writing this, the [`uslugify`](../miscellaneous_extras.md#uslugify) slugify provided by PyMdown Extensions is pretty close in the way it handles Unicode in slugs. By passing in the `pymdownx.slugs.uslugify` function via Toc's slugify parameter, you can alter the slugs to be GitHub like. If GitHub changes their slugs, you can always write your own to be more like theirs.
+The default slugify that Python Markdown uses isn't very much like GitHub's as it just removes all Unicode. But, at the time of writing this, the [`uslugify`](../miscellaneous_extras.md#uslugify) slugify provided by PyMdown Extensions is pretty close in the way it handles Unicode in slugs. By passing in the `pymdownx.slugs.uslugify` function via Toc's slugify parameter, you can alter the slugs to be GitHub like.
 
-As mentioned before, the GitHub extension does not intend to provide a 1:1 match of GFM. There are small differences that will never be directly addressed. With slugs, there is one difference between GitHub's and PyMdown Extensions `uslugify`, and that is with duplicate headers. GitHub appends a number to duplicate headers with a hyphen: `-1`. Python Markdown (through the Toc extension) appends a number to duplicate headers with an underscore `_1`. Unfortunately, a slug function cannot simply override this duplicate behavior as that behavior is controlled within the Toc extension. There are no plans at this time to write a Toc extension to replace the default one as a 1:1 match in behavior is not the end goal.
+As mentioned before, the GitHub extension does not intend to provide a 1:1 match of GFM. There are small differences that may never be directly addressed. With slugs, there is two *known* difference between GitHub's and PyMdown Extensions' `uslugify`.
+
+The first difference is with duplicate headers. GitHub appends a number to duplicate headers with a hyphen: `-1`. Python Markdown (through the Toc extension) appends a number to duplicate headers with an underscore `_1`. Unfortunately, a slug function cannot simply override this duplicate as that behavior is controlled within the Toc extension. There are no plans at this time to write a Toc extension to replace the default one as a 1:1 match in behavior is not the end goal.
+
+The second difference is with casing. `uslugify` lowercases all word characters.  GitHub seems to lowercase a subset such that things like `Ω` don't get lowercased. This exact difference has not be explored to understand how we can mimic this, and it may or may not be explored in the future.
 
 ## GitHub Emoji Configuration
 
