@@ -30,6 +30,9 @@ from markdown import util as md_util
 import re
 from . import util
 
+# We need to ignore theseas they are used in Markdown processing
+STX = '\u0002'
+ETX = '\u0003'
 ESCAPE_RE = r'\\(.)'
 ESCAPE_NO_NL_RE = r'\\([^\n])'
 HARDBREAK_RE = r'\\\n'
@@ -51,6 +54,8 @@ class EscapeAllPattern(Pattern):
         char = m.group(2)
         if self.nbsp and char == ' ':
             escape = md_util.AMP_SUBSTITUTE + 'nbsp;'
+        elif char in (STX, ETX):
+            escape = char
         else:
             escape = '%s%s%s' % (md_util.STX, util.get_ord(char), md_util.ETX)
         return escape
