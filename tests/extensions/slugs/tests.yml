@@ -1,0 +1,11 @@
+__default__: {}
+
+uslugify:
+  extensions:
+    markdown.extensions.toc:
+      slugify: !!python/name:pymdownx.slugs.uslugify
+
+uslugify (encoded):
+  extensions:
+    markdown.extensions.toc:
+      slugify: !!python/name:pymdownx.slugs.uslugify_encoded

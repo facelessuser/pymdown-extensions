@@ -8,3 +8,7 @@
 
 ??? optional-class "details with class"
     content
+
+??? "details end test"
+    content
+other content
