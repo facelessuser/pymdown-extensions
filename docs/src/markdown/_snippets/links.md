@@ -36,3 +36,4 @@
 [tox]: https://pypi.python.org/pypi/tox
 [twemoji]: https://github.com/twitter/twemoji
 [underscore-js]: http://underscorejs.org/
+[unicode-norm]: http://unicode.org/reports/tr15/#Norm_Forms
