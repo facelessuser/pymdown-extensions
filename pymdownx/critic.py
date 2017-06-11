@@ -312,7 +312,7 @@ class CriticExtension(Extension):
         critic = CriticViewPreprocessor(self.critic_stash)
         critic.config = self.getConfigs()
         md.preprocessors.add('critic', critic, ">normalize_whitespace")
-        md.postprocessors.add("critic-post", post, "<raw_html")
+        md.postprocessors.add("critic-post", post, ">raw_html")
 
     def reset(self):
         """
@@ -326,7 +326,7 @@ class CriticExtension(Extension):
         if not self.configured:
             self.configured = True
             self.md.preprocessors.link('critic', '>normalize_whitespace')
-            self.md.postprocessors.link('critic-post', '<raw_html')
+            self.md.postprocessors.link('critic-post', '>raw_html')
         self.critic_stash.clear()
 
 
