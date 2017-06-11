@@ -26,8 +26,8 @@ import re
 import unicodedata
 from . import util
 
-RE_TAGS = re.compile(r'''</?[^>]*>''', re.UNICODE)
-RE_WORD = re.compile(r'''[^\w\- ]''', re.UNICODE)
+RE_TAGS = re.compile(r'</?[^>]*>', re.UNICODE)
+RE_INVALID_SLUG_CHAR = re.compile(r'[^\w\- ]', re.UNICODE)
 
 
 def uslugify(text, sep):
@@ -36,7 +36,7 @@ def uslugify(text, sep):
     # Normalize, Strip html tags, strip leading and trailing whitespace, and lower
     tag_id = RE_TAGS.sub('', unicodedata.normalize('NFC', text)).strip().lower()
     # Remove non word characters, non spaces, and non dashes, and convert spaces to dashes.
-    return RE_WORD.sub('', tag_id).replace(' ', sep)
+    return RE_INVALID_SLUG_CHAR.sub('', tag_id).replace(' ', sep)
 
 
 def uslugify_encoded(text, sep):
