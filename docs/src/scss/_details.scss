@@ -27,10 +27,10 @@
         line-height: 1;
         text-transform: none;
         white-space: nowrap;
+        content: "\f0da";
         speak: none;
         word-wrap: normal;
         direction: ltr;
-        content: "\f0da";
       }
 
       &::-webkit-details-marker {
@@ -75,8 +75,8 @@
         @include z-depth(2);
 
         position: relative;
-        padding: 1.2rem;
         margin-bottom: 1rem;
+        padding: 1.2rem;
         overflow: hidden;
 
         *:nth-child(2) {
@@ -88,10 +88,10 @@
         }
 
         > summary {
-          outline: none;
           position: relative;
           margin: -1.2rem -1.2rem 0 -1.2rem;
           padding: 0.5rem 3.2rem;
+          outline: none;
           background-color: $tint;
           color: $clr-white;
 

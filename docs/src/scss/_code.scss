@@ -9,8 +9,8 @@ $md-code-background: hsla(0, 0%, 92.5%, 0.5);
 
       margin: 0 0.25em * $correct;
       padding: 0.0625em * $correct 0;
-      background-color: $md-code-background;
       border-radius: 0.2rem;
+      background-color: $md-code-background;
       box-shadow:
         +0.25em * $correct 0 0 $md-code-background,
         -0.25em * $correct 0 0 $md-code-background;
@@ -20,5 +20,12 @@ $md-code-background: hsla(0, 0%, 92.5%, 0.5);
 
   td code {
     word-break: normal;
+  }
+
+  .codehilite,
+  .highlight {
+    .hll {
+      display: inline;
+    }
   }
 }

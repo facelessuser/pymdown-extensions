@@ -5,19 +5,19 @@
     kbd {
       &::before,
       &::after {
-        color: $clr-grey-400;
-        font-weight: 400;
         position: relative;
-        font-family: sans-serif;
-        -webkit-font-smoothing: initial;
-        -moz-osx-font-smoothing: initial;
         margin: 0;
+        color: $clr-grey-400;
+        font-family: sans-serif;
+        -moz-osx-font-smoothing: initial;
+        -webkit-font-smoothing: initial;
+        font-weight: 400;
       }
     }
 
     span {
-      color: $clr-grey-400;
       padding: 0 0.2rem;
+      color: $clr-grey-400;
     }
 
     // Build primary colors
@@ -33,8 +33,8 @@
     ) {
       .key-#{$name} {
         &::before {
-          content: $code;
           padding-left: 0.2rem;
+          content: $code;
         }
       }
     }
@@ -47,8 +47,8 @@
     ) {
       .key-#{$name} {
         &::after {
-          content: $code;
           padding-left: 0.2rem;
+          content: $code;
         }
       }
     }
