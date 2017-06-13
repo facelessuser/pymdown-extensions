@@ -21,6 +21,7 @@ THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABI
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
+from __future__ import unicode_literals
 import re
 import unicodedata
 from . import util
@@ -49,7 +50,7 @@ def uslugify(text, sep, cased=NO_CASED, percent_encode=False):
             """Lowercase character."""
             return m.group(0).lower()
 
-        slug = RE_ASCII_LETTERS.sub(lower(), slug)
+        slug = RE_ASCII_LETTERS.sub(lower, slug)
 
     # Remove non word characters, non spaces, and non dashes, and convert spaces to dashes.
     slug = RE_SEP.sub(sep, RE_INVALID_SLUG_CHAR.sub('', slug))

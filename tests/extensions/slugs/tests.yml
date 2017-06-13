@@ -20,7 +20,7 @@ uslugify (cased-encoded):
     markdown.extensions.toc:
       slugify: !!python/name:pymdownx.slugs.uslugify_cased_encoded
 
-gfm (cased):
+gfm:
   extensions:
     markdown.extensions.toc:
       slugify: !!python/name:pymdownx.slugs.gfm
