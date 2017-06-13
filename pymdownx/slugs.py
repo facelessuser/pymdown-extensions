@@ -51,7 +51,6 @@ def uslugify(text, sep, cased=NO_CASED, percent_encode=False):
 
         slug = RE_ASCII_LETTERS.sub(lower(), slug)
 
-
     # Remove non word characters, non spaces, and non dashes, and convert spaces to dashes.
     slug = RE_SEP.sub(sep, RE_INVALID_SLUG_CHAR.sub('', slug))
 
@@ -74,6 +73,7 @@ def uslugify_cased_encoded(text, sep):
     """Unicode slugify cased (keep case) (percent encoded)."""
 
     return uslugify(text, sep, cased=CASED, percent_encode=True)
+
 
 def gfm(text, sep):
     """Unicode slugify cased (cased Unicode only) (utf-8)."""
