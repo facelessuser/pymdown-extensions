@@ -1,0 +1,1 @@
+# Testing GFM unicode-slugs_headers ±♠Ωℑ with encoding

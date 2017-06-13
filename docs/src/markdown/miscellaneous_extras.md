@@ -20,4 +20,12 @@ If you prefer to keep the casing of your Unicode slugs, this might be the slug f
 
 If you aren't encoding your HTML as UTF-8, or prefer the safer percent encoded Unicode slugs *and* you prefer to keep the casing of your Unicode slugs, you can use `pymdownx.slugs.uslugify_cased_encoded`. This is just like [`uslugify`](#uslugify) except that it percent encodes Unicode characters *and* it preserves the case of the original text. You can override Toc's default slugify by feeding in this function via the `slugify` parameter.
 
+### `gfm`
+
+If you are looking for a GitHub like slug, this may be for you. This is just like [`uslugify`](#uslugify) except that ASCII chars are lowercased while Unicode chars are not.
+
+### `gfm_encoded`
+
+If you are looking for a GitHub like slug, this may be for you. This is just like [`uslugify`](#uslugify) except that it percent encodes Unicode characters and ASCII chars are lowercased while Unicode chars are not.
+
 --8<-- "refs.md"
