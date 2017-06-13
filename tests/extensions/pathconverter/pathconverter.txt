@@ -10,3 +10,4 @@
 [windows network path](//network/path/file.html)
 [strange link](strange://odd/link/file.html)
 [strange link 2](strange://www.odd.com/link/file.html)
+<mail@mail.com>
