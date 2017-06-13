@@ -11,17 +11,24 @@ import copy
 import re
 
 PY3 = sys.version_info >= (3, 0)
+PY34 = sys.version_info >= (3, 4)
 
 if PY3:
     uchr = chr  # noqa
     from urllib.request import pathname2url, url2pathname  # noqa
     from urllib.parse import urlparse, urlunparse, quote  # noqa
     from html.parser import HTMLParser  # noqa
+    if PY34:
+        import html  # noqa
+        html_unescape = html.unescape  # noqa
+    else:
+        html_unescape = HTMLParser().unescape  # noqa
 else:
     uchr = unichr  # noqa
     from urllib import pathname2url, url2pathname, quote  # noqa
     from urlparse import urlparse, urlunparse  # noqa
     from HTMLParser import HTMLParser  # noqa
+    html_unescape = HTMLParser().unescape  # noqa
 
 RE_WIN_DRIVE_LETTER = re.compile(r"^[A-Za-z]$")
 RE_WIN_DRIVE_PATH = re.compile(r"^[A-Za-z]:(?:\\.*)?$")
@@ -136,7 +143,7 @@ def parse_url(url):
 
     is_url = False
     is_absolute = False
-    scheme, netloc, path, params, query, fragment = urlparse(url)
+    scheme, netloc, path, params, query, fragment = urlparse(html_unescape(url))
 
     if RE_URL.match(scheme):
         # Clearly a url
