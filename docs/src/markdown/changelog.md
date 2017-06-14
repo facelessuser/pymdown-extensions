@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.5.0
+
+Released June 13, 2017
+
+- **NEW**: Add new slugs to preserve case (https://github.com/facelessuser/pymdown-extensions/pull/103).
+- **NEW**: Add new GFM specific slug (both percent encoded and normal) that only lowercases ASCII chars just like GFM does (https://github.com/facelessuser/pymdown-extensions/issues/101).
+- **FIX**: PathConverter should not try and convert obscured email address (with HTML entities) (https://github.com/facelessuser/pymdown-extensions/issues/100).
+- **FIX**: Don't normalize Unicode in slugs with `NFKD`, use `NFC` instead (https://github.com/facelessuser/pymdown-extensions/issues/98).
+- **FIX**: Don't let EscapeAll escape CriticMarkup placeholders.  EscapeAll will no longer escape `STX` and `ETX`; they will just pass through (https://github.com/facelessuser/pymdown-extensions/issues/95).
+- **FIX**: Replace CriticMarkup placeholders after replacing raw HTML placeholders (https://github.com/facelessuser/pymdown-extensions/issues/95).
+
 ## 3.4.0
 
 Released June 1, 2017
@@ -156,3 +167,5 @@ Released Dec 10, 2015
 Released Dec 8, 2015
 
 - **NEW**: Initial release.
+
+--8<-- "refs.md"
