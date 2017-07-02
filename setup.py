@@ -53,7 +53,7 @@ setup(
     description='Extension pack for Python Markdown.',
     long_description=LONG_DESC,
     author='Isaac Muse',
-    author_email='Isaac.Muse [at] gmail.com',
+    author_email='Isaac.Muse@gmail.com',
     url='https://github.com/facelessuser/pymdown-extensions',
     packages=find_packages(exclude=['tools', 'tests']),
     install_requires=[
