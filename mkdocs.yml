@@ -99,6 +99,6 @@ extra:
     - type: github
       link: https://github.com/facelessuser
 extra_css:
-  - extra-6068b97e47.css
+  - extra-9b4c72abee.css
 extra_javascript:
   - extra-2aceccb07f.js

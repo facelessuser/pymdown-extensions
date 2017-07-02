@@ -53,7 +53,100 @@
   }
 }
 
-/* Material styled details */
+/* Special styled details */
+.md-typeset {
+  details {
+    &.note,
+    &.seealso,
+    &.summary,
+    &.tldr,
+    &.tip,
+    &.hint,
+    &.important,
+    &.success,
+    &.check,
+    &.done,
+    &.warning,
+    &.caution,
+    &.attention,
+    &.failure,
+    &.fail,
+    &.missing,
+    &.danger,
+    &.error,
+    &.bug,
+    &.quote,
+    &.cite,
+    &.settings {
+      @include z-depth(2);
+
+      position: relative;
+      margin-bottom: 1rem;
+      padding: 1.2rem;
+      overflow: hidden;
+
+      *:nth-child(2) {
+        margin-top: 0;
+      }
+
+      *:last-child {
+        margin-bottom: 0;
+      }
+
+      > summary {
+        position: relative;
+        margin: -1.2rem -1.2rem 0 -1.2rem;
+        padding: 0.5rem 3.2rem;
+        outline: none;
+
+        &::after,
+        &::before {
+          position: absolute;
+          top: 0.7rem;
+          font-family: "Material Icons";
+          font-size: 2rem;
+          font-style: normal;
+          font-variant: normal;
+          font-weight: 400;
+          line-height: 1;
+          text-transform: none;
+          white-space: nowrap;
+          speak: none;
+          word-wrap: normal;
+          direction: ltr;
+        }
+
+        &::after {
+          right: 1rem;
+        }
+
+        &::before {
+          left: 1rem;
+        }
+      }
+
+      &[open] {
+        > summary {
+          margin-bottom: 1.2rem;
+
+          &::after {
+            content: "keyboard_arrow_down";
+          }
+        }
+      }
+
+      &:not([open]) {
+        padding-bottom: 0;
+
+        > summary::after {
+          content: "keyboard_arrow_left";
+        }
+      }
+    }
+  }
+}
+
+/* Material colors and icons */
 .md-typeset {
   details {
     @each $names, $appearance in (
@@ -72,71 +165,12 @@
       $icon: nth($appearance, 2);
 
       &.#{nth($names, 1)} {
-        @include z-depth(2);
-
-        position: relative;
-        margin-bottom: 1rem;
-        padding: 1.2rem;
-        overflow: hidden;
-
-        *:nth-child(2) {
-          margin-top: 0;
-        }
-
-        *:last-child {
-          margin-bottom: 0;
-        }
-
         > summary {
-          position: relative;
-          margin: -1.2rem -1.2rem 0 -1.2rem;
-          padding: 0.5rem 3.2rem;
-          outline: none;
           background-color: $tint;
           color: $clr-white;
 
-          &::after,
           &::before {
-            position: absolute;
-            top: 0.7rem;
-            font-family: "Material Icons";
-            font-size: 2rem;
-            font-style: normal;
-            font-variant: normal;
-            font-weight: 400;
-            line-height: 1;
-            text-transform: none;
-            white-space: nowrap;
-            speak: none;
-            word-wrap: normal;
-            direction: ltr;
-          }
-
-          &::after {
-            right: 1rem;
-          }
-
-          &::before {
-            left: 1rem;
             content: $icon;
-          }
-        }
-
-        &[open] {
-          > summary {
-            margin-bottom: 1.2rem;
-
-            &::after {
-              content: "keyboard_arrow_down";
-            }
-          }
-        }
-
-        &:not([open]) {
-          padding-bottom: 0;
-
-          > summary::after {
-            content: "keyboard_arrow_left";
           }
         }
       }
