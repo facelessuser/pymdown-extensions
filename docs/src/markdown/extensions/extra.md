@@ -17,11 +17,11 @@ Extension                          | Name
 ---------------------------------- |--------
 [BetterEm](./betterem.md)          | `pymdownx.betterem`
 [SuperFences](./superfences.md)    | `pymdownx.superfences`
-[Footnotes](footnotes)             | `markdown.extensions.footnotes`
-[Attribute Lists](attr-list)       | `markdown.extensions.attr_list`
-[Definition Lists](def-list)       | `markdown.extensions.def_list`
-[Tables](tables)                   | `markdown.extensions.tables`
-[Abbreviations](abbreviations)     | `markdown.extensions.abbr`
+[Footnotes][footnotes]             | `markdown.extensions.footnotes`
+[Attribute Lists][attr-list]       | `markdown.extensions.attr_list`
+[Definition Lists][def-list]       | `markdown.extensions.def_list`
+[Tables][tables]                   | `markdown.extensions.tables`
+[Abbreviations][abbreviations]     | `markdown.extensions.abbr`
 [ExtraRawHTML](./extrarawhtml.md)  | `pymdownx.extrarawhtml`
 
 ## Options
