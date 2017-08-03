@@ -12,7 +12,7 @@ matrix:
     env: TOXENV=py35-unittests
   - python: 3.6
     env: TOXENV=py36-unittests
-  - python: 2.7
+  - python: 3.6
     env: TOXENV=lint
   - python: 2.7
     env: TOXENV=documents

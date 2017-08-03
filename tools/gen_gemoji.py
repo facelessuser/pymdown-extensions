@@ -122,12 +122,12 @@ def parse(repo, tag):
                     break
 
     with open(os.path.join(current_dir, 'tags', repo, repo, 'LICENSE'), 'r') as f:
-        license = f.read()
+        license_content = f.read()
 
     # Write out essential info
     with open('../pymdownx/gemoji_db.py', 'w') as f:
         # Dump emoji db to file and strip out PY2 unicode specifiers
-        f.write('"""Gemoji autogen.\n\nGenerated from gemoji source. Do not edit by hand.\n\n%s"""\n' % license)
+        f.write('"""Gemoji autogen.\n\nGenerated from gemoji source. Do not edit by hand.\n\n%s"""\n' % license_content)
         f.write('from __future__ import unicode_literals\n')
         f.write('version = "%s"\n' % tag)
         f.write('name = "gemoji"\n')

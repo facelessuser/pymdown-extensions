@@ -69,8 +69,8 @@ def parse(repo, tag):
 
     for asset in os.listdir(asset_path):
         if os.path.isfile(os.path.join(asset_path, asset)) and asset.endswith('.ai'):
-            unicode = asset[:-3]
-            unicode_alt = unicode
+            unicode_value = asset[:-3]
+            unicode_alt = unicode_value
             codes = unicode_alt.split('-')
             diff = 4 - len(codes[0])
             if diff > 0:
@@ -85,15 +85,15 @@ def parse(repo, tag):
                 ):
                     shortnames.add(k)
                     emoji_db[k] = copy.copy(v)
-                    emoji_db[k]['unicode'] = unicode
-                    if 'unicode_alt' in emoji_db[k] and unicode_alt == unicode:
+                    emoji_db[k]['unicode'] = unicode_value
+                    if 'unicode_alt' in emoji_db[k] and unicode_alt == unicode_value:
                         del emoji_db[k]['unicode_alt']
-                    elif unicode_alt != unicode:
+                    elif unicode_alt != unicode_value:
                         emoji_db[k]['unicode_alt'] = unicode_alt
                     found = True
                     break
             if not found:
-                unsupported.append(unicode)
+                unsupported.append(unicode_value)
 
     for k, v in emojis.aliases.items():
         if v in emoji_db:
