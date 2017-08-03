@@ -66,7 +66,6 @@ const config = {
     enabled: args.compress,
     jsOptions: {
       warnings: false,
-      screw_ie8: true,    // eslint-disable-line camelcase
       conditionals: true,
       unused: true,
       comparisons: true,
@@ -317,7 +316,7 @@ gulp.task("build", gsync.sync([
   // Build Mkdocs
   config.buildmkdocs ? "mkdocs:build" : false
 ].filter(t => t),
-  "group:build"))
+"group:build"))
 
 gulp.task("serve", gsync.sync([
   // Clean
@@ -328,7 +327,7 @@ gulp.task("serve", gsync.sync([
   // Watch for changes and start mkdocs
   ["scss:watch", "js:watch", "mkdocs:watch", "mkdocs:serve"]
 ].filter(t => t),
-  "group:serve"))
+"group:serve"))
 
 gulp.task("clean", [
   "scss:clean",
