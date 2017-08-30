@@ -6,8 +6,17 @@
 
         more content
 
+---
+
 ??? optional-class "details with class"
     content
+
+---
+
+??? only-class
+    content
+
+---
 
 ??? "details end test"
     content

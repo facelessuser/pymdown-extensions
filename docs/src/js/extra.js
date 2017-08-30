@@ -1,5 +1,4 @@
 import uml from "./uml"
-import details from "./details"
 
 (() => {
   const onReady = function(fn) {
@@ -15,7 +14,6 @@ import details from "./details"
   }
 
   onReady(() => {
-    details()
 
     if (typeof flowchart !== "undefined") {
       uml(flowchart, "uml-flowchart")

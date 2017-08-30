@@ -32,7 +32,7 @@ import re
 class DetailsProcessor(BlockProcessor):
     """Details block processor."""
 
-    START = re.compile(r'(?:^|\n)\?{3}(\+)? ?([\w\-]+)?(?: +"(.*?)") *(?:\n|$)')
+    START = re.compile(r'(?:^|\n)\?{3}(\+)? ?(?:([\w\-]+)?(?: +"(.*?)")|([\w\-]+)) *(?:\n|$)')
 
     def test(self, parent, block):
         """Test block."""
@@ -63,9 +63,14 @@ class DetailsProcessor(BlockProcessor):
         if m:
             state = m.group(1)
             is_open = state is not None
-            class_name = m.group(2)
-            class_name = '' if class_name is None else class_name.lower()
-            title = m.group(3)
+
+            if m.group(4):
+                class_name = m.group(4).lower()
+                title = class_name.capitalize()
+            else:
+                class_name = m.group(2)
+                class_name = '' if class_name is None else class_name.lower()
+                title = m.group(3)
 
             div = etree.SubElement(parent, 'details', ({'open': 'open'} if is_open else {}))
             if class_name:
