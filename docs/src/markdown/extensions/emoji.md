@@ -69,7 +69,7 @@ By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  
     ```python
     >>> import pymdownx.emoji1_db as e1db
     >>> e1db.version
-    'v3.1.1'
+    'v3.1.2'
     ```
 
 !!! warning "EmojiOne Update"
