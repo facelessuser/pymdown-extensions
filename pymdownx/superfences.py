@@ -35,8 +35,6 @@ from markdown.preprocessors import Preprocessor
 from markdown.blockprocessors import CodeBlockProcessor
 from markdown import util as md_util
 from . import highlight as hl
-from .util import PymdownxDeprecationWarning
-import warnings
 import re
 
 NESTED_FENCE_START = r'''(?x)
@@ -158,11 +156,6 @@ class SuperFencesCodeExtension(Extension):
                 'Specify custom fences. Default: See documentation.'
             ],
             'highlight_code': [True, "Highlight code - Default: True"],
-            'use_codehilite_settings': [
-                None,
-                "Deprecatd and does nothing. "
-                "- Default: None"
-            ],
             'css_class': [
                 '',
                 "Set class name for wrapper element. The default of CodeHilite or Highlight will be used"
@@ -199,15 +192,6 @@ class SuperFencesCodeExtension(Extension):
                 "formatter": None
             }
         )
-
-        if config.get('use_codehilite_settings'):  # pragma: no coverage
-            warnings.warn(
-                "'use_codehilite_settings' is deprecated and does nothing.\n"
-                "\nCodeHilite settings will only be used if CodeHilite is configured\n"
-                " and 'pymdownx.highlight' is not configured.\n"
-                "Please discontinue use of this setting as it will be removed in the future.",
-                PymdownxDeprecationWarning
-            )
 
         # UML blocks
         custom_fences = config.get('custom_fences', [])

@@ -27,8 +27,6 @@ from markdown import Extension
 from markdown.inlinepatterns import Pattern
 from markdown import util as md_util
 from . import util
-from .util import PymdownxDeprecationWarning
-import warnings
 
 RE_EMOJI = r'(:[+\-\w]+:)'
 SUPPORTED_INDEXES = ('emojione', 'gemoji', 'twemoji')
@@ -372,20 +370,6 @@ class EmojiExtension(Extension):
         """Add support for emojis."""
 
         config = self.getConfigs()
-
-        # To avoid having to do a major release, we'll support the old format until the next major release.
-        if util.get_arg_count(config['emoji_generator']) == LEGACY_ARG_COUNT:  # pragma: no coverage
-            legacy_gen = config['emoji_generator']
-            config['emoji_generator'] = (
-                lambda index, shortname, alias, uc, alt, title, category, options, md, legacy_gen=legacy_gen:
-                    legacy_gen(index, shortname, alias, uc, alt, title, options, md)
-            )
-            warnings.warn(
-                "'Emoji generators' now take 9 arguments. The 8 argument format is \n"
-                "\ndeprecated and will be removed in the future. Please update your\n"
-                "\ngenerator to the new format to avoid complications in the future.",
-                PymdownxDeprecationWarning
-            )
 
         util.escape_chars(md, [':'])
 
