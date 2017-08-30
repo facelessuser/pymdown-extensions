@@ -2,6 +2,8 @@
 
 ## 4.0.0
 
+Aug 29, 2017
+
 - **NEW**: Details extension will now derive a title from the class if only a class is provided (https://github.com/facelessuser/pymdown-extensions/issues/107).
 - **NEW**: Remove deprecated legacy emoji generator format.
 - **NEW**: Remove deprecated `use_codehilite_settings`.
