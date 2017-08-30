@@ -15,7 +15,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 GITHUB_API_HEADER = 'application/vnd.github.v3+json'
 GITHUB_API = 'https://api.github.com'
 GEMOJI = 'github/gemoji'
-EMOJIONE = 'Ranks/emojione'
+EMOJIONE = 'emojione/emojione'
 TWEMOJI = 'twitter/twemoji'
 
 PY3 = sys.version_info >= (3, 0) and sys.version_info[0:2] < (4, 0)
@@ -122,6 +122,7 @@ def select_tag(repo, no_download):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog='gen_emoji', description='Generate emoji db files.')
     # Flag arguments
+    parser.add_argument('--tag', default=None, help="Tag to use.")
     parser.add_argument('--gemoji', action='store_true', default=False, help="Get Gemoji.")
     parser.add_argument('--emojione', action='store_true', default=False, help="Get Emojione.")
     parser.add_argument('--twemoji', action='store_true', default=False, help="Get Twemoji.")
@@ -129,11 +130,20 @@ if __name__ == "__main__":
     args = parser.parse_args()
     os.chdir(current_dir)
     if args.gemoji:
-        tag = select_tag(GEMOJI, args.no_download)
+        if args.tag is None:
+            tag = select_tag(GEMOJI, args.no_download)
+        else:
+            tag = args.tag
         gen_gemoji.parse(GEMOJI.replace('/', '-'), tag)
     if args.emojione:
-        tag = select_tag(EMOJIONE, args.no_download)
+        if args.tag is None:
+            tag = select_tag(EMOJIONE, args.no_download)
+        else:
+            tag = args.tag
         gen_emoji1.parse(EMOJIONE.replace('/', '-'), tag)
     if args.twemoji:
-        tag = select_tag(TWEMOJI, args.no_download)
+        if args.tag is None:
+            tag = select_tag(TWEMOJI, args.no_download)
+        else:
+            tag = args.tag
         gen_twemoji.parse(TWEMOJI.replace('/', '-'), tag)

@@ -69,11 +69,11 @@ By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  
     ```python
     >>> import pymdownx.emoji1_db as e1db
     >>> e1db.version
-    'v3.0.3'
+    'v3.1.1'
     ```
 
 !!! warning "EmojiOne Update"
-    Recent EmojiOne 3.0 release dropped fee SVG support. PNG support can still be obtained via CDNs, or in the case of EmojiOne Awesome, by [downloading][emojione-awesome-css] the CSS.
+    Recent EmojiOne 3.0 release dropped fee SVG support. PNG support can still be obtained via CDNs.
 
     While EmojiOne only offers 3.0 vector graphics to paying customers now, you can still get SVG support. By default, we still use 2.2.7 SVGs, but you won't get images for emoji added after 2.2.7. If using SVG sprites, you will have to [download][emojione-sprites-svg] the sprite SVG.
 
@@ -106,7 +106,7 @@ By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  
     ```python
     >>> import pymdownx.twemoji_db as twdb
     >>> twdb.version
-    'v2.2.5'
+    'v2.5.0'
     ```
 
 ## Default Emoji Generators
@@ -117,10 +117,10 @@ You can select a generator to use by passing in one of the functions below via t
 
 `pymdownx.emoji.to_png`
 : 
-    This is a general purpose generator which provides EmojiOne, GitHub, and Twemoji CDN path(s) out of the box. Depending on the index you've chosen, you the appropriate CDN will be provided.  If this ever gets out of date, a new CDN can be passed in via `image_path` and/or `non_standard_image_path`. EmojiOne actually has multiple PNGs sizes of 32, 64, and 128, but the default CDN path is the one for size 64: `https://cdn.jsdelivr.net/emojione/assets/3.0/png/64/`. You can change it for a larger or smaller PNG size by updating the size in the URL and passing the new URL in through `image_path`. The PNG output form is as follows:
+    This is a general purpose generator which provides EmojiOne, GitHub, and Twemoji CDN path(s) out of the box. Depending on the index you've chosen, you the appropriate CDN will be provided.  If this ever gets out of date, a new CDN can be passed in via `image_path` and/or `non_standard_image_path`. EmojiOne actually has multiple PNGs sizes of 32, 64, and 128, but the default CDN path is the one for size 64: `https://cdn.jsdelivr.net/emojione/assets/3.1/png/64/`. You can change it for a larger or smaller PNG size by updating the size in the URL and passing the new URL in through `image_path`. The PNG output form is as follows:
 
     ```html
-    <img alt="😄" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/3.0/png/64/1f604.png" title=":smile:" />
+    <img alt="😄" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/3.1/png/64/1f604.png" title=":smile:" />
     ```
 
     **Generator Specific Options**
@@ -152,7 +152,7 @@ You can select a generator to use by passing in one of the functions below via t
 : 
     This generator was written to support PNG sprite output for EmojiOne.  It is expected that this will be used in conjunction with the the official EmojiOne CSS.  You can include the CSS from the CDN in your document. The CSS comes in three sizes: 32, 64, 128. Make sure to set the correct size in the options to generate the appropriate classes.
 
-    Example CDN for the 3.0 version with 64px PNGs: `https://cdn.jsdelivr.net/emojione/assets/3.0/sprites/emojione-sprite-64.min.css`.
+    Example CDN for the 3.1 version with 64px PNGs: `https://cdn.jsdelivr.net/emojione/assets/3.1/sprites/emojione-sprite-64.min.css`.
 
     `to_png_sprite` outputs the emoji as a span in the form below.  The CSS will apply the appropriate mapping in the sprite PNG to the background image of the span.
 
@@ -185,7 +185,7 @@ You can select a generator to use by passing in one of the functions below via t
 
 `pymdownx.emoji.to_awesome`
 : 
-    This generator is another EmojiOne specific output called EmojiOne Awesome. It aims to give a font-awesome like interface for EmojiOne.  There isn't currently a CDN link that could be found, but you can include the CSS in your project locally by [downloading it][emojione-awesome-css] from their repository.  The output format is:
+    This generator is another EmojiOne specific output called EmojiOne Awesome. It aims to give a font-awesome like interface for EmojiOne.  The `emojione-awesome` CDN currently follows this format: https://cdn.jsdelivr.net/npm/emojione@3.1.2/extras/css/emojione-awesome.css, so update accordingly.  The output format is:
 
     ```html
     <i class="e1a-smile"></i>

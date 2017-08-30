@@ -7,5 +7,5 @@ ab :ab:<br>
 abc :abc:<br>
 abcd :abcd:<br>
 accept :accept:<br>
-aerial_tramway :aerial_tramway:<br>
-airplane :airplane:<br>
+adult :adult:<br>
+adult_tone1 :adult_tone1:<br>
