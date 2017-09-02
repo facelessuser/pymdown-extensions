@@ -34,9 +34,9 @@ Details will be output in the format below. The content will always be encapsula
 
 Unfortunately, due to how new `#!html <details><summary>` tags are, not all browsers support them yet.  In order to have them supported in all new browsers, you will have to provide some fallback styling and JavaScript until all browsers catch up.
 
-This extension's goal is not to provide you with the perfect polyfill (you can design or find you own), but a basic example is provided to show the basic polyfill that is being used in this document. There are more elaborate polyfills available that support jQuery, add keyboard events, or even support back to IE8. Feel free to modify what is here or find a solution that fits your needs. 
+This extension's goal is not to provide you with the perfect polyfill (you can design or find you own), but a basic example is provided to show the basic polyfill that is being used in this document. There are more elaborate polyfills available that support jQuery, add keyboard events, or even support back to IE8. Feel free to modify what is here or find a solution that fits your needs.
 
-??? hint "Polyfill Example"
+??? settings "Polyfill Example"
     Here is the basic CSS that that can be used.  It is meant to provide a consistent CSS in both browsers that support `#!html <details><summary>` tags and those that do not.
 
     ```css

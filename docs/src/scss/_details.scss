@@ -1,0 +1,11 @@
+/* Material colors and icons */
+.md-typeset {
+  details {
+    @extend .admonition;
+
+    // Title
+    summary {
+      @extend .admonition-title;
+    }
+  }
+}

@@ -91,6 +91,8 @@ markdown_extensions:
   - pymdownx.details:
 
 extra:
+  logo:
+    icon: description
   palette:
     primary: blue
     accent: blue

@@ -76,7 +76,7 @@ Classes     | Description
 `task-list-control`   | This is attached to the `label` tag and represents the control object.
 `task-list-indicator` | This is attached to the `span` directly following the input and is used to style the visual indicator.
 
-??? hint "Example CSS"
+??? settings "Example CSS"
 
     In order to style these we mainly remove the list type style and adjust the margins to align with normal list styles.
 

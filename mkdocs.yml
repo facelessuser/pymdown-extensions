@@ -91,6 +91,8 @@ markdown_extensions:
   - pymdownx.details:
 
 extra:
+  logo:
+    icon: description
   palette:
     primary: blue
     accent: blue
@@ -101,6 +103,6 @@ extra:
     - type: github
       link: https://github.com/facelessuser
 extra_css:
-  - extra-e5d0f8ebfa.css
+  - extra.css
 extra_javascript:
-  - extra-4596f9831a.js
+  - extra.js

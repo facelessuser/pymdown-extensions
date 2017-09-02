@@ -1,0 +1,29 @@
+/* Material colors and icons */
+.md-typeset {
+  .admonition {
+    @each $names, $appearance in (
+      settings: $clr-purple-a700 "settings"
+    ) {
+      $tint: nth($appearance, 1);
+      $icon: nth($appearance, 2);
+
+      // Define base class
+      &%#{nth($names, 1)},
+      &.#{nth($names, 1)} {
+        border-left: 0.4rem solid $tint;
+
+        // Title
+        .admonition-title {
+          border-bottom: 0.1rem solid transparentize($tint, 0.9);
+          background-color: transparentize($tint, 0.9);
+
+          // Icon
+          &::before {
+            color: $tint;
+            content: $icon;
+          }
+        }
+      }
+    }
+  }
+}
