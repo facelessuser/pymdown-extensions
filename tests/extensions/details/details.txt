@@ -31,3 +31,13 @@
 ??? "details end test"
     content
 other content
+
+---
+
+???relaxed  spacing   "Title"
+    content
+
+---
+
+???relaxed  spacing no  title
+    content
