@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.1.0
+
+- **NEW**: Details can now have multiple classes defined.
+
 ## 4.0.0
 
 Aug 29, 2017
