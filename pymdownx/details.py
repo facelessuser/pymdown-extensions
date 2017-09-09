@@ -32,7 +32,9 @@ import re
 class DetailsProcessor(BlockProcessor):
     """Details block processor."""
 
-    START = re.compile(r'(?:^|\n)\?{3}(\+)? ?(?:([\w\-]+)?(?: +"(.*?)")|([\w\-]+)) *(?:\n|$)')
+    START = re.compile(
+        r'(?:^|\n)\?{3}(\+)? ?(?:([\w\-]+(?: [\w\-]+)*?)?(?: +"(.*?)")|([\w\-]+(?: [\w\-]+)*?)) *(?:\n|$)'
+    )
 
     def test(self, parent, block):
         """Test block."""
@@ -66,7 +68,7 @@ class DetailsProcessor(BlockProcessor):
 
             if m.group(4):
                 class_name = m.group(4).lower()
-                title = class_name.capitalize()
+                title = class_name.split(' ', 1)[0].capitalize()
             else:
                 class_name = m.group(2)
                 class_name = '' if class_name is None else class_name.lower()

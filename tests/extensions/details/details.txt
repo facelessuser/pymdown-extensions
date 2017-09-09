@@ -13,7 +13,17 @@
 
 ---
 
+??? multiple optional-class "details with multiple class"
+    content
+
+---
+
 ??? only-class
+    content
+
+---
+
+??? multiple classes
     content
 
 ---

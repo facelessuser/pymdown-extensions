@@ -6,14 +6,19 @@ Details is an extension that creates collapsible elements that hide their conten
 
 ## Syntax
 
-Details must contain a blank line before they start. Use `???` to start a details block or `???+` if you want to start a details block whose default state is 'open'.  Follow the start of the block with an optional class and the summary contained in quotes. Content is placed below the header and must be indented.
+Details must contain a blank line before they start. Use `???` to start a details block or `???+` if you want to start a details block whose default state is 'open'.  Follow the start of the block with an optional class or classes (separated with spaces) and the summary contained in quotes. Content is placed below the header and must be indented.
 
 ```
 ??? optional-class "Summary"
     Here's some content.
 ```
 
-It is possible to provide only a class.  If this is done, the title will be derived from the class.
+```
+??? multiple optional-class "Summary"
+    Here's some content.
+```
+
+It is possible to provide only a class or classes.  If this is done, the title will be derived from the *first* class.
 
 ```
 ??? class
@@ -22,6 +27,15 @@ It is possible to provide only a class.  If this is done, the title will be deri
 
 ```html
 <details class="class"><summary>Class</summary><p>Content.</p></details>
+```
+
+```
+??? multiple classes
+   Content.
+```
+
+```html
+<details class="multiple classes"><summary>Multiple</summary><p>Content.</p></details>
 ```
 
 Details will be output in the format below. The content will always be encapsulated in tags of some kind.
