@@ -33,8 +33,9 @@ class DetailsProcessor(BlockProcessor):
     """Details block processor."""
 
     START = re.compile(
-        r'(?:^|\n)\?{3}(\+)? ?(?:([\w\-]+(?: [\w\-]+)*?)?(?: +"(.*?)")|([\w\-]+(?: [\w\-]+)*?)) *(?:\n|$)'
+        r'(?:^|\n)\?{3}(\+)? ?(?:([\w\-]+(?: +[\w\-]+)*?)?(?: +"(.*?)")|([\w\-]+(?: +[\w\-]+)*?)) *(?:\n|$)'
     )
+    COMPRESS_SPACES = re.compile(r' {2,}')
 
     def test(self, parent, block):
         """Test block."""
@@ -67,11 +68,11 @@ class DetailsProcessor(BlockProcessor):
             is_open = state is not None
 
             if m.group(4):
-                class_name = m.group(4).lower()
-                title = class_name.split(' ', 1)[0].capitalize()
+                class_name = self.COMPRESS_SPACES.sub(' ', m.group(4).lower())
+                title = class_name.split(' ')[0].capitalize()
             else:
-                class_name = m.group(2)
-                class_name = '' if class_name is None else class_name.lower()
+                classes = m.group(2)
+                class_name = '' if classes is None else self.COMPRESS_SPACES.sub(' ', classes.lower())
                 title = m.group(3)
 
             div = etree.SubElement(parent, 'details', ({'open': 'open'} if is_open else {}))
