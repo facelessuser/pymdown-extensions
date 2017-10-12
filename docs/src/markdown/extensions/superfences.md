@@ -55,6 +55,18 @@ SuperFences provides 4 features:
         ```
     ````
 
+8. Fenced blocks should be separated from other blocks by an empty line.
+
+    ````
+    Paragraph.
+
+    ```
+    a fenced block
+    ```
+
+    Another paragraph.
+    ````
+
 ## Code Highlighting
 
 Assuming Pygments is installed, code highlighting will be handled by [Pygments][pygments] by default. If Pygments is not installed, or disabled, code blocks will be created using HTML5 style tags for a JavaScript syntax highlighter: `#!html <pre class="highlight"><code class="language-mylanguage"></code></pre>`. If you disable `highlight_code`, specified languages will be ignored, and the content will be wrapped in a simple `pre` and `code` tags with no classes.
