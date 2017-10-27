@@ -24,7 +24,7 @@ matrix:
   - python: 3.6
     env: TOXENV=lint
   - python: 2.7
-    node_js: 5
+    node_js: 6
     env: TOXENV=documents
 
 addons:
