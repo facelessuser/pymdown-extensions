@@ -2,8 +2,6 @@ sudo: false
 
 language: python
 
-node_js: 5
-
 # Cache dependencies
 cache:
   pip: true
@@ -26,6 +24,7 @@ matrix:
   - python: 3.6
     env: TOXENV=lint
   - python: 2.7
+    node_js: 5
     env: TOXENV=documents
 
 addons:
@@ -35,15 +34,15 @@ addons:
     - aspell-en
 
 before_install:
-- if [ $TOXENV = documents ]; npm install -g yarn@v1.2.1
+- if [ $TOXENV = documents ]; npm install -g yarn@v1.2.1;
 
 install:
-- if [ $TOXENV = documents ]; yarn install
+- if [ $TOXENV = documents ]; yarn install;
 - pip install tox
 - pip install codecov
 
 script:
-- if [ $TOXENV = documents ]; yarn build
+- if [ $TOXENV = documents ]; yarn build;
 - tox
 
 after_success:
