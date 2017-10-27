@@ -1,5 +1,14 @@
 sudo: false
+
 language: python
+
+# Cache dependencies
+cache:
+  pip: true
+  yarn: true
+  directories:
+    - node_modules
+
 matrix:
   include:
   - python: 2.7
@@ -15,19 +24,30 @@ matrix:
   - python: 3.6
     env: TOXENV=lint
   - python: 2.7
+    node_js: 6
     env: TOXENV=documents
+
 addons:
   apt:
     packages:
     - aspell
     - aspell-en
+
+before_install:
+- if [ $TOXENV = documents ]; then npm install -g yarn@v1.2.1; fi
+
 install:
+- if [ $TOXENV = documents ]; then yarn install; fi
 - pip install tox
 - pip install codecov
+
 script:
+- if [ $TOXENV = documents ]; then yarn build; fi
 - tox
+
 after_success:
 - codecov
+
 deploy:
   - provider: pypi
     user: facelessuser
