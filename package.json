@@ -50,6 +50,6 @@
     "stylelint-scss": "^2.0.0",
     "webpack": "^3.4.1",
     "webpack-stream": "^3.2.0",
-    "yargs": "^8.0.2"
+    "yargs": "^10.0.3"
   }
 }
