@@ -34,15 +34,15 @@ addons:
     - aspell-en
 
 before_install:
-- if [ $TOXENV = documents ]; npm install -g yarn@v1.2.1;
+- if [ $TOXENV = documents ]; then npm install -g yarn@v1.2.1; fi
 
 install:
-- if [ $TOXENV = documents ]; yarn install;
+- if [ $TOXENV = documents ]; then yarn install; fi
 - pip install tox
 - pip install codecov
 
 script:
-- if [ $TOXENV = documents ]; yarn build;
+- if [ $TOXENV = documents ]; then yarn build; fi
 - tox
 
 after_success:
