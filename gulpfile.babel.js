@@ -166,8 +166,8 @@ gulp.task("js:build:rollup", () => {
           "plugins": ["external-helpers"]
         })
       ],
-      "moduleName": "extra",
-      "entry": `${config.folders.src}/js/extra.js`
+      "name": "extra",
+      "input": `${config.folders.src}/js/extra.js`
     }))
     .pipe(gulpif(config.compress.enabled, uglify({compress: config.compress.jsOptions})))
     .pipe(gulpif(config.sourcemaps, sourcemaps.write(config.folders.theme)))
