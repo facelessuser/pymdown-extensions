@@ -2409,14 +2409,14 @@ gulp-rev@^8.0.0:
     through2 "^2.0.0"
     vinyl-file "^3.0.0"
 
-gulp-rollup@^2.14.0:
-  version "2.14.0"
-  resolved "https://registry.yarnpkg.com/gulp-rollup/-/gulp-rollup-2.14.0.tgz#0244b4884ed14e957626628b960488cfc5b04b18"
+gulp-rollup@^2.15.0:
+  version "2.15.0"
+  resolved "https://registry.yarnpkg.com/gulp-rollup/-/gulp-rollup-2.15.0.tgz#e69d871feda25acaaeb5721e06375c55c87b2d90"
   dependencies:
     buffer-from "^0.1.0"
     gulp-util "^3.0.6"
     readable-stream "^2.1.4"
-    rollup "^0.45.1"
+    rollup "^0.49.3"
     rollup-plugin-hypothetical "^1.1.0"
 
 gulp-sass@^3.1.0:
@@ -4739,11 +4739,9 @@ rollup-pluginutils@^1.5.0:
     estree-walker "^0.2.1"
     minimatch "^3.0.2"
 
-rollup@^0.45.1:
-  version "0.45.2"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.45.2.tgz#63a284c2b31234656f24e9e9717fabb6a7f0fa43"
-  dependencies:
-    source-map-support "^0.4.0"
+rollup@^0.49.3:
+  version "0.49.3"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.49.3.tgz#4cce32643dd8cf2154c69ff0e43470067db0adbf"
 
 run-async@^2.2.0:
   version "2.3.0"
@@ -4871,12 +4869,6 @@ source-map-resolve@^0.3.0:
     resolve-url "~0.2.1"
     source-map-url "~0.3.0"
     urix "~0.1.0"
-
-source-map-support@^0.4.0:
-  version "0.4.15"
-  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.4.15.tgz#03202df65c06d2bd8c7ec2362a193056fef8d3b1"
-  dependencies:
-    source-map "^0.5.6"
 
 source-map-support@^0.4.15:
   version "0.4.18"
