@@ -2413,14 +2413,14 @@ gulp-rev-replace@^0.4.3:
     gulp-util "^3.0.7"
     through2 "^2.0.0"
 
-gulp-rev@^8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/gulp-rev/-/gulp-rev-8.0.0.tgz#02f162fef9ac28e3e03c8f30db0e78b34833abd2"
+gulp-rev@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/gulp-rev/-/gulp-rev-8.1.0.tgz#9123f9a3f935008c66a8c768e71f8b87fb0e0cd7"
   dependencies:
     gulp-util "^3.0.0"
     modify-filename "^1.1.0"
     rev-hash "^2.0.0"
-    rev-path "^1.0.0"
+    rev-path "^2.0.0"
     sort-keys "^2.0.0"
     through2 "^2.0.0"
     vinyl-file "^3.0.0"
@@ -4889,9 +4889,9 @@ rev-hash@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/rev-hash/-/rev-hash-2.0.0.tgz#7720a236ed0c258df3e64bec03ec048b05b924c4"
 
-rev-path@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/rev-path/-/rev-path-1.0.0.tgz#d4ccb436ac3370c4607175ce88eafc5c65c5d653"
+rev-path@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/rev-path/-/rev-path-2.0.0.tgz#10c978e824d76ce7dd1f7e66e88f50f5e71a0a6a"
   dependencies:
     modify-filename "^1.0.0"
 
