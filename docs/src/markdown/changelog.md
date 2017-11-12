@@ -1,6 +1,18 @@
 # Changelog
 
+## 4.2.0
+
+Nov X, 2017
+
+- **NEW**: MagicLink can now auto-link a GitHub like shorthand for repository references.
+- **NEW**: MagicLink now renders pull request links with a slightly different output from issues.
+- **NEW**: Deprecate `base_repo_url` in MagicLink in favor of the new `provider`, `user`, and `repo`.
+- **NEW**: MagicLink now adds classes to repository links.
+- **NEW**: MagicLink now adds title to repository links.
+
 ## 4.1.0
+
+Oct 11, 2017
 
 - **NEW**: Details can now have multiple classes defined.
 
@@ -8,7 +20,7 @@
 
 Aug 29, 2017
 
-- **NEW**: Details extension will now derive a title from the class if only a class is provided (https://github.com/facelessuser/pymdown-extensions/issues/107).
+- **NEW**: Details extension will now derive a title from the class if only a class is provided (#107).
 - **NEW**: Remove deprecated legacy emoji generator format.
 - **NEW**: Remove deprecated `use_codehilite_settings`.
 - **NEW**: Remove deprecated `spoilers` extension redirect.
@@ -18,12 +30,12 @@ Aug 29, 2017
 
 Jun 13, 2017
 
-- **NEW**: Add new slugs to preserve case (https://github.com/facelessuser/pymdown-extensions/pull/103).
-- **NEW**: Add new GFM specific slug (both percent encoded and normal) that only lowercases ASCII chars just like GFM does (https://github.com/facelessuser/pymdown-extensions/issues/101).
-- **FIX**: PathConverter should not try and convert obscured email address (with HTML entities) (https://github.com/facelessuser/pymdown-extensions/issues/100).
-- **FIX**: Don't normalize Unicode in slugs with `NFKD`, use `NFC` instead (https://github.com/facelessuser/pymdown-extensions/issues/98).
-- **FIX**: Don't let EscapeAll escape CriticMarkup placeholders.  EscapeAll will no longer escape `STX` and `ETX`; they will just pass through (https://github.com/facelessuser/pymdown-extensions/issues/95).
-- **FIX**: Replace CriticMarkup placeholders after replacing raw HTML placeholders (https://github.com/facelessuser/pymdown-extensions/issues/95).
+- **NEW**: Add new slugs to preserve case (!103).
+- **NEW**: Add new GFM specific slug (both percent encoded and normal) that only lowercases ASCII chars just like GFM does (#101).
+- **FIX**: PathConverter should not try and convert obscured email address (with HTML entities) (#100).
+- **FIX**: Don't normalize Unicode in slugs with `NFKD`, use `NFC` instead (#98).
+- **FIX**: Don't let EscapeAll escape CriticMarkup placeholders.  EscapeAll will no longer escape `STX` and `ETX`; they will just pass through (#95).
+- **FIX**: Replace CriticMarkup placeholders after replacing raw HTML placeholders (#95).
 
 ## 3.4.0
 
@@ -37,8 +49,8 @@ Jun 1, 2017
 
 May 26, 2017
 
-- **NEW**: Added support for pull request link shortening in MagicLink (https://github.com/facelessuser/pymdown-extensions/pull/88).
-- **NEW**: Added new Spoilers extension (https://github.com/facelessuser/pymdown-extensions/issues/85).
+- **NEW**: Added support for pull request link shortening in MagicLink (!88).
+- **NEW**: Added new Spoilers extension (#85).
 
 ## 3.2.1
 
@@ -67,15 +79,15 @@ May 7, 2017
 Apr 16, 2017
 
 - **NEW**: Added Keys extension.
-- **NEW**: Generalized custom fences (https://github.com/facelessuser/pymdown-extensions/issues/60). `flow` and `sequence` fence are now just custom fences and can be disabled simply by overwriting the `custom_fences` setting.
-- **NEW**: Remove deprecated `no_nl2br` in GitHub extension (https://github.com/facelessuser/pymdown-extensions/issues/24).
-- **NEW**: Remove deprecated HeaderAnchor extension (https://github.com/facelessuser/pymdown-extensions/issues/24).
-- **NEW**: Remove deprecated PyMdown extension (https://github.com/facelessuser/pymdown-extensions/issues/24).
-- **NEW**: Remove deprecated GitHubEmoji extension (https://github.com/facelessuser/pymdown-extensions/issues/24).
-- **NEW**: Remove deprecated `nested` option in SuperFences (https://github.com/facelessuser/pymdown-extensions/issues/24).
-- **NEW**: Wrapper extensions (such as GitHub and Extra) can now allow setting the included sub extensions settings (https://github.com/facelessuser/pymdown-extensions/issues/61). Workaround settings that directly set specific extensions settings has been removed.
+- **NEW**: Generalized custom fences (#60). `flow` and `sequence` fence are now just custom fences and can be disabled simply by overwriting the `custom_fences` setting.
+- **NEW**: Remove deprecated `no_nl2br` in GitHub extension (#24).
+- **NEW**: Remove deprecated HeaderAnchor extension (#24).
+- **NEW**: Remove deprecated PyMdown extension (#24).
+- **NEW**: Remove deprecated GitHubEmoji extension (#24).
+- **NEW**: Remove deprecated `nested` option in SuperFences (#24).
+- **NEW**: Wrapper extensions (such as GitHub and Extra) can now allow setting the included sub extensions settings (#61). Workaround settings that directly set specific extensions settings has been removed.
 - **NEW**: Deprecated `use_codehilite_settings` in SuperFences and InlineHilite and now does nothing.  The settings will be removed in the future.  If `pymdownx.highlight` is used, it's settings will be used instead of CodeHilite. Eventually, the both SuperFences and InlineHilite will require `pymdownx.highlight` to be used and will have CodeHilite support stripped.
-- **FIX**: Fix MathJax CDN references and usage in documentation.  MathJax CDN is shutting down and must now use Cloudflare CDN (https://github.com/facelessuser/pymdown-extensions/issues/63).
+- **FIX**: Fix MathJax CDN references and usage in documentation.  MathJax CDN is shutting down and must now use Cloudflare CDN (#63).
 
 ## 2.0.0
 
@@ -89,13 +101,13 @@ Feb 12, 2017
 
 Jan 27, 2017
 
-- **NEW**: MagicLink special repository link shortener for GitHub, GitLab, and Bitbucket (https://github.com/facelessuser/pymdown-extensions/issues/49).
-- **FIX**: GitHub asterisk emphasis should never have had smart enabled for it (https://github.com/facelessuser/pymdown-extensions/issues/50).
+- **NEW**: MagicLink special repository link shortener for GitHub, GitLab, and Bitbucket (#49).
+- **FIX**: GitHub asterisk emphasis should never have had smart enabled for it (#50).
 - **FIX**: MagicLink fix for compatibility with wrapped symbols like `~`, `*` etc. which are commonly used.
 - **FIX**: MagicLink encodes emails like Python Markdown does for consistency.
-- **FIX**: MagicLink doesn't allow Unicode for email and does allow Unicode in a URL (https://github.com/facelessuser/pymdown-extensions/issues/53).
-- **FIX**: InlineHilite now returns a proper `etree` element so that the `attr_list` extension and function properly with it (https://github.com/facelessuser/pymdown-extensions/issues/48).
-- **FIX**: InlineHilite will no longer break if Pygments is not installed (https://github.com/facelessuser/pymdown-extensions/commit/478b410a2199d55f3e70b452516511d3810c61a5).
+- **FIX**: MagicLink doesn't allow Unicode for email and does allow Unicode in a URL (#53).
+- **FIX**: InlineHilite now returns a proper `etree` element so that the `attr_list` extension and function properly with it (#48).
+- **FIX**: InlineHilite will no longer break if Pygments is not installed (478b410a2199d55f3e70b452516511d3810c61a5).
 
 ## 1.7.0
 

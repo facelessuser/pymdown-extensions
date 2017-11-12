@@ -1,0 +1,31 @@
+Mention @some-bodies_name
+
+Commit some-bodies_name/some_repository@3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+
+Issue some-bodies_name/some_repository#33
+
+Pull request some-bodies_name/some_repository!33
+
+Commit 3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+
+Issue #33
+
+Pull request !33
+
+Commit MyRepo@3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+
+Issue MyRepo#33
+
+Pull MyRepo!33
+
+No issue \#33
+
+No pull request \!33
+
+No mention \@some-bodies_name
+
+No issue some-bodies_name/some_repository\#33
+
+No pull request some-bodies_name/some_repository\!33
+
+No commit @3f6b07a8eeaa9d606115758d90f55fec565d4e2a
