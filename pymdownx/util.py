@@ -176,5 +176,5 @@ def parse_url(url):
     return (scheme, netloc, path, params, query, fragment, is_url, is_absolute)
 
 
-class PymdownxDeprecationWarning(UserWarning):  # pragma: no coverage
+class PymdownxDeprecationWarning(UserWarning):  # pragma: no cover
     """Deprecation warning for Pymdownx that is not hidden."""

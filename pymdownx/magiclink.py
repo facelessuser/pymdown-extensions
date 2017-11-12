@@ -128,11 +128,8 @@ class MagicShortenerTreeprocessor(Treeprocessor):
     def shorten(self, link, label, my_repo, link_type, user_repo, value, url, hash_size):
         """Shorten url."""
 
-        class_name = link.get('class', '')
-        if class_name:  # pragma: no coverage
-            class_name = class_name.split(' ')
-        else:
-            class_name = []
+        class_attr = link.get('class', '')
+        class_name = class_attr.split(' ') if class_attr else []
 
         if 'magiclink' not in class_name:
             class_name.append('magiclink')
@@ -514,7 +511,7 @@ class MagiclinkExtension(Extension):
 
         # Setup base URL
         base_url = config.get('base_repo_url', '')
-        if base_url:  # pragma: no coverage
+        if base_url:  # pragma: no cover
             warnings.warn(
                 "'base_repo_url' is deprecated and will be removed in the future.\n"
                 "\nIt is strongly encouraged to migrate to using `provider`, 'user`\n"
