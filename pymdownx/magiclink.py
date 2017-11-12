@@ -129,7 +129,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         """Shorten url."""
 
         class_attr = link.get('class', '')
-        class_name = class_name.split(' ') if class_attr else []
+        class_name = class_attr.split(' ') if class_attr else []
 
         if 'magiclink' not in class_name:
             class_name.append('magiclink')
