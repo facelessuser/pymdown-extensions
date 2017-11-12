@@ -4,6 +4,11 @@
 Test comment
  -->
 
+<script type="text/javascript">
+var a = "<!-- Test comment -->";
+// <span class="some classes">
+</script>
+
 <span id="some-id">
     <span class="some classes">
         <span style="color: #333; background-color: #888;"></span>

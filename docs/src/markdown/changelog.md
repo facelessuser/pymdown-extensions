@@ -2,13 +2,14 @@
 
 ## 4.2.0
 
-Nov X, 2017
+Nov 12, 2017
 
-- **NEW**: MagicLink can now auto-link a GitHub like shorthand for repository references.
-- **NEW**: MagicLink now renders pull request links with a slightly different output from issues.
-- **NEW**: Deprecate `base_repo_url` in MagicLink in favor of the new `provider`, `user`, and `repo`.
-- **NEW**: MagicLink now adds classes to repository links.
-- **NEW**: MagicLink now adds title to repository links.
+- **NEW**: MagicLink can now auto-link a GitHub like shorthand for repository references (!139).
+- **NEW**: MagicLink now renders pull request links with a slightly different output from issues (!139).
+- **NEW**: Deprecate `base_repo_url` in MagicLink in favor of the new `provider`, `user`, and `repo` (!139).
+- **NEW**: MagicLink now adds classes to repository links (!139).
+- **NEW**: MagicLink now adds title to repository links (!139).
+- **FIX**: PlainHTML should not strip tags that are part of JavaScript code (!140).
 
 ## 4.1.0
 

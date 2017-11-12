@@ -33,9 +33,10 @@ RE_TAG_HTML = re.compile(
     r'''(?x)
     (?:
         (?P<comments>(\r?\n?\s*)<!--[\s\S]*?-->(\s*)(?=\r?\n)|<!--[\s\S]*?-->)|
-        (?P<open><[\w\:\.\-]+)
+        (?P<open><(?P<name>[\w\:\.\-]+))
         (?P<attr>(?:\s+[\w\-:]+(?:\s*=\s*(?:"[^"]*"|'[^']*'))?)*)
-        (?P<close>\s*(?:\/?)>)
+        (?P<close>\s*(?P<self_close>/)?>)|
+        (?P<close_tag></(?P<close_name>[\w\:\.\-]+)>)
     )
     ''',
     re.DOTALL | re.UNICODE
@@ -51,23 +52,31 @@ TAG_BAD_ATTR = r'''(?x)
 '''
 
 
-def repl(m, attributes, strip_comments):
-    """Replace comments and unwanted attributes."""
-
-    if m.group('comments'):
-        tag = '' if strip_comments else m.group('comments')
-    else:
-        tag = m.group('open')
-        if attributes is not None:
-            tag += attributes.sub('', m.group('attr'))
-        else:
-            tag += m.group('attr')
-        tag += m.group('close')
-    return tag
-
-
 class PlainHtmlPostprocessor(Postprocessor):
     """Post processor to strip out unwanted content."""
+
+    def repl(self, m):
+        """Replace comments and unwanted attributes."""
+
+        if m.group('comments'):
+            tag = '' if self.strip_comments and not self.script else m.group('comments')
+        else:
+            if self.script:
+                if m.group('close_tag') and m.group('close_name') == 'script':
+                    self.script = False
+                tag = m.group(0)
+            elif m.group('close_tag'):
+                tag = m.group(0)
+            else:
+                tag = m.group('open')
+                if self.re_attributes is not None:
+                    tag += self.re_attributes.sub('', m.group('attr'))
+                else:
+                    tag += m.group('attr')
+                tag += m.group('close')
+                if m.group('name') == "script" and m.group('self_close') is None:
+                    self.script = True
+        return tag
 
     def run(self, text):
         """Strip out ids and classes for a simplified HTML output."""
@@ -77,18 +86,16 @@ class PlainHtmlPostprocessor(Postprocessor):
         if self.config.get('strip_js_on_attributes', True):
             attributes.append(r'on[\w]+')
         if len(attributes):
-            re_attributes = re.compile(
+            self.re_attributes = re.compile(
                 TAG_BAD_ATTR % '|'.join(attributes),
                 re.DOTALL | re.UNICODE
             )
         else:
-            re_attributes = None
-        strip_comments = self.config.get('strip_comments', True)
+            self.re_attributes = None
+        self.strip_comments = self.config.get('strip_comments', True)
 
-        return RE_TAG_HTML.sub(
-            lambda m: repl(m, re_attributes, strip_comments),
-            text
-        )
+        self.script = False
+        return RE_TAG_HTML.sub(self.repl, text)
 
 
 class PlainHtmlExtension(Extension):
