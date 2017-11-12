@@ -129,7 +129,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         """Shorten url."""
 
         class_name = link.get('class', '')
-        if class_name:
+        if class_name:  # pragma: no coverage
             class_name = class_name.split(' ')
         else:
             class_name = []
