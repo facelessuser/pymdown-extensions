@@ -41,6 +41,13 @@ magiclink (gitlab):
       user: facelessuser
       repo: pymdown-extensions
 
+magiclink (legacy):
+  extensions:
+    pymdownx.magiclink:
+      hide_protocol: false
+      repo_url_shortener: true
+      base_repo_url: https://github.com/facelessuser/pymdown-extensions
+
 magiclink (shorthand):
   extensions:
     pymdownx.magiclink:

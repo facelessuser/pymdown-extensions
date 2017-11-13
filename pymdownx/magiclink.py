@@ -32,6 +32,7 @@ from . import util
 from .util import PymdownxDeprecationWarning
 import warnings
 import re
+import os
 
 MAGIC_LINK = 1
 MAGIC_AUTO_LINK = 2
@@ -203,12 +204,12 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         """Check if link is from our specified user and repo."""
 
         # See if these links are from the specified repo.
-        return match.group(provider + '_base') + '/' == self.base
+        return self.base and match.group(provider + '_base') + '/' == self.base
 
     def is_my_user(self, provider, match):
         """Check if link is from our specified user."""
 
-        return match.group(provider + '_base').startswith(self.base_user)
+        return self.base_user and match.group(provider + '_base').startswith(self.base_user)
 
     def run(self, root):
         """Shorten popular git repository links."""
@@ -494,8 +495,13 @@ class MagiclinkExtension(Extension):
         provider_info = self.get_provider_info(config.get('provider', 'github'))
 
         # Setup base URL
-        base_url = config.get('base_repo_url', '')
-        base_user_url = None
+        base_url = config.get('base_repo_url', '').rstrip('/')
+        base_user_url = os.path.dirname(base_url)
+        if base_url:
+            base_url += "/"
+        if base_user_url:
+            base_user_url += "/"
+
         if base_url:  # pragma: no cover
             warnings.warn(
                 "'base_repo_url' is deprecated and will be removed in the future.\n"
