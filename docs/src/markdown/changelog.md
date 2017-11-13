@@ -9,6 +9,8 @@ Nov 12, 2017
 - **NEW**: Deprecate `base_repo_url` in MagicLink in favor of the new `provider`, `user`, and `repo` (!139).
 - **NEW**: MagicLink now adds classes to repository links (!139).
 - **NEW**: MagicLink now adds title to repository links (!139).
+- **NEW**: MagicLink no longer styles repository commit hashes as code (!142).
+- **FIX**: MagicLink repository link outputs now better reflect default user and repository context (!142).
 - **FIX**: PlainHTML should not strip tags that are part of JavaScript code (!140).
 
 ## 4.1.0

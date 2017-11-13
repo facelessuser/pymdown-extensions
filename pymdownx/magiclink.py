@@ -35,7 +35,6 @@ import re
 
 MAGIC_LINK = 1
 MAGIC_AUTO_LINK = 2
-MAGIC_REPO_COMMIT_LINK = 3
 
 RE_MAIL = r'''(?xi)
 (
@@ -113,11 +112,11 @@ class MagicShortenerTreeprocessor(Treeprocessor):
     PULL = 1
     COMMIT = 2
 
-    def __init__(self, md, base_url, post_process_commit_only=False):
+    def __init__(self, md, base_url, base_user_url):
         """Initialize."""
 
-        self.base = base_url.rstrip('/')
-        self.skip = post_process_commit_only
+        self.base = base_url
+        self.base_user = base_user_url
         self.labels = {
             "github": "GitHub",
             "bitbucket": "Bitbucket",
@@ -125,7 +124,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         }
         Treeprocessor.__init__(self, md)
 
-    def shorten(self, link, label, my_repo, link_type, user_repo, value, url, hash_size):
+    def shorten(self, link, label, my_repo, my_user, link_type, user_repo, value, url, hash_size):
         """Shorten url."""
 
         class_attr = link.get('class', '')
@@ -135,23 +134,18 @@ class MagicShortenerTreeprocessor(Treeprocessor):
             class_name.append('magiclink')
 
         if link_type is self.COMMIT:
-            # user/repo@`hash`
-            text = '' if my_repo else user_repo + '@'
+            # user/repo@hash
+            if my_repo:
+                text = value[0:hash_size]
+            elif my_user:
+                text = '%s@%s' % (user_repo.split('/')[1], value[0:hash_size])
+            else:
+                text = '%s@%s' % (user_repo, value[0:hash_size])
             link.text = md_util.AtomicString(text)
 
-            # Need a root with an element for things to get processed.
-            # Send the `value` through and retreive it from the p element.
-            # Pop it off and add it to the link.
-            el = md_util.etree.Element('div')
-            p = md_util.etree.SubElement(el, 'p')
-            p.text = '`%s`' % value[0:hash_size]
-            el = self.markdown.treeprocessors['inline'].run(el)
-            p = list(el)[0]
-            for child in list(p):
-                link.append(child)
-                p.remove(child)
             if 'magiclink-commit' not in class_name:
                 class_name.append('magiclink-commit')
+
             link.set('title', '%s Commit: %s@%s' % (label, user_repo.rstrip('/'), value[0:hash_size]))
         else:
             # user/repo#(issue|pull)
@@ -165,29 +159,15 @@ class MagicShortenerTreeprocessor(Treeprocessor):
                 separator = '!'
                 if 'magiclink-pull' not in class_name:
                     class_name.append('magiclink-pull')
-            link.text = md_util.AtomicString((separator + value) if my_repo else (user_repo + separator + value))
+            if my_repo:
+                text = separator + value
+            elif my_user:
+                text = user_repo.split('/')[1] + separator + value
+            else:
+                text = user_repo + separator + value
+            link.text = md_util.AtomicString(text)
             link.set('title', '%s %s: %s%s%s' % (label, issue_type, user_repo.rstrip('/'), separator, value))
         link.set('class', ' '.join(class_name))
-
-    def post_process_commit(self, link, text):
-        """Post process a commit link."""
-
-        parts = text.split('@')
-        if len(parts) == 2:
-            link.text = md_util.AtomicString(parts[0] + '@')
-            commit = parts[1]
-        else:
-            link.text = md_util.AtomicString('')
-            commit = parts[0]
-
-        el = md_util.etree.Element('div')
-        p = md_util.etree.SubElement(el, 'p')
-        p.text = '`%s`' % commit
-        el = self.markdown.treeprocessors['inline'].run(el)
-        p = list(el)[0]
-        for child in list(p):
-            link.append(child)
-            p.remove(child)
 
     def get_provider(self, match):
         """Get the provider and hash size."""
@@ -220,13 +200,15 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         return value, link_type
 
     def is_my_repo(self, provider, match):
-        """Check if link is from our specified repo."""
+        """Check if link is from our specified user and repo."""
 
         # See if these links are from the specified repo.
-        my_repo = match.group(provider + '_base') == self.base
-        if not my_repo and self.hide_protocol:
-            my_repo = match.group(provider + '_base') == ('https://' + self.base)
-        return my_repo
+        return match.group(provider + '_base') + '/' == self.base
+
+    def is_my_user(self, provider, match):
+        """Check if link is from our specified user."""
+
+        return match.group(provider + '_base').startswith(self.base_user)
 
     def run(self, root):
         """Shorten popular git repository links."""
@@ -247,16 +229,14 @@ class MagicShortenerTreeprocessor(Treeprocessor):
             if has_child or not text:  # pragma: no cover
                 continue
 
-            if is_magic and int(is_magic) == MAGIC_REPO_COMMIT_LINK:
-                self.post_process_commit(link, text)
-
             # Make sure the text matches the href.  If needed, add back protocol to be sure.
             # Not all links will pass through MagicLink, so we try both with and without protocol.
-            elif not self.skip and (text == href or (is_magic and self.hide_protocol and ('https://' + text) == href)):
+            if (text == href or (is_magic and self.hide_protocol and ('https://' + text) == href)):
                 m = RE_REPO_LINK.match(href)
                 if m:
                     provider, hash_size = self.get_provider(m)
                     my_repo = self.is_my_repo(provider, m)
+                    my_user = my_repo or self.is_my_user(provider, m)
                     value, link_type = self.get_type(provider, m)
 
                     # All right, everything set, let's shorten.
@@ -264,6 +244,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
                         link,
                         self.labels[provider],
                         my_repo,
+                        my_user,
                         link_type,
                         m.group(provider + '_user_repo'),
                         value,
@@ -373,7 +354,9 @@ class MagiclinkShorthandPattern(Pattern):
         else:
             if not user:
                 user = self.user
-            text = '%s/%s%s%s' % (user, repo, issue_type, issue_value)
+                text = '%s%s%s' % (repo, issue_type, issue_value)
+            else:
+                text = '%s/%s%s%s' % (user, repo, issue_type, issue_value)
 
         el.set('href', issue_link % (user, repo, issue_value))
         el.text = md_util.AtomicString(text)
@@ -400,10 +383,11 @@ class MagiclinkShorthandPattern(Pattern):
         else:
             if not user:
                 user = self.user
-            text = '%s/%s@%s' % (user, repo, commit[0:self.provider_info['hash_size']])
+                text = '%s@%s' % (repo, commit[0:self.provider_info['hash_size']])
+            else:
+                text = '%s/%s@%s' % (user, repo, commit[0:self.provider_info['hash_size']])
 
         el.set('href', self.provider_info['commit'] % (user, repo, commit))
-        el.set('magiclink', md_util.text_type(MAGIC_REPO_COMMIT_LINK))
         el.text = md_util.AtomicString(text)
         el.set('class', 'magiclink magiclink-commit')
         el.set(
@@ -511,6 +495,7 @@ class MagiclinkExtension(Extension):
 
         # Setup base URL
         base_url = config.get('base_repo_url', '')
+        base_user_url = None
         if base_url:  # pragma: no cover
             warnings.warn(
                 "'base_repo_url' is deprecated and will be removed in the future.\n"
@@ -520,7 +505,8 @@ class MagiclinkExtension(Extension):
             )
         if config.get('repo_url_shorthand', False) or not base_url:
             if user and repo:
-                base_url = '%s/%s/%s' % (provider_info['url'], user, repo)
+                base_url = '%s/%s/%s/' % (provider_info['url'], user, repo)
+                base_user_url = '%s/%s/' % (provider_info['url'], user)
 
         # Setup general link patterns
         auto_link_pattern = MagiclinkAutoPattern(RE_AUTOLINK, md)
@@ -540,9 +526,9 @@ class MagiclinkExtension(Extension):
             shorthand = MagiclinkShorthandPattern(RE_SHORTHANDS, md, user, repo, provider_info)
             md.inlinePatterns.add("magic-repo-shorthand", shorthand, "<entity")
 
-        # Setup link post processor for shortening and formatting links
-        if config.get('repo_url_shortener', False) or config.get('repo_url_shorthand', False):
-            shortener = MagicShortenerTreeprocessor(md, base_url, not config.get('repo_url_shortener', False))
+        # Setup link post processor for shortening repository links
+        if config.get('repo_url_shortener', False):
+            shortener = MagicShortenerTreeprocessor(md, base_url, base_user_url)
             shortener.config = config
             md.treeprocessors.add("magic-repo-shortener", shortener, "<prettify")
 
