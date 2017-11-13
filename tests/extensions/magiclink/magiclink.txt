@@ -247,3 +247,5 @@ https://bitbucket.org/fake-user/fake-repository/pull-requests/539/optional-title
 https://bitbucket.org/fake-user/fake-repository/commits/commit/594b25d53798c30735da5a9be19c06cc94052a16
 
 <https://github.com/facelessuser/pymdown-extensions/issues/49>
+
+https://github.com/facelessuser/fake-repository/issues/87
