@@ -2,7 +2,7 @@
 
 ## 4.2.0
 
-Nov 12, 2017
+Nov 13, 2017
 
 - **NEW**: MagicLink can now auto-link a GitHub like shorthand for repository references (!139).
 - **NEW**: MagicLink now renders pull request links with a slightly different output from issues (!139).
