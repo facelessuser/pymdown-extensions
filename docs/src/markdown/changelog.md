@@ -5,9 +5,9 @@
 Nov X, 2017
 
 - **NEW**: Shorthand format for referencing non-default provider commits, issues, pulls, and mentions (!147).
-- **NEW**: Shorthand format for mentioning a repo via `@user/repo`.
-- **NEW**: Add repository provider specific classes.
-- **NEW**: Make repository labels configurable.
+- **NEW**: Shorthand format for mentioning a repo via `@user/repo` (!149).
+- **NEW**: Add repository provider specific classes (!149).
+- **NEW**: Make repository labels configurable (!149).
 - **FIX**: Adjust pattern boundaries auto-links.
 
 ## 4.2.0
