@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.3.0
+
+Nov X, 2017
+
+- **NEW**: Shorthand format for referencing non-default provider commits, issues, pulls, and mentions (!147).
+
 ## 4.2.0
 
 Nov 13, 2017

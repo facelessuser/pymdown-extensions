@@ -30,34 +30,46 @@ To use this feature you must configure MagicLink for your desired provider and s
 
 All shorthand links will be relative to your `provider`, and they do not currently work cross provider. So if your `provider` is set to `github`, all mentions will be generated for GitHub.  If a user name or repository is not specified, the link will use the values found in `user` and `repo` from the extension's [options](#options).
 
-Mentions of other users are performed with the following syntax: `@{user}`.
-
-Issues and pull requests are specified with `#{num}` and `!{num}` respectively. To specify an issue for a non-default repository under the default user, prefix the repository: `{repo}#{num}`. And to specify a repository under a non-default user, prefix both the user and repository: `{user}/{repo}#{num}`.
-
-Commit shorthand syntax is simply the 40 character commit hash value: `{hash}`. And much like issues and pull requests, you can denote a repository under the default user with `{repo}@{hash}` and a repository under a non-default user with `{user}/{repo}@{hash}`.
-
-For reference, the examples below assume the default provider, user, and repository as `github`, `facelessuer`, and `pymdown-extensions` respectively.
-
-Shorthand                                            | Output
----------------------------------------------------- | -----------
-`@user`                                              | @user                                              |Mention another user under your `provider`.
-`#1`                                                 | #1                                                 |Issue for the default `user` and `repo`.
-`repo#1`                                             | repo#1                                             |Issue for a specific project under the default `user`.
-`user/repo#1`                                        | user/repo#1                                        |Issue for a specific user and repository.
-`!2`                                                 | !2                                                 |Pull request for the default `user` and `repo`.
-`repo!2`                                             | repo!2                                             |Pull request for a specific project under the default `user`.
-`user/repo!2`                                        | user/repo!2                                        |Pull request for a specific user and repository.
-`181c06d1f11fa29961b334e90606ed1f1ec7a7cc`           | 181c06d1f11fa29961b334e90606ed1f1ec7a7cc           |Commit for the default `user` and `repo`.
-`repo@181c06d1f11fa29961b334e90606ed1f1ec7a7cc`      | repo@181c06d1f11fa29961b334e90606ed1f1ec7a7cc      |Commit for a specific project under the default `user`.
-`user/repo@181c06d1f11fa29961b334e90606ed1f1ec7a7cc` | user/repo@181c06d1f11fa29961b334e90606ed1f1ec7a7cc |Commit for a specific user and repository.
-
 !!! warning
-    Links are not be verified, so make sure you are specifying valid issues, repositories, and users as they will be auto-linked even if they are not valid.
+    Links are not verified, so make sure you are specifying valid issues, repositories, and users as they will be auto-linked even if they are not valid.
+
+### Mentions
+
+Mentions of other users are performed with the following syntax: `@{user}`. To reference an external provider, use the format `@{provider}:{user}`
+
+### Issues and Pull Requests
+
+Issues and pull requests are specified with `#{num}` and `!{num}` respectively. To specify an issue for a non-default repository under the default user, prefix the repository: `{repo}#{num}`. And to specify a repository under a non-default user, prefix both the user and repository: `{user}/{repo}#{num}`. And to reference an external provider, use the format `{provider}:{user}/{repo}#{num}`.
 
 !!! note "Note"
     GitHub actually gives pull requests and issues unique values while GitLab and Bitbucket can have pulls with the same ID as an issue. So with GitHub, you can use `#{num}` format for both issues and pulls, and GitHub will redirect you to the appropriate issue or pull.
 
     GitLab and Bitbucket **must** specify pulls different from issues, hence the `!13` format. Though GitHub doesn't *need* to use the pull format, you can if you like. This format was actually borrowed from GitLab.
+
+### Commits
+
+Commit shorthand syntax is simply the 40 character commit hash value: `{hash}`. And much like issues and pull requests, you can denote a repository under the default user with `{repo}@{hash}` and a repository under a non-default user with `{user}/{repo}@{hash}`. Lastly, to reference an external provider, use the format `{provider}:{user}/{repo}@{hash}`.
+
+### Shorthand Examples
+
+The examples below assume the default provider, user, and repository as `github`, `facelessuer`, and `pymdown-extensions` respectively.
+
+Shorthand                                                      | Output
+-------------------------------------------------------------- | -----------
+`@user`                                                        | @user
+`@gitlab:user`                                                 | @gitlab:user
+`#1`                                                           | #1
+`repo#1`                                                       | repo#1
+`bitbucket:user/repo#1`                                        | bitbucket:user/repo#1
+`user/repo#1`                                                  | user/repo#1
+`!2`                                                           | !2
+`repo!2`                                                       | repo!2
+`user/repo!2`                                                  | user/repo!2
+`gitlab:user/repo!1`                                           | gitlab:user/repo!1
+`181c06d1f11fa29961b334e90606ed1f1ec7a7cc`                     | 181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+`repo@181c06d1f11fa29961b334e90606ed1f1ec7a7cc`                | repo@181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+`user/repo@181c06d1f11fa29961b334e90606ed1f1ec7a7cc`           | user/repo@181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+`bitbucket:user/repo@181c06d1f11fa29961b334e90606ed1f1ec7a7cc` | bitbucket:user/repo@181c06d1f11fa29961b334e90606ed1f1ec7a7cc
 
 ## Repository Link Shortener
 
