@@ -2,6 +2,10 @@ sudo: false
 
 language: python
 
+# Limit git depth to speed up build
+git:
+  depth: 3
+
 # Cache dependencies
 cache:
   yarn: true
