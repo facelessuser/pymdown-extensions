@@ -80,6 +80,7 @@ blockquotes
 bool
 cmd
 customizable
+dict
 docstrings
 emoji
 escaper

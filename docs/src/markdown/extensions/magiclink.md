@@ -37,6 +37,8 @@ All shorthand links will be relative to your `provider`, and they do not current
 
 Mentions of other users are performed with the following syntax: `@{user}`. To reference an external provider, use the format `@{provider}:{user}`
 
+You can also mention repositories.  This feature is actually inspired by the GitHub only @Python-Markdown/github-links which performs *similar* auto-linking.  The syntax to auto-link a repository with mentioning is very similar to auto-linking a user, except you append the repository to the user name like so: `@{user}/{repo}`. If specifying a non-default provider, the form would look like: `@{provider}:{user}/{repo}`. The output for repository mentions omits the `@` symbol, and will even omit the user if it is a repository under the default user.
+
 ### Issues and Pull Requests
 
 Issues and pull requests are specified with `#{num}` and `!{num}` respectively. To specify an issue for a non-default repository under the default user, prefix the repository: `{repo}#{num}`. And to specify a repository under a non-default user, prefix both the user and repository: `{user}/{repo}#{num}`. And to reference an external provider, use the format `{provider}:{user}/{repo}#{num}`.
@@ -58,6 +60,9 @@ Shorthand                                                      | Output
 -------------------------------------------------------------- | -----------
 `@user`                                                        | @user
 `@gitlab:user`                                                 | @gitlab:user
+`@user/repo`                                                   | @user/repo
+`@facelessuser/pymdown-extensions`                             | @facelessuser/pymdown-extensions
+`@gitlab:user/repo`                                            | @gitlab:user/repo
 `#1`                                                           | #1
 `repo#1`                                                       | repo#1
 `bitbucket:user/repo#1`                                        | bitbucket:user/repo#1
@@ -112,6 +117,7 @@ Option                          | Type   | Default         | Description
 `provider`                      | string | `#!py 'github'` | The provider to use for repository shorthand syntax and shortener.
 `user`                          | string | `#!py ''`       | The default user name to use for the specified provider.
 `repo`                          | string | `#!py ''`       | The default repository name to use for the specified user and provider.
+`labels`                        | dict   | `#!py {}`       | A dictionary for overriding repository link title text. See [labels](#labels) for more info.
 ~~`base_repo_url`~~             | string | `#!py ''`       | The base repository URL for repository links.
 
 !!! warning "Deprecation 4.2.0"
@@ -119,15 +125,44 @@ Option                          | Type   | Default         | Description
 
     `base_repo_url` will be removed sometime in the future.  Please migrate to using `provider`, `user`, and `repo`.
 
+### Labels
+
+By default, MagicLink provides titles for the repository links in the form `{provider} {label}: {info}`. You can specify different values for `{label}` by configuring the `labels` option.
+
+The default values are:
+
+```js
+    {
+        'commit': 'Commit',
+        'issue': 'Issue',
+        'pull': 'Pull Request',
+        'mention': 'User',
+        'repository': 'Repository'
+    }
+```
+
+You only need to provide the options you wish to override. Assume we wanted to adopt the GitLab terminology for pull requests, we could simply set `labels` to:
+
+```js
+    {
+        'pull': 'Merge Request'
+    }
+```
+
 ## CSS
 
-For normal links, no classes are added to the anchor tags. For repository links `magiclink` will be added as a class.  And an additional class will be added for each repository link type.
+For normal links, no classes are added to the anchor tags. For repository links `magiclink` will be added as a class.  With an additional class will be added for each repository link type and provider.
 
 Link\ Type | Class
----------- | -----
-Mentions   | `magiclink magiclink-mention`
-Issues     | `magiclink magiclink-issue`
-Pulls      | `magiclink magiclink-pull`
-Commits    | `magiclink magiclink-commit`
+-------------------- | -----
+General              | `magiclink`
+Mentions             | `magiclink-mention`
+Repository\ Mentions | `magiclink-repository`
+Issues               | `magiclink-issue`
+Pulls                | `magiclink-pull`
+Commits              | `magiclink-commit`
+GitHub               | `magiclink-github`
+Bitbucket            | `magiclink-bitbucket`
+GitLab               | `magiclink-gitlab`
 
 --8<-- "refs.md"
