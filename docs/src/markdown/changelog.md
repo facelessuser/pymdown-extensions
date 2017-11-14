@@ -4,7 +4,7 @@
 
 Nov X, 2017
 
-- **NEW**: Shorthand format for referencing non-default provider commits, issues, pulls, and mentions (!145).
+- **NEW**: Shorthand format for referencing non-default provider commits, issues, pulls, and mentions (!147).
 
 ## 4.2.0
 
