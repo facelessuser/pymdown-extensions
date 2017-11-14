@@ -1,5 +1,9 @@
 Mention @some-bodies_name
 
+Mention @some-bodies_name/some_repository
+
+Mention @facelessuser/some_repository
+
 Commit some-bodies_name/some_repository@3f6b07a8eeaa9d606115758d90f55fec565d4e2a
 
 Issue some-bodies_name/some_repository#33
@@ -19,6 +23,10 @@ Issue MyRepo#33
 Pull MyRepo!33
 
 Mention @gitlab:some-user
+
+Mention @gitlab:some-bodies_name/some_repository
+
+Mention @bitbucket:facelessuser/some_repository
 
 Issue github:some-user/some-repo#1
 

@@ -59,10 +59,11 @@ RE_LINK = r'''(?xi)
 
 RE_SHORTHANDS = r'''(?x)
 (?:
-    (?P<mention>(?<![a-zA-Z])@[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?) |
+    (?P<mention>(?<![a-zA-Z])@[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?)
+        (?:/(?P<mention_repo>[-._a-zA-Z\d]{0,99}[a-zA-Z\d]))? |
     (?<![@/])(?:
         (?:(?P<user>\b[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?)/)?
-        (?P<repo>\b[-._a-zA-Z\d]{1,100})
+        (?P<repo>\b[-._a-zA-Z\d]{0,99}[a-zA-Z\d])
     )
     (?:(?P<issue>(?:\#|!)[1-9][0-9]*)|(?P<commit>@[a-f\d]{40})) |
     (?:(?<![a-zA-Z])(?P<issue2>(?:\#|!)[1-9][0-9]*)|(?P<commit2>(?<![@/])\b[a-f\d]{40}))
@@ -71,11 +72,12 @@ RE_SHORTHANDS = r'''(?x)
 
 RE_EXTERNAL_SHORTHANDS = r'''(?x)
 (?:
-    (?P<mention>(?<![a-zA-Z])@(?P<provider>(?:github|gitlab|bitbucket):)[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?) |
+    (?P<mention>(?<![a-zA-Z])@(?P<provider>(?:github|gitlab|bitbucket):)[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?)
+        (?:/(?P<mention_repo>[-._a-zA-Z\d]{,99}[a-zA-Z\d]))? |
     (?<![@/])(?:
         (?P<provider2>\b(?:github|gitlab|bitbucket):)
         (?P<user>[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?)/
-        (?P<repo>[-._a-zA-Z\d]{1,100})
+        (?P<repo>[-._a-zA-Z\d]{0,99}[a-zA-Z\d])
     )
     (?:(?P<issue>(?:\#|!)[1-9][0-9]*)|(?P<commit>@[a-f\d]{40}))
 )\b
@@ -359,6 +361,20 @@ class MagiclinkShorthandPattern(Pattern):
         el.text = md_util.AtomicString(mention)
         return el
 
+    def process_mention_repo(self, el, provider, mention, repo_name):
+        """Process mentioned repository."""
+
+        prov = provider if provider else self.provider
+        el.set('href', '%s/%s/%s' % (PROVIDER_INFO[prov]['url'], mention[1:], repo_name))
+        el.set('title', "%s Repository: %s/%s" % (PROVIDER_INFO[prov]['provider'], mention[1:], repo_name))
+        el.set('class', 'magiclink magiclink-repository')
+        user = mention[1:]
+        if user == self.user and prov == self.provider:
+            el.text = md_util.AtomicString(repo_name)
+        else:
+            el.text = md_util.AtomicString('%s/%s' % (user, repo_name))
+        return el
+
     def process_issues(self, el, provider, user, repo, issue):
         """Process issues."""
 
@@ -433,7 +449,16 @@ class MagiclinkShorthandPattern(Pattern):
         """Handle email link patterns."""
 
         el = md_util.etree.Element("a")
-        if m.group('mention'):
+        if m.group('mention_repo'):
+            if self.external and m.group('provider'):
+                provider = m.group('provider')
+                mention = m.group('mention').replace(provider, '')
+            else:
+                provider = ""
+                mention = m.group('mention')
+            repo_name = m.group('mention_repo')
+            self.process_mention_repo(el, provider[:-1], mention, repo_name)
+        elif m.group('mention'):
             if self.external and m.group('provider'):
                 provider = m.group('provider')
                 mention = m.group('mention').replace(provider, '')
