@@ -142,11 +142,12 @@ class MagicShortenerTreeprocessor(Treeprocessor):
     PULL = 1
     COMMIT = 2
 
-    def __init__(self, md, base_url, base_user_url):
+    def __init__(self, md, base_url, base_user_url, labels):
         """Initialize."""
 
         self.base = base_url
         self.base_user = base_user_url
+        self.repo_labels = labels
         self.labels = {
             "github": "GitHub",
             "bitbucket": "Bitbucket",
@@ -170,6 +171,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
 
         if link_type is self.COMMIT:
             # user/repo@hash
+            repo_label = self.repo_labels.get('commit', 'Commit')
             if my_repo:
                 text = value[0:hash_size]
             elif my_user:
@@ -181,16 +183,19 @@ class MagicShortenerTreeprocessor(Treeprocessor):
             if 'magiclink-commit' not in class_name:
                 class_name.append('magiclink-commit')
 
-            link.set('title', '%s Commit: %s@%s' % (label, user_repo.rstrip('/'), value[0:hash_size]))
+            link.set(
+                'title',
+                '%s %s: %s@%s' % (label, repo_label, user_repo.rstrip('/'), value[0:hash_size])
+            )
         else:
             # user/repo#(issue|pull)
             if link_type == self.ISSUE:
-                issue_type = 'Issue'
+                issue_type = self.repo_labels.get('issue', 'Issue')
                 separator = '#'
                 if 'magiclink-issue' not in class_name:
                     class_name.append('magiclink-issue')
             else:
-                issue_type = 'Pull Request'
+                issue_type = self.repo_labels.get('pull', 'Pull Request')
                 separator = '!'
                 if 'magiclink-pull' not in class_name:
                     class_name.append('magiclink-pull')
@@ -347,11 +352,12 @@ class MagicMailPattern(LinkPattern):
 class MagiclinkShorthandPattern(Pattern):
     """Convert emails to clickable email links."""
 
-    def __init__(self, pattern, md, user, repo, provider, external=False):
+    def __init__(self, pattern, md, user, repo, provider, labels, external=False):
         """Initialize."""
 
         self.user = user
         self.repo = repo
+        self.labels = labels
         self.provider = provider
         self.external = external
         Pattern.__init__(self, pattern, md)
@@ -361,7 +367,10 @@ class MagiclinkShorthandPattern(Pattern):
 
         prov = provider if provider else self.provider
         el.set('href', '%s/%s' % (PROVIDER_INFO[prov]['url'], mention[1:]))
-        el.set('title', "%s User: %s" % (PROVIDER_INFO[prov]['provider'], mention[1:]))
+        el.set(
+            'title',
+            "%s %s: %s" % (PROVIDER_INFO[prov]['provider'], self.labels.get('mention', "User"), mention[1:])
+        )
         el.set('class', 'magiclink magiclink-%s magiclink-mention' % prov)
         el.text = md_util.AtomicString(mention)
         return el
@@ -371,7 +380,12 @@ class MagiclinkShorthandPattern(Pattern):
 
         prov = provider if provider else self.provider
         el.set('href', '%s/%s/%s' % (PROVIDER_INFO[prov]['url'], mention[1:], repo_name))
-        el.set('title', "%s Repository: %s/%s" % (PROVIDER_INFO[prov]['provider'], mention[1:], repo_name))
+        el.set(
+            'title',
+            "%s %s: %s/%s" % (
+                PROVIDER_INFO[prov]['provider'], self.labels.get('repository', 'Repository'), mention[1:], repo_name
+            )
+        )
         el.set('class', 'magiclink magiclink-%s magiclink-repository' % prov)
         user = mention[1:]
         if user == self.user and prov == self.provider:
@@ -389,11 +403,11 @@ class MagiclinkShorthandPattern(Pattern):
 
         if issue_type == '#':
             issue_link = PROVIDER_INFO[prov]['issue']
-            issue_label = 'Issue'
+            issue_label = self.labels.get('issue', 'Issue')
             class_name = 'magiclink-issue'
         else:
             issue_link = PROVIDER_INFO[prov]['pull']
-            issue_label = 'Pull Request'
+            issue_label = self.labels.get('pull', 'Pull Request')
             class_name = 'magiclink-pull'
 
         if not repo:
@@ -442,8 +456,9 @@ class MagiclinkShorthandPattern(Pattern):
         el.set('class', 'magiclink magiclink-%s magiclink-commit' % prov)
         el.set(
             'title',
-            '%s Commit: %s/%s@%s' % (
+            '%s %s: %s/%s@%s' % (
                 PROVIDER_INFO[prov]['provider'],
+                self.labels.get('commit', 'Commit'),
                 user,
                 repo,
                 commit[0:PROVIDER_INFO[prov]['hash_size']]
@@ -518,6 +533,10 @@ class MagiclinkExtension(Extension):
                 'github',
                 'The base provider to use (github, gitlab, bitbucket) - Default: "github"'
             ],
+            'labels': [
+                {},
+                "Title labels - Default: {}"
+            ],
             'user': [
                 '',
                 'The base user name to use - Default: ""'
@@ -538,6 +557,7 @@ class MagiclinkExtension(Extension):
         user = config.get('user', '')
         repo = config.get('repo', '')
         provider = config.get('provider', 'github')
+        labels = config.get('labels', {})
 
         # Setup base URL
         base_url = config.get('base_repo_url', '').rstrip('/')
@@ -574,14 +594,18 @@ class MagiclinkExtension(Extension):
         if config.get('repo_url_shorthand', False):
             escape_chars = ['@']
             util.escape_chars(md, escape_chars)
-            shorthand_external = MagiclinkShorthandPattern(RE_EXTERNAL_SHORTHANDS, md, user, repo, provider, True)
-            shorthand = MagiclinkShorthandPattern(RE_SHORTHANDS, md, user, repo, provider)
+            shorthand_external = MagiclinkShorthandPattern(
+                RE_EXTERNAL_SHORTHANDS, md, user, repo, provider, labels, True
+            )
+            shorthand = MagiclinkShorthandPattern(
+                RE_SHORTHANDS, md, user, repo, provider, labels
+            )
             md.inlinePatterns.add("magic-repo-shorthand-external", shorthand_external, "<entity")
             md.inlinePatterns.add("magic-repo-shorthand", shorthand, "<entity")
 
         # Setup link post processor for shortening repository links
         if config.get('repo_url_shortener', False):
-            shortener = MagicShortenerTreeprocessor(md, base_url, base_user_url)
+            shortener = MagicShortenerTreeprocessor(md, base_url, base_user_url, labels)
             shortener.config = config
             md.treeprocessors.add("magic-repo-shortener", shortener, "<prettify")
 
