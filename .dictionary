@@ -80,12 +80,14 @@ blockquotes
 bool
 cmd
 customizable
+dict
 docstrings
 emoji
 escaper
 facelessuser
 formatter
 gfm
+github
 highlighter's
 html
 inline
@@ -118,6 +120,7 @@ preprocessor
 px
 py
 pycqa
+pymdown
 pypi
 pytest
 raphael
