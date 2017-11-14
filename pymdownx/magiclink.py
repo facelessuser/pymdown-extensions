@@ -154,14 +154,19 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         }
         Treeprocessor.__init__(self, md)
 
-    def shorten(self, link, label, my_repo, my_user, link_type, user_repo, value, url, hash_size):
+    def shorten(self, link, provider, my_repo, my_user, link_type, user_repo, value, url, hash_size):
         """Shorten url."""
 
+        label = PROVIDER_INFO[provider]['provider']
+        prov_class = 'magiclink-%s' % provider
         class_attr = link.get('class', '')
         class_name = class_attr.split(' ') if class_attr else []
 
         if 'magiclink' not in class_name:
             class_name.append('magiclink')
+
+        if prov_class not in class_name:
+            class_name.append(prov_class)
 
         if link_type is self.COMMIT:
             # user/repo@hash
@@ -269,7 +274,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
                     # All right, everything set, let's shorten.
                     self.shorten(
                         link,
-                        PROVIDER_INFO[provider]['provider'],
+                        provider,
                         my_repo,
                         my_user,
                         link_type,
@@ -357,7 +362,7 @@ class MagiclinkShorthandPattern(Pattern):
         prov = provider if provider else self.provider
         el.set('href', '%s/%s' % (PROVIDER_INFO[prov]['url'], mention[1:]))
         el.set('title', "%s User: %s" % (PROVIDER_INFO[prov]['provider'], mention[1:]))
-        el.set('class', 'magiclink magiclink-mention')
+        el.set('class', 'magiclink magiclink-%s magiclink-mention' % prov)
         el.text = md_util.AtomicString(mention)
         return el
 
@@ -367,7 +372,7 @@ class MagiclinkShorthandPattern(Pattern):
         prov = provider if provider else self.provider
         el.set('href', '%s/%s/%s' % (PROVIDER_INFO[prov]['url'], mention[1:], repo_name))
         el.set('title', "%s Repository: %s/%s" % (PROVIDER_INFO[prov]['provider'], mention[1:], repo_name))
-        el.set('class', 'magiclink magiclink-repository')
+        el.set('class', 'magiclink magiclink-%s magiclink-repository' % prov)
         user = mention[1:]
         if user == self.user and prov == self.provider:
             el.text = md_util.AtomicString(repo_name)
@@ -404,7 +409,7 @@ class MagiclinkShorthandPattern(Pattern):
 
         el.set('href', issue_link % (user, repo, issue_value))
         el.text = md_util.AtomicString(text)
-        el.set('class', 'magiclink %s' % class_name)
+        el.set('class', 'magiclink magiclink-%s %s' % (prov, class_name))
         el.set(
             'title',
             '%s %s: %s/%s%s%s' % (
@@ -434,7 +439,7 @@ class MagiclinkShorthandPattern(Pattern):
 
         el.set('href', PROVIDER_INFO[prov]['commit'] % (user, repo, commit))
         el.text = md_util.AtomicString(text)
-        el.set('class', 'magiclink magiclink-commit')
+        el.set('class', 'magiclink magiclink-%s magiclink-commit' % prov)
         el.set(
             'title',
             '%s Commit: %s/%s@%s' % (
