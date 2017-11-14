@@ -29,3 +29,5 @@ https://bitbucket.org/fake-user/fake-repository/commits/commit/594b25d53798c3073
 <https://github.com/facelessuser/pymdown-extensions/issues/49>
 
 https://github.com/facelessuser/fake-repository/issues/87
+
+https://github.com/facelessuser/fake-repository/commit/594b25d53798c30735da5a9be19c06cc94052a16
