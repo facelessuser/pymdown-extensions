@@ -37,7 +37,7 @@ All shorthand links will be relative to your `provider`, and they do not current
 
 Mentions of other users are performed with the following syntax: `@{user}`. To reference an external provider, use the format `@{provider}:{user}`
 
-You can also mention repositories.  This feature is actually inspired by the GitHub only @Python-Markdown/github-links which performs *similar* auto-linking.  The syntax to auto-link a repository with mentioning is very similar to auto-linking a user, except you append the repository to the user name like so: `@{user}/{repo}`. If specifying a non-default provider, the form would look like: `@{provider}:{user}/{repo}`. The output for repository mentions omits the `@` symbol, and will even omit the user if it is a repository under the default user.
+You can also mention repositories.  This feature is actually inspired by the GitHub only @Python-Markdown/github-links which performs *similar* auto-linking.  The syntax to auto-link a repository with mentioning is very similar to auto-linking a user, except you append the repository to the user name like so: `@{user}/{repo}`. If specifying a non-default provider, the form would look like: `@{provider}:{user}/{repo}`. The output for repository mentions omits the `@` symbol and will just show the user and repository, but you are free to style it with CSS to make it stand out more like has been done in this document.
 
 ### Issues and Pull Requests
 
@@ -61,7 +61,6 @@ Shorthand                                                      | Output
 `@user`                                                        | @user
 `@gitlab:user`                                                 | @gitlab:user
 `@user/repo`                                                   | @user/repo
-`@facelessuser/pymdown-extensions`                             | @facelessuser/pymdown-extensions
 `@gitlab:user/repo`                                            | @gitlab:user/repo
 `#1`                                                           | #1
 `repo#1`                                                       | repo#1

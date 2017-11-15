@@ -388,10 +388,10 @@ class MagiclinkShorthandPattern(Pattern):
         )
         el.set('class', 'magiclink magiclink-%s magiclink-repository' % prov)
         user = mention[1:]
-        if user == self.user and prov == self.provider:
-            el.text = md_util.AtomicString(repo_name)
-        else:
-            el.text = md_util.AtomicString('%s/%s' % (user, repo_name))
+        # if user == self.user and prov == self.provider:
+        #     el.text = md_util.AtomicString(repo_name)
+        # else:
+        el.text = md_util.AtomicString('%s/%s' % (user, repo_name))
         return el
 
     def process_issues(self, el, provider, user, repo, issue):

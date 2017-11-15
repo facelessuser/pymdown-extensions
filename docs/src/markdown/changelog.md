@@ -2,7 +2,7 @@
 
 ## 4.3.0
 
-Nov X, 2017
+Nov 14, 2017
 
 - **NEW**: Shorthand format for referencing non-default provider commits, issues, pulls, and mentions (!147).
 - **NEW**: Shorthand format for mentioning a repo via `@user/repo` (!149).
