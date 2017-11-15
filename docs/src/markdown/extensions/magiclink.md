@@ -77,7 +77,7 @@ Shorthand                                                      | Output
 
 ## Repository Link Shortener
 
-MagicLink can also recognize issue, pull request, and commit links, and render them in the same output format as the [repository-shortcut-links] feature. Unfortunately, mention link shortening is not presently supported due to the fact that MagicLink does not use any of the providers' API to verify user links, and some legitimate links can look like user links, but are not.
+MagicLink can also recognize issue, pull request, and commit links, and render them in the same output format as the [repository shortcut links](#repository-shortcut-links) feature. Unfortunately, mention link shortening is not presently supported due to the fact that MagicLink does not use any of the providers' API to verify user links, and some legitimate links can look like user links, but are not.
 
 Link shortening is a little different from the link shorthand feature as it can handle all three providers regardless of what the `provider` is set as the information can be directly determined from the links.
 
