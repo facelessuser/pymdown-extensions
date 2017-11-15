@@ -1,4 +1,7 @@
 build: false
+
+clone_depth: 5
+
 environment:
   matrix:
     - PYTHON: "C:/Python27"
@@ -13,21 +16,26 @@ environment:
       TOXENV: "py36-unittests"
     - PYTHON: "C:/Python27"
       TOXENV: "lint"
+
 init:
   - "ECHO %TOXENV%"
   - "ECHO %PYTHON%"
   - ps: "ls C:/Python*"
+
 install:
   - "%PYTHON%/Scripts/pip.exe install virtualenv"
   - "%PYTHON%/Scripts/pip.exe install tox"
   - "%PYTHON%/Scripts/pip.exe install codecov"
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+
 test_script:
   - pip --version
   - virtualenv --version
   - tox --version
   - tox
+
 after_test:
   - if not ("%TOXENV%" == "lint") codecov
+
 matrix:
   fast_finish: true
