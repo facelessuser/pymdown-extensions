@@ -71,7 +71,7 @@ License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 
 ## Gemoji Index
 
-`gemoji_db.py` is generated from Gemoji's source code: https://github.com/github/gemoji.
+`gemoji_db.py` is generated from Gemoji's source code: @github/gemoji.
 
 ```
 Copyright (c) 2013 GitHub, Inc.
@@ -100,7 +100,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 ## EmojiOne Index
 
-`emoji1_db.py` is generated from EmojiOne's source code: https://github.com/Ranks/emojione
+`emoji1_db.py` is generated from EmojiOne's source code: @Ranks/emojione
 
 ```
 EmojiOne Non-Artwork

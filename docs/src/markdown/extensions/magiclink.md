@@ -151,9 +151,9 @@ You only need to provide the options you wish to override. Assume we wanted to a
 
 ## CSS
 
-For normal links, no classes are added to the anchor tags. For repository links `magiclink` will be added as a class.  With an additional class will be added for each repository link type and provider.
+For normal links, no classes are added to the anchor tags. For repository links, `magiclink` will be added as a class. Also, an additional class will be added for each repository link type and provider.
 
-Link\ Type | Class
+Link\ Type           | Class
 -------------------- | -----
 General              | `magiclink`
 Mentions             | `magiclink-mention`

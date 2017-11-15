@@ -26,9 +26,9 @@ Directory      | Description
 
 When writing code, the code should roughly conform to PEP8 and PEP257 suggestions.  The PyMdown Extensions project utilizes the Flake8 linter (with some additional plugins) to ensure code conforms (give or take some of the rules).  When in doubt follow the formatting hints of existing code when adding or modifying files. existing files.  Listed below are the modules used:
 
-- [flake8][flake8]
-- [flake8_docstrings][flake8-docstrings]
-- [pep8-naming][pep8-naming]
+- @gitlab:pycqa/flake8
+- @gitlab:pycqa/flake8-docstrings
+- @gitlab:pycqa/pep8-naming
 
 Flake8 can be run directly via the command line from the root of the project.
 
@@ -40,10 +40,10 @@ flake8
 
 Documents are in Markdown (with with some additional syntax) and converted to HTML via Python Markdown and this extension bundle. If you would like to build and preview the documentation, you must have these packages installed:
 
-- [Python Markdown][python-markdown]: the Markdown parser.
-- [MkDocs][mkdocs]: the document site generator.
-- [Material][mkdocs-material]: a material theme for MkDocs.
-- PyMdown Extensions: this Python Markdown extension bundle.
+- @Python-Markdown/markdown: the Markdown parser.
+- @mkdocs/mkdocs: the document site generator.
+- @squidfunk/mkdocs-material: a material theme for MkDocs.
+- @facelessuser/pymdown-extensions: this Python Markdown extension bundle.
 
 In order to build and preview the documents, just run the command below from the root of the project and you should be able to view the documents at `localhost:8000` in your browser. After that, you should be able to update the documents and have your browser preview update live.
 
@@ -82,7 +82,7 @@ It should print out the files with the misspelled words if any are found.  If yo
 
 ## Validation Tests
 
-In order to preserve good code health, a test suite has been put together with [pytest][pytest]. There are currently two kinds of tests: syntax and targeted.  To run these tests, you can use the following command:
+In order to preserve good code health, a test suite has been put together with pytest (@pytest-dev/pytest). There are currently two kinds of tests: syntax and targeted.  To run these tests, you can use the following command:
 
 ```
 python run_tests.py
@@ -140,7 +140,7 @@ py.test tests/test_targeted.py
 
 ### Running Validation With Tox
 
-[Tox][tox] is a great way to run the validation tests, spelling checks, and linting in virtual environments so as not to mess with your current working environment. Tox will use the specified Python version for the given environment and create a virtual environment and install all the needed requirements (minus Aspell).  You could also setup your own virtual environments with the Virtualenv module without Tox, and manually do the same.
+Tox (@tox-dev/tox) is a great way to run the validation tests, spelling checks, and linting in virtual environments so as not to mess with your current working environment. Tox will use the specified Python version for the given environment and create a virtual environment and install all the needed requirements (minus Aspell).  You could also setup your own virtual environments with the Virtualenv module without Tox, and manually do the same.
 
 First, you need to have Tox installed:
 
@@ -176,7 +176,7 @@ tox -espelling
 
 ## Code Coverage
 
-When running the validation tests through Tox, it is setup to track code coverage via the [coverage][coverage] module.  Coverage is run on each `pyxx-unittests` environment.  If you've made changes to the code, you can clear the old coverage data:
+When running the validation tests through Tox, it is setup to track code coverage via the Coverage (@bitbucket:ned/coveragepy) module.  Coverage is run on each `pyxx-unittests` environment.  If you've made changes to the code, you can clear the old coverage data:
 
 ```
 coverage erase
@@ -190,7 +190,7 @@ You can checkout `tox.ini` to see how this is accomplished.
 
 The Emoji extension has emoji indexes generated from the source of Gemoji, EmojiOne, and Twemoji.  Below is the process for auto-generating these indexes.  In the case of Twemoji, it will also reference EmojiOne's short name index, so you may need to do both EmojiOne and Twemoji if the support is not satisfactory.
 
-1. Ensure you have [Requests][requests] installed: `pip install requests`.
+1. Ensure you have Requests (@requests/requests) installed: `pip install requests`.
 2. Fork the repository and checkout to your machine.
 3. Navigate to the root of the project.
 4. Call the generator script: `python tools/gen_emoji.py --gemoji`, `python tools/gen_emoji.py --emojione`, or `python tools/gen_emoji.py --twemoji`. If you already have the latest tag locally, you can specify `--no-download`.  It will prompt you to select a tag to download and/or use.  Please pull the latest **official** tag.  Please don't pull experimental tags.  This should update the indexes.
