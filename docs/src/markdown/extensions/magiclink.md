@@ -64,8 +64,8 @@ Shorthand                                                      | Output
 `@gitlab:user/repo`                                            | @gitlab:user/repo
 `#1`                                                           | #1
 `repo#1`                                                       | repo#1
-`bitbucket:user/repo#1`                                        | bitbucket:user/repo#1
 `user/repo#1`                                                  | user/repo#1
+`bitbucket:user/repo#1`                                        | bitbucket:user/repo#1
 `!2`                                                           | !2
 `repo!2`                                                       | repo!2
 `user/repo!2`                                                  | user/repo!2
