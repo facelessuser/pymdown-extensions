@@ -28,7 +28,7 @@ MagicLink supports a shorthand syntax for quickly referencing repository issues,
 
 To use this feature you must configure MagicLink for your desired provider and specify the default user and repository via the `provider`, `user`, and `repo` [options](#options).  You must also set `repo_url_shorthand` to `True`.
 
-All shorthand links will be relative to your `provider`, and they do not currently work cross provider. So if your `provider` is set to `github`, all mentions will be generated for GitHub.  If a user name or repository is not specified, the link will use the values found in `user` and `repo` from the extension's [options](#options).
+All shorthand links will be relative to your `provider`, unless they are prefixed with a different provider. So if your `provider` is set to `github`, all mentions will be generated for GitHub unless a provider is specified: `@provider:mention`.  If a user name or repository is not specified for issues, pull requests, or commits, the link will use the values found in `user` and `repo` from the extension's [options](#options).
 
 !!! warning
     Links are not verified, so make sure you are specifying valid issues, repositories, and users as they will be auto-linked even if they are not valid.
