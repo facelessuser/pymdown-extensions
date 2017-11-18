@@ -101,7 +101,7 @@ def gather_test_params():
         cfg_path = os.path.join(base, 'tests.yml')
         if os.path.exists(cfg_path):
             files.remove('tests.yml')
-            [files.remove(file) for file in files if not file.endswith('.txt')]
+            [files.remove(file) for file in files[:] if not file.endswith('.txt')]
             with codecs.open(cfg_path, 'r', encoding='utf-8') as f:
                 cfg = util.yaml_load(f.read())
             for testfile in files:
