@@ -397,6 +397,14 @@ class MagiclinkShorthandPattern(Pattern):
     def process_issues(self, el, provider, user, repo, issue):
         """Process issues."""
 
+        my_repo = not repo
+        my_user = not user
+
+        if my_repo:
+            repo = self.repo
+        if my_user:
+            user = self.user
+
         prov = provider if provider else self.provider
         issue_value = issue[1:]
         issue_type = issue[:1]
@@ -410,16 +418,12 @@ class MagiclinkShorthandPattern(Pattern):
             issue_label = self.labels.get('pull', 'Pull Request')
             class_name = 'magiclink-pull'
 
-        if not repo:
-            user = self.user
-            repo = self.repo
+        if my_repo:
             text = '%s%s' % (issue_type, issue_value)
+        elif my_user:
+            text = '%s%s%s' % (repo, issue_type, issue_value)
         else:
-            if not user:
-                user = self.user
-                text = '%s%s%s' % (repo, issue_type, issue_value)
-            else:
-                text = '%s/%s%s%s' % (user, repo, issue_type, issue_value)
+            text = '%s/%s%s%s' % (user, repo, issue_type, issue_value)
 
         el.set('href', issue_link % (user, repo, issue_value))
         el.text = md_util.AtomicString(text)
@@ -439,17 +443,21 @@ class MagiclinkShorthandPattern(Pattern):
     def process_commit(self, el, provider, user, repo, commit):
         """Process commit."""
 
-        prov = provider if provider else self.provider
-        if not repo:
-            user = self.user
+        my_repo = not repo
+        my_user = not user
+
+        if my_repo:
             repo = self.repo
+        if my_user:
+            user = self.user
+
+        prov = provider if provider else self.provider
+        if my_repo:
             text = commit[0:PROVIDER_INFO[prov]['hash_size']]
+        elif my_user:
+            text = '%s@%s' % (repo, commit[0:PROVIDER_INFO[prov]['hash_size']])
         else:
-            if not user:
-                user = self.user
-                text = '%s@%s' % (repo, commit[0:PROVIDER_INFO[prov]['hash_size']])
-            else:
-                text = '%s/%s@%s' % (user, repo, commit[0:PROVIDER_INFO[prov]['hash_size']])
+            text = '%s/%s@%s' % (user, repo, commit[0:PROVIDER_INFO[prov]['hash_size']])
 
         el.set('href', PROVIDER_INFO[prov]['commit'] % (user, repo, commit))
         el.text = md_util.AtomicString(text)
