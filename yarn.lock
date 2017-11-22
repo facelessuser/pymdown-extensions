@@ -3608,9 +3608,9 @@ modify-filename@^1.0.0, modify-filename@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/modify-filename/-/modify-filename-1.1.0.tgz#9a2dec83806fbb2d975f22beec859ca26b393aa1"
 
-modularscale-sass@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/modularscale-sass/-/modularscale-sass-3.0.3.tgz#f51bd7e4ed3bc42566dfd2c1c3c11f80fb5de958"
+modularscale-sass@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/modularscale-sass/-/modularscale-sass-3.0.4.tgz#f2fbf814b91546759478f113d3502b760fae6873"
 
 ms@2.0.0:
   version "2.0.0"
