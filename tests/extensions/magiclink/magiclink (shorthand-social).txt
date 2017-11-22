@@ -1,0 +1,89 @@
+Mention @some-bodies_name
+
+Not a repo mention @some-bodies_name/some_repository
+
+Not a repo mention @facelessuser/some_repository
+
+No Commit some-bodies_name/some_repository@3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+
+No Issue some-bodies_name/some_repository#33
+
+No Pull request some-bodies_name/some_repository!33
+
+No Commit 3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+
+No Issue #33
+
+No Pull request !33
+
+No Commit MyRepo@3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+
+No Issue MyRepo#33
+
+No Pull MyRepo!33
+
+Mention @gitlab:some-user
+
+Mention @gitlab:some-bodies_name/some_repository
+
+Mention @bitbucket:facelessuser/some_repository
+
+Issue github:some-user/some-repo#1
+
+Pull request bitbucket:some-user/some-repo!2
+
+Commit gitlab:some-user/some-repo@3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+
+---
+
+@twitter:username
+
+---
+
+No issue \#33
+
+No pull request \!33
+
+No mention \@some-bodies_name
+
+No issue some-bodies_name/some_repository\#33
+
+No pull request some-bodies_name/some_repository\!33
+
+No commit @3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+
+---
+
+https://github.com/facelessuser/pymdown-extensions/issues/49
+
+https://github.com/facelessuser/pymdown-extensions/pull/87
+
+https://github.com/facelessuser/pymdown-extensions/commit/6a09fde5c1cad66c660c3aa7792385c52c49e819
+
+https://github.com/fake-user/fake-repository/issues/538
+
+https://github.com/fake-user/fake-repository/pull/539
+
+https://github.com/fake-user/fake-repository/commit/594b25d53798c30735da5a9be19c06cc94052a16
+
+https://gitlab.com/fake-user/fake-repository/issues/538
+
+https://gitlab.com/fake-user/fake-repository/merge_requests/539
+
+https://gitlab.com/fake-user/fake-repository/commit/594b25d53798c30735da5a9be19c06cc94052a16
+
+https://bitbucket.org/fake-user/fake-repository/issues/538/
+
+https://bitbucket.org/fake-user/fake-repository/pull-requests/539/
+
+https://bitbucket.org/fake-user/fake-repository/issues/538/optional-title
+
+https://bitbucket.org/fake-user/fake-repository/pull-requests/539/optional-title
+
+https://bitbucket.org/fake-user/fake-repository/commits/commit/594b25d53798c30735da5a9be19c06cc94052a16
+
+<https://github.com/facelessuser/pymdown-extensions/issues/49>
+
+https://github.com/facelessuser/fake-repository/issues/87
+
+https://github.com/facelessuser/fake-repository/commit/594b25d53798c30735da5a9be19c06cc94052a16

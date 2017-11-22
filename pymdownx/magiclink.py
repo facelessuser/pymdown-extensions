@@ -81,11 +81,16 @@ RE_GIT_INT_REPO_MENTIONS = r'''(?x)
 /(?P<mention_repo>[-._a-zA-Z\d]{0,99}[a-zA-Z\d])\b
 '''
 RE_GIT_EXT_REFS = r'''(?x)
-(?<![@/])(?:(?P<user>\b(?:(?:github|gitlab|bitbucket):)?[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?)/)?
+(?<![@/])(?:(?P<user>\b(?:(?:github|gitlab|bitbucket):)[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?)/)
 (?P<repo>\b[-._a-zA-Z\d]{0,99}[a-zA-Z\d])
 (?:(?P<issue>(?:\#|!)[1-9][0-9]*)|(?P<commit>@[a-f\d]{40}))\b
 '''
-RE_GIT_INT_REFS = r'(?:(?<![a-zA-Z])(?P<issue>(?:\#|!)[1-9][0-9]*)|(?P<commit>(?<![@/])\b[a-f\d]{40}))\b'
+RE_GIT_INT_REFS = r'''(?x)
+(?<![@/])(?:(?P<user>\b[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?)/)?
+(?P<repo>\b[-._a-zA-Z\d]{0,99}[a-zA-Z\d])
+(?:(?P<issue>(?:\#|!)[1-9][0-9]*)|(?P<commit>@[a-f\d]{40}))\b
+'''
+RE_GIT_INT_MICRO_REFS = r'(?:(?<![a-zA-Z])(?P<issue>(?:\#|!)[1-9][0-9]*)|(?P<commit>(?<![@/])\b[a-f\d]{40}))\b'
 
 RE_AUTOLINK = r'(?i)<((?:ht|f)tps?://[^>]*)>'
 
@@ -657,13 +662,20 @@ class MagiclinkExtension(Extension):
             )
             md.inlinePatterns.add("magic-ext-refs", git_ext_refs, "<entity")
             if not self.is_social:
-                git_int_refs = MagiclinkInternalRefsPattern(
+                git_int_refs = MagiclinkExternalRefsPattern(
                     RE_GIT_INT_REFS, md, self.user, self.repo, self.provider, self.labels
                 )
                 md.inlinePatterns.add("magic-int-refs", git_int_refs, "<entity")
+                git_int_micro_refs = MagiclinkInternalRefsPattern(
+                    RE_GIT_INT_MICRO_REFS, md, self.user, self.repo, self.provider, self.labels
+                )
+                md.inlinePatterns.add("magic-int-micro-refs", git_int_micro_refs, "<entity")
 
     def get_base_urls(self, base_url, config):
         """Get base URLs."""
+
+        if self.is_social:
+            return '', ''
 
         # Setup base URL
         base_user_url = os.path.dirname(base_url)
