@@ -396,7 +396,7 @@ class MagiclinkAutoPattern(Pattern):
         return el
 
 
-class MagicMailPattern(LinkPattern):
+class MagiclinkMailPattern(LinkPattern):
     """Convert emails to clickable email links."""
 
     def email_encode(self, code):
@@ -568,6 +568,67 @@ class MagiclinkExtension(Extension):
         }
         super(MagiclinkExtension, self).__init__(*args, **kwargs)
 
+    def setup_autolinks(self, md, config):
+        """Setup autolinks."""
+
+        # Setup general link patterns
+        auto_link_pattern = MagiclinkAutoPattern(RE_AUTOLINK, md)
+        auto_link_pattern.config = config
+        md.inlinePatterns['autolink'] = auto_link_pattern
+
+        link_pattern = MagiclinkPattern(RE_LINK, md)
+        link_pattern.config = config
+        md.inlinePatterns.add("magic-link", link_pattern, "<entity")
+
+        md.inlinePatterns.add("magic-mail", MagiclinkMailPattern(RE_MAIL, md), "<entity")
+
+    def setup_shortener(self, md, base_url, base_user_url, labels, config):
+        """Setup shortener."""
+
+        shortener = MagicShortenerTreeprocessor(md, base_url, base_user_url, labels)
+        shortener.config = config
+        md.treeprocessors.add("magic-repo-shortener", shortener, "<prettify")
+
+    def setup_shorthand(self, md, user, repo, provider, labels, config):
+        """Setup shorthand."""
+
+        # Setup URL shortener
+        escape_chars = ['@']
+        util.escape_chars(md, escape_chars)
+        git_repo = MagiclinkRepositoryPattern(
+            RE_GIT_REPO_MENTIONS, md, user, repo, provider, labels
+        )
+        md.inlinePatterns.add("magic-repo-mention", git_repo, "<entity")
+        git_mention = MagiclinkMentionPattern(
+            RE_GIT_MENTIONS, md, user, repo, provider, labels
+        )
+        md.inlinePatterns.add("magic-mention", git_mention, "<entity")
+        git_ext_refs = MagiclinkExternalRefsPattern(
+            RE_GIT_EXT_REFS, md, user, repo, provider, labels
+        )
+        md.inlinePatterns.add("magic-ext-refs", git_ext_refs, "<entity")
+        git_int_refs = MagiclinkInternalRefsPattern(
+            RE_GIT_INT_REFS, md, user, repo, provider, labels
+        )
+        md.inlinePatterns.add("magic-int-refs", git_int_refs, "<entity")
+
+    def get_base_urls(self, base_url, user, repo, provider, config):
+        """Get base URLs."""
+
+        # Setup base URL
+        base_user_url = os.path.dirname(base_url)
+        if base_url:
+            base_url += "/"
+        if base_user_url:
+            base_user_url += "/"
+
+        if config.get('repo_url_shorthand', False) or not base_url:
+            if user and repo:
+                base_url = '%s/%s/%s/' % (PROVIDER_INFO[provider]['url'], user, repo)
+                base_user_url = '%s/%s/' % (PROVIDER_INFO[provider]['url'], user)
+
+        return base_url, base_user_url
+
     def extendMarkdown(self, md, md_globals):
         """Add support for turning html links and emails to link tags."""
 
@@ -579,63 +640,24 @@ class MagiclinkExtension(Extension):
         provider = config.get('provider', 'github')
         labels = config.get('labels', {})
 
-        # Setup base URL
-        base_url = config.get('base_repo_url', '').rstrip('/')
-        base_user_url = os.path.dirname(base_url)
-        if base_url:
-            base_url += "/"
-        if base_user_url:
-            base_user_url += "/"
-
-        if base_url:  # pragma: no cover
+        base_repo_url = config.get('base_repo_url', '').rstrip('/')
+        if base_repo_url:  # pragma: no cover
             warnings.warn(
                 "'base_repo_url' is deprecated and will be removed in the future.\n"
                 "\nIt is strongly encouraged to migrate to using `provider`, 'user`\n"
                 " and 'repo' moving forward.",
                 PymdownxDeprecationWarning
             )
-        if config.get('repo_url_shorthand', False) or not base_url:
-            if user and repo:
-                base_url = '%s/%s/%s/' % (PROVIDER_INFO[provider]['url'], user, repo)
-                base_user_url = '%s/%s/' % (PROVIDER_INFO[provider]['url'], user)
 
-        # Setup general link patterns
-        auto_link_pattern = MagiclinkAutoPattern(RE_AUTOLINK, md)
-        auto_link_pattern.config = config
-        link_pattern = MagiclinkPattern(RE_LINK, md)
-        link_pattern.config = config
+        self.setup_autolinks(md, config)
 
-        # Add link patterns
-        md.inlinePatterns['autolink'] = auto_link_pattern
-        md.inlinePatterns.add("magic-link", link_pattern, "<entity")
-        md.inlinePatterns.add("magic-mail", MagicMailPattern(RE_MAIL, md), "<entity")
-
-        # Setup URL shortener
         if config.get('repo_url_shorthand', False):
-            escape_chars = ['@']
-            util.escape_chars(md, escape_chars)
-            git_repo = MagiclinkRepositoryPattern(
-                RE_GIT_REPO_MENTIONS, md, user, repo, provider, labels
-            )
-            md.inlinePatterns.add("magic-repo-mention", git_repo, "<entity")
-            git_mention = MagiclinkMentionPattern(
-                RE_GIT_MENTIONS, md, user, repo, provider, labels
-            )
-            md.inlinePatterns.add("magic-mention", git_mention, "<entity")
-            git_ext_refs = MagiclinkExternalRefsPattern(
-                RE_GIT_EXT_REFS, md, user, repo, provider, labels
-            )
-            md.inlinePatterns.add("magic-ext-refs", git_ext_refs, "<entity")
-            git_int_refs = MagiclinkInternalRefsPattern(
-                RE_GIT_INT_REFS, md, user, repo, provider, labels
-            )
-            md.inlinePatterns.add("magic-int-refs", git_int_refs, "<entity")
+            self.setup_shorthand(md, user, repo, provider, labels, config)
 
         # Setup link post processor for shortening repository links
         if config.get('repo_url_shortener', False):
-            shortener = MagicShortenerTreeprocessor(md, base_url, base_user_url, labels)
-            shortener.config = config
-            md.treeprocessors.add("magic-repo-shortener", shortener, "<prettify")
+            base_url, base_user_url = self.get_base_urls(base_repo_url, user, repo, provider, config)
+            self.setup_shortener(md, base_url, base_user_url, labels, config)
 
 
 def makeExtension(*args, **kwargs):
