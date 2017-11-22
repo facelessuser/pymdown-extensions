@@ -61,14 +61,12 @@ RE_GIT_MENTIONS = r'''(?x)
 (?P<mention>(?<![a-zA-Z])@(?:(?:github|gitlab|bitbucket):)?[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?)\b
 '''
 RE_GIT_REPO_MENTIONS = RE_GIT_MENTIONS + r'/(?P<mention_repo>[-._a-zA-Z\d]{0,99}[a-zA-Z\d])\b'
-RE_GIT_REFS = r'''(?x)
-(?:
-    (?<![@/])(?:(?P<user>\b(?:(?:github|gitlab|bitbucket):)?[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?)/)?
-        (?P<repo>\b[-._a-zA-Z\d]{0,99}[a-zA-Z\d])
-        (?:(?P<issue>(?:\#|!)[1-9][0-9]*)|(?P<commit>@[a-f\d]{40})) |
-    (?:(?<![a-zA-Z])(?P<issue2>(?:\#|!)[1-9][0-9]*)|(?P<commit2>(?<![@/])\b[a-f\d]{40}))
-)\b
+RE_GIT_EXT_REFS = r'''(?x)
+(?<![@/])(?:(?P<user>\b(?:(?:github|gitlab|bitbucket):)?[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?)/)?
+(?P<repo>\b[-._a-zA-Z\d]{0,99}[a-zA-Z\d])
+(?:(?P<issue>(?:\#|!)[1-9][0-9]*)|(?P<commit>@[a-f\d]{40}))\b
 '''
+RE_GIT_INT_REFS = r'(?:(?<![a-zA-Z])(?P<issue>(?:\#|!)[1-9][0-9]*)|(?P<commit>(?<![@/])\b[a-f\d]{40}))\b'
 
 RE_AUTOLINK = r'(?i)<((?:ht|f)tps?://[^>]*)>'
 
@@ -133,6 +131,72 @@ class _MagiclinkShorthandPattern(Pattern):
         self.provider = provider
         self.external = external
         Pattern.__init__(self, pattern, md)
+
+
+class _MagiclinkReferencePattern(_MagiclinkShorthandPattern):
+    """Convert #1, repo#1, user/repo#1, !1, repo!1, user/repo!1, hash, repo@hash, or user/repo@hash to links."""
+
+    def process_issues(self, el, provider, user, repo, issue):
+        """Process issues."""
+
+        issue_type = issue[:1]
+        issue_value = issue[1:]
+
+        if issue_type == '#':
+            issue_link = PROVIDER_INFO[provider]['issue']
+            issue_label = self.labels.get('issue', 'Issue')
+            class_name = 'magiclink-issue'
+        else:
+            issue_link = PROVIDER_INFO[provider]['pull']
+            issue_label = self.labels.get('pull', 'Pull Request')
+            class_name = 'magiclink-pull'
+
+        if self.my_repo:
+            text = '%s%s' % (issue_type, issue_value)
+        elif self.my_user:
+            text = '%s%s%s' % (repo, issue_type, issue_value)
+        else:
+            text = '%s/%s%s%s' % (user, repo, issue_type, issue_value)
+
+        el.set('href', issue_link % (user, repo, issue_value))
+        el.text = md_util.AtomicString(text)
+        el.set('class', 'magiclink magiclink-%s %s' % (provider, class_name))
+        el.set(
+            'title',
+            '%s %s: %s/%s%s%s' % (
+                PROVIDER_INFO[provider]['provider'],
+                issue_label,
+                user,
+                repo,
+                issue_type,
+                issue_value
+            )
+        )
+
+    def process_commit(self, el, provider, user, repo, commit):
+        """Process commit."""
+
+        hash_ref = commit[0:PROVIDER_INFO[provider]['hash_size']]
+        if self.my_repo:
+            text = hash_ref
+        elif self.my_user:
+            text = '%s@%s' % (repo, hash_ref)
+        else:
+            text = '%s/%s@%s' % (user, repo, hash_ref)
+
+        el.set('href', PROVIDER_INFO[provider]['commit'] % (user, repo, commit))
+        el.text = md_util.AtomicString(text)
+        el.set('class', 'magiclink magiclink-%s magiclink-commit' % provider)
+        el.set(
+            'title',
+            '%s %s: %s/%s@%s' % (
+                PROVIDER_INFO[provider]['provider'],
+                self.labels.get('commit', 'Commit'),
+                user,
+                repo,
+                hash_ref
+            )
+        )
 
 
 class MagicShortenerTreeprocessor(Treeprocessor):
@@ -405,117 +469,59 @@ class MagiclinkRepositoryPattern(_MagiclinkShorthandPattern):
         return el
 
 
-class MagiclinkReferencePattern(_MagiclinkShorthandPattern):
-    """Convert #1, repo#1, user/repo#1, !1, repo!1, user/repo!1, hash, repo@hash, or user/repo@hash to links."""
-
-    def process_issues(self, el, provider, user, repo, issue):
-        """Process issues."""
-
-        issue_type = issue[:1]
-        issue_value = issue[1:]
-
-        if issue_type == '#':
-            issue_link = PROVIDER_INFO[provider]['issue']
-            issue_label = self.labels.get('issue', 'Issue')
-            class_name = 'magiclink-issue'
-        else:
-            issue_link = PROVIDER_INFO[provider]['pull']
-            issue_label = self.labels.get('pull', 'Pull Request')
-            class_name = 'magiclink-pull'
-
-        if self.my_repo:
-            text = '%s%s' % (issue_type, issue_value)
-        elif self.my_user:
-            text = '%s%s%s' % (repo, issue_type, issue_value)
-        else:
-            text = '%s/%s%s%s' % (user, repo, issue_type, issue_value)
-
-        el.set('href', issue_link % (user, repo, issue_value))
-        el.text = md_util.AtomicString(text)
-        el.set('class', 'magiclink magiclink-%s %s' % (provider, class_name))
-        el.set(
-            'title',
-            '%s %s: %s/%s%s%s' % (
-                PROVIDER_INFO[provider]['provider'],
-                issue_label,
-                user,
-                repo,
-                issue_type,
-                issue_value
-            )
-        )
-
-    def process_commit(self, el, provider, user, repo, commit):
-        """Process commit."""
-
-        hash_ref = commit[0:PROVIDER_INFO[provider]['hash_size']]
-        if self.my_repo:
-            text = hash_ref
-        elif self.my_user:
-            text = '%s@%s' % (repo, hash_ref)
-        else:
-            text = '%s/%s@%s' % (user, repo, hash_ref)
-
-        el.set('href', PROVIDER_INFO[provider]['commit'] % (user, repo, commit))
-        el.text = md_util.AtomicString(text)
-        el.set('class', 'magiclink magiclink-%s magiclink-commit' % provider)
-        el.set(
-            'title',
-            '%s %s: %s/%s@%s' % (
-                PROVIDER_INFO[provider]['provider'],
-                self.labels.get('commit', 'Commit'),
-                user,
-                repo,
-                hash_ref
-            )
-        )
+class MagiclinkExternalRefsPattern(_MagiclinkReferencePattern):
+    """Convert repo#1, user/repo#1, repo!1, user/repo!1, repo@hash, or user/repo@hash to links."""
 
     def handleMatch(self, m):
         """Handle email link patterns."""
 
-        self.my_user = False
-        self.my_repo = False
+        el = md_util.etree.Element("a")
+
+        is_commit = m.group('commit')
+        value = m.group('commit')[1:] if is_commit else m.group('issue')
+        repo = m.group('repo')
+        user = m.group('user')
+
+        if not user:
+            user = self.user
+
+        parts = user.split(':')
+        if len(parts) > 1:
+            provider = parts[0]
+            user = parts[1]
+        else:
+            provider = self.provider
+
+        self.my_user = user == self.user and provider == self.provider
+        self.my_repo = self.my_user and repo == self.repo
+
+        if is_commit:
+            self.process_commit(el, provider, user, repo, value)
+        else:
+            self.process_issues(el, provider, user, repo, value)
+        return el
+
+
+class MagiclinkInternalRefsPattern(_MagiclinkReferencePattern):
+    """Convert #1, !1, and commit_hash."""
+
+    def handleMatch(self, m):
+        """Handle email link patterns."""
 
         el = md_util.etree.Element("a")
-        if m.group('issue') or m.group('commit'):
-            # Get issue value and type
-            is_commit = m.group('commit')
-            value = m.group('commit')[1:] if is_commit else m.group('issue')
+        is_commit = m.group('commit')
+        value = m.group('commit') if is_commit else m.group('issue')
 
-            repo = m.group('repo')
-            user = m.group('user')
-            self.my_repo = not m.group('repo')
-            self.my_user = not m.group('user')
+        repo = self.repo
+        user = self.user
+        provider = self.provider
+        self.my_repo = True
+        self.my_user = True
 
-            if self.my_user:
-                user = self.user
-
-            parts = user.split(':')
-            if len(parts) > 1:
-                provider = parts[0]
-                user = parts[1]
-            else:
-                provider = self.provider
-
-            self.my_user = user == self.user and provider == self.provider
-
-            if is_commit:
-                self.process_commit(el, provider, user, repo, value)
-            else:
-                self.process_issues(el, provider, user, repo, value)
+        if is_commit:
+            self.process_commit(el, provider, user, repo, value)
         else:
-            is_commit = m.group('commit2')
-            value = m.group('commit2') if is_commit else m.group('issue2')
-
-            repo = self.repo
-            user = self.user
-            self.my_repo = True
-            self.my_user = True
-            provider = self.provider
-            if is_commit:
-                self.process_commit(el, provider, user, repo, value)
-            else:
-                self.process_issues(el, provider, user, repo, value)
+            self.process_issues(el, provider, user, repo, value)
         return el
 
 
@@ -616,10 +622,14 @@ class MagiclinkExtension(Extension):
                 RE_GIT_MENTIONS, md, user, repo, provider, labels
             )
             md.inlinePatterns.add("magic-mention", git_mention, "<entity")
-            git_refs = MagiclinkReferencePattern(
-                RE_GIT_REFS, md, user, repo, provider, labels
+            git_ext_refs = MagiclinkExternalRefsPattern(
+                RE_GIT_EXT_REFS, md, user, repo, provider, labels
             )
-            md.inlinePatterns.add("magic-refs", git_refs, "<entity")
+            md.inlinePatterns.add("magic-ext-refs", git_ext_refs, "<entity")
+            git_int_refs = MagiclinkInternalRefsPattern(
+                RE_GIT_INT_REFS, md, user, repo, provider, labels
+            )
+            md.inlinePatterns.add("magic-int-refs", git_int_refs, "<entity")
 
         # Setup link post processor for shortening repository links
         if config.get('repo_url_shortener', False):
