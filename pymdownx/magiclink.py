@@ -487,8 +487,6 @@ class MagiclinkReferencePattern(_MagiclinkShorthandPattern):
             self.my_repo = not m.group('repo')
             self.my_user = not m.group('user')
 
-            if self.my_repo:
-                repo = self.repo
             if self.my_user:
                 user = self.user
 
