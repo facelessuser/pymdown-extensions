@@ -54,6 +54,7 @@ magiclink (shorthand):
       hide_protocol: false
       repo_url_shortener: true
       repo_url_shorthand: true
+      social_url_shorthand: true
       user: facelessuser
       repo: pymdown-extensions
 

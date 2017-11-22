@@ -57,10 +57,29 @@ RE_LINK = r'''(?xi)
 )
 '''
 
-RE_GIT_MENTIONS = r'''(?x)
-(?P<mention>(?<![a-zA-Z])@(?:(?:github|gitlab|bitbucket):)?[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?)\b
+RE_TWITTER_EXT_MENTIONS = r'(?:twitter):\w{1,15}'
+RE_GIT_EXT_MENTIONS = r'(?:github|gitlab|bitbucket):[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?'
+
+RE_ALL_EXT_MENTIONS = r'''(?x)
+(?P<mention>
+    (?<![a-zA-Z])@
+    (?:%s)
+)\b
 '''
-RE_GIT_REPO_MENTIONS = RE_GIT_MENTIONS + r'/(?P<mention_repo>[-._a-zA-Z\d]{0,99}[a-zA-Z\d])\b'
+RE_TWITTER_INT_MENTIONS = r'''(?x)
+(?P<mention>(?<![a-zA-Z])@\w{1,15})\b
+'''
+RE_GIT_INT_MENTIONS = r'''(?x)
+(?P<mention>(?<![a-zA-Z])@[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?)\b
+'''
+RE_GIT_EXT_REPO_MENTIONS = r'''(?x)
+(?P<mention>(?<![a-zA-Z])@(?:(?:github|gitlab|bitbucket):)[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?)\b
+/(?P<mention_repo>[-._a-zA-Z\d]{0,99}[a-zA-Z\d])\b
+'''
+RE_GIT_INT_REPO_MENTIONS = r'''(?x)
+(?P<mention>(?<![a-zA-Z])@[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?)\b
+/(?P<mention_repo>[-._a-zA-Z\d]{0,99}[a-zA-Z\d])\b
+'''
 RE_GIT_EXT_REFS = r'''(?x)
 (?<![@/])(?:(?P<user>\b(?:(?:github|gitlab|bitbucket):)?[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?)/)?
 (?P<repo>\b[-._a-zA-Z\d]{0,99}[a-zA-Z\d])
@@ -91,7 +110,13 @@ RE_REPO_LINK = re.compile(
     '''
 )
 
+SOCIAL_PROVIDERS = ('twitter',)
+
 PROVIDER_INFO = {
+    "twitter": {
+        "provider": "Twitter",
+        "url": "https://twitter.com"
+    },
     "gitlab": {
         "provider": "GitLab",
         "url": "https://gitlab.com",
@@ -545,13 +570,17 @@ class MagiclinkExtension(Extension):
                 False,
                 "If 'True' repo shorthand syntax is converted to links - Default: False"
             ],
+            'social_url_shorthand': [
+                False,
+                "If 'True' social shorthand syntax is converted to links - Default: False"
+            ],
             'base_repo_url': [
                 '',
                 'The base repo url to use - Default: ""'
             ],
             'provider': [
                 'github',
-                'The base provider to use (github, gitlab, bitbucket) - Default: "github"'
+                'The base provider to use (github, gitlab, bitbucket, twitter) - Default: "github"'
             ],
             'labels': [
                 {},
@@ -582,37 +611,58 @@ class MagiclinkExtension(Extension):
 
         md.inlinePatterns.add("magic-mail", MagiclinkMailPattern(RE_MAIL, md), "<entity")
 
-    def setup_shortener(self, md, base_url, base_user_url, labels, config):
+    def setup_shortener(self, md, base_url, base_user_url, config):
         """Setup shortener."""
 
-        shortener = MagicShortenerTreeprocessor(md, base_url, base_user_url, labels)
+        shortener = MagicShortenerTreeprocessor(md, base_url, base_user_url, self.labels)
         shortener.config = config
         md.treeprocessors.add("magic-repo-shortener", shortener, "<prettify")
 
-    def setup_shorthand(self, md, user, repo, provider, labels, config):
+    def setup_shorthand(self, md, int_mentions, ext_mentions, config):
         """Setup shorthand."""
 
         # Setup URL shortener
         escape_chars = ['@']
         util.escape_chars(md, escape_chars)
-        git_repo = MagiclinkRepositoryPattern(
-            RE_GIT_REPO_MENTIONS, md, user, repo, provider, labels
-        )
-        md.inlinePatterns.add("magic-repo-mention", git_repo, "<entity")
-        git_mention = MagiclinkMentionPattern(
-            RE_GIT_MENTIONS, md, user, repo, provider, labels
-        )
-        md.inlinePatterns.add("magic-mention", git_mention, "<entity")
-        git_ext_refs = MagiclinkExternalRefsPattern(
-            RE_GIT_EXT_REFS, md, user, repo, provider, labels
-        )
-        md.inlinePatterns.add("magic-ext-refs", git_ext_refs, "<entity")
-        git_int_refs = MagiclinkInternalRefsPattern(
-            RE_GIT_INT_REFS, md, user, repo, provider, labels
-        )
-        md.inlinePatterns.add("magic-int-refs", git_int_refs, "<entity")
 
-    def get_base_urls(self, base_url, user, repo, provider, config):
+        # Repository shorthand
+        if self.git_short:
+            git_ext_repo = MagiclinkRepositoryPattern(
+                RE_GIT_EXT_REPO_MENTIONS, md, self.user, self.repo, self.provider, self.labels
+            )
+            md.inlinePatterns.add("magic-repo-ext-mention", git_ext_repo, "<entity")
+            if not self.is_social:
+                git_int_repo = MagiclinkRepositoryPattern(
+                    RE_GIT_INT_REPO_MENTIONS, md, self.user, self.repo, self.provider, self.labels
+                )
+                md.inlinePatterns.add("magic-repo-int-mention", git_int_repo, "<entity")
+
+        # Mentions
+        if ext_mentions:
+            pattern = RE_ALL_EXT_MENTIONS % '|'.join(ext_mentions)
+            git_mention = MagiclinkMentionPattern(
+                pattern, md, self.user, self.repo, self.provider, self.labels
+            )
+            md.inlinePatterns.add("magic-ext-mention", git_mention, "<entity")
+        if int_mentions:
+            git_mention = MagiclinkMentionPattern(
+                int_mentions, md, self.user, self.repo, self.provider, self.labels
+            )
+            md.inlinePatterns.add("magic-int-mention", git_mention, "<entity")
+
+        # Other project refs
+        if self.git_short:
+            git_ext_refs = MagiclinkExternalRefsPattern(
+                RE_GIT_EXT_REFS, md, self.user, self.repo, self.provider, self.labels
+            )
+            md.inlinePatterns.add("magic-ext-refs", git_ext_refs, "<entity")
+            if not self.is_social:
+                git_int_refs = MagiclinkInternalRefsPattern(
+                    RE_GIT_INT_REFS, md, self.user, self.repo, self.provider, self.labels
+                )
+                md.inlinePatterns.add("magic-int-refs", git_int_refs, "<entity")
+
+    def get_base_urls(self, base_url, config):
         """Get base URLs."""
 
         # Setup base URL
@@ -623,9 +673,9 @@ class MagiclinkExtension(Extension):
             base_user_url += "/"
 
         if config.get('repo_url_shorthand', False) or not base_url:
-            if user and repo:
-                base_url = '%s/%s/%s/' % (PROVIDER_INFO[provider]['url'], user, repo)
-                base_user_url = '%s/%s/' % (PROVIDER_INFO[provider]['url'], user)
+            if self.user and self.repo:
+                base_url = '%s/%s/%s/' % (PROVIDER_INFO[self.provider]['url'], self.user, self.repo)
+                base_user_url = '%s/%s/' % (PROVIDER_INFO[self.provider]['url'], self.user)
 
         return base_url, base_user_url
 
@@ -635,10 +685,25 @@ class MagiclinkExtension(Extension):
         config = self.getConfigs()
 
         # Setup repo variables
-        user = config.get('user', '')
-        repo = config.get('repo', '')
-        provider = config.get('provider', 'github')
-        labels = config.get('labels', {})
+        self.user = config.get('user', '')
+        self.repo = config.get('repo', '')
+        self.provider = config.get('provider', 'github')
+        self.labels = config.get('labels', {})
+        self.is_social = self.provider in SOCIAL_PROVIDERS
+        self.git_short = config.get('repo_url_shortener', False)
+        self.social_short = config.get('social_url_shorthand', False)
+
+        int_mentions = None
+        ext_mentions = []
+        if self.git_short:
+            ext_mentions.append(RE_GIT_EXT_MENTIONS)
+            if not self.is_social:
+                int_mentions = RE_GIT_INT_MENTIONS
+
+        if self.social_short:
+            ext_mentions.append(RE_TWITTER_EXT_MENTIONS)
+            if self.is_social:
+                int_mentions = RE_TWITTER_INT_MENTIONS
 
         base_repo_url = config.get('base_repo_url', '').rstrip('/')
         if base_repo_url:  # pragma: no cover
@@ -652,12 +717,12 @@ class MagiclinkExtension(Extension):
         self.setup_autolinks(md, config)
 
         if config.get('repo_url_shorthand', False):
-            self.setup_shorthand(md, user, repo, provider, labels, config)
+            self.setup_shorthand(md, int_mentions, ext_mentions, config)
 
         # Setup link post processor for shortening repository links
-        if config.get('repo_url_shortener', False):
-            base_url, base_user_url = self.get_base_urls(base_repo_url, user, repo, provider, config)
-            self.setup_shortener(md, base_url, base_user_url, labels, config)
+        if self.git_short or self.social_short:
+            base_url, base_user_url = self.get_base_urls(base_repo_url, config)
+            self.setup_shortener(md, base_url, base_user_url, config)
 
 
 def makeExtension(*args, **kwargs):
