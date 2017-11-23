@@ -5,7 +5,6 @@
 There are a number of files for build, test, and continuous integration in the root of the project, but in general, the project is broken up like so.
 
 ```
-├── doc_theme
 ├── docs
 ├── pymdownx
 ├── requirements
@@ -15,7 +14,6 @@ There are a number of files for build, test, and continuous integration in the r
 
 Directory      | Description
 -------------- | -----------
-`doc_theme`    | This contains document theme tweaks for the current theme
 `docs`         | This contains the source files for the documentation.
 `pymdownx`     | This contains the source code for all the extensions.
 `requirements` | This contains files with lists of dependencies required dependencies for continuous integration.
@@ -29,6 +27,8 @@ When writing code, the code should roughly conform to PEP8 and PEP257 suggestion
 - @gitlab:pycqa/flake8
 - @gitlab:pycqa/flake8-docstrings
 - @gitlab:pycqa/pep8-naming
+- @ebeweber/flake8-mutable
+- @gforcada/flake8-builtins
 
 Flake8 can be run directly via the command line from the root of the project.
 
@@ -61,7 +61,7 @@ yarn install
 
 After that you can begin making changes. When ready, you can run the following commands to get a live preview while you make edits, lint your changes, or build the final output.
 
-Yarn\ Commands          | Description
+Yarn\ Commands   | Description
 ---------------- | -----------
 `yarn serve`     | Create a live preview at `localhost:8000` that will pick up your changes as you make them.
 `yarn build`     | Build the final output which will package, minimize, and revision the scripts and stylesheets.  It will also update the `mkdocs.yml` file to point to the new revisioned files.
@@ -70,12 +70,14 @@ Yarn\ Commands          | Description
 
 If you need to make changes to the `mkdocs.yml` file, do not update the one in project root directly, but update the one in `docs/src`. The build environment copies the one in `docs/src` to the project root and injects the revisioned script name(s) and stylesheet name(s).
 
+When serving via `yarn`, if you want to make sure that the local version of `pymdown-extensions` is used, you need to configure `yarn serve` to call with Python instead of calling the MkDocs binary: `yarn serve --mkdocs="python3 -m mkdocs"`.  This is because if you are calling Python, it will look in the current working directory first for a given module when importing, but if you call the MkDocs binary, it will instead import the installed `pymdown-extensions`. Configuring the `--mkdocs` option is also useful if `mkdocs` is not in your path, or you want to call with a specific version of Python.
+
 ## Spell Checking Documents
 
 During validation we build the docs and run a spell checker on them.  The spell checker script uses [Aspell][aspell].  Currently this project uses the latest Aspell.  As the latest Aspell is not available on Windows, it is not expected that everyone will install and run Aspell locally.  In order to perform the spell check, it is expected you are setup to build the documents, and that you have Aspell installed in the your system path. To initiate the spell check run the following command from the root of the project:
 
 ```
-python spelling.py
+python tests/spelling.py
 ```
 
 It should print out the files with the misspelled words if any are found.  If you find it prints words that are not misspelled, you can add them in `.dictionary` in the root of the project.
@@ -168,10 +170,10 @@ To select PY27 unit tests (or other versions -- change accordingly):
 tox -epy27-unittests
 ```
 
-To select spelling:
+To select spelling and document building:
 
 ```
-tox -espelling
+tox -edocuments
 ```
 
 ## Code Coverage

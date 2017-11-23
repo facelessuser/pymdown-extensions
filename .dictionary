@@ -79,12 +79,14 @@ backticks
 blockquote
 blockquotes
 bool
+builtins
 cmd
 coveragepy
 customizable
 dev
 dict
 docstrings
+ebeweber
 emoji
 emojione
 escaper
@@ -92,6 +94,7 @@ facelessuser
 formatter
 gemoji
 gfm
+gforcada
 github
 highlighter's
 html
