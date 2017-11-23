@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.4.0
+
+Nov X, 2017
+
+- **NEW**: Add social media mentions -- Twitter only right now (#156).
+- **FIX**: Use correct regular expression for GitLab and Bitbucket.
+
 ## 4.3.0
 
 Nov 14, 2017
