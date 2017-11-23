@@ -24,17 +24,17 @@ They will be auto-linked like this:
 
 ## Shorthand Links
 
-MagicLink supports shorthand references for GitHub, GitLab, and Bitbucket issues, pull/merge requests, and commits. It also supports mentions for these repository providers and for social media (only Twitter is supported at this time).
-
-To enable shorthand syntax or code repository providers and social media providers, enable `repo_url_shorthand` and `social_url_shorthand` respectively in the [options](#options).
+MagicLink supports shorthand references for GitHub, GitLab, and Bitbucket issues (#1), pull/merge requests (!13), and commits (7d1b1902ea7fe00043a249564ed5032f08dd7152). You can also reference repositories (@facelessuser/pymdown-extensions) and it supports mentioning users (@facelessuser). Mentions also works for social media (only Twitter is supported at this time).
 
 The syntax for repository providers is actually very similar to GitLab's syntax. GitLab was chosen as its syntax bridges the gaps between the three providers. GitLab and Bitbucket require a pull specific syntax while GitHub does not have one. I also preferred the subtle differences in GitLab's commit references as it was consistent with pull and issue syntax.
 
-To use this feature you must first specify in the [options](#options) your `provider` to which all shorthand references are relative to. And if you are specifying a code repository provider as your default, you must also specify the `user` and `repo` (repository) which adds more context and allow you to shorten the syntax even more so for issues relating to your default `user` and/or `repo`. This is useful if you are using MagicLink to write documentation for a project that is hosted on one of the supported code repository providers.
+### Configuring
 
-If you are using this extension more generally, it may make more sense to set a social media provider as the default `provider`. There is no need to set a `user` or `repo` for a social media provider as the context is not useful for mentions. If specifying a social media provider as your default `provider`, you can still reference repository links with shorthand if it enabled, but you will have to use the longer syntax that requires specifying the `provider`, `user`, and `repo`.
+To enable shorthand syntax for code repository providers and social media providers, enable `repo_url_shorthand` and `social_url_shorthand` respectively in the [options](#options).
 
-In general, shorthand that is supported by your provider will be relative to your `provider` unless they are prefixed with a different provider: `@provider:mention`. So if your `provider` is set to `github`, all mentions, issues, pull requests, and commits will be generated for GitHub unless the reference specifies a different provider: `@twitter:mention`. For code repository providers, the same logic is applied to user names and repository names.  If the user is omitted, the default user is assumed.  If the user *and* repository name is omitted, the default user and repository name is assumed.
+To use this feature you must first specify in the [options](#options) your `provider` to which all shorthand references are relative to, but you will still be able to reference outside of your defaults. And if you are specifying a code repository provider as your default, you must also specify the `user` and `repo` (repository) which adds more context and allows you to shorten the syntax even more for issues relating to your default `user` and/or `repo`. This is useful if you are using MagicLink to write documentation for a project that is hosted on one of the supported code repository providers.
+
+If you are using this extension more generally, it may make more sense to set a social media provider as the default `provider`. There is no need to set a `user` or `repo` for a social media provider as the context is not useful for mentions. You will still be able to reference repository links with shorthand if it enabled, albeit in a longer format.
 
 !!! warning
     Links are not verified, so make sure you are specifying valid issues, repositories, and users as they will be auto-linked even if they are not valid.
@@ -125,7 +125,7 @@ Option                          | Type   | Default         | Description
 ~~`base_repo_url`~~             | string | `#!py ''`       | The base repository URL for repository links.
 
 !!! warning "Deprecation 4.2.0"
-    in 4.2.0 `base_repo_url` has been deprecated in favor of `provider`, `user`, and `repo`. If `repo_url_shorthand` is enabled, `base_repo_url` will be ignored and `provider`, `user`, and `repo` will be used.
+    In 4.2.0, `base_repo_url` has been deprecated in favor of `provider`, `user`, and `repo`. If `repo_url_shorthand` is enabled, `base_repo_url` will be ignored and `provider`, `user`, and `repo` will be used.
 
     `base_repo_url` will be removed sometime in the future.  Please migrate to using `provider`, `user`, and `repo`.
 
