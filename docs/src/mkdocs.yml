@@ -19,6 +19,8 @@ theme:
   font:
     text: Roboto
     code: Roboto Mono
+  feature:
+    tabs: true
 
 pages:
   - PyMdown Extensions: index.md
