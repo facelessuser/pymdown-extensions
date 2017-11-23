@@ -62,7 +62,7 @@ Check out documentation on each extension to learn more about how to configure a
     [Keys](extensions/keys.md) makes inserting key inputs into documents as easy as pressing ++ctrl+alt+delete++.
 
 ??? summary "MagicLink"
-    [MagicLink](extensions/magiclink.md) linkafies URL and email links without having to wrap them in Markdown syntax.
+    [MagicLink](extensions/magiclink.md) linkafies URL and email links without having to wrap them in Markdown syntax. Also, allows shortens repository issue, pull request, and commit links. You can even use easily insert mentions: @twitter:twitter.
 
 ??? summary "Mark"
     [Mark](extensions/mark.md) allows you to ==mark== words easily.
@@ -97,7 +97,7 @@ Check out documentation on each extension to learn more about how to configure a
     - [ ] milk
 
 ??? summary "Tilde"
-    [Tilde](extensions/tilde.md) is syntactically built around the `~` character. It adds support for inserting sub^scripts^ and adds an easy way to place ~~text~~ in a `#!html <del>` tag.
+    [Tilde](extensions/tilde.md) is syntactically built around the `~` character. It adds support for inserting sub~scripts~ and adds an easy way to place ~~text~~ in a `#!html <del>` tag.
 
 ??? summary "InlineHilite"
     [InlineHilite](extensions/inlinehilite.md) highlights inline code: `#!py from module import function as func`.

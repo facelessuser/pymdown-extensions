@@ -15,6 +15,7 @@ magiclink (bitbucket):
       provider: bitbucket
       repo_url_shortener: true
       repo_url_shorthand: true
+      social_url_shorthand: true
       user: facelessuser
       repo: pymdown-extensions
 
@@ -24,6 +25,7 @@ magiclink (extensions):
       hide_protocol: false
       repo_url_shortener: true
       repo_url_shorthand: true
+      social_url_shorthand: true
       user: facelessuser
       repo: pymdown-extensions
     pymdownx.betterem:
@@ -38,6 +40,7 @@ magiclink (gitlab):
       provider: gitlab
       repo_url_shortener: true
       repo_url_shorthand: true
+      social_url_shorthand: true
       user: facelessuser
       repo: pymdown-extensions
 
@@ -54,6 +57,18 @@ magiclink (shorthand):
       hide_protocol: false
       repo_url_shortener: true
       repo_url_shorthand: true
+      social_url_shorthand: true
+      user: facelessuser
+      repo: pymdown-extensions
+
+magiclink (shorthand-social):
+  extensions:
+    pymdownx.magiclink:
+      hide_protocol: false
+      repo_url_shortener: true
+      repo_url_shorthand: true
+      social_url_shorthand: true
+      provider: twitter
       user: facelessuser
       repo: pymdown-extensions
 
@@ -63,5 +78,6 @@ magiclink_hide_protocol:
       hide_protocol: true
       repo_url_shortener: true
       repo_url_shorthand: true
+      social_url_shorthand: true
       user: facelessuser
       repo: pymdown-extensions

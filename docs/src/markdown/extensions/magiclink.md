@@ -22,26 +22,32 @@ They will be auto-linked like this:
 - Just paste links directly in the document like this: https://google.com.
 - Or even an email address: fake.email@email.com.
 
-## Repository Shorthand Links
+## Shorthand Links
 
-MagicLink supports a shorthand syntax for quickly referencing repository issues, pull requests, commits, and even mentioning other users. The syntax is very *similar* to GitHub's, but borrows syntax from GitLab to bridge the differences between the three providers.
+MagicLink supports shorthand references for GitHub, GitLab, and Bitbucket issues (#1), pull/merge requests (!13), and commits (7d1b1902ea7fe00043a249564ed5032f08dd7152). You can also reference repositories (@facelessuser/pymdown-extensions) and it supports mentioning users (@facelessuser). Mentions also works for social media (only Twitter is supported at this time).
 
-To use this feature you must configure MagicLink for your desired provider and specify the default user and repository via the `provider`, `user`, and `repo` [options](#options).  You must also set `repo_url_shorthand` to `True`.
+The syntax for repository providers is actually very similar to GitLab's syntax. GitLab was chosen as its syntax bridges the gaps between the three providers. GitLab and Bitbucket require a pull specific syntax while GitHub does not have one. I also preferred the subtle differences in GitLab's commit references as it was consistent with pull and issue syntax.
 
-All shorthand links will be relative to your `provider`, unless they are prefixed with a different provider. So if your `provider` is set to `github`, all mentions will be generated for GitHub unless a provider is specified: `@provider:mention`.  If a user name or repository is not specified for issues, pull requests, or commits, the link will use the values found in `user` and `repo` from the extension's [options](#options).
+### Configuring
+
+To enable shorthand syntax for code repository providers and social media providers, enable `repo_url_shorthand` and `social_url_shorthand` respectively in the [options](#options).
+
+To use this feature you must first specify in the [options](#options) your `provider` to which all shorthand references are relative to, but you will still be able to reference outside of your defaults. And if you are specifying a code repository provider as your default, you must also specify the `user` and `repo` (repository) which adds more context and allows you to shorten the syntax even more for issues relating to your default `user` and/or `repo`. This is useful if you are using MagicLink to write documentation for a project that is hosted on one of the supported code repository providers.
+
+If you are using this extension more generally, it may make more sense to set a social media provider as the default `provider`. There is no need to set a `user` or `repo` for a social media provider as the context is not useful for mentions. You will still be able to reference repository links with shorthand if it enabled, albeit in a longer format.
 
 !!! warning
     Links are not verified, so make sure you are specifying valid issues, repositories, and users as they will be auto-linked even if they are not valid.
 
 ### Mentions
 
-Mentions of other users are performed with the following syntax: `@{user}`. To reference an external provider, use the format `@{provider}:{user}`
+Mentions of other users are performed with the following syntax: `@{user}`. To reference a provider other than your default, use the format `@{provider}:{user}`
 
-You can also mention repositories.  This feature is actually inspired by the GitHub only @Python-Markdown/github-links which performs *similar* auto-linking.  The syntax to auto-link a repository with mentioning is very similar to auto-linking a user, except you append the repository to the user name like so: `@{user}/{repo}`. If specifying a non-default provider, the form would look like: `@{provider}:{user}/{repo}`. The output for repository mentions omits the `@` symbol and will just show the user and repository, but you are free to style it with CSS to make it stand out more like has been done in this document.
+For code repository providers, you can also mention repositories.  This feature is actually inspired by the GitHub only extension @Python-Markdown/github-links, which performs *similar* auto-linking.  The syntax to auto-link a repository with mentioning is very similar to auto-linking a user, except you append the repository to the user name like so: `@{user}/{repo}`. If specifying a non-default provider, the form would look like: `@{provider}:{user}/{repo}`. The output for repository mentions omits the `@` symbol and will just show the user and repository, but you are free to style it with CSS to make it stand out more like has been done in this document.
 
 ### Issues and Pull Requests
 
-Issues and pull requests are specified with `#{num}` and `!{num}` respectively. To specify an issue for a non-default repository under the default user, prefix the repository: `{repo}#{num}`. And to specify a repository under a non-default user, prefix both the user and repository: `{user}/{repo}#{num}`. And to reference an external provider, use the format `{provider}:{user}/{repo}#{num}`.
+Issues and pull requests are specified with `#{num}` and `!{num}` respectively. To specify an issue for a non-default repository under the default user, prefix the repository: `{repo}#{num}`. And to specify a repository under a non-default user, prefix both the user and repository: `{user}/{repo}#{num}`. And to reference an external provider, use the format `{provider}:{user}/{repo}#{num}`. If the default provider is a social media provider, then only the latter syntax can be used.
 
 !!! note "Note"
     GitHub actually gives pull requests and issues unique values while GitLab and Bitbucket can have pulls with the same ID as an issue. So with GitHub, you can use `#{num}` format for both issues and pulls, and GitHub will redirect you to the appropriate issue or pull.
@@ -50,7 +56,7 @@ Issues and pull requests are specified with `#{num}` and `!{num}` respectively. 
 
 ### Commits
 
-Commit shorthand syntax is simply the 40 character commit hash value: `{hash}`. And much like issues and pull requests, you can denote a repository under the default user with `{repo}@{hash}` and a repository under a non-default user with `{user}/{repo}@{hash}`. Lastly, to reference an external provider, use the format `{provider}:{user}/{repo}@{hash}`.
+Commit shorthand syntax is simply the 40 character commit hash value: `{hash}`. And much like issues and pull requests, you can denote a repository under the default user with `{repo}@{hash}` and a repository under a non-default user with `{user}/{repo}@{hash}`. Lastly, to reference an external provider, use the format `{provider}:{user}/{repo}@{hash}`. If the default provider is a social media provider, then only the latter syntax can be used.
 
 ### Shorthand Examples
 
@@ -59,7 +65,7 @@ The examples below assume the default provider, user, and repository as `github`
 Shorthand                                                      | Output
 -------------------------------------------------------------- | -----------
 `@user`                                                        | @user
-`@gitlab:user`                                                 | @gitlab:user
+`@twitter:twitter`                                             | @twitter:twitter
 `@user/repo`                                                   | @user/repo
 `@gitlab:user/repo`                                            | @gitlab:user/repo
 `#1`                                                           | #1
@@ -77,9 +83,7 @@ Shorthand                                                      | Output
 
 ## Repository Link Shortener
 
-MagicLink can also recognize issue, pull request, and commit links, and render them in the same output format as the [repository shortcut links](#repository-shortcut-links) feature. Unfortunately, mention link shortening is not presently supported due to the fact that MagicLink does not use any of the providers' API to verify user links, and some legitimate links can look like user links, but are not.
-
-Link shortening is a little different from the link shorthand feature as it can handle all three providers regardless of what the `provider` is set as the information can be directly determined from the links.
+MagicLink can also recognize issue, pull request, and commit links, and render them in the same output format as the [repository shortcut links](#shorthand-links) feature. Unfortunately, mention link shortening is not presently supported due to the fact that MagicLink does not use any of the providers' API to verify user links, and some legitimate links can look like user links, but are not.
 
 If we specify long form URLs from external providers, they will be shortened appropriately.
 
@@ -92,7 +96,7 @@ If we specify long form URLs from external providers, they will be shortened app
 - https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
 
 
-When specifying links that reference the configured `provider` and `user`, links will be shortened differently in light of that context.
+When specifying links that reference the configured `provider`, `user`, and `repo`, links will be shortened differently in light of that context.
 
 ```md
 - https://github.com/facelessuser/pymdown-extensions/issues/1
@@ -112,7 +116,8 @@ Option                          | Type   | Default         | Description
 ------------------------------- | ------ | --------------- | -----------
 `hide_protocol`                 | bool   | `#!py False`    | If `True`, links are displayed without the initial `ftp://`, `http://`, `https://`, or `ftps://`.
 `repo_url_shortener`            | bool   | `#!py False`    | If `True`, GitHub, Bitbucket, and GitLab commit, pull, and issue links are are rendered in a shorthand syntax.
-`repo_url_shorthand`            | bool   | `#!py False`    | If `True`, you can directly use a shorthand syntax to represent commit, pull, issue, and mention links and they will be auto-linked.
+`repo_url_shorthand`            | bool   | `#!py False`    | If `True`, you can directly use a shorthand syntax to represent commit, pull, issue, and mention links for repository providers and they will be auto-linked.
+`social_url_shorthand`          | bool   | `#!py False`    | If `True`, you can directly use a shorthand syntax to represent mention links for social media providers and they will be auto-linked.
 `provider`                      | string | `#!py 'github'` | The provider to use for repository shorthand syntax and shortener.
 `user`                          | string | `#!py ''`       | The default user name to use for the specified provider.
 `repo`                          | string | `#!py ''`       | The default repository name to use for the specified user and provider.
@@ -120,7 +125,7 @@ Option                          | Type   | Default         | Description
 ~~`base_repo_url`~~             | string | `#!py ''`       | The base repository URL for repository links.
 
 !!! warning "Deprecation 4.2.0"
-    in 4.2.0 `base_repo_url` has been deprecated in favor of `provider`, `user`, and `repo`. If `repo_url_shorthand` is enabled, `base_repo_url` will be ignored and `provider`, `user`, and `repo` will be used.
+    In 4.2.0, `base_repo_url` has been deprecated in favor of `provider`, `user`, and `repo`. If `repo_url_shorthand` is enabled, `base_repo_url` will be ignored and `provider`, `user`, and `repo` will be used.
 
     `base_repo_url` will be removed sometime in the future.  Please migrate to using `provider`, `user`, and `repo`.
 
@@ -163,5 +168,6 @@ Commits              | `magiclink-commit`
 GitHub               | `magiclink-github`
 Bitbucket            | `magiclink-bitbucket`
 GitLab               | `magiclink-gitlab`
+Twitter              | `magiclink-twitter`
 
 --8<-- "refs.md"

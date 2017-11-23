@@ -19,6 +19,8 @@ theme:
   font:
     text: Roboto
     code: Roboto Mono
+  feature:
+    tabs: true
 
 pages:
   - PyMdown Extensions: index.md
@@ -80,6 +82,7 @@ markdown_extensions:
   - pymdownx.magiclink:
       repo_url_shortener: true
       repo_url_shorthand: true
+      social_url_shorthand: true
       user: facelessuser
       repo: pymdown-extensions
   - pymdownx.tilde:
