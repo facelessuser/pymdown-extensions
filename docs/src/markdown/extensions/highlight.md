@@ -12,7 +12,7 @@ As previously mentioned, both InlineHilite's and SuperFences' highlighting can b
 
 If Pygments is installed, it will be the default syntax highlighter, but if it is not, or if `use_pygments` is turned off, code tags will be rendered in the HTML5 format for JavaScript highlighting: 
 
-```
+```html
 <pre class="highlight"><code class="language-mylanguage"></code></pre>
 ```
 

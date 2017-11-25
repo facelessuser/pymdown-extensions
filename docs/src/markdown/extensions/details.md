@@ -62,7 +62,7 @@ Details will be output in the format below. The content will always be encapsula
 
 Unfortunately, due to how new `#!html <details><summary>` tags are, not all browsers support them yet.  In order to have them supported in all new browsers, you will have to provide some fallback styling and JavaScript until all browsers catch up.
 
-This extension's goal is not to provide you with the perfect polyfill (you can design or find your own), but a basic example is provided to show the basic polyfill that is being used in this document. There are more elaborate polyfills available that support jQuery, add keyboard events, or even support back to IE8. Feel free to modify what is here or find a solution that fits your needs.
+This extension's goal is not to provide you with the perfect polyfill, but this is a basic example that provides basic support. There are more elaborate polyfills available that support jQuery, add keyboard events, or even support back to IE8. Feel free to modify what is here or find a solution that fits your needs.
 
 ??? settings "Basic Polyfill Setup"
     Here is the basic CSS that that can be used.  It is meant to provide a consistent CSS in both browsers that support `#!html <details><summary>` tags and those that do not.
@@ -108,7 +108,7 @@ This extension's goal is not to provide you with the perfect polyfill (you can d
 
     And below is the JavaScript that will detect browsers that do not support `#!html <details><summary>` tags and apply a `no-details` class to all details in those browsers. It will also attach a click event that will toggle the open state. The CSS above will target the `no-details` class and the `open` attribute to hide/show the content of your `#!html <details>` tag. Just run the code after the HTML content is loaded.
 
-    There are plenty of things that aren't covered here, like jumping to a footnote or ID inside a closed pollyfilled detail element, but this documentation's aim is not to provide a complete solution for details, but to give you a starting point. There are already JavaScript projects that aim to provide complete detail pollyfills, and if they are not adequate, you can write your own. 
+    There are plenty of things that aren't covered here, like jumping to a footnote or ID inside a closed polyfilled detail element, but this is left up to the user to figure out, or for a complete 3rd party polyfill.
 
     ```js
     (function () {

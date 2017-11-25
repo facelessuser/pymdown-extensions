@@ -22,7 +22,7 @@ MagicLink supports auto-linking HTTP, FTP and email links. You can specify these
 
 ## Shorthand Links
 
-MagicLink supports shorthand references for GitHub, GitLab, and Bitbucket issues (#1), pull/merge requests (!13), and commits (7d1b1902ea7fe00043a249564ed5032f08dd7152). You can also reference repositories (@facelessuser/pymdown-extensions) and it supports mentioning users (@facelessuser). Mentions also works for social media (only Twitter is supported at this time).
+MagicLink supports shorthand references for GitHub, GitLab, and Bitbucket issues (#1), pull/merge requests (!13), commits (7d1b1902ea7fe00043a249564ed5032f08dd7152), and compares (e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac). You can also reference repositories (@facelessuser/pymdown-extensions) and it supports mentioning users (@facelessuser). Mentions also works for social media (only Twitter is supported at this time).
 
 The syntax for repository providers is actually very similar to GitLab's syntax. GitLab was chosen as its syntax bridges the gaps between the three providers. GitLab and Bitbucket require a pull specific syntax while GitHub does not have one. I also preferred the subtle differences in GitLab's commit references as it was consistent with pull and issue syntax.
 
@@ -136,9 +136,35 @@ Commit shorthand syntax is simply the 40 character commit hash value: `{hash}`. 
 
     gitlab:pycqa/flake8@8acf55e0f85233c51c291816d73d828cc62d30d1
 
+## Diff/Compare
+
+GitLab offers a useful shorthand to specify links to compare differences between two commits. This has been adopted for all the supported repository providers.
+
+Specifying a compare link is very similar to specifying a commit link except you must specify the older hash and the newer hash separated by `...`: `{hash1}...{hash2}`. To specify a compare for a non-default repository under the default user, prefix the repository: `{repo}@{hash1}...{hash2}`. And to specify a compare under a non-default user, prefix both the user and repository: `{user}/{repo}@{hash1}...{hash2}`. Lastly, to reference an external provider, use the format `{provider}:{user}/{repo}@{hash1}...{hash2}`.
+
+!!! example "Compare Example"
+
+    ```
+    e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+
+    backrefs@88c6238a1c2cf71a96eb9abb4b0213f79d6ca81f...cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
+
+    Python-Markdown/markdown@007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8dde242c29d4be50b7bbf3c17fedb
+
+    gitlab:pycqa/flake8@593a4b8eddb0262924812aaf90184521ed8bda61...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e
+    ```
+
+    e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+
+    backrefs@88c6238a1c2cf71a96eb9abb4b0213f79d6ca81f...cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
+
+    Python-Markdown/markdown@007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8dde242c29d4be50b7bbf3c17fedb
+
+    gitlab:pycqa/flake8@593a4b8eddb0262924812aaf90184521ed8bda61...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e
+
 ## Repository Link Shortener
 
-MagicLink can also recognize issue, pull request, and commit links, and render them in the same output format as the [repository shortcut links](#shorthand-links) feature. Unfortunately, mention link shortening is not presently supported due to the fact that MagicLink does not use any of the providers' API to verify user links, and some legitimate links can look like user links, but are not.
+MagicLink can also recognize issue, pull request, commit, and compare links, and render them in the same output format as the [repository shortcut links](#shorthand-links) feature. Unfortunately, mention link shortening is not presently supported due to the fact that MagicLink does not use any of the providers' API to verify user links, and some legitimate links can look like user links, but are not.
 
 If we specify long form URLs from external providers, they will be shortened appropriately.
 
@@ -162,12 +188,14 @@ When specifying links that reference the configured `provider`, `user`, and `rep
     - https://github.com/facelessuser/pymdown-extensions/issues/1
     - https://github.com/facelessuser/pymdown-extensions/pull/13
     - https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+    - https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
     - https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
     ```
 
     - https://github.com/facelessuser/pymdown-extensions/issues/1
     - https://github.com/facelessuser/pymdown-extensions/pull/13
     - https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+    - https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
     - https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
 
 ## CSS
@@ -182,6 +210,7 @@ Repository\ Mentions | `magiclink-repository`
 Issues               | `magiclink-issue`
 Pulls                | `magiclink-pull`
 Commits              | `magiclink-commit`
+Compares             | `magiclink-compare`
 GitHub               | `magiclink-github`
 Bitbucket            | `magiclink-bitbucket`
 GitLab               | `magiclink-gitlab`
@@ -215,6 +244,7 @@ The default values are:
 ```js
     {
         'commit': 'Commit',
+        'compare': 'Compare',
         'issue': 'Issue',
         'pull': 'Pull Request',
         'mention': 'User',

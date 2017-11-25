@@ -20,17 +20,19 @@ There are two special escapes among all of these escapes though: escaping "space
 
 So in short, EscapeAll escapes all inline characters.
 
-> So all ASCII characters?
+!!! question "Q & A"
 
-It escapes everything.
+    **So all ASCII characters?**
 
-> What about Unicode?
+    _It escapes everything._
 
-It escapes everything!
+    **What about Unicode?**
 
-> What about...
+    _It escapes everything!_
 
-EVERYTHING! IT ESCAPES EVERYTHING!
+    **What about...**
+
+    _EVERYTHING! IT ESCAPES EVERYTHING!_
 
 ## Options
 
