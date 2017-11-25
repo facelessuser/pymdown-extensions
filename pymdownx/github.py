@@ -25,6 +25,8 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import unicode_literals
 from markdown import Extension
 from . import emoji
+from .util import PymdownxDeprecationWarning
+import warnings
 
 extensions = [
     'markdown.extensions.tables',
@@ -69,6 +71,14 @@ class GithubExtension(Extension):
 
     def extendMarkdown(self, md, md_globals):
         """Register extension instances."""
+
+        warnings.warn(
+            "'GitHub' extension is deprecated, and it is encouraged to manually\n"
+            "configure your own GitHub mode by inlcuding and configuring\n"
+            "the necessary extensions. See documentation for details.\n"
+            "The 'GitHub' extension will be removed in the future.",
+            PymdownxDeprecationWarning
+        )
 
         md.registerExtensions(extensions, self.extension_configs)
 
