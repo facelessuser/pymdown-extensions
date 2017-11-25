@@ -37,6 +37,7 @@ import os
 MAGIC_LINK = 1
 MAGIC_AUTO_LINK = 2
 
+# Bare link/email detection
 RE_MAIL = r'''(?xi)
 (
     (?<![-/\+@a-z\d_])(?:[-+a-z\d_]([-a-z\d_+]|\.(?!\.))*)  # Local part
@@ -57,11 +58,15 @@ RE_LINK = r'''(?xi)
 )
 '''
 
+RE_AUTOLINK = r'(?i)<((?:ht|f)tps?://[^>]*)>'
+
+# Provider specific user regex rules
 RE_TWITTER_USER = r'\w{1,15}'
 RE_GITHUB_USER = r'[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?'
 RE_GITLAB_USER = r'[\.a-zA-Z\d_](?:[-a-zA-Z\d_\.]{0,37}[-a-zA-Z\d_])?'
 RE_BITBUCKET_USER = r'[-a-zA-Z\d_]{1,39}'
 
+# External mention patterns
 RE_ALL_EXT_MENTIONS = r'''(?x)
 (?P<mention>
     (?<![a-zA-Z])@
@@ -73,8 +78,10 @@ RE_GITHUB_EXT_MENTIONS = r'github:%s' % RE_GITHUB_USER
 RE_GITLAB_EXT_MENTIONS = r'gitlab:%s' % RE_GITLAB_USER
 RE_BITBUCKET_EXT_MENTIONS = r'bitbucket:%s' % RE_BITBUCKET_USER
 
+# Internal mention patterns
 RE_INT_MENTIONS = r'(?P<mention>(?<![a-zA-Z])@%s)\b'
 
+# External repo mention patterns
 RE_GIT_EXT_REPO_MENTIONS = r'''(?x)
 (?P<mention>
     (?<![a-zA-Z])
@@ -83,29 +90,32 @@ RE_GIT_EXT_REPO_MENTIONS = r'''(?x)
 /(?P<mention_repo>[-._a-zA-Z\d]{0,99}[a-zA-Z\d])\b
 ''' % '|'.join([RE_GITHUB_EXT_MENTIONS, RE_GITLAB_EXT_MENTIONS, RE_BITBUCKET_EXT_MENTIONS])
 
+# Internal repo mention patterns
 RE_GIT_INT_REPO_MENTIONS = r'''(?x)
 (?P<mention>(?<![a-zA-Z])@%s)\b
 /(?P<mention_repo>[-._a-zA-Z\d]{0,99}[a-zA-Z\d])\b
 '''
 
+# External reference patterns (issue, pull request, commit, compare)
 RE_GIT_EXT_REFS = r'''(?x)
 (?<![@/])(?:(?P<user>\b%s)/)
 (?P<repo>\b[-._a-zA-Z\d]{0,99}[a-zA-Z\d])
 (?:(?P<issue>(?:\#|!)[1-9][0-9]*)|(?P<commit>@[a-f\d]{40})(?:\.{3}(?P<diff>[a-f\d]{40}))?)\b
 ''' % '|'.join([RE_GITHUB_EXT_MENTIONS, RE_GITLAB_EXT_MENTIONS, RE_BITBUCKET_EXT_MENTIONS])
 
+# Internal reference patterns (issue, pull request, commit, compare)
 RE_GIT_INT_REFS = r'''(?x)
 (?<![@/])(?:(?P<user>\b%s)/)?
 (?P<repo>\b[-._a-zA-Z\d]{0,99}[a-zA-Z\d])
 (?:(?P<issue>(?:\#|!)[1-9][0-9]*)|(?P<commit>@[a-f\d]{40})(?:\.{3}(?P<diff>[a-f\d]{40}))?)\b
 '''
 
+# Internal reference patterns for default user and repository (issue, pull request, commit, compare)
 RE_GIT_INT_MICRO_REFS = r'''(?x)
 (?:(?<![a-zA-Z])(?P<issue>(?:\#|!)[1-9][0-9]*)|(?P<commit>(?<![@/])\b[a-f\d]{40})(?:\.{3}(?P<diff>[a-f\d]{40}))?)\b
 '''
 
-RE_AUTOLINK = r'(?i)<((?:ht|f)tps?://[^>]*)>'
-
+# Repository link shortening pattern
 RE_REPO_LINK = re.compile(
     r'''(?xi)
     (?:
@@ -130,8 +140,8 @@ RE_REPO_LINK = re.compile(
     '''
 )
 
-SOCIAL_PROVIDERS = ('twitter',)
-
+# Provider specific info (links, names, specific patterns, etc.)
+SOCIAL_PROVIDERS = {'twitter'}
 PROVIDER_INFO = {
     "twitter": {
         "provider": "Twitter",
