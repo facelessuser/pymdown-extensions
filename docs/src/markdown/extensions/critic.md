@@ -2,62 +2,103 @@
 
 ## Overview
 
-Critic is an extension that adds handling and support of [Critic Markup][critic-markup].  This extension runs before all other extensions to parse the critic edits.  It allows for the removal or acceptance of the critic modifications and modifies the source to reflect the rejection or approval (highlights and comments are stripped in both cases).  It also allows for visually displaying the changes in HTML output ([mileage may vary](#limitations-with-previewing-critic-markup)).
+Critic is an extension that adds handling and support of [Critic Markup][critic-markup] which uses a special syntax to represent edits to a Markdown document.  This extension runs before all other extensions to parse the critic edits.
 
-## Options
+Critic allows you to automatically accept edits or reject the edits and render the output accordingly. It also allows for visually displaying the changes in HTML output ([mileage may vary](#limitations-with-previewing-critic-markup)).
 
-Option    | Type   | Default     | Description
---------- |------- | ----------- | -----------
-`mode`    | string | `#!py view` | `view` just parses the markup and displays it in its HTML equivalent rendering.  `accept` strips out the critic markup and replaces them with the suggested changes.  `reject` rejects all the suggestions and strips the critic markup out replacing it with the original.
+## Usage
+
+Critic Markup uses special markup to insert, delete, substitute, highlight, and comment.
+
+To insert or remove text you can use `#!critic-markup {++insert me++}` and `#!critic-markup {--remove me--}` respectively.  You can also denote a substitution with `#!critic-markup {~~substitute this~>with this~~}`.
+
+You can also highlight specific text with `#!critic-markup {==highlight me==}`. Or even comment, which is generally done by highlighting text and following it with a comment: `#!critic-markup {==highlight me==}{>>Add a comment<<}`.
+
+!!! example "Critic Markup Accept Example"
+
+    ```critic-markup
+    Here is some {--*incorrect*--} Markdown.  I am adding this{++ here++}.  Here is some more {--text
+     that I am removing--}text.  And here is even more {++text that I 
+     am ++}adding.{~~
+
+    ~>  ~~}Paragraph was deleted and replaced with some spaces.{~~  ~>
+
+    ~~}Spaces were removed and a paragraph was added.
+
+    And here is a comment on {==some
+     text==}{>>This works quite well. I just wanted to comment on it.<<}. Substitutions {~~is~>are~~} great!
+
+    General block handling.
+
+    {--
+
+    * test remove
+    * test remove
+    * test remove
+        * test remove
+    * test remove
+
+    --}
+
+    {++
+
+    * test add
+    * test add
+    * test add
+        * test add
+    * test add
+
+    ++}
+    ```
+
+    --8<-- "critic-accept-example.md"
+
+When previewing, you can style them to stand out (see [CSS](#css) for more information):
+
+!!! example "Critic Markup Preview Example"
+
+    ```critic-markup
+    Here is some {--*incorrect*--} Markdown.  I am adding this{++ here++}.  Here is some more {--text
+     that I am removing--}text.  And here is even more {++text that I 
+     am ++}adding.{~~
+
+    ~>  ~~}Paragraph was deleted and replaced with some spaces.{~~  ~>
+
+    ~~}Spaces were removed and a paragraph was added.
+
+    And here is a comment on {==some
+     text==}{>>This works quite well. I just wanted to comment on it.<<}. Substitutions {~~is~>are~~} great!
+
+    General block handling.
+
+    {--
+
+    * test remove
+    * test remove
+    * test remove
+        * test remove
+    * test remove
+
+    --}
+
+    {++
+
+    * test add
+    * test add
+    * test add
+        * test add
+    * test add
+
+    ++}
+    ```
+
+    --8<-- "critic-preview-example.md"
 
 ## Limitations with Previewing Critic Markup
 
 Parsing CriticMarkup is very straight forward.  If you need to reject critic marks or accept them, the Critic extension will work quite well.  But when trying to render the edits visually **and** trying to convert the document to HTML, things can get ugly.  I think this is the one unfortunate problem with CriticMarkup.  The existence of the critic edits can alter the actual source.  Its a fantastic idea, but it should be understood that when using CriticMarkup beyond inline or block paragraphs, there is a possibility that invalid HTML will be created for the preview (especially in relation to lists or if breaking up Markdown syntax).  I think Fletcher said it best here: http://fletcher.github.io/MultiMarkdown-4/criticmarkup.
 
 The Critic extension does its best by employing a preprocessor to inject the critic tags before all other parsing and a post-processor to clean up some of the weird side effects of the injection (only selected odd cases as others are more difficult to fix).  It injects some classes into the edit region's HTML output which allows for CSS styling.  There is probably a lot more post-processing that could be done to fix more issues, but whether this extension will be going further down that road has not yet been decided.
-
-## Examples
-
---8<-- "critic-table.md"
-
-Here they are in action:
-
-```critic-markup
-Here is some {--*incorrect*--} Markdown.  I am adding this{++ here.++}.  Here is some more {--text
- that I am removing--}text.  And here is even more {++text that I 
- am ++}adding.{~~
-
-~>  ~~}Paragraph was deleted and replaced with some spaces.{~~  ~>
-
-~~}Spaces were removed and a paragraph was added.
-
-And here is a comment on {==some
- ==text== ==}{>>This works quite well. I just wanted to comment on it.<<}. Substitutions {~~is~>are~~} great!
-
-General block handling.
-
-{--
-
-* test
-* test
-* test
-    * test
-* test
-
---}
-
-{++
-
-* test
-* test
-* test
-    * test
-* test
-
-++}
-```
-
---8<-- "critic-example.md"
 
 ## CSS
 
@@ -70,9 +111,7 @@ Classes   | Description
 `block`   | Applied to critic HTML tags that are detected as surrounding a block region.
 `comment` | A CriticMarkup comment.
 
-??? settings "Example CSS"
-
-    Here is some example CSS you can use for rendering the visualization.
+??? settings "Basic CSS Setup"
 
     ```css
     /* Critic Markup */
@@ -188,5 +227,12 @@ Classes   | Description
       padding: .02em;
     }
     ```
+
+## Options
+
+Option    | Type   | Default     | Description
+--------- |------- | ----------- | -----------
+`mode`    | string | `#!py view` | `view` just parses the markup and displays it in its HTML equivalent rendering.  `accept` strips out the critic markup and replaces them with the suggested changes.  `reject` rejects all the suggestions and strips the critic markup out replacing it with the original.
+
 
 --8<-- "links.md"

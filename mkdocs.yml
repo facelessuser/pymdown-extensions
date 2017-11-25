@@ -78,6 +78,10 @@ markdown_extensions:
           lang: php
           options:
             startinline: true
+        - name: pycon3
+          lang: pycon
+          options:
+            python3: true
   - pymdownx.inlinehilite:
   - pymdownx.magiclink:
       repo_url_shortener: true
@@ -111,6 +115,6 @@ extra:
     - type: github
       link: https://github.com/facelessuser
 extra_css:
-  - extra-f8303dea60.css
+  - extra.css
 extra_javascript:
-  - extra-d8800ea088.js
+  - extra.js

@@ -2,58 +2,51 @@
 
 ## Overview
 
-ProgressBar is an extension that adds support for progress/status bars.  It can take percentages or fractions, and it can optionally generate classes for percentages at 20% levels.  It also works with Python Markdown's built in `attr_list` extension.  Though progress bars are rendered as block items, it accepts `attr_list`'s inline format.
+ProgressBar is an extension that adds support for progress/status bars.  It can take percentages or fractions, and it can optionally generate classes for percentages at 20% levels.  It also works with Python Markdown's built in `attr_list` extension.
 
 The basic syntax for progress bars is: `[= <percentage or fraction> "optional single or double quoted title"]`.  The opening `[` can be followed by one or more `=` characters. After the `=` char(s) the percentage is specified as either a fraction or percentage and can optionally be followed by a title surrounded in either double quotes or single quotes.
 
-## Options
+!!! example "Progress Bar Example"
 
-Option        | Type   | Default     | Description |
-------------- | ------ | ----------- |-------------|
-`level_class` | bool   | `#!py True` | Enables or disables the level class feature.  The level class feature adds level classes in increments of 20.
-`add_classes` | string | `#!py ''`   | This option accepts a string of classes separated by spaces.
+    ```
+    [=0% "0%"]
+    [=5% "5%"]
+    [=25% "25%"]
+    [=45% "45%"]
+    [=65% "65%"]
+    [=85% "85%"]
+    [=100% "100%"]
+    ```
 
-## Examples
+    [=0% "0%"]
+    [=5% "5%"]
+    [=25% "25%"]
+    [=45% "45%"]
+    [=65% "65%"]
+    [=85% "85%"]
+    [=100% "100%"]
 
-Colors by percent with labels:
+Though progress bars are rendered as block items, it accepts `attr_list`'s inline format.
 
-```
-[=0% "0%"]
-[=5% "5%"]
-[=25% "25%"]
-[=45% "45%"]
-[=65% "65%"]
-[=85% "85%"]
-[=100% "100%"]
-```
+!!! example "Progress Bar with Attributes"
 
-[=0% "0%"]
-[=5% "5%"]
-[=25% "25%"]
-[=45% "45%"]
-[=65% "65%"]
-[=85% "85%"]
-[=100% "100%"]
+    ```
+    [=0%]{: .thin}
+    [=5%]{: .thin}
+    [=25%]{: .thin}
+    [=45%]{: .thin}
+    [=65%]{: .thin}
+    [=85%]{: .thin}
+    [=100%]{: .thin}
+    ```
 
-Apply a class:
-
-```
-[=0%]{: .thin}
-[=5%]{: .thin}
-[=25%]{: .thin}
-[=45%]{: .thin}
-[=65%]{: .thin}
-[=85%]{: .thin}
-[=100%]{: .thin}
-```
-
-[=0%]{: .thin}
-[=5%]{: .thin}
-[=25%]{: .thin}
-[=45%]{: .thin}
-[=65%]{: .thin}
-[=85%]{: .thin}
-[=100%]{: .thin}
+    [=0%]{: .thin}
+    [=5%]{: .thin}
+    [=25%]{: .thin}
+    [=45%]{: .thin}
+    [=65%]{: .thin}
+    [=85%]{: .thin}
+    [=100%]{: .thin}
 
 ## Styling with CSS
 
@@ -74,9 +67,9 @@ Classes                  | Description
 `progress-label`         | This is attached to the `p` element that will contain the desired label.
 `progress-<integer>plus` | This is an optional class that indicates the percentage of the progress bar by increments of 20.
 
-??? settings "Example CSS"
+??? settings "CSS Setup"
 
-    You are able to style your progress bars as fancy or plain as you want. Do this documents current style, the CSS is pretty plain. You can see it down below.
+    You are able to style your progress bars as fancy or plain as you want.
 
     ```css
     .progress-label {
@@ -142,3 +135,10 @@ Classes                  | Description
       background-color: #f50057;
     }
     ```
+
+## Options
+
+Option        | Type   | Default     | Description |
+------------- | ------ | ----------- |-------------|
+`level_class` | bool   | `#!py True` | Enables or disables the level class feature.  The level class feature adds level classes in increments of 20.
+`add_classes` | string | `#!py ''`   | This option accepts a string of classes separated by spaces.

@@ -18,6 +18,13 @@ $md-code-background: hsla(0, 0%, 92.5%, 0.5);
     }
   }
 
+  .linenodiv {
+    .special {
+      font-weight: 800;
+      color: white;
+    }
+  }
+
   td code {
     word-break: normal;
   }

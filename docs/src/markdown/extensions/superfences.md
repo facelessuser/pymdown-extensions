@@ -2,17 +2,16 @@
 
 ## Overview
 
-SuperFences provides 4 features:
+SuperFences provides three features:
 
 1. The ability to [nest fences](#nested-fence-format) under blockquotes, lists, or other block elements (see [Limitations](#limitations) for more info).
 2. Ability to specify [custom fences](#custom-fences) to provide features like flowcharts, sequence diagrams, or other custom blocks.
-4. The ability to disable indented code blocks in favor of only using the fenced variant (off by default).
+3. The ability to disable indented code blocks in favor of only using the fenced variant (off by default).
 
 !!! danger "Reminder"
     Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this extension!
 
 ## Nested Fence Format
-
 
 1. Start and end fence boundaries are specified with either 3 or more backticks or tildes.
 
@@ -73,13 +72,19 @@ Assuming Pygments is installed, code highlighting will be handled by [Pygments][
 
 Highlighting can be further controlled if either the `pymdownx.highlight` extension is used or if Python Markdown's CodeHilite is used. If CodeHilite is configured, it's settings will be used to configure highlighting, but CodeHilite support is deprecated and will be removed in the next major release. It is recommended to instead use [`pymdownx.highlight`](./highlight.md) extension. If `pymdownx.highlight` is included and configured, CodeHilite will be ignored.
 
-When using fenced code blocks, you can specify a specific syntax language to highlight with by specifying the language name directly after the opening tokens (either ` ``` ` or `~~~`). So if we wanted to specify Python as the syntax to highlight with, we could use the following syntax below. Whether using Pygments or some other JavaScript highlighter, please consult your highlighter's documentation for recognized language syntax specifiers.
+When using fenced code blocks, you can specify a specific syntax language to highlight with by specifying the language name directly after the opening tokens (either ` ``` ` or `~~~`). Whether using Pygments or some other JavaScript highlighter, the syntax is the same, but please consult your highlighter's documentation for recognized language syntax specifiers.
 
-````
-```python
-import foo.bar
-```
-````
+!!! example "Highlight Example"
+
+    ````
+    ```python
+    import foo.bar
+    ```
+    ````
+
+    ```python
+    import foo.bar
+    ```
 
 ## Showing Line Numbers
 
@@ -87,63 +92,165 @@ Line numbers are provided via Pygments and can either be shown per code block or
 
 To set line numbers per code block, you can specify a special setting directly after the opening tokens (and language if present). Simply specify the starting line line number with option `linenums="1"`. The setting is followed by the equal sign and the value must be quoted.  Valid line numbers are n > 0.  If `linenums` is enabled globally, this will just control the starting line shown in the block.
 
-````
-``` linenums="1"
-import foo.bar
-```
-````
+!!! example "Line Number Example"
+
+    ````
+    ``` linenums="1"
+    import foo.bar
+    ```
+    ````
+
+    ``` linenums="1"
+    import foo.bar
+    ```
 
 Pygments also has a few additional options in regards to line numbers. One is "line step" which, if set to a number n > 1, will print only every n^th^ line number. The other option is a setting that can mark line numbers as "special" with a span and class `special`. If the special parameter is set to a number n > 0, every n^th^ line number is given the CSS class `special`.
 
 So to set showing only every other line number, we could do the following. Line options are separated by a space, and "line step" is always the second option, so you must specify line start before line step.
 
-````
-``` linenums="1 2"
-"""Some file."""
-import foo.bar
-import boo.baz
-import foo.bar.baz
-```
-````
+Pygments currently implements this a little weird and doesn't pad the first line number, so don't be surprised if line numbers don't quite line up correctly. Hopefully Pygments will fix this in the future.
+
+!!! example "Nth Line Example"
+
+    ````
+    ``` linenums="2 2"
+    """Some file."""
+    import foo.bar
+    import boo.baz
+    import foo.bar.baz
+    ```
+    ````
+
+    ``` linenums="2 2"
+    """Some file."""
+    import foo.bar
+    import boo.baz
+    import foo.bar.baz
+    ```
 
 To set every other line as special, you must set the third `linenums` option (specify line start and step before it). Special must be a value of n > 0.
 
-````
-``` linenums="1 1 2"
-"""Some file."""
-import foo.bar
-import boo.baz
-import foo.bar.baz
-```
-````
+!!! example "Special Line Example"
+
+    ````
+    ``` linenums="1 1 2"
+    """Some file."""
+    import foo.bar
+    import boo.baz
+    import foo.bar.baz
+    ```
+    ````
+
+    ``` linenums="1 1 2"
+    """Some file."""
+    import foo.bar
+    import boo.baz
+    import foo.bar.baz
+    ```
 
 For JavaScript libraries, a class of `linenums` is written to the block.  This may or may not be leveraged by your chosen highlighter.  It is uncertain at this time whether line number support for JavaScript highlighters will be enhanced beyond this.
 
 ## Highlighting Lines
 
-Via Pygments, certain lines can be specified for highlighting.  This is done by specifying a special setting directly after the opening tokens (and language if present).  The setting is named `hl_lines` and the value should be the targeted line numbers separated by spaces. Line numbers are always referenced starting at 1 ignoring what the line number is labeled as when showing line numbers.
+Via Pygments, certain lines can be specified for highlighting.  This is done by specifying a special setting directly after the opening tokens (and language if present).  The setting is named `hl_lines` and the value should be the targeted line numbers separated by spaces.
 
-````
-``` hl_lines="1 3"
-"""Some file."""
-import foo.bar
-import boo.baz
-import foo.bar.baz
-```
-````
+!!! example "Highlight Lines Example"
 
-````
-``` hl_lines="1 3" linenums="2"
-"""Some file."""
-import foo.bar
-import boo.baz
-import foo.bar.baz
-```
-````
+    ````
+    ``` hl_lines="1 3"
+    """Some file."""
+    import foo.bar
+    import boo.baz
+    import foo.bar.baz
+    ```
+    ````
+
+    ``` hl_lines="1 3"
+    """Some file."""
+    import foo.bar
+    import boo.baz
+    import foo.bar.baz
+    ```
+
+Line numbers are always referenced starting at 1 ignoring what the line number is labeled as when showing line numbers.
+
+!!! example "Highlight with Line Numbers Example"
+
+    ````
+    ``` hl_lines="1 3" linenums="2"
+    """Some file."""
+    import foo.bar
+    import boo.baz
+    import foo.bar.baz
+    ```
+    ````
+
+    ``` hl_lines="1 3" linenums="2"
+    """Some file."""
+    import foo.bar
+    import boo.baz
+    import foo.bar.baz
+    ```
 
 ## Custom Fences
 
-SuperFences allows defining custom fences for special purposes. For example, SuperFences defines two default custom fences (which can be removed if desired) called `flow` and `sequence`, for flowcharts and sequence diagrams respectively. The default custom fences simply preserve the content between the fences so a JavaScript UML library can convert the content and render the UML. Custom fences are created via the `custom_fences` option.  `custom_fences` takes an array of dictionaries where each dictionary defines a custom fence. The dictionaries requires the following keys:
+SuperFences allows defining custom fences for special purposes, like flow charts and sequence diagrams:
+
+!!! example "Flow Chart Example"
+
+    ````
+    ```flow
+    st=>start: Start:>http://www.google.com[blank]
+    e=>end:>http://www.google.com
+    op1=>operation: My Operation
+    sub1=>subroutine: My Subroutine
+    cond=>condition: Yes
+    or No?:>http://www.google.com
+    io=>inputoutput: catch something...
+
+    st->op1->cond
+    cond(yes)->io->e
+    cond(no)->sub1(right)->op1
+    ```
+    ````
+
+    ```flow
+    st=>start: Start:>http://www.google.com[blank]
+    e=>end:>http://www.google.com
+    op1=>operation: My Operation
+    sub1=>subroutine: My Subroutine
+    cond=>condition: Yes
+    or No?:>http://www.google.com
+    io=>inputoutput: catch something...
+
+    st->op1->cond
+    cond(yes)->io->e
+    cond(no)->sub1(right)->op1
+    ```
+
+!!! example "Sequence Diagram Example"
+
+    ````
+    ```sequence
+    Title: Here is a title
+    A->B: Normal line
+    B-->C: Dashed line
+    C->>D: Open arrow
+    D-->>A: Dashed open arrow
+    ```
+    ````
+
+    ```sequence
+    Title: Here is a title
+    A->B: Normal line
+    B-->C: Dashed line
+    C->>D: Open arrow
+    D-->>A: Dashed open arrow
+    ```
+
+As shown above, SuperFences defines two default custom fences (which can be removed if desired) called `flow` and `sequence`, for flowcharts and sequence diagrams respectively. The default custom fences simply preserve the content between the fences so a JavaScript UML library can convert the content and render the UML. To see *exactly* how to set up UML like in this documentation, see [UML Diagram Example](#uml-diagram-example).
+
+Custom fences are created via the `custom_fences` option.  `custom_fences` takes an array of dictionaries where each dictionary defines a custom fence. The dictionaries requires the following keys:
 
 Keys     | Description
 -------- | -----------
@@ -158,7 +265,7 @@ Format\ Function                | Description
 `superfences.fence_code_format` | Places the HTML escaped content of the fence under a `#!html <pre><code>` block.
 `superfences.fence_div_format`  | Places the HTML escaped content of the fence under a `#!html <div>` block.
 
-## UML Diagram Examples
+## UML Diagram Example
 
 This example illustrates how this document uses the `custom_fences` option to do UML diagrams.  Out of the box, SuperFences use the default settings for `custom_fences` for the purpose of including UML. The settings below show the default settings, which define two new custom languages called `flow` and `sequence`. The `flow` and `sequence` fences will pass the content through the `superfences.fence_code_format` format function which will wrap the content in `#!html <pre><code` blocks and attach the class `uml-flowchart` or `uml-sequence-diagram` to the respective `#!html <pre>` block. `superfences.fence_div_format` could just as easily be used to wrap the content in a `#!html <div>` instead, or a new custom function could have been written and used.
 
@@ -169,25 +276,9 @@ custom_fences = [
 ]
 ```
 
-As defined above, the custom UML diagrams are recognized when defining a fenced code block with either the language `flow` or `sequence`.  When they are converted, the HTML element containing this content will have the respective classes `uml-flowchart` or `uml-sequence-diagram`. The format function we used in this example only escapes the content to be included in HTML. We will rely on JavaScript libraries to render our flowcharts/diagrams in the browser. Below is an example of defining a flowchart fence.
+As defined above, the custom UML diagrams are recognized when defining a fenced code block with either the language `flow` or `sequence`.  When they are converted, the HTML element containing this content will have the respective classes `uml-flowchart` or `uml-sequence-diagram`. The format function we used in this example only escapes the content to be included in HTML. We will rely on JavaScript libraries to render our flowcharts/diagrams in the browser.
 
-````
-```flow
-st=>start: Start:>http://www.google.com[blank]
-e=>end:>http://www.google.com
-op1=>operation: My Operation
-sub1=>subroutine: My Subroutine
-cond=>condition: Yes
-or No?:>http://www.google.com
-io=>inputoutput: catch something...
-
-st->op1->cond
-cond(yes)->io->e
-cond(no)->sub1(right)->op1
-```
-````
-
-For this example we will use the [flowchart.js][flowchart-js] and [sequence-diagram.js][sequence-diagram-js] JavaScript libraries to render the flow charts in the browser. This extension does not provide these JavaScript libraries; you must provide the necessary JavaScript files for your custom fences. If you wish to follow along with this example to enable UML, see the requirements below.
+The JavaScript libraries used to render UML in this document are [flowchart.js][flowchart-js] and [sequence-diagram.js][sequence-diagram-js]. This extension does not provide these JavaScript libraries; you must provide the necessary JavaScript files for your custom fences yourself. If you wish to follow along with this example to enable UML, see the requirements below.
 
 flowcharts
 : 
@@ -340,166 +431,6 @@ Option                         | Type   | Default      | Description
 
 !!! warning "Deprecated 3.0.0"
     The setting `use_codehilite_settings` has been deprecated since `3.0.0` and now does nothing. It is still present to avoid breakage, but will be removed in the future.
-
-## Examples
-
-This highlights the special features of this extension except for `disable_indented_code_blocks`.
-
-### Nested Fences
-
-```
-- This is a list that contains multiple code blocks.
-
-    - Here is an indented block
-
-            ```
-            This will still be parsed
-            as a normal indented code block.
-            ```
-
-    - Here is a fenced code block:
-
-        ```
-        This will still be parsed
-        as a fenced code block.
-        ```
-
-    - Here is a fenced block in blockquotes:
-
-        > ```
-        > Blockquotes?
-        > Not a problem!
-        > ```
-
-    - Here is a highlighted code block:
-
-        ```python
-        """Some file."""
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-
-    - Here is a highlighted code block with line numbers:
-
-        ```python linenums="1"
-        """Some file."""
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-
-    - Here is a highlighted code block with line numbers and line highlighting:
-
-        ```python hl_lines="2 3" linenums="1"
-        """Some file."""
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-```
-
-- This is a list that contains multiple code blocks.
-
-    - Here is an indented block
-
-            ```
-            This will still be parsed
-            as a normal indented code block.
-            ```
-
-    - Here is a fenced code block:
-
-        ```
-        This will still be parsed
-        as a fenced code block.
-        ```
-
-    - Here is a fenced block in blockquotes:
-
-        > ```
-        > Blockquotes?
-        > Not a problem!
-        > ```
-
-    - Here is a highlighted code block:
-
-        ```python
-        """Some file."""
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-
-    - Here is a highlighted code block with line numbers:
-
-        ```python linenums="1"
-        """Some file."""
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-
-    - Here is a highlighted code block with line numbers and line highlighting:
-
-        ```python hl_lines="2 3" linenums="1"
-        """Some file."""
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-
-### UML Flow Charts
-
-````
-```flow
-st=>start: Start:>http://www.google.com[blank]
-e=>end:>http://www.google.com
-op1=>operation: My Operation
-sub1=>subroutine: My Subroutine
-cond=>condition: Yes
-or No?:>http://www.google.com
-io=>inputoutput: catch something...
-
-st->op1->cond
-cond(yes)->io->e
-cond(no)->sub1(right)->op1
-```
-````
-
-```flow
-st=>start: Start:>http://www.google.com[blank]
-e=>end:>http://www.google.com
-op1=>operation: My Operation
-sub1=>subroutine: My Subroutine
-cond=>condition: Yes
-or No?:>http://www.google.com
-io=>inputoutput: catch something...
-
-st->op1->cond
-cond(yes)->io->e
-cond(no)->sub1(right)->op1
-```
-
-### UML Sequence Diagrams
-
-````
-```sequence
-Title: Here is a title
-A->B: Normal line
-B-->C: Dashed line
-C->>D: Open arrow
-D-->>A: Dashed open arrow
-```
-````
-
-```sequence
-Title: Here is a title
-A->B: Normal line
-B-->C: Dashed line
-C->>D: Open arrow
-D-->>A: Dashed open arrow
-```
 
 --8<-- "links.md"
 

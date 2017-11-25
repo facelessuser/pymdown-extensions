@@ -2,45 +2,39 @@
 
 ## Overview
 
-The Tasklist extension adds GFM style task lists.  They follow the same syntax as GFM.
+The Tasklist extension adds GFM style task lists.  They follow the same syntax as GFM. Simply start each list item with a square bracket pair containing either a space (an unchecked item) or a `x` (a checked item).
 
-## Options
+!!! example "Task List Example"
 
-Option            | Type | Default      | Description
------------------ | ---- | ------------ | ------------
-`custom_checkbox` | bool | `#!py False` | Generate task lists in such a way as to allow for styling the check box with CSS.
+    All task lists in this documentation are generated with [`custom_checkbox`](#options) enabled.
 
-## Examples
+    ```
+    Task List
 
-Example task list results are generated with `custom_checkbox` enabled.
+    - [X] item 1
+        * [X] item A
+        * [ ] item B
+            more text
+            + [x] item a
+            + [ ] item b
+            + [x] item c
+        * [X] item C
+    - [ ] item 2
+    - [ ] item 3
+    ```
 
-```
-Task List
+    Task List
 
-- [X] item 1
-    * [X] item A
-    * [ ] item B
-        more text
-        + [x] item a
-        + [ ] item b
-        + [x] item c
-    * [X] item C
-- [ ] item 2
-- [ ] item 3
-```
-
-Task List
-
-- [X] item 1
-    * [X] item A
-    * [ ] item B
-        more text
-        + [x] item a
-        + [ ] item b
-        + [x] item c
-    * [X] item C
-- [ ] item 2
-- [ ] item 3
+    - [X] item 1
+        * [X] item A
+        * [ ] item B
+            more text
+            + [x] item a
+            + [ ] item b
+            + [x] item c
+        * [X] item C
+    - [ ] item 2
+    - [ ] item 3
 
 ## CSS
 
@@ -69,14 +63,14 @@ If `custom_checkbox` is enabled the structure will be as follows:
 </ul>
 ```
 
-Classes     | Description
------------ | ------------
+Classes               | Description
+--------------------- | ------------
 `task-list`           | Attached to either the `ul` or `ol` tag and represents the entire list element.
 `task-list-item`      | This is attached the `li` tag and represents an item in the list.
 `task-list-control`   | This is attached to the `label` tag and represents the control object.
 `task-list-indicator` | This is attached to the `span` directly following the input and is used to style the visual indicator.
 
-??? settings "Example CSS"
+??? settings "Basic Tasklist CSS"
 
     In order to style these we mainly remove the list type style and adjust the margins to align with normal list styles.
 
@@ -90,6 +84,8 @@ Classes     | Description
       vertical-align: middle;
     }
     ```
+
+??? settings "Custom Tasklist CSS"
 
     If custom check box icons are desired, custom styles can be used to give a unique look to the check marks.  Below is a very simple CSS example that creates a light gray square with rounded corners and displays a green Unicode check mark when the control is checked.  This can be adapted to use web fonts, images, etc.
 
@@ -142,5 +138,12 @@ Classes     | Description
       color: #1EBB52;
     }
     ```
+
+## Options
+
+Option            | Type | Default      | Description
+----------------- | ---- | ------------ | ------------
+`custom_checkbox` | bool | `#!py False` | Generate task lists in such a way as to allow for styling the check box with CSS.
+
 
 --8<-- "abbr.md"

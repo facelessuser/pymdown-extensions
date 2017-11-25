@@ -4,6 +4,18 @@
 
 InlineHilite is an inline code highlighter inspired by [CodeHilite][codehilite]. Borrowing from CodeHilite's existing syntax, InlineHilite utilizes the following syntax to insert inline highlighted code: `` `:::language mycode` `` or `` `#!language mycode` ``.  In CodeHilite, ` #! ` means "use line numbers", but line numbers will never be used in inline code regardless of which form is used. Use of one form or the other is purely for personal preference. As this feature is discussed further, we will call these specifiers (` #! ` and ` ::: `) mock shebangs.
 
+!!! example "Inline Highlighted Code Example"
+
+    ```
+    Here is some code: `#!js function pad(v){return ('0'+v).split('').reverse().splice(0,2).reverse().join('')}`.
+
+    The mock shebang will be treated like text here: ` #!js var test = 0; `.
+    ```
+
+    Here is some code: `#!js function pad(v){return ('0'+v).split('').reverse().splice(0,2).reverse().join('')}`
+
+    The mock shebang will be treated like text here: ` #!js var test = 0; `.
+
 When using the colon mock shebang, 3 or more colons can be used.  Mock shebangs must come **immediately** after the opening backtick(s) and must be followed by at least one space.  If you need to escape a mock shebang at the start of a code block, just put a space before it and it will be treated as part of the code.
 
 ## Code Highlighting
@@ -27,17 +39,5 @@ Option                    | Type   | Default      | Description
 
 !!! warning "Deprecated 3.0.0"
     The setting `use_codehilite_settings` has been deprecated since `3.0.0` and now does nothing. It is still present to avoid breakage, but will be removed in the future.
-
-## Example
-
-```
-Here is some code: `#!js function pad(v){return ('0'+v).split('').reverse().splice(0,2).reverse().join('')}`.
-
-The mock shebang will be treated like text here: ` #!js var test = 0; `.
-```
-
-Here is some code: `#!js function pad(v){return ('0'+v).split('').reverse().splice(0,2).reverse().join('')}`
-
-The mock shebang will be treated like text here: ` #!js var test = 0; `.
 
 --8<-- "links.md"

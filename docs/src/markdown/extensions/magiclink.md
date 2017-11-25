@@ -10,17 +10,15 @@ If you happen to have some conflicts with syntax for a specific case, you can al
 
 MagicLink supports auto-linking HTTP, FTP and email links. You can specify these links in raw text and they should get auto-linked. There are some limitations placed on MagicLink to keep it from aggressively auto-linking text that is not part of links. If you have a link that cannot be detected, you can always use the old style angle bracketed link format: `#!md <https://www.link.com>`.
 
-To use, just paste raw links in your Markdown:
+!!! example "Auto-Linking Example"
 
-```md
-- Just paste links directly in the document like this: https://google.com.
-- Or even an email address: fake.email@email.com.
-```
+    ```
+    - Just paste links directly in the document like this: https://google.com.
+    - Or even an email address: fake.email@email.com.
+    ```
 
-They will be auto-linked like this:
-
-- Just paste links directly in the document like this: https://google.com.
-- Or even an email address: fake.email@email.com.
+    - Just paste links directly in the document like this: https://google.com.
+    - Or even an email address: fake.email@email.com.
 
 ## Shorthand Links
 
@@ -43,11 +41,71 @@ If you are using this extension more generally, it may make more sense to set a 
 
 Mentions of other users are performed with the following syntax: `@{user}`. To reference a provider other than your default, use the format `@{provider}:{user}`
 
+!!! example "Mention Example"
+
+    ```
+    @facelessuser
+
+    @twitter:twitter
+    ```
+
+    @facelessuser
+
+    @twitter:twitter
+
 For code repository providers, you can also mention repositories.  This feature is actually inspired by the GitHub only extension @Python-Markdown/github-links, which performs *similar* auto-linking.  The syntax to auto-link a repository with mentioning is very similar to auto-linking a user, except you append the repository to the user name like so: `@{user}/{repo}`. If specifying a non-default provider, the form would look like: `@{provider}:{user}/{repo}`. The output for repository mentions omits the `@` symbol and will just show the user and repository, but you are free to style it with CSS to make it stand out more like has been done in this document.
+
+!!! example "Repository Mention Example"
+
+    ```
+    @facelessuser/pymdown-extensions
+
+    @gitlab:pycqa/flake8
+    ```
+
+    @facelessuser/pymdown-extensions
+
+    @gitlab:pycqa/flake8
 
 ### Issues and Pull Requests
 
 Issues and pull requests are specified with `#{num}` and `!{num}` respectively. To specify an issue for a non-default repository under the default user, prefix the repository: `{repo}#{num}`. And to specify a repository under a non-default user, prefix both the user and repository: `{user}/{repo}#{num}`. And to reference an external provider, use the format `{provider}:{user}/{repo}#{num}`. If the default provider is a social media provider, then only the latter syntax can be used.
+
+!!! example "Issue Example"
+
+    ```
+    Issue #1
+
+    Issue backrefs#1
+
+    Issue Python-Markdown/markdown#1
+
+    Issue gitlab:pycqa/flake8#385
+
+    Pull request !13
+
+    Pull request backrefs!4
+
+    Pull request Python-Markdown/markdown!598
+
+    Pull request gitlab:pycqa/flake8!213
+    ```
+
+    Issue #1
+
+    Issue backrefs#1
+
+    Issue Python-Markdown/markdown#1
+
+    Issue gitlab:pycqa/flake8#385
+
+    Pull request !13
+
+    Pull request backrefs!4
+
+    Pull request Python-Markdown/markdown!598
+
+    Pull request gitlab:pycqa/flake8!213
 
 !!! note "Note"
     GitHub actually gives pull requests and issues unique values while GitLab and Bitbucket can have pulls with the same ID as an issue. So with GitHub, you can use `#{num}` format for both issues and pulls, and GitHub will redirect you to the appropriate issue or pull.
@@ -58,28 +116,25 @@ Issues and pull requests are specified with `#{num}` and `!{num}` respectively. 
 
 Commit shorthand syntax is simply the 40 character commit hash value: `{hash}`. And much like issues and pull requests, you can denote a repository under the default user with `{repo}@{hash}` and a repository under a non-default user with `{user}/{repo}@{hash}`. Lastly, to reference an external provider, use the format `{provider}:{user}/{repo}@{hash}`. If the default provider is a social media provider, then only the latter syntax can be used.
 
-### Shorthand Examples
+!!! example "Commit Example"
 
-The examples below assume the default provider, user, and repository as `github`, `facelessuer`, and `pymdown-extensions` respectively.
+    ```
+    181c06d1f11fa29961b334e90606ed1f1ec7a7cc
 
-Shorthand                                                      | Output
--------------------------------------------------------------- | -----------
-`@user`                                                        | @user
-`@twitter:twitter`                                             | @twitter:twitter
-`@user/repo`                                                   | @user/repo
-`@gitlab:user/repo`                                            | @gitlab:user/repo
-`#1`                                                           | #1
-`repo#1`                                                       | repo#1
-`user/repo#1`                                                  | user/repo#1
-`bitbucket:user/repo#1`                                        | bitbucket:user/repo#1
-`!2`                                                           | !2
-`repo!2`                                                       | repo!2
-`user/repo!2`                                                  | user/repo!2
-`gitlab:user/repo!1`                                           | gitlab:user/repo!1
-`181c06d1f11fa29961b334e90606ed1f1ec7a7cc`                     | 181c06d1f11fa29961b334e90606ed1f1ec7a7cc
-`repo@181c06d1f11fa29961b334e90606ed1f1ec7a7cc`                | repo@181c06d1f11fa29961b334e90606ed1f1ec7a7cc
-`user/repo@181c06d1f11fa29961b334e90606ed1f1ec7a7cc`           | user/repo@181c06d1f11fa29961b334e90606ed1f1ec7a7cc
-`bitbucket:user/repo@181c06d1f11fa29961b334e90606ed1f1ec7a7cc` | bitbucket:user/repo@181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+    backrefs@cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
+
+    Python-Markdown/markdown@de5c696f94e8dde242c29d4be50b7bbf3c17fedb
+
+    gitlab:pycqa/flake8@8acf55e0f85233c51c291816d73d828cc62d30d1
+    ```
+
+    181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+
+    backrefs@cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
+
+    Python-Markdown/markdown@de5c696f94e8dde242c29d4be50b7bbf3c17fedb
+
+    gitlab:pycqa/flake8@8acf55e0f85233c51c291816d73d828cc62d30d1
 
 ## Repository Link Shortener
 
@@ -87,28 +142,50 @@ MagicLink can also recognize issue, pull request, and commit links, and render t
 
 If we specify long form URLs from external providers, they will be shortened appropriately.
 
-```md
-- https://gitlab.com/pycqa/flake8/issues/385
-- https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
-```
 
-- https://gitlab.com/pycqa/flake8/issues/385
-- https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
+!!! example "External Provider Example"
+
+    ```
+    - https://gitlab.com/pycqa/flake8/issues/385
+    - https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
+    ```
+
+    - https://gitlab.com/pycqa/flake8/issues/385
+    - https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
 
 
 When specifying links that reference the configured `provider`, `user`, and `repo`, links will be shortened differently in light of that context.
 
-```md
-- https://github.com/facelessuser/pymdown-extensions/issues/1
-- https://github.com/facelessuser/pymdown-extensions/pull/13
-- https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a
-- https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
-```
+!!! example "Internal Provider Example"
 
-- https://github.com/facelessuser/pymdown-extensions/issues/1
-- https://github.com/facelessuser/pymdown-extensions/pull/13
-- https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a
-- https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+    ```
+    - https://github.com/facelessuser/pymdown-extensions/issues/1
+    - https://github.com/facelessuser/pymdown-extensions/pull/13
+    - https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+    - https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+    ```
+
+    - https://github.com/facelessuser/pymdown-extensions/issues/1
+    - https://github.com/facelessuser/pymdown-extensions/pull/13
+    - https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+    - https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+
+## CSS
+
+For normal links, no classes are added to the anchor tags. For repository links, `magiclink` will be added as a class. Also, an additional class will be added for each repository link type and provider.
+
+Link\ Type           | Class
+-------------------- | -----
+General              | `magiclink`
+Mentions             | `magiclink-mention`
+Repository\ Mentions | `magiclink-repository`
+Issues               | `magiclink-issue`
+Pulls                | `magiclink-pull`
+Commits              | `magiclink-commit`
+GitHub               | `magiclink-github`
+Bitbucket            | `magiclink-bitbucket`
+GitLab               | `magiclink-gitlab`
+Twitter              | `magiclink-twitter`
 
 ## Options
 
@@ -152,22 +229,5 @@ You only need to provide the options you wish to override. Assume we wanted to a
         'pull': 'Merge Request'
     }
 ```
-
-## CSS
-
-For normal links, no classes are added to the anchor tags. For repository links, `magiclink` will be added as a class. Also, an additional class will be added for each repository link type and provider.
-
-Link\ Type           | Class
--------------------- | -----
-General              | `magiclink`
-Mentions             | `magiclink-mention`
-Repository\ Mentions | `magiclink-repository`
-Issues               | `magiclink-issue`
-Pulls                | `magiclink-pull`
-Commits              | `magiclink-commit`
-GitHub               | `magiclink-github`
-Bitbucket            | `magiclink-bitbucket`
-GitLab               | `magiclink-gitlab`
-Twitter              | `magiclink-twitter`
 
 --8<-- "refs.md"
