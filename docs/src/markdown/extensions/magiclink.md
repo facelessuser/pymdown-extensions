@@ -136,7 +136,7 @@ Commit shorthand syntax is simply the 40 character commit hash value: `{hash}`. 
 
     gitlab:pycqa/flake8@8acf55e0f85233c51c291816d73d828cc62d30d1
 
-## Diff/Compare
+### Diff/Compare
 
 GitLab offers a useful shorthand to specify links to compare differences between two commits. This has been adopted for all the supported repository providers.
 
@@ -151,7 +151,7 @@ Specifying a compare link is very similar to specifying a commit link except you
 
     Python-Markdown/markdown@007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8dde242c29d4be50b7bbf3c17fedb
 
-    gitlab:pycqa/flake8@593a4b8eddb0262924812aaf90184521ed8bda61...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e
+    gitlab:pycqa/flake8@1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e
     ```
 
     e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
@@ -160,7 +160,7 @@ Specifying a compare link is very similar to specifying a commit link except you
 
     Python-Markdown/markdown@007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8dde242c29d4be50b7bbf3c17fedb
 
-    gitlab:pycqa/flake8@593a4b8eddb0262924812aaf90184521ed8bda61...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e
+    gitlab:pycqa/flake8@1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e
 
 ## Repository Link Shortener
 
