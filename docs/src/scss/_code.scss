@@ -1,4 +1,5 @@
 $md-code-background: hsla(0, 0%, 92.5%, 0.5);
+$md-code-special: hsl(0, 0%, 100%);
 
 .md-typeset {
 
@@ -20,8 +21,8 @@ $md-code-background: hsla(0, 0%, 92.5%, 0.5);
 
   .linenodiv {
     .special {
+      color: $md-code-special;
       font-weight: 800;
-      color: white;
     }
   }
 

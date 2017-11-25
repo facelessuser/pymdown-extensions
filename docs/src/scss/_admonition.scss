@@ -14,7 +14,7 @@
         border-left: 0.4rem solid $tint;
 
         // Title
-        >.admonition-title {
+        > .admonition-title {
           border-bottom: 0.1rem solid transparentize($tint, 0.9);
           background-color: transparentize($tint, 0.9);
 
