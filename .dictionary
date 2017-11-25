@@ -74,6 +74,7 @@ UTF
 Virtualenv
 Waylan
 YAML
+backrefs
 backtick
 backticks
 blockquote
@@ -120,6 +121,7 @@ plugin
 plugins
 plusminus
 polyfill
+polyfilled
 polyfills
 pre
 prepend

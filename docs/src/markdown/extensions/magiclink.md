@@ -22,7 +22,7 @@ MagicLink supports auto-linking HTTP, FTP and email links. You can specify these
 
 ## Shorthand Links
 
-MagicLink supports shorthand references for GitHub, GitLab, and Bitbucket issues (#1), pull/merge requests (!13), commits (7d1b1902ea7fe00043a249564ed5032f08dd7152), and compares (e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac). You can also reference repositories (@facelessuser/pymdown-extensions) and it supports mentioning users (@facelessuser). Mentions also works for social media (only Twitter is supported at this time).
+MagicLink supports shorthand references for GitHub, GitLab, and Bitbucket issues (#1), pull/merge requests (!13), commits (7d1b1902ea7fe00043a249564ed5032f08dd7152), and compares (<nospell>e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac</nospell>). You can also reference repositories (@facelessuser/pymdown-extensions) and it supports mentioning users (@facelessuser). Mentions also works for social media (only Twitter is supported at this time).
 
 The syntax for repository providers is actually very similar to GitLab's syntax. GitLab was chosen as its syntax bridges the gaps between the three providers. GitLab and Bitbucket require a pull specific syntax while GitHub does not have one. I also preferred the subtle differences in GitLab's commit references as it was consistent with pull and issue syntax.
 
@@ -154,13 +154,13 @@ Specifying a compare link is very similar to specifying a commit link except you
     gitlab:pycqa/flake8@1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e
     ```
 
-    e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+    <nospell>e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac</nospell>
 
     backrefs@88c6238a1c2cf71a96eb9abb4b0213f79d6ca81f...cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
 
     Python-Markdown/markdown@007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8dde242c29d4be50b7bbf3c17fedb
 
-    gitlab:pycqa/flake8@1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e
+    <nospell>gitlab:pycqa/flake8@1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e</nospell>
 
 ## Repository Link Shortener
 
@@ -195,7 +195,7 @@ When specifying links that reference the configured `provider`, `user`, and `rep
     - https://github.com/facelessuser/pymdown-extensions/issues/1
     - https://github.com/facelessuser/pymdown-extensions/pull/13
     - https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a
-    - https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+    - <nospell>https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac</nospell>
     - https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
 
 ## CSS
