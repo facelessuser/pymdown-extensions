@@ -224,17 +224,23 @@ https://github.com/facelessuser/pymdown-extensions/pull/87
 
 https://github.com/facelessuser/pymdown-extensions/commit/6a09fde5c1cad66c660c3aa7792385c52c49e819
 
+https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+
 https://github.com/fake-user/fake-repository/issues/538
 
 https://github.com/fake-user/fake-repository/pull/539
 
 https://github.com/fake-user/fake-repository/commit/594b25d53798c30735da5a9be19c06cc94052a16
 
+https://github.com/fake-user/fake-repository/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+
 https://gitlab.com/fake-user/fake-repository/issues/538
 
 https://gitlab.com/fake-user/fake-repository/merge_requests/539
 
 https://gitlab.com/fake-user/fake-repository/commit/594b25d53798c30735da5a9be19c06cc94052a16
+
+https://gitlab.com/fake-user/fake-repository/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
 
 https://bitbucket.org/fake-user/fake-repository/issues/538/
 
@@ -246,8 +252,12 @@ https://bitbucket.org/fake-user/fake-repository/pull-requests/539/optional-title
 
 https://bitbucket.org/fake-user/fake-repository/commits/commit/594b25d53798c30735da5a9be19c06cc94052a16
 
+https://bitbucket.org/fake-user/fake-repository/branches/commits/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2..90b6fb8711e75732f987982cc024e9bb0111beac#diff
+
 <https://github.com/facelessuser/pymdown-extensions/issues/49>
 
 https://github.com/facelessuser/fake-repository/issues/87
 
 https://github.com/facelessuser/fake-repository/commit/594b25d53798c30735da5a9be19c06cc94052a16
+
+https://github.com/facelessuser/fake-repository/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
