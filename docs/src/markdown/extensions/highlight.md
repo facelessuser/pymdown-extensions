@@ -10,7 +10,11 @@ As previously mentioned, both InlineHilite's and SuperFences' highlighting can b
 
 ## Syntax Highlighting
 
-If Pygments is installed, it will be the default syntax highlighter, but if it is not, or if `use_pygments` is turned off, code tags will be rendered in the HTML5 format for JavaScript highlighting: `#!html <pre class="highlight"><code class="language-mylanguage"></code></pre>`.
+If Pygments is installed, it will be the default syntax highlighter, but if it is not, or if `use_pygments` is turned off, code tags will be rendered in the HTML5 format for JavaScript highlighting: 
+
+```html
+<pre class="highlight"><code class="language-mylanguage"></code></pre>
+```
 
 ## Extended Pygments Lexer Options
 
@@ -18,30 +22,31 @@ If using Pygments, some lexers have special options.  For instance, the `php` le
 
 `extend_pygments_lang` is an option that takes an array of dictionaries.  Each dictionary contains three keys: `name` which is the new name you are adding, `lang` which is the language the new name maps to, and `options` which is a dictionary of the options you wish to apply.
 
-For example, to create the above mentioned `php-inline` we would feed in the following to `extend_pygments_lang`:
+!!! example "Highlight Example"
 
-```py
-extended_pygments_lang = [
-    {"name": "php-inline", "lang": "php", "options": {"startinline": True}}
-]
-```
+    To create the above mentioned `php-inline` we would feed in the following to `extend_pygments_lang`:
 
-Now we can do this:
+    ```py
+    extended_pygments_lang = [
+        {"name": "php-inline", "lang": "php", "options": {"startinline": True}}
+    ]
+    ```
 
-````
-`#!php-inline $a = array("foo" => 0, "bar" => 1);`
-````
+    Now we can do this:
 
-To get this:
+    ````
+    `#!php-inline $a = array("foo" => 0, "bar" => 1);`
+    ````
 
-`#!php-inline $a = array("foo" => 0, "bar" => 1);`
+    To get this:
 
+    `#!php-inline $a = array("foo" => 0, "bar" => 1);`
 
 ## Options
 
 Option                    | Type   | Default                   | Description
 ------------------------- | ------ | ------------------------- | -----------
-`css_class`               | string | `#!py 'highlight'         | Default class to apply to the wrapper element on code blocks. Other extensions can override this.
+`css_class`               | string | `#!py 'highlight`         | Default class to apply to the wrapper element on code blocks. Other extensions can override this.
 `guess_lang`              | bool   | `#!py False`              | Guess what syntax language should be used if no language is specified. 
 `pygments_style`          | string | `#!python 'default'`      | Set the Pygments' style to use.  This really only has an effect when used with `noclasses`.
 `noclasses`               | bool   | `#!py False`              | This will cause the styles to directly be written to the tag's style attribute instead of requiring a stylesheet.

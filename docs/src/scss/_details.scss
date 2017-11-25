@@ -4,7 +4,7 @@
     @extend .admonition;
 
     // Title
-    summary {
+    > summary {
       @extend .admonition-title;
     }
   }

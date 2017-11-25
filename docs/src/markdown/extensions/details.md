@@ -18,25 +18,39 @@ Details must contain a blank line before they start. Use `???` to start a detail
     Here's some content.
 ```
 
-It is possible to provide only a class or classes.  If this is done, the title will be derived from the *first* class.
+!!! example "Example Details"
 
-```
-??? class
-   Content.
-```
+    ```
+    ???+ note "Open styled details"
 
-```html
-<details class="class"><summary>Class</summary><p>Content.</p></details>
-```
+        ??? danger "Nested details!"
+            And more content again.
+    ```
 
-```
-??? multiple classes
-   Content.
-```
+    ???+ note "Open styled details"
 
-```html
-<details class="multiple classes"><summary>Multiple</summary><p>Content.</p></details>
-```
+        ??? danger "Nested details!"
+            And more content again.
+
+It is also possible to provide only a class.  If this is done, the title will be derived from the *first* class.
+
+!!! example "Example Class from Title"
+
+    ```
+    ??? success
+       Content.
+    ```
+
+    ??? success
+        Content.
+
+    ```
+    ??? warning classes
+       Content.
+    ```
+
+    ??? warning classes
+        Content.
 
 Details will be output in the format below. The content will always be encapsulated in tags of some kind.
 
@@ -48,9 +62,9 @@ Details will be output in the format below. The content will always be encapsula
 
 Unfortunately, due to how new `#!html <details><summary>` tags are, not all browsers support them yet.  In order to have them supported in all new browsers, you will have to provide some fallback styling and JavaScript until all browsers catch up.
 
-This extension's goal is not to provide you with the perfect polyfill (you can design or find your own), but a basic example is provided to show the basic polyfill that is being used in this document. There are more elaborate polyfills available that support jQuery, add keyboard events, or even support back to IE8. Feel free to modify what is here or find a solution that fits your needs.
+This extension's goal is not to provide you with the perfect polyfill, but this is a basic example that provides basic support. There are more elaborate polyfills available that support jQuery, add keyboard events, or even support back to IE8. Feel free to modify what is here or find a solution that fits your needs.
 
-??? settings "Polyfill Example"
+??? settings "Basic Polyfill Setup"
     Here is the basic CSS that that can be used.  It is meant to provide a consistent CSS in both browsers that support `#!html <details><summary>` tags and those that do not.
 
     ```css
@@ -93,6 +107,8 @@ This extension's goal is not to provide you with the perfect polyfill (you can d
     ```
 
     And below is the JavaScript that will detect browsers that do not support `#!html <details><summary>` tags and apply a `no-details` class to all details in those browsers. It will also attach a click event that will toggle the open state. The CSS above will target the `no-details` class and the `open` attribute to hide/show the content of your `#!html <details>` tag. Just run the code after the HTML content is loaded.
+
+    There are plenty of things that aren't covered here, like jumping to a footnote or ID inside a closed polyfilled detail element, but this is left up to the user to figure out, or for a complete 3rd party polyfill.
 
     ```js
     (function () {
@@ -177,36 +193,3 @@ This extension's goal is not to provide you with the perfect polyfill (you can d
 
     }());
     ```
-
-## Examples
-
-### Basic Details
-
-The theme used to style this document also provides special styling when a class is not provided, but your theme may not.
-
-```
-???+ "Open details"
-
-    ??? "Nested details"
-        Some content.
-```
-
-???+ "Open details"
-
-    ??? "Nested details"
-        Some content.
-
-
-### Styled Details
-
-```
-???+ note "Open styled details"
-
-    ??? danger "Nested details!"
-        And more content again.
-```
-
-???+ note "Open styled details"
-
-    ??? danger "Nested details!"
-        And more content again.

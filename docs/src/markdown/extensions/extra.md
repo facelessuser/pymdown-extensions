@@ -28,7 +28,7 @@ Extension                          | Name
 
 If you wish to configure the individual extensions included via this extensions, you can configure them by placing that sub extension's settings under a setting value that equals the sub extensions name.
 
-```py
+```py3
 extension_configs = {
     'pymdownx.extra': {
         'markdown.extensions.footnotes': {

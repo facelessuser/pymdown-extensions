@@ -1,5 +1,54 @@
 # GitHub
 
+!!! warning "Deprecated 4.5.0"
+    4.5.0 has deprecated the GitHub extension and will remove it in version 5.0.0. The GitHub extension has never aimed to give a 1:1 match of GitHub features, and to avoid confusion, it is being discontinued, but all the great extensions can be configured individually to create your own GitHub-ish feel.
+
+    ??? settings "GitHub-ish Manual Setup"
+
+        As the GitHub extension is now deprecated, a recommended GitHub configuration is provided below to emulate a setup that gives a GitHub feel.
+
+        For GitHub like issue, commit, pull request, and mention shorthand syntax, you will also need to specify a `provider`, `user` and `repo` to give relative context for the very short forms: `#1`.  In the example below, we will use `fake-user` and `fake-repo`. See [MagicLink](./magiclink.md) for more details.
+
+        ```py3
+
+        extensions = [
+            'markdown.extensions.tables',
+            'pymdownx.magiclink',
+            'pymdownx.betterem',
+            'pymdownx.tilde',
+            'pymdownx.emoji',
+            'pymdownx.tasklist',
+            'pymdownx.superfences'
+        ]
+
+        extension_config = {
+            "pymdownx.magiclink": {
+                "repo_url_shortener": True,
+                "repo_url_shorthand": True,
+                "provider": "github",
+                "user": "facelessuser",
+                "repo": "pymdown-extensions"
+            },
+            "pymdownx.tilde": {
+                "subscript": False
+            },
+            "pymdownx.emoji": {
+                "emoji_index": pymdownx.emoji.gemoji,
+                "emoji_generator": pymdownx.emoji.to_png,
+                "alt": "short",
+                "options": {
+                    "attributes": {
+                        "align": "absmiddle",
+                        "height": "20px",
+                        "width": "20px"
+                    },
+                    "image_path": "https://assets-cdn.github.com/images/icons/emoji/unicode/",
+                    "non_standard_image_path": "https://assets-cdn.github.com/images/icons/emoji/"
+                }
+            }
+        }
+        ```
+
 ## Overview
 
 The GitHub extension is a convenience extension to load up and configure the minimum extensions needed to get a GFM feel.  It is not a 1:1 emulation, but some aspects are pretty close.  There is no desire to make it exact, but the feel is nice if you like GFM feel.

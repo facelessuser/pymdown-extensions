@@ -2,7 +2,15 @@
 
 ## Overview
 
-Keys is an extension to make entering and styling keyboard key presses easier. Syntactically, Keys is built around the `+` symbol.  A key or combination of key presses is surrounded by `++` with each key press separated with a single `+`.  For instance, if we wanted to represent `Ctrl + Alt + Delete`, we could just format our keys like this: `++ctrl+alt+delete++` --> ++ctrl+alt+delete++.
+Keys is an extension to make entering and styling keyboard key presses easier. Syntactically, Keys is built around the `+` symbol.  A key or combination of key presses is surrounded by `++` with each key press separated with a single `+`.
+
+!!! example "Keys Example"
+
+    ```
+    ++ctrl+alt+delete++
+    ```
+
+    ++ctrl+alt+delete++.
 
 ## Formatting
 
@@ -20,7 +28,19 @@ By default, Keys outputs keys in the form (separator `span`s will be omitted if 
 
 Notice the wrapper `span` has the class `keys` applied to it.  This is so you can target it or the elements under it with CSS. Each recognized key press has its own special key class assigned to it in the form `key-<key name>`. These individual key classes are great if you want to show special modifier key symbols before the key text (which is done in this documentation). The wrapper `keys` class can be customized with options, and the individual key classes are generated from the [key-map index](#key-map-index).
 
-If you would like to generate a key which isn't in the key index, you can extend the key map via a special [option](#extendingmodifying-key-map-index).  But if you don't need a key with a special class generated, or you need a way to quickly enter a one time special key, you can just insert it directly by quoting the text you want displayed instead of a key name: `++ctrl+alt+"My Special Key"++` --> ++ctrl+alt+"My Special Key"++. You can also enter HTML entities: `++ctrl+alt+"&Uuml;"++` --> ++ctrl+alt+"&Uuml;"++ if desired.
+If you would like to generate a key which isn't in the key index, you can extend the key map via a special [option](#extendingmodifying-key-map-index).  But if you don't need a key with a special class generated, or you need a way to quickly enter a one time special key, you can just insert it directly by quoting the text you want displayed instead of a key name. You can also enter HTML entities if desired.
+
+!!! example "Quoted Example"
+
+    ```
+    ++ctrl+alt+"My Special Key"++
+
+    ++cmd+alt+"&Uuml;"++
+    ```
+
+    ++ctrl+alt+"My Special Key"++
+
+    ++cmd+alt+"&Uuml;"++
 
 ## Strict `KBD` Output
 
@@ -278,15 +298,3 @@ Option       | Type       | Default       | Description
 `class`      | string     | `#!py 'keys'` | Defines a class(es) to apply to the HTML wrapper element.
 `camel_case` | bool       | `#!py False`  | Allow the use of camel case for key names `PgUp` --> `pg-up`.
 `key_map`    | dictionary | `#!py {}`     | Add additional keys to the key-map index or override output of existing outputs. See [Extending/Modifying Key-Map Index](#extendingmodifying-key-map-index) for more info.
-
-## Examples
-
-```
-To copy, press ++ctrl+alt+c++ for Windows or Linux or ++cmd+alt+c++ for Mac.
-
-You can also use custom key labels: ++ctrl+alt+"&Uuml;"++.
-```
-
-To copy, press ++ctrl+alt+c++ for Windows or Linux or ++cmd+alt+c++ for Mac.
-
-You can also use custom key labels: ++ctrl+alt+"&Uuml;"++.

@@ -10,13 +10,6 @@ Snippets can handle recursive file inclusion.  And if Snippets encounters the sa
 
 This is meant for simple file inclusion, it has no intention to implement features from complex template systems. If you need something more complex, you may consider using a template environment to process your files **before** feeding them through Python Markdown.  If you are using a document generation system, this can likely be performed via a plugin for that document system (assuming a plugin environment is available).
 
-## Options
-
-Option      | Type   | Default        | Description
------------ | ------ | -------------- |------------
-`base_path` | string | `#!py '.'`     | A string indicating a base path to be used resolve snippet locations.
-`encoding`  | string | `#!py 'utf-8'` | Encoding to use when reading in the snippets.
-
 ## Snippets Notation
 
 Snippets has two modes of inserting snippets: single line and block.
@@ -81,3 +74,10 @@ file1.md
 file2.md
 --8<-- 
 ```
+
+## Options
+
+Option      | Type   | Default        | Description
+----------- | ------ | -------------- |------------
+`base_path` | string | `#!py '.'`     | A string indicating a base path to be used resolve snippet locations.
+`encoding`  | string | `#!py 'utf-8'` | Encoding to use when reading in the snippets.

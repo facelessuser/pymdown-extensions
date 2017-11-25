@@ -78,6 +78,10 @@ markdown_extensions:
           lang: php
           options:
             startinline: true
+        - name: pycon3
+          lang: pycon
+          options:
+            python3: true
   - pymdownx.inlinehilite:
   - pymdownx.magiclink:
       repo_url_shortener: true
