@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.5.0
+
+Nov 26, 2017
+
+- **NEW**: Add GitLab style compare link shorthand and link shortening (#160).
+- **NEW**: Deprecate GitHub extension. It is now recommended to just include the extensions you want to create a GitHub feel instead of relying on a an extension to package something close-ish (#159).
+
 ## 4.4.0
 
 Nov 23, 2017
