@@ -5,6 +5,7 @@ import os
 import sys
 import yaml
 import codecs
+import bs4
 
 PY3 = sys.version_info >= (3, 0)
 
@@ -16,7 +17,7 @@ MKDOCS_SPELL = os.path.join(BUILD_DIR, MKDOCS_CFG)
 MKDOCS_BUILD = os.path.join(BUILD_DIR, 'site')
 
 
-def console(cmd, input_file=None):
+def console(cmd, input_file=None, input_text=None):
     """Call with arguments."""
 
     returncode = None
@@ -45,6 +46,8 @@ def console(cmd, input_file=None):
     if input_file is not None:
         with open(input_file, 'rb') as f:
             process.stdin.write(f.read())
+    if input_text is not None:
+        process.stdin.write(input_text)
     output = process.communicate()
     returncode = process.returncode
 
@@ -152,9 +155,103 @@ def compile_dictionary():
                 'master',
                 COMPILED_DICT
             ],
-            USER_DICT
+            input_file=USER_DICT
         )
     )
+
+
+def ignore_rules(*args):
+    """
+    Process ignore rules.
+
+    - tag
+    - tag#id
+    - #id
+    - tag#id.class1.class2
+    - tag.class1.class2
+    - #id.class1.class2
+    - .class1.class2
+    """
+
+    ignores = []
+
+    for arg in args:
+        selector = arg.lower()
+        tag = None
+        tag_id = None
+        classes = []
+
+        items = selector.split('#')
+        if len(items) > 1:
+            if items[0]:
+                tag = items[0]
+            items2 = items[1].split('.')
+            if len(items2) > 1:
+                if items2[0]:
+                    tag_id = items2[0]
+                classes.extend([x for x in items2[1:] if x])
+            else:
+                tag_id = items[0]
+        else:
+            items = items[0].split('.')
+            if len(items) > 1:
+                if items[0]:
+                    tag = items[0]
+                classes.extend([x for x in items[1:] if x])
+            else:
+                tag = selector
+
+        if tag or tag_id or classes:
+            ignores.append([tag, tag_id, classes])
+
+    return ignores
+
+
+def skip_tag(el, ignore):
+    """Determine if tag should be skipped."""
+
+    for tag, tag_id, classes in ignore:
+        if tag and el.name.lower() != tag:
+            continue
+        if tag_id and tag_id != el.attrs.get('id', '').lower():
+            continue
+        if classes:
+            current_classes = [c.lower() for c in el.attrs.get('class', [])]
+            found = True
+            for c in classes:
+                if c not in current_classes:
+                    found = False
+                    break
+            if not found:
+                continue
+        return True
+    return False
+
+
+def html_to_text(tree, ignore, attributes, root=True):
+    """
+    Parse the HTML creating a buffer with each tags content.
+
+    Skip any selectors specified and include attributes if specified.
+    Ignored tags will not have their attributes scanned either.
+    """
+
+    text = []
+
+    if not skip_tag(tree, ignore):
+        for attr in attributes:
+            value = tree.attrs.get(attr)
+            if value:
+                text.append(value)
+
+        for child in tree:
+            if isinstance(child, bs4.element.Tag):
+                if child.contents:
+                    text.extend(html_to_text(child, ignore, attributes, False))
+            else:
+                text.append(str(child))
+
+    return ' '.join(text) if root else text
 
 
 def check_spelling():
@@ -162,25 +259,32 @@ def check_spelling():
     print('Spell Checking...')
 
     fail = False
+    ignores = ignore_rules('code', 'pre', 'script', 'style', 'a.magiclink-compare', 'a.magiclink-commit')
+    attrs = {'title', 'alt'}
 
     for base, dirs, files in os.walk(MKDOCS_BUILD):
         # Remove child folders based on exclude rules
         for f in files:
             if f.endswith('.html'):
                 file_name = os.path.join(base, f)
+                with codecs.open(file_name, 'r', encoding='utf-8') as file_obj:
+                    html = bs4.BeautifulSoup(file_obj.read(), "html5lib")
+                    text = html_to_text(
+                        html.html,
+                        ignores,
+                        attrs
+                    )
+
                 wordlist = console(
                     [
                         'aspell',
                         'list',
                         '--lang=en',
-                        '--mode=html',
+                        '--mode=url',
                         '--encoding=utf-8',
-                        '--add-html-skip=code',
-                        '--add-html-skip=pre',
-                        '--add-html-skip=nospell',
                         '--extra-dicts=%s' % COMPILED_DICT
                     ],
-                    file_name
+                    input_text=text.encode('utf-8')
                 )
 
                 words = [w for w in sorted(set(wordlist.split('\n'))) if w]
