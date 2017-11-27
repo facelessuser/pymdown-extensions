@@ -5574,9 +5574,9 @@ stylelint@^8.0.0:
     svg-tags "^1.0.0"
     table "^4.0.1"
 
-stylelint@^8.3.0:
-  version "8.3.0"
-  resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-8.3.0.tgz#aa4f0c6d9ca7f24e7fc62331934dcd71c6317453"
+stylelint@^8.3.1:
+  version "8.3.1"
+  resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-8.3.1.tgz#424c822f32c88e85025b55d72c7b98355e3fa6de"
   dependencies:
     autoprefixer "^7.1.2"
     balanced-match "^1.0.0"
