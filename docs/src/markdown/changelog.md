@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.5.1
+
+Nov 28, 2017
+
+- **FIX**: If an invalid provider is given, default to `github`. If no `user` or `repo` is specified, do not convert links that depend on those default values (#169).
+
 ## 4.5.0
 
 Nov 26, 2017

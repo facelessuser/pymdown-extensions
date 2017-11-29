@@ -6,8 +6,6 @@ environment:
   matrix:
     - PYTHON: "C:/Python27"
       TOXENV: "py27-unittests"
-    - PYTHON: "C:/Python33"
-      TOXENV: "py33-unittests"
     - PYTHON: "C:/Python34"
       TOXENV: "py34-unittests"
     - PYTHON: "C:/Python35"
