@@ -184,14 +184,13 @@ PROVIDER_INFO = {
 class _MagiclinkShorthandPattern(Pattern):
     """Base shorthand link class."""
 
-    def __init__(self, pattern, md, user, repo, provider, labels, external=False):
+    def __init__(self, pattern, md, user, repo, provider, labels):
         """Initialize."""
 
         self.user = user
         self.repo = repo
         self.labels = labels
-        self.provider = provider
-        self.external = external
+        self.provider = provider if provider in PROVIDER_INFO else ''
         Pattern.__init__(self, pattern, md)
 
 
@@ -546,7 +545,6 @@ class MagiclinkMentionPattern(_MagiclinkShorthandPattern):
     def handleMatch(self, m):
         """Handle email link patterns."""
 
-        el = md_util.etree.Element("a")
         text = m.group('mention')[1:]
         parts = text.split(':')
         if len(parts) > 1:
@@ -556,6 +554,7 @@ class MagiclinkMentionPattern(_MagiclinkShorthandPattern):
             provider = self.provider
             mention = parts[0]
 
+        el = md_util.etree.Element("a")
         el.set('href', '%s/%s' % (PROVIDER_INFO[provider]['url'], mention))
         el.set(
             'title',
@@ -572,7 +571,6 @@ class MagiclinkRepositoryPattern(_MagiclinkShorthandPattern):
     def handleMatch(self, m):
         """Handle email link patterns."""
 
-        el = md_util.etree.Element("a")
         text = m.group('mention')[1:]
         parts = text.split(':')
         if len(parts) > 1:
@@ -583,6 +581,7 @@ class MagiclinkRepositoryPattern(_MagiclinkShorthandPattern):
             user = parts[0]
         repo = m.group('mention_repo')
 
+        el = md_util.etree.Element("a")
         el.set('href', '%s/%s/%s' % (PROVIDER_INFO[provider]['url'], user, repo))
         el.set(
             'title',
@@ -601,8 +600,6 @@ class MagiclinkExternalRefsPattern(_MagiclinkReferencePattern):
     def handleMatch(self, m):
         """Handle email link patterns."""
 
-        el = md_util.etree.Element("a")
-
         is_commit = m.group('commit')
         is_diff = m.group('diff')
         value = m.group('commit')[1:] if is_commit else m.group('issue')
@@ -620,9 +617,14 @@ class MagiclinkExternalRefsPattern(_MagiclinkReferencePattern):
         else:
             provider = self.provider
 
+        # If there is no valid user or provider, return plain text
+        if not user:
+            return m.group(0)
+
         self.my_user = user == self.user and provider == self.provider
         self.my_repo = self.my_user and repo == self.repo
 
+        el = md_util.etree.Element("a")
         if is_diff:
             self.process_compare(el, provider, user, repo, value, value2)
         elif is_commit:
@@ -638,7 +640,10 @@ class MagiclinkInternalRefsPattern(_MagiclinkReferencePattern):
     def handleMatch(self, m):
         """Handle email link patterns."""
 
-        el = md_util.etree.Element("a")
+        # We don't have a valid provider, user, and repo, so just return the text
+        if not self.user or not self.repo:
+            return m.group(0)
+
         is_commit = m.group('commit')
         is_diff = m.group('diff')
         value = m.group('commit') if is_commit else m.group('issue')
@@ -650,6 +655,7 @@ class MagiclinkInternalRefsPattern(_MagiclinkReferencePattern):
         self.my_repo = True
         self.my_user = True
 
+        el = md_util.etree.Element("a")
         if is_diff:
             self.process_compare(el, provider, user, repo, value, value2)
         elif is_commit:
@@ -807,6 +813,10 @@ class MagiclinkExtension(Extension):
         self.is_social = self.provider in SOCIAL_PROVIDERS
         self.git_short = config.get('repo_url_shorthand', False)
         self.social_short = config.get('social_url_shorthand', False)
+
+        # Ensure valid provider
+        if self.provider not in PROVIDER_INFO:
+            self.provider = 'github'
 
         int_mentions = None
         ext_mentions = []

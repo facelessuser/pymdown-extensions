@@ -1,0 +1,43 @@
+Mention @some-bodies_name
+
+Mention @some-bodies_name/some_repository
+
+Mention @facelessuser/some_repository
+
+Commit some-bodies_name/some_repository@3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+
+Compare some-bodies_name/some_repository@e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+
+Issue some-bodies_name/some_repository#33
+
+Pull request some-bodies_name/some_repository!33
+
+Commit 3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+
+Compare e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+
+Issue #33
+
+Pull request !33
+
+Commit MyRepo@3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+
+Compare MyRepo@e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+
+Issue MyRepo#33
+
+Pull MyRepo!33
+
+Mention @gitlab:some-user
+
+Mention @gitlab:some-bodies_name/some_repository
+
+Mention @bitbucket:facelessuser/some_repository
+
+Issue github:some-user/some-repo#1
+
+Pull request bitbucket:some-user/some-repo!2
+
+Commit gitlab:some-user/some-repo@3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+
+Compare gitlab:some-user/some-repo@e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac

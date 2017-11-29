@@ -44,6 +44,15 @@ magiclink (gitlab):
       user: facelessuser
       repo: pymdown-extensions
 
+magiclink (invalid):
+  extensions:
+    pymdownx.magiclink:
+      hide_protocol: false
+      provider: invalid
+      repo_url_shortener: true
+      repo_url_shorthand: true
+      social_url_shorthand: true
+
 magiclink (legacy):
   extensions:
     pymdownx.magiclink:
