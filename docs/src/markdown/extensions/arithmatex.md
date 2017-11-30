@@ -48,9 +48,9 @@ For block forms, the block must start with the appropriate opening for the block
 
 ## Output Format
 
-If `insert_as_script` is enabled, the math equations will be wrapped in a special MathJax script tag and embedded into the HTML. MathJax can already find these scripts, so there is no need to configure the `tex2jax` extension when setting up MathJax. The tag will be `#!html <script type="math/tex"></script>` for inline and `#!html <script type="math/tex; mode=display"></script>` for block. This is probably the most reliable HTML form, but if MathJax doesn't load, you don't get fallback text.  When `insert_as_script` is enabled, `tex_inline_wrap` and `tex_block_wrap` are ignored.
+The math equations will be wrapped in a special MathJax script tag and embedded into the HTML. MathJax can already find these scripts, so there is no need to include and configure the `tex2jax.js` extension when setting up MathJax. The tag will be `#!html <script type="math/tex"></script>` for inline and `#!html <script type="math/tex; mode=display"></script>` for block.
 
-On output, if `insert_as_script` is `#!py False`, the extension will escape necessary symbols and normalize all output to be wrapped in the more reliable `#!tex \(...\)` for inline math and `#!tex \[...\]` for block math. Then the wrapped content will be inserted into a `span` and embedded into the HTML.  The span provides a container to keep MathJax from gathering multiple equations into one by mistake.  So, with the default settings, if in your Markdown you used `#!tex $...$`, it would be converted to `#!tex \(...\)` in the HTML. Blocks would respectively be normalized from `#!tex $$...$$` to `#!tex \[...\]`.  In the case of `#!tex \begin{}...\end{}`, begins and ends will not be replaced, only wrapped`#!tex \[\begin{}...\end{}\]`. Normalization is provided as MathJax disables detection of `#!tex $...$` by default due to detection issues with money notation.  Since Arithmatex provides additional logic to curb issues with `#!tex $`, we allow it in the Markdown. If a different wrapper is desired, see [Options](#options) below to learn how to change the wrapper.
+By default, Arithmatex will also generate a preview span with the class `MathJax_Preview` that MathJax will hide when the math content is actually loaded. If you do not want to see the preview, simply set `preview` to `#!py3 False`.
 
 ## Loading MathJax
 
@@ -66,21 +66,7 @@ If you want to load one of the pre-defined configurations that MathJax offers, y
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
 ```
 
-If you don't include a pre-defined configuration, you will need to provide your own.  But you can also provide a configuration to tweak the pre-defined configuration.  Here we show a simple example of a configuration done in JavaScript.
-
-```js
-window.MathJax = {
-  config: ["MMLorHTML.js"],
-  jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
-  extensions: ["tex2jax.js", "MathMenu.js", "MathZoom.js"],
-  tex2jax: {
-    inlineMath: [ ["\\(","\\)"] ],
-    displayMath: [ ["\\[","\\]"] ]
-  },
-};
-```
-
-If you have `insert_as_script` enabled, you could omit the extension `tex2jax.js` and the `tex2jax` settings.
+If you don't include a pre-defined configuration, you will need to provide your own.  Here we show a simple example of a configuration done in JavaScript.
 
 ```js
 window.MathJax = {
@@ -94,13 +80,17 @@ Please see the [MathJax][mathjax] site for more info on using MathJax extensions
 
 ## Options
 
-Option             | Type            | Default                              | Description
------------------- | --------------- | ------------------------------------ |------------
-`inline_syntax`    | `#!py [string]` | `#!py ['dollar', 'round']`           | Syntax to search for: dollar=`#!tex $...$` and round=`#!tex \(...\)`.
-`block_syntax`     | `#!py [string]` | `#!py ['dollar', 'square', 'begin']` | Syntax to search for: dollar=`#!tex $...$`, square=`#!tex \[...\]`, and `#!tex \begin{}...\end{}`.
-`tex_inline_wrap`  | `#!py [string]` | `#!py ['\\(', '\\)']`                | An array containing the opening and closing portion of the wrap.
-`tex_block_wrap`   | `#!py [string]` | `#!py ['\\[', '\\]']`                | An array containing the opening and closing portion of the wrap.
-`insert_as_script` | bool            | `#!py False`                         | Instead of using the above wrap options, insert the equations in a `math/tex` script. This form is the most reliable in HTML, but if the MathJax script fails to load, the user won't see any indication of the equations.
+Option             | Type             | Default                              | Description
+------------------ | ---------------- | ------------------------------------ |------------
+`inline_syntax`    | `#!py3 [string]` | `#!py ['dollar', 'round']`           | Syntax to search for: dollar=`#!tex $...$` and round=`#!tex \(...\)`.
+`block_syntax`     | `#!py3 [string]` | `#!py ['dollar', 'square', 'begin']` | Syntax to search for: dollar=`#!tex $...$`, square=`#!tex \[...\]`, and `#!tex \begin{}...\end{}`.
+`preview`          | `#!py3 bool`     | `#!py True`                          | Insert a preview to show until MathJax finishes loading the equations.
+
+
+!!! warning Deprecation:
+    `tex_inline_wrap`, `tex_block_wrap`, `insert_as_script` have been deprecated in 4.6.0. If you are still setting these, it will do nothing.  These options will be removed in the future so it is strongly advised to stop setting them.
+
+    Inserting as script is now the default as it is the most reliable insertion format, and with the new way previews are inserted, there is no need for the old text conversion method.
 
 ---8<--- "links.md"
 

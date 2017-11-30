@@ -55,6 +55,12 @@ from markdown.blockprocessors import BlockProcessor
 from markdown import util as md_util
 from . import util
 import re
+from .util import PymdownxDeprecationWarning
+import warnings
+
+DEPRECATION_WARN = """'%s' is deprecated and does nothing.
+Please discontinue using this option as it will be removed in the future.
+See documentation to see why this have been deprecated."""
 
 RE_DOLLAR_INLINE = r'(?:(?<!\\)((?:\\{2})+)(?=\$)|(?<!\\)(\$)(?!\s)((?:\\.|[^\$])+?)(?<!\s)(?:\$))'
 RE_BRACKET_INLINE = r'(?:(?<!\\)((?:\\{2})+?)(?=\\\()|(?<!\\)(\\\()((?:\\[^)]|[^\\])+?)(?:\\\)))'
@@ -65,11 +71,11 @@ class InlineArithmatexPattern(Pattern):
 
     ESCAPED_BSLASH = '%s%s%s' % (md_util.STX, ord('\\'), md_util.ETX)
 
-    def __init__(self, pattern, wrap, script, md):
+    def __init__(self, pattern, config, md):
         """Initialize."""
 
-        self.script = script
-        self.wrap = wrap[0] + '%s' + wrap[1]
+        self.script = config.get('insert_as_script', True)
+        self.preview = config.get('preview', False)
         Pattern.__init__(self, pattern)
         self.markdown = md
 
@@ -87,12 +93,16 @@ class InlineArithmatexPattern(Pattern):
         math = m.group(4)
         if not math:
             math = m.group(7)
-        if self.script:
+
+        if self.preview:
+            el = md_util.etree.Element('span')
+            preview = md_util.etree.SubElement(el, 'span', {'class': 'MathJax_Preview'})
+            preview.text = md_util.AtomicString(math)
+            script = md_util.etree.SubElement(el, 'script', {'type': 'math/tex'})
+            script.text = md_util.AtomicString(math)
+        else:
             el = md_util.etree.Element('script', {'type': 'math/tex'})
             el.text = md_util.AtomicString(math)
-        else:
-            el = md_util.etree.Element('span')
-            el.text = md_util.AtomicString(self.wrap % math)
         return el
 
 
@@ -106,10 +116,7 @@ class BlockArithmatexProcessor(BlockProcessor):
     def __init__(self, config, md):
         """Initialize."""
 
-        self.script = config.get('insert_as_script', False)
-        wrap = config.get('tex_block_wrap', ['\\[', '\\]'])
-        self.wrap = wrap[0] + '%s' + wrap[1]
-
+        self.preview = config.get('preview', True)
         allowed_patterns = set(config.get('block_syntax', ['dollar', 'square', 'begin']))
         pattern = []
         if 'dollar' in allowed_patterns:
@@ -144,12 +151,13 @@ class BlockArithmatexProcessor(BlockProcessor):
             math = self.match.group('math2')
         if not math:
             math = self.match.group('math3')
-        if self.script:
-            el = md_util.etree.SubElement(parent, 'script', {'type': 'math/tex; mode=display'})
-            el.text = md_util.AtomicString(math)
-        else:
-            el = md_util.etree.SubElement(parent, 'span')
-            el.text = md_util.AtomicString(self.wrap % math)
+        if self.preview:
+            grandparent = parent
+            parent = md_util.etree.SubElement(grandparent, 'div')
+            preview = md_util.etree.SubElement(parent, 'div', {'class': 'MathJax_Preview'})
+            preview.text = md_util.AtomicString(math)
+        el = md_util.etree.SubElement(parent, 'script', {'type': 'math/tex; mode=display'})
+        el.text = md_util.AtomicString(math)
         return True
 
 
@@ -160,14 +168,8 @@ class ArithmatexExtension(Extension):
         """Initialize."""
 
         self.config = {
-            'tex_inline_wrap': [
-                ["\\(", "\\)"],
-                "Wrap inline content with the provided text ['open', 'close'] - Default: ['', '']"
-            ],
-            'tex_block_wrap': [
-                ["\\[", "\\]"],
-                "Wrap blick content with the provided text ['open', 'close'] - Default: ['', '']"
-            ],
+            'tex_inline_wrap': [[], "Deprecated"],
+            'tex_block_wrap': [[], "Deprecated"],
             "block_syntax": [
                 ['dollar', 'square', 'begin'],
                 'Enable block syntax: "dollar" ($$...$$), "square" (\\[...\\]), and '
@@ -178,9 +180,10 @@ class ArithmatexExtension(Extension):
                 'Enable block syntax: "dollar" ($$...$$), "bracket" (\\(...\\)) '
                 ' - Default: ["dollar", "round"]'
             ],
-            'insert_as_script': [
-                False,
-                "Insert the math Tex notation into a script tag. Overrides wrapping. - Default: False"
+            'insert_as_script': [False, "Deprecated"],
+            'preview': [
+                True,
+                "Insert a preview for scripts. - Default: False"
             ]
         }
 
@@ -194,6 +197,10 @@ class ArithmatexExtension(Extension):
 
         config = self.getConfigs()
 
+        for option in ('tex_inline_wrap', 'tex_block_wrap', 'insert_as_script'):
+            if config.get(option):  # pragma: no cover
+                warnings.warn(DEPRECATION_WARN % option, PymdownxDeprecationWarning)
+
         allowed_inline = set(config.get('inline_syntax', ['dollar', 'round']))
         inline_patterns = []
         if 'dollar' in allowed_inline:
@@ -203,8 +210,7 @@ class ArithmatexExtension(Extension):
         if inline_patterns:
             inline = InlineArithmatexPattern(
                 '(?:%s)' % '|'.join(inline_patterns),
-                config.get('tex_inline_wrap', ["\\(", "\\)"]),
-                config.get('insert_as_script', False),
+                config,
                 md
             )
             md.inlinePatterns.add("arithmatex-inline", inline, ">backtick")
