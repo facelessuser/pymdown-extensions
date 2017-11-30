@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 import subprocess
 import os
 import sys
-import yaml
 import codecs
 import bs4
 import re
@@ -65,73 +64,6 @@ def console(cmd, input_file=None, input_text=None):
     return output[0].decode('utf-8') if PY3 else output[0]
 
 
-def yaml_dump(data, stream=None, dumper=yaml.Dumper, **kwargs):
-    """Special dumper wrapper to modify the yaml dumper."""
-
-    class Dumper(dumper):
-        """Custom dumper."""
-
-    if not PY3:
-        # Unicode
-        Dumper.add_representer(
-            unicode,  # noqa
-            lambda dumper, value: dumper.represent_scalar(u'tag:yaml.org,2002:str', value)
-        )
-
-    return yaml.dump(data, stream, Dumper, **kwargs)
-
-
-def yaml_load(source, loader=yaml.Loader):
-    """
-    Wrap PyYaml's loader so we can extend it to suit our needs.
-
-    Load all strings as unicode: http://stackoverflow.com/a/2967461/3609487.
-    """
-
-    def construct_yaml_str(self, node):
-        """Override the default string handling function to always return Unicode objects."""
-        return self.construct_scalar(node)
-
-    class Loader(loader):
-        """Define a custom loader to leave the global loader unaltered."""
-
-    # Attach our unicode constructor to our custom loader ensuring all strings
-    # will be unicode on translation.
-    Loader.add_constructor('tag:yaml.org,2002:str', construct_yaml_str)
-
-    return yaml.load(source, Loader)
-
-
-def patch_doc_config(config_file):
-    """Patch the config file to wrap arithmatex with a tag aspell can ignore."""
-
-    with open(config_file, 'rb') as f:
-        config = yaml_load(f)
-
-    index = 0
-    for extension in config.get('markdown_extensions', []):
-        if isinstance(extension, str if PY3 else unicode) and extension == 'pymdownx.arithmatex':  # noqa
-            config['markdown_extensions'][index] = {'pymdownx.arithmatex': {'insert_as_script': True}}
-            break
-        elif isinstance(extension, dict) and 'pymdownx.arithmatex' in extension:
-            if isinstance(extension['pymdownx.arithmatex'], dict):
-                extension['pymdownx.arithmatex']['insert_as_script'] = True
-            elif extension['pymdownx.arithmatex'] is None:
-                extension['pymdownx.arithmatex'] = {'insert_as_script': True}
-            break
-        index += 1
-
-    with codecs.open(MKDOCS_SPELL, "w", encoding="utf-8") as f:
-        yaml_dump(
-            config, f,
-            width=None,
-            indent=4,
-            allow_unicode=True,
-            default_flow_style=False
-        )
-    return MKDOCS_SPELL
-
-
 def build_docs():
     """Build docs with MkDocs."""
     print('Building Docs...')
@@ -140,8 +72,7 @@ def build_docs():
             [
                 sys.executable,
                 '-m', 'mkdocs', 'build', '--clean',
-                '-d', MKDOCS_BUILD,
-                '-f', patch_doc_config(MKDOCS_CFG)
+                '-d', MKDOCS_BUILD
             ]
         )
     )
@@ -182,7 +113,7 @@ def ignore_rules(*args):
         tag_id = None
         classes = set()
 
-        for m in RE_SELECTOR.finditer(arg):
+        for m in RE_SELECTOR.finditer(selector):
             selector = m.group(0)
             if selector.startswith('.'):
                 classes.add(selector[1:])
@@ -253,7 +184,15 @@ def check_spelling():
     print('Spell Checking...')
 
     fail = False
-    ignores = ignore_rules('code', 'pre', 'script', 'style', 'a.magiclink-compare', 'a.magiclink-commit')
+    ignores = ignore_rules(
+        'code',
+        'pre',
+        'script',
+        'style',
+        'a.magiclink-compare',
+        'a.magiclink-commit',
+        '.MathJax_Preview'
+    )
     attrs = {'title', 'alt'}
 
     for base, dirs, files in os.walk(MKDOCS_BUILD):
