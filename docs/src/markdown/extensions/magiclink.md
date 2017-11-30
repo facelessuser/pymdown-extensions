@@ -228,7 +228,6 @@ Option                          | Type   | Default         | Description
 `user`                          | string | `#!py ''`       | The default user name to use for the specified provider.
 `repo`                          | string | `#!py ''`       | The default repository name to use for the specified user and provider.
 `labels`                        | dict   | `#!py {}`       | A dictionary for overriding repository link title text. See [labels](#labels) for more info.
-~~`base_repo_url`~~             | string | `#!py ''`       | The base repository URL for repository links.
 
 !!! warning "Deprecation 4.2.0"
     In 4.2.0, `base_repo_url` has been deprecated in favor of `provider`, `user`, and `repo`. If `repo_url_shorthand` is enabled, `base_repo_url` will be ignored and `provider`, `user`, and `repo` will be used.
