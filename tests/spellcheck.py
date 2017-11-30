@@ -6,6 +6,8 @@ import sys
 import yaml
 import codecs
 import bs4
+import re
+from collections import namedtuple
 
 PY3 = sys.version_info >= (3, 0)
 
@@ -15,6 +17,11 @@ MKDOCS_CFG = 'mkdocs.yml'
 COMPILED_DICT = os.path.join(BUILD_DIR, 'dictionary.bin')
 MKDOCS_SPELL = os.path.join(BUILD_DIR, MKDOCS_CFG)
 MKDOCS_BUILD = os.path.join(BUILD_DIR, 'site')
+RE_SELECTOR = re.compile(r'(\#|\.)?[-\w]+')
+
+
+class IgnoreRule (namedtuple('IgnoreRule', ['tag', 'id', 'classes'])):
+    """Ignore rule."""
 
 
 def console(cmd, input_file=None, input_text=None):
@@ -164,13 +171,7 @@ def ignore_rules(*args):
     """
     Process ignore rules.
 
-    - tag
-    - tag#id
-    - #id
-    - tag#id.class1.class2
-    - tag.class1.class2
-    - #id.class1.class2
-    - .class1.class2
+    Split ignore selector string into tag, id, and classes.
     """
 
     ignores = []
@@ -179,30 +180,21 @@ def ignore_rules(*args):
         selector = arg.lower()
         tag = None
         tag_id = None
-        classes = []
+        classes = set()
 
-        items = selector.split('#')
-        if len(items) > 1:
-            if items[0]:
-                tag = items[0]
-            items2 = items[1].split('.')
-            if len(items2) > 1:
-                if items2[0]:
-                    tag_id = items2[0]
-                classes.extend([x for x in items2[1:] if x])
-            else:
-                tag_id = items[0]
-        else:
-            items = items[0].split('.')
-            if len(items) > 1:
-                if items[0]:
-                    tag = items[0]
-                classes.extend([x for x in items[1:] if x])
-            else:
+        for m in RE_SELECTOR.finditer(arg):
+            selector = m.group(0)
+            if selector.startswith('.'):
+                classes.add(selector[1:])
+            elif selector.startswith('#') and tag_id is None:
+                tag_id = selector[1:]
+            elif tag is None:
                 tag = selector
+            else:
+                raise ValueError('Bad selector!')
 
         if tag or tag_id or classes:
-            ignores.append([tag, tag_id, classes])
+            ignores.append(IgnoreRule(tag, tag_id, tuple(classes)))
 
     return ignores
 
@@ -210,22 +202,24 @@ def ignore_rules(*args):
 def skip_tag(el, ignore):
     """Determine if tag should be skipped."""
 
-    for tag, tag_id, classes in ignore:
-        if tag and el.name.lower() != tag:
+    skip = False
+    for rule in ignore:
+        if rule.tag and el.name.lower() != rule.tag:
             continue
-        if tag_id and tag_id != el.attrs.get('id', '').lower():
+        if rule.id and rule.id != el.attrs.get('id', '').lower():
             continue
-        if classes:
+        if rule.classes:
             current_classes = [c.lower() for c in el.attrs.get('class', [])]
             found = True
-            for c in classes:
+            for c in rule.classes:
                 if c not in current_classes:
                     found = False
                     break
             if not found:
                 continue
-        return True
-    return False
+        skip = True
+        break
+    return skip
 
 
 def html_to_text(tree, ignore, attributes, root=True):
