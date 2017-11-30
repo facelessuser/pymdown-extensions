@@ -58,7 +58,7 @@ import re
 from .util import PymdownxDeprecationWarning
 import warnings
 
-DEPRECATION_WARN = """'%s' is deprecated and does nothing.
+DEPRECATION_WARN = """'%s' is deprecated and is now unnecessary and does nothing.
 Please discontinue using this option as it will be removed in the future.
 See documentation to see why this have been deprecated."""
 
@@ -71,13 +71,11 @@ class InlineArithmatexPattern(Pattern):
 
     ESCAPED_BSLASH = '%s%s%s' % (md_util.STX, ord('\\'), md_util.ETX)
 
-    def __init__(self, pattern, config, md):
+    def __init__(self, pattern, preview):
         """Initialize."""
 
-        self.script = config.get('insert_as_script', True)
-        self.preview = config.get('preview', False)
+        self.preview = preview
         Pattern.__init__(self, pattern)
-        self.markdown = md
 
     def handleMatch(self, m):
         """Handle notations and switch them to something that will be more detectable in HTML."""
@@ -113,11 +111,10 @@ class BlockArithmatexProcessor(BlockProcessor):
     RE_TEX_BLOCK = r'(?P<math2>\\begin\{(?P<env>[a-z]+\*?)\}.+?\\end\{(?P=env)\})'
     RE_BRACKET_BLOCK = r'\\\[(?P<math3>(?:\\[^\]]|[^\\])+?)\\\]'
 
-    def __init__(self, config, md):
+    def __init__(self, preview, allowed_patterns, md):
         """Initialize."""
 
-        self.preview = config.get('preview', True)
-        allowed_patterns = set(config.get('block_syntax', ['dollar', 'square', 'begin']))
+        self.preview = preview
         pattern = []
         if 'dollar' in allowed_patterns:
             pattern.append(self.RE_DOLLAR_BLOCK)
@@ -131,7 +128,6 @@ class BlockArithmatexProcessor(BlockProcessor):
             self.pattern = re.compile(r'(?s)^(?:%s)[ ]*$' % '|'.join(pattern))
         else:
             self.pattern = None
-        self.markdown = md
 
         BlockProcessor.__init__(self, md.parser)
 
@@ -196,6 +192,7 @@ class ArithmatexExtension(Extension):
         util.escape_chars(md, ['$'])
 
         config = self.getConfigs()
+        preview = config.get('preview', False)
 
         for option in ('tex_inline_wrap', 'tex_block_wrap', 'insert_as_script'):
             if config.get(option):  # pragma: no cover
@@ -210,11 +207,14 @@ class ArithmatexExtension(Extension):
         if inline_patterns:
             inline = InlineArithmatexPattern(
                 '(?:%s)' % '|'.join(inline_patterns),
-                config,
-                md
+                preview
             )
             md.inlinePatterns.add("arithmatex-inline", inline, ">backtick")
-        md.parser.blockprocessors.add('arithmatex-block', BlockArithmatexProcessor(config, md), "<code")
+        md.parser.blockprocessors.add(
+            'arithmatex-block',
+            BlockArithmatexProcessor(preview, set(config.get('block_syntax', ['dollar', 'square', 'begin'])), md),
+            "<code"
+        )
 
 
 def makeExtension(*args, **kwargs):
