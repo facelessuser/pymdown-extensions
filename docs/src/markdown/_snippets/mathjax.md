@@ -2,11 +2,7 @@
 MathJax.Hub.Config({
     config: ["MMLorHTML.js"],
     jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
-    extensions: ["tex2jax.js", "MathMenu.js", "MathZoom.js"],
-    tex2jax: {
-        inlineMath: [ ["\\(","\\)"] ],
-        displayMath: [ ["\\[","\\]"] ]
-    },
+    extensions: ["MathMenu.js", "MathZoom.js"],
     TeX: {
         TagSide: "right",
         TagIndent: ".8em",
