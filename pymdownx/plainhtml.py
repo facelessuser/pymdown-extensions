@@ -32,11 +32,16 @@ import re
 RE_TAG_HTML = re.compile(
     r'''(?x)
     (?:
-        (?P<comments>(\r?\n?\s*)<!--[\s\S]*?-->(\s*)(?=\r?\n)|<!--[\s\S]*?-->)|
+        (?P<comments>(?:\r?\n?\s*)<!--[\s\S]*?-->(?:\s*)(?=\r?\n)|<!--[\s\S]*?-->)|
+        (?P<scripts>
+            (?P<script_open><(?P<script_name>style|script))
+            (?P<script_attr>(?:\s+[\w\-:]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'`=<>]+))?)*)
+            (?P<script_rest>>.*?</(?P=script_name)\s*>)
+        )|
         (?P<open><(?P<name>[\w\:\.\-]+))
-        (?P<attr>(?:\s+[\w\-:]+(?:\s*=\s*(?:"[^"]*"|'[^']*'))?)*)
+        (?P<attr>(?:\s+[\w\-:]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'`=<>]+))?)*)
         (?P<close>\s*(?P<self_close>/)?>)|
-        (?P<close_tag></(?P<close_name>[\w\:\.\-]+)>)
+        (?P<close_tag></(?P<close_name>[\w\:\.\-]+)\s*>)
     )
     ''',
     re.DOTALL | re.UNICODE
@@ -46,7 +51,7 @@ TAG_BAD_ATTR = r'''(?x)
 (?P<attr>
     (?:
         \s+(?:%s)
-        (?:\s*=\s*(?:"[^"]*"|'[^']*'))
+        (?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'`=<>]+))
     )*
 )
 '''
@@ -59,12 +64,15 @@ class PlainHtmlPostprocessor(Postprocessor):
         """Replace comments and unwanted attributes."""
 
         if m.group('comments'):
-            tag = '' if self.strip_comments and not self.script else m.group('comments')
+            tag = '' if self.strip_comments else m.group('comments')
         else:
-            if self.script:
-                if m.group('close_tag') and m.group('close_name') == 'script':
-                    self.script = False
-                tag = m.group(0)
+            if m.group('scripts'):
+                tag = m.group('script_open')
+                if self.re_attributes is not None:
+                    tag += self.re_attributes.sub('', m.group('script_attr'))
+                else:
+                    tag += m.group('script_attr')
+                tag += m.group('script_rest')
             elif m.group('close_tag'):
                 tag = m.group(0)
             else:
@@ -74,8 +82,6 @@ class PlainHtmlPostprocessor(Postprocessor):
                 else:
                     tag += m.group('attr')
                 tag += m.group('close')
-                if m.group('name') == "script" and m.group('self_close') is None:
-                    self.script = True
         return tag
 
     def run(self, text):
@@ -94,7 +100,6 @@ class PlainHtmlPostprocessor(Postprocessor):
             self.re_attributes = None
         self.strip_comments = self.config.get('strip_comments', True)
 
-        self.script = False
         return RE_TAG_HTML.sub(self.repl, text)
 
 
