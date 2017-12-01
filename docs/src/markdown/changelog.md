@@ -3,6 +3,8 @@
 ## 4.6.0
 
 - **NEW**: Arithmatex now *just* uses the script wrapper output as it is the most reliable output, and now previews can be achieved by providing a span with class `MathJax_Preview` that gets auto hidden when the math is rendered. `insert_as_script`, `tex_inline_wrap`, and `tex_block_wrap` have all been deprecated as they are now entirely unnecessary. A new option has been added called `preview` that controls whether the script output generates a preview or not when the rendered math output is loading. Users no longer need to configure `tex2jax.js` in there MathJax configuration anymore.
+- **FIX**: PlainHTML has better script and style content avoidance to keep from stripping HTML tags and attributes from style and script content.
+- **FIX**: PlainHTML can strip attributes that are not quoted.
 
 ## 4.5.1
 
