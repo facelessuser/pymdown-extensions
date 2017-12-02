@@ -1,0 +1,14 @@
+__default__: {}
+
+striphtml:
+  extensions:
+    pymdownx.striphtml:
+      strip_attributes:
+      - id
+      - style
+      - class
+
+striphtml (no attr strip):
+  extensions:
+    pymdownx.striphtml:
+      strip_js_on_attributes: false
