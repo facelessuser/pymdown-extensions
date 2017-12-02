@@ -44,7 +44,7 @@ pages:
     - MagicLink: extensions/magiclink.md
     - Mark: extensions/mark.md
     - PathConverter: extensions/pathconverter.md
-    - PlainHTML: extensions/plainhtml.md
+    - StripHTML: extensions/striphtml.md
     - ProgressBar: extensions/progressbar.md
     - SmartSymbols: extensions/smartsymbols.md
     - Snippets: extensions/snippets.md
@@ -102,8 +102,7 @@ markdown_extensions:
   - pymdownx.progressbar:
   - pymdownx.arithmatex:
   - pymdownx.mark:
-  - pymdownx.plainhtml:
-      strip_attributes: ''
+  - pymdownx.striphtml:
   - pymdownx.snippets:
       base_path: docs/src/markdown/_snippets
   - pymdownx.keys:

@@ -2,52 +2,53 @@
 
 ## 4.6.0
 
-- **NEW**: Arithmatex now *just* uses the script wrapper output as it is the most reliable output, and now previews can be achieved by providing a span with class `MathJax_Preview` that gets auto hidden when the math is rendered. `insert_as_script`, `tex_inline_wrap`, and `tex_block_wrap` have all been deprecated as they are now entirely unnecessary. A new option has been added called `preview` that controls whether the script output generates a preview or not when the rendered math output is loading. Users no longer need to configure `tex2jax.js` in there MathJax configuration anymore.
-- **FIX**: PlainHTML has better script and style content avoidance to keep from stripping HTML tags and attributes from style and script content.
-- **FIX**: PlainHTML can strip attributes that are not quoted.
+- **NEW**: Arithmatex now *just* uses the script wrapper output as it is the most reliable output, and now previews can be achieved by providing a span with class `MathJax_Preview` that gets auto hidden when the math is rendered. `insert_as_script`, `tex_inline_wrap`, and `tex_block_wrap` have all been deprecated as they are now entirely unnecessary. A new option has been added called `preview` that controls whether the script output generates a preview or not when the rendered math output is loading. Users no longer need to configure `tex2jax.js` in there MathJax configuration anymore. (#171)
+- **NEW**: PlainHTML has been renamed to StripHTML. `strip_attributes` is now a list instead of a string with a default of `[]`. `pymdownx.plainhtml` is still available with the old convention for backwards compatibility, but will be removed for version 5.0.
+- **FIX**: PlainHTML has better script and style content avoidance to keep from stripping HTML tags and attributes from style and script content. (!174)
+- **FIX**: PlainHTML can strip attributes that are not quoted. (!174)
 
 ## 4.5.1
 
 Nov 28, 2017
 
-- **FIX**: If an invalid provider is given, default to `github`. If no `user` or `repo` is specified, do not convert links that depend on those default values (#169).
+- **FIX**: If an invalid provider is given, default to `github`. If no `user` or `repo` is specified, do not convert links that depend on those default values. (#169)
 
 ## 4.5.0
 
 Nov 26, 2017
 
-- **NEW**: Add GitLab style compare link shorthand and link shortening (#160).
-- **NEW**: Deprecate GitHub extension. It is now recommended to just include the extensions you want to create a GitHub feel instead of relying on a an extension to package something close-ish (#159).
+- **NEW**: Add GitLab style compare link shorthand and link shortening. (#160)
+- **NEW**: Deprecate GitHub extension. It is now recommended to just include the extensions you want to create a GitHub feel instead of relying on a an extension to package something close-ish. (#159)
 
 ## 4.4.0
 
 Nov 23, 2017
 
-- **NEW**: Add social media mentions -- Twitter only right now (#156).
+- **NEW**: Add social media mentions -- Twitter only right now. (#156)
 - **FIX**: Use correct regular expression for GitLab and Bitbucket.
 
 ## 4.3.0
 
 Nov 14, 2017
 
-- **NEW**: Shorthand format for referencing non-default provider commits, issues, pulls, and mentions (!147).
-- **NEW**: Shorthand format for mentioning a repo via `@user/repo` (!149).
-- **NEW**: Add repository provider specific classes (!149).
-- **NEW**: Make repository labels configurable (!149).
+- **NEW**: Shorthand format for referencing non-default provider commits, issues, pulls, and mentions. (!147)
+- **NEW**: Shorthand format for mentioning a repo via `@user/repo`. (!149)
+- **NEW**: Add repository provider specific classes. (!149)
+- **NEW**: Make repository labels configurable. (!149)
 - **FIX**: Adjust pattern boundaries auto-links.
 
 ## 4.2.0
 
 Nov 13, 2017
 
-- **NEW**: MagicLink can now auto-link a GitHub like shorthand for repository references (!139).
-- **NEW**: MagicLink now renders pull request links with a slightly different output from issues (!139).
-- **NEW**: Deprecate `base_repo_url` in MagicLink in favor of the new `provider`, `user`, and `repo` (!139).
-- **NEW**: MagicLink now adds classes to repository links (!139).
-- **NEW**: MagicLink now adds title to repository links (!139).
-- **NEW**: MagicLink no longer styles repository commit hashes as code (!143).
-- **FIX**: MagicLink repository link outputs now better reflect default user and repository context (!143).
-- **FIX**: PlainHTML should not strip tags that are part of JavaScript code (!140).
+- **NEW**: MagicLink can now auto-link a GitHub like shorthand for repository references. (!139)
+- **NEW**: MagicLink now renders pull request links with a slightly different output from issues. (!139)
+- **NEW**: Deprecate `base_repo_url` in MagicLink in favor of the new `provider`, `user`, and `repo`. (!139)
+- **NEW**: MagicLink now adds classes to repository links. (!139)
+- **NEW**: MagicLink now adds title to repository links. (!139)
+- **NEW**: MagicLink no longer styles repository commit hashes as code. (!143)
+- **FIX**: MagicLink repository link outputs now better reflect default user and repository context. (!143)
+- **FIX**: PlainHTML should not strip tags that are part of JavaScript code. (!140)
 
 ## 4.1.0
 
@@ -59,22 +60,22 @@ Oct 11, 2017
 
 Aug 29, 2017
 
-- **NEW**: Details extension will now derive a title from the class if only a class is provided (#107).
+- **NEW**: Details extension will now derive a title from the class if only a class is provided. (#107)
 - **NEW**: Remove deprecated legacy emoji generator format.
 - **NEW**: Remove deprecated `use_codehilite_settings`.
 - **NEW**: Remove deprecated `spoilers` extension redirect.
-- **NEW**: Update emoji databases: EmojiOne (3.1.2) and Twemoji to (2.5.0).
+- **NEW**: Update emoji databases: EmojiOne (3.1.2) and Twemoji to .(2.5.0)
 
 ## 3.5.0
 
 Jun 13, 2017
 
-- **NEW**: Add new slugs to preserve case (!103).
-- **NEW**: Add new GFM specific slug (both percent encoded and normal) that only lowercases ASCII chars just like GFM does (#101).
-- **FIX**: PathConverter should not try and convert obscured email address (with HTML entities) (#100).
-- **FIX**: Don't normalize Unicode in slugs with `NFKD`, use `NFC` instead (#98).
-- **FIX**: Don't let EscapeAll escape CriticMarkup placeholders.  EscapeAll will no longer escape `STX` and `ETX`; they will just pass through (#95).
-- **FIX**: Replace CriticMarkup placeholders after replacing raw HTML placeholders (#95).
+- **NEW**: Add new slugs to preserve case. (!103)
+- **NEW**: Add new GFM specific slug (both percent encoded and normal) that only lowercases ASCII chars just like GFM does. (#101)
+- **FIX**: PathConverter should not try and convert obscured email address (with HTML entities). (#100)
+- **FIX**: Don't normalize Unicode in slugs with `NFKD`, use `NFC` instead. (#98)
+- **FIX**: Don't let EscapeAll escape CriticMarkup placeholders.  EscapeAll will no longer escape `STX` and `ETX`; they will just pass through. (#95)
+- **FIX**: Replace CriticMarkup placeholders after replacing raw HTML placeholders. (#95)
 
 ## 3.4.0
 
@@ -88,8 +89,8 @@ Jun 1, 2017
 
 May 26, 2017
 
-- **NEW**: Added support for pull request link shortening in MagicLink (!88).
-- **NEW**: Added new Spoilers extension (#85).
+- **NEW**: Added support for pull request link shortening in MagicLink. (!88)
+- **NEW**: Added new Spoilers extension. (#85)
 
 ## 3.2.1
 
@@ -119,14 +120,14 @@ Apr 16, 2017
 
 - **NEW**: Added Keys extension.
 - **NEW**: Generalized custom fences (#60). `flow` and `sequence` fence are now just custom fences and can be disabled simply by overwriting the `custom_fences` setting.
-- **NEW**: Remove deprecated `no_nl2br` in GitHub extension (#24).
-- **NEW**: Remove deprecated HeaderAnchor extension (#24).
-- **NEW**: Remove deprecated PyMdown extension (#24).
-- **NEW**: Remove deprecated GitHubEmoji extension (#24).
-- **NEW**: Remove deprecated `nested` option in SuperFences (#24).
+- **NEW**: Remove deprecated `no_nl2br` in GitHub extension. (#24)
+- **NEW**: Remove deprecated HeaderAnchor extension. (#24)
+- **NEW**: Remove deprecated PyMdown extension. (#24)
+- **NEW**: Remove deprecated GitHubEmoji extension. (#24)
+- **NEW**: Remove deprecated `nested` option in SuperFences. (#24)
 - **NEW**: Wrapper extensions (such as GitHub and Extra) can now allow setting the included sub extensions settings (#61). Workaround settings that directly set specific extensions settings has been removed.
 - **NEW**: Deprecated `use_codehilite_settings` in SuperFences and InlineHilite and now does nothing.  The settings will be removed in the future.  If `pymdownx.highlight` is used, it's settings will be used instead of CodeHilite. Eventually, the both SuperFences and InlineHilite will require `pymdownx.highlight` to be used and will have CodeHilite support stripped.
-- **FIX**: Fix MathJax CDN references and usage in documentation.  MathJax CDN is shutting down and must now use Cloudflare CDN (#63).
+- **FIX**: Fix MathJax CDN references and usage in documentation.  MathJax CDN is shutting down and must now use Cloudflare CDN. (#63)
 
 ## 2.0.0
 
@@ -140,12 +141,12 @@ Feb 12, 2017
 
 Jan 27, 2017
 
-- **NEW**: MagicLink special repository link shortener for GitHub, GitLab, and Bitbucket (#49).
-- **FIX**: GitHub asterisk emphasis should never have had smart enabled for it (#50).
+- **NEW**: MagicLink special repository link shortener for GitHub, GitLab, and Bitbucket. (#49)
+- **FIX**: GitHub asterisk emphasis should never have had smart enabled for it. (#50)
 - **FIX**: MagicLink fix for compatibility with wrapped symbols like `~`, `*` etc. which are commonly used.
 - **FIX**: MagicLink encodes emails like Python Markdown does for consistency.
-- **FIX**: MagicLink doesn't allow Unicode for email and does allow Unicode in a URL (#53).
-- **FIX**: InlineHilite now returns a proper `etree` element so that the `attr_list` extension and function properly with it (#48).
+- **FIX**: MagicLink doesn't allow Unicode for email and does allow Unicode in a URL. (#53)
+- **FIX**: InlineHilite now returns a proper `etree` element so that the `attr_list` extension and function properly with it. (#48)
 - **FIX**: InlineHilite will no longer break if Pygments is not installed (478b410a2199d55f3e70b452516511d3810c61a5).
 
 ## 1.7.0

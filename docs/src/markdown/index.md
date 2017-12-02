@@ -57,7 +57,7 @@ Check out documentation on each extension to learn more about how to configure a
     [Highlight](extensions/highlight.md) allows you to configure the syntax highlighting of SuperFences and InlineHilite.  Also passes standard Markdown indented code blocks through the syntax highlighter.
 
 !!! summary "InlineHilite"
-    [InlineHilite](extensions/inlinehilite.md) highlights inline code: `#!py from module import function as func`.
+    [InlineHilite](extensions/inlinehilite.md) highlights inline code: `#!py3 from module import function as func`.
 
 !!! summary "Keys"
     [Keys](extensions/keys.md) makes inserting key inputs into documents as easy as pressing ++ctrl+alt+delete++.
@@ -71,9 +71,6 @@ Check out documentation on each extension to learn more about how to configure a
 !!! summary "PathConverter"
     [PathConverter](extensions/pathconverter.md) converts paths to absolute or relative to a given base path.
 
-!!! summary "PlainHTML"
-    [PlainHTML](extensions/plainhtml.md) can strip out HTML comments and specific tag attributes.
-
 !!! summary "ProgressBar"
     [ProgressBar](extensions/progressbar.md) creates progress bars quick and easy.
 
@@ -84,6 +81,9 @@ Check out documentation on each extension to learn more about how to configure a
 
 !!! summary "Snippets"
     [Snippets](extensions/snippets.md) include other Markdown or HTML snippets into the current Markdown file being parsed.
+
+!!! summary "StripHTML"
+    [StripHTML](extensions/striphtml.md) can strip out HTML comments and specific tag attributes.
 
 !!! summary "SuperFences"
     [SuperFences](extensions/superfences.md) is like Python Markdown's fences, but better. Nest fences under lists, admonitions, and other syntaxes. Also create special custom fences for content like UML.
