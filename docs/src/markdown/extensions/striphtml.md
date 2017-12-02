@@ -26,11 +26,11 @@ Because comments aren't stripped until the end in a post-processing step, they a
 
 By default, StripHTML strips the following attributes: `style`, `id`, `class`, and `on<name>`.  StripHTML also strips HTML comments. If desired, its behavior can be configured to strip less or even more, but it is limited to attributes and comments.
 
-Option                   | Type   | Default      | Description
------------------------- |------- | ------------ | -----------
-`strip_comments`         | bool   | `#!py3 True` | Strip HTML comments during post process.
-`strip_js_on_attributes` | bool   | `#!py3 True` | Strip JavaScript script attributes with the pattern on* during post process.
-`strip_attributes`       | list   | `#!py3 []`   | A string specifying attribute names separated by spaces.
+Option                   | Type     | Default      | Description
+------------------------ |--------- | ------------ | -----------
+`strip_comments`         | bool     | `#!py3 True` | Strip HTML comments during post process.
+`strip_js_on_attributes` | bool     | `#!py3 True` | Strip JavaScript script attributes with the pattern on* during post process.
+`strip_attributes`       | [string] | `#!py3 []`   | A list of tag attribute names to strip.
 
 !!! warning "Deprecation 4.6.0"
     StripHTML used to be known as `pymdownx.plainhtml`, but has been renamed to `pymdownx.striphtml`. The old `plainhtml` is still available. `plainhtml` treats `strip_attributes` as a string of attributes separated by spaces and has a default of `#!py3 "id style class"`.  It is encouraged to migrate to using `pymdownx.striphtml` as `pymdownx.plainhtml` will be removed in version 5.0.
