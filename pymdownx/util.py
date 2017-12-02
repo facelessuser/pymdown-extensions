@@ -21,7 +21,7 @@ if PY3:
     if PY34:
         import html  # noqa
         html_unescape = html.unescape  # noqa
-    else:
+    else:  # pragma: no cover
         html_unescape = HTMLParser().unescape  # noqa
 else:
     uchr = unichr  # noqa
