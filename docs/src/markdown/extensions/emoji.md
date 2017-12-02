@@ -109,7 +109,7 @@ You can select a generator to use by passing in one of the functions below via t
     `classes`                 | string     | Name of the index used         | Specifies the class(es) to be used in the image element.
     `image_path`              | string     | CDN for the default index used | This can be either a local path or a CDN containing the assets.  By default, an appropriate CDN is provided for EmojiOne, Gemoji, and Twemoji depending on which index is being used.
     `non_standard_image_path` | string     | CDN for the default index used | This can be either a local path, or a CDN containing the assets. Currently, only Gemoji's non-standard emoji take advantage of this as the GitHub CDN alters the path slightly for its non-Unicode emoji.  By default, an appropriate CDN is provided for Gemoji.
-    `attributes`              | dictionary | `#!py {}`                      | A dictionary containing tag attributes as key value string pairs. The dictionary keys are the attribute names and dictionary values are the attribute values.
+    `attributes`              | dictionary | `#!py3 {}`                      | A dictionary containing tag attributes as key value string pairs. The dictionary keys are the attribute names and dictionary values are the attribute values.
 
 `pymdownx.emoji.to_svg`
 : 
@@ -125,7 +125,7 @@ You can select a generator to use by passing in one of the functions below via t
     ------------ | ---------- | ------------------------- | -----------
     `classes`    | string     | Name of the index used    | Specifies the class(es) to be used in the image element. The default will match the name of the index used.
     `image_path` | string     | A CDN for EmojiOne images | This can be either a local path or a CDN containing the assets.  By default, an appropriate CDN is provided for EmojiOne.
-    `attributes` | dictionary | `#!py {}`                 | A dictionary containing tag attributes as key value string pairs. The dictionary keys are the attribute names and dictionary values are the attribute values.
+    `attributes` | dictionary | `#!py3 {}`                 | A dictionary containing tag attributes as key value string pairs. The dictionary keys are the attribute names and dictionary values are the attribute values.
 
 `pymdownx.emoji.to_png_sprite`
 : 
@@ -143,9 +143,9 @@ You can select a generator to use by passing in one of the functions below via t
 
     Option       | Type       | Default                | Description
     ------------ | ---------- | ---------------------- | -----------
-    `classes`    | string     | Name of the index used | Class(es) used for the span where the classes are inserted as "class" in the following template: `#!py '%(class)s-%(size)s-%(category)s _%(unicode)s'`.
-    `size`       | int        | `#!py 64`              | Integer specifying the size for the class above.
-    `attributes` | dictionary | `#!py {}`              | A dictionary containing tag attributes as key value string pairs. The dictionary keys are the attribute names and dictionary values are the attribute values.
+    `classes`    | string     | Name of the index used | Class(es) used for the span where the classes are inserted as "class" in the following template: `#!py3 '%(class)s-%(size)s-%(category)s _%(unicode)s'`.
+    `size`       | int        | `#!py3 64`              | Integer specifying the size for the class above.
+    `attributes` | dictionary | `#!py3 {}`              | A dictionary containing tag attributes as key value string pairs. The dictionary keys are the attribute names and dictionary values are the attribute values.
 
 `pymdownx.emoji.to_svg_sprite`
 : 
@@ -159,8 +159,8 @@ You can select a generator to use by passing in one of the functions below via t
 
     Option       | Type   | Default                | Description
     ------------ | ------ | ---------------------- | -----------
-    `classes`    | string | Name of the index used | Class(es) to apply to the `svg` element where the classes are inserted as "class" in the following template: `#!py '%(class)s-%(unicode)s'`.
-    `image_path` | string | `#!py ''`              | Path to the SVG sprites.
+    `classes`    | string | Name of the index used | Class(es) to apply to the `svg` element where the classes are inserted as "class" in the following template: `#!py3 '%(class)s-%(unicode)s'`.
+    `image_path` | string | `#!py3 ''`              | Path to the SVG sprites.
 
 `pymdownx.emoji.to_awesome`
 : 
@@ -174,8 +174,8 @@ You can select a generator to use by passing in one of the functions below via t
 
     Option       | Type       | Default      | Description
     ------------ | ---------- | ------------ | -----------
-    `classes`    | string     | `#!py 'e1a'` | Class(es) to apply to the element where the classes are inserted as "class" in the following template: `#!py '%(class)s-%(shortname)s'`.
-    `attributes` | dictionary | `#!py {}`    | A dictionary containing tag attributes as key value string pairs. The dictionary keys are the attribute names and dictionary values are the attribute values.
+    `classes`    | string     | `#!py3 'e1a'` | Class(es) to apply to the element where the classes are inserted as "class" in the following template: `#!py3 '%(class)s-%(shortname)s'`.
+    `attributes` | dictionary | `#!py3 {}`    | A dictionary containing tag attributes as key value string pairs. The dictionary keys are the attribute names and dictionary values are the attribute values.
 
 `pymdownx.emoji.to_alt`
 : 
@@ -281,7 +281,7 @@ Each different kind of output is controlled by a different emoji generator funct
     `title`     | string     | This is the title that can be used in image elements.  Depending on the global extension setting `title`, this will either return the full long description, the short name, or `None`.  See the `title` setting for more info.
     `category`  | string     | Category of the emoji, or `None` if there is no category for the emoji.
     `options`   | dictionary | This is a dictionary to specify generator function specific options.  This can be anything, and it is up to the generator function to parse and provide defaults.
-    `md`        | class      | This is the Markdown class object.  This is mainly used to access specific things needed from the Markdown class when formatting your output.  If you needed to stash your output, you would do something like: `#!py md.htmlStash.store(alt, safe=True)`.
+    `md`        | class      | This is the Markdown class object.  This is mainly used to access specific things needed from the Markdown class when formatting your output.  If you needed to stash your output, you would do something like: `#!py3 md.htmlStash.store(alt, safe=True)`.
 
     !!! Warning "Non-Unicode emoji"
         Keep in mind that Gemoji ships with some non-standard emoji like `:octocat:` that do not have Unicode code points.  `uc` and `alt` are affected by this and will return `None` and the short name respectively instead of strings describing the Unicode points.  For example `:octocat:` will just return `None` for `uc` and `:octocat:` for `alt`.  If you are parsing an index with custom emoji, like Gemoji has, then you need to be aware of this.
@@ -306,10 +306,10 @@ Option                      | Type       | Default              | Description
 --------------------------- | ---------- | -------------------- | -----------
 `emoji_index`               | function   | `emojione` index     | A function that returns the index to use when parsing `:short_name:` syntax. See [Default Emoji Indexes](#default-emoji-indexes) to see the provided indexes.
 `emoji_generator`           | function   | `to_png` generator   | A function that takes the emoji info and constructs the desired emoji output. See [Default Emoji Generators](#default-emoji-generators) to see the provided generators.
-`title`                     | string     | `#!python 'short'`   | Specifies the title format that is fed into the emoji generator function.  Can either be `long` which is the long description of the emoji, `short` which is the short name (`:short:`), or `none` which will simply pass `None`.
-`alt`                       | string     | `#!python 'unicode'` | Specifies the format for the alt value that is passed to the emoji generator function. If `alt` is set to `short`, the short name will be passed to the generator.  If `alt` is set to `unicode` the Unicode characters are passed to the generator.  Lastly, if `alt` is set to `html_entity`, the Unicode characters are passed encoded as HTML entities.
-`remove_variation_selector` | bool       | `#!python False`     | Specifies whether variation selectors should be removed from Unicode alt. Currently, only `fe0f` is removed as it is the only one presently found in the current emoji sets.
-`options`                   | dictionary | `#!python {}`        | Options that are specific to emoji generator functions.  Supported parameters can vary from function to function.
+`title`                     | string     | `#!py3thon 'short'`   | Specifies the title format that is fed into the emoji generator function.  Can either be `long` which is the long description of the emoji, `short` which is the short name (`:short:`), or `none` which will simply pass `None`.
+`alt`                       | string     | `#!py3thon 'unicode'` | Specifies the format for the alt value that is passed to the emoji generator function. If `alt` is set to `short`, the short name will be passed to the generator.  If `alt` is set to `unicode` the Unicode characters are passed to the generator.  Lastly, if `alt` is set to `html_entity`, the Unicode characters are passed encoded as HTML entities.
+`remove_variation_selector` | bool       | `#!py3thon False`     | Specifies whether variation selectors should be removed from Unicode alt. Currently, only `fe0f` is removed as it is the only one presently found in the current emoji sets.
+`options`                   | dictionary | `#!py3thon {}`        | Options that are specific to emoji generator functions.  Supported parameters can vary from function to function.
 
 !!! tip "Legacy GitHubEmoji Emulation"
     The Emoji extension was actually created to replace the now retired GitHubEmoji extension. Emoji was written to be much more flexible.  If you have a desire to configure the output to be like the legacy GitHubEmoji extension, you can use the settings below. This shows the full setup. To learn more about the settings used, continue reading the documentation.

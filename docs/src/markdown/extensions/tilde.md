@@ -36,6 +36,6 @@ To denote a subscript, you can surround the desired content in single `~`.  It u
 
 Option         | Type | Default     | Description
 -------------- | ---- | ----------- | -----------
-`smart_delete` | bool | `#!py True` | Use smart logic with delete characters.
-`delete`       | bool | `#!py True` | Enable delete feature.
-`subscript`    | bool | `#!py True` | Enable subscript feature.
+`smart_delete` | bool | `#!py3 True` | Use smart logic with delete characters.
+`delete`       | bool | `#!py3 True` | Enable delete feature.
+`subscript`    | bool | `#!py3 True` | Enable subscript feature.

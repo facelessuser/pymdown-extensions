@@ -143,7 +143,7 @@ Classes               | Description
 
 Option            | Type | Default      | Description
 ----------------- | ---- | ------------ | ------------
-`custom_checkbox` | bool | `#!py False` | Generate task lists in such a way as to allow for styling the check box with CSS.
+`custom_checkbox` | bool | `#!py3 False` | Generate task lists in such a way as to allow for styling the check box with CSS.
 
 
 --8<-- "abbr.md"

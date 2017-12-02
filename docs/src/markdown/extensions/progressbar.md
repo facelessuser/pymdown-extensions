@@ -140,5 +140,5 @@ Classes                  | Description
 
 Option        | Type   | Default     | Description |
 ------------- | ------ | ----------- |-------------|
-`level_class` | bool   | `#!py True` | Enables or disables the level class feature.  The level class feature adds level classes in increments of 20.
-`add_classes` | string | `#!py ''`   | This option accepts a string of classes separated by spaces.
+`level_class` | bool   | `#!py3 True` | Enables or disables the level class feature.  The level class feature adds level classes in increments of 20.
+`add_classes` | string | `#!py3 ''`   | This option accepts a string of classes separated by spaces.

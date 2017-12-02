@@ -22,12 +22,12 @@ Markdown       | Result
 
 Option            | Type | Default     | Description
 ----------------- | ---- | ----------- |------------
-`trademark`       | bool | `#!py True` | Add syntax for trademark symbol.
-`copyright`       | bool | `#!py True` | Add syntax for copyright symbol.
-`registered`      | bool | `#!py True` | Add syntax for registered symbol.
-`care_of`         | bool | `#!py True` | Add syntax for care / of.
-`plusminus`       | bool | `#!py True` | Add syntax for plus / minus.
-`arrows`          | bool | `#!py True` | Add syntax for creating arrows.
-`notequal`        | bool | `#!py True` | Add syntax for not equal symbol.
-`fractions`       | bool | `#!py True` | Add syntax for common fractions.
-`ordinal_numbers` | bool | `#!py True` | Add syntax for ordinal numbers.
+`trademark`       | bool | `#!py3 True` | Add syntax for trademark symbol.
+`copyright`       | bool | `#!py3 True` | Add syntax for copyright symbol.
+`registered`      | bool | `#!py3 True` | Add syntax for registered symbol.
+`care_of`         | bool | `#!py3 True` | Add syntax for care / of.
+`plusminus`       | bool | `#!py3 True` | Add syntax for plus / minus.
+`arrows`          | bool | `#!py3 True` | Add syntax for creating arrows.
+`notequal`        | bool | `#!py3 True` | Add syntax for not equal symbol.
+`fractions`       | bool | `#!py3 True` | Add syntax for common fractions.
+`ordinal_numbers` | bool | `#!py3 True` | Add syntax for ordinal numbers.

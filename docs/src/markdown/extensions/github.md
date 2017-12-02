@@ -65,7 +65,7 @@ Extension                       | Options                                       
 [Tables][tables]                |                                                               | `markdown.extensions.tables`
 [MagicLink](./magiclink.md)     |                                                               | `pymdownx.magiclink`
 [BetterEm](./betterem.md)       |                                                               | `pymdownx.betterem`
-[Tilde](./tilde.md)             | `#!py {"subscript": False }`                                  | `pymdownx.tilde`
+[Tilde](./tilde.md)             | `#!py3 {"subscript": False }`                                  | `pymdownx.tilde`
 [Emoji](./emoji.md)             | see [GitHub Emoji Configuration](#github-emoji-configuration) | `pymdownx.emoji`
 [Tasklist](./tasklist.md)       |                                                               | `pymdownx.tasklist`
 [SuperFences](./superfences.md) |                                                               | `pymdownx.superfences`

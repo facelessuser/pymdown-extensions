@@ -88,7 +88,7 @@ When using fenced code blocks, you can specify a specific syntax language to hig
 
 ## Showing Line Numbers
 
-Line numbers are provided via Pygments and can either be shown per code block or globally for all. To show globally via CodeHilite or `pymdownx.highlight`, you must set `linenums` to `#!py True` in the respective extension.
+Line numbers are provided via Pygments and can either be shown per code block or globally for all. To show globally via CodeHilite or `pymdownx.highlight`, you must set `linenums` to `#!py3 True` in the respective extension.
 
 To set line numbers per code block, you can specify a special setting directly after the opening tokens (and language if present). Simply specify the starting line line number with option `linenums="1"`. The setting is followed by the equal sign and the value must be quoted.  Valid line numbers are n > 0.  If `linenums` is enabled globally, this will just control the starting line shown in the block.
 
@@ -424,10 +424,10 @@ For the reasons above, the nested fences feature really is just a workaround.  B
 
 Option                         | Type   | Default      | Description
 ------------------------------ | ------ | ------------ | -----------
-`css_class`                    | string | `#!py ''`    | Class name is applied to the wrapper element of the code. If configured, this setting will override the `css_class` option of either CodeHilite or Highlight. If nothing is configured here or via CodeHilite or Highlight, the class `highlight` will be used.
-`disable_indented_code_blocks` | bool   | `#!py False` | Disables Python Markdown's indented code block parsing.  This is nice if you only ever use fenced blocks.
+`css_class`                    | string | `#!py3 ''`    | Class name is applied to the wrapper element of the code. If configured, this setting will override the `css_class` option of either CodeHilite or Highlight. If nothing is configured here or via CodeHilite or Highlight, the class `highlight` will be used.
+`disable_indented_code_blocks` | bool   | `#!py3 False` | Disables Python Markdown's indented code block parsing.  This is nice if you only ever use fenced blocks.
 `custom_fences`                | dict   | ``           | Custom fences.
-`highlight_code`               | bool   | `#!py True`  | Enable or disable code highlighting.
+`highlight_code`               | bool   | `#!py3 True`  | Enable or disable code highlighting.
 
 !!! warning "Deprecated 3.0.0"
     The setting `use_codehilite_settings` has been deprecated since `3.0.0` and now does nothing. It is still present to avoid breakage, but will be removed in the future.

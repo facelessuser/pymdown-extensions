@@ -287,14 +287,14 @@ Name            | Display             | Aliases
 
 If you want to add additional keys, or override text of existing keys, you can feed in your keys via the `key_map` option. The `key_map` parameter takes a simple dictionary with *key names* that are represented by lowercase alphanumeric characters and hyphens (`-`). The values of the dictionary represent the the text that is displayed for the key in the HTML output.
 
-So if you wanted to add a custom key, you could do this: `#!py {"custom": "Custom Key"}`.  If you wanted to override the output of the `option` key and change it from `Option` to `Opt`, you could do this: `#!py {"option": "Opt"}`.
+So if you wanted to add a custom key, you could do this: `#!py3 {"custom": "Custom Key"}`.  If you wanted to override the output of the `option` key and change it from `Option` to `Opt`, you could do this: `#!py3 {"option": "Opt"}`.
 
 ## Options
 
-Option       | Type       | Default       | Description
------------- | ---------- | ------------- | -----------
-`separator`  | string     | `#!py '+'`    | Define a separator.
-`strict`     | bool       | `#!py False`  | Use strict HTML5 output for keyboard key input.
-`class`      | string     | `#!py 'keys'` | Defines a class(es) to apply to the HTML wrapper element.
-`camel_case` | bool       | `#!py False`  | Allow the use of camel case for key names `PgUp` --> `pg-up`.
-`key_map`    | dictionary | `#!py {}`     | Add additional keys to the key-map index or override output of existing outputs. See [Extending/Modifying Key-Map Index](#extendingmodifying-key-map-index) for more info.
+Option       | Type   | Default        | Description
+------------ | ------ | -------------- | -----------
+`separator`  | string | `#!py3 '+'`    | Define a separator.
+`strict`     | bool   | `#!py3 False`  | Use strict HTML5 output for keyboard key input.
+`class`      | string | `#!py3 'keys'` | Defines a class(es) to apply to the HTML wrapper element.
+`camel_case` | bool   | `#!py3 False`  | Allow the use of camel case for key names `PgUp` --> `pg-up`.
+`key_map`    | dict   | `#!py3 {}`     | Add additional keys to the key-map index or override output of existing outputs. See [Extending/Modifying Key-Map Index](#extendingmodifying-key-map-index) for more info.

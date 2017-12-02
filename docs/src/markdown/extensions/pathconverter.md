@@ -18,7 +18,7 @@ As mentioned before, the use cases for something like this are limited, but if y
 
 Option          | Type   | Default                    | Description
 --------------- | ------ | -------------------------- |------------
-`base_path`     | string | `#!py ''`                  | A string indicating an absolute base path to be used to find referenced files.
-`relative_path` | string | `#!py ''`                  | A string indicating an absolute path that the references are to be relative to (not used when `absolute` is set `True`).
-`absolute`      | bool   | `#!py False`               | Determines whether paths are converted to absolute or relative.
-`tags`          | string | `#!py 'a script img link'` | Tags (separated by spaces) that are searched to find `href` and `src` attributes.
+`base_path`     | string | `#!py3 ''`                  | A string indicating an absolute base path to be used to find referenced files.
+`relative_path` | string | `#!py3 ''`                  | A string indicating an absolute path that the references are to be relative to (not used when `absolute` is set `True`).
+`absolute`      | bool   | `#!py3 False`               | Determines whether paths are converted to absolute or relative.
+`tags`          | string | `#!py3 'a script img link'` | Tags (separated by spaces) that are searched to find `href` and `src` attributes.

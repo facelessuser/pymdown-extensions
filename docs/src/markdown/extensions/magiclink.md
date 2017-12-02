@@ -220,14 +220,14 @@ Twitter              | `magiclink-twitter`
 
 Option                          | Type   | Default         | Description
 ------------------------------- | ------ | --------------- | -----------
-`hide_protocol`                 | bool   | `#!py False`    | If `True`, links are displayed without the initial `ftp://`, `http://`, `https://`, or `ftps://`.
-`repo_url_shortener`            | bool   | `#!py False`    | If `True`, GitHub, Bitbucket, and GitLab commit, pull, and issue links are are rendered in a shorthand syntax.
-`repo_url_shorthand`            | bool   | `#!py False`    | If `True`, you can directly use a shorthand syntax to represent commit, pull, issue, and mention links for repository providers and they will be auto-linked.
-`social_url_shorthand`          | bool   | `#!py False`    | If `True`, you can directly use a shorthand syntax to represent mention links for social media providers and they will be auto-linked.
-`provider`                      | string | `#!py 'github'` | The provider to use for repository shorthand syntax and shortener.
-`user`                          | string | `#!py ''`       | The default user name to use for the specified provider.
-`repo`                          | string | `#!py ''`       | The default repository name to use for the specified user and provider.
-`labels`                        | dict   | `#!py {}`       | A dictionary for overriding repository link title text. See [labels](#labels) for more info.
+`hide_protocol`                 | bool   | `#!py3 False`    | If `True`, links are displayed without the initial `ftp://`, `http://`, `https://`, or `ftps://`.
+`repo_url_shortener`            | bool   | `#!py3 False`    | If `True`, GitHub, Bitbucket, and GitLab commit, pull, and issue links are are rendered in a shorthand syntax.
+`repo_url_shorthand`            | bool   | `#!py3 False`    | If `True`, you can directly use a shorthand syntax to represent commit, pull, issue, and mention links for repository providers and they will be auto-linked.
+`social_url_shorthand`          | bool   | `#!py3 False`    | If `True`, you can directly use a shorthand syntax to represent mention links for social media providers and they will be auto-linked.
+`provider`                      | string | `#!py3 'github'` | The provider to use for repository shorthand syntax and shortener.
+`user`                          | string | `#!py3 ''`       | The default user name to use for the specified provider.
+`repo`                          | string | `#!py3 ''`       | The default repository name to use for the specified user and provider.
+`labels`                        | dict   | `#!py3 {}`       | A dictionary for overriding repository link title text. See [labels](#labels) for more info.
 
 !!! warning "Deprecation 4.2.0"
     In 4.2.0, `base_repo_url` has been deprecated in favor of `provider`, `user`, and `repo`. If `repo_url_shorthand` is enabled, `base_repo_url` will be ignored and `provider`, `user`, and `repo` will be used.

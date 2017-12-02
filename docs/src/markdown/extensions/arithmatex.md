@@ -80,11 +80,11 @@ Please see the [MathJax][mathjax] site for more info on using MathJax extensions
 
 ## Options
 
-Option             | Type             | Default                              | Description
------------------- | ---------------- | ------------------------------------ |------------
-`inline_syntax`    | `#!py3 [string]` | `#!py ['dollar', 'round']`           | Syntax to search for: dollar=`#!tex $...$` and round=`#!tex \(...\)`.
-`block_syntax`     | `#!py3 [string]` | `#!py ['dollar', 'square', 'begin']` | Syntax to search for: dollar=`#!tex $...$`, square=`#!tex \[...\]`, and `#!tex \begin{}...\end{}`.
-`preview`          | `#!py3 bool`     | `#!py True`                          | Insert a preview to show until MathJax finishes loading the equations.
+Option             | Type     | Default                              | Description
+------------------ | -------- | ------------------------------------ |------------
+`inline_syntax`    | [string] | `#!py3 ['dollar', 'round']`           | Syntax to search for: dollar=`#!tex $...$` and round=`#!tex \(...\)`.
+`block_syntax`     | [string] | `#!py3 ['dollar', 'square', 'begin']` | Syntax to search for: dollar=`#!tex $...$`, square=`#!tex \[...\]`, and `#!tex \begin{}...\end{}`.
+`preview`          | bool     | `#!py3 True`                          | Insert a preview to show until MathJax finishes loading the equations.
 
 
 !!! warning Deprecation:

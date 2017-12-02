@@ -22,4 +22,4 @@ To Mark some text, simply surround the text with double `=`.
 
 Option       | Type | Default     | Description
 ------------ | ---- | ----------- |------------
-`smart_mark` | bool | `#!py True` | Use smart logic with mark characters.
+`smart_mark` | bool | `#!py3 True` | Use smart logic with mark characters.
