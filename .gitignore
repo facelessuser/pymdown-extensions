@@ -66,3 +66,4 @@ node_modules/*
 *.js.map
 
 manifest.json
+dictionary.bin
