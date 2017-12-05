@@ -46,7 +46,7 @@
     "rollup-plugin-babel": "^3.0.2",
     "stylelint": "^8.3.1",
     "stylelint-config-standard": "^17.0.0",
-    "stylelint-order": "^0.7.0",
+    "stylelint-order": "^0.8.0",
     "stylelint-scss": "^2.2.0",
     "webpack": "^3.9.1",
     "webpack-stream": "^4.0.0",
