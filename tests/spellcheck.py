@@ -8,6 +8,7 @@ import bs4
 import yaml
 import re
 from collections import namedtuple
+import tokenize
 
 PY3 = sys.version_info >= (3, 0)
 
@@ -16,7 +17,7 @@ def yaml_load(source, loader=yaml.Loader):
     """
     Wrap PyYaml's loader so we can extend it to suit our needs.
 
-    Load all strings as unicode: http://stackoverflow.com/a/2967461/3609487.
+    Load all strings as Unicode: http://stackoverflow.com/a/2967461/3609487.
     """
 
     def construct_yaml_str(self, node):
@@ -26,8 +27,8 @@ def yaml_load(source, loader=yaml.Loader):
     class Loader(loader):
         """Define a custom loader to leave the global loader unaltered."""
 
-    # Attach our unicode constructor to our custom loader ensuring all strings
-    # will be unicode on translation.
+    # Attach our Unicode constructor to our custom loader ensuring all strings
+    # will be Unicode on translation.
     Loader.add_constructor('tag:yaml.org,2002:str', construct_yaml_str)
 
     return yaml.load(source, Loader)
@@ -83,56 +84,83 @@ def console(cmd, input_file=None, input_text=None):
     return output[0].decode('utf-8') if PY3 else output[0]
 
 
-class IgnoreRule (namedtuple('IgnoreRule', ['tag', 'id', 'classes'])):
+class Selector(namedtuple('IgnoreRule', ['tag', 'id', 'classes', 'attributes'])):
     """Ignore rule."""
 
+class SelectorAttribute(namedtuple('AttrRule', ['attribute', 'pattern'])):
+    """Selector attribute rule."""
 
-class Spelling(object):
-    """Spell check object."""
+
+class SpellingPython(object):
 
     DICTIONARY = 'dictionary.bin'
-    RE_SELECTOR = re.compile(r'(\#|\.)?[-\w]+')
 
     def __init__(self, config_file):
         """Initialize."""
 
-        config = read_config(config_file)
-        self.docs = config.get('docs', [])
+        config = read_config(config_file).get('python')
+        self.options = config.get('options', {})
+        self.sources = config.get('src', [])
         self.dictionary = ('\n'.join(config.get('dictionary', []))).encode('utf-8')
-        self.attributes = set(config.get('attributes', []))
-        self.ignores = self.ignore_rules(*config.get('ignores', []))
         self.dict_bin = os.path.abspath(self.DICTIONARY)
+        self.comments = self.options.get('comments', False)
 
-    def ignore_rules(self, *args):
-        """
-        Process ignore rules.
+    def source_to_text(self, source):
+        """Get docstrings and comments."""
 
-        Split ignore selector string into tag, id, and classes.
-        """
+        comments = []
+        prev_token_type = tokenize.NEWLINE
+        indent = ''
+        for token in tokenize.generate_tokens(source.readline):
+            token_type = token[0]
+            value = token[1]
 
-        ignores = []
+            if token_type == tokenize.COMMENT:
+                # Capture comments
+                if self.comments:
+                    comments.append(value)
+            elif token_type == tokenize.STRING:
+                # Capture docstrings
+                # If previously we captured an INDENT or NEWLINE previously we probably have a docstring.
+                # NL seems to be a different thing.
+                if prev_token_type in (tokenize.INDENT, tokenize.DEDENT, tokenize.NEWLINE):
+                    comments.append(value)
 
-        for arg in args:
-            selector = arg.lower()
-            tag = None
-            tag_id = None
-            classes = set()
+            prev_token_type = token_type
 
-            for m in self.RE_SELECTOR.finditer(selector):
-                selector = m.group(0)
-                if selector.startswith('.'):
-                    classes.add(selector[1:])
-                elif selector.startswith('#') and tag_id is None:
-                    tag_id = selector[1:]
-                elif tag is None:
-                    tag = selector
-                else:
-                    raise ValueError('Bad selector!')
+        return '\n'.join(comments)
 
-            if tag or tag_id or classes:
-                ignores.append(IgnoreRule(tag, tag_id, tuple(classes)))
+    def check_spelling(self, source_file):
+        """Check spelling."""
 
-        return ignores
+        fail = False
+        with codecs.open(source_file, 'r', encoding='utf-8') as file_obj:
+            text = self.source_to_text(file_obj)
+
+        wordlist = console(
+            [
+                'aspell',
+                'list',
+                '--lang=en',
+                '--mode=url',
+                '--encoding=utf-8',
+                '--extra-dicts',
+                self.dict_bin
+            ],
+            input_text=text.encode('utf-8')
+        )
+        words = [w for w in sorted(set(wordlist.split('\n'))) if w]
+
+        if words:
+            fail = True
+            print('Misspelled words in %s' % source_file)
+            print('-' * 80)
+            for word in words:
+                print(word)
+            print('-' * 80)
+            print('\n')
+        return fail
+
 
     def compile_dictionaries(self):
         """Compile user dictionary."""
@@ -154,20 +182,136 @@ class Spelling(object):
             )
         )
 
+    def check(self):
+        """Walk source and initiate spell check."""
+
+        self.compile_dictionaries()
+
+        print('Spell Checking...')
+        fail = False
+        for source in self.sources:
+            if os.path.isdir(source):
+                for base, dirs, files in os.walk(source):
+                    for f in files:
+                        if f.lower().endswith('.py'):
+                            file_name = os.path.join(base, f)
+                            if self.check_spelling(file_name):
+                                fail = True
+            elif source.lower().endswith('.py'):
+                if self.check_spelling(source):
+                    fail = True
+        return fail
+
+
+class SpellingHtml(object):
+    """Spell check object."""
+
+    DICTIONARY = 'dictionary.bin'
+    RE_SELECTOR = re.compile(r'''(\#|\.)?[-\w]+|\*|\[([\w\-:]+)(?:([~^|*$]?=)(\"[^"]+\"|'[^']'|[^'"\[\]]+))?\]''')
+
+    def __init__(self, config_file):
+        """Initialize."""
+
+        config = read_config(config_file).get('html', {})
+        self.docs = config.get('src', [])
+        self.dictionary = ('\n'.join(config.get('dictionary', []))).encode('utf-8')
+        self.attributes = set(config.get('attributes', []))
+        self.selectors = self.process_selectors(*config.get('ignores', []))
+        self.dict_bin = os.path.abspath(self.DICTIONARY)
+
+    def process_selectors(self, *args):
+        """
+        Process selectors.
+
+        We do our own selectors as BeautifulSoup4 has some annoying quirks,
+        and we don't really need to do nth selectors or siblings or
+        decendents etc.
+        """
+
+        selectors = []
+
+        for selector in args:
+            tag = None
+            tag_id = None
+            classes = set()
+            attributes = []
+
+            for m in self.RE_SELECTOR.finditer(selector):
+                if m.group(2):
+                    attr = m.group(2).lower()
+                    op = m.group(3)
+                    if op:
+                        value = m.group(4)[1:-1] if m.group(4).startswith('"') else m.group(4)
+                    else:
+                        value = None
+                    if not op:
+                        # Attribute name
+                        pattern = None
+                    elif op.startswith('^'):
+                        # Value start with
+                        pattern = re.compile(r'^%s.*' % re.escape(value))
+                    elif op.startswith('$'):
+                        # Value ends with
+                        pattern = re.compile(r'.*?%s$' % re.escape(value))
+                    elif op.startswith('*'):
+                        # Value contains
+                        pattern = re.compile(r'.*?%s.*' % re.escape(value))
+                    elif op.startswith('~'):
+                        # Value contains word within space separated list
+                        pattern = re.compile(r'.*?(?:(?<=^)|(?<= ))%s(?=(?:[ ]|$)).*' % re.escape(value))
+                    elif op.startswith('|'):
+                        # Value starts with word in dash separated list
+                        pattern = re.compile(r'^%s(?=-).*' % re.escape(value))
+                    else:
+                        # Value matches
+                        pattern = re.compile(r'^%s$' % re.escape(value))
+                    attributes.append(SelectorAttribute(attr, pattern))
+                else:
+                    selector = m.group(0).lower()
+                    if selector.startswith('.'):
+                        classes.add(selector[1:].lower())
+                    elif selector.startswith('#') and tag_id is None:
+                        tag_id = selector[1:]
+                    elif tag is None:
+                        tag = selector
+                    else:
+                        raise ValueError('Bad selector!')
+
+            if tag or tag_id or classes:
+                selectors.append(Selector(tag, tag_id, tuple(classes), tuple(attributes)))
+
+        return selectors
+
     def skip_tag(self, el):
         """Determine if tag should be skipped."""
 
         skip = False
-        for rule in self.ignores:
-            if rule.tag and el.name.lower() != rule.tag:
+        for selector in self.selectors:
+            if selector.tag and selector.tag not in (el.name.lower(), '*'):
                 continue
-            if rule.id and rule.id != el.attrs.get('id', '').lower():
+            if selector.id and selector.id != el.attrs.get('id', '').lower():
                 continue
-            if rule.classes:
+            if selector.classes:
                 current_classes = [c.lower() for c in el.attrs.get('class', [])]
                 found = True
-                for c in rule.classes:
+                for c in selector.classes:
                     if c not in current_classes:
+                        found = False
+                        break
+                if not found:
+                    continue
+            if selector.attributes:
+                found = True
+                for a in selector.attributes:
+                    value = el.attrs.get(a.attribute)
+                    if isinstance(value, list):
+                        value = ' '.join(value)
+                    if not value:
+                        found = False
+                        break
+                    elif a.pattern is None:
+                        continue
+                    elif a.pattern.match(value) is None:
                         found = False
                         break
                 if not found:
@@ -233,6 +377,26 @@ class Spelling(object):
             print('\n')
         return fail
 
+    def compile_dictionaries(self):
+        """Compile user dictionary."""
+
+        if os.path.exists(self.dict_bin):
+            os.remove(self.dict_bin)
+        print("Compiling Dictionary...")
+        print(
+            console(
+                [
+                    'aspell',
+                    '--lang=en',
+                    '--encoding=utf-8',
+                    'create',
+                    'master',
+                    os.path.abspath(self.dict_bin)
+                ],
+                input_text=self.dictionary
+            )
+        )
+
     def check(self):
         """Walk documents and initiate spell check."""
 
@@ -243,7 +407,6 @@ class Spelling(object):
         for doc in self.docs:
             if os.path.isdir(doc):
                 for base, dirs, files in os.walk(doc):
-                    # Remove child folders based on exclude rules
                     for f in files:
                         if f.lower().endswith('.html'):
                             file_name = os.path.join(base, f)
@@ -258,8 +421,14 @@ class Spelling(object):
 def main():
     """Main."""
 
-    spelling = Spelling('.spelling.yml')
-    return spelling.check()
+    fail = False
+    spelling = SpellingHtml('.spelling.yml')
+    if spelling.check():
+        fail = True
+    spelling = SpellingPython('.spelling.yml')
+    if spelling.check():
+        fail = True
+    return fail
 
 
 if __name__ == "__main__":
