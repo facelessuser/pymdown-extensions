@@ -70,7 +70,7 @@ class EscapeAllPostprocessor(Postprocessor):
         return util.get_char(int(m.group(1)))
 
     def run(self, text):
-        """Search document for esaped chars."""
+        """Search document for escaped chars."""
 
         return UNESCAPE_PATTERN.sub(self.unescape, text)
 

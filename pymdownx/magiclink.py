@@ -376,7 +376,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         link.set('title', '%s %s: %s%s%s' % (label, issue_type, user_repo.rstrip('/'), separator, value))
 
     def shorten(self, link, provider, link_type, user_repo, value, url, hash_size):
-        """Shorten url."""
+        """Shorten URL."""
 
         label = PROVIDER_INFO[provider]['provider']
         prov_class = 'magiclink-%s' % provider

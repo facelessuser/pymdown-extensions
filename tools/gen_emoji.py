@@ -27,12 +27,12 @@ else:
 
 
 def url_join(*args):
-    """Join url parts."""
+    """Join URL parts."""
     return '/'.join(args)
 
 
 def get_github_emoji():
-    """Get Github's usable emoji."""
+    """Get GitHub's usable emoji."""
     try:
         resp = requests.get(
             url_join(GITHUB_API, 'emojis'),
@@ -85,7 +85,7 @@ def download_tag(repo, tag, url):
 
 
 def select_tag(repo, no_download):
-    """Get Github's usable emoji."""
+    """Get GitHub's usable emoji."""
     resp = requests.get(
         url_join(GITHUB_API, 'repos', repo, 'tags'),
         headers={'Accept': GITHUB_API_HEADER},

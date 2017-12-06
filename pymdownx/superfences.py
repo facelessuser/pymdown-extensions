@@ -258,12 +258,12 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         self.codehilite_conf = {}
 
     def rebuild_block(self, lines):
-        """Deindent the fenced block lines."""
+        """Dedent the fenced block lines."""
 
         return '\n'.join([line[self.ws_len:] for line in lines])
 
     def get_hl_settings(self):
-        """Check for code hilite extension to get its config."""
+        """Check for CodeHilite extension to get its config."""
 
         if not self.checked_hl_settings:
             self.checked_hl_settings = True
@@ -442,7 +442,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         """
         Syntax highlight the code block.
 
-        If config is not empty, then the codehlite extension
+        If config is not empty, then the CodeHilite extension
         is enabled, so we call into it to highlight the code.
         """
 
@@ -505,7 +505,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
 
 class SuperFencesCodeBlockProcessor(CodeBlockProcessor):
-    """Process idented code blocks to see if we accidentaly processed its content as a fenced block."""
+    """Process indented code blocks to see if we accidentally processed its content as a fenced block."""
 
     FENCED_BLOCK_RE = re.compile(
         r'^([\> ]*)%s(%s)%s$' % (

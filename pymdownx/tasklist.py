@@ -47,7 +47,7 @@ class TasklistTreeprocessor(Treeprocessor):
     """Tasklist Treeprocessor that finds lists with checkboxes."""
 
     def inline(self, li):
-        """Search for checkbox directly in li tag."""
+        """Search for checkbox directly in `li` tag."""
 
         found = False
         m = RE_CHECKBOX.match(li.text)

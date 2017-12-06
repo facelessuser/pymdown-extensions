@@ -132,7 +132,7 @@ class ProgressBarTreeProcessor(AttrListTreeprocessor):
     """Used for AttrList compatibility."""
 
     def run(self, elem):
-        """Inline check for attrs at start of tail."""
+        """Inline check for attributes at start of tail."""
 
         if elem.tail:
             m = self.INLINE_RE.match(elem.tail)
@@ -145,7 +145,7 @@ class ProgressBarPattern(Pattern):
     """Pattern handler for the progress bars."""
 
     def __init__(self, pattern):
-        """Intialize."""
+        """Initialize."""
 
         Pattern.__init__(self, pattern)
 

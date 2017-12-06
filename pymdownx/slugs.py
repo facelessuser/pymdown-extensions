@@ -37,7 +37,7 @@ CASED = 2
 
 
 def uslugify(text, sep, cased=NO_CASED, percent_encode=False):
-    """Unicode slugify (utf-8)."""
+    """Unicode slugify (`utf-8`)."""
 
     # Normalize, Strip html tags, strip leading and trailing whitespace, and lower
     slug = RE_TAGS.sub('', unicodedata.normalize('NFC', text)).strip()
@@ -65,7 +65,7 @@ def uslugify_encoded(text, sep):
 
 
 def uslugify_cased(text, sep):
-    """Unicode slugify cased (keep case) (utf-8)."""
+    """Unicode slugify cased (keep case) (`utf-8`)."""
 
     return uslugify(text, sep, cased=CASED)
 
@@ -77,7 +77,7 @@ def uslugify_cased_encoded(text, sep):
 
 
 def gfm(text, sep):
-    """Unicode slugify cased (cased Unicode only) (utf-8)."""
+    """Unicode slugify cased (cased Unicode only) (`utf-8`)."""
 
     return uslugify(text, sep, cased=UNICODE_CASED)
 
