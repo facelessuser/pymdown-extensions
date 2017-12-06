@@ -225,7 +225,7 @@ class ProgressBarPattern(Pattern):
 
 
 class ProgressBarExtension(Extension):
-    """Add progressbar extension to Markdown class."""
+    """Add progress bar extension to Markdown class."""
 
     def __init__(self, *args, **kwargs):
         """Initialize."""

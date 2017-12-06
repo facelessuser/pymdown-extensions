@@ -31,7 +31,7 @@ import warnings
 
 
 class PlainHtmlExtension(Extension):
-    """PlainHtml extension."""
+    """Plain HTML extension."""
 
     def __init__(self, *args, **kwargs):
         """Initialize."""

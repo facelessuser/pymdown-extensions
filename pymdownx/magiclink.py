@@ -288,7 +288,7 @@ class _MagiclinkReferencePattern(_MagiclinkShorthandPattern):
 
 
 class MagicShortenerTreeprocessor(Treeprocessor):
-    """Treeprocessor that finds repo issue and commit links and shortens them."""
+    """Tree processor that finds repo issue and commit links and shortens them."""
 
     # Repo link types
     ISSUE = 0
@@ -504,7 +504,7 @@ class MagiclinkPattern(LinkPattern):
 
 
 class MagiclinkAutoPattern(Pattern):
-    """Return a link Element given an autolink `<http://example/com>`."""
+    """Return a link Element given an auto link `<http://example/com>`."""
 
     def handleMatch(self, m):
         """Return link optionally without protocol."""
@@ -666,7 +666,7 @@ class MagiclinkInternalRefsPattern(_MagiclinkReferencePattern):
 
 
 class MagiclinkExtension(Extension):
-    """Add Easylink extension to Markdown class."""
+    """Add auto link and link transformation extensions to Markdown class."""
 
     def __init__(self, *args, **kwargs):
         """Initialize."""
@@ -713,7 +713,7 @@ class MagiclinkExtension(Extension):
         super(MagiclinkExtension, self).__init__(*args, **kwargs)
 
     def setup_autolinks(self, md, config):
-        """Setup autolinks."""
+        """Setup auto links."""
 
         # Setup general link patterns
         auto_link_pattern = MagiclinkAutoPattern(RE_AUTOLINK, md)

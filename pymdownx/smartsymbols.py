@@ -160,7 +160,7 @@ class SmartSymbolsExtension(Extension):
         )
 
     def extendMarkdown(self, md, md_globals):
-        """Create a dict of inline replace patterns and add to the treeprocessor."""
+        """Create a dict of inline replace patterns and add to the tree processor."""
 
         configs = self.getConfigs()
         self.patterns = OrderedDict()

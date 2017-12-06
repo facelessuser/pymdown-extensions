@@ -136,7 +136,7 @@ class B64Extension(Extension):
         super(B64Extension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
-        """Add B64Treeprocessor to Markdown instance."""
+        """Add base 64 tree processor to Markdown instance."""
 
         b64 = B64Postprocessor(md)
         b64.config = self.getConfigs()

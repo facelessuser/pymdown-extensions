@@ -256,7 +256,7 @@ class HighlightTreeprocessor(Treeprocessor):
     """Highlight source code in code blocks."""
 
     def run(self, root):
-        """Find code blocks and store in htmlStash."""
+        """Find code blocks and store in `htmlStash`."""
 
         blocks = root.iter('pre')
         for block in blocks:
@@ -287,7 +287,7 @@ class HighlightTreeprocessor(Treeprocessor):
 
 
 class HighlightExtension(Extension):
-    """Configure highlight settins globally."""
+    """Configure highlight settings globally."""
 
     def __init__(self, *args, **kwargs):
         """Initialize."""

@@ -1,3 +1,5 @@
+spellchecker: aspell
+
 documents:
 - name: MkDocs
   language: html
@@ -36,8 +38,6 @@ documents:
     - pre
     - a.magiclink-compare
     - a.magiclink-commit
-  aspell_options:
-    run-together: true
   language_options:
     markdown_extensions:
       markdown.extensions.smarty:
@@ -74,18 +74,17 @@ documents:
         custom_checkbox: true
   dictionary:
   - Dedent
-  - FencedBlockPreprocessor
-  - GithubChecklistsTreeprocessor
-  - PathConverterPostprocessor
   - UrlParse
   - octocat
   - ord
+  - netpath
 
 # Global dictionary
 dictionary:
 - API
 - Arithmatex
 - AttrList
+- BeautifulSoup
 - BetterEm
 - Bitbucket
 - CDN
@@ -141,9 +140,11 @@ dictionary:
 - PlainHTML
 - ProgressBar
 - PyMdown
+- PyYaml
 - PyYaml's
 - Pygments
 - Pymdownx
+- Reindent
 - SCSS
 - SVG
 - SVGs
@@ -170,7 +171,9 @@ dictionary:
 - blockquotes
 - bool
 - builtins
+- checkboxes
 - cmd
+- config
 - coveragepy
 - customizable
 - dev
@@ -228,6 +231,7 @@ dictionary:
 - pytest
 - raphael
 - regex
+- reindent
 - reinstalling
 - repo
 - requesters
@@ -240,7 +244,9 @@ dictionary:
 - squidfunk
 - stylesheet
 - stylesheets
+- sortable
 - sublicense
+- superfences
 - syntaxes
 - th
 - thumbsup

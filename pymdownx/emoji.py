@@ -262,8 +262,8 @@ class EmojiPattern(Pattern):
             'remove_variation_selector' option.
 
         If using gemoji, it is possible you will get no Unicode and no Unicode alt.  This occurs with emoji
-        like :octocat:.  :octocat: is not a real emoji and has no Unicode code points, but it is provided by
-        gememoji as an emoji anyways.
+        like `:octocat:`.  `:octocat:` is not a real emoji and has no Unicode code points, but it is provided by
+        gemoji as an emoji anyways.
         """
 
         uc = emoji.get('unicode')

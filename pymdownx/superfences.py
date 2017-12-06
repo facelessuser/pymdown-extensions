@@ -1,5 +1,5 @@
 """
-Superfences.
+SuperFences.
 
 pymdownx.superfences
 Neseted Fenced Code Blocks
@@ -138,7 +138,7 @@ def fence_div_format(source, language, css_class):
 
 
 class SuperFencesCodeExtension(Extension):
-    """Superfences code block extension."""
+    """SuperFences code block extension."""
 
     def __init__(self, *args, **kwargs):
         """Initialize."""
@@ -166,7 +166,7 @@ class SuperFencesCodeExtension(Extension):
         super(SuperFencesCodeExtension, self).__init__(*args, **kwargs)
 
     def extend_super_fences(self, name, formatter):
-        """Extend superfences with the given name, language, and formatter."""
+        """Extend SuperFences with the given name, language, and formatter."""
 
         self.superfences.append(
             {
@@ -177,7 +177,7 @@ class SuperFencesCodeExtension(Extension):
         )
 
     def extendMarkdown(self, md, md_globals):
-        """Add FencedBlockPreprocessor to the Markdown instance."""
+        """Add fenced block preprocessor to the Markdown instance."""
 
         # Not super yet, so let's make it super
         md.registerExtension(self)

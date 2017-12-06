@@ -202,7 +202,7 @@ class SpellingPython(SpellingLanguage):
 class Spelling(object):
     """Spell check class."""
 
-    DICTIONARY = 'dictionary.bin'
+    DICTIONARY = 'dictionary.dic'
     RE_SELECTOR = re.compile(r'''(\#|\.)?[-\w]+|\*|\[([\w\-:]+)(?:([~^|*$]?=)(\"[^"]+\"|'[^']'|[^'"\[\]]+))?\]''')
 
     def __init__(self, config_file, plugins=None):
@@ -211,6 +211,7 @@ class Spelling(object):
         # General options
         self.dict_bin = os.path.abspath(self.DICTIONARY)
         config = self.read_config(config_file)
+        self.spellchecker = config.get('spellchecker', 'aspell')
         self.documents = config.get('documents', [])
         self.dictionary = config.get('dictionary', [])
         self.plugins = plugins if plugins else []
@@ -362,30 +363,37 @@ class Spelling(object):
             text = self.html_to_text(html.html)
             disallow = ('mode', 'encoding')
 
-            cmd = [
-                'aspell',
-                'list',
-                '--mode=url',
-                '--encoding=utf-8',
-                '--extra-dicts',
-                self.dict_bin
-            ]
+            if self.spellchecker == 'hunspell':
+                cmd = [
+                    'hunspell',
+                    '-l',
+                    '-i', 'utf-8',
+                    '-d', 'en_US',
+                    '-p', self.dict_bin
+                ]
+            else:
+                cmd = [
+                    'aspell',
+                    'list',
+                    '--lang=en',
+                    '--mode=url',
+                    '--encoding=utf-8',
+                    '--extra-dicts',
+                    self.dict_bin
+                ]
 
-            if 'lang' not in options:
-                cmd.extend(['--lang', 'en'])
-
-            for k, v in options.items():
-                if k not in disallow:
-                    key = ('-%s' if len(k) == 1 else '--%s') % k
-                    if isinstance(v, bool) and v is True:
-                        cmd.append(key)
-                    elif isinstance(v, str):
-                        cmd.extend([key, v])
-                    elif isinstance(v, int):
-                        cmd.extend([key, str(v)])
-                    elif isinstance(v, list):
-                        for value in v:
-                            cmd.extend([key, value])
+                for k, v in options.items():
+                    if k not in disallow:
+                        key = ('-%s' if len(k) == 1 else '--%s') % k
+                        if isinstance(v, bool) and v is True:
+                            cmd.append(key)
+                        elif isinstance(v, str):
+                            cmd.extend([key, v])
+                        elif isinstance(v, int):
+                            cmd.extend([key, str(v)])
+                        elif isinstance(v, list):
+                            for value in v:
+                                cmd.extend([key, value])
 
             wordlist = console(cmd, input_text=text.encode('utf-8'))
             words = [w for w in sorted(set(wordlist.split('\n'))) if w]
@@ -406,17 +414,21 @@ class Spelling(object):
         if os.path.exists(self.dict_bin):
             os.remove(self.dict_bin)
         print("Compiling Dictionary...")
-        console(
-            [
-                'aspell',
-                '--lang=en',
-                '--encoding=utf-8',
-                'create',
-                'master',
-                os.path.abspath(self.dict_bin)
-            ],
-            input_text='\n'.join(dictionary).encode('utf-8')
-        )
+        if self.spellchecker == 'hunspell':
+            with codecs.open(self.dict_bin, 'w', encoding='utf-8') as f:
+                f.write('\n'.join(sorted(set(dictionary))) + '\n')
+        else:
+            console(
+                [
+                    'aspell',
+                    '--lang=en',
+                    '--encoding=utf-8',
+                    'create',
+                    'master',
+                    os.path.abspath(self.dict_bin)
+                ],
+                input_text='\n'.join(dictionary).encode('utf-8')
+            )
 
     def walk_src(self, targets, plugin):
         """Walk source and parse files."""
@@ -450,12 +462,16 @@ class Spelling(object):
                     html_options = documents.get('html_options', {})
                     self.attributes = set(html_options.get('attributes', []))
                     self.selectors = self.process_selectors(*html_options.get('ignores', []))
-                    aspell_options = documents.get('aspell_options', {})
+                    if self.spellchecker == 'hunspell':
+                        options = {}
+                    else:
+                        options = documents.get('aspell_options', {})
 
                     print('Spell Checking %s...' % documents.get('name', ''))
                     for sources in self.walk_src(documents.get('src', []), plug):
-                        if self.check_spelling(sources, aspell_options):
+                        if self.check_spelling(sources, options):
                             fail = True
+
                     break
         return fail
 

@@ -127,7 +127,7 @@ class CriticStash(object):
 
 
 class CriticsPostprocessor(Postprocessor):
-    """Handle cleanup on postprocess for viewing critic marks."""
+    """Handle cleanup on post process for viewing critic marks."""
 
     def __init__(self, critic_stash):
         """Initialize."""

@@ -71,7 +71,7 @@ class InlineHilitePattern(Pattern):
             self.noclasses = config['noclasses']
 
     def highlight_code(self, language, src):
-        """Syntax highlite the inline code block."""
+        """Syntax highlight the inline code block."""
 
         process_text = self.style_plain_text or language or self.guess_lang
 
