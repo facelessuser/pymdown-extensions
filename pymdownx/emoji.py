@@ -369,7 +369,7 @@ class EmojiExtension(Extension):
         super(EmojiExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
-        """Add support for emojis."""
+        """Add support for emoji."""
 
         config = self.getConfigs()
 
