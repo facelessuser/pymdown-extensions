@@ -9,6 +9,8 @@ import yaml
 import re
 from collections import namedtuple
 import tokenize
+import textwrap
+import markdown
 
 PY3 = sys.version_info >= (3, 0)
 
@@ -32,15 +34,6 @@ def yaml_load(source, loader=yaml.Loader):
     Loader.add_constructor('tag:yaml.org,2002:str', construct_yaml_str)
 
     return yaml.load(source, Loader)
-
-
-def read_config(file_name):
-    """Read configuration."""
-
-    config = {}
-    with codecs.open(file_name, 'r', encoding='utf-8') as f:
-        config = yaml_load(f.read())
-    return config
 
 
 def console(cmd, input_file=None, input_text=None):
@@ -87,137 +80,148 @@ def console(cmd, input_file=None, input_text=None):
 class Selector(namedtuple('IgnoreRule', ['tag', 'id', 'classes', 'attributes'])):
     """Ignore rule."""
 
+
 class SelectorAttribute(namedtuple('AttrRule', ['attribute', 'pattern'])):
     """Selector attribute rule."""
 
 
-class SpellingPython(object):
+class SpellingLanguage(object):
+    """Spelling language."""
 
-    DICTIONARY = 'dictionary.bin'
+    LANGUAGE = ''
+    EXTENSIONS = tuple()
 
-    def __init__(self, config_file):
+    def __init__(self, config):
         """Initialize."""
+        pass
 
-        config = read_config(config_file).get('python')
-        self.options = config.get('options', {})
-        self.sources = config.get('src', [])
-        self.dictionary = ('\n'.join(config.get('dictionary', []))).encode('utf-8')
-        self.dict_bin = os.path.abspath(self.DICTIONARY)
-        self.comments = self.options.get('comments', False)
 
-    def source_to_text(self, source):
-        """Get docstrings and comments."""
+class SpellingHTML(SpellingLanguage):
+    """Spelling Python."""
 
-        comments = []
+    LANGUAGE = 'html'
+    EXTENSIONS = ('.html', '.htm')
+
+    def parse_file(self, source_file):
+        """Parse HTML file."""
+
+        with codecs.open(source_file, 'r', encoding='utf-8') as f:
+            text = f.read()
+        return [(text, source_file)]
+
+
+class SpellingPython(SpellingLanguage):
+    """Spelling Python."""
+
+    LANGUAGE = 'python'
+    EXTENSIONS = ('.py', '.pyw')
+
+    MODULE = 0
+    FUNCTION = 1
+    CLASS = 2
+
+    def __init__(self, config):
+        """Initialization."""
+
+        self.extensions = []
+        self.extension_configs = {}
+        for k, v in config.get('markdown_extensions', {}).items():
+            self.extensions.append(k)
+            if v is not None:
+                self.extension_configs[k] = v
+
+    def parse_file(self, source_file):
+        """Parse Python file returning docstrings."""
+
+        # comments = []
+        docstrings = []
         prev_token_type = tokenize.NEWLINE
         indent = ''
-        for token in tokenize.generate_tokens(source.readline):
-            token_type = token[0]
-            value = token[1]
+        name = None
+        stack = [(source_file, 0, self.MODULE)]
+        # encoding = ""
+        md = markdown.Markdown(extensions=self.extensions, extension_configs=self.extension_configs)
 
-            if token_type == tokenize.COMMENT:
-                # Capture comments
-                if self.comments:
-                    comments.append(value)
-            elif token_type == tokenize.STRING:
-                # Capture docstrings
-                # If previously we captured an INDENT or NEWLINE previously we probably have a docstring.
-                # NL seems to be a different thing.
-                if prev_token_type in (tokenize.INDENT, tokenize.DEDENT, tokenize.NEWLINE):
-                    comments.append(value)
+        with codecs.open(source_file, 'rb') as source:
 
-            prev_token_type = token_type
+            for token in tokenize.tokenize(source.readline):
+                token_type = token[0]
+                value = token[1]
+                line = str(token[2][0])
 
-        return '\n'.join(comments)
+                # if token_type == tokenize.ENCODING:
+                #     encoding = value
 
-    def check_spelling(self, source_file):
-        """Check spelling."""
+                # Track function and class ancestry
+                if token_type == tokenize.NAME:
+                    if value in ('def', 'class'):
+                        name = value
+                    elif name:
+                        parent = stack[-1][2]
+                        prefix = ''
+                        if parent != self.MODULE:
+                            prefix = '.' if parent == self.CLASS else ', '
+                        if name == 'class':
+                            stack.append(('%s%s' % (prefix, value), len(indent), self.CLASS))
+                        elif name == 'def':
+                            stack.append(('%s%s()' % (prefix, value), len(indent), self.FUNCTION))
+                        name = None
 
-        fail = False
-        with codecs.open(source_file, 'r', encoding='utf-8') as file_obj:
-            text = self.source_to_text(file_obj)
+                # if token_type == tokenize.COMMENT:
+                #     # Capture comments
+                #     if len(stack) > 1:
+                #         loc ="%s(%s): %s" % (stack[0][0], line, ''.join([crumb[0] for crumb in stack[1:]]))
+                #     else:
+                #         loc = "%s(%s)" % (stack[0][0], line)
+                #     comments.append((value, loc))
+                if token_type == tokenize.STRING:
+                    # Capture docstrings
+                    # If previously we captured an INDENT or NEWLINE previously we probably have a docstring.
+                    # NL seems to be a different thing.
+                    if prev_token_type in (tokenize.INDENT, tokenize.DEDENT, tokenize.NEWLINE):
+                        string = md.convert(textwrap.dedent(eval(value.strip())))
+                        md.reset()
+                        loc = "%s(%s): %s" % (stack[0][0], line, ''.join([crumb[0] for crumb in stack[1:]]))
+                        docstrings.append((string, loc))
 
-        wordlist = console(
-            [
-                'aspell',
-                'list',
-                '--lang=en',
-                '--mode=url',
-                '--encoding=utf-8',
-                '--extra-dicts',
-                self.dict_bin
-            ],
-            input_text=text.encode('utf-8')
-        )
-        words = [w for w in sorted(set(wordlist.split('\n'))) if w]
+                if token_type == tokenize.INDENT:
+                    indent = value
+                elif token_type == tokenize.DEDENT:
+                    indent = indent[:-4]
+                    if len(stack) > 1 and len(indent) <= stack[-1][1]:
+                        stack.pop()
 
-        if words:
-            fail = True
-            print('Misspelled words in %s' % source_file)
-            print('-' * 80)
-            for word in words:
-                print(word)
-            print('-' * 80)
-            print('\n')
-        return fail
+                prev_token_type = token_type
 
+        # if self.comments:
+        #     docstrings.extend(comments)
 
-    def compile_dictionaries(self):
-        """Compile user dictionary."""
-
-        if os.path.exists(self.dict_bin):
-            os.remove(self.dict_bin)
-        print("Compiling Dictionary...")
-        print(
-            console(
-                [
-                    'aspell',
-                    '--lang=en',
-                    '--encoding=utf-8',
-                    'create',
-                    'master',
-                    os.path.abspath(self.dict_bin)
-                ],
-                input_text=self.dictionary
-            )
-        )
-
-    def check(self):
-        """Walk source and initiate spell check."""
-
-        self.compile_dictionaries()
-
-        print('Spell Checking...')
-        fail = False
-        for source in self.sources:
-            if os.path.isdir(source):
-                for base, dirs, files in os.walk(source):
-                    for f in files:
-                        if f.lower().endswith('.py'):
-                            file_name = os.path.join(base, f)
-                            if self.check_spelling(file_name):
-                                fail = True
-            elif source.lower().endswith('.py'):
-                if self.check_spelling(source):
-                    fail = True
-        return fail
+        return docstrings
 
 
-class SpellingHtml(object):
-    """Spell check object."""
+class Spelling(object):
+    """Spell check class."""
 
     DICTIONARY = 'dictionary.bin'
     RE_SELECTOR = re.compile(r'''(\#|\.)?[-\w]+|\*|\[([\w\-:]+)(?:([~^|*$]?=)(\"[^"]+\"|'[^']'|[^'"\[\]]+))?\]''')
 
-    def __init__(self, config_file):
+    def __init__(self, config_file, plugins=None):
         """Initialize."""
 
-        config = read_config(config_file).get('html', {})
-        self.docs = config.get('src', [])
-        self.dictionary = ('\n'.join(config.get('dictionary', []))).encode('utf-8')
-        self.attributes = set(config.get('attributes', []))
-        self.selectors = self.process_selectors(*config.get('ignores', []))
+        # General options
         self.dict_bin = os.path.abspath(self.DICTIONARY)
+        config = self.read_config(config_file)
+        self.documents = config.get('documents', [])
+        self.dictionary = config.get('dictionary', [])
+        self.plugins = plugins if plugins else []
+
+    def read_config(self, file_name):
+        """Read configuration."""
+
+        config = {}
+        with codecs.open(file_name, 'r', encoding='utf-8') as f:
+            config = yaml_load(f.read())
+        return config
 
     def process_selectors(self, *args):
         """
@@ -225,10 +229,13 @@ class SpellingHtml(object):
 
         We do our own selectors as BeautifulSoup4 has some annoying quirks,
         and we don't really need to do nth selectors or siblings or
-        decendents etc.
+        descendants etc.
         """
 
-        selectors = []
+        selectors = [
+            Selector('style', None, tuple(), tuple()),
+            Selector('script', None, tuple(), tuple()),
+        ]
 
         for selector in args:
             tag = None
@@ -345,76 +352,111 @@ class SpellingHtml(object):
 
         return ' '.join(text) if root else text
 
-    def check_spelling(self, html_file):
+    def check_spelling(self, sources, options):
         """Check spelling."""
 
         fail = False
-        with codecs.open(html_file, 'r', encoding='utf-8') as file_obj:
-            html = bs4.BeautifulSoup(file_obj.read(), "html5lib")
-            text = self.html_to_text(html.html)
 
-        wordlist = console(
-            [
+        for source in sources:
+            html = bs4.BeautifulSoup(source[0], "html5lib")
+            text = self.html_to_text(html.html)
+            disallow = ('mode', 'encoding')
+
+            cmd = [
                 'aspell',
                 'list',
-                '--lang=en',
                 '--mode=url',
                 '--encoding=utf-8',
                 '--extra-dicts',
                 self.dict_bin
-            ],
-            input_text=text.encode('utf-8')
-        )
-        words = [w for w in sorted(set(wordlist.split('\n'))) if w]
+            ]
 
-        if words:
-            fail = True
-            print('Misspelled words in %s' % html_file)
-            print('-' * 80)
-            for word in words:
-                print(word)
-            print('-' * 80)
-            print('\n')
+            if 'lang' not in options:
+                cmd.extend(['--lang', 'en'])
+
+            for k, v in options.items():
+                if k not in disallow:
+                    key = ('-%s' if len(k) == 1 else '--%s') % k
+                    if isinstance(v, bool) and v is True:
+                        cmd.append(key)
+                    elif isinstance(v, str):
+                        cmd.extend([key, v])
+                    elif isinstance(v, int):
+                        cmd.extend([key, str(v)])
+                    elif isinstance(v, list):
+                        for value in v:
+                            cmd.extend([key, value])
+
+            wordlist = console(cmd, input_text=text.encode('utf-8'))
+            words = [w for w in sorted(set(wordlist.split('\n'))) if w]
+
+            if words:
+                fail = True
+                print('Misspelled words:\n%s' % source[1])
+                print('-' * 80)
+                for word in words:
+                    print(word)
+                print('-' * 80)
+                print('\n')
         return fail
 
-    def compile_dictionaries(self):
+    def compile_dictionary(self, dictionary):
         """Compile user dictionary."""
 
         if os.path.exists(self.dict_bin):
             os.remove(self.dict_bin)
         print("Compiling Dictionary...")
-        print(
-            console(
-                [
-                    'aspell',
-                    '--lang=en',
-                    '--encoding=utf-8',
-                    'create',
-                    'master',
-                    os.path.abspath(self.dict_bin)
-                ],
-                input_text=self.dictionary
-            )
+        console(
+            [
+                'aspell',
+                '--lang=en',
+                '--encoding=utf-8',
+                'create',
+                'master',
+                os.path.abspath(self.dict_bin)
+            ],
+            input_text='\n'.join(dictionary).encode('utf-8')
         )
 
-    def check(self):
-        """Walk documents and initiate spell check."""
+    def walk_src(self, targets, plugin):
+        """Walk source and parse files."""
 
-        self.compile_dictionaries()
-
-        print('Spell Checking...')
-        fail = False
-        for doc in self.docs:
-            if os.path.isdir(doc):
-                for base, dirs, files in os.walk(doc):
+        extensions = plugin.EXTENSIONS
+        for target in targets:
+            if os.path.isdir(target):
+                for base, dirs, files in os.walk(target):
                     for f in files:
-                        if f.lower().endswith('.html'):
-                            file_name = os.path.join(base, f)
-                            if self.check_spelling(file_name):
-                                fail = True
-            elif doc.lower().endswith('.html'):
-                if self.check_spelling(doc):
-                    fail = True
+                        if f.lower().endswith(tuple(extensions)):
+                            yield plugin.parse_file(os.path.join(base, f))
+            elif target.lower().endswith(tuple(extensions)):
+                yield plugin.parse_file(target)
+
+    def check(self):
+        """Walk source and initiate spell check."""
+
+        fail = False
+        for documents in self.documents:
+            lang = documents['language']
+            for plugin in self.plugins:
+                if lang == plugin.LANGUAGE:
+                    # Combine entires dictionary with the global dictionary and compile
+                    dictionary = self.dictionary[:]
+                    dictionary.extend(documents.get('dictionary', []))
+                    self.compile_dictionary(dictionary)
+
+                    # Create instance of plugin
+                    plug = plugin(documents.get('language_options', {}))
+
+                    html_options = documents.get('html_options', {})
+                    self.attributes = set(html_options.get('attributes', []))
+                    self.selectors = self.process_selectors(*html_options.get('ignores', []))
+                    aspell_options = documents.get('aspell_options', {})
+
+                    print('Spell Checking %s...' % documents.get('name', ''))
+                    for sources in self.walk_src(documents.get('src', []), plug):
+                        if self.check_spelling(sources, aspell_options):
+                            fail = True
+                    break
         return fail
 
 
@@ -422,10 +464,7 @@ def main():
     """Main."""
 
     fail = False
-    spelling = SpellingHtml('.spelling.yml')
-    if spelling.check():
-        fail = True
-    spelling = SpellingPython('.spelling.yml')
+    spelling = Spelling('.spelling.yml', [SpellingHTML, SpellingPython])
     if spelling.check():
         fail = True
     return fail

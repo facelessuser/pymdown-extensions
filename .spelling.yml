@@ -1,209 +1,254 @@
-html:
-  # Document HTML files or folders of HTML files to search
+documents:
+- name: MkDocs
+  language: html
   src:
   - site
-
-  options:
-    # Attributes of tags to also spell check along with tag content
+  excludes:
+  html_options:
     attributes:
     - title
     - alt
-
-    # Selectors describing tags to ignore (tag, class, and/or id only)
     ignores:
     - code
     - pre
-    - script
-    - style
     - a.magiclink-compare
     - a.magiclink-commit
+    - span.keys
     - .MathJax_Preview
     - .md-nav__link
     - .md-footer-custom-text
     - .md-source__repository
 
-  # Dictionary of words to ignore
-  dictionary:
-  - API
-  - Arithmatex
-  - BetterEm
-  - Bitbucket
-  - CDN
-  - CDNs
-  - CSS
-  - Changelog
-  - Cloudflare
-  - CodeHilite
-  - CodeHilite's
-  - CriticMarkup
-  - Ctrl
-  - Emoji
-  - EmojiOne
-  - EmojiOne's
-  - Esc
-  - EscapeAll
-  - ExtraRawHTML
-  - Fn
-  - GFM
-  - GIF
-  - Gemoji
-  - Gemoji's
-  - GitHub
-  - GitHub's
-  - GitHubEmoji
-  - GitLab
-  - GitLab's
-  - HeaderAnchor
-  - HeaderAnchor's
-  - Inline
-  - InlineHilite
-  - InlineHilite's
-  - JPEG
-  - JSON
-  - JavaScript
-  - KBD
-  - LaTeX
-  - Limberg
-  - MERCHANTABILITY
-  - MagicLink
-  - MathJax
-  - MkDocs
-  - Mkdoc's
-  - NONINFRINGEMENT
-  - Num
-  - OAuth
-  - Octicons
-  - PHP
-  - PNG
-  - PNGs
-  - Pandoc
-  - PathConverter
-  - PlainHTML
-  - ProgressBar
-  - PyMdown
-  - PyMdown's
-  - Pygments
-  - SCSS
-  - SVG
-  - SVGs
-  - Slugify
-  - SmartSymbols
-  - StripHTML
-  - Stylesheets
-  - SuperFences
-  - Tasklist
-  - Toc
-  - Tox
-  - Twemoji
-  - Twitter's
-  - UML
-  - UTF
-  - Virtualenv
-  - Waylan
-  - YAML
-  - backrefs
-  - backtick
-  - backticks
-  - blockquote
-  - blockquotes
-  - bool
-  - builtins
-  - cmd
-  - coveragepy
-  - customizable
-  - dev
-  - dict
-  - docstrings
-  - ebeweber
-  - emoji
-  - emojione
-  - escaper
-  - facelessuser
-  - formatter
-  - gemoji
-  - gfm
-  - gforcada
-  - github
-  - highlighter's
-  - html
-  - inline
-  - ish
-  - jQuery
-  - js
-  - kbd
-  - linkafies
-  - linter
-  - lowercased
-  - lowercases
-  - md
-  - mkdocs
-  - mrab
-  - mrabarnett
-  - namespace
-  - nd
-  - ned
-  - nl
-  - online
-  - plugin
-  - plugins
-  - plusminus
-  - polyfill
-  - polyfilled
-  - polyfills
-  - pre
-  - prepend
-  - prepended
-  - prepending
-  - prepends
-  - preprocessor
-  - px
-  - py
-  - pycqa
-  - pymdown
-  - pypi
-  - pytest
-  - raphael
-  - regex
-  - reinstalling
-  - repo
-  - requesters
-  - revisioned
-  - sanitizer
-  - shortener
-  - shortname
-  - shortnames
-  - slugify
-  - squidfunk
-  - stylesheet
-  - stylesheets
-  - sublicense
-  - syntaxes
-  - th
-  - thumbsup
-  - tox
-  - uc
-  - un
-  - underscore's
-  - unicode
-  - uslugify
-  - versa
-  - whitespace
-
-python:
-
-  # Python source
+- name: Python Source
+  language: python
   src:
   - pymdownx
   - tests
   - tools
+  exclude:
+  - tools/tags
+  html_options:
+    attributes:
+    - title
+    - alt
+    ignores:
+    - code
+    - pre
+    - a.magiclink-compare
+    - a.magiclink-commit
+  aspell_options:
+    run-together: true
+  language_options:
+    markdown_extensions:
+      markdown.extensions.smarty:
+        smart_quotes: false
+      pymdownx.betterem:
+      markdown.extensions.def_list:
+      markdown.extensions.tables:
+      pymdownx.superfences:
+      pymdownx.highlight:
+        css_class: codehilite
+        extend_pygments_lang:
+          - name: php-inline
+            lang: php
+            options:
+              startinline: true
+          - name: pycon3
+            lang: pycon
+            options:
+              python3: true
+      pymdownx.inlinehilite:
+      pymdownx.magiclink:
+        repo_url_shortener: true
+        repo_url_shorthand: true
+        social_url_shorthand: true
+        user: facelessuser
+        repo: pymdown-extensions
+      pymdownx.tilde:
+      pymdownx.caret:
+      pymdownx.smartsymbols:
+      pymdownx.escapeall:
+        hardbreak: True
+        nbsp: True
+      pymdownx.tasklist:
+        custom_checkbox: true
+  dictionary:
+  - Dedent
+  - FencedBlockPreprocessor
+  - GithubChecklistsTreeprocessor
+  - PathConverterPostprocessor
+  - UrlParse
+  - octocat
+  - ord
 
-  options:
-    # Search comments
-    comments: false
-
-    # Sources to exclude
-    exclude:
-    - tools/tags
-
-  # Dictionary of words to
-  dictionary: []
+# Global dictionary
+dictionary:
+- API
+- Arithmatex
+- AttrList
+- BetterEm
+- Bitbucket
+- CDN
+- CDNs
+- CSS
+- Changelog
+- Cloudflare
+- CodeHilite
+- CodeHilite's
+- CriticMarkup
+- Ctrl
+- Dicts
+- Emoji
+- EmojiOne
+- EmojiOne's
+- Esc
+- EscapeAll
+- ExtraRawHTML
+- GFM
+- GIF
+- Gemoji
+- Gemoji's
+- GitHub
+- GitHub's
+- GitHubEmoji
+- GitLab
+- GitLab's
+- HeaderAnchor
+- HeaderAnchor's
+- Inline
+- InlineHilite
+- InlineHilite's
+- JPEG
+- JSON
+- JavaScript
+- KBD
+- LaTeX
+- Limberg
+- MERCHANTABILITY
+- MagicLink
+- MathJax
+- MkDocs
+- Mkdoc's
+- NONINFRINGEMENT
+- Num
+- OAuth
+- Octicons
+- PHP
+- PNG
+- PNGs
+- Pandoc
+- PathConverter
+- PlainHTML
+- ProgressBar
+- PyMdown
+- PyYaml's
+- Pygments
+- Pymdownx
+- SCSS
+- SVG
+- SVGs
+- Slugify
+- SmartSymbols
+- StripHTML
+- Stylesheets
+- SuperFences
+- Tasklist
+- Toc
+- Tox
+- Twemoji
+- Twitter's
+- UML
+- UTF
+- Unescape
+- Virtualenv
+- Waylan
+- YAML
+- backrefs
+- backtick
+- backticks
+- blockquote
+- blockquotes
+- bool
+- builtins
+- cmd
+- coveragepy
+- customizable
+- dev
+- dict
+- dicts
+- docstrings
+- ebeweber
+- emoji
+- emojione
+- escaper
+- facelessuser
+- formatter
+- gemoji
+- gfm
+- gforcada
+- github
+- highlighter's
+- html
+- inline
+- ish
+- jQuery
+- js
+- kbd
+- linkafies
+- linter
+- lowercased
+- lowercases
+- md
+- mkdocs
+- mrab
+- mrabarnett
+- namespace
+- nd
+- ned
+- nl
+- online
+- plugin
+- plugins
+- plusminus
+- polyfill
+- polyfilled
+- polyfills
+- pre
+- prepend
+- prepended
+- prepending
+- prepends
+- preprocessor
+- px
+- py
+- pycqa
+- pymdown
+- pymdownx
+- pypi
+- pytest
+- raphael
+- regex
+- reinstalling
+- repo
+- requesters
+- revisioned
+- sanitizer
+- shortener
+- shortname
+- shortnames
+- slugify
+- squidfunk
+- stylesheet
+- stylesheets
+- sublicense
+- syntaxes
+- th
+- thumbsup
+- tox
+- uc
+- un
+- underscore's
+- unicode
+- uslugify
+- versa
+- whitespace
