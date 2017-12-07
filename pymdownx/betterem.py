@@ -2,7 +2,7 @@
 Better Emphasis.
 
 pymdownx.betterem
-Add inteligent handling of to em and strong notations
+Add intelligent handling of to em and strong notations
 
 MIT license.
 

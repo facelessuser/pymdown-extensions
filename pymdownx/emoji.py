@@ -2,7 +2,7 @@
 Emoji.
 
 pymdownx.emoji
-Emoji extension for emojione or Github's gemoji.
+Emoji extension for EmojiOne's, GitHub's, or Twemoji's gemoji.
 
 MIT license.
 

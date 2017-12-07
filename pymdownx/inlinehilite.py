@@ -1,5 +1,5 @@
 """
-Inline Hilite.
+Inline Highlighting.
 
 pymdownx.inlinehilite
 

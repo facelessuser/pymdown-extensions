@@ -3,7 +3,7 @@ Magic Link.
 
 pymdownx.magiclink
 An extension for Python Markdown.
-Find http|ftp links and email address and turn them to actual links
+Find HTML, FTP links, and email address and turn them to actual links
 
 MIT license.
 

@@ -1,4 +1,4 @@
-"""Utils."""
+"""Utilities."""
 import yaml
 from collections import OrderedDict
 import sys

@@ -2,7 +2,7 @@
 SuperFences.
 
 pymdownx.superfences
-Neseted Fenced Code Blocks
+Nested Fenced Code Blocks
 
 This is a modification of the original Fenced Code Extension.
 Algorithm has been rewritten to allow for fenced blocks in blockquotes,

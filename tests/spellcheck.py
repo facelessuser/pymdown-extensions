@@ -1,4 +1,4 @@
-"""Spell check with aspell."""
+"""Spell check with Aspell or Hunspell."""
 from __future__ import unicode_literals
 import subprocess
 import os
@@ -13,6 +13,15 @@ import textwrap
 import markdown
 
 PY3 = sys.version_info >= (3, 0)
+
+if PY3:
+    ustr = str
+    tokenizer = tokenize.tokenize
+    PREV_DOC_TOKENS = (tokenize.INDENT, tokenize.DEDENT, tokenize.NEWLINE, tokenize.ENCODING)
+else:
+    ustr = unicode  # noqa
+    tonkenizer = tokenize.generate_tokens
+    PREV_DOC_TOKENS = (tokenize.INDENT, tokenize.DEDENT, tokenize.NEWLINE)
 
 
 def yaml_load(source, loader=yaml.Loader):
@@ -123,6 +132,7 @@ class SpellingPython(SpellingLanguage):
     def __init__(self, config):
         """Initialization."""
 
+        self.markdown = config.get('markdown', False)
         self.extensions = []
         self.extension_configs = {}
         for k, v in config.get('markdown_extensions', {}).items():
@@ -139,18 +149,23 @@ class SpellingPython(SpellingLanguage):
         indent = ''
         name = None
         stack = [(source_file, 0, self.MODULE)]
-        # encoding = ""
-        md = markdown.Markdown(extensions=self.extensions, extension_configs=self.extension_configs)
+        encoding = 'utf-8'
+        if self.markdown:
+            md = markdown.Markdown(extensions=self.extensions, extension_configs=self.extension_configs)
+        else:
+            md = None
 
-        with codecs.open(source_file, 'rb') as source:
-
-            for token in tokenize.tokenize(source.readline):
+        with open(source_file, 'rb') as source:
+            for token in tokenizer(source.readline):
                 token_type = token[0]
                 value = token[1]
-                line = str(token[2][0])
+                line = ustr(token[2][0])
 
-                # if token_type == tokenize.ENCODING:
-                #     encoding = value
+                if PY3 and token_type == tokenize.ENCODING:
+                    encoding = value
+
+                value = token[1] if PY3 else token[1].decode(encoding)
+                line = ustr(token[2][0])
 
                 # Track function and class ancestry
                 if token_type == tokenize.NAME:
@@ -178,8 +193,10 @@ class SpellingPython(SpellingLanguage):
                     # Capture docstrings
                     # If previously we captured an INDENT or NEWLINE previously we probably have a docstring.
                     # NL seems to be a different thing.
-                    if prev_token_type in (tokenize.INDENT, tokenize.DEDENT, tokenize.NEWLINE):
-                        string = md.convert(textwrap.dedent(eval(value.strip())))
+                    if prev_token_type in PREV_DOC_TOKENS:
+                        string = textwrap.dedent(eval(value.strip()))
+                        if md:
+                            string = md.convert(string)
                         md.reset()
                         loc = "%s(%s): %s" % (stack[0][0], line, ''.join([crumb[0] for crumb in stack[1:]]))
                         docstrings.append((string, loc))
@@ -211,7 +228,6 @@ class Spelling(object):
         # General options
         self.dict_bin = os.path.abspath(self.DICTIONARY)
         config = self.read_config(config_file)
-        self.spellchecker = config.get('spellchecker', 'aspell')
         self.documents = config.get('documents', [])
         self.dictionary = config.get('dictionary', [])
         self.plugins = plugins if plugins else []
@@ -349,36 +365,38 @@ class Spelling(object):
                     if child.contents:
                         text.extend(self.html_to_text(child, False))
                 else:
-                    text.append(str(child))
+                    text.append(ustr(child))
 
-        return ' '.join(text) if root else text
+        return '<body>%s</body>' % ' '.join(text) if root else text
 
-    def check_spelling(self, sources, options):
+    def check_spelling(self, sources, master, options, html_advanced_filter):
         """Check spelling."""
 
         fail = False
 
         for source in sources:
-            html = bs4.BeautifulSoup(source[0], "html5lib")
-            text = self.html_to_text(html.html)
-            disallow = ('mode', 'encoding')
+            if html_advanced_filter:
+                html = bs4.BeautifulSoup(source[0], "html5lib")
+                text = self.html_to_text(html.html)
+            else:
+                text = source[0]
+            disallow = ('encoding')
 
             if self.spellchecker == 'hunspell':
                 cmd = [
                     'hunspell',
                     '-l',
                     '-i', 'utf-8',
-                    '-d', 'en_US',
+                    '-d', master,
                     '-p', self.dict_bin
                 ]
             else:
                 cmd = [
                     'aspell',
                     'list',
-                    '--lang=en',
-                    '--mode=url',
+                    '--lang', master,
                     '--encoding=utf-8',
-                    '--extra-dicts',
+                    '--add-extra-dicts',
                     self.dict_bin
                 ]
 
@@ -387,10 +405,10 @@ class Spelling(object):
                         key = ('-%s' if len(k) == 1 else '--%s') % k
                         if isinstance(v, bool) and v is True:
                             cmd.append(key)
-                        elif isinstance(v, str):
+                        elif isinstance(v, ustr):
                             cmd.extend([key, v])
                         elif isinstance(v, int):
-                            cmd.extend([key, str(v)])
+                            cmd.extend([key, ustr(v)])
                         elif isinstance(v, list):
                             for value in v:
                                 cmd.extend([key, value])
@@ -408,26 +426,36 @@ class Spelling(object):
                 print('\n')
         return fail
 
-    def compile_dictionary(self, dictionary):
+    def compile_dictionary(self, master, dictionaries):
         """Compile user dictionary."""
 
         if os.path.exists(self.dict_bin):
             os.remove(self.dict_bin)
+
         print("Compiling Dictionary...")
+        # Read word lists and create a unique set of words
+        words = set()
+        for dictionary in dictionaries:
+            with open(dictionary, 'rb') as src:
+                for word in src.read().split(b'\n'):
+                    words.add(word.replace(b'\r', b''))
+
         if self.spellchecker == 'hunspell':
-            with codecs.open(self.dict_bin, 'w', encoding='utf-8') as f:
-                f.write('\n'.join(sorted(set(dictionary))) + '\n')
+            # Sort and create wordlist
+            with open(self.dict_bin, 'wb') as dest:
+                dest.write(b'\n'.join(sorted(words)) + b'\n')
         else:
+            # Compile wordlist against master
             console(
                 [
                     'aspell',
-                    '--lang=en',
+                    '--lang', master,
                     '--encoding=utf-8',
                     'create',
                     'master',
                     os.path.abspath(self.dict_bin)
                 ],
-                input_text='\n'.join(dictionary).encode('utf-8')
+                input_text=b'\n'.join(sorted(words)) + b'\n'
             )
 
     def walk_src(self, targets, plugin):
@@ -451,25 +479,32 @@ class Spelling(object):
             lang = documents['language']
             for plugin in self.plugins:
                 if lang == plugin.LANGUAGE:
-                    # Combine entires dictionary with the global dictionary and compile
-                    dictionary = self.dictionary[:]
-                    dictionary.extend(documents.get('dictionary', []))
-                    self.compile_dictionary(dictionary)
-
                     # Create instance of plugin
-                    plug = plugin(documents.get('language_options', {}))
+                    plug = plugin(documents.get('options', {}))
 
-                    html_options = documents.get('html_options', {})
-                    self.attributes = set(html_options.get('attributes', []))
-                    self.selectors = self.process_selectors(*html_options.get('ignores', []))
+                    # Setup spell checker
+                    self.spellchecker = documents.get('spell_checker', 'aspell')
                     if self.spellchecker == 'hunspell':
                         options = {}
                     else:
-                        options = documents.get('aspell_options', {})
+                        options = documents.get('aspell', {})
 
+                    # Load and combine dictionaries
+                    dictionary_options = documents.get('dictionary', {})
+                    default_dict = 'en' if self.spellchecker == 'aspell' else 'en_US'
+                    master = dictionary_options.get('master', default_dict)
+                    self.compile_dictionary(master, dictionary_options.get('personal', []))
+
+                    # Setup HTML options
+                    html_options = documents.get('html', {})
+                    html_advanced_filter = html_options.get('advanced_filter', False)
+                    self.attributes = set(html_options.get('attributes', []))
+                    self.selectors = self.process_selectors(*html_options.get('ignores', []))
+
+                    # Perform spell check
                     print('Spell Checking %s...' % documents.get('name', ''))
                     for sources in self.walk_src(documents.get('src', []), plug):
-                        if self.check_spelling(sources, options):
+                        if self.check_spelling(sources, master, options, html_advanced_filter):
                             fail = True
 
                     break
