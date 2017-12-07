@@ -415,7 +415,20 @@ class Spelling(object):
                     cmd.extend(['--add-extra-dicts', personal_dict])
 
                 allowed = {
-                    'conf-dir', 'data-dir', 'lang', 'mode'
+                    'conf-dir', 'data-dir', 'add-dict-alias', 'rem-dict-alias', 'dict-dir',
+                    'encoding', 'add-filter', 'rem-filter', 'add-filter-path', 'rem-filter-path',
+                    'mode', 'e', 'H', 't', 'n', 'add-extra-dicts', 'rem-extra-dicts', 'home-dir',
+                    'ingore', 'W', 'dont-ignore-case', 'ignore-case', 'lang', 'l', 'local-data-dir',
+                    'd', 'master', 'dont-normalize', 'normalize', 'dont-norm-required',
+                    'norm-required', 'norm-form', 'dont-norm-strict', 'norm-strict', 'per-conf',
+                    'p', 'personal', 'C', 'B', 'dont-run-together', 'run-together', 'run-together-limit',
+                    'run-together-min', 'use-other-dicts', 'dont-use-other-dicts', 'add-variety', 'rem-variety',
+                    'add-context-delimieters', 'rem-context-delimeters', 'dont-context-visible-first',
+                    'context-visible-first', 'add-email-quote', 'rem-email-quote', 'email-margin',
+                    'add-html-check', 'rem-html-check', 'add-html-skip', 'rem-html-skip', 'add-sgml-check',
+                    'rem-sgml-check', 'add-sgml-skip', 'rem-sgml-skip', 'dont-tex-check-comments',
+                    'tex-check-comments', 'add-tex-command', 'rem-tex-command', 'add-texinfo-ignore',
+                    'rem-texinfo-ignore', 'add-texinfo-ignore-env', 'rem-texinfo-ignore-env', 'filter'
                 }
 
             for k, v in options.items():
