@@ -373,7 +373,7 @@ class Spelling(object):
                         text.append(ustr(child))
 
         if root:
-            return '<body>%s %s</body>' % (' '.join(text),  ' '.join(attributes))
+            return '<body>%s %s</body>' % (' '.join(text), ' '.join(attributes))
 
         return text, attributes
 
@@ -399,6 +399,11 @@ class Spelling(object):
                 if personal_dict:
                     cmd.extend(['-p', personal_dict])
 
+                allowed = {
+                    'check-apostrophe', 'check-url',
+                    'i', 'd' 'H', 'n', 'o', 'r', 't', 'X'
+                }
+
             else:
                 cmd = [
                     'aspell',
@@ -409,17 +414,22 @@ class Spelling(object):
                 if personal_dict:
                     cmd.extend(['--add-extra-dicts', personal_dict])
 
+                allowed = {
+                    'conf-dir', 'data-dir', 'lang', 'mode'
+                }
+
             for k, v in options.items():
-                key = ('-%s' if len(k) == 1 else '--%s') % k
-                if isinstance(v, bool) and v is True:
-                    cmd.append(key)
-                elif isinstance(v, ustr):
-                    cmd.extend([key, v])
-                elif isinstance(v, int):
-                    cmd.extend([key, ustr(v)])
-                elif isinstance(v, list):
-                    for value in v:
-                        cmd.extend([key, ustr(value)])
+                if k in allowed:
+                    key = ('-%s' if len(k) == 1 else '--%s') % k
+                    if isinstance(v, bool) and v is True:
+                        cmd.append(key)
+                    elif isinstance(v, ustr):
+                        cmd.extend([key, v])
+                    elif isinstance(v, int):
+                        cmd.extend([key, ustr(v)])
+                    elif isinstance(v, list):
+                        for value in v:
+                            cmd.extend([key, ustr(value)])
 
             wordlist = console(cmd, input_text=text.encode('utf-8'))
             words = [w for w in sorted(set(wordlist.split('\n'))) if w]
