@@ -5,11 +5,13 @@ documents:
   - site
   excludes:
   aspell:
+    lang: en
     mode: html
   dictionary:
-    master: en
-    personal:
-    - dictionary/en-custom.rws
+    lang: en
+    wordlists:
+    - dictionary/en-custom.txt
+    output: build/dictionary/mkdocs.dic
   html:
     advanced_filter: true
     attributes:
@@ -35,12 +37,14 @@ documents:
   exclude:
   - tools/tags
   aspell:
+    lang: en
     mode: html
   dictionary:
-    master: en
-    personal:
-    - dictionary/en-custom.rws
-    - dictionary/en-python.rws
+    lang: en
+    wordlists:
+    - dictionary/en-custom.txt
+    - dictionary/en-python.txt
+    output: build/dictionary/python.dic
   html:
     advanced_filter: true
     attributes:

@@ -353,23 +353,31 @@ class Spelling(object):
         """
 
         text = []
+        attributes = []
 
         if not self.skip_tag(tree):
             for attr in self.attributes:
-                value = tree.attrs.get(attr)
+                value = tree.attrs.get(attr, '').strip()
                 if value:
-                    text.append(value)
+                    attributes.append(value)
 
             for child in tree:
                 if isinstance(child, bs4.element.Tag):
                     if child.contents:
-                        text.extend(self.html_to_text(child, False))
+                        t, a = (self.html_to_text(child, False))
+                        text.extend(t)
+                        attributes.extend(a)
                 else:
-                    text.append(ustr(child))
+                    string = ustr(child).strip()
+                    if string:
+                        text.append(ustr(child))
 
-        return '<body>%s</body>' % ' '.join(text) if root else text
+        if root:
+            return '<body>%s %s</body>' % (' '.join(text),  ' '.join(attributes))
 
-    def check_spelling(self, sources, master, options, html_advanced_filter):
+        return text, attributes
+
+    def check_spelling(self, sources, options, html_advanced_filter, personal_dict):
         """Check spelling."""
 
         fail = False
@@ -380,38 +388,38 @@ class Spelling(object):
                 text = self.html_to_text(html.html)
             else:
                 text = source[0]
-            disallow = ('encoding')
 
             if self.spellchecker == 'hunspell':
                 cmd = [
                     'hunspell',
                     '-l',
                     '-i', 'utf-8',
-                    '-d', master,
-                    '-p', self.dict_bin
                 ]
+
+                if personal_dict:
+                    cmd.extend(['-p', personal_dict])
+
             else:
                 cmd = [
                     'aspell',
                     'list',
-                    '--lang', master,
-                    '--encoding=utf-8',
-                    '--add-extra-dicts',
-                    self.dict_bin
+                    '--encoding=utf-8'
                 ]
 
-                for k, v in options.items():
-                    if k not in disallow:
-                        key = ('-%s' if len(k) == 1 else '--%s') % k
-                        if isinstance(v, bool) and v is True:
-                            cmd.append(key)
-                        elif isinstance(v, ustr):
-                            cmd.extend([key, v])
-                        elif isinstance(v, int):
-                            cmd.extend([key, ustr(v)])
-                        elif isinstance(v, list):
-                            for value in v:
-                                cmd.extend([key, value])
+                if personal_dict:
+                    cmd.extend(['--add-extra-dicts', personal_dict])
+
+            for k, v in options.items():
+                key = ('-%s' if len(k) == 1 else '--%s') % k
+                if isinstance(v, bool) and v is True:
+                    cmd.append(key)
+                elif isinstance(v, ustr):
+                    cmd.extend([key, v])
+                elif isinstance(v, int):
+                    cmd.extend([key, ustr(v)])
+                elif isinstance(v, list):
+                    for value in v:
+                        cmd.extend([key, ustr(value)])
 
             wordlist = console(cmd, input_text=text.encode('utf-8'))
             words = [w for w in sorted(set(wordlist.split('\n'))) if w]
@@ -426,17 +434,20 @@ class Spelling(object):
                 print('\n')
         return fail
 
-    def compile_dictionary(self, master, dictionaries):
+    def compile_dictionary(self, lang, wordlists, output):
         """Compile user dictionary."""
 
-        if os.path.exists(self.dict_bin):
-            os.remove(self.dict_bin)
+        output_location = os.path.dirname(output)
+        if not os.path.exists(output_location):
+            os.makedirs(output_location)
+        if os.path.exists(output):
+            os.remove(output)
 
         print("Compiling Dictionary...")
         # Read word lists and create a unique set of words
         words = set()
-        for dictionary in dictionaries:
-            with open(dictionary, 'rb') as src:
+        for wordlist in wordlists:
+            with open(wordlist, 'rb') as src:
                 for word in src.read().split(b'\n'):
                     words.add(word.replace(b'\r', b''))
 
@@ -445,15 +456,14 @@ class Spelling(object):
             with open(self.dict_bin, 'wb') as dest:
                 dest.write(b'\n'.join(sorted(words)) + b'\n')
         else:
-            # Compile wordlist against master
+            # Compile wordlist against language
             console(
                 [
                     'aspell',
-                    '--lang', master,
+                    '--lang', lang,
                     '--encoding=utf-8',
                     'create',
-                    'master',
-                    os.path.abspath(self.dict_bin)
+                    'master', output
                 ],
                 input_text=b'\n'.join(sorted(words)) + b'\n'
             )
@@ -485,15 +495,19 @@ class Spelling(object):
                     # Setup spell checker
                     self.spellchecker = documents.get('spell_checker', 'aspell')
                     if self.spellchecker == 'hunspell':
-                        options = {}
+                        options = documents.get('hunspell', {})
                     else:
                         options = documents.get('aspell', {})
 
                     # Load and combine dictionaries
                     dictionary_options = documents.get('dictionary', {})
-                    default_dict = 'en' if self.spellchecker == 'aspell' else 'en_US'
-                    master = dictionary_options.get('master', default_dict)
-                    self.compile_dictionary(master, dictionary_options.get('personal', []))
+                    output = os.path.abspath(dictionary_options.get('output', self.dict_bin))
+                    lang = dictionary_options.get('lang', 'en' if self.spellchecker == 'aspell' else 'en_US')
+                    wordlists = dictionary_options.get('wordlists', [])
+                    if lang and wordlists:
+                        self.compile_dictionary(lang, dictionary_options.get('wordlists', []), output)
+                    else:
+                        output = None
 
                     # Setup HTML options
                     html_options = documents.get('html', {})
@@ -504,7 +518,7 @@ class Spelling(object):
                     # Perform spell check
                     print('Spell Checking %s...' % documents.get('name', ''))
                     for sources in self.walk_src(documents.get('src', []), plug):
-                        if self.check_spelling(sources, master, options, html_advanced_filter):
+                        if self.check_spelling(sources, options, html_advanced_filter, output):
                             fail = True
 
                     break

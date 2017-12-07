@@ -288,7 +288,7 @@ Each different kind of output is controlled by a different emoji generator funct
 
 ## Using with MkDocs
 
-This project uses these extensions with [MkDocs][mkdocs] to generate the documentation.  It might not be obvious how to set the index or generator functions in Mkdoc's YAML settings file, but it is actually pretty easy.  The functions are referenced like you would import them in Python except you also append them with a special prefix to let the YAML module know that the setting value is a Python object.  For instance, to specify the `to_svg` generator, you would simply reference it like this: `!!python/name:pymdownx.emoji.to_svg` (or you could use your own custom module :wink:).
+This project uses these extensions with [MkDocs][mkdocs] to generate the documentation.  It might not be obvious how to set the index or generator functions in MkDocs' YAML settings file, but it is actually pretty easy.  The functions are referenced like you would import them in Python except you also append them with a special prefix to let the YAML module know that the setting value is a Python object.  For instance, to specify the `to_svg` generator, you would simply reference it like this: `!!python/name:pymdownx.emoji.to_svg` (or you could use your own custom module :wink:).
 
 ```yaml
 markdown_extensions:

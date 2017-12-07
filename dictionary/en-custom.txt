@@ -47,7 +47,6 @@ MERCHANTABILITY
 MagicLink
 MathJax
 MkDocs
-Mkdoc's
 NONINFRINGEMENT
 Num
 OAuth
