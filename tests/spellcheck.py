@@ -11,6 +11,7 @@ from collections import namedtuple
 import tokenize
 import textwrap
 import markdown
+import fnmatch
 
 PY3 = sys.version_info >= (3, 0)
 
@@ -491,17 +492,50 @@ class Spelling(object):
                 input_text=b'\n'.join(sorted(words)) + b'\n'
             )
 
+    def skip_target(self, target):
+        """Check if target should be skipped."""
+
+        return self.skip_wild_card_target(target) or self.skip_regex_target(target)
+
+    def skip_wild_card_target(self, target):
+        """Check if target should be skipped via wildcard patterns."""
+
+        exclude = False
+        for pattern in self.excludes:
+            if fnmatch.fnmatch(target, pattern):
+                exclude = True
+                break
+        return exclude
+
+    def skip_regex_target(self, target):
+        """Check if target should be skipped via regex."""
+
+        exclude = False
+        for pattern in self.regex_excludes:
+            if pattern.match(target, pattern):
+                exclude = True
+                break
+        return exclude
+
     def walk_src(self, targets, plugin):
         """Walk source and parse files."""
 
         extensions = plugin.EXTENSIONS
         for target in targets:
             if os.path.isdir(target):
+                if self.skip_target(target):
+                    continue
                 for base, dirs, files in os.walk(target):
+                    [dirs.remove(d) for d in dirs[:] if self.skip_target(os.path.join(base, d))]
                     for f in files:
+                        file_path = os.path.join(base, f)
+                        if self.skip_target(file_path):
+                            continue
                         if f.lower().endswith(tuple(extensions)):
-                            yield plugin.parse_file(os.path.join(base, f))
+                            yield plugin.parse_file(file_path)
             elif target.lower().endswith(tuple(extensions)):
+                if self.skip_target(target):
+                    continue
                 yield plugin.parse_file(target)
 
     def check(self):
@@ -537,6 +571,10 @@ class Spelling(object):
                     html_advanced_filter = html_options.get('advanced_filter', False)
                     self.attributes = set(html_options.get('attributes', []))
                     self.selectors = self.process_selectors(*html_options.get('ignores', []))
+
+                    # Read excludes
+                    self.excludes = documents.get('excludes', [])
+                    self.regex_excludes = [re.compile(exclude) for exclude in documents.get('regex_excludes', [])]
 
                     # Perform spell check
                     print('Spell Checking %s...' % documents.get('name', ''))
