@@ -48,7 +48,7 @@
     "stylelint-config-standard": "^17.0.0",
     "stylelint-order": "^0.8.0",
     "stylelint-scss": "^2.2.0",
-    "webpack": "^3.9.1",
+    "webpack": "^3.10.0",
     "webpack-stream": "^4.0.0",
     "yargs": "^10.0.3"
   }
