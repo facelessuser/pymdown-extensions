@@ -10,7 +10,7 @@ documents:
   dictionary:
     lang: en
     wordlists:
-    - dictionary/en-custom.txt
+    - docs/src/dictionary/en-custom.txt
     output: build/dictionary/mkdocs.dic
   html:
     advanced_filter: true
@@ -42,8 +42,8 @@ documents:
   dictionary:
     lang: en
     wordlists:
-    - dictionary/en-custom.txt
-    - dictionary/en-python.txt
+    - docs/src/dictionary/en-custom.txt
+    - docs/src/dictionary/en-python.txt
     output: build/dictionary/python.dic
   html:
     advanced_filter: true
