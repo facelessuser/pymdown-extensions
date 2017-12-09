@@ -1,9 +1,10 @@
 # Changelog
 
-## x.x.x
+## 4.7.0
 
 Dec X, 2017
 
+- **NEW**: Bring back generic output for Arithmatex, now under the `generic` option.
 - **FIX**: StripHTML should allow space before close of opening tag.
 
 ## 4.6.0
