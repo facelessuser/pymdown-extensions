@@ -52,12 +52,17 @@ import re
 from .util import PymdownxDeprecationWarning
 import warnings
 
-DEPRECATION_WARN = """'%s' is deprecated and is now unnecessary and does nothing.
+DEPRECATION_WARN = """'insert_as_script' is deprecated and is now unnecessary if using MathJax
+as it is the default format for MathJax. If you wish to use a generic math output, use 'generic'.
 Please discontinue using this option as it will be removed in the future.
 See documentation to see why this have been deprecated."""
 
 RE_DOLLAR_INLINE = r'(?:(?<!\\)((?:\\{2})+)(?=\$)|(?<!\\)(\$)(?!\s)((?:\\.|[^\$])+?)(?<!\s)(?:\$))'
 RE_BRACKET_INLINE = r'(?:(?<!\\)((?:\\{2})+?)(?=\\\()|(?<!\\)(\\\()((?:\\[^)]|[^\\])+?)(?:\\\)))'
+
+RE_DOLLAR_BLOCK = r'(?P<dollar>[$]{2})(?P<math>.+?)(?P=dollar)'
+RE_TEX_BLOCK = r'(?P<math2>\\begin\{(?P<env>[a-z]+\*?)\}.+?\\end\{(?P=env)\})'
+RE_BRACKET_BLOCK = r'\\\[(?P<math3>(?:\\[^\]]|[^\\])+?)\\\]'
 
 
 class InlineArithmatexPattern(Pattern):
@@ -65,11 +70,38 @@ class InlineArithmatexPattern(Pattern):
 
     ESCAPED_BSLASH = '%s%s%s' % (md_util.STX, ord('\\'), md_util.ETX)
 
-    def __init__(self, pattern, preview):
+    def __init__(self, pattern, config):
         """Initialize."""
 
-        self.preview = preview
+        # Generic setup
+        self.generic = config.get('generic', False)
+        wrap = config.get('tex_inline_wrap', ["\\(", "\\)"])
+        self.wrap = wrap[0] + '%s' + wrap[1]
+
+        # Default setup
+        self.preview = config.get('preview', True)
         Pattern.__init__(self, pattern)
+
+    def mathjax_output(self, math):
+        """Default MathJax output."""
+
+        if self.preview:
+            el = md_util.etree.Element('span')
+            preview = md_util.etree.SubElement(el, 'span', {'class': 'MathJax_Preview'})
+            preview.text = md_util.AtomicString(math)
+            script = md_util.etree.SubElement(el, 'script', {'type': 'math/tex'})
+            script.text = md_util.AtomicString(math)
+        else:
+            el = md_util.etree.Element('script', {'type': 'math/tex'})
+            el.text = md_util.AtomicString(math)
+        return el
+
+    def generic_output(self, math):
+        """Generic output."""
+
+        el = md_util.etree.Element('span', {'class': 'arithmatex'})
+        el.text = md_util.AtomicString(self.wrap % math)
+        return el
 
     def handleMatch(self, m):
         """Handle notations and switch them to something that will be more detectable in HTML."""
@@ -86,42 +118,25 @@ class InlineArithmatexPattern(Pattern):
         if not math:
             math = m.group(7)
 
-        if self.preview:
-            el = md_util.etree.Element('span')
-            preview = md_util.etree.SubElement(el, 'span', {'class': 'MathJax_Preview'})
-            preview.text = md_util.AtomicString(math)
-            script = md_util.etree.SubElement(el, 'script', {'type': 'math/tex'})
-            script.text = md_util.AtomicString(math)
-        else:
-            el = md_util.etree.Element('script', {'type': 'math/tex'})
-            el.text = md_util.AtomicString(math)
-        return el
+        return self.generic_output(math) if self.generic else self.mathjax_output(math)
 
 
 class BlockArithmatexProcessor(BlockProcessor):
     """MathJax block processor to find $$MathJax$$ content."""
 
-    RE_DOLLAR_BLOCK = r'(?P<dollar>[$]{2})(?P<math>.+?)(?P=dollar)'
-    RE_TEX_BLOCK = r'(?P<math2>\\begin\{(?P<env>[a-z]+\*?)\}.+?\\end\{(?P=env)\})'
-    RE_BRACKET_BLOCK = r'\\\[(?P<math3>(?:\\[^\]]|[^\\])+?)\\\]'
-
-    def __init__(self, preview, allowed_patterns, md):
+    def __init__(self, pattern, config, md):
         """Initialize."""
 
-        self.preview = preview
-        pattern = []
-        if 'dollar' in allowed_patterns:
-            pattern.append(self.RE_DOLLAR_BLOCK)
-        if 'square' in allowed_patterns:
-            pattern.append(self.RE_BRACKET_BLOCK)
-        if 'begin' in allowed_patterns:
-            pattern.append(self.RE_TEX_BLOCK)
+        # Generic setup
+        self.generic = config.get('generic', False)
+        wrap = config.get('tex_block_wrap', ['\\[', '\\]'])
+        self.wrap = wrap[0] + '%s' + wrap[1]
+
+        # Default setup
+        self.preview = config.get('preview', False)
 
         self.match = None
-        if pattern:
-            self.pattern = re.compile(r'(?s)^(?:%s)[ ]*$' % '|'.join(pattern))
-        else:
-            self.pattern = None
+        self.pattern = re.compile(pattern)
 
         BlockProcessor.__init__(self, md.parser)
 
@@ -130,6 +145,23 @@ class BlockArithmatexProcessor(BlockProcessor):
 
         self.match = self.pattern.match(block) if self.pattern is not None else None
         return self.match is not None
+
+    def mathjax_output(self, parent, math):
+        """Default MathJax output."""
+
+        if self.preview:
+            grandparent = parent
+            parent = md_util.etree.SubElement(grandparent, 'div')
+            preview = md_util.etree.SubElement(parent, 'div', {'class': 'MathJax_Preview'})
+            preview.text = md_util.AtomicString(math)
+        el = md_util.etree.SubElement(parent, 'script', {'type': 'math/tex; mode=display'})
+        el.text = md_util.AtomicString(math)
+
+    def generic_output(self, parent, math):
+        """Generic output."""
+
+        el = md_util.etree.SubElement(parent, 'div', {'class': 'arithmatex'})
+        el.text = md_util.AtomicString(self.wrap % math)
 
     def run(self, parent, blocks):
         """Find and handle block content."""
@@ -141,13 +173,12 @@ class BlockArithmatexProcessor(BlockProcessor):
             math = self.match.group('math2')
         if not math:
             math = self.match.group('math3')
-        if self.preview:
-            grandparent = parent
-            parent = md_util.etree.SubElement(grandparent, 'div')
-            preview = md_util.etree.SubElement(parent, 'div', {'class': 'MathJax_Preview'})
-            preview.text = md_util.AtomicString(math)
-        el = md_util.etree.SubElement(parent, 'script', {'type': 'math/tex; mode=display'})
-        el.text = md_util.AtomicString(math)
+
+        if self.generic:
+            self.generic_output(parent, math)
+        else:
+            self.mathjax_output(parent, math)
+
         return True
 
 
@@ -158,8 +189,14 @@ class ArithmatexExtension(Extension):
         """Initialize."""
 
         self.config = {
-            'tex_inline_wrap': [[], "Deprecated"],
-            'tex_block_wrap': [[], "Deprecated"],
+            'tex_inline_wrap': [
+                ["\\(", "\\)"],
+                "Wrap inline content with the provided text ['open', 'close'] - Default: ['', '']"
+            ],
+            'tex_block_wrap': [
+                ["\\[", "\\]"],
+                "Wrap blick content with the provided text ['open', 'close'] - Default: ['', '']"
+            ],
             "block_syntax": [
                 ['dollar', 'square', 'begin'],
                 'Enable block syntax: "dollar" ($$...$$), "square" (\\[...\\]), and '
@@ -170,6 +207,7 @@ class ArithmatexExtension(Extension):
                 'Enable block syntax: "dollar" ($$...$$), "bracket" (\\(...\\)) '
                 ' - Default: ["dollar", "round"]'
             ],
+            'generic': [False, "Output in a generic format for non MathJax libraries - Default: False"],
             'insert_as_script': [False, "Deprecated"],
             'preview': [
                 True,
@@ -186,12 +224,11 @@ class ArithmatexExtension(Extension):
         util.escape_chars(md, ['$'])
 
         config = self.getConfigs()
-        preview = config.get('preview', False)
 
-        for option in ('tex_inline_wrap', 'tex_block_wrap', 'insert_as_script'):
-            if config.get(option):  # pragma: no cover
-                warnings.warn(DEPRECATION_WARN % option, PymdownxDeprecationWarning)
+        if config.get('insert_as_script'):  # pragma: no cover
+            warnings.warn(DEPRECATION_WARN, PymdownxDeprecationWarning)
 
+        # Inline patterns
         allowed_inline = set(config.get('inline_syntax', ['dollar', 'round']))
         inline_patterns = []
         if 'dollar' in allowed_inline:
@@ -199,16 +236,21 @@ class ArithmatexExtension(Extension):
         if 'round' in allowed_inline:
             inline_patterns.append(RE_BRACKET_INLINE)
         if inline_patterns:
-            inline = InlineArithmatexPattern(
-                '(?:%s)' % '|'.join(inline_patterns),
-                preview
-            )
+            inline = InlineArithmatexPattern('(?:%s)' % '|'.join(inline_patterns), config)
             md.inlinePatterns.add("arithmatex-inline", inline, ">backtick")
-        md.parser.blockprocessors.add(
-            'arithmatex-block',
-            BlockArithmatexProcessor(preview, set(config.get('block_syntax', ['dollar', 'square', 'begin'])), md),
-            "<code"
-        )
+
+        # Block patterns
+        allowed_block = set(config.get('block_syntax', ['dollar', 'square', 'begin']))
+        block_pattern = []
+        if 'dollar' in allowed_block:
+            block_pattern.append(RE_DOLLAR_BLOCK)
+        if 'square' in allowed_block:
+            block_pattern.append(RE_BRACKET_BLOCK)
+        if 'begin' in allowed_block:
+            block_pattern.append(RE_TEX_BLOCK)
+        if block_pattern:
+            block = BlockArithmatexProcessor(r'(?s)^(?:%s)[ ]*$' % '|'.join(block_pattern), config, md)
+            md.parser.blockprocessors.add('arithmatex-block', block, "<code")
 
 
 def makeExtension(*args, **kwargs):

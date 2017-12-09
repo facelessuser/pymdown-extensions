@@ -36,7 +36,7 @@ RE_TAG_HTML = re.compile(
         (?P<scripts>
             (?P<script_open><(?P<script_name>style|script))
             (?P<script_attr>(?:\s+[\w\-:]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'`=<>]+))?)*)
-            (?P<script_rest>>.*?</(?P=script_name)\s*>)
+            (?P<script_rest>\s*>.*?</(?P=script_name)\s*>)
         )|
         (?P<open><(?P<name>[\w\:\.\-]+))
         (?P<attr>(?:\s+[\w\-:]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'`=<>]+))?)*)

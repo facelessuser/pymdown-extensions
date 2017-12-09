@@ -23,14 +23,10 @@ $$
 MathJax.Hub.Config({
     config: ["MMLorHTML.js"],
     jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
-    extensions: ["tex2jax.js", "MathMenu.js", "MathZoom.js"],
-    tex2jax: {
-        inlineMath: [ ["\\(","\\)"] ],
-        displayMath: [ ["\\[","\\]"] ]
-    },
+    extensions: ["MathMenu.js", "MathZoom.js"],
     displayAlign: 'left',
     showProcessingMessages: false,
     messageStyle: 'none'
 });
 </script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"></script>

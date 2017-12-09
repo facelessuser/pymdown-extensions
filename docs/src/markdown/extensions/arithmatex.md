@@ -2,9 +2,9 @@
 
 ## Overview
 
-Arithmatex is an extension that preserves LaTeX math equations during the Markdown conversion process so that they can be used with [MathJax][mathjax]. It searches for the patterns `#!tex $...$` and `#!tex \(...\)` for inline math, and `#!tex $$...$$`, `#!tex \[...\]`, and `#!tex \begin{}...\end{}` for block math. By default, all formats are enabled, but they each format can individually be disabled if desired.
+Arithmatex is an extension that preserves LaTeX math equations during the Markdown conversion process so that they can be used with [MathJax][mathjax]. If you prefer to use something other than MathJax, Arithmatex can output a more generic format.
 
-Keep in mind that some equations can make it through without Arithmatex fine.  Arithmatex is meant to *ensure* they make it through.
+Arithmatex searches for the patterns `#!tex $...$` and `#!tex \(...\)` for inline math, and `#!tex $$...$$`, `#!tex \[...\]`, and `#!tex \begin{}...\end{}` for block math. By default, all formats are enabled, but each format can individually be disabled if desired.
 
 ## Input Format
 
@@ -46,11 +46,17 @@ For block forms, the block must start with the appropriate opening for the block
         p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
     \end{align}
 
-## Output Format
+## MathJax Output Format
 
 The math equations will be wrapped in a special MathJax script tag and embedded into the HTML. MathJax can already find these scripts, so there is no need to include and configure the `tex2jax.js` extension when setting up MathJax. The tag will be `#!html <script type="math/tex"></script>` for inline and `#!html <script type="math/tex; mode=display"></script>` for block.
 
 By default, Arithmatex will also generate a preview span with the class `MathJax_Preview` that MathJax will hide when the math content is actually loaded. If you do not want to see the preview, simply set `preview` to `#!py3 False`.
+
+## Generic Output Format
+
+If [`generic`](#options) is enabled, the extension will escape necessary symbols and normalize all output to be wrapped in the more reliable `#!tex \(...\)` for inline math and `#!tex \[...\]` for block math. The wrapping convention can be changed via `tex_inline_wrap` and `tex_block_wrap` in the [options](#options). Then the wrapped content will be inserted into a `span` or `div` for inline and display math respectively.
+
+With the default settings, if in your Markdown you used `#!tex $...$`, it would be converted to `#!html <span class="arithmatex">\(...\)</span>` in the HTML. Blocks would be normalized from `#!tex $$...$$` to `#!html <div class="arithmatex">\[...\]</div>`.  In the case of `#!tex \begin{}...\end{}`, begins and ends will not be replaced, only wrapped: `#!html <div class="arithmatex">\[\begin{}...\end{}\]</div>`.  Since Arithmatex provides additional logic to curb issues with `#!tex $`, we allow it in the Markdown. If a different wrapper is desired, see [Options](#options) below to learn how to change the wrapper.
 
 ## Loading MathJax
 
@@ -78,19 +84,25 @@ window.MathJax = {
 
 Please see the [MathJax][mathjax] site for more info on using MathJax extensions/plugins and configuring those extensions/plugins.
 
+## Other Math Libraries
+
+Arithmatex can be used with other libraries besides MathJax. One such library is [KaTeX][katex]. To configure such libraries, please read their documentation.
+
 ## Options
 
-Option             | Type     | Default                              | Description
------------------- | -------- | ------------------------------------ |------------
-`inline_syntax`    | [string] | `#!py3 ['dollar', 'round']`           | Syntax to search for: dollar=`#!tex $...$` and round=`#!tex \(...\)`.
-`block_syntax`     | [string] | `#!py3 ['dollar', 'square', 'begin']` | Syntax to search for: dollar=`#!tex $...$`, square=`#!tex \[...\]`, and `#!tex \begin{}...\end{}`.
-`preview`          | bool     | `#!py3 True`                          | Insert a preview to show until MathJax finishes loading the equations.
+Option            | Type     | Default                               | Description
+----------------- | -------- | ------------------------------------- |------------
+`inline_syntax`   | [string] | `#!py3 ['dollar', 'round']`           | Syntax to search for: dollar=`#!tex $...$` and round=`#!tex \(...\)`.
+`block_syntax`    | [string] | `#!py3 ['dollar', 'square', 'begin']` | Syntax to search for: dollar=`#!tex $...$`, square=`#!tex \[...\]`, and `#!tex \begin{}...\end{}`.
+`generic`         | bool     | `#!py3 False`                         | Output in a generic format suitable for non MathJax libraries.
+`tex_inline_wrap` | [string] | `#!py ['\\(', '\\)']`                 | An array containing the opening and closing portion of the `generic` wrap.
+`tex_block_wrap`  | [string] | `#!py ['\\[', '\\]']`                 | An array containing the opening and closing portion of the `generic` wrap.
+`preview`         | bool     | `#!py3 True`                          | Insert a preview to show until MathJax finishes loading the equations.
 
+!!! warning "Deprecation"
+    `insert_as_script` have been deprecated in 4.6.0. If you are still setting this, it will do nothing.  This option will be removed in the future so it is strongly advised to stop setting them.
 
-!!! warning Deprecation:
-    `tex_inline_wrap`, `tex_block_wrap`, `insert_as_script` have been deprecated in 4.6.0. If you are still setting these, it will do nothing.  These options will be removed in the future so it is strongly advised to stop setting them.
-
-    Inserting as script is now the default as it is the most reliable insertion format, and with the new way previews are inserted, there is no need for the old text conversion method.
+    MathJax is, and has always been the default, and now inserting as script is the default as it is the most reliable insertion format, and with the new way previews are inserted, there is no need for the old text conversion method. To output for other math libraries, like [KaTeX][katex], enable `generic`.
 
 ---8<--- "links.md"
 
