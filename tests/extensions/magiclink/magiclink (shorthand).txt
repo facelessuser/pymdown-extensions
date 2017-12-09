@@ -61,3 +61,17 @@ No pull request some-bodies_name/some_repository\!33
 No commit @3f6b07a8eeaa9d606115758d90f55fec565d4e2a
 
 No compare @e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+
+[No mention @facelessuser](http://google.com)
+
+[No issue #33](http://google.com)
+
+[No issue some-bodies_name/some_repository#33](http://google.com)
+
+[@facelessuser](http://google.com)
+
+[No repo @facelessuser/pymdown-extensions](http://google.com)
+
+[No link http://google.com](http://google.com)
+
+[No email fakeemail@mail.com](http://google.com)
