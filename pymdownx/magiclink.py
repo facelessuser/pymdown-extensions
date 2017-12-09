@@ -484,6 +484,8 @@ class MagicShortenerTreeprocessor(Treeprocessor):
 class MagiclinkPattern(LinkPattern):
     """Convert html, ftp links to clickable links."""
 
+    ANCESTOR_EXCLUDES = ('a',)
+
     def handleMatch(self, m):
         """Handle URL matches."""
 
@@ -524,6 +526,8 @@ class MagiclinkAutoPattern(Pattern):
 class MagiclinkMailPattern(LinkPattern):
     """Convert emails to clickable email links."""
 
+    ANCESTOR_EXCLUDES = ('a',)
+
     def email_encode(self, code):
         """Return entity definition by code, or the code if not defined."""
         return "%s#%d;" % (md_util.AMP_SUBSTITUTE, code)
@@ -541,6 +545,8 @@ class MagiclinkMailPattern(LinkPattern):
 
 class MagiclinkMentionPattern(_MagiclinkShorthandPattern):
     """Convert @mention to links."""
+
+    ANCESTOR_EXCLUDES = ('a',)
 
     def handleMatch(self, m):
         """Handle email link patterns."""
@@ -567,6 +573,8 @@ class MagiclinkMentionPattern(_MagiclinkShorthandPattern):
 
 class MagiclinkRepositoryPattern(_MagiclinkShorthandPattern):
     """Convert @user/repo to links."""
+
+    ANCESTOR_EXCLUDES = ('a',)
 
     def handleMatch(self, m):
         """Handle email link patterns."""
@@ -596,6 +604,8 @@ class MagiclinkRepositoryPattern(_MagiclinkShorthandPattern):
 
 class MagiclinkExternalRefsPattern(_MagiclinkReferencePattern):
     """Convert repo#1, user/repo#1, repo!1, user/repo!1, repo@hash, or user/repo@hash to links."""
+
+    ANCESTOR_EXCLUDES = ('a',)
 
     def handleMatch(self, m):
         """Handle email link patterns."""
@@ -636,6 +646,8 @@ class MagiclinkExternalRefsPattern(_MagiclinkReferencePattern):
 
 class MagiclinkInternalRefsPattern(_MagiclinkReferencePattern):
     """Convert #1, !1, and commit_hash."""
+
+    ANCESTOR_EXCLUDES = ('a',)
 
     def handleMatch(self, m):
         """Handle email link patterns."""
