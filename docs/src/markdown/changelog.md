@@ -4,8 +4,9 @@
 
 Dec X, 2017
 
-- **NEW**: Bring back generic output for Arithmatex, now under the `generic` option.
+- **NEW**: Bring back generic output for Arithmatex, now under the `generic` option (#185).
 - **FIX**: StripHTML should allow space before close of opening tag.
+- **FIX**: MagicLink should not auto-link inside a link (#151).
 
 ## 4.6.0
 
