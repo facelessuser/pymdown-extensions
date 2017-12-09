@@ -4,6 +4,11 @@ arithmatex:
   extensions:
     pymdownx.arithmatex:
 
+arithmatex (generic):
+  extensions:
+    pymdownx.arithmatex:
+      generic: true
+
 arithmatex (disable):
   extensions:
     pymdownx.arithmatex:
