@@ -1,5 +1,11 @@
 # Changelog
 
+## x.x.x
+
+Dec X, 2017
+
+- **FIX**: StripHTML should allow space before close of opening tag.
+
 ## 4.6.0
 
 Dec 2, 2017
