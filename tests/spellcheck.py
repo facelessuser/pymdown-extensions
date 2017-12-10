@@ -841,7 +841,8 @@ class Spelling(object):
     def walk_src(self, targets, plugin):
         """Walk source and parse files."""
 
-        extensions = plugin.EXTENSIONS
+        # Override extensions if the user provides their own
+        extensions = self.extensions if self.extensions else plugin.EXTENSIONS
         for target in targets:
             if os.path.isdir(target):
                 if self.skip_target(target):
@@ -931,6 +932,7 @@ class Spelling(object):
                 if lang == plugin.LANGUAGE:
                     # Setup plugin and variables for the spell check
                     plug = plugin(documents.get('options', {}), documents.get('fallback_encoding', 'ascii'))
+                    self.extensions = documents.get('extensions', [])
                     options = self.setup_spellchecker(documents)
                     output = self.setup_dictionary(documents)
                     self.setup_html(documents)
