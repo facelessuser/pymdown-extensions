@@ -1,3 +1,5 @@
+BOM
+BOMs
 Dedent
 LLC
 StackOverflow
@@ -25,6 +27,7 @@ pathconverter
 plainhtml
 progressbar
 shipit
+smartstrong
 smartsymbols
 striphtml
 tasklist

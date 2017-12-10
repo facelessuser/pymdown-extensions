@@ -12,6 +12,11 @@ import tokenize
 import textwrap
 import markdown
 import fnmatch
+import contextlib
+import mmap
+import functools
+
+__version__ = '0.1.0'
 
 PY3 = sys.version_info >= (3, 0)
 
@@ -25,6 +30,9 @@ else:
     PREV_DOC_TOKENS = (tokenize.INDENT, tokenize.DEDENT, tokenize.NEWLINE)
 
 
+###################
+# Helper Functions
+###################
 def yaml_load(source, loader=yaml.Loader):
     """
     Wrap PyYaml's loader so we can extend it to suit our needs.
@@ -44,6 +52,15 @@ def yaml_load(source, loader=yaml.Loader):
     Loader.add_constructor('tag:yaml.org,2002:str', construct_yaml_str)
 
     return yaml.load(source, Loader)
+
+
+def read_config(file_name):
+    """Read configuration."""
+
+    config = {}
+    with codecs.open(file_name, 'r', encoding='utf-8') as f:
+        config = yaml_load(f.read())
+    return config
 
 
 def console(cmd, input_file=None, input_text=None):
@@ -87,62 +104,287 @@ def console(cmd, input_file=None, input_text=None):
     return output[0].decode('utf-8') if PY3 else output[0]
 
 
-class Selector(namedtuple('IgnoreRule', ['tag', 'id', 'classes', 'attributes'])):
-    """Ignore rule."""
+###################
+# Encoding Detect
+###################
+class DetectEncoding(object):
+    """
+    Simple detect encoding class.
+
+    Attempts to detect UTF encoding via BOMs.
+    Override `special_encode_check` to add additional check logic.
+    """
+
+    MAX_GUESS_SIZE = 31457280
+    RE_UTF_BOM = re.compile(
+        b'^(?:(' +
+        codecs.BOM_UTF8 +
+        b')[\x00-\xFF]{,2}|(' +
+        codecs.BOM_UTF32_BE +
+        b')|(' +
+        codecs.BOM_UTF32_LE +
+        b')|(' +
+        codecs.BOM_UTF16_BE +
+        b')|(' +
+        codecs.BOM_UTF16_LE +
+        b'))'
+    )
+
+    def _is_very_large(self, size):
+        """Check if content is very large."""
+
+        return size >= self.MAX_GUESS_SIZE
+
+    def _verify_encode(self, file_obj, encoding, blocks=1, chunk_size=4096):
+        """
+        Iterate through the file chunking the data into blocks and decoding them.
+
+        Here we can adjust how the size of blocks and how many to validate. By default,
+        we are just going to check the first 4K block.
+        """
+
+        good = True
+        file_obj.seek(0)
+        binary_chunks = iter(functools.partial(file_obj.read, chunk_size), b"")
+        try:
+            for unicode_chunk in codecs.iterdecode(binary_chunks, encoding):  # noqa
+                if blocks:
+                    blocks -= 1
+                else:
+                    break
+        except Exception:
+            good = False
+        return good
+
+    def _has_bom(self, content):
+        """Check for UTF8, UTF16, and UTF32 BOMs."""
+
+        encoding = None
+        m = self.RE_UTF_BOM.match(content)
+        if m is not None:
+            if m.group(1):
+                encoding = 'utf-8-sig'
+            elif m.group(2):
+                encoding = 'utf-32'
+            elif m.group(3):
+                encoding = 'utf-32'
+            elif m.group(4):
+                encoding = 'utf-16'
+            elif m.group(5):
+                encoding = 'utf-16'
+        return encoding
+
+    def utf_strip_bom(self, encoding):
+        """Return an encoding that will ignore the BOM."""
+
+        if encoding == 'utf-8':
+            encoding = 'utf-8-sig'
+        elif encoding.startswith('utf-16'):
+            encoding = 'utf-16'
+        elif encoding.startswith('utf-32'):
+            encoding = 'utf-32'
+        return encoding
+
+    def special_encode_check(self, content, ext):
+        """Special encode check."""
+
+        return None
+
+    def _detect_encoding(self, f, ext, file_size):
+        """Guess by checking BOM, and checking `_special_encode_check`, and using memory map."""
+
+        encoding = None
+        with contextlib.closing(mmap.mmap(f.fileno(), 0, access=mmap.ACCESS_READ)) as m:
+            # Check for boms
+            encoding = self._has_bom(m.read(4))
+            m.seek(0)
+            # Check file extensions
+            if encoding is None:
+                encoding = self.utf_strip_bom(self.special_encode_check(m.read(1024), ext))
+
+        return encoding
+
+    def guess(self, filename, verify=True, verify_blocks=1, verify_block_size=4096):
+        """Guess the encoding and decode the content of the file."""
+
+        encoding = None
+
+        try:
+            ext = os.path.splitext(filename)[1].lower()
+            file_size = os.path.getsize(filename)
+            # If the file is really big, lets just call it binary.
+            # We dont' have time to let Python chug through a massive file.
+            if not self._is_very_large(file_size):
+                with open(filename, "rb") as f:
+                    if file_size == 0:
+                        encoding = 'ascii'
+                    else:
+                        encoding = self._detect_encoding(f, ext, file_size)
+
+                    if verify and encoding and encoding != 'bin':
+                        if not self.verify_encode(f, encoding.encode, verify_blocks, verify_block_size):
+                            encoding = 'bin'
+            else:
+                encoding = 'bin'
+        except Exception as e:  # pragma: no cover
+            encoding = 'bin'
+            pass
+
+        return encoding
 
 
-class SelectorAttribute(namedtuple('AttrRule', ['attribute', 'pattern'])):
-    """Selector attribute rule."""
+class DetectEncodingHTML(DetectEncoding):
+    """Detect HTML encoding."""
+
+    RE_HTML_ENCODE = re.compile(
+        br'''(?x)
+        <meta(?!\s*(?:name|value)\s*=)(?:[^>]*?content\s*=[\s"']*)?(?:[^>]*?)[\s"';]*charset\s*=[\s"']*([^\s"'/>]*)
+        '''
+    )
+
+    def special_encode_check(self, content, ext):
+        """Special HTML encoding check."""
+
+        encode = None
+        m = self.RE_HTML_ENCODE.search(content)
+        if m:
+            enc = m.group(1).decode('ascii')
+            try:
+                codecs.getencoder(enc)
+                encode = enc
+            except LookupError:
+                pass
+        else:
+            print('No match')
+        return encode
 
 
-class SpellingLanguage(object):
+class DetectEncodingPython(DetectEncoding):
+    """Detect Python encoding."""
+
+    RE_PY_ENCODE = re.compile(
+        br'^[^\r\n]*?coding[:=]\s*([-\w.]+)|[^\r\n]*?\r?\n[^\r\n]*?coding[:=]\s*([-\w.]+)'
+    )
+
+    def special_encode_check(self, content, ext):
+        """Special Python encoding check."""
+
+        encode = None
+
+        m = self.RE_PY_ENCODE.match(content)
+        if m:
+            if m.group(1):
+                enc = m.group(1).decode('ascii')
+            elif m.group(2):
+                enc = m.group(2).decode('ascii')
+            try:
+                codecs.getencoder(enc)
+                encode = enc
+            except LookupError:
+                pass
+        if encode is None:
+            encode = 'ascii'
+        return encode
+
+
+###################
+# Spelling Handlers
+###################
+class SpellingGeneric(object):
     """Spelling language."""
 
-    LANGUAGE = ''
-    EXTENSIONS = tuple()
+    LANGUAGE = 'text'
+    EXTENSIONS = tuple('*',)
+    DECODER = DetectEncoding
 
-    def __init__(self, config):
+    def __init__(self, config, encoding='ascii'):
         """Initialize."""
-        pass
 
+        self.default_encoding = encoding
 
-class SpellingHTML(SpellingLanguage):
-    """Spelling Python."""
+    def detect_encoding(self, source_file):
+        """Detect encoding."""
 
-    LANGUAGE = 'html'
-    EXTENSIONS = ('.html', '.htm')
+        detect = self.DECODER()
+        encoding = detect.guess(source_file, verify=False)
+        # If we didn't explicitly detect an encoding, assume default.
+        if not encoding:
+            encoding = self.default_encoding
+
+        return self.default_encoding if not encoding else encoding
 
     def parse_file(self, source_file):
         """Parse HTML file."""
 
-        with codecs.open(source_file, 'r', encoding='utf-8') as f:
-            text = f.read()
-        return [(text, source_file)]
+        encoding = self.detect_encoding(source_file)
+
+        if encoding != 'bin':
+            with codecs.open(source_file, 'r', encoding=encoding) as f:
+                text = f.read()
+        else:
+            text = ''
+        return [(text, source_file, encoding)]
 
 
-class SpellingPython(SpellingLanguage):
+class SpellingHTML(SpellingGeneric):
+    """Spelling Python."""
+
+    LANGUAGE = 'html'
+    EXTENSIONS = ('*.html', '*.htm')
+    DECODER = DetectEncodingHTML
+
+    def parse_file(self, source_file):
+        """Parse HTML file."""
+
+        encoding = self.detect_encoding(source_file)
+        try:
+            with codecs.open(source_file, 'r', encoding=encoding) as f:
+                text = f.read()
+            html = [(text, source_file, encoding)]
+        except Exception as e:
+            html = [('', source_file, 'bin')]
+        return html
+
+
+class SpellingPython(SpellingGeneric):
     """Spelling Python."""
 
     LANGUAGE = 'python'
-    EXTENSIONS = ('.py', '.pyw')
+    EXTENSIONS = ('*.py', '*.pyw')
+    DECODER = DetectEncodingPython
 
     MODULE = 0
     FUNCTION = 1
     CLASS = 2
 
-    def __init__(self, config):
+    def __init__(self, config, encoding='ascii'):
         """Initialization."""
 
         self.markdown = config.get('markdown', False)
         self.extensions = []
         self.extension_configs = {}
-        for k, v in config.get('markdown_extensions', {}).items():
-            self.extensions.append(k)
-            if v is not None:
-                self.extension_configs[k] = v
+        for item in config.get('markdown_extensions', []):
+            if isinstance(item, ustr):
+                self.extensions.append(item)
+            else:
+                k, v = list(item.items())[0]
+                self.extensions.append(k)
+                if v is not None:
+                    self.extension_configs[k] = v
+        super(SpellingPython, self).__init__(config, encoding)
 
-    def parse_file(self, source_file):
-        """Parse Python file returning docstrings."""
+    def detect_encoding(self, source_file):
+        """Get default encoding."""
+
+        if PY3:
+            # In Py3, the tokenizer will tell us what the encoding is.
+            encoding = 'ascii'
+        else:
+            encoding = self.DECODER().guess(source_file, verify=False)
+        return encoding
+
+    def parse_docstrings(self, source_file):
+        """Retrieve the Python docstrings."""
 
         # comments = []
         docstrings = []
@@ -150,7 +392,9 @@ class SpellingPython(SpellingLanguage):
         indent = ''
         name = None
         stack = [(source_file, 0, self.MODULE)]
-        encoding = 'utf-8'
+
+        encoding = self.detect_encoding(source_file)
+
         if self.markdown:
             md = markdown.Markdown(extensions=self.extensions, extension_configs=self.extension_configs)
         else:
@@ -198,9 +442,9 @@ class SpellingPython(SpellingLanguage):
                         string = textwrap.dedent(eval(value.strip()))
                         if md:
                             string = md.convert(string)
-                        md.reset()
+                            md.reset()
                         loc = "%s(%s): %s" % (stack[0][0], line, ''.join([crumb[0] for crumb in stack[1:]]))
-                        docstrings.append((string, loc))
+                        docstrings.append((string, loc, encoding))
 
                 if token_type == tokenize.INDENT:
                     indent = value
@@ -216,30 +460,57 @@ class SpellingPython(SpellingLanguage):
 
         return docstrings
 
+    def parse_file(self, source_file):
+        """Parse Python file returning docstrings."""
 
+        try:
+            docstrings = self.parse_docstrings(source_file)
+        except Exception as e:
+            print(e)
+            docstrings = [('', source_file, 'bin')]
+        return docstrings
+
+
+###################
+# Selector Objects
+###################
+class Selector(namedtuple('IgnoreRule', ['tag', 'id', 'classes', 'attributes'])):
+    """Ignore rule."""
+
+
+class SelectorAttribute(namedtuple('AttrRule', ['attribute', 'pattern'])):
+    """Selector attribute rule."""
+
+
+###################
+# Spell Checker
+###################
 class Spelling(object):
     """Spell check class."""
 
     DICTIONARY = 'dictionary.dic'
     RE_SELECTOR = re.compile(r'''(\#|\.)?[-\w]+|\*|\[([\w\-:]+)(?:([~^|*$]?=)(\"[^"]+\"|'[^']'|[^'"\[\]]+))?\]''')
 
-    def __init__(self, config_file, plugins=None):
+    def __init__(self, config, plugins=None, verbose=False):
         """Initialize."""
 
         # General options
+        self.verbose = verbose
         self.dict_bin = os.path.abspath(self.DICTIONARY)
-        config = self.read_config(config_file)
         self.documents = config.get('documents', [])
         self.dictionary = config.get('dictionary', [])
         self.plugins = plugins if plugins else []
 
-    def read_config(self, file_name):
-        """Read configuration."""
+    def normalize_utf(self, encoding):
+        """Normalize UTF encoding."""
 
-        config = {}
-        with codecs.open(file_name, 'r', encoding='utf-8') as f:
-            config = yaml_load(f.read())
-        return config
+        if encoding == 'utf-8-sig':
+            encoding = 'utf-8'
+        if encoding.startswith('utf-16'):
+            encoding = 'utf-16'
+        elif encoding.startswith('utf-32'):
+            encoding = 'utf-32'
+        return encoding
 
     def process_selectors(self, *args):
         """
@@ -378,23 +649,62 @@ class Spelling(object):
 
         return text, attributes
 
-    def check_spelling(self, sources, options, html_advanced_filter, personal_dict):
+    def apply_delimiters(self, text):
+        """Apply context delimiters."""
+
+        new_text = []
+        index = 0
+        last = 0
+        end = len(text)
+        while index < end:
+            m = self.escapes.match(text, pos=index)
+            if m:
+                index = m.end(0)
+                continue
+            handled = False
+            for delimiter in self.delimiters:
+                m = delimiter.match(text, pos=index)
+                if m:
+                    if self.context_visible_first is True:
+                        new_text.append(text[last:m.start(0)])
+                    else:
+                        new_text.append(m.group('spellcheck_content'))
+                    index = m.end(0)
+                    last = index
+                    handled = True
+                    break
+            if handled:
+                continue
+            index += 1
+        if last < end and self.context_visible_first is True:
+            new_text.append(text[last:end])
+        return ' '.join(new_text)
+
+    def check_spelling(self, sources, options, personal_dict):
         """Check spelling."""
 
         fail = False
 
         for source in sources:
-            if html_advanced_filter:
+            if source[2] == 'bin':
+                print('ERROR: Could not read %s' % source[1])
+                continue
+            if self.verbose:
+                print('CHECK: %s' % source[1])
+            if self.attributes or self.selectors:
                 html = bs4.BeautifulSoup(source[0], "html5lib")
                 text = self.html_to_text(html.html)
             else:
                 text = source[0]
 
+            if self.delimiters:
+                text = self.apply_delimiters(text)
+
             if self.spellchecker == 'hunspell':
                 cmd = [
                     'hunspell',
                     '-l',
-                    '-i', 'utf-8',
+                    '-i', self.normalize_utf(source[2]),
                 ]
 
                 if personal_dict:
@@ -409,7 +719,7 @@ class Spelling(object):
                 cmd = [
                     'aspell',
                     'list',
-                    '--encoding=utf-8'
+                    '--encoding', self.normalize_utf(source[2])
                 ]
 
                 if personal_dict:
@@ -424,7 +734,7 @@ class Spelling(object):
                     'norm-required', 'norm-form', 'dont-norm-strict', 'norm-strict', 'per-conf',
                     'p', 'personal', 'C', 'B', 'dont-run-together', 'run-together', 'run-together-limit',
                     'run-together-min', 'use-other-dicts', 'dont-use-other-dicts', 'add-variety', 'rem-variety',
-                    'add-context-delimieters', 'rem-context-delimeters', 'dont-context-visible-first',
+                    'add-context-delimiters', 'rem-context-delimiters', 'dont-context-visible-first',
                     'context-visible-first', 'add-email-quote', 'rem-email-quote', 'email-margin',
                     'add-html-check', 'rem-html-check', 'add-html-skip', 'rem-html-skip', 'add-sgml-check',
                     'rem-sgml-check', 'add-sgml-skip', 'rem-sgml-skip', 'dont-tex-check-comments',
@@ -517,6 +827,17 @@ class Spelling(object):
                 break
         return exclude
 
+    def is_extension(self, file_name, extensions):
+        """Is extension in current extensions."""
+
+        okay = False
+        lowered = file_name.lower()
+        for ext in extensions:
+            if fnmatch.fnmatch(lowered, ext):
+                okay = True
+                break
+        return okay
+
     def walk_src(self, targets, plugin):
         """Walk source and parse files."""
 
@@ -531,12 +852,74 @@ class Spelling(object):
                         file_path = os.path.join(base, f)
                         if self.skip_target(file_path):
                             continue
-                        if f.lower().endswith(tuple(extensions)):
+                        if self.is_extension(f, extensions):
                             yield plugin.parse_file(file_path)
-            elif target.lower().endswith(tuple(extensions)):
+            elif self.is_extension(target, extensions):
                 if self.skip_target(target):
                     continue
                 yield plugin.parse_file(target)
+
+    def setup_spellchecker(self, documents):
+        """Setup spell checker."""
+
+        self.spellchecker = documents.get('spell_checker', 'aspell')
+        if self.spellchecker == 'hunspell':
+            options = documents.get('hunspell', {})
+        else:
+            options = documents.get('aspell', {})
+
+        return options
+
+    def setup_dictionary(self, documents):
+        """Setup dictionary."""
+
+        dictionary_options = documents.get('dictionary', {})
+        output = os.path.abspath(dictionary_options.get('output', self.dict_bin))
+        lang = dictionary_options.get('lang', 'en' if self.spellchecker == 'aspell' else 'en_US')
+        wordlists = dictionary_options.get('wordlists', [])
+        if lang and wordlists:
+            self.compile_dictionary(lang, dictionary_options.get('wordlists', []), output)
+        else:
+            output = None
+        return output
+
+    def setup_delimiters(self, documents):
+        """Setup context delimiters."""
+
+        context_delimiters = documents.get('context_delimiters', {})
+        self.context_visible_first = context_delimiters.get('context_visible_first', False)
+        self.delimiters = []
+        self.escapes = None
+        escapes = []
+        for delimiter in context_delimiters.get('delimiters', []):
+            if not isinstance(delimiter, dict):
+                continue
+            escape = delimiter.get('escape', None)
+            if escape and len(escape) > 1:
+                escape = None
+            if escape:
+                escapes.append(escape)
+            self.delimiters.append(
+                re.compile(
+                    r'%s(?P<spellcheck_content>[\s\S]*?)%s' % (delimiter['open'], delimiter['close'])
+                )
+            )
+        self.escapes = re.compile(r'\\[\\%s]' % ''.join([re.escape(e) for e in escapes]))
+
+    def setup_excludes(self, documents):
+        """Setup excludes."""
+
+        # Read excludes
+        self.excludes = documents.get('excludes', [])
+        self.regex_excludes = [re.compile(exclude) for exclude in documents.get('regex_excludes', [])]
+
+    def setup_html(self, documents):
+        """Setup HTML."""
+
+        # Setup HTML options
+        html_options = documents.get('html', {})
+        self.attributes = set(html_options.get('attributes', []))
+        self.selectors = self.process_selectors(*html_options.get('ignores', []))
 
     def check(self):
         """Walk source and initiate spell check."""
@@ -546,55 +929,41 @@ class Spelling(object):
             lang = documents['language']
             for plugin in self.plugins:
                 if lang == plugin.LANGUAGE:
-                    # Create instance of plugin
-                    plug = plugin(documents.get('options', {}))
-
-                    # Setup spell checker
-                    self.spellchecker = documents.get('spell_checker', 'aspell')
-                    if self.spellchecker == 'hunspell':
-                        options = documents.get('hunspell', {})
-                    else:
-                        options = documents.get('aspell', {})
-
-                    # Load and combine dictionaries
-                    dictionary_options = documents.get('dictionary', {})
-                    output = os.path.abspath(dictionary_options.get('output', self.dict_bin))
-                    lang = dictionary_options.get('lang', 'en' if self.spellchecker == 'aspell' else 'en_US')
-                    wordlists = dictionary_options.get('wordlists', [])
-                    if lang and wordlists:
-                        self.compile_dictionary(lang, dictionary_options.get('wordlists', []), output)
-                    else:
-                        output = None
-
-                    # Setup HTML options
-                    html_options = documents.get('html', {})
-                    html_advanced_filter = html_options.get('advanced_filter', False)
-                    self.attributes = set(html_options.get('attributes', []))
-                    self.selectors = self.process_selectors(*html_options.get('ignores', []))
-
-                    # Read excludes
-                    self.excludes = documents.get('excludes', [])
-                    self.regex_excludes = [re.compile(exclude) for exclude in documents.get('regex_excludes', [])]
+                    # Setup plugin and variables for the spell check
+                    plug = plugin(documents.get('options', {}), documents.get('fallback_encoding', 'ascii'))
+                    options = self.setup_spellchecker(documents)
+                    output = self.setup_dictionary(documents)
+                    self.setup_html(documents)
+                    self.setup_delimiters(documents)
+                    self.setup_excludes(documents)
 
                     # Perform spell check
                     print('Spell Checking %s...' % documents.get('name', ''))
                     for sources in self.walk_src(documents.get('src', []), plug):
-                        if self.check_spelling(sources, options, html_advanced_filter, output):
+                        if self.check_spelling(sources, options, output):
                             fail = True
 
                     break
         return fail
 
 
-def main():
-    """Main."""
-
-    fail = False
-    spelling = Spelling('.spelling.yml', [SpellingHTML, SpellingPython])
-    if spelling.check():
-        fail = True
-    return fail
-
-
 if __name__ == "__main__":
+    def main():
+        """Main."""
+        import argparse
+
+        parser = argparse.ArgumentParser(prog='spellcheck', description='Spell checking tool.')
+        # Flag arguments
+        parser.add_argument('--version', action='version', version=('%(prog)s ' + __version__))
+        parser.add_argument('--verbose', '-v', action='store_true', default=False, help="verbose.")
+        parser.add_argument('--config', '-c', action='store', default='.spelling.yml', help="Spelling config.")
+        args = parser.parse_args()
+
+        fail = False
+        config = read_config(args.config)
+        spelling = Spelling(config, [SpellingHTML, SpellingPython], verbose=args.verbose)
+        if spelling.check():
+            fail = True
+        return fail
+
     sys.exit(main())

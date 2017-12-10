@@ -12,7 +12,6 @@ documents:
     - docs/src/dictionary/en-custom.txt
     output: build/dictionary/mkdocs.dic
   html:
-    advanced_filter: true
     attributes:
     - title
     - alt
@@ -37,55 +36,18 @@ documents:
   - tools/tags/*
   aspell:
     lang: en
-    mode: html
   dictionary:
     lang: en
     wordlists:
     - docs/src/dictionary/en-custom.txt
     - docs/src/dictionary/en-python.txt
     output: build/dictionary/python.dic
-  html:
-    advanced_filter: true
-    attributes:
-    - title
-    - alt
-    ignores:
-    - code
-    - pre
-    - a.magiclink-compare
-    - a.magiclink-commit
-  options:
-    markdown: true
-    markdown_extensions:
-      markdown.extensions.smarty:
-        smart_quotes: false
-      pymdownx.betterem:
-      markdown.extensions.def_list:
-      markdown.extensions.tables:
-      pymdownx.superfences:
-      pymdownx.highlight:
-        css_class: codehilite
-        extend_pygments_lang:
-          - name: php-inline
-            lang: php
-            options:
-              startinline: true
-          - name: pycon3
-            lang: pycon
-            options:
-              python3: true
-      pymdownx.inlinehilite:
-      pymdownx.magiclink:
-        repo_url_shortener: true
-        repo_url_shorthand: true
-        social_url_shorthand: true
-        user: facelessuser
-        repo: pymdown-extensions
-      pymdownx.tilde:
-      pymdownx.caret:
-      pymdownx.smartsymbols:
-      pymdownx.escapeall:
-        hardbreak: True
-        nbsp: True
-      pymdownx.tasklist:
-        custom_checkbox: true
+  context_delimiters:
+    context_visible_first: true
+    delimiters:
+    - escapes: '`'
+      open: (?P<open>`+)
+      close: (?P=open)
+    - escapes: '~'
+      open: (?P<open>~{3,})
+      close: (?P=open)
