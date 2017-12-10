@@ -48,6 +48,6 @@ documents:
     - escapes: ['`']
       open: (?P<open>`+)
       close: (?P=open)
-    - escapes: '~'
+    - escapes: ['~']
       open: (?P<open>~{3,})
       close: (?P=open)
