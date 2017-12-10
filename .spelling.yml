@@ -45,7 +45,7 @@ documents:
   context_delimiters:
     context_visible_first: true
     delimiters:
-    - escapes: '`'
+    - escapes: ['`']
       open: (?P<open>`+)
       close: (?P=open)
     - escapes: '~'

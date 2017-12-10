@@ -895,17 +895,15 @@ class Spelling(object):
         for delimiter in context_delimiters.get('delimiters', []):
             if not isinstance(delimiter, dict):
                 continue
-            escape = delimiter.get('escape', None)
-            if escape and len(escape) > 1:
-                escape = None
-            if escape:
-                escapes.append(escape)
+            for escape in delimiter.get('escapes', []):
+                if escape:
+                    escapes.append(escape)
             self.delimiters.append(
                 re.compile(
                     r'%s(?P<spellcheck_content>[\s\S]*?)%s' % (delimiter['open'], delimiter['close'])
                 )
             )
-        self.escapes = re.compile(r'\\[\\%s]' % ''.join([re.escape(e) for e in escapes]))
+        self.escapes = re.compile(r'\\(?:%s)' % '|'.join([r'\\'] + [re.escape(e) for e in escapes]))
 
     def setup_excludes(self, documents):
         """Setup excludes."""
