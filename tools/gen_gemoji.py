@@ -36,7 +36,7 @@ if sys.maxunicode == 0xFFFF:
         return [(''.join(pt) if pt else c) for c in s if is_full_point(c, pt)]
 
     def get_ord(c):
-        """Get Unicode ord."""
+        """Get Unicode ordinal number."""
 
         if len(c) == 2:
             high, low = [ord(p) for p in c]
@@ -53,7 +53,7 @@ else:
         return [c for c in s]
 
     def get_ord(c):
-        """Get Unicode ord."""
+        """Get Unicode ordinal number."""
 
         return ord(c)
 

@@ -155,7 +155,7 @@ class PathConverterExtension(Extension):
         super(PathConverterExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
-        """Add PathConverterPostprocessor to Markdown instance."""
+        """Add post processor to Markdown instance."""
 
         rel_path = PathConverterPostprocessor(md)
         rel_path.config = self.getConfigs()

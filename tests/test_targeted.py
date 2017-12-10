@@ -1,4 +1,4 @@
-"""Test uniprops."""
+"""Test `uniprops`."""
 from __future__ import unicode_literals
 from pymdownx import util
 import unittest
@@ -9,7 +9,7 @@ class TestUrlParse(unittest.TestCase):
     """Test UrlParse."""
 
     def test_url(self):
-        """Test url."""
+        """Test URL."""
 
         url = 'http://www.google.com'
         scheme, netloc, path, params, query, fragment, is_url, is_absolute = util.parse_url(url)

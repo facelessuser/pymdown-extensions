@@ -1,5 +1,5 @@
 """
-Inline Hilite.
+Inline Highlighting.
 
 pymdownx.inlinehilite
 
@@ -54,7 +54,7 @@ class InlineHilitePattern(Pattern):
         self.get_hl_settings = False
 
     def get_settings(self):
-        """Check for code hilite extension and gather its settings."""
+        """Check for CodeHilite extension and gather its settings."""
 
         if not self.get_hl_settings:
             self.get_hl_settings = True
@@ -71,7 +71,7 @@ class InlineHilitePattern(Pattern):
             self.noclasses = config['noclasses']
 
     def highlight_code(self, language, src):
-        """Syntax highlite the inline code block."""
+        """Syntax highlight the inline code block."""
 
         process_text = self.style_plain_text or language or self.guess_lang
 
@@ -102,7 +102,7 @@ class InlineHilitePattern(Pattern):
 
 
 class InlineHiliteExtension(Extension):
-    """Add inline-hilite extension to Markdown class."""
+    """Add inline highlighting extension to Markdown class."""
 
     def __init__(self, *args, **kwargs):
         """Initialize."""
@@ -126,7 +126,7 @@ class InlineHiliteExtension(Extension):
         super(InlineHiliteExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
-        """Add support for :::language`code` code hiliting."""
+        """Add support for `:::language code` and `#!language code` highlighting."""
 
         config = self.getConfigs()
         inline_hilite = InlineHilitePattern(BACKTICK_CODE_RE, md)

@@ -26,7 +26,7 @@ The database can be extended or modified with the `key_map` dict.
 
 ### Input
 
-```markdown
+```
 Press ++Shift+Alt+PgUp++, type in ++"Hello"++ and press ++Enter++.
 ```
 

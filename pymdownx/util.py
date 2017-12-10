@@ -119,10 +119,10 @@ def escape_chars(md, echrs):
 
 def parse_url(url):
     """
-    Parse the url.
+    Parse the URL.
 
     Try to determine if the following is a file path or
-    (as we will call anything else) a url.
+    (as we will call anything else) a URL.
 
     We return it slightly modified and combine the path parts.
 

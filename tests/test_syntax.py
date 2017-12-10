@@ -38,7 +38,7 @@ def set_target_file(file_name):
 
 
 def compare_results(cfg, testfile, update=False):
-    """Compare test reslts."""
+    """Compare test results."""
 
     extension = []
     extension_config = {}

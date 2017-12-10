@@ -2,7 +2,7 @@
 Better Emphasis.
 
 pymdownx.betterem
-Add inteligent handling of to em and strong notations
+Add intelligent handling of to em and strong notations
 
 MIT license.
 
@@ -114,7 +114,7 @@ class BetterEmExtension(Extension):
         Configure all the pattern rules.
 
         This should be used instead of smart_strong package.
-        pymdownx.extra should be used in place of makrdown.extensions.extra.
+        pymdownx.extra should be used in place of markdown.extensions.extra.
         """
 
         config = self.getConfigs()

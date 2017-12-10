@@ -3,8 +3,8 @@ Tilde.
 
 pymdownx.tilde
 Really simple plugin to add support for
-<del>test</del> tags as ~~test~~ and
-<sub>test</sub> tags as ~test~
+`<del>test</del>` tags as `~~test~~` and
+`<sub>test</sub>` tags as `~test~`
 
 MIT license.
 
@@ -58,7 +58,7 @@ class DeleteSubExtension(Extension):
         super(DeleteSubExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
-        """Insert <del>test</del> tags as ~~test~~ and <sub>test</sub> tags as ~test~."""
+        """Insert `<del>test</del>` tags as `~~test~~` and `<sub>test</sub>` tags as `~test~`."""
 
         config = self.getConfigs()
         delete = bool(config.get('delete', True))

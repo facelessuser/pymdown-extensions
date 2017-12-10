@@ -1,4 +1,4 @@
-"""Utils."""
+"""Utilities."""
 import yaml
 from collections import OrderedDict
 import sys
@@ -18,7 +18,7 @@ else:
 
 def yaml_load(stream, loader=yaml.Loader, object_pairs_hook=OrderedDict):
     """
-    Custom yaml loader.
+    Custom YAML loader.
 
     Make all YAML dictionaries load as ordered Dicts.
     http://stackoverflow.com/a/21912744/3609487

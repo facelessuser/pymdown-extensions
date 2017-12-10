@@ -44,10 +44,10 @@ def get_checkbox(state, custom_checkbox=False):
 
 
 class TasklistTreeprocessor(Treeprocessor):
-    """Tasklist Treeprocessor that finds lists with checkboxes."""
+    """Tasklist tree processor that finds lists with checkboxes."""
 
     def inline(self, li):
-        """Search for checkbox directly in li tag."""
+        """Search for checkbox directly in `li` tag."""
 
         found = False
         m = RE_CHECKBOX.match(li.text)
@@ -124,7 +124,7 @@ class TasklistExtension(Extension):
         super(TasklistExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
-        """Add GithubChecklistsTreeprocessor to Markdown instance."""
+        """Add checklist tree processor to Markdown instance."""
 
         tasklist = TasklistTreeprocessor(md)
         tasklist.config = self.getConfigs()

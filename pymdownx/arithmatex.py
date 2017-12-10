@@ -4,6 +4,7 @@ Arithmatex.
 pymdownx.arithmatex
 Extension that preserves the following for MathJax use:
 
+```
 $Equation$, \(Equation\)
 
 $$
@@ -17,18 +18,11 @@ $$
 \begin{align}
   Display Equations
 \end{align}
+```
 
-and $Inline MathJax Equations$
+and `$Inline MathJax Equations$`
 
-Inline equations are converted to the following form for HTML output by default:
-
-\(Inline MathJax Equations\)
-
-While block/display equations are converted to the following form for HTML output by default:
-
-\[
-  Display Equations
-\]
+Inline and display equations are converted to scripts tags. You can optionally generate previews.
 
 MIT license.
 
@@ -128,7 +122,7 @@ class InlineArithmatexPattern(Pattern):
 
 
 class BlockArithmatexProcessor(BlockProcessor):
-    """Mathjax block processor to find $$mathjax$$ content."""
+    """MathJax block processor to find $$MathJax$$ content."""
 
     def __init__(self, pattern, config, md):
         """Initialize."""

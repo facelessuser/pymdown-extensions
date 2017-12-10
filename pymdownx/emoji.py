@@ -2,7 +2,7 @@
 Emoji.
 
 pymdownx.emoji
-Emoji extension for emojione or Github's gemoji.
+Emoji extension for EmojiOne's, GitHub's, or Twemoji's gemoji.
 
 MIT license.
 
@@ -47,7 +47,7 @@ LEGACY_ARG_COUNT = 8
 
 
 def add_attriubtes(options, attributes):
-    """Add aditional attributes from options."""
+    """Add additional attributes from options."""
 
     attr = options.get('attributes', {})
     if attr:
@@ -80,7 +80,7 @@ def twemoji():
 # Converters
 ###################
 def to_png(index, shortname, alias, uc, alt, title, category, options, md):
-    """Return png element."""
+    """Return PNG element."""
 
     if index == 'gemoji':
         def_image_path = GITHUB_UNICODE_CDN
@@ -122,7 +122,7 @@ def to_png(index, shortname, alias, uc, alt, title, category, options, md):
 
 
 def to_svg(index, shortname, alias, uc, alt, title, category, options, md):
-    """Return svg element."""
+    """Return SVG element."""
 
     if index == 'twemoji':
         svg_path = TWEMOJI_SVG_CDN
@@ -147,7 +147,7 @@ def to_svg(index, shortname, alias, uc, alt, title, category, options, md):
 
 
 def to_png_sprite(index, shortname, alias, uc, alt, title, category, options, md):
-    """Return png sprite element."""
+    """Return PNG sprite element."""
 
     attributes = {
         "class": '%(class)s-%(size)s-%(category)s _%(unicode)s' % {
@@ -171,10 +171,12 @@ def to_png_sprite(index, shortname, alias, uc, alt, title, category, options, md
 
 def to_svg_sprite(index, shortname, alias, uc, alt, title, category, options, md):
     """
-    Return svg sprite element.
+    Return SVG sprite element.
 
+    ```
     <svg class="%(classes)s"><description>%(alt)s</description>
     <use xlink:href="%(sprite)s#emoji-%(unicode)s"></use></svg>
+    ```
     """
 
     xlink_href = '%s#emoji-%s' % (
@@ -260,8 +262,8 @@ class EmojiPattern(Pattern):
             'remove_variation_selector' option.
 
         If using gemoji, it is possible you will get no Unicode and no Unicode alt.  This occurs with emoji
-        like :octocat:.  :octocat: is not a real emoji and has no Unicode code points, but it is provided by
-        gememoji as an emoji anyways.
+        like `:octocat:`.  `:octocat:` is not a real emoji and has no Unicode code points, but it is provided by
+        gemoji as an emoji anyways.
         """
 
         uc = emoji.get('unicode')
@@ -301,7 +303,7 @@ class EmojiPattern(Pattern):
         return emoji.get('category')
 
     def handleMatch(self, m):
-        """Hanlde emoji pattern matches."""
+        """Handle emoji pattern matches."""
 
         el = m.group(2)
 
@@ -367,7 +369,7 @@ class EmojiExtension(Extension):
         super(EmojiExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
-        """Add support for emojis."""
+        """Add support for emoji."""
 
         config = self.getConfigs()
 

@@ -3,7 +3,7 @@ Magic Link.
 
 pymdownx.magiclink
 An extension for Python Markdown.
-Find http|ftp links and email address and turn them to actual links
+Find HTML, FTP links, and email address and turn them to actual links
 
 MIT license.
 
@@ -288,7 +288,7 @@ class _MagiclinkReferencePattern(_MagiclinkShorthandPattern):
 
 
 class MagicShortenerTreeprocessor(Treeprocessor):
-    """Treeprocessor that finds repo issue and commit links and shortens them."""
+    """Tree processor that finds repo issue and commit links and shortens them."""
 
     # Repo link types
     ISSUE = 0
@@ -376,7 +376,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         link.set('title', '%s %s: %s%s%s' % (label, issue_type, user_repo.rstrip('/'), separator, value))
 
     def shorten(self, link, provider, link_type, user_repo, value, url, hash_size):
-        """Shorten url."""
+        """Shorten URL."""
 
         label = PROVIDER_INFO[provider]['provider']
         prov_class = 'magiclink-%s' % provider
@@ -506,7 +506,7 @@ class MagiclinkPattern(LinkPattern):
 
 
 class MagiclinkAutoPattern(Pattern):
-    """Return a link Element given an autolink `<http://example/com>`."""
+    """Return a link Element given an auto link `<http://example/com>`."""
 
     def handleMatch(self, m):
         """Return link optionally without protocol."""
@@ -678,7 +678,7 @@ class MagiclinkInternalRefsPattern(_MagiclinkReferencePattern):
 
 
 class MagiclinkExtension(Extension):
-    """Add Easylink extension to Markdown class."""
+    """Add auto link and link transformation extensions to Markdown class."""
 
     def __init__(self, *args, **kwargs):
         """Initialize."""
@@ -725,7 +725,7 @@ class MagiclinkExtension(Extension):
         super(MagiclinkExtension, self).__init__(*args, **kwargs)
 
     def setup_autolinks(self, md, config):
-        """Setup autolinks."""
+        """Setup auto links."""
 
         # Setup general link patterns
         auto_link_pattern = MagiclinkAutoPattern(RE_AUTOLINK, md)

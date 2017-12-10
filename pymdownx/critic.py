@@ -84,7 +84,7 @@ RE_BLOCK_SEP = re.compile(r'^\n{2,}$')
 
 
 class CriticStash(object):
-    """Stach critic marks until ready."""
+    """Stash critic marks until ready."""
 
     def __init__(self, stash_key):
         """Initialize."""
@@ -127,7 +127,7 @@ class CriticStash(object):
 
 
 class CriticsPostprocessor(Postprocessor):
-    """Handle cleanup on postprocess for viewing critic marks."""
+    """Handle cleanup on post process for viewing critic marks."""
 
     def __init__(self, critic_stash):
         """Initialize."""
@@ -136,7 +136,7 @@ class CriticsPostprocessor(Postprocessor):
         self.critic_stash = critic_stash
 
     def subrestore(self, m):
-        """Replace all critic tags in the paragraph block <p>(critic del close)(critic ins close)</p> etc."""
+        """Replace all critic tags in the paragraph block `<p>(critic del close)(critic ins close)</p>` etc."""
         content = None
         key = m.group('key')
         if key is not None:
@@ -196,7 +196,7 @@ class CriticViewPreprocessor(Preprocessor):
         )
 
     def _del(self, text):
-        """Hanlde critic deletes."""
+        """Handle critic deletes."""
 
         if RE_BLOCK_SEP.match(text):
             return self.critic_stash.store('<del class="critic break">&nbsp;</del>')
@@ -247,7 +247,7 @@ class CriticViewPreprocessor(Preprocessor):
         """
         Normal critic parser.
 
-        Either removes accepted or rejected crtic marks and replaces with the opposite.
+        Either removes accepted or rejected critic marks and replaces with the opposite.
         Comments are removed and marks are replaced with their content.
         """
         accept = self.config["mode"] == 'accept'

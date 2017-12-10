@@ -6,18 +6,18 @@ Really simple plugin to add support for:
   copyright, trademark, and registered symbols
   plus/minus, not equal, arrows via:
 
-    copyrite   = (c)
-    trademart  = (tm)
-    registered = (r)
-    plus/minus = +/-
-    care/of    = c/o
-    fractions  = 1/2 etc.
+    copyright  = `(c)`
+    trademark  = `(tm)`
+    registered = `(r)`
+    plus/minus = `+/-`
+    care/of    = `c/o`
+    fractions  = `1/2` etc.
         (only certain available unicode fractions)
     arrows:
-        left   = <--
-        right  = -->
-        both   = <-->
-    not equal  = =/=
+        left   = `<--`
+        right  = `-->`
+        both   = `<-->`
+    not equal  = `=/=`
        (maybe this could be =/= in the future as this might be more
         intuitive to non-programmers)
 
@@ -160,7 +160,7 @@ class SmartSymbolsExtension(Extension):
         )
 
     def extendMarkdown(self, md, md_globals):
-        """Create a dict of inline replace patterns and add to the treeprocessor."""
+        """Create a dict of inline replace patterns and add to the tree processor."""
 
         configs = self.getConfigs()
         self.patterns = OrderedDict()

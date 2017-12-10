@@ -2,7 +2,7 @@
 B64.
 
 An extension for Python Markdown.
-Given an absolute base path, this extension searches for img tags,
+Given an absolute base path, this extension searches for image tags,
 and if the images are local, will embed the images in base64.
 
 MIT license.
@@ -136,7 +136,7 @@ class B64Extension(Extension):
         super(B64Extension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md, md_globals):
-        """Add B64Treeprocessor to Markdown instance."""
+        """Add base 64 tree processor to Markdown instance."""
 
         b64 = B64Postprocessor(md)
         b64.config = self.getConfigs()
