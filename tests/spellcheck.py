@@ -15,6 +15,8 @@ import fnmatch
 import contextlib
 import mmap
 import functools
+import random
+import string
 
 __version__ = '0.1.0'
 
@@ -26,7 +28,7 @@ if PY3:
     PREV_DOC_TOKENS = (tokenize.INDENT, tokenize.DEDENT, tokenize.NEWLINE, tokenize.ENCODING)
 else:
     ustr = unicode  # noqa
-    tonkenizer = tokenize.generate_tokens
+    tokenizer = tokenize.generate_tokens
     PREV_DOC_TOKENS = (tokenize.INDENT, tokenize.DEDENT, tokenize.NEWLINE)
 
 
@@ -102,6 +104,15 @@ def console(cmd, input_file=None, input_text=None):
     )
 
     return output[0].decode('utf-8') if PY3 else output[0]
+
+
+def random_name_gen(size=6):
+    """Generate a random python attribute name."""
+
+    return ''.join(
+        [random.choice(string.ascii_uppercase)] +
+        [random.choice(string.ascii_uppercase + string.digits) for i in range(size - 1)]
+    ) if size > 0 else ''
 
 
 ###################
@@ -663,12 +674,12 @@ class Spelling(object):
                 continue
             handled = False
             for delimiter in self.delimiters:
-                m = delimiter.match(text, pos=index)
+                m = delimiter[0].match(text, pos=index)
                 if m:
                     if self.context_visible_first is True:
                         new_text.append(text[last:m.start(0)])
                     else:
-                        new_text.append(m.group('spellcheck_content'))
+                        new_text.append(m.group(delimiter[1]))
                     index = m.end(0)
                     last = index
                     handled = True
@@ -906,11 +917,11 @@ class Spelling(object):
                 content = r'(?:\\(?:%s)|[^\\])*?' % '|'.join([r'\\'] + [re.escape(e) for e in internal_escapes])
             else:
                 content = r'[\s\S]*?'
-            self.delimiters.append(
-                re.compile(
-                    r'%s(?P<spellcheck_content>%s)%s' % (delimiter['open'], content, delimiter['close']), re.M
-                )
-            )
+            group = random_name_gen()
+            while group in delimiter['open'] or group in delimiter['close']:
+                group = random_name_gen()
+            pattern = r'%s(?P<%s>%s)(?:%s|\Z)' % (delimiter['open'], group, content, delimiter['close'])
+            self.delimiters.append((re.compile(pattern, re.M), group))
         self.escapes = re.compile(r'\\(?:%s)' % '|'.join([r'\\'] + [re.escape(e) for e in escapes]))
 
     def setup_excludes(self, documents):
