@@ -892,15 +892,23 @@ class Spelling(object):
         self.delimiters = []
         self.escapes = None
         escapes = []
+        internal_escapes = []
         for delimiter in context_delimiters.get('delimiters', []):
             if not isinstance(delimiter, dict):
                 continue
             for escape in delimiter.get('escapes', []):
                 if escape:
                     escapes.append(escape)
+            for escape in delimiter.get('internal_escapes', []):
+                if escape:
+                    internal_escapes.append(escape)
+            if internal_escapes:
+                content = r'(?:\\(?:%s)|[^\\])*?' % '|'.join([r'\\'] + [re.escape(e) for e in internal_escapes])
+            else:
+                content = r'[\s\S]*?'
             self.delimiters.append(
                 re.compile(
-                    r'%s(?P<spellcheck_content>[\s\S]*?)%s' % (delimiter['open'], delimiter['close'])
+                    r'%s(?P<spellcheck_content>%s)%s' % (delimiter['open'], content, delimiter['close']), re.M
                 )
             )
         self.escapes = re.compile(r'\\(?:%s)' % '|'.join([r'\\'] + [re.escape(e) for e in escapes]))
