@@ -6,9 +6,11 @@ pymdownx.inlinehilite
 An alternative inline code extension that highlights code.  Can
 use CodeHilite to source its settings or pymdownx.highlight.
 
-    `:::javascript var test = 0;`
-            - or -
-    `#!javascript var test = 0;`
+`:::javascript var test = 0;`
+
+- or -
+
+`#!javascript var test = 0;`
 
 Copyright 2014 - 2017 Isaac Muse <isaacmuse@gmail.com>
 """

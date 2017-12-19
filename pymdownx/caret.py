@@ -3,9 +3,9 @@ Caret.
 
 pymdownx.caret
 Really simple plugin to add support for
-<ins>test</ins> tags as ^^test^^ and
-<sup>test</sup> tags as ^test^
 
+`<ins>test</ins>` tags as `^^test^^` and
+`<sup>test</sup>` tags as `^test^`
 
 MIT license.
 

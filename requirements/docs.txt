@@ -1,3 +1,2 @@
-mkdocs-material==2.2.0
-html5lib
-beautifulsoup4
+mkdocs-material>=2.2.5
+pyspelling

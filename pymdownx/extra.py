@@ -6,8 +6,8 @@ A wrapper that emulate PHP Markdown Extra.
 Re-packages Python Markdowns 'extra' extensions,
 but substitutes a few extensions with PyMdown extensions:
 
-    - fenced_code --> superfences
-    - smartstrong --> betterem
+- fenced_code --> superfences
+- smartstrong --> betterem
 
 MIT license.
 
