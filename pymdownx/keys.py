@@ -26,22 +26,22 @@ The database can be extended or modified with the `key_map` dict.
 
 ### Input
 
-```
+~~~
 Press ++Shift+Alt+PgUp++, type in ++"Hello"++ and press ++Enter++.
-```
+~~~
 
 ### Config 1
 
-```yaml
+~~~.yaml
   pymdownx.keys:
     camel_case: true
     strict: false
     separator: '+'
-```
+~~~
 
 ### Output 1
 
-```html
+~~~.html
 <p>Press <span class="keys"><kbd class="key-shift">Shift</kbd><span>+</span><kbd
 class="key-alt">Alt</kbd><span>+</span><kbd class="key-page-up">Page Up</kbd></span>, type in <span
 class="keys"><kbd>Hello</kbd></span> and press <span class="keys"><kbd class="key-enter">Enter</kbd></span>.</p>
@@ -49,20 +49,20 @@ class="keys"><kbd>Hello</kbd></span> and press <span class="keys"><kbd class="ke
 
 ### Config 2
 
-```yaml
+~~~.yaml
   pymdownx.keys:
     camel_case: true
     strict: true
     separator: ''
-```
+~~~
 
 ### Output 2
 
-```html
+~~~.html
 <p>Press <kbd class="keys"><kbd class="key-shift">Shift</kbd><kbd class="key-alt">Alt</kbd><kbd
 class="key-page-up">Page Up</kbd></kbd>, type in <kbd class="keys"><kbd>Hello</kbd></kbd> and press <kbd
 class="keys"><kbd class="key-enter">Enter</kbd></kbd>.</p>
-```
+~~~
 
 Idea by Adam Twardoch and coded by Isaac Muse.
 

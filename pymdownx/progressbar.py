@@ -4,7 +4,7 @@ Progress Bar.
 pymdownx.progressbar
 Simple plugin to add support for progress bars
 
-```
+~~~
 /* No label */
 [==30%]
 
@@ -13,7 +13,7 @@ Simple plugin to add support for progress bars
 
 /* works with attr_list inline style */
 [==50/200  MyLabel]{: .additional-class }
-```
+~~~
 
 New line is not required before the progress bar but suggested unless in a table.
 Can take percentages and divisions.
@@ -23,7 +23,7 @@ Functionality is subject to change.
 Minimum Recommended Styling
 (but you could add gloss, candy striping, animation, or anything else):
 
-```css
+~~~.css
 .progress {
   display: block;
   width: 300px;
@@ -86,7 +86,7 @@ For Level Colors
 .progress-0plus .progress-bar {
   background-color: #f63a0f;
 }
-```
+~~~
 
 MIT license.
 
