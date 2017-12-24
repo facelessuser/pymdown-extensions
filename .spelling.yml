@@ -4,50 +4,66 @@ documents:
   options:
     comments: false
     attributes:
-    - title
-    - alt
+      - title
+      - alt
     ignores:
-    - code
-    - pre
-    - a.magiclink-compare
-    - a.magiclink-commit
-    - span.keys
-    - .MathJax_Preview
-    - .md-nav__link
-    - .md-footer-custom-text
-    - .md-source__repository
-    - .headerlink
-    - .md-icon
+      - code
+      - pre
+      - a.magiclink-compare
+      - a.magiclink-commit
+      - span.keys
+      - .MathJax_Preview
+      - .md-nav__link
+      - .md-footer-custom-text
+      - .md-source__repository
+      - .headerlink
+      - .md-icon
   sources:
-  - site
+    - site
   aspell:
     lang: en
   dictionary:
     lang: en
     wordlists:
-    - docs/src/dictionary/en-custom.txt
+      - docs/src/dictionary/en-custom.txt
     output: build/dictionary/mkdocs.dic
 
 - name: markdown
   parser: pyspelling.parsers.markdown_parser
   sources:
-  - README.md
+    - README.md
   aspell:
     lang: en
   dictionary:
     lang: en
     wordlists:
-    - docs/src/dictionary/en-custom.txt
+      - docs/src/dictionary/en-custom.txt
     output: build/dictionary/mkdocs.dic
   filters:
-  - pyspelling.filters.html_filter:
-      comments: false
-      attributes:
-      - title
-      - alt
-      ignores:
-      - code
-      - pre
+    - pyspelling.filters.html_filter:
+        comments: false
+        attributes:
+          - title
+          - alt
+        ignores:
+          - code
+          - pre
+
+- name: javascript
+  parser: pyspelling.parsers.javascript_parser
+  options:
+    jsdocs: true
+  default_encoding: utf-8
+  sources:
+    - docs/src/js
+  aspell:
+    lang: en
+  dictionary:
+    lang: en
+    wordlists:
+      - docs/src/dictionary/en-custom.txt
+      - docs/src/dictionary/en-javascript.txt
+    output: build/dictionary/javascript.dic
 
 - name: python
   parser: pyspelling.parsers.python_parser
@@ -55,27 +71,27 @@ documents:
     comments: false
     strings: false
   sources:
-  - pymdownx
-  - tests
-  - tools
+    - pymdownx
+    - tests
+    - tools
   excludes:
-  - tools/tags/*
+    - tools/tags/*
   aspell:
     lang: en
   dictionary:
     lang: en
     wordlists:
-    - docs/src/dictionary/en-custom.txt
-    - docs/src/dictionary/en-python.txt
+      - docs/src/dictionary/en-custom.txt
+      - docs/src/dictionary/en-python.txt
     output: build/dictionary/python.dic
   filters:
-  - pyspelling.filters.context_filter:
-      context_visible_first: true
-      escapes: \\[\\`~]
-      delimiters:
-      - open: (?P<open>`+)
-        content: .*?
-        close: (?P=open)
-      - open: (?s)^(?P<open>\s*~{3,})
-        content: .*?
-        close: ^(?P=open)$
+    - pyspelling.filters.context_filter:
+        context_visible_first: true
+        escapes: \\[\\`~]
+        delimiters:
+          - open: (?P<open>`+)
+            content: .*?
+            close: (?P=open)
+          - open: (?s)^(?P<open>\s*~{3,})
+            content: .*?
+            close: ^(?P=open)$

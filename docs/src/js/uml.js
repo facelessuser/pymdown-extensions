@@ -49,12 +49,12 @@ export default (converter, className, settings) => {
     const text = (parentEl.tagName.toLowerCase() === "pre") ? getFromCode(parentEl) : getFromDiv(parentEl)
 
     // Insert our new div at the end of our content to get general
-    // typset and page sizes as our parent might be `display:none`
+    // typeset and page sizes as our parent might be `display:none`
     // keeping us from getting the right sizes for our SVG.
     // Our new div will be hidden via "visibility" and take no space
-    // via `poistion: absolute`. When we are all done, use the
+    // via `position: absolute`. When we are all done, use the
     // original node as a reference to insert our SVG back
-    // into the proper place, and then make our SVG visilbe again.
+    // into the proper place, and then make our SVG visible again.
     // Lastly, clean up the old node.
     article[0].appendChild(el)
     const diagram = converter.parse(text)
