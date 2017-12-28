@@ -4,7 +4,6 @@ Progress Bar.
 pymdownx.progressbar
 Simple plugin to add support for progress bars
 
-~~~
 /* No label */
 [==30%]
 
@@ -13,7 +12,6 @@ Simple plugin to add support for progress bars
 
 /* works with attr_list inline style */
 [==50/200  MyLabel]{: .additional-class }
-~~~
 
 New line is not required before the progress bar but suggested unless in a table.
 Can take percentages and divisions.
@@ -21,9 +19,8 @@ Floats are okay.  Numbers must be positive.  This is an experimental extension.
 Functionality is subject to change.
 
 Minimum Recommended Styling
-(but you could add gloss, candy striping, animation, or anything else):
+(but you could add gloss, candystriping, animation or anything else):
 
-~~~.css
 .progress {
   display: block;
   width: 300px;
@@ -86,7 +83,6 @@ For Level Colors
 .progress-0plus .progress-bar {
   background-color: #f63a0f;
 }
-~~~
 
 MIT license.
 
@@ -107,11 +103,12 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
+from . import util
 from markdown import Extension
-from markdown.inlinepatterns import Pattern, dequote
 from markdown import util as md_util
 from markdown.extensions.attr_list import AttrListTreeprocessor
-from . import util
+from markdown.inlinepatterns import Pattern
+from markdown.inlinepatterns import dequote
 
 RE_PROGRESS = r'''(?x)
 \[={1,}\s*                                                          # Opening
@@ -125,10 +122,15 @@ RE_PROGRESS = r'''(?x)
 '''
 
 CLASS_100PLUS = "progress-100plus"
+CLASS_90PLUS = "progress-90plus"
 CLASS_80PLUS = "progress-80plus"
+CLASS_70PLUS = "progress-70plus"
 CLASS_60PLUS = "progress-60plus"
+CLASS_50PLUS = "progress-50plus"
 CLASS_40PLUS = "progress-40plus"
+CLASS_30PLUS = "progress-30plus"
 CLASS_20PLUS = "progress-20plus"
+CLASS_10PLUS = "progress-10plus"
 CLASS_0PLUS = "progress-0plus"
 
 
@@ -136,7 +138,7 @@ class ProgressBarTreeProcessor(AttrListTreeprocessor):
     """Used for AttrList compatibility."""
 
     def run(self, elem):
-        """Inline check for attributes at start of tail."""
+        """Inline check for attrs at start of tail."""
 
         if elem.tail:
             m = self.INLINE_RE.match(elem.tail)
@@ -149,7 +151,7 @@ class ProgressBarPattern(Pattern):
     """Pattern handler for the progress bars."""
 
     def __init__(self, pattern):
-        """Initialize."""
+        """Intialize."""
 
         Pattern.__init__(self, pattern)
 
@@ -157,14 +159,13 @@ class ProgressBarPattern(Pattern):
         """Create the tag."""
 
         # Create list of all classes and remove duplicates
-        classes = list(
+        classes = sorted(
             set(
                 ["progress"] +
                 self.config.get('add_classes', '').split() +
                 add_classes
             )
         )
-        classes.sort()
         el = md_util.etree.Element("div")
         el.set('class', ' '.join(classes))
         bar = md_util.etree.SubElement(el, 'div')
@@ -214,14 +215,24 @@ class ProgressBarPattern(Pattern):
         if level_class:
             if value >= 100.0:
                 add_classes.append(CLASS_100PLUS)
+            elif value >= 90.0:
+                add_classes.append(CLASS_90PLUS)
             elif value >= 80.0:
                 add_classes.append(CLASS_80PLUS)
+            elif value >= 70.0:
+                add_classes.append(CLASS_70PLUS)
             elif value >= 60.0:
                 add_classes.append(CLASS_60PLUS)
+            elif value >= 50.0:
+                add_classes.append(CLASS_50PLUS)
             elif value >= 40.0:
                 add_classes.append(CLASS_40PLUS)
+            elif value >= 30.0:
+                add_classes.append(CLASS_30PLUS)
             elif value >= 20.0:
                 add_classes.append(CLASS_20PLUS)
+            elif value >= 10.0:
+                add_classes.append(CLASS_10PLUS)
             else:
                 add_classes.append(CLASS_0PLUS)
 
@@ -229,15 +240,14 @@ class ProgressBarPattern(Pattern):
 
 
 class ProgressBarExtension(Extension):
-    """Add progress bar extension to Markdown class."""
+    """Add progressbar extension to Markdown class."""
 
     def __init__(self, *args, **kwargs):
         """Initialize."""
 
         self.config = {
             'level_class': [
-                True,
-                "Include class that defines progress level in increments of 20 - Default: True"
+                True, "Include class that defines progress level in increments of 10 - Default: True"
             ],
             'add_classes': [
                 '',
