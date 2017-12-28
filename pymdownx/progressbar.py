@@ -13,14 +13,16 @@ Simple plugin to add support for progress bars
 /* works with attr_list inline style */
 [==50/200  MyLabel]{: .additional-class }
 
+~~~
 New line is not required before the progress bar but suggested unless in a table.
 Can take percentages and divisions.
 Floats are okay.  Numbers must be positive.  This is an experimental extension.
 Functionality is subject to change.
 
 Minimum Recommended Styling
-(but you could add gloss, candystriping, animation or anything else):
+(but you could add gloss, candy striping, animation, or anything else):
 
+~~~.css
 .progress {
   display: block;
   width: 300px;
@@ -83,6 +85,7 @@ For Level Colors
 .progress-0plus .progress-bar {
   background-color: #f63a0f;
 }
+~~~
 
 MIT license.
 
@@ -138,7 +141,7 @@ class ProgressBarTreeProcessor(AttrListTreeprocessor):
     """Used for AttrList compatibility."""
 
     def run(self, elem):
-        """Inline check for attrs at start of tail."""
+        """Inline check for attributes at start of tail."""
 
         if elem.tail:
             m = self.INLINE_RE.match(elem.tail)
@@ -151,7 +154,7 @@ class ProgressBarPattern(Pattern):
     """Pattern handler for the progress bars."""
 
     def __init__(self, pattern):
-        """Intialize."""
+        """Initialize."""
 
         Pattern.__init__(self, pattern)
 
@@ -240,14 +243,15 @@ class ProgressBarPattern(Pattern):
 
 
 class ProgressBarExtension(Extension):
-    """Add progressbar extension to Markdown class."""
+    """Add progress bar extension to Markdown class."""
 
     def __init__(self, *args, **kwargs):
         """Initialize."""
 
         self.config = {
             'level_class': [
-                True, "Include class that defines progress level in increments of 10 - Default: True"
+                True,
+                "Include class that defines progress level in increments of 10 - Default: True"
             ],
             'add_classes': [
                 '',
