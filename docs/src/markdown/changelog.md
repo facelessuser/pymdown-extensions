@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.8.0
+
+- **NEW**: Set progress bar class level increments via `progress_increment` instead of using the hard coded value of `20`.
+
 ## 4.7.0
 
 Dec 8, 2017
