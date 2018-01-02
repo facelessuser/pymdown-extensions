@@ -4,7 +4,7 @@ repo_url: https://github.com/facelessuser/pymdown-extensions
 edit_uri: tree/master/docs/src/markdown
 site_description: A Collection of Useful Extensions for Python Markdown
 copyright: |
-  Copyright &copy; 2014 - 2017 <a href="https://github.com/facelessuser">Isaac Muse</a>
+  Copyright &copy; 2014 - 2018 <a href="https://github.com/facelessuser">Isaac Muse</a>
   <br><span class="md-footer-custom-text">emoji provided free by </span><a href="http://www.emojione.com">EmojiOne</a>
 
 docs_dir: docs/src/markdown
@@ -69,6 +69,7 @@ markdown_extensions:
   - markdown.extensions.def_list:
   - markdown.extensions.tables:
   - markdown.extensions.abbr:
+  - markdown.extensions.footnotes:
   - pymdownx.extrarawhtml:
   - pymdownx.superfences:
   - pymdownx.highlight:
