@@ -43,7 +43,7 @@
     "material-shadows": "^3.0.1",
     "modularscale-sass": "^3.0.4",
     "postcss-pseudo-classes": "^0.2.0",
-    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-babel": "^3.0.3",
     "stylelint": "^8.4.0",
     "stylelint-config-standard": "^17.0.0",
     "stylelint-order": "^0.8.0",
