@@ -137,7 +137,7 @@ if LEGACY:
                 safe=True
             )
 
-else:
+else:  # pragma: no cover
     class SmartSymbolsPattern(HtmlInlineProcessor):
         """Smart symbols patterns handler."""
 

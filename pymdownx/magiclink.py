@@ -512,7 +512,7 @@ if LEGACY:
 
             return el
 
-else:
+else:  # pragma: no cover
     class MagiclinkPattern(LinkInlineProcessor):
         """Convert html, ftp links to clickable links."""
 
