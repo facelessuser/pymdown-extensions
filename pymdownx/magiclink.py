@@ -36,7 +36,7 @@ import os
 try:
     from markdown.inlinepatterns import LinkPattern, Pattern
     LEGACY = True
-except ImportError:
+except ImportError:  # pragma: no cover
     from markdown.inlinepatterns import LinkInlineProcessor, Pattern
     LEGACY = False
 

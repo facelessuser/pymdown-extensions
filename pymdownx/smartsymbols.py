@@ -47,7 +47,7 @@ from markdown import treeprocessors
 try:
     from markdown.inlinepatterns import HtmlPattern
     LEGACY = True
-except ImportError:
+except ImportError:  # pragma: no cover
     from markdown.inlinepatterns import HtmlInlineProcessor
     LEGACY = False
 
