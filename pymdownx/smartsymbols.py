@@ -41,9 +41,15 @@ DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
-from markdown.inlinepatterns import HtmlPattern
 from markdown.odict import OrderedDict
-from markdown.treeprocessors import InlineProcessor
+from markdown import treeprocessors
+
+try:
+    from markdown.inlinepatterns import HtmlPattern
+    LEGACY = True
+except ImportError:  # pragma: no cover
+    from markdown.inlinepatterns import HtmlInlineProcessor
+    LEGACY = False
 
 RE_TRADE = ("smart-trademark", r'\(tm\)', r'&trade;')
 RE_COPY = ("smart-copyright", r'\(c\)', r'&copy;')
@@ -112,23 +118,43 @@ ARR = {
 }
 
 
-class SmartSymbolsPattern(HtmlPattern):
-    """Smart symbols patterns handler."""
+if LEGACY:
+    class SmartSymbolsPattern(HtmlPattern):
+        """Smart symbols patterns handler."""
 
-    def __init__(self, pattern, replace, md):
-        """Setup replace pattern."""
+        def __init__(self, pattern, replace, md):
+            """Setup replace pattern."""
 
-        super(SmartSymbolsPattern, self).__init__(pattern)
-        self.replace = replace
-        self.md = md
+            super(SmartSymbolsPattern, self).__init__(pattern)
+            self.replace = replace
+            self.md = md
 
-    def handleMatch(self, m):
-        """Replace symbol."""
+        def handleMatch(self, m):
+            """Replace symbol."""
 
-        return self.md.htmlStash.store(
-            m.expand(self.replace(m) if callable(self.replace) else self.replace),
-            safe=True
-        )
+            return self.md.htmlStash.store(
+                m.expand(self.replace(m) if callable(self.replace) else self.replace),
+                safe=True
+            )
+
+else:  # pragma: no cover
+    class SmartSymbolsPattern(HtmlInlineProcessor):
+        """Smart symbols patterns handler."""
+
+        def __init__(self, pattern, replace, md):
+            """Setup replace pattern."""
+
+            super(SmartSymbolsPattern, self).__init__(pattern)
+            self.replace = replace
+            self.md = md
+
+        def handleMatch(self, m, data):
+            """Replace symbol."""
+
+            return self.md.htmlStash.store(
+                m.expand(self.replace(m) if callable(self.replace) else self.replace),
+                safe=True
+            ), m.start(0), m.end(0)
 
 
 class SmartSymbolsExtension(Extension):
@@ -169,7 +195,7 @@ class SmartSymbolsExtension(Extension):
             if configs[k]:
                 self.add_pattern(v, md)
 
-        inline_processor = InlineProcessor(md)
+        inline_processor = treeprocessors.InlineProcessor(md)
         inline_processor.inlinePatterns = self.patterns
         md.treeprocessors.add('smart-symbols', inline_processor, '_end')
         if "smarty" in md.treeprocessors.keys():

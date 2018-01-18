@@ -25,7 +25,6 @@ DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
-from markdown.inlinepatterns import LinkPattern, Pattern
 from markdown.treeprocessors import Treeprocessor
 from markdown import util as md_util
 from . import util
@@ -34,12 +33,20 @@ import warnings
 import re
 import os
 
+try:
+    from markdown.inlinepatterns import LinkPattern, Pattern
+    LEGACY = True
+except ImportError:  # pragma: no cover
+    from markdown.inlinepatterns import LinkInlineProcessor, Pattern
+    LEGACY = False
+
 MAGIC_LINK = 1
 MAGIC_AUTO_LINK = 2
 
+
 # Bare link/email detection
 RE_MAIL = r'''(?xi)
-(
+(?P<mail>
     (?<![-/\+@a-z\d_])(?:[-+a-z\d_]([-a-z\d_+]|\.(?!\.))*)  # Local part
     (?<!\.)@(?:[-a-z\d_]+\.)                                # @domain part start
     (?:(?:[-a-z\d_]|(?<!\.)\.(?!\.))*)[a-z]\b               # @domain.end (allow multiple dot names)
@@ -48,7 +55,7 @@ RE_MAIL = r'''(?xi)
 '''
 
 RE_LINK = r'''(?xi)
-(
+(?P<link>
     (?:(?<=\b)|(?<=_))(?:
         (?:ht|f)tps?://(?:(?:[^_\W][-\w]*(?:\.[-\w.]+)+)|localhost)|  # (http|ftp)://
         (?P<www>w{3}\.)[^_\W][-\w]*(?:\.[-\w.]+)+                     # www.
@@ -481,28 +488,53 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         return root
 
 
-class MagiclinkPattern(LinkPattern):
-    """Convert html, ftp links to clickable links."""
+if LEGACY:
+    class MagiclinkPattern(LinkPattern):
+        """Convert html, ftp links to clickable links."""
 
-    ANCESTOR_EXCLUDES = ('a',)
+        ANCESTOR_EXCLUDES = ('a',)
 
-    def handleMatch(self, m):
-        """Handle URL matches."""
+        def handleMatch(self, m):
+            """Handle URL matches."""
 
-        el = md_util.etree.Element("a")
-        el.text = md_util.AtomicString(m.group(2))
-        if m.group("www"):
-            href = "http://%s" % m.group(2)
-        else:
-            href = m.group(2)
-            if self.config['hide_protocol']:
-                el.text = md_util.AtomicString(el.text[el.text.find("://") + 3:])
-        el.set("href", self.sanitize_url(self.unescape(href.strip())))
+            el = md_util.etree.Element("a")
+            el.text = md_util.AtomicString(m.group('link'))
+            if m.group("www"):
+                href = "http://%s" % m.group('link')
+            else:
+                href = m.group('link')
+                if self.config['hide_protocol']:
+                    el.text = md_util.AtomicString(el.text[el.text.find("://") + 3:])
+            el.set("href", self.sanitize_url(self.unescape(href.strip())))
 
-        if self.config.get('repo_url_shortener', False):
-            el.set('magiclink', md_util.text_type(MAGIC_LINK))
+            if self.config.get('repo_url_shortener', False):
+                el.set('magiclink', md_util.text_type(MAGIC_LINK))
 
-        return el
+            return el
+
+else:  # pragma: no cover
+    class MagiclinkPattern(LinkInlineProcessor):
+        """Convert html, ftp links to clickable links."""
+
+        ANCESTOR_EXCLUDES = ('a',)
+
+        def handleMatch(self, m, data):
+            """Handle URL matches."""
+
+            el = md_util.etree.Element("a")
+            el.text = md_util.AtomicString(m.group('link'))
+            if m.group("www"):
+                href = "http://%s" % m.group('link')
+            else:
+                href = m.group('link')
+                if self.config['hide_protocol']:
+                    el.text = md_util.AtomicString(el.text[el.text.find("://") + 3:])
+            el.set("href", self.sanitize_url(self.unescape(href.strip())))
+
+            if self.config.get('repo_url_shortener', False):
+                el.set('magiclink', md_util.text_type(MAGIC_LINK))
+
+            return el, m.start(0), m.end(0)
 
 
 class MagiclinkAutoPattern(Pattern):
@@ -523,7 +555,7 @@ class MagiclinkAutoPattern(Pattern):
         return el
 
 
-class MagiclinkMailPattern(LinkPattern):
+class MagiclinkMailPattern(Pattern):
     """Convert emails to clickable email links."""
 
     ANCESTOR_EXCLUDES = ('a',)
@@ -536,7 +568,7 @@ class MagiclinkMailPattern(LinkPattern):
         """Handle email link patterns."""
 
         el = md_util.etree.Element("a")
-        email = self.unescape(m.group(2))
+        email = self.unescape(m.group('mail'))
         href = "mailto:%s" % email
         el.text = md_util.AtomicString(''.join([self.email_encode(ord(c)) for c in email]))
         el.set("href", ''.join([md_util.AMP_SUBSTITUTE + '#%d;' % ord(c) for c in href]))
