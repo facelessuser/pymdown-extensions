@@ -39,6 +39,7 @@ InlineHilite
 InlineHilite's
 JPEG
 JSON
+Jan
 JavaScript
 KBD
 KaTeX

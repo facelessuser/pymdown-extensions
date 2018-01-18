@@ -1,12 +1,11 @@
 # Changelog
 
-## 4.8.1
-
-- **FIX**: Compatibility changes for next Markdown release.
-
 ## 4.8.0
 
+Jan 17, 2018
+
 - **NEW**: Set progress bar class level increments via `progress_increment` instead of using the hard coded value of `20`.
+- **FIX**: Compatibility changes for next Markdown release.
 
 ## 4.7.0
 
