@@ -970,7 +970,7 @@ browserslist@^2.5.1:
     caniuse-lite "^1.0.30000760"
     electron-to-chromium "^1.3.27"
 
-buffer-from@^0.1.0:
+buffer-from@^0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-0.1.1.tgz#57b18b1da0a19ec06f33837a5275a242351bd75e"
   dependencies:
@@ -2557,15 +2557,16 @@ gulp-rev@^8.1.1:
     vinyl "^2.1.0"
     vinyl-file "^3.0.0"
 
-gulp-rollup@^2.14.0:
-  version "2.15.0"
-  resolved "https://registry.yarnpkg.com/gulp-rollup/-/gulp-rollup-2.15.0.tgz#e69d871feda25acaaeb5721e06375c55c87b2d90"
+gulp-rollup@^2.16.2:
+  version "2.16.2"
+  resolved "https://registry.yarnpkg.com/gulp-rollup/-/gulp-rollup-2.16.2.tgz#1f805d3a3d808679fb545a683697eead73a93731"
   dependencies:
-    buffer-from "^0.1.0"
-    gulp-util "^3.0.6"
-    readable-stream "^2.1.4"
-    rollup "^0.49.3"
-    rollup-plugin-hypothetical "^1.1.0"
+    buffer-from "^0.1.1"
+    plugin-error "^1.0.0"
+    readable-stream "^2.3.3"
+    rollup "^0.54.1"
+    rollup-plugin-hypothetical "^2.0.0"
+    vinyl "^2.1.0"
 
 gulp-sass@^3.1.0:
   version "3.1.0"
@@ -4910,7 +4911,7 @@ read-pkg@^3.0.0:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@^2.0.0, readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.0.6, readable-stream@^2.1.4, readable-stream@^2.1.5, readable-stream@^2.2.2, readable-stream@^2.2.6:
+readable-stream@^2.0.0, readable-stream@^2.0.1, readable-stream@^2.0.2, readable-stream@^2.0.5, readable-stream@^2.0.6, readable-stream@^2.1.4, readable-stream@^2.1.5, readable-stream@^2.2.2, readable-stream@^2.2.6, readable-stream@^2.3.3:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-2.3.3.tgz#368f2512d79f9d46fdfc71349ae7878bbc1eb95c"
   dependencies:
@@ -5251,9 +5252,9 @@ rollup-plugin-babel@^3.0.3:
   dependencies:
     rollup-pluginutils "^1.5.0"
 
-rollup-plugin-hypothetical@^1.1.0:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-hypothetical/-/rollup-plugin-hypothetical-1.2.1.tgz#f427077b7bab592cc298197ab9aaac4fe4efa055"
+rollup-plugin-hypothetical@^2.0.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-hypothetical/-/rollup-plugin-hypothetical-2.1.0.tgz#7fec9a865ed7d0eac14ca6ee2b2c4088acdb1955"
 
 rollup-pluginutils@^1.5.0:
   version "1.5.2"
@@ -5262,9 +5263,9 @@ rollup-pluginutils@^1.5.0:
     estree-walker "^0.2.1"
     minimatch "^3.0.2"
 
-rollup@^0.49.3:
-  version "0.49.3"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.49.3.tgz#4cce32643dd8cf2154c69ff0e43470067db0adbf"
+rollup@^0.54.1:
+  version "0.54.1"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.54.1.tgz#415a5d999421502646cf54b873fc4ce1a7393970"
 
 run-async@^2.2.0:
   version "2.3.0"
