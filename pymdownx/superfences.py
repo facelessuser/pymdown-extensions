@@ -146,8 +146,6 @@ class SuperFencesCodeExtension(Extension):
         self.superfences = []
         self.config = {
             'disable_indented_code_blocks': [False, "Disable indented code blocks - Default: False"],
-            'uml_flow': [True, "Enable flowcharts - Default: True"],
-            'uml_sequence': [True, "Enable sequence diagrams - Default: True"],
             'custom_fences': [
                 [
                     {'name': 'flow', 'class': 'uml-flowchart'},
