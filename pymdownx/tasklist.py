@@ -31,16 +31,20 @@ import re
 RE_CHECKBOX = re.compile(r"^(?P<checkbox> *\[(?P<state>(?:x|X| ){1})\] +)(?P<line>.*)")
 
 
-def get_checkbox(state, custom_checkbox=False):
+def get_checkbox(state, custom_checkbox=False, clickable_checkbox=False):
     """Get checkbox tag."""
 
     if custom_checkbox:
         return (
             '<label class="task-list-control">' +
-            '<input type="checkbox" disabled%s/>' % (' checked' if state.lower() == 'x' else '') +
+            '<input type="checkbox"%s%s/>' % (
+                ' disabled' if not clickable_checkbox else '',
+                ' checked' if state.lower() == 'x' else '') +
             '<span class="task-list-indicator"></span></label> '
         )
-    return '<input type="checkbox" disabled%s> ' % (' checked' if state.lower() == 'x' else '')
+    return '<input type="checkbox"%s%s/> ' % (
+        ' disabled' if not clickable_checkbox else '',
+        ' checked' if state.lower() == 'x' else '')
 
 
 class TasklistTreeprocessor(Treeprocessor):
@@ -53,7 +57,7 @@ class TasklistTreeprocessor(Treeprocessor):
         m = RE_CHECKBOX.match(li.text)
         if m is not None:
             li.text = self.markdown.htmlStash.store(
-                get_checkbox(m.group('state'), self.custom_checkbox),
+                get_checkbox(m.group('state'), self.custom_checkbox, self.clickable_checkbox),
                 safe=True
             ) + m.group('line')
             found = True
@@ -69,7 +73,7 @@ class TasklistTreeprocessor(Treeprocessor):
                 m = RE_CHECKBOX.match(first.text)
                 if m is not None:
                     first.text = self.markdown.htmlStash.store(
-                        get_checkbox(m.group('state'), self.custom_checkbox),
+                        get_checkbox(m.group('state'), self.custom_checkbox, self.clickable_checkbox),
                         safe=True
                     ) + m.group('line')
                     found = True
@@ -79,6 +83,7 @@ class TasklistTreeprocessor(Treeprocessor):
         """Find list items that start with [ ] or [x] or [X]."""
 
         self.custom_checkbox = bool(self.config["custom_checkbox"])
+        self.clickable_checkbox = bool(self.config["clickable_checkbox"])
         parent_map = dict((c, p) for p in root.iter() for c in p)
         task_items = []
         lilinks = root.iter('li')
@@ -116,6 +121,10 @@ class TasklistExtension(Extension):
             'custom_checkbox': [
                 False,
                 "Add an empty label tag after the input tag to allow for custom styling - Default: False"
+            ],
+            'clickable_checkbox': [
+                False,
+                "Allow user to check/uncheck the checkbox - Default: False"
             ],
             'delete': [True, "Enable delete - Default: True"],
             'subscript': [True, "Enable subscript - Default: True"]
