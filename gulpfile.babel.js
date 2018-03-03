@@ -17,8 +17,6 @@ import gulpif from "gulp-if"
 import clean from "gulp-clean"
 import concat from "gulp-concat"
 import mqpacker from "css-mqpacker"
-import stream from "webpack-stream"
-import webpack from "webpack"
 import sourcemaps from "gulp-sourcemaps"
 import rollup from "gulp-rollup"
 import rollupBabel from "rollup-plugin-babel"
@@ -33,7 +31,6 @@ const args = yargs
   .default("lint", false)
   .default("clean", false)
   .default("sourcemaps", false)
-  .default("webpack", false)
   .default("buildmkdocs", false)
   .default("revision", false)
   .default("mkdocs", "mkdocs")
@@ -81,7 +78,6 @@ const config = {
   },
   clean: args.clean,
   sourcemaps: args.sourcemaps,
-  webpack: args.webpack,
   buildmkdocs: args.buildmkdocs,
   revision: args.revision,
   mkdocsCmd: args.mkdocs
@@ -148,15 +144,18 @@ gulp.task("js:build:rollup", () => {
   return gulp.src(config.files.es6)
     .pipe(gulpif(config.sourcemaps, sourcemaps.init()))
     .pipe(rollup({
-      "globals": {
-        "flowchart": "flowchart",
-        "sequence-diagram": "Diagram"
+      "output": {
+        "name": "extra",
+        "format": "iife",
+        "globals": {
+          "flowchart": "flowchart",
+          "sequence-diagram": "Diagram"
+        }
       },
       "external": [
         "flowchart",
         "sequence-diagram"
       ],
-      "format": "iife",
       "plugins": [
         rollupBabel({
           "presets": [
@@ -166,7 +165,6 @@ gulp.task("js:build:rollup", () => {
           "plugins": ["external-helpers"]
         })
       ],
-      "name": "extra",
       "input": `${config.folders.src}/js/extra.js`
     }))
     .pipe(gulpif(config.compress.enabled, uglify({compress: config.compress.jsOptions})))
@@ -179,62 +177,7 @@ gulp.task("js:build:rollup", () => {
     .pipe(gulpif(config.revision, gulp.dest(config.folders.theme)))
 })
 
-gulp.task("js:build:webpack", () => {
-  // Only needed if we want to pack some of the node packages.
-  return gulp.src(config.files.es6)
-    .pipe(
-      stream(
-        {
-          devtool: (config.sourcemaps) ? "inline-source-map" : "",
-          entry: "extra.js",
-          output: {filename: "extra.js"},
-          module: {
-            loaders: [
-              {
-                test: /\.js$/,
-                loader: "babel-loader"
-              }
-            ]
-          },
-          plugins: [
-            // Don't emit assets that include errors
-            new webpack.NoEmitOnErrorsPlugin(),
-            new webpack.DefinePlugin({
-              "process.env": {
-                "NODE_ENV": JSON.stringify("production")
-              }
-            })
-          ].concat(
-            config.compress.enabled ? [
-              new webpack.optimize.UglifyJsPlugin({
-                sourceMap: config.sourcemaps,
-                compress: config.compress.jsOptions,
-                output: {comments: false}
-              })
-            ] : []
-          ),
-          stats: {color: true},
-          resolve: {
-            modules: [
-              `${config.folders.src}/js`
-            ],
-            extensions: [
-              ".js"
-            ]
-          }
-        },
-        webpack
-      )
-    )
-
-    // Revisioning
-    .pipe(gulpif(config.revision, rev()))
-    .pipe(gulp.dest(config.folders.theme))
-    .pipe(gulpif(config.revision, rev.manifest("manifest.json", {base: config.folders.theme, merge: true})))
-    .pipe(gulpif(config.revision, gulp.dest(config.folders.theme)))
-})
-
-gulp.task("js:build", [config.webpack ? "js:build:webpack" : "js:build:rollup"], () => {
+gulp.task("js:build", ["js:build:rollup"], () => {
   return gulp.src(config.files.mkdocsSrc)
     .pipe(gulpif(config.revision, revReplace({
       manifest: gulp.src("manifest.json"),
@@ -251,7 +194,7 @@ gulp.task("js:lint", () => {
 })
 
 gulp.task("js:watch", () => {
-  gulp.watch(config.files.es6, [config.webpack ? "js:build:webpack" : "js:build:rollup"])
+  gulp.watch(config.files.es6, ["js:build:rollup"])
 })
 
 gulp.task("js:clean", () => {
