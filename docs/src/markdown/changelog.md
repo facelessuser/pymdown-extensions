@@ -2,6 +2,8 @@
 
 ## 4.9.0
 
+Mar 3, 2018
+
 - **NEW**: Add option to make task lists editable (!249).
 - **FIX**: Remove internal references to deprecated options.
 

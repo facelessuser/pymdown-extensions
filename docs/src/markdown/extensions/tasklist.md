@@ -49,7 +49,7 @@ The default HTML structure of a task list is found below:
 </ul>
 ```
 
-If `custom_checkbox` is enabled the structure will be as follows:
+If `custom_checkbox` is enabled, the structure will be as follows:
 
 ```html
 <ul class="task-list">
@@ -63,7 +63,7 @@ If `custom_checkbox` is enabled the structure will be as follows:
 </ul>
 ```
 
-If `clickable_checkbox` is enabled checkboxes will be enabled:
+If `clickable_checkbox` is enabled, user interaction will be allowed by removing the `disabled` attribute from the `input` element:
 
 ```html
 <ul class="task-list">
