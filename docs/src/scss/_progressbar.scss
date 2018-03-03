@@ -21,6 +21,13 @@ $pb-stripe: transparentize($clr-white, 0.2);
     background-color: $clr-blue-a400;
   }
 
+  /* Stripe animation */
+  .candystripe-animate {
+    .progress-bar{
+      animation: animate-stripes 3s linear infinite;
+    }
+  }
+
   .progress {
     display: block;
     position: relative;
@@ -88,13 +95,6 @@ $pb-stripe: transparentize($clr-white, 0.2);
       .progress-bar {
         background-color: $color;
       }
-    }
-  }
-
-  /* Stripe animation */
-  .candystripe-animate {
-    .progress-bar{
-      animation: animate-stripes 3s linear infinite;
     }
   }
 

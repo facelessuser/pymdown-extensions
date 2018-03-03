@@ -35,7 +35,7 @@ addons:
     - aspell-en
 
 before_install:
-- if [ $TOXENV = documents ]; then npm install -g yarn@v1.2.1; fi
+- if [ $TOXENV = documents ]; then npm install -g yarn@v1.3.2; fi
 
 install:
 - if [ $TOXENV = documents ]; then yarn install; fi
