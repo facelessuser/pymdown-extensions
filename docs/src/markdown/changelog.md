@@ -1,5 +1,10 @@
 # Changelog
 
+## 4.9.0
+
+- **NEW**: Add option to make task lists editable (!249).
+- **FIX**: Remove internal references to deprecated options.
+
 ## 4.8.0
 
 Jan 17, 2018
