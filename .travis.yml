@@ -14,40 +14,44 @@ cache:
 
 matrix:
   include:
-  - python: 2.7
-    env: TOXENV=py27-unittests
-  - python: 3.4
-    env: TOXENV=py34-unittests
-  - python: 3.5
-    env: TOXENV=py35-unittests
-  - python: 3.6
-    env: TOXENV=py36-unittests
-  - python: 3.6
-    env: TOXENV=lint
-  - python: 3.6
-    node_js: 6
-    env: TOXENV=documents
+    - python: 2.7
+      env: TOXENV=py27-unittests
+    - python: 3.4
+      env: TOXENV=py34-unittests
+    - python: 3.5
+      env: TOXENV=py35-unittests
+    - python: 3.6
+      env: TOXENV=py36-unittests
+    - python: 3.7-dev
+      env: TOXENV=py37-unittests
+    - python: 3.6
+      env: TOXENV=lint
+    - python: 3.6
+      node_js: 6
+      env: TOXENV=documents
+  allow_failures:
+    - python: 3.7-dev
 
 addons:
   apt:
     packages:
-    - aspell
-    - aspell-en
+      - aspell
+      - aspell-en
 
 before_install:
 - if [ $TOXENV = documents ]; then npm install -g yarn@v1.3.2; fi
 
 install:
-- if [ $TOXENV = documents ]; then yarn install; fi
-- pip install tox
-- pip install codecov
+  - if [ $TOXENV = documents ]; then yarn install; fi
+  - pip install tox
+  - pip install codecov
 
 script:
-- if [ $TOXENV = documents ]; then yarn build; fi
-- tox
+  - if [ $TOXENV = documents ]; then yarn build; fi
+  - tox
 
 after_success:
-- codecov
+  - codecov
 
 deploy:
   - provider: pypi

@@ -43,6 +43,17 @@ def get_version():
         fp.close()
 
 
+def get_requirements(req):
+    """Load list of dependencies."""
+
+    install_requires = []
+    with open(req) as f:
+        for line in f:
+            if not line.startswith("#"):
+                install_requires.append(line.strip())
+    return install_requires
+
+
 VER, DEVSTATUS = get_version()
 
 
@@ -56,9 +67,7 @@ setup(
     author_email='Isaac.Muse@gmail.com',
     url='https://github.com/facelessuser/pymdown-extensions',
     packages=find_packages(exclude=['tools', 'tests']),
-    install_requires=[
-        'Markdown>=2.6.0,<3'
-    ],
+    install_requires=get_requirements("requirements/project.txt"),
     license='MIT License',
     classifiers=[
         'Development Status :: %s' % DEVSTATUS,

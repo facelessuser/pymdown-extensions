@@ -1,2 +1,1 @@
 Markdown>=2.6.0
-Pygments>=2.0.1
