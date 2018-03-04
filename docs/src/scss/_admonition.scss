@@ -2,8 +2,7 @@
 .md-typeset {
   .admonition {
     @each $names, $appearance in (
-      settings config: $clr-purple-a700 "settings",
-      example: $clr-deep-purple-a700 "format_list_numbered"
+      settings config: $clr-purple-a700 "settings"
     ) {
       $tint: nth($appearance, 1);
       $icon: nth($appearance, 2);

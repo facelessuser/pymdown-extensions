@@ -12,7 +12,7 @@ For the `#!tex $...$` inline variant, it is expected that the opening token (`#!
 
 !!! example "Inline Examples"
 
-    ```text
+    ```tex
     $p(x|y) = \frac{p(y|x)p(x)}{p(y)}$, \(p(x|y) = \frac{p(y|x)p(x)}{p(y)}\).
     ```
 
