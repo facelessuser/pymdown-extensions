@@ -2152,17 +2152,17 @@ gulp-sourcemaps@^2.6.4:
     strip-bom-string "1.X"
     through2 "2.X"
 
-gulp-stylelint@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/gulp-stylelint/-/gulp-stylelint-6.0.0.tgz#b65b1fcd4ddfeff9564457eaa7fee264a5d71e5e"
+gulp-stylelint@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/gulp-stylelint/-/gulp-stylelint-7.0.0.tgz#4249dc36a983e6a2c28a449f73d9a369bb14b458"
   dependencies:
     chalk "^2.3.0"
     deep-extend "^0.5.0"
     fancy-log "^1.3.2"
     mkdirp "^0.5.1"
-    plugin-error "^0.1.2"
+    plugin-error "^1.0.1"
     promise "^8.0.1"
-    source-map "^0.6.1"
+    source-map "^0.5.6"
     strip-ansi "^4.0.0"
     through2 "^2.0.3"
 
@@ -3706,7 +3706,7 @@ plugin-error@^0.1.2:
     arr-union "^2.0.1"
     extend-shallow "^1.1.2"
 
-plugin-error@^1.0.0:
+plugin-error@^1.0.0, plugin-error@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/plugin-error/-/plugin-error-1.0.1.tgz#77016bd8919d0ac377fdcdd0322328953ca5781c"
   dependencies:
