@@ -708,7 +708,6 @@ class MagiclinkInternalRefsPattern(_MagiclinkReferencePattern):
             self.process_commit(el, provider, user, repo, value)
         else:
             self.process_issues(el, provider, user, repo, value)
-        print(el)
         return el
 
 
