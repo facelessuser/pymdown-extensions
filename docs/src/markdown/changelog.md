@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.9.1
+
+Mar 18, 2018
+
+- **FIX**: Output issue when no user and/or repository is specified.
+
 ## 4.9.0
 
 Mar 3, 2018

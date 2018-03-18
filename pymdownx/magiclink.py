@@ -105,21 +105,23 @@ RE_GIT_INT_REPO_MENTIONS = r'''(?x)
 
 # External reference patterns (issue, pull request, commit, compare)
 RE_GIT_EXT_REFS = r'''(?x)
-(?<![@/])(?:(?P<user>\b%s)/)
+(?P<all>(?<![@/])(?:(?P<user>\b%s)/)
 (?P<repo>\b[-._a-zA-Z\d]{0,99}[a-zA-Z\d])
-(?:(?P<issue>(?:\#|!)[1-9][0-9]*)|(?P<commit>@[a-f\d]{40})(?:\.{3}(?P<diff>[a-f\d]{40}))?)\b
+(?:(?P<issue>(?:\#|!)[1-9][0-9]*)|(?P<commit>@[a-f\d]{40})(?:\.{3}(?P<diff>[a-f\d]{40}))?))\b
 ''' % '|'.join([RE_GITHUB_EXT_MENTIONS, RE_GITLAB_EXT_MENTIONS, RE_BITBUCKET_EXT_MENTIONS])
 
 # Internal reference patterns (issue, pull request, commit, compare)
-RE_GIT_INT_REFS = r'''(?x)
-(?<![@/])(?:(?P<user>\b%s)/)?
+RE_GIT_INT_EXT_REFS = r'''(?x)
+(?P<all>(?<![@/])(?:(?P<user>\b%s)/)?
 (?P<repo>\b[-._a-zA-Z\d]{0,99}[a-zA-Z\d])
-(?:(?P<issue>(?:\#|!)[1-9][0-9]*)|(?P<commit>@[a-f\d]{40})(?:\.{3}(?P<diff>[a-f\d]{40}))?)\b
+(?:(?P<issue>(?:\#|!)[1-9][0-9]*)|(?P<commit>@[a-f\d]{40})(?:\.{3}(?P<diff>[a-f\d]{40}))?))\b
 '''
 
 # Internal reference patterns for default user and repository (issue, pull request, commit, compare)
 RE_GIT_INT_MICRO_REFS = r'''(?x)
-(?:(?<![a-zA-Z])(?P<issue>(?:\#|!)[1-9][0-9]*)|(?P<commit>(?<![@/])\b[a-f\d]{40})(?:\.{3}(?P<diff>[a-f\d]{40}))?)\b
+(?P<all>
+    (?:(?<![a-zA-Z])(?P<issue>(?:\#|!)[1-9][0-9]*)|(?P<commit>(?<![@/])\b[a-f\d]{40})(?:\.{3}(?P<diff>[a-f\d]{40}))?)
+)\b
 '''
 
 # Repository link shortening pattern
@@ -661,7 +663,7 @@ class MagiclinkExternalRefsPattern(_MagiclinkReferencePattern):
 
         # If there is no valid user or provider, return plain text
         if not user:
-            return m.group(0)
+            return m.group('all')
 
         self.my_user = user == self.user and provider == self.provider
         self.my_repo = self.my_user and repo == self.repo
@@ -686,7 +688,7 @@ class MagiclinkInternalRefsPattern(_MagiclinkReferencePattern):
 
         # We don't have a valid provider, user, and repo, so just return the text
         if not self.user or not self.repo:
-            return m.group(0)
+            return m.group('all')
 
         is_commit = m.group('commit')
         is_diff = m.group('diff')
@@ -706,6 +708,7 @@ class MagiclinkInternalRefsPattern(_MagiclinkReferencePattern):
             self.process_commit(el, provider, user, repo, value)
         else:
             self.process_issues(el, provider, user, repo, value)
+        print(el)
         return el
 
 
@@ -816,7 +819,7 @@ class MagiclinkExtension(Extension):
             md.inlinePatterns.add("magic-ext-refs", git_ext_refs, "<entity")
             if not self.is_social:
                 git_int_refs = MagiclinkExternalRefsPattern(
-                    RE_GIT_INT_REFS % int_mentions, md, self.user, self.repo, self.provider, self.labels
+                    RE_GIT_INT_EXT_REFS % int_mentions, md, self.user, self.repo, self.provider, self.labels
                 )
                 md.inlinePatterns.add("magic-int-refs", git_int_refs, "<entity")
                 git_int_micro_refs = MagiclinkInternalRefsPattern(
