@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.9.2
+
+Mar 26, 2018
+
+- **FIX**: Issues with task lists that span multiple lines. (#267)
+- **FIX**: Require latest Python Markdown.
+
 ## 4.9.1
 
 Mar 18, 2018
@@ -10,7 +17,7 @@ Mar 18, 2018
 
 Mar 3, 2018
 
-- **NEW**: Add option to make task lists editable (!249).
+- **NEW**: Add option to make task lists editable. (!249)
 - **FIX**: Remove internal references to deprecated options.
 
 ## 4.8.0
@@ -26,7 +33,7 @@ Dec 8, 2017
 
 - **NEW**: Bring back generic output for Arithmatex. Now under the `generic` option (#185).
 - **FIX**: StripHTML should allow space before close of opening tag.
-- **FIX**: MagicLink should not auto-link inside a link (#151).
+- **FIX**: MagicLink should not auto-link inside a link. (#151)
 
 ## 4.6.0
 
