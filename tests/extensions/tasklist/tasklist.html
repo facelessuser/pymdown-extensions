@@ -9,7 +9,8 @@
 <ul class="task-list">
 <li class="task-list-item"><input type="checkbox" disabled checked/> item 1<ul class="task-list">
 <li class="task-list-item"><input type="checkbox" disabled checked/> item A</li>
-<li class="task-list-item"><input type="checkbox" disabled/> item B<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> item B
+    more text<ul class="task-list">
 <li class="task-list-item"><input type="checkbox" disabled checked/> item a</li>
 <li class="task-list-item"><input type="checkbox" disabled/> item b</li>
 <li class="task-list-item"><input type="checkbox" disabled checked/> item c</li>
@@ -25,7 +26,8 @@
 <ul>
 <li>item 1<ul class="task-list">
 <li class="task-list-item"><input type="checkbox" disabled checked/> item A</li>
-<li class="task-list-item"><input type="checkbox" disabled/> item B<ol>
+<li class="task-list-item"><input type="checkbox" disabled/> item B
+    more text<ol>
 <li>item a</li>
 <li>item b</li>
 <li>item c</li>
@@ -67,6 +69,15 @@
 </li>
 </ul>
 </li>
+</ul>
+<h1>Test Tasklists Spanning Multiple Lines</h1>
+<ul class="task-list">
+<li class="task-list-item"><input type="checkbox" disabled/> The text on this line will be rendered, and the text on the
+   second line should work as well.</li>
+<li class="task-list-item"><input type="checkbox" disabled/> It should also still work if you do any kind of
+   special content.  For instance, <em>right here</em> it should still continue
+   working.  And using <code>preformatted</code> or some
+   other type of content should work too.</li>
 </ul>
 </div>
 </body>
