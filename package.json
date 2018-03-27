@@ -27,7 +27,7 @@
     "gulp": "^3.9.1",
     "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
-    "gulp-cssnano": "^2.1.2",
+    "gulp-cssnano": "^2.1.3",
     "gulp-eslint": "^4.0.2",
     "gulp-if": "^2.0.2",
     "gulp-postcss": "^7.0.1",
