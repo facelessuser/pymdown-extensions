@@ -295,7 +295,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         self.whitespace = None
         self.fence_end = None
 
-    def eval(self, m, start, end):
+    def eval_fence(self, m, start, end):
         """Evaluate a normal fence."""
 
         if m.group(0).strip() == '':
@@ -417,7 +417,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                         self.eval_quoted(m, quote_level, start, end)
                     elif quote_level == 0:
                         # Handle all other cases
-                        self.eval(m, start, end)
+                        self.eval_fence(m, start, end)
                     else:
                         # Looks like we got a blockquote line
                         # when not in a blockquote.
