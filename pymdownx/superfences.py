@@ -448,14 +448,11 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                     ws_virtual_len += len(c)
                     ws.append(c)
                     if ws_virtual_len >= self.ws_virtual_len:
-                        ws = ''.join(ws)
-                        content = ws[self.ws_virtual_len:] + line[ws_len:]
-                        ws = ws[:self.ws_virtual_len]
                         break
-                if isinstance(ws, list):
-                    ws = ''.join(ws)
-                    content = ws[self.ws_virtual_len:] + line[ws_len:]
-                    ws = ws[:self.ws_virtual_len]
+
+                ws = ''.join(ws)
+                content = ws[self.ws_virtual_len:] + line[ws_len:]
+                ws = ws[:self.ws_virtual_len]
 
                 end = count + 1
                 quote_level = ws.count(">")
@@ -479,7 +476,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         while len(self.stack):
             fenced, start, end = self.stack.pop()
             if self.preserve_tabs:
-                lines = lines[:start] + [fenced.replace(md_util.STX, SOH).replace(md_util.ETX, EOT)] + lines[end:]
+                lines = lines[:start] + [fenced.replace(md_util.STX, SOH, 1)[:-1] + EOT] + lines[end:]
             else:
                 lines = lines[:start] + [fenced] + lines[end:]
         return lines
