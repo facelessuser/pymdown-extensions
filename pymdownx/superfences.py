@@ -226,7 +226,9 @@ class SuperFencesCodeExtension(Extension):
         for entry in self.superfences:
             entry["stash"].clear_stash()
 
+
 class SuperFencesBlockPostNormalizePreprocessor(Preprocessor):
+    """Preprocessor to clean up normalization bypass hack."""
 
     TEMP_PLACEHOLDER_RE = re.compile(
         r'^([\> ]*)%s(%s)%s$' % (
@@ -245,6 +247,7 @@ class SuperFencesBlockPostNormalizePreprocessor(Preprocessor):
             new_lines.append(line)
 
         return new_lines
+
 
 class SuperFencesBlockPreprocessor(Preprocessor):
     """
