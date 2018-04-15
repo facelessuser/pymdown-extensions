@@ -40,3 +40,4 @@ superfences (normal):
           options:
             startinline: true
     pymdownx.superfences:
+      preserve_tabs: true

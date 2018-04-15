@@ -73,6 +73,14 @@ as a fenced code block.
         ```
     ```
 
+- Tabs
+
+    ```
+    Test	with tabs.
+	Test	with tabs.
+  	Test		tabs.
+    ```
+
 - Here is a highlighted code block with line numbers:
 
     ```python linenums="1"
