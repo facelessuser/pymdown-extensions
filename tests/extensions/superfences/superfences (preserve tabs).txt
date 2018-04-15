@@ -1,9 +1,9 @@
 # Neseted Fences:
 
-    ```
-    This will still be parsed
-    as a normal indented code block.
-    ```
+	```
+	This will still be parsed
+	as a normal indented code block.
+	```
 
 ```
 This will still be parsed
@@ -11,67 +11,67 @@ as a fenced code block.
 ```
 
 - 
-    ```
-    This will work.
-    ```
+	```
+	This will work.
+	```
 
 - This is a list that contains multiple code blocks.
 
-    - Here is an indented block
+	- Here is an indented block
 
-            ```
-            This will still be parsed
-            as a normal indented code block.
-            ```
+			```
+			This will still be parsed
+			as a normal indented code block.
+			```
 
-    - Here is a fenced code block:
+	- Here is a fenced code block:
 
-        ```
-        This will still be parsed
-        as a fenced code block.
-        ```
+		```
+		This will still be parsed
+		as a fenced code block.
+		```
 
-        > ```
-        > Blockquotes?
+		> ```
+		> Blockquotes?
 
-        > Not a problem!
-        > ```
+		> Not a problem!
+		> ```
 
 - Fenced block with lesser child fence.
 
-    ````
-        ```
-        Fenced block containing fenced syntax.
-        ```
-    ````
+	````
+		```
+		Fenced block containing fenced syntax.
+		```
+	````
 
-    ````
-    ```
-    Fenced block containing fenced syntax.
-    ```
-    ````
+	````
+	```
+	Fenced block containing fenced syntax.
+	```
+	````
 
 - Fenced block with greater child fence:
 
-    ```
-        ````
-        Fenced block containing fenced syntax.
-        ````
-    ```
+	```
+		````
+		Fenced block containing fenced syntax.
+		````
+	```
 
-    ```
-    ````
-    Fenced block containing fenced syntax.
-    ````
-    ```
+	```
+	````
+	Fenced block containing fenced syntax.
+	````
+	```
 
 - Fenced block with indented child fence:
 
-    ```
-        ```
-        Fenced block containing fenced syntax.
-        ```
-    ```
+	```
+		```
+		Fenced block containing fenced syntax.
+		```
+	```
 
 - Tabs
 
@@ -92,27 +92,27 @@ as a fenced code block.
 
 - Here is a highlighted code block with line numbers:
 
-    ```python linenums="1"
-    """Some file."""
-    import foo.bar
-    import boo.baz
-    import foo.bar.baz
-    ```
+	```python linenums="1"
+	"""Some file."""
+	import foo.bar
+	import boo.baz
+	import foo.bar.baz
+	```
 
 - Here is a highlighted code block with line numbers and line highlighting:
 
-    ```python hl_lines="2 3" linenums="1"
-    """Some file."""
-    import foo.bar
-    import boo.baz
-    import foo.bar.baz
-    ```
+	```python hl_lines="2 3" linenums="1"
+	"""Some file."""
+	import foo.bar
+	import boo.baz
+	import foo.bar.baz
+	```
 
 - Highlight extended language:
 
-    ```php-inline 
-    $a = array("foo" => 0, "bar" => 1);
-    ```
+	```php-inline 
+	$a = array("foo" => 0, "bar" => 1);
+	```
 
 # UML Flow Charts
 

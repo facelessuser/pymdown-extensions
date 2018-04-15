@@ -272,7 +272,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
     def normalize_ws(self, text):
         """Normalize whitespace."""
 
-        return text.replace('\t', ' ' * self.tab_len)
+        return text.expandtabs(self.tab_len)
 
     def rebuild_block(self, lines):
         """Dedent the fenced block lines."""
@@ -439,18 +439,16 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 ws_len = 0
                 ws_virtual_len = 0
                 content = ''
-                ws = []
+                ws = ''
                 for c in line:
                     if c not in ('>', ' ', '\t'):
                         break
                     ws_len += 1
-                    c = self.normalize_ws(c)
-                    ws_virtual_len += len(c)
-                    ws.append(c)
+                    ws = self.normalize_ws(ws + c)
+                    ws_virtual_len = len(ws)
                     if ws_virtual_len >= self.ws_virtual_len:
                         break
 
-                ws = ''.join(ws)
                 content = ws[self.ws_virtual_len:] + line[ws_len:]
                 ws = ws[:self.ws_virtual_len]
 
