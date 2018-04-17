@@ -361,7 +361,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
     def process_nested_block(self, ws, content, start, end):
         """Process the contents of the nested block."""
 
-        self.last = ws + content
+        self.last = ws + self.normalize_ws(content)
         code = None
         for entry in reversed(self.extension.superfences):
             if entry["test"](self.lang):
@@ -416,7 +416,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 m = RE_NESTED_FENCE_START.match(line, self.ws_len)
                 if m is not None:
                     start = count
-                    self.first = ws + m.group(0)
+                    self.first = ws + self.normalize_ws(m.group(0))
                     self.ws = ws
                     self.quote_level = self.ws.count(">")
                     self.empty_lines = 0
@@ -439,18 +439,26 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 ws_len = 0
                 ws_virtual_len = 0
                 content = ''
-                ws = ''
+                ws = []
+                index = 0
                 for c in line:
                     if c not in ('>', ' ', '\t'):
                         break
                     ws_len += 1
-                    ws = self.normalize_ws(ws + c)
-                    ws_virtual_len = len(ws)
+                    if c == '\t':
+                        tab_size = self.tab_len - (index % self.tab_len)
+                        ws_virtual_len += tab_size
+                        ws.append(' ' * tab_size)
+                    else:
+                        tab_size = 1
+                        ws_virtual_len += 1
+                        ws.append(c)
                     if ws_virtual_len >= self.ws_virtual_len:
                         break
+                    index += tab_size
 
-                content = ws[self.ws_virtual_len:] + line[ws_len:]
-                ws = ws[:self.ws_virtual_len]
+                ws = ''.join(ws)
+                content = line[ws_len:]
 
                 end = count + 1
                 quote_level = ws.count(">")
@@ -528,8 +536,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             # we can restore the original source
             obj["stash"].store(
                 placeholder[1:-1],
-                "%s\n%s%s" % (self.first, source, self.last),
-                self.ws_len
+                "%s\n%s%s" % (self.first, self.normalize_ws(source), self.last),
+                self.ws_virtual_len
             )
 
     def run(self, lines):
