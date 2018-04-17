@@ -42,18 +42,18 @@ EOT = '\u0004'
 
 RE_NESTED_FENCE_START = re.compile(
     r'''(?x)
-    (?:(?P<fence>~{3,}|`{3,}))[ \t]*                                        # Fence opening
-    (\{?                                                                    # Language opening
-    \.?(?P<lang>[\w#.+-]*))?[ \t]*                                          # Language
+    (?P<fence>~{3,}|`{3,})[ \t]*                                              # Fence opening
+    (\{?                                                                      # Language opening
+    \.?(?P<lang>[\w#.+-]*))?[ \t]*                                            # Language
     (?:
-    (hl_lines=(?P<quot>"|')(?P<hl_lines>\d+(?:[ ]+\d+)*)(?P=quot))?[ \t]*|  # highlight lines
-    (linenums=(?P<quot2>"|')                                                # Line numbers
-        (?P<linestart>[\d]+)                                                #   Line number start
-        (?:[ ]+(?P<linestep>[\d]+))?                                        #   Line step
-        (?:[ ]+(?P<linespecial>[\d]+))?                                     #   Line special
+    (hl_lines=(?P<quot>"|')(?P<hl_lines>\d+(?:[ \t]+\d+)*)(?P=quot))?[ \t]*|  # highlight lines
+    (linenums=(?P<quot2>"|')                                                  # Line numbers
+        (?P<linestart>[\d]+)                                                  #   Line number start
+        (?:[ \t]+(?P<linestep>[\d]+))?                                        #   Line step
+        (?:[ \t]+(?P<linespecial>[\d]+))?                                     #   Line special
     (?P=quot2))?[ \t]*
     ){,2}
-    }?[ \t]*$                                                               # Language closing
+    }?[ \t]*$                                                                 # Language closing
     '''
 )
 
@@ -442,6 +442,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 ws = []
                 index = 0
                 for c in line:
+                    if ws_virtual_len >= self.ws_virtual_len:
+                        break
                     if c not in ('>', ' ', '\t'):
                         break
                     ws_len += 1
@@ -453,8 +455,6 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                         tab_size = 1
                         ws_virtual_len += 1
                         ws.append(c)
-                    if ws_virtual_len >= self.ws_virtual_len:
-                        break
                     index += tab_size
 
                 ws = ''.join(ws)
