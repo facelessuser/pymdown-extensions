@@ -447,7 +447,7 @@ Option                         | Type         | Default       | Description
 `disable_indented_code_blocks` | bool         | `#!py3 False` | Disables Python Markdown's indented code block parsing.  This is nice if you only ever use fenced blocks.
 `custom_fences`                | [dictionary] | `#!py3 [{'name':'flow', 'class':'uml-flowchart'}, {'name':'sequence', 'class':'uml-sequence-diagram'}]` | Custom fences.
 `highlight_code`               | bool         | `#!py3 True`  | Enable or disable code highlighting.
-`preserve_tabs`                | bool         | `#!py3 False` | Experimental feature that preserves tabs in fenced bocks.
+`preserve_tabs`                | bool         | `#!py3 False` | Experimental feature that preserves tabs in fenced code blocks.
 
 !!! warning "Deprecated 3.0.0"
     The setting `use_codehilite_settings` has been deprecated since `3.0.0` and now does nothing. It is still present to avoid breakage, but will be removed in the future.
