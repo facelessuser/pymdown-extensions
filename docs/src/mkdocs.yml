@@ -72,6 +72,7 @@ markdown_extensions:
   - markdown.extensions.footnotes:
   - pymdownx.extrarawhtml:
   - pymdownx.superfences:
+      preserve_tabs: true
   - pymdownx.highlight:
       css_class: codehilite
       extend_pygments_lang:

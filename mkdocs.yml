@@ -72,6 +72,7 @@ markdown_extensions:
   - markdown.extensions.footnotes:
   - pymdownx.extrarawhtml:
   - pymdownx.superfences:
+      preserve_tabs: true
   - pymdownx.highlight:
       css_class: codehilite
       extend_pygments_lang:
@@ -115,6 +116,6 @@ extra:
     - type: github
       link: https://github.com/facelessuser
 extra_css:
-  - extra-d04c85ed4a.css
+  - extra-c507967d85.css
 extra_javascript:
   - extra-d8800ea088.js
