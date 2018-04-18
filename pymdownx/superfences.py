@@ -40,6 +40,8 @@ import re
 SOH = '\u0001'
 EOT = '\u0004'
 
+PREFIX_CHARS = ('>', ' ', '\t')
+
 RE_NESTED_FENCE_START = re.compile(
     r'''(?x)
     (?P<fence>~{3,}|`{3,})[ \t]*                                              # Fence opening
@@ -394,25 +396,57 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
         return int(linespecial) if linespecial else -1
 
+    def parse_fence_line(self, line):
+        """Parse fence line."""
+
+        ws_len = 0
+        ws_virtual_len = 0
+        ws = []
+        index = 0
+        for c in line:
+            if ws_virtual_len >= self.ws_virtual_len:
+                break
+            if c not in PREFIX_CHARS:
+                break
+            ws_len += 1
+            if c == '\t':
+                tab_size = self.tab_len - (index % self.tab_len)
+                ws_virtual_len += tab_size
+                ws.append(' ' * tab_size)
+            else:
+                tab_size = 1
+                ws_virtual_len += 1
+                ws.append(c)
+            index += tab_size
+
+        return ''.join(ws), line[ws_len:]
+
+    def parse_whitespace(self, line):
+        """Parse the whitespace (blockquote syntax is counted as well)."""
+
+        self.ws_len = 0
+        self.ws_virtual_len = 0
+        ws = []
+        for c in line:
+            if c not in PREFIX_CHARS:
+                break
+            self.ws_len += 1
+            ws.append(c)
+
+        ws = self.normalize_ws(''.join(ws))
+        self.ws_virtual_len = len(ws)
+
+        return ws
+
     def search_nested(self, lines):
         """Search for nested fenced blocks."""
 
         count = 0
         for line in lines:
             if self.fence is None:
+                ws = self.parse_whitespace(line)
+
                 # Found the start of a fenced block.
-                self.ws_len = 0
-                self.ws_virtual_len = 0
-                ws = []
-                for c in line:
-                    if c not in ('>', ' ', '\t'):
-                        break
-                    self.ws_len += 1
-                    ws.append(c)
-
-                ws = self.normalize_ws(''.join(ws))
-                self.ws_virtual_len = len(ws)
-
                 m = RE_NESTED_FENCE_START.match(line, self.ws_len)
                 if m is not None:
                     start = count
@@ -436,29 +470,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 # - When content lines are inside blockquotes, make sure
                 #   the nested block quote levels make sense according to
                 #   blockquote rules.
-                ws_len = 0
-                ws_virtual_len = 0
-                content = ''
-                ws = []
-                index = 0
-                for c in line:
-                    if ws_virtual_len >= self.ws_virtual_len:
-                        break
-                    if c not in ('>', ' ', '\t'):
-                        break
-                    ws_len += 1
-                    if c == '\t':
-                        tab_size = self.tab_len - (index % self.tab_len)
-                        ws_virtual_len += tab_size
-                        ws.append(' ' * tab_size)
-                    else:
-                        tab_size = 1
-                        ws_virtual_len += 1
-                        ws.append(c)
-                    index += tab_size
-
-                ws = ''.join(ws)
-                content = line[ws_len:]
+                ws, content = self.parse_fence_line(line)
 
                 end = count + 1
                 quote_level = ws.count(">")
