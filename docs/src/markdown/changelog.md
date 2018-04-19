@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.10.0
+
+- **NEW**: SuperFences now adds experimental support for preserving tabs in fenced code blocks. (#276)
+
 ## 4.9.2
 
 Mar 26, 2018
@@ -31,7 +35,7 @@ Jan 17, 2018
 
 Dec 8, 2017
 
-- **NEW**: Bring back generic output for Arithmatex. Now under the `generic` option (#185).
+- **NEW**: Bring back generic output for Arithmatex. Now under the `generic` option. (#185)
 - **FIX**: StripHTML should allow space before close of opening tag.
 - **FIX**: MagicLink should not auto-link inside a link. (#151)
 

@@ -2,11 +2,12 @@
 
 ## Overview
 
-SuperFences provides three features:
+SuperFences provides four features:
 
 1. The ability to [nest fences](#nested-fence-format) under blockquotes, lists, or other block elements (see [Limitations](#limitations) for more info).
 2. Ability to specify [custom fences](#custom-fences) to provide features like flowcharts, sequence diagrams, or other custom blocks.
 3. The ability to disable indented code blocks in favor of only using the fenced variant (off by default).
+4. Experimental feature that preserves tabs within a code block instead of converting them to spaces which is Python Markdown's default behavior.
 
 !!! danger "Reminder"
     Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this extension!
@@ -65,6 +66,25 @@ SuperFences provides three features:
 
     Another paragraph.
     ````
+
+## Preserve tabs
+
+Python Markdown has an approach where it normalizes whitespace. This means `\r\n` is converted to `\n` and `\t` is converted to spaces. In 99% of Markdown, this is never really an issue, but with code blocks it can be. Tabs can sometimes be very useful for aligning certain kinds of data, especially when dealing with characters of varying width.
+
+!!! example "Tabbed Content"
+
+    ```
+    ============================================================
+    T	Tp	Sp	D	Dp	S	D7	T
+    ------------------------------------------------------------
+    A	F#m	Bm	E	C#m	D	E7	A
+    A#	Gm	Cm	F	Dm	D#	F7	A#
+    B♭	Gm	Cm	F	Dm	E♭m	F7	B♭
+    ```
+
+If you have a scenario where preserving tabs is a requirement, you can use SuperFences `preserve_tabs` option to prevent converting tabs to spaces inside fenced code blocks. This *only* applies to fenced code blocks. Indented code blocks and inline code blocks will still be treated with Python Markdown's default behavior.
+
+This feature is experimental and actually applies the fences before whitespace normalization and bypasses the normalization for the code content.
 
 ## Code Highlighting
 
@@ -427,6 +447,7 @@ Option                         | Type         | Default       | Description
 `disable_indented_code_blocks` | bool         | `#!py3 False` | Disables Python Markdown's indented code block parsing.  This is nice if you only ever use fenced blocks.
 `custom_fences`                | [dictionary] | `#!py3 [{'name':'flow', 'class':'uml-flowchart'}, {'name':'sequence', 'class':'uml-sequence-diagram'}]` | Custom fences.
 `highlight_code`               | bool         | `#!py3 True`  | Enable or disable code highlighting.
+`preserve_tabs`                | bool         | `#!py3 False` | Experimental feature that preserves tabs in fenced code blocks.
 
 !!! warning "Deprecated 3.0.0"
     The setting `use_codehilite_settings` has been deprecated since `3.0.0` and now does nothing. It is still present to avoid breakage, but will be removed in the future.
