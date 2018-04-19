@@ -2,6 +2,8 @@
 
 ## 4.10.0
 
+Apr 18, 2018
+
 - **NEW**: SuperFences now adds experimental support for preserving tabs in fenced code blocks. (#276)
 
 ## 4.9.2
