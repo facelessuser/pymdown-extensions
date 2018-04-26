@@ -285,6 +285,9 @@ Format\ Function                | Description
 `superfences.fence_code_format` | Places the HTML escaped content of the fence under a `#!html <pre><code>` block.
 `superfences.fence_div_format`  | Places the HTML escaped content of the fence under a `#!html <div>` block.
 
+!!! tip
+    If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please see the [FAQ](../faq.md) to see how to specify function references in YAML.
+
 ## UML Diagram Example
 
 This example illustrates how this document uses the `custom_fences` option to do UML diagrams.  Out of the box, SuperFences use the default settings for `custom_fences` for the purpose of including UML. The settings below show the default settings, which define two new custom languages called `flow` and `sequence`. The `flow` and `sequence` fences will pass the content through the `superfences.fence_code_format` format function which will wrap the content in `#!html <pre><code` blocks and attach the class `uml-flowchart` or `uml-sequence-diagram` to the respective `#!html <pre>` block. `superfences.fence_div_format` could just as easily be used to wrap the content in a `#!html <div>` instead, or a new custom function could have been written and used.
