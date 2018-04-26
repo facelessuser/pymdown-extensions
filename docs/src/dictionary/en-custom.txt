@@ -63,6 +63,7 @@ PathConverter
 PlainHTML
 ProgressBar
 PyMdown
+PyYAML
 PyYaml
 PyYaml's
 Pygments

@@ -1,13 +1,16 @@
 # GitHub
 
 !!! warning "Deprecated 4.5.0"
-    4.5.0 has deprecated the GitHub extension and will remove it in version 5.0.0. The GitHub extension has never aimed to give a 1:1 match of GitHub features, and to avoid confusion, it is being discontinued, but all the great extensions can be configured individually to create your own GitHub-ish feel.
+    4.5.0 has deprecated the GitHub extension and will remove it in version 5.0.0. The GitHub extension has never aimed to give a 1:1 match of GitHub features, and to avoid confusion, it is being discontinued, but all the great extensions can be configured individually to create your own GitHub-ish feel. You see a full manual setup below.
 
     ??? settings "GitHub-ish Manual Setup"
 
         As the GitHub extension is now deprecated, a recommended GitHub configuration is provided below to emulate a setup that gives a GitHub feel.
 
         For GitHub like issue, commit, pull request, and mention shorthand syntax, you will also need to specify a `provider`, `user` and `repo` to give relative context for the very short forms: `#1`.  In the example below, we will use `fake-user` and `fake-repo`. See [MagicLink](./magiclink.md) for more details.
+
+        !!! tip
+            If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please see the [FAQ](../faq.md) to see how to specify function references in YAML.
 
         ```py3
 
@@ -84,31 +87,6 @@ For those looking for a GitHub theme, there is no GitHub style included with thi
 The default slugify that Python Markdown uses isn't very much like GitHub's as it just removes all Unicode. But, at the time of writing this, the [`gfm`](../miscellaneous_extras.md#gfm) slugify provided by PyMdown Extensions is pretty close in the way it handles Unicode in slugs. By passing in the `pymdownx.slugs.uslugify` function via Toc's slugify parameter, you can alter the slugs to be GitHub like.
 
 As mentioned before, the GitHub extension does not intend to provide a 1:1 match of GFM. There is one small known difference that may never be directly addressed. GitHub appends a number to duplicate headers with a hyphen: `-1`. Python Markdown (through the Toc extension) appends a number to duplicate headers with an underscore `_1`. Unfortunately, a slug function cannot simply override this duplicate as that behavior is controlled within the Toc extension. There are no plans at this time to write a Toc extension to replace the default one as a 1:1 match in behavior is not the end goal.
-
-## GitHub Emoji Configuration
-
-This is for informational purposes in case you wish to configure GitHub style emoji outside of the GitHub Extension. This is the full, default setup used to get GitHub emoji images.  This is valid at the time of writing this. GitHub uses Gemoji to provide their emoji, but GitHub also constantly tweaks how they do things, so in time this may render differently than what they actually do. This should provide emoji for as long as the CDNs are valid.
-
-```python
-import pymdownx.emoji
-
-extension_configs = {
-    "pymdownx.emoji": {
-        "emoji_index": pymdownx.emoji.gemoji,
-        "emoji_generator": pymdownx.emoji.to_png,
-        "alt": "short",
-        "options": {
-            "attributes": {
-                "align": "absmiddle",
-                "height": "20px",
-                "width": "20px"
-            },
-            "image_path": "https://assets-cdn.github.com/images/icons/emoji/unicode/",
-            "non_standard_image_path": "https://assets-cdn.github.com/images/icons/emoji/"
-        }
-    }
-}
-```
 
 ## Options
 
