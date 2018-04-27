@@ -73,14 +73,19 @@ By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  
 
 `pymdownx.emoji.twemoji`
 : 
-    This function provides an index of the latest Twemoji supported emoji (at the time of release).  The associated short names are currently borrowed from EmojiOne's index. These few emoji are currently Twemoji specific, two of which are likely to always be as they are not part of the official emoji spec:
+    This function provides an index of the latest Twemoji supported emoji (at the time of release).  The associated short names are currently borrowed from EmojiOne's index. These few emoji are currently Twemoji specific, two of which are likely to always be as they are not part of the official emoji spec.
+
+    !!! warning
+        Since we use EmojiOne's index for short names, if EmojiOne updates their support to include the emoji listed below, the short name is subject to change.
+
+    Twemoji specific emoji:
 
     - `:skier_tone1:`
     - `:skier_tone2:`
     - `:skier_tone3:`
     - `:skier_tone4:`
     - `:skier_tone5:`
-    - `:pirage_flag:`
+    - `:pirate_flag:`
     - `:shibuya:`
     - `:woman_levitate:`
     - `:woman_in_business_suit_levitating_tone1:`
