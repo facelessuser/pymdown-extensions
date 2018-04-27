@@ -45,8 +45,101 @@ special_emoji = {
         "category": "travel",
         "name": "Shibuya 109",
         "unicode": "e50a"
+    },
+    # Woman levitate
+    ":woman_levitate:": {
+        "category": "people",
+        "name": "woman in business suit levitating",
+        "unicode": "1f574-fe0f-200d-2640-fe0f"
+    },
+    # Woman levitating variants
+    ":woman_in_business_suit_levitating_tone1:": {
+        "category": "people",
+        "name": "woman in business suit levitating: light skin tone",
+        "unicode": "1f574-1f3fb-200d-2640-fe0f",
+        "aliases": ["woman_in_business_suit_levitating_light_skin_tone"]
+    },
+    ":woman_in_business_suit_levitating_tone2:": {
+        "category": "people",
+        "name": "woman in business suit levitating: medium-light skin tone",
+        "unicode": "1f574-1f3fc-200d-2640-fe0f",
+        "aliases": ["woman_in_business_suit_levitating_medium_light_skin_tone"]
+    },
+    ":woman_in_business_suit_levitating_tone3:": {
+        "category": "people",
+        "name": "woman in business suit levitating: medium skin tone",
+        "unicode": "1f574-1f3fd-200d-2640-fe0f",
+        "aliases": ["woman_in_business_suit_levitating_medium_skin_tone"]
+    },
+    ":woman_in_business_suit_levitating_tone4:": {
+        "category": "people",
+        "name": "woman in business suit levitating: medium-dark skin tone",
+        "unicode": "1f574-1f3fe-200d-2640-fe0f",
+        "aliases": ["woman_in_business_suit_levitating_medium_dark_skin_tone"]
+    },
+    ":woman_in_business_suit_levitating_tone5:": {
+        "category": "people",
+        "name": "woman in business suit levitating: dark skin tone",
+        "unicode": "1f574-1f3ff-200d-2640-fe0f",
+        "aliases": ["woman_in_business_suit_levitating_dark_skin_tone"]
+    },
+    # Woman in tuxedo
+    ":woman_in_tuxedo:": {
+        "category": "people",
+        "name": "woman in tuxedo",
+        "unicode": "1f935-200d-2640-fe0f"
+    },
+    # Woman in tuxedo variants
+    ":woman_in_tuxedo_tone1:": {
+        "category": "people",
+        "name": "woman in tuxedo: light skin tone",
+        "unicode": "1f935-1f3fb-200d-2640-fe0f"
+    },
+    ":woman_in_tuxedo_tone2:": {
+        "category": "people",
+        "name": "woman in tuxedo: medium-light skin tone",
+        "unicode": "1f935-1f3fc-200d-2640-fe0f"
+    },
+    ":woman_in_tuxedo_tone3:": {
+        "category": "people",
+        "name": "woman in tuxedo: medium skin tone",
+        "unicode": "1f935-1f3fd-200d-2640-fe0f"
+    },
+    ":woman_in_tuxedo_tone4:": {
+        "category": "people",
+        "name": "woman in tuxedo: medium-dark skin tone",
+        "unicode": "1f935-1f3fe-200d-2640-fe0f"
+    },
+    ":woman_in_tuxedo_tone5:": {
+        "category": "people",
+        "name": "woman in tuxedo: dark skin tone",
+        "unicode": "1f935-1f3ff-200d-2640-fe0f"
     }
 }
+
+additional_aliases = {}
+
+ignore_emoji = [
+    # Alternative man levitating
+    "1f574-fe0f-200d-2642-fe0f",
+
+    # Alternative man levitating variants
+    "1f574-1f3fb-200d-2642-fe0f",
+    "1f574-1f3fc-200d-2642-fe0f",
+    "1f574-1f3fd-200d-2642-fe0f",
+    "1f574-1f3fe-200d-2642-fe0f",
+    "1f574-1f3ff-200d-2642-fe0f",
+
+    # Alternative man in tuxedo
+    "1f935-200d-2642-fe0f",
+
+    # Alternative man in tuxedo variants
+    "1f935-1f3fb-200d-2642-fe0f",
+    "1f935-1f3fc-200d-2642-fe0f",
+    "1f935-1f3fd-200d-2642-fe0f",
+    "1f935-1f3fe-200d-2642-fe0f",
+    "1f935-1f3ff-200d-2642-fe0f"
+]
 
 
 def get_unicode_alt(value):
@@ -103,11 +196,31 @@ def parse(repo, tag):
     for k, v in special_emoji.items():
         if k not in emoji_db and k not in aliases:
             shortnames.add(k)
-            emoji_db[k] = copy.copy(v)
+            copy_emoji = copy.copy(v)
+            if 'aliases' in copy_emoji:
+                del copy_emoji['aliases']
+            emoji_db[k] = copy_emoji
             code_point = v.get('unicode_alt', v['unicode'])
             if code_point in unsupported:
                 index = unsupported.index(code_point)
                 del unsupported[index]
+            special_aliases = v.get('aliases', [])
+            for spec_alias in special_aliases:
+                if spec_alias not in aliases:
+                    aliases[spec_alias] = k
+
+    # Additional aliases
+    for k, v in additional_aliases.items():
+        if k in emoji_db:
+            for a in v:
+                if a not in aliases:
+                    aliases[a] = k
+
+    # Remove ignored emoji from unsupported list
+    for ignore in ignore_emoji:
+        if ignore in unsupported:
+            index = unsupported.index(ignore)
+            del unsupported[index]
 
     # Save test files
     for test in ('png', 'svg', 'entities'):

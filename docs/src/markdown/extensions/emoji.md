@@ -51,7 +51,7 @@ By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  
     ```pycon3
     >>> import pymdownx.emoji1_db as e1db
     >>> e1db.version
-    'v3.1.2'
+    'v3.1.3'
     ```
 
     !!! warning "EmojiOne Update"
@@ -82,13 +82,33 @@ By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  
     - `:skier_tone5:`
     - `:pirage_flag:`
     - `:shibuya:`
+    - `:woman_levitate:`
+    - `:woman_in_business_suit_levitating_tone1:`
+    - `:woman_in_business_suit_levitating_tone2:`
+    - `:woman_in_business_suit_levitating_tone3:`
+    - `:woman_in_business_suit_levitating_tone4:`
+    - `:woman_in_business_suit_levitating_tone5:`
+    - `:woman_in_tuxedo:`
+    - `:woman_in_tuxedo_tone1:`
+    - `:woman_in_tuxedo_tone2:`
+    - `:woman_in_tuxedo_tone3:`
+    - `:woman_in_tuxedo_tone4:`
+    - `:woman_in_tuxedo_tone5:`
+
+    For consistency with existing like emoji, these aliases have been added as well:
+
+    - `:woman_in_business_suit_levitating_light_skin_tone:` --> `:woman_in_business_suit_levitating_tone1:`
+    - `:woman_in_business_suit_levitating_medium_light_skin_tone:` --> `:woman_in_business_suit_levitating_tone2:`
+    - `:woman_in_business_suit_levitating_medium_skin_tone:` --> `:woman_in_business_suit_levitating_tone3:`
+    - `:woman_in_business_suit_levitating_medium_dark_skin_tone:` --> `:woman_in_business_suit_levitating_tone4:`
+    - `:woman_in_business_suit_levitating_dark_skin_tone:` --> `:woman_in_business_suit_levitating_tone5:`
 
     You can always find out what tag it was built with by doing the following:
 
     ```pycon3
     >>> import pymdownx.twemoji_db as twdb
     >>> twdb.version
-    'v2.5.0'
+    'v2.6.0'
     ```
 
 ## Default Emoji Generators
@@ -170,7 +190,7 @@ You can select a generator to use by passing in one of the functions below via t
 
 `pymdownx.emoji.to_awesome`
 : 
-    This generator is another EmojiOne specific output called EmojiOne Awesome. It aims to give a font-awesome like interface for EmojiOne.  The `emojione-awesome` CDN currently follows this format: https://cdn.jsdelivr.net/npm/emojione@3.1.2/extras/css/emojione-awesome.css, so update accordingly.  The output format is:
+    This generator is another EmojiOne specific output called EmojiOne Awesome. It aims to give a font-awesome like interface for EmojiOne.  The `emojione-awesome` CDN currently follows this format: https://cdn.jsdelivr.net/npm/emojione@3.1.3/extras/css/emojione-awesome.css, so update accordingly.  The output format is:
 
     ```html
     <i class="e1a-smile"></i>

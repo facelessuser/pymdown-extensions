@@ -3,7 +3,7 @@
 Names from emojione database. Do not edit by hand.
 """
 from __future__ import unicode_literals
-version = "v2.5.0"
+version = "v2.6.0"
 name = "twemoji"
 emoji = {
     ":100:": {
@@ -12274,6 +12274,31 @@ emoji = {
         "name": "woman health worker: dark skin tone",
         "unicode": "1f469-1f3ff-200d-2695-fe0f"
     },
+    ":woman_in_business_suit_levitating_tone1:": {
+        "category": "people",
+        "name": "woman in business suit levitating: light skin tone",
+        "unicode": "1f574-1f3fb-200d-2640-fe0f"
+    },
+    ":woman_in_business_suit_levitating_tone2:": {
+        "category": "people",
+        "name": "woman in business suit levitating: medium-light skin tone",
+        "unicode": "1f574-1f3fc-200d-2640-fe0f"
+    },
+    ":woman_in_business_suit_levitating_tone3:": {
+        "category": "people",
+        "name": "woman in business suit levitating: medium skin tone",
+        "unicode": "1f574-1f3fd-200d-2640-fe0f"
+    },
+    ":woman_in_business_suit_levitating_tone4:": {
+        "category": "people",
+        "name": "woman in business suit levitating: medium-dark skin tone",
+        "unicode": "1f574-1f3fe-200d-2640-fe0f"
+    },
+    ":woman_in_business_suit_levitating_tone5:": {
+        "category": "people",
+        "name": "woman in business suit levitating: dark skin tone",
+        "unicode": "1f574-1f3ff-200d-2640-fe0f"
+    },
     ":woman_in_lotus_position:": {
         "category": "activity",
         "name": "woman in lotus position",
@@ -12334,6 +12359,36 @@ emoji = {
         "name": "woman in steamy room: dark skin tone",
         "unicode": "1f9d6-1f3ff-200d-2640-fe0f"
     },
+    ":woman_in_tuxedo:": {
+        "category": "people",
+        "name": "woman in tuxedo",
+        "unicode": "1f935-200d-2640-fe0f"
+    },
+    ":woman_in_tuxedo_tone1:": {
+        "category": "people",
+        "name": "woman in tuxedo: light skin tone",
+        "unicode": "1f935-1f3fb-200d-2640-fe0f"
+    },
+    ":woman_in_tuxedo_tone2:": {
+        "category": "people",
+        "name": "woman in tuxedo: medium-light skin tone",
+        "unicode": "1f935-1f3fc-200d-2640-fe0f"
+    },
+    ":woman_in_tuxedo_tone3:": {
+        "category": "people",
+        "name": "woman in tuxedo: medium skin tone",
+        "unicode": "1f935-1f3fd-200d-2640-fe0f"
+    },
+    ":woman_in_tuxedo_tone4:": {
+        "category": "people",
+        "name": "woman in tuxedo: medium-dark skin tone",
+        "unicode": "1f935-1f3fe-200d-2640-fe0f"
+    },
+    ":woman_in_tuxedo_tone5:": {
+        "category": "people",
+        "name": "woman in tuxedo: dark skin tone",
+        "unicode": "1f935-1f3ff-200d-2640-fe0f"
+    },
     ":woman_judge:": {
         "category": "people",
         "name": "woman judge",
@@ -12393,6 +12448,11 @@ emoji = {
         "category": "activity",
         "name": "woman juggling: dark skin tone",
         "unicode": "1f939-1f3ff-200d-2640-fe0f"
+    },
+    ":woman_levitate:": {
+        "category": "people",
+        "name": "woman in business suit levitating",
+        "unicode": "1f574-fe0f-200d-2640-fe0f"
     },
     ":woman_lifting_weights:": {
         "category": "activity",
@@ -14691,5 +14751,15 @@ aliases = {
     ":za:": ":flag_za:",
     ":zipper_mouth_face:": ":zipper_mouth:",
     ":zm:": ":flag_zm:",
-    ":zw:": ":flag_zw:"
+    ":zw:": ":flag_zw:",
+    "skier_dark_skin_tone": ":skier_tone5:",
+    "skier_light_skin_tone": ":skier_tone1:",
+    "skier_mediu_skin_tone": ":skier_tone3:",
+    "skier_medium_dark_skin_tone": ":skier_tone4:",
+    "skier_medium_light_skin_tone": ":skier_tone2:",
+    "woman_in_business_suit_levitating_dark_skin_tone": ":woman_in_business_suit_levitating_tone5:",
+    "woman_in_business_suit_levitating_light_skin_tone": ":woman_in_business_suit_levitating_tone1:",
+    "woman_in_business_suit_levitating_medium_dark_skin_tone": ":woman_in_business_suit_levitating_tone4:",
+    "woman_in_business_suit_levitating_medium_light_skin_tone": ":woman_in_business_suit_levitating_tone2:",
+    "woman_in_business_suit_levitating_medium_skin_tone": ":woman_in_business_suit_levitating_tone3:"
 }
