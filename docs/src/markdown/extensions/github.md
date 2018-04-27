@@ -1,56 +1,7 @@
 # GitHub
 
 !!! warning "Deprecated 4.5.0"
-    4.5.0 has deprecated the GitHub extension and will remove it in version 5.0.0. The GitHub extension has never aimed to give a 1:1 match of GitHub features, and to avoid confusion, it is being discontinued, but all the great extensions can be configured individually to create your own GitHub-ish feel. You see a full manual setup below.
-
-    ??? settings "GitHub-ish Manual Setup"
-
-        As the GitHub extension is now deprecated, a recommended GitHub configuration is provided below to emulate a setup that gives a GitHub feel.
-
-        For GitHub like issue, commit, pull request, and mention shorthand syntax, you will also need to specify a `provider`, `user` and `repo` to give relative context for the very short forms: `#1`.  In the example below, we will use `fake-user` and `fake-repo`. See [MagicLink](./magiclink.md) for more details.
-
-        !!! tip
-            If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please see the [FAQ](../faq.md) to see how to specify function references in YAML.
-
-        ```py3
-
-        extensions = [
-            'markdown.extensions.tables',
-            'pymdownx.magiclink',
-            'pymdownx.betterem',
-            'pymdownx.tilde',
-            'pymdownx.emoji',
-            'pymdownx.tasklist',
-            'pymdownx.superfences'
-        ]
-
-        extension_config = {
-            "pymdownx.magiclink": {
-                "repo_url_shortener": True,
-                "repo_url_shorthand": True,
-                "provider": "github",
-                "user": "facelessuser",
-                "repo": "pymdown-extensions"
-            },
-            "pymdownx.tilde": {
-                "subscript": False
-            },
-            "pymdownx.emoji": {
-                "emoji_index": pymdownx.emoji.gemoji,
-                "emoji_generator": pymdownx.emoji.to_png,
-                "alt": "short",
-                "options": {
-                    "attributes": {
-                        "align": "absmiddle",
-                        "height": "20px",
-                        "width": "20px"
-                    },
-                    "image_path": "https://assets-cdn.github.com/images/icons/emoji/unicode/",
-                    "non_standard_image_path": "https://assets-cdn.github.com/images/icons/emoji/"
-                }
-            }
-        }
-        ```
+    4.5.0 has deprecated the GitHub extension and will remove it in version 5.0.0. The GitHub extension has never aimed to give a 1:1 match of GitHub features, and to avoid confusion, it is being discontinued, but all the great extensions can be configured individually to create your own GitHub-ish feel. Please see the [FAQ](../faq.md#github-ish-configurations) to learn how to configure a GitHub-ish feel.
 
 ## Overview
 

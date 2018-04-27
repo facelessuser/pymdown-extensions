@@ -40,7 +40,7 @@ Emoji provides various output formats that take the Unicode data associated with
 By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  All indexes are generated from the most recent official release tag source (in the case of Twemoji, sort names are acquired from EmojiOne's generated index). They can be used by passing in one of the three functions below via the `emoji_index` parameter.  Pass the actual function reference, not a string. If you need to create your own, just check out [Custom Emoji Indexes](#custom-emoji-generators).
 
 !!! tip
-    If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please see the [FAQ](../faq.md) to see how to specify function references in YAML.
+    If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify function references in YAML.
 
 `pymdownx.emoji.emojione`
 : 
@@ -98,7 +98,7 @@ Emoji provides six default emoji generators. PNG output and Unicode code point o
 You can select a generator to use by passing in one of the functions below via the `emoji_generator` parameter.  Pass the actual function reference, not a string. If you need to create your own, just check out [Custom Emoji Generators](#custom-emoji-generators).
 
 !!! tip
-    If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please see the [FAQ](../faq.md) to see how to specify function references in YAML.
+    If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify function references in YAML.
 
 `pymdownx.emoji.to_png`
 : 
