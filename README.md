@@ -4,13 +4,17 @@
 [![Requirements Status][requires-image]][requires-link]
 [![pypi-version][pypi-image]][pypi-link]
 ![License][license-image-mit]
+
 # PyMdown Extensions
+
 Extensions for [Python Markdown](https://pythonhosted.org/Markdown/).
 
 # Documentation
+
 Extension documentation is found here: http://facelessuser.github.io/pymdown-extensions/.
 
 # License
+
 License is MIT except for a few exceptions.  See [LICENSE](https://github.com/facelessuser/pymdown-extensions/blob/master/LICENSE.md) for more info.
 
 [codecov-image]: https://img.shields.io/codecov/c/github/facelessuser/pymdown-extensions/master.svg
