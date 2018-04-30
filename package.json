@@ -1,6 +1,6 @@
 {
   "name": "pymdown-extensions",
-  "version": "4.10.0",
+  "version": "4.10.1",
   "description": "Extensions for Python Markdown",
   "repository": "https://github.com/facelessuser/pymdown-extensions.git",
   "author": "Isaac Muse <isaacmuse@gmail.com>",
