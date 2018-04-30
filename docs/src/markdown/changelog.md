@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.10.1
+
+- **FIX**: Update Twemoji to 2.6.0 and EmojiOne 3.1.3.
+
 ## 4.10.0
 
 Apr 18, 2018

@@ -87,7 +87,7 @@ def download_tag(repo, tag, url):
 def select_tag(repo, no_download):
     """Get GitHub's usable emoji."""
     resp = requests.get(
-        url_join(GITHUB_API, 'repos', repo, 'tags'),
+        url_join(GITHUB_API, 'repos', repo, 'releases'),
         headers={'Accept': GITHUB_API_HEADER},
         timeout=50
     )
@@ -99,7 +99,7 @@ def select_tag(repo, no_download):
     num_tags = len(tags)
     text = []
     for index in range(num_tags):
-        text.append('    [%d] %s' % (index, tags[index]['name']))
+        text.append('    [%d] %s' % (index, tags[index]['tag_name']))
         if (index + 1) % 4 == 0:
             text.append('\n')
     if len(text) == 0 or text[-1] != '\n':
@@ -115,8 +115,8 @@ def select_tag(repo, no_download):
             user_input = None
 
     if not no_download:
-        download_tag(repo, tags[user_input]['name'], tags[user_input]['zipball_url'])
-    return tags[user_input]['name']
+        download_tag(repo, tags[user_input]['tag_name'], tags[user_input]['zipball_url'])
+    return tags[user_input]['tag_name']
 
 
 if __name__ == "__main__":
