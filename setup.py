@@ -6,24 +6,6 @@ from setuptools import setup, find_packages
 import os
 import imp
 
-LONG_DESC = '''
-PyMdown Extensions (pymdownx) is a collection of extensions for `Python Markdown`_.
-It should work for Python Markdown versions 2.6.0 and greater.
-You can check out the list of available extensions and learn more about them by `reading the docs`_.
-
-.. _`Python Markdown`: https://pythonhosted.org/Markdown/
-.. _`reading the docs`: http://facelessuser.github.io/pymdown-extensions/
-
-Support
-=======
-
-Help and support is available here at the repositories `bug tracker`_.
-Please read about `support and contributing`_ before creating issues.
-
-.. _`bug tracker`: https://github.com/facelessuser/pymdown-extensions/issues
-.. _`support and contributing`: http://facelessuser.github.io/pymdown-extensions/contributing/
-'''
-
 
 def get_version():
     """Get version and version_info without importing the entire module."""
@@ -54,6 +36,14 @@ def get_requirements(req):
     return install_requires
 
 
+def get_description():
+    """Get long description."""
+
+    with open("README.md", 'r') as f:
+        desc = f.read()
+    return desc
+
+
 VER, DEVSTATUS = get_version()
 
 
@@ -62,7 +52,8 @@ setup(
     version=VER,
     keywords='markdown extensions',
     description='Extension pack for Python Markdown.',
-    long_description=LONG_DESC,
+    long_description=get_description(),
+    long_description_content_type='text/markdown',
     author='Isaac Muse',
     author_email='Isaac.Muse@gmail.com',
     url='https://github.com/facelessuser/pymdown-extensions',
