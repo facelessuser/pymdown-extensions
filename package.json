@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^8.4.1",
-    "babel-core": "^6.26.2",
+    "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
     "babel-loader": "^7.1.4",
     "babel-plugin-external-helpers": "^6.22.0",
