@@ -1,5 +1,11 @@
 # Changelog
 
+## 4.10.2
+
+May 17, 2018
+
+- **FIX**: Failure with code highlight when guessing is enabled, but a bad language name is provided.
+
 ## 4.10.1
 
 Apr 29, 2018

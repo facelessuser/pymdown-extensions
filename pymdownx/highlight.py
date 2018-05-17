@@ -145,9 +145,12 @@ class Highlight(object):
 
         if lexer is None:
             if self.guess_lang:
-                lexer = guess_lexer(src)
-            else:
-                lexer = get_lexer_by_name('text')
+                try:
+                    lexer = guess_lexer(src)
+                except Exception:  # pragma: no cover
+                    pass
+        if lexer is None:
+            lexer = get_lexer_by_name('text')
         return lexer
 
     def escape(self, txt):
