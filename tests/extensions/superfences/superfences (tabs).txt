@@ -66,7 +66,7 @@ class Program {
     }
     ```
 
-```Bash tab=""
+```Bash tab=
 #!/bin/bash
 STR="Hello World!"
 echo $STR
@@ -74,7 +74,7 @@ echo $STR
 
 Break
 
-```C tab=""
+```C tab=
 #include 
 
 int main(void) {

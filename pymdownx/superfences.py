@@ -49,14 +49,14 @@ RE_NESTED_FENCE_START = re.compile(
     (\{?                                                                      # Language opening
     \.?(?P<lang>[\w#.+-]*))?[ \t]*                                            # Language
     (?:
-    (hl_lines=(?P<quot>"|')(?P<hl_lines>\d+(?:[ \t]+\d+)*)(?P=quot))?[ \t]*|  # highlight lines
-    (linenums=(?P<quot2>"|')                                                  # Line numbers
+    hl_lines=(?P<quot>"|')(?P<hl_lines>\d+(?:[ \t]+\d+)*)(?P=quot)[ \t]*|     # highlight lines
+    linenums=(?P<quot2>"|')                                                   # Line numbers
         (?P<linestart>[\d]+)                                                  #   Line number start
         (?:[ \t]+(?P<linestep>[\d]+))?                                        #   Line step
         (?:[ \t]+(?P<linespecial>[\d]+))?                                     #   Line special
-    (?P=quot2))?[ \t]*|
-    (?P<tab>tab=(?P<quot3>"|')(?P<tab_title>.*?)(?P=quot3))?[ \t]*            # Tab specifier
-    ){,2}
+    (?P=quot2)[ \t]*|
+    (?P<tab>tab=)(?:(?P<quot3>"|')(?P<tab_title>.*?)(?P=quot3))?[ \t]*   # Tab specifier
+    )*
     }?[ \t]*$                                                                 # Language closing
     '''
 )
@@ -65,7 +65,7 @@ RE_TABS = re.compile(r'((?:<p><superfences>.*?</superfences></p>\s*)+)', re.DOTA
 
 TAB = r'''<superfences><input name="tabs_%%(index)s" type="radio" id="tab_%%(index)s_%%(tab_index)s" %%(state)s/>
 <label for="tab_%%(index)s_%%(tab_index)s">%(title)s</label>
-%(code)s</superfences>'''
+<div class="superfences-content">%(code)s</div></superfences>'''
 
 NESTED_FENCE_END = r'%s[ \t]*$'
 
@@ -397,14 +397,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 self.empty_lines = 0
                 self.code.append(ws + content)
 
-    def get_tab(self, code, lang, title):
+    def get_tab(self, code, title):
         """Wrap code in tab div."""
-
-        if not title:
-            if lang:
-                title = lang
-            else:
-                title = 'Tab'
 
         return TAB % {'code': code, 'title': title}
 
@@ -417,7 +411,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             if entry["test"](self.lang):
                 code = entry["formatter"](self.rebuild_block(self.code), self.lang)
                 if self.tab is not None:
-                    code = self.get_tab(code, self.lang, self.tab)
+                    code = self.get_tab(code, self.tab)
                 break
 
         if code is not None:
@@ -513,6 +507,10 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                     self.fence_end = re.compile(NESTED_FENCE_END % self.fence)
                     if m.group('tab'):
                         self.tab = m.group('tab_title')
+                        if self.tab is None:
+                            self.tab = self.lang
+                        if not self.tab:
+                            self.tab = 'Tab'
             else:
                 # Evaluate lines
                 # - Determine if it is the ending line or content line
