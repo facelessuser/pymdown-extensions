@@ -2,12 +2,13 @@
 
 ## Overview
 
-SuperFences provides four features:
+SuperFences provides a number of features:
 
-1. The ability to [nest fences](#nested-fence-format) under blockquotes, lists, or other block elements (see [Limitations](#limitations) for more info).
-2. Ability to specify [custom fences](#custom-fences) to provide features like flowcharts, sequence diagrams, or other custom blocks.
-3. The ability to disable indented code blocks in favor of only using the fenced variant (off by default).
-4. Experimental feature that preserves tabs within a code block instead of converting them to spaces which is Python Markdown's default behavior.
+1. Allowing the [nesting of fences](#nested-fence-format) under blockquotes, lists, or other block elements (see [Limitations](#limitations) for more info).
+2. Create [tabbed fenced code blocks](#tabbed-fences).
+3. Ability to specify [custom fences](#custom-fences) to provide features like flowcharts, sequence diagrams, or other custom blocks.
+4. Allow disabling of indented code blocks in favor of only using the fenced variant (off by default).
+5. Experimental feature that preserves tabs within a code block instead of converting them to spaces which is Python Markdown's default behavior.
 
 !!! danger "Reminder"
     Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this extension!
@@ -67,11 +68,85 @@ SuperFences provides four features:
     Another paragraph.
     ````
 
+## Tabbed Fences
+
+SuperFences has the ability to create tabbed code blocks.  Simply add `tab="tab-title"` to the fence's header, and the code block will will be rendered in a tab with the title `tab-title`.  If you do not provide a title, but you've specified a language, the language will be used as the title. No case transformation is applied -- what you type is what you get. Consecutive code tabs will be grouped together.
+
+!!! example "Tabbed Code"
+
+    ````
+    ```Bash tab=""
+    #!/bin/bash
+    STR="Hello World!"
+    echo $STR
+    ```
+
+    ```C tab=""
+    #include 
+
+    int main(void) {
+      printf("hello, world\n");
+    }
+    ```
+
+    ```C++ tab=""
+    #include <iostream>
+
+    int main() {
+      std::cout << "Hello, world!\n";
+      return 0;
+    }
+    ```
+
+    ```C# tab=""
+    using System;
+
+    class Program {
+      static void Main(string[] args) {
+        Console.WriteLine("Hello, world!");
+      }
+    }
+    ```
+    ````
+
+    ```Bash tab=""
+    #!/bin/bash
+    STR="Hello World!"
+    echo $STR
+    ```
+
+    ```C tab=""
+    #include 
+
+    int main(void) {
+      printf("hello, world\n");
+    }
+    ```
+
+    ```C++ tab=""
+    #include <iostream>
+
+    int main() {
+      std::cout << "Hello, world!\n";
+      return 0;
+    }
+    ```
+
+    ```C# tab=""
+    using System;
+
+    class Program {
+      static void Main(string[] args) {
+        Console.WriteLine("Hello, world!");
+      }
+    }
+    ```
+
 ## Preserve tabs
 
 Python Markdown has an approach where it normalizes whitespace. This means `\r\n` is converted to `\n` and `\t` is converted to spaces. In 99% of Markdown, this is never really an issue, but with code blocks it can be. Tabs can sometimes be very useful for aligning certain kinds of data, especially when dealing with characters of varying width.
 
-!!! example "Tabbed Content"
+!!! example "Tabs in Content"
 
     ```
     ============================================================
