@@ -1,0 +1,87 @@
+# Math Rendering Test Case
+
+## Inline Math
+
+This is Inline Math using `\( ... \)` \( x + y = z \in \left\{ -1, 1 \right\} \) and now using `$ ... $` $ x + y = z \in \left\{ -1, 1 \right\} $ and it should handle the case of giving my friend 2\$.  
+
+We can also do the same without gaps.
+
+This is Inline Math using `\(...\)` \(x + y = z \in \left\{ -1, 1 \right\}\) and now using `$...$` $x + y = z \in \left\{ -1, 1 \right\}$ and it should handle the case of giving my friend 2\$.  
+
+It can also take care of cases of one sided gaps.
+
+This is Inline Math using `\( ...\)` \( x + y = z \in \left\{ -1, 1 \right\}\) and now using `$ ...$` $ x + y = z \in \left\{ -1, 1 \right\}$ and it should handle the case of giving my friend 2\$.  
+
+This is Inline Math using `\(... \)` \(x + y = z \in \left\{ -1, 1 \right\} \) and now using `$... $` $x + y = z \in \left\{ -1, 1 \right\} $ and it should handle the case of giving my friend 2\$. 
+
+Here is a dollar test. My friend has \$2.00 and I have \$10.00. $ 2 + 10 = 13 $.
+
+## Display Math
+
+Well, this should be less challenging:
+
+\[ x + y = z \in \left\{ -1, 1 \right\} \] 
+
+\[x + y = z \in \left\{ -1, 1 \right\}\] 
+
+\[ x + y = z \in \left\{ -1, 1 \right\}\] 
+
+\[x + y = z \in \left\{ -1, 1 \right\} \] 
+
+$$ x + y = z \in \left\{ -1, 1 \right\} $$
+
+$$x + y = z \in \left\{ -1, 1 \right\}$$
+
+$$ x + y = z \in \left\{ -1, 1 \right\}$$
+
+$$x + y = z \in \left\{ -1, 1 \right\} $$
+
+## Environments
+
+\begin{align*}
+x + y & = z \in \left\{ -1, 1 \right\} \\
+g + h & = l
+\end{align*}
+
+$$ \begin{align*}
+x + y & = z \in \left\{ -1, 1 \right\} \\
+g + h & = l
+\end{align*} $$
+
+$$ \begin{align*}
+x + y & = z \in \left\{ -1, 1 \right\} \\
+g + h & = l
+\end{align*}$$
+
+$$\begin{align*}
+x + y & = z \in \left\{ -1, 1 \right\} \\
+g + h & = l
+\end{align*} $$
+
+\begin{align*} x + y & = z \in \left\{ -1, 1 \right\} \\ g + h & = l \end{align*}
+
+\begin{align*}x + y & = z \in \left\{ -1, 1 \right\} \\ g + h & = l\end{align*}
+
+\begin{align*} x + y & = z \in \left\{ -1, 1 \right\} \\ g + h & = l\end{align*}
+
+\begin{align*}x + y & = z \in \left\{ -1, 1 \right\} \\ g + h & = l \end{align*}
+
+$$\begin{align*}x + y & = z \in \left\{ -1, 1 \right\} \\ g + h & = l\end{align*}$$
+
+$$ \begin{align*}x + y & = z \in \left\{ -1, 1 \right\} \\ g + h & = l\end{align*} $$
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    config: ["MMLorHTML.js"],
+    jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+    extensions: ["tex2jax.js", "MathMenu.js", "MathZoom.js"],
+    tex2jax: {
+        inlineMath: [ ["\\(","\\)"] ],
+        displayMath: [ ["\\[","\\]"] ]
+    },
+    displayAlign: 'left',
+    showProcessingMessages: false,
+    messageStyle: 'none'
+});
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"></script>
