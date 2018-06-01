@@ -1,0 +1,55 @@
+.superfences-tabs {
+  display: flex;
+  position: relative;
+  flex-wrap: wrap;
+}
+
+.superfences-tabs input {
+  position: absolute;
+  opacity: 0;
+}
+
+.superfences-tabs label {
+  width: 100%;
+  padding: 4px;
+  margin: 0 8px;
+  cursor: pointer;
+}
+
+.superfences-tabs input:nth-child(n+1):checked + label {
+  color: #333;
+}
+
+@media (min-width: 900px) {
+  .superfences-tabs label {
+    width: auto;
+  }
+}
+
+.superfences-tabs .highlight {
+  display: none;
+  width: 100%;
+  background: #ddd;
+  margin-top: 10px;
+}
+
+.superfences-tabs .highlight pre {
+  font-family: Monaco;
+  font-size: 13px;
+  padding: 10px 12px;
+  margin: 0;
+}
+
+@media (min-width: 900px) {
+  .superfences-tabs .highlight {
+    order: 99;
+  }
+  
+  .superfences-tabs input:nth-child(n+1):checked + label {
+    color: #ff5252;
+  }
+}
+
+.superfences-tabs input:nth-child(n+1):checked + label + .highlight {
+  display: block;
+}
