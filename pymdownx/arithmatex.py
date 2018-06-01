@@ -57,7 +57,8 @@ as it is the default format for MathJax. If you wish to use a generic math outpu
 Please discontinue using this option as it will be removed in the future.
 See documentation to see why this have been deprecated."""
 
-RE_DOLLAR_INLINE = r'(?:(?<!\\)((?:\\{2})+)(?=\$)|(?<!\\)(\$)(?!\s)((?:\\.|[^\$])+?)(?<!\s)(?:\$))'
+RE_SMART_DOLLAR_INLINE = r'(?:(?<!\\)((?:\\{2})+)(?=\$)|(?<!\\)(\$)(?!\s)((?:\\.|[^\$])+?)(?<!\s)(?:\$))'
+RE_DOLLAR_INLINE = r'(?:(?<!\\)((?:\\{2})+)(?=\$)|(?<!\\)(\$)((?:\\.|[^\$])+?)(?:\$))'
 RE_BRACKET_INLINE = r'(?:(?<!\\)((?:\\{2})+?)(?=\\\()|(?<!\\)(\\\()((?:\\[^)]|[^\\])+?)(?:\\\)))'
 
 RE_DOLLAR_BLOCK = r'(?P<dollar>[$]{2})(?P<math>.+?)(?P=dollar)'
@@ -197,6 +198,7 @@ class ArithmatexExtension(Extension):
                 ["\\[", "\\]"],
                 "Wrap blick content with the provided text ['open', 'close'] - Default: ['', '']"
             ],
+            "smart_dollar": [True, "Use Arithmatex's smart dollars - Default True"],
             "block_syntax": [
                 ['dollar', 'square', 'begin'],
                 'Enable block syntax: "dollar" ($$...$$), "square" (\\[...\\]), and '
@@ -230,9 +232,10 @@ class ArithmatexExtension(Extension):
 
         # Inline patterns
         allowed_inline = set(config.get('inline_syntax', ['dollar', 'round']))
+        smart_dollar = config.get('smart_dollar', True)
         inline_patterns = []
         if 'dollar' in allowed_inline:
-            inline_patterns.append(RE_DOLLAR_INLINE)
+            inline_patterns.append(RE_SMART_DOLLAR_INLINE if smart_dollar else RE_DOLLAR_INLINE)
         if 'round' in allowed_inline:
             inline_patterns.append(RE_BRACKET_INLINE)
         if inline_patterns:

@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.11.0
+
+- **NEW**: Allow Arithmatex's "smart dollar" logic to be turned off via setting the option `smart_dollar` to `False` (#297).
+
 ## 4.10.2
 
 May 17, 2018

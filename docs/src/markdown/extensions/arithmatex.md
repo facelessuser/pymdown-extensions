@@ -8,7 +8,7 @@ Arithmatex searches for the patterns `#!tex $...$` and `#!tex \(...\)` for inlin
 
 ## Input Format
 
-For the `#!tex $...$` inline variant, it is expected that the opening token (`#!tex $`) is to be followed by a non-whitespace character, and the closing to be preceded by a non-white-space character.  This is to help avoid false positives when using the dollar sign in traditional ways such as: I have $2.00 and Bob has $10.00.  The previous statement requires no escaping of the `#!tex $` character.  But when needed, the `#!tex $` character can be escaped using `#!tex \$`.
+By default, [`smart_dollar`](#options) mode is enabled for the `#!tex $...$` inline variant. With `smart_dollar` it is expected that the opening token (`#!tex $`) is to be followed by a non-whitespace character, and the closing to be preceded by a non-white-space character.  This is to help avoid false positives when using the dollar sign in traditional ways such as: I have $2.00 and Bob has $10.00.  The previous statement requires no escaping of the `#!tex $` character.  But when needed, the `#!tex $` character can be escaped using `#!tex \$`. `smart_dollar` can be disabled and will capture any `#!tex $...$` whose dollar symbols are not escaped (`#!tex \$`).
 
 !!! example "Inline Examples"
 
@@ -17,6 +17,11 @@ For the `#!tex $...$` inline variant, it is expected that the opening token (`#!
     ```
 
     $p(x|y) = \frac{p(y|x)p(x)}{p(y)}$, \(p(x|y) = \frac{p(y|x)p(x)}{p(y)}\).
+
+!!! tip
+    When using MathJax, for best results, it is advised to not use [`generic`](#options) mode, and configure MathJax without the `text2jax` extension since MathJax automatically detects Arithmatex's default output.
+
+    If using generic mode (for libraries like KaTeX), Arithmatex will convert dollars to the form `#!tex \(...\)` in the HTML output. This is because `#!tex $...$` is extremely problematic to scan for, which is why MathJax and KaTeX disable `#!tex $...$` by default in their plain text scanners, and why Arithmatex enables `smart_dollar` by default when scanning for `#!tex $...$`. It is advised, if outputting in in `generic` mode, to not configure your JavaScript library to look for `#!tex $...$` and instead look for `#!tex \(...\)`, and let Arithmatex's handle `#!tex $...$`.
 
 For block forms, the block must start with the appropriate opening for the block type: `#!tex $$`, `#!tex \[`, and `#!tex \begin{}` for the respective search pattern. The block must also end with the proper respective end: `#!tex $$`, `#!tex \]`, and `#!tex \end{}`. A block also must contain no empty lines and should be both preceded and followed by an empty line.
 
@@ -56,7 +61,7 @@ By default, Arithmatex will also generate a preview span with the class `MathJax
 
 If [`generic`](#options) is enabled, the extension will escape necessary symbols and normalize all output to be wrapped in the more reliable `#!tex \(...\)` for inline math and `#!tex \[...\]` for block math. The wrapping convention can be changed via `tex_inline_wrap` and `tex_block_wrap` in the [options](#options). Then the wrapped content will be inserted into a `span` or `div` for inline and display math respectively.
 
-With the default settings, if in your Markdown you used `#!tex $...$`, it would be converted to `#!html <span class="arithmatex">\(...\)</span>` in the HTML. Blocks would be normalized from `#!tex $$...$$` to `#!html <div class="arithmatex">\[...\]</div>`.  In the case of `#!tex \begin{}...\end{}`, begins and ends will not be replaced, only wrapped: `#!html <div class="arithmatex">\[\begin{}...\end{}\]</div>`.  Since Arithmatex provides additional logic to curb issues with `#!tex $`, we allow it in the Markdown. If a different wrapper is desired, see [Options](#options) below to learn how to change the wrapper.
+With the default settings, if in your Markdown you used `#!tex $...$` for inline math, it would be converted to `#!html <span class="arithmatex">\(...\)</span>` in the HTML. Blocks would be normalized from `#!tex $$...$$` to `#!html <div class="arithmatex">\[...\]</div>`.  In the case of `#!tex \begin{}...\end{}`, begins and ends will not be replaced, only wrapped: `#!html <div class="arithmatex">\[\begin{}...\end{}\]</div>`.  Since Arithmatex provides additional logic to curb issues with `#!tex $`, we allow it in the Markdown. If a different wrapper is desired, see [Options](#options) below to learn how to change the wrapper.
 
 ## Loading MathJax
 
@@ -95,8 +100,9 @@ Option            | Type     | Default                               | Descripti
 `inline_syntax`   | [string] | `#!py3 ['dollar', 'round']`           | Syntax to search for: dollar=`#!tex $...$` and round=`#!tex \(...\)`.
 `block_syntax`    | [string] | `#!py3 ['dollar', 'square', 'begin']` | Syntax to search for: dollar=`#!tex $...$`, square=`#!tex \[...\]`, and `#!tex \begin{}...\end{}`.
 `generic`         | bool     | `#!py3 False`                         | Output in a generic format suitable for non MathJax libraries.
-`tex_inline_wrap` | [string] | `#!py ['\\(', '\\)']`                 | An array containing the opening and closing portion of the `generic` wrap.
-`tex_block_wrap`  | [string] | `#!py ['\\[', '\\]']`                 | An array containing the opening and closing portion of the `generic` wrap.
+`tex_inline_wrap` | [string] | `#!py3 ['\\(', '\\)']`                | An array containing the opening and closing portion of the `generic` wrap.
+`tex_block_wrap`  | [string] | `#!py3 ['\\[', '\\]']`                | An array containing the opening and closing portion of the `generic` wrap.
+`smart_dollar`    | bool     | `#!py3 True`                          | Enable Arithmatex's smart dollar logic to minimize math detection issues with `#!tex $`.
 `preview`         | bool     | `#!py3 True`                          | Insert a preview to show until MathJax finishes loading the equations.
 
 !!! warning "Deprecation"

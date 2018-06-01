@@ -1,6 +1,7 @@
 API
 Apr
 Arithmatex
+Arithmatex's
 Aspell
 AttrList
 BeautifulSoup

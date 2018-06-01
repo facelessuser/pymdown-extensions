@@ -1,0 +1,58 @@
+<h1>Math Rendering Test Case</h1>
+<h2>Inline Math</h2>
+<p>This is Inline Math using <code>\( ... \)</code> <span class="arithmatex">\( x + y = z \in \left\{ -1, 1 \right\} \)</span> and now using <code>$ ... $</code> <span class="arithmatex">\( x + y = z \in \left\{ -1, 1 \right\} \)</span> and it should handle the case of giving my friend 2$.  </p>
+<p>We can also do the same without gaps.</p>
+<p>This is Inline Math using <code>\(...\)</code> <span class="arithmatex">\(x + y = z \in \left\{ -1, 1 \right\}\)</span> and now using <code>$...$</code> <span class="arithmatex">\(x + y = z \in \left\{ -1, 1 \right\}\)</span> and it should handle the case of giving my friend 2$.  </p>
+<p>It can also take care of cases of one sided gaps.</p>
+<p>This is Inline Math using <code>\( ...\)</code> <span class="arithmatex">\( x + y = z \in \left\{ -1, 1 \right\}\)</span> and now using <code>$ ...$</code> <span class="arithmatex">\( x + y = z \in \left\{ -1, 1 \right\}\)</span> and it should handle the case of giving my friend 2$.  </p>
+<p>This is Inline Math using <code>\(... \)</code> <span class="arithmatex">\(x + y = z \in \left\{ -1, 1 \right\} \)</span> and now using <code>$... $</code> <span class="arithmatex">\(x + y = z \in \left\{ -1, 1 \right\} \)</span> and it should handle the case of giving my friend 2$. </p>
+<p>Here is a dollar test. My friend has $2.00 and I have $10.00. <span class="arithmatex">\( 2 + 10 = 13 \)</span>.</p>
+<h2>Display Math</h2>
+<p>Well, this should be less challenging:</p>
+<div class="arithmatex">\[ x + y = z \in \left\{ -1, 1 \right\} \]</div>
+<div class="arithmatex">\[x + y = z \in \left\{ -1, 1 \right\}\]</div>
+<div class="arithmatex">\[ x + y = z \in \left\{ -1, 1 \right\}\]</div>
+<div class="arithmatex">\[x + y = z \in \left\{ -1, 1 \right\} \]</div>
+<div class="arithmatex">\[ x + y = z \in \left\{ -1, 1 \right\} \]</div>
+<div class="arithmatex">\[x + y = z \in \left\{ -1, 1 \right\}\]</div>
+<div class="arithmatex">\[ x + y = z \in \left\{ -1, 1 \right\}\]</div>
+<div class="arithmatex">\[x + y = z \in \left\{ -1, 1 \right\} \]</div>
+<h2>Environments</h2>
+<div class="arithmatex">\[\begin{align*}
+x + y &amp; = z \in \left\{ -1, 1 \right\} \\
+g + h &amp; = l
+\end{align*}\]</div>
+<div class="arithmatex">\[ \begin{align*}
+x + y &amp; = z \in \left\{ -1, 1 \right\} \\
+g + h &amp; = l
+\end{align*} \]</div>
+<div class="arithmatex">\[ \begin{align*}
+x + y &amp; = z \in \left\{ -1, 1 \right\} \\
+g + h &amp; = l
+\end{align*}\]</div>
+<div class="arithmatex">\[\begin{align*}
+x + y &amp; = z \in \left\{ -1, 1 \right\} \\
+g + h &amp; = l
+\end{align*} \]</div>
+<div class="arithmatex">\[\begin{align*} x + y &amp; = z \in \left\{ -1, 1 \right\} \\ g + h &amp; = l \end{align*}\]</div>
+<div class="arithmatex">\[\begin{align*}x + y &amp; = z \in \left\{ -1, 1 \right\} \\ g + h &amp; = l\end{align*}\]</div>
+<div class="arithmatex">\[\begin{align*} x + y &amp; = z \in \left\{ -1, 1 \right\} \\ g + h &amp; = l\end{align*}\]</div>
+<div class="arithmatex">\[\begin{align*}x + y &amp; = z \in \left\{ -1, 1 \right\} \\ g + h &amp; = l \end{align*}\]</div>
+<div class="arithmatex">\[\begin{align*}x + y &amp; = z \in \left\{ -1, 1 \right\} \\ g + h &amp; = l\end{align*}\]</div>
+<div class="arithmatex">\[ \begin{align*}x + y &amp; = z \in \left\{ -1, 1 \right\} \\ g + h &amp; = l\end{align*} \]</div>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    config: ["MMLorHTML.js"],
+    jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+    extensions: ["tex2jax.js", "MathMenu.js", "MathZoom.js"],
+    tex2jax: {
+        inlineMath: [ ["\\(","\\)"] ],
+        displayMath: [ ["\\[","\\]"] ]
+    },
+    displayAlign: 'left',
+    showProcessingMessages: false,
+    messageStyle: 'none'
+});
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"></script>

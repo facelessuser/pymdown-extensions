@@ -4,6 +4,12 @@ arithmatex:
   extensions:
     pymdownx.arithmatex:
 
+arithmatex (dumb dollar):
+  extensions:
+    pymdownx.arithmatex:
+      generic: true
+      smart_dollar: false
+
 arithmatex (generic):
   extensions:
     pymdownx.arithmatex:
