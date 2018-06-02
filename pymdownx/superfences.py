@@ -252,7 +252,8 @@ class SuperFencesTabPostProcessor(Postprocessor):
                 entry.replace('<p><superfences>', '') % {
                     'index': self.count,
                     'tab_index': tab_count,
-                    'state': ('checked="checked" ' if tab_count == 0 else '')
+                    'state': ('checked="checked" ' if tab_count == 0 else ''),
+                    'tab_title': 'Tab %d' % (tab_count + 1)
                 }
             )
             tab_count += 1
@@ -507,10 +508,10 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                     self.fence_end = re.compile(NESTED_FENCE_END % self.fence)
                     if m.group('tab'):
                         self.tab = m.group('tab_title')
-                        if self.tab is None:
+                        if not self.tab:
                             self.tab = self.lang
                         if not self.tab:
-                            self.tab = 'Tab'
+                            self.tab = '%(tab_title)s'
             else:
                 # Evaluate lines
                 # - Determine if it is the ending line or content line

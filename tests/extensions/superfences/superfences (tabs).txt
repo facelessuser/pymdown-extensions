@@ -104,3 +104,25 @@ class Program {
   }
 }
 ```
+
+Break
+
+```tab=""
+using System;
+
+class Program {
+  static void Main(string[] args) {
+    Console.WriteLine("Hello, world!");
+  }
+}
+```
+
+```tab=""
+using System;
+
+class Program {
+  static void Main(string[] args) {
+    Console.WriteLine("Hello, world!");
+  }
+}
+```
