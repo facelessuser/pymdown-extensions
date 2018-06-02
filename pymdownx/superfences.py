@@ -401,7 +401,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
     def get_tab(self, code, title):
         """Wrap code in tab div."""
 
-        return TAB % {'code': code, 'title': title}
+        return TAB % {'code': code.replace('%', '%%'), 'title': title}
 
     def process_nested_block(self, ws, content, start, end):
         """Process the contents of the nested block."""
