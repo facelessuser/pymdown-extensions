@@ -70,18 +70,18 @@ SuperFences provides a number of features:
 
 ## Tabbed Fences
 
-SuperFences has the ability to create tabbed code blocks.  Simply add `tab="tab-title"` to the fence's header, and the code block will will be rendered in a tab with the title `tab-title`.  If you do not provide a title, but you've specified a language, the language will be used as the title. No case transformation is applied -- what you type is what you get. Consecutive code tabs will be grouped together.
+SuperFences has the ability to create tabbed code blocks.  Simply add `tab="tab-title"` to the fence's header, and the code block will will be rendered in a tab with the title `tab-title`.  If you do not provide a title with either `tab=` or `tab=""`, but you've specified a language, the language will be used as the title. No case transformation is applied -- what you type is what you get. Consecutive code tabs will be grouped together.
 
 !!! example "Tabbed Code"
 
     ````
-    ```Bash tab=""
+    ```Bash tab=
     #!/bin/bash
     STR="Hello World!"
     echo $STR
     ```
 
-    ```C tab=""
+    ```C tab=
     #include 
 
     int main(void) {
@@ -89,7 +89,7 @@ SuperFences has the ability to create tabbed code blocks.  Simply add `tab="tab-
     }
     ```
 
-    ```C++ tab=""
+    ```C++ tab=
     #include <iostream>
 
     int main() {
@@ -98,7 +98,7 @@ SuperFences has the ability to create tabbed code blocks.  Simply add `tab="tab-
     }
     ```
 
-    ```C# tab=""
+    ```C# tab=
     using System;
 
     class Program {
@@ -109,13 +109,13 @@ SuperFences has the ability to create tabbed code blocks.  Simply add `tab="tab-
     ```
     ````
 
-    ```Bash tab=""
+    ```Bash tab=
     #!/bin/bash
     STR="Hello World!"
     echo $STR
     ```
 
-    ```C tab=""
+    ```C tab=
     #include 
 
     int main(void) {
@@ -123,7 +123,7 @@ SuperFences has the ability to create tabbed code blocks.  Simply add `tab="tab-
     }
     ```
 
-    ```C++ tab=""
+    ```C++ tab=
     #include <iostream>
 
     int main() {
@@ -132,13 +132,72 @@ SuperFences has the ability to create tabbed code blocks.  Simply add `tab="tab-
     }
     ```
 
-    ```C# tab=""
+    ```C# tab=
     using System;
 
     class Program {
       static void Main(string[] args) {
         Console.WriteLine("Hello, world!");
       }
+    }
+    ```
+
+In order to use tabbed code blocks, some additional CSS is needed. You can check out the configuration below which will show the CSS and the HTML it targets. Keep in mind the CSS is just the minimum to get you started. You can tweak it and modify it to get it how you like it.
+
+??? settings "Tabbed Code Setup"
+    ```HTML tab=
+    <div class="superfences-tabs">
+    <input name="tabs_1" type="radio" id="tab_1_0" checked="checked">
+    <label for="tab_1_0">Tab 0</label>
+    <div class="superfences-content">...</div>
+    ...
+    <input name="tabs_1" type="radio" id="tab_1_X" checked="checked">
+    <label for="tab_1_X">Tab X</label>
+    <div class="superfences-content">...</div>
+    ...
+    </div>
+    ```
+
+    ```CSS tab=
+    .superfences-tabs {
+      display: flex;
+      position: relative;
+      flex-wrap: wrap;
+    }
+
+    .superfences-tabs .highlight {
+      background: #ddd;
+    }
+
+    .superfences-tabs .superfences-content {
+      display: none;
+      order: 99;
+      width: 100%;
+    }
+
+    .superfences-tabs label {
+      width: auto;
+      margin: 0 0.5em;
+      padding: 0.25em;
+      font-size: 120%;
+      cursor: pointer;
+    }
+
+    .superfences-tabs input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .superfences-tabs input:nth-child(n+1) {
+      color: #333333;
+    }
+
+    .superfences-tabs input:nth-child(n+1):checked + label {
+        color: #FF5252;
+    }
+
+    .superfences-tabs input:nth-child(n+1):checked + label + .superfences-content {
+        display: block;
     }
     ```
 
