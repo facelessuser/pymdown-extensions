@@ -7,6 +7,7 @@
   "license": "MIT",
   "scripts": {
     "build": "node_modules/.bin/gulp build --compress --lint --buildmkdocs --revision",
+    "compile": "node_modules/.bin/gulp build --compress --buildmkdocs --revision",
     "clean_all": "node_modules/.bin/gulp clean",
     "serve": "node_modules/.bin/gulp serve",
     "lint": "node_modules/.bin/gulp lint"
