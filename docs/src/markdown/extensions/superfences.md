@@ -230,13 +230,13 @@ When using fenced code blocks, you can specify a specific syntax language to hig
 
 !!! example "Highlight Example"
 
-    ````
+    ````tab="Source"
     ```python
     import foo.bar
     ```
     ````
 
-    ```python
+    ```python tab="Output"
     import foo.bar
     ```
 
@@ -248,13 +248,13 @@ To set line numbers per code block, you can specify a special setting directly a
 
 !!! example "Line Number Example"
 
-    ````
+    ````tab="Source"
     ``` linenums="1"
     import foo.bar
     ```
     ````
 
-    ``` linenums="1"
+    ```tab="Output" linenums="1"
     import foo.bar
     ```
 
@@ -266,7 +266,7 @@ Pygments currently implements this a little weird and doesn't pad the first line
 
 !!! example "Nth Line Example"
 
-    ````
+    ````tab="Source"
     ``` linenums="2 2"
     """Some file."""
     import foo.bar
@@ -275,7 +275,7 @@ Pygments currently implements this a little weird and doesn't pad the first line
     ```
     ````
 
-    ``` linenums="2 2"
+    ```tab="Output" linenums="2 2"
     """Some file."""
     import foo.bar
     import boo.baz
@@ -286,7 +286,7 @@ To set every other line as special, you must set the third `linenums` option (sp
 
 !!! example "Special Line Example"
 
-    ````
+    ````tab="Source"
     ``` linenums="1 1 2"
     """Some file."""
     import foo.bar
@@ -295,7 +295,7 @@ To set every other line as special, you must set the third `linenums` option (sp
     ```
     ````
 
-    ``` linenums="1 1 2"
+    ```tab="Output" linenums="1 1 2"
     """Some file."""
     import foo.bar
     import boo.baz
@@ -310,7 +310,7 @@ Via Pygments, certain lines can be specified for highlighting.  This is done by 
 
 !!! example "Highlight Lines Example"
 
-    ````
+    ````tab="Source"
     ``` hl_lines="1 3"
     """Some file."""
     import foo.bar
@@ -319,7 +319,7 @@ Via Pygments, certain lines can be specified for highlighting.  This is done by 
     ```
     ````
 
-    ``` hl_lines="1 3"
+    ```tab="Output" hl_lines="1 3"
     """Some file."""
     import foo.bar
     import boo.baz
@@ -330,7 +330,7 @@ Line numbers are always referenced starting at 1 ignoring what the line number i
 
 !!! example "Highlight with Line Numbers Example"
 
-    ````
+    ````tab="Source"
     ``` hl_lines="1 3" linenums="2"
     """Some file."""
     import foo.bar
@@ -339,7 +339,7 @@ Line numbers are always referenced starting at 1 ignoring what the line number i
     ```
     ````
 
-    ``` hl_lines="1 3" linenums="2"
+    ```tab="Output" hl_lines="1 3" linenums="2"
     """Some file."""
     import foo.bar
     import boo.baz
@@ -352,7 +352,7 @@ SuperFences allows defining custom fences for special purposes, like flow charts
 
 !!! example "Flow Chart Example"
 
-    ````
+    ````tab="Source"
     ```flow
     st=>start: Start:>http://www.google.com[blank]
     e=>end:>http://www.google.com
@@ -368,7 +368,7 @@ SuperFences allows defining custom fences for special purposes, like flow charts
     ```
     ````
 
-    ```flow
+    ```flow tab="Output"
     st=>start: Start:>http://www.google.com[blank]
     e=>end:>http://www.google.com
     op1=>operation: My Operation
@@ -384,7 +384,7 @@ SuperFences allows defining custom fences for special purposes, like flow charts
 
 !!! example "Sequence Diagram Example"
 
-    ````
+    ````tab="Source"
     ```sequence
     Title: Here is a title
     A->B: Normal line
@@ -394,7 +394,7 @@ SuperFences allows defining custom fences for special purposes, like flow charts
     ```
     ````
 
-    ```sequence
+    ```sequence tab="Output"
     Title: Here is a title
     A->B: Normal line
     B-->C: Dashed line
