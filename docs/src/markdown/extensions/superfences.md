@@ -147,12 +147,12 @@ In order to use tabbed code blocks, some additional CSS is needed. You can check
 ??? settings "Tabbed Code Setup"
     ```HTML tab=
     <div class="superfences-tabs">
-    <input name="tabs_1" type="radio" id="tab_1_0" checked="checked">
-    <label for="tab_1_0">Tab 0</label>
+    <input name="__tabs_1" type="radio" id="__tab_1_0" checked="checked">
+    <label for="__tab_1_0">Tab 0</label>
     <div class="superfences-content">...</div>
     ...
-    <input name="tabs_1" type="radio" id="tab_1_X" checked="checked">
-    <label for="tab_1_X">Tab X</label>
+    <input name="__tabs_1" type="radio" id="__tab_1_X" checked="checked">
+    <label for="__tab_1_X">Tab X</label>
     <div class="superfences-content">...</div>
     ...
     </div>

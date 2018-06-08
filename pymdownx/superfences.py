@@ -63,8 +63,8 @@ RE_NESTED_FENCE_START = re.compile(
 
 RE_TABS = re.compile(r'((?:<p><superfences>.*?</superfences></p>\s*)+)', re.DOTALL)
 
-TAB = r'''<superfences><input name="tabs_%%(index)s" type="radio" id="tab_%%(index)s_%%(tab_index)s" %%(state)s/>
-<label for="tab_%%(index)s_%%(tab_index)s">%(title)s</label>
+TAB = r'''<superfences><input name="__tabs_%%(index)s" type="radio" id="__tab_%%(index)s_%%(tab_index)s" %%(state)s/>
+<label for="__tab_%%(index)s_%%(tab_index)s">%(title)s</label>
 <div class="superfences-content">%(code)s</div></superfences>'''
 
 NESTED_FENCE_END = r'%s[ \t]*$'
