@@ -2,12 +2,13 @@
 
 ## Overview
 
-SuperFences provides four features:
+SuperFences provides a number of features:
 
-1. The ability to [nest fences](#nested-fence-format) under blockquotes, lists, or other block elements (see [Limitations](#limitations) for more info).
-2. Ability to specify [custom fences](#custom-fences) to provide features like flowcharts, sequence diagrams, or other custom blocks.
-3. The ability to disable indented code blocks in favor of only using the fenced variant (off by default).
-4. Experimental feature that preserves tabs within a code block instead of converting them to spaces which is Python Markdown's default behavior.
+1. Allowing the [nesting of fences](#nested-fence-format) under blockquotes, lists, or other block elements (see [Limitations](#limitations) for more info).
+2. Create [tabbed fenced code blocks](#tabbed-fences).
+3. Ability to specify [custom fences](#custom-fences) to provide features like flowcharts, sequence diagrams, or other custom blocks.
+4. Allow disabling of indented code blocks in favor of only using the fenced variant (off by default).
+5. Experimental feature that preserves tabs within a code block instead of converting them to spaces which is Python Markdown's default behavior.
 
 !!! danger "Reminder"
     Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this extension!
@@ -67,11 +68,144 @@ SuperFences provides four features:
     Another paragraph.
     ````
 
+## Tabbed Fences
+
+SuperFences has the ability to create tabbed code blocks.  Simply add `tab="tab-title"` to the fence's header, and the code block will will be rendered in a tab with the title `tab-title`.  If you do not provide a title with either `tab=` or `tab=""`, but you've specified a language, the language will be used as the title. No case transformation is applied -- what you type is what you get. Consecutive code tabs will be grouped together.
+
+!!! example "Tabbed Code"
+
+    ````
+    ```Bash tab=
+    #!/bin/bash
+    STR="Hello World!"
+    echo $STR
+    ```
+
+    ```C tab=
+    #include 
+
+    int main(void) {
+      printf("hello, world\n");
+    }
+    ```
+
+    ```C++ tab=
+    #include <iostream>
+
+    int main() {
+      std::cout << "Hello, world!\n";
+      return 0;
+    }
+    ```
+
+    ```C# tab=
+    using System;
+
+    class Program {
+      static void Main(string[] args) {
+        Console.WriteLine("Hello, world!");
+      }
+    }
+    ```
+    ````
+
+    ```Bash tab=
+    #!/bin/bash
+    STR="Hello World!"
+    echo $STR
+    ```
+
+    ```C tab=
+    #include 
+
+    int main(void) {
+      printf("hello, world\n");
+    }
+    ```
+
+    ```C++ tab=
+    #include <iostream>
+
+    int main() {
+      std::cout << "Hello, world!\n";
+      return 0;
+    }
+    ```
+
+    ```C# tab=
+    using System;
+
+    class Program {
+      static void Main(string[] args) {
+        Console.WriteLine("Hello, world!");
+      }
+    }
+    ```
+
+In order to use tabbed code blocks, some additional CSS is needed. You can check out the configuration below which will show the CSS and the HTML it targets. Keep in mind the CSS is just the minimum to get you started. You can tweak it and modify it to get it how you like it.
+
+??? settings "Tabbed Code Setup"
+    ```HTML tab=
+    <div class="superfences-tabs">
+    <input name="__tabs_1" type="radio" id="__tab_1_0" checked="checked">
+    <label for="__tab_1_0">Tab 0</label>
+    <div class="superfences-content">...</div>
+    ...
+    <input name="__tabs_1" type="radio" id="__tab_1_X" checked="checked">
+    <label for="__tab_1_X">Tab X</label>
+    <div class="superfences-content">...</div>
+    ...
+    </div>
+    ```
+
+    ```CSS tab=
+    .superfences-tabs {
+      display: flex;
+      position: relative;
+      flex-wrap: wrap;
+    }
+
+    .superfences-tabs .highlight {
+      background: #ddd;
+    }
+
+    .superfences-tabs .superfences-content {
+      display: none;
+      order: 99;
+      width: 100%;
+    }
+
+    .superfences-tabs label {
+      width: auto;
+      margin: 0 0.5em;
+      padding: 0.25em;
+      font-size: 120%;
+      cursor: pointer;
+    }
+
+    .superfences-tabs input {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .superfences-tabs input:nth-child(n+1) {
+      color: #333333;
+    }
+
+    .superfences-tabs input:nth-child(n+1):checked + label {
+        color: #FF5252;
+    }
+
+    .superfences-tabs input:nth-child(n+1):checked + label + .superfences-content {
+        display: block;
+    }
+    ```
+
 ## Preserve tabs
 
 Python Markdown has an approach where it normalizes whitespace. This means `\r\n` is converted to `\n` and `\t` is converted to spaces. In 99% of Markdown, this is never really an issue, but with code blocks it can be. Tabs can sometimes be very useful for aligning certain kinds of data, especially when dealing with characters of varying width.
 
-!!! example "Tabbed Content"
+!!! example "Tabs in Content"
 
     ```
     ============================================================
@@ -96,13 +230,13 @@ When using fenced code blocks, you can specify a specific syntax language to hig
 
 !!! example "Highlight Example"
 
-    ````
+    ````tab="Source"
     ```python
     import foo.bar
     ```
     ````
 
-    ```python
+    ```python tab="Output"
     import foo.bar
     ```
 
@@ -114,13 +248,13 @@ To set line numbers per code block, you can specify a special setting directly a
 
 !!! example "Line Number Example"
 
-    ````
+    ````tab="Source"
     ``` linenums="1"
     import foo.bar
     ```
     ````
 
-    ``` linenums="1"
+    ```tab="Output" linenums="1"
     import foo.bar
     ```
 
@@ -132,7 +266,7 @@ Pygments currently implements this a little weird and doesn't pad the first line
 
 !!! example "Nth Line Example"
 
-    ````
+    ````tab="Source"
     ``` linenums="2 2"
     """Some file."""
     import foo.bar
@@ -141,7 +275,7 @@ Pygments currently implements this a little weird and doesn't pad the first line
     ```
     ````
 
-    ``` linenums="2 2"
+    ```tab="Output" linenums="2 2"
     """Some file."""
     import foo.bar
     import boo.baz
@@ -152,7 +286,7 @@ To set every other line as special, you must set the third `linenums` option (sp
 
 !!! example "Special Line Example"
 
-    ````
+    ````tab="Source"
     ``` linenums="1 1 2"
     """Some file."""
     import foo.bar
@@ -161,7 +295,7 @@ To set every other line as special, you must set the third `linenums` option (sp
     ```
     ````
 
-    ``` linenums="1 1 2"
+    ```tab="Output" linenums="1 1 2"
     """Some file."""
     import foo.bar
     import boo.baz
@@ -176,7 +310,7 @@ Via Pygments, certain lines can be specified for highlighting.  This is done by 
 
 !!! example "Highlight Lines Example"
 
-    ````
+    ````tab="Source"
     ``` hl_lines="1 3"
     """Some file."""
     import foo.bar
@@ -185,7 +319,7 @@ Via Pygments, certain lines can be specified for highlighting.  This is done by 
     ```
     ````
 
-    ``` hl_lines="1 3"
+    ```tab="Output" hl_lines="1 3"
     """Some file."""
     import foo.bar
     import boo.baz
@@ -196,7 +330,7 @@ Line numbers are always referenced starting at 1 ignoring what the line number i
 
 !!! example "Highlight with Line Numbers Example"
 
-    ````
+    ````tab="Source"
     ``` hl_lines="1 3" linenums="2"
     """Some file."""
     import foo.bar
@@ -205,7 +339,7 @@ Line numbers are always referenced starting at 1 ignoring what the line number i
     ```
     ````
 
-    ``` hl_lines="1 3" linenums="2"
+    ```tab="Output" hl_lines="1 3" linenums="2"
     """Some file."""
     import foo.bar
     import boo.baz
@@ -218,7 +352,7 @@ SuperFences allows defining custom fences for special purposes, like flow charts
 
 !!! example "Flow Chart Example"
 
-    ````
+    ````tab="Source"
     ```flow
     st=>start: Start:>http://www.google.com[blank]
     e=>end:>http://www.google.com
@@ -234,7 +368,7 @@ SuperFences allows defining custom fences for special purposes, like flow charts
     ```
     ````
 
-    ```flow
+    ```flow tab="Output"
     st=>start: Start:>http://www.google.com[blank]
     e=>end:>http://www.google.com
     op1=>operation: My Operation
@@ -250,7 +384,7 @@ SuperFences allows defining custom fences for special purposes, like flow charts
 
 !!! example "Sequence Diagram Example"
 
-    ````
+    ````tab="Source"
     ```sequence
     Title: Here is a title
     A->B: Normal line
@@ -260,7 +394,7 @@ SuperFences allows defining custom fences for special purposes, like flow charts
     ```
     ````
 
-    ```sequence
+    ```sequence tab="Output"
     Title: Here is a title
     A->B: Normal line
     B-->C: Dashed line

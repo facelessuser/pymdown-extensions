@@ -1,0 +1,54 @@
+$tab-label: #333333;
+$tab-current-label: #2196F3;
+
+.md-typeset {
+
+  /* SuperFences tabbed code */
+  .superfences-tabs {
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+    margin: 1em 0;
+    border-radius: 0.2rem;
+    box-shadow:
+      0 0.125em 0.125em 0 rgba(0, 0, 0, 0.14),
+      0 0.063em 0.313em 0 rgba(0, 0, 0, 0.12),
+      0 0.188em 0.063em -0.125em rgba(0, 0, 0, 0.2);
+
+    .superfences-content {
+      display: none;
+      order: 99;
+      width: 100%;
+
+      & > * {
+        margin: 0 !important;
+      }
+    }
+
+    label {
+      width: auto;
+      margin: 0 0.5em;
+      padding: 0.25em;
+      font-size: 120%;
+      cursor: pointer;
+    }
+
+    input {
+      position: absolute;
+      opacity: 0;
+
+      &:nth-child(n+1){
+        color: $tab-label;
+
+        &:checked + label {
+          border-bottom: 0.25em solid $tab-current-label;
+          color: $tab-current-label;
+
+          & + .superfences-content {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}

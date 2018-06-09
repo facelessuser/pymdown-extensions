@@ -51,3 +51,10 @@ superfences (preserve tabs):
             startinline: true
     pymdownx.superfences:
       preserve_tabs: true
+
+superfences (tabs):
+  css:
+    - ../_assets/tabs.css
+  extensions:
+    pymdownx.highlight:
+    pymdownx.superfences:

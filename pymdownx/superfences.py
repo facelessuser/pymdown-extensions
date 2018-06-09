@@ -32,6 +32,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 from markdown.extensions import Extension
 from markdown.preprocessors import Preprocessor
+from markdown.postprocessors import Postprocessor
 from markdown.blockprocessors import CodeBlockProcessor
 from markdown import util as md_util
 from . import highlight as hl
@@ -48,16 +49,23 @@ RE_NESTED_FENCE_START = re.compile(
     (\{?                                                                      # Language opening
     \.?(?P<lang>[\w#.+-]*))?[ \t]*                                            # Language
     (?:
-    (hl_lines=(?P<quot>"|')(?P<hl_lines>\d+(?:[ \t]+\d+)*)(?P=quot))?[ \t]*|  # highlight lines
-    (linenums=(?P<quot2>"|')                                                  # Line numbers
+    hl_lines=(?P<quot>"|')(?P<hl_lines>\d+(?:[ \t]+\d+)*)(?P=quot)[ \t]*|     # highlight lines
+    linenums=(?P<quot2>"|')                                                   # Line numbers
         (?P<linestart>[\d]+)                                                  #   Line number start
         (?:[ \t]+(?P<linestep>[\d]+))?                                        #   Line step
         (?:[ \t]+(?P<linespecial>[\d]+))?                                     #   Line special
-    (?P=quot2))?[ \t]*
-    ){,2}
+    (?P=quot2)[ \t]*|
+    (?P<tab>tab=)(?:(?P<quot3>"|')(?P<tab_title>.*?)(?P=quot3))?[ \t]*   # Tab specifier
+    )*
     }?[ \t]*$                                                                 # Language closing
     '''
 )
+
+RE_TABS = re.compile(r'((?:<p><superfences>.*?</superfences></p>\s*)+)', re.DOTALL)
+
+TAB = r'''<superfences><input name="__tabs_%%(index)s" type="radio" id="__tab_%%(index)s_%%(tab_index)s" %%(state)s/>
+<label for="__tab_%%(index)s_%%(tab_index)s">%(title)s</label>
+<div class="superfences-content">%(code)s</div></superfences>'''
 
 NESTED_FENCE_END = r'%s[ \t]*$'
 
@@ -221,12 +229,41 @@ class SuperFencesCodeExtension(Extension):
             self.markdown.preprocessors.add('fenced_code_post_norm', post_fenced, ">normalize_whitespace")
         else:
             self.markdown.preprocessors.add('fenced_code_block', fenced, ">normalize_whitespace")
+        self.markdown.postprocessors.add('fenced_tabs', SuperFencesTabPostProcessor(self.markdown), '>raw_html')
 
     def reset(self):
         """Clear the stash."""
 
         for entry in self.superfences:
             entry["stash"].clear_stash()
+
+
+class SuperFencesTabPostProcessor(Postprocessor):
+    """Post processor for grouping tabs."""
+
+    def repl(self, m):
+        """Replace grouped superfences tabs with a tab group."""
+
+        self.count += 1
+        tab_count = 0
+        tabs = []
+        for entry in [x.strip() for x in m.group(1).split('</superfences></p>')]:
+            tabs.append(
+                entry.replace('<p><superfences>', '') % {
+                    'index': self.count,
+                    'tab_index': tab_count,
+                    'state': ('checked="checked" ' if tab_count == 0 else ''),
+                    'tab_title': 'Tab %d' % (tab_count + 1)
+                }
+            )
+            tab_count += 1
+        return '<div class="superfences-tabs">\n' + '\n'.join(tabs) + '</div>\n'
+
+    def run(self, text):
+        """Search for superfences tab and group consecutive tabs together."""
+
+        self.count = 0
+        return RE_TABS.sub(self.repl, text)
 
 
 class SuperFencesBlockPostNormalizePreprocessor(Preprocessor):
@@ -315,6 +352,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         self.code = []
         self.empty_lines = 0
         self.fence_end = None
+        self.tab = None
 
     def eval_fence(self, ws, content, start, end):
         """Evaluate a normal fence."""
@@ -360,6 +398,11 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 self.empty_lines = 0
                 self.code.append(ws + content)
 
+    def get_tab(self, code, title):
+        """Wrap code in tab div."""
+
+        return TAB % {'code': code.replace('%', '%%'), 'title': title}
+
     def process_nested_block(self, ws, content, start, end):
         """Process the contents of the nested block."""
 
@@ -368,6 +411,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         for entry in reversed(self.extension.superfences):
             if entry["test"](self.lang):
                 code = entry["formatter"](self.rebuild_block(self.code), self.lang)
+                if self.tab is not None:
+                    code = self.get_tab(code, self.tab)
                 break
 
         if code is not None:
@@ -461,6 +506,12 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                     self.linestep = m.group('linestep')
                     self.linespecial = m.group('linespecial')
                     self.fence_end = re.compile(NESTED_FENCE_END % self.fence)
+                    if m.group('tab'):
+                        self.tab = m.group('tab_title')
+                        if not self.tab:
+                            self.tab = self.lang
+                        if not self.tab:
+                            self.tab = '%(tab_title)s'
             else:
                 # Evaluate lines
                 # - Determine if it is the ending line or content line

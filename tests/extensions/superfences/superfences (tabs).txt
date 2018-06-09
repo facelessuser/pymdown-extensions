@@ -1,0 +1,123 @@
+```Bash tab=""
+#!/bin/bash
+STR="Hello World!"
+echo $STR
+```
+
+```C tab=""
+#include 
+
+int main(void) {
+  printf("hello, world\n");
+}
+```
+
+```C++ tab=""
+#include <iostream>
+
+int main() {
+  std::cout << "Hello, world!\n";
+  return 0;
+}
+```
+
+```C# tab=""
+using System;
+
+class Program {
+  static void Main(string[] args) {
+    Console.WriteLine("Hello, world!");
+  }
+}
+```
+
+- Lists
+
+    ```Bash tab="Title 1"
+    #!/bin/bash
+    STR="Hello World!"
+    echo $STR
+    ```
+
+    ```C tab="Title 2"
+    #include 
+
+    int main(void) {
+      printf("hello, world\n");
+    }
+    ```
+
+    ```C++ tab="Title 3"
+    #include <iostream>
+
+    int main() {
+      std::cout << "Hello, world!\n";
+      return 0;
+    }
+    ```
+
+    ```C# tab="Title 4"
+    using System;
+
+    class Program {
+      static void Main(string[] args) {
+        Console.WriteLine("Hello, world!");
+      }
+    }
+    ```
+
+```Bash tab=
+#!/bin/bash
+STR="Hello World!"
+echo $STR
+```
+
+Break
+
+```C tab=
+#include 
+
+int main(void) {
+  printf("hello, world\n");
+}
+```
+
+Break
+
+```C++ tab=""
+#include <iostream>
+
+int main() {
+  std::cout << "Hello, world!\n";
+  return 0;
+}
+```
+
+Break
+
+```C# tab=""
+using System;
+
+class Program {
+  static void Main(string[] args) {
+    Console.WriteLine("Hello, world!");
+  }
+}
+```
+
+Break
+
+```tab=""
+using System;
+
+class Program {
+  static void Main(string[] args) {
+    Console.WriteLine("Hello, world!");
+  }
+}
+```
+
+```tab=""
+Make sure python fomratting strings don't break %(us)s.
+%s %%(test)s.
+```

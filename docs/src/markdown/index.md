@@ -86,9 +86,17 @@ Check out documentation on each extension to learn more about how to configure a
     [StripHTML](extensions/striphtml.md) can strip out HTML comments and specific tag attributes.
 
 !!! summary "SuperFences"
-    [SuperFences](extensions/superfences.md) is like Python Markdown's fences, but better. Nest fences under lists, admonitions, and other syntaxes. Also create special custom fences for content like UML.
+    [SuperFences](extensions/superfences.md) is like Python Markdown's fences, but better. Nest fences under lists, admonitions, and other syntaxes. Combine multiple fences together in tabbed groups, and even create special custom fences for content like UML.
 
-    ```sequence
+    ```tab="Source"
+    Title: Here is a title
+    A->B: Normal line
+    B-->C: Dashed line
+    C->>D: Open arrow
+    D-->>A: Dashed open arrow
+    ```
+
+    ```sequence tab="Result"
     Title: Here is a title
     A->B: Normal line
     B-->C: Dashed line
