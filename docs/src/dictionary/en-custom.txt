@@ -160,6 +160,7 @@ raphael
 regex
 reindent
 reinstalling
+renderer
 repo
 requesters
 revisioned
