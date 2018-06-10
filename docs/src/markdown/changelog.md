@@ -2,7 +2,10 @@
 
 ## 4.11.0
 
+Jun 10, 2018
+
 - **NEW**: Allow Arithmatex's "smart dollar" logic to be turned off via setting the option `smart_dollar` to `False` (#297).
+- **NEW**: Add support for tabbed groups in SuperFences.
 
 ## 4.10.2
 
