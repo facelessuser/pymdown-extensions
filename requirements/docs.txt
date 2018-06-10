@@ -1,2 +1,2 @@
-mkdocs-material>=2.2.5
+mkdocs-material>=2.8.0
 pyspelling

@@ -43,6 +43,7 @@ JPEG
 JSON
 Jan
 JavaScript
+Jun
 KBD
 KaTeX
 LaTeX
