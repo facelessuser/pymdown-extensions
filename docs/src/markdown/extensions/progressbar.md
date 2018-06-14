@@ -26,7 +26,7 @@ The basic syntax for progress bars is: `[= <percentage or fraction> "optional si
     [=85% "85%"]
     [=100% "100%"]
 
-Though progress bars are rendered as block items, it accepts `attr_list`'s inline format.
+Though progress bars are rendered as block items, it accepts `attr_list`'s inline format. `markdown.extensions.attr_list` must be enabled for the following to work.
 
 !!! example "Progress Bar with Attributes"
 

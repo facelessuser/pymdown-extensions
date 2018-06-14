@@ -262,7 +262,7 @@ Pygments also has a few additional options in regards to line numbers. One is "l
 
 So to set showing only every other line number, we could do the following. Line options are separated by a space, and "line step" is always the second option, so you must specify line start before line step.
 
-Pygments currently implements this a little weird and doesn't pad the first line number, so don't be surprised if line numbers don't quite line up correctly. Hopefully Pygments will fix this in the future.
+Pygments currently implements step a little weird. Step is always relative to 1, not from the specified starting line number. Pygments doesn't pad before the first shown step even when the starting line number doesn't align with the first step. If the starting does not align with the first step, line numbers could be off. Step is best used when using 1 as the starting line. Hopefully Pygments will fix this in the future.
 
 !!! example "Nth Line Example"
 
@@ -467,7 +467,7 @@ In the below example we create an `onReady` function to execute the conversion w
 
 The actual `convertUML` function reads UML instructions from our element and sticks it in a div that gets appended to our main HTML content (in this case we look for the the `body` tag, but it could be anything). We don't want to do it in place where our UML instructions are because it might be under an element that is hiding it with `display: none` (like a `details` tag); it won't render correctly if its parent is not displayed.  After we render the SVG, we insert it back where it belongs throwing away the original element that had the instructions.
 
-```js
+```js linenums="1"
 (function () {
 'use strict';
 
