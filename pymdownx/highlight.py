@@ -23,6 +23,7 @@ License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 """
 from __future__ import absolute_import
 from __future__ import unicode_literals
+import re
 from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
 from markdown import util as md_util
@@ -72,6 +73,10 @@ DEFAULT_CONFIG = {
         False,
         'Display line numbers in block code output (not inline) - Default: False'
     ],
+    'linenum_style': [
+        'table',
+        'Line number style -Default: False'
+    ],
     'extend_pygments_lang': [
         [],
         'Extend pygments language with special language entry - Default: {}'
@@ -96,12 +101,54 @@ if pygments:
             yield 0, ''
 
 
+    class SuperFencesHtmlFormatter(HtmlFormatter):
+        """Adds ability to output linenumbers in a new way."""
+
+        RE_SPAN_NUMS = re.compile(r'^(<span[^>]*)>([^<]+)(</span>)', re.DOTALL)
+        RE_TABLE_NUMS = re.compile(r'(<pre[^>]*>)(?!<span></span>)')
+
+        def __init__(self, **options):
+            """Initialize."""
+
+            self.superfences_linenos = options.get('linenos', False) == 'superfences-inline'
+            if self.superfences_linenos:
+                options['linenos'] = 'inline'
+            HtmlFormatter.__init__(self, **options)
+
+        def _wrap_inlinelinenos(self, inner):
+            """
+            Wrapper to handle superfences inline.
+
+            For our special inline version, don't display line numbers via `<span>  1</span>`,
+            but include as <span data-linenos="  1"></span>` and use CSS to display them:
+            `[data-linenos]:before {content: attr(data-linenos);}`.  This allows us to use
+            inline and copy and paste without issue.
+            """
+
+            for t, line in HtmlFormatter._wrap_inlinelinenos(self, inner):
+                if self.superfences_linenos:
+                    line = self.RE_SPAN_NUMS.sub(r'\1 data-linenos="\2">\3', line)
+                yield t, line
+
+        def _wrap_tablelinenos(self, inner):
+            """
+            Wrapper to handle line numbers better in table.
+
+            Pygments currently has a bug with line step where leading blank lines collapse.
+            Use the same fix Pygments uses for code content for code line numbers.
+            This fix should be pull requested on the Pygments repository.
+            """
+
+            for t, line in HtmlFormatter._wrap_tablelinenos(self, inner):
+                yield t, self.RE_TABLE_NUMS.sub(r'\1<span></span>', line)
+
+
 class Highlight(object):
     """Highlight class."""
 
     def __init__(
         self, guess_lang=True, pygments_style='default', use_pygments=True,
-        noclasses=False, extend_pygments_lang=None, linenums=False
+        noclasses=False, extend_pygments_lang=None, linenums=False, linenum_style='table'
     ):
         """Initialize."""
 
@@ -110,7 +157,7 @@ class Highlight(object):
         self.use_pygments = use_pygments
         self.noclasses = noclasses
         self.linenums = linenums
-        self.linenums_style = 'table'
+        self.linenums_style = linenum_style
 
         if extend_pygments_lang is None:
             extend_pygments_lang = []
@@ -185,7 +232,7 @@ class Highlight(object):
                 hl_lines = []
 
             # Setup formatter
-            html_formatter = InlineHtmlFormatter if inline else HtmlFormatter
+            html_formatter = InlineHtmlFormatter if inline else SuperFencesHtmlFormatter
             formatter = html_formatter(
                 cssclass=css_class,
                 linenos=linenums,

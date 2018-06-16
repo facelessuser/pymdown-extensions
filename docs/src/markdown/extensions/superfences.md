@@ -262,8 +262,6 @@ Pygments also has a few additional options in regards to line numbers. One is "l
 
 So to set showing only every other line number, we could do the following. Line options are separated by a space, and "line step" is always the second option, so you must specify line start before line step.
 
-Pygments currently implements step a little weird. Step is always relative to 1, not from the specified starting line number. Pygments doesn't pad before the first shown step even when the starting line number doesn't align with the first step. If the starting does not align with the first step, line numbers could be off. Step is best used when using 1 as the starting line. Hopefully Pygments will fix this in the future.
-
 !!! example "Nth Line Example"
 
     ````tab="Source"
@@ -339,7 +337,7 @@ Line numbers are always referenced starting at 1 ignoring what the line number i
     ```
     ````
 
-    ```tab="Output" hl_lines="1 3" linenums="2"
+    ```tab="Output" hl_lines="1 3" linenums="2 1 2"
     """Some file."""
     import foo.bar
     import boo.baz

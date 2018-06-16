@@ -1,5 +1,8 @@
 $md-code-background: hsla(0, 0%, 92.5%, 0.5);
 $md-code-special: hsl(0, 0%, 100%);
+$md-linenos-background: hsla(0, 0%, 60%, 0.2);
+$md-linenos: #999999;
+$md-linenos-border: #DDDDDD;
 $tab-label: #333333;
 $tab-current-label: #FF5252;
 
@@ -23,8 +26,11 @@ $tab-current-label: #FF5252;
 
   .linenodiv {
     .special {
-      color: $md-code-special;
-      font-weight: 800;
+      margin-right: -1.2rem;
+      margin-left: -1.6rem;
+      padding-right: 1.2rem;
+      padding-left: 1.6rem;
+      background-color: $md-linenos-background;
     }
   }
 
@@ -38,6 +44,27 @@ $tab-current-label: #FF5252;
 
     .hll {
       display: inline;
+    }
+
+    [data-linenos] {
+      &.special::before {
+        margin-left: -1.6rem;
+        padding-left: 1.6rem;
+        background-color: $md-linenos-background;
+      }
+
+      &::before {
+        display: inline-block;
+        margin-right: 0.5rem;
+        border-right: 0.0625rem solid $md-linenos-border;
+        color: $md-linenos;
+        content: attr(data-linenos);
+      }
+
+      + .hll {
+        margin: 0 -0.5rem;
+        padding: 0 0.5rem;
+      }
     }
   }
 }
