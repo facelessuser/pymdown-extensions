@@ -101,7 +101,7 @@ if pygments:
             yield 0, ''
 
 
-    class SuperFencesHtmlFormatter(HtmlFormatter):
+    class BlockHtmlFormatter(HtmlFormatter):
         """Adds ability to output linenumbers in a new way."""
 
         RE_SPAN_NUMS = re.compile(r'^(<span[^>]*)>([^<]+)(</span>)', re.DOTALL)
@@ -110,14 +110,14 @@ if pygments:
         def __init__(self, **options):
             """Initialize."""
 
-            self.superfences_linenos = options.get('linenos', False) == 'superfences-inline'
-            if self.superfences_linenos:
+            self.advanced_inline = options.get('linenos', False) == 'advanced-inline'
+            if self.advanced_inline:
                 options['linenos'] = 'inline'
             HtmlFormatter.__init__(self, **options)
 
         def _wrap_inlinelinenos(self, inner):
             """
-            Wrapper to handle superfences inline.
+            Wrapper to handle block inline line numbers.
 
             For our special inline version, don't display line numbers via `<span>  1</span>`,
             but include as <span data-linenos="  1"></span>` and use CSS to display them:
@@ -126,7 +126,7 @@ if pygments:
             """
 
             for t, line in HtmlFormatter._wrap_inlinelinenos(self, inner):
-                if self.superfences_linenos:
+                if self.advanced_inline:
                     line = self.RE_SPAN_NUMS.sub(r'\1 data-linenos="\2">\3', line)
                 yield t, line
 
@@ -232,7 +232,7 @@ class Highlight(object):
                 hl_lines = []
 
             # Setup formatter
-            html_formatter = InlineHtmlFormatter if inline else SuperFencesHtmlFormatter
+            html_formatter = InlineHtmlFormatter if inline else BlockHtmlFormatter
             formatter = html_formatter(
                 cssclass=css_class,
                 linenos=linenums,
