@@ -326,10 +326,10 @@ Via Pygments, certain lines can be specified for highlighting.  This is done by 
 
 Line numbers are always referenced starting at 1 ignoring what the line number is labeled as when showing line numbers.
 
-!!! example "Highlight with Line Numbers Example"
+!!! example "Highlight Lines with Line Numbers Example"
 
     ````tab="Source"
-    ``` hl_lines="1 3" linenums="2"
+    ```hl_lines="1 3" linenums="2"
     """Some file."""
     import foo.bar
     import boo.baz
@@ -337,7 +337,7 @@ Line numbers are always referenced starting at 1 ignoring what the line number i
     ```
     ````
 
-    ```tab="Output" hl_lines="1 3" linenums="2 1 2"
+    ```tab="Output" hl_lines="1 3" linenums="2"
     """Some file."""
     import foo.bar
     import boo.baz

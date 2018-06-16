@@ -85,7 +85,7 @@ markdown_extensions:
           lang: pycon
           options:
             python3: true
-      linenum_style: advanced-inline
+      linenums_style: advanced-inline
   - pymdownx.inlinehilite:
   - pymdownx.magiclink:
       repo_url_shortener: true
@@ -118,6 +118,6 @@ extra:
     - type: github
       link: https://github.com/facelessuser
 extra_css:
-  - extra-070399162e.css
+  - extra-df6506505e.css
 extra_javascript:
   - extra-d8800ea088.js

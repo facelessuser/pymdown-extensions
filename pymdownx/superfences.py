@@ -49,13 +49,13 @@ RE_NESTED_FENCE_START = re.compile(
     (\{?                                                                      # Language opening
     \.?(?P<lang>[\w#.+-]*))?[ \t]*                                            # Language
     (?:
-    hl_lines=(?P<quot>"|')(?P<hl_lines>\d+(?:[ \t]+\d+)*)(?P=quot)[ \t]*|     # highlight lines
-    linenums=(?P<quot2>"|')                                                   # Line numbers
+    hl_lines=(?P<quot>["'])(?P<hl_lines>\d+(?:[ \t]+\d+)*)(?P=quot)[ \t]*|    # highlight lines
+    linenums=(?P<quot2>["'])                                                  # Line numbers
         (?P<linestart>[\d]+)                                                  #   Line number start
         (?:[ \t]+(?P<linestep>[\d]+))?                                        #   Line step
         (?:[ \t]+(?P<linespecial>[\d]+))?                                     #   Line special
     (?P=quot2)[ \t]*|
-    (?P<tab>tab=)(?:(?P<quot3>"|')(?P<tab_title>.*?)(?P=quot3))?[ \t]*   # Tab specifier
+    (?P<tab>tab=)(?:(?P<quot3>["'])(?P<tab_title>.*?)(?P=quot3))?[ \t]*       # Tab specifier
     )*
     }?[ \t]*$                                                                 # Language closing
     '''
@@ -335,7 +335,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             self.use_pygments = config['use_pygments']
             self.noclasses = config['noclasses']
             self.linenums = config['linenums']
-            self.linenum_style = config.get('linenum_style', 'table')
+            self.linenums_style = config.get('linenums_style', 'table')
+            self.linenums_special = config.get('linenums_special', -1)
 
     def clear(self):
         """Reset the class variables."""
@@ -571,7 +572,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 use_pygments=self.use_pygments,
                 noclasses=self.noclasses,
                 linenums=self.linenums,
-                linenum_style = self.linenum_style,
+                linenums_style = self.linenums_style,
+                linenums_special = self.linenums_special,
                 extend_pygments_lang=self.extend_pygments_lang
             ).highlight(
                 src,

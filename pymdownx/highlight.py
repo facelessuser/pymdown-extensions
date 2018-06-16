@@ -73,9 +73,13 @@ DEFAULT_CONFIG = {
         False,
         'Display line numbers in block code output (not inline) - Default: False'
     ],
-    'linenum_style': [
+    'linenums_style': [
         'table',
         'Line number style -Default: False'
+    ],
+    'linenums_special': [
+        -1,
+        'Globally make nth line special - Default: -1'
     ],
     'extend_pygments_lang': [
         [],
@@ -148,7 +152,7 @@ class Highlight(object):
 
     def __init__(
         self, guess_lang=True, pygments_style='default', use_pygments=True,
-        noclasses=False, extend_pygments_lang=None, linenums=False, linenum_style='table'
+        noclasses=False, extend_pygments_lang=None, linenums=False, linenums_special=-1, linenums_style='table'
     ):
         """Initialize."""
 
@@ -157,7 +161,8 @@ class Highlight(object):
         self.use_pygments = use_pygments
         self.noclasses = noclasses
         self.linenums = linenums
-        self.linenums_style = linenum_style
+        self.linenums_style = linenums_style
+        self.linenums_special = linenums_special
 
         if extend_pygments_lang is None:
             extend_pygments_lang = []
@@ -226,6 +231,8 @@ class Highlight(object):
                 linestep = 1
             if not linenums or linestart < 1:
                 linestart = 1
+            if self.linenums_special != -1 and linespecial == -1:
+                linespecial = self.linenums_special
             if not linenums or linespecial < 0:
                 linespecial = 0
             if hl_lines is None or inline:

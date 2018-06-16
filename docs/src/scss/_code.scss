@@ -59,6 +59,7 @@ $tab-current-label: #FF5252;
         border-right: 0.0625rem solid $md-linenos-border;
         color: $md-linenos;
         content: attr(data-linenos);
+        user-select: none;
       }
 
       + .hll {
