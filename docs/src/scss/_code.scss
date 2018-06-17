@@ -29,10 +29,19 @@ $tab-current-label: #FF5252;
   .linenodiv {
     .special {
       margin-right: -1.2rem;
-      margin-left: -1.6rem;
+      margin-left: -1.2rem;
       padding-right: 1.2rem;
-      padding-left: 1.6rem;
+      padding-left: 1.2rem;
       background-color: $md-linenos-background-special-table;
+    }
+  }
+
+  > table .linenodiv {
+    @media only screen and (max-width: 44.9375em) {
+      .special {
+        margin-left: -1.6rem;
+        padding-left: 1.6rem;
+      }
     }
   }
 
@@ -55,11 +64,11 @@ $tab-current-label: #FF5252;
 
       &::before {
         display: inline-block;
-        position: sticky;
-        left: -1.6rem;
+        // position: sticky;
+        // left: -1.2rem;
         margin-right: 0.5rem;
-        margin-left: -1.6rem;
-        padding-left: 1.6rem;
+        margin-left: -1.2rem;
+        padding-left: 1.2rem;
         border-right: 0.0625rem solid $md-linenos-border;
         background-color: $md-linenos-background;
         color: $md-linenos;
@@ -70,6 +79,17 @@ $tab-current-label: #FF5252;
       + .hll {
         margin: 0 -0.5rem;
         padding: 0 0.5rem;
+      }
+    }
+  }
+
+  > .codehilite,
+  > .highlight {
+    [data-linenos]::before {
+      @media only screen and (max-width: 44.9375em) {
+        // left: -1.6rem;
+        margin-left: -1.6rem;
+        padding-left: 1.6rem;
       }
     }
   }
