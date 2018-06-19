@@ -105,7 +105,7 @@ if pygments:
             yield 0, ''
 
     class BlockHtmlFormatter(HtmlFormatter):
-        """Adds ability to output linenumbers in a new way."""
+        """Adds ability to output line numbers in a new way."""
 
         RE_SPAN_NUMS = re.compile(r'^(<span[^>]*)>([^<]+)(</span>)', re.DOTALL)
         RE_TABLE_NUMS = re.compile(r'(<pre[^>]*>)(?!<span></span>)')
@@ -123,7 +123,7 @@ if pygments:
             Wrapper to handle block inline line numbers.
 
             For our special inline version, don't display line numbers via `<span>  1</span>`,
-            but include as <span data-linenos="  1"></span>` and use CSS to display them:
+            but include as `<span data-linenos="  1"></span>` and use CSS to display them:
             `[data-linenos]:before {content: attr(data-linenos);}`.  This allows us to use
             inline and copy and paste without issue.
             """
