@@ -102,13 +102,13 @@ $tab-current-label: #FF5252;
         }
       }
     }
+  }
 
-    .highlight {
-      @extend .codehilite;
-    }
+  .highlight {
+    @extend .codehilite;
+  }
 
-    .highlighttable {
-      @extend .codehilitetable;
-    }
+  .highlighttable {
+    @extend .codehilitetable;
   }
 }

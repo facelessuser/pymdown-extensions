@@ -75,7 +75,7 @@ DEFAULT_CONFIG = {
     ],
     'linenums_style': [
         'table',
-        'Line number style -Default: False'
+        'Line number style -Default: "table"'
     ],
     'linenums_special': [
         -1,
@@ -324,6 +324,8 @@ class HighlightTreeprocessor(Treeprocessor):
                     use_pygments=self.config['use_pygments'],
                     noclasses=self.config['noclasses'],
                     linenums=self.config['linenums'],
+                    linenums_style=self.config['linenums_style'],
+                    linenums_special=self.config['linenums_special'],
                     extend_pygments_lang=self.config['extend_pygments_lang']
                 )
                 placeholder = self.markdown.htmlStash.store(
