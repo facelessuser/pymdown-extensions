@@ -26,21 +26,20 @@ $tab-current-label: #FF5252;
     }
   }
 
-  .linenodiv {
-    .special {
-      margin-right: -1.2rem;
-      margin-left: -1.2rem;
-      padding-right: 1.2rem;
-      padding-left: 1.2rem;
-      background-color: $md-linenos-background-special-table;
+  .codehilitetable {
+    .linenos {
+      border-right: 0.0625rem solid $md-linenos-border;
+      border-radius: 0;
+      background-color: $md-code-background;
     }
-  }
 
-  > table .linenodiv {
-    @media only screen and (max-width: 44.9375em) {
+    .linenodiv {
       .special {
-        margin-left: -1.6rem;
-        padding-left: 1.6rem;
+        margin-right: -1.2rem;
+        margin-left: -1.2rem;
+        padding-right: 1.2rem;
+        padding-left: 1.2rem;
+        background-color: $md-linenos-background-special-table;
       }
     }
   }
@@ -49,8 +48,7 @@ $tab-current-label: #FF5252;
     word-break: normal;
   }
 
-  .codehilite,
-  .highlight {
+  .codehilite {
     tab-size: 8;
 
     .hll {
@@ -83,14 +81,34 @@ $tab-current-label: #FF5252;
     }
   }
 
-  > .codehilite,
-  > .highlight {
-    [data-linenos]::before {
-      @media only screen and (max-width: 44.9375em) {
-        // left: -1.6rem;
-        margin-left: -1.6rem;
-        padding-left: 1.6rem;
+  > {
+    .codehilitetable {
+      .linenodiv {
+        @media only screen and (max-width: 44.9375em) {
+          .special {
+            margin-left: -1.6rem;
+            padding-left: 1.6rem;
+          }
+        }
       }
+    }
+
+    .codehilite {
+      [data-linenos]::before {
+        @media only screen and (max-width: 44.9375em) {
+          // left: -1.6rem;
+          margin-left: -1.6rem;
+          padding-left: 1.6rem;
+        }
+      }
+    }
+
+    .highlight {
+      @extend .codehilite;
+    }
+
+    .highlighttable {
+      @extend .codehilitetable;
     }
   }
 }

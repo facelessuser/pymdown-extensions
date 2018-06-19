@@ -1,3 +1,5 @@
+$md-footer-text: hsla(0, 0%, 100%, 0.3);
+
 .md-footer .md-footer-custom-text {
-  color: hsla(0, 0%, 100%, 0.3);
+  color: $md-footer-text;
 }

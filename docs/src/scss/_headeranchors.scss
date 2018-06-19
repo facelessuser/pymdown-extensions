@@ -9,6 +9,16 @@
     }
   }
 
+  h1 {
+    .headerlink {
+      margin-top: -0.6rem;
+
+      @media only screen and (min-width: 76.1876em) {
+        margin-top: 0.8rem;
+      }
+    }
+  }
+
   h2 {
     .headerlink {
       margin-top: -0.4rem;
