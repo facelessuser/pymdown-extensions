@@ -104,7 +104,6 @@ if pygments:
                 yield i, t.strip()
             yield 0, ''
 
-
     class BlockHtmlFormatter(HtmlFormatter):
         """Adds ability to output linenumbers in a new way."""
 
