@@ -55,7 +55,7 @@ RE_NESTED_FENCE_START = re.compile(
         (?:[ \t]+(?P<linestep>[\d]+))?                                        #   Line step
         (?:[ \t]+(?P<linespecial>[\d]+))?                                     #   Line special
     (?P=quot2)[ \t]*|
-    (?P<tab>tab=)(?:(?P<quot3>"|')(?P<tab_title>.*?)(?P=quot3))?[ \t]*   # Tab specifier
+    (?P<tab>tab=)(?:(?P<quot3>"|')(?P<tab_title>.*?)(?P=quot3))?[ \t]*        # Tab specifier
     )*
     }?[ \t]*$                                                                 # Language closing
     '''
@@ -488,6 +488,11 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
         count = 0
         for line in lines:
+            if self.preserve_tabs:
+                # Strip carriage returns if the lines end with them.
+                # This is necessary since we are handling preserved tabs
+                # Before whitespace normalization.
+                line = line.rstrip('\r')
             if self.fence is None:
                 ws = self.parse_whitespace(line)
 
