@@ -56,10 +56,6 @@ $tab-current-label: #FF5252;
     }
 
     [data-linenos] {
-      &.special::before {
-        background-color: $md-linenos-background-special;
-      }
-
       &::before {
         display: inline-block;
         // position: sticky;
@@ -72,6 +68,10 @@ $tab-current-label: #FF5252;
         color: $md-linenos;
         content: attr(data-linenos);
         user-select: none;
+      }
+
+      &.special::before {
+        background-color: $md-linenos-background-special;
       }
 
       + .hll {
@@ -102,13 +102,13 @@ $tab-current-label: #FF5252;
         }
       }
     }
+  }
 
-    .highlight {
-      @extend .codehilite;
-    }
+  .highlight {
+    @extend .codehilite;
+  }
 
-    .highlighttable {
-      @extend .codehilitetable;
-    }
+  .highlighttable {
+    @extend .codehilitetable;
   }
 }

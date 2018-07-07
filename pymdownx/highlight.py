@@ -108,7 +108,9 @@ if pygments:
     class BlockHtmlFormatter(HtmlFormatter):
         """Adds ability to output linenumbers in a new way."""
 
-        RE_SPAN_NUMS = re.compile(r'^(<span[^>]*)>([^<]+)(</span>)', re.DOTALL)
+        # Capture `<span class="lineno">   1 </span>`
+        RE_SPAN_NUMS = re.compile(r'(<span[^>]*?)(class="[^"]*\blineno\b[^"]*)"([^>]*)>([^<]+)(</span>)')
+        # Capture `<pre>` that is not followed by `<span></span>`
         RE_TABLE_NUMS = re.compile(r'(<pre[^>]*>)(?!<span></span>)')
 
         def __init__(self, **options):
@@ -119,7 +121,23 @@ if pygments:
                 options['linenos'] = 'inline'
             HtmlFormatter.__init__(self, **options)
 
-        def _wrap_inlinelinenos(self, inner):
+        def _format_custom_line(self, m):
+            """Format the custom line number."""
+
+            # We've broken up the match in such a way that we not only
+            # move the line number value to `data-linenos`, but we could
+            # wrap the gutter number in the future with a highlight class.
+            # The decision to do this has still not be made.
+            return (
+                m.group(1) +
+                m.group(2) +
+                #self._linehl_class + '"'
+                + m.group(3) +
+                ' data-linenos="' + m.group(4) + '">' +
+                m.group(5)
+            )
+
+        def _wrap_customlinenums(self, inner):
             """
             Wrapper to handle block inline line numbers.
 
@@ -129,10 +147,22 @@ if pygments:
             inline and copy and paste without issue.
             """
 
-            for t, line in HtmlFormatter._wrap_inlinelinenos(self, inner):
-                if self.advanced_inline:
-                    line = self.RE_SPAN_NUMS.sub(r'\1 data-linenos="\2">\3', line)
+            # # Could be used to wrap gutter line number with a highlight class
+            # hls = self.hl_lines
+            # lineno = 0
+            for t, line in inner:
+                if t:
+                    # lineno += 1
+                    # self._linehl_class = ' linehl' if lineno in hls else ''
+                    line = self.RE_SPAN_NUMS.sub(self._format_custom_line, line)
                 yield t, line
+
+        def wrap(self, source, outfile):
+            """Wrap the source code."""
+
+            if self.linenos == 2 and self.advanced_inline:
+                source = self._wrap_customlinenums(source)
+            return HtmlFormatter.wrap(self, source, outfile)
 
         def _wrap_tablelinenos(self, inner):
             """
