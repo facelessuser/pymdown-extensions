@@ -572,8 +572,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 use_pygments=self.use_pygments,
                 noclasses=self.noclasses,
                 linenums=self.linenums,
-                linenums_style = self.linenums_style,
-                linenums_special = self.linenums_special,
+                linenums_style=self.linenums_style,
+                linenums_special=self.linenums_special,
                 extend_pygments_lang=self.extend_pygments_lang
             ).highlight(
                 src,

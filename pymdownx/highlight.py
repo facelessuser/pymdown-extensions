@@ -75,7 +75,7 @@ DEFAULT_CONFIG = {
     ],
     'linenums_style': [
         'table',
-        'Line number style -Default: False'
+        'Line number style -Default: "table"'
     ],
     'linenums_special': [
         -1,
@@ -104,9 +104,8 @@ if pygments:
                 yield i, t.strip()
             yield 0, ''
 
-
     class BlockHtmlFormatter(HtmlFormatter):
-        """Adds ability to output linenumbers in a new way."""
+        """Adds ability to output line numbers in a new way."""
 
         # Capture `<span class="lineno">   1 </span>`
         RE_SPAN_NUMS = re.compile(r'(<span[^>]*?)(class="[^"]*\blineno\b[^"]*)"([^>]*)>([^<]+)(</span>)')
@@ -142,7 +141,7 @@ if pygments:
             Wrapper to handle block inline line numbers.
 
             For our special inline version, don't display line numbers via `<span>  1</span>`,
-            but include as <span data-linenos="  1"></span>` and use CSS to display them:
+            but include as `<span data-linenos="  1"></span>` and use CSS to display them:
             `[data-linenos]:before {content: attr(data-linenos);}`.  This allows us to use
             inline and copy and paste without issue.
             """
@@ -354,6 +353,8 @@ class HighlightTreeprocessor(Treeprocessor):
                     use_pygments=self.config['use_pygments'],
                     noclasses=self.config['noclasses'],
                     linenums=self.config['linenums'],
+                    linenums_style=self.config['linenums_style'],
+                    linenums_special=self.config['linenums_special'],
                     extend_pygments_lang=self.config['extend_pygments_lang']
                 )
                 placeholder = self.markdown.htmlStash.store(
