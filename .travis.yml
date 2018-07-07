@@ -27,7 +27,7 @@ matrix:
     - python: 3.6
       env: TOXENV=lint
     - python: 3.6
-      node_js: 6
+      node_js: 8
       env: TOXENV=documents
   allow_failures:
     - python: 3.7-dev
