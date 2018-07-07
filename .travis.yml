@@ -39,6 +39,7 @@ addons:
       - aspell-en
 
 before_install:
+- node --version
 - if [ $TOXENV = documents ]; then npm install -g yarn@v1.7.0; fi
 
 install:
