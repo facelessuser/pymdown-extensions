@@ -80,7 +80,7 @@ This extension's goal is not to provide you with the perfect polyfill, but this 
     d=0;d<c.length;d++){var f=c[d],e=f.parentNode;e.className.match(/(\s|^)no-details(\s|$)/)||(e.className+=" no-details");f.addEventListener("click",function(a){a=a.target.parentNode;a.hasAttribute("open")?a.removeAttribute("open"):a.setAttribute("open","open")})}};(function(){(function(c){document.addEventListener?document.addEventListener("DOMContentLoaded",c):document.attachEvent("onreadystatechange",function(){"interactive"===document.readyState&&c()})})(function(){g()})})()})();
     ```
 
-??? settings "Beautified Version" This is the simplified and beautified version for the css and js. You shouldn't use it in production.
+??? settings "Beautified Version" This is the simplified and beautified version for the CSS and JS. You shouldn't use it in production.
     
     ```css
     details {
