@@ -64,9 +64,24 @@ Unfortunately, due to how new `#!html <details><summary>` tags are, not all brow
 
 This extension's goal is not to provide you with the perfect polyfill, but this is a basic example that provides basic support. There are more elaborate polyfills available that support jQuery, add keyboard events, or even support back to IE8. Feel free to modify what is here or find a solution that fits your needs.
 
-??? settings "Basic Polyfill Setup"
+???+ settings "Basic Polyfill Setup"
     Here is the basic CSS that that can be used.  It is meant to provide a consistent CSS in both browsers that support `#!html <details><summary>` tags and those that do not.
 
+    ```css
+    details{display:block}details[open]>summary::before{content:"\25BC"}details summary{display:block;cursor:pointer}details     summary:focus{outline:0}details summary::before{content:"\25B6";padding-right:.5em}details summary::-webkit-details-marker{display:none}details.no-details:not([open])>*{display:none}details.no-details:not([open]) summary{display:block}
+    ```
+
+    And below is the JavaScript that will detect browsers that do not support `#!html <details><summary>` tags and apply a `no-details` class to all details in those browsers. It will also attach a click event that will toggle the open state. The CSS above will target the `no-details` class and the `open` attribute to hide/show the content of your `#!html <details>` tag. Just run the code after the HTML content is loaded.
+
+    There are plenty of things that aren't covered here, like jumping to a footnote or ID inside a closed polyfilled detail element, but this is left up to the user to figure out, or for a complete 3rd party polyfill.
+
+    ```js
+    (function(){var g=function(){if(!function(){var a=document.createElement("details"),c=!1;if(!("open"in a))return!1;var b;(b=document.body)||(b=document.documentElement,c=!0,b=b.insertBefore(document.createElement("body"),b.firstElementChild||b.firstChild));a.innerHTML="<summary>a</summary>b";a.style.display="block";b.appendChild(a);var d=a.offsetHeight;a.open=!0;d=d!==a.offsetHeight;b.removeChild(a);c&&b.parentNode.removeChild(b);return d}())for(var c=document.querySelectorAll("details>summary"),
+    d=0;d<c.length;d++){var f=c[d],e=f.parentNode;e.className.match(/(\s|^)no-details(\s|$)/)||(e.className+=" no-details");f.addEventListener("click",function(a){a=a.target.parentNode;a.hasAttribute("open")?a.removeAttribute("open"):a.setAttribute("open","open")})}};(function(){(function(c){document.addEventListener?document.addEventListener("DOMContentLoaded",c):document.attachEvent("onreadystatechange",function(){"interactive"===document.readyState&&c()})})(function(){g()})})()})();
+    ```
+
+??? settings "Beautified Version" This is the simplified and beautified version for the CSS and JS. You shouldn't use it in production.
+    
     ```css
     details {
       display: block;
@@ -105,10 +120,6 @@ This extension's goal is not to provide you with the perfect polyfill, but this 
       display: block;
     }
     ```
-
-    And below is the JavaScript that will detect browsers that do not support `#!html <details><summary>` tags and apply a `no-details` class to all details in those browsers. It will also attach a click event that will toggle the open state. The CSS above will target the `no-details` class and the `open` attribute to hide/show the content of your `#!html <details>` tag. Just run the code after the HTML content is loaded.
-
-    There are plenty of things that aren't covered here, like jumping to a footnote or ID inside a closed polyfilled detail element, but this is left up to the user to figure out, or for a complete 3rd party polyfill.
 
     ```js
     (function () {
