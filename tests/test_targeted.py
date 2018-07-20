@@ -146,7 +146,7 @@ class TestSnippets(unittest.TestCase):
 
     def test_bad_file_checked(self):
         """Test bad file when the check is enabled."""
-        with self.assertRaises(Exception):
+        with self.assertRaises(IOError):
             markdown.Markdown(
                 extensions=['pymdownx.snippets'],
                 extension_configs={'pymdownx.snippets': {'check_paths': True}}
