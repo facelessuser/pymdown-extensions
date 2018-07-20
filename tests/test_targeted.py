@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from pymdownx import util
 import unittest
 import pytest
+import markdown
 
 
 class TestUrlParse(unittest.TestCase):
@@ -138,6 +139,41 @@ class TestUrlParse(unittest.TestCase):
         self.assertEqual(path, '..\\file\\path')
         self.assertEqual(is_url, False)
         self.assertEqual(is_absolute, False)
+
+
+class TestSnippets(unittest.TestCase):
+    """Targeted tests for Snippets."""
+
+    def test_bad_file_checked(self):
+        """Test bad file when the check is enabled."""
+        with self.assertRaises(Exception):
+            markdown.Markdown(
+                extensions=['pymdownx.snippets'],
+                extension_configs={'pymdownx.snippets': {'check_paths': True}}
+            ).convert('--8<--- "bad.file"')
+
+    def test_good_file_checked(self):
+        """Test good file when the check is enabled."""
+        expected = "<p>Snippet</p>"
+        rendered = markdown.Markdown(
+            extensions=['pymdownx.snippets'],
+            extension_configs={'pymdownx.snippets': {
+                'check_paths': True,
+                'base_path': 'tests/extensions/_snippets'
+            }}
+        ).convert('--8<--- "d.txt"')
+
+        self.assertEqual(expected, rendered)
+
+    def test_bad_file_unchecked(self):
+        """Test bad file when the check is disabled."""
+        expected = ""
+        rendered = markdown.Markdown(
+            extensions=['pymdownx.snippets'],
+            extension_configs={'pymdownx.snippets': {'check_paths': False}}
+        ).convert('--8<--- "bad.file"')
+
+        self.assertEqual(expected, rendered)
 
 
 def run():
