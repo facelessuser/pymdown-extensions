@@ -26,6 +26,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import SimpleTagPattern, DoubleTagPattern
+from . import util
 
 SMART_UNDER_CONTENT = r'((?:[^_]|_(?=\w|\s)|(?<=\s)_+?(?=\s))+?_*?)'
 SMART_STAR_CONTENT = r'((?:[^\*]|\*(?=[^\W_]|\*|\s)|(?<=\s)\*+?(?=\s))+?\**?)'
@@ -137,7 +138,12 @@ class BetterEmExtension(Extension):
 
         md.inlinePatterns["strong_em"] = DoubleTagPattern(star_strong_em, 'strong,em')
         md.inlinePatterns.add("strong_em2", DoubleTagPattern(under_strong_em, 'strong,em'), '>strong_em')
-        md.inlinePatterns.link("em_strong", ">strong_em2")
+        if util.MD3:  # pragma: no cover
+            value = md.inlinePatterns["em_strong"]
+            index = md.inlinePatterns._priority[md.inlinePatterns.get_index_for_name("strong_em2")].priority
+            md.inlinePatterns.register(value, "em_strong", index + 1)
+        else:
+            md.inlinePatterns.link("em_strong", ">strong_em2")
         md.inlinePatterns["em_strong"] = DoubleTagPattern(star_em_strong, 'em,strong')
         md.inlinePatterns.add('em_strong2', DoubleTagPattern(under_em_strong, 'em,strong'), '>em_strong')
         md.inlinePatterns.add('strong_em3', DoubleTagPattern(star_strong_em2, 'strong,em'), '>em_strong2')

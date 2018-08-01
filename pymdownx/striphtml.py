@@ -26,6 +26,7 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.postprocessors import Postprocessor
+from . import util
 import re
 
 
@@ -75,6 +76,8 @@ class StripHtmlPostprocessor(Postprocessor):
             )
 
         super(StripHtmlPostprocessor, self).__init__(md)
+        if not util.MD3:
+            self.md = md
 
     def repl(self, m):
         """Replace comments and unwanted attributes."""

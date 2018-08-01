@@ -26,6 +26,7 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
 from markdown import util as md_util
+from . import util
 import copy
 from collections import OrderedDict
 try:
@@ -258,6 +259,13 @@ def get_hl_settings(md):
 class HighlightTreeprocessor(Treeprocessor):
     """Highlight source code in code blocks."""
 
+    def __init__(self, md):
+        """Initialize."""
+
+        super(HighlightTreeprocessor, self).__init__(md)
+        if not util.MD3:
+            self.md = md
+
     def run(self, root):
         """Find code blocks and store in `htmlStash`."""
 
@@ -272,14 +280,23 @@ class HighlightTreeprocessor(Treeprocessor):
                     linenums=self.config['linenums'],
                     extend_pygments_lang=self.config['extend_pygments_lang']
                 )
-                placeholder = self.markdown.htmlStash.store(
-                    code.highlight(
-                        block[0].text,
-                        '',
-                        self.config['css_class']
-                    ),
-                    safe=True
-                )
+                if util.MD3:  # pragma: no cover
+                    placeholder = self.md.htmlStash.store(
+                        code.highlight(
+                            block[0].text,
+                            '',
+                            self.config['css_class']
+                        )
+                    )
+                else:
+                    placeholder = self.md.htmlStash.store(
+                        code.highlight(
+                            block[0].text,
+                            '',
+                            self.config['css_class']
+                        ),
+                        safe=True
+                    )
 
                 # Clear codeblock in etree instance
                 block.clear()
