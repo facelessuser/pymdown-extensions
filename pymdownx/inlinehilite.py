@@ -20,6 +20,7 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import Pattern
 from markdown import util as md_util
+from . import util
 from . import highlight as hl
 
 ESCAPED_BSLASH = '%s%s%s' % (md_util.STX, ord('\\'), md_util.ETX)
@@ -51,8 +52,9 @@ class InlineHilitePattern(Pattern):
     def __init__(self, pattern, md):
         """Initialize."""
 
-        Pattern.__init__(self, pattern)
-        self.markdown = md
+        Pattern.__init__(self, pattern, md)
+        if not util.MD3:
+            self.md = md
         self.get_hl_settings = False
 
     def get_settings(self):
@@ -62,7 +64,7 @@ class InlineHilitePattern(Pattern):
             self.get_hl_settings = True
             self.style_plain_text = self.config['style_plain_text']
 
-            config = hl.get_hl_settings(self.markdown)
+            config = hl.get_hl_settings(self.md)
             css_class = self.config['css_class']
             self.css_class = css_class if css_class else config['css_class']
 
@@ -85,10 +87,16 @@ class InlineHilitePattern(Pattern):
                 noclasses=self.noclasses,
                 extend_pygments_lang=self.extend_pygments_lang
             ).highlight(src, language, self.css_class, inline=True)
-            el.text = self.markdown.htmlStash.store(el.text, safe=True)
+            if util.MD3:  # pragma: no cover
+                el.text = self.md.htmlStash.store(el.text)
+            else:
+                el.text = self.md.htmlStash.store(el.text, safe=True)
         else:
             el = md_util.etree.Element('code')
-            el.text = self.markdown.htmlStash.store(_escape(src), safe=True)
+            if util.MD3:  # pragma: no cover
+                el.text = self.md.htmlStash.store(_escape(src))
+            else:
+                el.text = self.md.htmlStash.store(_escape(src), safe=True)
         return el
 
     def handleMatch(self, m):

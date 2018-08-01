@@ -143,10 +143,12 @@ class ProgressBarTreeProcessor(AttrListTreeprocessor):
 class ProgressBarPattern(Pattern):
     """Pattern handler for the progress bars."""
 
-    def __init__(self, pattern):
+    def __init__(self, pattern, md):
         """Initialize."""
 
-        Pattern.__init__(self, pattern)
+        Pattern.__init__(self, pattern, md)
+        if not util.MD3:
+            self.md = md
 
     def create_tag(self, width, label, add_classes, alist):
         """Create the tag."""
@@ -170,8 +172,8 @@ class ProgressBarPattern(Pattern):
         p.text = label
         if alist is not None:
             el.tail = alist
-            if 'attr_list' in self.markdown.treeprocessors.keys():
-                ProgressBarTreeProcessor(self.markdown).run(el)
+            if 'attr_list' in self.md.treeprocessors:
+                ProgressBarTreeProcessor(self.md).run(el)
         return el
 
     def handleMatch(self, m):
@@ -242,9 +244,8 @@ class ProgressBarExtension(Extension):
         """Add the progress bar pattern handler."""
 
         util.escape_chars(md, ['='])
-        progress = ProgressBarPattern(RE_PROGRESS)
+        progress = ProgressBarPattern(RE_PROGRESS, md)
         progress.config = self.getConfigs()
-        progress.markdown = md
         md.inlinePatterns.add("progress-bar", progress, ">escape")
 
 

@@ -96,7 +96,6 @@ class EscapeAllExtension(Extension):
     def extendMarkdown(self, md, md_globals):
         """Escape all."""
 
-        self.md = md
         config = self.getConfigs()
         hardbreak = config['hardbreak']
         md.inlinePatterns['escape'] = EscapeAllPattern(

@@ -36,6 +36,7 @@ from markdown.postprocessors import Postprocessor
 from markdown.blockprocessors import CodeBlockProcessor
 from markdown import util as md_util
 from . import highlight as hl
+from . import util
 import re
 
 SOH = '\u0001'
@@ -200,7 +201,7 @@ class SuperFencesCodeExtension(Extension):
                     lambda s, l, c=class_name, f=fence_format: f(s, l, c)
                 )
 
-        self.markdown = md
+        self.md = md
         self.patch_fenced_rule()
         for entry in self.superfences:
             entry["stash"] = CodeStash()
@@ -214,22 +215,21 @@ class SuperFencesCodeExtension(Extension):
         """
 
         config = self.getConfigs()
-        fenced = SuperFencesBlockPreprocessor(self.markdown)
-        indented_code = SuperFencesCodeBlockProcessor(self)
+        fenced = SuperFencesBlockPreprocessor(self.md)
+        indented_code = SuperFencesCodeBlockProcessor(self.md.parser)
         fenced.config = config
         fenced.extension = self
         indented_code.config = config
-        indented_code.markdown = self.markdown
         indented_code.extension = self
         self.superfences[0]["formatter"] = fenced.highlight
-        self.markdown.parser.blockprocessors['code'] = indented_code
+        self.md.parser.blockprocessors['code'] = indented_code
         if config["preserve_tabs"]:
-            self.markdown.preprocessors.add('fenced_code_block', fenced, "<normalize_whitespace")
-            post_fenced = SuperFencesBlockPostNormalizePreprocessor(self.markdown)
-            self.markdown.preprocessors.add('fenced_code_post_norm', post_fenced, ">normalize_whitespace")
+            self.md.preprocessors.add('fenced_code_block', fenced, "<normalize_whitespace")
+            post_fenced = SuperFencesBlockPostNormalizePreprocessor(self.md)
+            self.md.preprocessors.add('fenced_code_post_norm', post_fenced, ">normalize_whitespace")
         else:
-            self.markdown.preprocessors.add('fenced_code_block', fenced, ">normalize_whitespace")
-        self.markdown.postprocessors.add('fenced_tabs', SuperFencesTabPostProcessor(self.markdown), '>raw_html')
+            self.md.preprocessors.add('fenced_code_block', fenced, ">normalize_whitespace")
+        self.md.postprocessors.add('fenced_tabs', SuperFencesTabPostProcessor(self.md), '>raw_html')
 
     def reset(self):
         """Clear the stash."""
@@ -303,8 +303,9 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         """Initialize."""
 
         super(SuperFencesBlockPreprocessor, self).__init__(md)
-        self.markdown = md
-        self.tab_len = self.markdown.tab_length
+        if not util.MD3:
+            self.md = md
+        self.tab_len = self.md.tab_length
         self.checked_hl_settings = False
         self.codehilite_conf = {}
 
@@ -325,7 +326,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             self.checked_hl_settings = True
             self.highlight_code = self.config['highlight_code']
 
-            config = hl.get_hl_settings(self.markdown)
+            config = hl.get_hl_settings(self.md)
             css_class = self.config['css_class']
             self.css_class = css_class if css_class else config['css_class']
 
@@ -597,7 +598,10 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         Store the original text in case we need to restore if we are too greedy.
         """
         # Save the fenced blocks to add once we are done iterating the lines
-        placeholder = self.markdown.htmlStash.store(code, safe=True)
+        if util.MD3:  # pragma: no cover
+            placeholder = self.md.htmlStash.store(code)
+        else:
+            placeholder = self.md.htmlStash.store(code, safe=True)
         self.stack.append(('%s%s' % (self.ws, placeholder), start, end))
         if not self.disabled_indented:
             # If an indented block consumes this placeholder,

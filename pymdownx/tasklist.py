@@ -27,6 +27,7 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
 import re
+from . import util
 
 RE_CHECKBOX = re.compile(r"^(?P<checkbox> *\[(?P<state>(?:x|X| ){1})\] +)(?P<line>.*)", re.DOTALL)
 
@@ -50,16 +51,28 @@ def get_checkbox(state, custom_checkbox=False, clickable_checkbox=False):
 class TasklistTreeprocessor(Treeprocessor):
     """Tasklist tree processor that finds lists with checkboxes."""
 
+    def __init__(self, md):
+        """Initialize."""
+
+        super(TasklistTreeprocessor, self).__init__(md)
+        if not util.MD3:
+            self.md = md
+
     def inline(self, li):
         """Search for checkbox directly in `li` tag."""
 
         found = False
         m = RE_CHECKBOX.match(li.text)
         if m is not None:
-            li.text = self.markdown.htmlStash.store(
-                get_checkbox(m.group('state'), self.custom_checkbox, self.clickable_checkbox),
-                safe=True
-            ) + m.group('line')
+            if util.MD3:  # pragma: no cover
+                li.text = self.md.htmlStash.store(
+                    get_checkbox(m.group('state'), self.custom_checkbox, self.clickable_checkbox)
+                ) + m.group('line')
+            else:
+                li.text = self.md.htmlStash.store(
+                    get_checkbox(m.group('state'), self.custom_checkbox, self.clickable_checkbox),
+                    safe=True
+                ) + m.group('line')
             found = True
         return found
 
@@ -72,10 +85,15 @@ class TasklistTreeprocessor(Treeprocessor):
             if first.tag == "p" and first.text is not None:
                 m = RE_CHECKBOX.match(first.text)
                 if m is not None:
-                    first.text = self.markdown.htmlStash.store(
-                        get_checkbox(m.group('state'), self.custom_checkbox, self.clickable_checkbox),
-                        safe=True
-                    ) + m.group('line')
+                    if util.MD3:  # pragma: no cover
+                        first.text = self.md.htmlStash.store(
+                            get_checkbox(m.group('state'), self.custom_checkbox, self.clickable_checkbox)
+                        ) + m.group('line')
+                    else:
+                        first.text = self.md.htmlStash.store(
+                            get_checkbox(m.group('state'), self.custom_checkbox, self.clickable_checkbox),
+                            safe=True
+                        ) + m.group('line')
                     found = True
         return found
 

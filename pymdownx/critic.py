@@ -29,6 +29,7 @@ from markdown import Extension
 from markdown.preprocessors import Preprocessor
 from markdown.postprocessors import Postprocessor
 import re
+from . import util
 
 STX = '\u0002'
 ETX = '\u0003'
@@ -325,8 +326,21 @@ class CriticExtension(Extension):
 
         if not self.configured:
             self.configured = True
-            self.md.preprocessors.link('critic', '>normalize_whitespace')
-            self.md.postprocessors.link('critic-post', '>raw_html')
+            if util.MD3:  # pragma: no cover
+                value = self.md.preprocessors["critic"]
+                index = self.md.preprocessors._priority[
+                    self.md.preprocessors.get_index_for_name("normalize_whitespace")
+                ].priority
+                self.md.preprocessors.register(value, "critic", index - 1)
+
+                value = self.md.postprocessors["critic-post"]
+                index = self.md.postprocessors._priority[
+                    self.md.postprocessors.get_index_for_name("raw_html")
+                ].priority
+                self.md.postprocessors.register(value, "critic-post", index - 1)
+            else:
+                self.md.preprocessors.link('critic', '>normalize_whitespace')
+                self.md.postprocessors.link('critic-post', '>raw_html')
         self.critic_stash.clear()
 
 

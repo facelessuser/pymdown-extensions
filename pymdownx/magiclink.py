@@ -33,12 +33,10 @@ import warnings
 import re
 import os
 
-try:
-    from markdown.inlinepatterns import LinkPattern, Pattern
-    LEGACY = True
-except ImportError:  # pragma: no cover
+if util.MD3:  # pragma: no cover
     from markdown.inlinepatterns import LinkInlineProcessor, Pattern
-    LEGACY = False
+else:  # pragma: no cover
+    from markdown.inlinepatterns import LinkPattern, Pattern
 
 MAGIC_LINK = 1
 MAGIC_AUTO_LINK = 2
@@ -201,6 +199,8 @@ class _MagiclinkShorthandPattern(Pattern):
         self.labels = labels
         self.provider = provider if provider in PROVIDER_INFO else ''
         Pattern.__init__(self, pattern, md)
+        if not util.MD3:
+            self.md = md
 
 
 class _MagiclinkReferencePattern(_MagiclinkShorthandPattern):
@@ -317,6 +317,8 @@ class MagicShortenerTreeprocessor(Treeprocessor):
             "gitlab": "GitLab"
         }
         Treeprocessor.__init__(self, md)
+        if not util.MD3:
+            self.md = md
 
     def shorten_diff(self, link, class_name, label, user_repo, value, hash_size):
         """Shorten diff/compare links."""
@@ -490,7 +492,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         return root
 
 
-if LEGACY:
+if not util.MD3:
     class MagiclinkPattern(LinkPattern):
         """Convert html, ftp links to clickable links."""
 
@@ -531,7 +533,7 @@ else:  # pragma: no cover
                 href = m.group('link')
                 if self.config['hide_protocol']:
                     el.text = md_util.AtomicString(el.text[el.text.find("://") + 3:])
-            el.set("href", self.sanitize_url(self.unescape(href.strip())))
+            el.set("href", self.unescape(href.strip()))
 
             if self.config.get('repo_url_shortener', False):
                 el.set('magiclink', md_util.text_type(MAGIC_LINK))
@@ -764,7 +766,10 @@ class MagiclinkExtension(Extension):
         # Setup general link patterns
         auto_link_pattern = MagiclinkAutoPattern(RE_AUTOLINK, md)
         auto_link_pattern.config = config
-        md.inlinePatterns['autolink'] = auto_link_pattern
+        if util.MD3:  # pragma: no cover
+            md.inlinePatterns._data['autolink'] = auto_link_pattern
+        else:
+            md.inlinePatterns['autolink'] = auto_link_pattern
 
         link_pattern = MagiclinkPattern(RE_LINK, md)
         link_pattern.config = config
