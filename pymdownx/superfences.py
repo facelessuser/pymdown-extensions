@@ -46,21 +46,17 @@ PREFIX_CHARS = ('>', ' ', '\t')
 
 RE_NESTED_FENCE_START = re.compile(
     r'''(?x)
-    (?P<fence>~{3,}|`{3,})[ \t]*                                              # Fence opening
-    (\{?                                                                      # Language opening
-    \.?(?P<lang>[\w#.+-]*))?[ \t]*                                            # Language
-    (?:
-    hl_lines=(?P<quot>"|')(?P<hl_lines>\d+(?:[ \t]+\d+)*)(?P=quot)[ \t]*|     # highlight lines
-    linenums=(?P<quot2>"|')                                                   # Line numbers
-        (?P<linestart>[\d]+)                                                  #   Line number start
-        (?:[ \t]+(?P<linestep>[\d]+))?                                        #   Line step
-        (?:[ \t]+(?P<linespecial>[\d]+))?                                     #   Line special
-    (?P=quot2)[ \t]*|
-    (?P<tab>tab=)(?:(?P<quot3>"|')(?P<tab_title>.*?)(?P=quot3))?[ \t]*        # Tab specifier
-    )*
-    }?[ \t]*$                                                                 # Language closing
+    (?P<fence>~{3,}|`{3,})[ \t]*                                                          # Fence opening
+    (\{?                                                                                  # Language opening
+    \.?(?P<lang>[\w#.+-]*))?[ \t]*                                                        # Language
+    (?P<options>(?:\b[a-zA-Z][a-zA-Z0-9_]*=(?:(?P<quot>"|')[^"'\n\r]*(?P=quot))?[ \t]*)*) # Options
+    }?[ \t]*$                                                                             # Language closing
     '''
 )
+
+RE_HL_LINES = re.compile(r'(?P<hl_lines>\d+(?:[ \t]+\d+)*)')
+RE_LINENUMS = re.compile(r'(?P<linestart>[\d]+)(?:[ \t]+(?P<linestep>[\d]+))?(?:[ \t]+(?P<linespecial>[\d]+))?')
+RE_OPTIONS = re.compile(r'''(?P<key>[a-zA-Z][a-zA-Z0-9_]*)=(?:(?P<quot>"|')(?P<value>[^"'\n\r]*)(?P=quot))?''')
 
 RE_TABS = re.compile(r'((?:<p><superfences>.*?</superfences></p>\s*)+)', re.DOTALL)
 
@@ -134,6 +130,28 @@ def fence_div_format(source, language, css_class):
     return '<div class="%s">%s</div>' % (css_class, _escape(source))
 
 
+def default_validator(language, options):
+    """Default validator."""
+
+    okay = True
+    # Check for invalid keys
+    for k in options.keys():
+        if k not in ('hl_lines', 'linenums'):
+            okay = False
+            break
+
+    # Check format of valid keys
+    if okay:
+        for opt, validator in (('hl_lines', RE_HL_LINES), ('linenums', RE_LINENUMS)):
+            if opt in options:
+                value = options[opt]
+                if value is None or validator.match(options[opt]) is None:
+                    okay = False
+                    break
+
+    return okay
+
+
 class SuperFencesCodeExtension(Extension):
     """SuperFences code block extension."""
 
@@ -161,14 +179,15 @@ class SuperFencesCodeExtension(Extension):
         }
         super(SuperFencesCodeExtension, self).__init__(*args, **kwargs)
 
-    def extend_super_fences(self, name, formatter):
+    def extend_super_fences(self, name, formatter, validator):
         """Extend SuperFences with the given name, language, and formatter."""
 
         self.superfences.append(
             {
                 "name": name,
                 "test": lambda l, language=name: language == l,
-                "formatter": formatter
+                "formatter": formatter,
+                "validator": validator
             }
         )
 
@@ -185,20 +204,25 @@ class SuperFencesCodeExtension(Extension):
             {
                 "name": "superfences",
                 "test": lambda language: True,
-                "formatter": None
+                "formatter": None,
+                "validator": lambda l, o, v=default_validator: v(l, o)
             }
         )
 
-        # UML blocks
+        # Custom Fences
         custom_fences = config.get('custom_fences', [])
         for custom in custom_fences:
             name = custom.get('name')
             class_name = custom.get('class')
+            pass_options = custom.get('pass_options', False)
             fence_format = custom.get('format', fence_code_format)
+            validator = custom.get('validator', default_validator)
             if name is not None and class_name is not None:
                 self.extend_super_fences(
                     name,
-                    lambda s, l, c=class_name, f=fence_format: f(s, l, c)
+                    lambda s, l, o, p=pass_options, c=class_name, f=fence_format:
+                        (f(s, l, c, o) if pass_options else f(s, l, c)),
+                    lambda l, o, v=validator: v(l, o)
                 )
 
         self.md = md
@@ -411,7 +435,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         code = None
         for entry in reversed(self.extension.superfences):
             if entry["test"](self.lang):
-                code = entry["formatter"](self.rebuild_block(self.code), self.lang)
+                code = entry["formatter"](self.rebuild_block(self.code), self.lang, self.options)
                 if self.tab is not None:
                     code = self.get_tab(code, self.tab)
                 break
@@ -484,6 +508,16 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
         return ws
 
+    def get_options(self, string):
+        """Get options."""
+
+        options = {}
+        for m in RE_OPTIONS.finditer(string):
+            key = m.group('key')
+            value = m.group('value')
+            options[key] = value
+        return options
+
     def search_nested(self, lines):
         """Search for nested fenced blocks."""
 
@@ -507,17 +541,37 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                     self.empty_lines = 0
                     self.fence = m.group('fence')
                     self.lang = m.group('lang')
-                    self.hl_lines = m.group('hl_lines')
-                    self.linestart = m.group('linestart')
-                    self.linestep = m.group('linestep')
-                    self.linespecial = m.group('linespecial')
-                    self.fence_end = re.compile(NESTED_FENCE_END % self.fence)
-                    if m.group('tab'):
-                        self.tab = m.group('tab_title')
+                    self.options = self.get_options(m.group('options'))
+                    if 'tab' in self.options:
+                        self.tab = self.options['tab']
                         if not self.tab:
                             self.tab = self.lang
                         if not self.tab:
                             self.tab = '%(tab_title)s'
+                        del self.options['tab']
+
+                    index = 0
+                    for entry in reversed(self.extension.superfences):
+                        index += 1
+                        if entry["test"](self.lang):
+                            validator = entry.get("validator", lambda l, o, v=default_validator: v(l, o))
+                            okay = validator(self.lang, self.options)
+                            break
+
+                    if okay:
+                        # Check if we reached the first/default
+                        if index == len(self.extension.superfences):
+                            if 'hl_lines' in self.options:
+                                m = RE_HL_LINES.match(self.options['hl_lines'])
+                                self.hl_lines = m.group('hl_lines')
+                            if 'linenums' in self.options:
+                                m = RE_LINENUMS.match(self.options['linenums'])
+                                self.linestart = m.group('linestart')
+                                self.linestep = m.group('linestep')
+                                self.linespecial = m.group('linespecial')
+                        self.fence_end = re.compile(NESTED_FENCE_END % self.fence)
+                    else:
+                        self.clear()
             else:
                 # Evaluate lines
                 # - Determine if it is the ending line or content line
@@ -556,7 +610,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 lines = lines[:start] + [fenced] + lines[end:]
         return lines
 
-    def highlight(self, src, language):
+    def highlight(self, src, language, options=None):
         """
         Syntax highlight the code block.
 
