@@ -1,7 +1,6 @@
 """Test cases for SuperFences."""
 from __future__ import unicode_literals
 from .. import util
-from pymdownx import util as pymd_util
 
 
 class TestSuperFences(util.MdCase):
