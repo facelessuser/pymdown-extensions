@@ -186,5 +186,6 @@ underscore's
 unicode
 unittest
 uslugify
+validator
 versa
 whitespace
