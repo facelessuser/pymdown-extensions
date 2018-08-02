@@ -46,17 +46,17 @@ PREFIX_CHARS = ('>', ' ', '\t')
 
 RE_NESTED_FENCE_START = re.compile(
     r'''(?x)
-    (?P<fence>~{3,}|`{3,})[ \t]*                                                          # Fence opening
-    (\{?                                                                                  # Language opening
-    \.?(?P<lang>[\w#.+-]*))?[ \t]*                                                        # Language
-    (?P<options>(?:\b[a-zA-Z][a-zA-Z0-9_]*=(?:(?P<quot>"|')[^"'\n\r]*(?P=quot))?[ \t]*)*) # Options
-    }?[ \t]*$                                                                             # Language closing
+    (?P<fence>~{3,}|`{3,})[ \t]*                                                   # Fence opening
+    (\{?                                                                           # Language opening
+    \.?(?P<lang>[\w#.+-]*))?[ \t]*                                                 # Language
+    (?P<options>(?:\b[a-zA-Z][a-zA-Z0-9_]*=(?:(?P<quot>"|').*?(?P=quot))?[ \t]*)*) # Options
+    }?[ \t]*$                                                                      # Language closing
     '''
 )
 
 RE_HL_LINES = re.compile(r'(?P<hl_lines>\d+(?:[ \t]+\d+)*)')
 RE_LINENUMS = re.compile(r'(?P<linestart>[\d]+)(?:[ \t]+(?P<linestep>[\d]+))?(?:[ \t]+(?P<linespecial>[\d]+))?')
-RE_OPTIONS = re.compile(r'''(?P<key>[a-zA-Z][a-zA-Z0-9_]*)=(?:(?P<quot>"|')(?P<value>[^"'\n\r]*)(?P=quot))?''')
+RE_OPTIONS = re.compile(r'''(?P<key>[a-zA-Z][a-zA-Z0-9_]*)=(?:(?P<quot>"|')(?P<value>.*?)(?P=quot))?''')
 
 RE_TABS = re.compile(r'((?:<p><superfences>.*?</superfences></p>\s*)+)', re.DOTALL)
 
@@ -606,7 +606,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 lines = lines[:start] + [fenced] + lines[end:]
         return lines
 
-    def highlight(self, src, language, options=None):
+    def highlight(self, src, language, options):
         """
         Syntax highlight the code block.
 
@@ -619,11 +619,11 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         linestart = None
         linespecial = None
         hl_lines = None
-        if 'hl_lines' in self.options:
-            m = RE_HL_LINES.match(self.options['hl_lines'])
+        if 'hl_lines' in options:
+            m = RE_HL_LINES.match(options['hl_lines'])
             hl_lines = m.group('hl_lines')
-        if 'linenums' in self.options:
-            m = RE_LINENUMS.match(self.options['linenums'])
+        if 'linenums' in options:
+            m = RE_LINENUMS.match(options['linenums'])
             linestart = m.group('linestart')
             linestep = m.group('linestep')
             linespecial = m.group('linespecial')
