@@ -130,8 +130,8 @@ def fence_div_format(source, language, css_class):
     return '<div class="%s">%s</div>' % (css_class, _escape(source))
 
 
-def default_validator(language, options):
-    """Default validator."""
+def highlight_validator(language, options):
+    """Highlight validator."""
 
     okay = True
     # Check for invalid keys
@@ -150,6 +150,12 @@ def default_validator(language, options):
                     break
 
     return okay
+
+
+def default_validator(language, options):
+    """Default validator."""
+
+    return len(options) == 0
 
 
 class SuperFencesCodeExtension(Extension):
@@ -205,7 +211,7 @@ class SuperFencesCodeExtension(Extension):
                 "name": "superfences",
                 "test": lambda language: True,
                 "formatter": None,
-                "validator": lambda l, o, v=default_validator: v(l, o)
+                "validator": lambda l, o, v=highlight_validator: v(l, o)
             }
         )
 
@@ -214,9 +220,9 @@ class SuperFencesCodeExtension(Extension):
         for custom in custom_fences:
             name = custom.get('name')
             class_name = custom.get('class')
-            pass_options = custom.get('pass_options', False)
             fence_format = custom.get('format', fence_code_format)
             validator = custom.get('validator', default_validator)
+            pass_options = custom.get('validator') is not None
             if name is not None and class_name is not None:
                 self.extend_super_fences(
                     name,
@@ -369,10 +375,6 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         self.ws_virtual_len = 0
         self.fence = None
         self.lang = None
-        self.hl_lines = None
-        self.linestart = None
-        self.linestep = None
-        self.linespecial = None
         self.quote_level = 0
         self.code = []
         self.empty_lines = 0
@@ -530,26 +532,12 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             del self.options['tab']
 
         # Run per language validator
-        index = 0
         for entry in reversed(self.extension.superfences):
-            index += 1
             if entry["test"](self.lang):
                 validator = entry.get("validator", lambda l, o, v=default_validator: v(l, o))
                 okay = validator(self.lang, self.options)
                 break
 
-        if okay:
-            # Check if we reached the first/default
-            if index == len(self.extension.superfences):
-                # Default format options
-                if 'hl_lines' in self.options:
-                    m = RE_HL_LINES.match(self.options['hl_lines'])
-                    self.hl_lines = m.group('hl_lines')
-                if 'linenums' in self.options:
-                    m = RE_LINENUMS.match(self.options['linenums'])
-                    self.linestart = m.group('linestart')
-                    self.linestep = m.group('linestep')
-                    self.linespecial = m.group('linespecial')
         return okay
 
     def search_nested(self, lines):
@@ -626,11 +614,25 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         is enabled, so we call into it to highlight the code.
         """
 
+        # Default format options
+        linestep = None
+        linestart = None
+        linespecial = None
+        hl_lines = None
+        if 'hl_lines' in self.options:
+            m = RE_HL_LINES.match(self.options['hl_lines'])
+            hl_lines = m.group('hl_lines')
+        if 'linenums' in self.options:
+            m = RE_LINENUMS.match(self.options['linenums'])
+            linestart = m.group('linestart')
+            linestep = m.group('linestep')
+            linespecial = m.group('linespecial')
+
         if self.highlight_code:
-            linestep = self.parse_line_step(self.linestep)
-            linestart = self.parse_line_start(self.linestart)
-            linespecial = self.parse_line_special(self.linespecial)
-            hl_lines = self.parse_hl_lines(self.hl_lines)
+            linestep = self.parse_line_step(linestep)
+            linestart = self.parse_line_start(linestart)
+            linespecial = self.parse_line_special(linespecial)
+            hl_lines = self.parse_hl_lines(hl_lines)
 
             el = hl.Highlight(
                 guess_lang=self.guess_lang,
