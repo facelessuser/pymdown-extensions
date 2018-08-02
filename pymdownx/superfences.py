@@ -378,6 +378,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         self.empty_lines = 0
         self.fence_end = None
         self.tab = None
+        self.options = {}
 
     def eval_fence(self, ws, content, start, end):
         """Evaluate a normal fence."""
@@ -508,15 +509,48 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
         return ws
 
-    def get_options(self, string):
+    def parse_options(self, string):
         """Get options."""
 
-        options = {}
+        okay = True
+
+        self.options = {}
         for m in RE_OPTIONS.finditer(string):
             key = m.group('key')
             value = m.group('value')
-            options[key] = value
-        return options
+            self.options[key] = value
+
+        # Global options (remove as we handle them)
+        if 'tab' in self.options:
+            self.tab = self.options['tab']
+            if not self.tab:
+                self.tab = self.lang
+            if not self.tab:
+                self.tab = '%(tab_title)s'
+            del self.options['tab']
+
+        # Run per language validator
+        index = 0
+        for entry in reversed(self.extension.superfences):
+            index += 1
+            if entry["test"](self.lang):
+                validator = entry.get("validator", lambda l, o, v=default_validator: v(l, o))
+                okay = validator(self.lang, self.options)
+                break
+
+        if okay:
+            # Check if we reached the first/default
+            if index == len(self.extension.superfences):
+                # Default format options
+                if 'hl_lines' in self.options:
+                    m = RE_HL_LINES.match(self.options['hl_lines'])
+                    self.hl_lines = m.group('hl_lines')
+                if 'linenums' in self.options:
+                    m = RE_LINENUMS.match(self.options['linenums'])
+                    self.linestart = m.group('linestart')
+                    self.linestep = m.group('linestep')
+                    self.linespecial = m.group('linespecial')
+        return okay
 
     def search_nested(self, lines):
         """Search for nested fenced blocks."""
@@ -541,36 +575,10 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                     self.empty_lines = 0
                     self.fence = m.group('fence')
                     self.lang = m.group('lang')
-                    self.options = self.get_options(m.group('options'))
-                    if 'tab' in self.options:
-                        self.tab = self.options['tab']
-                        if not self.tab:
-                            self.tab = self.lang
-                        if not self.tab:
-                            self.tab = '%(tab_title)s'
-                        del self.options['tab']
-
-                    index = 0
-                    for entry in reversed(self.extension.superfences):
-                        index += 1
-                        if entry["test"](self.lang):
-                            validator = entry.get("validator", lambda l, o, v=default_validator: v(l, o))
-                            okay = validator(self.lang, self.options)
-                            break
-
-                    if okay:
-                        # Check if we reached the first/default
-                        if index == len(self.extension.superfences):
-                            if 'hl_lines' in self.options:
-                                m = RE_HL_LINES.match(self.options['hl_lines'])
-                                self.hl_lines = m.group('hl_lines')
-                            if 'linenums' in self.options:
-                                m = RE_LINENUMS.match(self.options['linenums'])
-                                self.linestart = m.group('linestart')
-                                self.linestep = m.group('linestep')
-                                self.linespecial = m.group('linespecial')
+                    if self.parse_options(m.group('options')):
                         self.fence_end = re.compile(NESTED_FENCE_END % self.fence)
                     else:
+                        # Option parsing failed, abandon fence
                         self.clear()
             else:
                 # Evaluate lines
