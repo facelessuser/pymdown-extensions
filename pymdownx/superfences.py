@@ -538,12 +538,14 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         for m in RE_OPTIONS.finditer(string):
             key = m.group('key')
             value = m.group('value')
+            if value is None:
+                value = True
             self.options[key] = value
 
         # Global options (remove as we handle them)
         if 'tab' in self.options:
             self.tab = self.options['tab']
-            if not self.tab:
+            if not self.tab or self.tab is True:
                 self.tab = self.lang
             if not self.tab:
                 self.tab = '%(tab_title)s'
