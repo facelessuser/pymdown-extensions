@@ -146,7 +146,7 @@ def highlight_validator(language, options):
         for opt, validator in (('hl_lines', RE_HL_LINES), ('linenums', RE_LINENUMS)):
             if opt in options:
                 value = options[opt]
-                if value is None or validator.match(options[opt]) is None:
+                if value is True or validator.match(options[opt]) is None:
                     okay = False
                     break
 
