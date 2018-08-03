@@ -35,6 +35,7 @@ from markdown.preprocessors import Preprocessor
 from markdown.postprocessors import Postprocessor
 from markdown.blockprocessors import CodeBlockProcessor
 from markdown import util as md_util
+import functools
 from . import highlight as hl
 from . import util
 import re
@@ -158,6 +159,24 @@ def default_validator(language, options):
     return len(options) == 0
 
 
+def _validator(language, options, validator=None):
+    """Validator wrapper."""
+
+    return validator(language, options)
+
+
+def _formatter(source, language, options, pass_opts=False, class_name="", fmt=None):
+    """Formatter wrapper."""
+
+    return fmt(source, language, class_name, options) if pass_opts else fmt(source, language, class_name)
+
+
+def _test(language, test_language=None):
+    """Test language."""
+
+    return test_language is None or language == test_language
+
+
 class SuperFencesCodeExtension(Extension):
     """SuperFences code block extension."""
 
@@ -191,7 +210,7 @@ class SuperFencesCodeExtension(Extension):
         self.superfences.append(
             {
                 "name": name,
-                "test": lambda l, language=name: language == l,
+                "test": functools.partial(_test, test_language=name),
                 "formatter": formatter,
                 "validator": validator
             }
@@ -209,9 +228,9 @@ class SuperFencesCodeExtension(Extension):
             0,
             {
                 "name": "superfences",
-                "test": lambda language: True,
+                "test": _test,
                 "formatter": None,
-                "validator": lambda l, o, v=highlight_validator: v(l, o)
+                "validator": functools.partial(_validator, validator=highlight_validator)
             }
         )
 
@@ -226,9 +245,8 @@ class SuperFencesCodeExtension(Extension):
             if name is not None and class_name is not None:
                 self.extend_super_fences(
                     name,
-                    lambda s, l, o, p=pass_options, c=class_name, f=fence_format:
-                        (f(s, l, c, o) if pass_options else f(s, l, c)),
-                    lambda l, o, v=validator: v(l, o)
+                    functools.partial(_formatter, pass_opts=pass_options, class_name=class_name, fmt=fence_format),
+                    functools.partial(_validator, validator=validator)
                 )
 
         self.md = md
@@ -534,7 +552,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         # Run per language validator
         for entry in reversed(self.extension.superfences):
             if entry["test"](self.lang):
-                validator = entry.get("validator", lambda l, o, v=default_validator: v(l, o))
+                validator = entry.get("validator", functools.partial(_validator, validator=default_validator))
                 okay = validator(self.lang, self.options)
                 break
 
