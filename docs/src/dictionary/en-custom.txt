@@ -24,6 +24,7 @@ Esc
 EscapeAll
 ExtraRawHTML
 ExtraRawHtml
+Formatters
 GFM
 GIF
 Gemoji
@@ -51,6 +52,7 @@ Limberg
 MERCHANTABILITY
 MagicLink
 Mar
+MathJax
 MathJax
 MkDocs
 NONINFRINGEMENT
@@ -87,7 +89,9 @@ Twemoji's
 Twitter's
 UML
 UTF
+Uml
 Unescape
+Validators
 Virtualenv
 Waylan
 YAML
@@ -97,6 +101,7 @@ backticks
 blockquote
 blockquotes
 bool
+boolean
 builtins
 checkbox
 checkboxes
@@ -114,6 +119,7 @@ emojione
 escaper
 facelessuser
 formatter
+formatters
 gemoji
 gfm
 gforcada
