@@ -406,11 +406,14 @@ As shown above, SuperFences defines two default custom fences (which can be remo
 
 Custom fences are created via the `custom_fences` option.  `custom_fences` takes an array of dictionaries where each dictionary defines a custom fence. The dictionaries requires the following keys:
 
-Keys     | Description
--------- | -----------
-`name`   | The language name that is specified when using the fence in Markdown.
-`class`  | The class name assigned to the HTML element when converting from Markdown to HTML.
-`format` | A function that formats the HTML output.  Should return a string as HTML.
+Keys        | Description
+----------- | -----------
+`name`      | The language name that is specified when using the fence in Markdown.
+`class`     | The class name assigned to the HTML element when converting from Markdown to HTML.
+`format`    | A function that formats the HTML output.  Should return a string as HTML.
+`validator` | An optional parameter that is used to provide a function to validate custom fence parameters.
+
+### Formatters
 
 SuperFences provides two format functions by default, but you can always write your own:
 
@@ -419,10 +422,84 @@ Format\ Function                | Description
 `superfences.fence_code_format` | Places the HTML escaped content of the fence under a `#!html <pre><code>` block.
 `superfences.fence_div_format`  | Places the HTML escaped content of the fence under a `#!html <div>` block.
 
+In general, formatters take three parameters: the source found between the fences, the specified language, and the class name originally defined via the `class` option in the `custom_fence` entry. By default, no options are allowed when using a custom formatter unless a `validator` is provided to validate options.
+
+```python
+def custom_formatter(source, language, css_class):
+    pass
+```
+
+If a validator is provided, then the custom formatter will take an additional parameter containing all the found options.
+
+```python
+def custom_formatter(source, language, css_class, options):
+    pass
+```
+
 !!! tip
     If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify function references in YAML.
 
-## UML Diagram Example
+### Validators
+
+The `validator` is used to provide functions that accept or reject provided fence options. The validator is sent two parameters: the language defined in the fence, and a dictionary of options to validate.
+
+Custom options can be used as keys with quoted values (`key="value"`), or as keys with no value which are used more as a boolean (`key=`). SuperFences will parse the options in the fence and then pass them to the validator. If the validator returns true, the options will be accepted and later passed to the formatter.
+
+This custom fence:
+
+````
+```custom_fence custom_option="value" other_custom_option=
+content
+```
+````
+
+Would yield this option dictionary:
+
+```python
+{
+    "custom_option": "value",
+    "other_custom_option": True
+}
+```
+
+For a contrived example: if we wanted to define a custom fence named `test` that accepts an option `opt` that can only be assigned a value of `A`, we would write the following validator:
+
+```py3
+def custom_validator(language, options):
+    """Custom validator."""
+
+    okay = True
+    for k in options.keys():
+        if k != 'opt':
+            okay = False
+            break
+    if okay:
+        if options['opt'] != "A":
+            okay = False
+    return okay
+```
+
+Then later the formatter would be given the options:
+
+```py3
+def custom_format(source, language, class_name, options):
+    """Custom format."""
+
+    return '<div class_name="%s %s", data-option="%s">%s</div>' % (language, class_name, options['opt'], html_escape(source))
+```
+
+This would allow us to use the following custom fence:
+
+````
+```test opt="A"
+test
+```
+````
+
+!!! tip
+    If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify function references in YAML.
+
+### UML Diagram Example
 
 This example illustrates how this document uses the `custom_fences` option to do UML diagrams.  Out of the box, SuperFences use the default settings for `custom_fences` for the purpose of including UML. The settings below show the default settings, which define two new custom languages called `flow` and `sequence`. The `flow` and `sequence` fences will pass the content through the `superfences.fence_code_format` format function which will wrap the content in `#!html <pre><code` blocks and attach the class `uml-flowchart` or `uml-sequence-diagram` to the respective `#!html <pre>` block. `superfences.fence_div_format` could just as easily be used to wrap the content in a `#!html <div>` instead, or a new custom function could have been written and used.
 

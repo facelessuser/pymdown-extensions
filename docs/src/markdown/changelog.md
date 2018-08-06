@@ -1,5 +1,9 @@
 # Changelog
 
+## 4.13.0
+
+- **NEW**: Add validator to custom fences so custom options can be used.
+
 ## 4.12.0
 
 - **NEW**: Add option to fail if specified snippet isn't found. (#335)
