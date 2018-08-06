@@ -53,7 +53,7 @@ MERCHANTABILITY
 MagicLink
 Mar
 MathJax
-MathJax
+Mathjax
 MkDocs
 NONINFRINGEMENT
 Num
