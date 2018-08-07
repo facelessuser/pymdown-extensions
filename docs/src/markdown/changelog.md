@@ -1,10 +1,19 @@
 # Changelog
 
+## 4.13.0
+
+- **NEW**: Add validator to custom fences so custom options can be used.
+
+## 4.12.0
+
+- **NEW**: Add option to fail if specified snippet isn't found. (#335)
+- **FIX**: Windows issue with `preserve_tabs` option in SuperFences. (#328)
+
 ## 4.11.0
 
 Jun 10, 2018
 
-- **NEW**: Allow Arithmatex's "smart dollar" logic to be turned off via setting the option `smart_dollar` to `False` (#297).
+- **NEW**: Allow Arithmatex's "smart dollar" logic to be turned off via setting the option `smart_dollar` to `False`. (#297)
 - **NEW**: Add support for tabbed groups in SuperFences.
 
 ## 4.10.2

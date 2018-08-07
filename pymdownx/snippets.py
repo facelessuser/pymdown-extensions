@@ -56,6 +56,7 @@ class SnippetPreprocessor(Preprocessor):
 
         self.base_path = config.get('base_path')
         self.encoding = config.get('encoding')
+        self.check_paths = config.get('check_paths')
         self.tab_length = md.tab_length
         super(SnippetPreprocessor, self).__init__()
 
@@ -107,22 +108,25 @@ class SnippetPreprocessor(Preprocessor):
                     continue
 
                 snippet = os.path.join(self.base_path, path)
-                if snippet and os.path.exists(snippet):
-                    if snippet in self.seen:
-                        # This is in the stack and we don't want an infinite loop!
-                        continue
-                    if file_name:
-                        # Track this file.
-                        self.seen.add(file_name)
-                    try:
-                        with codecs.open(snippet, 'r', encoding=self.encoding) as f:
-                            new_lines.extend(
-                                [space + l2 for l2 in self.parse_snippets([l.rstrip('\r\n') for l in f], snippet)]
-                            )
-                    except Exception:  # pragma: no cover
-                        pass
-                    if file_name:
-                        self.seen.remove(file_name)
+                if snippet:
+                    if os.path.exists(snippet):
+                        if snippet in self.seen:
+                            # This is in the stack and we don't want an infinite loop!
+                            continue
+                        if file_name:
+                            # Track this file.
+                            self.seen.add(file_name)
+                        try:
+                            with codecs.open(snippet, 'r', encoding=self.encoding) as f:
+                                new_lines.extend(
+                                    [space + l2 for l2 in self.parse_snippets([l.rstrip('\r\n') for l in f], snippet)]
+                                )
+                        except Exception:  # pragma: no cover
+                            pass
+                        if file_name:
+                            self.seen.remove(file_name)
+                    elif self.check_paths:
+                        raise IOError("Snippet at path %s could not be found" % path)
 
         return new_lines
 
@@ -141,7 +145,8 @@ class SnippetExtension(Extension):
 
         self.config = {
             'base_path': [".", "Base path for snippet paths - Default: \"\""],
-            'encoding': ["utf-8", "Encoding of snippets - Default: \"utf-8\""]
+            'encoding': ["utf-8", "Encoding of snippets - Default: \"utf-8\""],
+            'check_paths': [False, "Make the build fail if a snippet can't be found - Default: \"false\""]
         }
 
         super(SnippetExtension, self).__init__(*args, **kwargs)

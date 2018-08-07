@@ -15,6 +15,7 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.extensions import extra
 import re
+from . import util
 
 
 class ExtraRawHtmExtension(Extension):
@@ -25,7 +26,7 @@ class ExtraRawHtmExtension(Extension):
 
         md.registerExtension(self)
 
-        if not md.safeMode:
+        if util.MD3 or not md.safeMode:
             # Turn on processing of markdown text within raw html
             md.preprocessors['html_block'].markdown_in_raw = True
             md.parser.blockprocessors.add(

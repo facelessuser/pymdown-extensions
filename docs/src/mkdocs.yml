@@ -22,7 +22,7 @@ theme:
   feature:
     tabs: true
 
-pages:
+nav:
   - PyMdown Extensions: index.md
   - Installation: installation.md
   - Usage Notes: usage_notes.md

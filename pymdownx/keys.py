@@ -117,14 +117,15 @@ class KeysPattern(Pattern):
         """Initialize."""
 
         self.ksep = config['separator']
-        self.markdown = md
         self.strict = config['strict']
         self.classes = config['class'].split(' ')
         self.html_parser = util.HTMLParser()
         self.map = self.merge(keymap.keymap, config['key_map'])
         self.aliases = keymap.aliases
         self.camel = config['camel_case']
-        super(KeysPattern, self).__init__(pattern)
+        super(KeysPattern, self).__init__(pattern, md)
+        if not util.MD3:
+            self.md = md
 
     def merge(self, x, y):
         """Given two dicts, merge them into a new dict."""

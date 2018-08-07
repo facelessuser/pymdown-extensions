@@ -206,7 +206,7 @@ def to_awesome(index, shortname, alias, uc, alt, title, category, options, md):
 def to_alt(index, shortname, alias, uc, alt, title, category, options, md):
     """Return html entities."""
 
-    return md.htmlStash.store(alt, safe=True)
+    return md.htmlStash.store(alt) if util.MD3 else md.htmlStash.store(alt, safe=True)
 
 
 ###################
@@ -222,14 +222,15 @@ class EmojiPattern(Pattern):
         alt = config['alt']
 
         self._set_index(config["emoji_index"])
-        self.markdown = md
         self.unicode_alt = alt in UNICODE_ALT
         self.encoded_alt = alt == UNICODE_ENTITY
         self.remove_var_sel = config['remove_variation_selector']
         self.title = title if title in VALID_TITLE else NO_TITLE
         self.generator = config['emoji_generator']
         self.options = config['options']
-        Pattern.__init__(self, pattern)
+        Pattern.__init__(self, pattern, md)
+        if not util.MD3:
+            self.md = md
 
     def _set_index(self, index):
         """Set the index."""
@@ -324,7 +325,7 @@ class EmojiPattern(Pattern):
                 title,
                 category,
                 self.options,
-                self.markdown
+                self.md
             )
 
         return el

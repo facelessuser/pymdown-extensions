@@ -7,7 +7,7 @@
 
 # PyMdown Extensions
 
-Extensions for [Python Markdown](https://pythonhosted.org/Markdown/).
+Extensions for [Python Markdown](https://python-markdown.github.io).
 
 # Documentation
 
