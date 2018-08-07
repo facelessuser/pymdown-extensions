@@ -131,8 +131,8 @@ if pygments:
             return (
                 m.group(1) +
                 m.group(2) +
-                #self._linehl_class + '"'
-                + m.group(3) +
+                #self._linehl_class + '"' +
+                m.group(3) +
                 ' data-linenos="' + m.group(4) + '">' +
                 m.group(5)
             )
