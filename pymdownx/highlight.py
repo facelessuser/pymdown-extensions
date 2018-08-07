@@ -164,17 +164,17 @@ if pygments:
                 source = self._wrap_customlinenums(source)
             return HtmlFormatter.wrap(self, source, outfile)
 
-        def _wrap_tablelinenos(self, inner):
-            """
-            Wrapper to handle line numbers better in table.
+        # def _wrap_tablelinenos(self, inner):
+        #     """
+        #     Wrapper to handle line numbers better in table.
 
-            Pygments currently has a bug with line step where leading blank lines collapse.
-            Use the same fix Pygments uses for code content for code line numbers.
-            This fix should be pull requested on the Pygments repository.
-            """
+        #     Pygments currently has a bug with line step where leading blank lines collapse.
+        #     Use the same fix Pygments uses for code content for code line numbers.
+        #     This fix should be pull requested on the Pygments repository.
+        #     """
 
-            for t, line in HtmlFormatter._wrap_tablelinenos(self, inner):
-                yield t, self.RE_TABLE_NUMS.sub(r'\1<span></span>', line)
+        #     for t, line in HtmlFormatter._wrap_tablelinenos(self, inner):
+        #         yield t, self.RE_TABLE_NUMS.sub(r'\1<span></span>', line)
 
 
 class Highlight(object):
