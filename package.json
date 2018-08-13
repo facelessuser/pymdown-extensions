@@ -47,7 +47,7 @@
     "rollup-plugin-babel": "^3.0.7",
     "stylelint": "^9.4.0",
     "stylelint-config-standard": "^18.2.0",
-    "stylelint-order": "^0.8.1",
+    "stylelint-order": "^1.0.0",
     "stylelint-scss": "^3.3.0",
     "yargs": "^12.0.1"
   }
