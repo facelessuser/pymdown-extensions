@@ -17,7 +17,7 @@
     "node": ">= 5.0.0"
   },
   "devDependencies": {
-    "autoprefixer": "^9.1.0",
+    "autoprefixer": "^9.1.1",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.6",
     "babel-loader": "^7.1.5",
@@ -31,7 +31,7 @@
     "gulp-cssnano": "^2.1.3",
     "gulp-eslint": "^4.0.2",
     "gulp-if": "^2.0.2",
-    "gulp-postcss": "^7.0.1",
+    "gulp-postcss": "^8.0.0",
     "gulp-rev": "^8.1.1",
     "gulp-rev-replace": "^0.4.4",
     "gulp-rollup": "^2.16.2",
@@ -47,8 +47,8 @@
     "rollup-plugin-babel": "^3.0.7",
     "stylelint": "^9.4.0",
     "stylelint-config-standard": "^18.2.0",
-    "stylelint-order": "^0.8.1",
-    "stylelint-scss": "^3.2.0",
+    "stylelint-order": "^1.0.0",
+    "stylelint-scss": "^3.3.0",
     "yargs": "^12.0.1"
   }
 }
