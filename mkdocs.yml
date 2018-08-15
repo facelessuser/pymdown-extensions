@@ -84,7 +84,7 @@ markdown_extensions:
           lang: pycon
           options:
             python3: true
-      linenums_style: advanced-inline
+      linenums_style: pymdownx-inline
   - pymdownx.inlinehilite:
   - pymdownx.magiclink:
       repo_url_shortener: true

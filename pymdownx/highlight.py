@@ -116,8 +116,8 @@ if pygments:
         def __init__(self, **options):
             """Initialize."""
 
-            self.advanced_inline = options.get('linenos', False) == 'advanced-inline'
-            if self.advanced_inline:
+            self.pymdownx_inline = options.get('linenos', False) == 'pymdownx-inline'
+            if self.pymdownx_inline:
                 options['linenos'] = 'inline'
             HtmlFormatter.__init__(self, **options)
 
@@ -131,7 +131,8 @@ if pygments:
             return (
                 m.group(1) +
                 m.group(2) +
-                # self._linehl_class + '"' +
+                # self._linehl_class +
+                '"' +
                 m.group(3) +
                 ' data-linenos="' + m.group(4) + '">' +
                 m.group(5)
@@ -160,21 +161,21 @@ if pygments:
         def wrap(self, source, outfile):
             """Wrap the source code."""
 
-            if self.linenos == 2 and self.advanced_inline:
+            if self.linenos == 2 and self.pymdownx_inline:
                 source = self._wrap_customlinenums(source)
             return HtmlFormatter.wrap(self, source, outfile)
 
-        # def _wrap_tablelinenos(self, inner):
-        #     """
-        #     Wrapper to handle line numbers better in table.
+        def _wrap_tablelinenos(self, inner):
+            """
+            Wrapper to handle line numbers better in table.
 
-        #     Pygments currently has a bug with line step where leading blank lines collapse.
-        #     Use the same fix Pygments uses for code content for code line numbers.
-        #     This fix should be pull requested on the Pygments repository.
-        #     """
+            Pygments currently has a bug with line step where leading blank lines collapse.
+            Use the same fix Pygments uses for code content for code line numbers.
+            This fix should be pull requested on the Pygments repository.
+            """
 
-        #     for t, line in HtmlFormatter._wrap_tablelinenos(self, inner):
-        #         yield t, self.RE_TABLE_NUMS.sub(r'\1<span></span>', line)
+            for t, line in HtmlFormatter._wrap_tablelinenos(self, inner):
+                yield t, self.RE_TABLE_NUMS.sub(r'\1<span></span>', line)
 
 
 class Highlight(object):
