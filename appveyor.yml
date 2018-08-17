@@ -5,13 +5,13 @@ clone_depth: 5
 environment:
   matrix:
     - PYTHON: "C:/Python27"
-      TOXENV: "py27-unittests"
+      TOXENV: "py27"
     - PYTHON: "C:/Python34"
-      TOXENV: "py34-unittests"
+      TOXENV: "py34"
     - PYTHON: "C:/Python35"
-      TOXENV: "py35-unittests"
+      TOXENV: "py35"
     - PYTHON: "C:/Python36"
-      TOXENV: "py36-unittests"
+      TOXENV: "py36"
     - PYTHON: "C:/Python27"
       TOXENV: "lint"
 
