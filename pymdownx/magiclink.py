@@ -737,10 +737,6 @@ class MagiclinkExtension(Extension):
                 False,
                 "If 'True' social shorthand syntax is converted to links - Default: False"
             ],
-            'base_repo_url': [
-                '',
-                'The base repo url to use - Default: ""'
-            ],
             'provider': [
                 'github',
                 'The base provider to use (github, gitlab, bitbucket, twitter) - Default: "github"'
@@ -831,23 +827,18 @@ class MagiclinkExtension(Extension):
                 )
                 md.inlinePatterns.add("magic-int-micro-refs", git_int_micro_refs, "<entity")
 
-    def get_base_urls(self, base_url, config):
+    def get_base_urls(self, config):
         """Get base URLs."""
 
+        base_url = ''
+        base_user_url = ''
+
         if self.is_social:
-            return '', ''
+            return base_url, base_user_url
 
-        # Setup base URL
-        base_user_url = os.path.dirname(base_url)
-        if base_url:
-            base_url += "/"
-        if base_user_url:
-            base_user_url += "/"
-
-        if config.get('repo_url_shorthand', False) or not base_url:
-            if self.user and self.repo:
-                base_url = '%s/%s/%s/' % (PROVIDER_INFO[self.provider]['url'], self.user, self.repo)
-                base_user_url = '%s/%s/' % (PROVIDER_INFO[self.provider]['url'], self.user)
+        if self.user and self.repo:
+            base_url = '%s/%s/%s/' % (PROVIDER_INFO[self.provider]['url'], self.user, self.repo)
+            base_user_url = '%s/%s/' % (PROVIDER_INFO[self.provider]['url'], self.user)
 
         return base_url, base_user_url
 
@@ -880,15 +871,6 @@ class MagiclinkExtension(Extension):
         if self.git_short or self.social_short:
             int_mentions = PROVIDER_INFO[self.provider]['user_pattern']
 
-        base_repo_url = config.get('base_repo_url', '').rstrip('/')
-        if base_repo_url:  # pragma: no cover
-            warnings.warn(
-                "'base_repo_url' is deprecated and will be removed in the future.\n"
-                "\nIt is strongly encouraged to migrate to using `provider`, 'user`\n"
-                " and 'repo' moving forward.",
-                PymdownxDeprecationWarning
-            )
-
         self.setup_autolinks(md, config)
 
         if self.git_short or self.social_short:
@@ -896,7 +878,7 @@ class MagiclinkExtension(Extension):
 
         # Setup link post processor for shortening repository links
         if config.get('repo_url_shortener', False):
-            base_url, base_user_url = self.get_base_urls(base_repo_url, config)
+            base_url, base_user_url = self.get_base_urls(config)
             self.setup_shortener(md, base_url, base_user_url, config)
 
 
