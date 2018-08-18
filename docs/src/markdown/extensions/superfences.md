@@ -661,9 +661,6 @@ Option                         | Type         | Default       | Description
 `highlight_code`               | bool         | `#!py3 True`  | Enable or disable code highlighting.
 `preserve_tabs`                | bool         | `#!py3 False` | Experimental feature that preserves tabs in fenced code blocks.
 
-!!! warning "Deprecated 3.0.0"
-    The setting `use_codehilite_settings` has been deprecated since `3.0.0` and now does nothing. It is still present to avoid breakage, but will be removed in the future.
-
 --8<-- "links.md"
 
 --8<-- "uml.md"
