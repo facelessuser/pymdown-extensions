@@ -2,7 +2,10 @@
 
 ## 4.13.0
 
-- **NEW**: Add validator to custom fences so custom options can be used.
+- **NEW**: Add validator to custom fences so custom options can be used. (!350)
+- **NEW**: Add global `linenums_special` option to Highlight extension. Can be overridden per fence in SuperFences. (!360)
+- **NEW**: Add `linenums_style` option to set line number output to Pygments `table` or `inline` format.  Also provide a custom `pymdownx-inline` format for more sane inline output in regards to copy and paste. See Highlight documentation for more info. (!360)
+- **FIX**: Add workaround in Highlight extension for line number alignment issues in Pygments with certain `step` values. (!360)
 
 ## 4.12.0
 
