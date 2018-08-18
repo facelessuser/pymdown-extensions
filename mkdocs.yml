@@ -37,7 +37,6 @@ nav:
     - EscapeAll: extensions/escapeall.md
     - Extra: extensions/extra.md
     - ExtraRawHTML: extensions/extrarawhtml.md
-    - GitHub: extensions/github.md
     - Highlight: extensions/highlight.md
     - InlineHilite: extensions/inlinehilite.md
     - Keys: extensions/keys.md
@@ -75,6 +74,7 @@ markdown_extensions:
   - pymdownx.superfences:
       preserve_tabs: true
   - pymdownx.highlight:
+      css_class: codehilite
       extend_pygments_lang:
         - name: php-inline
           lang: php

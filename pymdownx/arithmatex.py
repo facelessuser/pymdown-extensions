@@ -49,13 +49,6 @@ from markdown.blockprocessors import BlockProcessor
 from markdown import util as md_util
 from . import util
 import re
-from .util import PymdownxDeprecationWarning
-import warnings
-
-DEPRECATION_WARN = """'insert_as_script' is deprecated and is now unnecessary if using MathJax
-as it is the default format for MathJax. If you wish to use a generic math output, use 'generic'.
-Please discontinue using this option as it will be removed in the future.
-See documentation to see why this have been deprecated."""
 
 RE_SMART_DOLLAR_INLINE = r'(?:(?<!\\)((?:\\{2})+)(?=\$)|(?<!\\)(\$)(?!\s)((?:\\.|[^\$])+?)(?<!\s)(?:\$))'
 RE_DOLLAR_INLINE = r'(?:(?<!\\)((?:\\{2})+)(?=\$)|(?<!\\)(\$)((?:\\.|[^\$])+?)(?:\$))'
@@ -210,7 +203,6 @@ class ArithmatexExtension(Extension):
                 ' - Default: ["dollar", "round"]'
             ],
             'generic': [False, "Output in a generic format for non MathJax libraries - Default: False"],
-            'insert_as_script': [False, "Deprecated"],
             'preview': [
                 True,
                 "Insert a preview for scripts. - Default: False"
@@ -226,9 +218,6 @@ class ArithmatexExtension(Extension):
         util.escape_chars(md, ['$'])
 
         config = self.getConfigs()
-
-        if config.get('insert_as_script'):  # pragma: no cover
-            warnings.warn(DEPRECATION_WARN, PymdownxDeprecationWarning)
 
         # Inline patterns
         allowed_inline = set(config.get('inline_syntax', ['dollar', 'round']))

@@ -168,13 +168,6 @@ Option            | Type     | Default                               | Descripti
 `smart_dollar`    | bool     | `#!py3 True`                          | Enable Arithmatex's smart dollar logic to minimize math detection issues with `#!tex $`.
 `preview`         | bool     | `#!py3 True`                          | Insert a preview to show until MathJax finishes loading the equations.
 
-!!! warning "Deprecation"
-    `insert_as_script` has been deprecated in 4.6.0. If you are still setting this, it will do nothing.  This option will be removed in the future so it is strongly advised to stop setting it.
-
-    MathJax is, and has always been the default, and inserting as script is the default as it is the most reliable insertion format. With the new way previews are inserted, there is no need for the old text conversion method via `tex2jax`.
-
-    To output for other math libraries, like [KaTeX][katex], enable `generic`.
-
 ---8<--- "links.md"
 
 ---8<--- "mathjax.md"
