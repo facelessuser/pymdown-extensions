@@ -172,6 +172,7 @@ repo
 requesters
 revisioned
 sanitizer
+selectable
 shortener
 shortname
 shortnames
