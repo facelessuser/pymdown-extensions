@@ -49,8 +49,6 @@ from markdown.blockprocessors import BlockProcessor
 from markdown import util as md_util
 from . import util
 import re
-from .util import PymdownxDeprecationWarning
-import warnings
 
 RE_SMART_DOLLAR_INLINE = r'(?:(?<!\\)((?:\\{2})+)(?=\$)|(?<!\\)(\$)(?!\s)((?:\\.|[^\$])+?)(?<!\s)(?:\$))'
 RE_DOLLAR_INLINE = r'(?:(?<!\\)((?:\\{2})+)(?=\$)|(?<!\\)(\$)((?:\\.|[^\$])+?)(?:\$))'

@@ -28,10 +28,7 @@ from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
 from markdown import util as md_util
 from . import util
-from .util import PymdownxDeprecationWarning
-import warnings
 import re
-import os
 
 if util.MD3:  # pragma: no cover
     from markdown.inlinepatterns import LinkInlineProcessor, Pattern
