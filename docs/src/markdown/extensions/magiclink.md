@@ -229,11 +229,6 @@ Option                          | Type   | Default         | Description
 `repo`                          | string | `#!py3 ''`       | The default repository name to use for the specified user and provider.
 `labels`                        | dict   | `#!py3 {}`       | A dictionary for overriding repository link title text. See [labels](#labels) for more info.
 
-!!! warning "Deprecation 4.2.0"
-    In 4.2.0, `base_repo_url` has been deprecated in favor of `provider`, `user`, and `repo`. If `repo_url_shorthand` is enabled, `base_repo_url` will be ignored and `provider`, `user`, and `repo` will be used.
-
-    `base_repo_url` will be removed sometime in the future.  Please migrate to using `provider`, `user`, and `repo`.
-
 ### Labels
 
 By default, MagicLink provides titles for the repository links in the form `{provider} {label}: {info}`. You can specify different values for `{label}` by configuring the `labels` option.

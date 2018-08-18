@@ -32,7 +32,4 @@ Option                   | Type     | Default      | Description
 `strip_js_on_attributes` | bool     | `#!py3 True` | Strip JavaScript script attributes with the pattern on* during post process.
 `strip_attributes`       | [string] | `#!py3 []`   | A list of tag attribute names to strip.
 
-!!! warning "Deprecation 4.6.0"
-    StripHTML used to be known as `pymdownx.plainhtml`, but has been renamed to `pymdownx.striphtml`. The old `plainhtml` is still available. `plainhtml` treats `strip_attributes` as a string of attributes separated by spaces and has a default of `#!py3 "id style class"`.  It is encouraged to migrate to using `pymdownx.striphtml` as `pymdownx.plainhtml` will be removed in version 5.0.
-
 --8<-- "links.md"
