@@ -262,7 +262,7 @@ class Highlight(object):
                 linestep = 1
             if not linenums or linestart < 1:
                 linestart = 1
-            if self.linenums_special != -1 and linespecial == -1:
+            if self.linenums_special >= 0 and linespecial < 0:
                 linespecial = self.linenums_special
             if not linenums or linespecial < 0:
                 linespecial = 0
