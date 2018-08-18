@@ -23,6 +23,7 @@ License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 """
 from __future__ import absolute_import
 from __future__ import unicode_literals
+import re
 from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
 from markdown import util as md_util
@@ -73,6 +74,14 @@ DEFAULT_CONFIG = {
         False,
         'Display line numbers in block code output (not inline) - Default: False'
     ],
+    'linenums_style': [
+        'table',
+        'Line number style -Default: "table"'
+    ],
+    'linenums_special': [
+        -1,
+        'Globally make nth line special - Default: -1'
+    ],
     'extend_pygments_lang': [
         [],
         'Extend pygments language with special language entry - Default: {}'
@@ -96,13 +105,85 @@ if pygments:
                 yield i, t.strip()
             yield 0, ''
 
+    class BlockHtmlFormatter(HtmlFormatter):
+        """Adds ability to output line numbers in a new way."""
+
+        # Capture `<span class="lineno">   1 </span>`
+        RE_SPAN_NUMS = re.compile(r'(<span[^>]*?)(class="[^"]*\blineno\b[^"]*)"([^>]*)>([^<]+)(</span>)')
+        # Capture `<pre>` that is not followed by `<span></span>`
+        RE_TABLE_NUMS = re.compile(r'(<pre[^>]*>)(?!<span></span>)')
+
+        def __init__(self, **options):
+            """Initialize."""
+
+            self.pymdownx_inline = options.get('linenos', False) == 'pymdownx-inline'
+            if self.pymdownx_inline:
+                options['linenos'] = 'inline'
+            HtmlFormatter.__init__(self, **options)
+
+        def _format_custom_line(self, m):
+            """Format the custom line number."""
+
+            # We've broken up the match in such a way that we not only
+            # move the line number value to `data-linenos`, but we could
+            # wrap the gutter number in the future with a highlight class.
+            # The decision to do this has still not be made.
+            return (
+                m.group(1) +
+                m.group(2) +
+                # self._linehl_class +
+                '"' +
+                m.group(3) +
+                ' data-linenos="' + m.group(4) + '">' +
+                m.group(5)
+            )
+
+        def _wrap_customlinenums(self, inner):
+            """
+            Wrapper to handle block inline line numbers.
+
+            For our special inline version, don't display line numbers via `<span>  1</span>`,
+            but include as `<span data-linenos="  1"></span>` and use CSS to display them:
+            `[data-linenos]:before {content: attr(data-linenos);}`.  This allows us to use
+            inline and copy and paste without issue.
+            """
+
+            # # Could be used to wrap gutter line number with a highlight class
+            # hls = self.hl_lines
+            # lineno = 0
+            for t, line in inner:
+                if t:
+                    # lineno += 1
+                    # self._linehl_class = ' linehl' if lineno in hls else ''
+                    line = self.RE_SPAN_NUMS.sub(self._format_custom_line, line)
+                yield t, line
+
+        def wrap(self, source, outfile):
+            """Wrap the source code."""
+
+            if self.linenos == 2 and self.pymdownx_inline:
+                source = self._wrap_customlinenums(source)
+            return HtmlFormatter.wrap(self, source, outfile)
+
+        def _wrap_tablelinenos(self, inner):
+            """
+            Wrapper to handle line numbers better in table.
+
+            Pygments currently has a bug with line step where leading blank lines collapse.
+            Use the same fix Pygments uses for code content for code line numbers.
+            This fix should be pull requested on the Pygments repository.
+            """
+
+            for t, line in HtmlFormatter._wrap_tablelinenos(self, inner):
+                yield t, self.RE_TABLE_NUMS.sub(r'\1<span></span>', line)
+
 
 class Highlight(object):
     """Highlight class."""
 
     def __init__(
         self, guess_lang=True, pygments_style='default', use_pygments=True,
-        noclasses=False, extend_pygments_lang=None, linenums=False
+        noclasses=False, extend_pygments_lang=None, linenums=False, linenums_special=-1, linenums_style='table'
     ):
         """Initialize."""
 
@@ -111,7 +192,8 @@ class Highlight(object):
         self.use_pygments = use_pygments
         self.noclasses = noclasses
         self.linenums = linenums
-        self.linenums_style = 'table'
+        self.linenums_style = linenums_style
+        self.linenums_special = linenums_special
 
         if extend_pygments_lang is None:
             extend_pygments_lang = []
@@ -180,13 +262,15 @@ class Highlight(object):
                 linestep = 1
             if not linenums or linestart < 1:
                 linestart = 1
+            if self.linenums_special >= 0 and linespecial < 0:
+                linespecial = self.linenums_special
             if not linenums or linespecial < 0:
                 linespecial = 0
             if hl_lines is None or inline:
                 hl_lines = []
 
             # Setup formatter
-            html_formatter = InlineHtmlFormatter if inline else HtmlFormatter
+            html_formatter = InlineHtmlFormatter if inline else BlockHtmlFormatter
             formatter = html_formatter(
                 cssclass=css_class,
                 linenos=linenums,
@@ -278,6 +362,8 @@ class HighlightTreeprocessor(Treeprocessor):
                     use_pygments=self.config['use_pygments'],
                     noclasses=self.config['noclasses'],
                     linenums=self.config['linenums'],
+                    linenums_style=self.config['linenums_style'],
+                    linenums_special=self.config['linenums_special'],
                     extend_pygments_lang=self.config['extend_pygments_lang']
                 )
                 if util.MD3:  # pragma: no cover

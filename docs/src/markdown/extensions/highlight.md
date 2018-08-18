@@ -42,16 +42,32 @@ If using Pygments, some lexers have special options.  For instance, the `php` le
 
     `#!php-inline $a = array("foo" => 0, "bar" => 1);`
 
+## Line Number Styles
+
+Pygments has two available styles when outputting source code with line numbers enabled: `table` and `inline`. `table` is the default output and creates a table output for lines with numbers.  `inline` places the line numbers directly in the source code output and can sometimes be undesirable as it copy and paste will always copy the line numbers as well.
+
+The Highlight extension provides a third line number style called `pymdownx-inline`.  Instead of writing line numbers directly in the pre like Pygments' default `inline` style does, it writes the line numbers as `#!html <span class="lineno" data-linenos="1 "></span>`. This way the line numbers are un-selectable and can be displayed with CSS:
+
+```css
+[data-linenos]:before {
+  content: attr(data-linenos);
+}
+```
+
+Line number styles are set with the option `linenums_style` as described in [Options](#options).
+
 ## Options
 
-Option                    | Type   | Default                   | Description
-------------------------- | ------ | ------------------------- | -----------
-`css_class`               | string | `#!py3 'highlight`         | Default class to apply to the wrapper element on code blocks. Other extensions can override this.
-`guess_lang`              | bool   | `#!py3 False`              | Guess what syntax language should be used if no language is specified. 
-`pygments_style`          | string | `#!py3thon 'default'`      | Set the Pygments' style to use.  This really only has an effect when used with `noclasses`.
-`noclasses`               | bool   | `#!py3 False`              | This will cause the styles to directly be written to the tag's style attribute instead of requiring a stylesheet.
-`use_pygments`            | bool   | `#!py3 True`               | Controls whether Pygments (if available) is used to style the code, or if the code will just be escaped and prepped for a JavaScript syntax highlighter.
-`linenums`                | bool   | `#!py3 False`              | Enable line numbers globally for *block* code.  This will be ignored for *inline* code.
-`extend_pygments_lang`    | list   | `#!py3 []`                 | A list of extended languages to add.  See [Extended Pygments Lexer Options](#extended-pygments-lexer-options) for more info.
+Option                    | Type   | Default               | Description
+------------------------- | ------ | ----------------------| -----------
+`css_class`               | string | `#!py3 'highlight`    | Default class to apply to the wrapper element on code blocks. Other extensions can override this.
+`guess_lang`              | bool   | `#!py3 False`         | Guess what syntax language should be used if no language is specified. 
+`pygments_style`          | string | `#!py3thon 'default'` | Set the Pygments' style to use.  This really only has an effect when used with `noclasses`.
+`noclasses`               | bool   | `#!py3 False`         | This will cause the styles to directly be written to the tag's style attribute instead of requiring a stylesheet.
+`use_pygments`            | bool   | `#!py3 True`          | Controls whether Pygments (if available) is used to style the code, or if the code will just be escaped and prepped for a JavaScript syntax highlighter.
+`linenums`                | bool   | `#!py3 False`         | Enable line numbers globally for *block* code.  This will be ignored for *inline* code.
+`linenums_special`        | int    | `#!py3 1`             | Globally sets the specified nth lines' gutter with the class "special".  This can be overridden in [SuperFences](./superfences.md) per fence if desired.
+`linenums_style`          | string | `#!py3 'table'`       | Controls the output style when `linenums` are enabled. Supported styles are Pygments default `table` and `inline`, but also supported is the pymdown-extensions `pymdownx-inline` which provides a special inline mode, see [Line Number Styles](#line-number-styles) for more info.
+`extend_pygments_lang`    | list   | `#!py3 []`            | A list of extended languages to add.  See [Extended Pygments Lexer Options](#extended-pygments-lexer-options) for more info.
 
 --8<-- "refs.md"

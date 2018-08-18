@@ -11,7 +11,6 @@ MathJax.Hub.Config({
             autoNumber: "AMS",
         }
     },
-    displayAlign: 'left',
     showProcessingMessages: false,
     messageStyle: 'none'
 });

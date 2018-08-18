@@ -75,7 +75,6 @@ markdown_extensions:
   - pymdownx.superfences:
       preserve_tabs: true
   - pymdownx.highlight:
-      css_class: codehilite
       extend_pygments_lang:
         - name: php-inline
           lang: php
@@ -85,6 +84,7 @@ markdown_extensions:
           lang: pycon
           options:
             python3: true
+      linenums_style: pymdownx-inline
   - pymdownx.inlinehilite:
   - pymdownx.magiclink:
       repo_url_shortener: true
@@ -117,6 +117,6 @@ extra:
     - type: github
       link: https://github.com/facelessuser
 extra_css:
-  - extra-c507967d85.css
+  - extra-e39a75e568.css
 extra_javascript:
   - extra-d8800ea088.js
