@@ -4,9 +4,9 @@
    Convert SASS to CSS and minify.
    Start MkDocs server
 */
+import Promise from "promise"
 import yargs from "yargs"
 import gulp from "gulp"
-import gulpsync from "gulp-sync"
 import sass from "gulp-sass"
 import uglify from "gulp-uglify"
 import postcss from "gulp-postcss"
@@ -14,7 +14,6 @@ import autoprefixer from "autoprefixer"
 import cssnano from "cssnano"
 import childProcess from "child_process"
 import gulpif from "gulp-if"
-import clean from "gulp-clean"
 import concat from "gulp-concat"
 import mqpacker from "css-mqpacker"
 import sourcemaps from "gulp-sourcemaps"
@@ -24,6 +23,8 @@ import stylelint from "gulp-stylelint"
 import eslint from "gulp-eslint"
 import rev from "gulp-rev"
 import revReplace from "gulp-rev-replace"
+import vinylPaths from "vinyl-paths"
+import del from "del"
 
 /* Argument Flags */
 const args = yargs
@@ -35,9 +36,6 @@ const args = yargs
   .default("revision", false)
   .default("mkdocs", "mkdocs")
   .argv
-
-/* Create a gulp sync object */
-const gsync = gulpsync(gulp)
 
 /* Mkdocs server */
 let mkdocs = null
@@ -109,14 +107,14 @@ gulp.task("scss:build:sass", () => {
     .pipe(gulpif(config.revision, gulp.dest(config.folders.theme)))
 })
 
-gulp.task("scss:build", ["scss:build:sass"], () => {
+gulp.task("scss:build", gulp.series("scss:build:sass", () => {
   return gulp.src(config.files.mkdocsSrc)
     .pipe(gulpif(config.revision, revReplace({
       manifest: gulp.src("manifest.json"),
       replaceInExtensions: [".yml"]
     })))
     .pipe(gulp.dest("."))
-})
+}))
 
 gulp.task("scss:lint", () => {
   return gulp.src(config.files.scss)
@@ -129,12 +127,12 @@ gulp.task("scss:lint", () => {
 })
 
 gulp.task("scss:watch", () => {
-  gulp.watch(config.files.scss, ["scss:build"])
+  gulp.watch(config.files.scss, gulp.series("scss:build"))
 })
 
 gulp.task("scss:clean", () => {
-  return gulp.src(config.files.css)
-    .pipe(clean())
+  return gulp.src(config.files.css, {allowEmpty: true})
+    .pipe(vinylPaths(del))
 })
 
 // ------------------------------
@@ -159,10 +157,9 @@ gulp.task("js:build:rollup", () => {
       "plugins": [
         rollupBabel({
           "presets": [
-            ["es2015", {"modules": false}]
+            ["@babel/preset-env", {"modules": false}]
           ],
-          babelrc: false,
-          "plugins": ["external-helpers"]
+          babelrc: false
         })
       ],
       "input": `${config.folders.src}/js/extra.js`
@@ -177,14 +174,14 @@ gulp.task("js:build:rollup", () => {
     .pipe(gulpif(config.revision, gulp.dest(config.folders.theme)))
 })
 
-gulp.task("js:build", ["js:build:rollup"], () => {
+gulp.task("js:build", gulp.series("js:build:rollup", () => {
   return gulp.src(config.files.mkdocsSrc)
     .pipe(gulpif(config.revision, revReplace({
       manifest: gulp.src("manifest.json"),
       replaceInExtensions: [".yml"]
     })))
     .pipe(gulp.dest("."))
-})
+}))
 
 gulp.task("js:lint", () => {
   return gulp.src([config.files.es6, config.files.gulp])
@@ -194,12 +191,12 @@ gulp.task("js:lint", () => {
 })
 
 gulp.task("js:watch", () => {
-  gulp.watch(config.files.es6, ["js:build:rollup"])
+  gulp.watch(config.files.es6, gulp.series("js:build:rollup"))
 })
 
 gulp.task("js:clean", () => {
-  return gulp.src(config.files.js)
-    .pipe(clean())
+  return gulp.src(config.files.js, {allowEmpty: true})
+    .pipe(vinylPaths(del))
 })
 
 // ------------------------------
@@ -226,59 +223,68 @@ gulp.task("mkdocs:update", () => {
 })
 
 gulp.task("mkdocs:watch", () => {
-  gulp.watch(config.files.mkdocsSrc, ["mkdocs:update"])
+  gulp.watch(config.files.mkdocsSrc, gulp.series("mkdocs:update"))
 })
 
 gulp.task("mkdocs:build", () => {
-  const cmdParts = (`${config.mkdocsCmd} build`).split(/ +/)
-  const cmd = cmdParts[0]
-  const cmdArgs = cmdParts.slice(1, cmdParts.length - 1)
+  return new Promise((resolve, reject) => {
+    const cmdParts = (`${config.mkdocsCmd} build`).split(/ +/)
+    const cmd = cmdParts[0]
+    const cmdArgs = cmdParts.slice(1, cmdParts.length - 1)
 
-  const proc = childProcess.spawnSync(cmd, cmdArgs)
-  if (proc.status)
-    throw new Error(`MkDocs error:\n${proc.stderr.toString()}`)
-  return proc
+    const proc = childProcess.spawnSync(cmd, cmdArgs)
+    if (proc.status)
+      reject(proc.stderr.toString())
+    else
+      resolve()
+  })
 })
 
 gulp.task("mkdocs:clean", () => {
-  return gulp.src(config.folders.mkdocs)
-    .pipe(clean())
+  return gulp.src(config.folders.mkdocs, {allowEmpty: true})
+    .pipe(vinylPaths(del))
 })
 
 // ------------------------------
 // Main entry points
 // ------------------------------
-gulp.task("build", gsync.sync([
+gulp.task("serve", gulp.series(
+  // Clean
+  "scss:clean",
+  "js:clean",
+  // Build JS and CSS
+  "js:build",
+  "scss:build",
+  // Watch for changes and start mkdocs
+  gulp.parallel(
+    "scss:watch",
+    "js:watch",
+    "mkdocs:watch",
+    "mkdocs:serve"
+  )
+))
+
+gulp.task("clean", gulp.series(
+  "scss:clean",
+  "js:clean",
+  "mkdocs:clean"
+))
+
+gulp.task("lint", gulp.series(
+  "js:lint",
+  "scss:lint"
+))
+
+gulp.task("build", gulp.series(
   // Clean
   config.clean ? "clean" : ["scss:clean", "js:clean"],
   // Build JS and CSS
   "js:build",
   "scss:build",
-  // Lint
-  config.lint.enabled ? "lint" : false,
-  // Build Mkdocs
-  config.buildmkdocs ? "mkdocs:build" : false
-].filter(t => t),
-"group:build"))
-
-gulp.task("serve", gsync.sync([
-  // Clean
-  ["scss:clean", "js:clean"],
-  // Build JS and CSS
-  "js:build",
-  "scss:build",
-  // Watch for changes and start mkdocs
-  ["scss:watch", "js:watch", "mkdocs:watch", "mkdocs:serve"]
-].filter(t => t),
-"group:serve"))
-
-gulp.task("clean", [
-  "scss:clean",
-  "js:clean",
-  "mkdocs:clean"
-])
-
-gulp.task("lint", [
-  "js:lint",
-  "scss:lint"
-])
+  [
+    // Lint
+    config.lint.enabled ? "lint" : false,
+    // Build Mkdocs
+    config.buildmkdocs ? "mkdocs:build" : false
+  ].filter(t => t)
+))
