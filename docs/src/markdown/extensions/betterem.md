@@ -120,4 +120,4 @@ Option         | Type   | Default             | Description
 -------------- | ------ | ------------------- | -----------
 `smart_enable` | string | `#!py3 'underscore'` | A string that specifies whether smart should be enabled for `all`, `asterisk`, `underscore`, or `none`.
 
---8<-- "abbr.md"
+--8<-- "abbr.txt"

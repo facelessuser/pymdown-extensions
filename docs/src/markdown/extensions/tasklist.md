@@ -161,4 +161,4 @@ Option               | Type | Default      | Description
 `clickable_checkbox` | bool | `#!py3 False` | Enable user to interact with checkboxes.
 
 
---8<-- "abbr.md"
+--8<-- "abbr.txt"

@@ -38,4 +38,4 @@ extension_configs = {
 }
 ```
 
---8<-- "links.md"
+--8<-- "links.txt"

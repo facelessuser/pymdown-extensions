@@ -76,4 +76,4 @@ extension_config = {
 }
 ```
 
---8<-- "refs.md"
+--8<-- "refs.txt"

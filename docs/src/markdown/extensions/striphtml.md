@@ -32,4 +32,4 @@ Option                   | Type     | Default      | Description
 `strip_js_on_attributes` | bool     | `#!py3 True` | Strip JavaScript script attributes with the pattern on* during post process.
 `strip_attributes`       | [string] | `#!py3 []`   | A list of tag attribute names to strip.
 
---8<-- "links.md"
+--8<-- "links.txt"

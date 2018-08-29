@@ -201,4 +201,4 @@ The Emoji extension has emoji indexes generated from the source of Gemoji, Emoji
 
 Nothing is fool proof.  If they make a breaking change to the files that the script parses, or the location of the files change, the auto-update tool may need to be updated itself (hopefully this would be a rare occurrence).  If such a change does occur, and you are feeling brave, a pull request would be appreciated, but in time, they will be resolved regardless.
 
---8<-- "links.md"
+--8<-- "links.txt"

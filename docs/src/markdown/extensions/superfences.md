@@ -661,6 +661,6 @@ Option                         | Type         | Default       | Description
 `highlight_code`               | bool         | `#!py3 True`  | Enable or disable code highlighting.
 `preserve_tabs`                | bool         | `#!py3 False` | Experimental feature that preserves tabs in fenced code blocks.
 
---8<-- "links.md"
+--8<-- "links.txt"
 
---8<-- "uml.md"
+--8<-- "uml.txt"

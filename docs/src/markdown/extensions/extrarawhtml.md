@@ -18,4 +18,4 @@ Python Markdown provides an `extra` extension that has features similar to PHP M
     </p></div>
     ```
 
---8<-- "links.md"
+--8<-- "links.txt"

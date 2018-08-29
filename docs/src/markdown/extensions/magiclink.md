@@ -254,4 +254,4 @@ You only need to provide the options you wish to override. Assume we wanted to a
     }
 ```
 
---8<-- "refs.md"
+--8<-- "refs.txt"

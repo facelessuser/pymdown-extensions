@@ -115,9 +115,9 @@ Check out documentation on each extension to learn more about how to configure a
     [Tilde](extensions/tilde.md) is syntactically built around the `~` character. It adds support for inserting sub~scripts~ and adds an easy way to place ~~text~~ in a `#!html <del>` tag.
 
 --8<--
-refs.md
+refs.txt
 
-uml.md
+uml.txt
 
-mathjax.md
+mathjax.txt
 --8<--

@@ -28,4 +28,4 @@ If you are looking for a GitHub like slug, this may be for you. This is just lik
 
 If you are looking for a GitHub like slug, this may be for you. This is just like [`uslugify`](#uslugify) except that it percent encodes Unicode characters and ASCII chars are lowercased while Unicode chars are not.
 
---8<-- "refs.md"
+--8<-- "refs.txt"
