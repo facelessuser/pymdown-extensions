@@ -55,13 +55,13 @@ accept_extension_configs = {
     }
 }
 
-with codecs.open('docs/src/markdown/_snippets/critic-accept-example.md', 'w', encoding='utf-8') as f:
+with codecs.open('docs/src/markdown/_snippets/critic-accept-example.txt', 'w', encoding='utf-8') as f:
     html = markdown.Markdown(
         extensions=extensions, extension_configs=accept_extension_configs
     ).convert(critic_markup_example)
     f.write(html.replace('\n', ''))
 
-with codecs.open('docs/src/markdown/_snippets/critic-preview-example.md', 'w', encoding='utf-8') as f:
+with codecs.open('docs/src/markdown/_snippets/critic-preview-example.txt', 'w', encoding='utf-8') as f:
     html = markdown.Markdown(
         extensions=extensions
     ).convert(critic_markup_example)
