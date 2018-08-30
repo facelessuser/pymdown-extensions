@@ -309,4 +309,4 @@ Dec 8, 2015
 
 - **NEW**: Initial release.
 
---8<-- "refs.md"
+--8<-- "refs.txt"

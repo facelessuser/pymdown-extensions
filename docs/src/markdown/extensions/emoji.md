@@ -373,4 +373,4 @@ Option                      | Type       | Default              | Description
     }
     ```
 
---8<-- "refs.md"
+--8<-- "refs.txt"
