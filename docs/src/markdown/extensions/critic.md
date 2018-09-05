@@ -51,7 +51,7 @@ You can also highlight specific text with `#!critic-markup {==highlight me==}`. 
     ++}
     ```
 
-    --8<-- "critic-accept-example.md"
+    --8<-- "critic-accept-example.txt"
 
 When previewing, you can style them to stand out (see [CSS](#css) for more information):
 
@@ -92,7 +92,7 @@ When previewing, you can style them to stand out (see [CSS](#css) for more infor
     ++}
     ```
 
-    --8<-- "critic-preview-example.md"
+    --8<-- "critic-preview-example.txt"
 
 ## Limitations with Previewing Critic Markup
 
