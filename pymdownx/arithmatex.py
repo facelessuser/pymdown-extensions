@@ -59,6 +59,16 @@ RE_TEX_BLOCK = r'(?P<math2>\\begin\{(?P<env>[a-z]+\*?)\}.+?\\end\{(?P=env)\})'
 RE_BRACKET_BLOCK = r'\\\[(?P<math3>(?:\\[^\]]|[^\\])+?)\\\]'
 
 
+def _escape(txt):
+    """Basic html escaping."""
+
+    txt = txt.replace('&', '&amp;')
+    txt = txt.replace('<', '&lt;')
+    txt = txt.replace('>', '&gt;')
+    txt = txt.replace('"', '&quot;')
+    return txt
+
+
 def _inline_mathjax_formatter(math, preview=False):
     """Inline math formatter."""
 
@@ -72,6 +82,29 @@ def _inline_mathjax_formatter(math, preview=False):
         el = md_util.etree.Element('script', {'type': 'math/tex'})
         el.text = md_util.AtomicString(math)
     return el
+
+
+def _block_mathjax_formatter(math, preview=False):
+    """Block math formatter."""
+
+    text = ''
+    if preview:
+        text += (
+            '<div>\n' +
+            '<div class="MathJax_Preview">\n' +
+            _escape(math) +
+            '\n</div>\n'
+        )
+
+    text += (
+        '<script type="math/tex; mode=display">\n' +
+        _escape(math) +
+        '\n</script>\n'
+    )
+    if preview:
+        text += '</div>'
+
+    return text
 
 
 # Formatters usable with InlineHilite
@@ -93,6 +126,25 @@ def inline_generic_formatter(math, language='math', class_name='arithmatex', wra
     el = md_util.etree.Element('span', {'class': class_name})
     el.text = md_util.AtomicString(wrap % math)
     return el
+
+
+# Formatters usable with SuperFences
+def block_mathjax_preview_formatter(math, language='math', class_name='arithmatex'):
+    """Block MathJax formatter with preview."""
+
+    return _block_mathjax_formatter(math, True)
+
+
+def block_mathjax_formatter(math, language='math', class_name='arithmatex'):
+    """Block MathJax formatter."""
+
+    return _block_mathjax_formatter(math, False)
+
+
+def block_generic_formatter(math, language='math', class_name='arithmatex', wrap='\\[\n%s\n\\]'):
+    """Generic block formatter."""
+
+    return '<div class="%s">%s</div>' % (class_name, (wrap % math))
 
 
 class InlineArithmatexPattern(Pattern):
