@@ -147,7 +147,7 @@ class InlineHilitePattern(Pattern):
         return el
 
     def handle_code(self, lang, src):
-        """Hanlde code block."""
+        """Handle code block."""
 
         for entry in reversed(self.formatters):
             if entry["test"](lang):

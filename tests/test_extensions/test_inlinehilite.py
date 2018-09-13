@@ -130,7 +130,7 @@ class TestInlineHiliteNoPygments(util.MdCase):
     }
 
     def test_no_pygments(self):
-        """Ensure proper behavor when disabling Pygments."""
+        """Ensure proper behavior when disabling Pygments."""
 
         self.check_markdown(
             r'`#!python import module`.',
@@ -321,7 +321,7 @@ class TestInlineHiliteCustom4(util.MdCase):
     }
 
     def test_custom(self):
-        """Test custom formattter."""
+        """Test custom formatter."""
 
         self.check_markdown(
             r'`#!test src test`',
