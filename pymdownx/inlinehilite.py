@@ -20,6 +20,7 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import Pattern
 from markdown import util as md_util
+import functools
 from . import util
 from . import highlight as hl
 
@@ -46,16 +47,62 @@ def _escape(txt):
     return txt
 
 
+def _test(language, test_language=None):
+    """Test language."""
+
+    return test_language is None or language == test_language
+
+
+def _formatter(source, language, class_name="", fmt=None):
+    """Formatter wrapper."""
+
+    return fmt(source, language, class_name)
+
+
 class InlineHilitePattern(Pattern):
     """Handle the inline code patterns."""
 
-    def __init__(self, pattern, md):
+    def __init__(self, pattern, config, md):
         """Initialize."""
 
+        self.config = config
         Pattern.__init__(self, pattern, md)
+        self.md = md
+
+        self.formatters = [
+            {
+                "name": "inlinehilite",
+                "test": _test,
+                "formatter": self.highlight_code
+            }
+        ]
+
+        # Custom Fences
+        custom_inline = self.config.get('custom_inline', [])
+        for custom in custom_inline:
+            name = custom.get('name')
+            class_name = custom.get('class')
+            inline_format = custom.get('format', self.highlight_code)
+            if name is not None and class_name is not None:
+                self.extend_custom_inline(
+                    name,
+                    functools.partial(_formatter, class_name=class_name, fmt=inline_format)
+                )
+
         if not util.MD3:
             self.md = md
         self.get_hl_settings = False
+
+    def extend_custom_inline(self, name, formatter):
+        """Extend SuperFences with the given name, language, and formatter."""
+
+        self.formatters.append(
+            {
+                "name": name,
+                "test": functools.partial(_test, test_language=name),
+                "formatter": formatter
+            }
+        )
 
     def get_settings(self):
         """Check for CodeHilite extension and gather its settings."""
@@ -74,7 +121,7 @@ class InlineHilitePattern(Pattern):
             self.use_pygments = config['use_pygments']
             self.noclasses = config['noclasses']
 
-    def highlight_code(self, language, src):
+    def highlight_code(self, src, language, classname=None):
         """Syntax highlight the inline code block."""
 
         process_text = self.style_plain_text or language or self.guess_lang
@@ -99,6 +146,19 @@ class InlineHilitePattern(Pattern):
                 el.text = self.md.htmlStash.store(_escape(src), safe=True)
         return el
 
+    def handle_code(self, lang, src):
+        """Hanlde code block."""
+
+        for entry in reversed(self.formatters):
+            if entry["test"](lang):
+                value = entry["formatter"](src, lang)
+                if isinstance(value, str):
+                    if util.MD3:  # pragma: no cover
+                        value = self.md.htmlStash.store(value)
+                    else:
+                        value = self.md.htmlStash.store(value, safe=True)
+                return value
+
     def handleMatch(self, m):
         """Handle the pattern match."""
 
@@ -108,7 +168,7 @@ class InlineHilitePattern(Pattern):
             lang = m.group('lang') if m.group('lang') else ''
             src = m.group('code').strip()
             self.get_settings()
-            return self.highlight_code(lang, src)
+            return self.handle_code(lang, src)
 
 
 class InlineHiliteExtension(Extension):
@@ -117,6 +177,7 @@ class InlineHiliteExtension(Extension):
     def __init__(self, *args, **kwargs):
         """Initialize."""
 
+        self.inlinehilite = []
         self.config = {
             'style_plain_text': [
                 False,
@@ -131,7 +192,8 @@ class InlineHiliteExtension(Extension):
                 "Set class name for wrapper element. The default of CodeHilite or Highlight will be used"
                 "if nothing is set. - "
                 "Default: ''"
-            ]
+            ],
+            'custom_inline': [[], "Custom inline - default []"]
         }
         super(InlineHiliteExtension, self).__init__(*args, **kwargs)
 
@@ -139,8 +201,7 @@ class InlineHiliteExtension(Extension):
         """Add support for `:::language code` and `#!language code` highlighting."""
 
         config = self.getConfigs()
-        inline_hilite = InlineHilitePattern(BACKTICK_CODE_RE, md)
-        inline_hilite.config = config
+        inline_hilite = InlineHilitePattern(BACKTICK_CODE_RE, config, md)
         md.inlinePatterns['backtick'] = inline_hilite
 
 

@@ -59,6 +59,42 @@ RE_TEX_BLOCK = r'(?P<math2>\\begin\{(?P<env>[a-z]+\*?)\}.+?\\end\{(?P=env)\})'
 RE_BRACKET_BLOCK = r'\\\[(?P<math3>(?:\\[^\]]|[^\\])+?)\\\]'
 
 
+def _inline_mathjax_formatter(math, preview=False):
+    """Inline math formatter."""
+
+    if preview:
+        el = md_util.etree.Element('span')
+        pre = md_util.etree.SubElement(el, 'span', {'class': 'MathJax_Preview'})
+        pre.text = md_util.AtomicString(math)
+        script = md_util.etree.SubElement(el, 'script', {'type': 'math/tex'})
+        script.text = md_util.AtomicString(math)
+    else:
+        el = md_util.etree.Element('script', {'type': 'math/tex'})
+        el.text = md_util.AtomicString(math)
+    return el
+
+
+# Formatters usable with InlineHilite
+def inline_mathjax_preview_formatter(math, language='math', class_name='arithmatex'):
+    """Inline math formatter with preview."""
+
+    return _inline_mathjax_formatter(math, True)
+
+
+def inline_mathjax_formatter(math, language='math', class_name='arithmatex'):
+    """Inline math formatter."""
+
+    return _inline_mathjax_formatter(math, False)
+
+
+def inline_generic_formatter(math, language='math', class_name='arithmatex', wrap='\\(%s\\)'):
+    """Inline generic formatter."""
+
+    el = md_util.etree.Element('span', {'class': class_name})
+    el.text = md_util.AtomicString(wrap % math)
+    return el
+
+
 class InlineArithmatexPattern(Pattern):
     """Arithmatex inline pattern handler."""
 
@@ -76,27 +112,6 @@ class InlineArithmatexPattern(Pattern):
         self.preview = config.get('preview', True)
         Pattern.__init__(self, pattern)
 
-    def mathjax_output(self, math):
-        """Default MathJax output."""
-
-        if self.preview:
-            el = md_util.etree.Element('span')
-            preview = md_util.etree.SubElement(el, 'span', {'class': 'MathJax_Preview'})
-            preview.text = md_util.AtomicString(math)
-            script = md_util.etree.SubElement(el, 'script', {'type': 'math/tex'})
-            script.text = md_util.AtomicString(math)
-        else:
-            el = md_util.etree.Element('script', {'type': 'math/tex'})
-            el.text = md_util.AtomicString(math)
-        return el
-
-    def generic_output(self, math):
-        """Generic output."""
-
-        el = md_util.etree.Element('span', {'class': 'arithmatex'})
-        el.text = md_util.AtomicString(self.wrap % math)
-        return el
-
     def handleMatch(self, m):
         """Handle notations and switch them to something that will be more detectable in HTML."""
 
@@ -112,7 +127,10 @@ class InlineArithmatexPattern(Pattern):
         if not math:
             math = m.group(7)
 
-        return self.generic_output(math) if self.generic else self.mathjax_output(math)
+        if self.generic:
+            return inline_generic_formatter(math, wrap=self.wrap)
+        else:
+            return _inline_mathjax_formatter(math, self.preview)
 
 
 class BlockArithmatexProcessor(BlockProcessor):
