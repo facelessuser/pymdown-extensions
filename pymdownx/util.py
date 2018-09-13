@@ -19,6 +19,7 @@ PY34 = sys.version_info >= (3, 4)
 MD3 = __version_info__[0] >= 3
 
 if PY3:
+    ustr = str
     uchr = chr  # noqa
     from urllib.request import pathname2url, url2pathname  # noqa
     from urllib.parse import urlparse, urlunparse, quote  # noqa
@@ -29,6 +30,7 @@ if PY3:
     else:  # pragma: no cover
         html_unescape = HTMLParser().unescape  # noqa
 else:
+    ustr = unicode
     uchr = unichr  # noqa
     from urllib import pathname2url, url2pathname, quote  # noqa
     from urlparse import urlparse, urlunparse  # noqa
