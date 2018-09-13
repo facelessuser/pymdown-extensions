@@ -105,7 +105,7 @@ class TestInlineHilitePlainText(util.MdCase):
     }
 
     def test_unstyled_plaintext(self):
-        """Test unstyled plaintext."""
+        """Test unstyled plain text."""
 
         self.check_markdown(
             r'Lets test inline highlight no guessing and no text styling `import module`.',
