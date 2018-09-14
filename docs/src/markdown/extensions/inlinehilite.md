@@ -50,7 +50,7 @@ Keys        | Description
 ----------- | -----------
 `name`      | The language name that is specified when using the fence in Markdown.
 `class`     | The class name assigned to the HTML element when converting from Markdown to HTML.
-`format`    | A function that formats the HTML output.  Should return a either an etree element (preferrable) or a string as HTML.
+`format`    | A function that formats the HTML output.  Should return a either an ElementTree object (preferable) or a string as HTML.
 
 ### Formatters
 
@@ -67,6 +67,6 @@ Option                    | Type         | Default       | Description
 ------------------------- | ------------ | ------------- | -----------
 `css_class`               | string       | `#!py3 ''`    | Class name is applied to the wrapper element of the code. If configured, this setting will override the `css_class` option of either CodeHilite or Highlight. If nothing is configured here or via CodeHilite or Highlight, the class `highlight` will be used.
 `style_plain_text`        | bool         | `#!py3 False` | When `guess_lang` is set to `#!py3 False`, InlineHilite will avoid applying classes to code blocks that do not explicitly set a language. If it is desired to have plain text styled like code, enable this to inject classes so that they can all be styled the same.
-`custom_inline`           | [dictionary] | `#!py3 []`    | Custom inlilne code blocks.
+`custom_inline`           | [dictionary] | `#!py3 []`    | Custom inline code blocks.
 
 --8<-- "links.txt"
