@@ -30,11 +30,43 @@ If using [Pygments][pygments], the elements will be highlighted without issues, 
 
 If you are using a JavaScript highlighter, such as [`highlight.js`][highlightjs], you will most likely need to construct a JavaScript method to target the inline blocks as these may not be targeted out of the box. You may also find it useful to tag inline code with a different class than what is used for block code so you can also process and style them differently. The CSS class used can be configured independently for inline code in the options if using `pymdownx.highight` instead of CodeHilite.
 
+## Custom Inline Blocks
+
+Like [SuperFences](./superfences.md), InlineHilite now provides a support for custom inline blocks.
+
+!!! example "Inline Math"
+    ```
+    `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+    ```
+
+    `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+
+!!! tip "Math Example"
+    For more indepth information on how to reproduce the example above, check out [Arithmatex Documentation](./arithmatex.md#alternative-math-blocks).
+
+Custom inline code blocks are created via the `custom_inline` option.  `custom_inline` takes an array of dictionaries where each dictionary defines a custom inline code block. The dictionaries requires the following keys:
+
+Keys        | Description
+----------- | -----------
+`name`      | The language name that is specified when using the fence in Markdown.
+`class`     | The class name assigned to the HTML element when converting from Markdown to HTML.
+`format`    | A function that formats the HTML output.  Should return a either an etree element (preferrable) or a string as HTML.
+
+### Formatters
+
+In general, formatters take three parameters: the source found between the backticks, the specified language, and the class name originally defined via the `class` option in the `custom_inline` entry. Should return a either an etree element (preferrable) or a string as HTML.
+
+```python
+def custom_formatter(source, language, css_class):
+    return el
+```
+
 ## Options
 
-Option                    | Type   | Default      | Description
-------------------------- | ------ | ------------ | -----------
-`css_class`               | string | `#!py3 ''`    | Class name is applied to the wrapper element of the code. If configured, this setting will override the `css_class` option of either CodeHilite or Highlight. If nothing is configured here or via CodeHilite or Highlight, the class `highlight` will be used.
-`style_plain_text`        | bool   | `#!py3 False` | When `guess_lang` is set to `#!py3 False`, InlineHilite will avoid applying classes to code blocks that do not explicitly set a language. If it is desired to have plain text styled like code, enable this to inject classes so that they can all be styled the same.
+Option                    | Type         | Default       | Description
+------------------------- | ------------ | ------------- | -----------
+`css_class`               | string       | `#!py3 ''`    | Class name is applied to the wrapper element of the code. If configured, this setting will override the `css_class` option of either CodeHilite or Highlight. If nothing is configured here or via CodeHilite or Highlight, the class `highlight` will be used.
+`style_plain_text`        | bool         | `#!py3 False` | When `guess_lang` is set to `#!py3 False`, InlineHilite will avoid applying classes to code blocks that do not explicitly set a language. If it is desired to have plain text styled like code, enable this to inject classes so that they can all be styled the same.
+`custom_inline`           | [dictionary] | `#!py3 []`    | Custom inlilne code blocks.
 
 --8<-- "links.txt"
