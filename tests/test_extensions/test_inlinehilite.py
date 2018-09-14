@@ -4,7 +4,7 @@ from .. import util
 import pymdownx.arithmatex as arithmatex
 
 
-def _formatter(src, language='test', class_name='test'):
+def _format(src, language='test', class_name='test'):
     """Inline math formatter."""
 
     return '<span class="lang-%s %s">%s</span>' % (language, class_name, src)
@@ -222,7 +222,7 @@ class TestInlineHiliteCustom1(util.MdCase):
                 {
                     'name': 'math',
                     'class': 'arithmatex',
-                    'format': arithmatex.inline_mathjax_formatter
+                    'format': arithmatex.inline_mathjax_format
                 }
             ]
         }
@@ -256,7 +256,7 @@ class TestInlineHiliteCustom2(util.MdCase):
                 {
                     'name': 'math',
                     'class': 'arithmatex',
-                    'format': arithmatex.inline_mathjax_preview_formatter
+                    'format': arithmatex.inline_mathjax_preview_format
                 }
             ]
         }
@@ -285,7 +285,7 @@ class TestInlineHiliteCustom3(util.MdCase):
                 {
                     'name': 'math',
                     'class': 'arithmatex',
-                    'format': arithmatex.inline_generic_formatter
+                    'format': arithmatex.inline_generic_format
                 }
             ]
         }
@@ -314,7 +314,7 @@ class TestInlineHiliteCustom4(util.MdCase):
                 {
                     'name': 'test',
                     'class': 'class-test',
-                    'format': _formatter
+                    'format': _format
                 }
             ]
         }

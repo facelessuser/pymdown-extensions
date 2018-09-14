@@ -136,7 +136,7 @@ class TestSuperFencesCustom2(util.MdCase):
     extension_configs = {
         'pymdownx.superfences': {
             'custom_fences': [
-                {'name': 'math', 'class': 'arithmatex', 'format': arithmatex.block_mathjax_formatter}
+                {'name': 'math', 'class': 'arithmatex', 'format': arithmatex.block_mathjax_format}
             ]
         }
     }
@@ -166,7 +166,7 @@ class TestSuperFencesCustom3(util.MdCase):
     extension_configs = {
         'pymdownx.superfences': {
             'custom_fences': [
-                {'name': 'math', 'class': 'arithmatex', 'format': arithmatex.block_mathjax_preview_formatter}
+                {'name': 'math', 'class': 'arithmatex', 'format': arithmatex.block_mathjax_preview_format}
             ]
         }
     }
@@ -201,7 +201,7 @@ class TestSuperFencesCustom4(util.MdCase):
     extension_configs = {
         'pymdownx.superfences': {
             'custom_fences': [
-                {'name': 'math', 'class': 'arithmatex', 'format': arithmatex.block_generic_formatter}
+                {'name': 'math', 'class': 'arithmatex', 'format': arithmatex.block_generic_format}
             ]
         }
     }

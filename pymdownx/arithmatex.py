@@ -69,7 +69,7 @@ def _escape(txt):
     return txt
 
 
-def _inline_mathjax_formatter(math, preview=False):
+def _inline_mathjax_format(math, preview=False):
     """Inline math formatter."""
 
     if preview:
@@ -84,7 +84,7 @@ def _inline_mathjax_formatter(math, preview=False):
     return el
 
 
-def _block_mathjax_formatter(math, preview=False):
+def _block_mathjax_format(math, preview=False):
     """Block math formatter."""
 
     text = ''
@@ -108,19 +108,19 @@ def _block_mathjax_formatter(math, preview=False):
 
 
 # Formatters usable with InlineHilite
-def inline_mathjax_preview_formatter(math, language='math', class_name='arithmatex'):
+def inline_mathjax_preview_format(math, language='math', class_name='arithmatex'):
     """Inline math formatter with preview."""
 
-    return _inline_mathjax_formatter(math, True)
+    return _inline_mathjax_format(math, True)
 
 
-def inline_mathjax_formatter(math, language='math', class_name='arithmatex'):
+def inline_mathjax_format(math, language='math', class_name='arithmatex'):
     """Inline math formatter."""
 
-    return _inline_mathjax_formatter(math, False)
+    return _inline_mathjax_format(math, False)
 
 
-def inline_generic_formatter(math, language='math', class_name='arithmatex', wrap='\\(%s\\)'):
+def inline_generic_format(math, language='math', class_name='arithmatex', wrap='\\(%s\\)'):
     """Inline generic formatter."""
 
     el = md_util.etree.Element('span', {'class': class_name})
@@ -129,19 +129,19 @@ def inline_generic_formatter(math, language='math', class_name='arithmatex', wra
 
 
 # Formatters usable with SuperFences
-def block_mathjax_preview_formatter(math, language='math', class_name='arithmatex'):
+def block_mathjax_preview_format(math, language='math', class_name='arithmatex'):
     """Block MathJax formatter with preview."""
 
-    return _block_mathjax_formatter(math, True)
+    return _block_mathjax_format(math, True)
 
 
-def block_mathjax_formatter(math, language='math', class_name='arithmatex'):
+def block_mathjax_format(math, language='math', class_name='arithmatex'):
     """Block MathJax formatter."""
 
-    return _block_mathjax_formatter(math, False)
+    return _block_mathjax_format(math, False)
 
 
-def block_generic_formatter(math, language='math', class_name='arithmatex', wrap='\\[\n%s\n\\]'):
+def block_generic_format(math, language='math', class_name='arithmatex', wrap='\\[\n%s\n\\]'):
     """Generic block formatter."""
 
     return '<div class="%s">%s</div>' % (class_name, (wrap % math))
@@ -180,9 +180,9 @@ class InlineArithmatexPattern(Pattern):
             math = m.group(7)
 
         if self.generic:
-            return inline_generic_formatter(math, wrap=self.wrap)
+            return inline_generic_format(math, wrap=self.wrap)
         else:
-            return _inline_mathjax_formatter(math, self.preview)
+            return _inline_mathjax_format(math, self.preview)
 
 
 class BlockArithmatexProcessor(BlockProcessor):
