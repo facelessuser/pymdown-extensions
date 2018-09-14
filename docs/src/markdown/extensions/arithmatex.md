@@ -156,6 +156,71 @@ var katexMath = (function () {
 }());
 ```
 
+## Alternative Math Blocks
+
+[InlineHilite](./inlinehilite.md) and [SuperFences](./superfences.md) both have a feature where you can specify your own custom inline and fence blocks respectively. Arithmatex provides a number of compatible formats that can be used in conjunction with InlineHilite and SuperFences to create an alternative (and possibly more preferable) syntax for math.
+
+In InlineHilite, by simply providing the following configuration (no need to include `pymdownx.arithmatex` as an extension), you can create a familiar inline math format:
+
+```py3
+import pymdownx.arithmatex as arithmatex
+
+extensions = [
+    "pymdownx.inlinehilite"
+]
+
+extension_config = {
+    "pymdownx.inlinehilite": {
+        "custom_inline": [
+            {"name": "math", "class": "arithmatex", arithmatex.inline_mathjax_format}
+        ]
+    }
+}
+```
+
+!!! example "Inline Math"
+    ```
+    `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+    ```
+
+    `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+
+
+In SuperFences, by providing the following configuration (no need to include `pymdownx.arithmatex` as an extension), you can create math fences:
+
+```py3
+import pymdownx.arithmatex as arithmatex
+
+extensions = [
+    "pymdownx.inlinehilite"
+]
+
+extension_config = {
+    "pymdownx.superfences": {
+        "custom_fences": [
+            {"name": "math", "class": "arithmatex", arithmatex.inline_mathjax_format}
+        ]
+    }
+}
+```
+
+!!! example "Math Fences"
+    ````
+    ```math
+    \begin{align}
+        p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
+        p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
+    \end{align}
+    ```
+    ````
+
+    ```math
+    \begin{align}
+        p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
+        p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
+    \end{align}
+    ```
+
 ## Options
 
 Option            | Type     | Default                               | Description
