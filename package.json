@@ -27,7 +27,7 @@
     "babel-eslint": "^9.0.0",
     "css-mqpacker": "^6.0.2",
     "del": "^3.0.0",
-    "eslint": "^4.19.1",
+    "eslint": "^5.5.0",
     "gulp": "^4.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-cssnano": "^2.1.3",
