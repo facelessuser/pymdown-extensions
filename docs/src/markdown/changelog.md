@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.1.0
+
+- **NEW**: Allow custom inline highlight code blocks. (!380)
+- **NEW**: Add new formatters in Arithmatex that are compatible with SuperFences' custom fence feature and InlineHilite's custom inline feature. (!380)
+
 ## 5.0.0
 
 - **NEW**: Add validator to custom fences so custom options can be used. (!350)

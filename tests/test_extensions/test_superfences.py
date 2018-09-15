@@ -1,6 +1,7 @@
 """Test cases for SuperFences."""
 from __future__ import unicode_literals
 from .. import util
+import pymdownx.arithmatex as arithmatex
 
 
 def custom_format(source, language, class_name, options):
@@ -68,7 +69,7 @@ class TestSuperFences(util.MdCase):
         )
 
 
-class TestSuperFencesCustom(util.MdCase):
+class TestSuperFencesCustom1(util.MdCase):
     """Test Details."""
 
     extension = ['pymdownx.superfences']
@@ -123,6 +124,101 @@ class TestSuperFencesCustom(util.MdCase):
             ''',
             r'''
             <div lang="test" class_name="class-test", option="A">test</div>
+            ''',
+            True
+        )
+
+
+class TestSuperFencesCustom2(util.MdCase):
+    """Test Details."""
+
+    extension = ['pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.superfences': {
+            'custom_fences': [
+                {'name': 'math', 'class': 'arithmatex', 'format': arithmatex.block_mathjax_format}
+            ]
+        }
+    }
+
+    def test_arithmatex(self):
+        """Test Arithmatex formatter without preview."""
+
+        self.check_markdown(
+            r'''
+            ```math
+            E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+            ```
+            ''',
+            r'''
+            <script type="math/tex; mode=display">
+            E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+            </script>
+            ''',
+            True
+        )
+
+
+class TestSuperFencesCustom3(util.MdCase):
+    """Test Details."""
+
+    extension = ['pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.superfences': {
+            'custom_fences': [
+                {'name': 'math', 'class': 'arithmatex', 'format': arithmatex.block_mathjax_preview_format}
+            ]
+        }
+    }
+
+    def test_arithmatex_preview(self):
+        """Test Arithmatex formatter with preview."""
+
+        self.check_markdown(
+            r'''
+            ```math
+            E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+            ```
+            ''',
+            r'''
+            <div>
+            <div class="MathJax_Preview">
+            E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+            </div>
+            <script type="math/tex; mode=display">
+            E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+            </script>
+            </div>
+            ''',
+            True
+        )
+
+
+class TestSuperFencesCustom4(util.MdCase):
+    """Test Details."""
+
+    extension = ['pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.superfences': {
+            'custom_fences': [
+                {'name': 'math', 'class': 'arithmatex', 'format': arithmatex.block_generic_format}
+            ]
+        }
+    }
+
+    def test_arithmatex_generic(self):
+        """Test Arithmatex generic formatter."""
+
+        self.check_markdown(
+            r'''
+            ```math
+            E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+            ```
+            ''',
+            r'''
+            <div class="arithmatex">\[
+            E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+            \]</div>
             ''',
             True
         )

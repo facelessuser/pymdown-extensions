@@ -1,7 +1,0 @@
-Lets test inline highlight with `#!python import module`.
-
-Another test `:::python import module`.
-
-Escape mock shebang with a space ` #!python import module`.
-
-Check bad language `#!bad import module`.

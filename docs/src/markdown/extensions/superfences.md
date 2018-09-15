@@ -408,7 +408,7 @@ Keys        | Description
 ----------- | -----------
 `name`      | The language name that is specified when using the fence in Markdown.
 `class`     | The class name assigned to the HTML element when converting from Markdown to HTML.
-`format`    | A function that formats the HTML output.  Should return a string as HTML.
+`format`    | A function that formats the HTML output. The function should return a string as HTML.
 `validator` | An optional parameter that is used to provide a function to validate custom fence parameters.
 
 ### Formatters
@@ -424,15 +424,17 @@ In general, formatters take three parameters: the source found between the fence
 
 ```python
 def custom_formatter(source, language, css_class):
-    pass
+    return string
 ```
 
 If a validator is provided, then the custom formatter will take an additional parameter containing all the found options.
 
 ```python
 def custom_formatter(source, language, css_class, options):
-    pass
+    return string
 ```
+
+All formatters should return a string as HTML.
 
 !!! tip
     If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify function references in YAML.

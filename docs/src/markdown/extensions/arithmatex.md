@@ -156,6 +156,82 @@ var katexMath = (function () {
 }());
 ```
 
+## Alternative Math Blocks
+
+[InlineHilite](./inlinehilite.md) and [SuperFences](./superfences.md) both have a feature where you can specify your own custom inline and fence blocks respectively. Arithmatex provides a number of compatible formats that can be used in conjunction with InlineHilite and SuperFences to create an alternative (and possibly more preferable) syntax for math.
+
+In InlineHilite, by simply providing the following configuration (no need to include `pymdownx.arithmatex` as an extension), you can create a familiar inline math format:
+
+```py3
+import pymdownx.arithmatex as arithmatex
+
+extensions = [
+    "pymdownx.inlinehilite"
+]
+
+extension_config = {
+    "pymdownx.inlinehilite": {
+        "custom_inline": [
+            {"name": "math", "class": "arithmatex", arithmatex.inline_mathjax_format}
+        ]
+    }
+}
+```
+
+!!! example "Inline Math"
+    ```
+    `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+    ```
+
+    `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+
+
+In SuperFences, by providing the following configuration (no need to include `pymdownx.arithmatex` as an extension), you can create math fences:
+
+```py3
+import pymdownx.arithmatex as arithmatex
+
+extensions = [
+    "pymdownx.inlinehilite"
+]
+
+extension_config = {
+    "pymdownx.superfences": {
+        "custom_fences": [
+            {"name": "math", "class": "arithmatex", arithmatex.inline_mathjax_format}
+        ]
+    }
+}
+```
+
+!!! example "Math Fences"
+    ````
+    ```math
+    \begin{align}
+        p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
+        p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
+    \end{align}
+    ```
+    ````
+
+    ```math
+    \begin{align}
+        p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
+        p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
+    \end{align}
+    ```
+
+Provided formats are found below:
+
+Name                            | Description
+------------------------------- | -----------
+`inline_mathjax_preview_format` | Inline format suitable for InlineHilite that preserves math in MathJax script format with an appropriate preview.
+`inline_mathjax_format`         | Inline format suitable for InlineHilite that preserves math in MathJax script format without a preview.
+`inline_generic_format`         | Inline format suitable for InlineHilite that preserves math in generic spans with `arithmatex` class. Content will be wrapped with `\(` and `\)`, so your math library should target those for conversion.
+`block_mathjax_preview_format`  | Display/block format suitable for SuperFences that preserves math in MathJax script format with an appropriate preview.
+`block_mathjax_format`          | Display/block format suitable for SuperFences that preserves math in MathJax script format without a preview.
+`block_generic_format`          | Display/block format suitable for SuperFences that preserves math in generic spans with `arithmatex` class. Content will be wrapped with `\[` and `\]`, so your math library should target those for conversion.
+
 ## Options
 
 Option            | Type     | Default                               | Description
@@ -168,6 +244,8 @@ Option            | Type     | Default                               | Descripti
 `smart_dollar`    | bool     | `#!py3 True`                          | Enable Arithmatex's smart dollar logic to minimize math detection issues with `#!tex $`.
 `preview`         | bool     | `#!py3 True`                          | Insert a preview to show until MathJax finishes loading the equations.
 
----8<--- "links.txt"
+---8<---
+links.txt
 
----8<--- "mathjax.txt"
+mathjax.txt
+---8<---

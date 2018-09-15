@@ -17,6 +17,7 @@ CodeHilite's
 CriticMarkup
 Ctrl
 Dicts
+ElementTree
 Emoji
 EmojiOne
 EmojiOne's
@@ -126,6 +127,7 @@ gforcada
 github
 highlighter's
 html
+indepth
 inline
 ish
 jQuery
@@ -192,6 +194,7 @@ un
 underscore's
 unicode
 unittest
+unstyled
 uslugify
 validator
 versa

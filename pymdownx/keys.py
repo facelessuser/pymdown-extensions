@@ -119,7 +119,6 @@ class KeysPattern(Pattern):
         self.ksep = config['separator']
         self.strict = config['strict']
         self.classes = config['class'].split(' ')
-        self.html_parser = util.HTMLParser()
         self.map = self.merge(keymap.keymap, config['key_map'])
         self.aliases = keymap.aliases
         self.camel = config['camel_case']
@@ -157,7 +156,7 @@ class KeysPattern(Pattern):
         """Process key."""
 
         if key.startswith(('"', "'")):
-            value = (None, self.html_parser.unescape(ESCAPE_RE.sub(r'\1', key[1:-1])).strip())
+            value = (None, util.html_unescape(ESCAPE_RE.sub(r'\1', key[1:-1])).strip())
         else:
             norm_key = self.normalize(key)
             canonical_key = self.aliases.get(norm_key, norm_key)
