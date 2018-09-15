@@ -50,7 +50,7 @@ Keys        | Description
 ----------- | -----------
 `name`      | The language name that is specified when using the fence in Markdown.
 `class`     | The class name assigned to the HTML element when converting from Markdown to HTML.
-`format`    | A function that formats the HTML output.  Should return a either an ElementTree object (preferable) or a string as HTML.
+`format`    | A function that formats the HTML output. The function should return either an ElementTree object (preferable) or a string as HTML.
 
 ### Formatters
 

@@ -408,7 +408,7 @@ Keys        | Description
 ----------- | -----------
 `name`      | The language name that is specified when using the fence in Markdown.
 `class`     | The class name assigned to the HTML element when converting from Markdown to HTML.
-`format`    | A function that formats the HTML output.  Should return a string as HTML.
+`format`    | A function that formats the HTML output. The function should return a string as HTML.
 `validator` | An optional parameter that is used to provide a function to validate custom fence parameters.
 
 ### Formatters
