@@ -227,10 +227,10 @@ Name                            | Description
 ------------------------------- | -----------
 `inline_mathjax_preview_format` | Inline format suitable for InlineHilite that preserves math in MathJax script format with an appropriate preview.
 `inline_mathjax_format`         | Inline format suitable for InlineHilite that preserves math in MathJax script format without a preview.
-`inline_generic_format`         | Inline format suitable for InlineHilite that preserves math in generic spans with `arithmatex` class.
+`inline_generic_format`         | Inline format suitable for InlineHilite that preserves math in generic spans with `arithmatex` class. Content will be wrapped with `\(` and `\)`, so your math library should target those for conversion.
 `block_mathjax_preview_format`  | Display/block format suitable for SuperFences that preserves math in MathJax script format with an appropriate preview.
 `block_mathjax_format`          | Display/block format suitable for SuperFences that preserves math in MathJax script format without a preview.
-`block_generic_format`          | Display/block format suitable for SuperFences that preserves math in generic spans with `arithmatex` class.
+`block_generic_format`          | Display/block format suitable for SuperFences that preserves math in generic spans with `arithmatex` class. Content will be wrapped with `\[` and `\]`, so your math library should target those for conversion.
 
 ## Options
 
