@@ -54,7 +54,7 @@ Keys        | Description
 
 ### Formatters
 
-In general, formatters take three parameters: the source found between the backticks, the specified language, and the class name originally defined via the `class` option in the `custom_inline` entry. Should return a either an etree element (preferrable) or a string as HTML.
+In general, formatters take three parameters: the source found between the backticks, the specified language, and the class name originally defined via the `class` option in the `custom_inline` entry. Should return a either an ElementTree element (preferable) or a string as HTML.
 
 ```python
 def custom_formatter(source, language, css_class):
