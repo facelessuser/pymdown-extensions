@@ -244,6 +244,8 @@ Option            | Type     | Default                               | Descripti
 `smart_dollar`    | bool     | `#!py3 True`                          | Enable Arithmatex's smart dollar logic to minimize math detection issues with `#!tex $`.
 `preview`         | bool     | `#!py3 True`                          | Insert a preview to show until MathJax finishes loading the equations.
 
----8<--- "links.txt"
+---8<---
+links.txt
 
----8<--- "mathjax.txt"
+mathjax.txt
+---8<---
