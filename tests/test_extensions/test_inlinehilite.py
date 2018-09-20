@@ -325,5 +325,5 @@ class TestInlineHiliteCustom4(util.MdCase):
 
         self.check_markdown(
             r'`#!test src test`',
-            r'<p><span class="lang-test class-test">src test</span></p>'
+            r'<p>&lt;span class="lang-test class-test"&gt;src test&lt;/span&gt;</p>'
         )

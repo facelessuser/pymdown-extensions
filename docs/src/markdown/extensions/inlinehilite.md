@@ -50,11 +50,11 @@ Keys        | Description
 ----------- | -----------
 `name`      | The language name that is specified when using the fence in Markdown.
 `class`     | The class name assigned to the HTML element when converting from Markdown to HTML.
-`format`    | A function that formats the HTML output. The function should return either an ElementTree object (preferable) or a string as HTML.
+`format`    | A function that formats the HTML output. The function should return either an ElementTree object.
 
 ### Formatters
 
-In general, formatters take three parameters: the source found between the backticks, the specified language, and the class name originally defined via the `class` option in the `custom_inline` entry. Should return a either an ElementTree element (preferable) or a string as HTML.
+In general, formatters take three parameters: the source found between the backticks, the specified language, and the class name originally defined via the `class` option in the `custom_inline` entry. Should return an ElementTree object.
 
 ```python
 def custom_formatter(source, language, css_class):
