@@ -151,13 +151,7 @@ class InlineHilitePattern(Pattern):
 
         for entry in reversed(self.formatters):
             if entry["test"](lang):
-                value = entry["formatter"](src, lang)
-                if isinstance(value, util.ustr):
-                    if util.MD3:  # pragma: no cover
-                        value = self.md.htmlStash.store(value)
-                    else:
-                        value = self.md.htmlStash.store(value, safe=True)
-                return value
+                return entry["formatter"](src, lang)
 
     def handleMatch(self, m):
         """Handle the pattern match."""
