@@ -24,7 +24,7 @@
     "@babel/register": "^7.0.0",
     "autoprefixer": "^9.1.5",
     "babel-core": "^7.0.0-bridge.0",
-    "babel-eslint": "^9.0.0",
+    "babel-eslint": "^10.0.0",
     "css-mqpacker": "^6.0.2",
     "del": "^3.0.0",
     "eslint": "^4.19.1",
