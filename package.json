@@ -43,7 +43,7 @@
     "gulp-uglify": "^3.0.1",
     "material-design-color": "^2.3.2",
     "material-shadows": "^3.0.1",
-    "modularscale-sass": "^3.0.5",
+    "modularscale-sass": "^3.0.7",
     "postcss-pseudo-classes": "^0.2.0",
     "rollup": "^0.66.1",
     "rollup-plugin-babel": "^4.0.3",
