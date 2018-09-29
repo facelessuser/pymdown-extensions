@@ -13,22 +13,13 @@ class TestDetails(util.MdCase):
     def test_nested(self):
         """Test nested."""
 
-        if pymd_util.MD3:
-            expected = r'''
-                <details><summary>details</summary><p>content</p>
-                <details open="open"><summary>open nested details</summary><p>content</p>
-                <p>more content</p>
-                </details>
-                </details>
-                '''
-        else:
-            expected = (
-                r'<details><summary>details</summary><p>content</p>'
-                r'<details open="open"><summary>open nested details</summary><p>content</p>'
-                r'<p>more content</p>'
-                r'</details>'
-                r'</details>'
-            )
+        expected = r'''
+            <details><summary>details</summary><p>content</p>
+            <details open="open"><summary>open nested details</summary><p>content</p>
+            <p>more content</p>
+            </details>
+            </details>
+            '''
 
         self.check_markdown(
             r'''
@@ -47,16 +38,10 @@ class TestDetails(util.MdCase):
     def test_class(self):
         """Test class."""
 
-        if pymd_util.MD3:
-            expected = r'''
-                <details class="optional-class"><summary>details with class</summary><p>content</p>
-                </details>
-                '''
-        else:
-            expected = (
-                r'<details class="optional-class"><summary>details with class</summary><p>content</p>'
-                r'</details>'
-            )
+        expected = r'''
+            <details class="optional-class"><summary>details with class</summary><p>content</p>
+            </details>
+            '''
 
         self.check_markdown(
             r'''
@@ -70,16 +55,10 @@ class TestDetails(util.MdCase):
     def test_multiple_classes(self):
         """Test multiple classes."""
 
-        if pymd_util.MD3:
-            expected = r'''
-                <details class="multiple optional-class"><summary>details with multiple class</summary><p>content</p>
-                </details>
-                '''
-        else:
-            expected = (
-                r'<details class="multiple optional-class"><summary>details with multiple class</summary><p>content</p>'
-                r'</details>'
-            )
+        expected = r'''
+            <details class="multiple optional-class"><summary>details with multiple class</summary><p>content</p>
+            </details>
+            '''
 
         self.check_markdown(
             r'''
@@ -93,16 +72,10 @@ class TestDetails(util.MdCase):
     def test_only_class(self):
         """Test only class."""
 
-        if pymd_util.MD3:
-            expected = r'''
-                <details class="only-class"><summary>Only-class</summary><p>content</p>
-                </details>
-                '''
-        else:
-            expected = (
-                r'<details class="only-class"><summary>Only-class</summary><p>content</p>'
-                r'</details>'
-            )
+        expected = r'''
+            <details class="only-class"><summary>Only-class</summary><p>content</p>
+            </details>
+            '''
 
         self.check_markdown(
             r'''
@@ -116,16 +89,10 @@ class TestDetails(util.MdCase):
     def test_only_multiple_classes(self):
         """Test only multiple classes."""
 
-        if pymd_util.MD3:
-            expected = r'''
-                <details class="multiple classes"><summary>Multiple</summary><p>content</p>
-                </details>
-                '''
-        else:
-            expected = (
-                r'<details class="multiple classes"><summary>Multiple</summary><p>content</p>'
-                r'</details>'
-            )
+        expected = r'''
+            <details class="multiple classes"><summary>Multiple</summary><p>content</p>
+            </details>
+            '''
 
         self.check_markdown(
             r'''
@@ -139,18 +106,11 @@ class TestDetails(util.MdCase):
     def test_content_after(self):
         """Test content after details."""
 
-        if pymd_util.MD3:
-            expected = r'''
-                <details><summary>details end test</summary><p>content</p>
-                </details>
-                <p>other content</p>
-                '''
-        else:
-            expected = (
-                r'<details><summary>details end test</summary><p>content</p>'
-                r'</details>'
-                r'<p>other content</p>'
-            )
+        expected = r'''
+            <details><summary>details end test</summary><p>content</p>
+            </details>
+            <p>other content</p>
+            '''
 
         self.check_markdown(
             r'''
@@ -165,16 +125,10 @@ class TestDetails(util.MdCase):
     def test_relaxed_spacing(self):
         """Test relaxed spacing."""
 
-        if pymd_util.MD3:
-            expected = r'''
-                <details class="relaxed spacing"><summary>Title</summary><p>content</p>
-                </details>
-                '''
-        else:
-            expected = (
-                r'<details class="relaxed spacing"><summary>Title</summary><p>content</p>'
-                r'</details>'
-            )
+        expected = r'''
+            <details class="relaxed spacing"><summary>Title</summary><p>content</p>
+            </details>
+            '''
 
         self.check_markdown(
             r'''
@@ -188,16 +142,10 @@ class TestDetails(util.MdCase):
     def test_relaxed_spacing_no_title(self):
         """Test relaxed spacing and no title."""
 
-        if pymd_util.MD3:
-            expected = r'''
-                <details class="relaxed spacing no title"><summary>Relaxed</summary><p>content</p>
-                </details>
-                '''
-        else:
-            expected = (
-                r'<details class="relaxed spacing no title"><summary>Relaxed</summary><p>content</p>'
-                r'</details>'
-            )
+        expected = r'''
+            <details class="relaxed spacing no title"><summary>Relaxed</summary><p>content</p>
+            </details>
+            '''
 
         self.check_markdown(
             r'''

@@ -210,7 +210,7 @@ class SuperFencesCodeExtension(Extension):
             }
         )
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Add fenced block preprocessor to the Markdown instance."""
 
         # Not super yet, so let's make it super
@@ -344,8 +344,6 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         """Initialize."""
 
         super(SuperFencesBlockPreprocessor, self).__init__(md)
-        if not util.MD3:
-            self.md = md
         self.tab_len = self.md.tab_length
         self.checked_hl_settings = False
         self.codehilite_conf = {}
@@ -679,10 +677,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         Store the original text in case we need to restore if we are too greedy.
         """
         # Save the fenced blocks to add once we are done iterating the lines
-        if util.MD3:  # pragma: no cover
-            placeholder = self.md.htmlStash.store(code)
-        else:
-            placeholder = self.md.htmlStash.store(code, safe=True)
+        placeholder = self.md.htmlStash.store(code)
         self.stack.append(('%s%s' % (self.ws, placeholder), start, end))
         if not self.disabled_indented:
             # If an indented block consumes this placeholder,

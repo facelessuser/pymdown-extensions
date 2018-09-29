@@ -18,7 +18,7 @@ Copyright 2014 - 2017 Isaac Muse <isaacmuse@gmail.com>
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from markdown import Extension
-from markdown.inlinepatterns import Pattern
+from markdown.inlinepatterns import InlineProcessor
 from markdown import util as md_util
 import functools
 from . import util
@@ -59,14 +59,14 @@ def _formatter(source, language, md, class_name="", fmt=None):
     return fmt(source, language, class_name, md)
 
 
-class InlineHilitePattern(Pattern):
+class InlineHilitePattern(InlineProcessor):
     """Handle the inline code patterns."""
 
     def __init__(self, pattern, config, md):
         """Initialize."""
 
         self.config = config
-        Pattern.__init__(self, pattern, md)
+        InlineProcessor.__init__(self, pattern, md)
         self.md = md
 
         self.formatters = [
@@ -89,8 +89,6 @@ class InlineHilitePattern(Pattern):
                     functools.partial(_formatter, class_name=class_name, fmt=inline_format)
                 )
 
-        if not util.MD3:
-            self.md = md
         self.get_hl_settings = False
 
     def extend_custom_inline(self, name, formatter):
@@ -134,16 +132,10 @@ class InlineHilitePattern(Pattern):
                 noclasses=self.noclasses,
                 extend_pygments_lang=self.extend_pygments_lang
             ).highlight(src, language, self.css_class, inline=True)
-            if util.MD3:  # pragma: no cover
-                el.text = self.md.htmlStash.store(el.text)
-            else:
-                el.text = self.md.htmlStash.store(el.text, safe=True)
+            el.text = self.md.htmlStash.store(el.text)
         else:
             el = md_util.etree.Element('code')
-            if util.MD3:  # pragma: no cover
-                el.text = self.md.htmlStash.store(_escape(src))
-            else:
-                el.text = self.md.htmlStash.store(_escape(src), safe=True)
+            el.text = self.md.htmlStash.store(_escape(src))
         return el
 
     def handle_code(self, lang, src):
@@ -153,22 +145,19 @@ class InlineHilitePattern(Pattern):
             if entry["test"](lang):
                 value = entry["formatter"](src, lang, self.md)
                 if isinstance(value, util.ustr):
-                    if util.MD3:  # pragma: no cover
-                        value = self.md.htmlStash.store(value)
-                    else:
-                        value = self.md.htmlStash.store(value, safe=True)
+                    value = self.md.htmlStash.store(value)
                 return value
 
-    def handleMatch(self, m):
+    def handleMatch(self, m, data):
         """Handle the pattern match."""
 
         if m.group('escapes'):
-            return m.group('escapes').replace(DOUBLE_BSLASH, ESCAPED_BSLASH)
+            return m.group('escapes').replace(DOUBLE_BSLASH, ESCAPED_BSLASH), m.start(0), m.end(0)
         else:
             lang = m.group('lang') if m.group('lang') else ''
             src = m.group('code').strip()
             self.get_settings()
-            return self.handle_code(lang, src)
+            return self.handle_code(lang, src), m.start(0), m.end(0)
 
 
 class InlineHiliteExtension(Extension):
@@ -197,7 +186,7 @@ class InlineHiliteExtension(Extension):
         }
         super(InlineHiliteExtension, self).__init__(*args, **kwargs)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Add support for `:::language code` and `#!language code` highlighting."""
 
         config = self.getConfigs()

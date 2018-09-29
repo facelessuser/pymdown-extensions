@@ -55,8 +55,6 @@ class TasklistTreeprocessor(Treeprocessor):
         """Initialize."""
 
         super(TasklistTreeprocessor, self).__init__(md)
-        if not util.MD3:
-            self.md = md
 
     def inline(self, li):
         """Search for checkbox directly in `li` tag."""
@@ -64,15 +62,9 @@ class TasklistTreeprocessor(Treeprocessor):
         found = False
         m = RE_CHECKBOX.match(li.text)
         if m is not None:
-            if util.MD3:  # pragma: no cover
-                li.text = self.md.htmlStash.store(
-                    get_checkbox(m.group('state'), self.custom_checkbox, self.clickable_checkbox)
-                ) + m.group('line')
-            else:
-                li.text = self.md.htmlStash.store(
-                    get_checkbox(m.group('state'), self.custom_checkbox, self.clickable_checkbox),
-                    safe=True
-                ) + m.group('line')
+            li.text = self.md.htmlStash.store(
+                get_checkbox(m.group('state'), self.custom_checkbox, self.clickable_checkbox)
+            ) + m.group('line')
             found = True
         return found
 
@@ -85,15 +77,9 @@ class TasklistTreeprocessor(Treeprocessor):
             if first.tag == "p" and first.text is not None:
                 m = RE_CHECKBOX.match(first.text)
                 if m is not None:
-                    if util.MD3:  # pragma: no cover
-                        first.text = self.md.htmlStash.store(
-                            get_checkbox(m.group('state'), self.custom_checkbox, self.clickable_checkbox)
-                        ) + m.group('line')
-                    else:
-                        first.text = self.md.htmlStash.store(
-                            get_checkbox(m.group('state'), self.custom_checkbox, self.clickable_checkbox),
-                            safe=True
-                        ) + m.group('line')
+                    first.text = self.md.htmlStash.store(
+                        get_checkbox(m.group('state'), self.custom_checkbox, self.clickable_checkbox)
+                    ) + m.group('line')
                     found = True
         return found
 
@@ -150,7 +136,7 @@ class TasklistExtension(Extension):
 
         super(TasklistExtension, self).__init__(*args, **kwargs)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Add checklist tree processor to Markdown instance."""
 
         tasklist = TasklistTreeprocessor(md)

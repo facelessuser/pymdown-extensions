@@ -84,7 +84,7 @@ DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
-from markdown.inlinepatterns import Pattern
+from markdown.inlinepatterns import InlineProcessor
 from markdown import util as md_util
 from . import util
 from . import keymap_db as keymap
@@ -110,7 +110,7 @@ ESCAPED_BSLASH = '%s%s%s' % (md_util.STX, ord('\\'), md_util.ETX)
 DOUBLE_BSLASH = '\\\\'
 
 
-class KeysPattern(Pattern):
+class KeysPattern(InlineProcessor):
     """Return kbd tag."""
 
     def __init__(self, pattern, config, md):
@@ -123,8 +123,6 @@ class KeysPattern(Pattern):
         self.aliases = keymap.aliases
         self.camel = config['camel_case']
         super(KeysPattern, self).__init__(pattern, md)
-        if not util.MD3:
-            self.md = md
 
     def merge(self, x, y):
         """Given two dicts, merge them into a new dict."""
@@ -164,15 +162,15 @@ class KeysPattern(Pattern):
             value = (canonical_key, name) if name else None
         return value
 
-    def handleMatch(self, m):
+    def handleMatch(self, m, data):
         """Handle kbd pattern matches."""
 
-        if m.group(2):
-            return m.group('escapes').replace(DOUBLE_BSLASH, ESCAPED_BSLASH)
-        content = [self.process_key(key) for key in UNESCAPED_PLUS.split(m.group(3)) if key != '+']
+        if m.group(1):
+            return m.group('escapes').replace(DOUBLE_BSLASH, ESCAPED_BSLASH), m.start(0), m.end(0)
+        content = [self.process_key(key) for key in UNESCAPED_PLUS.split(m.group(2)) if key != '+']
 
         if None in content:
-            return
+            return None, None, None
 
         el = md_util.etree.Element(
             ('kbd' if self.strict else 'span'),
@@ -194,7 +192,7 @@ class KeysPattern(Pattern):
             kbd.text = md_util.AtomicString(item_name)
             last = kbd
 
-        return el
+        return el, m.start(0), m.end(0)
 
 
 class KeysExtension(Extension):
@@ -212,7 +210,7 @@ class KeysExtension(Extension):
         }
         super(KeysExtension, self).__init__(*args, **kwargs)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Add support for keys."""
 
         util.escape_chars(md, ['+'])

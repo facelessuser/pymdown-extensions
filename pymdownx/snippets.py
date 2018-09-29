@@ -151,7 +151,7 @@ class SnippetExtension(Extension):
 
         super(SnippetExtension, self).__init__(*args, **kwargs)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Register the extension."""
 
         self.md = md

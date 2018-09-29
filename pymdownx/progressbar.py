@@ -108,7 +108,7 @@ DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
-from markdown.inlinepatterns import Pattern, dequote
+from markdown.inlinepatterns import InlineProcessor, dequote
 from markdown import util as md_util
 from markdown.extensions.attr_list import AttrListTreeprocessor
 from . import util
@@ -140,15 +140,13 @@ class ProgressBarTreeProcessor(AttrListTreeprocessor):
                 elem.tail = elem.tail[m.end():]
 
 
-class ProgressBarPattern(Pattern):
+class ProgressBarPattern(InlineProcessor):
     """Pattern handler for the progress bars."""
 
     def __init__(self, pattern, md):
         """Initialize."""
 
-        Pattern.__init__(self, pattern, md)
-        if not util.MD3:
-            self.md = md
+        InlineProcessor.__init__(self, pattern, md)
 
     def create_tag(self, width, label, add_classes, alist):
         """Create the tag."""
@@ -176,7 +174,7 @@ class ProgressBarPattern(Pattern):
                 ProgressBarTreeProcessor(self.md).run(el)
         return el
 
-    def handleMatch(self, m):
+    def handleMatch(self, m, data):
         """Handle the match."""
 
         label = ""
@@ -189,7 +187,7 @@ class ProgressBarPattern(Pattern):
         if m.group('attr_list'):
             alist = m.group('attr_list')
         if m.group('percent'):
-            value = float(m.group(2))
+            value = float(m.group('percent'))
         else:
             try:
                 num = float(m.group('frac_num'))
@@ -213,7 +211,7 @@ class ProgressBarPattern(Pattern):
         if level_class:
             add_classes.append(CLASS_LEVEL % int(value - (value % increment)))
 
-        return self.create_tag('%.2f' % value, label, add_classes, alist)
+        return self.create_tag('%.2f' % value, label, add_classes, alist), m.start(0), m.end(0)
 
 
 class ProgressBarExtension(Extension):
@@ -240,7 +238,7 @@ class ProgressBarExtension(Extension):
 
         super(ProgressBarExtension, self).__init__(*args, **kwargs)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Add the progress bar pattern handler."""
 
         util.escape_chars(md, ['='])

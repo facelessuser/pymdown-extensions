@@ -54,7 +54,7 @@ class ExtraExtension(Extension):
         self.config.update(extra_extension_configs)
         self.config.update(kwargs)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Register extension instances."""
 
         md.registerExtensions(extra_extensions, self.config)

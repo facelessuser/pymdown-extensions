@@ -16,7 +16,6 @@ except ImportError:
 
 PY3 = sys.version_info >= (3, 0)
 PY34 = sys.version_info >= (3, 4)
-MD3 = __version_info__[0] >= 3
 
 if PY3:
     ustr = str  # noqa

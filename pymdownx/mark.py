@@ -25,7 +25,7 @@ DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
-from markdown.inlinepatterns import SimpleTagPattern, SimpleTextPattern
+from markdown.inlinepatterns import SimpleTagInlineProcessor, SimpleTextInlineProcessor
 from . import util
 
 RE_SMART_CONTENT = r'((?:[^\=]|\=(?=[^\W_]|\=|\s)|(?<=\s)\=+?(?=\s))+?\=*?)'
@@ -49,17 +49,17 @@ class MarkExtension(Extension):
 
         super(MarkExtension, self).__init__(*args, **kwargs)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Add support for <mark>test</mark> tags as ==test==."""
 
         util.escape_chars(md, ['='])
         config = self.getConfigs()
 
         if config.get('smart_mark', True):
-            md.inlinePatterns.add("mark", SimpleTagPattern(RE_SMART_MARK, "mark"), "<not_strong")
+            md.inlinePatterns.add("mark", SimpleTagInlineProcessor(RE_SMART_MARK, "mark"), "<not_strong")
         else:
-            md.inlinePatterns.add("mark", SimpleTagPattern(RE_MARK, "mark"), "<not_strong")
-        md.inlinePatterns.add('not_mark', SimpleTextPattern(RE_NOT_MARK), "<mark")
+            md.inlinePatterns.add("mark", SimpleTagInlineProcessor(RE_MARK, "mark"), "<not_strong")
+        md.inlinePatterns.add('not_mark', SimpleTextInlineProcessor(RE_NOT_MARK), "<mark")
 
 
 def makeExtension(*args, **kwargs):

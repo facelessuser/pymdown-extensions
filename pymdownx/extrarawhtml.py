@@ -21,24 +21,23 @@ from . import util
 class ExtraRawHtmExtension(Extension):
     """Add raw HTML extensions to Markdown class."""
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Register extension instances."""
 
         md.registerExtension(self)
 
-        if util.MD3 or not md.safeMode:
-            # Turn on processing of markdown text within raw html
-            md.preprocessors['html_block'].markdown_in_raw = True
-            md.parser.blockprocessors.add(
-                'markdown_block',
-                extra.MarkdownInHtmlProcessor(md.parser),
-                '_begin'
-            )
-            md.parser.blockprocessors.tag_counter = -1
-            md.parser.blockprocessors.contain_span_tags = re.compile(
-                r'^(p|h[1-6]|li|dd|dt|td|th|legend|address)$',
-                re.IGNORECASE
-            )
+        # Turn on processing of markdown text within raw html
+        md.preprocessors['html_block'].markdown_in_raw = True
+        md.parser.blockprocessors.add(
+            'markdown_block',
+            extra.MarkdownInHtmlProcessor(md.parser),
+            '_begin'
+        )
+        md.parser.blockprocessors.tag_counter = -1
+        md.parser.blockprocessors.contain_span_tags = re.compile(
+            r'^(p|h[1-6]|li|dd|dt|td|th|legend|address)$',
+            re.IGNORECASE
+        )
 
 
 def makeExtension(*args, **kwargs):

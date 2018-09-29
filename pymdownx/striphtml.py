@@ -76,8 +76,6 @@ class StripHtmlPostprocessor(Postprocessor):
             )
 
         super(StripHtmlPostprocessor, self).__init__(md)
-        if not util.MD3:
-            self.md = md
 
     def repl(self, m):
         """Replace comments and unwanted attributes."""
@@ -135,7 +133,7 @@ class StripHtmlExtension(Extension):
         }
         super(StripHtmlExtension, self).__init__(*args, **kwargs)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Strip unwanted HTML attributes and/or comments."""
 
         config = self.getConfigs()

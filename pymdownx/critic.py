@@ -303,7 +303,7 @@ class CriticExtension(Extension):
 
         self.configured = False
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Register the extension."""
 
         self.md = md
@@ -326,21 +326,17 @@ class CriticExtension(Extension):
 
         if not self.configured:
             self.configured = True
-            if util.MD3:  # pragma: no cover
-                value = self.md.preprocessors["critic"]
-                index = self.md.preprocessors._priority[
-                    self.md.preprocessors.get_index_for_name("normalize_whitespace")
-                ].priority
-                self.md.preprocessors.register(value, "critic", index - 1)
+            value = self.md.preprocessors["critic"]
+            index = self.md.preprocessors._priority[
+                self.md.preprocessors.get_index_for_name("normalize_whitespace")
+            ].priority
+            self.md.preprocessors.register(value, "critic", index - 1)
 
-                value = self.md.postprocessors["critic-post"]
-                index = self.md.postprocessors._priority[
-                    self.md.postprocessors.get_index_for_name("raw_html")
-                ].priority
-                self.md.postprocessors.register(value, "critic-post", index - 1)
-            else:
-                self.md.preprocessors.link('critic', '>normalize_whitespace')
-                self.md.postprocessors.link('critic-post', '>raw_html')
+            value = self.md.postprocessors["critic-post"]
+            index = self.md.postprocessors._priority[
+                self.md.postprocessors.get_index_for_name("raw_html")
+            ].priority
+            self.md.postprocessors.register(value, "critic-post", index - 1)
         self.critic_stash.clear()
 
 
