@@ -176,8 +176,8 @@ class TestSuperFencesCustom3(util.MdCase):
         'pymdownx.superfences': {
             'custom_fences': [
                 {
-                    'name': 'math', 
-                    'class': 'arithmatex', 
+                    'name': 'math',
+                    'class': 'arithmatex',
                     'format': arithmatex.fence_mathjax_preview_format
                 }
             ]
