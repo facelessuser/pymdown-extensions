@@ -213,7 +213,7 @@ def to_alt(index, shortname, alias, uc, alt, title, category, options, md):
 # Classes
 ###################
 class EmojiPattern(InlineProcessor):
-    """Return element of type `tag` with a text attribute of group(2) of an InlineProcessor."""
+    """Return element of type `tag` with a text attribute of group(2) of an `InlineProcessor`."""
 
     def __init__(self, pattern, config, md):
         """Initialize."""

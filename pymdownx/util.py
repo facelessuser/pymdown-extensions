@@ -9,10 +9,6 @@ from __future__ import unicode_literals
 import sys
 import copy
 import re
-try:
-    from markdown import __version_info__
-except ImportError:
-    from markdown import version_info as __version_info__
 
 PY3 = sys.version_info >= (3, 0)
 PY34 = sys.version_info >= (3, 4)

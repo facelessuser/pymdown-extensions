@@ -15,7 +15,6 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.extensions import extra
 import re
-from . import util
 
 
 class ExtraRawHtmExtension(Extension):

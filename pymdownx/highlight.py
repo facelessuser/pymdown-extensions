@@ -27,7 +27,6 @@ import re
 from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
 from markdown import util as md_util
-from . import util
 import copy
 from collections import OrderedDict
 try:

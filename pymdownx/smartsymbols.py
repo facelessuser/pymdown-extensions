@@ -42,7 +42,6 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown import treeprocessors
-from . import util
 from markdown.util import Registry
 from markdown.inlinepatterns import HtmlInlineProcessor
 

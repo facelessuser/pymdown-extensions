@@ -37,7 +37,6 @@ from markdown.blockprocessors import CodeBlockProcessor
 from markdown import util as md_util
 import functools
 from . import highlight as hl
-from . import util
 import re
 
 SOH = '\u0001'
