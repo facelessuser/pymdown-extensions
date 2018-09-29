@@ -108,19 +108,19 @@ def _fence_mathjax_format(math, preview=False):
 
 
 # Formatters usable with InlineHilite
-def inline_mathjax_preview_format(math, language='math', class_name='arithmatex'):
+def inline_mathjax_preview_format(math, language='math', class_name='arithmatex', md=None):
     """Inline math formatter with preview."""
 
     return _inline_mathjax_format(math, True)
 
 
-def inline_mathjax_format(math, language='math', class_name='arithmatex'):
+def inline_mathjax_format(math, language='math', class_name='arithmatex', md=None):
     """Inline math formatter."""
 
     return _inline_mathjax_format(math, False)
 
 
-def inline_generic_format(math, language='math', class_name='arithmatex', wrap='\\(%s\\)'):
+def inline_generic_format(math, language='math', class_name='arithmatex', md=None, wrap='\\(%s\\)'):
     """Inline generic formatter."""
 
     el = md_util.etree.Element('span', {'class': class_name})

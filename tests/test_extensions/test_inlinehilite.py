@@ -4,7 +4,7 @@ from .. import util
 import pymdownx.arithmatex as arithmatex
 
 
-def _format(src, language='test', class_name='test'):
+def _format(src, language, class_name, md):
     """Inline math formatter."""
 
     return '<span class="lang-%s %s">%s</span>' % (language, class_name, src)
