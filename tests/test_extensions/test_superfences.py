@@ -144,7 +144,7 @@ class TestSuperFencesCustom2(util.MdCase):
                 {
                     'name': 'math',
                     'class': 'arithmatex',
-                    'format': arithmatex.block_mathjax_format
+                    'format': arithmatex.fence_mathjax_format
                 }
             ]
         }
@@ -178,7 +178,7 @@ class TestSuperFencesCustom3(util.MdCase):
                 {
                     'name': 'math', 
                     'class': 'arithmatex', 
-                    'format': arithmatex.block_mathjax_preview_format
+                    'format': arithmatex.fence_mathjax_preview_format
                 }
             ]
         }
@@ -217,7 +217,7 @@ class TestSuperFencesCustom4(util.MdCase):
                 {
                     'name': 'math',
                     'class': 'arithmatex',
-                    'format': arithmatex.block_generic_format
+                    'format': arithmatex.fence_generic_format
                 }
             ]
         }

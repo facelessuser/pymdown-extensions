@@ -119,13 +119,13 @@ class CodeStash(object):
         self.stash = {}
 
 
-def block_code_format(source, language, css_class, options, md):
+def fence_code_format(source, language, css_class, options, md):
     """Format source as code blocks."""
 
     return '<pre class="%s"><code>%s</code></pre>' % (css_class, _escape(source))
 
 
-def block_div_format(source, language, css_class, options, md):
+def fence_div_format(source, language, css_class, options, md):
     """Format source as div."""
 
     return '<div class="%s">%s</div>' % (css_class, _escape(source))
@@ -233,7 +233,7 @@ class SuperFencesCodeExtension(Extension):
         for custom in custom_fences:
             name = custom.get('name')
             class_name = custom.get('class')
-            fence_format = custom.get('format', block_code_format)
+            fence_format = custom.get('format', fence_code_format)
             validator = custom.get('validator', default_validator)
             if name is not None and class_name is not None:
                 self.extend_super_fences(

@@ -84,7 +84,7 @@ def _inline_mathjax_format(math, preview=False):
     return el
 
 
-def _block_mathjax_format(math, preview=False):
+def _fence_mathjax_format(math, preview=False):
     """Block math formatter."""
 
     text = ''
@@ -129,19 +129,19 @@ def inline_generic_format(math, language='math', class_name='arithmatex', wrap='
 
 
 # Formatters usable with SuperFences
-def block_mathjax_preview_format(math, language='math', class_name='arithmatex', options=None, md=None):
+def fence_mathjax_preview_format(math, language='math', class_name='arithmatex', options=None, md=None):
     """Block MathJax formatter with preview."""
 
-    return _block_mathjax_format(math, True)
+    return _fence_mathjax_format(math, True)
 
 
-def block_mathjax_format(math, language='math', class_name='arithmatex', options=None, md=None):
+def fence_mathjax_format(math, language='math', class_name='arithmatex', options=None, md=None):
     """Block MathJax formatter."""
 
-    return _block_mathjax_format(math, False)
+    return _fence_mathjax_format(math, False)
 
 
-def block_generic_format(math, language='math', class_name='arithmatex', options=None, md=None, wrap='\\[\n%s\n\\]'):
+def fence_generic_format(math, language='math', class_name='arithmatex', options=None, md=None, wrap='\\[\n%s\n\\]'):
     """Generic block formatter."""
 
     return '<div class="%s">%s</div>' % (class_name, (wrap % math))

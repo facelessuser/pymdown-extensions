@@ -6,7 +6,7 @@ superfences (custom):
       custom_fences:
         - name: test
           class: test
-          format: !!python/name:pymdownx.superfences.block_div_format
+          format: !!python/name:pymdownx.superfences.fence_div_format
 
 superfences (failures):
   extensions:
@@ -15,10 +15,10 @@ superfences (failures):
       custom_fences:
         - name: flow
           class: uml-flowchart
-          format: !!python/name:pymdownx.superfences.block_code_format
+          format: !!python/name:pymdownx.superfences.fence_code_format
         - name: sequence
           class: uml-sequence-diagram
-          format: !!python/name:pymdownx.superfences.block_code_format
+          format: !!python/name:pymdownx.superfences.fence_code_format
 
 superfences (no indent blocks):
   extensions:
@@ -29,10 +29,10 @@ superfences (no indent blocks):
       custom_fences:
         - name: flow
           class: uml-flowchart
-          format: !!python/name:pymdownx.superfences.block_code_format
+          format: !!python/name:pymdownx.superfences.fence_code_format
         - name: sequence
           class: uml-sequence-diagram
-          format: !!python/name:pymdownx.superfences.block_code_format
+          format: !!python/name:pymdownx.superfences.fence_code_format
 
 superfences (no highlight):
   extensions:
@@ -41,10 +41,10 @@ superfences (no highlight):
       custom_fences:
         - name: flow
           class: uml-flowchart
-          format: !!python/name:pymdownx.superfences.block_code_format
+          format: !!python/name:pymdownx.superfences.fence_code_format
         - name: sequence
           class: uml-sequence-diagram
-          format: !!python/name:pymdownx.superfences.block_code_format
+          format: !!python/name:pymdownx.superfences.fence_code_format
 
 superfences (no pygments):
   extensions:
@@ -54,10 +54,10 @@ superfences (no pygments):
       custom_fences:
         - name: flow
           class: uml-flowchart
-          format: !!python/name:pymdownx.superfences.block_code_format
+          format: !!python/name:pymdownx.superfences.fence_code_format
         - name: sequence
           class: uml-sequence-diagram
-          format: !!python/name:pymdownx.superfences.block_code_format
+          format: !!python/name:pymdownx.superfences.fence_code_format
 
 superfences (normal):
   extensions:
@@ -71,10 +71,10 @@ superfences (normal):
       custom_fences:
        - name: flow
          class: uml-flowchart
-         format: !!python/name:pymdownx.superfences.block_code_format
+         format: !!python/name:pymdownx.superfences.fence_code_format
        - name: sequence
          class: uml-sequence-diagram
-         format: !!python/name:pymdownx.superfences.block_code_format
+         format: !!python/name:pymdownx.superfences.fence_code_format
 
 superfences (preserve tabs):
   extensions:
@@ -89,10 +89,10 @@ superfences (preserve tabs):
       custom_fences:
         - name: flow
           class: uml-flowchart
-          format: !!python/name:pymdownx.superfences.block_code_format
+          format: !!python/name:pymdownx.superfences.fence_code_format
         - name: sequence
           class: uml-sequence-diagram
-          format: !!python/name:pymdownx.superfences.block_code_format
+          format: !!python/name:pymdownx.superfences.fence_code_format
 
 superfences (tabs):
   css:
@@ -103,7 +103,7 @@ superfences (tabs):
       custom_fences:
         - name: flow
           class: uml-flowchart
-          format: !!python/name:pymdownx.superfences.block_code_format
+          format: !!python/name:pymdownx.superfences.fence_code_format
         - name: sequence
           class: uml-sequence-diagram
-          format: !!python/name:pymdownx.superfences.block_code_format
+          format: !!python/name:pymdownx.superfences.fence_code_format
