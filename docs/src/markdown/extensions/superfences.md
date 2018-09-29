@@ -420,17 +420,10 @@ Format\ Function                | Description
 `superfences.fence_code_format` | Places the HTML escaped content of the fence under a `#!html <pre><code>` block.
 `superfences.fence_div_format`  | Places the HTML escaped content of the fence under a `#!html <div>` block.
 
-In general, formatters take three parameters: the source found between the fences, the specified language, and the class name originally defined via the `class` option in the `custom_fence` entry. By default, no options are allowed when using a custom formatter unless a `validator` is provided to validate options.
+In general, formatters take five parameters: the source found between the fences, the specified language, the class name originally defined via the `class` option in the `custom_fence` entry, custom options, and the Markdown object (in case you want access to meta data etc.).
 
 ```python
-def custom_formatter(source, language, css_class):
-    return string
-```
-
-If a validator is provided, then the custom formatter will take an additional parameter containing all the found options.
-
-```python
-def custom_formatter(source, language, css_class, options):
+def custom_formatter(source, language, css_class, options, md):
     return string
 ```
 
@@ -501,7 +494,7 @@ test
 
 ### UML Diagram Example
 
-This example illustrates how this document uses the `custom_fences` option to do UML diagrams.  Out of the box, SuperFences use the default settings for `custom_fences` for the purpose of including UML. The settings below show the default settings, which define two new custom languages called `flow` and `sequence`. The `flow` and `sequence` fences will pass the content through the `superfences.fence_code_format` format function which will wrap the content in `#!html <pre><code` blocks and attach the class `uml-flowchart` or `uml-sequence-diagram` to the respective `#!html <pre>` block. `superfences.fence_div_format` could just as easily be used to wrap the content in a `#!html <div>` instead, or a new custom function could have been written and used.
+This example illustrates how this document uses the `custom_fences` option to do UML diagrams.  The settings below shows two new custom languages called `flow` and `sequence` and are the options that must be fed through `custom_fences` [option](#options). The `flow` and `sequence` fences will pass the content through the `superfences.fence_code_format` format function which will wrap the content in `#!html <pre><code` blocks and attach the class `uml-flowchart` or `uml-sequence-diagram` to the respective `#!html <pre>` block. `superfences.fence_div_format` could just as easily be used to wrap the content in a `#!html <div>` instead, or a new custom function could have been written and used.
 
 ```py
 custom_fences = [
@@ -659,7 +652,7 @@ Option                         | Type         | Default       | Description
 ------------------------------ | ------------ | ------------- | -----------
 `css_class`                    | string       | `#!py3 ''`    | Class name is applied to the wrapper element of the code. If configured, this setting will override the `css_class` option of either CodeHilite or Highlight. If nothing is configured here or via CodeHilite or Highlight, the class `highlight` will be used.
 `disable_indented_code_blocks` | bool         | `#!py3 False` | Disables Python Markdown's indented code block parsing.  This is nice if you only ever use fenced blocks.
-`custom_fences`                | [dictionary] | `#!py3 [{'name':'flow', 'class':'uml-flowchart'}, {'name':'sequence', 'class':'uml-sequence-diagram'}]` | Custom fences.
+`custom_fences`                | [dictionary] | `#!py3 []`    | Custom fences.
 `highlight_code`               | bool         | `#!py3 True`  | Enable or disable code highlighting.
 `preserve_tabs`                | bool         | `#!py3 False` | Experimental feature that preserves tabs in fenced code blocks.
 
