@@ -53,10 +53,10 @@ def _test(language, test_language=None):
     return test_language is None or language == test_language
 
 
-def _formatter(source, language, class_name="", fmt=None):
+def _formatter(source, language, md, class_name="", fmt=None):
     """Formatter wrapper."""
 
-    return fmt(source, language, class_name)
+    return fmt(source, language, class_name, md)
 
 
 class InlineHilitePattern(Pattern):
@@ -121,7 +121,7 @@ class InlineHilitePattern(Pattern):
             self.use_pygments = config['use_pygments']
             self.noclasses = config['noclasses']
 
-    def highlight_code(self, src, language, classname=None):
+    def highlight_code(self, src, language, classname=None, md=None):
         """Syntax highlight the inline code block."""
 
         process_text = self.style_plain_text or language or self.guess_lang
@@ -151,7 +151,7 @@ class InlineHilitePattern(Pattern):
 
         for entry in reversed(self.formatters):
             if entry["test"](lang):
-                value = entry["formatter"](src, lang)
+                value = entry["formatter"](src, lang, self.md)
                 if isinstance(value, util.ustr):
                     if util.MD3:  # pragma: no cover
                         value = self.md.htmlStash.store(value)

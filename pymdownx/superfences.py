@@ -119,13 +119,13 @@ class CodeStash(object):
         self.stash = {}
 
 
-def fence_code_format(source, language, css_class):
+def fence_code_format(source, language, css_class, options, md):
     """Format source as code blocks."""
 
     return '<pre class="%s"><code>%s</code></pre>' % (css_class, _escape(source))
 
 
-def fence_div_format(source, language, css_class):
+def fence_div_format(source, language, css_class, options, md):
     """Format source as div."""
 
     return '<div class="%s">%s</div>' % (css_class, _escape(source))
@@ -165,10 +165,10 @@ def _validator(language, options, validator=None):
     return validator(language, options)
 
 
-def _formatter(source, language, options, pass_opts=False, class_name="", fmt=None):
+def _formatter(source, language, options, md, class_name="", fmt=None):
     """Formatter wrapper."""
 
-    return fmt(source, language, class_name, options) if pass_opts else fmt(source, language, class_name)
+    return fmt(source, language, class_name, options, md)
 
 
 def _test(language, test_language=None):
@@ -186,13 +186,7 @@ class SuperFencesCodeExtension(Extension):
         self.superfences = []
         self.config = {
             'disable_indented_code_blocks': [False, "Disable indented code blocks - Default: False"],
-            'custom_fences': [
-                [
-                    {'name': 'flow', 'class': 'uml-flowchart'},
-                    {'name': 'sequence', 'class': 'uml-sequence-diagram'}
-                ],
-                'Specify custom fences. Default: See documentation.'
-            ],
+            'custom_fences': [[], 'Specify custom fences. Default: See documentation.'],
             'highlight_code': [True, "Highlight code - Default: True"],
             'css_class': [
                 '',
@@ -241,11 +235,10 @@ class SuperFencesCodeExtension(Extension):
             class_name = custom.get('class')
             fence_format = custom.get('format', fence_code_format)
             validator = custom.get('validator', default_validator)
-            pass_options = custom.get('validator') is not None
             if name is not None and class_name is not None:
                 self.extend_super_fences(
                     name,
-                    functools.partial(_formatter, pass_opts=pass_options, class_name=class_name, fmt=fence_format),
+                    functools.partial(_formatter, class_name=class_name, fmt=fence_format),
                     functools.partial(_validator, validator=validator)
                 )
 
@@ -458,7 +451,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         code = None
         for entry in reversed(self.extension.superfences):
             if entry["test"](self.lang):
-                code = entry["formatter"](self.rebuild_block(self.code), self.lang, self.options)
+                code = entry["formatter"](self.rebuild_block(self.code), self.lang, self.options, self.md)
                 if self.tab is not None:
                     code = self.get_tab(code, self.tab)
                 break
@@ -628,7 +621,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 lines = lines[:start] + [fenced] + lines[end:]
         return lines
 
-    def highlight(self, src, language, options):
+    def highlight(self, src, language, options, md):
         """
         Syntax highlight the code block.
 

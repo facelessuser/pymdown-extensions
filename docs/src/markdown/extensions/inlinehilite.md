@@ -50,15 +50,19 @@ Keys        | Description
 ----------- | -----------
 `name`      | The language name that is specified when using the fence in Markdown.
 `class`     | The class name assigned to the HTML element when converting from Markdown to HTML.
-`format`    | A function that formats the HTML output. The function should return either an ElementTree object (preferable) or a string as HTML.
+`format`    | A function that formats the HTML output. The function should return either an ElementTree object or a string as HTML.
 
 ### Formatters
 
-In general, formatters take three parameters: the source found between the backticks, the specified language, and the class name originally defined via the `class` option in the `custom_inline` entry. Should return a either an ElementTree element (preferable) or a string as HTML.
+In general, formatters take four parameters: the source found between the backticks, the specified language, the class name originally defined via the `class` option in the `custom_inline` entry, and the Markdown class object. Should return a either an ElementTree element or a string as HTML.
+
+When returning a string, InlineHilite will treat the string as ready for HTML, so escape what needs to be escaped as it is expected to be fully ready HTML and will be stashed and re-inserted at post processing.
+
+When returning an ElementTree object, remember to wrap string content as `markdown.util.AtomicString` to prevent it from being processed further, you can also stash raw HTML string content assigned to elements like InlineHilite does by default above. InlineHilite will not try and guess what you intend, you must manage your content in the ElementTree objects or the Markdown parser may apply other conversion to your HTML content.
 
 ```python
-def custom_formatter(source, language, css_class):
-    return el
+def custom_formatter(source, language, css_class, md):
+    return el  # Or string
 ```
 
 ## Options

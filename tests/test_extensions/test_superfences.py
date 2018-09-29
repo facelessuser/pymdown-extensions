@@ -4,7 +4,7 @@ from .. import util
 import pymdownx.arithmatex as arithmatex
 
 
-def custom_format(source, language, class_name, options):
+def custom_format(source, language, class_name, options, md):
     """Custom format."""
 
     return '<div lang="%s" class_name="class-%s", option="%s">%s</div>' % (language, class_name, options['opt'], source)
@@ -76,7 +76,12 @@ class TestSuperFencesCustom1(util.MdCase):
     extension_configs = {
         'pymdownx.superfences': {
             'custom_fences': [
-                {'name': 'test', 'class': 'test', 'format': custom_format, 'validator': custom_validator}
+                {
+                    'name': 'test',
+                    'class': 'test',
+                    'format': custom_format,
+                    'validator': custom_validator
+                }
             ]
         }
     }
@@ -136,7 +141,11 @@ class TestSuperFencesCustom2(util.MdCase):
     extension_configs = {
         'pymdownx.superfences': {
             'custom_fences': [
-                {'name': 'math', 'class': 'arithmatex', 'format': arithmatex.block_mathjax_format}
+                {
+                    'name': 'math',
+                    'class': 'arithmatex',
+                    'format': arithmatex.fence_mathjax_format
+                }
             ]
         }
     }
@@ -166,7 +175,11 @@ class TestSuperFencesCustom3(util.MdCase):
     extension_configs = {
         'pymdownx.superfences': {
             'custom_fences': [
-                {'name': 'math', 'class': 'arithmatex', 'format': arithmatex.block_mathjax_preview_format}
+                {
+                    'name': 'math',
+                    'class': 'arithmatex',
+                    'format': arithmatex.fence_mathjax_preview_format
+                }
             ]
         }
     }
@@ -201,7 +214,11 @@ class TestSuperFencesCustom4(util.MdCase):
     extension_configs = {
         'pymdownx.superfences': {
             'custom_fences': [
-                {'name': 'math', 'class': 'arithmatex', 'format': arithmatex.block_generic_format}
+                {
+                    'name': 'math',
+                    'class': 'arithmatex',
+                    'format': arithmatex.fence_generic_format
+                }
             ]
         }
     }
