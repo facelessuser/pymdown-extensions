@@ -78,16 +78,23 @@ class InsertSubExtension(Extension):
         sup_ins2_rule = RE_SMART_SUP_INS2 if smart else RE_SUP_INS2
         sup_rule = RE_SUP
 
+        md.inlinePatterns.register(SimpleTextInlineProcessor(RE_NOT_CARET), "not_caret", 65)
         if insert:
-            md.inlinePatterns.add("ins", SimpleTagInlineProcessor(ins_rule, "ins"), "<not_strong")
-            md.inlinePatterns.add('not_caret', SimpleTextInlineProcessor(RE_NOT_CARET), "<ins")
             if superscript:
-                md.inlinePatterns.add("sup_ins", DoubleTagInlineProcessor(sup_ins_rule, "sup,ins"), "<ins")
-                md.inlinePatterns.add("sup_ins2", DoubleTagInlineProcessor(sup_ins2_rule, "sup,ins"), "<ins")
-                md.inlinePatterns.add("sup", SimpleTagInlineProcessor(sup_rule, "sup"), ">ins" if smart else "<ins")
+                md.inlinePatterns.register(DoubleTagInlineProcessor(sup_ins_rule, "sup,ins"), "sup_ins", 64.9)
+                md.inlinePatterns.register(DoubleTagInlineProcessor(sup_ins2_rule, "sup,ins"), "sup_ins2", 64.8)
+
+            # If not "smart", this needs to occur before `ins`, but if "smart", this needs to be after `ins`
+            if superscript and not smart:
+                md.inlinePatterns.register(SimpleTagInlineProcessor(sup_rule, "sup"), "sup", 64.8)
+
+            md.inlinePatterns.register(SimpleTagInlineProcessor(ins_rule, "ins"), "ins", 64)
+
+            # "smart", so this happens after `ins`
+            if superscript and smart:
+                md.inlinePatterns.register(SimpleTagInlineProcessor(sup_rule, "sup"), "sup", 63.9)
         elif superscript:
-            md.inlinePatterns.add("sup", SimpleTagInlineProcessor(sup_rule, "sup"), "<not_strong")
-            md.inlinePatterns.add('not_caret', SimpleTextInlineProcessor(RE_NOT_CARET), "<sup")
+            md.inlinePatterns.register(SimpleTagInlineProcessor(sup_rule, "sup"), "sup", 64.8)
 
 
 def makeExtension(*args, **kwargs):

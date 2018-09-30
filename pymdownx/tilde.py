@@ -77,16 +77,23 @@ class DeleteSubExtension(Extension):
         sub_del2_rule = RE_SMART_SUB_DEL2 if smart else RE_SUB_DEL2
         sub_rule = RE_SUB
 
+        md.inlinePatterns.register(SimpleTextInlineProcessor(RE_NOT_TILDE), "not_tilde", 65)
         if delete:
-            md.inlinePatterns.add("del", SimpleTagInlineProcessor(delete_rule, "del"), "<not_strong")
-            md.inlinePatterns.add('not_tilde', SimpleTextInlineProcessor(RE_NOT_TILDE), "<del")
             if subscript:
-                md.inlinePatterns.add("sub_del", DoubleTagInlineProcessor(sub_del_rule, "sub,del"), "<del")
-                md.inlinePatterns.add("sub_del2", DoubleTagInlineProcessor(sub_del2_rule, "sub,del"), "<del")
-                md.inlinePatterns.add("sub", SimpleTagInlineProcessor(sub_rule, "sub"), ">del" if smart else "<del")
+                md.inlinePatterns.register(DoubleTagInlineProcessor(sub_del_rule, "sub,del"), "sub_del", 64.9)
+                md.inlinePatterns.register(DoubleTagInlineProcessor(sub_del2_rule, "sub,del"), "sub_del2", 64.8)
+
+            # If not "smart", this needs to occur before `del`, but if "smart", this needs to be after `del`
+            if subscript and not smart:
+                md.inlinePatterns.register(SimpleTagInlineProcessor(sub_rule, "sub"), "sub", 64.8)
+
+            md.inlinePatterns.register(SimpleTagInlineProcessor(delete_rule, "del"), "del", 64)
+
+            # "smart", so this happens after `del`
+            if subscript and smart:
+                md.inlinePatterns.register(SimpleTagInlineProcessor(sub_rule, "sub"), "sub", 63.9)
         elif subscript:
-            md.inlinePatterns.add("sub", SimpleTagInlineProcessor(sub_rule, "sub"), "<not_strong")
-            md.inlinePatterns.add('not_tilde', SimpleTextInlineProcessor(RE_NOT_TILDE), "<sub")
+            md.inlinePatterns.register(SimpleTagInlineProcessor(sub_rule, "sub"), "sub", 64.8)
 
 
 def makeExtension(*args, **kwargs):

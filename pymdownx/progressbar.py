@@ -244,7 +244,7 @@ class ProgressBarExtension(Extension):
         util.escape_chars(md, ['='])
         progress = ProgressBarPattern(RE_PROGRESS, md)
         progress.config = self.getConfigs()
-        md.inlinePatterns.add("progress-bar", progress, ">escape")
+        md.inlinePatterns.register(progress, "progress-bar", 179)
 
 
 def makeExtension(*args, **kwargs):

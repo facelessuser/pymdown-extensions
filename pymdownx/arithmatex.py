@@ -299,7 +299,7 @@ class ArithmatexExtension(Extension):
             inline_patterns.append(RE_BRACKET_INLINE)
         if inline_patterns:
             inline = InlineArithmatexPattern('(?:%s)' % '|'.join(inline_patterns), config)
-            md.inlinePatterns.add("arithmatex-inline", inline, ">backtick")
+            md.inlinePatterns.register(inline, 'arithmatex-inline', 189.9)
 
         # Block patterns
         allowed_block = set(config.get('block_syntax', ['dollar', 'square', 'begin']))

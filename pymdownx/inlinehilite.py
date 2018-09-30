@@ -190,8 +190,7 @@ class InlineHiliteExtension(Extension):
         """Add support for `:::language code` and `#!language code` highlighting."""
 
         config = self.getConfigs()
-        inline_hilite = InlineHilitePattern(BACKTICK_CODE_RE, config, md)
-        md.inlinePatterns['backtick'] = inline_hilite
+        md.inlinePatterns.register(InlineHilitePattern(BACKTICK_CODE_RE, config, md), "backtick", 190)
 
 
 def makeExtension(*args, **kwargs):

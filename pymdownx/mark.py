@@ -54,12 +54,9 @@ class MarkExtension(Extension):
 
         util.escape_chars(md, ['='])
         config = self.getConfigs()
-
-        if config.get('smart_mark', True):
-            md.inlinePatterns.add("mark", SimpleTagInlineProcessor(RE_SMART_MARK, "mark"), "<not_strong")
-        else:
-            md.inlinePatterns.add("mark", SimpleTagInlineProcessor(RE_MARK, "mark"), "<not_strong")
-        md.inlinePatterns.add('not_mark', SimpleTextInlineProcessor(RE_NOT_MARK), "<mark")
+        pattern = RE_SMART_MARK if config.get('smart_mark', True) else RE_MARK
+        md.inlinePatterns.register(SimpleTextInlineProcessor(RE_NOT_MARK), "not_mark", 65)
+        md.inlinePatterns.register(SimpleTagInlineProcessor(pattern, "mark"), "mark", 64.9)
 
 
 def makeExtension(*args, **kwargs):

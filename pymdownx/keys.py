@@ -214,7 +214,7 @@ class KeysExtension(Extension):
         """Add support for keys."""
 
         util.escape_chars(md, ['+'])
-        md.inlinePatterns.add("keys", KeysPattern(RE_KBD, self.getConfigs(), md), "<escape")
+        md.inlinePatterns.register(KeysPattern(RE_KBD, self.getConfigs(), md), "keys", 185)
 
 
 def makeExtension(*args, **kwargs):

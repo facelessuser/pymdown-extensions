@@ -726,20 +726,13 @@ class MagiclinkExtension(Extension):
         # Setup general link patterns
         auto_link_pattern = MagiclinkAutoPattern(RE_AUTOLINK, md)
         auto_link_pattern.config = config
-        md.inlinePatterns._data['autolink'] = auto_link_pattern
+        md.inlinePatterns.register(auto_link_pattern, "autolink", 120)
 
         link_pattern = MagiclinkPattern(RE_LINK, md)
         link_pattern.config = config
-        md.inlinePatterns.add("magic-link", link_pattern, "<entity")
+        md.inlinePatterns.register(link_pattern, "magic-link", 85)
 
-        md.inlinePatterns.add("magic-mail", MagiclinkMailPattern(RE_MAIL, md), "<entity")
-
-    def setup_shortener(self, md, base_url, base_user_url, config):
-        """Setup shortener."""
-
-        shortener = MagicShortenerTreeprocessor(md, base_url, base_user_url, self.labels)
-        shortener.config = config
-        md.treeprocessors.add("magic-repo-shortener", shortener, "<prettify")
+        md.inlinePatterns.register(MagiclinkMailPattern(RE_MAIL, md), "magic-mail", 84.9)
 
     def setup_shorthand(self, md, int_mentions, ext_mentions, config):
         """Setup shorthand."""
@@ -753,40 +746,47 @@ class MagiclinkExtension(Extension):
             git_ext_repo = MagiclinkRepositoryPattern(
                 RE_GIT_EXT_REPO_MENTIONS, md, self.user, self.repo, self.provider, self.labels
             )
-            md.inlinePatterns.add("magic-repo-ext-mention", git_ext_repo, "<entity")
+            md.inlinePatterns.register(git_ext_repo, "magic-repo-ext-mention", 84.8)
             if not self.is_social:
                 git_int_repo = MagiclinkRepositoryPattern(
                     RE_GIT_INT_REPO_MENTIONS % int_mentions, md, self.user, self.repo, self.provider, self.labels
                 )
-                md.inlinePatterns.add("magic-repo-int-mention", git_int_repo, "<entity")
+                md.inlinePatterns.register(git_int_repo, "magic-repo-int-mention", 84.7)
 
         # Mentions
         pattern = RE_ALL_EXT_MENTIONS % '|'.join(ext_mentions)
         git_mention = MagiclinkMentionPattern(
             pattern, md, self.user, self.repo, self.provider, self.labels
         )
-        md.inlinePatterns.add("magic-ext-mention", git_mention, "<entity")
+        md.inlinePatterns.register(git_mention, "magic-ext-mention", 84.6)
 
         git_mention = MagiclinkMentionPattern(
             RE_INT_MENTIONS % int_mentions, md, self.user, self.repo, self.provider, self.labels
         )
-        md.inlinePatterns.add("magic-int-mention", git_mention, "<entity")
+        md.inlinePatterns.register(git_mention, "magic-int-mention", 84.5)
 
         # Other project refs
         if self.git_short:
             git_ext_refs = MagiclinkExternalRefsPattern(
                 RE_GIT_EXT_REFS, md, self.user, self.repo, self.provider, self.labels
             )
-            md.inlinePatterns.add("magic-ext-refs", git_ext_refs, "<entity")
+            md.inlinePatterns.register(git_ext_refs, "magic-ext-refs", 84.3)
             if not self.is_social:
                 git_int_refs = MagiclinkExternalRefsPattern(
                     RE_GIT_INT_EXT_REFS % int_mentions, md, self.user, self.repo, self.provider, self.labels
                 )
-                md.inlinePatterns.add("magic-int-refs", git_int_refs, "<entity")
+                md.inlinePatterns.register(git_int_refs, "magic-int-refs", 84.2)
                 git_int_micro_refs = MagiclinkInternalRefsPattern(
                     RE_GIT_INT_MICRO_REFS, md, self.user, self.repo, self.provider, self.labels
                 )
-                md.inlinePatterns.add("magic-int-micro-refs", git_int_micro_refs, "<entity")
+                md.inlinePatterns.register(git_int_micro_refs, "magic-int-micro-refs", 84.1)
+
+    def setup_shortener(self, md, base_url, base_user_url, config):
+        """Setup shortener."""
+
+        shortener = MagicShortenerTreeprocessor(md, base_url, base_user_url, self.labels)
+        shortener.config = config
+        md.treeprocessors.add("magic-repo-shortener", shortener, "<prettify")
 
     def get_base_urls(self, config):
         """Get base URLs."""

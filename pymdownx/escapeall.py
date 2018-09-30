@@ -98,15 +98,15 @@ class EscapeAllExtension(Extension):
 
         config = self.getConfigs()
         hardbreak = config['hardbreak']
-        md.inlinePatterns['escape'] = EscapeAllPattern(
-            ESCAPE_NO_NL_RE if hardbreak else ESCAPE_RE, config['nbsp']
+        md.inlinePatterns.register(
+            EscapeAllPattern(ESCAPE_NO_NL_RE if hardbreak else ESCAPE_RE, config['nbsp']),
+            "escape",
+            180
         )
+
         md.postprocessors['unescape'] = EscapeAllPostprocessor(md)
         if config['hardbreak']:
-            try:
-                md.inlinePatterns.add("hardbreak", SubstituteTagInlineProcessor(HARDBREAK_RE, 'br'), "<nl")
-            except Exception:
-                md.inlinePatterns.add("hardbreak", SubstituteTagInlineProcessor(HARDBREAK_RE, 'br'), "_end")
+            md.inlinePatterns.register(SubstituteTagInlineProcessor(HARDBREAK_RE, 'br'), "hardbreak", 5.1)
 
 
 def makeExtension(*args, **kwargs):

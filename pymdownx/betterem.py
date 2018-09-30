@@ -135,19 +135,18 @@ class BetterEmExtension(Extension):
         star_emphasis = SMART_STAR_EM if enable_star else STAR_EM
         under_emphasis = SMART_UNDER_EM if enable_under else UNDER_EM
 
-        md.inlinePatterns["strong_em"] = DoubleTagInlineProcessor(star_strong_em, 'strong,em')
-        md.inlinePatterns.add("strong_em2", DoubleTagInlineProcessor(under_strong_em, 'strong,em'), '>strong_em')
-        value = md.inlinePatterns["em_strong"]
-        index = md.inlinePatterns._priority[md.inlinePatterns.get_index_for_name("strong_em2")].priority
-        md.inlinePatterns.register(value, "em_strong", index + 1)
-        md.inlinePatterns["em_strong"] = DoubleTagInlineProcessor(star_em_strong, 'em,strong')
-        md.inlinePatterns.add('em_strong2', DoubleTagInlineProcessor(under_em_strong, 'em,strong'), '>em_strong')
-        md.inlinePatterns.add('strong_em3', DoubleTagInlineProcessor(star_strong_em2, 'strong,em'), '>em_strong2')
-        md.inlinePatterns.add('strong_em4', DoubleTagInlineProcessor(under_strong_em2, 'strong,em'), '>strong_em3')
-        md.inlinePatterns["strong"] = SimpleTagInlineProcessor(star_strong, 'strong')
-        md.inlinePatterns.add("strong2", SimpleTagInlineProcessor(under_strong, 'strong'), '>strong')
-        md.inlinePatterns["emphasis"] = SimpleTagInlineProcessor(star_emphasis, 'em')
-        md.inlinePatterns["emphasis2"] = SimpleTagInlineProcessor(under_emphasis, 'em')
+        # If we don't have to move an existing extension, use the same priority,
+        # but if we do have to, move it closely to the relative needed position.
+        md.inlinePatterns.register(DoubleTagInlineProcessor(star_strong_em, 'strong,em'), "strong_em", 50)
+        md.inlinePatterns.register(DoubleTagInlineProcessor(under_strong_em, 'strong,em'), "strong_em2", 49.9)
+        md.inlinePatterns.register(DoubleTagInlineProcessor(star_em_strong, 'em,strong'), "em_strong", 49.8)
+        md.inlinePatterns.register(DoubleTagInlineProcessor(under_em_strong, 'em,strong'), "em_strong2", 49.7)
+        md.inlinePatterns.register(DoubleTagInlineProcessor(star_strong_em2, 'strong,em'), 'strong_em3', 49.6)
+        md.inlinePatterns.register(DoubleTagInlineProcessor(under_strong_em2, 'strong,em'), 'strong_em4', 49.5)
+        md.inlinePatterns.register(SimpleTagInlineProcessor(star_strong, 'strong'), "strong", 40)
+        md.inlinePatterns.register(SimpleTagInlineProcessor(under_strong, 'strong'), "strong2", 39.9)
+        md.inlinePatterns.register(SimpleTagInlineProcessor(star_emphasis, 'em'), "emphasis", 30)
+        md.inlinePatterns.register(SimpleTagInlineProcessor(under_emphasis, 'em'), "emphasis2", 10)
 
 
 def makeExtension(*args, **kwargs):

@@ -374,8 +374,7 @@ class EmojiExtension(Extension):
 
         util.escape_chars(md, [':'])
 
-        emj = EmojiPattern(RE_EMOJI, config, md)
-        md.inlinePatterns.add("emoji", emj, "<not_strong")
+        md.inlinePatterns.register(EmojiPattern(RE_EMOJI, config, md), "emoji", 75)
 
 
 ###################
