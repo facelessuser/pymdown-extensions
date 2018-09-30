@@ -393,7 +393,7 @@ class HighlightExtension(Extension):
 
         ht = HighlightTreeprocessor(md)
         ht.config = self.getConfigs()
-        md.treeprocessors.add("indent-highlight", ht, "<inline")
+        md.treeprocessors.register(ht, "indent-highlight", 30)
         md.registerExtension(self)
 
 

@@ -786,7 +786,7 @@ class MagiclinkExtension(Extension):
 
         shortener = MagicShortenerTreeprocessor(md, base_url, base_user_url, self.labels)
         shortener.config = config
-        md.treeprocessors.add("magic-repo-shortener", shortener, "<prettify")
+        md.treeprocessors.register(shortener, "magic-repo-shortener", 9.9)
 
     def get_base_urls(self, config):
         """Get base URLs."""

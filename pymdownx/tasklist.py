@@ -140,7 +140,7 @@ class TasklistExtension(Extension):
 
         tasklist = TasklistTreeprocessor(md)
         tasklist.config = self.getConfigs()
-        md.treeprocessors.add("task-list", tasklist, ">inline")
+        md.treeprocessors.register(tasklist, "task-list", 25)
         md.registerExtension(self)
 
 

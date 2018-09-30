@@ -104,7 +104,7 @@ class EscapeAllExtension(Extension):
             180
         )
 
-        md.postprocessors['unescape'] = EscapeAllPostprocessor(md)
+        md.postprocessors.register(EscapeAllPostprocessor(md), "unescape", 10)
         if config['hardbreak']:
             md.inlinePatterns.register(SubstituteTagInlineProcessor(HARDBREAK_RE, 'br'), "hardbreak", 5.1)
 

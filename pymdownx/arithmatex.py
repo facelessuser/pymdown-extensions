@@ -312,7 +312,7 @@ class ArithmatexExtension(Extension):
             block_pattern.append(RE_TEX_BLOCK)
         if block_pattern:
             block = BlockArithmatexProcessor(r'(?s)^(?:%s)[ ]*$' % '|'.join(block_pattern), config, md)
-            md.parser.blockprocessors.add('arithmatex-block', block, "<code")
+            md.parser.blockprocessors.register(block, "arithmatex-block", 79.9)
 
 
 def makeExtension(*args, **kwargs):

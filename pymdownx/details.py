@@ -97,7 +97,7 @@ class DetailsExtension(Extension):
         """Add Details to Markdown instance."""
         md.registerExtension(self)
 
-        md.parser.blockprocessors.add('details', DetailsProcessor(md.parser), '_begin')
+        md.parser.blockprocessors.register(DetailsProcessor(md.parser), "details", 105)
 
 
 def makeExtension(*args, **kwargs):
