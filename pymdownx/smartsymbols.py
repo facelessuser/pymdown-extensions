@@ -151,7 +151,7 @@ class SmartSymbolsExtension(Extension):
     def add_pattern(self, patterns, md):
         """Construct the inline symbol pattern."""
 
-        self.patterns.register(SmartSymbolsPattern(patterns[1], patterns[2], md), patterns[0], 2)
+        self.patterns.register(SmartSymbolsPattern(patterns[1], patterns[2], md), patterns[0], 30)
 
     def extendMarkdown(self, md):
         """Create a dict of inline replace patterns and add to the tree processor."""
@@ -165,10 +165,7 @@ class SmartSymbolsExtension(Extension):
 
         inline_processor = treeprocessors.InlineProcessor(md)
         inline_processor.inlinePatterns = self.patterns
-        if "smarty" in md.treeprocessors:
-            md.treeprocessors.add('smart-symbols', inline_processor, '<smarty')
-        else:
-            md.treeprocessors.add('smart-symbols', inline_processor, '_end')
+        md.treeprocessors.register(inline_processor, "smart-symbols", 2.1)
 
 
 def makeExtension(*args, **kwargs):

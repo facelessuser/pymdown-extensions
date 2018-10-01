@@ -24,13 +24,10 @@ class ExtraRawHtmExtension(Extension):
         """Register extension instances."""
 
         md.registerExtension(self)
-
         # Turn on processing of markdown text within raw html
         md.preprocessors['html_block'].markdown_in_raw = True
-        md.parser.blockprocessors.add(
-            'markdown_block',
-            extra.MarkdownInHtmlProcessor(md.parser),
-            '_begin'
+        md.parser.blockprocessors.register(
+            extra.MarkdownInHtmlProcessor(md.parser), 'markdown_block', 105
         )
         md.parser.blockprocessors.tag_counter = -1
         md.parser.blockprocessors.contain_span_tags = re.compile(

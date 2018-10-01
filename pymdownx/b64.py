@@ -140,7 +140,7 @@ class B64Extension(Extension):
 
         b64 = B64Postprocessor(md)
         b64.config = self.getConfigs()
-        md.postprocessors.add("b64", b64, "_end")
+        md.postprocessors.register(b64, "b64", 2)
         md.registerExtension(self)
 
 

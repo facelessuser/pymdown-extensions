@@ -262,14 +262,14 @@ class SuperFencesCodeExtension(Extension):
         indented_code.config = config
         indented_code.extension = self
         self.superfences[0]["formatter"] = fenced.highlight
-        self.md.parser.blockprocessors['code'] = indented_code
+        self.md.parser.blockprocessors.register(indented_code, "code", 80)
         if config["preserve_tabs"]:
-            self.md.preprocessors.add('fenced_code_block', fenced, "<normalize_whitespace")
+            self.md.preprocessors.register(fenced, "fenced_code_block", 31)
             post_fenced = SuperFencesBlockPostNormalizePreprocessor(self.md)
-            self.md.preprocessors.add('fenced_code_post_norm', post_fenced, ">normalize_whitespace")
+            self.md.preprocessors.register(post_fenced, "fenced_code_post_norm", 25)
         else:
-            self.md.preprocessors.add('fenced_code_block', fenced, ">normalize_whitespace")
-        self.md.postprocessors.add('fenced_tabs', SuperFencesTabPostProcessor(self.md), '>raw_html')
+            self.md.preprocessors.register(fenced, "fenced_code_block", 25)
+        self.md.postprocessors.register(SuperFencesTabPostProcessor(self.md), "fenced_tabs", 25)
 
     def reset(self):
         """Clear the stash."""

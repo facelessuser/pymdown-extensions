@@ -300,42 +300,24 @@ class CriticExtension(Extension):
 
         super(CriticExtension, self).__init__(*args, **kwargs)
 
-        self.configured = False
-
     def extendMarkdown(self, md):
         """Register the extension."""
 
-        self.md = md
         md.registerExtension(self)
         self.critic_stash = CriticStash(CRITIC_KEY)
         post = CriticsPostprocessor(self.critic_stash)
         critic = CriticViewPreprocessor(self.critic_stash)
         critic.config = self.getConfigs()
-        md.preprocessors.add('critic', critic, ">normalize_whitespace")
-        md.postprocessors.add("critic-post", post, ">raw_html")
+        if critic.config['mode'] == 'view':
+            md.preprocessors.register(critic, "critic", 29.9)
+        else:
+            md.preprocessors.register(critic, "critic", 31.1)
+
+        md.postprocessors.register(post, "critic-post", 25)
 
     def reset(self):
-        """
-        Try and make sure critic is handled first after "normalize_whitespace".
+        """Clear stash."""
 
-        Wait to until after all extensions have been loaded
-        so we can be as sure as we can that this is the first
-        thing run after "normalize_whitespace"
-        """
-
-        if not self.configured:
-            self.configured = True
-            value = self.md.preprocessors["critic"]
-            index = self.md.preprocessors._priority[
-                self.md.preprocessors.get_index_for_name("normalize_whitespace")
-            ].priority
-            self.md.preprocessors.register(value, "critic", index - 1)
-
-            value = self.md.postprocessors["critic-post"]
-            index = self.md.postprocessors._priority[
-                self.md.postprocessors.get_index_for_name("raw_html")
-            ].priority
-            self.md.postprocessors.register(value, "critic-post", index - 1)
         self.critic_stash.clear()
 
 

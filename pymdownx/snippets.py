@@ -39,7 +39,7 @@ class SnippetPreprocessor(Preprocessor):
         (?P<all>
             (?P<inline_marker>-{2,}8<-{2,}[ ]+)
             (?P<snippet>(?:"(?:\\"|[^"\n])+?"|'(?:\\'|[^'\n])+?'))(?![ \t]) |
-            (?P<block_marker>-{2,}8<-{2,})(?![ \t])
+            (?P<block_marker>-{2,}8<-{2,})(?![ \t])\r?
         )$
         '''
     )
@@ -93,7 +93,7 @@ class SnippetPreprocessor(Preprocessor):
 
             if m:
                 # Get spaces and snippet path.  Remove quotes if inline.
-                space = m.group('space').replace('\t', ' ' * self.tab_length)
+                space = m.group('space').expandtabs(self.tab_length)
                 path = m.group('snippet')[1:-1].strip() if inline else m.group('snippet').strip()
 
                 if not inline:
@@ -158,7 +158,7 @@ class SnippetExtension(Extension):
         md.registerExtension(self)
         config = self.getConfigs()
         snippet = SnippetPreprocessor(config, md)
-        md.preprocessors.add('snippet', snippet, ">normalize_whitespace")
+        md.preprocessors.register(snippet, "snippet", 32)
 
 
 def makeExtension(*args, **kwargs):

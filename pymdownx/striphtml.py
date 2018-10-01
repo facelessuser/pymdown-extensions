@@ -135,6 +135,7 @@ class StripHtmlExtension(Extension):
     def extendMarkdown(self, md):
         """Strip unwanted HTML attributes and/or comments."""
 
+        md.registerExtension(self)
         config = self.getConfigs()
         striphtml = StripHtmlPostprocessor(
             config.get('strip_comments'),
@@ -142,8 +143,7 @@ class StripHtmlExtension(Extension):
             config.get('strip_attributes'),
             md
         )
-        md.postprocessors.add("strip-html", striphtml, "_end")
-        md.registerExtension(self)
+        md.postprocessors.register(striphtml, "strip-html", 1)
 
 
 def makeExtension(*args, **kwargs):

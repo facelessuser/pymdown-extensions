@@ -159,7 +159,7 @@ class PathConverterExtension(Extension):
 
         rel_path = PathConverterPostprocessor(md)
         rel_path.config = self.getConfigs()
-        md.postprocessors.add("path-converter", rel_path, "_end")
+        md.postprocessors.register(rel_path, "path-converter", 2)
         md.registerExtension(self)
 
 
