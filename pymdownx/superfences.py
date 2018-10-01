@@ -264,7 +264,8 @@ class SuperFencesCodeExtension(Extension):
         self.superfences[0]["formatter"] = fenced.highlight
         self.md.parser.blockprocessors.register(indented_code, "code", 80)
         if config["preserve_tabs"]:
-            self.md.preprocessors.register(fenced, "fenced_code_block", 31)
+            # Need to squeeze in right after critic.
+            self.md.preprocessors.register(fenced, "fenced_code_block", 31.05)
             post_fenced = SuperFencesBlockPostNormalizePreprocessor(self.md)
             self.md.preprocessors.register(post_fenced, "fenced_code_post_norm", 25)
         else:
