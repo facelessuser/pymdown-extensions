@@ -9,6 +9,12 @@ from __future__ import unicode_literals
 import sys
 import copy
 import re
+from markdown.util import STX, ETX
+from markdown.preprocessors import Preprocessor
+
+# Workaround: Pre whitespace normalization placeholder markers
+SOH = '\u0001'  # start
+EOT = '\u0004'  # end
 
 PY3 = sys.version_info >= (3, 0)
 PY34 = sys.version_info >= (3, 4)
@@ -176,6 +182,34 @@ def parse_url(url):
         is_absolute = True
 
     return (scheme, netloc, path, params, query, fragment, is_url, is_absolute)
+
+
+class PreNormalizePreprocessor(Preprocessor):
+    """Preprocessor to remove workaround symbols."""
+
+    NAME = "pymdownx-pre-norm-ws"
+    POSITION = 35
+
+    def run(self, lines):
+        """Remove workaround placeholder markers before adding actual workaround placeholders."""
+
+        source = '\n'.join(lines)
+        source = source.replace(SOH, '').replace(EOT, '')
+        return source.split('\n')
+
+
+class PostNormalizePreprocessor(Preprocessor):
+    """Preprocessor to clean up normalization bypass hack."""
+
+    NAME = "pymdownx-post-norm-ws"
+    POSITION = 29.9
+
+    def run(self, lines):
+        """Convert alternate placeholder symbols to actual placeholder symbols."""
+
+        source = '\n'.join(lines)
+        source = source.replace(SOH, STX).replace(EOT, ETX)
+        return source.split('\n')
 
 
 class PymdownxDeprecationWarning(UserWarning):  # pragma: no cover

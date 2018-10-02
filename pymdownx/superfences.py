@@ -35,12 +35,10 @@ from markdown.preprocessors import Preprocessor
 from markdown.postprocessors import Postprocessor
 from markdown.blockprocessors import CodeBlockProcessor
 from markdown import util as md_util
+from .util import PreNormalizePreprocessor, PostNormalizePreprocessor, SOH, EOT
 import functools
 from . import highlight as hl
 import re
-
-SOH = '\u0001'
-EOT = '\u0004'
 
 PREFIX_CHARS = ('>', ' ', '\t')
 
@@ -265,9 +263,17 @@ class SuperFencesCodeExtension(Extension):
         self.md.parser.blockprocessors.register(indented_code, "code", 80)
         if config["preserve_tabs"]:
             # Need to squeeze in right after critic.
+            self.md.preprocessors.register(
+                PreNormalizePreprocessor(self.md),
+                PreNormalizePreprocessor.NAME,
+                PreNormalizePreprocessor.POSITION
+            )
             self.md.preprocessors.register(fenced, "fenced_code_block", 31.05)
-            post_fenced = SuperFencesBlockPostNormalizePreprocessor(self.md)
-            self.md.preprocessors.register(post_fenced, "fenced_code_post_norm", 25)
+            self.md.preprocessors.register(
+                PostNormalizePreprocessor(self.md),
+                PostNormalizePreprocessor.NAME,
+                PostNormalizePreprocessor.POSITION
+            )
         else:
             self.md.preprocessors.register(fenced, "fenced_code_block", 25)
         self.md.postprocessors.register(SuperFencesTabPostProcessor(self.md), "fenced_tabs", 25)
@@ -305,28 +311,6 @@ class SuperFencesTabPostProcessor(Postprocessor):
 
         self.count = 0
         return RE_TABS.sub(self.repl, text)
-
-
-class SuperFencesBlockPostNormalizePreprocessor(Preprocessor):
-    """Preprocessor to clean up normalization bypass hack."""
-
-    TEMP_PLACEHOLDER_RE = re.compile(
-        r'^([\> ]*)%s(%s)%s$' % (
-            SOH,
-            md_util.HTML_PLACEHOLDER[1:-1] % r'([0-9]+)',
-            EOT
-        )
-    )
-
-    def run(self, lines):
-        """Search for fenced blocks."""
-
-        new_lines = []
-        for line in lines:
-            line = self.TEMP_PLACEHOLDER_RE.sub(r'\1' + md_util.STX + r'\2' + md_util.ETX, line)
-            new_lines.append(line)
-
-        return new_lines
 
 
 class SuperFencesBlockPreprocessor(Preprocessor):

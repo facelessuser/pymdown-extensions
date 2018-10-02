@@ -28,10 +28,9 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.preprocessors import Preprocessor
 from markdown.postprocessors import Postprocessor
+from .util import PreNormalizePreprocessor, PostNormalizePreprocessor, SOH, EOT, STX, ETX
 import re
 
-STX = '\u0002'
-ETX = '\u0003'
 CRITIC_KEY = "czjqqkd:%s"
 CRITIC_PLACEHOLDER = CRITIC_KEY % r'[0-9]+'
 SINGLE_CRITIC_PLACEHOLDER = r'%(stx)s(?P<key>%(key)s)%(etx)s' % {
@@ -80,7 +79,7 @@ RE_CRITIC = re.compile(ALL_CRITICS, re.DOTALL)
 RE_CRITIC_PLACEHOLDER = re.compile(CRITIC_PLACEHOLDERS)
 RE_CRITIC_SUB_PLACEHOLDER = re.compile(SINGLE_CRITIC_PLACEHOLDER)
 RE_CRITIC_BLOCK = re.compile(r'((?:ins|del|mark)\s+)(class=([\'"]))(.*?)(\3)')
-RE_BLOCK_SEP = re.compile(r'^\n{2,}$')
+RE_BLOCK_SEP = re.compile(r'^\r?\n{2,}$')
 
 
 class CriticStash(object):
@@ -117,7 +116,7 @@ class CriticStash(object):
         key = self.stash_key % str(self.count)
         self.stash[key] = code
         self.count += 1
-        return STX + key + ETX
+        return SOH + key + EOT
 
     def clear(self):
         """Clear the stash."""
@@ -308,11 +307,17 @@ class CriticExtension(Extension):
         post = CriticsPostprocessor(self.critic_stash)
         critic = CriticViewPreprocessor(self.critic_stash)
         critic.config = self.getConfigs()
-        if critic.config['mode'] == 'view':
-            md.preprocessors.register(critic, "critic", 29.9)
-        else:
-            md.preprocessors.register(critic, "critic", 31.1)
-
+        md.preprocessors.register(
+            PreNormalizePreprocessor(md),
+            PreNormalizePreprocessor.NAME,
+            PreNormalizePreprocessor.POSITION
+        )
+        md.preprocessors.register(critic, "critic", 31.1)
+        md.preprocessors.register(
+            PostNormalizePreprocessor(md),
+            PostNormalizePreprocessor.NAME,
+            PostNormalizePreprocessor.POSITION
+        )
         md.postprocessors.register(post, "critic-post", 25)
 
     def reset(self):
