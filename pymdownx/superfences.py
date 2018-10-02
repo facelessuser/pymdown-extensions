@@ -241,8 +241,7 @@ class SuperFencesCodeExtension(Extension):
 
         self.md = md
         self.patch_fenced_rule()
-        for entry in self.superfences:
-            entry["stash"] = CodeStash()
+        self.stash = CodeStash()
 
     def patch_fenced_rule(self):
         """
@@ -281,8 +280,7 @@ class SuperFencesCodeExtension(Extension):
     def reset(self):
         """Clear the stash."""
 
-        for entry in self.superfences:
-            entry["stash"].clear_stash()
+        self.stash.clear_stash()
 
 
 class SuperFencesTabPostProcessor(Postprocessor):
@@ -439,7 +437,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 break
 
         if code is not None:
-            self._store(self.normalize_ws('\n'.join(self.code)) + '\n', code, start, end, entry)
+            self._store(self.normalize_ws('\n'.join(self.code)) + '\n', code, start, end)
         self.clear()
 
     def parse_hl_lines(self, hl_lines):
@@ -654,7 +652,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             el = self.CODE_WRAP % ('', '', _escape(src))
         return el
 
-    def _store(self, source, code, start, end, obj):
+    def _store(self, source, code, start, end):
         """
         Store the fenced blocks in the stack to be replaced when done iterating.
 
@@ -666,7 +664,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         if not self.disabled_indented:
             # If an indented block consumes this placeholder,
             # we can restore the original source
-            obj["stash"].store(
+            self.extension.stash.store(
                 placeholder[1:-1],
                 "%s\n%s%s" % (self.first, self.normalize_ws(source), self.last),
                 self.ws_virtual_len
@@ -721,14 +719,11 @@ class SuperFencesCodeBlockProcessor(CodeBlockProcessor):
                 key = m.group(2)
                 indent_level = len(m.group(1))
                 original = None
-                for entry in self.extension.superfences:
-                    stash = entry["stash"]
-                    original, pos = stash.get(key)
-                    if original is not None:
-                        code = self.reindent(original, pos, indent_level)
-                        new_block.append(code)
-                        stash.remove(key)
-                        break
+                original, pos = self.extension.stash.get(key)
+                if original is not None:
+                    code = self.reindent(original, pos, indent_level)
+                    new_block.append(code)
+                    self.extension.stash.remove(key)
                 if original is None:  # pragma: no cover
                     # Too much work to test this. This is just a fall back in case
                     # we find a placeholder, and we went to revert it and it wasn't in our stash.
