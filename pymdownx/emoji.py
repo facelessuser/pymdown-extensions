@@ -24,7 +24,7 @@ DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
-from markdown.inlinepatterns import Pattern
+from markdown.inlinepatterns import InlineProcessor
 from markdown import util as md_util
 from . import util
 
@@ -206,14 +206,14 @@ def to_awesome(index, shortname, alias, uc, alt, title, category, options, md):
 def to_alt(index, shortname, alias, uc, alt, title, category, options, md):
     """Return html entities."""
 
-    return md.htmlStash.store(alt) if util.MD3 else md.htmlStash.store(alt, safe=True)
+    return md.htmlStash.store(alt)
 
 
 ###################
 # Classes
 ###################
-class EmojiPattern(Pattern):
-    """Return element of type `tag` with a text attribute of group(3) of a Pattern."""
+class EmojiPattern(InlineProcessor):
+    """Return element of type `tag` with a text attribute of group(2) of an `InlineProcessor`."""
 
     def __init__(self, pattern, config, md):
         """Initialize."""
@@ -228,9 +228,7 @@ class EmojiPattern(Pattern):
         self.title = title if title in VALID_TITLE else NO_TITLE
         self.generator = config['emoji_generator']
         self.options = config['options']
-        Pattern.__init__(self, pattern, md)
-        if not util.MD3:
-            self.md = md
+        InlineProcessor.__init__(self, pattern, md)
 
     def _set_index(self, index):
         """Set the index."""
@@ -303,10 +301,10 @@ class EmojiPattern(Pattern):
 
         return emoji.get('category')
 
-    def handleMatch(self, m):
+    def handleMatch(self, m, data):
         """Handle emoji pattern matches."""
 
-        el = m.group(2)
+        el = m.group(1)
 
         shortname = self.emoji_index['aliases'].get(el, el)
         alias = None if shortname == el else el
@@ -328,7 +326,7 @@ class EmojiPattern(Pattern):
                 self.md
             )
 
-        return el
+        return el, m.start(0), m.end(0)
 
 
 class EmojiExtension(Extension):
@@ -369,15 +367,14 @@ class EmojiExtension(Extension):
         }
         super(EmojiExtension, self).__init__(*args, **kwargs)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Add support for emoji."""
 
         config = self.getConfigs()
 
         util.escape_chars(md, [':'])
 
-        emj = EmojiPattern(RE_EMOJI, config, md)
-        md.inlinePatterns.add("emoji", emj, "<not_strong")
+        md.inlinePatterns.register(EmojiPattern(RE_EMOJI, config, md), "emoji", 75)
 
 
 ###################

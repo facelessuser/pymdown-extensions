@@ -42,19 +42,8 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown import treeprocessors
-from . import util
-
-if util.MD3:  # pragma: no cover
-    from markdown.util import Registry
-else:
-    from markdown.odict import OrderedDict as Registry
-
-try:
-    from markdown.inlinepatterns import HtmlPattern
-    LEGACY = True
-except ImportError:  # pragma: no cover
-    from markdown.inlinepatterns import HtmlInlineProcessor
-    LEGACY = False
+from markdown.util import Registry
+from markdown.inlinepatterns import HtmlInlineProcessor
 
 RE_TRADE = ("smart-trademark", r'\(tm\)', r'&trade;')
 RE_COPY = ("smart-copyright", r'\(c\)', r'&copy;')
@@ -123,41 +112,21 @@ ARR = {
 }
 
 
-if not util.MD3:
-    class SmartSymbolsPattern(HtmlPattern):
-        """Smart symbols patterns handler."""
+class SmartSymbolsPattern(HtmlInlineProcessor):
+    """Smart symbols patterns handler."""
 
-        def __init__(self, pattern, replace, md):
-            """Setup replace pattern."""
+    def __init__(self, pattern, replace, md):
+        """Setup replace pattern."""
 
-            super(SmartSymbolsPattern, self).__init__(pattern)
-            self.replace = replace
-            self.md = md
+        super(SmartSymbolsPattern, self).__init__(pattern, md)
+        self.replace = replace
 
-        def handleMatch(self, m):
-            """Replace symbol."""
+    def handleMatch(self, m, data):
+        """Replace symbol."""
 
-            return self.md.htmlStash.store(
-                m.expand(self.replace(m) if callable(self.replace) else self.replace),
-                safe=True
-            )
-
-else:  # pragma: no cover
-    class SmartSymbolsPattern(HtmlInlineProcessor):
-        """Smart symbols patterns handler."""
-
-        def __init__(self, pattern, replace, md):
-            """Setup replace pattern."""
-
-            super(SmartSymbolsPattern, self).__init__(pattern, md)
-            self.replace = replace
-
-        def handleMatch(self, m, data):
-            """Replace symbol."""
-
-            return self.md.htmlStash.store(
-                m.expand(self.replace(m) if callable(self.replace) else self.replace),
-            ), m.start(0), m.end(0)
+        return self.md.htmlStash.store(
+            m.expand(self.replace(m) if callable(self.replace) else self.replace),
+        ), m.start(0), m.end(0)
 
 
 class SmartSymbolsExtension(Extension):
@@ -182,20 +151,9 @@ class SmartSymbolsExtension(Extension):
     def add_pattern(self, patterns, md):
         """Construct the inline symbol pattern."""
 
-        if util.MD3:  # pragma: no cover
-            self.patterns.register(
-                SmartSymbolsPattern(patterns[1], patterns[2], md),
-                patterns[0],
-                2
-            )
-        else:
-            self.patterns.add(
-                patterns[0],
-                SmartSymbolsPattern(patterns[1], patterns[2], md),
-                '_begin'
-            )
+        self.patterns.register(SmartSymbolsPattern(patterns[1], patterns[2], md), patterns[0], 30)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Create a dict of inline replace patterns and add to the tree processor."""
 
         configs = self.getConfigs()
@@ -207,10 +165,7 @@ class SmartSymbolsExtension(Extension):
 
         inline_processor = treeprocessors.InlineProcessor(md)
         inline_processor.inlinePatterns = self.patterns
-        if "smarty" in md.treeprocessors:
-            md.treeprocessors.add('smart-symbols', inline_processor, '<smarty')
-        else:
-            md.treeprocessors.add('smart-symbols', inline_processor, '_end')
+        md.treeprocessors.register(inline_processor, "smart-symbols", 2.1)
 
 
 def makeExtension(*args, **kwargs):

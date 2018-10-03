@@ -93,11 +93,11 @@ class DetailsProcessor(BlockProcessor):
 class DetailsExtension(Extension):
     """Add Details extension."""
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Add Details to Markdown instance."""
         md.registerExtension(self)
 
-        md.parser.blockprocessors.add('details', DetailsProcessor(md.parser), '_begin')
+        md.parser.blockprocessors.register(DetailsProcessor(md.parser), "details", 105)
 
 
 def makeExtension(*args, **kwargs):

@@ -1,9 +1,13 @@
 # Changelog
 
-## 5.1.0
+## 6.0.0
 
 - **NEW**: Allow custom inline highlight code blocks. (!380)
-- **NEW**: Add new formatters in Arithmatex that are compatible with SuperFences' custom fence feature and InlineHilite's custom inline feature. (!380)
+- **NEW**: SuperFences now has one custom format convention which now also accepts the markdown class object to allow access to meta.
+- **NEW**: SuperFences no longer adds `flow` and `sequence` as default custom fences. Users will need to configure them themselves.
+- **NEW**: Add new SuperFences formatters in Arithmatex that are compatible with SuperFences' custom fence feature and InlineHilite's custom inline feature. (!380)
+- **NEW**: Requires Python Markdown 3.0.1 and utilizes the new priority registry when adding extensions and uses the new inline processor API instead of the old methodology.
+- **FIX**: Fixes to SuperFences behavior of "preserve tabs" vs "normal" operations.
 
 ## 5.0.0
 

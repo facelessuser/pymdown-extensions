@@ -28,11 +28,9 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.preprocessors import Preprocessor
 from markdown.postprocessors import Postprocessor
+from .util import PreNormalizePreprocessor, PostNormalizePreprocessor, SOH, EOT, STX, ETX
 import re
-from . import util
 
-STX = '\u0002'
-ETX = '\u0003'
 CRITIC_KEY = "czjqqkd:%s"
 CRITIC_PLACEHOLDER = CRITIC_KEY % r'[0-9]+'
 SINGLE_CRITIC_PLACEHOLDER = r'%(stx)s(?P<key>%(key)s)%(etx)s' % {
@@ -81,7 +79,7 @@ RE_CRITIC = re.compile(ALL_CRITICS, re.DOTALL)
 RE_CRITIC_PLACEHOLDER = re.compile(CRITIC_PLACEHOLDERS)
 RE_CRITIC_SUB_PLACEHOLDER = re.compile(SINGLE_CRITIC_PLACEHOLDER)
 RE_CRITIC_BLOCK = re.compile(r'((?:ins|del|mark)\s+)(class=([\'"]))(.*?)(\3)')
-RE_BLOCK_SEP = re.compile(r'^\n{2,}$')
+RE_BLOCK_SEP = re.compile(r'^\r?\n{2,}$')
 
 
 class CriticStash(object):
@@ -118,7 +116,7 @@ class CriticStash(object):
         key = self.stash_key % str(self.count)
         self.stash[key] = code
         self.count += 1
-        return STX + key + ETX
+        return SOH + key + EOT
 
     def clear(self):
         """Clear the stash."""
@@ -301,46 +299,30 @@ class CriticExtension(Extension):
 
         super(CriticExtension, self).__init__(*args, **kwargs)
 
-        self.configured = False
-
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Register the extension."""
 
-        self.md = md
         md.registerExtension(self)
         self.critic_stash = CriticStash(CRITIC_KEY)
         post = CriticsPostprocessor(self.critic_stash)
         critic = CriticViewPreprocessor(self.critic_stash)
         critic.config = self.getConfigs()
-        md.preprocessors.add('critic', critic, ">normalize_whitespace")
-        md.postprocessors.add("critic-post", post, ">raw_html")
+        md.preprocessors.register(
+            PreNormalizePreprocessor(md),
+            PreNormalizePreprocessor.NAME,
+            PreNormalizePreprocessor.POSITION
+        )
+        md.preprocessors.register(critic, "critic", 31.1)
+        md.preprocessors.register(
+            PostNormalizePreprocessor(md),
+            PostNormalizePreprocessor.NAME,
+            PostNormalizePreprocessor.POSITION
+        )
+        md.postprocessors.register(post, "critic-post", 25)
 
     def reset(self):
-        """
-        Try and make sure critic is handled first after "normalize_whitespace".
+        """Clear stash."""
 
-        Wait to until after all extensions have been loaded
-        so we can be as sure as we can that this is the first
-        thing run after "normalize_whitespace"
-        """
-
-        if not self.configured:
-            self.configured = True
-            if util.MD3:  # pragma: no cover
-                value = self.md.preprocessors["critic"]
-                index = self.md.preprocessors._priority[
-                    self.md.preprocessors.get_index_for_name("normalize_whitespace")
-                ].priority
-                self.md.preprocessors.register(value, "critic", index - 1)
-
-                value = self.md.postprocessors["critic-post"]
-                index = self.md.postprocessors._priority[
-                    self.md.postprocessors.get_index_for_name("raw_html")
-                ].priority
-                self.md.postprocessors.register(value, "critic-post", index - 1)
-            else:
-                self.md.preprocessors.link('critic', '>normalize_whitespace')
-                self.md.postprocessors.link('critic-post', '>raw_html')
         self.critic_stash.clear()
 
 

@@ -44,7 +44,7 @@ DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
-from markdown.inlinepatterns import Pattern
+from markdown.inlinepatterns import InlineProcessor
 from markdown.blockprocessors import BlockProcessor
 from markdown import util as md_util
 from . import util
@@ -147,7 +147,7 @@ def fence_generic_format(math, language='math', class_name='arithmatex', options
     return '<div class="%s">%s</div>' % (class_name, (wrap % math))
 
 
-class InlineArithmatexPattern(Pattern):
+class InlineArithmatexPattern(InlineProcessor):
     """Arithmatex inline pattern handler."""
 
     ESCAPED_BSLASH = '%s%s%s' % (md_util.STX, ord('\\'), md_util.ETX)
@@ -162,27 +162,27 @@ class InlineArithmatexPattern(Pattern):
 
         # Default setup
         self.preview = config.get('preview', True)
-        Pattern.__init__(self, pattern)
+        InlineProcessor.__init__(self, pattern)
 
-    def handleMatch(self, m):
+    def handleMatch(self, m, data):
         """Handle notations and switch them to something that will be more detectable in HTML."""
 
         # Handle escapes
-        escapes = m.group(2)
+        escapes = m.group(1)
         if not escapes:
-            escapes = m.group(5)
+            escapes = m.group(4)
         if escapes:
-            return escapes.replace('\\\\', self.ESCAPED_BSLASH)
+            return escapes.replace('\\\\', self.ESCAPED_BSLASH), m.start(0), m.end(0)
 
         # Handle Tex
-        math = m.group(4)
+        math = m.group(3)
         if not math:
-            math = m.group(7)
+            math = m.group(6)
 
         if self.generic:
-            return inline_generic_format(math, wrap=self.wrap)
+            return inline_generic_format(math, wrap=self.wrap), m.start(0), m.end(0)
         else:
-            return _inline_mathjax_format(math, self.preview)
+            return _inline_mathjax_format(math, self.preview), m.start(0), m.end(0)
 
 
 class BlockArithmatexProcessor(BlockProcessor):
@@ -281,7 +281,7 @@ class ArithmatexExtension(Extension):
 
         super(ArithmatexExtension, self).__init__(*args, **kwargs)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Extend the inline and block processor objects."""
 
         md.registerExtension(self)
@@ -299,7 +299,7 @@ class ArithmatexExtension(Extension):
             inline_patterns.append(RE_BRACKET_INLINE)
         if inline_patterns:
             inline = InlineArithmatexPattern('(?:%s)' % '|'.join(inline_patterns), config)
-            md.inlinePatterns.add("arithmatex-inline", inline, ">backtick")
+            md.inlinePatterns.register(inline, 'arithmatex-inline', 189.9)
 
         # Block patterns
         allowed_block = set(config.get('block_syntax', ['dollar', 'square', 'begin']))
@@ -312,7 +312,7 @@ class ArithmatexExtension(Extension):
             block_pattern.append(RE_TEX_BLOCK)
         if block_pattern:
             block = BlockArithmatexProcessor(r'(?s)^(?:%s)[ ]*$' % '|'.join(block_pattern), config, md)
-            md.parser.blockprocessors.add('arithmatex-block', block, "<code")
+            md.parser.blockprocessors.register(block, "arithmatex-block", 79.9)
 
 
 def makeExtension(*args, **kwargs):

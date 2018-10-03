@@ -27,7 +27,6 @@ import re
 from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
 from markdown import util as md_util
-from . import util
 import copy
 from collections import OrderedDict
 try:
@@ -347,8 +346,6 @@ class HighlightTreeprocessor(Treeprocessor):
         """Initialize."""
 
         super(HighlightTreeprocessor, self).__init__(md)
-        if not util.MD3:
-            self.md = md
 
     def run(self, root):
         """Find code blocks and store in `htmlStash`."""
@@ -366,23 +363,13 @@ class HighlightTreeprocessor(Treeprocessor):
                     linenums_special=self.config['linenums_special'],
                     extend_pygments_lang=self.config['extend_pygments_lang']
                 )
-                if util.MD3:  # pragma: no cover
-                    placeholder = self.md.htmlStash.store(
-                        code.highlight(
-                            block[0].text,
-                            '',
-                            self.config['css_class']
-                        )
+                placeholder = self.md.htmlStash.store(
+                    code.highlight(
+                        block[0].text,
+                        '',
+                        self.config['css_class']
                     )
-                else:
-                    placeholder = self.md.htmlStash.store(
-                        code.highlight(
-                            block[0].text,
-                            '',
-                            self.config['css_class']
-                        ),
-                        safe=True
-                    )
+                )
 
                 # Clear codeblock in etree instance
                 block.clear()
@@ -401,12 +388,12 @@ class HighlightExtension(Extension):
         self.config = copy.deepcopy(DEFAULT_CONFIG)
         super(HighlightExtension, self).__init__(*args, **kwargs)
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Add support for code highlighting."""
 
         ht = HighlightTreeprocessor(md)
         ht.config = self.getConfigs()
-        md.treeprocessors.add("indent-highlight", ht, "<inline")
+        md.treeprocessors.register(ht, "indent-highlight", 30)
         md.registerExtension(self)
 
 

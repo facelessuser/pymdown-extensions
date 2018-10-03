@@ -35,13 +35,10 @@ from markdown.preprocessors import Preprocessor
 from markdown.postprocessors import Postprocessor
 from markdown.blockprocessors import CodeBlockProcessor
 from markdown import util as md_util
+from .util import PreNormalizePreprocessor, PostNormalizePreprocessor, SOH, EOT
 import functools
 from . import highlight as hl
-from . import util
 import re
-
-SOH = '\u0001'
-EOT = '\u0004'
 
 PREFIX_CHARS = ('>', ' ', '\t')
 
@@ -66,6 +63,14 @@ TAB = r'''<superfences><input name="__tabs_%%(index)s" type="radio" id="__tab_%%
 <div class="superfences-content">%(code)s</div></superfences>'''
 
 NESTED_FENCE_END = r'%s[ \t]*$'
+
+FENCED_BLOCK_RE = re.compile(
+    r'^([\> ]*)%s(%s)%s$' % (
+        md_util.HTML_PLACEHOLDER[0],
+        md_util.HTML_PLACEHOLDER[1:-1] % r'([0-9]+)',
+        md_util.HTML_PLACEHOLDER[-1]
+    )
+)
 
 
 def _escape(txt):
@@ -210,7 +215,7 @@ class SuperFencesCodeExtension(Extension):
             }
         )
 
-    def extendMarkdown(self, md, md_globals):
+    def extendMarkdown(self, md):
         """Add fenced block preprocessor to the Markdown instance."""
 
         # Not super yet, so let's make it super
@@ -244,8 +249,7 @@ class SuperFencesCodeExtension(Extension):
 
         self.md = md
         self.patch_fenced_rule()
-        for entry in self.superfences:
-            entry["stash"] = CodeStash()
+        self.stash = CodeStash()
 
     def patch_fenced_rule(self):
         """
@@ -256,27 +260,41 @@ class SuperFencesCodeExtension(Extension):
         """
 
         config = self.getConfigs()
+
         fenced = SuperFencesBlockPreprocessor(self.md)
-        indented_code = SuperFencesCodeBlockProcessor(self.md.parser)
         fenced.config = config
         fenced.extension = self
+        self.superfences[0]["formatter"] = fenced.highlight
+        self.md.preprocessors.register(fenced, "fenced_code_block", 25)
+
+        indented_code = SuperFencesCodeBlockProcessor(self.md.parser)
         indented_code.config = config
         indented_code.extension = self
-        self.superfences[0]["formatter"] = fenced.highlight
-        self.md.parser.blockprocessors['code'] = indented_code
+        self.md.parser.blockprocessors.register(indented_code, "code", 80)
+
         if config["preserve_tabs"]:
-            self.md.preprocessors.add('fenced_code_block', fenced, "<normalize_whitespace")
-            post_fenced = SuperFencesBlockPostNormalizePreprocessor(self.md)
-            self.md.preprocessors.add('fenced_code_post_norm', post_fenced, ">normalize_whitespace")
-        else:
-            self.md.preprocessors.add('fenced_code_block', fenced, ">normalize_whitespace")
-        self.md.postprocessors.add('fenced_tabs', SuperFencesTabPostProcessor(self.md), '>raw_html')
+            # Need to squeeze in right after critic.
+            raw_fenced = SuperFencesRawBlockPreprocessor(self.md)
+            raw_fenced.config = config
+            raw_fenced.extension = self
+            self.md.preprocessors.register(
+                PreNormalizePreprocessor(self.md),
+                PreNormalizePreprocessor.NAME,
+                PreNormalizePreprocessor.POSITION
+            )
+            self.md.preprocessors.register(raw_fenced, "fenced_raw_block", 31.05)
+            self.md.preprocessors.register(
+                PostNormalizePreprocessor(self.md),
+                PostNormalizePreprocessor.NAME,
+                PostNormalizePreprocessor.POSITION
+            )
+
+        self.md.postprocessors.register(SuperFencesTabPostProcessor(self.md), "fenced_tabs", 25)
 
     def reset(self):
         """Clear the stash."""
 
-        for entry in self.superfences:
-            entry["stash"].clear_stash()
+        self.stash.clear_stash()
 
 
 class SuperFencesTabPostProcessor(Postprocessor):
@@ -307,28 +325,6 @@ class SuperFencesTabPostProcessor(Postprocessor):
         return RE_TABS.sub(self.repl, text)
 
 
-class SuperFencesBlockPostNormalizePreprocessor(Preprocessor):
-    """Preprocessor to clean up normalization bypass hack."""
-
-    TEMP_PLACEHOLDER_RE = re.compile(
-        r'^([\> ]*)%s(%s)%s$' % (
-            SOH,
-            md_util.HTML_PLACEHOLDER[1:-1] % r'([0-9]+)',
-            EOT
-        )
-    )
-
-    def run(self, lines):
-        """Search for fenced blocks."""
-
-        new_lines = []
-        for line in lines:
-            line = self.TEMP_PLACEHOLDER_RE.sub(r'\1' + md_util.STX + r'\2' + md_util.ETX, line)
-            new_lines.append(line)
-
-        return new_lines
-
-
 class SuperFencesBlockPreprocessor(Preprocessor):
     """
     Preprocessor to find fenced code blocks.
@@ -344,8 +340,6 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         """Initialize."""
 
         super(SuperFencesBlockPreprocessor, self).__init__(md)
-        if not util.MD3:
-            self.md = md
         self.tab_len = self.md.tab_length
         self.checked_hl_settings = False
         self.codehilite_conf = {}
@@ -457,7 +451,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 break
 
         if code is not None:
-            self._store(self.normalize_ws('\n'.join(self.code)) + '\n', code, start, end, entry)
+            self._store(self.normalize_ws('\n'.join(self.code)) + '\n', code, start, end)
         self.clear()
 
     def parse_hl_lines(self, hl_lines):
@@ -560,11 +554,10 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
         count = 0
         for line in lines:
-            if self.preserve_tabs:
-                # Strip carriage returns if the lines end with them.
-                # This is necessary since we are handling preserved tabs
-                # Before whitespace normalization.
-                line = line.rstrip('\r')
+            # Strip carriage returns if the lines end with them.
+            # This is necessary since we are handling preserved tabs
+            # Before whitespace normalization.
+            line = line.rstrip('\r')
             if self.fence is None:
                 ws = self.parse_whitespace(line)
 
@@ -610,15 +603,17 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
             count += 1
 
+        return self.reassemble(lines)
+
+    def reassemble(self, lines):
+        """Reassemble text."""
+
         # Now that we are done iterating the lines,
         # let's replace the original content with the
         # fenced blocks.
         while len(self.stack):
             fenced, start, end = self.stack.pop()
-            if self.preserve_tabs:
-                lines = lines[:start] + [fenced.replace(md_util.STX, SOH, 1)[:-1] + EOT] + lines[end:]
-            else:
-                lines = lines[:start] + [fenced] + lines[end:]
+            lines = lines[:start] + [fenced] + lines[end:]
         return lines
 
     def highlight(self, src, language, options, md):
@@ -672,26 +667,58 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             el = self.CODE_WRAP % ('', '', _escape(src))
         return el
 
-    def _store(self, source, code, start, end, obj):
+    def _store(self, source, code, start, end):
         """
         Store the fenced blocks in the stack to be replaced when done iterating.
 
         Store the original text in case we need to restore if we are too greedy.
         """
         # Save the fenced blocks to add once we are done iterating the lines
-        if util.MD3:  # pragma: no cover
-            placeholder = self.md.htmlStash.store(code)
-        else:
-            placeholder = self.md.htmlStash.store(code, safe=True)
+        placeholder = self.md.htmlStash.store(code)
         self.stack.append(('%s%s' % (self.ws, placeholder), start, end))
         if not self.disabled_indented:
             # If an indented block consumes this placeholder,
             # we can restore the original source
-            obj["stash"].store(
+            self.extension.stash.store(
                 placeholder[1:-1],
                 "%s\n%s%s" % (self.first, self.normalize_ws(source), self.last),
                 self.ws_virtual_len
             )
+
+    def reindent(self, text, pos, level):
+        """Reindent the code to where it is supposed to be."""
+
+        indented = []
+        for line in text.split('\n'):
+            index = pos - level
+            indented.append(line[index:])
+        return indented
+
+    def restore_raw_text(self, lines):
+        """Revert a prematurely converted fenced block."""
+
+        new_lines = []
+        for line in lines:
+            m = FENCED_BLOCK_RE.match(line)
+            if m:
+                key = m.group(2)
+                indent_level = len(m.group(1))
+                original = None
+                original, pos = self.extension.stash.get(key)
+                if original is not None:
+                    code = self.reindent(original, pos, indent_level)
+                    new_lines.extend(code)
+                    self.extension.stash.remove(key)
+                if original is None:  # pragma: no cover
+                    # Too much work to test this. This is just a fall back in case
+                    # we find a placeholder, and we went to revert it and it wasn't in our stash.
+                    # Most likely this would be caused by someone else. We just want to put it
+                    # back in the block if we can't revert it.  Maybe we can do a more directed
+                    # unit test in the future.
+                    new_lines.append(line)
+            else:
+                new_lines.append(line)
+        return new_lines
 
     def run(self, lines):
         """Search for fenced blocks."""
@@ -702,21 +729,60 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         self.disabled_indented = self.config.get("disable_indented_code_blocks", False)
         self.preserve_tabs = self.config.get("preserve_tabs", False)
 
-        lines = self.search_nested(lines)
+        if self.preserve_tabs:
+            lines = self.restore_raw_text(lines)
+        return self.search_nested(lines)
 
+
+class SuperFencesRawBlockPreprocessor(SuperFencesBlockPreprocessor):
+    """Special class for preserving tabs before normalizing whitespace."""
+
+    def process_nested_block(self, ws, content, start, end):
+        """Process the contents of the nested block."""
+
+        self.last = ws + self.normalize_ws(content)
+        code = '\n'.join(self.code)
+        self._store(code + '\n', code, start, end)
+        self.clear()
+
+    def _store(self, source, code, start, end):
+        """
+        Store the fenced blocks in the stack to be replaced when done iterating.
+
+        Store the original text in case we need to restore if we are too greedy.
+        """
+        # Just get a placeholder, we won't ever actually retrieve this source
+        placeholder = self.md.htmlStash.store('')
+        self.stack.append(('%s%s' % (self.ws, placeholder), start, end))
+        # Here is the source we'll actually retrieve.
+        self.extension.stash.store(
+            placeholder[1:-1],
+            "%s\n%s%s" % (self.first, source, self.last),
+            self.ws_virtual_len
+        )
+
+    def reassemble(self, lines):
+        """Reassemble text."""
+
+        # Now that we are done iterating the lines,
+        # let's replace the original content with the
+        # fenced blocks.
+        while len(self.stack):
+            fenced, start, end = self.stack.pop()
+            lines = lines[:start] + [fenced.replace(md_util.STX, SOH, 1)[:-1] + EOT] + lines[end:]
         return lines
+
+    def run(self, lines):
+        """Search for fenced blocks."""
+
+        self.clear()
+        self.stack = []
+        self.disabled_indented = self.config.get("disable_indented_code_blocks", False)
+        return self.search_nested(lines)
 
 
 class SuperFencesCodeBlockProcessor(CodeBlockProcessor):
     """Process indented code blocks to see if we accidentally processed its content as a fenced block."""
-
-    FENCED_BLOCK_RE = re.compile(
-        r'^([\> ]*)%s(%s)%s$' % (
-            md_util.HTML_PLACEHOLDER[0],
-            md_util.HTML_PLACEHOLDER[1:-1] % r'([0-9]+)',
-            md_util.HTML_PLACEHOLDER[-1]
-        )
-    )
 
     def test(self, parent, block):
         """Test method that is one day to be deprecated."""
@@ -737,19 +803,16 @@ class SuperFencesCodeBlockProcessor(CodeBlockProcessor):
 
         new_block = []
         for line in block.split('\n'):
-            m = self.FENCED_BLOCK_RE.match(line)
+            m = FENCED_BLOCK_RE.match(line)
             if m:
                 key = m.group(2)
                 indent_level = len(m.group(1))
                 original = None
-                for entry in self.extension.superfences:
-                    stash = entry["stash"]
-                    original, pos = stash.get(key)
-                    if original is not None:
-                        code = self.reindent(original, pos, indent_level)
-                        new_block.append(code)
-                        stash.remove(key)
-                        break
+                original, pos = self.extension.stash.get(key)
+                if original is not None:
+                    code = self.reindent(original, pos, indent_level)
+                    new_block.append(code)
+                    self.extension.stash.remove(key)
                 if original is None:  # pragma: no cover
                     # Too much work to test this. This is just a fall back in case
                     # we find a placeholder, and we went to revert it and it wasn't in our stash.
