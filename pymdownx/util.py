@@ -43,6 +43,32 @@ RE_WIN_DRIVE_PATH = re.compile(r"^[A-Za-z]:(?:\\.*)?$")
 RE_URL = re.compile('(http|ftp)s?|data|mailto|tel|news')
 IS_NARROW = sys.maxunicode == 0xFFFF
 
+if sys.platform.startswith('win'):
+    _PLATFORM = "windows"
+elif sys.platform == "darwin":
+    _PLATFORM = "osx"
+else:
+    _PLATFORM = "linux"
+
+
+def is_win():  # pragma: no cover
+    """Is Windows."""
+
+    return _PLATFORM == "windows"
+
+
+def is_linux():  # pragma: no cover
+    """Is Linux."""
+
+    return _PLATFORM == "linux"
+
+
+def is_mac():  # pragma: no cover
+    """Is macOS."""
+
+    return _PLATFORM == "osx"
+
+
 if IS_NARROW:
     def get_code_points(s):
         """Get the Unicode code points."""
@@ -150,19 +176,23 @@ def parse_url(url):
         # Maybe just a url fragment
         is_url = True
     elif scheme == 'file' and (RE_WIN_DRIVE_PATH.match(netloc)):
+        print('hit')
         # file://c:/path or file://c:\path
         path = '/' + (netloc + path).replace('\\', '/')
         netloc = ''
         is_absolute = True
     elif scheme == 'file' and netloc.startswith('\\'):
+        print('hit2')
         # file://\c:\path or file://\\path
         path = (netloc + path).replace('\\', '/')
         netloc = ''
         is_absolute = True
     elif scheme == 'file':
+        print('hit3')
         # file:///path
         is_absolute = True
     elif RE_WIN_DRIVE_LETTER.match(scheme):
+        print('hit4')
         # c:/path
         path = '/%s:%s' % (scheme, path.replace('\\', '/'))
         scheme = 'file'
@@ -176,6 +206,7 @@ def parse_url(url):
         is_absolute = True
     elif scheme != '' and netloc != '':
         # A non-filepath or strange url
+        print('hit5')
         is_url = True
     elif path.startswith(('/', '\\')):
         # /root path
