@@ -70,12 +70,7 @@ def repl_path(m, base_path):
     try:
         scheme, netloc, path, params, query, fragment, is_url, is_absolute = util.parse_url(m.group('path')[1:-1])
         if not is_url:
-            path = util.url2pathname(path).replace('\\', '/')
-            # Adjust /c:/ to c:/.
-            # If some 'nix OS is using a folder formated like a windows drive,
-            # too bad :).
-            if scheme == 'file' and RE_SLASH_WIN_DRIVE.match(path):
-                path = path[1:]
+            path = util.url2pathname(path)
 
         if is_absolute:
             file_name = os.path.normpath(path)
@@ -92,7 +87,6 @@ def repl_path(m, base_path):
                             base64.b64encode(f.read()).decode('ascii')
                         )
                     break
-
     except Exception:  # pragma: no cover
         # Parsing crashed and burned; no need to continue.
         pass
