@@ -137,6 +137,7 @@ linkafies
 linter
 lowercased
 lowercases
+macOS
 md
 mkdocs
 mrab

@@ -81,6 +81,7 @@ class TestRelative(util.MdCase):
             r'[fragment](#fragment)',
             r'<p><a href="#fragment">fragment</a></p>'
         )
+
     def test_windows(self):
         """Test Windows file path."""
 
@@ -197,6 +198,7 @@ class TestAbsolute(util.MdCase):
             r'[fragment](#fragment)',
             r'<p><a href="#fragment">fragment</a></p>'
         )
+
     def test_windows(self):
         """Test Windows file path."""
 
