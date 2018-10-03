@@ -258,7 +258,7 @@ class TestWindows(util.MdCase):
         if util.is_win():
             self.check_markdown(
                 r'![picture](./extensions/_assets/bg.png)',
-                r'<p><img alt="picture" src="C:/Some/fake/path/extensions/_assets/bg.png" /></p>'
+                r'<p><img alt="picture" src="///C:/Some/fake/path/extensions/_assets/bg.png" /></p>'
             )
         else:
             self.check_markdown(
