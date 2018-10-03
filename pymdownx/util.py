@@ -45,7 +45,7 @@ IS_NARROW = sys.maxunicode == 0xFFFF
 
 if sys.platform.startswith('win'):
     _PLATFORM = "windows"
-elif sys.platform == "darwin":
+elif sys.platform == "darwin":  # pragma: no cover
     _PLATFORM = "osx"
 else:
     _PLATFORM = "linux"
