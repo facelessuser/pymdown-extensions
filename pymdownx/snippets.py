@@ -38,16 +38,16 @@ class SnippetPreprocessor(Preprocessor):
         ^(?P<space>[ \t]*)
         (?P<all>
             (?P<inline_marker>-{2,}8<-{2,}[ ]+)
-            (?P<snippet>(?:"(?:\\"|[^"\n])+?"|'(?:\\'|[^'\n])+?'))(?![ \t]) |
-            (?P<block_marker>-{2,}8<-{2,})(?![ \t])\r?
-        )$
+            (?P<snippet>(?:"(?:\\"|[^"\n\r])+?"|'(?:\\'|[^'\n\r])+?'))(?![ \t]) |
+            (?P<block_marker>-{2,}8<-{2,})(?![ \t])
+        )\r?$
         '''
     )
 
     RE_SNIPPET = re.compile(
         r'''(?x)
         ^(?P<space>[ \t]*)
-        (?P<snippet>.*?)$
+        (?P<snippet>.*?)\r?$
         '''
     )
 

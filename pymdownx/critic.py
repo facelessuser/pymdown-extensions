@@ -79,7 +79,7 @@ RE_CRITIC = re.compile(ALL_CRITICS, re.DOTALL)
 RE_CRITIC_PLACEHOLDER = re.compile(CRITIC_PLACEHOLDERS)
 RE_CRITIC_SUB_PLACEHOLDER = re.compile(SINGLE_CRITIC_PLACEHOLDER)
 RE_CRITIC_BLOCK = re.compile(r'((?:ins|del|mark)\s+)(class=([\'"]))(.*?)(\3)')
-RE_BLOCK_SEP = re.compile(r'^\r?\n{2,}$')
+RE_BLOCK_SEP = re.compile(r'^(?:\r?\n){2,}$')
 
 
 class CriticStash(object):
