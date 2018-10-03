@@ -131,8 +131,6 @@ class PathConverterPostprocessor(Postprocessor):
 
         basepath = self.config['base_path']
         relativepath = self.config['relative_path']
-        print(basepath)
-        print(relativepath)
         absolute = bool(self.config['absolute'])
         tags = re.compile(RE_TAG_HTML % '|'.join(self.config['tags'].split()))
         if not absolute and basepath and relativepath:
