@@ -59,6 +59,7 @@ RE_TAG_LINK_ATTR = re.compile(
     )
     '''
 )
+RE_WIN_ODD_DRIVE_PATH = re.compile(r"^///[A-Za-z]:(?:/.*)?$")
 
 
 def repl_relative(m, base_path, relative_path):
@@ -72,14 +73,14 @@ def repl_relative(m, base_path, relative_path):
             # Get the absolute path of the file or return
             # if we can't resolve the path
             path = util.url2pathname(path)
-            abs_path = None
             if (not is_absolute):
                 # Convert current relative path to absolute
-                temp = os.path.normpath(os.path.join(base_path, path))
-                abs_path = temp.replace("\\", "/")
-
+                path = os.path.relpath(
+                    os.path.normpath(os.path.join(base_path, path)),
+                    os.path.normpath(relative_path)
+                )
                 # Convert the path, url encode it, and format it as a link
-                path = util.pathname2url(os.path.relpath(abs_path, relative_path).replace('\\', '/'))
+                path = util.pathname2url(path)
                 link = '%s"%s"' % (m.group('name'), util.urlunparse((scheme, netloc, path, params, query, fragment)))
     except Exception:  # pragma: no cover
         # Parsing crashed and burned; no need to continue.
@@ -97,8 +98,8 @@ def repl_absolute(m, base_path):
 
         if (not is_absolute and not is_url):
             path = util.url2pathname(path)
-            temp = os.path.normpath(os.path.join(base_path, path))
-            path = util.pathname2url(temp.replace("\\", "/"))
+            path = os.path.normpath(os.path.join(base_path, path))
+            path = util.pathname2url(path)
             link = '%s"%s"' % (m.group('name'), util.urlunparse((scheme, netloc, path, params, query, fragment)))
     except Exception:  # pragma: no cover
         # Parsing crashed and burned; no need to continue.

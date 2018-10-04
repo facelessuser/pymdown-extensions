@@ -43,6 +43,32 @@ RE_WIN_DRIVE_PATH = re.compile(r"^[A-Za-z]:(?:\\.*)?$")
 RE_URL = re.compile('(http|ftp)s?|data|mailto|tel|news')
 IS_NARROW = sys.maxunicode == 0xFFFF
 
+if sys.platform.startswith('win'):
+    _PLATFORM = "windows"
+elif sys.platform == "darwin":  # pragma: no cover
+    _PLATFORM = "osx"
+else:
+    _PLATFORM = "linux"
+
+
+def is_win():  # pragma: no cover
+    """Is Windows."""
+
+    return _PLATFORM == "windows"
+
+
+def is_linux():  # pragma: no cover
+    """Is Linux."""
+
+    return _PLATFORM == "linux"
+
+
+def is_mac():  # pragma: no cover
+    """Is macOS."""
+
+    return _PLATFORM == "osx"
+
+
 if IS_NARROW:
     def get_code_points(s):
         """Get the Unicode code points."""

@@ -22,6 +22,31 @@ else:
 
 CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
 
+if sys.platform.startswith('win'):
+    _PLATFORM = "windows"
+elif sys.platform == "darwin":
+    _PLATFORM = "osx"
+else:
+    _PLATFORM = "linux"
+
+
+def is_win():  # pragma: no cover
+    """Is Windows."""
+
+    return _PLATFORM == "windows"
+
+
+def is_linux():  # pragma: no cover
+    """Is Linux."""
+
+    return _PLATFORM == "linux"
+
+
+def is_mac():  # pragma: no cover
+    """Is macOS."""
+
+    return _PLATFORM == "osx"
+
 
 class MdCase(unittest.TestCase):
     """Markdown unittest test case base."""
