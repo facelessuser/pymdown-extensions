@@ -231,12 +231,12 @@ When using fenced code blocks, you can specify a specific syntax language to hig
 !!! example "Highlight Example"
 
     ````tab="Source"
-    ```python
+    ```py3
     import foo.bar
     ```
     ````
 
-    ```python tab="Output"
+    ```py3 tab="Output"
     import foo.bar
     ```
 
@@ -422,7 +422,7 @@ Format\ Function                | Description
 
 In general, formatters take five parameters: the source found between the fences, the specified language, the class name originally defined via the `class` option in the `custom_fence` entry, custom options, and the Markdown object (in case you want access to meta data etc.).
 
-```python
+```py3
 def custom_formatter(source, language, css_class, options, md):
     return string
 ```
@@ -448,7 +448,7 @@ content
 
 Would yield this option dictionary:
 
-```python
+```py3
 {
     "custom_option": "value",
     "other_custom_option": True
@@ -475,7 +475,7 @@ def custom_validator(language, options):
 Then later the formatter would be given the options:
 
 ```py3
-def custom_format(source, language, class_name, options):
+def custom_format(source, language, class_name, options, md):
     """Custom format."""
 
     return '<div class_name="%s %s", data-option="%s">%s</div>' % (language, class_name, options['opt'], html_escape(source))
@@ -494,13 +494,25 @@ test
 
 ### UML Diagram Example
 
-This example illustrates how this document uses the `custom_fences` option to do UML diagrams.  The settings below shows two new custom languages called `flow` and `sequence` and are the options that must be fed through `custom_fences` [option](#options). The `flow` and `sequence` fences will pass the content through the `superfences.fence_code_format` format function which will wrap the content in `#!html <pre><code` blocks and attach the class `uml-flowchart` or `uml-sequence-diagram` to the respective `#!html <pre>` block. `superfences.fence_div_format` could just as easily be used to wrap the content in a `#!html <div>` instead, or a new custom function could have been written and used.
+This example illustrates how this document uses the `custom_fences` option to do UML diagrams.  The settings below shows two new custom languages called `flow` and `sequence` and are the options that must be fed through the `custom_fences` [option](#options). The `flow` and `sequence` fences will pass the content through the `superfences.fence_code_format` format function which will wrap the content in `#!html <pre><code` blocks and attach the class `uml-flowchart` or `uml-sequence-diagram` to the respective `#!html <pre>` block. `superfences.fence_div_format` could just as easily be used to wrap the content in a `#!html <div>` instead, or a new custom function could have been written and used.
 
-```py
-custom_fences = [
-    {'name': 'flow', 'class': 'uml-flowchart', 'format': superfences.fence_code_format},
-    {'name': 'sequence', 'class': 'uml-sequence-diagram', 'format': superfences.fence_code_format}
-]
+```py3
+extension_configs = {
+    "pymdownx.superfences": {
+        "custom_fences": [
+            {
+                'name': 'flow',
+                'class': 'uml-flowchart',
+                'format': pymdownx.superfences.fence_code_format
+            },
+            {
+                'name': 'sequence',
+                'class': 'uml-sequence-diagram',
+                'format': pymdownx.superfences.fence_code_format
+            }
+        ]
+    }
+}
 ```
 
 As defined above, the custom UML diagrams are recognized when defining a fenced code block with either the language `flow` or `sequence`.  When they are converted, the HTML element containing this content will have the respective classes `uml-flowchart` or `uml-sequence-diagram`. The format function we used in this example only escapes the content to be included in HTML. We will rely on JavaScript libraries to render our flowcharts/diagrams in the browser.
