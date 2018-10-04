@@ -65,6 +65,7 @@ PNG
 PNGs
 Pandoc
 PathConverter
+PathConverter's
 PlainHTML
 ProgressBar
 PyMdown
