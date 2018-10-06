@@ -325,7 +325,7 @@ def get_hl_settings(md):
             target = ext.getConfigs()
             break
 
-    if target is None:
+    if target is None and CodeHiliteExtension:
         for ext in md.registeredExtensions:
             if isinstance(ext, CodeHiliteExtension):
                 target = ext.getConfigs()
