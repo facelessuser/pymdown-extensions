@@ -35,10 +35,12 @@ from markdown.preprocessors import Preprocessor
 from markdown.postprocessors import Postprocessor
 from markdown.blockprocessors import CodeBlockProcessor
 from markdown import util as md_util
-from .util import PreNormalizePreprocessor, PostNormalizePreprocessor, SOH, EOT
 import functools
 from . import highlight as hl
 import re
+
+SOH = '\u0001'  # start
+EOT = '\u0004'  # end
 
 PREFIX_CHARS = ('>', ' ', '\t')
 
@@ -277,17 +279,8 @@ class SuperFencesCodeExtension(Extension):
             raw_fenced = SuperFencesRawBlockPreprocessor(self.md)
             raw_fenced.config = config
             raw_fenced.extension = self
-            self.md.preprocessors.register(
-                PreNormalizePreprocessor(self.md),
-                PreNormalizePreprocessor.NAME,
-                PreNormalizePreprocessor.POSITION
-            )
             self.md.preprocessors.register(raw_fenced, "fenced_raw_block", 31.05)
-            self.md.preprocessors.register(
-                PostNormalizePreprocessor(self.md),
-                PostNormalizePreprocessor.NAME,
-                PostNormalizePreprocessor.POSITION
-            )
+            self.md.registerExtensions(["pymdownx._bypassnorm"], {})
 
         self.md.postprocessors.register(SuperFencesTabPostProcessor(self.md), "fenced_tabs", 25)
 

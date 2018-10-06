@@ -28,8 +28,11 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.preprocessors import Preprocessor
 from markdown.postprocessors import Postprocessor
-from .util import PreNormalizePreprocessor, PostNormalizePreprocessor, SOH, EOT, STX, ETX
+from markdown.util import STX, ETX
 import re
+
+SOH = '\u0001'  # start
+EOT = '\u0004'  # end
 
 CRITIC_KEY = "czjqqkd:%s"
 CRITIC_PLACEHOLDER = CRITIC_KEY % r'[0-9]+'
@@ -307,18 +310,9 @@ class CriticExtension(Extension):
         post = CriticsPostprocessor(self.critic_stash)
         critic = CriticViewPreprocessor(self.critic_stash)
         critic.config = self.getConfigs()
-        md.preprocessors.register(
-            PreNormalizePreprocessor(md),
-            PreNormalizePreprocessor.NAME,
-            PreNormalizePreprocessor.POSITION
-        )
         md.preprocessors.register(critic, "critic", 31.1)
-        md.preprocessors.register(
-            PostNormalizePreprocessor(md),
-            PostNormalizePreprocessor.NAME,
-            PostNormalizePreprocessor.POSITION
-        )
         md.postprocessors.register(post, "critic-post", 25)
+        md.registerExtensions(["pymdownx._bypassnorm"], {})
 
     def reset(self):
         """Clear stash."""
