@@ -245,7 +245,6 @@ class Highlight(object):
         txt = txt.replace('&', '&amp;')
         txt = txt.replace('<', '&lt;')
         txt = txt.replace('>', '&gt;')
-        txt = txt.replace('"', '&quot;')
         return txt
 
     def highlight(
@@ -328,6 +327,13 @@ class HighlightTreeprocessor(Treeprocessor):
 
         super(HighlightTreeprocessor, self).__init__(md)
 
+    def code_unescape(self, text):
+        """Unescape code."""
+        text = text.replace("&amp;", "&")
+        text = text.replace("&lt;", "<")
+        text = text.replace("&gt;", ">")
+        return text
+
     def run(self, root):
         """Find code blocks and store in `htmlStash`."""
 
@@ -346,7 +352,7 @@ class HighlightTreeprocessor(Treeprocessor):
                 )
                 placeholder = self.md.htmlStash.store(
                     code.highlight(
-                        block[0].text,
+                        self.code_unescape(block[0].text),
                         '',
                         self.config['css_class']
                     )
