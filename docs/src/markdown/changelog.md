@@ -7,6 +7,7 @@
 - **NEW**: SuperFences no longer adds `flow` and `sequence` as default custom fences. Users will need to configure them themselves.
 - **NEW**: Add new SuperFences formatters in Arithmatex that are compatible with SuperFences' custom fence feature and InlineHilite's custom inline feature. (!380)
 - **NEW**: Requires Python Markdown 3.0.1 and utilizes the new priority registry when adding extensions and uses the new inline processor API instead of the old methodology.
+- **NEW**: Upgrade support for EmojiOne to 4.0.0 and Twemoji to 11.2.0.
 - **FIX**: Fixes to SuperFences behavior of "preserve tabs" vs "normal" operations.
 - **FIX**: Fixes to PathConverter's output. (#392)
 - **FIX**: Remove unnecessary path code in B64.
