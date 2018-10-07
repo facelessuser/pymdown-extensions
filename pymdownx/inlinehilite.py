@@ -22,7 +22,6 @@ from markdown.inlinepatterns import InlineProcessor
 from markdown import util as md_util
 import functools
 from . import util
-from . import highlight as hl
 
 ESCAPED_BSLASH = '%s%s%s' % (md_util.STX, ord('\\'), md_util.ETX)
 DOUBLE_BSLASH = '\\\\'
@@ -109,7 +108,16 @@ class InlineHilitePattern(InlineProcessor):
             self.get_hl_settings = True
             self.style_plain_text = self.config['style_plain_text']
 
-            config = hl.get_hl_settings(self.md)
+            config = None
+            self.highlighter = None
+            for ext in self.md.registeredExtensions:
+                try:
+                    config = getattr(ext, "get_pymdownx_highlight_settings")()
+                    self.highlighter = getattr(ext, "get_pymdownx_highlighter")()
+                    break
+                except AttributeError:
+                    pass
+
             css_class = self.config['css_class']
             self.css_class = css_class if css_class else config['css_class']
 
@@ -125,7 +133,7 @@ class InlineHilitePattern(InlineProcessor):
         process_text = self.style_plain_text or language or self.guess_lang
 
         if process_text:
-            el = hl.Highlight(
+            el = self.highlighter(
                 guess_lang=self.guess_lang,
                 pygments_style=self.pygments_style,
                 use_pygments=self.use_pygments,
@@ -191,6 +199,7 @@ class InlineHiliteExtension(Extension):
 
         config = self.getConfigs()
         md.inlinePatterns.register(InlineHilitePattern(BACKTICK_CODE_RE, config, md), "backtick", 190)
+        md.registerExtensions(["pymdownx.highlight"], {"pymdownx.highlight": {"_enabled": False}})
 
 
 def makeExtension(*args, **kwargs):

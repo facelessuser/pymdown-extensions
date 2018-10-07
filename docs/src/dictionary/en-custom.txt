@@ -65,6 +65,7 @@ PNG
 PNGs
 Pandoc
 PathConverter
+PathConverter's
 PlainHTML
 ProgressBar
 PyMdown
@@ -159,6 +160,7 @@ prepended
 prepending
 prepends
 preprocessor
+preprocessors
 px
 py
 pycqa

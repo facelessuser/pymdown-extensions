@@ -19,12 +19,12 @@ License is MIT except for a few exceptions.  See [LICENSE](https://github.com/fa
 
 [codecov-image]: https://img.shields.io/codecov/c/github/facelessuser/pymdown-extensions/master.svg
 [codecov-link]: https://codecov.io/github/facelessuser/pymdown-extensions
-[travis-image]: https://img.shields.io/travis/facelessuser/pymdown-extensions/master.svg?label=Unix%20Build
+[travis-image]: https://img.shields.io/travis/facelessuser/pymdown-extensions/master.svg?label=Unix%20Build&logo=travis
 [travis-link]: https://travis-ci.org/facelessuser/pymdown-extensions
-[appveyor-image]: https://img.shields.io/appveyor/ci/facelessuser/pymdown-extensions/master.svg?label=Windows%20Build
+[appveyor-image]: https://img.shields.io/appveyor/ci/facelessuser/pymdown-extensions/master.svg?label=Windows%20Build&logo=appveyor
 [appveyor-link]: https://ci.appveyor.com/project/facelessuser/pymdown-extensions
 [requires-image]: https://img.shields.io/requires/github/facelessuser/pymdown-extensions/master.svg
 [requires-link]: https://requires.io/github/facelessuser/pymdown-extensions/requirements/?branch=master
-[pypi-image]: https://img.shields.io/pypi/v/pymdown-extensions.svg
+[pypi-image]: https://img.shields.io/pypi/v/pymdown-extensions.svg?logo=python&logoColor=white
 [pypi-link]: https://pypi.python.org/pypi/pymdown-extensions
 [license-image-mit]: https://img.shields.io/badge/license-MIT-blue.svg

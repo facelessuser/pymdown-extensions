@@ -60,7 +60,7 @@ When returning a string, InlineHilite will treat the string as ready for HTML, s
 
 When returning an ElementTree object, remember to wrap string content as `markdown.util.AtomicString` to prevent it from being processed further, you can also stash raw HTML string content assigned to elements like InlineHilite does by default above. InlineHilite will not try and guess what you intend, you must manage your content in the ElementTree objects or the Markdown parser may apply other conversion to your HTML content.
 
-```python
+```py3
 def custom_formatter(source, language, css_class, md):
     return el  # Or string
 ```

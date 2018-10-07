@@ -9,6 +9,7 @@ arithmatex
 autogen
 betterem
 bowtie
+bypassnorm
 chunking
 escapeall
 extrarawhtml

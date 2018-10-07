@@ -8,6 +8,41 @@
 - **NEW**: Add new SuperFences formatters in Arithmatex that are compatible with SuperFences' custom fence feature and InlineHilite's custom inline feature. (!380)
 - **NEW**: Requires Python Markdown 3.0.1 and utilizes the new priority registry when adding extensions and uses the new inline processor API instead of the old methodology.
 - **FIX**: Fixes to SuperFences behavior of "preserve tabs" vs "normal" operations.
+- **FIX**: Fixes to PathConverter's output. (#392)
+- **FIX**: Remove unnecessary path code in B64.
+
+!!! note "Upgrade Notes"
+    The only backwards incompatible changes are with SuperFences' custom fences.
+
+    1. `flow` and `sequence` are no longer defined by default. If you were relying on the default custom fences, you will have to define them manually now. The needed settings are found below:
+
+        ```py3
+        extension_configs = {
+            "pymdownx.superfences": {
+                "custom_fences": [
+                    {
+                        'name': 'flow',
+                        'class': 'uml-flowchart',
+                        'format': pymdownx.superfences.fence_code_format
+                    },
+                    {
+                        'name': 'sequence',
+                        'class': 'uml-sequence-diagram',
+                        'format': pymdownx.superfences.fence_code_format
+                    }
+                ]
+            }
+        }
+        ```
+
+        If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please see the [FAQ](faq.md#function-references-in-yaml) to see how to specify function references in YAML.
+
+    2. If you've written your own custom fence formatters, the number of parameters needed has changed, so you must update your existing formatters.  The needed parameters are the same regardless of whether you are using an options validator or not.
+
+        ```py3
+        def custom_formatter(source, language, css_class, options, md):
+            return string
+        ```
 
 ## 5.0.0
 
