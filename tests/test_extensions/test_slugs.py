@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Test slugs."""
 from __future__ import unicode_literals
 from .. import util

@@ -4,7 +4,7 @@ Bypass whitespace normalization.
 pymdownx._bypassnorm
 
 Strips `SOH` and `EOT` characters before whitespace normalization
-allowing other pugins to then create preprocessors that stash HTML
+allowing other extensions to then create preprocessors that stash HTML
 with `SOH` and `EOT`  After whitespace normalization, all `SOH` and
 `EOT` characters will be converted to the Python Markdown standard
 `STX` and `ETX` convention since whitespace normalization usually
@@ -54,7 +54,6 @@ class BypassNormExtension(Extension):
         self.inlinehilite = []
         self.config = {}
         super(BypassNormExtension, self).__init__(*args, **kwargs)
-
 
     def extendMarkdown(self, md):
         """Add extensions that help with bypassing whitespace normalization."""
