@@ -36,6 +36,7 @@ RE_WIN_DRIVE_LETTER = re.compile(r"^[A-Za-z]$")
 RE_WIN_DRIVE_PATH = re.compile(r"^[A-Za-z]:(?:\\.*)?$")
 RE_URL = re.compile('(http|ftp)s?|data|mailto|tel|news')
 IS_NARROW = sys.maxunicode == 0xFFFF
+RE_WIN_DEFAULT_PROTOCOL = re.compile(r"^///[A-Za-z]:(?:/.*)?$")
 
 if sys.platform.startswith('win'):
     _PLATFORM = "windows"
@@ -61,6 +62,22 @@ def is_mac():  # pragma: no cover
     """Is macOS."""
 
     return _PLATFORM == "osx"
+
+
+def url2path(path):
+    """Path to URL."""
+
+    return url2pathname(path)
+
+
+def path2url(url):
+    """URL to path."""
+
+    path = pathname2url(url)
+    # If on windows, replace the notation to use a default protocol `///` with nothing.
+    if is_win() and RE_WIN_DEFAULT_PROTOCOL.match(path):
+        path = path.replace('///', '', 1)
+    return path
 
 
 if IS_NARROW:

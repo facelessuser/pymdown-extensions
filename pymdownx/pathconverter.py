@@ -59,7 +59,6 @@ RE_TAG_LINK_ATTR = re.compile(
     )
     '''
 )
-RE_WIN_ODD_DRIVE_PATH = re.compile(r"^///[A-Za-z]:(?:/.*)?$")
 
 
 def repl_relative(m, base_path, relative_path):
@@ -72,7 +71,7 @@ def repl_relative(m, base_path, relative_path):
         if not is_url:
             # Get the absolute path of the file or return
             # if we can't resolve the path
-            path = util.url2pathname(path)
+            path = util.url2path(path)
             if (not is_absolute):
                 # Convert current relative path to absolute
                 path = os.path.relpath(
@@ -80,10 +79,7 @@ def repl_relative(m, base_path, relative_path):
                     os.path.normpath(relative_path)
                 )
                 # Convert the path, url encode it, and format it as a link
-                path = util.pathname2url(path)
-                # If on windows, replace the notation to use a default protocol `///` with nothing.
-                if util.is_win() and path.startswith('///'):
-                    path = path.replace('///', '', 1)
+                path = util.path2url(path)
                 link = '%s"%s"' % (m.group('name'), util.urlunparse((scheme, netloc, path, params, query, fragment)))
     except Exception:  # pragma: no cover
         # Parsing crashed and burned; no need to continue.
@@ -100,12 +96,9 @@ def repl_absolute(m, base_path):
         scheme, netloc, path, params, query, fragment, is_url, is_absolute = util.parse_url(m.group('path')[1:-1])
 
         if (not is_absolute and not is_url):
-            path = util.url2pathname(path)
+            path = util.url2path(path)
             path = os.path.normpath(os.path.join(base_path, path))
-            path = util.pathname2url(path)
-            # If on windows, replace the notation to use a default protocol `///` with nothing.
-            if util.is_win() and path.startswith('///'):
-                path = path.replace('///', '', 1)
+            path = util.path2url(path)
             link = '%s"%s"' % (m.group('name'), util.urlunparse((scheme, netloc, path, params, query, fragment)))
     except Exception:  # pragma: no cover
         # Parsing crashed and burned; no need to continue.
