@@ -80,7 +80,6 @@ def _escape(txt):
     txt = txt.replace('&', '&amp;')
     txt = txt.replace('<', '&lt;')
     txt = txt.replace('>', '&gt;')
-    txt = txt.replace('"', '&quot;')
     return txt
 
 

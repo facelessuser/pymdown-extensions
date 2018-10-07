@@ -11,6 +11,7 @@
 - **FIX**: Fixes to SuperFences behavior of "preserve tabs" vs "normal" operations.
 - **FIX**: Fixes to PathConverter's output. (#392)
 - **FIX**: Remove unnecessary path code in B64.
+- **FIX**: Fix issues with double escaping entities in code blocks after Python Markdown 3.0 update.
 
 !!! note "Upgrade Notes"
     The only backwards incompatible changes are with SuperFences' custom fences.
