@@ -48,8 +48,6 @@ superfences (no highlight):
 
 superfences (no pygments):
   extensions:
-    pymdownx.highlight:
-      use_pygments: false
     pymdownx.superfences:
       custom_fences:
         - name: flow
@@ -58,6 +56,8 @@ superfences (no pygments):
         - name: sequence
           class: uml-sequence-diagram
           format: !!python/name:pymdownx.superfences.fence_code_format
+    pymdownx.highlight:
+      use_pygments: false
 
 superfences (normal):
   extensions:
