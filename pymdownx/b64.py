@@ -70,7 +70,7 @@ def repl_path(m, base_path):
     try:
         scheme, netloc, path, params, query, fragment, is_url, is_absolute = util.parse_url(m.group('path')[1:-1])
         if not is_url:
-            path = util.url2pathname(path)
+            path = util.url2path(path)
 
         if is_absolute:
             file_name = os.path.normpath(path)

@@ -241,8 +241,8 @@ class TestAbsolute(util.MdCase):
         )
 
 
-class TestWindows(util.MdCase):
-    """Test windows specific cases."""
+class TestWindowsAbs(util.MdCase):
+    """Test windows specific cases for absolute."""
 
     extension = ["pymdownx.pathconverter"]
     extension_configs = {
@@ -258,10 +258,36 @@ class TestWindows(util.MdCase):
         if util.is_win():
             self.check_markdown(
                 r'![picture](./extensions/_assets/bg.png)',
-                r'<p><img alt="picture" src="///C:/Some/fake/path/extensions/_assets/bg.png" /></p>'
+                r'<p><img alt="picture" src="C:/Some/fake/path/extensions/_assets/bg.png" /></p>'
             )
         else:
             self.check_markdown(
                 r'![picture](./extensions/_assets/bg.png)',
                 r'<p><img alt="picture" src="C%3A/Some/fake/path/extensions/_assets/bg.png" /></p>'
+            )
+
+
+class TestWindowsRel(util.MdCase):
+    """Test windows specific cases for relative."""
+
+    extension = ["pymdownx.pathconverter"]
+    extension_configs = {
+        "pymdownx.pathconverter": {
+            "base_path": "C:/Some/fake/path",
+            "relative_path": "C:/Some/other/path"
+        }
+    }
+
+    def test_windows_root_conversion(self):
+        """Test Windows c:/ Conversion."""
+
+        if util.is_win():
+            self.check_markdown(
+                r'![picture](./extensions/_assets/bg.png)',
+                r'<p><img alt="picture" src="../../fake/path/extensions/_assets/bg.png" /></p>'
+            )
+        else:
+            self.check_markdown(
+                r'![picture](./extensions/_assets/bg.png)',
+                r'<p><img alt="picture" src="../../fake/path/extensions/_assets/bg.png" /></p>'
             )
