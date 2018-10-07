@@ -84,6 +84,10 @@ DEFAULT_CONFIG = {
     'extend_pygments_lang': [
         [],
         'Extend pygments language with special language entry - Default: {}'
+    ],
+    '_enabled': [
+        True,
+        'Used internally to communicate if extension has been explicitly enabled - Default: False'
     ]
 }
 
@@ -316,29 +320,6 @@ class Highlight(object):
             return code.strip()
 
 
-def get_hl_settings(md):
-    """Get the specified extension."""
-    target = None
-
-    for ext in md.registeredExtensions:
-        if isinstance(ext, HighlightExtension):
-            target = ext.getConfigs()
-            break
-
-    if target is None and CodeHiliteExtension:
-        for ext in md.registeredExtensions:
-            if isinstance(ext, CodeHiliteExtension):
-                target = ext.getConfigs()
-                break
-
-    if target is None:
-        target = {}
-        config_clone = copy.deepcopy(DEFAULT_CONFIG)
-        for k, v in config_clone.items():
-            target[k] = config_clone[k][0]
-    return target
-
-
 class HighlightTreeprocessor(Treeprocessor):
     """Highlight source code in code blocks."""
 
@@ -388,13 +369,60 @@ class HighlightExtension(Extension):
         self.config = copy.deepcopy(DEFAULT_CONFIG)
         super(HighlightExtension, self).__init__(*args, **kwargs)
 
+    def get_pymdownx_highlight_settings(self):
+        """Get the specified extension."""
+
+        target = None
+
+        if self.enabled:
+            target = self.getConfigs()
+
+        if target is None and CodeHiliteExtension:
+            for ext in self.md.registeredExtensions:
+                if isinstance(ext, CodeHiliteExtension):
+                    target = ext.getConfigs()
+                    break
+
+        if target is None:
+            target = {}
+            config_clone = copy.deepcopy(DEFAULT_CONFIG)
+            for k, v in config_clone.items():
+                target[k] = config_clone[k][0]
+        return target
+
+    def get_pymdownx_highlighter(self):
+        """Get the highlighter."""
+
+        return Highlight
+
     def extendMarkdown(self, md):
         """Add support for code highlighting."""
 
-        ht = HighlightTreeprocessor(md)
-        ht.config = self.getConfigs()
-        md.treeprocessors.register(ht, "indent-highlight", 30)
-        md.registerExtension(self)
+        config = self.getConfigs()
+        self.md = md
+        self.enabled = config.get("_enabled", False)
+
+        if self.enabled:
+            ht = HighlightTreeprocessor(self.md)
+            ht.config = self.getConfigs()
+            self.md.treeprocessors.register(ht, "indent-highlight", 30)
+
+        index = 0
+        register = None
+        for ext in self.md.registeredExtensions:
+            if isinstance(ext, HighlightExtension):
+                register = not ext.enabled and self.enabled
+                break
+
+        if register is None:
+            register = True
+            index = -1
+
+        if register:
+            if index == -1:
+                self.md.registerExtension(self)
+            else:
+                self.md.registeredExtensions[index] = self
 
 
 def makeExtension(*args, **kwargs):

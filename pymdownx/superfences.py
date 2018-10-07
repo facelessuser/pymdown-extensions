@@ -36,7 +36,6 @@ from markdown.postprocessors import Postprocessor
 from markdown.blockprocessors import CodeBlockProcessor
 from markdown import util as md_util
 import functools
-from . import highlight as hl
 import re
 
 SOH = '\u0001'  # start
@@ -284,6 +283,9 @@ class SuperFencesCodeExtension(Extension):
 
         self.md.postprocessors.register(SuperFencesTabPostProcessor(self.md), "fenced_tabs", 25)
 
+        # Add the highlight extension, but do so in a disabled state so we can just retrieve default configs
+        self.md.registerExtensions(["pymdownx.highlight"], {"pymdownx.highlight": {"_enabled": False}})
+
     def reset(self):
         """Clear the stash."""
 
@@ -354,7 +356,16 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             self.checked_hl_settings = True
             self.highlight_code = self.config['highlight_code']
 
-            config = hl.get_hl_settings(self.md)
+            config = None
+            self.highlighter = None
+            for ext in self.md.registeredExtensions:
+                try:
+                    config = getattr(ext, "get_pymdownx_highlight_settings")()
+                    self.highlighter = getattr(ext, "get_pymdownx_highlighter")()
+                    break
+                except AttributeError:
+                    pass
+
             css_class = self.config['css_class']
             self.css_class = css_class if css_class else config['css_class']
 
@@ -637,7 +648,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             linespecial = self.parse_line_special(linespecial)
             hl_lines = self.parse_hl_lines(hl_lines)
 
-            el = hl.Highlight(
+            el = self.highlighter(
                 guess_lang=self.guess_lang,
                 pygments_style=self.pygments_style,
                 use_pygments=self.use_pygments,
