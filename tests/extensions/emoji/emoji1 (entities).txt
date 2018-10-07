@@ -4,8 +4,8 @@
 8ball :8ball:<br>
 a :a:<br>
 ab :ab:<br>
+abacus :abacus:<br>
 abc :abc:<br>
 abcd :abcd:<br>
 accept :accept:<br>
 adult :adult:<br>
-adult_tone1 :adult_tone1:<br>
