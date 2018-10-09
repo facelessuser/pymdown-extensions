@@ -22,15 +22,15 @@ matrix:
       env: TOXENV=py35
     - python: 3.6
       env: TOXENV=py36
-    - python: 3.7-dev
+    - python: 3.7
+      dist: xenial
       env: TOXENV=py37
+      sudo: true
     - python: 3.6
       env: TOXENV=lint
     - python: 3.6
       node_js: 8
       env: TOXENV=documents
-  allow_failures:
-    - python: 3.7-dev
 
 addons:
   apt:
