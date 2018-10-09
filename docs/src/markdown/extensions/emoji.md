@@ -80,41 +80,38 @@ By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  
     There are a few emoji that are currently Twemoji specific, two of which are likely to always be as they are not part of the official emoji spec. The short names are listed below.
 
     ??? info "Twemoji Specific Emoji"
-        !!! warning
-            Since we use EmojiOne's index for short names, if EmojiOne updates their support to include the emoji listed below, the short name is subject to change.
+        Twemoji provides some non-standard emoji. We've made them available following the naming patterns that EmojiOne follows as we are using their short name index.
 
-        Twemoji specific emoji:
+        The emoji are either some that only Twemoji supports, rarely supported by others, or emoji that have tone and/or gender modifiers that aren't supported in the Unicode specifications. We've also provided appropriate aliases for consistency with other like emoji.
 
         ```
+        :pirate_flag:
+        :shibuya:
+
         :skier_tone1:
         :skier_tone2:
         :skier_tone3:
         :skier_tone4:
         :skier_tone5:
-        :pirate_flag:
-        :shibuya:
+
         :woman_levitate:
+        :woman_levitate_tone1:
+        :woman_levitate_tone2:
+        :woman_levitate_tone3:
+        :woman_levitate_tone4:
+        :woman_levitate_tone5:
         :woman_in_business_suit_levitating_tone1:
         :woman_in_business_suit_levitating_tone2:
         :woman_in_business_suit_levitating_tone3:
         :woman_in_business_suit_levitating_tone4:
         :woman_in_business_suit_levitating_tone5:
+
         :woman_in_tuxedo:
         :woman_in_tuxedo_tone1:
         :woman_in_tuxedo_tone2:
         :woman_in_tuxedo_tone3:
         :woman_in_tuxedo_tone4:
         :woman_in_tuxedo_tone5:
-        ```
-
-        For consistency with existing like emoji, these aliases have been added as well:
-
-        ```
-        :woman_in_business_suit_levitating_light_skin_tone: --> :woman_in_business_suit_levitating_tone1:
-        :woman_in_business_suit_levitating_medium_light_skin_tone: --> :woman_in_business_suit_levitating_tone2:
-        :woman_in_business_suit_levitating_medium_skin_tone: --> :woman_in_business_suit_levitating_tone3:
-        :woman_in_business_suit_levitating_medium_dark_skin_tone: --> :woman_in_business_suit_levitating_tone4:
-        :woman_in_business_suit_levitating_dark_skin_tone: --> :woman_in_business_suit_levitating_tone5:
         ```
 
     You can always find out what tag it was built with by doing the following:
