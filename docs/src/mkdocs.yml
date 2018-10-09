@@ -54,6 +54,7 @@ nav:
   - Contributing &amp; Support: contributing.md
   - Development: development.md
   - FAQ: faq.md
+  - Release Notes: release.md
   - Changelog: changelog.md
   - License: license.md
 
@@ -73,6 +74,16 @@ markdown_extensions:
   - pymdownx.extrarawhtml:
   - pymdownx.superfences:
       preserve_tabs: true
+      custom_fences: 
+        - name: flow
+          class: uml-flowchart
+          format: !!python/name:pymdownx.superfences.fence_code_format
+        - name: sequence
+          class: uml-sequence-diagram
+          format: !!python/name:pymdownx.superfences.fence_code_format
+        - name: math
+          class: arithmatex
+          format: !!python/name:pymdownx.arithmatex.fence_mathjax_format
   - pymdownx.highlight:
       css_class: codehilite
       extend_pygments_lang:
@@ -86,6 +97,10 @@ markdown_extensions:
             python3: true
       linenums_style: pymdownx-inline
   - pymdownx.inlinehilite:
+      custom_inline:
+        - name: math
+          class: arithmatex
+          format: !!python/name:pymdownx.arithmatex.inline_mathjax_format
   - pymdownx.magiclink:
       repo_url_shortener: true
       repo_url_shorthand: true

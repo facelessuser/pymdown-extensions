@@ -140,6 +140,7 @@ lowercased
 lowercases
 macOS
 md
+metadata
 mkdocs
 mrab
 mrabarnett
