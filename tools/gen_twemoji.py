@@ -6,15 +6,22 @@ import copy
 sys.path.append('../pymdownx/')
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
+ADDITIONAL_ALIASES = {}
+
 # Special emoji
-special_emoji = {
+SPECIAL_EMOJI = {
     # An unoffical emoji supported by very few
     ":pirate_flag:": {
         "category": "flags",
         "name": "pirate flag",
         "unicode": "1f3f4-200d-2620-fe0f"
     },
-    # Skier skin tones (not supported by EmojiOne yet)
+    ":shibuya:": {
+        "category": "travel",
+        "name": "Shibuya 109",
+        "unicode": "e50a"
+    },
+    # Skier skin tones (not supported by Unicode spec)
     ":skier_tone1:": {
         "category": "activity",
         "name": "skier: light skin tone",
@@ -40,48 +47,57 @@ special_emoji = {
         "name": "skier: dark skin tone",
         "unicode": "26f7-1f3ff"
     },
-    # Not many support this one
-    ":shibuya:": {
-        "category": "travel",
-        "name": "Shibuya 109",
-        "unicode": "e50a"
-    },
-    # Woman levitate
+    # Woman levitate (not supported in Unicode spec)
     ":woman_levitate:": {
         "category": "people",
         "name": "woman in business suit levitating",
-        "unicode": "1f574-fe0f-200d-2640-fe0f"
+        "unicode": "1f574-fe0f-200d-2640-fe0f",
+        "aliases": ["woman_in_business_suit_levitating"]
     },
-    # Woman levitating variants
-    ":woman_in_business_suit_levitating_tone1:": {
+    ":woman_levitate_tone1:": {
         "category": "people",
         "name": "woman in business suit levitating: light skin tone",
         "unicode": "1f574-1f3fb-200d-2640-fe0f",
-        "aliases": ["woman_in_business_suit_levitating_light_skin_tone"]
+        "aliases": [
+            "woman_in_business_suit_levitating_tone1",
+            "woman_in_business_suit_levitating_light_skin_tone"
+        ]
     },
-    ":woman_in_business_suit_levitating_tone2:": {
+    ":woman_leviate_tone2:": {
         "category": "people",
         "name": "woman in business suit levitating: medium-light skin tone",
         "unicode": "1f574-1f3fc-200d-2640-fe0f",
-        "aliases": ["woman_in_business_suit_levitating_medium_light_skin_tone"]
+        "aliases": [
+            "woman_in_business_suit_levitating_tone2",
+            "woman_in_business_suit_levitating_medium_light_skin_tone"
+        ]
     },
-    ":woman_in_business_suit_levitating_tone3:": {
+    ":woman_leviate_tone3:": {
         "category": "people",
         "name": "woman in business suit levitating: medium skin tone",
         "unicode": "1f574-1f3fd-200d-2640-fe0f",
-        "aliases": ["woman_in_business_suit_levitating_medium_skin_tone"]
+        "aliases": [
+            "woman_in_business_suit_levitating_tone3",
+            "woman_in_business_suit_levitating_medium_skin_tone"
+        ]
     },
-    ":woman_in_business_suit_levitating_tone4:": {
+    ":woman_leviate_tone4:": {
         "category": "people",
         "name": "woman in business suit levitating: medium-dark skin tone",
         "unicode": "1f574-1f3fe-200d-2640-fe0f",
-        "aliases": ["woman_in_business_suit_levitating_medium_dark_skin_tone"]
+        "aliases": [
+            "woman_in_business_suit_levitating_tone4",
+            "woman_in_business_suit_levitating_medium_dark_skin_tone"
+        ]
     },
-    ":woman_in_business_suit_levitating_tone5:": {
+    ":woman_leviate_tone5:": {
         "category": "people",
         "name": "woman in business suit levitating: dark skin tone",
         "unicode": "1f574-1f3ff-200d-2640-fe0f",
-        "aliases": ["woman_in_business_suit_levitating_dark_skin_tone"]
+        "aliases": [
+            "woman_in_business_suit_levitating_tone5",
+            "woman_in_business_suit_levitating_dark_skin_tone"
+        ]
     },
     # Woman in tuxedo
     ":woman_in_tuxedo:": {
@@ -89,7 +105,6 @@ special_emoji = {
         "name": "woman in tuxedo",
         "unicode": "1f935-200d-2640-fe0f"
     },
-    # Woman in tuxedo variants
     ":woman_in_tuxedo_tone1:": {
         "category": "people",
         "name": "woman in tuxedo: light skin tone",
@@ -117,13 +132,11 @@ special_emoji = {
     }
 }
 
-additional_aliases = {}
-
-ignore_emoji = [
+IGNORE_EMOJI = [
     # Alternative man levitating
+    # Per spec, "levitate" is already a man,
+    # no need to explicity have a man variant.
     "1f574-fe0f-200d-2642-fe0f",
-
-    # Alternative man levitating variants
     "1f574-1f3fb-200d-2642-fe0f",
     "1f574-1f3fc-200d-2642-fe0f",
     "1f574-1f3fd-200d-2642-fe0f",
@@ -131,21 +144,15 @@ ignore_emoji = [
     "1f574-1f3ff-200d-2642-fe0f",
 
     # Alternative man in tuxedo
+    # Per spec, "tuxedo" is already a man,
+    # no need to explicity have a man variant.
     "1f935-200d-2642-fe0f",
-
-    # Alternative man in tuxedo variants
     "1f935-1f3fb-200d-2642-fe0f",
     "1f935-1f3fc-200d-2642-fe0f",
     "1f935-1f3fd-200d-2642-fe0f",
     "1f935-1f3fe-200d-2642-fe0f",
     "1f935-1f3ff-200d-2642-fe0f"
 ]
-
-
-def get_unicode_alt(value):
-    """Get alternate Unicode form or return the original."""
-
-    return value['code_points']['output']
 
 
 def parse(repo, tag):
@@ -193,7 +200,7 @@ def parse(repo, tag):
             aliases[k] = v
 
     # Copy emoji only found in EmojiOne
-    for k, v in special_emoji.items():
+    for k, v in SPECIAL_EMOJI.items():
         if k not in emoji_db and k not in aliases:
             shortnames.add(k)
             copy_emoji = copy.copy(v)
@@ -210,14 +217,14 @@ def parse(repo, tag):
                     aliases[spec_alias] = k
 
     # Additional aliases
-    for k, v in additional_aliases.items():
+    for k, v in ADDITIONAL_ALIASES.items():
         if k in emoji_db:
             for a in v:
                 if a not in aliases:
                     aliases[a] = k
 
     # Remove ignored emoji from unsupported list
-    for ignore in ignore_emoji:
+    for ignore in IGNORE_EMOJI:
         if ignore in unsupported:
             index = unsupported.index(ignore)
             del unsupported[index]

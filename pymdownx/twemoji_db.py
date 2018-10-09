@@ -12914,31 +12914,6 @@ emoji = {
         "name": "woman health worker: dark skin tone",
         "unicode": "1f469-1f3ff-200d-2695-fe0f"
     },
-    ":woman_in_business_suit_levitating_tone1:": {
-        "category": "people",
-        "name": "woman in business suit levitating: light skin tone",
-        "unicode": "1f574-1f3fb-200d-2640-fe0f"
-    },
-    ":woman_in_business_suit_levitating_tone2:": {
-        "category": "people",
-        "name": "woman in business suit levitating: medium-light skin tone",
-        "unicode": "1f574-1f3fc-200d-2640-fe0f"
-    },
-    ":woman_in_business_suit_levitating_tone3:": {
-        "category": "people",
-        "name": "woman in business suit levitating: medium skin tone",
-        "unicode": "1f574-1f3fd-200d-2640-fe0f"
-    },
-    ":woman_in_business_suit_levitating_tone4:": {
-        "category": "people",
-        "name": "woman in business suit levitating: medium-dark skin tone",
-        "unicode": "1f574-1f3fe-200d-2640-fe0f"
-    },
-    ":woman_in_business_suit_levitating_tone5:": {
-        "category": "people",
-        "name": "woman in business suit levitating: dark skin tone",
-        "unicode": "1f574-1f3ff-200d-2640-fe0f"
-    },
     ":woman_in_lotus_position:": {
         "category": "activity",
         "name": "woman in lotus position",
@@ -13089,10 +13064,35 @@ emoji = {
         "name": "woman juggling: dark skin tone",
         "unicode": "1f939-1f3ff-200d-2640-fe0f"
     },
+    ":woman_leviate_tone2:": {
+        "category": "people",
+        "name": "woman in business suit levitating: medium-light skin tone",
+        "unicode": "1f574-1f3fc-200d-2640-fe0f"
+    },
+    ":woman_leviate_tone3:": {
+        "category": "people",
+        "name": "woman in business suit levitating: medium skin tone",
+        "unicode": "1f574-1f3fd-200d-2640-fe0f"
+    },
+    ":woman_leviate_tone4:": {
+        "category": "people",
+        "name": "woman in business suit levitating: medium-dark skin tone",
+        "unicode": "1f574-1f3fe-200d-2640-fe0f"
+    },
+    ":woman_leviate_tone5:": {
+        "category": "people",
+        "name": "woman in business suit levitating: dark skin tone",
+        "unicode": "1f574-1f3ff-200d-2640-fe0f"
+    },
     ":woman_levitate:": {
         "category": "people",
         "name": "woman in business suit levitating",
         "unicode": "1f574-fe0f-200d-2640-fe0f"
+    },
+    ":woman_levitate_tone1:": {
+        "category": "people",
+        "name": "woman in business suit levitating: light skin tone",
+        "unicode": "1f574-1f3fb-200d-2640-fe0f"
     },
     ":woman_lifting_weights:": {
         "category": "activity",
@@ -15618,9 +15618,15 @@ aliases = {
     ":zipper_mouth_face:": ":zipper_mouth:",
     ":zm:": ":flag_zm:",
     ":zw:": ":flag_zw:",
-    "woman_in_business_suit_levitating_dark_skin_tone": ":woman_in_business_suit_levitating_tone5:",
-    "woman_in_business_suit_levitating_light_skin_tone": ":woman_in_business_suit_levitating_tone1:",
-    "woman_in_business_suit_levitating_medium_dark_skin_tone": ":woman_in_business_suit_levitating_tone4:",
-    "woman_in_business_suit_levitating_medium_light_skin_tone": ":woman_in_business_suit_levitating_tone2:",
-    "woman_in_business_suit_levitating_medium_skin_tone": ":woman_in_business_suit_levitating_tone3:"
+    "woman_in_business_suit_levitating": ":woman_levitate:",
+    "woman_in_business_suit_levitating_dark_skin_tone": ":woman_leviate_tone5:",
+    "woman_in_business_suit_levitating_light_skin_tone": ":woman_levitate_tone1:",
+    "woman_in_business_suit_levitating_medium_dark_skin_tone": ":woman_leviate_tone4:",
+    "woman_in_business_suit_levitating_medium_light_skin_tone": ":woman_leviate_tone2:",
+    "woman_in_business_suit_levitating_medium_skin_tone": ":woman_leviate_tone3:",
+    "woman_in_business_suit_levitating_tone1": ":woman_levitate_tone1:",
+    "woman_in_business_suit_levitating_tone2": ":woman_leviate_tone2:",
+    "woman_in_business_suit_levitating_tone3": ":woman_leviate_tone3:",
+    "woman_in_business_suit_levitating_tone4": ":woman_leviate_tone4:",
+    "woman_in_business_suit_levitating_tone5": ":woman_leviate_tone5:"
 }
