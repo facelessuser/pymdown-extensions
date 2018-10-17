@@ -2722,9 +2722,9 @@ gulp-rollup@^2.16.2:
     rollup-plugin-hypothetical "^2.0.0"
     vinyl "^2.1.0"
 
-gulp-sass@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/gulp-sass/-/gulp-sass-4.0.1.tgz#7f43d117eb2d303524968a1b48494af1bc64d1d9"
+gulp-sass@^4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/gulp-sass/-/gulp-sass-4.0.2.tgz#cfb1e3eff2bd9852431c7ce87f43880807d8d505"
   dependencies:
     chalk "^2.3.0"
     lodash.clonedeep "^4.3.2"
