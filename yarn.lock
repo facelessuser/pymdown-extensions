@@ -2702,12 +2702,12 @@ gulp-rev-replace@^0.4.4:
     plugin-error "^0.1.2"
     through2 "^2.0.0"
 
-gulp-rev@^8.1.1:
-  version "8.1.1"
-  resolved "https://registry.yarnpkg.com/gulp-rev/-/gulp-rev-8.1.1.tgz#b1106bfaa5653106a11d1612eb0cffde540cb196"
+gulp-rev@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/gulp-rev/-/gulp-rev-9.0.0.tgz#fe51b181c5fbbebfe740b64748d6980827e82878"
   dependencies:
     modify-filename "^1.1.0"
-    plugin-error "^0.1.2"
+    plugin-error "^1.0.1"
     rev-hash "^2.0.0"
     rev-path "^2.0.0"
     sort-keys "^2.0.0"
