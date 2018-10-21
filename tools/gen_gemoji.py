@@ -9,7 +9,6 @@ U_VARIATION_SELECTOR_16 = 0xfe0f
 U_EXTRA = (U_JOIN, U_VARIATION_SELECTOR_16)
 
 if sys.maxunicode == 0xFFFF:
-    # For ease of supporting, just require uniseq for both narrow and wide PY27.
 
     def get_code_points(s):
         """Get the Unicode code points."""

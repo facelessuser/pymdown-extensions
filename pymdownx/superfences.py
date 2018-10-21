@@ -282,7 +282,7 @@ class SuperFencesCodeExtension(Extension):
 
         self.md.postprocessors.register(SuperFencesTabPostProcessor(self.md), "fenced_tabs", 25)
 
-        # Add the highlight extension, but do so in a disabled state so we can just retrieve default configs
+        # Add the highlight extension, but do so in a disabled state so we can just retrieve default configurations
         self.md.registerExtensions(["pymdownx.highlight"], {"pymdownx.highlight": {"_enabled": False}})
 
     def reset(self):
@@ -349,7 +349,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         return '\n'.join([line[self.ws_virtual_len:] for line in lines])
 
     def get_hl_settings(self):
-        """Check for CodeHilite extension to get its config."""
+        """Check for CodeHilite extension to get its configurations."""
 
         if not self.checked_hl_settings:
             self.checked_hl_settings = True
@@ -623,7 +623,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         """
         Syntax highlight the code block.
 
-        If config is not empty, then the CodeHilite extension
+        If configuration is not empty, then the CodeHilite extension
         is enabled, so we call into it to highlight the code.
         """
 

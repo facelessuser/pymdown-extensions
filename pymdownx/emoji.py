@@ -95,7 +95,7 @@ def to_png(index, shortname, alias, uc, alt, title, category, options, md):
     is_unicode = uc is not None
     classes = options.get('classes', index)
 
-    # In genral we can use the alias, but github specific images don't have one for each alias.
+    # In general we can use the alias, but github specific images don't have one for each alias.
     # We can tell we have a github specific if there is no Unicode value.
     if is_unicode:
         image_path = options.get('image_path', def_image_path)

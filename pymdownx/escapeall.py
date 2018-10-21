@@ -30,7 +30,7 @@ from markdown import util as md_util
 import re
 from . import util
 
-# We need to ignore theseas they are used in Markdown processing
+# We need to ignore these as they are used in Markdown processing
 STX = '\u0002'
 ETX = '\u0003'
 ESCAPE_RE = r'\\(.)'

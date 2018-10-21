@@ -78,7 +78,7 @@ def repl_relative(m, base_path, relative_path):
                     os.path.normpath(os.path.join(base_path, path)),
                     os.path.normpath(relative_path)
                 )
-                # Convert the path, url encode it, and format it as a link
+                # Convert the path, URL encode it, and format it as a link
                 path = util.path2url(path)
                 link = '%s"%s"' % (m.group('name'), util.urlunparse((scheme, netloc, path, params, query, fragment)))
     except Exception:  # pragma: no cover

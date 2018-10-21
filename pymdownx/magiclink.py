@@ -454,11 +454,11 @@ class MagicShortenerTreeprocessor(Treeprocessor):
             if is_magic:
                 del link.attrib['magiclink']
 
-            # We want a normal link.  No subelements embedded in it, just a normal string.
+            # We want a normal link.  No sub-elements embedded in it, just a normal string.
             if has_child or not text:  # pragma: no cover
                 continue
 
-            # Make sure the text matches the href.  If needed, add back protocol to be sure.
+            # Make sure the text matches the `href`.  If needed, add back protocol to be sure.
             # Not all links will pass through MagicLink, so we try both with and without protocol.
             if (text == href or (is_magic and self.hide_protocol and ('https://' + text) == href)):
                 m = RE_REPO_LINK.match(href)
