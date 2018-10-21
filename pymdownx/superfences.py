@@ -582,7 +582,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             else:
                 # Evaluate lines
                 # - Determine if it is the ending line or content line
-                # - If is a content line, make sure it is all indentend
+                # - If is a content line, make sure it is all indented
                 #   with the opening and closing lines (lines with just
                 #   whitespace will be stripped so those don't matter).
                 # - When content lines are inside blockquotes, make sure
