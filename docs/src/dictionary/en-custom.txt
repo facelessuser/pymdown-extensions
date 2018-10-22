@@ -22,6 +22,8 @@ Emoji
 EmojiOne
 EmojiOne's
 Esc
+didn't
+isn't
 EscapeAll
 ExtraRawHTML
 ExtraRawHtml

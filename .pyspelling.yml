@@ -1,6 +1,6 @@
-documents:
+matrix:
 - name: mkdocs
-  filters:
+  pipeline:
   - pyspelling.filters.html:
       comments: false
       attributes:
@@ -38,7 +38,7 @@ documents:
     wordlists:
     - docs/src/dictionary/en-custom.txt
     output: build/dictionary/mkdocs.dic
-  filters:
+  pipeline:
   - pyspelling.filters.markdown:
   - pyspelling.filters.html:
       comments: false
@@ -50,7 +50,7 @@ documents:
       - pre
 
 - name: javascript
-  filters:
+  pipeline:
   - pyspelling.filters.javascript:
       jsdocs: true
   default_encoding: utf-8
@@ -65,6 +65,29 @@ documents:
     - docs/src/dictionary/en-javascript.txt
     output: build/dictionary/javascript.dic
 
+- name: scss
+  default_encoding: utf-8
+  sources:
+  - docs/src/scss/*.scss
+  aspell:
+    lang: en
+  dictionary:
+    lang: en
+    wordlists:
+    - docs/src/dictionary/en-custom.txt
+    output: build/dictionary/scss.dic
+  pipeline:
+  - pyspelling.filters.stylesheets:
+      stylesheets: scss
+  - pyspelling.filters.context:
+      context_visible_first: true
+      escapes: \\[\\`~]
+      delimiters:
+        - open: (?P<open>`+)
+          close: (?P=open)
+        - open: (?s)^(?P<open>\s*~{3,})
+          close: ^(?P=open)$
+
 - name: python
   sources:
   - pymdownx/**/*.py
@@ -78,17 +101,25 @@ documents:
     - docs/src/dictionary/en-custom.txt
     - docs/src/dictionary/en-python.txt
     output: build/dictionary/python.dic
-  filters:
+  pipeline:
   - pyspelling.filters.python:
-      comments: false
-      strings: false
+  - pyspelling.flow_control.wildcard:
+      allow:
+      - py-comment
+  - pyspelling.filters.context:
+      context_visible_first: true
+      delimiters:
+      # Ignore lint (noqa) and coverage (pragma) as well as shebang (#!)
+      - open: ^(?:(?:noqa|pragma)\b|!)
+        close: $
+      # Ignore Python encoding string -*- encoding stuff -*-
+      - open: ^ *-\*-
+        close: -\*-$
   - pyspelling.filters.context:
       context_visible_first: true
       escapes: \\[\\`~]
       delimiters:
         - open: (?P<open>`+)
-          content: .*?
           close: (?P=open)
         - open: (?s)^(?P<open>\s*~{3,})
-          content: .*?
           close: ^(?P=open)$

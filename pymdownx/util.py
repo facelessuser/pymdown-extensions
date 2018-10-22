@@ -181,10 +181,10 @@ def parse_url(url):
     scheme, netloc, path, params, query, fragment = urlparse(html_unescape(url))
 
     if RE_URL.match(scheme):
-        # Clearly a url
+        # Clearly a URL
         is_url = True
     elif scheme == '' and netloc == '' and path == '':
-        # Maybe just a url fragment
+        # Maybe just a URL fragment
         is_url = True
     elif scheme == 'file' and (RE_WIN_DRIVE_PATH.match(netloc)):
         # file://c:/path or file://c:\path
@@ -212,7 +212,7 @@ def parse_url(url):
         netloc = ''
         is_absolute = True
     elif scheme != '' and netloc != '':
-        # A non-filepath or strange url
+        # A non-file path or strange URL
         is_url = True
     elif path.startswith(('/', '\\')):
         # /root path

@@ -10,7 +10,7 @@ ADDITIONAL_ALIASES = {}
 
 # Special emoji
 SPECIAL_EMOJI = {
-    # An unoffical emoji supported by very few
+    # An unofficial emoji supported by very few
     ":pirate_flag:": {
         "category": "flags",
         "name": "pirate flag",
@@ -135,7 +135,7 @@ SPECIAL_EMOJI = {
 IGNORE_EMOJI = [
     # Alternative man levitating
     # Per spec, "levitate" is already a man,
-    # no need to explicity have a man variant.
+    # no need to explicitly have a man variant.
     "1f574-fe0f-200d-2642-fe0f",
     "1f574-1f3fb-200d-2642-fe0f",
     "1f574-1f3fc-200d-2642-fe0f",
@@ -145,7 +145,7 @@ IGNORE_EMOJI = [
 
     # Alternative man in tuxedo
     # Per spec, "tuxedo" is already a man,
-    # no need to explicity have a man variant.
+    # no need to explicitly have a man variant.
     "1f935-200d-2642-fe0f",
     "1f935-1f3fb-200d-2642-fe0f",
     "1f935-1f3fc-200d-2642-fe0f",

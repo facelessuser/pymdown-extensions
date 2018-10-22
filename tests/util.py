@@ -80,7 +80,7 @@ class MdCase(unittest.TestCase):
         """Check the markdown."""
 
         if dedent:
-            # For markdown, begining and ending new lines get stripped out with
+            # For markdown, beginning and ending new lines get stripped out with
             # no issues, but for HTML (expected), we need to trim.
             # If there are tests that are newline sensitive, it may make sense
             # to call dedent directly to control this.
