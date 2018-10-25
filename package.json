@@ -39,7 +39,7 @@
     "gulp-rollup": "^2.16.2",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.4",
-    "gulp-stylelint": "^7.0.0",
+    "gulp-stylelint": "^8.0.0",
     "gulp-uglify": "^3.0.1",
     "material-design-color": "^2.3.2",
     "material-shadows": "^3.0.1",
