@@ -22,8 +22,9 @@ matrix:
   - site/**/*.html
   aspell:
     lang: en
+  hunspell:
+    d: docs/src/dictionary/hunspell/en_US
   dictionary:
-    lang: en
     wordlists:
     - docs/src/dictionary/en-custom.txt
     output: build/dictionary/mkdocs.dic
@@ -33,8 +34,9 @@ matrix:
   - README.md
   aspell:
     lang: en
+  hunspell:
+    d: docs/src/dictionary/hunspell/en_US
   dictionary:
-    lang: en
     wordlists:
     - docs/src/dictionary/en-custom.txt
     output: build/dictionary/mkdocs.dic
@@ -58,8 +60,9 @@ matrix:
   - docs/src/js/*.js
   aspell:
     lang: en
+  hunspell:
+    d: docs/src/dictionary/hunspell/en_US
   dictionary:
-    lang: en
     wordlists:
     - docs/src/dictionary/en-custom.txt
     - docs/src/dictionary/en-javascript.txt
@@ -71,8 +74,9 @@ matrix:
   - docs/src/scss/*.scss
   aspell:
     lang: en
+  hunspell:
+    d: docs/src/dictionary/hunspell/en_US
   dictionary:
-    lang: en
     wordlists:
     - docs/src/dictionary/en-custom.txt
     output: build/dictionary/scss.dic
@@ -81,22 +85,29 @@ matrix:
       stylesheets: scss
   - pyspelling.filters.context:
       context_visible_first: true
-      escapes: \\[\\`~]
+      escapes: '\\[\\`]'
       delimiters:
-        - open: (?P<open>`+)
-          close: (?P=open)
-        - open: (?s)^(?P<open>\s*~{3,})
-          close: ^(?P=open)$
+      # Ignore multiline content between fences (fences can have 3 or more back ticks)
+      # ```
+      # content
+      # ```
+      - open: '(?s)^(?P<open> *`{3,})$'
+        close: '^(?P=open)$'
+      # Ignore text between inline back ticks
+      - open: '(?P<open>`+)'
+        close: '(?P=open)'
 
 - name: python
   sources:
-  - pymdownx/**/*.py
-  - tests/**/*.py
-  - tools/**/*.py|!tools/tags/*
+  # - pymdownx/**/*.py
+  # - tests/**/*.py
+  # - tools/**/*.py|!tools/tags/*
+  - pymdownx/**/progressbar.py
   aspell:
     lang: en
+  hunspell:
+    d: docs/src/dictionary/hunspell/en_US
   dictionary:
-    lang: en
     wordlists:
     - docs/src/dictionary/en-custom.txt
     - docs/src/dictionary/en-python.txt
@@ -110,16 +121,21 @@ matrix:
       context_visible_first: true
       delimiters:
       # Ignore lint (noqa) and coverage (pragma) as well as shebang (#!)
-      - open: ^(?:(?:noqa|pragma)\b|!)
-        close: $
+      - open: '^(?: *(?:noqa\b|pragma: no cover)|!)'
+        close: '$'
       # Ignore Python encoding string -*- encoding stuff -*-
-      - open: ^ *-\*-
-        close: -\*-$
+      - open: '^ *-\*-'
+        close: '-\*-$'
   - pyspelling.filters.context:
       context_visible_first: true
-      escapes: \\[\\`~]
+      escapes: '\\[\\`]'
       delimiters:
-        - open: (?P<open>`+)
-          close: (?P=open)
-        - open: (?s)^(?P<open>\s*~{3,})
-          close: ^(?P=open)$
+      # Ignore multiline content between fences (fences can have 3 or more back ticks)
+      # ```
+      # content
+      # ```
+      - open: '(?s)^(?P<open> *`{3,})$'
+        close: '^(?P=open)$'
+      # Ignore text between inline back ticks
+      - open: '(?P<open>`+)'
+        close: '(?P=open)'

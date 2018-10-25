@@ -173,10 +173,10 @@ def to_svg_sprite(index, shortname, alias, uc, alt, title, category, options, md
     """
     Return SVG sprite element.
 
-    ~~~.html
+    ```
     <svg class="%(classes)s"><description>%(alt)s</description>
     <use xlink:href="%(sprite)s#emoji-%(unicode)s"></use></svg>
-    ~~~
+    ```
     """
 
     xlink_href = '%s#emoji-%s' % (
