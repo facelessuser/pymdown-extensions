@@ -43,7 +43,7 @@ class TestUrlParse(unittest.TestCase):
     def test_file_windows_backslash(self):
         """Test file windows with backslash."""
 
-        url = 'file://c:\path'
+        url = r'file://c:\path'
         scheme, netloc, path, params, query, fragment, is_url, is_absolute = util.parse_url(url)
         self.assertEqual(scheme, 'file')
         self.assertEqual(path, '/c:/path')
@@ -53,7 +53,7 @@ class TestUrlParse(unittest.TestCase):
     def test_file_windows_start_backslash(self):
         """Test file windows start with backslash."""
 
-        url = 'file://\c:\path'
+        url = r'file://\c:\path'
         scheme, netloc, path, params, query, fragment, is_url, is_absolute = util.parse_url(url)
         self.assertEqual(scheme, 'file')
         self.assertEqual(path, '/c:/path')
@@ -93,7 +93,7 @@ class TestUrlParse(unittest.TestCase):
     def test_windows_path_backslash(self):
         """Test file windows path with backslash."""
 
-        url = 'c:\path'
+        url = r'c:\path'
         scheme, netloc, path, params, query, fragment, is_url, is_absolute = util.parse_url(url)
         self.assertEqual(scheme, 'file')
         self.assertEqual(path, '/c:/path')

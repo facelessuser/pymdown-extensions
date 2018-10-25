@@ -4,7 +4,7 @@ Arithmatex.
 pymdownx.arithmatex
 Extension that preserves the following for MathJax use:
 
-~~~.tex
+```
 $Equation$, \(Equation\)
 
 $$
@@ -18,7 +18,7 @@ $$
 \begin{align}
   Display Equations
 \end{align}
-~~~
+```
 
 and `$Inline MathJax Equations$`
 

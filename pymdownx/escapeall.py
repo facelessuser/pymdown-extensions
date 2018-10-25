@@ -36,7 +36,7 @@ ETX = '\u0003'
 ESCAPE_RE = r'\\(.)'
 ESCAPE_NO_NL_RE = r'\\([^\n])'
 HARDBREAK_RE = r'\\\n'
-UNESCAPE_PATTERN = re.compile('%s(\d+)%s' % (md_util.STX, md_util.ETX))
+UNESCAPE_PATTERN = re.compile(r'%s(\d+)%s' % (md_util.STX, md_util.ETX))
 
 
 class EscapeAllPattern(InlineProcessor):
