@@ -5969,9 +5969,9 @@ stylelint-order@^1.0.0:
     postcss "^7.0.2"
     postcss-sorting "^4.0.0"
 
-stylelint-scss@^3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/stylelint-scss/-/stylelint-scss-3.3.1.tgz#5061bca7cc586eb05972caa31b5e627fa3296235"
+stylelint-scss@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/stylelint-scss/-/stylelint-scss-3.3.2.tgz#0ee3ec3758c54e9cf4805da82dcce4d514d9e095"
   dependencies:
     lodash "^4.17.10"
     postcss-media-query-parser "^0.2.3"
