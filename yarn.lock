@@ -2751,9 +2751,9 @@ gulp-sourcemaps@^2.6.4:
     strip-bom-string "1.X"
     through2 "2.X"
 
-gulp-stylelint@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/gulp-stylelint/-/gulp-stylelint-7.0.0.tgz#4249dc36a983e6a2c28a449f73d9a369bb14b458"
+gulp-stylelint@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/gulp-stylelint/-/gulp-stylelint-8.0.0.tgz#b8de497b2dce2ab466d323961f310cf502198bbf"
   dependencies:
     chalk "^2.3.0"
     deep-extend "^0.5.0"
