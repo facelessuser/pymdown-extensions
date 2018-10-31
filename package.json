@@ -47,7 +47,7 @@
     "postcss-pseudo-classes": "^0.2.0",
     "rollup": "^0.66.6",
     "rollup-plugin-babel": "^4.0.3",
-    "stylelint": "^9.6.0",
+    "stylelint": "^9.7.1",
     "stylelint-config-standard": "^18.2.0",
     "stylelint-order": "^1.0.0",
     "stylelint-scss": "^3.3.2",
