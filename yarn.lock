@@ -3761,7 +3761,7 @@ lodash.uniq@^4.5.0:
   version "4.5.0"
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
 
-lodash@^4.0.0, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.4, lodash@^4.3.0, lodash@~4.17.4:
+lodash@^4.0.0, lodash@^4.13.1, lodash@^4.17.10, lodash@^4.17.11, lodash@^4.17.4, lodash@^4.3.0, lodash@~4.17.4:
   version "4.17.11"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.11.tgz#b39ea6229ef607ecd89e2c8df12536891cac9b8d"
 
@@ -5991,15 +5991,15 @@ stylelint-order@^1.0.0:
     postcss "^7.0.2"
     postcss-sorting "^4.0.0"
 
-stylelint-scss@^3.3.2:
-  version "3.3.2"
-  resolved "https://registry.yarnpkg.com/stylelint-scss/-/stylelint-scss-3.3.2.tgz#0ee3ec3758c54e9cf4805da82dcce4d514d9e095"
+stylelint-scss@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/stylelint-scss/-/stylelint-scss-3.4.0.tgz#263da8450e371bcf646063c6ac62f69225369697"
   dependencies:
-    lodash "^4.17.10"
+    lodash "^4.17.11"
     postcss-media-query-parser "^0.2.3"
     postcss-resolve-nested-selector "^0.1.1"
     postcss-selector-parser "^4.0.0"
-    postcss-value-parser "^3.3.0"
+    postcss-value-parser "^3.3.1"
 
 stylelint@^9.7.1:
   version "9.7.1"
