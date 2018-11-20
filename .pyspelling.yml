@@ -7,17 +7,11 @@ matrix:
       - title
       - alt
       ignores:
-      - code
-      - pre
-      - a.magiclink-compare
-      - a.magiclink-commit
-      - span.keys
-      - .MathJax_Preview
-      - .md-nav__link
-      - .md-footer-custom-text
-      - .md-source__repository
-      - .headerlink
-      - .md-icon
+      - ':matches(code, pre)'
+      - 'a:matches(.magiclink-compare, .magiclink-commit, .magiclink-repository)'
+      - 'span.keys'
+      - ':matches(.MathJax_Preview, .md-nav__link, .md-footer-custom-text, .md-source__repository, .headerlink, .md-icon)'
+  - pyspelling.filters.url:
   sources:
   - site/**/*.html
   aspell:
@@ -48,13 +42,14 @@ matrix:
       - title
       - alt
       ignores:
-      - code
-      - pre
+      - ':matches(code, pre)'
+  - pyspelling.filters.url:
 
 - name: javascript
   pipeline:
   - pyspelling.filters.javascript:
       jsdocs: true
+  - pyspelling.filters.url:
   default_encoding: utf-8
   sources:
   - docs/src/js/*.js
@@ -96,6 +91,7 @@ matrix:
       # Ignore text between inline back ticks
       - open: '(?P<open>`+)'
         close: '(?P=open)'
+  - pyspelling.filters.url:
 
 - name: python
   sources:
@@ -139,3 +135,4 @@ matrix:
       # Ignore text between inline back ticks
       - open: '(?P<open>`+)'
         close: '(?P=open)'
+  - pyspelling.filters.url:
