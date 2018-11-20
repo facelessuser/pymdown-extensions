@@ -6772,9 +6772,9 @@ yargs-parser@^10.0.0:
   dependencies:
     camelcase "^4.1.0"
 
-yargs-parser@^11.1.0:
-  version "11.1.0"
-  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-11.1.0.tgz#0b8104116367bf663089b24e5801438ab50396a3"
+yargs-parser@^11.1.1:
+  version "11.1.1"
+  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-11.1.1.tgz#879a0865973bca9f6bab5cbdf3b1c67ec7d3bcf4"
   dependencies:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
@@ -6785,9 +6785,9 @@ yargs-parser@^5.0.0:
   dependencies:
     camelcase "^3.0.0"
 
-yargs@^12.0.4:
-  version "12.0.4"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-12.0.4.tgz#5ea307c6f11f11881c3bc375f9c939194e8cf4bc"
+yargs@^12.0.5:
+  version "12.0.5"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-12.0.5.tgz#05f5997b609647b64f66b81e3b4b10a368e7ad13"
   dependencies:
     cliui "^4.0.0"
     decamelize "^1.2.0"
@@ -6800,7 +6800,7 @@ yargs@^12.0.4:
     string-width "^2.0.0"
     which-module "^2.0.0"
     y18n "^3.2.1 || ^4.0.0"
-    yargs-parser "^11.1.0"
+    yargs-parser "^11.1.1"
 
 yargs@^7.0.0, yargs@^7.1.0:
   version "7.1.0"
