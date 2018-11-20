@@ -2,7 +2,8 @@
 .md-typeset {
   .admonition {
     @each $names, $appearance in (
-      settings config: $clr-purple-a700 "settings"
+      settings config: $clr-purple-a700 "settings",
+      new: $clr-yellow-a700 "new_releases"
     ) {
       $tint: nth($appearance, 1);
       $icon: nth($appearance, 2);
