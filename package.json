@@ -49,7 +49,7 @@
     "rollup-plugin-babel": "^4.0.3",
     "stylelint": "^9.8.0",
     "stylelint-config-standard": "^18.2.0",
-    "stylelint-order": "^1.0.0",
+    "stylelint-order": "^2.0.0",
     "stylelint-scss": "^3.4.0",
     "vinyl-paths": "^2.1.0",
     "yargs": "^12.0.5"
