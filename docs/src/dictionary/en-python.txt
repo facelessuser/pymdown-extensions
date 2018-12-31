@@ -36,4 +36,5 @@ striphtml
 tasklist
 tasklists
 trollface
+tuple
 wildcard
