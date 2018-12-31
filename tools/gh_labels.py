@@ -55,7 +55,7 @@ label_list = {
     'keys': (SUBCATEGORY, "Related to the keys extension."),
     'magiclink': (SUBCATEGORY, "Related to the magiclink extension."),
     'mark': (SUBCATEGORY, "Related to the mark extension."),
-    'paythconverter': (SUBCATEGORY, "Related to the paythconverter extension."),
+    'pathconverter': (SUBCATEGORY, "Related to the paythconverter extension."),
     'progressbar': (SUBCATEGORY, "Related to the progressbar extension."),
     'slugs': (SUBCATEGORY, "Related to the slugs extension."),
     'smartsymbols': (SUBCATEGORY, "Related to the smartsymbols extension."),
