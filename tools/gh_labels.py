@@ -31,7 +31,7 @@ label_list = {
     # Issue type
     'bug': (BUG, "Bug report."),
     'feature': (FEATURE, "Feature request."),
-    'maintenance': (MAINTENANCE, "Maintenance chore.")
+    'maintenance': (MAINTENANCE, "Maintenance chore."),
     'support': (SUPPORT, "Support request."),
 
     # Category
