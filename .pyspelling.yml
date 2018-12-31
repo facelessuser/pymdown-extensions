@@ -95,10 +95,9 @@ matrix:
 
 - name: python
   sources:
-  # - pymdownx/**/*.py
-  # - tests/**/*.py
-  # - tools/**/*.py|!tools/tags/*
-  - pymdownx/**/progressbar.py
+  - pymdownx/**/*.py
+  - tests/**/*.py
+  - tools/**/*.py|!tools/tags/*
   aspell:
     lang: en
   hunspell:
@@ -110,6 +109,7 @@ matrix:
     output: build/dictionary/python.dic
   pipeline:
   - pyspelling.filters.python:
+      group_comments: true
   - pyspelling.flow_control.wildcard:
       allow:
       - py-comment

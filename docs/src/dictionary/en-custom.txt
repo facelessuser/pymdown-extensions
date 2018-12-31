@@ -1,4 +1,5 @@
 API
+Accessors
 Apr
 Arithmatex
 Arithmatex's
@@ -22,8 +23,6 @@ Emoji
 EmojiOne
 EmojiOne's
 Esc
-didn't
-isn't
 EscapeAll
 ExtraRawHTML
 ExtraRawHtml
@@ -99,6 +98,7 @@ Validators
 Virtualenv
 Waylan
 YAML
+accessor
 backrefs
 backtick
 backticks
@@ -113,9 +113,11 @@ cmd
 config
 coveragepy
 customizable
+deprecations
 dev
 dict
 dicts
+didn't
 docstrings
 ebeweber
 emoji
@@ -133,9 +135,11 @@ html
 indepth
 inline
 ish
+isn't
 jQuery
 js
 kbd
+keymap
 linkafies
 linter
 lowercased
@@ -164,6 +168,8 @@ prepending
 prepends
 preprocessor
 preprocessors
+prerelease
+prereleases
 px
 py
 pycqa
