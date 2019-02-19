@@ -1,5 +1,9 @@
 # Changelog
 
+## Latest
+
+- **FIX**: Don't install tests when installing package.
+
 ## 6.0.0
 
 Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
