@@ -51,7 +51,7 @@ setup(
     author='Isaac Muse',
     author_email='Isaac.Muse@gmail.com',
     url='https://github.com/facelessuser/pymdown-extensions',
-    packages=find_packages(exclude=['tools', 'tests']),
+    packages=find_packages(exclude=['tools', 'test*']),
     install_requires=get_requirements("requirements/project.txt"),
     license='MIT License',
     classifiers=[
