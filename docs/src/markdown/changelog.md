@@ -1,7 +1,9 @@
 # Changelog
 
-## Latest
+## 6.1.0
 
+- **NEW**: `version` and `version_info` are now accessible via the more standard form `__version__` and `_version_info__`. The old format, while available, is now deprecated.
+- **FIX**: Fix issue where entities in the form `&#35;` would trigger MagicLink's shorthand for issues.
 - **FIX**: Don't install tests when installing package.
 
 ## 6.0.0

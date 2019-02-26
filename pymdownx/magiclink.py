@@ -746,40 +746,40 @@ class MagiclinkExtension(Extension):
             git_ext_repo = MagiclinkRepositoryPattern(
                 RE_GIT_EXT_REPO_MENTIONS, md, self.user, self.repo, self.provider, self.labels
             )
-            md.inlinePatterns.register(git_ext_repo, "magic-repo-ext-mention", 84.8)
+            md.inlinePatterns.register(git_ext_repo, "magic-repo-ext-mention", 79.9)
             if not self.is_social:
                 git_int_repo = MagiclinkRepositoryPattern(
                     RE_GIT_INT_REPO_MENTIONS % int_mentions, md, self.user, self.repo, self.provider, self.labels
                 )
-                md.inlinePatterns.register(git_int_repo, "magic-repo-int-mention", 84.7)
+                md.inlinePatterns.register(git_int_repo, "magic-repo-int-mention", 79.8)
 
         # Mentions
         pattern = RE_ALL_EXT_MENTIONS % '|'.join(ext_mentions)
         git_mention = MagiclinkMentionPattern(
             pattern, md, self.user, self.repo, self.provider, self.labels
         )
-        md.inlinePatterns.register(git_mention, "magic-ext-mention", 84.6)
+        md.inlinePatterns.register(git_mention, "magic-ext-mention", 79.7)
 
         git_mention = MagiclinkMentionPattern(
             RE_INT_MENTIONS % int_mentions, md, self.user, self.repo, self.provider, self.labels
         )
-        md.inlinePatterns.register(git_mention, "magic-int-mention", 84.5)
+        md.inlinePatterns.register(git_mention, "magic-int-mention", 79.6)
 
         # Other project refs
         if self.git_short:
             git_ext_refs = MagiclinkExternalRefsPattern(
                 RE_GIT_EXT_REFS, md, self.user, self.repo, self.provider, self.labels
             )
-            md.inlinePatterns.register(git_ext_refs, "magic-ext-refs", 84.3)
+            md.inlinePatterns.register(git_ext_refs, "magic-ext-refs", 79.5)
             if not self.is_social:
                 git_int_refs = MagiclinkExternalRefsPattern(
                     RE_GIT_INT_EXT_REFS % int_mentions, md, self.user, self.repo, self.provider, self.labels
                 )
-                md.inlinePatterns.register(git_int_refs, "magic-int-refs", 84.2)
+                md.inlinePatterns.register(git_int_refs, "magic-int-refs", 79.4)
                 git_int_micro_refs = MagiclinkInternalRefsPattern(
                     RE_GIT_INT_MICRO_REFS, md, self.user, self.repo, self.provider, self.labels
                 )
-                md.inlinePatterns.register(git_int_micro_refs, "magic-int-micro-refs", 84.1)
+                md.inlinePatterns.register(git_int_micro_refs, "magic-int-micro-refs", 79.3)
 
     def setup_shortener(self, md, base_url, base_user_url, config):
         """Setup shortener."""
