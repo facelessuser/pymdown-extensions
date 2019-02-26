@@ -53,6 +53,7 @@ LaTeX
 Limberg
 MERCHANTABILITY
 MagicLink
+MagicLink's
 Mar
 MathJax
 Mathjax
