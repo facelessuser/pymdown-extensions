@@ -110,7 +110,7 @@ gulp.task("scss:build:sass", () => {
 gulp.task("scss:build", gulp.series("scss:build:sass", () => {
   return gulp.src(config.files.mkdocsSrc)
     .pipe(gulpif(config.revision, revReplace({
-      manifest: gulp.src("manifest.json"),
+      manifest: gulp.src("manifest.json", {allowEmpty: true}),
       replaceInExtensions: [".yml"]
     })))
     .pipe(gulp.dest("."))
@@ -177,7 +177,7 @@ gulp.task("js:build:rollup", () => {
 gulp.task("js:build", gulp.series("js:build:rollup", () => {
   return gulp.src(config.files.mkdocsSrc)
     .pipe(gulpif(config.revision, revReplace({
-      manifest: gulp.src("manifest.json"),
+      manifest: gulp.src("manifest.json", {allowEmpty: true}),
       replaceInExtensions: [".yml"]
     })))
     .pipe(gulp.dest("."))
