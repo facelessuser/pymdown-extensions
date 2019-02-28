@@ -29,12 +29,12 @@ import touch from "gulp-touch-fd"
 
 /* Argument Flags */
 const args = yargs
-  .default("compress", false)
-  .default("lint", false)
-  .default("clean", false)
-  .default("sourcemaps", false)
-  .default("buildmkdocs", false)
-  .default("revision", false)
+  .boolean("compress")
+  .boolean("lint")
+  .boolean("clean")
+  .boolean("sourcemaps")
+  .boolean("buildmkdocs")
+  .boolean("revision")
   .default("mkdocs", "mkdocs")
   .argv
 
@@ -128,7 +128,7 @@ gulp.task("scss:lint", () => {
 })
 
 gulp.task("scss:watch", () => {
-  gulp.watch(config.files.scss, gulp.series("scss:build", "mkdocs:touch"))
+  gulp.watch(config.files.scss, gulp.series("scss:build", "mkdocs:update"))
 })
 
 gulp.task("scss:clean", () => {
@@ -192,7 +192,7 @@ gulp.task("js:lint", () => {
 })
 
 gulp.task("js:watch", () => {
-  gulp.watch(config.files.es6, gulp.series("js:build:rollup", "mkdocs:touch"))
+  gulp.watch(config.files.es6, gulp.series("js:build:rollup", "mkdocs:update"))
 })
 
 gulp.task("js:clean", () => {
@@ -221,16 +221,7 @@ gulp.task("mkdocs:serve", () => {
 gulp.task("mkdocs:update", () => {
   return gulp.src(config.files.mkdocsSrc)
     .pipe(gulp.dest("."))
-})
-
-gulp.task("mkdocs:touch", () => {
-  return gulp.src(config.files.mkdocsSrc)
-    .pipe(gulp.dest("."))
     .pipe(touch())
-})
-
-gulp.task("mkdocs:watch", () => {
-  gulp.watch(config.files.mkdocsSrc, gulp.series("mkdocs:update"))
 })
 
 gulp.task("mkdocs:build", () => {
@@ -266,7 +257,6 @@ gulp.task("serve", gulp.series(
   gulp.parallel(
     "scss:watch",
     "js:watch",
-    "mkdocs:watch",
     "mkdocs:serve"
   )
 ))
