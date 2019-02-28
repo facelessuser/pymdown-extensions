@@ -132,6 +132,6 @@ extra:
     - type: github
       link: https://github.com/facelessuser
 extra_css:
-  - extra-83f68d2c59.css
+  - extra-30d8e6755c.css
 extra_javascript:
   - extra-0b9b22dd13.js

@@ -2770,6 +2770,12 @@ gulp-stylelint@^8.0.0:
     strip-ansi "^4.0.0"
     through2 "^2.0.3"
 
+gulp-touch-fd@funkedigital/gulp-touch-fd:
+  version "2.0.0"
+  resolved "https://codeload.github.com/funkedigital/gulp-touch-fd/tar.gz/37db9cfb962f8d05601e5224d10673db76de3a7f"
+  dependencies:
+    map-stream "0.0.7"
+
 gulp-uglify@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/gulp-uglify/-/gulp-uglify-3.0.1.tgz#8d3eee466521bea6b10fd75dff72adf8b7ea2d97"
@@ -3833,6 +3839,10 @@ map-obj@^1.0.0, map-obj@^1.0.1:
 map-obj@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-2.0.0.tgz#a65cd29087a92598b8791257a523e021222ac1f9"
+
+map-stream@0.0.7:
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/map-stream/-/map-stream-0.0.7.tgz#8a1f07896d82b10926bd3744a2420009f88974a8"
 
 map-visit@^1.0.0:
   version "1.0.0"

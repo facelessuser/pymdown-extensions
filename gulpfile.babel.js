@@ -25,6 +25,7 @@ import rev from "gulp-rev"
 import revReplace from "gulp-rev-replace"
 import vinylPaths from "vinyl-paths"
 import del from "del"
+import touch from "gulp-touch-fd"
 
 /* Argument Flags */
 const args = yargs
@@ -110,7 +111,7 @@ gulp.task("scss:build:sass", () => {
 gulp.task("scss:build", gulp.series("scss:build:sass", () => {
   return gulp.src(config.files.mkdocsSrc)
     .pipe(gulpif(config.revision, revReplace({
-      manifest: gulp.src("manifest.json"),
+      manifest: gulp.src("manifest.json", {allowEmpty: true}),
       replaceInExtensions: [".yml"]
     })))
     .pipe(gulp.dest("."))
@@ -127,7 +128,7 @@ gulp.task("scss:lint", () => {
 })
 
 gulp.task("scss:watch", () => {
-  gulp.watch(config.files.scss, gulp.series("scss:build"))
+  gulp.watch(config.files.scss, gulp.series("scss:build", "mkdocs:touch"))
 })
 
 gulp.task("scss:clean", () => {
@@ -177,7 +178,7 @@ gulp.task("js:build:rollup", () => {
 gulp.task("js:build", gulp.series("js:build:rollup", () => {
   return gulp.src(config.files.mkdocsSrc)
     .pipe(gulpif(config.revision, revReplace({
-      manifest: gulp.src("manifest.json"),
+      manifest: gulp.src("manifest.json", {allowEmpty: true}),
       replaceInExtensions: [".yml"]
     })))
     .pipe(gulp.dest("."))
@@ -191,7 +192,7 @@ gulp.task("js:lint", () => {
 })
 
 gulp.task("js:watch", () => {
-  gulp.watch(config.files.es6, gulp.series("js:build:rollup"))
+  gulp.watch(config.files.es6, gulp.series("js:build:rollup", "mkdocs:touch"))
 })
 
 gulp.task("js:clean", () => {
@@ -220,6 +221,12 @@ gulp.task("mkdocs:serve", () => {
 gulp.task("mkdocs:update", () => {
   return gulp.src(config.files.mkdocsSrc)
     .pipe(gulp.dest("."))
+})
+
+gulp.task("mkdocs:touch", () => {
+  return gulp.src(config.files.mkdocsSrc)
+    .pipe(gulp.dest("."))
+    .pipe(touch())
 })
 
 gulp.task("mkdocs:watch", () => {

@@ -40,6 +40,7 @@
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-stylelint": "^8.0.0",
+    "gulp-touch-fd": "funkedigital/gulp-touch-fd",
     "gulp-uglify": "^3.0.1",
     "material-design-color": "^2.3.2",
     "material-shadows": "^3.0.1",
