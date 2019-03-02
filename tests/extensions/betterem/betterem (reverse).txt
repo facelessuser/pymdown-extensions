@@ -16,6 +16,8 @@ Test: **This will NOT all be bold** because of the placement of the center aster
 
 Test: **This will all be bold* because the token is less than that of the surrounding.**
 
+Test: This is text **bold *italic bold*** with more text
+
 Test: _All will _ be italic_
 
 Test: _All will _be italic_
@@ -31,3 +33,5 @@ Test: _All will _be italic__
 Test: __All will not___ be bold__
 
 Test: __All will not ___ be bold__
+
+Test: This is text __bold _italic bold___ with more text

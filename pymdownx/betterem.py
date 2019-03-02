@@ -25,7 +25,7 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from markdown import Extension
-from markdown.inlinepatterns import SimpleTagInlineProcessor, DoubleTagInlineProcessor
+from markdown.inlinepatterns import SimpleTagInlineProcessor, DoubleTagInlineProcessor, util
 
 SMART_UNDER_CONTENT = r'((?:[^_]|_(?=\w|\s)|(?<=\s)_+?(?=\s))+?_*?)'
 SMART_STAR_CONTENT = r'((?:[^\*]|\*(?=[^\W_]|\*|\s)|(?<=\s)\*+?(?=\s))+?\**?)'
@@ -46,8 +46,12 @@ STAR_STRONG_EM2 = r'(\*{3})(?![\s\*])%s(?<!\s)\*%s(?<!\s)\*{2}' % (STAR_CONTENT,
 UNDER_STRONG_EM2 = r'(_{3})(?![\s_])%s(?<!\s)_%s(?<!\s)_{2}' % (UNDER_CONTENT, UNDER_CONTENT2)
 # ***em,strong**em*
 STAR_EM_STRONG = r'(\*{3})(?![\s\*])%s(?<!\s)\*{2}%s(?<!\s)\*' % (STAR_CONTENT2, STAR_CONTENT)
+# **em*em,strong***
+STAR_STRONG_EM3 = r'(\*{2})(?![\s\*])%s\*(?![\s\*])%s(?<!\s)\*{3}' % (STAR_CONTENT2, STAR_CONTENT)
 # ___em,strong__em_
 UNDER_EM_STRONG = r'(_{3})(?![\s_])%s(?<!\s)_{2}%s(?<!\s)_' % (UNDER_CONTENT2, UNDER_CONTENT)
+# __em_em,strong___
+UNDER_STRONG_EM3 = r'(_{2})(?![\s_])%s_(?![\s_])%s(?<!\s)_{3}' % (UNDER_CONTENT2, UNDER_CONTENT)
 # **strong**
 STAR_STRONG = r'(\*{2})(?!\s)%s(?<!\s)\1' % STAR_CONTENT2
 # __strong__
@@ -90,6 +94,23 @@ SMART_STAR_STRONG = r'(?:(?<=_)|(?<![\w\*]))(\*{2})(?![\s\*])%s(?<!\s)\1(?:(?=_)
 SMART_STAR_EM = r'(?:(?<=_)|(?<![\w\*]))(\*)(?![\s\*])%s(?<!\s)\1(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT
 
 
+class DoubleTagInlineProcessor2(SimpleTagInlineProcessor):
+    """
+    Return a ElementTree element nested in tag2 nested in tag1.
+
+    Useful for strong emphasis etc.
+    """
+
+    def handleMatch(self, m, data):
+        """Handle match for double tags."""
+        tag1, tag2 = self.tag.split(",")
+        el1 = util.etree.Element(tag1)
+        el2 = util.etree.SubElement(el1, tag2)
+        el1.text = m.group(2)
+        el2.text = m.group(3)
+        return el1, m.start(0), m.end(0)
+
+
 class BetterEmExtension(Extension):
     """Add extension to Markdown class."""
 
@@ -130,6 +151,8 @@ class BetterEmExtension(Extension):
         under_em_strong = SMART_UNDER_EM_STRONG if enable_under else UNDER_EM_STRONG
         star_strong_em2 = SMART_STAR_STRONG_EM2 if enable_star else STAR_STRONG_EM2
         under_strong_em2 = SMART_UNDER_STRONG_EM2 if enable_under else UNDER_STRONG_EM2
+        star_strong_em3 = None if enable_star else STAR_STRONG_EM3
+        under_strong_em3 = None if enable_under else UNDER_STRONG_EM3
         star_strong = SMART_STAR_STRONG if enable_star else STAR_STRONG
         under_strong = SMART_UNDER_STRONG if enable_under else UNDER_STRONG
         star_emphasis = SMART_STAR_EM if enable_star else STAR_EM
@@ -143,6 +166,11 @@ class BetterEmExtension(Extension):
         md.inlinePatterns.register(DoubleTagInlineProcessor(under_em_strong, 'em,strong'), "em_strong2", 49.7)
         md.inlinePatterns.register(DoubleTagInlineProcessor(star_strong_em2, 'strong,em'), 'strong_em3', 49.6)
         md.inlinePatterns.register(DoubleTagInlineProcessor(under_strong_em2, 'strong,em'), 'strong_em4', 49.5)
+        # This is only needed when smart mode is disabled
+        if star_strong_em3 is not None:
+            md.inlinePatterns.register(DoubleTagInlineProcessor2(star_strong_em3, 'strong,em'), 'strong_em5', 49.4)
+        if under_strong_em3 is not None:
+            md.inlinePatterns.register(DoubleTagInlineProcessor2(under_strong_em3, 'strong,em'), 'strong_em6', 49.3)
         md.inlinePatterns.register(SimpleTagInlineProcessor(star_strong, 'strong'), "strong", 40)
         md.inlinePatterns.register(SimpleTagInlineProcessor(under_strong, 'strong'), "strong2", 39.9)
         md.inlinePatterns.register(SimpleTagInlineProcessor(star_emphasis, 'em'), "emphasis", 30)
