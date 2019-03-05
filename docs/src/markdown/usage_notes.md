@@ -22,15 +22,3 @@ Also, you shouldn't include an extension more than once. If you try to include m
     'markdown.extensions.abbr',
     'pymdownx.extrarawhtml'
     ```
-
-- `pymdownx.github` (deprecated) doesn't replace any extensions and is just a convenience extensions to include most of the extensions needed to get a GitHub-ish feel.  Remember to avoid including this and then including conflicting extensions or doubles of extensions.  Here is the full list of included extensions:
-
-    ```
-    'markdown.extensions.tables',
-    'pymdownx.magiclink',
-    'pymdownx.betterem',
-    'pymdownx.tilde',
-    'pymdownx.emoji',
-    'pymdownx.tasklist',
-    'pymdownx.superfences'
-    ```
