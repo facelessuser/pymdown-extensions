@@ -1,6 +1,5 @@
 """
-Figure and Figcaption Extension
-===============================
+Figure and Figcaption Extension.
 
 This extension adds figure and figcaption handling.
 """
@@ -45,9 +44,7 @@ class FigureBlockProcessor(BlockProcessor):
         """Test block."""
 
         sibling = self.lastChild(parent)
-        return (self.START.search(block)
-                or (block.startswith(' ' * self.tab_length)
-                    and sibling is not None and sibling.tag == 'figure'))
+        return (self.START.search(block) or (block.startswith(' ' * self.tab_length) and sibling is not None and sibling.tag == 'figure'))
 
     def run(self, parent, blocks):
         """Convert to figure block."""
@@ -91,6 +88,7 @@ class FigCapTreeprocessor(Treeprocessor):
     """Get rid of the <p> tag if <img> is the only thing in the <p>."""
 
     def run(self, root):
+        """Operate the <p> that only has a <img> in it and without any text."""
         for figure in root.iterfind('figure'):
             for p in figure.iterfind('p'):
                 if len(p) == 1:
