@@ -44,7 +44,8 @@ class FigureBlockProcessor(BlockProcessor):
         """Test block."""
 
         sibling = self.lastChild(parent)
-        return (self.START.search(block) or (block.startswith(' ' * self.tab_length) and sibling is not None and sibling.tag == 'figure'))
+        return (self.START.search(block) or 
+                (block.startswith(' ' * self.tab_length) and sibling is not None and sibling.tag == 'figure'))
 
     def run(self, parent, blocks):
         """Convert to figure block."""
