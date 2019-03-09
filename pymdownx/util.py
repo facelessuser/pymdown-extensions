@@ -12,6 +12,7 @@ import re
 
 PY3 = sys.version_info >= (3, 0)
 PY34 = sys.version_info >= (3, 4)
+PY37 = sys.version_info >= (3, 7)
 
 if PY3:
     ustr = str  # noqa
@@ -24,12 +25,17 @@ if PY3:
         html_unescape = html.unescape  # noqa
     else:  # pragma: no cover
         html_unescape = HTMLParser().unescape  # noqa
+    if not PY37:
+        from collections import OrderedDict as odict  # noqa: N813,F401
+    else:
+        odict = dict
 else:
     ustr = unicode  # noqa
     uchr = unichr  # noqa
     from urllib import pathname2url, url2pathname, quote  # noqa
     from urlparse import urlparse, urlunparse  # noqa
     from HTMLParser import HTMLParser  # noqa
+    from collections import OrderedDict as odict  # noqa: N813,F401
     html_unescape = HTMLParser().unescape  # noqa
 
 RE_WIN_DRIVE_LETTER = re.compile(r"^[A-Za-z]$")

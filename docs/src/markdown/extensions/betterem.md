@@ -34,11 +34,15 @@ BetterEm allows for a more natural nested token feel.
     ***I'm italic and bold* I am just bold.**
 
     ***I'm bold and italic!** I am just italic.*
+
+    **I'm bold *I am bold and italic***
     ```
 
     ***I'm italic and bold* I am just bold.**
 
     ***I'm bold and italic!** I am just italic.*
+
+    **I'm bold *I am bold and italic***
 
 BetterEm will ensure smart mode doesn't terminate in scenarios where there are a large amount of consecutive tokens inside.
 

@@ -25,7 +25,10 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from markdown import Extension
-from markdown.inlinepatterns import SimpleTagInlineProcessor, DoubleTagInlineProcessor, util
+from markdown.inlinepatterns import InlineProcessor
+from markdown.inlinepatterns import util as md_util
+from . import util
+import re
 
 SMART_UNDER_CONTENT = r'((?:[^_]|_(?=\w|\s)|(?<=\s)_+?(?=\s))+?_*?)'
 SMART_STAR_CONTENT = r'((?:[^\*]|\*(?=[^\W_]|\*|\s)|(?<=\s)\*+?(?=\s))+?\**?)'
@@ -36,79 +39,202 @@ UNDER_CONTENT2 = r'((?:[^_]|(?<!_)_(?=\w))+?)'
 STAR_CONTENT = r'(\*|(?:(?<=\s)\*|[^\*])+?)'
 STAR_CONTENT2 = r'((?:[^\*]|(?<!\*)\*(?=[^\W_]|\*))+?)'
 
-# ***strong,em***
-STAR_STRONG_EM = r'(\*{3})(?!\s)(\*{1,2}|[^\*]+?)(?<!\s)\1'
-# ___strong,em___
-UNDER_STRONG_EM = r'(_{3})(?!\s)(_{1,2}|[^_]+?)(?<!\s)\1'
-# ***strong,em*strong**
-STAR_STRONG_EM2 = r'(\*{3})(?![\s\*])%s(?<!\s)\*%s(?<!\s)\*{2}' % (STAR_CONTENT, STAR_CONTENT2)
-# ___strong,em_strong__
-UNDER_STRONG_EM2 = r'(_{3})(?![\s_])%s(?<!\s)_%s(?<!\s)_{2}' % (UNDER_CONTENT, UNDER_CONTENT2)
-# ***em,strong**em*
-STAR_EM_STRONG = r'(\*{3})(?![\s\*])%s(?<!\s)\*{2}%s(?<!\s)\*' % (STAR_CONTENT2, STAR_CONTENT)
-# **em*em,strong***
-STAR_STRONG_EM3 = r'(\*{2})(?![\s\*])%s\*(?![\s\*])%s(?<!\s)\*{3}' % (STAR_CONTENT2, STAR_CONTENT)
-# ___em,strong__em_
-UNDER_EM_STRONG = r'(_{3})(?![\s_])%s(?<!\s)_{2}%s(?<!\s)_' % (UNDER_CONTENT2, UNDER_CONTENT)
-# __em_em,strong___
-UNDER_STRONG_EM3 = r'(_{2})(?![\s_])%s_(?![\s_])%s(?<!\s)_{3}' % (UNDER_CONTENT2, UNDER_CONTENT)
-# **strong**
-STAR_STRONG = r'(\*{2})(?!\s)%s(?<!\s)\1' % STAR_CONTENT2
-# __strong__
-UNDER_STRONG = r'(_{2})(?!\s)%s(?<!\s)\1' % UNDER_CONTENT2
-# *emphasis*
-STAR_EM = r'(\*)(?!\s)%s(?<!\s)\1' % STAR_CONTENT
-# _emphasis_
-UNDER_EM = r'(_)(?!\s)%s(?<!\s)\1' % UNDER_CONTENT
 
-# Smart rules for when "smart underscore" is enabled
-# SMART: ___strong,em___
-SMART_UNDER_STRONG_EM = r'(?<!\w)(_{3})(?![\s_])%s(?<!\s)\1(?!\w)' % SMART_UNDER_CONTENT
-# ___strong,em_ strong__
-SMART_UNDER_STRONG_EM2 = \
-    r'(?<!\w)(_{3})(?![\s_])%s(?<!\s)_(?!\w)%s(?<!\s)_{2}(?!\w)' % (SMART_UNDER_MIXED_CONTENT, SMART_UNDER_CONTENT)
-# ___em,strong__ em_
-SMART_UNDER_EM_STRONG = \
-    r'(?<!\w)(_{3})(?![\s_])%s(?<!\s)_{2}(?!\w)%s(?<!\s)_(?!\w)' % (SMART_UNDER_MIXED_CONTENT, SMART_UNDER_CONTENT)
-# __strong__
-SMART_UNDER_STRONG = r'(?<!\w)(_{2})(?![\s_])%s(?<!\s)\1(?!\w)' % SMART_UNDER_CONTENT
-# SMART _em_
-SMART_UNDER_EM = r'(?<!\w)(_)(?![\s_])%s(?<!\s)\1(?!\w)' % SMART_UNDER_CONTENT
+class BetterEmPattern(InlineProcessor):
+    """Handle strong and emphasis for `*` patterns."""
 
-# Smart rules for when "smart asterisk" is enabled
-# SMART: ***strong,em***
-SMART_STAR_STRONG_EM = r'(?:(?<=_)|(?<![\w\*]))(\*{3})(?![\s\*])%s(?<!\s)\1(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT
-# ***strong,em* strong**
-SMART_STAR_STRONG_EM2 = \
-    r'(?:(?<=_)|(?<![\w\*]))(\*{3})(?![\s\*])%s(?<!\s)\*(?:(?=_)|(?![\w\*]))%s(?<!\s)\*{2}(?:(?=_)|(?![\w\*]))' % (
-        SMART_STAR_MIXED_CONTENT, SMART_STAR_CONTENT
+    # ***strong,em***
+    STRONG_EM = re.compile(
+        r'(\*{3})(?!\s)(\*{1,2}|[^\*]+?)(?<!\s)\1', re.DOTALL | re.UNICODE
     )
-# ***em,strong** em*
-SMART_STAR_EM_STRONG = \
-    r'(?:(?<=_)|(?<![\w\*]))(\*{3})(?![\s\*])%s(?<!\s)\*{2}(?:(?=_)|(?![\w\*]))%s(?<!\s)\*(?:(?=_)|(?![\w\*]))' % (
-        SMART_STAR_MIXED_CONTENT, SMART_STAR_CONTENT
+    # ***strong,em*strong**
+    STRONG_EM2 = re.compile(
+        r'(\*{3})(?![\s\*])%s(?<!\s)\*%s(?<!\s)\*{2}' % (STAR_CONTENT, STAR_CONTENT2), re.DOTALL | re.UNICODE
     )
-# **strong**
-SMART_STAR_STRONG = r'(?:(?<=_)|(?<![\w\*]))(\*{2})(?![\s\*])%s(?<!\s)\1(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT
-# SMART *em*
-SMART_STAR_EM = r'(?:(?<=_)|(?<![\w\*]))(\*)(?![\s\*])%s(?<!\s)\1(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT
+    # ***em,strong**em*
+    EM_STRONG = re.compile(
+        r'(\*{3})(?![\s\*])%s(?<!\s)\*{2}%s(?<!\s)\*' % (STAR_CONTENT2, STAR_CONTENT), re.DOTALL | re.UNICODE
+    )
+    # **em*em,strong***
+    STRONG_EM3 = re.compile(
+        r'(\*{2})(?![\s\*])%s\*(?![\s\*])%s(?<!\s)\*{3}' % (STAR_CONTENT2, STAR_CONTENT), re.DOTALL | re.UNICODE
+    )
+    # **strong**
+    STRONG = re.compile(
+        r'(\*{2})(?!\s)%s(?<!\s)\1' % STAR_CONTENT2, re.DOTALL | re.UNICODE
+    )
+    # *emphasis*
+    EM = re.compile(
+        r'(\*)(?!\s)%s(?<!\s)\1' % STAR_CONTENT, re.DOTALL | re.UNICODE
+    )
 
+    # Smart rules for when "smart asterisk" is enabled
+    # SMART: ***strong,em***
+    SMART_STRONG_EM = re.compile(
+        r'(?:(?<=_)|(?<![\w\*]))(\*{3})(?![\s\*])%s(?<!\s)\1(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT,
+        re.DOTALL | re.UNICODE
+    )
+    # ***strong,em* strong**
+    SMART_STRONG_EM2 = re.compile(
+        r'(?:(?<=_)|(?<![\w\*]))(\*{3})(?![\s\*])%s(?<!\s)\*(?:(?=_)|(?![\w\*]))%s(?<!\s)\*{2}(?:(?=_)|(?![\w\*]))' % (
+            SMART_STAR_MIXED_CONTENT, SMART_STAR_CONTENT
+        ),
+        re.DOTALL | re.UNICODE
+    )
+    # **em*em,strong***
+    SMART_STRONG_EM3 = re.compile(
+        r'''(?x)
+        (?:(?<=_)|(?<![\w\*]))(\*{2})(?![\s\*])%s(?:(?<=_)|(?<![\w\*]))\*(?![\s\*])%s(?<!\s)\*{3}(?:(?=_)|(?![\w\*]))
+        ''' % (SMART_STAR_CONTENT, SMART_STAR_CONTENT),
+        re.DOTALL | re.UNICODE
+    )
+    # ***em,strong** em*
+    SMART_EM_STRONG = re.compile(
+        r'(?:(?<=_)|(?<![\w\*]))(\*{3})(?![\s\*])%s(?<!\s)\*{2}(?:(?=_)|(?![\w\*]))%s(?<!\s)\*(?:(?=_)|(?![\w\*]))' % (
+            SMART_STAR_MIXED_CONTENT, SMART_STAR_CONTENT
+        ),
+        re.DOTALL | re.UNICODE
+    )
+    # **strong**
+    SMART_STRONG = re.compile(
+        r'(?:(?<=_)|(?<![\w\*]))(\*{2})(?![\s\*])%s(?<!\s)\1(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT,
+        re.DOTALL | re.UNICODE
+    )
+    # SMART *em*
+    SMART_EM = re.compile(
+        r'(?:(?<=_)|(?<![\w\*]))(\*)(?![\s\*])%s(?<!\s)\1(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT,
+        re.DOTALL | re.UNICODE
+    )
 
-class DoubleTagInlineProcessor2(SimpleTagInlineProcessor):
-    """
-    Return a ElementTree element nested in tag2 nested in tag1.
+    def __init__(self, pattern, smart=False, md=None):
+        """Initialize."""
 
-    Useful for strong emphasis etc.
-    """
+        self.smart = smart
+        super(BetterEmPattern, self).__init__(pattern, md)
+
+        self.setup_pattern_list()
+
+    def setup_pattern_list(self):
+        """Setup pattern list."""
+
+        self.patterns = util.odict()
+        if self.smart:
+            self.patterns[self.SMART_STRONG_EM] = (self.double_pattern, 'strong,em')
+            self.patterns[self.SMART_EM_STRONG] = (self.double_pattern, 'em,strong')
+            self.patterns[self.SMART_STRONG_EM2] = (self.double_pattern, 'strong,em')
+            self.patterns[self.SMART_STRONG_EM3] = (self.double_pattern2, 'strong,em')
+            self.patterns[self.SMART_STRONG] = (self.simple_pattern, 'strong')
+            self.patterns[self.SMART_EM] = (self.simple_pattern, 'em')
+        else:
+            self.patterns[self.STRONG_EM] = (self.double_pattern, 'strong,em')
+            self.patterns[self.EM_STRONG] = (self.double_pattern, 'em,strong')
+            self.patterns[self.STRONG_EM2] = (self.double_pattern, 'strong,em')
+            self.patterns[self.STRONG_EM3] = (self.double_pattern2, 'strong,em')
+            self.patterns[self.STRONG] = (self.simple_pattern, 'strong')
+            self.patterns[self.EM] = (self.simple_pattern, 'em')
 
     def handleMatch(self, m, data):
-        """Handle match for double tags."""
-        tag1, tag2 = self.tag.split(",")
-        el1 = util.etree.Element(tag1)
-        el2 = util.etree.SubElement(el1, tag2)
+        """Handle emphasis match."""
+
+        for pattern, value in self.patterns.items():
+            m1 = pattern.match(data, m.start(0))
+            if m1 is not None:
+                return value[0](m1, value[1])
+        return None, None, None
+
+    def simple_pattern(self, m, tag):
+        """Simple pattern."""
+
+        el = md_util.etree.Element(tag)
+        el.text = m.group(2)
+        return el, m.start(0), m.end(0)
+
+    def double_pattern(self, m, tags):
+        """Double pattern."""
+
+        tag1, tag2 = tags.split(",")
+        el1 = md_util.etree.Element(tag1)
+        el2 = md_util.etree.SubElement(el1, tag2)
+        el2.text = m.group(2)
+        if len(m.groups()) == 3:
+            el2.tail = m.group(3)
+        return el1, m.start(0), m.end(0)
+
+    def double_pattern2(self, m, tags):
+        """Double pattern 2."""
+
+        tag1, tag2 = tags.split(",")
+        el1 = md_util.etree.Element(tag1)
+        el2 = md_util.etree.SubElement(el1, tag2)
         el1.text = m.group(2)
         el2.text = m.group(3)
         return el1, m.start(0), m.end(0)
+
+
+class BetterEmUnderPattern(BetterEmPattern):
+    """Handle strong and emphasis for `_` patterns."""
+
+    # ___strong,em___
+    STRONG_EM = re.compile(
+        r'(_{3})(?!\s)(_{1,2}|[^_]+?)(?<!\s)\1',
+        re.DOTALL | re.UNICODE
+    )
+    # ___strong,em_strong__
+    STRONG_EM2 = re.compile(
+        r'(_{3})(?![\s_])%s(?<!\s)_%s(?<!\s)_{2}' % (UNDER_CONTENT, UNDER_CONTENT2),
+        re.DOTALL | re.UNICODE
+    )
+    # ___em,strong__em_
+    EM_STRONG = re.compile(
+        r'(_{3})(?![\s_])%s(?<!\s)_{2}%s(?<!\s)_' % (UNDER_CONTENT2, UNDER_CONTENT),
+        re.DOTALL | re.UNICODE
+    )
+    # __em_em,strong___
+    STRONG_EM3 = re.compile(
+        r'(_{2})(?![\s_])%s_(?![\s_])%s(?<!\s)_{3}' % (UNDER_CONTENT2, UNDER_CONTENT),
+        re.DOTALL | re.UNICODE
+    )
+    # __strong__
+    STRONG = re.compile(
+        r'(_{2})(?!\s)%s(?<!\s)\1' % UNDER_CONTENT2,
+        re.DOTALL | re.UNICODE
+    )
+    # _emphasis_
+    EM = re.compile(
+        r'(_)(?!\s)%s(?<!\s)\1' % UNDER_CONTENT,
+        re.DOTALL | re.UNICODE
+    )
+
+    # Smart rules for when "smart underscore" is enabled
+    # SMART: ___strong,em___
+    SMART_STRONG_EM = re.compile(
+        r'(?<!\w)(_{3})(?![\s_])%s(?<!\s)\1(?!\w)' % SMART_UNDER_CONTENT,
+        re.DOTALL | re.UNICODE
+    )
+    # ___strong,em_ strong__
+    SMART_STRONG_EM2 = re.compile(
+        r'(?<!\w)(_{3})(?![\s_])%s(?<!\s)_(?!\w)%s(?<!\s)_{2}(?!\w)' % (SMART_UNDER_MIXED_CONTENT, SMART_UNDER_CONTENT),
+        re.DOTALL | re.UNICODE
+    )
+    SMART_STRONG_EM3 = re.compile(
+        r'(?<!\w)(_{2})(?![\s_])%s(?<!\w)_(?![\s_])%s(?<!\s)_{3}(?!\w)' % (SMART_UNDER_CONTENT, SMART_UNDER_CONTENT),
+        re.DOTALL | re.UNICODE
+    )
+    # ___em,strong__ em_
+    SMART_EM_STRONG = re.compile(
+        r'(?<!\w)(_{3})(?![\s_])%s(?<!\s)_{2}(?!\w)%s(?<!\s)_(?!\w)' % (SMART_UNDER_MIXED_CONTENT, SMART_UNDER_CONTENT),
+        re.DOTALL | re.UNICODE
+    )
+    # __strong__
+    SMART_STRONG = re.compile(
+        r'(?<!\w)(_{2})(?![\s_])%s(?<!\s)\1(?!\w)' % SMART_UNDER_CONTENT,
+        re.DOTALL | re.UNICODE
+    )
+    # SMART _em_
+    SMART_EM = re.compile(
+        r'(?<!\w)(_)(?![\s_])%s(?<!\s)\1(?!\w)' % SMART_UNDER_CONTENT,
+        re.DOTALL | re.UNICODE
+    )
 
 
 class BetterEmExtension(Extension):
@@ -145,36 +271,16 @@ class BetterEmExtension(Extension):
             enable_under = enabled == "underscore" or enable_all
             enable_star = enabled == "asterisk" or enable_all
 
-        star_strong_em = SMART_STAR_STRONG_EM if enable_star else STAR_STRONG_EM
-        under_strong_em = SMART_UNDER_STRONG_EM if enable_under else UNDER_STRONG_EM
-        star_em_strong = SMART_STAR_EM_STRONG if enable_star else STAR_EM_STRONG
-        under_em_strong = SMART_UNDER_EM_STRONG if enable_under else UNDER_EM_STRONG
-        star_strong_em2 = SMART_STAR_STRONG_EM2 if enable_star else STAR_STRONG_EM2
-        under_strong_em2 = SMART_UNDER_STRONG_EM2 if enable_under else UNDER_STRONG_EM2
-        star_strong_em3 = None if enable_star else STAR_STRONG_EM3
-        under_strong_em3 = None if enable_under else UNDER_STRONG_EM3
-        star_strong = SMART_STAR_STRONG if enable_star else STAR_STRONG
-        under_strong = SMART_UNDER_STRONG if enable_under else UNDER_STRONG
-        star_emphasis = SMART_STAR_EM if enable_star else STAR_EM
-        under_emphasis = SMART_UNDER_EM if enable_under else UNDER_EM
+        # Delete all default properties and register with new
+        md.inlinePatterns.deregister('em_strong', strict=False)
+        md.inlinePatterns.deregister('strong_em', strict=False)
+        md.inlinePatterns.deregister('strong', strict=False)
+        md.inlinePatterns.deregister('emphasis', strict=False)
+        md.inlinePatterns.deregister('strong2', strict=False)
+        md.inlinePatterns.deregister('emphasis2', strict=False)
 
-        # If we don't have to move an existing extension, use the same priority,
-        # but if we do have to, move it closely to the relative needed position.
-        md.inlinePatterns.register(DoubleTagInlineProcessor(star_strong_em, 'strong,em'), "strong_em", 50)
-        md.inlinePatterns.register(DoubleTagInlineProcessor(under_strong_em, 'strong,em'), "strong_em2", 49.9)
-        md.inlinePatterns.register(DoubleTagInlineProcessor(star_em_strong, 'em,strong'), "em_strong", 49.8)
-        md.inlinePatterns.register(DoubleTagInlineProcessor(under_em_strong, 'em,strong'), "em_strong2", 49.7)
-        md.inlinePatterns.register(DoubleTagInlineProcessor(star_strong_em2, 'strong,em'), 'strong_em3', 49.6)
-        md.inlinePatterns.register(DoubleTagInlineProcessor(under_strong_em2, 'strong,em'), 'strong_em4', 49.5)
-        # This is only needed when smart mode is disabled
-        if star_strong_em3 is not None:
-            md.inlinePatterns.register(DoubleTagInlineProcessor2(star_strong_em3, 'strong,em'), 'strong_em5', 49.4)
-        if under_strong_em3 is not None:
-            md.inlinePatterns.register(DoubleTagInlineProcessor2(under_strong_em3, 'strong,em'), 'strong_em6', 49.3)
-        md.inlinePatterns.register(SimpleTagInlineProcessor(star_strong, 'strong'), "strong", 40)
-        md.inlinePatterns.register(SimpleTagInlineProcessor(under_strong, 'strong'), "strong2", 39.9)
-        md.inlinePatterns.register(SimpleTagInlineProcessor(star_emphasis, 'em'), "emphasis", 30)
-        md.inlinePatterns.register(SimpleTagInlineProcessor(under_emphasis, 'em'), "emphasis2", 10)
+        md.inlinePatterns.register(BetterEmPattern(r'\*', smart=enable_all or enable_star), 'strong_em', 50)
+        md.inlinePatterns.register(BetterEmUnderPattern(r'_', smart=enable_all or enable_under), 'strong_em2', 60)
 
 
 def makeExtension(*args, **kwargs):
