@@ -35,3 +35,7 @@ Test: __All will not___ be bold__
 Test: __All will not ___ be bold__
 
 Test: This is text __bold _italic bold___ with more text
+
+Test: **test *test* *test* test**
+
+Test: ***test* test *test***

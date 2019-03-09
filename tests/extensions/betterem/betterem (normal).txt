@@ -35,3 +35,7 @@ Test: **All will not*** be bold**
 Test: **All will not *** be bold**
 
 Test: This is text **bold *italic bold*** with more text
+
+Test: **test *test* *test* test**
+
+Test: ***test* test *test***
