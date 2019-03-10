@@ -39,3 +39,15 @@ Test: This is text **bold *italic bold*** with more text
 Test: **test *test* *test* test**
 
 Test: ***test* test *test***
+
+Test: *test * test*
+
+Test: **test ** test**
+
+Test: __test _test_ _test_ test__
+
+Test: ___test_ test _test___
+
+Test: _test _ test_
+
+Test: __test __ test__
