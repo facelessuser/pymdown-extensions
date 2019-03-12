@@ -25,7 +25,8 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from markdown import Extension
-from markdown.inlinepatterns import SimpleTagInlineProcessor, DoubleTagInlineProcessor, util
+from markdown.inlinepatterns import InlineProcessor, util
+import re
 
 SMART_UNDER_CONTENT = r'((?:[^_]|_(?=\w|\s)|(?<=\s)_+?(?=\s))+?_*?)'
 SMART_STAR_CONTENT = r'((?:[^\*]|\*(?=[^\W_]|\*|\s)|(?<=\s)\*+?(?=\s))+?\**?)'
@@ -94,21 +95,178 @@ SMART_STAR_STRONG = r'(?:(?<=_)|(?<![\w\*]))(\*{2})(?![\s\*])%s(?<!\s)\1(?:(?=_)
 SMART_STAR_EM = r'(?:(?<=_)|(?<![\w\*]))(\*)(?![\s\*])%s(?<!\s)\1(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT
 
 
-class DoubleTagInlineProcessor2(SimpleTagInlineProcessor):
-    """
-    Return a ElementTree element nested in tag2 nested in tag1.
+class AsteriskProcessor(InlineProcessor):
+    """Emphasis processor for handling strong and em matches."""
 
-    Useful for strong emphasis etc.
-    """
+    PATTERNS = [
+        (re.compile(STAR_STRONG_EM, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        (re.compile(STAR_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
+        (re.compile(STAR_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        (re.compile(STAR_STRONG_EM3, re.DOTALL | re.UNICODE), 'double2', 'strong,em'),
+        (re.compile(STAR_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
+        (re.compile(STAR_EM, re.DOTALL | re.UNICODE), 'single', 'em')
+    ]
+
+    def build_single(self, m, tag, idx):
+        """Return single tag."""
+        el1 = util.etree.Element(tag)
+        text = m.group(2)
+        self.parse_sub_patterns(text, el1, None, idx)
+        return el1
+
+    def build_double(self, m, tags, idx):
+        """Return double tag."""
+
+        tag1, tag2 = tags.split(",")
+        el1 = util.etree.Element(tag1)
+        el2 = util.etree.Element(tag2)
+        text = m.group(2)
+        self.parse_sub_patterns(text, el2, None, idx)
+        el1.append(el2)
+        if len(m.groups()) == 3:
+            text = m.group(3)
+            self.parse_sub_patterns(text, el1, el2, idx)
+        return el1
+
+    def build_double2(self, m, tags, idx):
+        """Return double tags (variant 2): `<strong>text <em>text</em></strong>`."""
+
+        tag1, tag2 = tags.split(",")
+        el1 = util.etree.Element(tag1)
+        el2 = util.etree.Element(tag2)
+        text = m.group(2)
+        self.parse_sub_patterns(text, el1, None, idx)
+        text = m.group(3)
+        el1.append(el2)
+        self.parse_sub_patterns(text, el2, None, idx)
+        return el1
+
+    def parse_sub_patterns(self, data, parent, last, idx):
+        """
+        Parses sub patterns.
+
+        `data` (`str`):
+            text to evaluate.
+
+        `parent` (`etree.Element`):
+            Parent to attach text and sub elements to.
+
+        `last` (`etree.Element`):
+            Last appended child to parent. Can also be None if parent has no children.
+
+        `idx` (`int`):
+            Current pattern index that was used to evaluate the parent.
+
+        """
+
+        offset = 0
+        pos = 0
+
+        length = len(data)
+        while pos < length:
+            # Find the start of potential emphasis or strong tokens
+            if self.compiled_re.match(data, pos):
+                matched = False
+                # See if the we can match an emphasis/strong pattern
+                for index, pattern in enumerate(self.PATTERNS):
+                    # Only evaluate patterns that are after what was used on the parent
+                    if index <= idx:
+                        continue
+                    m = pattern[0].match(data, pos)
+                    if m:
+                        # Append child nodes to parent
+                        # Text nodes should be appended to the last
+                        # child if present, and if not, it should
+                        # be added as the parent's text node.
+                        text = data[offset:m.start(0)]
+                        if text:
+                            if last is not None:
+                                last.tail = text
+                            else:
+                                parent.text = text
+                        el = self.build_element(m, pattern[1], pattern[2], index)
+                        parent.append(el)
+                        last = el
+                        # Move our position past the matched hunk
+                        offset = pos = m.end(0)
+                        matched = True
+                if not matched:
+                    # We matched nothing, move on to the next character
+                    pos += 1
+            else:
+                # Increment position as no potential emphasis start was found.
+                pos += 1
+
+        # Append any leftover text as a text node.
+        text = data[offset:]
+        if text:
+            if last is not None:
+                last.tail = text
+            else:
+                parent.text = text
+
+    def build_element(self, m, builder, tags, index):
+        """Element builder."""
+
+        if builder == 'double2':
+            return self.build_double2(m, tags, index)
+        elif builder == 'double':
+            return self.build_double(m, tags, index)
+        else:
+            return self.build_single(m, tags, index)
 
     def handleMatch(self, m, data):
-        """Handle match for double tags."""
-        tag1, tag2 = self.tag.split(",")
-        el1 = util.etree.Element(tag1)
-        el2 = util.etree.SubElement(el1, tag2)
-        el1.text = m.group(2)
-        el2.text = m.group(3)
-        return el1, m.start(0), m.end(0)
+        """Parse patterns."""
+
+        el = None
+        start = None
+        end = None
+
+        for index, pattern in enumerate(self.PATTERNS):
+            m1 = pattern[0].match(data, m.start(0))
+            if m1:
+                start = m1.start(0)
+                end = m1.end(0)
+                el = self.build_element(m1, pattern[1], pattern[2], index)
+                break
+        return el, start, end
+
+
+class SmartAsteriskProcessor(AsteriskProcessor):
+    """Smart emphasis and strong processor."""
+
+    PATTERNS = [
+        (re.compile(SMART_STAR_STRONG_EM, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        (re.compile(SMART_STAR_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
+        (re.compile(SMART_STAR_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        (re.compile(SMART_STAR_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
+        (re.compile(SMART_STAR_EM, re.DOTALL | re.UNICODE), 'single', 'em')
+    ]
+
+
+class UnderscoreProcessor(AsteriskProcessor):
+    """Emphasis processor for handling strong and em matches."""
+
+    PATTERNS = [
+        (re.compile(UNDER_STRONG_EM, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        (re.compile(UNDER_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
+        (re.compile(UNDER_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        (re.compile(UNDER_STRONG_EM3, re.DOTALL | re.UNICODE), 'double2', 'strong,em'),
+        (re.compile(UNDER_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
+        (re.compile(UNDER_EM, re.DOTALL | re.UNICODE), 'single', 'em')
+    ]
+
+
+class SmartUnderscoreProcessor(AsteriskProcessor):
+    """Emphasis processor for handling strong and em matches."""
+
+    PATTERNS = [
+        (re.compile(SMART_UNDER_STRONG_EM, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        (re.compile(SMART_UNDER_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
+        (re.compile(SMART_UNDER_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        (re.compile(SMART_UNDER_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
+        (re.compile(SMART_UNDER_EM, re.DOTALL | re.UNICODE), 'single', 'em')
+    ]
 
 
 class BetterEmExtension(Extension):
@@ -145,36 +303,19 @@ class BetterEmExtension(Extension):
             enable_under = enabled == "underscore" or enable_all
             enable_star = enabled == "asterisk" or enable_all
 
-        star_strong_em = SMART_STAR_STRONG_EM if enable_star else STAR_STRONG_EM
-        under_strong_em = SMART_UNDER_STRONG_EM if enable_under else UNDER_STRONG_EM
-        star_em_strong = SMART_STAR_EM_STRONG if enable_star else STAR_EM_STRONG
-        under_em_strong = SMART_UNDER_EM_STRONG if enable_under else UNDER_EM_STRONG
-        star_strong_em2 = SMART_STAR_STRONG_EM2 if enable_star else STAR_STRONG_EM2
-        under_strong_em2 = SMART_UNDER_STRONG_EM2 if enable_under else UNDER_STRONG_EM2
-        star_strong_em3 = None if enable_star else STAR_STRONG_EM3
-        under_strong_em3 = None if enable_under else UNDER_STRONG_EM3
-        star_strong = SMART_STAR_STRONG if enable_star else STAR_STRONG
-        under_strong = SMART_UNDER_STRONG if enable_under else UNDER_STRONG
-        star_emphasis = SMART_STAR_EM if enable_star else STAR_EM
-        under_emphasis = SMART_UNDER_EM if enable_under else UNDER_EM
-
         # If we don't have to move an existing extension, use the same priority,
         # but if we do have to, move it closely to the relative needed position.
-        md.inlinePatterns.register(DoubleTagInlineProcessor(star_strong_em, 'strong,em'), "strong_em", 50)
-        md.inlinePatterns.register(DoubleTagInlineProcessor(under_strong_em, 'strong,em'), "strong_em2", 49.9)
-        md.inlinePatterns.register(DoubleTagInlineProcessor(star_em_strong, 'em,strong'), "em_strong", 49.8)
-        md.inlinePatterns.register(DoubleTagInlineProcessor(under_em_strong, 'em,strong'), "em_strong2", 49.7)
-        md.inlinePatterns.register(DoubleTagInlineProcessor(star_strong_em2, 'strong,em'), 'strong_em3', 49.6)
-        md.inlinePatterns.register(DoubleTagInlineProcessor(under_strong_em2, 'strong,em'), 'strong_em4', 49.5)
-        # This is only needed when smart mode is disabled
-        if star_strong_em3 is not None:
-            md.inlinePatterns.register(DoubleTagInlineProcessor2(star_strong_em3, 'strong,em'), 'strong_em5', 49.4)
-        if under_strong_em3 is not None:
-            md.inlinePatterns.register(DoubleTagInlineProcessor2(under_strong_em3, 'strong,em'), 'strong_em6', 49.3)
-        md.inlinePatterns.register(SimpleTagInlineProcessor(star_strong, 'strong'), "strong", 40)
-        md.inlinePatterns.register(SimpleTagInlineProcessor(under_strong, 'strong'), "strong2", 39.9)
-        md.inlinePatterns.register(SimpleTagInlineProcessor(star_emphasis, 'em'), "emphasis", 30)
-        md.inlinePatterns.register(SimpleTagInlineProcessor(under_emphasis, 'em'), "emphasis2", 10)
+        md.inlinePatterns.deregister('strong_em', False)
+        md.inlinePatterns.deregister('em_strong', False)
+        md.inlinePatterns.deregister('strong', False)
+        md.inlinePatterns.deregister('emphasis', False)
+        md.inlinePatterns.deregister('strong2', False)
+        md.inlinePatterns.deregister('emphasis2', False)
+
+        asterisk = SmartAsteriskProcessor(r'\*') if enable_star else AsteriskProcessor(r'\*')
+        md.inlinePatterns.register(asterisk, "strong_em", 50)
+        underscore = SmartUnderscoreProcessor('_') if enable_under else UnderscoreProcessor('_')
+        md.inlinePatterns.register(underscore, "strong_em2", 40)
 
 
 def makeExtension(*args, **kwargs):
