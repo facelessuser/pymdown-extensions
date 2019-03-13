@@ -1,0 +1,8 @@
+---8<--- "a.txt"
+
+---8<---
+loop_block.txt
+c.txt
+
+d.txt
+---8<---
