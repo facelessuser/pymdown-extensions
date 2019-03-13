@@ -9,3 +9,8 @@ snippets (block):
   extensions:
     pymdownx.snippets:
       base_path: '{{BASE}}/../_snippets'
+
+snippets (mixed):
+  extensions:
+    pymdownx.snippets:
+      base_path: '{{BASE}}/../_snippets'

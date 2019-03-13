@@ -37,7 +37,7 @@ class SnippetPreprocessor(Preprocessor):
         r'''(?x)
         ^(?P<space>[ \t]*)
         (?P<all>
-            (?P<inline_marker>-{2,}8<-{2,}[ ]+)
+            (?P<inline_marker>-{2,}8<-{2,}[ \t]+)
             (?P<snippet>(?:"(?:\\"|[^"\n\r])+?"|'(?:\\'|[^'\n\r])+?'))(?![ \t]) |
             (?P<block_marker>-{2,}8<-{2,})(?![ \t])
         )\r?$
@@ -67,6 +67,7 @@ class SnippetPreprocessor(Preprocessor):
         inline = False
         block = False
         for line in lines:
+            inline = False
             m = self.RE_ALL_SNIPPETS.match(line)
             if m:
                 if block and m.group('inline_marker'):
