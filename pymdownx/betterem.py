@@ -26,6 +26,7 @@ from __future__ import absolute_import
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import InlineProcessor, util
+from collections import namedtuple
 import re
 
 SMART_UNDER_CONTENT = r'((?:[^_]|_(?=\w|\s)|(?<=\s)_+?(?=\s))+?_*?)'
@@ -95,16 +96,20 @@ SMART_STAR_STRONG = r'(?:(?<=_)|(?<![\w\*]))(\*{2})(?![\s\*])%s(?<!\s)\1(?:(?=_)
 SMART_STAR_EM = r'(?:(?<=_)|(?<![\w\*]))(\*)(?![\s\*])%s(?<!\s)\1(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT
 
 
+class EmStrongItem(namedtuple('EmStrongItem', ['pattern', 'builder', 'tags'])):
+    """Emphasis/strong pattern item."""
+
+
 class AsteriskProcessor(InlineProcessor):
     """Emphasis processor for handling strong and em matches."""
 
     PATTERNS = [
-        (re.compile(STAR_STRONG_EM, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
-        (re.compile(STAR_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
-        (re.compile(STAR_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
-        (re.compile(STAR_STRONG_EM3, re.DOTALL | re.UNICODE), 'double2', 'strong,em'),
-        (re.compile(STAR_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
-        (re.compile(STAR_EM, re.DOTALL | re.UNICODE), 'single', 'em')
+        EmStrongItem(re.compile(STAR_STRONG_EM, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        EmStrongItem(re.compile(STAR_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
+        EmStrongItem(re.compile(STAR_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        EmStrongItem(re.compile(STAR_STRONG_EM3, re.DOTALL | re.UNICODE), 'double2', 'strong,em'),
+        EmStrongItem(re.compile(STAR_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
+        EmStrongItem(re.compile(STAR_EM, re.DOTALL | re.UNICODE), 'single', 'em')
     ]
 
     def build_single(self, m, tag, idx):
@@ -168,11 +173,11 @@ class AsteriskProcessor(InlineProcessor):
             if self.compiled_re.match(data, pos):
                 matched = False
                 # See if the we can match an emphasis/strong pattern
-                for index, pattern in enumerate(self.PATTERNS):
+                for index, item in enumerate(self.PATTERNS):
                     # Only evaluate patterns that are after what was used on the parent
                     if index <= idx:
                         continue
-                    m = pattern[0].match(data, pos)
+                    m = item.pattern.match(data, pos)
                     if m:
                         # Append child nodes to parent
                         # Text nodes should be appended to the last
@@ -184,7 +189,7 @@ class AsteriskProcessor(InlineProcessor):
                                 last.tail = text
                             else:
                                 parent.text = text
-                        el = self.build_element(m, pattern[1], pattern[2], index)
+                        el = self.build_element(m, item.builder, item.tags, index)
                         parent.append(el)
                         last = el
                         # Move our position past the matched hunk
@@ -222,12 +227,12 @@ class AsteriskProcessor(InlineProcessor):
         start = None
         end = None
 
-        for index, pattern in enumerate(self.PATTERNS):
-            m1 = pattern[0].match(data, m.start(0))
+        for index, item in enumerate(self.PATTERNS):
+            m1 = item.pattern.match(data, m.start(0))
             if m1:
                 start = m1.start(0)
                 end = m1.end(0)
-                el = self.build_element(m1, pattern[1], pattern[2], index)
+                el = self.build_element(m1, item.builder, item.tags, index)
                 break
         return el, start, end
 
@@ -236,11 +241,11 @@ class SmartAsteriskProcessor(AsteriskProcessor):
     """Smart emphasis and strong processor."""
 
     PATTERNS = [
-        (re.compile(SMART_STAR_STRONG_EM, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
-        (re.compile(SMART_STAR_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
-        (re.compile(SMART_STAR_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
-        (re.compile(SMART_STAR_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
-        (re.compile(SMART_STAR_EM, re.DOTALL | re.UNICODE), 'single', 'em')
+        EmStrongItem(re.compile(SMART_STAR_STRONG_EM, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        EmStrongItem(re.compile(SMART_STAR_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
+        EmStrongItem(re.compile(SMART_STAR_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        EmStrongItem(re.compile(SMART_STAR_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
+        EmStrongItem(re.compile(SMART_STAR_EM, re.DOTALL | re.UNICODE), 'single', 'em')
     ]
 
 
@@ -248,12 +253,12 @@ class UnderscoreProcessor(AsteriskProcessor):
     """Emphasis processor for handling strong and em matches."""
 
     PATTERNS = [
-        (re.compile(UNDER_STRONG_EM, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
-        (re.compile(UNDER_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
-        (re.compile(UNDER_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
-        (re.compile(UNDER_STRONG_EM3, re.DOTALL | re.UNICODE), 'double2', 'strong,em'),
-        (re.compile(UNDER_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
-        (re.compile(UNDER_EM, re.DOTALL | re.UNICODE), 'single', 'em')
+        EmStrongItem(re.compile(UNDER_STRONG_EM, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        EmStrongItem(re.compile(UNDER_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
+        EmStrongItem(re.compile(UNDER_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        EmStrongItem(re.compile(UNDER_STRONG_EM3, re.DOTALL | re.UNICODE), 'double2', 'strong,em'),
+        EmStrongItem(re.compile(UNDER_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
+        EmStrongItem(re.compile(UNDER_EM, re.DOTALL | re.UNICODE), 'single', 'em')
     ]
 
 
@@ -261,11 +266,11 @@ class SmartUnderscoreProcessor(AsteriskProcessor):
     """Emphasis processor for handling strong and em matches."""
 
     PATTERNS = [
-        (re.compile(SMART_UNDER_STRONG_EM, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
-        (re.compile(SMART_UNDER_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
-        (re.compile(SMART_UNDER_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
-        (re.compile(SMART_UNDER_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
-        (re.compile(SMART_UNDER_EM, re.DOTALL | re.UNICODE), 'single', 'em')
+        EmStrongItem(re.compile(SMART_UNDER_STRONG_EM, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        EmStrongItem(re.compile(SMART_UNDER_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
+        EmStrongItem(re.compile(SMART_UNDER_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        EmStrongItem(re.compile(SMART_UNDER_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
+        EmStrongItem(re.compile(SMART_UNDER_EM, re.DOTALL | re.UNICODE), 'single', 'em')
     ]
 
 
@@ -305,8 +310,10 @@ class BetterEmExtension(Extension):
 
         # If we don't have to move an existing extension, use the same priority,
         # but if we do have to, move it closely to the relative needed position.
+        md.inlinePatterns.deregister('not_strong', False)
         md.inlinePatterns.deregister('strong_em', False)
         md.inlinePatterns.deregister('em_strong', False)
+        md.inlinePatterns.deregister('em_strong2', False)
         md.inlinePatterns.deregister('strong', False)
         md.inlinePatterns.deregister('emphasis', False)
         md.inlinePatterns.deregister('strong2', False)
