@@ -784,11 +784,15 @@ ansi-regex@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-4.0.0.tgz#70de791edf021404c3fd615aa89118ae0432e5a9"
 
+ansi-regex@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-4.1.0.tgz#8b9f8f08cf1acb843756a839ca8c7e3168c51997"
+
 ansi-styles@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-2.2.1.tgz#b432dd3358b634cf75e1e4664368240533c1ddbe"
 
-ansi-styles@^3.2.1:
+ansi-styles@^3.2.0, ansi-styles@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-3.2.1.tgz#41fbb20243e50b12be0f04b8dedbf07520ce841d"
   dependencies:
@@ -1416,6 +1420,14 @@ cliui@^4.0.0:
     string-width "^2.1.1"
     strip-ansi "^4.0.0"
     wrap-ansi "^2.0.0"
+
+cliui@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/cliui/-/cliui-5.0.0.tgz#deefcfdb2e800784aa34f46fa08e06851c7bbbc5"
+  dependencies:
+    string-width "^3.1.0"
+    strip-ansi "^5.2.0"
+    wrap-ansi "^5.1.0"
 
 clone-buffer@^1.0.0:
   version "1.0.0"
@@ -6017,13 +6029,13 @@ string-width@^2.0.0, string-width@^2.1.1:
     is-fullwidth-code-point "^2.0.0"
     strip-ansi "^4.0.0"
 
-string-width@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/string-width/-/string-width-3.0.0.tgz#5a1690a57cc78211fffd9bf24bbe24d090604eb1"
+string-width@^3.0.0, string-width@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/string-width/-/string-width-3.1.0.tgz#22767be21b62af1081574306f69ac51b62203961"
   dependencies:
     emoji-regex "^7.0.1"
     is-fullwidth-code-point "^2.0.0"
-    strip-ansi "^5.0.0"
+    strip-ansi "^5.1.0"
 
 string_decoder@^1.1.1:
   version "1.2.0"
@@ -6073,6 +6085,12 @@ strip-ansi@^5.0.0:
   resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-5.0.0.tgz#f78f68b5d0866c20b2c9b8c61b5298508dc8756f"
   dependencies:
     ansi-regex "^4.0.0"
+
+strip-ansi@^5.1.0, strip-ansi@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/strip-ansi/-/strip-ansi-5.2.0.tgz#8c9a536feb6afc962bdfa5b104a5091c1ad9c0ae"
+  dependencies:
+    ansi-regex "^4.1.0"
 
 strip-bom-buf@^1.0.0:
   version "1.0.0"
@@ -6879,6 +6897,14 @@ wrap-ansi@^2.0.0:
     string-width "^1.0.1"
     strip-ansi "^3.0.1"
 
+wrap-ansi@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-5.1.0.tgz#1fd1f67235d5b6d0fee781056001bfb694c03b09"
+  dependencies:
+    ansi-styles "^3.2.0"
+    string-width "^3.0.0"
+    strip-ansi "^5.0.0"
+
 wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
@@ -6925,9 +6951,9 @@ yargs-parser@^10.0.0:
   dependencies:
     camelcase "^4.1.0"
 
-yargs-parser@^13.0.0:
-  version "13.0.0"
-  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-13.0.0.tgz#3fc44f3e76a8bdb1cc3602e860108602e5ccde8b"
+yargs-parser@^13.1.0:
+  version "13.1.0"
+  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-13.1.0.tgz#7016b6dd03e28e1418a510e258be4bff5a31138f"
   dependencies:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
@@ -6961,11 +6987,11 @@ yargs@^10.0.3:
     y18n "^3.2.1"
     yargs-parser "^8.1.0"
 
-yargs@^13.2.2:
-  version "13.2.2"
-  resolved "https://registry.yarnpkg.com/yargs/-/yargs-13.2.2.tgz#0c101f580ae95cea7f39d927e7770e3fdc97f993"
+yargs@^13.2.4:
+  version "13.2.4"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-13.2.4.tgz#0b562b794016eb9651b98bd37acf364aa5d6dc83"
   dependencies:
-    cliui "^4.0.0"
+    cliui "^5.0.0"
     find-up "^3.0.0"
     get-caller-file "^2.0.1"
     os-locale "^3.1.0"
@@ -6975,7 +7001,7 @@ yargs@^13.2.2:
     string-width "^3.0.0"
     which-module "^2.0.0"
     y18n "^4.0.0"
-    yargs-parser "^13.0.0"
+    yargs-parser "^13.1.0"
 
 yargs@^7.0.0, yargs@^7.1.0:
   version "7.1.0"
