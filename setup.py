@@ -4,19 +4,32 @@
 
 from setuptools import setup, find_packages
 import os
-import imp
+import sys
+
+PY2 = sys.version_info < (3, 0)
 
 
 def get_version():
     """Get version and version_info without importing the entire module."""
 
-    path = os.path.join(os.path.dirname(__file__), 'pymdownx')
-    fp, pathname, desc = imp.find_module('__meta__', [path])
-    try:
+    if PY2:
+        import imp
+
+        path = os.path.join(os.path.dirname(__file__), 'pymdownx')
+        fp, pathname, desc = imp.find_module('__meta__', [path])
         vi = imp.load_module('__meta__', fp, pathname, desc).__version_info__
-        return vi._get_canonical(), vi._get_dev_status()
-    finally:
         fp.close()
+    else:
+        import types
+        import codecs
+
+        script = os.path.join(os.path.dirname(__file__), 'pymdownx', '__meta__.py')
+        module = types.ModuleType(os.path.splitext(os.path.basename(script))[0])
+        module.__dict__['__file__'] = script
+        with codecs.open(script, 'r', encoding='utf-8') as f:
+            exec(compile(f.read(), script, 'exec'), module.__dict__)
+        vi = module.__version_info__
+    return vi._get_canonical(), vi._get_dev_status()
 
 
 def get_requirements(req):
