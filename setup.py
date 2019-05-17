@@ -15,10 +15,14 @@ def get_version():
     if PY2:
         import imp
 
-        path = os.path.join(os.path.dirname(__file__), 'pymdownx')
-        fp, pathname, desc = imp.find_module('__meta__', [path])
-        vi = imp.load_module('__meta__', fp, pathname, desc).__version_info__
-        fp.close()
+        try:
+            fp = None
+            path = os.path.join(os.path.dirname(__file__), 'pymdownx')
+            fp, pathname, desc = imp.find_module('__meta__', [path])
+            vi = imp.load_module('__meta__', fp, pathname, desc).__version_info__
+        finally:
+            if fp is not None:
+                fp.close()
     else:
         import importlib.util
 
