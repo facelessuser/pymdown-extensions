@@ -10,7 +10,7 @@ Extensions for [Python Markdown](https://python-markdown.github.io).
 
 # Documentation
 
-Extension documentation is found here: http://facelessuser.github.io/pymdown-extensions/.
+Extension documentation is found here: https://facelessuser.github.io/pymdown-extensions/.
 
 # License
 
