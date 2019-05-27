@@ -43,6 +43,7 @@ install:
   - if [ $TOXENV = documents ]; then yarn install; fi
   - pip install tox
   - pip install codecov
+  - node --version
 
 script:
   - if [ $TOXENV = documents ]; then yarn build; fi
