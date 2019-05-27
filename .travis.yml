@@ -27,7 +27,6 @@ matrix:
     - python: 3.6
       env: TOXENV=lint
     - python: 3.6
-      node_js: 8
       env: TOXENV=documents
 
 addons:
@@ -37,7 +36,9 @@ addons:
       - aspell-en
 
 before_install:
-- if [ $TOXENV = documents ]; then npm install -g yarn@v1.9.4; fi
+  - if [ $TOXENV = documents ]; then nvm install 8.15.1; fi
+  - if [ $TOXENV = documents ]; then nvm alias default 8.15.1; fi
+  - if [ $TOXENV = documents ]; then npm install -g yarn@v1.9.4; fi
 
 install:
   - if [ $TOXENV = documents ]; then yarn install; fi
@@ -46,7 +47,6 @@ install:
   - node --version
 
 script:
-  - if [ $TOXENV = documents ]; then yarn build; fi
   - tox
 
 after_success:
