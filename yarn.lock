@@ -5744,9 +5744,9 @@ rollup@^0.54.1:
   version "0.54.1"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.54.1.tgz#415a5d999421502646cf54b873fc4ce1a7393970"
 
-rollup@^1.15.4:
-  version "1.15.4"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.15.4.tgz#3d6d8cbc8f19651d63acdacf874da2f9ed06c8ba"
+rollup@^1.15.6:
+  version "1.15.6"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.15.6.tgz#caf0ed28d2d78e3a59c1398e5a3695fb600a0ef0"
   dependencies:
     "@types/estree" "0.0.39"
     "@types/node" "^12.0.8"
