@@ -662,9 +662,9 @@
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
 
-"@types/node@*", "@types/node@^12.0.8":
-  version "12.0.8"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.8.tgz#551466be11b2adc3f3d47156758f610bd9f6b1d8"
+"@types/node@*", "@types/node@^12.0.10":
+  version "12.0.12"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.12.tgz#cc791b402360db1eaf7176479072f91ee6c6c7ca"
 
 "@types/unist@*", "@types/unist@^2.0.0":
   version "2.0.2"
@@ -5472,12 +5472,12 @@ rollup@^0.54.1:
   version "0.54.1"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.54.1.tgz#415a5d999421502646cf54b873fc4ce1a7393970"
 
-rollup@^1.15.6:
-  version "1.15.6"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.15.6.tgz#caf0ed28d2d78e3a59c1398e5a3695fb600a0ef0"
+rollup@^1.16.4:
+  version "1.16.4"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-1.16.4.tgz#0a13bace39cf6c1784781e383e605d1b6274c2f4"
   dependencies:
     "@types/estree" "0.0.39"
-    "@types/node" "^12.0.8"
+    "@types/node" "^12.0.10"
     acorn "^6.1.1"
 
 run-async@^2.2.0:
