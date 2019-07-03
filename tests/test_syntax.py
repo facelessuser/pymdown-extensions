@@ -135,7 +135,7 @@ def gather_test_params():
 def pytest_generate_tests(metafunc):
     """Generate tests."""
 
-    if "compare" in metafunc.funcargnames:
+    if "compare" in metafunc.fixturenames:
         metafunc.parametrize("compare", gather_test_params())
 
 
