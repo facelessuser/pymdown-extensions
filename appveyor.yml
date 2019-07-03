@@ -12,7 +12,7 @@ environment:
       TOXENV: "py36"
     - PYTHON: "C:/Python37"
       TOXENV: "py37"
-    - PYTHON: "C:/Python27"
+    - PYTHON: "C:/Python37"
       TOXENV: "lint"
 
 init:
@@ -21,10 +21,10 @@ init:
   - ps: "ls C:/Python*"
 
 install:
-  - "%PYTHON%/Scripts/pip.exe install virtualenv"
-  - "%PYTHON%/Scripts/pip.exe install tox"
-  - "%PYTHON%/Scripts/pip.exe install codecov"
   - "SET PATH=%PYTHON%;%PYTHON%\\Scripts;%PATH%"
+  - "python -m pip install --user -U pip"
+  - "python -m pip install -U setuptools wheel"
+  - "python -m pip install -U virtualenv tox codecov"
 
 test_script:
   - pip --version
