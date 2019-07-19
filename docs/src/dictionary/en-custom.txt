@@ -116,6 +116,7 @@ coveragepy
 customizable
 deprecations
 dev
+deviantart
 dict
 dicts
 didn't
@@ -212,3 +213,4 @@ uslugify
 validator
 versa
 whitespace
+whynne
