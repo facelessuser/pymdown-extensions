@@ -29,14 +29,14 @@ from markdown.inlinepatterns import InlineProcessor, util
 from collections import namedtuple
 import re
 
-SMART_UNDER_CONTENT = r'((?:[^_]|_(?=\w|\s)|(?<=\s)_+?(?=\s))+?_*?)'
-SMART_STAR_CONTENT = r'((?:[^\*]|\*(?=[^\W_]|\*|\s)|(?<=\s)\*+?(?=\s))+?\**?)'
-SMART_UNDER_MIXED_CONTENT = r'((?:[^_]|_(?=\w)|(?<=\s)_+?(?=\s))+?_*)'
-SMART_STAR_MIXED_CONTENT = r'((?:[^\*]|\*(?=[^\W_]|\*)|(?<=\s)\*+?(?=\s))+?\**)'
+SMART_UNDER_CONTENT = r'((?:(?<=\s)_+?(?=\s)|.)+?_*?)'
+SMART_STAR_CONTENT = r'((?:(?<=\s)\*+?(?=\s)|.)+?\**?)'
+SMART_UNDER_MIXED_CONTENT = r'((?:_(?=[^\s])|(?<=\s)_+?(?=\s))+?_*)'
+SMART_STAR_MIXED_CONTENT = r'((?:\*(?=[^\s])|(?<=\s)\*+?(?=\s))+?\**)'
 UNDER_CONTENT = r'(_|(?:(?<=\s)_|[^_])+?)'
-UNDER_CONTENT2 = r'((?:[^_]|(?<!_{2})_(?=[\w\s]))+?)'
+UNDER_CONTENT2 = r'((?:[^_]|(?<!_{2})_)+?)'
 STAR_CONTENT = r'(\*|(?:(?<=\s)\*|[^\*])+?)'
-STAR_CONTENT2 = r'((?:[^\*]|(?<!\*{2})\*(?=[^\W_]|\*|\s))+?)'
+STAR_CONTENT2 = r'((?:[^\*]|(?<!\*{2})\*)+?)'
 
 # ***strong,em***
 STAR_STRONG_EM = r'(\*{3})(?!\s)(\*{1,2}|[^\*]+?)(?<!\s)\1'
