@@ -35,38 +35,38 @@ SMART_MIXED_CONTENT = r'((?:\^(?=[^\s])|(?<=\s)\^+?(?=\s))+?\^*)'
 CONTENT = r'(\^|[^\s]+?)'
 CONTENT2 = r'((?:[^\^]|(?<!\^{2})\^)+?)'
 
-# ^^^del,sup^^^
+# `^^^ins,sup^^^`
 INS_SUP = r'(\^{3})(?!\s)(\^{1,2}|[^\^\s]+?)(?<!\s)\1'
-# ^^^ins,sup^ins^^
+# `^^^ins,sup^ins^^`
 INS_SUP2 = r'(\^{3})(?![\s\^])%s(?<!\s)\^%s(?<!\s)\^{2}' % (CONTENT, CONTENT2)
-# ^^^sup,ins^^sup^
+# `^^^sup,ins^^sup^`
 SUP_INS = r'(\^{3})(?![\s\^])%s(?<!\s)\^{2}%s(?<!\s)\^' % (CONTENT, CONTENT)
-# ^^ins^sup,ins^^^
+# `^^ins^sup,ins^^^`
 INS_SUP3 = r'(\^{2})(?![\s\^])%s\^(?![\s\^])%s(?<!\s)\^{3}' % (CONTENT2, CONTENT)
-# ^^ins^^
+# `^^ins^^`
 INS = r'(\^{2})(?!\s)%s(?<!\s)\1' % CONTENT2
-# ^sup^
+# `^sup^`
 SUP = r'(\^)(?!\s)%s(?<!\s)\1' % CONTENT
 
 # Smart rules for when "smart caret" is enabled
-# SMART: ^^^ins,sup^^^
+# SMART: `^^^ins,sup^^^`
 SMART_INS_SUP = r'(\^{3})(?![\s\^])%s(?<!\s)\1' % CONTENT
-# ^^^ins,sup^ ins^^
+# `^^^ins,sup^ ins^^`
 SMART_INS_SUP2 = \
     r'(\^{3})(?![\s\^])%s(?<!\s)\^(?:(?=_)|(?![\w\^]))%s(?<!\s)\^{2}' % (
         CONTENT, SMART_CONTENT
     )
-# ^^^sup,ins^^ sup^
+# `^^^sup,ins^^ sup^`
 SMART_SUP_INS = \
     r'(\^{3})(?![\s\^])%s(?<!\s)\^{2}(?:(?=_)|(?![\w\^]))%s(?<!\s)\^' % (
         CONTENT, CONTENT
     )
-# ^^ins^^
+# `^^ins^^`
 SMART_INS = r'(?:(?<=_)|(?<![\w\^]))(\^{2})(?![\s\^])%s(?<!\s)\1(?:(?=_)|(?![\w\^]))' % SMART_CONTENT
 
 
 class CaretProcessor(util.PatternSequenceProcessor):
-    """Emphasis processor for handling insert and sup matches."""
+    """Emphasis processor for handling insert and superscript matches."""
 
     PATTERNS = [
         util.PatSeqItem(re.compile(INS_SUP, re.DOTALL | re.UNICODE), 'double', 'ins,sup'),
@@ -91,7 +91,7 @@ class CaretSmartProcessor(util.PatternSequenceProcessor):
 
 
 class CaretSupProcessor(util.PatternSequenceProcessor):
-    """Just sup processor."""
+    """Just superscript processor."""
 
     PATTERNS = [
         util.PatSeqItem(re.compile(SUP, re.DOTALL | re.UNICODE), 'single', 'sup')

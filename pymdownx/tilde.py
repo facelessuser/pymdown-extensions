@@ -34,38 +34,38 @@ SMART_MIXED_CONTENT = r'((?:~(?=[^\s])|(?<=\s)~+?(?=\s))+?~*)'
 CONTENT = r'(~|[^\s]+?)'
 CONTENT2 = r'((?:[^~]|(?<!~{2})~)+?)'
 
-# ~~~del,sub~~~
+# `~~~del,sub~~~`
 DEL_SUB = r'(~{3})(?!\s)(~{1,2}|[^~\s]+?)(?<!\s)\1'
-# ~~~del,sub~del~~
+# `~~~del,sub~del~~`
 DEL_SUB2 = r'(~{3})(?![\s~])%s(?<!\s)~%s(?<!\s)~{2}' % (CONTENT, CONTENT2)
-# ~~~sub,del~~sub~
+# `~~~sub,del~~sub~`
 SUB_DEL = r'(~{3})(?![\s~])%s(?<!\s)~{2}%s(?<!\s)~' % (CONTENT, CONTENT)
-# ~~del~sub,del~~~
+# `~~del~sub,del~~~`
 DEL_SUB3 = r'(~{2})(?![\s~])%s~(?![\s~])%s(?<!\s)~{3}' % (CONTENT2, CONTENT)
-# ~~del~~
+# `~~del~~`
 DEL = r'(~{2})(?!\s)%s(?<!\s)\1' % CONTENT2
-# ~sub~
+# `~sub~`
 SUB = r'(~)(?!\s)%s(?<!\s)\1' % CONTENT
 
 # Smart rules for when "smart tilde" is enabled
-# SMART: ~~~del,sub~~~
+# SMART: `~~~del,sub~~~`
 SMART_DEL_SUB = r'(~{3})(?![\s~])%s(?<!\s)\1' % CONTENT
-# ~~~del,sub~ del~~
+# `~~~del,sub~ del~~`
 SMART_DEL_SUB2 = \
     r'(~{3})(?![\s~])%s(?<!\s)~(?:(?=_)|(?![\w~]))%s(?<!\s)~{2}' % (
         CONTENT, SMART_CONTENT
     )
-# ~~~sub,del~~ sub~
+# `~~~sub,del~~ sub~`
 SMART_SUB_DEL = \
     r'(~{3})(?![\s~])%s(?<!\s)~{2}(?:(?=_)|(?![\w~]))%s(?<!\s)~' % (
         CONTENT, CONTENT
     )
-# ~~del~~
+# `~~del~~`
 SMART_DEL = r'(?:(?<=_)|(?<![\w~]))(~{2})(?![\s~])%s(?<!\s)\1(?:(?=_)|(?![\w~]))' % SMART_CONTENT
 
 
 class TildeProcessor(util.PatternSequenceProcessor):
-    """Emphasis processor for handling delete and sub matches."""
+    """Emphasis processor for handling delete and subscript matches."""
 
     PATTERNS = [
         util.PatSeqItem(re.compile(DEL_SUB, re.DOTALL | re.UNICODE), 'double', 'del,sub'),
@@ -78,7 +78,7 @@ class TildeProcessor(util.PatternSequenceProcessor):
 
 
 class TildeSmartProcessor(util.PatternSequenceProcessor):
-    """Smart delete and sub processor."""
+    """Smart delete and subscript processor."""
 
     PATTERNS = [
         util.PatSeqItem(re.compile(SMART_DEL_SUB, re.DOTALL | re.UNICODE), 'double', 'del,sub'),
@@ -90,7 +90,7 @@ class TildeSmartProcessor(util.PatternSequenceProcessor):
 
 
 class TildeSubProcessor(util.PatternSequenceProcessor):
-    """Just sub processor."""
+    """Just subscript processor."""
 
     PATTERNS = [
         util.PatSeqItem(re.compile(SUB, re.DOTALL | re.UNICODE), 'single', 'sub')
