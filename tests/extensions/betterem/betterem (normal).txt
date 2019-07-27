@@ -52,6 +52,10 @@ Test: _test _ test_
 
 Test: __test __ test__
 
+Test: **test *(test)* test**
+
+Test: __test _(test)_ test__
+
 One asterisk: *
 
 One underscore: _

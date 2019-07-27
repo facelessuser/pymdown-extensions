@@ -6,6 +6,7 @@
 - **FIX**: Fix issue where entities in the form `&#35;` would trigger MagicLink's shorthand for issues.
 - **FIX**: Don't install tests when installing package.
 - **FIX**: Fix for BetterEm case `**Strong*em,strong***`.
+- **FIX**: Handling boundary cases of BetterEm smart logic with non-word characters.
 
 ## 6.0.0
 
