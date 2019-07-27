@@ -24,17 +24,32 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
+import re
 from markdown import Extension
-from markdown.inlinepatterns import SimpleTagInlineProcessor, SimpleTextInlineProcessor
 from . import util
 
-RE_SMART_CONTENT = r'((?:[^\=]|\=(?=[^\W_]|\=|\s)|(?<=\s)\=+?(?=\s))+?\=*?)'
-RE_DUMB_CONTENT = r'((?:[^\=]|(?<!\=)\=(?=[^\W_]|\=))+?)'
-RE_SMART_MARK_BASE = r'(\={2})(?![\s\=])%s(?<!\s)\={2}' % RE_SMART_CONTENT
-RE_SMART_MARK = r'(?:(?<=_)|(?<![\w\=]))%s(?:(?=_)|(?![\w\=]))' % RE_SMART_MARK_BASE
-RE_MARK_BASE = r'(\={2})(?!\s)%s(?<!\s)\={2}' % RE_DUMB_CONTENT
-RE_NOT_MARK = r'((^| )(\=)( |$))'
-RE_MARK = RE_MARK_BASE
+SMART_CONTENT = r'((?:(?<=\s)=+?(?=\s)|.)+?=*?)'
+CONTENT = r'((?:[^=]|(?<!={2})=)+?)'
+# ==mark==
+MARK = r'(={2})(?!\s)%s(?<!\s)\1' % CONTENT
+# ==mark==
+SMART_MARK = r'(?:(?<=_)|(?<![\w=]))(={2})(?![\s=])%s(?<!\s)\1(?:(?=_)|(?![\w=]))' % SMART_CONTENT
+
+
+class MarkProcessor(util.PatternSequenceProcessor):
+    """Handle mark patterns."""
+
+    PATTERNS = [
+        util.PatSeqItem(re.compile(MARK, re.DOTALL | re.UNICODE), 'single', 'mark')
+    ]
+
+
+class MarkSmartProcessor(util.PatternSequenceProcessor):
+    """Handle smart mark patterns."""
+
+    PATTERNS = [
+        util.PatSeqItem(re.compile(SMART_MARK, re.DOTALL | re.UNICODE), 'single', 'mark')
+    ]
 
 
 class MarkExtension(Extension):
@@ -50,13 +65,19 @@ class MarkExtension(Extension):
         super(MarkExtension, self).__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
-        """Add support for <mark>test</mark> tags as ==test==."""
+        """Insert `<mark>test</mark>` tags as `==test==`."""
 
-        util.escape_chars(md, ['='])
         config = self.getConfigs()
-        pattern = RE_SMART_MARK if config.get('smart_mark', True) else RE_MARK
-        md.inlinePatterns.register(SimpleTextInlineProcessor(RE_NOT_MARK), "not_mark", 65)
-        md.inlinePatterns.register(SimpleTagInlineProcessor(pattern, "mark"), "mark", 64.9)
+        smart = bool(config.get('smart_mark', True))
+
+        md.registerExtension(self)
+
+        escape_chars = []
+        escape_chars.append('=')
+        util.escape_chars(md, escape_chars)
+
+        mark = MarkSmartProcessor(r'=') if smart else MarkProcessor(r'=')
+        md.inlinePatterns.register(mark, "mark", 65)
 
 
 def makeExtension(*args, **kwargs):
