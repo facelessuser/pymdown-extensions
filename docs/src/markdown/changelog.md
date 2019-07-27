@@ -5,6 +5,8 @@
 - **NEW**: `version` and `version_info` are now accessible via the more standard form `__version__` and `_version_info__`. The old format, while available, is now deprecated.
 - **FIX**: Fix issue where entities in the form `&#35;` would trigger MagicLink's shorthand for issues.
 - **FIX**: Don't install tests when installing package.
+- **FIX**: Fix for BetterEm case `**Strong*em,strong***`. Similar cases in Critic and Tilde are also adjusted.
+- **FIX**: Fixes for non-word character boundary cases in BetterEm, Critic, Mark, and Tilde extensions.
 
 ## 6.0.0
 

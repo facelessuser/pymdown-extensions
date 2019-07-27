@@ -24,17 +24,18 @@ DEALINGS IN THE SOFTWARE.
 """
 from __future__ import absolute_import
 from __future__ import unicode_literals
+import re
 from markdown import Extension
-from markdown.inlinepatterns import SimpleTagInlineProcessor, DoubleTagInlineProcessor
+from . import util
 
-SMART_UNDER_CONTENT = r'((?:[^_]|_(?=\w|\s)|(?<=\s)_+?(?=\s))+?_*?)'
-SMART_STAR_CONTENT = r'((?:[^\*]|\*(?=[^\W_]|\*|\s)|(?<=\s)\*+?(?=\s))+?\**?)'
-SMART_UNDER_MIXED_CONTENT = r'((?:[^_]|_(?=\w)|(?<=\s)_+?(?=\s))+?_*)'
-SMART_STAR_MIXED_CONTENT = r'((?:[^\*]|\*(?=[^\W_]|\*)|(?<=\s)\*+?(?=\s))+?\**)'
+SMART_UNDER_CONTENT = r'((?:(?<=\s)_+?(?=\s)|.)+?_*?)'
+SMART_STAR_CONTENT = r'((?:(?<=\s)\*+?(?=\s)|.)+?\**?)'
+SMART_UNDER_MIXED_CONTENT = r'((?:_(?=[^\s])|(?<=\s)_+?(?=\s))+?_*)'
+SMART_STAR_MIXED_CONTENT = r'((?:\*(?=[^\s])|(?<=\s)\*+?(?=\s))+?\**)'
 UNDER_CONTENT = r'(_|(?:(?<=\s)_|[^_])+?)'
-UNDER_CONTENT2 = r'((?:[^_]|(?<!_)_(?=\w))+?)'
+UNDER_CONTENT2 = r'((?:[^_]|(?<!_{2})_)+?)'
 STAR_CONTENT = r'(\*|(?:(?<=\s)\*|[^\*])+?)'
-STAR_CONTENT2 = r'((?:[^\*]|(?<!\*)\*(?=[^\W_]|\*))+?)'
+STAR_CONTENT2 = r'((?:[^\*]|(?<!\*{2})\*)+?)'
 
 # ***strong,em***
 STAR_STRONG_EM = r'(\*{3})(?!\s)(\*{1,2}|[^\*]+?)(?<!\s)\1'
@@ -46,8 +47,12 @@ STAR_STRONG_EM2 = r'(\*{3})(?![\s\*])%s(?<!\s)\*%s(?<!\s)\*{2}' % (STAR_CONTENT,
 UNDER_STRONG_EM2 = r'(_{3})(?![\s_])%s(?<!\s)_%s(?<!\s)_{2}' % (UNDER_CONTENT, UNDER_CONTENT2)
 # ***em,strong**em*
 STAR_EM_STRONG = r'(\*{3})(?![\s\*])%s(?<!\s)\*{2}%s(?<!\s)\*' % (STAR_CONTENT2, STAR_CONTENT)
+# **strong*em,strong***
+STAR_STRONG_EM3 = r'(\*{2})(?![\s\*])%s\*(?![\s\*])%s(?<!\s)\*{3}' % (STAR_CONTENT2, STAR_CONTENT)
 # ___em,strong__em_
 UNDER_EM_STRONG = r'(_{3})(?![\s_])%s(?<!\s)_{2}%s(?<!\s)_' % (UNDER_CONTENT2, UNDER_CONTENT)
+# __strong_em,strong___
+UNDER_STRONG_EM3 = r'(_{2})(?![\s_])%s_(?![\s_])%s(?<!\s)_{3}' % (UNDER_CONTENT2, UNDER_CONTENT)
 # **strong**
 STAR_STRONG = r'(\*{2})(?!\s)%s(?<!\s)\1' % STAR_CONTENT2
 # __strong__
@@ -90,6 +95,56 @@ SMART_STAR_STRONG = r'(?:(?<=_)|(?<![\w\*]))(\*{2})(?![\s\*])%s(?<!\s)\1(?:(?=_)
 SMART_STAR_EM = r'(?:(?<=_)|(?<![\w\*]))(\*)(?![\s\*])%s(?<!\s)\1(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT
 
 
+class AsteriskProcessor(util.PatternSequenceProcessor):
+    """Emphasis processor for handling strong and em matches."""
+
+    PATTERNS = [
+        util.PatSeqItem(re.compile(STAR_STRONG_EM, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        util.PatSeqItem(re.compile(STAR_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
+        util.PatSeqItem(re.compile(STAR_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        util.PatSeqItem(re.compile(STAR_STRONG_EM3, re.DOTALL | re.UNICODE), 'double2', 'strong,em'),
+        util.PatSeqItem(re.compile(STAR_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
+        util.PatSeqItem(re.compile(STAR_EM, re.DOTALL | re.UNICODE), 'single', 'em')
+    ]
+
+
+class SmartAsteriskProcessor(util.PatternSequenceProcessor):
+    """Smart emphasis and strong processor."""
+
+    PATTERNS = [
+        util.PatSeqItem(re.compile(SMART_STAR_STRONG_EM, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        util.PatSeqItem(re.compile(SMART_STAR_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
+        util.PatSeqItem(re.compile(SMART_STAR_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        util.PatSeqItem(re.compile(SMART_STAR_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
+        util.PatSeqItem(re.compile(SMART_STAR_EM, re.DOTALL | re.UNICODE), 'single', 'em')
+    ]
+
+
+class UnderscoreProcessor(util.PatternSequenceProcessor):
+    """Emphasis processor for handling strong and em matches."""
+
+    PATTERNS = [
+        util.PatSeqItem(re.compile(UNDER_STRONG_EM, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        util.PatSeqItem(re.compile(UNDER_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
+        util.PatSeqItem(re.compile(UNDER_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        util.PatSeqItem(re.compile(UNDER_STRONG_EM3, re.DOTALL | re.UNICODE), 'double2', 'strong,em'),
+        util.PatSeqItem(re.compile(UNDER_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
+        util.PatSeqItem(re.compile(UNDER_EM, re.DOTALL | re.UNICODE), 'single', 'em')
+    ]
+
+
+class SmartUnderscoreProcessor(util.PatternSequenceProcessor):
+    """Emphasis processor for handling strong and em matches."""
+
+    PATTERNS = [
+        util.PatSeqItem(re.compile(SMART_UNDER_STRONG_EM, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        util.PatSeqItem(re.compile(SMART_UNDER_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
+        util.PatSeqItem(re.compile(SMART_UNDER_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        util.PatSeqItem(re.compile(SMART_UNDER_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
+        util.PatSeqItem(re.compile(SMART_UNDER_EM, re.DOTALL | re.UNICODE), 'single', 'em')
+    ]
+
+
 class BetterEmExtension(Extension):
     """Add extension to Markdown class."""
 
@@ -124,29 +179,21 @@ class BetterEmExtension(Extension):
             enable_under = enabled == "underscore" or enable_all
             enable_star = enabled == "asterisk" or enable_all
 
-        star_strong_em = SMART_STAR_STRONG_EM if enable_star else STAR_STRONG_EM
-        under_strong_em = SMART_UNDER_STRONG_EM if enable_under else UNDER_STRONG_EM
-        star_em_strong = SMART_STAR_EM_STRONG if enable_star else STAR_EM_STRONG
-        under_em_strong = SMART_UNDER_EM_STRONG if enable_under else UNDER_EM_STRONG
-        star_strong_em2 = SMART_STAR_STRONG_EM2 if enable_star else STAR_STRONG_EM2
-        under_strong_em2 = SMART_UNDER_STRONG_EM2 if enable_under else UNDER_STRONG_EM2
-        star_strong = SMART_STAR_STRONG if enable_star else STAR_STRONG
-        under_strong = SMART_UNDER_STRONG if enable_under else UNDER_STRONG
-        star_emphasis = SMART_STAR_EM if enable_star else STAR_EM
-        under_emphasis = SMART_UNDER_EM if enable_under else UNDER_EM
-
         # If we don't have to move an existing extension, use the same priority,
         # but if we do have to, move it closely to the relative needed position.
-        md.inlinePatterns.register(DoubleTagInlineProcessor(star_strong_em, 'strong,em'), "strong_em", 50)
-        md.inlinePatterns.register(DoubleTagInlineProcessor(under_strong_em, 'strong,em'), "strong_em2", 49.9)
-        md.inlinePatterns.register(DoubleTagInlineProcessor(star_em_strong, 'em,strong'), "em_strong", 49.8)
-        md.inlinePatterns.register(DoubleTagInlineProcessor(under_em_strong, 'em,strong'), "em_strong2", 49.7)
-        md.inlinePatterns.register(DoubleTagInlineProcessor(star_strong_em2, 'strong,em'), 'strong_em3', 49.6)
-        md.inlinePatterns.register(DoubleTagInlineProcessor(under_strong_em2, 'strong,em'), 'strong_em4', 49.5)
-        md.inlinePatterns.register(SimpleTagInlineProcessor(star_strong, 'strong'), "strong", 40)
-        md.inlinePatterns.register(SimpleTagInlineProcessor(under_strong, 'strong'), "strong2", 39.9)
-        md.inlinePatterns.register(SimpleTagInlineProcessor(star_emphasis, 'em'), "emphasis", 30)
-        md.inlinePatterns.register(SimpleTagInlineProcessor(under_emphasis, 'em'), "emphasis2", 10)
+        md.inlinePatterns.deregister('not_strong', False)
+        md.inlinePatterns.deregister('strong_em', False)
+        md.inlinePatterns.deregister('em_strong', False)
+        md.inlinePatterns.deregister('em_strong2', False)
+        md.inlinePatterns.deregister('strong', False)
+        md.inlinePatterns.deregister('emphasis', False)
+        md.inlinePatterns.deregister('strong2', False)
+        md.inlinePatterns.deregister('emphasis2', False)
+
+        asterisk = SmartAsteriskProcessor(r'\*') if enable_star else AsteriskProcessor(r'\*')
+        md.inlinePatterns.register(asterisk, "strong_em", 50)
+        underscore = SmartUnderscoreProcessor('_') if enable_under else UnderscoreProcessor('_')
+        md.inlinePatterns.register(underscore, "strong_em2", 40)
 
 
 def makeExtension(*args, **kwargs):

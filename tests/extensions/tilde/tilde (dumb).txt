@@ -14,6 +14,8 @@ Test: \~\~Escaped\~\~
 
 Test: ~~All will ~ be deleted~~
 
-Test: ~~All will~~~ be deleted with subscript in middle~~
+Test: ~~All will~\~~ be deleted with subscript in middle~~
 
-Test: ~~All will ~~~ be deleted with subscript in middle~~
+Test: ~~All will ~\~~ be deleted with subscript in middle~~
+
+Test: Subscript ~~~

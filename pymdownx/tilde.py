@@ -25,22 +25,92 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
+import re
 from markdown import Extension
-from markdown.inlinepatterns import SimpleTagInlineProcessor, DoubleTagInlineProcessor, SimpleTextInlineProcessor
 from . import util
 
-RE_SMART_CONTENT = r'((?:[^~]|~(?=[^\W_]|~|\s)|(?<=\s)~+?(?=\s))+?~*?)'
-RE_CONTENT = r'((?:[^~]|(?<!~)~(?=[^\W_]|~))+?)'
-RE_SMART_DEL = r'(?:(?<=_)|(?<![\w~]))(~{2})(?![\s~])%s(?<!\s)\1(?:(?=_)|(?![\w~]))' % RE_SMART_CONTENT
-RE_DEL = r'(~{2})(?!\s)%s(?<!\s)\1' % RE_CONTENT
+SMART_CONTENT = r'((?:(?<=\s)~+?(?=\s)|.)+?~*?)'
+SMART_MIXED_CONTENT = r'((?:~(?=[^\s])|(?<=\s)~+?(?=\s))+?~*)'
+CONTENT = r'(~|[^\s]+?)'
+CONTENT2 = r'((?:[^~]|(?<!~{2})~)+?)'
 
-RE_SUB_DEL = r'(~{3})(?!\s)([^~]+?)(?<!\s)\1'
-RE_SMART_SUB_DEL = r'(~{3})(?!\s)%s(?<!\s)\1' % RE_SMART_CONTENT
-RE_SUB_DEL2 = r'(~{3})(?!\s)([^~]+?)(?<!\s)~{2}([^~ ]+?)~'
-RE_SMART_SUB_DEL2 = r'(~{3})(?!\s)%s(?<!\s)~{2}(?:(?=_)|(?![\w~]))([^~ ]+?)~' % RE_SMART_CONTENT
-RE_SUB = r'(~)([^~ ]+?|~)\1'
+# `~~~del,sub~~~`
+DEL_SUB = r'(~{3})(?!\s)(~{1,2}|[^~\s]+?)(?<!\s)\1'
+# `~~~del,sub~del~~`
+DEL_SUB2 = r'(~{3})(?![\s~])%s(?<!\s)~%s(?<!\s)~{2}' % (CONTENT, CONTENT2)
+# `~~~sub,del~~sub~`
+SUB_DEL = r'(~{3})(?![\s~])%s(?<!\s)~{2}%s(?<!\s)~' % (CONTENT, CONTENT)
+# `~~del~sub,del~~~`
+DEL_SUB3 = r'(~{2})(?![\s~])%s~(?![\s~])%s(?<!\s)~{3}' % (CONTENT2, CONTENT)
+# `~~del~~`
+DEL = r'(~{2})(?!\s)%s(?<!\s)\1' % CONTENT2
+# `~sub~`
+SUB = r'(~)(?!\s)%s(?<!\s)\1' % CONTENT
 
-RE_NOT_TILDE = r'((^| )(~)( |$))'
+# Smart rules for when "smart tilde" is enabled
+# SMART: `~~~del,sub~~~`
+SMART_DEL_SUB = r'(~{3})(?![\s~])%s(?<!\s)\1' % CONTENT
+# `~~~del,sub~ del~~`
+SMART_DEL_SUB2 = \
+    r'(~{3})(?![\s~])%s(?<!\s)~(?:(?=_)|(?![\w~]))%s(?<!\s)~{2}' % (
+        CONTENT, SMART_CONTENT
+    )
+# `~~~sub,del~~ sub~`
+SMART_SUB_DEL = \
+    r'(~{3})(?![\s~])%s(?<!\s)~{2}(?:(?=_)|(?![\w~]))%s(?<!\s)~' % (
+        CONTENT, CONTENT
+    )
+# `~~del~~`
+SMART_DEL = r'(?:(?<=_)|(?<![\w~]))(~{2})(?![\s~])%s(?<!\s)\1(?:(?=_)|(?![\w~]))' % SMART_CONTENT
+
+
+class TildeProcessor(util.PatternSequenceProcessor):
+    """Emphasis processor for handling delete and subscript matches."""
+
+    PATTERNS = [
+        util.PatSeqItem(re.compile(DEL_SUB, re.DOTALL | re.UNICODE), 'double', 'del,sub'),
+        util.PatSeqItem(re.compile(SUB_DEL, re.DOTALL | re.UNICODE), 'double', 'sub,del'),
+        util.PatSeqItem(re.compile(DEL_SUB2, re.DOTALL | re.UNICODE), 'double', 'del,sub'),
+        util.PatSeqItem(re.compile(DEL_SUB3, re.DOTALL | re.UNICODE), 'double2', 'del,sub'),
+        util.PatSeqItem(re.compile(DEL, re.DOTALL | re.UNICODE), 'single', 'del'),
+        util.PatSeqItem(re.compile(SUB, re.DOTALL | re.UNICODE), 'single', 'sub')
+    ]
+
+
+class TildeSmartProcessor(util.PatternSequenceProcessor):
+    """Smart delete and subscript processor."""
+
+    PATTERNS = [
+        util.PatSeqItem(re.compile(SMART_DEL_SUB, re.DOTALL | re.UNICODE), 'double', 'del,sub'),
+        util.PatSeqItem(re.compile(SMART_SUB_DEL, re.DOTALL | re.UNICODE), 'double', 'sub,del'),
+        util.PatSeqItem(re.compile(SMART_DEL_SUB2, re.DOTALL | re.UNICODE), 'double', 'del,sub'),
+        util.PatSeqItem(re.compile(SMART_DEL, re.DOTALL | re.UNICODE), 'single', 'del'),
+        util.PatSeqItem(re.compile(SUB, re.DOTALL | re.UNICODE), 'single', 'sub')
+    ]
+
+
+class TildeSubProcessor(util.PatternSequenceProcessor):
+    """Just subscript processor."""
+
+    PATTERNS = [
+        util.PatSeqItem(re.compile(SUB, re.DOTALL | re.UNICODE), 'single', 'sub')
+    ]
+
+
+class TildeDeleteProcessor(util.PatternSequenceProcessor):
+    """Just delete processor."""
+
+    PATTERNS = [
+        util.PatSeqItem(re.compile(DEL, re.DOTALL | re.UNICODE), 'single', 'del')
+    ]
+
+
+class TildeSmartDeleteProcessor(util.PatternSequenceProcessor):
+    """Just smart delete processor."""
+
+    PATTERNS = [
+        util.PatSeqItem(re.compile(SMART_DEL, re.DOTALL | re.UNICODE), 'single', 'del')
+    ]
 
 
 class DeleteSubExtension(Extension):
@@ -65,6 +135,8 @@ class DeleteSubExtension(Extension):
         subscript = bool(config.get('subscript', True))
         smart = bool(config.get('smart_delete', True))
 
+        md.registerExtension(self)
+
         escape_chars = []
         if delete or subscript:
             escape_chars.append('~')
@@ -72,28 +144,16 @@ class DeleteSubExtension(Extension):
             escape_chars.append(' ')
         util.escape_chars(md, escape_chars)
 
-        delete_rule = RE_SMART_DEL if smart else RE_DEL
-        sub_del_rule = RE_SMART_SUB_DEL if smart else RE_SUB_DEL
-        sub_del2_rule = RE_SMART_SUB_DEL2 if smart else RE_SUB_DEL2
-        sub_rule = RE_SUB
-
-        md.inlinePatterns.register(SimpleTextInlineProcessor(RE_NOT_TILDE), "not_tilde", 65)
-        if delete:
-            if subscript:
-                md.inlinePatterns.register(DoubleTagInlineProcessor(sub_del_rule, "sub,del"), "sub_del", 64.9)
-                md.inlinePatterns.register(DoubleTagInlineProcessor(sub_del2_rule, "sub,del"), "sub_del2", 64.8)
-
-            # If not "smart", this needs to occur before `del`, but if "smart", this needs to be after `del`
-            if subscript and not smart:
-                md.inlinePatterns.register(SimpleTagInlineProcessor(sub_rule, "sub"), "sub", 64.8)
-
-            md.inlinePatterns.register(SimpleTagInlineProcessor(delete_rule, "del"), "del", 64)
-
-            # "smart", so this happens after `del`
-            if subscript and smart:
-                md.inlinePatterns.register(SimpleTagInlineProcessor(sub_rule, "sub"), "sub", 63.9)
+        tilde = None
+        if delete and subscript:
+            tilde = TildeSmartProcessor(r'~') if smart else TildeProcessor(r'~')
+        elif delete:
+            tilde = TildeSmartDeleteProcessor(r'~') if smart else TildeDeleteProcessor(r'~')
         elif subscript:
-            md.inlinePatterns.register(SimpleTagInlineProcessor(sub_rule, "sub"), "sub", 64.8)
+            tilde = TildeSubProcessor(r'~')
+
+        if tilde is not None:
+            md.inlinePatterns.register(tilde, "sub_del", 65)
 
 
 def makeExtension(*args, **kwargs):
