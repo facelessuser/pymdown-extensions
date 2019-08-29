@@ -31,6 +31,7 @@ GFM
 GIF
 Gemoji
 Gemoji's
+Gendered
 GitHub
 GitHub's
 GitHubEmoji
@@ -46,6 +47,7 @@ JPEG
 JSON
 Jan
 JavaScript
+JoyPixels
 Jun
 KBD
 KaTeX
