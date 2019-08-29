@@ -2,7 +2,7 @@ __default__: {}
 
 emoji1 (awesome):
   css:
-    - https://cdn.jsdelivr.net/npm/emojione@4.0.0/extras/css/emojione-awesome.css
+    - https://cdn.jsdelivr.net/npm/emojione@4.5.0/extras/css/emojione-awesome.css
   extensions:
     pymdownx.emoji:
       emoji_generator: !!python/name:pymdownx.emoji.to_awesome
@@ -30,13 +30,13 @@ emoji1 (no title):
 
 emoji1 (png):
   css:
-    - https://cdn.jsdelivr.net/npm/emojione@4.0.0/extras/css/emojione.min.css
+    - https://cdn.jsdelivr.net/npm/emojione@4.5.0/extras/css/emojione.min.css
   extensions:
     pymdownx.emoji:
 
 emoji1 (png sprite):
   css:
-    - https://cdn.jsdelivr.net/emojione/assets/4.0/sprites/emojione-sprite-64.css
+    - https://cdn.jsdelivr.net/emojione/assets/4.5/sprites/emojione-sprite-64.css
   extensions:
     pymdownx.emoji:
       emoji_generator: !!python/name:pymdownx.emoji.to_png_sprite

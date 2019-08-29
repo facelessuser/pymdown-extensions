@@ -18,7 +18,7 @@ There are a number of emoji short name conventions that people may be aware of. 
 
 - [Gemoji][gemoji] (<img align="absmiddle" alt=":smile:" class="gemoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f604.png" title=":smile:" width="20px" /> <img align="absmiddle" alt=":heart:" class="gemoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/2764.png" title=":heart:" width="20px" /> <img align="absmiddle" alt=":+1:" class="gemoji" height="20px" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f44d.png" title=":+1:" width="20px" />): Gemoji is GitHub's open source emoji solution. It contains a lot of common emoji and a couple special, non Unicode emoji (like Gemoji's `:octocat:`). If you are a GitHub user, you are probably familiar with some of the short names associated with it. Their associated CDN contains the emoji in 75x75 PNG format.
 - [EmojiOne][emojione] (:smile: :heart: :thumbsup:): EmojiOne is a very complete, high quality emoji set with support for gender and skin tone modifiers. Their free emoji set includes PNGs in sizes of 32x32, 64x64, and 128x128 which are all available via a CDN. Their older (version 2.2.7) emoji set, which contains less emoji, offers SVG images as well. Emoji supports EmojiOne's newest short name mapping, but it can be used for their older set, but short names for emoji that have been added since the old set will not map to any images if this is done.
-- [Twemoji][twemoji] (<img align="absmiddle" alt=":smile:" class="twemoji" height="20px" src="https://twemoji.maxcdn.com/2/72x72/1f604.png" title=":smile:" width="20px" /> <img align="absmiddle" alt=":heart:" class="twemoji" height="20px" src="https://twemoji.maxcdn.com/2/72x72/2764.png" title=":heart:" width="20px" /> <img align="absmiddle" alt=":thumbsup:" class="twemoji" height="20px" src="https://twemoji.maxcdn.com/2/72x72/1f44d.png" title=":thumbsup:" width="20px" />): Twemoji is Twitter's open source emoji set which also covers a great many emoji with skin tones and gender modifiers. The hosted CDN provides 72x72 PNG emoji or SVG emoji. While Gemoji and EmojiOne have a short name convention, Twemoji does not, and there are currently no 3rd projects that provide short names anywhere close to all the provided emoji. Since EmojiOne has the largest emoji library of the supported sets, we use EmojiOne's short name list for Twemoji. There will be a reasonable attempt to patch in emoji not found in EmojiOne's index, but if EmojiOne is ever significantly behind, we may wait for EmojiOne to catch up.
+- [Twemoji][twemoji] (<img align="absmiddle" alt=":smile:" class="twemoji" height="20px" src="https://twemoji.maxcdn.com/v/latest/72x72/1f604.png" title=":smile:" width="20px" /> <img align="absmiddle" alt=":heart:" class="twemoji" height="20px" src="https://twemoji.maxcdn.com/v/latest/72x72/2764.png" title=":heart:" width="20px" /> <img align="absmiddle" alt=":thumbsup:" class="twemoji" height="20px" src="https://twemoji.maxcdn.com/v/latest/72x72/1f44d.png" title=":thumbsup:" width="20px" />): Twemoji is Twitter's open source emoji set which also covers a great many emoji with skin tones and gender modifiers. The hosted CDN provides 72x72 PNG emoji or SVG emoji. While Gemoji and EmojiOne have a short name convention, Twemoji does not, and there are currently no 3rd projects that provide short names anywhere close to all the provided emoji. Since EmojiOne has the largest emoji library of the supported sets, we use EmojiOne's short name list for Twemoji. There will be a reasonable attempt to patch in emoji not found in EmojiOne's index, but if EmojiOne is ever significantly behind, we may wait for EmojiOne to catch up.
 
 !!! warning "Emoji Image Licensing"
     PyMdown Extensions has no affiliation with EmojiOne, Gemoji, or Twemoji.  The indexes generated from their sources are covered under their respective licensing.  When using their images or CSS, please see their licensing terms to ensure proper usage and attributions.
@@ -44,14 +44,14 @@ By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  
 
 `pymdownx.emoji.emojione`
 : 
-    This is the default function that is used, and it provides an index using the latest EmojiOne supported emoji (at the time of release).
+    This is the default function that is used. The associated short names are currently borrowed from JoyPixels' index (formally known as EmojiOne). EmojiOne was rebranded as JoyPixels and is no longer free. While the index is JoyPixels, and is licensed under MIT, the referenced images are from the last EmojiOne release: 4.5.0.
 
     You can always find out what tag it was built with by doing the following:
 
     ```pycon3
     >>> import pymdownx.emoji1_db as e1db
     >>> e1db.version
-    '4.0.0'
+    '4.5.0'
     ```
 
     !!! warning "EmojiOne Update"
@@ -70,12 +70,12 @@ By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  
     ```pycon3
     >>> import pymdownx.gemoji_db as gmdb
     >>> gmdb.version
-    'v3.0.0'
+    'v3.0.1'
     ```
 
 `pymdownx.emoji.twemoji`
 : 
-    This function provides an index of the latest Twemoji supported emoji (at the time of release).  The associated short names are currently borrowed from EmojiOne's index.
+    This function provides an index of the latest Twemoji supported emoji (at the time of release).  The associated short names are currently borrowed from JoyPixels' index (formally known as EmojiOne).
 
     There are a few emoji that are currently Twemoji specific, two of which are likely to always be as they are not part of the official emoji spec. The short names are listed below.
 
@@ -112,6 +112,17 @@ By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  
         :woman_in_tuxedo_tone3:
         :woman_in_tuxedo_tone4:
         :woman_in_tuxedo_tone5:
+
+        :men_wrestling:
+        :women_wrestling:
+
+        :couple_with_heart_woman_man:
+        :couple_with_heart_woman_woman:
+        :couple_with_heart_man_man:
+
+        :couplekiss_woman_man:
+        :couplekiss_woman_woman:
+        :couplekiss_man_man:
         ```
 
     You can always find out what tag it was built with by doing the following:
@@ -119,7 +130,7 @@ By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  
     ```pycon3
     >>> import pymdownx.twemoji_db as twdb
     >>> twdb.version
-    'v11.2.0'
+    'v12.1.2'
     ```
 
 ## Default Emoji Generators
@@ -133,10 +144,10 @@ You can select a generator to use by passing in one of the functions below via t
 
 `pymdownx.emoji.to_png`
 : 
-    This is a general purpose generator which provides EmojiOne, GitHub, and Twemoji CDN path(s) out of the box. Depending on the index you've chosen, you the appropriate CDN will be provided.  If this ever gets out of date, a new CDN can be passed in via `image_path` and/or `non_standard_image_path`. EmojiOne actually has multiple PNGs sizes of 32, 64, and 128, but the default CDN path is the one for size 64: `https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/`. You can change it for a larger or smaller PNG size by updating the size in the URL and passing the new URL in through `image_path`. The PNG output form is as follows:
+    This is a general purpose generator which provides EmojiOne, GitHub, and Twemoji CDN path(s) out of the box. Depending on the index you've chosen, you the appropriate CDN will be provided.  If this ever gets out of date, a new CDN can be passed in via `image_path` and/or `non_standard_image_path`. EmojiOne actually has multiple PNGs sizes of 32, 64, and 128, but the default CDN path is the one for size 64: `https://cdn.jsdelivr.net/emojione/assets/4.5/png/64/`. You can change it for a larger or smaller PNG size by updating the size in the URL and passing the new URL in through `image_path`. The PNG output form is as follows:
 
     ```html
-    <img alt="😄" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.0/png/64/1f604.png" title=":smile:" />
+    <img alt="😄" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/4.5/png/64/1f604.png" title=":smile:" />
     ```
 
     **Generator Specific Options**
@@ -168,7 +179,7 @@ You can select a generator to use by passing in one of the functions below via t
 : 
     This generator was written to support PNG sprite output for EmojiOne.  It is expected that this will be used in conjunction with the the official EmojiOne CSS.  You can include the CSS from the CDN in your document. The CSS comes in three sizes: 32, 64, 128. Make sure to set the correct size in the options to generate the appropriate classes.
 
-    Example CDN for the 4.0 version with 64px PNGs: `https://cdn.jsdelivr.net/emojione/assets/4.0/sprites/emojione-sprite-64.min.css`.
+    Example CDN for the 4.5 version with 64px PNGs: `https://cdn.jsdelivr.net/emojione/assets/4.5/sprites/emojione-sprite-64.min.css`.
 
     `to_png_sprite` outputs the emoji as a span in the form below.  The CSS will apply the appropriate mapping in the sprite PNG to the background image of the span.
 
@@ -201,7 +212,7 @@ You can select a generator to use by passing in one of the functions below via t
 
 `pymdownx.emoji.to_awesome`
 : 
-    This generator is another EmojiOne specific output called EmojiOne Awesome. It aims to give a font-awesome like interface for EmojiOne.  The `emojione-awesome` CDN currently follows this format: https://cdn.jsdelivr.net/npm/emojione@4.0.0/extras/css/emojione-awesome.css, so update accordingly.  The output format is:
+    This generator is another EmojiOne specific output called EmojiOne Awesome. It aims to give a font-awesome like interface for EmojiOne.  The `emojione-awesome` CDN currently follows this format: https://cdn.jsdelivr.net/npm/emojione@4.5.0/extras/css/emojione-awesome.css, so update accordingly.  The output format is:
 
     ```html
     <i class="e1a-smile"></i>

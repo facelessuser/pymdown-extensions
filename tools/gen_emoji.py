@@ -15,7 +15,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 GITHUB_API_HEADER = 'application/vnd.github.v3+json'
 GITHUB_API = 'https://api.github.com'
 GEMOJI = 'github/gemoji'
-EMOJIONE = 'emojione/emojione'
+EMOJIONE = 'joypixels/emoji-toolkit'
 TWEMOJI = 'twitter/twemoji'
 
 PY3 = sys.version_info >= (3, 0) and sys.version_info[0:2] < (4, 0)

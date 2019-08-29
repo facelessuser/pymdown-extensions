@@ -2,6 +2,9 @@
 
 ## 6.1.0
 
+- **NEW**: Upgrade Twemoji to 12.1.2 using the latest JoyPixels' (formally EmojiOne) short name index.
+- **NEW**: Upgrade EmojiOne to 4.5.0 using the latest JoyPixels' (formally EmojiOne) short name index. EmojiOne was rebranded as JoyPixels, but while the index is licensed under MIT, the image assests are no longer free. The Emoji extension will only reference the last free release of EmojiOne.
+- **NEW**: Upgrade Gemoji to 3.0.1.
 - **NEW**: `version` and `version_info` are now accessible via the more standard form `__version__` and `_version_info__`. The old format, while available, is now deprecated.
 - **FIX**: Fix issue where entities in the form `&#35;` would trigger MagicLink's shorthand for issues.
 - **FIX**: Don't install tests when installing package.

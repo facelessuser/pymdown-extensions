@@ -129,6 +129,49 @@ SPECIAL_EMOJI = {
         "category": "people",
         "name": "woman in tuxedo: dark skin tone",
         "unicode": "1f935-1f3ff-200d-2640-fe0f"
+    },
+    # Gendered wrestling (not supported in Unicode spec)
+    ":men_wrestling:": {
+        "category": "activity",
+        "name": "men wrestling",
+        "unicode": "1f93c-200d-2642-fe0f"
+    },
+    ":women_wrestling:": {
+        "category": "activity",
+        "name": "women wrestling",
+        "unicode": "1f93c-200d-2640-fe0f"
+    },
+    # Gendered couple with heart (not supported in Unicode spec)
+    ":couple_with_heart_woman_man:": {
+        "category": "people",
+        "name": "couple with heart: woman, man",
+        "unicode": "1f469-200d-2764-fe0f-200d-1f468"
+    },
+    ":couple_with_heart_woman_woman:": {
+        "category": "people",
+        "name": "couple with heart: woman, woman",
+        "unicode": "1f469-200d-2764-fe0f-200d-1f469"
+    },
+    ":couple_with_heart_man_man:": {
+        "category": "people",
+        "name": "couple with heart: man, man",
+        "unicode": "1f468-200d-2764-fe0f-200d-1f468"
+    },
+    # Gendered couple kiss (not supported in Unicode spec)
+    ":couplekiss_woman_man:": {
+        "category": "people",
+        "name": "kiss: woman, man",
+        "unicode": "1f469-200d-2764-fe0f-200d-1f48b-200d-1f468"
+    },
+    ":couplekiss_woman_woman:": {
+        "category": "people",
+        "name": "kiss: woman, woman",
+        "unicode": "1f469-200d-2764-fe0f-200d-1f48b-200d-1f469"
+    },
+    ":couplekiss_man_man:": {
+        "category": "people",
+        "name": "kiss: man, man",
+        "unicode": "1f468-200d-2764-fe0f-200d-1f48b-200d-1f468"
     }
 }
 
@@ -160,7 +203,7 @@ def parse(repo, tag):
     # Load emoji database
     import emoji1_db as emojis
 
-    asset_path = os.path.join(current_dir, 'tags', repo, repo, '2', 'assets')
+    asset_path = os.path.join(current_dir, 'tags', repo, repo, 'assets', 'ai')
 
     emoji_db = {}
     shortnames = set()

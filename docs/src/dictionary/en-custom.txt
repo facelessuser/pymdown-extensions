@@ -180,6 +180,7 @@ pymdownx
 pypi
 pytest
 raphael
+rebranded
 regex
 reindent
 reinstalling
