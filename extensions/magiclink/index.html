@@ -1,0 +1,1342 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="A Collection of Useful Extensions for Python Markdown">
+      
+      
+        <link rel="canonical" href="https://facelessuser.github.io/pymdown-extensions/extensions/magiclink/">
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.2">
+    
+    
+      
+        <title>MagicLink - PyMdown Extensions Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#2196f3">
+      
+    
+    
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../../extra-30d8e6755c.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#magiclink" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://facelessuser.github.io/pymdown-extensions" title="PyMdown Extensions Documentation" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon">description</i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              PyMdown Extensions Documentation
+            </span>
+            <span class="md-header-nav__topic">
+              
+                MagicLink
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/facelessuser/pymdown-extensions/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+        
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." class="md-tabs__link">
+        PyMdown Extensions
+      </a>
+    
+  </li>
+
+      
+        
+      
+        
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../arithmatex/" class="md-tabs__link md-tabs__link--active">
+          Extensions
+        </a>
+      
+    </li>
+  
+
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</nav>
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://facelessuser.github.io/pymdown-extensions" title="PyMdown Extensions Documentation" class="md-nav__button md-logo">
+      
+        <i class="md-icon">description</i>
+      
+    </a>
+    PyMdown Extensions Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/facelessuser/pymdown-extensions/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="PyMdown Extensions" class="md-nav__link">
+      PyMdown Extensions
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../installation/" title="Installation" class="md-nav__link">
+      Installation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../usage_notes/" title="Usage Notes" class="md-nav__link">
+      Usage Notes
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    
+    <label class="md-nav__link" for="nav-4">
+      Extensions
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Extensions
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../arithmatex/" title="Arithmatex" class="md-nav__link">
+      Arithmatex
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../b64/" title="B64" class="md-nav__link">
+      B64
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../betterem/" title="BetterEm" class="md-nav__link">
+      BetterEm
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../caret/" title="Caret" class="md-nav__link">
+      Caret
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../critic/" title="Critic" class="md-nav__link">
+      Critic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../details/" title="Details" class="md-nav__link">
+      Details
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../emoji/" title="Emoji" class="md-nav__link">
+      Emoji
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../escapeall/" title="EscapeAll" class="md-nav__link">
+      EscapeAll
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../extra/" title="Extra" class="md-nav__link">
+      Extra
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../extrarawhtml/" title="ExtraRawHTML" class="md-nav__link">
+      ExtraRawHTML
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../highlight/" title="Highlight" class="md-nav__link">
+      Highlight
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../inlinehilite/" title="InlineHilite" class="md-nav__link">
+      InlineHilite
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../keys/" title="Keys" class="md-nav__link">
+      Keys
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        MagicLink
+      </label>
+    
+    <a href="./" title="MagicLink" class="md-nav__link md-nav__link--active">
+      MagicLink
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auto-linking" class="md-nav__link">
+    Auto-Linking
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shorthand-links" class="md-nav__link">
+    Shorthand Links
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuring" class="md-nav__link">
+    Configuring
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mentions" class="md-nav__link">
+    Mentions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issues-and-pull-requests" class="md-nav__link">
+    Issues and Pull Requests
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commits" class="md-nav__link">
+    Commits
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diffcompare" class="md-nav__link">
+    Diff/Compare
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#repository-link-shortener" class="md-nav__link">
+    Repository Link Shortener
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#css" class="md-nav__link">
+    CSS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    Options
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#labels" class="md-nav__link">
+    Labels
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../mark/" title="Mark" class="md-nav__link">
+      Mark
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../pathconverter/" title="PathConverter" class="md-nav__link">
+      PathConverter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../striphtml/" title="StripHTML" class="md-nav__link">
+      StripHTML
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../progressbar/" title="ProgressBar" class="md-nav__link">
+      ProgressBar
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../smartsymbols/" title="SmartSymbols" class="md-nav__link">
+      SmartSymbols
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../snippets/" title="Snippets" class="md-nav__link">
+      Snippets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../superfences/" title="SuperFences" class="md-nav__link">
+      SuperFences
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tasklist/" title="Tasklist" class="md-nav__link">
+      Tasklist
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tilde/" title="Tilde" class="md-nav__link">
+      Tilde
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../miscellaneous_extras/" title="Miscellaneous Extras" class="md-nav__link">
+      Miscellaneous Extras
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../contributing/" title="Contributing & Support" class="md-nav__link">
+      Contributing &amp; Support
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../development/" title="Development" class="md-nav__link">
+      Development
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../faq/" title="FAQ" class="md-nav__link">
+      FAQ
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../release/" title="Release Notes" class="md-nav__link">
+      Release Notes
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../changelog/" title="Changelog" class="md-nav__link">
+      Changelog
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../license/" title="License" class="md-nav__link">
+      License
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#auto-linking" class="md-nav__link">
+    Auto-Linking
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#shorthand-links" class="md-nav__link">
+    Shorthand Links
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#configuring" class="md-nav__link">
+    Configuring
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mentions" class="md-nav__link">
+    Mentions
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#issues-and-pull-requests" class="md-nav__link">
+    Issues and Pull Requests
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commits" class="md-nav__link">
+    Commits
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diffcompare" class="md-nav__link">
+    Diff/Compare
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#repository-link-shortener" class="md-nav__link">
+    Repository Link Shortener
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#css" class="md-nav__link">
+    CSS
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#options" class="md-nav__link">
+    Options
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#labels" class="md-nav__link">
+    Labels
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/facelessuser/pymdown-extensions/tree/master/docs/src/markdown/extensions/magiclink.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="magiclink">MagicLink<a class="headerlink" href="#magiclink" title="Permanent link"></a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
+<p>MagicLink is an extension that provides a number of useful link related features. MagicLink can auto-link HTML, FTP, and email links. It can auto-convert repository links (GitHub, GitLab, and Bitbucket) and display them in a more concise, shorthand format. MagicLink can also be configured to directly auto-link the aforementioned shorthand format.</p>
+<p>If you happen to have some conflicts with syntax for a specific case, you can always revert to the old auto-link format as well: <code class="codehilite">&lt;https://www.link.com&gt;</code>. If enabled, repository link shortening will be applied to the the angle bracketed auto-link format as well.</p>
+<h2 id="auto-linking">Auto-Linking<a class="headerlink" href="#auto-linking" title="Permanent link"></a></h2>
+<p>MagicLink supports auto-linking HTTP, FTP and email links. You can specify these links in raw text and they should get auto-linked. There are some limitations placed on MagicLink to keep it from aggressively auto-linking text that is not part of links. If you have a link that cannot be detected, you can always use the old style angle bracketed link format: <code class="codehilite">&lt;https://www.link.com&gt;</code>.</p>
+<div class="admonition example">
+<p class="admonition-title">Auto-Linking Example</p>
+<div class="codehilite"><pre><span></span>- Just paste links directly in the document like this: https://google.com.
+- Or even an email address: fake.email@email.com.
+</pre></div>
+
+<ul>
+<li>Just paste links directly in the document like this: <a href="https://google.com">https://google.com</a>.</li>
+<li>Or even an email address: <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#97;&#107;&#101;&#46;&#101;&#109;&#97;&#105;&#108;&#64;&#101;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#102;&#97;&#107;&#101;&#46;&#101;&#109;&#97;&#105;&#108;&#64;&#101;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>.</li>
+</ul>
+</div>
+<h2 id="shorthand-links">Shorthand Links<a class="headerlink" href="#shorthand-links" title="Permanent link"></a></h2>
+<p>MagicLink supports shorthand references for GitHub, GitLab, and Bitbucket issues (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/1" title="GitHub Issue: facelessuser/pymdown-extensions#1">#1</a>), pull/merge requests (<a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/13" title="GitHub Pull Request: facelessuser/pymdown-extensions!13">!13</a>), commits (<a class="magiclink magiclink-github magiclink-commit" href="https://github.com/facelessuser/pymdown-extensions/commit/7d1b1902ea7fe00043a249564ed5032f08dd7152" title="GitHub Commit: facelessuser/pymdown-extensions@7d1b190">7d1b190</a>), and compares (<a class="magiclink magiclink-github magiclink-compare" href="https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac" title="GitHub Compare: facelessuser/pymdown-extensions@e2ed7e0...90b6fb8">e2ed7e0...90b6fb8</a>). You can also reference repositories (<a class="magiclink magiclink-github magiclink-repository" href="https://github.com/facelessuser/pymdown-extensions" title="GitHub Repository: facelessuser/pymdown-extensions">facelessuser/pymdown-extensions</a>) and it supports mentioning users (<a class="magiclink magiclink-github magiclink-mention" href="https://github.com/facelessuser" title="GitHub User: facelessuser">@facelessuser</a>). Mentions also works for social media (only Twitter is supported at this time).</p>
+<p>The syntax for repository providers is actually very similar to GitLab's syntax. GitLab was chosen as its syntax bridges the gaps between the three providers. GitLab and Bitbucket require a pull specific syntax while GitHub does not have one. I also preferred the subtle differences in GitLab's commit references as it was consistent with pull and issue syntax.</p>
+<h3 id="configuring">Configuring<a class="headerlink" href="#configuring" title="Permanent link"></a></h3>
+<p>To enable shorthand syntax for code repository providers and social media providers, enable <code>repo_url_shorthand</code> and <code>social_url_shorthand</code> respectively in the <a href="#options">options</a>.</p>
+<p>To use this feature you must first specify in the <a href="#options">options</a> your <code>provider</code> to which all shorthand references are relative to, but you will still be able to reference outside of your defaults. And if you are specifying a code repository provider as your default, you must also specify the <code>user</code> and <code>repo</code> (repository) which adds more context and allows you to shorten the syntax even more for issues relating to your default <code>user</code> and/or <code>repo</code>. This is useful if you are using MagicLink to write documentation for a project that is hosted on one of the supported code repository providers.</p>
+<p>If you are using this extension more generally, it may make more sense to set a social media provider as the default <code>provider</code>. There is no need to set a <code>user</code> or <code>repo</code> for a social media provider as the context is not useful for mentions. You will still be able to reference repository links with shorthand if it enabled, albeit in a longer format.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Links are not verified, so make sure you are specifying valid issues, repositories, and users as they will be auto-linked even if they are not valid.</p>
+</div>
+<h3 id="mentions">Mentions<a class="headerlink" href="#mentions" title="Permanent link"></a></h3>
+<p>Mentions of other users are performed with the following syntax: <code>@{user}</code>. To reference a provider other than your default, use the format <code>@{provider}:{user}</code></p>
+<div class="admonition example">
+<p class="admonition-title">Mention Example</p>
+<div class="codehilite"><pre><span></span>@facelessuser
+
+@twitter:twitter
+</pre></div>
+
+<p><a class="magiclink magiclink-github magiclink-mention" href="https://github.com/facelessuser" title="GitHub User: facelessuser">@facelessuser</a></p>
+<p><a class="magiclink magiclink-twitter magiclink-mention" href="https://twitter.com/twitter" title="Twitter User: twitter">@twitter</a></p>
+</div>
+<p>For code repository providers, you can also mention repositories.  This feature is actually inspired by the GitHub only extension <a class="magiclink magiclink-github magiclink-repository" href="https://github.com/Python-Markdown/github-links" title="GitHub Repository: Python-Markdown/github-links">Python-Markdown/github-links</a>, which performs <em>similar</em> auto-linking.  The syntax to auto-link a repository with mentioning is very similar to auto-linking a user, except you append the repository to the user name like so: <code>@{user}/{repo}</code>. If specifying a non-default provider, the form would look like: <code>@{provider}:{user}/{repo}</code>. The output for repository mentions omits the <code>@</code> symbol and will just show the user and repository, but you are free to style it with CSS to make it stand out more like has been done in this document.</p>
+<div class="admonition example">
+<p class="admonition-title">Repository Mention Example</p>
+<div class="codehilite"><pre><span></span>@facelessuser/pymdown-extensions
+
+@gitlab:pycqa/flake8
+</pre></div>
+
+<p><a class="magiclink magiclink-github magiclink-repository" href="https://github.com/facelessuser/pymdown-extensions" title="GitHub Repository: facelessuser/pymdown-extensions">facelessuser/pymdown-extensions</a></p>
+<p><a class="magiclink magiclink-gitlab magiclink-repository" href="https://gitlab.com/pycqa/flake8" title="GitLab Repository: pycqa/flake8">pycqa/flake8</a></p>
+</div>
+<h3 id="issues-and-pull-requests">Issues and Pull Requests<a class="headerlink" href="#issues-and-pull-requests" title="Permanent link"></a></h3>
+<p>Issues and pull requests are specified with <code>#{num}</code> and <code>!{num}</code> respectively. To specify an issue for a non-default repository under the default user, prefix the repository: <code>{repo}#{num}</code>. And to specify a repository under a non-default user, prefix both the user and repository: <code>{user}/{repo}#{num}</code>. And to reference an external provider, use the format <code>{provider}:{user}/{repo}#{num}</code>. If the default provider is a social media provider, then only the latter syntax can be used.</p>
+<div class="admonition example">
+<p class="admonition-title">Issue Example</p>
+<div class="codehilite"><pre><span></span>Issue #1
+
+Issue backrefs#1
+
+Issue Python-Markdown/markdown#1
+
+Issue gitlab:pycqa/flake8#385
+
+Pull request !13
+
+Pull request backrefs!4
+
+Pull request Python-Markdown/markdown!598
+
+Pull request gitlab:pycqa/flake8!213
+</pre></div>
+
+<p>Issue <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/1" title="GitHub Issue: facelessuser/pymdown-extensions#1">#1</a></p>
+<p>Issue <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/backrefs/issues/1" title="GitHub Issue: facelessuser/backrefs#1">backrefs#1</a></p>
+<p>Issue <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/Python-Markdown/markdown/issues/1" title="GitHub Issue: Python-Markdown/markdown#1">Python-Markdown/markdown#1</a></p>
+<p>Issue <a class="magiclink magiclink-gitlab magiclink-issue" href="https://gitlab.com/pycqa/flake8/issues/385" title="GitLab Issue: pycqa/flake8#385">pycqa/flake8#385</a></p>
+<p>Pull request <a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/13" title="GitHub Pull Request: facelessuser/pymdown-extensions!13">!13</a></p>
+<p>Pull request <a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/backrefs/pull/4" title="GitHub Pull Request: facelessuser/backrefs!4">backrefs!4</a></p>
+<p>Pull request <a class="magiclink magiclink-github magiclink-pull" href="https://github.com/Python-Markdown/markdown/pull/598" title="GitHub Pull Request: Python-Markdown/markdown!598">Python-Markdown/markdown!598</a></p>
+<p>Pull request <a class="magiclink magiclink-gitlab magiclink-pull" href="https://gitlab.com/pycqa/flake8/merge_requests/213" title="GitLab Pull Request: pycqa/flake8!213">pycqa/flake8!213</a></p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>GitHub actually gives pull requests and issues unique values while GitLab and Bitbucket can have pulls with the same ID as an issue. So with GitHub, you can use <code>#{num}</code> format for both issues and pulls, and GitHub will redirect you to the appropriate issue or pull.</p>
+<p>GitLab and Bitbucket <strong>must</strong> specify pulls different from issues, hence the <code>!13</code> format. Though GitHub doesn't <em>need</em> to use the pull format, you can if you like. This format was actually borrowed from GitLab.</p>
+</div>
+<h3 id="commits">Commits<a class="headerlink" href="#commits" title="Permanent link"></a></h3>
+<p>Commit shorthand syntax is simply the 40 character commit hash value: <code>{hash}</code>. And much like issues and pull requests, you can denote a repository under the default user with <code>{repo}@{hash}</code> and a repository under a non-default user with <code>{user}/{repo}@{hash}</code>. Lastly, to reference an external provider, use the format <code>{provider}:{user}/{repo}@{hash}</code>. If the default provider is a social media provider, then only the latter syntax can be used.</p>
+<div class="admonition example">
+<p class="admonition-title">Commit Example</p>
+<div class="codehilite"><pre><span></span>181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+
+backrefs@cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
+
+Python-Markdown/markdown@de5c696f94e8dde242c29d4be50b7bbf3c17fedb
+
+gitlab:pycqa/flake8@8acf55e0f85233c51c291816d73d828cc62d30d1
+</pre></div>
+
+<p><a class="magiclink magiclink-github magiclink-commit" href="https://github.com/facelessuser/pymdown-extensions/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc" title="GitHub Commit: facelessuser/pymdown-extensions@181c06d">181c06d</a></p>
+<p><a class="magiclink magiclink-github magiclink-commit" href="https://github.com/facelessuser/backrefs/commit/cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61" title="GitHub Commit: facelessuser/backrefs@cb4ecc5">backrefs@cb4ecc5</a></p>
+<p><a class="magiclink magiclink-github magiclink-commit" href="https://github.com/Python-Markdown/markdown/commit/de5c696f94e8dde242c29d4be50b7bbf3c17fedb" title="GitHub Commit: Python-Markdown/markdown@de5c696">Python-Markdown/markdown@de5c696</a></p>
+<p><a class="magiclink magiclink-gitlab magiclink-commit" href="https://gitlab.com/pycqa/flake8/commit/8acf55e0f85233c51c291816d73d828cc62d30d1" title="GitLab Commit: pycqa/flake8@8acf55e0">pycqa/flake8@8acf55e0</a></p>
+</div>
+<h3 id="diffcompare">Diff/Compare<a class="headerlink" href="#diffcompare" title="Permanent link"></a></h3>
+<p>GitLab offers a useful shorthand to specify links to compare differences between two commits. This has been adopted for all the supported repository providers.</p>
+<p>Specifying a compare link is very similar to specifying a commit link except you must specify the older hash and the newer hash separated by <code>...</code>: <code>{hash1}...{hash2}</code>. To specify a compare for a non-default repository under the default user, prefix the repository: <code>{repo}@{hash1}...{hash2}</code>. And to specify a compare under a non-default user, prefix both the user and repository: <code>{user}/{repo}@{hash1}...{hash2}</code>. Lastly, to reference an external provider, use the format <code>{provider}:{user}/{repo}@{hash1}...{hash2}</code>.</p>
+<div class="admonition example">
+<p class="admonition-title">Compare Example</p>
+<div class="codehilite"><pre><span></span>e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+
+backrefs@88c6238a1c2cf71a96eb9abb4b0213f79d6ca81f...cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
+
+Python-Markdown/markdown@007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8dde242c29d4be50b7bbf3c17fedb
+
+gitlab:pycqa/flake8@1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e
+</pre></div>
+
+<p><a class="magiclink magiclink-github magiclink-compare" href="https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac" title="GitHub Compare: facelessuser/pymdown-extensions@e2ed7e0...90b6fb8">e2ed7e0...90b6fb8</a></p>
+<p><a class="magiclink magiclink-github magiclink-compare" href="https://github.com/facelessuser/backrefs/compare/88c6238a1c2cf71a96eb9abb4b0213f79d6ca81f...cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61" title="GitHub Compare: facelessuser/backrefs@88c6238...cb4ecc5">backrefs@88c6238...cb4ecc5</a></p>
+<p><a class="magiclink magiclink-github magiclink-compare" href="https://github.com/Python-Markdown/markdown/compare/007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8dde242c29d4be50b7bbf3c17fedb" title="GitHub Compare: Python-Markdown/markdown@007bd2a...de5c696">Python-Markdown/markdown@007bd2a...de5c696</a></p>
+<p><a class="magiclink magiclink-gitlab magiclink-compare" href="https://gitlab.com/pycqa/flake8/compare/1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e" title="GitLab Compare: pycqa/flake8@1ecf9700...9bea7576">pycqa/flake8@1ecf9700...9bea7576</a></p>
+</div>
+<h2 id="repository-link-shortener">Repository Link Shortener<a class="headerlink" href="#repository-link-shortener" title="Permanent link"></a></h2>
+<p>MagicLink can also recognize issue, pull request, commit, and compare links, and render them in the same output format as the <a href="#shorthand-links">repository shortcut links</a> feature. Unfortunately, mention link shortening is not presently supported due to the fact that MagicLink does not use any of the providers' API to verify user links, and some legitimate links can look like user links, but are not.</p>
+<p>If we specify long form URLs from external providers, they will be shortened appropriately.</p>
+<div class="admonition example">
+<p class="admonition-title">External Provider Example</p>
+<div class="codehilite"><pre><span></span>- https://gitlab.com/pycqa/flake8/issues/385
+- https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
+</pre></div>
+
+<ul>
+<li><a class="magiclink magiclink-gitlab magiclink-issue" href="https://gitlab.com/pycqa/flake8/issues/385" title="GitLab Issue: pycqa/flake8#385">pycqa/flake8#385</a></li>
+<li><a class="magiclink magiclink-bitbucket magiclink-issue" href="https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase" title="Bitbucket Issue: mrabarnett/mrab-regex#260">mrabarnett/mrab-regex#260</a></li>
+</ul>
+</div>
+<p>When specifying links that reference the configured <code>provider</code>, <code>user</code>, and <code>repo</code>, links will be shortened differently in light of that context.</p>
+<div class="admonition example">
+<p class="admonition-title">Internal Provider Example</p>
+<div class="codehilite"><pre><span></span>- https://github.com/facelessuser/pymdown-extensions/issues/1
+- https://github.com/facelessuser/pymdown-extensions/pull/13
+- https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+- https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+- https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+</pre></div>
+
+<ul>
+<li><a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/1" title="GitHub Issue: facelessuser/pymdown-extensions#1">#1</a></li>
+<li><a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/13" title="GitHub Pull Request: facelessuser/pymdown-extensions!13">!13</a></li>
+<li><a class="magiclink magiclink-github magiclink-commit" href="https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a" title="GitHub Commit: facelessuser/pymdown-extensions@3f6b07a">3f6b07a</a></li>
+<li><a class="magiclink magiclink-github magiclink-compare" href="https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac" title="GitHub Compare: facelessuser/pymdown-extensions@e2ed7e0...90b6fb8">e2ed7e0...90b6fb8</a></li>
+<li><a class="magiclink magiclink-github magiclink-commit" href="https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc" title="GitHub Commit: facelessuser/Rummage@181c06d">Rummage@181c06d</a></li>
+</ul>
+</div>
+<h2 id="css">CSS<a class="headerlink" href="#css" title="Permanent link"></a></h2>
+<p>For normal links, no classes are added to the anchor tags. For repository links, <code>magiclink</code> will be added as a class. Also, an additional class will be added for each repository link type and provider.</p>
+<table>
+<thead>
+<tr>
+<th>Link&nbsp;Type</th>
+<th>Class</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>General</td>
+<td><code>magiclink</code></td>
+</tr>
+<tr>
+<td>Mentions</td>
+<td><code>magiclink-mention</code></td>
+</tr>
+<tr>
+<td>Repository&nbsp;Mentions</td>
+<td><code>magiclink-repository</code></td>
+</tr>
+<tr>
+<td>Issues</td>
+<td><code>magiclink-issue</code></td>
+</tr>
+<tr>
+<td>Pulls</td>
+<td><code>magiclink-pull</code></td>
+</tr>
+<tr>
+<td>Commits</td>
+<td><code>magiclink-commit</code></td>
+</tr>
+<tr>
+<td>Compares</td>
+<td><code>magiclink-compare</code></td>
+</tr>
+<tr>
+<td>GitHub</td>
+<td><code>magiclink-github</code></td>
+</tr>
+<tr>
+<td>Bitbucket</td>
+<td><code>magiclink-bitbucket</code></td>
+</tr>
+<tr>
+<td>GitLab</td>
+<td><code>magiclink-gitlab</code></td>
+</tr>
+<tr>
+<td>Twitter</td>
+<td><code>magiclink-twitter</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>hide_protocol</code></td>
+<td>bool</td>
+<td><code class="codehilite"><span class="kc">False</span></code></td>
+<td>If <code>True</code>, links are displayed without the initial <code>ftp://</code>, <code>http://</code>, <code>https://</code>, or <code>ftps://</code>.</td>
+</tr>
+<tr>
+<td><code>repo_url_shortener</code></td>
+<td>bool</td>
+<td><code class="codehilite"><span class="kc">False</span></code></td>
+<td>If <code>True</code>, GitHub, Bitbucket, and GitLab commit, pull, and issue links are are rendered in a shorthand syntax.</td>
+</tr>
+<tr>
+<td><code>repo_url_shorthand</code></td>
+<td>bool</td>
+<td><code class="codehilite"><span class="kc">False</span></code></td>
+<td>If <code>True</code>, you can directly use a shorthand syntax to represent commit, pull, issue, and mention links for repository providers and they will be auto-linked.</td>
+</tr>
+<tr>
+<td><code>social_url_shorthand</code></td>
+<td>bool</td>
+<td><code class="codehilite"><span class="kc">False</span></code></td>
+<td>If <code>True</code>, you can directly use a shorthand syntax to represent mention links for social media providers and they will be auto-linked.</td>
+</tr>
+<tr>
+<td><code>provider</code></td>
+<td>string</td>
+<td><code class="codehilite"><span class="s1">&#39;github&#39;</span></code></td>
+<td>The provider to use for repository shorthand syntax and shortener.</td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>string</td>
+<td><code class="codehilite"><span class="s1">&#39;&#39;</span></code></td>
+<td>The default user name to use for the specified provider.</td>
+</tr>
+<tr>
+<td><code>repo</code></td>
+<td>string</td>
+<td><code class="codehilite"><span class="s1">&#39;&#39;</span></code></td>
+<td>The default repository name to use for the specified user and provider.</td>
+</tr>
+<tr>
+<td><code>labels</code></td>
+<td>dict</td>
+<td><code class="codehilite"><span class="p">{}</span></code></td>
+<td>A dictionary for overriding repository link title text. See <a href="#labels">labels</a> for more info.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="labels">Labels<a class="headerlink" href="#labels" title="Permanent link"></a></h3>
+<p>By default, MagicLink provides titles for the repository links in the form <code>{provider} {label}: {info}</code>. You can specify different values for <code>{label}</code> by configuring the <code>labels</code> option.</p>
+<p>The default values are:</p>
+<div class="codehilite"><pre><span></span>    <span class="p">{</span>
+        <span class="s1">&#39;commit&#39;</span><span class="o">:</span> <span class="s1">&#39;Commit&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;compare&#39;</span><span class="o">:</span> <span class="s1">&#39;Compare&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;issue&#39;</span><span class="o">:</span> <span class="s1">&#39;Issue&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;pull&#39;</span><span class="o">:</span> <span class="s1">&#39;Pull Request&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;mention&#39;</span><span class="o">:</span> <span class="s1">&#39;User&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;repository&#39;</span><span class="o">:</span> <span class="s1">&#39;Repository&#39;</span>
+    <span class="p">}</span>
+</pre></div>
+
+<p>You only need to provide the options you wish to override. Assume we wanted to adopt the GitLab terminology for pull requests, we could simply set <code>labels</code> to:</p>
+<div class="codehilite"><pre><span></span>    <span class="p">{</span>
+        <span class="s1">&#39;pull&#39;</span><span class="o">:</span> <span class="s1">&#39;Merge Request&#39;</span>
+    <span class="p">}</span>
+</pre></div>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../keys/" title="Keys" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Keys
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../mark/" title="Mark" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Mark
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2014 - 2018 <a href="https://github.com/facelessuser">Isaac Muse</a>
+<br><span class="md-footer-custom-text">emoji provided free by </span><a href="http://www.emojione.com">EmojiOne</a>
+
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+  <div class="md-footer-social">
+    <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
+    
+      <a href="https://github.com/facelessuser" class="md-footer-social__link fa fa-github"></a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/application.c648116f.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
+      
+        <script src="../../extra-0b9b22dd13.js"></script>
+      
+    
+  </body>
+</html>
