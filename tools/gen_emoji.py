@@ -9,13 +9,15 @@ import zipfile
 import gen_emoji1
 import gen_gemoji
 import gen_twemoji
+import gen_joypixels
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
 GITHUB_API_HEADER = 'application/vnd.github.v3+json'
 GITHUB_API = 'https://api.github.com'
 GEMOJI = 'github/gemoji'
-EMOJIONE = 'joypixels/emoji-toolkit'
+EMOJIONE = 'joypixels/emojione'
+JOYPIXELS = 'joypixels/emoji-toolkit'
 TWEMOJI = 'twitter/twemoji'
 
 PY3 = sys.version_info >= (3, 0) and sys.version_info[0:2] < (4, 0)
@@ -123,6 +125,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog='gen_emoji', description='Generate emoji db files.')
     # Flag arguments
     parser.add_argument('--tag', default=None, help="Tag to use.")
+    parser.add_argument('--joypixels-tag', default=None, help="Joypixels tag to use for Twemoji.")
+    parser.add_argument('--joypixels-no-download', action='store_true', default=False, help="Skip Joypixels download.")
     parser.add_argument('--gemoji', action='store_true', default=False, help="Get Gemoji.")
     parser.add_argument('--emojione', action='store_true', default=False, help="Get Emojione.")
     parser.add_argument('--twemoji', action='store_true', default=False, help="Get Twemoji.")
@@ -142,8 +146,13 @@ if __name__ == "__main__":
             tag = args.tag
         gen_emoji1.parse(EMOJIONE.replace('/', '-'), tag)
     if args.twemoji:
+        if args.joypixels_tag is None:
+            jtag = select_tag(JOYPIXELS, args.joypixels_no_download)
+        else:
+            jtag = args.joypixels_tag
+        db, aliases = gen_joypixels.parse(JOYPIXELS.replace('/', '-'), jtag)
         if args.tag is None:
             tag = select_tag(TWEMOJI, args.no_download)
         else:
             tag = args.tag
-        gen_twemoji.parse(TWEMOJI.replace('/', '-'), tag)
+        gen_twemoji.parse(TWEMOJI.replace('/', '-'), tag, jtag, db, aliases)

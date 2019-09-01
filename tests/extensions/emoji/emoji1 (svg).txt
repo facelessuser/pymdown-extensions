@@ -8,4 +8,4 @@ abacus :abacus:<br>
 abc :abc:<br>
 abcd :abcd:<br>
 accept :accept:<br>
-adhesive_bandage :adhesive_bandage:<br>
+adult :adult:<br>

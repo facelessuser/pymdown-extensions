@@ -54,7 +54,7 @@ def parse(repo, tag):
         # Dump emoji db to file and strip out PY2 unicode specifiers
         f.write('"""Emojione autogen.\n\nGenerated from emojione source. Do not edit by hand.\n%s"""\n' % LICENSE)
         f.write('from __future__ import unicode_literals\n')
-        f.write('version = "4.5.0"\n')
+        f.write('version = "%s"\n' % tag)
         f.write('name = "emojione"\n')
         f.write('emoji = %s\n' % json.dumps(emoji_db, sort_keys=True, indent=4, separators=(',', ': ')))
         f.write('aliases = %s\n' % json.dumps(aliases, sort_keys=True, indent=4, separators=(',', ': ')))

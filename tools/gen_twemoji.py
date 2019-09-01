@@ -198,10 +198,8 @@ IGNORE_EMOJI = [
 ]
 
 
-def parse(repo, tag):
+def parse(repo, tag, jtag, emojis, emoji_aliases):
     """Save test files."""
-    # Load emoji database
-    import emoji1_db as emojis
 
     asset_path = os.path.join(current_dir, 'tags', repo, repo, 'assets', 'ai')
 
@@ -220,7 +218,7 @@ def parse(repo, tag):
                 codes[0] = ('0' * diff) + codes[0]
                 unicode_alt = '-'.join(codes)
             found = False
-            for k, v in emojis.emoji.items():
+            for k, v in emojis.items():
                 db_unicode = v.get('unicode_alt', v.get('unicode'))
                 if (
                     db_unicode and
@@ -238,7 +236,7 @@ def parse(repo, tag):
             if not found:
                 unsupported.append(unicode_value)
 
-    for k, v in emojis.aliases.items():
+    for k, v in emoji_aliases.items():
         if v in emoji_db:
             aliases[k] = v
 
@@ -289,6 +287,7 @@ def parse(repo, tag):
         f.write('"""Twemoji autogen.\n\nNames from emojione database. Do not edit by hand.\n"""\n')
         f.write('from __future__ import unicode_literals\n')
         f.write('version = "%s"\n' % tag)
+        f.write('index_version = "%s"\n' % jtag)
         f.write('name = "twemoji"\n')
         f.write('emoji = %s\n' % json.dumps(emoji_db, sort_keys=True, indent=4, separators=(',', ': ')))
         f.write('aliases = %s\n' % json.dumps(aliases, sort_keys=True, indent=4, separators=(',', ': ')))
