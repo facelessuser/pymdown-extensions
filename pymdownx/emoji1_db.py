@@ -7,7 +7,7 @@ MIT license.
 Copyright (c) http://www.emojione.com
 """
 from __future__ import unicode_literals
-version = "4.0.0"
+version = "4.5.0"
 name = "emojione"
 emoji = {
     ":100:": {

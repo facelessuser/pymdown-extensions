@@ -2,6 +2,7 @@
 import sys
 import os
 import json
+import codecs
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
 U_JOIN = 0x200d
@@ -83,7 +84,7 @@ def get_gemoji_specific(value):
 def parse(repo, tag):
     """Save test files."""
     # Load emoji database
-    with open(os.path.join(current_dir, 'tags', repo, repo, 'db', 'emoji.json'), 'r') as f:
+    with codecs.open(os.path.join(current_dir, 'tags', repo, repo, 'db', 'emoji.json'), 'r', encoding='utf-8') as f:
         emojis = json.loads(f.read())
 
     emoji_db = {}

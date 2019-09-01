@@ -40,7 +40,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
-version = "v3.0.0"
+version = "v3.0.1"
 name = "gemoji"
 emoji = {
     ":+1:": {
@@ -579,8 +579,7 @@ emoji = {
     ":basketball_man:": {
         "category": "Activity",
         "name": "person bouncing ball",
-        "unicode": "26f9",
-        "unicode_alt": "26f9-fe0f"
+        "unicode": "26f9"
     },
     ":basketball_woman:": {
         "category": "Activity",
@@ -707,7 +706,7 @@ emoji = {
         "category": "Activity",
         "name": "woman biking",
         "unicode": "1f6b4-2640",
-        "unicode_alt": "1f6b4-200d-2640-fe0f"
+        "unicode_alt": "1f6b4-200d-2640"
     },
     ":bikini:": {
         "category": "People",
@@ -795,7 +794,7 @@ emoji = {
         "category": "People",
         "name": "blond-haired woman",
         "unicode": "1f471-2640",
-        "unicode_alt": "1f471-200d-2640-fe0f"
+        "unicode_alt": "1f471-200d-2640"
     },
     ":blossom:": {
         "category": "Nature",
@@ -907,7 +906,7 @@ emoji = {
         "category": "People",
         "name": "woman bowing",
         "unicode": "1f647-2640",
-        "unicode_alt": "1f647-200d-2640-fe0f"
+        "unicode_alt": "1f647-200d-2640"
     },
     ":bowling:": {
         "category": "Activity",
@@ -1577,8 +1576,7 @@ emoji = {
     ":comet:": {
         "category": "Nature",
         "name": "comet",
-        "unicode": "2604",
-        "unicode_alt": "2604-fe0f"
+        "unicode": "2604"
     },
     ":comoros:": {
         "category": "Flags",
@@ -1640,7 +1638,7 @@ emoji = {
         "category": "People",
         "name": "woman construction worker",
         "unicode": "1f477-2640",
-        "unicode_alt": "1f477-200d-2640-fe0f"
+        "unicode_alt": "1f477-200d-2640"
     },
     ":control_knobs:": {
         "category": "Objects",
@@ -1897,7 +1895,7 @@ emoji = {
         "category": "People",
         "name": "men with bunny ears partying",
         "unicode": "1f46f-2642",
-        "unicode_alt": "1f46f-200d-2642-fe0f"
+        "unicode_alt": "1f46f-200d-2642"
     },
     ":dancing_women:": {
         "category": "People",
@@ -2776,7 +2774,7 @@ emoji = {
         "category": "People",
         "name": "man frowning",
         "unicode": "1f64d-2642",
-        "unicode_alt": "1f64d-200d-2642-fe0f"
+        "unicode_alt": "1f64d-200d-2642"
     },
     ":frowning_woman:": {
         "category": "People",
@@ -2907,8 +2905,7 @@ emoji = {
     ":golfing_man:": {
         "category": "Activity",
         "name": "person golfing",
-        "unicode": "1f3cc",
-        "unicode_alt": "1f3cc-fe0f"
+        "unicode": "1f3cc"
     },
     ":golfing_woman:": {
         "category": "Activity",
@@ -3005,7 +3002,7 @@ emoji = {
         "category": "People",
         "name": "woman guard",
         "unicode": "1f482-2640",
-        "unicode_alt": "1f482-200d-2640-fe0f"
+        "unicode_alt": "1f482-200d-2640"
     },
     ":guatemala:": {
         "category": "Flags",
@@ -3046,7 +3043,7 @@ emoji = {
         "category": "People",
         "name": "man getting haircut",
         "unicode": "1f487-2642",
-        "unicode_alt": "1f487-200d-2642-fe0f"
+        "unicode_alt": "1f487-200d-2642"
     },
     ":haircut_woman:": {
         "category": "People",
@@ -3922,8 +3919,7 @@ emoji = {
     ":male_detective:": {
         "category": "People",
         "name": "detective",
-        "unicode": "1f575",
-        "unicode_alt": "1f575-fe0f"
+        "unicode": "1f575"
     },
     ":mali:": {
         "category": "Flags",
@@ -3956,7 +3952,7 @@ emoji = {
         "category": "Activity",
         "name": "man cartwheeling",
         "unicode": "1f938-2642",
-        "unicode_alt": "1f938-200d-2642-fe0f"
+        "unicode_alt": "1f938-200d-2642"
     },
     ":man_cook:": {
         "category": "People",
@@ -3973,7 +3969,7 @@ emoji = {
         "category": "People",
         "name": "man facepalming",
         "unicode": "1f926-2642",
-        "unicode_alt": "1f926-200d-2642-fe0f"
+        "unicode_alt": "1f926-200d-2642"
     },
     ":man_factory_worker:": {
         "category": "People",
@@ -3997,7 +3993,7 @@ emoji = {
         "category": "People",
         "name": "man health worker",
         "unicode": "1f468-2695",
-        "unicode_alt": "1f468-200d-2695-fe0f"
+        "unicode_alt": "1f468-200d-2695"
     },
     ":man_in_tuxedo:": {
         "category": "People",
@@ -4008,13 +4004,13 @@ emoji = {
         "category": "People",
         "name": "man judge",
         "unicode": "1f468-2696",
-        "unicode_alt": "1f468-200d-2696-fe0f"
+        "unicode_alt": "1f468-200d-2696"
     },
     ":man_juggling:": {
         "category": "Activity",
         "name": "man juggling",
         "unicode": "1f939-2642",
-        "unicode_alt": "1f939-200d-2642-fe0f"
+        "unicode_alt": "1f939-200d-2642"
     },
     ":man_mechanic:": {
         "category": "People",
@@ -4032,19 +4028,19 @@ emoji = {
         "category": "People",
         "name": "man pilot",
         "unicode": "1f468-2708",
-        "unicode_alt": "1f468-200d-2708-fe0f"
+        "unicode_alt": "1f468-200d-2708"
     },
     ":man_playing_handball:": {
         "category": "Activity",
         "name": "man playing handball",
         "unicode": "1f93e-2642",
-        "unicode_alt": "1f93e-200d-2642-fe0f"
+        "unicode_alt": "1f93e-200d-2642"
     },
     ":man_playing_water_polo:": {
         "category": "Activity",
         "name": "man playing water polo",
         "unicode": "1f93d-2642",
-        "unicode_alt": "1f93d-200d-2642-fe0f"
+        "unicode_alt": "1f93d-200d-2642"
     },
     ":man_scientist:": {
         "category": "People",
@@ -4056,7 +4052,7 @@ emoji = {
         "category": "People",
         "name": "man shrugging",
         "unicode": "1f937-2642",
-        "unicode_alt": "1f937-200d-2642-fe0f"
+        "unicode_alt": "1f937-200d-2642"
     },
     ":man_singer:": {
         "category": "People",
@@ -4131,7 +4127,7 @@ emoji = {
         "category": "People",
         "name": "man getting massage",
         "unicode": "1f486-2642",
-        "unicode_alt": "1f486-200d-2642-fe0f"
+        "unicode_alt": "1f486-200d-2642"
     },
     ":massage_woman:": {
         "category": "People",
@@ -4187,7 +4183,7 @@ emoji = {
         "category": "Activity",
         "name": "men wrestling",
         "unicode": "1f93c-2642",
-        "unicode_alt": "1f93c-200d-2642-fe0f"
+        "unicode_alt": "1f93c-200d-2642"
     },
     ":menorah:": {
         "category": "Symbols",
@@ -4373,7 +4369,7 @@ emoji = {
         "category": "Activity",
         "name": "woman mountain biking",
         "unicode": "1f6b5-2640",
-        "unicode_alt": "1f6b5-200d-2640-fe0f"
+        "unicode_alt": "1f6b5-200d-2640"
     },
     ":mountain_cableway:": {
         "category": "Places",
@@ -4619,7 +4615,7 @@ emoji = {
         "category": "People",
         "name": "man gesturing NO",
         "unicode": "1f645-2642",
-        "unicode_alt": "1f645-200d-2642-fe0f"
+        "unicode_alt": "1f645-200d-2642"
     },
     ":no_good_woman:": {
         "category": "People",
@@ -4750,7 +4746,7 @@ emoji = {
         "category": "People",
         "name": "man gesturing OK",
         "unicode": "1f646-2642",
-        "unicode_alt": "1f646-200d-2642-fe0f"
+        "unicode_alt": "1f646-200d-2642"
     },
     ":ok_woman:": {
         "category": "People",
@@ -5167,7 +5163,7 @@ emoji = {
         "category": "People",
         "name": "woman police officer",
         "unicode": "1f46e-2640",
-        "unicode_alt": "1f46e-200d-2640-fe0f"
+        "unicode_alt": "1f46e-200d-2640"
     },
     ":poodle:": {
         "category": "Nature",
@@ -5233,7 +5229,7 @@ emoji = {
         "category": "People",
         "name": "man pouting",
         "unicode": "1f64e-2642",
-        "unicode_alt": "1f64e-200d-2642-fe0f"
+        "unicode_alt": "1f64e-200d-2642"
     },
     ":pouting_woman:": {
         "category": "People",
@@ -5403,7 +5399,7 @@ emoji = {
         "category": "People",
         "name": "man raising hand",
         "unicode": "1f64b-2642",
-        "unicode_alt": "1f64b-200d-2642-fe0f"
+        "unicode_alt": "1f64b-200d-2642"
     },
     ":raising_hand_woman:": {
         "category": "People",
@@ -5602,7 +5598,7 @@ emoji = {
         "category": "Activity",
         "name": "woman rowing boat",
         "unicode": "1f6a3-2640",
-        "unicode_alt": "1f6a3-200d-2640-fe0f"
+        "unicode_alt": "1f6a3-200d-2640"
     },
     ":ru:": {
         "category": "Flags",
@@ -5628,7 +5624,7 @@ emoji = {
         "category": "People",
         "name": "woman running",
         "unicode": "1f3c3-2640",
-        "unicode_alt": "1f3c3-200d-2640-fe0f"
+        "unicode_alt": "1f3c3-200d-2640"
     },
     ":rwanda:": {
         "category": "Flags",
@@ -6391,7 +6387,7 @@ emoji = {
         "category": "Activity",
         "name": "woman surfing",
         "unicode": "1f3c4-2640",
-        "unicode_alt": "1f3c4-200d-2640-fe0f"
+        "unicode_alt": "1f3c4-200d-2640"
     },
     ":suriname:": {
         "category": "Flags",
@@ -6450,7 +6446,7 @@ emoji = {
         "category": "Activity",
         "name": "woman swimming",
         "unicode": "1f3ca-2640",
-        "unicode_alt": "1f3ca-200d-2640-fe0f"
+        "unicode_alt": "1f3ca-200d-2640"
     },
     ":switzerland:": {
         "category": "Flags",
@@ -6609,7 +6605,7 @@ emoji = {
         "category": "People",
         "name": "man tipping hand",
         "unicode": "1f481-2642",
-        "unicode_alt": "1f481-200d-2642-fe0f"
+        "unicode_alt": "1f481-200d-2642"
     },
     ":tipping_hand_woman:": {
         "category": "People",
@@ -7061,7 +7057,7 @@ emoji = {
         "category": "People",
         "name": "woman walking",
         "unicode": "1f6b6-2640",
-        "unicode_alt": "1f6b6-200d-2640-fe0f"
+        "unicode_alt": "1f6b6-200d-2640"
     },
     ":wallis_futuna:": {
         "category": "Flags",
@@ -7139,8 +7135,7 @@ emoji = {
     ":weight_lifting_man:": {
         "category": "Activity",
         "name": "person lifting weights",
-        "unicode": "1f3cb",
-        "unicode_alt": "1f3cb-fe0f"
+        "unicode": "1f3cb"
     },
     ":weight_lifting_woman:": {
         "category": "Activity",
@@ -7277,7 +7272,7 @@ emoji = {
         "category": "Activity",
         "name": "woman cartwheeling",
         "unicode": "1f938-2640",
-        "unicode_alt": "1f938-200d-2640-fe0f"
+        "unicode_alt": "1f938-200d-2640"
     },
     ":woman_cook:": {
         "category": "People",
@@ -7289,7 +7284,7 @@ emoji = {
         "category": "People",
         "name": "woman facepalming",
         "unicode": "1f926-2640",
-        "unicode_alt": "1f926-200d-2640-fe0f"
+        "unicode_alt": "1f926-200d-2640"
     },
     ":woman_factory_worker:": {
         "category": "People",
@@ -7313,19 +7308,19 @@ emoji = {
         "category": "People",
         "name": "woman health worker",
         "unicode": "1f469-2695",
-        "unicode_alt": "1f469-200d-2695-fe0f"
+        "unicode_alt": "1f469-200d-2695"
     },
     ":woman_judge:": {
         "category": "People",
         "name": "woman judge",
         "unicode": "1f469-2696",
-        "unicode_alt": "1f469-200d-2696-fe0f"
+        "unicode_alt": "1f469-200d-2696"
     },
     ":woman_juggling:": {
         "category": "Activity",
         "name": "woman juggling",
         "unicode": "1f939-2640",
-        "unicode_alt": "1f939-200d-2640-fe0f"
+        "unicode_alt": "1f939-200d-2640"
     },
     ":woman_mechanic:": {
         "category": "People",
@@ -7343,19 +7338,19 @@ emoji = {
         "category": "People",
         "name": "woman pilot",
         "unicode": "1f469-2708",
-        "unicode_alt": "1f469-200d-2708-fe0f"
+        "unicode_alt": "1f469-200d-2708"
     },
     ":woman_playing_handball:": {
         "category": "Activity",
         "name": "woman playing handball",
         "unicode": "1f93e-2640",
-        "unicode_alt": "1f93e-200d-2640-fe0f"
+        "unicode_alt": "1f93e-200d-2640"
     },
     ":woman_playing_water_polo:": {
         "category": "Activity",
         "name": "woman playing water polo",
         "unicode": "1f93d-2640",
-        "unicode_alt": "1f93d-200d-2640-fe0f"
+        "unicode_alt": "1f93d-200d-2640"
     },
     ":woman_scientist:": {
         "category": "People",
@@ -7367,7 +7362,7 @@ emoji = {
         "category": "People",
         "name": "woman shrugging",
         "unicode": "1f937-2640",
-        "unicode_alt": "1f937-200d-2640-fe0f"
+        "unicode_alt": "1f937-200d-2640"
     },
     ":woman_singer:": {
         "category": "People",
@@ -7397,7 +7392,7 @@ emoji = {
         "category": "People",
         "name": "woman wearing turban",
         "unicode": "1f473-2640",
-        "unicode_alt": "1f473-200d-2640-fe0f"
+        "unicode_alt": "1f473-200d-2640"
     },
     ":womans_clothes:": {
         "category": "People",
@@ -7413,7 +7408,7 @@ emoji = {
         "category": "Activity",
         "name": "women wrestling",
         "unicode": "1f93c-2640",
-        "unicode_alt": "1f93c-200d-2640-fe0f"
+        "unicode_alt": "1f93c-200d-2640"
     },
     ":womens:": {
         "category": "Symbols",
@@ -7550,6 +7545,8 @@ aliases = {
     ":runner:": ":running_man:",
     ":running:": ":running_man:",
     ":sailboat:": ":boat:",
+    ":sassy_man:": ":tipping_hand_man:",
+    ":sassy_woman:": ":tipping_hand_woman:",
     ":satisfied:": ":laughing:",
     ":shit:": ":hankey:",
     ":shoe:": ":mans_shoe:",

@@ -129,6 +129,49 @@ SPECIAL_EMOJI = {
         "category": "people",
         "name": "woman in tuxedo: dark skin tone",
         "unicode": "1f935-1f3ff-200d-2640-fe0f"
+    },
+    # Gendered wrestling (not supported in Unicode spec)
+    ":men_wrestling:": {
+        "category": "activity",
+        "name": "men wrestling",
+        "unicode": "1f93c-200d-2642-fe0f"
+    },
+    ":women_wrestling:": {
+        "category": "activity",
+        "name": "women wrestling",
+        "unicode": "1f93c-200d-2640-fe0f"
+    },
+    # Gendered couple with heart (not supported in Unicode spec)
+    ":couple_with_heart_woman_man:": {
+        "category": "people",
+        "name": "couple with heart: woman, man",
+        "unicode": "1f469-200d-2764-fe0f-200d-1f468"
+    },
+    ":couple_with_heart_woman_woman:": {
+        "category": "people",
+        "name": "couple with heart: woman, woman",
+        "unicode": "1f469-200d-2764-fe0f-200d-1f469"
+    },
+    ":couple_with_heart_man_man:": {
+        "category": "people",
+        "name": "couple with heart: man, man",
+        "unicode": "1f468-200d-2764-fe0f-200d-1f468"
+    },
+    # Gendered couple kiss (not supported in Unicode spec)
+    ":couplekiss_woman_man:": {
+        "category": "people",
+        "name": "kiss: woman, man",
+        "unicode": "1f469-200d-2764-fe0f-200d-1f48b-200d-1f468"
+    },
+    ":couplekiss_woman_woman:": {
+        "category": "people",
+        "name": "kiss: woman, woman",
+        "unicode": "1f469-200d-2764-fe0f-200d-1f48b-200d-1f469"
+    },
+    ":couplekiss_man_man:": {
+        "category": "people",
+        "name": "kiss: man, man",
+        "unicode": "1f468-200d-2764-fe0f-200d-1f48b-200d-1f468"
     }
 }
 
@@ -155,12 +198,10 @@ IGNORE_EMOJI = [
 ]
 
 
-def parse(repo, tag):
+def parse(repo, tag, jtag, emojis, emoji_aliases):
     """Save test files."""
-    # Load emoji database
-    import emoji1_db as emojis
 
-    asset_path = os.path.join(current_dir, 'tags', repo, repo, '2', 'assets')
+    asset_path = os.path.join(current_dir, 'tags', repo, repo, 'assets', 'ai')
 
     emoji_db = {}
     shortnames = set()
@@ -177,7 +218,7 @@ def parse(repo, tag):
                 codes[0] = ('0' * diff) + codes[0]
                 unicode_alt = '-'.join(codes)
             found = False
-            for k, v in emojis.emoji.items():
+            for k, v in emojis.items():
                 db_unicode = v.get('unicode_alt', v.get('unicode'))
                 if (
                     db_unicode and
@@ -195,7 +236,7 @@ def parse(repo, tag):
             if not found:
                 unsupported.append(unicode_value)
 
-    for k, v in emojis.aliases.items():
+    for k, v in emoji_aliases.items():
         if v in emoji_db:
             aliases[k] = v
 
@@ -246,6 +287,7 @@ def parse(repo, tag):
         f.write('"""Twemoji autogen.\n\nNames from emojione database. Do not edit by hand.\n"""\n')
         f.write('from __future__ import unicode_literals\n')
         f.write('version = "%s"\n' % tag)
+        f.write('index_version = "%s"\n' % jtag)
         f.write('name = "twemoji"\n')
         f.write('emoji = %s\n' % json.dumps(emoji_db, sort_keys=True, indent=4, separators=(',', ': ')))
         f.write('aliases = %s\n' % json.dumps(aliases, sort_keys=True, indent=4, separators=(',', ': ')))

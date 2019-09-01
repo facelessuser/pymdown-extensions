@@ -31,6 +31,7 @@ GFM
 GIF
 Gemoji
 Gemoji's
+Gendered
 GitHub
 GitHub's
 GitHubEmoji
@@ -46,6 +47,7 @@ JPEG
 JSON
 Jan
 JavaScript
+JoyPixels
 Jun
 KBD
 KaTeX
@@ -156,6 +158,7 @@ namespace
 nd
 ned
 nl
+octocat
 online
 plugin
 plugins
@@ -180,6 +183,7 @@ pymdownx
 pypi
 pytest
 raphael
+rebranded
 regex
 reindent
 reinstalling

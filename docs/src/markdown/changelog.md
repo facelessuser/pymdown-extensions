@@ -2,7 +2,11 @@
 
 ## 6.1.0
 
+- **NEW**: Upgrade Twemoji to 12.1.2 using the latest JoyPixels' (formally EmojiOne) short name index in @JoyPixels/emoji-toolkit 5.0.4.
+- **NEW**: Upgrade EmojiOne to 4.5.0 to the last release in the 4+ series. EmojiOne was rebranded as JoyPixels, but while the index is licensed under MIT, the image assets are no longer as permissible as they once were. The Emoji extension will only reference the last release under the older more permissible license (4.5.0). The option to use the CDN with EmojiOne 2.7 is still available as well which used an even more permissible license.
+- **NEW**: Upgrade Gemoji to 3.0.1.
 - **NEW**: `version` and `version_info` are now accessible via the more standard form `__version__` and `_version_info__`. The old format, while available, is now deprecated.
+- **FIX**: Fix GitHub emoji CDN links to use their latest.
 - **FIX**: Fix issue where entities in the form `&#35;` would trigger MagicLink's shorthand for issues.
 - **FIX**: Don't install tests when installing package.
 - **FIX**: Fix for BetterEm case `**Strong*em,strong***`. Similar cases in Critic and Tilde are also adjusted.

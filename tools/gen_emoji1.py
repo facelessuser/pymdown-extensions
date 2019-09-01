@@ -12,7 +12,7 @@ Copyright (c) http://www.emojione.com
 def get_unicode_alt(value):
     """Get alternate Unicode form or return the original."""
 
-    return value['code_points']['output']
+    return value['code_points']['fully_qualified']
 
 
 def parse(repo, tag):
