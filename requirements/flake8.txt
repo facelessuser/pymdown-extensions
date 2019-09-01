@@ -1,5 +1,4 @@
 flake8
-pydocstyle<4.0.0
 flake8_docstrings
 pep8-naming
 flake8-mutable
