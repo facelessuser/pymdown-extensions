@@ -1,5 +1,9 @@
 # Changelog
 
+## Development
+
+- **FIX**: MagicLink: match the auto-link pattern in the current Markdown package.
+
 ## 6.1.0
 
 - **NEW**: Upgrade Twemoji to 12.1.2 using the latest JoyPixels' (formally EmojiOne) short name index in @JoyPixels/emoji-toolkit 5.0.4.

@@ -56,7 +56,7 @@ RE_LINK = r'''(?xi)
 )
 '''
 
-RE_AUTOLINK = r'(?i)<((?:ht|f)tps?://[^>]*)>'
+RE_AUTOLINK = r'(?i)<((?:ht|f)tps?://[^<>]*)>'
 
 # Provider specific user regex rules
 RE_TWITTER_USER = r'\w{1,15}'
