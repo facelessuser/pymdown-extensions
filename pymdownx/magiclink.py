@@ -35,6 +35,7 @@ from markdown.inlinepatterns import LinkInlineProcessor, InlineProcessor
 MAGIC_LINK = 1
 MAGIC_AUTO_LINK = 2
 
+RE_VALID_REPO_NAME = re.compile(r'[-a-z0-9]+', re.I)
 
 # Bare link/email detection
 RE_MAIL = r'''(?xi)
@@ -838,9 +839,17 @@ class MagiclinkExtension(Extension):
             host = custom['host']
             repo_type = custom['type']
             name = custom['name']
+            if RE_VALID_REPO_NAME.match(name) is None:
+                raise ValueError(
+                    "Custom repository names must only use characters [-a-zA-Z0-9_], '{}' is invalid".format(name)
+                )
             if name not in self.provider_info:
+                if repo_type not in ('github', 'gitlab', 'bitbucket'):
+                    raise ValueError("Custom repository type of '{}' is not supported".format(repo_type))
                 self.provider_info[name] = copy.deepcopy(PROVIDER_INFO[repo_type])
                 self.provider_info[name]['host'] = host
+            else:
+                raise ValueError("The custom name '{}' is already registered".format(name))
 
         github_hosts = []
         bitbucket_hosts = []
@@ -854,10 +863,10 @@ class MagiclinkExtension(Extension):
             if provider['type'] == 'github':
                 github_names.append(key)
                 github_hosts.append(provider['host'])
-            if provider['type'] == 'bitbucket':
+            elif provider['type'] == 'bitbucket':
                 bitbucket_names.append(key)
                 bitbucket_hosts.append(provider['host'])
-            if provider['type'] == 'gitlab':
+            elif provider['type'] == 'gitlab':
                 gitlab_names.append(key)
                 gitlab_hosts.append(provider['host'])
 
