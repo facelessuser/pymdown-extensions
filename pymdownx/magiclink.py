@@ -728,7 +728,7 @@ class MagiclinkExtension(Extension):
                 '',
                 'The base repo to use - Default: ""'
             ],
-            'custom': [
+            'custom_provider': [
                 [],
                 'A list containing custom providers - Default []'
             ]
@@ -834,7 +834,7 @@ class MagiclinkExtension(Extension):
         config = self.getConfigs()
 
         self.provider_info = copy.deepcopy(PROVIDER_INFO)
-        for custom in config.get('custom', []):
+        for custom in config.get('custom_provider', []):
             host = custom['host']
             repo_type = custom['type']
             name = custom['name']
