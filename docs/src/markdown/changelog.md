@@ -3,6 +3,7 @@
 ## Development
 
 - **FIX**: MagicLink: match the auto-link pattern in the current Markdown package.
+- **FIX**: Fix fenced math escape issue when using MathJax script output format.
 
 ## 6.1.0
 
