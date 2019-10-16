@@ -85,13 +85,12 @@ jobs:
         python -m pip install -r requirements/docs.txt
         python -m pip install -r requirements/extra.txt
         python -m pip install -r requirements/project.txt
-        npm install -g yarn@v1.19.1
-        yarn install
+        npm install
     - name: Install Aspell
       run: |
         sudo apt-get install aspell aspell-en
     - name: Build documents
       run: |
-        yarn build
+        npm run-script build
         python -m mkdocs build --clean --verbose --strict
         python -m pyspelling

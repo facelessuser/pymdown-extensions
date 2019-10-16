@@ -14,7 +14,8 @@
   },
   "dependencies": {},
   "engines": {
-    "node": ">= 10"
+    "node": ">= 10",
+    "yarn": "YARN NO LONGER USED - use npm instead."
   },
   "devDependencies": {
     "@babel/cli": "^7.6.4",
