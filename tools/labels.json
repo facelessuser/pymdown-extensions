@@ -25,7 +25,7 @@
         "maintenance": {"color": "maintenance", "description": "Maintenance chore."},
         "support": {"color": "support", "description": "Support request."},
 
-        "extensiion": {"color": "category", "description": "Related to the core."},
+        "extensiion": {"color": "category", "description": "Related to extensions."},
         "integration": {"color": "category", "description": "Related to packaging and/or testing."},
         "docs": {"color": "category", "description": "Related to documentation."},
 
