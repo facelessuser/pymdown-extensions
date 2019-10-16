@@ -98,7 +98,7 @@ def _fence_mathjax_format(math, preview=False):
 
     text += (
         '<script type="math/tex; mode=display">\n' +
-        _escape(math) +
+        math +
         '\n</script>\n'
     )
     if preview:

@@ -27,7 +27,7 @@ install:
   - "python -m pip install -U virtualenv tox codecov"
 
 test_script:
-  - pip --version
+  - python -m pip --version
   - virtualenv --version
   - tox --version
   - tox
