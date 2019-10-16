@@ -39,7 +39,7 @@
     "gulp-rollup": "^2.16.2",
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
-    "gulp-stylelint": "^9.0.0",
+    "gulp-stylelint": "^10.0.0",
     "gulp-touch-fd": "funkedigital/gulp-touch-fd",
     "gulp-uglify": "^3.0.2",
     "material-design-color": "^2.3.2",
