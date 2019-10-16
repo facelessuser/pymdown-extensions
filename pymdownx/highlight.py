@@ -85,6 +85,10 @@ DEFAULT_CONFIG = {
         [],
         'Extend pygments language with special language entry - Default: {}'
     ],
+    'legacy_no_wrap_code': [
+        False,
+        'Do not wrap block code under pre elements with code elements - Default: False'
+    ],
     '_enabled': [
         True,
         'Used internally to communicate if extension has been explicitly enabled - Default: False'
@@ -180,7 +184,8 @@ class Highlight(object):
 
     def __init__(
         self, guess_lang=True, pygments_style='default', use_pygments=True,
-        noclasses=False, extend_pygments_lang=None, linenums=False, linenums_special=-1, linenums_style='table'
+        noclasses=False, extend_pygments_lang=None, linenums=False, linenums_special=-1,
+        linenums_style='table', wrapcode=True
     ):
         """Initialize."""
 
@@ -191,6 +196,7 @@ class Highlight(object):
         self.linenums = linenums
         self.linenums_style = linenums_style
         self.linenums_special = linenums_special
+        self.wrapcode = wrapcode
 
         if extend_pygments_lang is None:
             extend_pygments_lang = []
@@ -275,7 +281,8 @@ class Highlight(object):
                 linenospecial=linespecial,
                 style=self.pygments_style,
                 noclasses=self.noclasses,
-                hl_lines=hl_lines
+                hl_lines=hl_lines,
+                wrapcode=self.wrapcode
             )
 
             # Convert
@@ -342,7 +349,8 @@ class HighlightTreeprocessor(Treeprocessor):
                     linenums=self.config['linenums'],
                     linenums_style=self.config['linenums_style'],
                     linenums_special=self.config['linenums_special'],
-                    extend_pygments_lang=self.config['extend_pygments_lang']
+                    extend_pygments_lang=self.config['extend_pygments_lang'],
+                    wrapcode=not self.config['legacy_no_wrap_code']
                 )
                 placeholder = self.md.htmlStash.store(
                     code.highlight(
@@ -388,6 +396,7 @@ class HighlightExtension(Extension):
             config_clone = copy.deepcopy(DEFAULT_CONFIG)
             for k, v in config_clone.items():
                 target[k] = config_clone[k][0]
+
         return target
 
     def get_pymdownx_highlighter(self):

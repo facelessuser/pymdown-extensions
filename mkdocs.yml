@@ -75,7 +75,7 @@ markdown_extensions:
   - pymdownx.extrarawhtml:
   - pymdownx.superfences:
       preserve_tabs: true
-      custom_fences: 
+      custom_fences:
         - name: flow
           class: uml-flowchart
           format: !!python/name:pymdownx.superfences.fence_code_format
@@ -134,6 +134,6 @@ extra:
     - type: github
       link: https://github.com/facelessuser
 extra_css:
-  - extra-174a536342.css
+  - extra-424d7dfff1.css
 extra_javascript:
   - extra-0d9305e748.js

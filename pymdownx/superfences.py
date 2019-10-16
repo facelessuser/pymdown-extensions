@@ -376,6 +376,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             self.linenums = config['linenums']
             self.linenums_style = config.get('linenums_style', 'table')
             self.linenums_special = config.get('linenums_special', -1)
+            self.wrapcode = not config.get('legacy_no_wrap_code', False)
 
     def clear(self):
         """Reset the class variables."""
@@ -655,7 +656,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 linenums=self.linenums,
                 linenums_style=self.linenums_style,
                 linenums_special=self.linenums_special,
-                extend_pygments_lang=self.extend_pygments_lang
+                extend_pygments_lang=self.extend_pygments_lang,
+                wrapcode=self.wrapcode
             ).highlight(
                 src,
                 language,

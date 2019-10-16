@@ -100,5 +100,9 @@ Option                    | Type   | Default               | Description
 `linenums_special`        | int    | `#!py3 1`             | Globally sets the specified nth lines' gutter with the class "special".  This can be overridden in [SuperFences](./superfences.md) per fence if desired.
 `linenums_style`          | string | `#!py3 'table'`       | Controls the output style when `linenums` are enabled. Supported styles are Pygments default `table` and `inline`, but also supported is the pymdown-extensions `pymdownx-inline` which provides a special inline mode, see [Line Number Styles](#line-number-styles) for more info.
 `extend_pygments_lang`    | list   | `#!py3 []`            | A list of extended languages to add.  See [Extended Pygments Lexer Options](#extended-pygments-lexer-options) for more info.
+`legacy_no_wrap_code`     | bool   | `#!py3 False`         | A temporary option provided during the transition period to the new output format. From now on, all block code under `pre` elements will be wrapped in a `code` element as well under Pygments 2.4+. This disables this format. This option will be removed in the future.
+
+!!! new "New Option 6.2"
+    `legacy_no_wrap_code` was added in `6.2`, but is only provided to help transition to the format when using Pygments 2.4+. This option will be removed in the future.
 
 --8<-- "refs.txt"

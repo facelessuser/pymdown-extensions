@@ -1,18 +1,18 @@
 <h1>Neseted Fences:</h1>
-<div class="highlight"><pre><span></span>```
+<div class="highlight"><pre><span></span><code>```
 This will still be parsed
 as a normal indented code block.
 ```
-</pre></div>
+</code></pre></div>
 
-<div class="highlight"><pre><span></span>This will still be parsed
+<div class="highlight"><pre><span></span><code>This will still be parsed
 as a fenced code block.
-</pre></div>
+</code></pre></div>
 
 <ul>
 <li>
-<div class="highlight"><pre><span></span>This will work.
-</pre></div>
+<div class="highlight"><pre><span></span><code>This will work.
+</code></pre></div>
 
 </li>
 <li>
@@ -20,24 +20,24 @@ as a fenced code block.
 <ul>
 <li>
 <p>Here is an indented block</p>
-<div class="highlight"><pre><span></span>```
+<div class="highlight"><pre><span></span><code>```
 This will still be parsed
 as a normal indented code block.
 ```
-</pre></div>
+</code></pre></div>
 
 </li>
 <li>
 <p>Here is a fenced code block:</p>
-<div class="highlight"><pre><span></span>This will still be parsed
+<div class="highlight"><pre><span></span><code>This will still be parsed
 as a fenced code block.
-</pre></div>
+</code></pre></div>
 
 <blockquote>
-<div class="highlight"><pre><span></span>Blockquotes?
+<div class="highlight"><pre><span></span><code>Blockquotes?
 
 Not a problem!
-</pre></div>
+</code></pre></div>
 
 </blockquote>
 </li>
@@ -45,52 +45,52 @@ Not a problem!
 </li>
 <li>
 <p>Fenced block with lesser child fence.</p>
-<div class="highlight"><pre><span></span>	```
+<div class="highlight"><pre><span></span><code>	```
 	Fenced block containing fenced syntax.
 	```
-</pre></div>
+</code></pre></div>
 
-<div class="highlight"><pre><span></span>```
+<div class="highlight"><pre><span></span><code>```
 Fenced block containing fenced syntax.
 ```
-</pre></div>
+</code></pre></div>
 
 </li>
 <li>
 <p>Fenced block with greater child fence:</p>
-<div class="highlight"><pre><span></span>	````
+<div class="highlight"><pre><span></span><code>	````
 	Fenced block containing fenced syntax.
 	````
-</pre></div>
+</code></pre></div>
 
-<div class="highlight"><pre><span></span>````
+<div class="highlight"><pre><span></span><code>````
 Fenced block containing fenced syntax.
 ````
-</pre></div>
+</code></pre></div>
 
 </li>
 <li>
 <p>Fenced block with indented child fence:</p>
-<div class="highlight"><pre><span></span>	```
+<div class="highlight"><pre><span></span><code>	```
 	Fenced block containing fenced syntax.
 	```
-</pre></div>
+</code></pre></div>
 
 </li>
 <li>
 <p>Tabs</p>
-<div class="highlight"><pre><span></span>Test	with tabs.
+<div class="highlight"><pre><span></span><code>Test	with tabs.
 Test	with tabs.
 Test		tabs.
-</pre></div>
+</code></pre></div>
 
-<div class="highlight"><pre><span></span>============================================================
+<div class="highlight"><pre><span></span><code>============================================================
 T	Tp	Sp	D	Dp	S	D7	T
 ------------------------------------------------------------
 A	F#m	Bm	E	C#m	D	E7	A
 A#	Gm	Cm	F	Dm	D#	F7	A#
 B♭	Gm	Cm	F	Dm	E♭m	F7	B♭
-</pre></div>
+</code></pre></div>
 
 </li>
 <li>
@@ -98,11 +98,11 @@ B♭	Gm	Cm	F	Dm	E♭m	F7	B♭
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Some file.&quot;&quot;&quot;</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;Some file.&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">foo.bar</span>
 <span class="kn">import</span> <span class="nn">boo.baz</span>
 <span class="kn">import</span> <span class="nn">foo.bar.baz</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 
 </li>
@@ -111,18 +111,18 @@ B♭	Gm	Cm	F	Dm	E♭m	F7	B♭
 <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
 2
 3
-4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;Some file.&quot;&quot;&quot;</span>
+4</pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="sd">&quot;&quot;&quot;Some file.&quot;&quot;&quot;</span>
 <span class="hll"><span class="kn">import</span> <span class="nn">foo.bar</span>
 </span><span class="hll"><span class="kn">import</span> <span class="nn">boo.baz</span>
 </span><span class="kn">import</span> <span class="nn">foo.bar.baz</span>
-</pre></div>
+</code></pre></div>
 </td></tr></table>
 
 </li>
 <li>
 <p>Highlight extended language:</p>
-<div class="highlight"><pre><span></span><span class="nv">$a</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">);</span>
-</pre></div>
+<div class="highlight"><pre><span></span><code><span class="nv">$a</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">);</span>
+</code></pre></div>
 
 </li>
 </ul>
