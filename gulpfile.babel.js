@@ -61,7 +61,6 @@ const config = {
   compress: {
     enabled: args.compress,
     jsOptions: {
-      warnings: false,
       conditionals: true,
       unused: true,
       comparisons: true,
@@ -165,7 +164,7 @@ gulp.task("js:build:rollup", () => {
       ],
       "input": `${config.folders.src}/js/extra.js`
     }))
-    .pipe(gulpif(config.compress.enabled, uglify({compress: config.compress.jsOptions})))
+    .pipe(gulpif(config.compress.enabled, uglify({compress: config.compress.jsOptions, warnings: false})))
     .pipe(gulpif(config.sourcemaps, sourcemaps.write(config.folders.theme)))
 
     // Revisioning

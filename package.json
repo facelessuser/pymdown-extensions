@@ -14,7 +14,8 @@
   },
   "dependencies": {},
   "engines": {
-    "node": ">= 8"
+    "node": ">= 10",
+    "yarn": "YARN NO LONGER USED - use npm instead."
   },
   "devDependencies": {
     "@babel/cli": "^7.6.4",
@@ -46,6 +47,7 @@
     "material-shadows": "^3.0.1",
     "modularscale-sass": "^3.0.10",
     "postcss-pseudo-classes": "^0.2.0",
+    "promise": "^8.0.3",
     "rollup": "^1.24.0",
     "rollup-plugin-babel": "^4.3.3",
     "stylelint": "^10.1.0",

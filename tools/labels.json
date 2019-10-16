@@ -1,0 +1,72 @@
+{
+    "user": "facelessuser",
+    "repo": "pymdown-extensions",
+
+    "colors": {
+        "bug": "#c45b46",
+        "feature": "#7b17d8",
+        "support": "#efbe62",
+        "maintenance": "#b2ffeb",
+
+        "category": "#709ad8",
+        "subcategory": "#bfd4f2",
+
+        "pending": "#f0f49a",
+        "rejected": "#f7c7be",
+        "approved": "#beed6d",
+
+        "low": "#dddddd"
+    },
+
+    "labels": {
+
+        "bug": {"color": "bug", "description": "Bug report."},
+        "feature": {"color": "feature", "description": "Feature request."},
+        "maintenance": {"color": "maintenance", "description": "Maintenance chore."},
+        "support": {"color": "support", "description": "Support request."},
+
+        "extensiion": {"color": "category", "description": "Related to the core."},
+        "integration": {"color": "category", "description": "Related to packaging and/or testing."},
+        "docs": {"color": "category", "description": "Related to documentation."},
+
+        "arithmatex": {"color": "subcategory", "description": "Related to the arithmatex extension."},
+        "b64": {"color": "subcategory", "description": "Related to the b64 extension."},
+        "betterem": {"color": "subcategory", "description": "Related to the betterem extension."},
+        "caret": {"color": "subcategory", "description": "Related to the caret extension."},
+        "critic": {"color": "subcategory", "description": "Related to the critic extension."},
+        "details": {"color": "subcategory", "description": "Related to the details extension."},
+        "emoji": {"color": "subcategory", "description": "Related to the emoji extension."},
+        "escapeall": {"color": "subcategory", "description": "Related to the escapeall extension."},
+        "extra": {"color": "subcategory", "description": "Related to the extra extension."},
+        "extrarawhtml": {"color": "subcategory", "description": "Related to the extrarawhtml extension."},
+        "highlight": {"color": "subcategory", "description": "Related to the highlight extension."},
+        "inlinehilite": {"color": "subcategory", "description": "Related to the inlinehilite extension."},
+        "keys": {"color": "subcategory", "description": "Related to the keys extension."},
+        "magiclink": {"color": "subcategory", "description": "Related to the magiclink extension."},
+        "mark": {"color": "subcategory", "description": "Related to the mark extension."},
+        "pathconverter": {"color": "subcategory", "description": "Related to the paythconverter extension."},
+        "progressbar": {"color": "subcategory", "description": "Related to the progressbar extension."},
+        "slugs": {"color": "subcategory", "description": "Related to the slugs extension."},
+        "smartsymbols": {"color": "subcategory", "description": "Related to the smartsymbols extension."},
+        "snippets": {"color": "subcategory", "description": "Related to the snippets extension."},
+        "striphtml": {"color": "subcategory", "description": "Related to the striphtml extension."},
+        "superfences": {"color": "subcategory", "description": "Related to the superfences extension."},
+        "tasklist": {"color": "subcategory", "description": "Related to the tasklist extension."},
+        "tilde": {"color": "subcategory", "description": "Related to the tilde extension."},
+
+        "more-info-needed": {"color": "pending", "description": "More information is required."},
+        "needs-confirmation": {"color": "pending", "description": "The alleged behavior needs to be confirmed."},
+        "needs-decision": {"color": "pending", "description": "A decision needs to be made regarding request."},
+        "confirmed": {"color": "approved", "description": "Confirmed bug report or approved feature request."},
+        "maybe": {"color": "low", "description": "Pending approval of low priority request."},
+        "duplicate": {"color": "rejected", "description": "The issue has been previously reported."},
+        "wontfix": {"color": "rejected", "description": "The issue will not be fixed for the stated reasons."},
+        "invalid": {"color": "rejected", "description": "Invalid report (user error, upstream issue, etc)."},
+
+        "work-in-progress": {"color": "pending", "description": "A partial solution. More changes will be coming."},
+        "needs-review": {"color": "pending", "description": "Needs to be reviewed and/or approved."},
+        "requires-changes": {"color": "pending", "description": "Awaiting updates after a review."},
+        "approved": {"color": "approved", "description": "The pull request is ready to be merged."},
+        "rejected": {"color": "rejected", "description": "The pull request is rejected for the stated reasons."}
+    }
+}
