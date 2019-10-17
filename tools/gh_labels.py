@@ -255,7 +255,8 @@ class GhLabelSync:
             # Editing an existing label
             if (
                 label.lower() == old_name.lower() and
-                (label_color.lower() != color.lower() or label_description != description)
+                (label_color.lower() != color.lower() or label_description != description) or
+                new_name != old_name
             ):
                 modified = True
             edit = LabelEdit(old_name, new_name, color, description, modified=modified)
