@@ -243,11 +243,14 @@ class GhLabelSync:
         edit = None
         for name, value in self.labels.items():
             old_name = value.get('renamed', name)
+            new_name = name
 
-            if label.lower() != old_name.lower():
+            if label.lower() not in (old_name.lower(), new_name.lower()):
                 continue
 
-            new_name = name
+            if label.lower() != old_name.lower():
+                old_name = new_name
+
             color = value['color']
             description = value.get('description', '')
             modified = False
