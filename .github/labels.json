@@ -1,7 +1,4 @@
 {
-    "user": "facelessuser",
-    "repo": "pymdown-extensions",
-
     "colors": {
         "bug": "#c45b46",
         "feature": "#7b17d8",
