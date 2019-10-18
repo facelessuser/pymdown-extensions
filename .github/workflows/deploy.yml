@@ -26,14 +26,10 @@ jobs:
         python -m pip install --upgrade pip setuptools
         python -m pip install -r requirements/docs.txt
     - name: Deploy documents
-      env:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        GH_USER: ${{ secrets.GH_USER }}
-        GH_EMAIL: ${{ secrets.GH_EMAIL }}
       run: |
-        git config user.name ${GH_USER}
-        git config user.email "${GH_EMAIL}"
-        git remote add gh-token "https://${GH_TOKEN}@github.com/facelessuser/pymdown-extensions.git"
+        git config user.name ${{ secrets.GH_USER }}
+        git config user.email "${{ secrets.GH_EMAIL }}"
+        git remote add gh-token "https://${{ secrets.GH_TOKEN }}@github.com/facelessuser/pymdown-extensions.git"
         git fetch gh-token && git fetch gh-token gh-pages:gh-pages
         python -m mkdocs gh-deploy -v --clean --remote-name gh-token
         git push gh-token gh-pages
