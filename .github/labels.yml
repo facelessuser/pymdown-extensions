@@ -1,0 +1,188 @@
+colors:
+    bug: '#c45b46'
+    feature: '#7b17d8'
+    support: '#efbe62'
+    maintenance: '#b2ffeb'
+    category: '#709ad8'
+    subcategory: '#bfd4f2'
+    pending: '#f0f49a'
+    rejected: '#f7c7be'
+    approved: '#beed6d'
+    low: '#dddddd'
+
+labels:
+- name: bug
+  color: bug
+  description: Bug report.
+
+- name: feature
+  color: feature
+  description: Feature request.
+
+- name: maintenance
+  color: maintenance
+  description: Maintenance chore.
+
+- name: support
+  color: support
+  description: Support request.
+
+- name: extensions
+  color: category
+  description: Related to extensions.
+
+- name: integration
+  color: category
+  description: Related to packaging and/or testing.
+
+- name: docs
+  color: category
+  description: Related to documentation.
+
+- name: arithmatex
+  color: subcategory
+  description: Related to the arithmatex extension.
+
+- name: b64
+  color: subcategory
+  description: Related to the b64 extension.
+
+- name: betterem
+  color: subcategory
+  description: Related to the betterem extension.
+
+- name: caret
+  color: subcategory
+  description: Related to the caret extension.
+
+- name: critic
+  color: subcategory
+  description: Related to the critic extension.
+
+- name: details
+  color: subcategory
+  description: Related to the details extension.
+
+- name: emoji
+  color: subcategory
+  description: Related to the emoji extension.
+
+- name: escapeall
+  color: subcategory
+  description: Related to the escapeall extension.
+
+- name: extra
+  color: subcategory
+  description: Related to the extra extension.
+
+- name: extrarawhtml
+  color: subcategory
+  description: Related to the extrarawhtml extension.
+
+- name: highlight
+  color: subcategory
+  description: Related to the highlight extension.
+
+- name: inlinehilite
+  color: subcategory
+  description: Related to the inlinehilite extension.
+
+- name: keys
+  color: subcategory
+  description: Related to the keys extension.
+
+- name: magiclink
+  color: subcategory
+  description: Related to the magiclink extension.
+
+- name: mark
+  color: subcategory
+  description: Related to the mark extension.
+
+- name: pathconverter
+  color: subcategory
+  description: Related to the paythconverter extension.
+
+- name: progressbar
+  color: subcategory
+  description: Related to the progressbar extension.
+
+- name: slugs
+  color: subcategory
+  description: Related to the slugs extension.
+
+- name: smartsymbols
+  color: subcategory
+  description: Related to the smartsymbols extension.
+
+- name: snippets
+  color: subcategory
+  description: Related to the snippets extension.
+
+- name: striphtml
+  color: subcategory
+  description: Related to the striphtml extension.
+
+- name: superfences
+  color: subcategory
+  description: Related to the superfences extension.
+
+- name: tasklist
+  color: subcategory
+  description: Related to the tasklist extension.
+
+- name: tilde
+  color: subcategory
+  description: Related to the tilde extension.
+
+- name: more-info-needed
+  color: pending
+  description: More information is required.
+
+- name: needs-confirmation
+  color: pending
+  description: The alleged behavior needs to be confirmed.
+
+- name: needs-decision
+  color: pending
+  description: A decision needs to be made regarding request.
+
+- name: confirmed
+  color: approved
+  description: Confirmed bug report or approved feature request.
+
+- name: maybe
+  color: low
+  description: Pending approval of low priority request.
+
+- name: duplicate
+  color: rejected
+  description: The issue has been previously reported.
+
+- name: wontfix
+  color: rejected
+  description: The issue will not be fixed for the stated reasons.
+
+- name: invalid
+  color: rejected
+  description: Invalid report (user error, upstream issue, etc).
+
+- name: work-in-progress
+  color: pending
+  description: A partial solution. More changes will be coming.
+
+- name: needs-review
+  color: pending
+  description: Needs to be reviewed and/or approved.
+
+- name: requires-changes
+  color: pending
+  description: Awaiting updates after a review.
+
+- name: approved
+  color: approved
+  description: The pull request is ready to be merged.
+
+- name: rejected
+  color: rejected
+  description: The pull request is rejected for the stated reasons.
