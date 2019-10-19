@@ -44,13 +44,13 @@ jobs:
       env:
         cov-label: ${{ matrix.platform }}-${{ matrix.python-version }}
       run: |
-        python -c "import os; os.rename('.coverage', '.coverage-{}'.format(os.getenv('cov-label')))"
+        python -c "import os; os.rename('.coverage', '.coverage.{}'.format(os.getenv('cov-label')))"
     - name: Save Coverage
       if: success()
       uses: actions/upload-artifact@v1
       with:
         name: coverage-${{ matrix.platform }}-${{ matrix.python-version }}
-        path: .coverage-${{ matrix.platform }}-${{ matrix.python-version }}
+        path: .coverage.${{ matrix.platform }}-${{ matrix.python-version }}
 
   coverage:
 
@@ -111,7 +111,7 @@ jobs:
         python -m coverage combine
     - name: Coverage Report
       run: |
-        python -m codecov -t ${{ secrets.CODECOV_TOKEN }}
+        python -m codecov -t ${{ secrets.CODECOV_TOKEN }} -c ${GITHUB_SHA}
 
   lint:
     strategy:

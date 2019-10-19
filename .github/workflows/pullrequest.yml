@@ -41,13 +41,13 @@ jobs:
       env:
         cov-label: ${{ matrix.platform }}-${{ matrix.python-version }}
       run: |
-        python -c "import os; os.rename('.coverage', '.coverage_{}'.format(os.getenv('cov-label')))"
+        python -c "import os; os.rename('.coverage', '.coverage.{}'.format(os.getenv('cov-label')))"
     - name: Save Coverage
       if: success()
       uses: actions/upload-artifact@v1
       with:
         name: coverage-${{ matrix.platform }}-${{ matrix.python-version }}
-        path: .coverage_${{ matrix.platform }}-${{ matrix.python-version }}
+        path: .coverage.${{ matrix.platform }}-${{ matrix.python-version }}
 
   coverage:
 
@@ -62,7 +62,7 @@ jobs:
         python-version: 3.7
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip setuptools coverage codecov
+        python -m pip install --upgrade pip setuptools coverage
     - name: Download Coverage 2.7 ubuntu-latest
       uses: actions/download-artifact@v1
       with:
@@ -105,11 +105,12 @@ jobs:
         path: '.'
     - name: Combine coverage
       run: |
-        python -c "import os; print(os.listdir('.'))"
         python -m coverage combine
     - name: Coverage Report
-      run: |
-        python -m codecov -t ${{ secrets.CODECOV_TOKEN }}
+      uses: codecov/codecov-action@v1.0.3
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: .coverage
 
   lint:
     strategy:
