@@ -68,49 +68,81 @@ jobs:
       with:
         name: coverage-ubuntu-latest-2.7
         path: '.'
+    - uses: codecov/codecov-action@v1.0.3
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: .coverage.ubuntu-latest-2.7
+        name: coverage.ubuntu-latest-2.7
     - name: Download Coverage 3.5 ubuntu-latest
       uses: actions/download-artifact@v1
       with:
         name: coverage-ubuntu-latest-3.5
         path: '.'
+    - uses: codecov/codecov-action@v1.0.3
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: .coverage.ubuntu-latest-3.5
+        name: coverage.ubuntu-latest-3.5
     - name: Download Coverage 3.6 ubuntu-latest
       uses: actions/download-artifact@v1
       with:
         name: coverage-ubuntu-latest-3.6
         path: '.'
+    - uses: codecov/codecov-action@v1.0.3
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: .coverage.ubuntu-latest-3.6
+        name: coverage.ubuntu-latest-3.6
     - name: Download Coverage 3.7 ubuntu-latest
       uses: actions/download-artifact@v1
       with:
         name: coverage-ubuntu-latest-3.7
         path: '.'
+    - uses: codecov/codecov-action@v1.0.3
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: .coverage.ubuntu-latest-3.7
+        name: coverage.ubuntu-latest-3.7
     - name: Download Coverage 2.7 windows-latest
       uses: actions/download-artifact@v1
       with:
         name: coverage-windows-latest-2.7
         path: '.'
+    - uses: codecov/codecov-action@v1.0.3
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: .coverage.windows-latest-2.7
+        name: coverage.windows-latest-2.7
     - name: Download Coverage 3.5 windows-latest
       uses: actions/download-artifact@v1
       with:
         name: coverage-windows-latest-3.5
         path: '.'
+    - uses: codecov/codecov-action@v1.0.3
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: .coverage.windows-latest-3.5
+        name: coverage.windows-latest-3.5
     - name: Download Coverage 3.6 windows-latest
       uses: actions/download-artifact@v1
       with:
         name: coverage-windows-latest-3.6
         path: '.'
+    - uses: codecov/codecov-action@v1.0.3
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: .coverage.windows-latest-3.6
+        name: coverage.windows-latest-3.6
     - name: Download Coverage 3.7 windows-latest
       uses: actions/download-artifact@v1
       with:
         name: coverage-windows-latest-3.7
         path: '.'
-    - name: Combine coverage
-      run: |
-        python -m coverage combine
-    - name: Coverage Report
-      uses: codecov/codecov-action@v1.0.3
+    - uses: codecov/codecov-action@v1.0.3
       with:
         token: ${{secrets.CODECOV_TOKEN}}
-        file: .coverage
+        file: .coverage.windows-latest-3.7
+        name: coverage.windows-latest-3.7
 
   lint:
     strategy:
