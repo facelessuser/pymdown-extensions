@@ -9,7 +9,7 @@ All extensions are found under `pymdownx`.  Assuming we wanted to specify the us
 ```pycon3
 >>> import markdown
 >>> text = "A link https://google.com"
->>> html = markdown.markdown(text, ['pymdownx.magiclink'])
+>>> html = markdown.markdown(text, extensions=['pymdownx.magiclink'])
 '<p>A link <a href="https://google.com">https://google.com</a></p>'
 ```
 
