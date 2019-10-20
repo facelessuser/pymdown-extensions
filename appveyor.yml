@@ -12,8 +12,6 @@ environment:
       TOXENV: "py36"
     - PYTHON: "C:/Python37"
       TOXENV: "py37"
-    - PYTHON: "C:/Python37"
-      TOXENV: "lint"
 
 init:
   - "ECHO %TOXENV%"
@@ -33,7 +31,7 @@ test_script:
   - tox
 
 after_test:
-  - if not ("%TOXENV%" == "lint") codecov
+  - codecov
 
 matrix:
   fast_finish: true
