@@ -1,0 +1,12 @@
+name: "wildcard labeler"
+on:
+- pull_request
+
+jobs:
+  pull-labels:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Wildcard Labeler
+      uses: facelessuser/wildcard-labeler-action@master
+      with:
+        token: "${{ secrets.GITHUB_TOKEN }}"

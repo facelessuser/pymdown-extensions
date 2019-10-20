@@ -10,6 +10,11 @@ colors:
     approved: '#beed6d'
     low: '#dddddd'
 
+ignores:
+  - dependencies
+  - javascript
+  - security
+
 labels:
 - name: bug
   color: bug
@@ -27,17 +32,25 @@ labels:
   color: support
   description: Support request.
 
-- name: extensions
-  color: category
-  description: Related to extensions.
-
-- name: integration
-  color: category
-  description: Related to packaging and/or testing.
-
 - name: docs
   color: category
   description: Related to documentation.
+
+- name: tests
+  color: category
+  description: Related to testing.
+
+- name: infrastructure
+  color: category
+  description: Related to project infrastructure.
+
+- name: source
+  color: category
+  description: Related to source code.
+
+- name: utilities
+  color: subcategory
+  description: Related to the utilities library.
 
 - name: arithmatex
   color: subcategory
@@ -134,6 +147,10 @@ labels:
 - name: tilde
   color: subcategory
   description: Related to the tilde extension.
+
+- name: triage
+  color: pending
+  description: Issue needs triage.
 
 - name: more-info-needed
   color: pending
