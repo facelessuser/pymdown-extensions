@@ -1,7 +1,7 @@
 name: new pull
 on:
   pull_request:
-    types: [created, reopened]
+    types: [opened, reopened]
 
 jobs:
   needs-review:
