@@ -37,16 +37,14 @@ jobs:
     - name: Test with pytest
       run: |
         python -m tox
-    - name: Rename Coverage
-      env:
-        cov-label: ${{ matrix.platform }}-${{ matrix.python-version }}
-      run: |
-        python -c "import os; os.rename('.coverage', '.coverage.{}'.format(os.getenv('cov-label')))"
+        python -m coverage xml
     - name: Coverage Report
       if: success()
       uses: codecov/codecov-action@v1.0.3
       with:
         token: ${{secrets.CODECOV_TOKEN}}
+        file: coverage.xml
+        name: GitHub CI - coverage.${{ matrix.platform }}-${{ matrix.python-version }}
 
   win-tests:
     strategy:
