@@ -15,5 +15,5 @@ jobs:
     - name: Sync labels
       uses: facelessuser/label-mgr-action@v1
       with:
-        token: ${{ secrets.GH_TOKEN }}
+        token: ${{ secrets.GITHUB_TOKEN }}
         mode: 'delete'
