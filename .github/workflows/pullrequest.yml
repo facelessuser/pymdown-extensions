@@ -8,7 +8,7 @@ jobs:
       fail-fast: false
       max-parallel: 4
       matrix:
-        platform: [ubuntu-latest]
+        platform: [ubuntu-latest, windows-latest]
         python-version: [2.7, 3.5, 3.6, 3.7]
         include:
           - python-version: 2.7
@@ -37,122 +37,11 @@ jobs:
     - name: Test with pytest
       run: |
         python -m tox
-    - name: Rename Coverage
-      env:
-        cov-label: ${{ matrix.platform }}-${{ matrix.python-version }}
-      run: |
-        python -c "import os; os.rename('.coverage', '.coverage.{}'.format(os.getenv('cov-label')))"
     - name: Coverage Report
       if: success()
-      uses: codecov/codecov-action@v1.0.3
+      uses: coverallsapp/github-action@master
       with:
-        token: ${{secrets.CODECOV_TOKEN}}
-
-  win-tests:
-    strategy:
-      fail-fast: false
-      max-parallel: 4
-      matrix:
-        platform: [windows-latest]
-        python-version: [2.7, 3.5, 3.6, 3.7]
-        include:
-          - python-version: 2.7
-            tox-env: py27
-          - python-version: 3.5
-            tox-env: py35
-          - python-version: 3.6
-            tox-env: py36
-          - python-version: 3.7
-            tox-env: py37
-
-    env:
-      TOXENV: ${{ matrix.tox-env }}
-
-    runs-on: ${{ matrix.platform }}
-
-    steps:
-    - uses: actions/checkout@v1
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip setuptools tox coverage
-    - name: Test with pytest
-      run: |
-        python -m tox
-    - name: Rename Coverage
-      env:
-        cov-label: ${{ matrix.platform }}-${{ matrix.python-version }}
-      run: |
-        python -m coverage xml
-        python -c "import os; os.rename('coverage.xml', 'coverage.{}.xml'.format(os.getenv('cov-label')))"
-    - name: Coverage Report
-      if: success()
-      uses: actions/upload-artifact@v1
-      with:
-        name: coverage-${{ matrix.platform }}-${{ matrix.python-version }}
-        path: coverage.${{ matrix.platform }}-${{ matrix.python-version }}.xml
-
-  coverage:
-
-    needs: win-tests
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v1
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
-      with:
-        python-version: 3.7
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip setuptools coverage codecov
-    - name: Download Coverage 2.7 windows-latest
-      uses: actions/download-artifact@v1
-      with:
-        name: coverage-windows-latest-2.7
-        path: '.'
-    - name: Download Coverage 3.5 windows-latest
-      uses: actions/download-artifact@v1
-      with:
-        name: coverage-windows-latest-3.5
-        path: '.'
-    - name: Download Coverage 3.6 windows-latest
-      uses: actions/download-artifact@v1
-      with:
-        name: coverage-windows-latest-3.6
-        path: '.'
-    - name: Download Coverage 3.7 windows-latest
-      uses: actions/download-artifact@v1
-      with:
-        name: coverage-windows-latest-3.7
-        path: '.'
-    - name: Coverage Report 2.7
-      uses: codecov/codecov-action@v1.0.3
-      with:
-        token: ${{secrets.CODECOV_TOKEN}}
-        file: coverage.windows-latest-2.7.xml
-        name: GitHub CI - coverage.windows-latest-2.7
-    - name: Coverage Report 3.5
-      uses: codecov/codecov-action@v1.0.3
-      with:
-        token: ${{secrets.CODECOV_TOKEN}}
-        file: coverage.windows-latest-3.5.xml
-        name: GitHub CI - coverage.windows-latest-3.5
-    - name: Coverage Report 3.6
-      uses: codecov/codecov-action@v1.0.3
-      with:
-        token: ${{secrets.CODECOV_TOKEN}}
-        file: coverage.windows-latest-3.6.xml
-        name: GitHub CI - coverage.windows-latest-3.6
-    - name: Coverage Report 3.7
-      uses: codecov/codecov-action@v1.0.3
-      with:
-        token: ${{secrets.CODECOV_TOKEN}}
-        file: coverage.windows-latest-3.7.xml
-        name: GitHub CI - coverage.windows-latest-3.7
+        github-token: ${{ secrets.GITHUB_TOKEN }}
 
   lint:
     strategy:
