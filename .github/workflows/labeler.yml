@@ -7,6 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Wildcard Labeler
-      uses: facelessuser/wildcard-labeler-action@master
+      uses: facelessuser/wildcard-labeler-action@v1
       with:
         token: "${{ secrets.GITHUB_TOKEN }}"

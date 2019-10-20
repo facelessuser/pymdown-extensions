@@ -1,9 +1,6 @@
 brace_expansion: true
 
 rules:
-  - labels: [utilities]
-    patterns: ['pymdownx/{__meta__,util}.py']
-
   - labels: [infrastructure]
     patterns: ['*|{tools,requirements,.github}/**']
 

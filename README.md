@@ -1,4 +1,6 @@
 [![Build][github-ci-image]][github-ci-link]
+[![Unix Build Status][travis-image]][travis-link]
+[![Windows Build Status][appveyor-image]][appveyor-link]
 [![Coverage Status][codecov-image]][codecov-link]
 [![pypi-version][pypi-image]][pypi-link]
 ![License][license-image-mit]
@@ -17,6 +19,10 @@ License is MIT except for a few exceptions.  See [LICENSE](https://github.com/fa
 
 [github-ci-image]: https://github.com/facelessuser/pymdown-extensions/workflows/build/badge.svg
 [github-ci-link]: https://github.com/facelessuser/pymdown-extensions/actions?workflow=build
+[travis-image]: https://img.shields.io/travis/facelessuser/pymdown-extensions/master.svg?label=Unix%20Build&logo=travis
+[travis-link]: https://travis-ci.org/facelessuser/pymdown-extensions
+[appveyor-image]: https://img.shields.io/appveyor/ci/facelessuser/pymdown-extensions/master.svg?label=Windows%20Build&logo=appveyor
+[appveyor-link]: https://ci.appveyor.com/project/facelessuser/pymdown-extensions
 [codecov-image]: https://img.shields.io/codecov/c/github/facelessuser/pymdown-extensions/master.svg
 [codecov-link]: https://codecov.io/github/facelessuser/pymdown-extensions
 [pypi-image]: https://img.shields.io/pypi/v/pymdown-extensions.svg?logo=python&logoColor=white

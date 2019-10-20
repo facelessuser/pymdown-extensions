@@ -48,10 +48,6 @@ labels:
   color: category
   description: Related to source code.
 
-- name: utilities
-  color: subcategory
-  description: Related to the utilities library.
-
 - name: arithmatex
   color: subcategory
   description: Related to the arithmatex extension.
