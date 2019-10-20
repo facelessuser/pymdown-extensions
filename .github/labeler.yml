@@ -1,0 +1,83 @@
+brace_expansion: true
+
+rules:
+  - labels: [utilities]
+    patterns: ['pymdownx/{__meta__,util}.py']
+
+  - labels: [infrastructure]
+    patterns: ['*|{tools,requirements,.github}/**']
+
+  - labels: [source]
+    patterns: ['pymdownx/**']
+
+  - labels: [tests]
+    patterns: ['tests/**']
+
+  - labels: [docs]
+    patterns: ['docs/**']
+
+  - labels: [caret]
+    patterns: ['**/caret*']
+
+  - labels: [arithmatex]
+    patterns: ['**/arithmatex*']
+
+  - labels: [critic]
+    patterns: ['**/critic*']
+
+  - labels: [details]
+    patterns: ['**/details*']
+
+  - labels: [emoji]
+    patterns: ['**/emoji*|pymdownx/{gemoji,emoji1,twemoji}_db.py']
+
+  - labels: [escapeall]
+    patterns: ['**/escapeall*']
+
+  - labels: [extra]
+    patterns: ['**/extra*']
+
+  - labels: [extrarawhtml]
+    patterns: ['**/extrarawhtml*']
+
+  - labels: [highlight]
+    patterns: ['**/highlight*']
+
+  - labels: [inlinehilite]
+    patterns: ['**/inlinehilite*']
+
+  - labels: [keys]
+    patterns: ['**/keys*|pymdownx/keymap_db.py']
+
+  - labels: [magiclink]
+    patterns: ['**/magiclink*']
+
+  - labels: [mark]
+    patterns: ['**/mark*']
+
+  - labels: [pathconverter]
+    patterns: ['**/pathconverter*']
+
+  - labels: [progressbar]
+    patterns: ['**/progressbar*']
+
+  - labels: [slugs]
+    patterns: ['**/slugs*']
+
+  - labels: [smartsymbols]
+    patterns: ['**/smartsymbols*']
+
+  - labels: [snippets]
+    patterns: ['**/snippets*']
+
+  - labels: [striphtml]
+    patterns: ['**/striphtml*']
+
+  - labels: [superfences]
+    patterns: ['**/superfences*|**/_bypassnorm.py']
+
+  - labels: [tasklist]
+    patterns: ['**/tasklist*']
+
+  - labels: [tilde]
+    patterns: ['**/tilde*']
