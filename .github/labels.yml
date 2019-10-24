@@ -1,3 +1,98 @@
+# Wildcard labels
+brace_expansion: true
+extended_glob: true
+
+rules:
+  - labels: [infrastructure]
+    patterns: ['*|{tools,requirements,.github}/**|-README.md']
+
+  - labels: [source]
+    patterns: ['pymdownx/**']
+
+  - labels: [tests]
+    patterns: ['tests/**']
+
+  - labels: [docs]
+    patterns: ['docs/**|README.md']
+
+  - labels: [caret]
+    patterns: ['**/?(test_)caret*|**/caret/**']
+
+  - labels: [arithmatex]
+    patterns: ['**/?(test_)arithmatex*|**/arithmatex/**']
+
+  - labels: [critic]
+    patterns: ['**/?(test_|gen_)critic*|**/critic/**']
+
+  - labels: [details]
+    patterns: ['**/?(test_)details*|**/details/**']
+
+  - labels: [emoji]
+    patterns: ['**/?(test_|gen_)emoji*|**/emoji/**|pymdownx/{gemoji,emoji1,twemoji}_db.py']
+
+  - labels: [escapeall]
+    patterns: ['**/?(test_)escapeall*|**/escapeall/**']
+
+  - labels: [extra]
+    patterns: ['**/?(test_)extra!(rawhtml)*|**/extra/**|-docs/theme/**|-docs/src/@(js|scss)/**']
+
+  - labels: [extrarawhtml]
+    patterns: ['**/?(test_)extrarawhtml*|**/extrarawhtml/**']
+
+  - labels: [highlight]
+    patterns: ['**/?(test_)highlight*|**/highlight/**']
+
+  - labels: [inlinehilite]
+    patterns: ['**/?(test_)inlinehilite*|**/inlinehilite/**']
+
+  - labels: [keys]
+    patterns: ['**/?(test_)keys*|**/keys/**|pymdownx/keymap_db.py']
+
+  - labels: [magiclink]
+    patterns: ['**/?(test_)magiclink*|**/magiclink/**']
+
+  - labels: [mark]
+    patterns: ['**/?(test_)mark*|**/mark/**']
+
+  - labels: [pathconverter]
+    patterns: ['**/?(test_)pathconverter*|**/pathconverter/**']
+
+  - labels: [progressbar]
+    patterns: ['**/?(test_)progressbar*|**/progressbar/**']
+
+  - labels: [slugs]
+    patterns: ['**/?(test_)slugs*|**/slugs/**']
+
+  - labels: [smartsymbols]
+    patterns: ['**/?(test_)smartsymbols*|**/smartsymbols/**']
+
+  - labels: [snippets]
+    patterns: ['**/?(test_)snippets*|**/snippets/**']
+
+  - labels: [striphtml]
+    patterns: ['**/?(test_)striphtml*|**/striphtml/**']
+
+  - labels: [superfences]
+    patterns: ['**/?(test_)superfences*|**/superfences/**|**/_bypassnorm.py']
+
+  - labels: [tasklist]
+    patterns: ['**/?(test_)tasklist*|**/tasklist/**']
+
+  - labels: [tilde]
+    patterns: ['**/?(test_)tilde*|**/tilde/**']
+
+# WIP
+wip:
+  - work-in-progress
+  - needs-review
+  - needs-decision
+  - needs-confirmation
+  - requires-changes
+  - rejected
+
+# Label management
+delete_labels: true
+
 colors:
     bug: '#c45b46'
     feature: '#7b17d8'
@@ -13,6 +108,7 @@ colors:
 ignores:
   - dependencies
   - javascript
+  - python
   - security
 
 labels:
@@ -179,6 +275,10 @@ labels:
 - name: invalid
   color: rejected
   description: Invalid report (user error, upstream issue, etc).
+
+- name: triage
+  color: pending
+  description: Issue needs triage.
 
 - name: work-in-progress
   color: pending
