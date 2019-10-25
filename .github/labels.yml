@@ -104,6 +104,7 @@ colors:
   rejected: '#f7c7be'
   approved: '#beed6d'
   low: '#dddddd'
+  bot: '#000000'
 
 ignores:
   - dependencies
@@ -239,10 +240,6 @@ labels:
 - name: tilde
   color: subcategory
   description: Related to the tilde extension.
-
-- name: triage
-  color: pending
-  description: Issue needs triage.
 
 - name: more-info-needed
   color: pending
