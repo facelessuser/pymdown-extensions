@@ -4,7 +4,7 @@ extended_glob: true
 
 rules:
   - labels: [infrastructure]
-    patterns: ['*|{tools,requirements,.github}/**|-README.md']
+    patterns: ['*|@(requirements|.github)/**|-README.md']
 
   - labels: [source]
     patterns: ['pymdownx/**']
@@ -28,7 +28,7 @@ rules:
     patterns: ['**/?(test_)details*|**/details/**']
 
   - labels: [emoji]
-    patterns: ['**/?(test_|gen_)emoji*|**/emoji/**|pymdownx/{gemoji,emoji1,twemoji}_db.py']
+    patterns: ['**/?(test_|gen_)emoji*|**/emoji/**|pymdownx/@(gemoji|emoji1|twemoji)_db.py']
 
   - labels: [escapeall]
     patterns: ['**/?(test_)escapeall*|**/escapeall/**']
@@ -94,16 +94,16 @@ wip:
 delete_labels: true
 
 colors:
-    bug: '#c45b46'
-    feature: '#7b17d8'
-    support: '#efbe62'
-    maintenance: '#b2ffeb'
-    category: '#709ad8'
-    subcategory: '#bfd4f2'
-    pending: '#f0f49a'
-    rejected: '#f7c7be'
-    approved: '#beed6d'
-    low: '#dddddd'
+  bug: '#c45b46'
+  feature: '#7b17d8'
+  support: '#efbe62'
+  maintenance: '#b2ffeb'
+  category: '#709ad8'
+  subcategory: '#bfd4f2'
+  pending: '#f0f49a'
+  rejected: '#f7c7be'
+  approved: '#beed6d'
+  low: '#dddddd'
 
 ignores:
   - dependencies
@@ -299,3 +299,11 @@ labels:
 - name: rejected
   color: rejected
   description: The pull request is rejected for the stated reasons.
+
+- name: skip-triage
+  color: bot
+  description: Tells bot to not tag a new issue with 'triage'.
+
+- name: skip-review
+  color: bot
+  description: Tells bot to not tag a reviews with 'needs-review'.

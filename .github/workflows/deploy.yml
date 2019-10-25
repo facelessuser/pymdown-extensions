@@ -29,7 +29,7 @@ jobs:
       run: |
         git config user.name ${{ secrets.GH_USER }}
         git config user.email "${{ secrets.GH_EMAIL }}"
-        git remote add gh-token "https://${{ secrets.GH_TOKEN }}@github.com/facelessuser/pymdown-extensions.git"
+        git remote add gh-token "https://${{ secrets.GITHUB_TOKEN }}@github.com/facelessuser/pymdown-extensions.git"
         git fetch gh-token && git fetch gh-token gh-pages:gh-pages
         python -m mkdocs gh-deploy -v --clean --remote-name gh-token
         git push gh-token gh-pages
