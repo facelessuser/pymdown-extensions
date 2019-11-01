@@ -1,10 +1,12 @@
+template: 'facelessuser:master-labels:labels.yml:master'
+
 # Wildcard labels
 brace_expansion: true
 extended_glob: true
 
 rules:
   - labels: [infrastructure]
-    patterns: ['*|@(requirements|.github)/**|-README.md']
+    patterns: ['*|@(requirements|.github)/**|-*.md']
 
   - labels: [source]
     patterns: ['pymdownx/**']
@@ -13,134 +15,73 @@ rules:
     patterns: ['tests/**']
 
   - labels: [docs]
-    patterns: ['docs/**|README.md']
+    patterns: ['docs/**|*.md']
 
   - labels: [caret]
-    patterns: ['**/?(test_)caret*|**/caret/**']
+    patterns: ['**/?(test_)caret*.py|tests/**/caret/**']
 
   - labels: [arithmatex]
-    patterns: ['**/?(test_)arithmatex*|**/arithmatex/**']
+    patterns: ['**/?(test_)arithmatex*.py|tests/**/arithmatex/**']
 
   - labels: [critic]
-    patterns: ['**/?(test_|gen_)critic*|**/critic/**']
+    patterns: ['**/?(test_|gen_)critic*.py|tests/**/critic/**']
 
   - labels: [details]
-    patterns: ['**/?(test_)details*|**/details/**']
+    patterns: ['**/?(test_)details*.py|tests/**/details/**']
 
   - labels: [emoji]
-    patterns: ['**/?(test_|gen_)emoji*|**/emoji/**|pymdownx/@(gemoji|emoji1|twemoji)_db.py']
+    patterns: ['**/?(test_|gen_)emoji*|tests/**/emoji/**|pymdownx/@(gemoji|emoji1|twemoji)_db.py']
 
   - labels: [escapeall]
-    patterns: ['**/?(test_)escapeall*|**/escapeall/**']
+    patterns: ['**/?(test_)escapeall*.py|tests/**/escapeall/**']
 
   - labels: [extra]
-    patterns: ['**/?(test_)extra!(rawhtml)*|**/extra/**|-docs/theme/**|-docs/src/@(js|scss)/**']
+    patterns: ['**/?(test_)extra!(rawhtml)*.py|tests/**/extra!(rawhtml)/**|-docs/theme/**|-docs/src/@(js|scss)/**']
 
   - labels: [extrarawhtml]
-    patterns: ['**/?(test_)extrarawhtml*|**/extrarawhtml/**']
+    patterns: ['**/?(test_)extrarawhtml*.py|tests/**/extrarawhtml/**']
 
   - labels: [highlight]
-    patterns: ['**/?(test_)highlight*|**/highlight/**']
+    patterns: ['**/?(test_)highlight*.py|tests/**/highlight/**']
 
   - labels: [inlinehilite]
-    patterns: ['**/?(test_)inlinehilite*|**/inlinehilite/**']
+    patterns: ['**/?(test_)inlinehilite*.py|tests/**/inlinehilite/**']
 
   - labels: [keys]
-    patterns: ['**/?(test_)keys*|**/keys/**|pymdownx/keymap_db.py']
+    patterns: ['**/?(test_)keys*.py|tests/**/keys/**|pymdownx/keymap_db.py']
 
   - labels: [magiclink]
-    patterns: ['**/?(test_)magiclink*|**/magiclink/**']
+    patterns: ['**/?(test_)magiclink*.py|tests/**/magiclink/**']
 
   - labels: [mark]
-    patterns: ['**/?(test_)mark*|**/mark/**']
+    patterns: ['**/?(test_)mark*.py|tests/**/mark/**']
 
   - labels: [pathconverter]
-    patterns: ['**/?(test_)pathconverter*|**/pathconverter/**']
+    patterns: ['**/?(test_)pathconverter*.py|tests/**/pathconverter/**']
 
   - labels: [progressbar]
-    patterns: ['**/?(test_)progressbar*|**/progressbar/**']
+    patterns: ['**/?(test_)progressbar*.py|tests/**/progressbar/**']
 
   - labels: [slugs]
-    patterns: ['**/?(test_)slugs*|**/slugs/**']
+    patterns: ['**/?(test_)slugs*.py|tests/**/slugs/**']
 
   - labels: [smartsymbols]
-    patterns: ['**/?(test_)smartsymbols*|**/smartsymbols/**']
+    patterns: ['**/?(test_)smartsymbols*.py|tests/**/smartsymbols/**']
 
   - labels: [snippets]
-    patterns: ['**/?(test_)snippets*|**/snippets/**']
+    patterns: ['**/?(test_)snippets*.py|tests/**/snippets/**']
 
   - labels: [striphtml]
-    patterns: ['**/?(test_)striphtml*|**/striphtml/**']
+    patterns: ['**/?(test_)striphtml*.py|tests/**/striphtml/**']
 
   - labels: [superfences]
-    patterns: ['**/?(test_)superfences*|**/superfences/**|**/_bypassnorm.py']
+    patterns: ['**/?(test_)superfences*.py|tests/**/superfences/**|**/_bypassnorm.py']
 
   - labels: [tasklist]
-    patterns: ['**/?(test_)tasklist*|**/tasklist/**']
+    patterns: ['**/?(test_)tasklist*.py|tests/**/tasklist/**']
 
   - labels: [tilde]
-    patterns: ['**/?(test_)tilde*|**/tilde/**']
-
-# Triage
-
-triage_add: 'triage'
-triage_skip: ['skip-triage']
-triage_remove: ['confirmed']
-
-# Review
-
-review_add: 'needs-review'
-review_skip: ['skip-review']
-review_remove: ['approved']
-
-# WIP
-
-wip:
-  - work-in-progress
-  - needs-review
-  - needs-decision
-  - needs-confirmation
-  - requires-changes
-  - rejected
-  - duplicate
-  - invalid
-  - triage
-  - wontfix
-
-# LGTM
-
-lgtm_add:
-  pull_request: [approved]
-  issue: []
-
-lgtm_remove:
-  - work-in-progress
-  - needs-review
-  - needs-decision
-  - needs-confirmation
-  - requires-changes
-  - rejected
-  - duplicate
-  - invalid
-  - triage
-  - wontfix
-
-# Label management
-
-delete_labels: true
-
-colors:
-  bug: '#c45b46'
-  feature: '#7b17d8'
-  support: '#efbe62'
-  maintenance: '#b2ffeb'
-  category: '#709ad8'
-  subcategory: '#bfd4f2'
-  pending: '#f0f49a'
-  rejected: '#f7c7be'
-  approved: '#beed6d'
-  low: '#dddddd'
-  bot: '#000000'
+    patterns: ['**/?(test_)tilde*.py|tests/**/tilde/**']
 
 ignores:
   - dependencies
@@ -149,38 +90,6 @@ ignores:
   - security
 
 labels:
-- name: bug
-  color: bug
-  description: Bug report.
-
-- name: feature
-  color: feature
-  description: Feature request.
-
-- name: maintenance
-  color: maintenance
-  description: Maintenance chore.
-
-- name: support
-  color: support
-  description: Support request.
-
-- name: docs
-  color: category
-  description: Related to documentation.
-
-- name: tests
-  color: category
-  description: Related to testing.
-
-- name: infrastructure
-  color: category
-  description: Related to project infrastructure.
-
-- name: source
-  color: category
-  description: Related to source code.
-
 - name: arithmatex
   color: subcategory
   description: Related to the arithmatex extension.
@@ -276,67 +185,3 @@ labels:
 - name: tilde
   color: subcategory
   description: Related to the tilde extension.
-
-- name: more-info-needed
-  color: pending
-  description: More information is required.
-
-- name: needs-confirmation
-  color: pending
-  description: The alleged behavior needs to be confirmed.
-
-- name: needs-decision
-  color: pending
-  description: A decision needs to be made regarding request.
-
-- name: confirmed
-  color: approved
-  description: Confirmed bug report or approved feature request.
-
-- name: maybe
-  color: low
-  description: Pending approval of low priority request.
-
-- name: duplicate
-  color: rejected
-  description: The issue has been previously reported.
-
-- name: wontfix
-  color: rejected
-  description: The issue will not be fixed for the stated reasons.
-
-- name: invalid
-  color: rejected
-  description: Invalid report (user error, upstream issue, etc).
-
-- name: triage
-  color: pending
-  description: Issue needs triage.
-
-- name: work-in-progress
-  color: pending
-  description: A partial solution. More changes will be coming.
-
-- name: needs-review
-  color: pending
-  description: Needs to be reviewed and/or approved.
-
-- name: requires-changes
-  color: pending
-  description: Awaiting updates after a review.
-
-- name: approved
-  color: approved
-  description: The pull request is ready to be merged.
-
-- name: rejected
-  color: rejected
-  description: The pull request is rejected for the stated reasons.
-
-- name: skip-triage
-  color: bot
-  description: Tells bot to not tag a new issue with 'triage'.
-
-- name: skip-review
-  color: bot
-  description: Tells bot to not tag a reviews with 'needs-review'.
