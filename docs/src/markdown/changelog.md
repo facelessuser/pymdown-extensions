@@ -1,7 +1,8 @@
 # Changelog
 
-## Development
+## 6.2.0
 
+- **NEW**: Use Twemoji as the default emoji index in the Emoji extension. EmojiOne/JoyPixels now has an even less permissible license, so use Twemoji which is much more friendly to the average user.
 - **FIX**: MagicLink: match the auto-link pattern in the current Markdown package.
 - **FIX**: Fix fenced math escape issue when using MathJax script output format.
 
