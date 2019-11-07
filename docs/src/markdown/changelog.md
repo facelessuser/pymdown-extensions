@@ -2,7 +2,8 @@
 
 ## 6.2.0
 
-- **NEW**: Use Twemoji as the default emoji index in the Emoji extension. EmojiOne/JoyPixels now has an even less permissible license, so use Twemoji which is much more friendly to the average user.
+- **NEW**: Downgrade and lock EmojiOne version 2.2.7. 2.2.7 is the last truly free version of EmojiOne. This is the safest version that users should use. EmojiOne will not be updated anymore as they are now JoyPixels and have a license that is not that permissible. We've reverted support for any version greater than 2.2.7 to ensure we don't accidentally cause a user to improperly use JoyPixels' assets.
+- **NEW**: Drop specialized `to_awesome` generator for EmojiOne.
 - **FIX**: MagicLink: match the auto-link pattern in the current Markdown package.
 - **FIX**: Fix fenced math escape issue when using MathJax script output format.
 

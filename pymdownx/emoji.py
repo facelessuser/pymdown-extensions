@@ -31,8 +31,8 @@ from . import util
 RE_EMOJI = r'(:[+\-\w]+:)'
 SUPPORTED_INDEXES = ('emojione', 'gemoji', 'twemoji')
 UNICODE_VARIATION_SELECTOR_16 = 'fe0f'
-EMOJIONE_SVG_CDN = 'https://cdn.jsdelivr.net/emojione/assets/svg/'
-EMOJIONE_PNG_CDN = 'https://cdn.jsdelivr.net/emojione/assets/4.5/png/64/'
+EMOJIONE_SVG_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/'
+EMOJIONE_PNG_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/'
 TWEMOJI_SVG_CDN = 'https://twemoji.maxcdn.com/v/latest/svg/'
 TWEMOJI_PNG_CDN = 'https://twemoji.maxcdn.com/v/latest/72x72/'
 GITHUB_UNICODE_CDN = 'https://github.githubassets.com/images/icons/emoji/unicode/'
@@ -190,19 +190,6 @@ def to_svg_sprite(index, shortname, alias, uc, alt, title, category, options, md
     return svg
 
 
-def to_awesome(index, shortname, alias, uc, alt, title, category, options, md):
-    """
-    Return "awesome style element for "font-awesome" format.
-
-    See: https://github.com/Ranks/emojione/tree/master/lib/emojione-awesome.
-    """
-
-    classes = '%s-%s' % (options.get('classes', 'e1a'), shortname[1:-1])
-    attributes = {"class": classes}
-    add_attriubtes(options, attributes)
-    return md_util.etree.Element("i", attributes)
-
-
 def to_alt(index, shortname, alias, uc, alt, title, category, options, md):
     """Return html entities."""
 
@@ -337,8 +324,8 @@ class EmojiExtension(Extension):
 
         self.config = {
             'emoji_index': [
-                twemoji,
-                "Function that returns the desired emoji index. - Default: 'pymdownx.emoji.twemoji'"
+                emojione,
+                "Function that returns the desired emoji index. - Default: 'pymdownx.emoji.emojione'"
             ],
             'emoji_generator': [
                 to_png,

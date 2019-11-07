@@ -4,8 +4,8 @@
 8ball :8ball:<br>
 a :a:<br>
 ab :ab:<br>
-abacus :abacus:<br>
 abc :abc:<br>
 abcd :abcd:<br>
 accept :accept:<br>
-adult :adult:<br>
+aerial_tramway :aerial_tramway:<br>
+airplane :airplane:<br>
