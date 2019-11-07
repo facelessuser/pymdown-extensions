@@ -72,7 +72,7 @@ Arithmatex requires you to provide the MathJax library and provide and configure
 ```
 
 ```html tab="MathJax 3"
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 ```
 
 Generally, it is best to add your own configuration to get exactly what you want. Here we show some simple examples of configurations done in JavaScript. We've provided two basic configurations below: one that is configured for Arithmatex's [MathJax Output Format](#mathjax-output-format), and one that works with the [Generic Output Format](#generic-output-format) by using `tex2jax`. These are a good starting point,so feel free to take them and configure them further. Please see the [MathJax][mathjax] site for more info on using MathJax extensions/plugins and configuring those extensions/plugins.
