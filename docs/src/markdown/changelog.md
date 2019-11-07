@@ -2,6 +2,7 @@
 
 ## 6.2.0
 
+- **NEW**: Upgrade Twemoji to use 12.1.3.
 - **NEW**: Downgrade and lock EmojiOne version 2.2.7. 2.2.7 is the last truly free version of EmojiOne. This is the safest version that users should use. EmojiOne will not be updated anymore as they are now JoyPixels and have a license that is not that permissible. We've reverted support for any version greater than 2.2.7 to ensure we don't accidentally cause a user to improperly use JoyPixels' assets.
 - **NEW**: Drop specialized `to_awesome` generator for EmojiOne.
 - **FIX**: MagicLink: match the auto-link pattern in the current Markdown package.

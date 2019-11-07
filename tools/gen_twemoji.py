@@ -141,22 +141,6 @@ SPECIAL_EMOJI = {
         "name": "women wrestling",
         "unicode": "1f93c-200d-2640-fe0f"
     },
-    # Gendered couple with heart (not supported in Unicode spec)
-    ":couple_with_heart_woman_man:": {
-        "category": "people",
-        "name": "couple with heart: woman, man",
-        "unicode": "1f469-200d-2764-fe0f-200d-1f468"
-    },
-    ":couple_with_heart_woman_woman:": {
-        "category": "people",
-        "name": "couple with heart: woman, woman",
-        "unicode": "1f469-200d-2764-fe0f-200d-1f469"
-    },
-    ":couple_with_heart_man_man:": {
-        "category": "people",
-        "name": "couple with heart: man, man",
-        "unicode": "1f468-200d-2764-fe0f-200d-1f468"
-    },
     # Gendered couple kiss (not supported in Unicode spec)
     ":couplekiss_woman_man:": {
         "category": "people",
@@ -172,6 +156,12 @@ SPECIAL_EMOJI = {
         "category": "people",
         "name": "kiss: man, man",
         "unicode": "1f468-200d-2764-fe0f-200d-1f48b-200d-1f468"
+    },
+    # Transgender flag
+    ":transgender_flag:": {
+        "category": "flags",
+        "name": "transgender flag",
+        "unicode": "1f3f3-fe0f-200d-26a7-fe0f"
     }
 }
 
