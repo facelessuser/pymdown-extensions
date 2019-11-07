@@ -362,10 +362,10 @@ copyright :copyright:<br>
 corn :corn:<br>
 couch :couch:<br>
 couple :couple:<br>
+couple_mm :couple_mm:<br>
 couple_with_heart :couple_with_heart:<br>
-couple_with_heart_man_man :couple_with_heart_man_man:<br>
 couple_with_heart_woman_man :couple_with_heart_woman_man:<br>
-couple_with_heart_woman_woman :couple_with_heart_woman_woman:<br>
+couple_ww :couple_ww:<br>
 couplekiss :couplekiss:<br>
 couplekiss_man_man :couplekiss_man_man:<br>
 couplekiss_woman_man :couplekiss_woman_man:<br>
@@ -2467,6 +2467,7 @@ traffic_light :traffic_light:<br>
 train2 :train2:<br>
 train :train:<br>
 tram :tram:<br>
+transgender_flag :transgender_flag:<br>
 triangular_flag_on_post :triangular_flag_on_post:<br>
 triangular_ruler :triangular_ruler:<br>
 trident :trident:<br>

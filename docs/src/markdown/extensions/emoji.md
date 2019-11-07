@@ -107,13 +107,11 @@ By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  
         :men_wrestling:
         :women_wrestling:
 
-        :couple_with_heart_woman_man:
-        :couple_with_heart_woman_woman:
-        :couple_with_heart_man_man:
-
         :couplekiss_woman_man:
         :couplekiss_woman_woman:
         :couplekiss_man_man:
+
+        :transgender_flag:
         ```
 
     You can always find out what tag it was built with by doing the following:
@@ -121,9 +119,9 @@ By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  
     ```pycon3
     >>> import pymdownx.twemoji_db as twdb
     >>> twdb.version
-    'v12.1.2'
+    'v12.1.3'
     >>> twdb.index_version
-    '5.0.4'
+    '5.0.5'
     ```
 
 `pymdownx.emoji.gemoji`

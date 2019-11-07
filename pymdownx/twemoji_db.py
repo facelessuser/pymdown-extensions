@@ -3,8 +3,8 @@
 Names from emojione database. Do not edit by hand.
 """
 from __future__ import unicode_literals
-version = "v12.1.2"
-index_version = "5.0.4"
+version = "v12.1.3"
+index_version = "5.0.5"
 name = "twemoji"
 emoji = {
     ":100:": {
@@ -1824,22 +1824,22 @@ emoji = {
         "name": "woman and man holding hands",
         "unicode": "1f46b"
     },
+    ":couple_mm:": {
+        "category": "people",
+        "name": "couple with heart: man, man",
+        "unicode": "1f468-200d-2764-fe0f-200d-1f468"
+    },
     ":couple_with_heart:": {
         "category": "people",
         "name": "couple with heart",
         "unicode": "1f491"
-    },
-    ":couple_with_heart_man_man:": {
-        "category": "people",
-        "name": "couple with heart: man, man",
-        "unicode": "1f468-200d-2764-fe0f-200d-1f468"
     },
     ":couple_with_heart_woman_man:": {
         "category": "people",
         "name": "couple with heart: woman, man",
         "unicode": "1f469-200d-2764-fe0f-200d-1f468"
     },
-    ":couple_with_heart_woman_woman:": {
+    ":couple_ww:": {
         "category": "people",
         "name": "couple with heart: woman, woman",
         "unicode": "1f469-200d-2764-fe0f-200d-1f469"
@@ -12359,6 +12359,11 @@ emoji = {
         "name": "tram",
         "unicode": "1f68a"
     },
+    ":transgender_flag:": {
+        "category": "flags",
+        "name": "transgender flag",
+        "unicode": "1f3f3-fe0f-200d-26a7-fe0f"
+    },
     ":triangular_flag_on_post:": {
         "category": "flags",
         "name": "triangular flag",
@@ -15494,6 +15499,8 @@ aliases = {
     ":cop_tone4:": ":police_officer_tone4:",
     ":cop_tone5:": ":police_officer_tone5:",
     ":couch_and_lamp:": ":couch:",
+    ":couple_with_heart_mm:": ":couple_mm:",
+    ":couple_with_heart_ww:": ":couple_ww:",
     ":cp:": ":flag_cp:",
     ":cr:": ":flag_cr:",
     ":cricket_bat_ball:": ":cricket_game:",
