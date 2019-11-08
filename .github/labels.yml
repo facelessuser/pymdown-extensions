@@ -5,183 +5,206 @@ brace_expansion: true
 extended_glob: true
 
 rules:
-  - labels: [infrastructure]
+  - labels: ['C: infrastructure']
     patterns: ['*|@(requirements|.github)/**|-*.md']
 
-  - labels: [source]
+  - labels: ['C: source']
     patterns: ['pymdownx/**']
 
-  - labels: [tests]
+  - labels: ['C: tests']
     patterns: ['tests/**']
 
-  - labels: [docs]
+  - labels: ['C: docs']
     patterns: ['docs/**|*.md']
 
-  - labels: [caret]
+  - labels: ['C: caret']
     patterns: ['**/?(test_)caret*.py|tests/**/caret/**']
 
-  - labels: [arithmatex]
+  - labels: ['C: arithmatex']
     patterns: ['**/?(test_)arithmatex*.py|tests/**/arithmatex/**']
 
-  - labels: [critic]
+  - labels: ['C: critic']
     patterns: ['**/?(test_|gen_)critic*.py|tests/**/critic/**']
 
-  - labels: [details]
+  - labels: ['C: details']
     patterns: ['**/?(test_)details*.py|tests/**/details/**']
 
-  - labels: [emoji]
+  - labels: ['C: emoji']
     patterns: ['**/?(test_|gen_)emoji*|tests/**/emoji/**|pymdownx/@(gemoji|emoji1|twemoji)_db.py']
 
-  - labels: [escapeall]
+  - labels: ['C: escapeall']
     patterns: ['**/?(test_)escapeall*.py|tests/**/escapeall/**']
 
-  - labels: [extra]
+  - labels: ['C: extra']
     patterns: ['**/?(test_)extra!(rawhtml)*.py|tests/**/extra!(rawhtml)/**|-docs/theme/**|-docs/src/@(js|scss)/**']
 
-  - labels: [extrarawhtml]
+  - labels: ['C: extrarawhtml']
     patterns: ['**/?(test_)extrarawhtml*.py|tests/**/extrarawhtml/**']
 
-  - labels: [highlight]
+  - labels: ['C: highlight']
     patterns: ['**/?(test_)highlight*.py|tests/**/highlight/**']
 
-  - labels: [inlinehilite]
+  - labels: ['C: inlinehilite']
     patterns: ['**/?(test_)inlinehilite*.py|tests/**/inlinehilite/**']
 
-  - labels: [keys]
+  - labels: ['C: keys']
     patterns: ['**/?(test_)keys*.py|tests/**/keys/**|pymdownx/keymap_db.py']
 
-  - labels: [magiclink]
+  - labels: ['C: magiclink']
     patterns: ['**/?(test_)magiclink*.py|tests/**/magiclink/**']
 
-  - labels: [mark]
+  - labels: ['C: mark']
     patterns: ['**/?(test_)mark*.py|tests/**/mark/**']
 
-  - labels: [pathconverter]
+  - labels: ['C: pathconverter']
     patterns: ['**/?(test_)pathconverter*.py|tests/**/pathconverter/**']
 
-  - labels: [progressbar]
+  - labels: ['C: progressbar']
     patterns: ['**/?(test_)progressbar*.py|tests/**/progressbar/**']
 
-  - labels: [slugs]
+  - labels: ['C: slugs']
     patterns: ['**/?(test_)slugs*.py|tests/**/slugs/**']
 
-  - labels: [smartsymbols]
+  - labels: ['C: smartsymbols']
     patterns: ['**/?(test_)smartsymbols*.py|tests/**/smartsymbols/**']
 
-  - labels: [snippets]
+  - labels: ['C: snippets']
     patterns: ['**/?(test_)snippets*.py|tests/**/snippets/**']
 
-  - labels: [striphtml]
+  - labels: ['C: striphtml']
     patterns: ['**/?(test_)striphtml*.py|tests/**/striphtml/**']
 
-  - labels: [superfences]
+  - labels: ['C: superfences']
     patterns: ['**/?(test_)superfences*.py|tests/**/superfences/**|**/_bypassnorm.py']
 
-  - labels: [tasklist]
+  - labels: ['C: tasklist']
     patterns: ['**/?(test_)tasklist*.py|tests/**/tasklist/**']
 
-  - labels: [tilde]
+  - labels: ['C: tilde']
     patterns: ['**/?(test_)tilde*.py|tests/**/tilde/**']
 
 ignores:
   - dependencies
   - javascript
-  - python
   - security
 
 labels:
-- name: arithmatex
+- name: 'C: arithmatex'
+  renamed: arithmatex
   color: subcategory
   description: Related to the arithmatex extension.
 
-- name: b64
+- name: 'C: b64'
+  renamed: b64
   color: subcategory
   description: Related to the b64 extension.
 
-- name: betterem
+- name: 'C: betterem'
+  renamed: betterem
   color: subcategory
   description: Related to the betterem extension.
 
-- name: caret
+- name: 'C: caret'
+  renamed: caret
   color: subcategory
   description: Related to the caret extension.
 
-- name: critic
+- name: 'C: critic'
+  renamed: critic
   color: subcategory
   description: Related to the critic extension.
 
-- name: details
+- name: 'C: details'
+  renamed: details
   color: subcategory
   description: Related to the details extension.
 
-- name: emoji
+- name: 'C: emoji'
+  renamed: emoji
   color: subcategory
   description: Related to the emoji extension.
 
-- name: escapeall
+- name: 'C: escapeall'
+  renamed: escapeall
   color: subcategory
   description: Related to the escapeall extension.
 
-- name: extra
+- name: 'C: extra'
+  renamed: extra
   color: subcategory
   description: Related to the extra extension.
 
-- name: extrarawhtml
+- name: 'C: extrarawhtml'
+  renamed: extrarawhtml
   color: subcategory
   description: Related to the extrarawhtml extension.
 
-- name: highlight
+- name: 'C: highlight'
+  renamed: highlight
   color: subcategory
   description: Related to the highlight extension.
 
-- name: inlinehilite
+- name: 'C: inlinehilite'
+  renamed: inlinehilite
   color: subcategory
   description: Related to the inlinehilite extension.
 
-- name: keys
+- name: 'C: keys'
+  renamed: keys
   color: subcategory
   description: Related to the keys extension.
 
-- name: magiclink
+- name: 'C: magiclink'
+  renamed: magiclink
   color: subcategory
   description: Related to the magiclink extension.
 
-- name: mark
+- name: 'C: mark'
+  renamed: mark
   color: subcategory
   description: Related to the mark extension.
 
-- name: pathconverter
+- name: 'C: pathconverter'
+  renamed: pathconverter
   color: subcategory
   description: Related to the paythconverter extension.
 
-- name: progressbar
+- name: 'C: progressbar'
+  renamed: progressbar
   color: subcategory
   description: Related to the progressbar extension.
 
-- name: slugs
+- name: 'C: slugs'
+  renamed: slugs
   color: subcategory
   description: Related to the slugs extension.
 
-- name: smartsymbols
+- name: 'C: smartsymbols'
+  renamed: smartsymbols
   color: subcategory
   description: Related to the smartsymbols extension.
 
-- name: snippets
+- name: 'C: snippets'
+  renamed: snippets
   color: subcategory
   description: Related to the snippets extension.
 
-- name: striphtml
+- name: 'C: striphtml'
+  renamed: striphtml
   color: subcategory
   description: Related to the striphtml extension.
 
-- name: superfences
+- name: 'C: superfences'
+  renamed: superfences
   color: subcategory
   description: Related to the superfences extension.
 
-- name: tasklist
+- name: 'C: tasklist'
+  renamed: tasklist
   color: subcategory
   description: Related to the tasklist extension.
 
-- name: tilde
+- name: 'C: tilde'
+  renamed: tilde
   color: subcategory
   description: Related to the tilde extension.
