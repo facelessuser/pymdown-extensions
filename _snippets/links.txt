@@ -8,12 +8,14 @@
 [def-list]: https://python-markdown.github.io/extensions/definition_lists/
 [emojione]: https://github.com/Ranks/emojione
 [emojione-awesome-css]: https://github.com/Ranks/emojione/blob/master/extras/css/emojione-awesome.css
+[emojione-index]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/emoji1_db.py
 [emojione-sprites-svg]: https://github.com/Ranks/emojione/blob/v2.2.7/assets/sprites/emojione.sprites.svg
 [flake8]: https://pypi.python.org/pypi/flake8
 [flake8-docstrings]: https://pypi.python.org/pypi/flake8-docstrings
 [flowchart-js]: http://adrai.github.io/flowchart.js/
 [footnotes]: https://python-markdown.github.io/extensions/footnotes/
 [gemoji]: https://github.com/github/gemoji
+[gemoji-index]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/gemoji_db.py
 [github-api-emoji]: https://developer.github.com/v3/emojis/
 [github-api-oauth]: https://developer.github.com/v3/oauth/
 [highlightjs]: https://highlightjs.org/
@@ -37,5 +39,6 @@
 [toc]: https://python-markdown.github.io/extensions/toc/
 [tox]: https://pypi.python.org/pypi/tox
 [twemoji]: https://github.com/twitter/twemoji
+[twemoji-index]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/twemoji_db.py
 [underscore-js]: http://underscorejs.org/
 [unicode-norm]: http://unicode.org/reports/tr15/#Norm_Forms
