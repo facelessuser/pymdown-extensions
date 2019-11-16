@@ -29,15 +29,15 @@ jobs:
       run: |
         git config user.name ${{ secrets.GH_USER }}
         git config user.email "${{ secrets.GH_EMAIL }}"
-        git remote add gh-token "https://${{ secrets.GITHUB_TOKEN }}@github.com/facelessuser/pymdown-extensions.git"
+        git remote add gh-token "https://${{ secrets.GH_TOKEN }}@github.com/facelessuser/pymdown-extensions.git"
         git fetch gh-token && git fetch gh-token gh-pages:gh-pages
         python -m mkdocs gh-deploy -v --clean --remote-name gh-token
         git push gh-token gh-pages
 
-  wheel:
+  pypi:
     strategy:
       matrix:
-        python-version: [3.7]
+        distribution: [bdist_wheel, sdist]
 
     runs-on: ubuntu-latest
 
@@ -45,33 +45,11 @@ jobs:
       - uses: actions/checkout@v1
       - uses: actions/setup-python@v1
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: 3.7
       - name: Package
         run: |
           pip install --upgrade setuptools wheel
-          python setup.py bdist_wheel
-      - name: Publish
-        uses: pypa/gh-action-pypi-publish@v1.0.0a0
-        with:
-          user: __token__
-          password: ${{ secrets.PYPI_TOKEN }}
-
-  sdist:
-    strategy:
-      matrix:
-        python-version: [3.7]
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-python@v1
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Package
-        run: |
-          pip install --upgrade setuptools
-          python setup.py sdist
+          python setup.py ${{ matrix.distribution }}
       - name: Publish
         uses: pypa/gh-action-pypi-publish@v1.0.0a0
         with:
