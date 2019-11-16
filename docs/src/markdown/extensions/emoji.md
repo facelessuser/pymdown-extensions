@@ -64,6 +64,8 @@ By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  
     'v2.2.7'
     ```
 
+    To see the full list of short names for this index, see the index [source][emojione-index].
+
 `pymdownx.emoji.twemoji`
 : 
     This function provides an index of the latest Twemoji supported emoji (at the time of release).  The associated short names are currently borrowed from JoyPixels' index found in their @JoyPixels/emoji-toolkit repo. JoyPixels short name index is available under the MIT license and is used as Twemoji does not provide its own list of short names.
@@ -124,6 +126,8 @@ By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  
     '5.0.5'
     ```
 
+    To see the full list of short names for this index, see the index [source][twemoji-index].
+
 `pymdownx.emoji.gemoji`
 : 
     This function provides an index of the latest Gemoji supported emoji (at the time of release).
@@ -135,6 +139,8 @@ By default, Emoji provides three indexes: `emojione`, `gemoji`, and `twemoji`.  
     >>> gmdb.version
     'v3.0.1'
     ```
+
+    To see the full list of short names for this index, see the index [source][gemoji-index].
 
 ## Default Emoji Generators
 
