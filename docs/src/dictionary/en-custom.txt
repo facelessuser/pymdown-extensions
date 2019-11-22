@@ -74,6 +74,7 @@ PathConverter's
 PlainHTML
 ProgressBar
 PyMdown
+PyPI
 PyYAML
 PyYaml
 PyYaml's
