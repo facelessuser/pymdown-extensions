@@ -53,7 +53,7 @@
     "stylelint": "^11.1.1",
     "stylelint-config-standard": "^19.0.0",
     "stylelint-order": "^3.1.1",
-    "stylelint-scss": "^3.12.1",
+    "stylelint-scss": "^3.13.0",
     "vinyl-paths": "^3.0.1",
     "yargs": "^15.0.2"
   }
