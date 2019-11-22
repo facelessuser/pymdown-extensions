@@ -82,7 +82,7 @@ def path2url(url):
     return path
 
 
-if IS_NARROW:
+if IS_NARROW:  # pragma: no cover
     def get_code_points(s):
         """Get the Unicode code points."""
 

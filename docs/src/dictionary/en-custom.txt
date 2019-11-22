@@ -37,6 +37,7 @@ GitHub's
 GitHubEmoji
 GitLab
 GitLab's
+Gitter
 HeaderAnchor
 HeaderAnchor's
 Hunspell
