@@ -23,7 +23,7 @@
     "@babel/plugin-external-helpers": "^7.7.4",
     "@babel/preset-env": "^7.7.4",
     "@babel/register": "^7.7.4",
-    "autoprefixer": "^9.7.2",
+    "autoprefixer": "^9.7.3",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.3",
     "css-mqpacker": "^7.0.0",
