@@ -21,7 +21,7 @@
     "@babel/cli": "^7.7.5",
     "@babel/core": "^7.7.5",
     "@babel/plugin-external-helpers": "^7.7.4",
-    "@babel/preset-env": "^7.7.4",
+    "@babel/preset-env": "^7.7.6",
     "@babel/register": "^7.7.4",
     "autoprefixer": "^9.7.3",
     "babel-core": "^7.0.0-bridge.0",
