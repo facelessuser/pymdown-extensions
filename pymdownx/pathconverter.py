@@ -80,7 +80,10 @@ def repl_relative(m, base_path, relative_path):
                 )
                 # Convert the path, URL encode it, and format it as a link
                 path = util.path2url(path)
-                link = '%s"%s"' % (m.group('name'), util.urlunparse((scheme, netloc, path, params, query, fragment)))
+                link = '%s"%s"' % (
+                    m.group('name'),
+                    util.urlunparse((scheme, netloc, path, params, query, fragment))
+                )
     except Exception:  # pragma: no cover
         # Parsing crashed and burned; no need to continue.
         pass
@@ -99,7 +102,12 @@ def repl_absolute(m, base_path):
             path = util.url2path(path)
             path = os.path.normpath(os.path.join(base_path, path))
             path = util.path2url(path)
-            link = '%s"%s"' % (m.group('name'), util.urlunparse((scheme, netloc, path, params, query, fragment)))
+            start = '/' if not path.startswith('/') else ''
+            link = '%s"%s%s"' % (
+                m.group('name'),
+                start,
+                util.urlunparse((scheme, netloc, path, params, query, fragment))
+            )
     except Exception:  # pragma: no cover
         # Parsing crashed and burned; no need to continue.
         pass
