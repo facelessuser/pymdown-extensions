@@ -1,5 +1,10 @@
 # Changelog
 
+## 6.2.1
+
+- **FIX**: Fix issue in PathConverter where Windows path conversion from relative to absolute doesn't always work in all
+  browsers.
+
 ## 6.2.0
 
 - **NEW**: Upgrade Twemoji to use 12.1.3.
