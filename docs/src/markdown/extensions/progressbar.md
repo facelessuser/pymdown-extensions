@@ -2,9 +2,14 @@
 
 ## Overview
 
-ProgressBar is an extension that adds support for progress/status bars.  It can take percentages or fractions, and it can optionally generate classes for percentages at specific value levels.  It also works with Python Markdown's built in `attr_list` extension.
+ProgressBar is an extension that adds support for progress/status bars.  It can take percentages or fractions, and it
+can optionally generate classes for percentages at specific value levels.  It also works with Python Markdown's built
+in `attr_list` extension.
 
-The basic syntax for progress bars is: `[= <percentage or fraction> "optional single or double quoted title"]`.  The opening `[` can be followed by one or more `=` characters. After the `=` char(s) the percentage is specified as either a fraction or percentage and can optionally be followed by a title surrounded in either double quotes or single quotes.
+The basic syntax for progress bars is: `[= <percentage or fraction> "optional single or double quoted title"]`.  The
+opening `[` can be followed by one or more `=` characters. After the `=` char(s) the percentage is specified as either
+a fraction or percentage and can optionally be followed by a title surrounded in either double quotes or single
+quotes.
 
 !!! example "Progress Bar Example"
 
@@ -26,7 +31,8 @@ The basic syntax for progress bars is: `[= <percentage or fraction> "optional si
     [=85% "85%"]
     [=100% "100%"]
 
-Though progress bars are rendered as block items, it accepts `attr_list`'s inline format. `markdown.extensions.attr_list` must be enabled for the following to work.
+Though progress bars are rendered as block items, it accepts `attr_list`'s inline format.
+`markdown.extensions.attr_list` must be enabled for the following to work.
 
 !!! example "Progress Bar with Attributes"
 
@@ -47,6 +53,13 @@ Though progress bars are rendered as block items, it accepts `attr_list`'s inlin
     [=65%]{: .thin}
     [=85%]{: .thin}
     [=100%]{: .thin}
+
+The ProgressBar extension can be included in Python Markdown by using the following:
+
+```py3
+import markdown
+md = markdown.Markdown(extensions=['pymdownx.progressbar'])
+```
 
 ## Styling with CSS
 

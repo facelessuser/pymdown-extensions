@@ -4,11 +4,15 @@
 
 > How do I specify function references in YAML if I am using a module like [MkDocs][mkdocs]?
 
-Pymdown Extensions has a number of extensions that expose customization via options that take function references. If you are using a project like [MkDocs][mkdocs], which allows a user to configure Python Markdown extensions via YAML, specifying function references may not be intuitive.
+Pymdown Extensions has a number of extensions that expose customization via options that take function references. If
+you are using a project like [MkDocs][mkdocs], which allows a user to configure Python Markdown extensions via YAML,
+specifying function references may not be intuitive.
 
-Keep in mind that the following examples specifically reference YAML configurations that are implemented via [PyYAML][pyyaml] and are configured to allow Python objects.
+Keep in mind that the following examples specifically reference YAML configurations that are implemented via
+[PyYAML][pyyaml] and are configured to allow Python objects.
 
-When specifying a function reference in PyYAML, you must prepend the function with `!!python/name:`. For instance, to specify Python Markdown's Toc extension to use one of PyMdown Extensions' slugs in MkDocs:
+When specifying a function reference in PyYAML, you must prepend the function with `!!python/name:`. For instance, to
+specify Python Markdown's Toc extension to use one of PyMdown Extensions' slugs in MkDocs:
 
 ```yaml
 markdown_extensions:
@@ -29,12 +33,17 @@ markdown_extensions:
 
 > How do I get GitHub Flavored Markdown?
 
-As the GitHub extension is now deprecated, a recommended GitHub configuration is provided below to emulate a setup that gives a GitHub feel.
+As the GitHub extension is now deprecated, a recommended GitHub configuration is provided below to emulate a setup that
+gives a GitHub feel.
 
-For GitHub issue, commit, pull request, and mention shorthand syntax, you will also need to specify a `provider`, `user` and `repo` in the MagicLink extension to give relative context for shorthand links (like `#1`) so that links can properly be generated.  In the example below, we will use `facelessuser` and `pymdown-extensions` as the user and repository respectively. See [MagicLink](./extensions/magiclink.md) for more details.
+For GitHub issue, commit, pull request, and mention shorthand syntax, you will also need to specify a `provider`, `user`
+and `repo` in the MagicLink extension to give relative context for shorthand links (like `#1`) so that links can
+properly be generated.  In the example below, we will use `facelessuser` and `pymdown-extensions` as the user and
+repository respectively. See [MagicLink](./extensions/magiclink.md) for more details.
 
 !!! tip
-    If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please see the related [FAQ question](#function-references-in-yaml) to see how to specify function references in YAML.
+    If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please
+    see the related [FAQ question](#function-references-in-yaml) to see how to specify function references in YAML.
 
 ```py3
 

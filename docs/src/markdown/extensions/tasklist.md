@@ -2,7 +2,8 @@
 
 ## Overview
 
-The Tasklist extension adds GFM style task lists.  They follow the same syntax as GFM. Simply start each list item with a square bracket pair containing either a space (an unchecked item) or a `x` (a checked item).
+The Tasklist extension adds GFM style task lists.  They follow the same syntax as GFM. Simply start each list item with
+a square bracket pair containing either a space (an unchecked item) or a `x` (a checked item).
 
 !!! example "Task List Example"
 
@@ -36,6 +37,13 @@ The Tasklist extension adds GFM style task lists.  They follow the same syntax a
     - [ ] item 2
     - [ ] item 3
 
+The Tasklist extension can be included in Python Markdown by using the following:
+
+```py3
+import markdown
+md = markdown.Markdown(extensions=['pymdownx.tasklist'])
+```
+
 ## CSS
 
 The default HTML structure of a task list is found below:
@@ -63,7 +71,8 @@ If `custom_checkbox` is enabled, the structure will be as follows:
 </ul>
 ```
 
-If `clickable_checkbox` is enabled, user interaction will be allowed by removing the `disabled` attribute from the `input` element:
+If `clickable_checkbox` is enabled, user interaction will be allowed by removing the `disabled` attribute from the
+`input` element:
 
 ```html
 <ul class="task-list">
@@ -86,7 +95,8 @@ If `clickable_checkbox` is enabled, user interaction will be allowed by removing
 
 ??? settings "Basic Tasklist CSS"
 
-    In order to style these we mainly remove the list type style and adjust the margins to align with normal list styles.
+    In order to style these we mainly remove the list type style and adjust the margins to align with normal list
+    styles.
 
     ```css
     .markdown-body .task-list-item {
@@ -101,7 +111,9 @@ If `clickable_checkbox` is enabled, user interaction will be allowed by removing
 
 ??? settings "Custom Tasklist CSS"
 
-    If custom check box icons are desired, custom styles can be used to give a unique look to the check marks.  Below is a very simple CSS example that creates a light gray square with rounded corners and displays a green Unicode check mark when the control is checked.  This can be adapted to use web fonts, images, etc.
+    If custom check box icons are desired, custom styles can be used to give a unique look to the check marks.  Below is
+    a very simple CSS example that creates a light gray square with rounded corners and displays a green Unicode check
+    mark when the control is checked.  This can be adapted to use web fonts, images, etc.
 
     ```css
     .markdown-body .task-list-item {

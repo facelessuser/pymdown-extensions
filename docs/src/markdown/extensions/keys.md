@@ -2,7 +2,8 @@
 
 ## Overview
 
-Keys is an extension to make entering and styling keyboard key presses easier. Syntactically, Keys is built around the `+` symbol.  A key or combination of key presses is surrounded by `++` with each key press separated with a single `+`.
+Keys is an extension to make entering and styling keyboard key presses easier. Syntactically, Keys is built around the
+`+` symbol.  A key or combination of key presses is surrounded by `++` with each key press separated with a single `+`.
 
 !!! example "Keys Example"
 
@@ -12,9 +13,17 @@ Keys is an extension to make entering and styling keyboard key presses easier. S
 
     ++ctrl+alt+delete++.
 
+The Keys extension can be included in Python Markdown by using the following:
+
+```py3
+import markdown
+md = markdown.Markdown(extensions=['pymdownx.keys'])
+```
+
 ## Formatting
 
-By default, Keys outputs keys in the form (separator `span`s will be omitted if a separator is not provided via the [options](#options)):
+By default, Keys outputs keys in the form (separator `span`s will be omitted if a separator is not provided via the
+[options](#options)):
 
 ```html
 <span class="keys">
@@ -44,7 +53,8 @@ If you would like to generate a key which isn't in the key index, you can extend
 
 ## Strict `KBD` Output
 
-According to HTML5 spec on [`kbd`](https://dev.w3.org/html5/spec-preview/the-kbd-element.html), a literal key input, is represented by a `kbd` wrapped the other `kbd`s:
+According to HTML5 spec on [`kbd`](https://dev.w3.org/html5/spec-preview/the-kbd-element.html), a literal key input, is
+represented by a `kbd` wrapped the other `kbd`s:
 
 ```html
 <kbd class="keys">
@@ -56,11 +66,14 @@ According to HTML5 spec on [`kbd`](https://dev.w3.org/html5/spec-preview/the-kbd
 </kbd>
 ```
 
-This is not how many people traditionally use `kbd`s for key inputs, but if you are a stickler for rules, you can enable the `strict` option to use a more "proper" format.
+This is not how many people traditionally use `kbd`s for key inputs, but if you are a stickler for rules, you can enable
+the `strict` option to use a more "proper" format.
 
 ## Key-Map Index
 
-By default, Keys provides a key-map index for English US keyboards. The key-map index is a dictionary that provides all supported key names (which are used as the class in output class `key-<name>`) with their corresponding display text.  There is also a separate alias dictionary which maps some aliases to entries in the key-map index.
+By default, Keys provides a key-map index for English US keyboards. The key-map index is a dictionary that provides all
+supported key names (which are used as the class in output class `key-<name>`) with their corresponding display text.
+There is also a separate alias dictionary which maps some aliases to entries in the key-map index.
 
 ### Alphanumeric and Space Keys
 
@@ -285,9 +298,13 @@ Name            | Display             | Aliases
 
 ## Extending/Modifying Key-Map Index
 
-If you want to add additional keys, or override text of existing keys, you can feed in your keys via the `key_map` option. The `key_map` parameter takes a simple dictionary with *key names* that are represented by lowercase alphanumeric characters and hyphens (`-`). The values of the dictionary represent the the text that is displayed for the key in the HTML output.
+If you want to add additional keys, or override text of existing keys, you can feed in your keys via the `key_map`
+option. The `key_map` parameter takes a simple dictionary with *key names* that are represented by lowercase
+alphanumeric characters and hyphens (`-`). The values of the dictionary represent the the text that is displayed for the
+key in the HTML output.
 
-So if you wanted to add a custom key, you could do this: `#!py3 {"custom": "Custom Key"}`.  If you wanted to override the output of the `option` key and change it from `Option` to `Opt`, you could do this: `#!py3 {"option": "Opt"}`.
+So if you wanted to add a custom key, you could do this: `#!py3 {"custom": "Custom Key"}`.  If you wanted to override
+the output of the `option` key and change it from `Option` to `Opt`, you could do this: `#!py3 {"option": "Opt"}`.
 
 ## Options
 
