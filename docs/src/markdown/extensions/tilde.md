@@ -2,11 +2,20 @@
 
 ## Overview
 
-Tilde optionally adds two different features which are syntactically built around the `~` character: **delete** which inserts `#!html <del></del>` tags and **subscript** which inserts `#!html <sub></sub>` tags.
+Tilde optionally adds two different features which are syntactically built around the `~` character: **delete** which
+inserts `#!html <del></del>` tags and **subscript** which inserts `#!html <sub></sub>` tags.
+
+The Tilde extension can be included in Python Markdown by using the following:
+
+```py3
+import markdown
+md = markdown.Markdown(extensions=['pymdownx.tilde'])
+```
 
 ## Delete
 
-To wrap content in a **delete** tag, simply surround the text with double `~`. You can also enable `smart_delete` in the [options](#options). Smart behavior of **delete** models that of [BetterEm](betterem.md#differences).
+To wrap content in a **delete** tag, simply surround the text with double `~`. You can also enable `smart_delete` in the
+[options](#options). Smart behavior of **delete** models that of [BetterEm](betterem.md#differences).
 
 !!! example "Delete Example"
 
@@ -18,7 +27,8 @@ To wrap content in a **delete** tag, simply surround the text with double `~`. Y
 
 ## Subscript
 
-To denote a subscript, you can surround the desired content in single `~`.  It uses Pandoc style logic, so if your subscript needs to have spaces, you must escape the spaces.
+To denote a subscript, you can surround the desired content in single `~`.  It uses Pandoc style logic, so if your
+subscript needs to have spaces, you must escape the spaces.
 
 !!! example "Subscript Example"
 

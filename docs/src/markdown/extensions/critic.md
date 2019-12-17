@@ -2,17 +2,28 @@
 
 ## Overview
 
-Critic is an extension that adds handling and support of [Critic Markup][critic-markup] which uses a special syntax to represent edits to a Markdown document.  This extension runs before all other extensions to parse the critic edits.
+Critic is an extension that adds handling and support of [Critic Markup][critic-markup] which uses a special syntax to
+represent edits to a Markdown document.  This extension runs before all other extensions to parse the critic edits.
 
-Critic allows you to automatically accept edits or reject the edits and render the output accordingly. It also allows for visually displaying the changes in HTML output ([mileage may vary](#limitations-with-previewing-critic-markup)).
+Critic allows you to automatically accept edits or reject the edits and render the output accordingly. It also allows
+for visually displaying the changes in HTML output ([mileage may vary](#limitations-with-previewing-critic-markup)).
+
+The Critic extension can be included in Python Markdown by using the following:
+
+```py3
+import markdown
+md = markdown.Markdown(extensions=['pymdownx.critic'])
+```
 
 ## Usage
 
 Critic Markup uses special markup to insert, delete, substitute, highlight, and comment.
 
-To insert or remove text you can use `#!critic-markup {++insert me++}` and `#!critic-markup {--remove me--}` respectively.  You can also denote a substitution with `#!critic-markup {~~substitute this~>with this~~}`.
+To insert or remove text you can use `#!critic-markup {++insert me++}` and `#!critic-markup {--remove me--}`
+respectively.  You can also denote a substitution with `#!critic-markup {~~substitute this~>with this~~}`.
 
-You can also highlight specific text with `#!critic-markup {==highlight me==}`. Or even comment, which is generally done by highlighting text and following it with a comment: `#!critic-markup {==highlight me==}{>>Add a comment<<}`.
+You can also highlight specific text with `#!critic-markup {==highlight me==}`. Or even comment, which is generally done
+by highlighting text and following it with a comment: `#!critic-markup {==highlight me==}{>>Add a comment<<}`.
 
 !!! example "Critic Markup Accept Example"
 
@@ -96,9 +107,19 @@ When previewing, you can style them to stand out (see [CSS](#css) for more infor
 
 ## Limitations with Previewing Critic Markup
 
-Parsing CriticMarkup is very straight forward.  If you need to reject critic marks or accept them, the Critic extension will work quite well.  But when trying to render the edits visually **and** trying to convert the document to HTML, things can get ugly.  I think this is the one unfortunate problem with CriticMarkup.  The existence of the critic edits can alter the actual source.  Its a fantastic idea, but it should be understood that when using CriticMarkup beyond inline or block paragraphs, there is a possibility that invalid HTML will be created for the preview (especially in relation to lists or if breaking up Markdown syntax).  I think Fletcher said it best here: http://fletcher.github.io/MultiMarkdown-4/criticmarkup.
+Parsing CriticMarkup is very straight forward.  If you need to reject critic marks or accept them, the Critic extension
+will work quite well.  But when trying to render the edits visually **and** trying to convert the document to HTML,
+things can get ugly.  I think this is the one unfortunate problem with CriticMarkup.  The existence of the critic edits
+can alter the actual source.  Its a fantastic idea, but it should be understood that when using CriticMarkup beyond
+inline or block paragraphs, there is a possibility that invalid HTML will be created for the preview (especially in
+relation to lists or if breaking up Markdown syntax).  I think Fletcher said it best here:
+http://fletcher.github.io/MultiMarkdown-4/criticmarkup.
 
-The Critic extension does its best by employing a preprocessor to inject the critic tags before all other parsing and a post-processor to clean up some of the weird side effects of the injection (only selected odd cases as others are more difficult to fix).  It injects some classes into the edit region's HTML output which allows for CSS styling.  There is probably a lot more post-processing that could be done to fix more issues, but whether this extension will be going further down that road has not yet been decided.
+The Critic extension does its best by employing a preprocessor to inject the critic tags before all other parsing and a
+post-processor to clean up some of the weird side effects of the injection (only selected odd cases as others are more
+difficult to fix).  It injects some classes into the edit region's HTML output which allows for CSS styling.  There is
+probably a lot more post-processing that could be done to fix more issues, but whether this extension will be going
+further down that road has not yet been decided.
 
 ## CSS
 
@@ -232,7 +253,7 @@ Classes   | Description
 
 Option    | Type   | Default     | Description
 --------- |------- | ----------- | -----------
-`mode`    | string | `#!py3 view` | `view` just parses the markup and displays it in its HTML equivalent rendering.  `accept` strips out the critic markup and replaces them with the suggested changes.  `reject` rejects all the suggestions and strips the critic markup out replacing it with the original.
+`mode`    | string | `#!py3 view` | `view` just parses the markup and displays it in its HTML equivalent rendering. `accept` strips out the critic markup and replaces them with the suggested changes.  `reject` rejects all the suggestions and strips the critic markup out replacing it with the original.
 
 
 --8<-- "links.txt"

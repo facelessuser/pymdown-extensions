@@ -17,8 +17,10 @@ Installation is easy with pip:
 pip install pymdown-extensions
 ```
 
-If you want to manually install it, run `#!bash python setup.py build` and `#!bash python setup.py install`.  You should be able to access the extensions in Python Markdown under the namespace `pymdownx.<extension>`.
+If you want to manually install it, run `#!bash python setup.py build` and `#!bash python setup.py install`.  You should
+be able to access the extensions in Python Markdown under the namespace `pymdownx.<extension>`.
 
-If you would like to modify the code, you can install it via: `#!bash pip install --editable .`.  This method will allow you to instantly see your changes without reinstalling.  If you want to do this in a virtual machine, you can.
+If you would like to modify the code, you can install it via: `#!bash pip install --editable .`.  This method will allow
+you to instantly see your changes without reinstalling.  If you want to do this in a virtual machine, you can.
 
 --8<-- "links.txt"

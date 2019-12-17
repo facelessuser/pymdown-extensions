@@ -2,11 +2,22 @@
 
 ## Overview
 
-Details is an extension that creates collapsible elements that hide their content. It uses the HTML5 `#!html <details><summary>` tags to accomplish this.  It supports nesting and you can also force the default state to be open. And if you want to style some different than others, you can optionally feed in a custom class.
+Details is an extension that creates collapsible elements that hide their content. It uses the HTML5
+`#!html <details><summary>` tags to accomplish this.  It supports nesting and you can also force the default state to be
+open. And if you want to style some different than others, you can optionally feed in a custom class.
+
+The Details extension can be included in Python Markdown by using the following:
+
+```py3
+import markdown
+md = markdown.Markdown(extensions=['pymdownx.details'])
+```
 
 ## Syntax
 
-Details must contain a blank line before they start. Use `???` to start a details block or `???+` if you want to start a details block whose default state is 'open'.  Follow the start of the block with an optional class or classes (separated with spaces) and the summary contained in quotes. Content is placed below the header and must be indented.
+Details must contain a blank line before they start. Use `???` to start a details block or `???+` if you want to start a
+details block whose default state is 'open'.  Follow the start of the block with an optional class or classes (separated
+with spaces) and the summary contained in quotes. Content is placed below the header and must be indented.
 
 ```
 ??? optional-class "Summary"
@@ -60,12 +71,17 @@ Details will be output in the format below. The content will always be encapsula
 
 ## Browser Support
 
-Unfortunately, due to how new `#!html <details><summary>` tags are, not all browsers support them yet.  In order to have them supported in all new browsers, you will have to provide some fallback styling and JavaScript until all browsers catch up.
+Unfortunately, due to how new `#!html <details><summary>` tags are, not all browsers support them yet.  In order to have
+  them supported in all new browsers, you will have to provide some fallback styling and JavaScript until all browsers
+  catch up.
 
-This extension's goal is not to provide you with the perfect polyfill, but this is a basic example that provides basic support. There are more elaborate polyfills available that support jQuery, add keyboard events, or even support back to IE8. Feel free to modify what is here or find a solution that fits your needs.
+This extension's goal is not to provide you with the perfect polyfill, but this is a basic example that provides basic
+support. There are more elaborate polyfills available that support jQuery, add keyboard events, or even support back to
+IE8. Feel free to modify what is here or find a solution that fits your needs.
 
 ??? settings "Basic Polyfill Setup"
-    Here is the basic CSS that that can be used.  It is meant to provide a consistent CSS in both browsers that support `#!html <details><summary>` tags and those that do not.
+    Here is the basic CSS that that can be used.  It is meant to provide a consistent CSS in both browsers that support
+    `#!html <details><summary>` tags and those that do not.
 
     ```css
     details {
@@ -106,9 +122,13 @@ This extension's goal is not to provide you with the perfect polyfill, but this 
     }
     ```
 
-    And below is the JavaScript that will detect browsers that do not support `#!html <details><summary>` tags and apply a `no-details` class to all details in those browsers. It will also attach a click event that will toggle the open state. The CSS above will target the `no-details` class and the `open` attribute to hide/show the content of your `#!html <details>` tag. Just run the code after the HTML content is loaded.
+    And below is the JavaScript that will detect browsers that do not support `#!html <details><summary>` tags and apply
+    a `no-details` class to all details in those browsers. It will also attach a click event that will toggle the open
+    state. The CSS above will target the `no-details` class and the `open` attribute to hide/show the content of your
+    `#!html <details>` tag. Just run the code after the HTML content is loaded.
 
-    There are plenty of things that aren't covered here, like jumping to a footnote or ID inside a closed polyfilled detail element, but this is left up to the user to figure out, or for a complete 3rd party polyfill.
+    There are plenty of things that aren't covered here, like jumping to a footnote or ID inside a closed polyfilled
+    detail element, but this is left up to the user to figure out, or for a complete 3rd party polyfill.
 
     ```js
     (function () {

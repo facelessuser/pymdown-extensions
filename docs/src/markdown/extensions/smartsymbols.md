@@ -2,7 +2,9 @@
 
 ## Overview
 
-SmartSymbols adds syntax for creating special characters such as trademarks, arrows, fractions, etc.  It basically allows for more "smarty-pants" like replacements.  It is meant to be used along side Python Markdown's `smarty` extension not to replace.
+SmartSymbols adds syntax for creating special characters such as trademarks, arrows, fractions, etc.  It basically
+allows for more "smarty-pants" like replacements.  It is meant to be used along side Python Markdown's `smarty`
+extension not to replace.
 
 Markdown       | Result
 -------------- |--------
@@ -17,6 +19,13 @@ Markdown       | Result
 `=/=`          | =/=
 `1/4, etc.`    | 1/4, etc.
 `1st 2nd etc.` |1st 2nd etc.
+
+The SmartSymbols extension can be included in Python Markdown by using the following:
+
+```py3
+import markdown
+md = markdown.Markdown(extensions=['pymdownx.smartsymbols'])
+```
 
 ## Options
 

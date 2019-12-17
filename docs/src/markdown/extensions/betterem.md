@@ -2,10 +2,22 @@
 
 ## Overview
 
-BetterEm is an extension that aims to improve emphasis (bold and italic) handling.  It provides two modes that control both asterisk's and underscore's bold and italic syntax: **smart** when `smart_enable` is turned on and normal if `smart_enable` is turned off.  BetterEm overrides all the current bold and italic rules in Python Markdown with its own.  When **smart** is enabled for either asterisks and/or underscores, it is enabled for all variants: single and double.  When **smart** is enabled, the behavior will be very similar in feel to GFM bold and italic (but not necessarily exact).
+BetterEm is an extension that aims to improve emphasis (bold and italic) handling.  It provides two modes that control
+both asterisk's and underscore's bold and italic syntax: **smart** when `smart_enable` is turned on and normal if
+`smart_enable` is turned off.  BetterEm overrides all the current bold and italic rules in Python Markdown with its own.
+When **smart** is enabled for either asterisks and/or underscores, it is enabled for all variants: single and double.
+When **smart** is enabled, the behavior will be very similar in feel to GFM bold and italic (but not necessarily exact).
+
+The BetterEm extension can be included in Python Markdown by using the following:
+
+```py3
+import markdown
+md = markdown.Markdown(extensions=['pymdownx.betterem'])
+```
 
 !!! danger "Reminder"
-    Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this extension!
+    Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this
+    extension!
 
 ## Differences
 
@@ -40,7 +52,8 @@ BetterEm allows for a more natural nested token feel.
 
     ***I'm bold and italic!** I am just italic.*
 
-BetterEm will ensure smart mode doesn't terminate in scenarios where there are a large amount of consecutive tokens inside.
+BetterEm will ensure smart mode doesn't terminate in scenarios where there are a large amount of consecutive tokens
+inside.
 
 !!! example "Consecutive Token Example"
     ```

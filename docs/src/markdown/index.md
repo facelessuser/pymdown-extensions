@@ -2,9 +2,12 @@
 
 ## Usage
 
-PyMdown Extensions is a collection of extensions for Python Markdown.  Keep in mind, the PyMdown extensions were designed to work with the default extensions, so your mileage may vary in regards to compatibility when paired with other 3rd party extensions.
+PyMdown Extensions is a collection of extensions for Python Markdown.  Keep in mind, the PyMdown extensions were
+designed to work with the default extensions, so your mileage may vary in regards to compatibility when paired with
+other 3rd party extensions.
 
-All extensions are found under `pymdownx`.  Assuming we wanted to specify the use of the MagicLink extension, we would include it in Python Markdown like so:
+All extensions are found under `pymdownx`.  Assuming we wanted to specify the use of the MagicLink extension, we would
+include it in Python Markdown like so:
 
 ```pycon3
 >>> import markdown
@@ -16,21 +19,25 @@ All extensions are found under `pymdownx`.  Assuming we wanted to specify the us
 Check out documentation on each extension to learn more about how to configure and use each one.
 
 !!! danger "Reminder"
-    Please read the [Usage Notes](usage_notes.md) for information on extension compatibility and general notes to be aware of when using these extensions.
+    Please read the [Usage Notes](usage_notes.md) for information on extension compatibility and general notes to be
+    aware of when using these extensions.
 
 ## Extensions
 
 !!! summary "Arithmatex"
-    [Arithmatex](extensions/arithmatex.md) is an extension that preserves LaTeX math equations ($\frac{\sqrt x}{y^3}$) during the Markdown conversion process so that they can be used with [MathJax][mathjax].
+    [Arithmatex](extensions/arithmatex.md) is an extension that preserves LaTeX math equations ($\frac{\sqrt x}{y^3}$)
+    during the Markdown conversion process so that they can be used with [MathJax][mathjax].
 
 !!! summary "B64"
     [B64](extensions/b64.md) converts all local images in a document to base64 encoding and embeds them in the document.
 
 !!! summary "BetterEm"
-    [BetterEm](extensions/betterem.md) is a different approach to **emphasis** than Python Markdown's default.  It works similar but handles certain corner cases differently.
+    [BetterEm](extensions/betterem.md) is a different approach to **emphasis** than Python Markdown's default.  It works
+    similar but handles certain corner cases differently.
 
 !!! summary "Caret"
-    [Caret](extensions/caret.md) is an extension that is syntactically built around the `^` character. It adds support for inserting super^scripts^ and adds an easy way to place ^^text^^ in an `#!html <ins>` tag.
+    [Caret](extensions/caret.md) is an extension that is syntactically built around the `^` character. It adds support
+    for inserting super^scripts^ and adds an easy way to place ^^text^^ in an `#!html <ins>` tag.
 
 !!! summary "Critic"
     [Critic](extensions/critic.md) adds handling and support of [Critic Markup][critic-markup].
@@ -45,16 +52,20 @@ Check out documentation on each extension to learn more about how to configure a
     [Emoji](extensions/emoji.md) makes adding emoji via Markdown easy :smile:.
 
 !!! summary "EscapeAll"
-    [EscapeAll](extensions/escapeall.md) allows the escaping of any character, some with additional effects.  Check it out to learn more.
+    [EscapeAll](extensions/escapeall.md) allows the escaping of any character, some with additional effects.  Check it
+    out to learn more.
 
 !!! summary "Extra"
-    [Extra](extensions/extra.md) is just like Python Markdown's Extra package except it uses PyMdown Extensions to substitute similar extensions.
+    [Extra](extensions/extra.md) is just like Python Markdown's Extra package except it uses PyMdown Extensions to
+    substitute similar extensions.
 
 !!! summary "ExtraRawHTML"
-    [ExtraRawHTML](extensions/extrarawhtml.md) exposes Python Markdown's feature of parsing markdown in HTML blocks. No longer do you have to include all of Extra when all you want to do is parse Markdown in HTML blocks.
+    [ExtraRawHTML](extensions/extrarawhtml.md) exposes Python Markdown's feature of parsing markdown in HTML blocks. No
+    longer do you have to include all of Extra when all you want to do is parse Markdown in HTML blocks.
 
 !!! summary "Highlight"
-    [Highlight](extensions/highlight.md) allows you to configure the syntax highlighting of SuperFences and InlineHilite.  Also passes standard Markdown indented code blocks through the syntax highlighter.
+    [Highlight](extensions/highlight.md) allows you to configure the syntax highlighting of SuperFences and
+    InlineHilite.  Also passes standard Markdown indented code blocks through the syntax highlighter.
 
 !!! summary "InlineHilite"
     [InlineHilite](extensions/inlinehilite.md) highlights inline code: `#!py3 from module import function as func`.
@@ -63,7 +74,9 @@ Check out documentation on each extension to learn more about how to configure a
     [Keys](extensions/keys.md) makes inserting key inputs into documents as easy as pressing ++ctrl+alt+delete++.
 
 !!! summary "MagicLink"
-    [MagicLink](extensions/magiclink.md) linkafies URL and email links without having to wrap them in Markdown syntax. Also, allows shortens repository issue, pull request, and commit links. You can even use easily insert mentions: @twitter:twitter.
+    [MagicLink](extensions/magiclink.md) linkafies URL and email links without having to wrap them in Markdown syntax.
+    Also, allows shortens repository issue, pull request, and commit links. You can even use easily insert mentions:
+    @twitter:twitter.
 
 !!! summary "Mark"
     [Mark](extensions/mark.md) allows you to ==mark== words easily.
@@ -77,16 +90,20 @@ Check out documentation on each extension to learn more about how to configure a
     [== 75%]{: .success}
 
 !!! summary "SmartSymbols"
-    [SmartSymbols](extensions/smartsymbols.md) inserts commonly used Unicode characters via simple ASCII representations: `=/=` --> =/=.
+    [SmartSymbols](extensions/smartsymbols.md) inserts commonly used Unicode characters via simple ASCII
+    representations: `=/=` --> =/=.
 
 !!! summary "Snippets"
-    [Snippets](extensions/snippets.md) include other Markdown or HTML snippets into the current Markdown file being parsed.
+    [Snippets](extensions/snippets.md) include other Markdown or HTML snippets into the current Markdown file being
+    parsed.
 
 !!! summary "StripHTML"
     [StripHTML](extensions/striphtml.md) can strip out HTML comments and specific tag attributes.
 
 !!! summary "SuperFences"
-    [SuperFences](extensions/superfences.md) is like Python Markdown's fences, but better. Nest fences under lists, admonitions, and other syntaxes. Combine multiple fences together in tabbed groups, and even create special custom fences for content like UML.
+    [SuperFences](extensions/superfences.md) is like Python Markdown's fences, but better. Nest fences under lists,
+    admonitions, and other syntaxes. Combine multiple fences together in tabbed groups, and even create special custom
+    fences for content like UML.
 
     ```tab="Source"
     Title: Here is a title
@@ -112,7 +129,8 @@ Check out documentation on each extension to learn more about how to configure a
     - [ ] milk
 
 !!! summary "Tilde"
-    [Tilde](extensions/tilde.md) is syntactically built around the `~` character. It adds support for inserting sub~scripts~ and adds an easy way to place ~~text~~ in a `#!html <del>` tag.
+    [Tilde](extensions/tilde.md) is syntactically built around the `~` character. It adds support for inserting
+    sub~scripts~ and adds an easy way to place ~~text~~ in a `#!html <del>` tag.
 
 --8<--
 refs.txt
