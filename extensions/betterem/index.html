@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,12 +55,12 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
@@ -811,10 +811,20 @@
                 
                 <h1 id="betterem">BetterEm<a class="headerlink" href="#betterem" title="Permanent link"></a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
-<p>BetterEm is an extension that aims to improve emphasis (bold and italic) handling.  It provides two modes that control both asterisk's and underscore's bold and italic syntax: <strong>smart</strong> when <code>smart_enable</code> is turned on and normal if <code>smart_enable</code> is turned off.  BetterEm overrides all the current bold and italic rules in Python Markdown with its own.  When <strong>smart</strong> is enabled for either asterisks and/or underscores, it is enabled for all variants: single and double.  When <strong>smart</strong> is enabled, the behavior will be very similar in feel to <abbr title="GitHub Flavored Markdown">GFM</abbr> bold and italic (but not necessarily exact).</p>
+<p>BetterEm is an extension that aims to improve emphasis (bold and italic) handling.  It provides two modes that control
+both asterisk's and underscore's bold and italic syntax: <strong>smart</strong> when <code>smart_enable</code> is turned on and normal if
+<code>smart_enable</code> is turned off.  BetterEm overrides all the current bold and italic rules in Python Markdown with its own.
+When <strong>smart</strong> is enabled for either asterisks and/or underscores, it is enabled for all variants: single and double.
+When <strong>smart</strong> is enabled, the behavior will be very similar in feel to <abbr title="GitHub Flavored Markdown">GFM</abbr> bold and italic (but not necessarily exact).</p>
+<p>The BetterEm extension can be included in Python Markdown by using the following:</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.betterem&#39;</span><span class="p">])</span>
+</pre></div>
+
 <div class="admonition danger">
 <p class="admonition-title">Reminder</p>
-<p>Remember to read the <a href="../../usage_notes/">Usage Notes</a> for information that may be relevant when using this extension!</p>
+<p>Remember to read the <a href="../../usage_notes/">Usage Notes</a> for information that may be relevant when using this
+extension!</p>
 </div>
 <h2 id="differences">Differences<a class="headerlink" href="#differences" title="Permanent link"></a></h2>
 <div class="admonition note">
@@ -843,7 +853,8 @@
 <p><strong><em>I'm italic and bold</em> I am just bold.</strong></p>
 <p><em><strong>I'm bold and italic!</strong> I am just italic.</em></p>
 </div>
-<p>BetterEm will ensure smart mode doesn't terminate in scenarios where there are a large amount of consecutive tokens inside.</p>
+<p>BetterEm will ensure smart mode doesn't terminate in scenarios where there are a large amount of consecutive tokens
+inside.</p>
 <div class="admonition example">
 <p class="admonition-title">Consecutive Token Example</p>
 <div class="codehilite"><pre><span></span>___A lot of underscores____________is okay___
@@ -922,6 +933,7 @@ __This will all be bold_ because of the token is less than that of the surroundi
                 
                   
                 
+                
               
               
                 
@@ -976,7 +988,7 @@ __This will all be bold_ because of the token is less than that of the surroundi
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2018 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1002,7 +1014,7 @@ __This will all be bold_ because of the token is less than that of the surroundi
       
     </div>
     
-      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
+      <script src="../../assets/javascripts/application.808e90bb.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

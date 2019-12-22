@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,12 +55,12 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
@@ -825,9 +825,16 @@
                 
                 <h1 id="tilde">Tilde<a class="headerlink" href="#tilde" title="Permanent link"></a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
-<p>Tilde optionally adds two different features which are syntactically built around the <code>~</code> character: <strong>delete</strong> which inserts <code class="codehilite"><span class="p">&lt;</span><span class="nt">del</span><span class="p">&gt;&lt;/</span><span class="nt">del</span><span class="p">&gt;</span></code> tags and <strong>subscript</strong> which inserts <code class="codehilite"><span class="p">&lt;</span><span class="nt">sub</span><span class="p">&gt;&lt;/</span><span class="nt">sub</span><span class="p">&gt;</span></code> tags.</p>
+<p>Tilde optionally adds two different features which are syntactically built around the <code>~</code> character: <strong>delete</strong> which
+inserts <code class="codehilite"><span class="p">&lt;</span><span class="nt">del</span><span class="p">&gt;&lt;/</span><span class="nt">del</span><span class="p">&gt;</span></code> tags and <strong>subscript</strong> which inserts <code class="codehilite"><span class="p">&lt;</span><span class="nt">sub</span><span class="p">&gt;&lt;/</span><span class="nt">sub</span><span class="p">&gt;</span></code> tags.</p>
+<p>The Tilde extension can be included in Python Markdown by using the following:</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.tilde&#39;</span><span class="p">])</span>
+</pre></div>
+
 <h2 id="delete">Delete<a class="headerlink" href="#delete" title="Permanent link"></a></h2>
-<p>To wrap content in a <strong>delete</strong> tag, simply surround the text with double <code>~</code>. You can also enable <code>smart_delete</code> in the <a href="#options">options</a>. Smart behavior of <strong>delete</strong> models that of <a href="../betterem/#differences">BetterEm</a>.</p>
+<p>To wrap content in a <strong>delete</strong> tag, simply surround the text with double <code>~</code>. You can also enable <code>smart_delete</code> in the
+<a href="#options">options</a>. Smart behavior of <strong>delete</strong> models that of <a href="../betterem/#differences">BetterEm</a>.</p>
 <div class="admonition example">
 <p class="admonition-title">Delete Example</p>
 <div class="codehilite"><pre><span></span>~~Delete me~~
@@ -836,7 +843,8 @@
 <p><del>Delete me</del></p>
 </div>
 <h2 id="subscript">Subscript<a class="headerlink" href="#subscript" title="Permanent link"></a></h2>
-<p>To denote a subscript, you can surround the desired content in single <code>~</code>.  It uses Pandoc style logic, so if your subscript needs to have spaces, you must escape the spaces.</p>
+<p>To denote a subscript, you can surround the desired content in single <code>~</code>.  It uses Pandoc style logic, so if your
+subscript needs to have spaces, you must escape the spaces.</p>
 <div class="admonition example">
 <p class="admonition-title">Subscript Example</p>
 <div class="codehilite"><pre><span></span>CH~3~CH~2~OH
@@ -880,6 +888,7 @@ text~a\ subscript~
 </table>
                 
                   
+                
                 
               
               
@@ -935,7 +944,7 @@ text~a\ subscript~
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2018 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -961,7 +970,7 @@ text~a\ subscript~
       
     </div>
     
-      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
+      <script src="../../assets/javascripts/application.808e90bb.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

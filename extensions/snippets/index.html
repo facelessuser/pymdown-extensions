@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,12 +55,12 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
@@ -825,10 +825,25 @@
                 
                 <h1 id="snippets">Snippets<a class="headerlink" href="#snippets" title="Permanent link"></a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
-<p>Snippets is an extension to insert markdown or HTML snippets into another markdown file.  Snippets is great for situations where you have content you need to insert into multiple documents.  For instance, this document keeps all its hyperlinks in a separate file.  Then includes those hyperlinks at the bottom of a document via snippets. If a link needs to be updated, it can be updated in one location instead of updating them in multiple files.</p>
-<p>Snippets is run as a preprocessor, so if a snippet is found in a fenced code block etc., it will still get processed.  If the specified file cannot be found, the the markup will be removed.  If you need to show a snippet example in fenced code, please escape it as listed in <a href="#snippets-notation">Snippets Notation</a>.</p>
-<p>Snippets can handle recursive file inclusion.  And if Snippets encounters the same file in the current stack, it will avoid re-processing it in order to avoid an infinite loop (or crash on hitting max recursion depth).  Though it should be said, you should extreme recursion depth as you will hit Python's recursion limit.</p>
-<p>This is meant for simple file inclusion, it has no intention to implement features from complex template systems. If you need something more complex, you may consider using a template environment to process your files <strong>before</strong> feeding them through Python Markdown.  If you are using a document generation system, this can likely be performed via a plugin for that document system (assuming a plugin environment is available).</p>
+<p>Snippets is an extension to insert markdown or HTML snippets into another markdown file.  Snippets is great for
+situations where you have content you need to insert into multiple documents.  For instance, this document keeps all its
+hyperlinks in a separate file.  Then includes those hyperlinks at the bottom of a document via snippets. If a link needs
+to be updated, it can be updated in one location instead of updating them in multiple files.</p>
+<p>Snippets is run as a preprocessor, so if a snippet is found in a fenced code block etc., it will still get processed. If
+the specified file cannot be found, the the markup will be removed.  If you need to show a snippet example in fenced
+code, please escape it as listed in <a href="#snippets-notation">Snippets Notation</a>.</p>
+<p>Snippets can handle recursive file inclusion.  And if Snippets encounters the same file in the current stack, it will
+avoid re-processing it in order to avoid an infinite loop (or crash on hitting max recursion depth).  Though it should
+be said, you should extreme recursion depth as you will hit Python's recursion limit.</p>
+<p>This is meant for simple file inclusion, it has no intention to implement features from complex template systems. If you
+need something more complex, you may consider using a template environment to process your files <strong>before</strong> feeding them
+through Python Markdown.  If you are using a document generation system, this can likely be performed via a plugin for
+that document system (assuming a plugin environment is available).</p>
+<p>The Snippets extension can be included in Python Markdown by using the following:</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.snippets&#39;</span><span class="p">])</span>
+</pre></div>
+
 <h2 id="snippets-notation">Snippets Notation<a class="headerlink" href="#snippets-notation" title="Permanent link"></a></h2>
 <p>Snippets has two modes of inserting snippets: single line and block.</p>
 <p>Single line format is done by placing the following markup for the single line notation:</p>
@@ -842,8 +857,15 @@ filename2.md
 --8&lt;-- 
 </pre></div>
 
-<p>As you can see, the notation is ASCII scissors cutting a line followed by the file name.  In the case of the single line variant, the file name follows directly after the scissors and is quoted.  In the case of the block format, the file names follow on separate lines and an additional scissor is added afterwards to signal the end of the block.</p>
-<p>The dashes can be as few as 2 (<code>--8&lt;--</code>) or longer if desired (<code>---8&lt;---------</code>); whatever your preference is.  The important thing is that the notation must reside on a line(s) by itself, and the path must be quoted in the case of the single line notation.  If the file name is indented, the content will be indented to that level as well.  To reduce confusion in block format, it is advised to ensure the entire block is indented to the same level.  If you need to escape the syntax, just make sure a minimum of a space is after the quoted file name for single line format, or a space after the start or end block markers in block format.</p>
+<p>As you can see, the notation is ASCII scissors cutting a line followed by the file name.  In the case of the single line
+variant, the file name follows directly after the scissors and is quoted.  In the case of the block format, the file
+names follow on separate lines and an additional scissor is added afterwards to signal the end of the block.</p>
+<p>The dashes can be as few as 2 (<code>--8&lt;--</code>) or longer if desired (<code>---8&lt;---------</code>); whatever your preference is.  The
+important thing is that the notation must reside on a line(s) by itself, and the path must be quoted in the case of the
+single line notation.  If the file name is indented, the content will be indented to that level as well.  To reduce
+confusion in block format, it is advised to ensure the entire block is indented to the same level.  If you need to
+escape the syntax, just make sure a minimum of a space is after the quoted file name for single line format, or a space
+after the start or end block markers in block format.</p>
 <div class="codehilite"><pre><span></span>--8&lt;-- &quot;escaped notation&quot;&lt;space&gt;
 
 --8&lt;--&lt;space&gt;
@@ -851,7 +873,8 @@ escaped notation
 --8&lt;--&lt;space&gt;
 </pre></div>
 
-<p>If you have a file you want to temporarily ignore, you can comment it out by prepending the path with <code>;</code> (notice the semicolon is followed by a space).  This works for both single line and block format:</p>
+<p>If you have a file you want to temporarily ignore, you can comment it out by prepending the path with <code>;</code> (notice the
+semicolon is followed by a space).  This works for both single line and block format:</p>
 <div class="codehilite"><pre><span></span>--8&lt;-- &quot;; skip.md&quot; 
 
 --8&lt;-- 
@@ -912,6 +935,7 @@ file2.md
                 
                   
                 
+                
               
               
                 
@@ -966,7 +990,7 @@ file2.md
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2018 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -992,7 +1016,7 @@ file2.md
       
     </div>
     
-      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
+      <script src="../../assets/javascripts/application.808e90bb.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

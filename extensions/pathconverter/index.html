@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,12 +55,12 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
@@ -797,12 +797,35 @@
                 
                 <h1 id="pathconverter">PathConverter<a class="headerlink" href="#pathconverter" title="Permanent link"></a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
-<p>PathConverter is an extension that can convert local, relative reference paths to absolute or relative paths for links and images. It was originally written for a project that wanted to preview the markdown by rendering it in a temporary location. This extension allowed the paths to be converted to work from the temporary location. This context is important when trying to understand why this extension was created. It's actual usage is limited to situations like this, so it isn't something that would get used in most normal scenarios.</p>
-<p>PathConverter takes an absolute base path. The base path is the Markdown content's assumed location at time of conversion.  The path is used as a reference for locating images and referenced files relative to the Markdown content.  Essentially, the references in the Markdown file would currently be relative to this base path at conversion time. The references existence is not verified, but the it is analyze to determine if it is a relative path, and if so, it is eligible for conversion. In the case of <strong>absolute</strong> mode, the relative Markdown references would be converted to absolute paths.</p>
-<p>If PathConverter is in <strong>relative</strong> mode, the extension will also need a relative path to convert to.  The relative path must be an absolute path to the location the HTML is assumed to live after conversion.  If the references paths can be confirmed to be relative, those references will be converted to relative paths that align to the provided relative path parameter. The idea is that a Markdown file could be found in a location that is not meant to be its final location. References within the Markdown source would link relative to the base path, but they would then be converted to be relative to it's new location &ndash; the relative path parameter.</p>
-<p>Currently PathConverter will search desired tags for <code>href</code> and <code>src</code> attributes. By default, only <code>a</code>, <code>script</code>, <code>img</code>, and <code>link</code> tags are searched.</p>
-<p>PathConverter is also intelligent enough to only operate on the file portion of the reference link.  Consider the following scenario:  <code>path/to/file.html#header-to-jump-to</code>.  In the example, <code>path/to/file.html</code> will be converted, but <code>#header-to-jump-to</code> will be left unaltered.</p>
-<p>As mentioned before, the use cases for something like this are limited, but if you have a situation that lends well to something like this, PathConverter can help.</p>
+<p>PathConverter is an extension that can convert local, relative reference paths to absolute or relative paths for links
+and images. It was originally written for a project that wanted to preview the markdown by rendering it in a temporary
+location. This extension allowed the paths to be converted to work from the temporary location. This context is
+important when trying to understand why this extension was created. It's actual usage is limited to situations like
+this, so it isn't something that would get used in most normal scenarios.</p>
+<p>PathConverter takes an absolute base path. The base path is the Markdown content's assumed location at time of
+conversion.  The path is used as a reference for locating images and referenced files relative to the Markdown content.
+Essentially, the references in the Markdown file would currently be relative to this base path at conversion time. The
+references existence is not verified, but the it is analyze to determine if it is a relative path, and if so, it is
+eligible for conversion. In the case of <strong>absolute</strong> mode, the relative Markdown references would be converted to
+absolute paths.</p>
+<p>If PathConverter is in <strong>relative</strong> mode, the extension will also need a relative path to convert to.  The relative path
+must be an absolute path to the location the HTML is assumed to live after conversion.  If the references paths can be
+confirmed to be relative, those references will be converted to relative paths that align to the provided relative path
+parameter. The idea is that a Markdown file could be found in a location that is not meant to be its final location.
+References within the Markdown source would link relative to the base path, but they would then be converted to be
+relative to it's new location &ndash; the relative path parameter.</p>
+<p>Currently PathConverter will search desired tags for <code>href</code> and <code>src</code> attributes. By default, only <code>a</code>, <code>script</code>, <code>img</code>,
+and <code>link</code> tags are searched.</p>
+<p>PathConverter is also intelligent enough to only operate on the file portion of the reference link.  Consider the
+following scenario:  <code>path/to/file.html#header-to-jump-to</code>.  In the example, <code>path/to/file.html</code> will be converted, but
+<code>#header-to-jump-to</code> will be left unaltered.</p>
+<p>As mentioned before, the use cases for something like this are limited, but if you have a situation that lends well to
+something like this, PathConverter can help.</p>
+<p>The PathConverter extension can be included in Python Markdown by using the following:</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.pathconverter&#39;</span><span class="p">])</span>
+</pre></div>
+
 <h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
 <table>
 <thead>
@@ -842,6 +865,7 @@
 </table>
                 
                   
+                
                 
               
               
@@ -897,7 +921,7 @@
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2018 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -923,7 +947,7 @@
       
     </div>
     
-      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
+      <script src="../../assets/javascripts/application.808e90bb.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,12 +55,12 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
@@ -783,7 +783,13 @@
                 
                 <h1 id="extrarawhtml">ExtraRawHTML<a class="headerlink" href="#extrarawhtml" title="Permanent link"></a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
-<p>Python Markdown provides an <code>extra</code> extension that has features similar to PHP Markdown Extra.  For reasons covered in <a href="../extra/"><code>pymdownx.extra</code></a>, PyMdown Extensions implements its own <code>extra</code> extension.  In order to accomplish this, Python Markdown's raw HTML parsing functionality, which is used to parse nested Markdown inside HTML blocks, had to be split out of the <code>extra</code> implementation.  Afterwards, it was decided to expose it as an independent extension to allow people who maybe didn't want to use all of the features found in <code>extra</code>, but still wanted to use the parsing of nested Markdown inside of HTML blocks.  This is basically a wrapper around Python Markdown's <code>extra</code> extension's raw HTML parsing.  For more info see <a href="https://python-markdown.github.io/extensions/extra/#nested-markdown-inside-html-blocks">Python Markdown's Extra documentation</a>.</p>
+<p>Python Markdown provides an <code>extra</code> extension that has features similar to PHP Markdown Extra.  For reasons covered in
+<a href="../extra/"><code>pymdownx.extra</code></a>, PyMdown Extensions implements its own <code>extra</code> extension.  In order to accomplish this,
+Python Markdown's raw HTML parsing functionality, which is used to parse nested Markdown inside HTML blocks, had to be
+split out of the <code>extra</code> implementation.  Afterwards, it was decided to expose it as an independent extension to allow
+people who maybe didn't want to use all of the features found in <code>extra</code>, but still wanted to use the parsing of nested
+Markdown inside of HTML blocks.  This is basically a wrapper around Python Markdown's <code>extra</code> extension's raw HTML
+parsing.  For more info see <a href="https://python-markdown.github.io/extensions/extra/#nested-markdown-inside-html-blocks">Python Markdown's Extra documentation</a>.</p>
 <div class="admonition example">
 <p class="admonition-title">Raw HTML Example</p>
 <div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;some-class&quot;</span> <span class="na">markdown</span><span class="o">=</span><span class="s">&quot;1&quot;</span><span class="p">&gt;</span>
@@ -797,8 +803,13 @@ Some *Markdown*! :smile:
 </pre></div>
 
 </div>
+<p>The ExtraRawHTML extension can be included in Python Markdown by using the following:</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.extrarawhtml&#39;</span><span class="p">])</span>
+</pre></div>
                 
                   
+                
                 
               
               
@@ -854,7 +865,7 @@ Some *Markdown*! :smile:
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2018 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -880,7 +891,7 @@ Some *Markdown*! :smile:
       
     </div>
     
-      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
+      <script src="../../assets/javascripts/application.808e90bb.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

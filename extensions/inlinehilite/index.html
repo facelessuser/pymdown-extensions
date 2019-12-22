@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,12 +55,12 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
@@ -865,7 +865,11 @@
                 
                 <h1 id="inlinehilite">InlineHilite<a class="headerlink" href="#inlinehilite" title="Permanent link"></a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
-<p>InlineHilite is an inline code highlighter inspired by <a href="https://python-markdown.github.io/extensions/code_hilite/">CodeHilite</a>. Borrowing from CodeHilite's existing syntax, InlineHilite utilizes the following syntax to insert inline highlighted code: <code>`:::language mycode`</code> or <code>`#!language mycode`</code>.  In CodeHilite, <code>#!</code> means "use line numbers", but line numbers will never be used in inline code regardless of which form is used. Use of one form or the other is purely for personal preference. As this feature is discussed further, we will call these specifiers (<code>#!</code> and <code>:::</code>) mock shebangs.</p>
+<p>InlineHilite is an inline code highlighter inspired by <a href="https://python-markdown.github.io/extensions/code_hilite/">CodeHilite</a>. Borrowing from CodeHilite's existing
+syntax, InlineHilite utilizes the following syntax to insert inline highlighted code: <code>`:::language mycode`</code> or
+<code>`#!language mycode`</code>.  In CodeHilite, <code>#!</code> means "use line numbers", but line numbers will never be used in
+inline code regardless of which form is used. Use of one form or the other is purely for personal preference. As this
+feature is discussed further, we will call these specifiers (<code>#!</code> and <code>:::</code>) mock shebangs.</p>
 <div class="admonition example">
 <p class="admonition-title">Inline Highlighted Code Example</p>
 <div class="codehilite"><pre><span></span>Here is some code: `#!js function pad(v){return (&#39;0&#39;+v).split(&#39;&#39;).reverse().splice(0,2).reverse().join(&#39;&#39;)}`.
@@ -876,13 +880,31 @@ The mock shebang will be treated like text here: ` #!js var test = 0; `.
 <p>Here is some code: <code class="codehilite"><span class="kd">function</span> <span class="nx">pad</span><span class="p">(</span><span class="nx">v</span><span class="p">){</span><span class="k">return</span> <span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="o">+</span><span class="nx">v</span><span class="p">).</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">).</span><span class="nx">reverse</span><span class="p">().</span><span class="nx">splice</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">).</span><span class="nx">reverse</span><span class="p">().</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)}</span></code></p>
 <p>The mock shebang will be treated like text here: <code>#!js var test = 0;</code>.</p>
 </div>
-<p>When using the colon mock shebang, 3 or more colons can be used.  Mock shebangs must come <strong>immediately</strong> after the opening backtick(s) and must be followed by at least one space.  If you need to escape a mock shebang at the start of a code block, just put a space before it and it will be treated as part of the code.</p>
+<p>When using the colon mock shebang, 3 or more colons can be used.  Mock shebangs must come <strong>immediately</strong> after the
+opening backtick(s) and must be followed by at least one space.  If you need to escape a mock shebang at the start of a
+code block, just put a space before it and it will be treated as part of the code.</p>
+<p>The InlineHilite extension can be included in Python Markdown by using the following:</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.inlinehilite&#39;</span><span class="p">])</span>
+</pre></div>
+
 <h2 id="code-highlighting">Code Highlighting<a class="headerlink" href="#code-highlighting" title="Permanent link"></a></h2>
-<p>Assuming Pygments is installed, code highlighting will be handled by <a href="http://pygments.org/">Pygments</a> by default. If Pygments is not installed, or disabled, code blocks will be output for JavaScript syntax highlighters as <code class="codehilite"><span class="p">&lt;</span><span class="nt">code</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;highlight language-mylanguage&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">code</span><span class="p">&gt;</span></code>.</p>
-<p>Highlighting can be further controlled if either the <code>pymdownx.highlight</code> extension is used or if Python Markdown's CodeHilite is used. If CodeHilite is configured, it's settings will be used to configure highlighting, but CodeHilite support is deprecated and will be removed in the next major release. It is recommended to instead use <a href="../highlight/"><code>pymdownx.highlight</code></a> extension. If <code>pymdownx.highlight</code> is included and configured, CodeHilite will be ignored.</p>
+<p>Assuming Pygments is installed, code highlighting will be handled by <a href="http://pygments.org/">Pygments</a> by default. If Pygments is not
+installed, or disabled, code blocks will be output for JavaScript syntax highlighters as
+<code class="codehilite"><span class="p">&lt;</span><span class="nt">code</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;highlight language-mylanguage&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">code</span><span class="p">&gt;</span></code>.</p>
+<p>Highlighting can be further controlled if either the <code>pymdownx.highlight</code> extension is used or if Python Markdown's
+CodeHilite is used. If CodeHilite is configured, it's settings will be used to configure highlighting, but CodeHilite
+support is deprecated and will be removed in the next major release. It is recommended to instead use
+<a href="../highlight/"><code>pymdownx.highlight</code></a> extension. If <code>pymdownx.highlight</code> is included and configured, CodeHilite will be
+ignored.</p>
 <h2 id="using-javascript-highlighters">Using JavaScript Highlighters<a class="headerlink" href="#using-javascript-highlighters" title="Permanent link"></a></h2>
-<p>If using <a href="http://pygments.org/">Pygments</a>, the elements will be highlighted without issues, but you may need to adjust CSS to get the general style of the inline block the way you like it.</p>
-<p>If you are using a JavaScript highlighter, such as <a href="https://highlightjs.org/"><code>highlight.js</code></a>, you will most likely need to construct a JavaScript method to target the inline blocks as these may not be targeted out of the box. You may also find it useful to tag inline code with a different class than what is used for block code so you can also process and style them differently. The CSS class used can be configured independently for inline code in the options if using <code>pymdownx.highight</code> instead of CodeHilite.</p>
+<p>If using <a href="http://pygments.org/">Pygments</a>, the elements will be highlighted without issues, but you may need to adjust CSS to get
+the general style of the inline block the way you like it.</p>
+<p>If you are using a JavaScript highlighter, such as <a href="https://highlightjs.org/"><code>highlight.js</code></a>, you will most likely need to construct
+a JavaScript method to target the inline blocks as these may not be targeted out of the box. You may also find it useful
+to tag inline code with a different class than what is used for block code so you can also process and style them
+differently. The CSS class used can be configured independently for inline code in the options if using
+<code>pymdownx.highight</code> instead of CodeHilite.</p>
 <h2 id="custom-inline-blocks">Custom Inline Blocks<a class="headerlink" href="#custom-inline-blocks" title="Permanent link"></a></h2>
 <p>Like <a href="../superfences/">SuperFences</a>, InlineHilite now provides a support for custom inline blocks.</p>
 <div class="admonition example">
@@ -896,9 +918,11 @@ The mock shebang will be treated like text here: ` #!js var test = 0; `.
 </div>
 <div class="admonition tip">
 <p class="admonition-title">Math Example</p>
-<p>For more indepth information on how to reproduce the example above, check out <a href="../arithmatex/#alternative-math-blocks">Arithmatex Documentation</a>.</p>
+<p>For more indepth information on how to reproduce the example above, check out
+<a href="../arithmatex/#alternative-math-blocks">Arithmatex Documentation</a>.</p>
 </div>
-<p>Custom inline code blocks are created via the <code>custom_inline</code> option.  <code>custom_inline</code> takes an array of dictionaries where each dictionary defines a custom inline code block. The dictionaries requires the following keys:</p>
+<p>Custom inline code blocks are created via the <code>custom_inline</code> option.  <code>custom_inline</code> takes an array of dictionaries
+where each dictionary defines a custom inline code block. The dictionaries requires the following keys:</p>
 <table>
 <thead>
 <tr>
@@ -922,9 +946,15 @@ The mock shebang will be treated like text here: ` #!js var test = 0; `.
 </tbody>
 </table>
 <h3 id="formatters">Formatters<a class="headerlink" href="#formatters" title="Permanent link"></a></h3>
-<p>In general, formatters take four parameters: the source found between the backticks, the specified language, the class name originally defined via the <code>class</code> option in the <code>custom_inline</code> entry, and the Markdown class object. Should return a either an ElementTree element or a string as HTML.</p>
-<p>When returning a string, InlineHilite will treat the string as ready for HTML, so escape what needs to be escaped as it is expected to be fully ready HTML and will be stashed and re-inserted at post processing.</p>
-<p>When returning an ElementTree object, remember to wrap string content as <code>markdown.util.AtomicString</code> to prevent it from being processed further, you can also stash raw HTML string content assigned to elements like InlineHilite does by default above. InlineHilite will not try and guess what you intend, you must manage your content in the ElementTree objects or the Markdown parser may apply other conversion to your HTML content.</p>
+<p>In general, formatters take four parameters: the source found between the backticks, the specified language, the class
+name originally defined via the <code>class</code> option in the <code>custom_inline</code> entry, and the Markdown class object. Should
+return a either an ElementTree element or a string as HTML.</p>
+<p>When returning a string, InlineHilite will treat the string as ready for HTML, so escape what needs to be escaped as it
+is expected to be fully ready HTML and will be stashed and re-inserted at post processing.</p>
+<p>When returning an ElementTree object, remember to wrap string content as <code>markdown.util.AtomicString</code> to prevent it from
+being processed further, you can also stash raw HTML string content assigned to elements like InlineHilite does by
+default above. InlineHilite will not try and guess what you intend, you must manage your content in the ElementTree
+objects or the Markdown parser may apply other conversion to your HTML content.</p>
 <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">custom_formatter</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span> <span class="n">css_class</span><span class="p">,</span> <span class="n">md</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">el</span>  <span class="c1"># Or string</span>
 </pre></div>
@@ -982,6 +1012,7 @@ MathJax.Hub.Config({
                 
                   
                 
+                
               
               
                 
@@ -1036,7 +1067,7 @@ MathJax.Hub.Config({
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2018 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1062,7 +1093,7 @@ MathJax.Hub.Config({
       
     </div>
     
-      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
+      <script src="../../assets/javascripts/application.808e90bb.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

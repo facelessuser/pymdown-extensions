@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,12 +55,12 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
@@ -965,32 +965,44 @@
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
 <p>SuperFences provides a number of features:</p>
 <ol>
-<li>Allowing the <a href="#nested-fence-format">nesting of fences</a> under blockquotes, lists, or other block elements (see <a href="#limitations">Limitations</a> for more info).</li>
+<li>Allowing the <a href="#nested-fence-format">nesting of fences</a> under blockquotes, lists, or other block elements (see
+  <a href="#limitations">Limitations</a> for more info).</li>
 <li>Create <a href="#tabbed-fences">tabbed fenced code blocks</a>.</li>
-<li>Ability to specify <a href="#custom-fences">custom fences</a> to provide features like flowcharts, sequence diagrams, or other custom blocks.</li>
+<li>Ability to specify <a href="#custom-fences">custom fences</a> to provide features like flowcharts, sequence diagrams, or other
+  custom blocks.</li>
 <li>Allow disabling of indented code blocks in favor of only using the fenced variant (off by default).</li>
-<li>Experimental feature that preserves tabs within a code block instead of converting them to spaces which is Python Markdown's default behavior.</li>
+<li>Experimental feature that preserves tabs within a code block instead of converting them to spaces which is Python
+  Markdown's default behavior.</li>
 </ol>
 <div class="admonition danger">
 <p class="admonition-title">Reminder</p>
-<p>Remember to read the <a href="../../usage_notes/">Usage Notes</a> for information that may be relevant when using this extension!</p>
+<p>Remember to read the <a href="../../usage_notes/">Usage Notes</a> for information that may be relevant when using this
+extension!</p>
 </div>
+<p>The SuperFences extension can be included in Python Markdown by using the following:</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.superfences&#39;</span><span class="p">])</span>
+</pre></div>
+
 <h2 id="nested-fence-format">Nested Fence Format<a class="headerlink" href="#nested-fence-format" title="Permanent link"></a></h2>
 <ol>
 <li>
 <p>Start and end fence boundaries are specified with either 3 or more backticks or tildes.</p>
 </li>
 <li>
-<p>Start and end fence boundaries must both use matching symbols (backticks or tildes) and must be of the same number of symbols.  If start is 3 backticks, the fence will end with 3 backticks.</p>
+<p>Start and end fence boundaries must both use matching symbols (backticks or tildes) and must be of the same number of
+  symbols.  If start is 3 backticks, the fence will end with 3 backticks.</p>
 </li>
 <li>
 <p>Start and end fence boundaries must be aligned to the same indentation level.</p>
 </li>
 <li>
-<p>Content between fences must be indented at least the same amount as the start and end boundaries.  Empty lines are exempted.</p>
+<p>Content between fences must be indented at least the same amount as the start and end boundaries.  Empty lines are
+  exempted.</p>
 </li>
 <li>
-<p>If you are using a fenced block inside a blockquote, at the very least, the first line of the fenced block needs to have the appropriate number of <code>&gt;</code> characters signifying the quote depth.</p>
+<p>If you are using a fenced block inside a blockquote, at the very least, the first line of the fenced block needs to
+  have the appropriate number of <code>&gt;</code> characters signifying the quote depth.</p>
 <div class="codehilite"><pre><span></span>&gt; ```
   a fenced block
   ```
@@ -998,7 +1010,8 @@
 
 </li>
 <li>
-<p>Too many blank lines will cause a blockquote to terminate, so remember to use <code>&gt;</code> markers accordingly if not marking every line.</p>
+<p>Too many blank lines will cause a blockquote to terminate, so remember to use <code>&gt;</code> markers accordingly if not marking
+  every line.</p>
 <div class="codehilite"><pre><span></span>&gt; ```
   a fenced block
 
@@ -1008,7 +1021,8 @@
 
 </li>
 <li>
-<p>If using a fenced block as the first line of a list, you will have to leave the first line blank, but remember that the list marker must be followed by a space.</p>
+<p>If using a fenced block as the first line of a list, you will have to leave the first line blank, but remember that
+  the list marker must be followed by a space.</p>
 <div class="codehilite"><pre><span></span>-&lt;space&gt;
     ```
     a fenced block
@@ -1036,7 +1050,10 @@ Another paragraph.
 </li>
 </ol>
 <h2 id="tabbed-fences">Tabbed Fences<a class="headerlink" href="#tabbed-fences" title="Permanent link"></a></h2>
-<p>SuperFences has the ability to create tabbed code blocks.  Simply add <code>tab="tab-title"</code> to the fence's header, and the code block will will be rendered in a tab with the title <code>tab-title</code>.  If you do not provide a title with either <code>tab=</code> or <code>tab=""</code>, but you've specified a language, the language will be used as the title. No case transformation is applied &ndash; what you type is what you get. Consecutive code tabs will be grouped together.</p>
+<p>SuperFences has the ability to create tabbed code blocks.  Simply add <code>tab="tab-title"</code> to the fence's header, and the
+code block will will be rendered in a tab with the title <code>tab-title</code>.  If you do not provide a title with either <code>tab=</code>
+or <code>tab=""</code>, but you've specified a language, the language will be used as the title. No case transformation is applied
+&ndash; what you type is what you get. Consecutive code tabs will be grouped together.</p>
 <div class="admonition example">
 <p class="admonition-title">Tabbed Code</p>
 <div class="codehilite"><pre><span></span>```Bash tab=
@@ -1109,7 +1126,9 @@ class Program {
 </pre></div></div>
 </div>
 </div>
-<p>In order to use tabbed code blocks, some additional CSS is needed. You can check out the configuration below which will show the CSS and the HTML it targets. Keep in mind the CSS is just the minimum to get you started. You can tweak it and modify it to get it how you like it.</p>
+<p>In order to use tabbed code blocks, some additional CSS is needed. You can check out the configuration below which will
+show the CSS and the HTML it targets. Keep in mind the CSS is just the minimum to get you started. You can tweak it and
+modify it to get it how you like it.</p>
 <details class="settings"><summary>Tabbed Code Setup</summary><div class="superfences-tabs">
 <input name="__tabs_2" type="radio" id="__tab_2_0" checked="checked" />
 <label for="__tab_2_0">HTML</label>
@@ -1170,7 +1189,9 @@ class Program {
 </div>
 </details>
 <h2 id="preserve-tabs">Preserve tabs<a class="headerlink" href="#preserve-tabs" title="Permanent link"></a></h2>
-<p>Python Markdown has an approach where it normalizes whitespace. This means <code>\r\n</code> is converted to <code>\n</code> and <code>\t</code> is converted to spaces. In 99% of Markdown, this is never really an issue, but with code blocks it can be. Tabs can sometimes be very useful for aligning certain kinds of data, especially when dealing with characters of varying width.</p>
+<p>Python Markdown has an approach where it normalizes whitespace. This means <code>\r\n</code> is converted to <code>\n</code> and <code>\t</code> is
+converted to spaces. In 99% of Markdown, this is never really an issue, but with code blocks it can be. Tabs can
+sometimes be very useful for aligning certain kinds of data, especially when dealing with characters of varying width.</p>
 <div class="admonition example">
 <p class="admonition-title">Tabs in Content</p>
 <div class="codehilite"><pre><span></span>============================================================
@@ -1182,12 +1203,25 @@ B♭	Gm	Cm	F	Dm	E♭m	F7	B♭
 </pre></div>
 
 </div>
-<p>If you have a scenario where preserving tabs is a requirement, you can use SuperFences <code>preserve_tabs</code> option to prevent converting tabs to spaces inside fenced code blocks. This <em>only</em> applies to fenced code blocks. Indented code blocks and inline code blocks will still be treated with Python Markdown's default behavior.</p>
-<p>This feature is experimental and actually applies the fences before whitespace normalization and bypasses the normalization for the code content.</p>
+<p>If you have a scenario where preserving tabs is a requirement, you can use SuperFences <code>preserve_tabs</code> option to prevent
+converting tabs to spaces inside fenced code blocks. This <em>only</em> applies to fenced code blocks. Indented code blocks and
+inline code blocks will still be treated with Python Markdown's default behavior.</p>
+<p>This feature is experimental and actually applies the fences before whitespace normalization and bypasses the
+normalization for the code content.</p>
 <h2 id="code-highlighting">Code Highlighting<a class="headerlink" href="#code-highlighting" title="Permanent link"></a></h2>
-<p>Assuming Pygments is installed, code highlighting will be handled by <a href="http://pygments.org/">Pygments</a> by default. If Pygments is not installed, or disabled, code blocks will be created using HTML5 style tags for a JavaScript syntax highlighter: <code class="codehilite"><span class="p">&lt;</span><span class="nt">pre</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;highlight&quot;</span><span class="p">&gt;&lt;</span><span class="nt">code</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;language-mylanguage&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">code</span><span class="p">&gt;&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span></code>. If you disable <code>highlight_code</code>, specified languages will be ignored, and the content will be wrapped in a simple <code>pre</code> and <code>code</code> tags with no classes.</p>
-<p>Highlighting can be further controlled if either the <code>pymdownx.highlight</code> extension is used or if Python Markdown's CodeHilite is used. If CodeHilite is configured, it's settings will be used to configure highlighting, but CodeHilite support is deprecated and will be removed in the next major release. It is recommended to instead use <a href="../highlight/"><code>pymdownx.highlight</code></a> extension. If <code>pymdownx.highlight</code> is included and configured, CodeHilite will be ignored.</p>
-<p>When using fenced code blocks, you can specify a specific syntax language to highlight with by specifying the language name directly after the opening tokens (either <code>```</code> or <code>~~~</code>). Whether using Pygments or some other JavaScript highlighter, the syntax is the same, but please consult your highlighter's documentation for recognized language syntax specifiers.</p>
+<p>Assuming Pygments is installed, code highlighting will be handled by <a href="http://pygments.org/">Pygments</a> by default. If Pygments is not
+installed, or disabled, code blocks will be created using HTML5 style tags for a JavaScript syntax highlighter:
+<code class="codehilite"><span class="p">&lt;</span><span class="nt">pre</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;highlight&quot;</span><span class="p">&gt;&lt;</span><span class="nt">code</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;language-mylanguage&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">code</span><span class="p">&gt;&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span></code>. If you disable <code>highlight_code</code>,
+specified languages will be ignored, and the content will be wrapped in a simple <code>pre</code> and <code>code</code> tags with no classes.</p>
+<p>Highlighting can be further controlled if either the <code>pymdownx.highlight</code> extension is used or if Python Markdown's
+CodeHilite is used. If CodeHilite is configured, it's settings will be used to configure highlighting, but CodeHilite
+support is deprecated and will be removed in the next major release. It is recommended to instead use
+<a href="../highlight/"><code>pymdownx.highlight</code></a> extension. If <code>pymdownx.highlight</code> is included and configured, CodeHilite will be
+ignored.</p>
+<p>When using fenced code blocks, you can specify a specific syntax language to highlight with by specifying the language
+name directly after the opening tokens (either <code>```</code> or <code>~~~</code>). Whether using Pygments or some other JavaScript
+highlighter, the syntax is the same, but please consult your highlighter's documentation for recognized language syntax
+specifiers.</p>
 <div class="admonition example">
 <p class="admonition-title">Highlight Example</p>
 <div class="superfences-tabs">
@@ -1204,8 +1238,12 @@ import foo.bar
 </div>
 </div>
 <h2 id="showing-line-numbers">Showing Line Numbers<a class="headerlink" href="#showing-line-numbers" title="Permanent link"></a></h2>
-<p>Line numbers are provided via Pygments and can either be shown per code block or globally for all. To show globally via CodeHilite or <code>pymdownx.highlight</code>, you must set <code>linenums</code> to <code class="codehilite"><span class="kc">True</span></code> in the respective extension.</p>
-<p>To set line numbers per code block, you can specify a special setting directly after the opening tokens (and language if present). Simply specify the starting line line number with option <code>linenums="1"</code>. The setting is followed by the equal sign and the value must be quoted.  Valid line numbers are n &gt; 0.  If <code>linenums</code> is enabled globally, this will just control the starting line shown in the block.</p>
+<p>Line numbers are provided via Pygments and can either be shown per code block or globally for all. To show globally via
+CodeHilite or <code>pymdownx.highlight</code>, you must set <code>linenums</code> to <code class="codehilite"><span class="kc">True</span></code> in the respective extension.</p>
+<p>To set line numbers per code block, you can specify a special setting directly after the opening tokens (and language if
+present). Simply specify the starting line line number with option <code>linenums="1"</code>. The setting is followed by the equal
+sign and the value must be quoted.  Valid line numbers are n &gt; 0.  If <code>linenums</code> is enabled globally, this will just
+control the starting line shown in the block.</p>
 <div class="admonition example">
 <p class="admonition-title">Line Number Example</p>
 <div class="superfences-tabs">
@@ -1221,8 +1259,12 @@ import foo.bar
 </pre></div></div>
 </div>
 </div>
-<p>Pygments also has a few additional options in regards to line numbers. One is "line step" which, if set to a number n &gt; 1, will print only every n<sup>th</sup> line number. The other option is a setting that can mark line numbers as "special" with a span and class <code>special</code>. If the special parameter is set to a number n &gt; 0, every n<sup>th</sup> line number is given the CSS class <code>special</code>.</p>
-<p>So to set showing only every other line number, we could do the following. Line options are separated by a space, and "line step" is always the second option, so you must specify line start before line step.</p>
+<p>Pygments also has a few additional options in regards to line numbers. One is "line step" which, if set to a number n &gt;
+1, will print only every n<sup>th</sup> line number. The other option is a setting that can mark line numbers as "special" with a
+span and class <code>special</code>. If the special parameter is set to a number n &gt; 0, every n<sup>th</sup> line number is given the CSS
+class <code>special</code>.</p>
+<p>So to set showing only every other line number, we could do the following. Line options are separated by a space, and
+"line step" is always the second option, so you must specify line start before line step.</p>
 <div class="admonition example">
 <p class="admonition-title">Nth Line Example</p>
 <div class="superfences-tabs">
@@ -1244,7 +1286,8 @@ import foo.bar.baz
 </pre></div></div>
 </div>
 </div>
-<p>To set every other line as special, you must set the third <code>linenums</code> option (specify line start and step before it). Special must be a value of n &gt; 0.</p>
+<p>To set every other line as special, you must set the third <code>linenums</code> option (specify line start and step before it).
+Special must be a value of n &gt; 0.</p>
 <div class="admonition example">
 <p class="admonition-title">Special Line Example</p>
 <div class="superfences-tabs">
@@ -1266,9 +1309,13 @@ import foo.bar.baz
 </pre></div></div>
 </div>
 </div>
-<p>For JavaScript libraries, a class of <code>linenums</code> is written to the block.  This may or may not be leveraged by your chosen highlighter.  It is uncertain at this time whether line number support for JavaScript highlighters will be enhanced beyond this.</p>
+<p>For JavaScript libraries, a class of <code>linenums</code> is written to the block.  This may or may not be leveraged by your
+chosen highlighter.  It is uncertain at this time whether line number support for JavaScript highlighters will be
+enhanced beyond this.</p>
 <h2 id="highlighting-lines">Highlighting Lines<a class="headerlink" href="#highlighting-lines" title="Permanent link"></a></h2>
-<p>Via Pygments, certain lines can be specified for highlighting.  This is done by specifying a special setting directly after the opening tokens (and language if present).  The setting is named <code>hl_lines</code> and the value should be the targeted line numbers separated by spaces.</p>
+<p>Via Pygments, certain lines can be specified for highlighting.  This is done by specifying a special setting directly
+after the opening tokens (and language if present).  The setting is named <code>hl_lines</code> and the value should be the
+targeted line numbers separated by spaces.</p>
 <div class="admonition example">
 <p class="admonition-title">Highlight Lines Example</p>
 <div class="superfences-tabs">
@@ -1370,8 +1417,12 @@ C-&gt;&gt;D: Open arrow
 D--&gt;&gt;A: Dashed open arrow</code></pre></div>
 </div>
 </div>
-<p>As shown above, SuperFences defines two default custom fences (which can be removed if desired) called <code>flow</code> and <code>sequence</code>, for flowcharts and sequence diagrams respectively. The default custom fences simply preserve the content between the fences so a JavaScript UML library can convert the content and render the UML. To see <em>exactly</em> how to set up UML like in this documentation, see <a href="#uml-diagram-example">UML Diagram Example</a>.</p>
-<p>Custom fences are created via the <code>custom_fences</code> option.  <code>custom_fences</code> takes an array of dictionaries where each dictionary defines a custom fence. The dictionaries requires the following keys:</p>
+<p>As shown above, SuperFences defines two default custom fences (which can be removed if desired) called <code>flow</code> and
+<code>sequence</code>, for flowcharts and sequence diagrams respectively. The default custom fences simply preserve the content
+between the fences so a JavaScript UML library can convert the content and render the UML. To see <em>exactly</em> how to set
+up UML like in this documentation, see <a href="#uml-diagram-example">UML Diagram Example</a>.</p>
+<p>Custom fences are created via the <code>custom_fences</code> option.  <code>custom_fences</code> takes an array of dictionaries where each
+dictionary defines a custom fence. The dictionaries requires the following keys:</p>
 <table>
 <thead>
 <tr>
@@ -1418,7 +1469,9 @@ D--&gt;&gt;A: Dashed open arrow</code></pre></div>
 </tr>
 </tbody>
 </table>
-<p>In general, formatters take five parameters: the source found between the fences, the specified language, the class name originally defined via the <code>class</code> option in the <code>custom_fence</code> entry, custom options, and the Markdown object (in case you want access to meta data etc.).</p>
+<p>In general, formatters take five parameters: the source found between the fences, the specified language, the class name
+originally defined via the <code>class</code> option in the <code>custom_fence</code> entry, custom options, and the Markdown object (in case
+you want access to meta data etc.).</p>
 <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">custom_formatter</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span> <span class="n">css_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">md</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">string</span>
 </pre></div>
@@ -1426,11 +1479,15 @@ D--&gt;&gt;A: Dashed open arrow</code></pre></div>
 <p>All formatters should return a string as HTML.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>If you are attempting to configure these options in a YAML based configuration (like in <a href="https://github.com/mkdocs/mkdocs">MkDocs</a>), please see the <a href="../../faq/#function-references-in-yaml">FAQ</a> to see how to specify function references in YAML.</p>
+<p>If you are attempting to configure these options in a YAML based configuration (like in <a href="https://github.com/mkdocs/mkdocs">MkDocs</a>), please
+see the <a href="../../faq/#function-references-in-yaml">FAQ</a> to see how to specify function references in YAML.</p>
 </div>
 <h3 id="validators">Validators<a class="headerlink" href="#validators" title="Permanent link"></a></h3>
-<p>The <code>validator</code> is used to provide functions that accept or reject provided fence options. The validator is sent two parameters: the language defined in the fence, and a dictionary of options to validate.</p>
-<p>Custom options can be used as keys with quoted values (<code>key="value"</code>), or as keys with no value which are used more as a boolean (<code>key=</code>). SuperFences will parse the options in the fence and then pass them to the validator. If the validator returns true, the options will be accepted and later passed to the formatter.</p>
+<p>The <code>validator</code> is used to provide functions that accept or reject provided fence options. The validator is sent two
+parameters: the language defined in the fence, and a dictionary of options to validate.</p>
+<p>Custom options can be used as keys with quoted values (<code>key="value"</code>), or as keys with no value which are used more as a
+boolean (<code>key=</code>). SuperFences will parse the options in the fence and then pass them to the validator. If the validator
+returns true, the options will be accepted and later passed to the formatter.</p>
 <p>This custom fence:</p>
 <div class="codehilite"><pre><span></span>```custom_fence custom_option=&quot;value&quot; other_custom_option=
 content
@@ -1444,7 +1501,8 @@ content
 <span class="p">}</span>
 </pre></div>
 
-<p>For a contrived example: if we wanted to define a custom fence named <code>test</code> that accepts an option <code>opt</code> that can only be assigned a value of <code>A</code>, we would write the following validator:</p>
+<p>For a contrived example: if we wanted to define a custom fence named <code>test</code> that accepts an option <code>opt</code> that can only
+be assigned a value of <code>A</code>, we would write the following validator:</p>
 <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">custom_validator</span><span class="p">(</span><span class="n">language</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Custom validator.&quot;&quot;&quot;</span>
 
@@ -1474,10 +1532,16 @@ test
 
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
-<p>If you are attempting to configure these options in a YAML based configuration (like in <a href="https://github.com/mkdocs/mkdocs">MkDocs</a>), please see the <a href="../../faq/#function-references-in-yaml">FAQ</a> to see how to specify function references in YAML.</p>
+<p>If you are attempting to configure these options in a YAML based configuration (like in <a href="https://github.com/mkdocs/mkdocs">MkDocs</a>), please
+see the <a href="../../faq/#function-references-in-yaml">FAQ</a> to see how to specify function references in YAML.</p>
 </div>
 <h3 id="uml-diagram-example">UML Diagram Example<a class="headerlink" href="#uml-diagram-example" title="Permanent link"></a></h3>
-<p>This example illustrates how this document uses the <code>custom_fences</code> option to do UML diagrams.  The settings below shows two new custom languages called <code>flow</code> and <code>sequence</code> and are the options that must be fed through the <code>custom_fences</code> <a href="#options">option</a>. The <code>flow</code> and <code>sequence</code> fences will pass the content through the <code>superfences.fence_code_format</code> format function which will wrap the content in <code class="codehilite"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">code</span></code> blocks and attach the class <code>uml-flowchart</code> or <code>uml-sequence-diagram</code> to the respective <code class="codehilite"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;</span></code> block. <code>superfences.fence_div_format</code> could just as easily be used to wrap the content in a <code class="codehilite"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span></code> instead, or a new custom function could have been written and used.</p>
+<p>This example illustrates how this document uses the <code>custom_fences</code> option to do UML diagrams.  The settings below shows
+two new custom languages called <code>flow</code> and <code>sequence</code> and are the options that must be fed through the <code>custom_fences</code>
+<a href="#options">option</a>. The <code>flow</code> and <code>sequence</code> fences will pass the content through the <code>superfences.fence_code_format</code>
+format function which will wrap the content in <code class="codehilite"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">code</span></code> blocks and attach the class <code>uml-flowchart</code> or
+<code>uml-sequence-diagram</code> to the respective <code class="codehilite"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;</span></code> block. <code>superfences.fence_div_format</code> could just as easily be
+used to wrap the content in a <code class="codehilite"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span></code> instead, or a new custom function could have been written and used.</p>
 <div class="codehilite"><pre><span></span><span class="n">extension_configs</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;pymdownx.superfences&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;custom_fences&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -1496,8 +1560,14 @@ test
 <span class="p">}</span>
 </pre></div>
 
-<p>As defined above, the custom UML diagrams are recognized when defining a fenced code block with either the language <code>flow</code> or <code>sequence</code>.  When they are converted, the HTML element containing this content will have the respective classes <code>uml-flowchart</code> or <code>uml-sequence-diagram</code>. The format function we used in this example only escapes the content to be included in HTML. We will rely on JavaScript libraries to render our flowcharts/diagrams in the browser.</p>
-<p>The JavaScript libraries used to render UML in this document are <a href="http://adrai.github.io/flowchart.js/">flowchart.js</a> and <a href="http://bramp.github.io/js-sequence-diagrams/">sequence-diagram.js</a>. This extension does not provide these JavaScript libraries; you must provide the necessary JavaScript files for your custom fences yourself. If you wish to follow along with this example to enable UML, see the requirements below.</p>
+<p>As defined above, the custom UML diagrams are recognized when defining a fenced code block with either the language
+<code>flow</code> or <code>sequence</code>.  When they are converted, the HTML element containing this content will have the respective
+classes <code>uml-flowchart</code> or <code>uml-sequence-diagram</code>. The format function we used in this example only escapes the content
+to be included in HTML. We will rely on JavaScript libraries to render our flowcharts/diagrams in the browser.</p>
+<p>The JavaScript libraries used to render UML in this document are <a href="http://adrai.github.io/flowchart.js/">flowchart.js</a> and
+<a href="http://bramp.github.io/js-sequence-diagrams/">sequence-diagram.js</a>. This extension does not provide these JavaScript libraries; you must provide
+the necessary JavaScript files for your custom fences yourself. If you wish to follow along with this example to enable
+UML, see the requirements below.</p>
 <dl>
 <dt>flowcharts</dt>
 <dd>
@@ -1523,10 +1593,25 @@ test
 <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </pre></div>
 
-<p>Simply including the libraries above is not enough as these libraries need to be pointed at the elements they need to convert.  Also, we need to configure the libraries with the settings we would like.</p>
-<p>As mentioned earlier, our flowchart elements have the <code>uml-flowchart</code> class assigned to them, and the sequence diagram elements have the <code>uml-sequence-diagram</code> class assigned to them. Below shows an example script to convert the UML diagrams for both flowcharts and sequence diagrams using the listed libraries above. This script will target the elements with the classes <code>uml-flowchart</code> and <code>uml-sequence-diagram</code>. The script will pass the content to the correct library to render the content.  It will then insert the rendered UML and remove the original source. This is just an example, and you are not required to use the following script. You are free to modify the example script or write your own to suite your specific custom fence.</p>
-<p>In the below example we create an <code>onReady</code> function to execute the conversion when the HTML is loaded.  We create a <code>convertUML</code> function that takes the class name to search for, the converter to use, and a settings object to feed into the converter.  We then call <code>onReady</code> and feed it a callback function that will execute <code>convertUML</code> for flowcharts and for sequence diagrams. Notice that <code>convertUML</code> can handle both the <code class="codehilite"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">code</span><span class="p">&gt;</span></code> format or the <code class="codehilite"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span></code> format we mentioned earlier.</p>
-<p>The actual <code>convertUML</code> function reads UML instructions from our element and sticks it in a div that gets appended to our main HTML content (in this case we look for the the <code>body</code> tag, but it could be anything). We don't want to do it in place where our UML instructions are because it might be under an element that is hiding it with <code>display: none</code> (like a <code>details</code> tag); it won't render correctly if its parent is not displayed.  After we render the SVG, we insert it back where it belongs throwing away the original element that had the instructions.</p>
+<p>Simply including the libraries above is not enough as these libraries need to be pointed at the elements they need to
+convert.  Also, we need to configure the libraries with the settings we would like.</p>
+<p>As mentioned earlier, our flowchart elements have the <code>uml-flowchart</code> class assigned to them, and the sequence diagram
+elements have the <code>uml-sequence-diagram</code> class assigned to them. Below shows an example script to convert the UML
+diagrams for both flowcharts and sequence diagrams using the listed libraries above. This script will target the
+elements with the classes <code>uml-flowchart</code> and <code>uml-sequence-diagram</code>. The script will pass the content to the correct
+library to render the content.  It will then insert the rendered UML and remove the original source. This is just an
+example, and you are not required to use the following script. You are free to modify the example script or write your
+own to suite your specific custom fence.</p>
+<p>In the below example we create an <code>onReady</code> function to execute the conversion when the HTML is loaded.  We create a
+<code>convertUML</code> function that takes the class name to search for, the converter to use, and a settings object to feed into
+the converter.  We then call <code>onReady</code> and feed it a callback function that will execute <code>convertUML</code> for flowcharts and
+for sequence diagrams. Notice that <code>convertUML</code> can handle both the <code class="codehilite"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">code</span><span class="p">&gt;</span></code> format or the <code class="codehilite"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span></code>
+format we mentioned earlier.</p>
+<p>The actual <code>convertUML</code> function reads UML instructions from our element and sticks it in a div that gets appended to
+our main HTML content (in this case we look for the the <code>body</code> tag, but it could be anything). We don't want to do it in
+place where our UML instructions are because it might be under an element that is hiding it with <code>display: none</code> (like a
+<code>details</code> tag); it won't render correctly if its parent is not displayed.  After we render the SVG, we insert it back
+where it belongs throwing away the original element that had the instructions.</p>
 <div class="codehilite"><pre><span></span><span class="lineno" data-linenos=" 1 "></span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 <span class="lineno" data-linenos=" 2 "></span><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
 <span class="lineno" data-linenos=" 3 "></span>
@@ -1626,10 +1711,17 @@ test
 </pre></div>
 
 <h2 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link"></a></h2>
-<p>This extension suffers from the same issues that the original fenced block extension suffers from.  Normally Python Markdown does not parse content inside HTML tags unless they are marked with the attribute <code>markdown='1'</code>.  But since this is run as a preprocessor, it is not aware of the HTML blocks.</p>
-<p>SuperFences is made to work with the default extensions out of the box.  It will probably not work with other extensions such as Grid Tables, since that extension allows for characters to obscure the blocks like the blockquote syntax does (though this has been designed to work with blockquotes).  Ideally fenced blocks need to be handled by a block parser, but there is much work to be done on Python Markdown's internal block handlers before this is possible.</p>
-<p>SuperFences works best when following the guidelines.  If the guidelines are not followed, odd results may be encountered.</p>
-<p>For the reasons above, the nested fences feature really is just a workaround.  But for a lot of people, this functionality is more than sufficient.</p>
+<p>This extension suffers from the same issues that the original fenced block extension suffers from.  Normally Python
+Markdown does not parse content inside HTML tags unless they are marked with the attribute <code>markdown='1'</code>.  But since
+this is run as a preprocessor, it is not aware of the HTML blocks.</p>
+<p>SuperFences is made to work with the default extensions out of the box.  It will probably not work with other extensions
+such as Grid Tables, since that extension allows for characters to obscure the blocks like the blockquote syntax does
+(though this has been designed to work with blockquotes).  Ideally fenced blocks need to be handled by a block parser,
+but there is much work to be done on Python Markdown's internal block handlers before this is possible.</p>
+<p>SuperFences works best when following the guidelines.  If the guidelines are not followed, odd results may be
+encountered.</p>
+<p>For the reasons above, the nested fences feature really is just a workaround.  But for a lot of people, this
+functionality is more than sufficient.</p>
 <h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
 <table>
 <thead>
@@ -1682,6 +1774,7 @@ test
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script>
                 
                   
+                
                 
               
               
@@ -1737,7 +1830,7 @@ test
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2018 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1763,7 +1856,7 @@ test
       
     </div>
     
-      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
+      <script src="../../assets/javascripts/application.808e90bb.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

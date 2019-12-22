@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,12 +55,12 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
@@ -811,7 +811,8 @@
                 
                 <h1 id="tasklist">Tasklist<a class="headerlink" href="#tasklist" title="Permanent link"></a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
-<p>The Tasklist extension adds <abbr title="GitHub Flavored Markdown">GFM</abbr> style task lists.  They follow the same syntax as <abbr title="GitHub Flavored Markdown">GFM</abbr>. Simply start each list item with a square bracket pair containing either a space (an unchecked item) or a <code>x</code> (a checked item).</p>
+<p>The Tasklist extension adds <abbr title="GitHub Flavored Markdown">GFM</abbr> style task lists.  They follow the same syntax as <abbr title="GitHub Flavored Markdown">GFM</abbr>. Simply start each list item with
+a square bracket pair containing either a space (an unchecked item) or a <code>x</code> (a checked item).</p>
 <div class="admonition example">
 <p class="admonition-title">Task List Example</p>
 <p>All task lists in this documentation are generated with <a href="#options"><code>custom_checkbox</code></a> enabled.</p>
@@ -847,6 +848,11 @@
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> item 3</li>
 </ul>
 </div>
+<p>The Tasklist extension can be included in Python Markdown by using the following:</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.tasklist&#39;</span><span class="p">])</span>
+</pre></div>
+
 <h2 id="css">CSS<a class="headerlink" href="#css" title="Permanent link"></a></h2>
 <p>The default HTML structure of a task list is found below:</p>
 <div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list&quot;</span><span class="p">&gt;</span>
@@ -869,7 +875,8 @@
 <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
 </pre></div>
 
-<p>If <code>clickable_checkbox</code> is enabled, user interaction will be allowed by removing the <code>disabled</code> attribute from the <code>input</code> element:</p>
+<p>If <code>clickable_checkbox</code> is enabled, user interaction will be allowed by removing the <code>disabled</code> attribute from the
+<code>input</code> element:</p>
 <div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list&quot;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list-item&quot;</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list-control&quot;</span><span class="p">&gt;</span>
@@ -907,7 +914,8 @@
 </tr>
 </tbody>
 </table>
-<details class="settings"><summary>Basic Tasklist CSS</summary><p>In order to style these we mainly remove the list type style and adjust the margins to align with normal list styles.</p>
+<details class="settings"><summary>Basic Tasklist CSS</summary><p>In order to style these we mainly remove the list type style and adjust the margins to align with normal list
+styles.</p>
 <div class="codehilite"><pre><span></span><span class="p">.</span><span class="nc">markdown-body</span> <span class="p">.</span><span class="nc">task-list-item</span> <span class="p">{</span>
   <span class="k">list-style-type</span><span class="p">:</span> <span class="kc">none</span> <span class="cp">!important</span><span class="p">;</span>
 <span class="p">}</span>
@@ -919,7 +927,9 @@
 </pre></div>
 
 </details>
-<details class="settings"><summary>Custom Tasklist CSS</summary><p>If custom check box icons are desired, custom styles can be used to give a unique look to the check marks.  Below is a very simple CSS example that creates a light gray square with rounded corners and displays a green Unicode check mark when the control is checked.  This can be adapted to use web fonts, images, etc.</p>
+<details class="settings"><summary>Custom Tasklist CSS</summary><p>If custom check box icons are desired, custom styles can be used to give a unique look to the check marks.  Below is
+a very simple CSS example that creates a light gray square with rounded corners and displays a green Unicode check
+mark when the control is checked.  This can be adapted to use web fonts, images, etc.</p>
 <div class="codehilite"><pre><span></span><span class="p">.</span><span class="nc">markdown-body</span> <span class="p">.</span><span class="nc">task-list-item</span> <span class="p">{</span>
   <span class="k">list-style-type</span><span class="p">:</span> <span class="kc">none</span> <span class="cp">!important</span><span class="p">;</span>
 <span class="p">}</span>
@@ -998,6 +1008,7 @@
                 
                   
                 
+                
               
               
                 
@@ -1052,7 +1063,7 @@
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2018 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1078,7 +1089,7 @@
       
     </div>
     
-      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
+      <script src="../../assets/javascripts/application.808e90bb.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

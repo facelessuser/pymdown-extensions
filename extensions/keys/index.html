@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,12 +55,12 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
@@ -1005,7 +1005,8 @@
                 
                 <h1 id="keys">Keys<a class="headerlink" href="#keys" title="Permanent link"></a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
-<p>Keys is an extension to make entering and styling keyboard key presses easier. Syntactically, Keys is built around the <code>+</code> symbol.  A key or combination of key presses is surrounded by <code>++</code> with each key press separated with a single <code>+</code>.</p>
+<p>Keys is an extension to make entering and styling keyboard key presses easier. Syntactically, Keys is built around the
+<code>+</code> symbol.  A key or combination of key presses is surrounded by <code>++</code> with each key press separated with a single <code>+</code>.</p>
 <div class="admonition example">
 <p class="admonition-title">Keys Example</p>
 <div class="codehilite"><pre><span></span>++ctrl+alt+delete++
@@ -1013,8 +1014,14 @@
 
 <p><span class="keys"><kbd class="key-control">Ctrl</kbd><span>＋</span><kbd class="key-alt">Alt</kbd><span>＋</span><kbd class="key-delete">Del</kbd></span>.</p>
 </div>
+<p>The Keys extension can be included in Python Markdown by using the following:</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.keys&#39;</span><span class="p">])</span>
+</pre></div>
+
 <h2 id="formatting">Formatting<a class="headerlink" href="#formatting" title="Permanent link"></a></h2>
-<p>By default, Keys outputs keys in the form (separator <code>span</code>s will be omitted if a separator is not provided via the <a href="#options">options</a>):</p>
+<p>By default, Keys outputs keys in the form (separator <code>span</code>s will be omitted if a separator is not provided via the
+<a href="#options">options</a>):</p>
 <div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;keys&quot;</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">kbd</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;key-ctrl&quot;</span><span class="p">&gt;</span>Ctrl<span class="p">&lt;/</span><span class="nt">kbd</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>+<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
@@ -1037,7 +1044,8 @@
 <p><span class="keys"><kbd class="key-command">Cmd</kbd><span>＋</span><kbd class="key-alt">Alt</kbd><span>＋</span><kbd>Ü</kbd></span></p>
 </div>
 <h2 id="strict-kbd-output">Strict <code>KBD</code> Output<a class="headerlink" href="#strict-kbd-output" title="Permanent link"></a></h2>
-<p>According to HTML5 spec on <a href="https://dev.w3.org/html5/spec-preview/the-kbd-element.html"><code>kbd</code></a>, a literal key input, is represented by a <code>kbd</code> wrapped the other <code>kbd</code>s:</p>
+<p>According to HTML5 spec on <a href="https://dev.w3.org/html5/spec-preview/the-kbd-element.html"><code>kbd</code></a>, a literal key input, is
+represented by a <code>kbd</code> wrapped the other <code>kbd</code>s:</p>
 <div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">kbd</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;keys&quot;</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">kbd</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;key-ctrl&quot;</span><span class="p">&gt;</span>Ctrl<span class="p">&lt;/</span><span class="nt">kbd</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>+<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
@@ -1047,9 +1055,12 @@
 <span class="p">&lt;/</span><span class="nt">kbd</span><span class="p">&gt;</span>
 </pre></div>
 
-<p>This is not how many people traditionally use <code>kbd</code>s for key inputs, but if you are a stickler for rules, you can enable the <code>strict</code> option to use a more "proper" format.</p>
+<p>This is not how many people traditionally use <code>kbd</code>s for key inputs, but if you are a stickler for rules, you can enable
+the <code>strict</code> option to use a more "proper" format.</p>
 <h2 id="key-map-index">Key-Map Index<a class="headerlink" href="#key-map-index" title="Permanent link"></a></h2>
-<p>By default, Keys provides a key-map index for English US keyboards. The key-map index is a dictionary that provides all supported key names (which are used as the class in output class <code>key-&lt;name&gt;</code>) with their corresponding display text.  There is also a separate alias dictionary which maps some aliases to entries in the key-map index.</p>
+<p>By default, Keys provides a key-map index for English US keyboards. The key-map index is a dictionary that provides all
+supported key names (which are used as the class in output class <code>key-&lt;name&gt;</code>) with their corresponding display text.
+There is also a separate alias dictionary which maps some aliases to entries in the key-map index.</p>
 <h3 id="alphanumeric-and-space-keys">Alphanumeric and Space Keys<a class="headerlink" href="#alphanumeric-and-space-keys" title="Permanent link"></a></h3>
 <table>
 <thead>
@@ -2031,8 +2042,12 @@
 </tbody>
 </table>
 <h2 id="extendingmodifying-key-map-index">Extending/Modifying Key-Map Index<a class="headerlink" href="#extendingmodifying-key-map-index" title="Permanent link"></a></h2>
-<p>If you want to add additional keys, or override text of existing keys, you can feed in your keys via the <code>key_map</code> option. The <code>key_map</code> parameter takes a simple dictionary with <em>key names</em> that are represented by lowercase alphanumeric characters and hyphens (<code>-</code>). The values of the dictionary represent the the text that is displayed for the key in the HTML output.</p>
-<p>So if you wanted to add a custom key, you could do this: <code class="codehilite"><span class="p">{</span><span class="s2">&quot;custom&quot;</span><span class="p">:</span> <span class="s2">&quot;Custom Key&quot;</span><span class="p">}</span></code>.  If you wanted to override the output of the <code>option</code> key and change it from <code>Option</code> to <code>Opt</code>, you could do this: <code class="codehilite"><span class="p">{</span><span class="s2">&quot;option&quot;</span><span class="p">:</span> <span class="s2">&quot;Opt&quot;</span><span class="p">}</span></code>.</p>
+<p>If you want to add additional keys, or override text of existing keys, you can feed in your keys via the <code>key_map</code>
+option. The <code>key_map</code> parameter takes a simple dictionary with <em>key names</em> that are represented by lowercase
+alphanumeric characters and hyphens (<code>-</code>). The values of the dictionary represent the the text that is displayed for the
+key in the HTML output.</p>
+<p>So if you wanted to add a custom key, you could do this: <code class="codehilite"><span class="p">{</span><span class="s2">&quot;custom&quot;</span><span class="p">:</span> <span class="s2">&quot;Custom Key&quot;</span><span class="p">}</span></code>.  If you wanted to override
+the output of the <code>option</code> key and change it from <code>Option</code> to <code>Opt</code>, you could do this: <code class="codehilite"><span class="p">{</span><span class="s2">&quot;option&quot;</span><span class="p">:</span> <span class="s2">&quot;Opt&quot;</span><span class="p">}</span></code>.</p>
 <h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
 <table>
 <thead>
@@ -2078,6 +2093,7 @@
 </table>
                 
                   
+                
                 
               
               
@@ -2133,7 +2149,7 @@
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2018 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -2159,7 +2175,7 @@
       
     </div>
     
-      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
+      <script src="../../assets/javascripts/application.808e90bb.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

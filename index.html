@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,12 +55,12 @@
       
     
     
-      <script src="assets/javascripts/modernizr.74668098.js"></script>
+      <script src="assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
@@ -793,8 +793,11 @@
                 
                 <h1 id="pymdown-extensions">PyMdown Extensions<a class="headerlink" href="#pymdown-extensions" title="Permanent link"></a></h1>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link"></a></h2>
-<p>PyMdown Extensions is a collection of extensions for Python Markdown.  Keep in mind, the PyMdown extensions were designed to work with the default extensions, so your mileage may vary in regards to compatibility when paired with other 3<sup>rd</sup> party extensions.</p>
-<p>All extensions are found under <code>pymdownx</code>.  Assuming we wanted to specify the use of the MagicLink extension, we would include it in Python Markdown like so:</p>
+<p>PyMdown Extensions is a collection of extensions for Python Markdown.  Keep in mind, the PyMdown extensions were
+designed to work with the default extensions, so your mileage may vary in regards to compatibility when paired with
+other 3<sup>rd</sup> party extensions.</p>
+<p>All extensions are found under <code>pymdownx</code>.  Assuming we wanted to specify the use of the MagicLink extension, we would
+include it in Python Markdown like so:</p>
 <div class="codehilite"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">markdown</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;A link https://google.com&quot;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">html</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">markdown</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.magiclink&#39;</span><span class="p">])</span>
@@ -804,12 +807,14 @@
 <p>Check out documentation on each extension to learn more about how to configure and use each one.</p>
 <div class="admonition danger">
 <p class="admonition-title">Reminder</p>
-<p>Please read the <a href="usage_notes/">Usage Notes</a> for information on extension compatibility and general notes to be aware of when using these extensions.</p>
+<p>Please read the <a href="usage_notes/">Usage Notes</a> for information on extension compatibility and general notes to be
+aware of when using these extensions.</p>
 </div>
 <h2 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link"></a></h2>
 <div class="admonition summary">
 <p class="admonition-title">Arithmatex</p>
-<p><a href="extensions/arithmatex/">Arithmatex</a> is an extension that preserves LaTeX math equations (<span><span class="MathJax_Preview">\frac{\sqrt x}{y^3}</span><script type="math/tex">\frac{\sqrt x}{y^3}</script></span>) during the Markdown conversion process so that they can be used with <a href="http://www.mathjax.org/">MathJax</a>.</p>
+<p><a href="extensions/arithmatex/">Arithmatex</a> is an extension that preserves LaTeX math equations (<span><span class="MathJax_Preview">\frac{\sqrt x}{y^3}</span><script type="math/tex">\frac{\sqrt x}{y^3}</script></span>)
+during the Markdown conversion process so that they can be used with <a href="http://www.mathjax.org/">MathJax</a>.</p>
 </div>
 <div class="admonition summary">
 <p class="admonition-title">B64</p>
@@ -817,11 +822,13 @@
 </div>
 <div class="admonition summary">
 <p class="admonition-title">BetterEm</p>
-<p><a href="extensions/betterem/">BetterEm</a> is a different approach to <strong>emphasis</strong> than Python Markdown's default.  It works similar but handles certain corner cases differently.</p>
+<p><a href="extensions/betterem/">BetterEm</a> is a different approach to <strong>emphasis</strong> than Python Markdown's default.  It works
+similar but handles certain corner cases differently.</p>
 </div>
 <div class="admonition summary">
 <p class="admonition-title">Caret</p>
-<p><a href="extensions/caret/">Caret</a> is an extension that is syntactically built around the <code>^</code> character. It adds support for inserting super<sup>scripts</sup> and adds an easy way to place <ins>text</ins> in an <code class="codehilite"><span class="p">&lt;</span><span class="nt">ins</span><span class="p">&gt;</span></code> tag.</p>
+<p><a href="extensions/caret/">Caret</a> is an extension that is syntactically built around the <code>^</code> character. It adds support
+for inserting super<sup>scripts</sup> and adds an easy way to place <ins>text</ins> in an <code class="codehilite"><span class="p">&lt;</span><span class="nt">ins</span><span class="p">&gt;</span></code> tag.</p>
 </div>
 <div class="admonition summary">
 <p class="admonition-title">Critic</p>
@@ -839,23 +846,27 @@
 </div>
 <div class="admonition summary">
 <p class="admonition-title">EscapeAll</p>
-<p><a href="extensions/escapeall/">EscapeAll</a> allows the escaping of any character, some with additional effects.  Check it out to learn more.</p>
+<p><a href="extensions/escapeall/">EscapeAll</a> allows the escaping of any character, some with additional effects.  Check it
+out to learn more.</p>
 </div>
 <div class="admonition summary">
 <p class="admonition-title">Extra</p>
-<p><a href="extensions/extra/">Extra</a> is just like Python Markdown's Extra package except it uses PyMdown Extensions to substitute similar extensions.</p>
+<p><a href="extensions/extra/">Extra</a> is just like Python Markdown's Extra package except it uses PyMdown Extensions to
+substitute similar extensions.</p>
 </div>
 <div class="admonition summary">
 <p class="admonition-title">ExtraRawHTML</p>
-<p><a href="extensions/extrarawhtml/">ExtraRawHTML</a> exposes Python Markdown's feature of parsing markdown in HTML blocks. No longer do you have to include all of Extra when all you want to do is parse Markdown in HTML blocks.</p>
+<p><a href="extensions/extrarawhtml/">ExtraRawHTML</a> exposes Python Markdown's feature of parsing markdown in HTML blocks. No
+longer do you have to include all of Extra when all you want to do is parse Markdown in HTML blocks.</p>
 </div>
 <div class="admonition summary">
 <p class="admonition-title">Highlight</p>
-<p><a href="extensions/highlight/">Highlight</a> allows you to configure the syntax highlighting of SuperFences and InlineHilite.  Also passes standard Markdown indented code blocks through the syntax highlighter.</p>
+<p><a href="extensions/highlight/">Highlight</a> allows you to configure the syntax highlighting of SuperFences and
+InlineHilite.  Also passes standard Markdown indented code blocks through the syntax highlighter.</p>
 </div>
 <div class="admonition summary">
 <p class="admonition-title">InlineHilite</p>
-<p><a href="extensions/inlinehilite/">InlineHilite</a> highlights inline code: <code class="codehilite"><span class="kn">from</span> <span class="nn">module</span> <span class="k">import</span> <span class="n">function</span> <span class="k">as</span> <span class="n">func</span></code>.</p>
+<p><a href="extensions/inlinehilite/">InlineHilite</a> highlights inline code: <code class="codehilite"><span class="kn">from</span> <span class="nn">module</span> <span class="kn">import</span> <span class="n">function</span> <span class="k">as</span> <span class="n">func</span></code>.</p>
 </div>
 <div class="admonition summary">
 <p class="admonition-title">Keys</p>
@@ -863,7 +874,9 @@
 </div>
 <div class="admonition summary">
 <p class="admonition-title">MagicLink</p>
-<p><a href="extensions/magiclink/">MagicLink</a> linkafies URL and email links without having to wrap them in Markdown syntax. Also, allows shortens repository issue, pull request, and commit links. You can even use easily insert mentions: <a class="magiclink magiclink-twitter magiclink-mention" href="https://twitter.com/twitter" title="Twitter User: twitter">@twitter</a>.</p>
+<p><a href="extensions/magiclink/">MagicLink</a> linkafies URL and email links without having to wrap them in Markdown syntax.
+Also, allows shortens repository issue, pull request, and commit links. You can even use easily insert mentions:
+<a class="magiclink magiclink-twitter magiclink-mention" href="https://twitter.com/twitter" title="Twitter User: twitter">@twitter</a>.</p>
 </div>
 <div class="admonition summary">
 <p class="admonition-title">Mark</p>
@@ -886,11 +899,13 @@
 </div>
 <div class="admonition summary">
 <p class="admonition-title">SmartSymbols</p>
-<p><a href="extensions/smartsymbols/">SmartSymbols</a> inserts commonly used Unicode characters via simple ASCII representations: <code>=/=</code> &rarr; &ne;.</p>
+<p><a href="extensions/smartsymbols/">SmartSymbols</a> inserts commonly used Unicode characters via simple ASCII
+representations: <code>=/=</code> &rarr; &ne;.</p>
 </div>
 <div class="admonition summary">
 <p class="admonition-title">Snippets</p>
-<p><a href="extensions/snippets/">Snippets</a> include other Markdown or HTML snippets into the current Markdown file being parsed.</p>
+<p><a href="extensions/snippets/">Snippets</a> include other Markdown or HTML snippets into the current Markdown file being
+parsed.</p>
 </div>
 <div class="admonition summary">
 <p class="admonition-title">StripHTML</p>
@@ -898,7 +913,9 @@
 </div>
 <div class="admonition summary">
 <p class="admonition-title">SuperFences</p>
-<p><a href="extensions/superfences/">SuperFences</a> is like Python Markdown's fences, but better. Nest fences under lists, admonitions, and other syntaxes. Combine multiple fences together in tabbed groups, and even create special custom fences for content like UML.</p>
+<p><a href="extensions/superfences/">SuperFences</a> is like Python Markdown's fences, but better. Nest fences under lists,
+admonitions, and other syntaxes. Combine multiple fences together in tabbed groups, and even create special custom
+fences for content like UML.</p>
 <div class="superfences-tabs">
 <input name="__tabs_1" type="radio" id="__tab_1_0" checked="checked" />
 <label for="__tab_1_0">Source</label>
@@ -928,7 +945,8 @@ D--&gt;&gt;A: Dashed open arrow</code></pre></div>
 </div>
 <div class="admonition summary">
 <p class="admonition-title">Tilde</p>
-<p><a href="extensions/tilde/">Tilde</a> is syntactically built around the <code>~</code> character. It adds support for inserting sub<sub>scripts</sub> and adds an easy way to place <del>text</del> in a <code class="codehilite"><span class="p">&lt;</span><span class="nt">del</span><span class="p">&gt;</span></code> tag.</p>
+<p><a href="extensions/tilde/">Tilde</a> is syntactically built around the <code>~</code> character. It adds support for inserting
+sub<sub>scripts</sub> and adds an easy way to place <del>text</del> in a <code class="codehilite"><span class="p">&lt;</span><span class="nt">del</span><span class="p">&gt;</span></code> tag.</p>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script>
 
@@ -959,6 +977,7 @@ MathJax.Hub.Config({
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"></script>
                 
                   
+                
                 
               
               
@@ -1000,7 +1019,7 @@ MathJax.Hub.Config({
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2018 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1026,7 +1045,7 @@ MathJax.Hub.Config({
       
     </div>
     
-      <script src="assets/javascripts/application.ac79c3b0.js"></script>
+      <script src="assets/javascripts/application.808e90bb.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"."}})</script>
       

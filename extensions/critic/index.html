@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,12 +55,12 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
@@ -839,46 +839,55 @@
                 
                 <h1 id="critic">Critic<a class="headerlink" href="#critic" title="Permanent link"></a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
-<p>Critic is an extension that adds handling and support of <a href="http://criticmarkup.com/">Critic Markup</a> which uses a special syntax to represent edits to a Markdown document.  This extension runs before all other extensions to parse the critic edits.</p>
-<p>Critic allows you to automatically accept edits or reject the edits and render the output accordingly. It also allows for visually displaying the changes in HTML output (<a href="#limitations-with-previewing-critic-markup">mileage may vary</a>).</p>
+<p>Critic is an extension that adds handling and support of <a href="http://criticmarkup.com/">Critic Markup</a> which uses a special syntax to
+represent edits to a Markdown document.  This extension runs before all other extensions to parse the critic edits.</p>
+<p>Critic allows you to automatically accept edits or reject the edits and render the output accordingly. It also allows
+for visually displaying the changes in HTML output (<a href="#limitations-with-previewing-critic-markup">mileage may vary</a>).</p>
+<p>The Critic extension can be included in Python Markdown by using the following:</p>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.critic&#39;</span><span class="p">])</span>
+</pre></div>
+
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link"></a></h2>
 <p>Critic Markup uses special markup to insert, delete, substitute, highlight, and comment.</p>
-<p>To insert or remove text you can use <code class="codehilite">{++insert me++}</code> and <code class="codehilite">{--remove me--}</code> respectively.  You can also denote a substitution with <code class="codehilite">{~~substitute this~&gt;with this~~}</code>.</p>
-<p>You can also highlight specific text with <code class="codehilite">{==highlight me==}</code>. Or even comment, which is generally done by highlighting text and following it with a comment: <code class="codehilite">{==highlight me==}{&gt;&gt;Add a comment&lt;&lt;}</code>.</p>
+<p>To insert or remove text you can use <code class="codehilite"><span class="s">{++insert me++}</span></code> and <code class="codehilite"><span class="s">{--remove me--}</span></code>
+respectively.  You can also denote a substitution with <code class="codehilite"><span class="s">{~~substitute this~&gt;with this~~}</span></code>.</p>
+<p>You can also highlight specific text with <code class="codehilite"><span class="s">{==highlight me==}</span></code>. Or even comment, which is generally done
+by highlighting text and following it with a comment: <code class="codehilite"><span class="s">{==highlight me==}{&gt;&gt;Add a comment&lt;&lt;}</span></code>.</p>
 <div class="admonition example">
 <p class="admonition-title">Critic Markup Accept Example</p>
-<div class="codehilite"><pre><span></span>Here is some {--*incorrect*--} Markdown.  I am adding this{++ here++}.  Here is some more {--text
- that I am removing--}text.  And here is even more {++text that I 
- am ++}adding.{~~
+<div class="codehilite"><pre><span></span>Here<span class="w"> </span>is<span class="w"> </span>some<span class="w"> </span><span class="s">{--*incorrect*--}</span><span class="w"> </span>Markdown.<span class="w">  </span>I<span class="w"> </span>am<span class="w"> </span>adding<span class="w"> </span>this<span class="s">{++ here++}</span>.<span class="w">  </span>Here<span class="w"> </span>is<span class="w"> </span>some<span class="w"> </span>more<span class="w"> </span><span class="s">{--text</span>
+<span class="s"> that I am removing--}</span>text.<span class="w">  </span>And<span class="w"> </span>here<span class="w"> </span>is<span class="w"> </span>even<span class="w"> </span>more<span class="w"> </span><span class="s">{++text that I </span>
+<span class="s"> am ++}</span>adding.<span class="s">{~~</span>
 
-~&gt;  ~~}Paragraph was deleted and replaced with some spaces.{~~  ~&gt;
+<span class="s">~&gt;  ~~}</span>Paragraph<span class="w"> </span>was<span class="w"> </span>deleted<span class="w"> </span>and<span class="w"> </span>replaced<span class="w"> </span>with<span class="w"> </span>some<span class="w"> </span>spaces.<span class="s">{~~  ~&gt;</span>
 
-~~}Spaces were removed and a paragraph was added.
+<span class="s">~~}</span>Spaces<span class="w"> </span>were<span class="w"> </span>removed<span class="w"> </span>and<span class="w"> </span>a<span class="w"> </span>paragraph<span class="w"> </span>was<span class="w"> </span>added.
 
-And here is a comment on {==some
- text==}{&gt;&gt;This works quite well. I just wanted to comment on it.&lt;&lt;}. Substitutions {~~is~&gt;are~~} great!
+And<span class="w"> </span>here<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>comment<span class="w"> </span>on<span class="w"> </span><span class="s">{==some</span>
+<span class="s"> text==}{&gt;&gt;This works quite well. I just wanted to comment on it.&lt;&lt;}</span>.<span class="w"> </span>Substitutions<span class="w"> </span><span class="s">{~~is~&gt;are~~}</span><span class="w"> </span>great!
 
-General block handling.
+General<span class="w"> </span>block<span class="w"> </span>handling.
 
-{--
+<span class="s">{--</span>
 
-* test remove
-* test remove
-* test remove
-    * test remove
-* test remove
+<span class="s">* test remove</span>
+<span class="s">* test remove</span>
+<span class="s">* test remove</span>
+<span class="s">    * test remove</span>
+<span class="s">* test remove</span>
 
---}
+<span class="s">--}</span>
 
-{++
+<span class="s">{++</span>
 
-* test add
-* test add
-* test add
-    * test add
-* test add
+<span class="s">* test add</span>
+<span class="s">* test add</span>
+<span class="s">* test add</span>
+<span class="s">    * test add</span>
+<span class="s">* test add</span>
 
-++}
+<span class="s">++}</span>
 </pre></div>
 
 <p><p>Here is some  Markdown.  I am adding this here.  Here is some more text.  And here is even more text that I am adding.  Paragraph was deleted and replaced with some spaces.</p><p>Spaces were removed and a paragraph was added.</p><p>And here is a comment on some text. Substitutions are great!</p><p>General block handling.</p><ul><li>test add</li><li>test add</li><li>test add<ul><li>test add</li></ul></li><li>test add</li></ul></p>
@@ -886,45 +895,55 @@ General block handling.
 <p>When previewing, you can style them to stand out (see <a href="#css">CSS</a> for more information):</p>
 <div class="admonition example">
 <p class="admonition-title">Critic Markup Preview Example</p>
-<div class="codehilite"><pre><span></span>Here is some {--*incorrect*--} Markdown.  I am adding this{++ here++}.  Here is some more {--text
- that I am removing--}text.  And here is even more {++text that I 
- am ++}adding.{~~
+<div class="codehilite"><pre><span></span>Here<span class="w"> </span>is<span class="w"> </span>some<span class="w"> </span><span class="s">{--*incorrect*--}</span><span class="w"> </span>Markdown.<span class="w">  </span>I<span class="w"> </span>am<span class="w"> </span>adding<span class="w"> </span>this<span class="s">{++ here++}</span>.<span class="w">  </span>Here<span class="w"> </span>is<span class="w"> </span>some<span class="w"> </span>more<span class="w"> </span><span class="s">{--text</span>
+<span class="s"> that I am removing--}</span>text.<span class="w">  </span>And<span class="w"> </span>here<span class="w"> </span>is<span class="w"> </span>even<span class="w"> </span>more<span class="w"> </span><span class="s">{++text that I </span>
+<span class="s"> am ++}</span>adding.<span class="s">{~~</span>
 
-~&gt;  ~~}Paragraph was deleted and replaced with some spaces.{~~  ~&gt;
+<span class="s">~&gt;  ~~}</span>Paragraph<span class="w"> </span>was<span class="w"> </span>deleted<span class="w"> </span>and<span class="w"> </span>replaced<span class="w"> </span>with<span class="w"> </span>some<span class="w"> </span>spaces.<span class="s">{~~  ~&gt;</span>
 
-~~}Spaces were removed and a paragraph was added.
+<span class="s">~~}</span>Spaces<span class="w"> </span>were<span class="w"> </span>removed<span class="w"> </span>and<span class="w"> </span>a<span class="w"> </span>paragraph<span class="w"> </span>was<span class="w"> </span>added.
 
-And here is a comment on {==some
- text==}{&gt;&gt;This works quite well. I just wanted to comment on it.&lt;&lt;}. Substitutions {~~is~&gt;are~~} great!
+And<span class="w"> </span>here<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>comment<span class="w"> </span>on<span class="w"> </span><span class="s">{==some</span>
+<span class="s"> text==}{&gt;&gt;This works quite well. I just wanted to comment on it.&lt;&lt;}</span>.<span class="w"> </span>Substitutions<span class="w"> </span><span class="s">{~~is~&gt;are~~}</span><span class="w"> </span>great!
 
-General block handling.
+General<span class="w"> </span>block<span class="w"> </span>handling.
 
-{--
+<span class="s">{--</span>
 
-* test remove
-* test remove
-* test remove
-    * test remove
-* test remove
+<span class="s">* test remove</span>
+<span class="s">* test remove</span>
+<span class="s">* test remove</span>
+<span class="s">    * test remove</span>
+<span class="s">* test remove</span>
 
---}
+<span class="s">--}</span>
 
-{++
+<span class="s">{++</span>
 
-* test add
-* test add
-* test add
-    * test add
-* test add
+<span class="s">* test add</span>
+<span class="s">* test add</span>
+<span class="s">* test add</span>
+<span class="s">    * test add</span>
+<span class="s">* test add</span>
 
-++}
+<span class="s">++}</span>
 </pre></div>
 
 <p><p>Here is some <del class="critic"><em>incorrect</em></del> Markdown.  I am adding this<ins class="critic"> here</ins>.  Here is some more <del class="critic">text that I am removing</del>text.  And here is even more <ins class="critic">text that I am </ins>adding.<del class="critic break">&nbsp;</del><ins class="critic">  </ins>Paragraph was deleted and replaced with some spaces.<del class="critic">  </del></p><ins class="critic break">&nbsp;</ins><p>Spaces were removed and a paragraph was added.</p><p>And here is a comment on <mark class="critic">some text</mark><span class="critic comment">This works quite well. I just wanted to comment on it.</span>. Substitutions <del class="critic">is</del><ins class="critic">are</ins> great!</p><p>General block handling.</p><del class="critic block"><ul><li>test remove</li><li>test remove</li><li>test remove<ul><li>test remove</li></ul></li><li>test remove</li></ul></del><ins class="critic block"><ul><li>test add</li><li>test add</li><li>test add<ul><li>test add</li></ul></li><li>test add</li></ul></ins></p>
 </div>
 <h2 id="limitations-with-previewing-critic-markup">Limitations with Previewing Critic Markup<a class="headerlink" href="#limitations-with-previewing-critic-markup" title="Permanent link"></a></h2>
-<p>Parsing CriticMarkup is very straight forward.  If you need to reject critic marks or accept them, the Critic extension will work quite well.  But when trying to render the edits visually <strong>and</strong> trying to convert the document to HTML, things can get ugly.  I think this is the one unfortunate problem with CriticMarkup.  The existence of the critic edits can alter the actual source.  Its a fantastic idea, but it should be understood that when using CriticMarkup beyond inline or block paragraphs, there is a possibility that invalid HTML will be created for the preview (especially in relation to lists or if breaking up Markdown syntax).  I think Fletcher said it best here: <a href="http://fletcher.github.io/MultiMarkdown-4/criticmarkup">http://fletcher.github.io/MultiMarkdown-4/criticmarkup</a>.</p>
-<p>The Critic extension does its best by employing a preprocessor to inject the critic tags before all other parsing and a post-processor to clean up some of the weird side effects of the injection (only selected odd cases as others are more difficult to fix).  It injects some classes into the edit region's HTML output which allows for CSS styling.  There is probably a lot more post-processing that could be done to fix more issues, but whether this extension will be going further down that road has not yet been decided.</p>
+<p>Parsing CriticMarkup is very straight forward.  If you need to reject critic marks or accept them, the Critic extension
+will work quite well.  But when trying to render the edits visually <strong>and</strong> trying to convert the document to HTML,
+things can get ugly.  I think this is the one unfortunate problem with CriticMarkup.  The existence of the critic edits
+can alter the actual source.  Its a fantastic idea, but it should be understood that when using CriticMarkup beyond
+inline or block paragraphs, there is a possibility that invalid HTML will be created for the preview (especially in
+relation to lists or if breaking up Markdown syntax).  I think Fletcher said it best here:
+<a href="http://fletcher.github.io/MultiMarkdown-4/criticmarkup">http://fletcher.github.io/MultiMarkdown-4/criticmarkup</a>.</p>
+<p>The Critic extension does its best by employing a preprocessor to inject the critic tags before all other parsing and a
+post-processor to clean up some of the weird side effects of the injection (only selected odd cases as others are more
+difficult to fix).  It injects some classes into the edit region's HTML output which allows for CSS styling.  There is
+probably a lot more post-processing that could be done to fix more issues, but whether this extension will be going
+further down that road has not yet been decided.</p>
 <h2 id="css">CSS<a class="headerlink" href="#css" title="Permanent link"></a></h2>
 <p>Critic renders the CriticMarkup with the following classes.</p>
 <table>
@@ -1083,12 +1102,13 @@ General block handling.
 <td><code>mode</code></td>
 <td>string</td>
 <td><code class="codehilite"><span class="n">view</span></code></td>
-<td><code>view</code> just parses the markup and displays it in its HTML equivalent rendering.  <code>accept</code> strips out the critic markup and replaces them with the suggested changes.  <code>reject</code> rejects all the suggestions and strips the critic markup out replacing it with the original.</td>
+<td><code>view</code> just parses the markup and displays it in its HTML equivalent rendering. <code>accept</code> strips out the critic markup and replaces them with the suggested changes.  <code>reject</code> rejects all the suggestions and strips the critic markup out replacing it with the original.</td>
 </tr>
 </tbody>
 </table>
                 
                   
+                
                 
               
               
@@ -1144,7 +1164,7 @@ General block handling.
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2018 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1170,7 +1190,7 @@ General block handling.
       
     </div>
     
-      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
+      <script src="../../assets/javascripts/application.808e90bb.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

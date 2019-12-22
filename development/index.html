@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.1b62728e.css">
       
         <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,12 +55,12 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../assets/javascripts/modernizr.268332fc.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
@@ -931,7 +931,8 @@
                 
                 <h1 id="development">Development<a class="headerlink" href="#development" title="Permanent link"></a></h1>
 <h2 id="project-layout">Project Layout<a class="headerlink" href="#project-layout" title="Permanent link"></a></h2>
-<p>There are a number of files for build, test, and continuous integration in the root of the project, but in general, the project is broken up like so.</p>
+<p>There are a number of files for build, test, and continuous integration in the root of the project, but in general, the
+project is broken up like so.</p>
 <div class="codehilite"><pre><span></span>├── docs
 ├── pymdownx
 ├── requirements
@@ -970,7 +971,10 @@
 </tbody>
 </table>
 <h2 id="coding-standards">Coding Standards<a class="headerlink" href="#coding-standards" title="Permanent link"></a></h2>
-<p>When writing code, the code should roughly conform to PEP8 and PEP257 suggestions.  The PyMdown Extensions project utilizes the Flake8 linter (with some additional plugins) to ensure code conforms (give or take some of the rules).  When in doubt follow the formatting hints of existing code when adding or modifying files. existing files.  Listed below are the modules used:</p>
+<p>When writing code, the code should roughly conform to PEP8 and PEP257 suggestions.  The PyMdown Extensions project
+utilizes the Flake8 linter (with some additional plugins) to ensure code conforms (give or take some of the rules).
+When in doubt follow the formatting hints of existing code when adding or modifying files. existing files.  Listed below
+are the modules used:</p>
 <ul>
 <li><a class="magiclink magiclink-gitlab magiclink-repository" href="https://gitlab.com/pycqa/flake8" title="GitLab Repository: pycqa/flake8">pycqa/flake8</a></li>
 <li><a class="magiclink magiclink-gitlab magiclink-repository" href="https://gitlab.com/pycqa/flake8-docstrings" title="GitLab Repository: pycqa/flake8-docstrings">pycqa/flake8-docstrings</a></li>
@@ -983,23 +987,33 @@
 </pre></div>
 
 <h2 id="building-and-editing-documents">Building and Editing Documents<a class="headerlink" href="#building-and-editing-documents" title="Permanent link"></a></h2>
-<p>Documents are in Markdown (with with some additional syntax) and converted to HTML via Python Markdown and this extension bundle. If you would like to build and preview the documentation, you must have these packages installed:</p>
+<p>Documents are in Markdown (with with some additional syntax) and converted to HTML via Python Markdown and this
+extension bundle. If you would like to build and preview the documentation, you must have these packages installed:</p>
 <ul>
 <li><a class="magiclink magiclink-github magiclink-repository" href="https://github.com/Python-Markdown/markdown" title="GitHub Repository: Python-Markdown/markdown">Python-Markdown/markdown</a>: the Markdown parser.</li>
 <li><a class="magiclink magiclink-github magiclink-repository" href="https://github.com/mkdocs/mkdocs" title="GitHub Repository: mkdocs/mkdocs">mkdocs/mkdocs</a>: the document site generator.</li>
 <li><a class="magiclink magiclink-github magiclink-repository" href="https://github.com/squidfunk/mkdocs-material" title="GitHub Repository: squidfunk/mkdocs-material">squidfunk/mkdocs-material</a>: a material theme for MkDocs.</li>
 <li><a class="magiclink magiclink-github magiclink-repository" href="https://github.com/facelessuser/pymdown-extensions" title="GitHub Repository: facelessuser/pymdown-extensions">facelessuser/pymdown-extensions</a>: this Python Markdown extension bundle.</li>
 </ul>
-<p>In order to build and preview the documents, just run the command below from the root of the project and you should be able to view the documents at <code>localhost:8000</code> in your browser. After that, you should be able to update the documents and have your browser preview update live.</p>
+<p>In order to build and preview the documents, just run the command below from the root of the project and you should be
+able to view the documents at <code>localhost:8000</code> in your browser. After that, you should be able to update the documents
+and have your browser preview update live.</p>
 <div class="codehilite"><pre><span></span>mkdocs serve
 </pre></div>
 
 <h2 id="editing-document-theme">Editing Document Theme<a class="headerlink" href="#editing-document-theme" title="Permanent link"></a></h2>
-<p>It isn't expected that people will need to mess with the theme, but if it is needed, a little additional work is required. The documents use the <a href="https://github.com/squidfunk/mkdocs-material">Material</a> theme for <a href="https://github.com/mkdocs/mkdocs">MkDocs</a> with some additional local tweaks and additions.  JavaScript additions are provided in <code>docs/src/js</code> and are in es2015 syntax and are converted to es5. Stylesheets are located at <code>docs/src/scss</code> and are written in SCSS, and are converted to CSS.  All conversions are done in a <code>Node.js</code> environment.  In order to get up and running, download and install <a href="https://yarnpkg.com/"><code>Yarn</code></a>. Also, install <a href="https://nodejs.org/en/"><code>Node.js</code></a> version 6+. From the root of the project, in a terminal, enter the command below.  This command will install all the needed <code>Node.js</code> modules.</p>
+<p>It isn't expected that people will need to mess with the theme, but if it is needed, a little additional work is
+required. The documents use the <a href="https://github.com/squidfunk/mkdocs-material">Material</a> theme for <a href="https://github.com/mkdocs/mkdocs">MkDocs</a> with some additional local tweaks
+and additions.  JavaScript additions are provided in <code>docs/src/js</code> and are in es2015 syntax and are converted to es5.
+Stylesheets are located at <code>docs/src/scss</code> and are written in SCSS, and are converted to CSS.  All conversions are done
+in a <code>Node.js</code> environment.  In order to get up and running, download and install <a href="https://yarnpkg.com/"><code>Yarn</code></a>. Also,
+install <a href="https://nodejs.org/en/"><code>Node.js</code></a> version 6+. From the root of the project, in a terminal, enter the command
+below.  This command will install all the needed <code>Node.js</code> modules.</p>
 <div class="codehilite"><pre><span></span>yarn install
 </pre></div>
 
-<p>After that you can begin making changes. When ready, you can run the following commands to get a live preview while you make edits, lint your changes, or build the final output.</p>
+<p>After that you can begin making changes. When ready, you can run the following commands to get a live preview while you
+make edits, lint your changes, or build the final output.</p>
 <table>
 <thead>
 <tr>
@@ -1026,21 +1040,37 @@
 </tr>
 </tbody>
 </table>
-<p>If you need to make changes to the <code>mkdocs.yml</code> file, do not update the one in project root directly, but update the one in <code>docs/src</code>. The build environment copies the one in <code>docs/src</code> to the project root and injects the revisioned script name(s) and stylesheet name(s).</p>
-<p>When serving via <code>yarn</code>, if you want to make sure that the local version of <code>pymdown-extensions</code> is used, you need to configure <code>yarn serve</code> to call with Python instead of calling the MkDocs binary: <code>yarn serve --mkdocs="python3 -m mkdocs"</code>.  This is because if you are calling Python, it will look in the current working directory first for a given module when importing, but if you call the MkDocs binary, it will instead import the installed <code>pymdown-extensions</code>. Configuring the <code>--mkdocs</code> option is also useful if <code>mkdocs</code> is not in your path, or you want to call with a specific version of Python.</p>
+<p>If you need to make changes to the <code>mkdocs.yml</code> file, do not update the one in project root directly, but update the one
+in <code>docs/src</code>. The build environment copies the one in <code>docs/src</code> to the project root and injects the revisioned script
+name(s) and stylesheet name(s).</p>
+<p>When serving via <code>yarn</code>, if you want to make sure that the local version of <code>pymdown-extensions</code> is used, you need to
+configure <code>yarn serve</code> to call with Python instead of calling the MkDocs binary:
+<code>yarn serve --mkdocs="python3 -m mkdocs"</code>.  This is because if you are calling Python, it will look in the current
+working directory first for a given module when importing, but if you call the MkDocs binary, it will instead import the
+installed <code>pymdown-extensions</code>. Configuring the <code>--mkdocs</code> option is also useful if <code>mkdocs</code> is not in your path, or you
+want to call with a specific version of Python.</p>
 <h2 id="spell-checking-documents">Spell Checking Documents<a class="headerlink" href="#spell-checking-documents" title="Permanent link"></a></h2>
-<p>During validation we build the docs and run a spell checker on them.  The spell checker script uses <a href="http://aspell.net/">Aspell</a>.  Currently this project uses the latest Aspell.  As the latest Aspell is not available on Windows, it is not expected that everyone will install and run Aspell locally.  In order to perform the spell check, it is expected you are setup to build the documents, and that you have Aspell installed in the your system path. To initiate the spell check run the following command from the root of the project:</p>
+<p>During validation we build the docs and run a spell checker on them.  The spell checker script uses <a href="http://aspell.net/">Aspell</a>.
+Currently this project uses the latest Aspell.  As the latest Aspell is not available on Windows, it is not expected
+that everyone will install and run Aspell locally.  In order to perform the spell check, it is expected you are setup
+to build the documents, and that you have Aspell installed in the your system path. To initiate the spell check run the
+following command from the root of the project:</p>
 <div class="codehilite"><pre><span></span>python tests/spelling.py
 </pre></div>
 
-<p>It should print out the files with the misspelled words if any are found.  If you find it prints words that are not misspelled, you can add them in <code>.dictionary</code> in the root of the project.</p>
+<p>It should print out the files with the misspelled words if any are found.  If you find it prints words that are not
+misspelled, you can add them in <code>.dictionary</code> in the root of the project.</p>
 <h2 id="validation-tests">Validation Tests<a class="headerlink" href="#validation-tests" title="Permanent link"></a></h2>
-<p>In order to preserve good code health, a test suite has been put together with pytest (<a class="magiclink magiclink-github magiclink-repository" href="https://github.com/pytest-dev/pytest" title="GitHub Repository: pytest-dev/pytest">pytest-dev/pytest</a>). There are currently two kinds of tests: syntax and targeted.  To run these tests, you can use the following command:</p>
+<p>In order to preserve good code health, a test suite has been put together with pytest (<a class="magiclink magiclink-github magiclink-repository" href="https://github.com/pytest-dev/pytest" title="GitHub Repository: pytest-dev/pytest">pytest-dev/pytest</a>). There are
+currently two kinds of tests: syntax and targeted.  To run these tests, you can use the following command:</p>
 <div class="codehilite"><pre><span></span>python run_tests.py
 </pre></div>
 
 <h3 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link"></a></h3>
-<p>Syntax tests are essentially text files containing Markdown. They are found under <code>tests/extensions</code>.  <code>test_syntax.py</code> scans all the files and converts the files to HTML with the extensions and options defined in <code>tests/extensions/tests.yml</code>.  They are then compared to the current stored HTML output.  If the two differ, the test fails.</p>
+<p>Syntax tests are essentially text files containing Markdown. They are found under <code>tests/extensions</code>.  <code>test_syntax.py</code>
+scans all the files and converts the files to HTML with the extensions and options defined in
+<code>tests/extensions/tests.yml</code>.  They are then compared to the current stored HTML output.  If the two differ, the test
+fails.</p>
 <p>To run <strong>only</strong> these tests, from the root of the project run the following command:</p>
 <div class="codehilite"><pre><span></span>python run_tests.py --test-target syntax
 </pre></div>
@@ -1062,7 +1092,8 @@
 </pre></div>
 
 <h3 id="targeted">Targeted<a class="headerlink" href="#targeted" title="Permanent link"></a></h3>
-<p>Targeted tests are unit tests that target specific areas in the code and exercises them to ensure proper functionality.  These tests are found in <code>test_targeted.py</code>.</p>
+<p>Targeted tests are unit tests that target specific areas in the code and exercises them to ensure proper functionality.
+These tests are found in <code>test_targeted.py</code>.</p>
 <p>You can run <strong>only</strong> these tests from the root of the project with:</p>
 <div class="codehilite"><pre><span></span>python run_tests.py --test-target targeted
 </pre></div>
@@ -1072,17 +1103,23 @@
 </pre></div>
 
 <h3 id="running-validation-with-tox">Running Validation With Tox<a class="headerlink" href="#running-validation-with-tox" title="Permanent link"></a></h3>
-<p>Tox (<a class="magiclink magiclink-github magiclink-repository" href="https://github.com/tox-dev/tox" title="GitHub Repository: tox-dev/tox">tox-dev/tox</a>) is a great way to run the validation tests, spelling checks, and linting in virtual environments so as not to mess with your current working environment. Tox will use the specified Python version for the given environment and create a virtual environment and install all the needed requirements (minus Aspell).  You could also setup your own virtual environments with the Virtualenv module without Tox, and manually do the same.</p>
+<p>Tox (<a class="magiclink magiclink-github magiclink-repository" href="https://github.com/tox-dev/tox" title="GitHub Repository: tox-dev/tox">tox-dev/tox</a>) is a great way to run the validation tests, spelling checks, and linting in virtual environments so
+as not to mess with your current working environment. Tox will use the specified Python version for the given
+environment and create a virtual environment and install all the needed requirements (minus Aspell).  You could also
+setup your own virtual environments with the Virtualenv module without Tox, and manually do the same.</p>
 <p>First, you need to have Tox installed:</p>
 <div class="codehilite"><pre><span></span>pip install tox
 </pre></div>
 
-<p>By running Tox, it will walk through all the environments and create them (assuming you have all the python versions on your machine) and run the related tests.  See <code>tox.ini</code> to learn more.</p>
+<p>By running Tox, it will walk through all the environments and create them (assuming you have all the python versions on
+your machine) and run the related tests.  See <code>tox.ini</code> to learn more.</p>
 <div class="codehilite"><pre><span></span>tox
 </pre></div>
 
-<p>If you don't have all the Python versions needed to test all the environments, those entries will fail.  You can ignore those.  Spelling will also fail if you don't have the correct version of Aspell.</p>
-<p>To target a specific environment to test, you use the <code>-e</code> option to select the environment of interest.  To select lint:</p>
+<p>If you don't have all the Python versions needed to test all the environments, those entries will fail.  You can ignore
+those.  Spelling will also fail if you don't have the correct version of Aspell.</p>
+<p>To target a specific environment to test, you use the <code>-e</code> option to select the environment of interest.  To select
+lint:</p>
 <div class="codehilite"><pre><span></span>tox -elint
 </pre></div>
 
@@ -1095,25 +1132,38 @@
 </pre></div>
 
 <h2 id="code-coverage">Code Coverage<a class="headerlink" href="#code-coverage" title="Permanent link"></a></h2>
-<p>When running the validation tests through Tox, it is setup to track code coverage via the Coverage (<a class="magiclink magiclink-bitbucket magiclink-repository" href="https://bitbucket.org/ned/coveragepy" title="Bitbucket Repository: ned/coveragepy">ned/coveragepy</a>) module.  Coverage is run on each <code>pyxx-unittests</code> environment.  If you've made changes to the code, you can clear the old coverage data:</p>
+<p>When running the validation tests through Tox, it is setup to track code coverage via the Coverage
+(<a class="magiclink magiclink-bitbucket magiclink-repository" href="https://bitbucket.org/ned/coveragepy" title="Bitbucket Repository: ned/coveragepy">ned/coveragepy</a>) module.  Coverage is run on each <code>pyxx-unittests</code> environment.  If you've made changes to
+the code, you can clear the old coverage data:</p>
 <div class="codehilite"><pre><span></span>coverage erase
 </pre></div>
 
-<p>Then run each unit test environment to and coverage will be calculated. All the data from each run is merged together.  HTML is output for each file in <code>.tox/pyXX-unittests/tmp</code>.  You can use these to see areas that are not covered/exercised yet with testing.</p>
+<p>Then run each unit test environment to and coverage will be calculated. All the data from each run is merged together.
+HTML is output for each file in <code>.tox/pyXX-unittests/tmp</code>.  You can use these to see areas that are not
+covered/exercised yet with testing.</p>
 <p>You can checkout <code>tox.ini</code> to see how this is accomplished.</p>
 <h2 id="generating-emoji-indexes">Generating Emoji Indexes<a class="headerlink" href="#generating-emoji-indexes" title="Permanent link"></a></h2>
-<p>The Emoji extension has emoji indexes generated from the source of Gemoji, EmojiOne, and Twemoji.  Below is the process for auto-generating these indexes.  In the case of Twemoji, it will also reference EmojiOne's short name index, so you may need to do both EmojiOne and Twemoji if the support is not satisfactory.</p>
+<p>The Emoji extension has emoji indexes generated from the source of Gemoji, EmojiOne, and Twemoji.  Below is the process
+for auto-generating these indexes.  In the case of Twemoji, it will also reference EmojiOne's short name index, so you
+may need to do both EmojiOne and Twemoji if the support is not satisfactory.</p>
 <ol>
 <li>Ensure you have Requests (<a class="magiclink magiclink-github magiclink-repository" href="https://github.com/requests/requests" title="GitHub Repository: requests/requests">requests/requests</a>) installed: <code>pip install requests</code>.</li>
 <li>Fork the repository and checkout to your machine.</li>
 <li>Navigate to the root of the project.</li>
-<li>Call the generator script: <code>python tools/gen_emoji.py --gemoji</code>, <code>python tools/gen_emoji.py --emojione</code>, or <code>python tools/gen_emoji.py --twemoji</code>. If you already have the latest tag locally, you can specify <code>--no-download</code>.  It will prompt you to select a tag to download and/or use.  Please pull the latest <strong>official</strong> tag.  Please don't pull experimental tags.  This should update the indexes.</li>
+<li>Call the generator script: <code>python tools/gen_emoji.py --gemoji</code>, <code>python tools/gen_emoji.py --emojione</code>, or
+  <code>python tools/gen_emoji.py --twemoji</code>. If you already have the latest tag locally, you can specify <code>--no-download</code>. It
+  will prompt you to select a tag to download and/or use.  Please pull the latest <strong>official</strong> tag.  Please don't pull
+  experimental tags.  This should update the indexes.</li>
 <li>Then you want to update the tests.</li>
 <li>Force the tests to update via <code>python run_tests.py --update</code>.  Make sure only the emoji tests get updated.</li>
 </ol>
-<p>Nothing is fool proof.  If they make a breaking change to the files that the script parses, or the location of the files change, the auto-update tool may need to be updated itself (hopefully this would be a rare occurrence).  If such a change does occur, and you are feeling brave, a pull request would be appreciated, but in time, they will be resolved regardless.</p>
+<p>Nothing is fool proof.  If they make a breaking change to the files that the script parses, or the location of the files
+change, the auto-update tool may need to be updated itself (hopefully this would be a rare occurrence).  If such a
+change does occur, and you are feeling brave, a pull request would be appreciated, but in time, they will be resolved
+regardless.</p>
                 
                   
+                
                 
               
               
@@ -1169,7 +1219,7 @@
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2018 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1195,7 +1245,7 @@
       
     </div>
     
-      <script src="../assets/javascripts/application.ac79c3b0.js"></script>
+      <script src="../assets/javascripts/application.808e90bb.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       
