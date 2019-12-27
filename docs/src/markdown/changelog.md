@@ -1,5 +1,10 @@
 # Changelog
 
+## 6.3.0
+
+- **NEW**: `pymdownx.extrarawhtml` is now deprecated in favor of Python Markdown's `md_in_html` extension found in the
+  3.2 release.
+
 ## 6.2.1
 
 - **FIX**: Fix issue in PathConverter where Windows path conversion from relative to absolute doesn't always work in all

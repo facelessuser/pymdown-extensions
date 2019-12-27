@@ -97,7 +97,7 @@ matrix:
   sources:
   - pymdownx/**/*.py
   - tests/**/*.py
-  - tools/**/*.py|!tools/tags/*
+  - tools/**/*.py|!tools/tags/**
   aspell:
     lang: en
   hunspell:

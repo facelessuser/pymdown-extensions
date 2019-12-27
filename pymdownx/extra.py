@@ -29,6 +29,7 @@ DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
 from markdown import Extension
+from . import util
 
 extra_extensions = [
     'pymdownx.betterem',
@@ -38,7 +39,7 @@ extra_extensions = [
     'markdown.extensions.def_list',
     'markdown.extensions.tables',
     'markdown.extensions.abbr',
-    'pymdownx.extrarawhtml'
+    'markdown.extensions.md_in_html' if util.MD32 else 'pymdownx.extrarawhtml'
 ]
 
 extra_extension_configs = {}

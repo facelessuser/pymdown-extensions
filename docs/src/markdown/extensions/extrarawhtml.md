@@ -2,6 +2,13 @@
 
 ## Overview
 
+!!! warning "Deprecated 6.3"
+    ExtraRawHTML has been deprecated in 6.3.
+
+    As of Python Markdown release 3.2, raw HTML handling has been broken out into a separate extensions called
+    `md_in_html`. This change makes the existence of `extrarawhtml` redundant. It is advised that all users use
+    `md_in_html` moving forward. `extrarawhtml` will be removed in a future version.
+
 Python Markdown provides an `extra` extension that has features similar to PHP Markdown Extra.  For reasons covered in
 [`pymdownx.extra`](./extra.md), PyMdown Extensions implements its own `extra` extension.  In order to accomplish this,
 Python Markdown's raw HTML parsing functionality, which is used to parse nested Markdown inside HTML blocks, had to be
