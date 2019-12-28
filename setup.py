@@ -4,33 +4,18 @@
 
 from setuptools import setup, find_packages
 import os
-import sys
-
-PY2 = sys.version_info < (3, 0)
 
 
 def get_version():
     """Get version and version_info without importing the entire module."""
 
-    if PY2:
-        import imp
+    import importlib.util
 
-        try:
-            fp = None
-            path = os.path.join(os.path.dirname(__file__), 'pymdownx')
-            fp, pathname, desc = imp.find_module('__meta__', [path])
-            vi = imp.load_module('__meta__', fp, pathname, desc).__version_info__
-        finally:
-            if fp is not None:
-                fp.close()
-    else:
-        import importlib.util
-
-        path = os.path.join(os.path.dirname(__file__), 'pymdownx', '__meta__.py')
-        spec = importlib.util.spec_from_file_location("__meta__", path)
-        module = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(module)
-        vi = module.__version_info__
+    path = os.path.join(os.path.dirname(__file__), 'pymdownx', '__meta__.py')
+    spec = importlib.util.spec_from_file_location("__meta__", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    vi = module.__version_info__
     return vi._get_canonical(), vi._get_dev_status()
 
 
@@ -76,12 +61,11 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: Text Processing :: Filters',

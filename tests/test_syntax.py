@@ -119,7 +119,7 @@ def gather_test_params():
                     for k1, v1 in v.items():
                         if v1 is not None:
                             for k2, v2 in v1.items():
-                                if isinstance(v2, util.string_type):
+                                if isinstance(v2, str):
                                     v1[k2] = v2.replace(
                                         '{{BASE}}', base
                                     ).replace(

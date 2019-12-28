@@ -21,7 +21,6 @@ from markdown import Extension
 from markdown.inlinepatterns import InlineProcessor
 from markdown import util as md_util
 import functools
-from . import util
 
 ESCAPED_BSLASH = '%s%s%s' % (md_util.STX, ord('\\'), md_util.ETX)
 DOUBLE_BSLASH = '\\\\'
@@ -151,7 +150,7 @@ class InlineHilitePattern(InlineProcessor):
         for entry in reversed(self.formatters):
             if entry["test"](lang):
                 value = entry["formatter"](src, lang, self.md)
-                if isinstance(value, util.ustr):
+                if isinstance(value, str):
                     value = self.md.htmlStash.store(value)
                 return value
 

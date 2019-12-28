@@ -8,18 +8,6 @@ import textwrap
 import markdown
 import difflib
 
-PY2 = sys.version_info >= (2, 0) and sys.version_info < (3, 0)
-PY3 = sys.version_info >= (3, 0) and sys.version_info < (4, 0)
-
-if PY2:
-    unicode_type = unicode  # noqa
-    string_type = basestring  # noqa
-    binary_type = str
-else:
-    unicode_type = str  # noqa
-    string_type = str  # noqa
-    binary_type = bytes  # noqa
-
 CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
 
 if sys.platform.startswith('win'):
@@ -61,7 +49,7 @@ class MdCase(unittest.TestCase):
         for k1, v1 in self.extension_configs.items():
             if v1 is not None:
                 for k2, v2 in v1.items():
-                    if isinstance(v2, string_type):
+                    if isinstance(v2, str):
                         v1[k2] = v2.replace(
                             '{{BASE}}', self.base
                         ).replace(

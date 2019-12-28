@@ -39,6 +39,7 @@ from markdown.postprocessors import Postprocessor
 from . import util
 import os
 import re
+from urllib.parse import urlunparse
 
 RE_TAG_HTML = r'''(?xus)
     (?:
@@ -82,7 +83,7 @@ def repl_relative(m, base_path, relative_path):
                 path = util.path2url(path)
                 link = '%s"%s"' % (
                     m.group('name'),
-                    util.urlunparse((scheme, netloc, path, params, query, fragment))
+                    urlunparse((scheme, netloc, path, params, query, fragment))
                 )
     except Exception:  # pragma: no cover
         # Parsing crashed and burned; no need to continue.
@@ -106,7 +107,7 @@ def repl_absolute(m, base_path):
             link = '%s"%s%s"' % (
                 m.group('name'),
                 start,
-                util.urlunparse((scheme, netloc, path, params, query, fragment))
+                urlunparse((scheme, netloc, path, params, query, fragment))
             )
     except Exception:  # pragma: no cover
         # Parsing crashed and burned; no need to continue.
