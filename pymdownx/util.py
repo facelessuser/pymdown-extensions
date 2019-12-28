@@ -7,11 +7,13 @@ Copyright (c) 2017 Isaac Muse <isaacmuse@gmail.com>
 """
 from __future__ import unicode_literals
 from markdown.inlinepatterns import InlineProcessor, util
+from markdown.__meta__ import __version_info__
 from collections import namedtuple
 import sys
 import copy
 import re
 
+MD32 = __version_info__ >= (3, 2)
 PY3 = sys.version_info >= (3, 0)
 PY34 = sys.version_info >= (3, 4)
 
