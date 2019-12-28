@@ -4,6 +4,9 @@
 
 - **NEW**: `pymdownx.extrarawhtml` is now deprecated in favor of Python Markdown's `md_in_html` extension found in the
   3.2 release.
+- **NEW**: When using Pygments 2.4+, code under `pre` elements will also be wrapped in `code` blocks:
+  `#!html <pre><code></code></pre>`. `legacy_no_wrap_code` option has been provided as a temporary way to get the old
+  behavior during the transition period, the option will be removed in the future.
 
 ## 6.2.1
 

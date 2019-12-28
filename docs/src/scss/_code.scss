@@ -10,6 +10,11 @@ $tab-current-label: #FF5252;
 
 .md-typeset {
 
+  /* Handled pre with wrapped code */
+  div.codehilite > pre {
+    padding: 0;
+  }
+
   /* Code */
   a {
     > code {
