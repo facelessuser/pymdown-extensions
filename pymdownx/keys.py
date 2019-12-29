@@ -83,6 +83,7 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 DEALINGS IN THE SOFTWARE.
 """
 from __future__ import unicode_literals
+import html
 from markdown import Extension
 from markdown.inlinepatterns import InlineProcessor
 from markdown import util as md_util
@@ -154,7 +155,7 @@ class KeysPattern(InlineProcessor):
         """Process key."""
 
         if key.startswith(('"', "'")):
-            value = (None, util.html_unescape(ESCAPE_RE.sub(r'\1', key[1:-1])).strip())
+            value = (None, html.unescape(ESCAPE_RE.sub(r'\1', key[1:-1])).strip())
         else:
             norm_key = self.normalize(key)
             canonical_key = self.aliases.get(norm_key, norm_key)

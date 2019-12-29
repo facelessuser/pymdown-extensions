@@ -12,34 +12,15 @@ from collections import namedtuple
 import sys
 import copy
 import re
+import html
+from urllib.request import pathname2url, url2pathname
+from urllib.parse import urlparse
 
 MD32 = __version_info__ >= (3, 2)
-PY3 = sys.version_info >= (3, 0)
-PY34 = sys.version_info >= (3, 4)
-
-if PY3:
-    ustr = str  # noqa
-    uchr = chr  # noqa
-    from urllib.request import pathname2url, url2pathname  # noqa
-    from urllib.parse import urlparse, urlunparse, quote  # noqa
-    from html.parser import HTMLParser  # noqa
-    if PY34:
-        import html  # noqa
-        html_unescape = html.unescape  # noqa
-    else:  # pragma: no cover
-        html_unescape = HTMLParser().unescape  # noqa
-else:
-    ustr = unicode  # noqa
-    uchr = unichr  # noqa
-    from urllib import pathname2url, url2pathname, quote  # noqa
-    from urlparse import urlparse, urlunparse  # noqa
-    from HTMLParser import HTMLParser  # noqa
-    html_unescape = HTMLParser().unescape  # noqa
 
 RE_WIN_DRIVE_LETTER = re.compile(r"^[A-Za-z]$")
 RE_WIN_DRIVE_PATH = re.compile(r"^[A-Za-z]:(?:\\.*)?$")
 RE_URL = re.compile('(http|ftp)s?|data|mailto|tel|news')
-IS_NARROW = sys.maxunicode == 0xFFFF
 RE_WIN_DEFAULT_PROTOCOL = re.compile(r"^///[A-Za-z]:(?:/.*)?$")
 
 if sys.platform.startswith('win'):
@@ -84,70 +65,22 @@ def path2url(url):
     return path
 
 
-if IS_NARROW:  # pragma: no cover
-    def get_code_points(s):
-        """Get the Unicode code points."""
+def get_code_points(s):
+    """Get the Unicode code points."""
 
-        pt = []
+    return [c for c in s]
 
-        def is_full_point(p, point):
-            """
-            Check if we have a full code point.
 
-            Surrogates are stored in point.
-            """
-            v = ord(p)
-            if 0xD800 <= v <= 0xDBFF:
-                del point[:]
-                point.append(p)
-                return False
-            if point and 0xDC00 <= v <= 0xDFFF:
-                point.append(p)
-                return True
-            del point[:]
-            return True
+def get_ord(c):
+    """Get Unicode ord."""
 
-        return [(''.join(pt) if pt else c) for c in s if is_full_point(c, pt)]
+    return ord(c)
 
-    def get_ord(c):
-        """Get Unicode ord."""
 
-        if len(c) == 2:
-            high, low = [ord(p) for p in c]
-            ordinal = (high - 0xD800) * 0x400 + low - 0xDC00 + 0x10000
-        else:
-            ordinal = ord(c)
+def get_char(value):
+    """Get the Unicode char."""
 
-        return ordinal
-
-    def get_char(value):
-        """Get the Unicode char."""
-        if value > 0xFFFF:
-            c = ''.join(
-                [
-                    uchr(int((value - 0x10000) / (0x400)) + 0xD800),
-                    uchr((value - 0x10000) % 0x400 + 0xDC00)
-                ]
-            )
-        else:
-            c = uchr(value)
-        return c
-
-else:
-    def get_code_points(s):
-        """Get the Unicode code points."""
-
-        return [c for c in s]
-
-    def get_ord(c):
-        """Get Unicode ord."""
-
-        return ord(c)
-
-    def get_char(value):
-        """Get the Unicode char."""
-
-        return uchr(value)
+    return chr(value)
 
 
 def escape_chars(md, echrs):
@@ -182,7 +115,7 @@ def parse_url(url):
 
     is_url = False
     is_absolute = False
-    scheme, netloc, path, params, query, fragment = urlparse(html_unescape(url))
+    scheme, netloc, path, params, query, fragment = urlparse(html.unescape(url))
 
     if RE_URL.match(scheme):
         # Clearly a URL
