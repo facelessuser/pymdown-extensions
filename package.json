@@ -52,7 +52,7 @@
     "rollup-plugin-babel": "^4.3.3",
     "stylelint": "^12.0.1",
     "stylelint-config-standard": "^19.0.0",
-    "stylelint-order": "^3.1.1",
+    "stylelint-order": "^4.0.0",
     "stylelint-scss": "^3.13.0",
     "vinyl-paths": "^3.0.1",
     "yargs": "^15.0.2"
