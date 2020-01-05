@@ -55,6 +55,6 @@
     "stylelint-order": "^4.0.0",
     "stylelint-scss": "^3.13.0",
     "vinyl-paths": "^3.0.1",
-    "yargs": "^15.0.2"
+    "yargs": "^15.1.0"
   }
 }
