@@ -37,6 +37,14 @@ http://223.255.255.254
 
 www.google.com
 
+http://single-word
+
+www.single-word
+
+http://localhost/website
+
+http://3628126748
+
 # Should Fail
 
 http://
@@ -87,9 +95,8 @@ http://-error-.invalid/
 
 http://-a.b.co
 
-http://3628126748
-
 # These should be valid
+
 first.last@test.org
 
 1234567890123456789012345678901234567890123456789012345678901234@test.org
