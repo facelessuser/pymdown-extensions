@@ -137,6 +137,7 @@ gfm
 gforcada
 github
 highlighter's
+hostnames
 html
 indepth
 inline
