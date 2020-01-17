@@ -37,6 +37,10 @@ http://223.255.255.254
 
 www.google.com
 
+http://single-word
+
+http://localhost/website
+
 # Should Fail
 
 http://

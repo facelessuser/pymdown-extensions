@@ -48,7 +48,7 @@ RE_MAIL = r'''(?xi)
 RE_LINK = r'''(?xi)
 (?P<link>
     (?:(?<=\b)|(?<=_))(?:
-        (?:ht|f)tps?://(?:(?:[^_\W][-\w]*(?:\.[-\w.]+)+)|localhost)|  # (http|ftp)://
+        (?:ht|f)tps?://(?:[^_\W][-\w]*(?:[^ \d][-\w.]+)+)|  # (http|ftp)://
         (?P<www>w{3}\.)[^_\W][-\w]*(?:\.[-\w.]+)+                     # www.
     )
     /?[-\w.?,!'(){}\[\]/+&@%$#=:"|~;]*                                # url path, fragments, and query stuff
