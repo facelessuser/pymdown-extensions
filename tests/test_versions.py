@@ -1,7 +1,6 @@
 """Version tests."""
 from __future__ import unicode_literals
 import unittest
-import warnings
 from pymdownx.__meta__ import Version, parse_version
 
 
