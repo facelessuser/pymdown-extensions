@@ -17,7 +17,7 @@ import re
 from . import util
 if util.MD32:  # pragma: no cover
     from markdown.extensions import md_in_html as module
-else:
+else:  # pragma: no cover
     from markdown.extensions import extra as module
 
 
@@ -28,7 +28,7 @@ class ExtraRawHtmExtension(Extension):
         """Register extension instances."""
 
         util.PymdownxDeprecationWarning(
-            "'extrarawhtml' extension is deprected, 'markdown.extensions.md_in_html' should be used instead"
+            "'extrarawhtml' extension is deprecated, 'markdown.extensions.md_in_html' should be used instead"
         )
 
         md.registerExtension(self)
