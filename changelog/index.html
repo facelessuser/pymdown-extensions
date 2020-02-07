@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.1b62728e.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.30686662.css">
       
         <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,19 +55,19 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.268332fc.js"></script>
+      <script src="../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../extra-174a536342.css">
+      <link rel="stylesheet" href="../extra-c035e56df5.css">
     
     
       
@@ -702,6 +702,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#630" class="md-nav__link">
+    6.3.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#621" class="md-nav__link">
     6.2.1
   </a>
@@ -1039,6 +1046,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#630" class="md-nav__link">
+    6.3.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#621" class="md-nav__link">
     6.2.1
   </a>
@@ -1352,6 +1366,16 @@
                 
                 
                 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link"></a></h1>
+<h2 id="630">6.3.0<a class="headerlink" href="#630" title="Permanent link"></a></h2>
+<ul>
+<li><strong>NEW</strong>: <code>pymdownx.extrarawhtml</code> is now deprecated in favor of Python Markdown's <code>md_in_html</code> extension found in the
+  3.2 release.</li>
+<li><strong>NEW</strong>: When using Pygments 2.4+, code under <code>pre</code> elements will also be wrapped in <code>code</code> blocks:
+  <code class="codehilite"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">code</span><span class="p">&gt;&lt;/</span><span class="nt">code</span><span class="p">&gt;&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span></code>. <code>legacy_no_wrap_code</code> option has been provided as a temporary way to get the old
+  behavior during the transition period, the option will be removed in the future.</li>
+<li><strong>NEW</strong>: Remove deprecated <code>version</code> and <code>version_info</code>.</li>
+<li><strong>FIX</strong>: Allow single word hostnames in MagicLink auto-link.</li>
+</ul>
 <h2 id="621">6.2.1<a class="headerlink" href="#621" title="Permanent link"></a></h2>
 <ul>
 <li><strong>FIX</strong>: Fix issue in PathConverter where Windows path conversion from relative to absolute doesn't always work in all
@@ -1681,7 +1705,6 @@
                 
                   
                 
-                
               
               
                 
@@ -1736,7 +1759,7 @@
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1762,7 +1785,7 @@
       
     </div>
     
-      <script src="../assets/javascripts/application.808e90bb.js"></script>
+      <script src="../assets/javascripts/application.ac79c3b0.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       

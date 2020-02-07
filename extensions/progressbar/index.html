@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,19 +55,19 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../../extra-174a536342.css">
+      <link rel="stylesheet" href="../../extra-c035e56df5.css">
     
     
       
@@ -820,14 +820,14 @@ a fraction or percentage and can optionally be followed by a title surrounded in
 quotes.</p>
 <div class="admonition example">
 <p class="admonition-title">Progress Bar Example</p>
-<div class="codehilite"><pre><span></span>[=0% &quot;0%&quot;]
+<div class="codehilite"><pre><span></span><code>[=0% &quot;0%&quot;]
 [=5% &quot;5%&quot;]
 [=25% &quot;25%&quot;]
 [=45% &quot;45%&quot;]
 [=65% &quot;65%&quot;]
 [=85% &quot;85%&quot;]
 [=100% &quot;100%&quot;]
-</pre></div>
+</code></pre></div>
 
 <p>
 <div class="progress progress-0plus">
@@ -871,14 +871,14 @@ quotes.</p>
 <code>markdown.extensions.attr_list</code> must be enabled for the following to work.</p>
 <div class="admonition example">
 <p class="admonition-title">Progress Bar with Attributes</p>
-<div class="codehilite"><pre><span></span>[=0%]{: .thin}
+<div class="codehilite"><pre><span></span><code>[=0%]{: .thin}
 [=5%]{: .thin}
 [=25%]{: .thin}
 [=45%]{: .thin}
 [=65%]{: .thin}
 [=85%]{: .thin}
 [=100%]{: .thin}
-</pre></div>
+</code></pre></div>
 
 <p>
 <div class="progress progress-0plus thin">
@@ -919,18 +919,18 @@ quotes.</p>
 </p>
 </div>
 <p>The ProgressBar extension can be included in Python Markdown by using the following:</p>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.progressbar&#39;</span><span class="p">])</span>
-</pre></div>
+</code></pre></div>
 
 <h2 id="styling-with-css">Styling with CSS<a class="headerlink" href="#styling-with-css" title="Permanent link"></a></h2>
 <p>The general HTML structure of the progress bar is as follows:</p>
-<div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;progress progress-100plus&quot;</span><span class="p">&gt;</span>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;progress progress-100plus&quot;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;progress-bar&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;width:100.00%&quot;</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;progress-label&quot;</span><span class="p">&gt;</span>100%<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
     <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</pre></div>
+</code></pre></div>
 
 <table>
 <thead>
@@ -959,7 +959,7 @@ quotes.</p>
 </tbody>
 </table>
 <details class="settings"><summary>CSS Setup</summary><p>You are able to style your progress bars as fancy or plain as you want.</p>
-<div class="codehilite"><pre><span></span><span class="p">.</span><span class="nc">progress-label</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">.</span><span class="nc">progress-label</span> <span class="p">{</span>
   <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
   <span class="k">text-align</span><span class="p">:</span> <span class="kc">center</span><span class="p">;</span>
   <span class="k">font-weight</span><span class="p">:</span> <span class="mi">700</span><span class="p">;</span>
@@ -1021,7 +1021,7 @@ quotes.</p>
 <span class="p">.</span><span class="nc">progress-0plus</span> <span class="p">.</span><span class="nc">progress-bar</span> <span class="p">{</span>
   <span class="k">background-color</span><span class="p">:</span> <span class="mh">#f50057</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </details>
 <h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
@@ -1057,7 +1057,6 @@ quotes.</p>
 </table>
                 
                   
-                
                 
               
               
@@ -1113,7 +1112,7 @@ quotes.</p>
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1139,7 +1138,7 @@ quotes.</p>
       
     </div>
     
-      <script src="../../assets/javascripts/application.808e90bb.js"></script>
+      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

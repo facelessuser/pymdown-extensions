@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,19 +55,19 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../../extra-174a536342.css">
+      <link rel="stylesheet" href="../../extra-c035e56df5.css">
     
     
       
@@ -855,15 +855,15 @@ creating an alternate language name with your desired options.</p>
 affect highlighting via Pygments except <code>use_pygments</code> and <code>css_class</code>.  If you want to use a JavaScript syntax
 highlighter, set <code>use_pygments</code> to <code class="codehilite"><span class="kc">False</span></code> or make sure you don't have Pygments installed.</p>
 <p>The Highlight extension can be included in Python Markdown by using the following:</p>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.highight&#39;</span><span class="p">])</span>
-</pre></div>
+</code></pre></div>
 
 <h2 id="syntax-highlighting">Syntax Highlighting<a class="headerlink" href="#syntax-highlighting" title="Permanent link"></a></h2>
 <p>If Pygments is installed, it will be the default syntax highlighter, but if it is not, or if <code>use_pygments</code> is turned
 off, code tags will be rendered in the HTML5 format for JavaScript highlighting: </p>
-<div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">pre</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;highlight&quot;</span><span class="p">&gt;&lt;</span><span class="nt">code</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;language-mylanguage&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">code</span><span class="p">&gt;&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span>
-</pre></div>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">pre</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;highlight&quot;</span><span class="p">&gt;&lt;</span><span class="nt">code</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;language-mylanguage&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">code</span><span class="p">&gt;&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span>
+</code></pre></div>
 
 <h2 id="extended-pygments-lexer-options">Extended Pygments Lexer Options<a class="headerlink" href="#extended-pygments-lexer-options" title="Permanent link"></a></h2>
 <p>If using Pygments, some lexers have special options.  For instance, the <code>php</code> lexer has the option <code>startinline</code> which,
@@ -877,14 +877,14 @@ dictionary of the options you wish to apply.</p>
 <div class="admonition example">
 <p class="admonition-title">Highlight Example</p>
 <p>To create the above mentioned <code>php-inline</code> we would feed in the following to <code>extend_pygments_lang</code>:</p>
-<div class="codehilite"><pre><span></span><span class="n">extended_pygments_lang</span> <span class="o">=</span> <span class="p">[</span>
+<div class="codehilite"><pre><span></span><code><span class="n">extended_pygments_lang</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;php-inline&quot;</span><span class="p">,</span> <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="s2">&quot;php&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;startinline&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}}</span>
 <span class="p">]</span>
-</pre></div>
+</code></pre></div>
 
 <p>Now we can do this:</p>
-<div class="codehilite"><pre><span></span>`#!php-inline $a = array(&quot;foo&quot; =&gt; 0, &quot;bar&quot; =&gt; 1);`
-</pre></div>
+<div class="codehilite"><pre><span></span><code>`#!php-inline $a = array(&quot;foo&quot; =&gt; 0, &quot;bar&quot; =&gt; 1);`
+</code></pre></div>
 
 <p>To get this:</p>
 <p><code class="codehilite"><span class="nv">$a</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">);</span></code></p>
@@ -897,10 +897,10 @@ the source code output and can sometimes be undesirable as it copy and paste wil
 directly in the pre like Pygments' default <code>inline</code> style does, it writes the line numbers as
 <code class="codehilite"><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;lineno&quot;</span> <span class="na">data-linenos</span><span class="o">=</span><span class="s">&quot;1 &quot;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span></code>. This way the line numbers are un-selectable and can be
 displayed with CSS:</p>
-<div class="codehilite"><pre><span></span><span class="o">[</span><span class="nt">data-linenos</span><span class="o">]</span><span class="p">:</span><span class="nd">before</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="o">[</span><span class="nt">data-linenos</span><span class="o">]</span><span class="p">:</span><span class="nd">before</span> <span class="p">{</span>
   <span class="k">content</span><span class="p">:</span> <span class="nb">attr</span><span class="p">(</span><span class="n">data</span><span class="o">-</span><span class="n">linenos</span><span class="p">);</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 <p>Line number styles are set with the option <code>linenums_style</code> as described in <a href="#options">Options</a>.</p>
 <h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
@@ -968,11 +968,20 @@ displayed with CSS:</p>
 <td><code class="codehilite"><span class="p">[]</span></code></td>
 <td>A list of extended languages to add.  See <a href="#extended-pygments-lexer-options">Extended Pygments Lexer Options</a> for more info.</td>
 </tr>
+<tr>
+<td><code>legacy_no_wrap_code</code></td>
+<td>bool</td>
+<td><code class="codehilite"><span class="kc">False</span></code></td>
+<td>A temporary option provided during the transition period to the new output format. From now on, all block code under <code>pre</code> elements will be wrapped in a <code>code</code> element as well under Pygments 2.4+. This disables this format. This option will be removed in the future.</td>
+</tr>
 </tbody>
 </table>
+<div class="admonition new">
+<p class="admonition-title">New Option 6.2</p>
+<p><code>legacy_no_wrap_code</code> was added in <code>6.2</code>, but is only provided to help transition to the format when using Pygments 2.4+. This option will be removed in the future.</p>
+</div>
                 
                   
-                
                 
               
               
@@ -1028,7 +1037,7 @@ displayed with CSS:</p>
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1054,7 +1063,7 @@ displayed with CSS:</p>
       
     </div>
     
-      <script src="../../assets/javascripts/application.808e90bb.js"></script>
+      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

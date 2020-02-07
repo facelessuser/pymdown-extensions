@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,19 +55,19 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../../extra-174a536342.css">
+      <link rel="stylesheet" href="../../extra-c035e56df5.css">
     
     
       
@@ -1009,36 +1009,36 @@
 <code>+</code> symbol.  A key or combination of key presses is surrounded by <code>++</code> with each key press separated with a single <code>+</code>.</p>
 <div class="admonition example">
 <p class="admonition-title">Keys Example</p>
-<div class="codehilite"><pre><span></span>++ctrl+alt+delete++
-</pre></div>
+<div class="codehilite"><pre><span></span><code>++ctrl+alt+delete++
+</code></pre></div>
 
 <p><span class="keys"><kbd class="key-control">Ctrl</kbd><span>＋</span><kbd class="key-alt">Alt</kbd><span>＋</span><kbd class="key-delete">Del</kbd></span>.</p>
 </div>
 <p>The Keys extension can be included in Python Markdown by using the following:</p>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.keys&#39;</span><span class="p">])</span>
-</pre></div>
+</code></pre></div>
 
 <h2 id="formatting">Formatting<a class="headerlink" href="#formatting" title="Permanent link"></a></h2>
 <p>By default, Keys outputs keys in the form (separator <code>span</code>s will be omitted if a separator is not provided via the
 <a href="#options">options</a>):</p>
-<div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;keys&quot;</span><span class="p">&gt;</span>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;keys&quot;</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">kbd</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;key-ctrl&quot;</span><span class="p">&gt;</span>Ctrl<span class="p">&lt;/</span><span class="nt">kbd</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>+<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">kbd</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;key-alt&quot;</span><span class="p">&gt;</span>Alt<span class="p">&lt;/</span><span class="nt">kbd</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>+<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">kbd</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;key-delete&quot;</span><span class="p">&gt;</span>Delete<span class="p">&lt;/</span><span class="nt">kbd</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-</pre></div>
+</code></pre></div>
 
 <p>Notice the wrapper <code>span</code> has the class <code>keys</code> applied to it.  This is so you can target it or the elements under it with CSS. Each recognized key press has its own special key class assigned to it in the form <code>key-&lt;key name&gt;</code>. These individual key classes are great if you want to show special modifier key symbols before the key text (which is done in this documentation). The wrapper <code>keys</code> class can be customized with options, and the individual key classes are generated from the <a href="#key-map-index">key-map index</a>.</p>
 <p>If you would like to generate a key which isn't in the key index, you can extend the key map via a special <a href="#extendingmodifying-key-map-index">option</a>.  But if you don't need a key with a special class generated, or you need a way to quickly enter a one time special key, you can just insert it directly by quoting the text you want displayed instead of a key name. You can also enter HTML entities if desired.</p>
 <div class="admonition example">
 <p class="admonition-title">Quoted Example</p>
-<div class="codehilite"><pre><span></span>++ctrl+alt+&quot;My Special Key&quot;++
+<div class="codehilite"><pre><span></span><code>++ctrl+alt+&quot;My Special Key&quot;++
 
 ++cmd+alt+&quot;&amp;Uuml;&quot;++
-</pre></div>
+</code></pre></div>
 
 <p><span class="keys"><kbd class="key-control">Ctrl</kbd><span>＋</span><kbd class="key-alt">Alt</kbd><span>＋</span><kbd>My Special Key</kbd></span></p>
 <p><span class="keys"><kbd class="key-command">Cmd</kbd><span>＋</span><kbd class="key-alt">Alt</kbd><span>＋</span><kbd>Ü</kbd></span></p>
@@ -1046,14 +1046,14 @@
 <h2 id="strict-kbd-output">Strict <code>KBD</code> Output<a class="headerlink" href="#strict-kbd-output" title="Permanent link"></a></h2>
 <p>According to HTML5 spec on <a href="https://dev.w3.org/html5/spec-preview/the-kbd-element.html"><code>kbd</code></a>, a literal key input, is
 represented by a <code>kbd</code> wrapped the other <code>kbd</code>s:</p>
-<div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">kbd</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;keys&quot;</span><span class="p">&gt;</span>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">kbd</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;keys&quot;</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">kbd</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;key-ctrl&quot;</span><span class="p">&gt;</span>Ctrl<span class="p">&lt;/</span><span class="nt">kbd</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>+<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">kbd</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;key-alt&quot;</span><span class="p">&gt;</span>Alt<span class="p">&lt;/</span><span class="nt">kbd</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span>+<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
   <span class="p">&lt;</span><span class="nt">kbd</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;key-delete&quot;</span><span class="p">&gt;</span>Delete<span class="p">&lt;/</span><span class="nt">kbd</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">kbd</span><span class="p">&gt;</span>
-</pre></div>
+</code></pre></div>
 
 <p>This is not how many people traditionally use <code>kbd</code>s for key inputs, but if you are a stickler for rules, you can enable
 the <code>strict</code> option to use a more "proper" format.</p>
@@ -2094,7 +2094,6 @@ the output of the <code>option</code> key and change it from <code>Option</code>
                 
                   
                 
-                
               
               
                 
@@ -2149,7 +2148,7 @@ the output of the <code>option</code> key and change it from <code>Option</code>
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -2175,7 +2174,7 @@ the output of the <code>option</code> key and change it from <code>Option</code>
       
     </div>
     
-      <script src="../../assets/javascripts/application.808e90bb.js"></script>
+      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

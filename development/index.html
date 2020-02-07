@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.1b62728e.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.30686662.css">
       
         <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,19 +55,19 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.268332fc.js"></script>
+      <script src="../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../extra-174a536342.css">
+      <link rel="stylesheet" href="../extra-c035e56df5.css">
     
     
       
@@ -933,12 +933,12 @@
 <h2 id="project-layout">Project Layout<a class="headerlink" href="#project-layout" title="Permanent link"></a></h2>
 <p>There are a number of files for build, test, and continuous integration in the root of the project, but in general, the
 project is broken up like so.</p>
-<div class="codehilite"><pre><span></span>├── docs
+<div class="codehilite"><pre><span></span><code>├── docs
 ├── pymdownx
 ├── requirements
 ├── tests
 └── tools
-</pre></div>
+</code></pre></div>
 
 <table>
 <thead>
@@ -983,8 +983,8 @@ are the modules used:</p>
 <li><a class="magiclink magiclink-github magiclink-repository" href="https://github.com/gforcada/flake8-builtins" title="GitHub Repository: gforcada/flake8-builtins">gforcada/flake8-builtins</a></li>
 </ul>
 <p>Flake8 can be run directly via the command line from the root of the project.</p>
-<div class="codehilite"><pre><span></span>flake8
-</pre></div>
+<div class="codehilite"><pre><span></span><code>flake8
+</code></pre></div>
 
 <h2 id="building-and-editing-documents">Building and Editing Documents<a class="headerlink" href="#building-and-editing-documents" title="Permanent link"></a></h2>
 <p>Documents are in Markdown (with with some additional syntax) and converted to HTML via Python Markdown and this
@@ -998,8 +998,8 @@ extension bundle. If you would like to build and preview the documentation, you 
 <p>In order to build and preview the documents, just run the command below from the root of the project and you should be
 able to view the documents at <code>localhost:8000</code> in your browser. After that, you should be able to update the documents
 and have your browser preview update live.</p>
-<div class="codehilite"><pre><span></span>mkdocs serve
-</pre></div>
+<div class="codehilite"><pre><span></span><code>mkdocs serve
+</code></pre></div>
 
 <h2 id="editing-document-theme">Editing Document Theme<a class="headerlink" href="#editing-document-theme" title="Permanent link"></a></h2>
 <p>It isn't expected that people will need to mess with the theme, but if it is needed, a little additional work is
@@ -1009,8 +1009,8 @@ Stylesheets are located at <code>docs/src/scss</code> and are written in SCSS, a
 in a <code>Node.js</code> environment.  In order to get up and running, download and install <a href="https://yarnpkg.com/"><code>Yarn</code></a>. Also,
 install <a href="https://nodejs.org/en/"><code>Node.js</code></a> version 6+. From the root of the project, in a terminal, enter the command
 below.  This command will install all the needed <code>Node.js</code> modules.</p>
-<div class="codehilite"><pre><span></span>yarn install
-</pre></div>
+<div class="codehilite"><pre><span></span><code>yarn install
+</code></pre></div>
 
 <p>After that you can begin making changes. When ready, you can run the following commands to get a live preview while you
 make edits, lint your changes, or build the final output.</p>
@@ -1055,16 +1055,16 @@ Currently this project uses the latest Aspell.  As the latest Aspell is not avai
 that everyone will install and run Aspell locally.  In order to perform the spell check, it is expected you are setup
 to build the documents, and that you have Aspell installed in the your system path. To initiate the spell check run the
 following command from the root of the project:</p>
-<div class="codehilite"><pre><span></span>python tests/spelling.py
-</pre></div>
+<div class="codehilite"><pre><span></span><code>python tests/spelling.py
+</code></pre></div>
 
 <p>It should print out the files with the misspelled words if any are found.  If you find it prints words that are not
 misspelled, you can add them in <code>.dictionary</code> in the root of the project.</p>
 <h2 id="validation-tests">Validation Tests<a class="headerlink" href="#validation-tests" title="Permanent link"></a></h2>
 <p>In order to preserve good code health, a test suite has been put together with pytest (<a class="magiclink magiclink-github magiclink-repository" href="https://github.com/pytest-dev/pytest" title="GitHub Repository: pytest-dev/pytest">pytest-dev/pytest</a>). There are
 currently two kinds of tests: syntax and targeted.  To run these tests, you can use the following command:</p>
-<div class="codehilite"><pre><span></span>python run_tests.py
-</pre></div>
+<div class="codehilite"><pre><span></span><code>python run_tests.py
+</code></pre></div>
 
 <h3 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link"></a></h3>
 <p>Syntax tests are essentially text files containing Markdown. They are found under <code>tests/extensions</code>.  <code>test_syntax.py</code>
@@ -1072,35 +1072,35 @@ scans all the files and converts the files to HTML with the extensions and optio
 <code>tests/extensions/tests.yml</code>.  They are then compared to the current stored HTML output.  If the two differ, the test
 fails.</p>
 <p>To run <strong>only</strong> these tests, from the root of the project run the following command:</p>
-<div class="codehilite"><pre><span></span>python run_tests.py --test-target syntax
-</pre></div>
+<div class="codehilite"><pre><span></span><code>python run_tests.py --test-target syntax
+</code></pre></div>
 
 <p>You could also run them directly with:</p>
-<div class="codehilite"><pre><span></span>py.test tests/test_syntax.py
-</pre></div>
+<div class="codehilite"><pre><span></span><code>py.test tests/test_syntax.py
+</code></pre></div>
 
 <p>To run a specific syntax test:</p>
-<div class="codehilite"><pre><span></span>python run_tests.py --test-target syntax --file tests/extensions/arithmatex.txt
-</pre></div>
+<div class="codehilite"><pre><span></span><code>python run_tests.py --test-target syntax --file tests/extensions/arithmatex.txt
+</code></pre></div>
 
 <p>To accept the differences in tests due to a change(s) you made, you can run the following command:</p>
-<div class="codehilite"><pre><span></span>python run_tests.py --update
-</pre></div>
+<div class="codehilite"><pre><span></span><code>python run_tests.py --update
+</code></pre></div>
 
 <p>To update and accept the differences in a single test:</p>
-<div class="codehilite"><pre><span></span>python run_tests.py --update --file tests/extensions/arithmatex.txt
-</pre></div>
+<div class="codehilite"><pre><span></span><code>python run_tests.py --update --file tests/extensions/arithmatex.txt
+</code></pre></div>
 
 <h3 id="targeted">Targeted<a class="headerlink" href="#targeted" title="Permanent link"></a></h3>
 <p>Targeted tests are unit tests that target specific areas in the code and exercises them to ensure proper functionality.
 These tests are found in <code>test_targeted.py</code>.</p>
 <p>You can run <strong>only</strong> these tests from the root of the project with:</p>
-<div class="codehilite"><pre><span></span>python run_tests.py --test-target targeted
-</pre></div>
+<div class="codehilite"><pre><span></span><code>python run_tests.py --test-target targeted
+</code></pre></div>
 
 <p>You could also run them directly with:</p>
-<div class="codehilite"><pre><span></span>py.test tests/test_targeted.py
-</pre></div>
+<div class="codehilite"><pre><span></span><code>py.test tests/test_targeted.py
+</code></pre></div>
 
 <h3 id="running-validation-with-tox">Running Validation With Tox<a class="headerlink" href="#running-validation-with-tox" title="Permanent link"></a></h3>
 <p>Tox (<a class="magiclink magiclink-github magiclink-repository" href="https://github.com/tox-dev/tox" title="GitHub Repository: tox-dev/tox">tox-dev/tox</a>) is a great way to run the validation tests, spelling checks, and linting in virtual environments so
@@ -1108,35 +1108,35 @@ as not to mess with your current working environment. Tox will use the specified
 environment and create a virtual environment and install all the needed requirements (minus Aspell).  You could also
 setup your own virtual environments with the Virtualenv module without Tox, and manually do the same.</p>
 <p>First, you need to have Tox installed:</p>
-<div class="codehilite"><pre><span></span>pip install tox
-</pre></div>
+<div class="codehilite"><pre><span></span><code>pip install tox
+</code></pre></div>
 
 <p>By running Tox, it will walk through all the environments and create them (assuming you have all the python versions on
 your machine) and run the related tests.  See <code>tox.ini</code> to learn more.</p>
-<div class="codehilite"><pre><span></span>tox
-</pre></div>
+<div class="codehilite"><pre><span></span><code>tox
+</code></pre></div>
 
 <p>If you don't have all the Python versions needed to test all the environments, those entries will fail.  You can ignore
 those.  Spelling will also fail if you don't have the correct version of Aspell.</p>
 <p>To target a specific environment to test, you use the <code>-e</code> option to select the environment of interest.  To select
 lint:</p>
-<div class="codehilite"><pre><span></span>tox -elint
-</pre></div>
+<div class="codehilite"><pre><span></span><code>tox -elint
+</code></pre></div>
 
 <p>To select PY27 unit tests (or other versions &ndash; change accordingly):</p>
-<div class="codehilite"><pre><span></span>tox -epy27-unittests
-</pre></div>
+<div class="codehilite"><pre><span></span><code>tox -epy27-unittests
+</code></pre></div>
 
 <p>To select spelling and document building:</p>
-<div class="codehilite"><pre><span></span>tox -edocuments
-</pre></div>
+<div class="codehilite"><pre><span></span><code>tox -edocuments
+</code></pre></div>
 
 <h2 id="code-coverage">Code Coverage<a class="headerlink" href="#code-coverage" title="Permanent link"></a></h2>
 <p>When running the validation tests through Tox, it is setup to track code coverage via the Coverage
 (<a class="magiclink magiclink-bitbucket magiclink-repository" href="https://bitbucket.org/ned/coveragepy" title="Bitbucket Repository: ned/coveragepy">ned/coveragepy</a>) module.  Coverage is run on each <code>pyxx-unittests</code> environment.  If you've made changes to
 the code, you can clear the old coverage data:</p>
-<div class="codehilite"><pre><span></span>coverage erase
-</pre></div>
+<div class="codehilite"><pre><span></span><code>coverage erase
+</code></pre></div>
 
 <p>Then run each unit test environment to and coverage will be calculated. All the data from each run is merged together.
 HTML is output for each file in <code>.tox/pyXX-unittests/tmp</code>.  You can use these to see areas that are not
@@ -1163,7 +1163,6 @@ change does occur, and you are feeling brave, a pull request would be appreciate
 regardless.</p>
                 
                   
-                
                 
               
               
@@ -1219,7 +1218,7 @@ regardless.</p>
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1245,7 +1244,7 @@ regardless.</p>
       
     </div>
     
-      <script src="../assets/javascripts/application.808e90bb.js"></script>
+      <script src="../assets/javascripts/application.ac79c3b0.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       

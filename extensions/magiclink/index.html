@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,19 +55,19 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../../extra-174a536342.css">
+      <link rel="stylesheet" href="../../extra-c035e56df5.css">
     
     
       
@@ -968,9 +968,9 @@ shorthand format. MagicLink can also be configured to directly auto-link the afo
 as well: <code class="codehilite">&lt;https://www.link.com&gt;</code>. If enabled, repository link shortening will be applied to the the angle
 bracketed auto-link format as well.</p>
 <p>The MagicLink extension can be included in Python Markdown by using the following:</p>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.magiclink&#39;</span><span class="p">])</span>
-</pre></div>
+</code></pre></div>
 
 <h2 id="auto-linking">Auto-Linking<a class="headerlink" href="#auto-linking" title="Permanent link"></a></h2>
 <p>MagicLink supports auto-linking HTTP, FTP and email links. You can specify these links in raw text and they should get
@@ -979,9 +979,9 @@ part of links. If you have a link that cannot be detected, you can always use th
 <code class="codehilite">&lt;https://www.link.com&gt;</code>.</p>
 <div class="admonition example">
 <p class="admonition-title">Auto-Linking Example</p>
-<div class="codehilite"><pre><span></span>- Just paste links directly in the document like this: https://google.com.
+<div class="codehilite"><pre><span></span><code>- Just paste links directly in the document like this: https://google.com.
 - Or even an email address: fake.email@email.com.
-</pre></div>
+</code></pre></div>
 
 <ul>
 <li>Just paste links directly in the document like this: <a href="https://google.com">https://google.com</a>.</li>
@@ -1020,10 +1020,10 @@ auto-linked even if they are not valid.</p>
 default, use the format <code>@{provider}:{user}</code></p>
 <div class="admonition example">
 <p class="admonition-title">Mention Example</p>
-<div class="codehilite"><pre><span></span>@facelessuser
+<div class="codehilite"><pre><span></span><code>@facelessuser
 
 @twitter:twitter
-</pre></div>
+</code></pre></div>
 
 <p><a class="magiclink magiclink-github magiclink-mention" href="https://github.com/facelessuser" title="GitHub User: facelessuser">@facelessuser</a></p>
 <p><a class="magiclink magiclink-twitter magiclink-mention" href="https://twitter.com/twitter" title="Twitter User: twitter">@twitter</a></p>
@@ -1036,10 +1036,10 @@ output for repository mentions omits the <code>@</code> symbol and will just sho
 style it with CSS to make it stand out more like has been done in this document.</p>
 <div class="admonition example">
 <p class="admonition-title">Repository Mention Example</p>
-<div class="codehilite"><pre><span></span>@facelessuser/pymdown-extensions
+<div class="codehilite"><pre><span></span><code>@facelessuser/pymdown-extensions
 
 @gitlab:pycqa/flake8
-</pre></div>
+</code></pre></div>
 
 <p><a class="magiclink magiclink-github magiclink-repository" href="https://github.com/facelessuser/pymdown-extensions" title="GitHub Repository: facelessuser/pymdown-extensions">facelessuser/pymdown-extensions</a></p>
 <p><a class="magiclink magiclink-gitlab magiclink-repository" href="https://gitlab.com/pycqa/flake8" title="GitLab Repository: pycqa/flake8">pycqa/flake8</a></p>
@@ -1052,7 +1052,7 @@ the format <code>{provider}:{user}/{repo}#{num}</code>. If the default provider 
 syntax can be used.</p>
 <div class="admonition example">
 <p class="admonition-title">Issue Example</p>
-<div class="codehilite"><pre><span></span>Issue #1
+<div class="codehilite"><pre><span></span><code>Issue #1
 
 Issue backrefs#1
 
@@ -1067,7 +1067,7 @@ Pull request backrefs!4
 Pull request Python-Markdown/markdown!598
 
 Pull request gitlab:pycqa/flake8!213
-</pre></div>
+</code></pre></div>
 
 <p>Issue <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/1" title="GitHub Issue: facelessuser/pymdown-extensions#1">#1</a></p>
 <p>Issue <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/backrefs/issues/1" title="GitHub Issue: facelessuser/backrefs#1">backrefs#1</a></p>
@@ -1093,14 +1093,14 @@ you can denote a repository under the default user with <code>{repo}@{hash}</cod
 the default provider is a social media provider, then only the latter syntax can be used.</p>
 <div class="admonition example">
 <p class="admonition-title">Commit Example</p>
-<div class="codehilite"><pre><span></span>181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+<div class="codehilite"><pre><span></span><code>181c06d1f11fa29961b334e90606ed1f1ec7a7cc
 
 backrefs@cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
 
 Python-Markdown/markdown@de5c696f94e8dde242c29d4be50b7bbf3c17fedb
 
 gitlab:pycqa/flake8@8acf55e0f85233c51c291816d73d828cc62d30d1
-</pre></div>
+</code></pre></div>
 
 <p><a class="magiclink magiclink-github magiclink-commit" href="https://github.com/facelessuser/pymdown-extensions/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc" title="GitHub Commit: facelessuser/pymdown-extensions@181c06d">181c06d</a></p>
 <p><a class="magiclink magiclink-github magiclink-commit" href="https://github.com/facelessuser/backrefs/commit/cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61" title="GitHub Commit: facelessuser/backrefs@cb4ecc5">backrefs@cb4ecc5</a></p>
@@ -1117,14 +1117,14 @@ the user and repository: <code>{user}/{repo}@{hash1}...{hash2}</code>. Lastly, t
 <code>{provider}:{user}/{repo}@{hash1}...{hash2}</code>.</p>
 <div class="admonition example">
 <p class="admonition-title">Compare Example</p>
-<div class="codehilite"><pre><span></span>e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+<div class="codehilite"><pre><span></span><code>e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
 
 backrefs@88c6238a1c2cf71a96eb9abb4b0213f79d6ca81f...cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
 
 Python-Markdown/markdown@007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8dde242c29d4be50b7bbf3c17fedb
 
 gitlab:pycqa/flake8@1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e
-</pre></div>
+</code></pre></div>
 
 <p><a class="magiclink magiclink-github magiclink-compare" href="https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac" title="GitHub Compare: facelessuser/pymdown-extensions@e2ed7e0...90b6fb8">e2ed7e0...90b6fb8</a></p>
 <p><a class="magiclink magiclink-github magiclink-compare" href="https://github.com/facelessuser/backrefs/compare/88c6238a1c2cf71a96eb9abb4b0213f79d6ca81f...cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61" title="GitHub Compare: facelessuser/backrefs@88c6238...cb4ecc5">backrefs@88c6238...cb4ecc5</a></p>
@@ -1139,9 +1139,9 @@ legitimate links can look like user links, but are not.</p>
 <p>If we specify long form URLs from external providers, they will be shortened appropriately.</p>
 <div class="admonition example">
 <p class="admonition-title">External Provider Example</p>
-<div class="codehilite"><pre><span></span>- https://gitlab.com/pycqa/flake8/issues/385
+<div class="codehilite"><pre><span></span><code>- https://gitlab.com/pycqa/flake8/issues/385
 - https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
-</pre></div>
+</code></pre></div>
 
 <ul>
 <li><a class="magiclink magiclink-gitlab magiclink-issue" href="https://gitlab.com/pycqa/flake8/issues/385" title="GitLab Issue: pycqa/flake8#385">pycqa/flake8#385</a></li>
@@ -1152,12 +1152,12 @@ legitimate links can look like user links, but are not.</p>
 in light of that context.</p>
 <div class="admonition example">
 <p class="admonition-title">Internal Provider Example</p>
-<div class="codehilite"><pre><span></span>- https://github.com/facelessuser/pymdown-extensions/issues/1
+<div class="codehilite"><pre><span></span><code>- https://github.com/facelessuser/pymdown-extensions/issues/1
 - https://github.com/facelessuser/pymdown-extensions/pull/13
 - https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a
 - https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
 - https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
-</pre></div>
+</code></pre></div>
 
 <ul>
 <li><a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/1" title="GitHub Issue: facelessuser/pymdown-extensions#1">#1</a></li>
@@ -1289,7 +1289,7 @@ Also, an additional class will be added for each repository link type and provid
 <p>By default, MagicLink provides titles for the repository links in the form <code>{provider} {label}: {info}</code>. You can specify
 different values for <code>{label}</code> by configuring the <code>labels</code> option.</p>
 <p>The default values are:</p>
-<div class="codehilite"><pre><span></span>    <span class="p">{</span>
+<div class="codehilite"><pre><span></span><code>    <span class="p">{</span>
         <span class="s1">&#39;commit&#39;</span><span class="o">:</span> <span class="s1">&#39;Commit&#39;</span><span class="p">,</span>
         <span class="s1">&#39;compare&#39;</span><span class="o">:</span> <span class="s1">&#39;Compare&#39;</span><span class="p">,</span>
         <span class="s1">&#39;issue&#39;</span><span class="o">:</span> <span class="s1">&#39;Issue&#39;</span><span class="p">,</span>
@@ -1297,17 +1297,16 @@ different values for <code>{label}</code> by configuring the <code>labels</code>
         <span class="s1">&#39;mention&#39;</span><span class="o">:</span> <span class="s1">&#39;User&#39;</span><span class="p">,</span>
         <span class="s1">&#39;repository&#39;</span><span class="o">:</span> <span class="s1">&#39;Repository&#39;</span>
     <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 <p>You only need to provide the options you wish to override. Assume we wanted to adopt the GitLab terminology for pull
 requests, we could simply set <code>labels</code> to:</p>
-<div class="codehilite"><pre><span></span>    <span class="p">{</span>
+<div class="codehilite"><pre><span></span><code>    <span class="p">{</span>
         <span class="s1">&#39;pull&#39;</span><span class="o">:</span> <span class="s1">&#39;Merge Request&#39;</span>
     <span class="p">}</span>
-</pre></div>
+</code></pre></div>
                 
                   
-                
                 
               
               
@@ -1363,7 +1362,7 @@ requests, we could simply set <code>labels</code> to:</p>
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1389,7 +1388,7 @@ requests, we could simply set <code>labels</code> to:</p>
       
     </div>
     
-      <script src="../../assets/javascripts/application.808e90bb.js"></script>
+      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

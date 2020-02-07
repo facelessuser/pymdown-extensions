@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,19 +55,19 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../../extra-174a536342.css">
+      <link rel="stylesheet" href="../../extra-c035e56df5.css">
     
     
       
@@ -815,29 +815,29 @@
 <code class="codehilite"><span class="p">&lt;</span><span class="nt">details</span><span class="p">&gt;&lt;</span><span class="nt">summary</span><span class="p">&gt;</span></code> tags to accomplish this.  It supports nesting and you can also force the default state to be
 open. And if you want to style some different than others, you can optionally feed in a custom class.</p>
 <p>The Details extension can be included in Python Markdown by using the following:</p>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.details&#39;</span><span class="p">])</span>
-</pre></div>
+</code></pre></div>
 
 <h2 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link"></a></h2>
 <p>Details must contain a blank line before they start. Use <code>???</code> to start a details block or <code>???+</code> if you want to start a
 details block whose default state is 'open'.  Follow the start of the block with an optional class or classes (separated
 with spaces) and the summary contained in quotes. Content is placed below the header and must be indented.</p>
-<div class="codehilite"><pre><span></span>??? optional-class &quot;Summary&quot;
+<div class="codehilite"><pre><span></span><code>??? optional-class &quot;Summary&quot;
     Here&#39;s some content.
-</pre></div>
+</code></pre></div>
 
-<div class="codehilite"><pre><span></span>??? multiple optional-class &quot;Summary&quot;
+<div class="codehilite"><pre><span></span><code>??? multiple optional-class &quot;Summary&quot;
     Here&#39;s some content.
-</pre></div>
+</code></pre></div>
 
 <div class="admonition example">
 <p class="admonition-title">Example Details</p>
-<div class="codehilite"><pre><span></span>???+ note &quot;Open styled details&quot;
+<div class="codehilite"><pre><span></span><code>???+ note &quot;Open styled details&quot;
 
     ??? danger &quot;Nested details!&quot;
         And more content again.
-</pre></div>
+</code></pre></div>
 
 <details class="note" open="open"><summary>Open styled details</summary><details class="danger"><summary>Nested details!</summary><p>And more content again.</p>
 </details>
@@ -846,22 +846,22 @@ with spaces) and the summary contained in quotes. Content is placed below the he
 <p>It is also possible to provide only a class.  If this is done, the title will be derived from the <em>first</em> class.</p>
 <div class="admonition example">
 <p class="admonition-title">Example Class from Title</p>
-<div class="codehilite"><pre><span></span>??? success
+<div class="codehilite"><pre><span></span><code>??? success
    Content.
-</pre></div>
+</code></pre></div>
 
 <details class="success"><summary>Success</summary><p>Content.</p>
 </details>
-<div class="codehilite"><pre><span></span>??? warning classes
+<div class="codehilite"><pre><span></span><code>??? warning classes
    Content.
-</pre></div>
+</code></pre></div>
 
 <details class="warning classes"><summary>Warning</summary><p>Content.</p>
 </details>
 </div>
 <p>Details will be output in the format below. The content will always be encapsulated in tags of some kind.</p>
-<div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">details</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;optional-class&quot;</span><span class="p">&gt;&lt;</span><span class="nt">summary</span><span class="p">&gt;</span>Text<span class="p">&lt;/</span><span class="nt">summary</span><span class="p">&gt;&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Content<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;&lt;/</span><span class="nt">details</span><span class="p">&gt;</span>
-</pre></div>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">details</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;optional-class&quot;</span><span class="p">&gt;&lt;</span><span class="nt">summary</span><span class="p">&gt;</span>Text<span class="p">&lt;/</span><span class="nt">summary</span><span class="p">&gt;&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Content<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;&lt;/</span><span class="nt">details</span><span class="p">&gt;</span>
+</code></pre></div>
 
 <h2 id="browser-support">Browser Support<a class="headerlink" href="#browser-support" title="Permanent link"></a></h2>
 <p>Unfortunately, due to how new <code class="codehilite"><span class="p">&lt;</span><span class="nt">details</span><span class="p">&gt;&lt;</span><span class="nt">summary</span><span class="p">&gt;</span></code> tags are, not all browsers support them yet.  In order to have
@@ -872,7 +872,7 @@ support. There are more elaborate polyfills available that support jQuery, add k
 IE8. Feel free to modify what is here or find a solution that fits your needs.</p>
 <details class="settings"><summary>Basic Polyfill Setup</summary><p>Here is the basic CSS that that can be used.  It is meant to provide a consistent CSS in both browsers that support
 <code class="codehilite"><span class="p">&lt;</span><span class="nt">details</span><span class="p">&gt;&lt;</span><span class="nt">summary</span><span class="p">&gt;</span></code> tags and those that do not.</p>
-<div class="codehilite"><pre><span></span><span class="nt">details</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="nt">details</span> <span class="p">{</span>
   <span class="k">display</span><span class="p">:</span> <span class="kc">block</span><span class="p">;</span>
 <span class="p">}</span>
 
@@ -908,7 +908,7 @@ IE8. Feel free to modify what is here or find a solution that fits your needs.</
 <span class="nt">details</span><span class="p">.</span><span class="nc">no-details</span><span class="p">:</span><span class="nd">not</span><span class="o">([</span><span class="nt">open</span><span class="o">])</span> <span class="nt">summary</span> <span class="p">{</span>
   <span class="k">display</span><span class="p">:</span> <span class="kc">block</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 <p>And below is the JavaScript that will detect browsers that do not support <code class="codehilite"><span class="p">&lt;</span><span class="nt">details</span><span class="p">&gt;&lt;</span><span class="nt">summary</span><span class="p">&gt;</span></code> tags and apply
 a <code>no-details</code> class to all details in those browsers. It will also attach a click event that will toggle the open
@@ -916,7 +916,7 @@ state. The CSS above will target the <code>no-details</code> class and the <code
 <code class="codehilite"><span class="p">&lt;</span><span class="nt">details</span><span class="p">&gt;</span></code> tag. Just run the code after the HTML content is loaded.</p>
 <p>There are plenty of things that aren't covered here, like jumping to a footnote or ID inside a closed polyfilled
 detail element, but this is left up to the user to figure out, or for a complete 3<sup>rd</sup> party polyfill.</p>
-<div class="codehilite"><pre><span></span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 <span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
 <span class="cm">/**</span>
 <span class="cm"> * Converts details/summary tags into working elements in browsers that don&#39;t yet support them.</span>
@@ -997,12 +997,11 @@ detail element, but this is left up to the user to figure out, or for a complete
 <span class="p">})();</span>
 
 <span class="p">}());</span>
-</pre></div>
+</code></pre></div>
 
 </details>
                 
                   
-                
                 
               
               
@@ -1058,7 +1057,7 @@ detail element, but this is left up to the user to figure out, or for a complete
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1084,7 +1083,7 @@ detail element, but this is left up to the user to figure out, or for a complete
       
     </div>
     
-      <script src="../../assets/javascripts/application.808e90bb.js"></script>
+      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

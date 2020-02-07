@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,19 +55,19 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../../extra-174a536342.css">
+      <link rel="stylesheet" href="../../extra-c035e56df5.css">
     
     
       
@@ -817,9 +817,9 @@ both asterisk's and underscore's bold and italic syntax: <strong>smart</strong> 
 When <strong>smart</strong> is enabled for either asterisks and/or underscores, it is enabled for all variants: single and double.
 When <strong>smart</strong> is enabled, the behavior will be very similar in feel to <abbr title="GitHub Flavored Markdown">GFM</abbr> bold and italic (but not necessarily exact).</p>
 <p>The BetterEm extension can be included in Python Markdown by using the following:</p>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.betterem&#39;</span><span class="p">])</span>
-</pre></div>
+</code></pre></div>
 
 <div class="admonition danger">
 <p class="admonition-title">Reminder</p>
@@ -834,10 +834,10 @@ extension!</p>
 <p>BetterEm requires that non-whitespace characters follow the opening token(s) and precede the closing token(s).</p>
 <div class="admonition example">
 <p class="admonition-title">Whitespace Example</p>
-<div class="codehilite"><pre><span></span>* Won&#39;t highlight *
+<div class="codehilite"><pre><span></span><code>* Won&#39;t highlight *
 
 *Will highlight*
-</pre></div>
+</code></pre></div>
 
 <p>This * won't emphasize *</p>
 <p>This <em>will emphasize</em></p>
@@ -845,10 +845,10 @@ extension!</p>
 <p>BetterEm allows for a more natural nested token feel.</p>
 <div class="admonition example">
 <p class="admonition-title">Nested Token Example</p>
-<div class="codehilite"><pre><span></span>***I&#39;m italic and bold* I am just bold.**
+<div class="codehilite"><pre><span></span><code>***I&#39;m italic and bold* I am just bold.**
 
 ***I&#39;m bold and italic!** I am just italic.*
-</pre></div>
+</code></pre></div>
 
 <p><strong><em>I'm italic and bold</em> I am just bold.</strong></p>
 <p><em><strong>I'm bold and italic!</strong> I am just italic.</em></p>
@@ -857,10 +857,10 @@ extension!</p>
 inside.</p>
 <div class="admonition example">
 <p class="admonition-title">Consecutive Token Example</p>
-<div class="codehilite"><pre><span></span>___A lot of underscores____________is okay___
+<div class="codehilite"><pre><span></span><code>___A lot of underscores____________is okay___
 
 ___A lot of underscores____________is okay___
-</pre></div>
+</code></pre></div>
 
 <p><strong><em>A lot of underscores____________is okay</em></strong></p>
 <p><strong><em>A lot of underscores____________is okay</em></strong></p>
@@ -868,14 +868,14 @@ ___A lot of underscores____________is okay___
 <p>BetterEm will also ensure that smart mode breaks proper when an inner like token signifies an end.</p>
 <div class="admonition example">
 <p class="admonition-title">Smart Break Example</p>
-<div class="codehilite"><pre><span></span>__This will all be bold __because of the placement of the center underscores.__
+<div class="codehilite"><pre><span></span><code>__This will all be bold __because of the placement of the center underscores.__
 
 __This will all be bold __ because of the placement of the center underscores.__
 
 __This will NOT all be bold__ because of the placement of the center underscores.__
 
 __This will all be bold_ because of the token is less than that of the surrounding.__
-</pre></div>
+</code></pre></div>
 
 <p><strong>This will all be bold __because of the placement of the center underscores.</strong></p>
 <p><strong>This will all be bold __ because of the placement of the center asterisks.</strong></p>
@@ -885,7 +885,7 @@ __This will all be bold_ because of the token is less than that of the surroundi
 <p>BetterEm will allow non-smart emphasis to contain "floating" like tokens.</p>
 <div class="admonition example">
 <p class="admonition-title">Floating Token Example</p>
-<div class="codehilite"><pre><span></span>`*All will * be italic*
+<div class="codehilite"><pre><span></span><code>`*All will * be italic*
 
 `*All will *be italic*
 
@@ -900,7 +900,7 @@ __This will all be bold_ because of the token is less than that of the surroundi
 `**All will not*** be bold**
 
 `**All will not *** be bold**
-</pre></div>
+</code></pre></div>
 
 <p><em>All will * be italic</em></p>
 <p><em>All will *be italic</em></p>
@@ -932,7 +932,6 @@ __This will all be bold_ because of the token is less than that of the surroundi
 </table>
                 
                   
-                
                 
               
               
@@ -988,7 +987,7 @@ __This will all be bold_ because of the token is less than that of the surroundi
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1014,7 +1013,7 @@ __This will all be bold_ because of the token is less than that of the surroundi
       
     </div>
     
-      <script src="../../assets/javascripts/application.808e90bb.js"></script>
+      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

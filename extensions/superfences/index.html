@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,19 +55,19 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../../extra-174a536342.css">
+      <link rel="stylesheet" href="../../extra-c035e56df5.css">
     
     
       
@@ -980,9 +980,9 @@
 extension!</p>
 </div>
 <p>The SuperFences extension can be included in Python Markdown by using the following:</p>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.superfences&#39;</span><span class="p">])</span>
-</pre></div>
+</code></pre></div>
 
 <h2 id="nested-fence-format">Nested Fence Format<a class="headerlink" href="#nested-fence-format" title="Permanent link"></a></h2>
 <ol>
@@ -1003,27 +1003,27 @@ extension!</p>
 <li>
 <p>If you are using a fenced block inside a blockquote, at the very least, the first line of the fenced block needs to
   have the appropriate number of <code>&gt;</code> characters signifying the quote depth.</p>
-<div class="codehilite"><pre><span></span>&gt; ```
+<div class="codehilite"><pre><span></span><code>&gt; ```
   a fenced block
   ```
-</pre></div>
+</code></pre></div>
 
 </li>
 <li>
 <p>Too many blank lines will cause a blockquote to terminate, so remember to use <code>&gt;</code> markers accordingly if not marking
   every line.</p>
-<div class="codehilite"><pre><span></span>&gt; ```
+<div class="codehilite"><pre><span></span><code>&gt; ```
   a fenced block
 
 &gt; with blank lines
   ```
-</pre></div>
+</code></pre></div>
 
 </li>
 <li>
 <p>If using a fenced block as the first line of a list, you will have to leave the first line blank, but remember that
   the list marker must be followed by a space.</p>
-<div class="codehilite"><pre><span></span>-&lt;space&gt;
+<div class="codehilite"><pre><span></span><code>-&lt;space&gt;
     ```
     a fenced block
     ```
@@ -1033,19 +1033,19 @@ Definition
     ```
     a fenced block
     ```
-</pre></div>
+</code></pre></div>
 
 </li>
 <li>
 <p>Fenced blocks should be separated from other blocks by an empty line.</p>
-<div class="codehilite"><pre><span></span>Paragraph.
+<div class="codehilite"><pre><span></span><code>Paragraph.
 
 ```
 a fenced block
 ```
 
 Another paragraph.
-</pre></div>
+</code></pre></div>
 
 </li>
 </ol>
@@ -1056,7 +1056,7 @@ or <code>tab=""</code>, but you've specified a language, the language will be us
 &ndash; what you type is what you get. Consecutive code tabs will be grouped together.</p>
 <div class="admonition example">
 <p class="admonition-title">Tabbed Code</p>
-<div class="codehilite"><pre><span></span>```Bash tab=
+<div class="codehilite"><pre><span></span><code>```Bash tab=
 #!/bin/bash
 STR=&quot;Hello World!&quot;
 echo $STR
@@ -1088,42 +1088,42 @@ class Program {
   }
 }
 ```
-</pre></div>
+</code></pre></div>
 
 <div class="superfences-tabs">
 <input name="__tabs_1" type="radio" id="__tab_1_0" checked="checked" />
 <label for="__tab_1_0">Bash</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="ch">#!/bin/bash</span>
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="nv">STR</span><span class="o">=</span><span class="s2">&quot;Hello World!&quot;</span>
 <span class="nb">echo</span> <span class="nv">$STR</span>
-</pre></div></div>
+</code></pre></div></div>
 <input name="__tabs_1" type="radio" id="__tab_1_1" />
 <label for="__tab_1_1">C</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="cp">#include</span> 
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code><span class="cp">#include</span> 
 
 <span class="cpf">int main(void) {</span><span class="cp"></span>
   <span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello, world</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 <span class="p">}</span>
-</pre></div></div>
+</code></pre></div></div>
 <input name="__tabs_1" type="radio" id="__tab_1_2" />
 <label for="__tab_1_2">C++</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
   <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello, world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div></div>
+</code></pre></div></div>
 <input name="__tabs_1" type="radio" id="__tab_1_3" />
 <label for="__tab_1_3">C#</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">Program</span> <span class="p">{</span>
   <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
     <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span>
   <span class="p">}</span>
 <span class="p">}</span>
-</pre></div></div>
+</code></pre></div></div>
 </div>
 </div>
 <p>In order to use tabbed code blocks, some additional CSS is needed. You can check out the configuration below which will
@@ -1132,7 +1132,7 @@ modify it to get it how you like it.</p>
 <details class="settings"><summary>Tabbed Code Setup</summary><div class="superfences-tabs">
 <input name="__tabs_2" type="radio" id="__tab_2_0" checked="checked" />
 <label for="__tab_2_0">HTML</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;superfences-tabs&quot;</span><span class="p">&gt;</span>
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;superfences-tabs&quot;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;__tabs_1&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;radio&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;__tab_1_0&quot;</span> <span class="na">checked</span><span class="o">=</span><span class="s">&quot;checked&quot;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;__tab_1_0&quot;</span><span class="p">&gt;</span>Tab 0<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;superfences-content&quot;</span><span class="p">&gt;</span>...<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
@@ -1142,10 +1142,10 @@ modify it to get it how you like it.</p>
 <span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;superfences-content&quot;</span><span class="p">&gt;</span>...<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
 ...
 <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
-</pre></div></div>
+</code></pre></div></div>
 <input name="__tabs_2" type="radio" id="__tab_2_1" />
 <label for="__tab_2_1">CSS</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="p">.</span><span class="nc">superfences-tabs</span> <span class="p">{</span>
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code><span class="p">.</span><span class="nc">superfences-tabs</span> <span class="p">{</span>
   <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
   <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
   <span class="k">flex-wrap</span><span class="p">:</span> <span class="kc">wrap</span><span class="p">;</span>
@@ -1185,7 +1185,7 @@ modify it to get it how you like it.</p>
 <span class="p">.</span><span class="nc">superfences-tabs</span> <span class="nt">input</span><span class="p">:</span><span class="nd">nth-child</span><span class="o">(</span><span class="nt">n</span><span class="o">+</span><span class="nt">1</span><span class="o">)</span><span class="p">:</span><span class="nd">checked</span> <span class="o">+</span> <span class="nt">label</span> <span class="o">+</span> <span class="p">.</span><span class="nc">superfences-content</span> <span class="p">{</span>
     <span class="k">display</span><span class="p">:</span> <span class="kc">block</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div></div>
+</code></pre></div></div>
 </div>
 </details>
 <h2 id="preserve-tabs">Preserve tabs<a class="headerlink" href="#preserve-tabs" title="Permanent link"></a></h2>
@@ -1194,13 +1194,13 @@ converted to spaces. In 99% of Markdown, this is never really an issue, but with
 sometimes be very useful for aligning certain kinds of data, especially when dealing with characters of varying width.</p>
 <div class="admonition example">
 <p class="admonition-title">Tabs in Content</p>
-<div class="codehilite"><pre><span></span>============================================================
+<div class="codehilite"><pre><span></span><code>============================================================
 T	Tp	Sp	D	Dp	S	D7	T
 ------------------------------------------------------------
 A	F#m	Bm	E	C#m	D	E7	A
 A#	Gm	Cm	F	Dm	D#	F7	A#
 B♭	Gm	Cm	F	Dm	E♭m	F7	B♭
-</pre></div>
+</code></pre></div>
 
 </div>
 <p>If you have a scenario where preserving tabs is a requirement, you can use SuperFences <code>preserve_tabs</code> option to prevent
@@ -1227,14 +1227,14 @@ specifiers.</p>
 <div class="superfences-tabs">
 <input name="__tabs_3" type="radio" id="__tab_3_0" checked="checked" />
 <label for="__tab_3_0">Source</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span>```py3
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code>```py3
 import foo.bar
 ```
-</pre></div></div>
+</code></pre></div></div>
 <input name="__tabs_3" type="radio" id="__tab_3_1" />
 <label for="__tab_3_1">Output</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">foo.bar</span>
-</pre></div></div>
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">foo.bar</span>
+</code></pre></div></div>
 </div>
 </div>
 <h2 id="showing-line-numbers">Showing Line Numbers<a class="headerlink" href="#showing-line-numbers" title="Permanent link"></a></h2>
@@ -1249,14 +1249,14 @@ control the starting line shown in the block.</p>
 <div class="superfences-tabs">
 <input name="__tabs_4" type="radio" id="__tab_4_0" checked="checked" />
 <label for="__tab_4_0">Source</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span>``` linenums=&quot;1&quot;
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code>``` linenums=&quot;1&quot;
 import foo.bar
 ```
-</pre></div></div>
+</code></pre></div></div>
 <input name="__tabs_4" type="radio" id="__tab_4_1" />
 <label for="__tab_4_1">Output</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="lineno" data-linenos="1 "></span>import foo.bar
-</pre></div></div>
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code><span class="lineno" data-linenos="1 "></span>import foo.bar
+</code></pre></div></div>
 </div>
 </div>
 <p>Pygments also has a few additional options in regards to line numbers. One is "line step" which, if set to a number n &gt;
@@ -1270,20 +1270,20 @@ class <code>special</code>.</p>
 <div class="superfences-tabs">
 <input name="__tabs_5" type="radio" id="__tab_5_0" checked="checked" />
 <label for="__tab_5_0">Source</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span>``` linenums=&quot;2 2&quot;
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code>``` linenums=&quot;2 2&quot;
 &quot;&quot;&quot;Some file.&quot;&quot;&quot;
 import foo.bar
 import boo.baz
 import foo.bar.baz
 ```
-</pre></div></div>
+</code></pre></div></div>
 <input name="__tabs_5" type="radio" id="__tab_5_1" />
 <label for="__tab_5_1">Output</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="lineno" data-linenos="2 "></span>&quot;&quot;&quot;Some file.&quot;&quot;&quot;
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code><span class="lineno" data-linenos="2 "></span>&quot;&quot;&quot;Some file.&quot;&quot;&quot;
 <span class="lineno" data-linenos="  "></span>import foo.bar
 <span class="lineno" data-linenos="4 "></span>import boo.baz
 <span class="lineno" data-linenos="  "></span>import foo.bar.baz
-</pre></div></div>
+</code></pre></div></div>
 </div>
 </div>
 <p>To set every other line as special, you must set the third <code>linenums</code> option (specify line start and step before it).
@@ -1293,20 +1293,20 @@ Special must be a value of n &gt; 0.</p>
 <div class="superfences-tabs">
 <input name="__tabs_6" type="radio" id="__tab_6_0" checked="checked" />
 <label for="__tab_6_0">Source</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span>``` linenums=&quot;1 1 2&quot;
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code>``` linenums=&quot;1 1 2&quot;
 &quot;&quot;&quot;Some file.&quot;&quot;&quot;
 import foo.bar
 import boo.baz
 import foo.bar.baz
 ```
-</pre></div></div>
+</code></pre></div></div>
 <input name="__tabs_6" type="radio" id="__tab_6_1" />
 <label for="__tab_6_1">Output</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="lineno" data-linenos="1 "></span>&quot;&quot;&quot;Some file.&quot;&quot;&quot;
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code><span class="lineno" data-linenos="1 "></span>&quot;&quot;&quot;Some file.&quot;&quot;&quot;
 <span class="lineno special" data-linenos="2 "></span>import foo.bar
 <span class="lineno" data-linenos="3 "></span>import boo.baz
 <span class="lineno special" data-linenos="4 "></span>import foo.bar.baz
-</pre></div></div>
+</code></pre></div></div>
 </div>
 </div>
 <p>For JavaScript libraries, a class of <code>linenums</code> is written to the block.  This may or may not be leveraged by your
@@ -1321,20 +1321,20 @@ targeted line numbers separated by spaces.</p>
 <div class="superfences-tabs">
 <input name="__tabs_7" type="radio" id="__tab_7_0" checked="checked" />
 <label for="__tab_7_0">Source</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span>``` hl_lines=&quot;1 3&quot;
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code>``` hl_lines=&quot;1 3&quot;
 &quot;&quot;&quot;Some file.&quot;&quot;&quot;
 import foo.bar
 import boo.baz
 import foo.bar.baz
 ```
-</pre></div></div>
+</code></pre></div></div>
 <input name="__tabs_7" type="radio" id="__tab_7_1" />
 <label for="__tab_7_1">Output</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="hll">&quot;&quot;&quot;Some file.&quot;&quot;&quot;
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code><span class="hll">&quot;&quot;&quot;Some file.&quot;&quot;&quot;
 </span>import foo.bar
 <span class="hll">import boo.baz
 </span>import foo.bar.baz
-</pre></div></div>
+</code></pre></div></div>
 </div>
 </div>
 <p>Line numbers are always referenced starting at 1 ignoring what the line number is labeled as when showing line numbers.</p>
@@ -1343,20 +1343,20 @@ import foo.bar.baz
 <div class="superfences-tabs">
 <input name="__tabs_8" type="radio" id="__tab_8_0" checked="checked" />
 <label for="__tab_8_0">Source</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span>```hl_lines=&quot;1 3&quot; linenums=&quot;2&quot;
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code>```hl_lines=&quot;1 3&quot; linenums=&quot;2&quot;
 &quot;&quot;&quot;Some file.&quot;&quot;&quot;
 import foo.bar
 import boo.baz
 import foo.bar.baz
 ```
-</pre></div></div>
+</code></pre></div></div>
 <input name="__tabs_8" type="radio" id="__tab_8_1" />
 <label for="__tab_8_1">Output</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="lineno" data-linenos="2 "></span><span class="hll">&quot;&quot;&quot;Some file.&quot;&quot;&quot;
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code><span class="lineno" data-linenos="2 "></span><span class="hll">&quot;&quot;&quot;Some file.&quot;&quot;&quot;
 </span><span class="lineno" data-linenos="3 "></span>import foo.bar
 <span class="lineno" data-linenos="4 "></span><span class="hll">import boo.baz
 </span><span class="lineno" data-linenos="5 "></span>import foo.bar.baz
-</pre></div></div>
+</code></pre></div></div>
 </div>
 </div>
 <h2 id="custom-fences">Custom Fences<a class="headerlink" href="#custom-fences" title="Permanent link"></a></h2>
@@ -1366,7 +1366,7 @@ import foo.bar.baz
 <div class="superfences-tabs">
 <input name="__tabs_9" type="radio" id="__tab_9_0" checked="checked" />
 <label for="__tab_9_0">Source</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span>```flow
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code>```flow
 st=&gt;start: Start:&gt;http://www.google.com[blank]
 e=&gt;end:&gt;http://www.google.com
 op1=&gt;operation: My Operation
@@ -1379,7 +1379,7 @@ st-&gt;op1-&gt;cond
 cond(yes)-&gt;io-&gt;e
 cond(no)-&gt;sub1(right)-&gt;op1
 ```
-</pre></div></div>
+</code></pre></div></div>
 <input name="__tabs_9" type="radio" id="__tab_9_1" />
 <label for="__tab_9_1">Output</label>
 <div class="superfences-content"><pre class="uml-flowchart"><code>st=&gt;start: Start:&gt;http://www.google.com[blank]
@@ -1400,14 +1400,14 @@ cond(no)-&gt;sub1(right)-&gt;op1</code></pre></div>
 <div class="superfences-tabs">
 <input name="__tabs_10" type="radio" id="__tab_10_0" checked="checked" />
 <label for="__tab_10_0">Source</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span>```sequence
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code>```sequence
 Title: Here is a title
 A-&gt;B: Normal line
 B--&gt;C: Dashed line
 C-&gt;&gt;D: Open arrow
 D--&gt;&gt;A: Dashed open arrow
 ```
-</pre></div></div>
+</code></pre></div></div>
 <input name="__tabs_10" type="radio" id="__tab_10_1" />
 <label for="__tab_10_1">Output</label>
 <div class="superfences-content"><pre class="uml-sequence-diagram"><code>Title: Here is a title
@@ -1472,9 +1472,9 @@ dictionary defines a custom fence. The dictionaries requires the following keys:
 <p>In general, formatters take five parameters: the source found between the fences, the specified language, the class name
 originally defined via the <code>class</code> option in the <code>custom_fence</code> entry, custom options, and the Markdown object (in case
 you want access to meta data etc.).</p>
-<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">custom_formatter</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span> <span class="n">css_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">md</span><span class="p">):</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">custom_formatter</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span> <span class="n">css_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">md</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">string</span>
-</pre></div>
+</code></pre></div>
 
 <p>All formatters should return a string as HTML.</p>
 <div class="admonition tip">
@@ -1489,21 +1489,21 @@ parameters: the language defined in the fence, and a dictionary of options to va
 boolean (<code>key=</code>). SuperFences will parse the options in the fence and then pass them to the validator. If the validator
 returns true, the options will be accepted and later passed to the formatter.</p>
 <p>This custom fence:</p>
-<div class="codehilite"><pre><span></span>```custom_fence custom_option=&quot;value&quot; other_custom_option=
+<div class="codehilite"><pre><span></span><code>```custom_fence custom_option=&quot;value&quot; other_custom_option=
 content
 ```
-</pre></div>
+</code></pre></div>
 
 <p>Would yield this option dictionary:</p>
-<div class="codehilite"><pre><span></span><span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">{</span>
     <span class="s2">&quot;custom_option&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span>
     <span class="s2">&quot;other_custom_option&quot;</span><span class="p">:</span> <span class="kc">True</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 <p>For a contrived example: if we wanted to define a custom fence named <code>test</code> that accepts an option <code>opt</code> that can only
 be assigned a value of <code>A</code>, we would write the following validator:</p>
-<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">custom_validator</span><span class="p">(</span><span class="n">language</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">custom_validator</span><span class="p">(</span><span class="n">language</span><span class="p">,</span> <span class="n">options</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Custom validator.&quot;&quot;&quot;</span>
 
     <span class="n">okay</span> <span class="o">=</span> <span class="kc">True</span>
@@ -1515,20 +1515,20 @@ be assigned a value of <code>A</code>, we would write the following validator:</
         <span class="k">if</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;opt&#39;</span><span class="p">]</span> <span class="o">!=</span> <span class="s2">&quot;A&quot;</span><span class="p">:</span>
             <span class="n">okay</span> <span class="o">=</span> <span class="kc">False</span>
     <span class="k">return</span> <span class="n">okay</span>
-</pre></div>
+</code></pre></div>
 
 <p>Then later the formatter would be given the options:</p>
-<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">custom_format</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">md</span><span class="p">):</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">custom_format</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">md</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Custom format.&quot;&quot;&quot;</span>
 
     <span class="k">return</span> <span class="s1">&#39;&lt;div class_name=&quot;</span><span class="si">%s</span><span class="s1"> </span><span class="si">%s</span><span class="s1">&quot;, data-option=&quot;</span><span class="si">%s</span><span class="s1">&quot;&gt;</span><span class="si">%s</span><span class="s1">&lt;/div&gt;&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">language</span><span class="p">,</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">options</span><span class="p">[</span><span class="s1">&#39;opt&#39;</span><span class="p">],</span> <span class="n">html_escape</span><span class="p">(</span><span class="n">source</span><span class="p">))</span>
-</pre></div>
+</code></pre></div>
 
 <p>This would allow us to use the following custom fence:</p>
-<div class="codehilite"><pre><span></span>```test opt=&quot;A&quot;
+<div class="codehilite"><pre><span></span><code>```test opt=&quot;A&quot;
 test
 ```
-</pre></div>
+</code></pre></div>
 
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -1542,7 +1542,7 @@ two new custom languages called <code>flow</code> and <code>sequence</code> and 
 format function which will wrap the content in <code class="codehilite"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">code</span></code> blocks and attach the class <code>uml-flowchart</code> or
 <code>uml-sequence-diagram</code> to the respective <code class="codehilite"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;</span></code> block. <code>superfences.fence_div_format</code> could just as easily be
 used to wrap the content in a <code class="codehilite"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span></code> instead, or a new custom function could have been written and used.</p>
-<div class="codehilite"><pre><span></span><span class="n">extension_configs</span> <span class="o">=</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="n">extension_configs</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;pymdownx.superfences&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;custom_fences&quot;</span><span class="p">:</span> <span class="p">[</span>
             <span class="p">{</span>
@@ -1558,7 +1558,7 @@ used to wrap the content in a <code class="codehilite"><span class="p">&lt;</spa
         <span class="p">]</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 <p>As defined above, the custom UML diagrams are recognized when defining a fenced code block with either the language
 <code>flow</code> or <code>sequence</code>.  When they are converted, the HTML element containing this content will have the respective
@@ -1587,11 +1587,11 @@ UML, see the requirements below.</p>
 </dd>
 </dl>
 <p>All of the above mentioned libraries can be included using CDNs (you can use the version of your choice):</p>
-<div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</pre></div>
+</code></pre></div>
 
 <p>Simply including the libraries above is not enough as these libraries need to be pointed at the elements they need to
 convert.  Also, we need to configure the libraries with the settings we would like.</p>
@@ -1612,7 +1612,7 @@ our main HTML content (in this case we look for the the <code>body</code> tag, b
 place where our UML instructions are because it might be under an element that is hiding it with <code>display: none</code> (like a
 <code>details</code> tag); it won't render correctly if its parent is not displayed.  After we render the SVG, we insert it back
 where it belongs throwing away the original element that had the instructions.</p>
-<div class="codehilite"><pre><span></span><span class="lineno" data-linenos=" 1 "></span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="lineno" data-linenos=" 1 "></span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 <span class="lineno" data-linenos=" 2 "></span><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
 <span class="lineno" data-linenos=" 3 "></span>
 <span class="lineno" data-linenos=" 4 "></span><span class="cm">/**</span>
@@ -1708,7 +1708,7 @@ where it belongs throwing away the original element that had the instructions.</
 <span class="lineno" data-linenos="94 "></span><span class="p">})();</span>
 <span class="lineno" data-linenos="95 "></span>
 <span class="lineno" data-linenos="96 "></span><span class="p">}());</span>
-</pre></div>
+</code></pre></div>
 
 <h2 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link"></a></h2>
 <p>This extension suffers from the same issues that the original fenced block extension suffers from.  Normally Python
@@ -1775,7 +1775,6 @@ functionality is more than sufficient.</p>
                 
                   
                 
-                
               
               
                 
@@ -1830,7 +1829,7 @@ functionality is more than sufficient.</p>
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1856,7 +1855,7 @@ functionality is more than sufficient.</p>
       
     </div>
     
-      <script src="../../assets/javascripts/application.808e90bb.js"></script>
+      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

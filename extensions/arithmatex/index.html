@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,19 +55,19 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../../extra-174a536342.css">
+      <link rel="stylesheet" href="../../extra-c035e56df5.css">
     
     
       
@@ -888,9 +888,9 @@ a more generic format suitable for other libraries like <a href="https://github.
 <code class="codehilite"><span class="sb">\[</span><span class="nb">...</span><span class="s">\]</span></code>, and <code class="codehilite"><span class="k">\begin</span><span class="nb">{}</span>...<span class="k">\end</span><span class="nb">{}</span></code> for block math. By default, all formats are enabled, but each format can
 individually be disabled if desired.</p>
 <p>The Arithmatex extension can be included in Python Markdown by using the following:</p>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.arithmatex&#39;</span><span class="p">])</span>
-</pre></div>
+</code></pre></div>
 
 <h2 id="input-format">Input Format<a class="headerlink" href="#input-format" title="Permanent link"></a></h2>
 <p>By default, <a href="#options"><code>smart_dollar</code></a> mode is enabled for the <code class="codehilite"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> inline variant. With <code>smart_dollar</code> it is
@@ -901,8 +901,8 @@ character.  But when needed, the <code class="codehilite"><span class="s">$</spa
 will capture any <code class="codehilite"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> whose dollar symbols are not escaped (<code class="codehilite"><span class="k">\$</span></code>).</p>
 <div class="admonition example">
 <p class="admonition-title">Inline Examples</p>
-<div class="codehilite"><pre><span></span><span class="s">$</span><span class="nb">p</span><span class="o">(</span><span class="nb">x|y</span><span class="o">)</span><span class="nb"> </span><span class="o">=</span><span class="nb"> </span><span class="nv">\frac</span><span class="nb">{p</span><span class="o">(</span><span class="nb">y|x</span><span class="o">)</span><span class="nb">p</span><span class="o">(</span><span class="nb">x</span><span class="o">)</span><span class="nb">}{p</span><span class="o">(</span><span class="nb">y</span><span class="o">)</span><span class="nb">}</span><span class="s">$</span>, <span class="s">\(</span><span class="nb">p</span><span class="o">(</span><span class="nb">x|y</span><span class="o">)</span><span class="nb"> </span><span class="o">=</span><span class="nb"> </span><span class="nv">\frac</span><span class="nb">{p</span><span class="o">(</span><span class="nb">y|x</span><span class="o">)</span><span class="nb">p</span><span class="o">(</span><span class="nb">x</span><span class="o">)</span><span class="nb">}{p</span><span class="o">(</span><span class="nb">y</span><span class="o">)</span><span class="nb">}</span><span class="s">\)</span>.
-</pre></div>
+<div class="codehilite"><pre><span></span><code><span class="s">$</span><span class="nb">p</span><span class="o">(</span><span class="nb">x|y</span><span class="o">)</span><span class="nb"> </span><span class="o">=</span><span class="nb"> </span><span class="nv">\frac</span><span class="nb">{p</span><span class="o">(</span><span class="nb">y|x</span><span class="o">)</span><span class="nb">p</span><span class="o">(</span><span class="nb">x</span><span class="o">)</span><span class="nb">}{p</span><span class="o">(</span><span class="nb">y</span><span class="o">)</span><span class="nb">}</span><span class="s">$</span>, <span class="s">\(</span><span class="nb">p</span><span class="o">(</span><span class="nb">x|y</span><span class="o">)</span><span class="nb"> </span><span class="o">=</span><span class="nb"> </span><span class="nv">\frac</span><span class="nb">{p</span><span class="o">(</span><span class="nb">y|x</span><span class="o">)</span><span class="nb">p</span><span class="o">(</span><span class="nb">x</span><span class="o">)</span><span class="nb">}{p</span><span class="o">(</span><span class="nb">y</span><span class="o">)</span><span class="nb">}</span><span class="s">\)</span>.
+</code></pre></div>
 
 <p><span><span class="MathJax_Preview">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</span><script type="math/tex">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</script></span>, <span><span class="MathJax_Preview">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</span><script type="math/tex">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</script></span>.</p>
 </div>
@@ -919,7 +919,7 @@ HTML output. This is because <code class="codehilite"><span class="s">$</span><s
 empty line.</p>
 <div class="admonition example">
 <p class="admonition-title">Block Examples</p>
-<div class="codehilite"><pre><span></span><span class="sb">$$</span><span class="nb"></span>
+<div class="codehilite"><pre><span></span><code><span class="sb">$$</span><span class="nb"></span>
 <span class="nb">E</span><span class="o">(</span><span class="nv">\mathbf</span><span class="nb">{v}, </span><span class="nv">\mathbf</span><span class="nb">{h}</span><span class="o">)</span><span class="nb"> </span><span class="o">=</span><span class="nb"> </span><span class="o">-</span><span class="nv">\sum</span><span class="nb">_{i,j}w_{ij}v_i h_j </span><span class="o">-</span><span class="nb"> </span><span class="nv">\sum</span><span class="nb">_i b_i v_i </span><span class="o">-</span><span class="nb"> </span><span class="nv">\sum</span><span class="nb">_j c_j h_j</span>
 <span class="s">$$</span>
 
@@ -929,7 +929,7 @@ empty line.</p>
     p(v<span class="nb">_</span>i=1|<span class="k">\mathbf</span><span class="nb">{</span>h<span class="nb">}</span>) <span class="nb">&amp;</span> = <span class="k">\sigma\left</span>(<span class="k">\sum</span><span class="nb">_</span>j w<span class="nb">_{</span>ij<span class="nb">}</span>h<span class="nb">_</span>j + b<span class="nb">_</span>i<span class="k">\right</span>) <span class="k">\\</span>
     p(h<span class="nb">_</span>j=1|<span class="k">\mathbf</span><span class="nb">{</span>v<span class="nb">}</span>) <span class="nb">&amp;</span> = <span class="k">\sigma\left</span>(<span class="k">\sum</span><span class="nb">_</span>i w<span class="nb">_{</span>ij<span class="nb">}</span>v<span class="nb">_</span>i + c<span class="nb">_</span>j<span class="k">\right</span>)
 <span class="k">\end</span><span class="nb">{</span>align<span class="nb">}</span>
-</pre></div>
+</code></pre></div>
 
 <div>
 <div class="MathJax_Preview">
@@ -976,12 +976,12 @@ of including MathJax is to use the CDN. Latest version at time of writing this i
 <div class="superfences-tabs">
 <input name="__tabs_1" type="radio" id="__tab_1_0" checked="checked" />
 <label for="__tab_1_0">MathJax 2</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</pre></div></div>
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></div></div>
 <input name="__tabs_1" type="radio" id="__tab_1_1" />
 <label for="__tab_1_1">MathJax 3</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</pre></div></div>
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></div></div>
 </div>
 <p>Generally, it is best to add your own configuration to get exactly what you want. Here we show some simple examples of
 configurations done in JavaScript. We've provided two basic configurations below: one that is configured for
@@ -992,15 +992,15 @@ extensions/plugins and configuring those extensions/plugins.</p>
 <div class="superfences-tabs">
 <input name="__tabs_2" type="radio" id="__tab_2_0" checked="checked" />
 <label for="__tab_2_0">Default - MathJax 2</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code><span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
   <span class="nx">config</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;MMLorHTML.js&quot;</span><span class="p">],</span>
   <span class="nx">jax</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;input/TeX&quot;</span><span class="p">,</span> <span class="s2">&quot;output/HTML-CSS&quot;</span><span class="p">,</span> <span class="s2">&quot;output/NativeMML&quot;</span><span class="p">],</span>
   <span class="nx">extensions</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;MathMenu.js&quot;</span><span class="p">,</span> <span class="s2">&quot;MathZoom.js&quot;</span><span class="p">]</span>
 <span class="p">});</span>
-</pre></div></div>
+</code></pre></div></div>
 <input name="__tabs_2" type="radio" id="__tab_2_1" />
 <label for="__tab_2_1">Default - MathJax 3</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="nb">window</span><span class="p">.</span><span class="nx">MathJax</span> <span class="o">=</span> <span class="p">{</span>
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code><span class="nb">window</span><span class="p">.</span><span class="nx">MathJax</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">ignoreHtmlClass</span><span class="o">:</span> <span class="s1">&#39;tex2jax_ignore&#39;</span><span class="p">,</span>
     <span class="nx">processHtmlClass</span><span class="o">:</span> <span class="s1">&#39;tex2jax_process&#39;</span><span class="p">,</span>
@@ -1023,10 +1023,10 @@ extensions/plugins and configuring those extensions/plugins.</p>
     <span class="p">}</span>
   <span class="p">}</span>
 <span class="p">};</span>
-</pre></div></div>
+</code></pre></div></div>
 <input name="__tabs_2" type="radio" id="__tab_2_2" />
 <label for="__tab_2_2">Generic - MathJax 2</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code><span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
   <span class="nx">config</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;MMLorHTML.js&quot;</span><span class="p">],</span>
   <span class="nx">extensions</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;tex2jax.js&quot;</span><span class="p">],</span>
   <span class="nx">jax</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;input/TeX&quot;</span><span class="p">,</span> <span class="s2">&quot;output/HTML-CSS&quot;</span><span class="p">,</span> <span class="s2">&quot;output/NativeMML&quot;</span><span class="p">],</span>
@@ -1039,10 +1039,10 @@ extensions/plugins and configuring those extensions/plugins.</p>
     <span class="nx">processClass</span><span class="o">:</span> <span class="s2">&quot;arithmatex&quot;</span>
   <span class="p">},</span>
 <span class="p">});</span>
-</pre></div></div>
+</code></pre></div></div>
 <input name="__tabs_2" type="radio" id="__tab_2_3" />
 <label for="__tab_2_3">Generic - MathJax 3</label>
-<div class="superfences-content"><div class="codehilite"><pre><span></span><span class="nb">window</span><span class="p">.</span><span class="nx">MathJax</span> <span class="o">=</span> <span class="p">{</span>
+<div class="superfences-content"><div class="codehilite"><pre><span></span><code><span class="nb">window</span><span class="p">.</span><span class="nx">MathJax</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">tex</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">inlineMath</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s2">&quot;\\(&quot;</span><span class="p">,</span><span class="s2">&quot;\\)&quot;</span><span class="p">]</span> <span class="p">],</span>
     <span class="nx">displayMath</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s2">&quot;\\[&quot;</span><span class="p">,</span><span class="s2">&quot;\\]&quot;</span><span class="p">]</span> <span class="p">],</span>
@@ -1054,7 +1054,7 @@ extensions/plugins and configuring those extensions/plugins.</p>
     <span class="nx">processHtmlClass</span><span class="o">:</span> <span class="s2">&quot;arithmatex&quot;</span>
   <span class="p">}</span>
 <span class="p">};</span>
-</pre></div></div>
+</code></pre></div></div>
 </div>
 <p>Notice that in our generic configuration, we set up <code>tex2jax</code> to only load <code>arithmatex</code> classes by excluding all
 elements and adding an exception for the <code>arithmatex</code> class. We also don't bother adding <code class="codehilite"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> and
@@ -1063,19 +1063,19 @@ elements and adding an exception for the <code>arithmatex</code> class. We also 
 <code>processEnvironments</code> to properly process <code class="codehilite"><span class="k">\begin</span><span class="nb">{}</span>...<span class="k">\end</span><span class="nb">{}</span></code> blocks.</p>
 <h2 id="loading-katex">Loading KaTeX<a class="headerlink" href="#loading-katex" title="Permanent link"></a></h2>
 <p>In order to use KaTeX, the generic output format is required. You will need to include the KaTeX library:</p>
-<div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</pre></div>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></div>
 
 <p>And the KaTeX CSS:</p>
-<div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css&quot;</span><span class="p">&gt;</span>
-</pre></div>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css&quot;</span><span class="p">&gt;</span>
+</code></pre></div>
 
 <p>Though KaTeX does have its own auto load script, we want to ensure it <em>only</em> loads math content from elements with the
 <code>arithmatex</code> class. Below is a script that would do just that. Notice we check for and strip wrappers <code class="codehilite"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code>
 and <code class="codehilite"><span class="sb">\[</span><span class="nb">...</span><span class="s">\]</span></code> off the content of the elements and send it through the renderer. We also don't bother adding
 <code class="codehilite"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> and <code class="codehilite"><span class="sb">$$</span><span class="nb">...</span><span class="s">$$</span></code> to the <code>inlineMath</code> and <code>displayMath</code> options as Arithmatex converts them respectively
 to <code class="codehilite"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code> and <code class="codehilite"><span class="sb">\[</span><span class="nb">...</span><span class="s">\]</span></code> in the HTML output (unless altered in <a href="#options">Options</a>).</p>
-<div class="codehilite"><pre><span></span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 <span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
 
 <span class="kd">var</span> <span class="nx">katexMath</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
@@ -1113,7 +1113,7 @@ to <code class="codehilite"><span class="s">\(</span><span class="nb">...</span>
 <span class="p">})();</span>
 
 <span class="p">}());</span>
-</pre></div>
+</code></pre></div>
 
 <h2 id="alternative-math-blocks">Alternative Math Blocks<a class="headerlink" href="#alternative-math-blocks" title="Permanent link"></a></h2>
 <div class="admonition tip">
@@ -1126,7 +1126,7 @@ custom inline and fence blocks respectively. Arithmatex provides a number of com
 conjunction with InlineHilite and SuperFences to create an alternative (and possibly more preferable) syntax for math.</p>
 <p>In InlineHilite, by simply providing the following configuration (no need to include <code>pymdownx.arithmatex</code> as an
 extension), you can create a familiar inline math format:</p>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">pymdownx.arithmatex</span> <span class="k">as</span> <span class="nn">arithmatex</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pymdownx.arithmatex</span> <span class="k">as</span> <span class="nn">arithmatex</span>
 
 <span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">&quot;pymdownx.inlinehilite&quot;</span>
@@ -1139,12 +1139,12 @@ extension), you can create a familiar inline math format:</p>
         <span class="p">]</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 <div class="admonition example">
 <p class="admonition-title">Inline Math</p>
-<div class="codehilite"><pre><span></span>`#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
-</pre></div>
+<div class="codehilite"><pre><span></span><code>`#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+</code></pre></div>
 
 <p>
 <script type="math/tex">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</script>
@@ -1152,7 +1152,7 @@ extension), you can create a familiar inline math format:</p>
 </div>
 <p>In SuperFences, by providing the following configuration (no need to include <code>pymdownx.arithmatex</code> as an extension), you
 can create math fences:</p>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">pymdownx.arithmatex</span> <span class="k">as</span> <span class="nn">arithmatex</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pymdownx.arithmatex</span> <span class="k">as</span> <span class="nn">arithmatex</span>
 
 <span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s2">&quot;pymdownx.inlinehilite&quot;</span>
@@ -1165,17 +1165,17 @@ can create math fences:</p>
         <span class="p">]</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 <div class="admonition example">
 <p class="admonition-title">Math Fences</p>
-<div class="codehilite"><pre><span></span>```math
+<div class="codehilite"><pre><span></span><code>```math
 \begin{align}
     p(v_i=1|\mathbf{h}) &amp; = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
     p(h_j=1|\mathbf{v}) &amp; = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
 \end{align}
 ```
-</pre></div>
+</code></pre></div>
 
 <script type="math/tex; mode=display">
 \begin{align}
@@ -1298,7 +1298,6 @@ MathJax.Hub.Config({
                 
                   
                 
-                
               
               
                 
@@ -1353,7 +1352,7 @@ MathJax.Hub.Config({
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1379,7 +1378,7 @@ MathJax.Hub.Config({
       
     </div>
     
-      <script src="../../assets/javascripts/application.808e90bb.js"></script>
+      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

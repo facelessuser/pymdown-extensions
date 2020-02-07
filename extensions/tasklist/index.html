@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,19 +55,19 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../../extra-174a536342.css">
+      <link rel="stylesheet" href="../../extra-c035e56df5.css">
     
     
       
@@ -816,7 +816,7 @@ a square bracket pair containing either a space (an unchecked item) or a <code>x
 <div class="admonition example">
 <p class="admonition-title">Task List Example</p>
 <p>All task lists in this documentation are generated with <a href="#options"><code>custom_checkbox</code></a> enabled.</p>
-<div class="codehilite"><pre><span></span>Task List
+<div class="codehilite"><pre><span></span><code>Task List
 
 - [X] item 1
     * [X] item A
@@ -828,7 +828,7 @@ a square bracket pair containing either a space (an unchecked item) or a <code>x
     * [X] item C
 - [ ] item 2
 - [ ] item 3
-</pre></div>
+</code></pre></div>
 
 <p>Task List</p>
 <ul class="task-list">
@@ -849,22 +849,22 @@ a square bracket pair containing either a space (an unchecked item) or a <code>x
 </ul>
 </div>
 <p>The Tasklist extension can be included in Python Markdown by using the following:</p>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.tasklist&#39;</span><span class="p">])</span>
-</pre></div>
+</code></pre></div>
 
 <h2 id="css">CSS<a class="headerlink" href="#css" title="Permanent link"></a></h2>
 <p>The default HTML structure of a task list is found below:</p>
-<div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list&quot;</span><span class="p">&gt;</span>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list&quot;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list-item&quot;</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">disabled</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">checked</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">&gt;</span>
         item 1
     <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-</pre></div>
+</code></pre></div>
 
 <p>If <code>custom_checkbox</code> is enabled, the structure will be as follows:</p>
-<div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list&quot;</span><span class="p">&gt;</span>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list&quot;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list-item&quot;</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list-control&quot;</span><span class="p">&gt;</span>
             <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">disabled</span> <span class="na">checked</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">&gt;</span>
@@ -873,11 +873,11 @@ a square bracket pair containing either a space (an unchecked item) or a <code>x
         item 1
     <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-</pre></div>
+</code></pre></div>
 
 <p>If <code>clickable_checkbox</code> is enabled, user interaction will be allowed by removing the <code>disabled</code> attribute from the
 <code>input</code> element:</p>
-<div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list&quot;</span><span class="p">&gt;</span>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list&quot;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list-item&quot;</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list-control&quot;</span><span class="p">&gt;</span>
             <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">checked</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">&gt;</span>
@@ -886,7 +886,7 @@ a square bracket pair containing either a space (an unchecked item) or a <code>x
         item 1
     <span class="p">&lt;/</span><span class="nt">li</span><span class="p">&gt;</span>
 <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
-</pre></div>
+</code></pre></div>
 
 <table>
 <thead>
@@ -916,7 +916,7 @@ a square bracket pair containing either a space (an unchecked item) or a <code>x
 </table>
 <details class="settings"><summary>Basic Tasklist CSS</summary><p>In order to style these we mainly remove the list type style and adjust the margins to align with normal list
 styles.</p>
-<div class="codehilite"><pre><span></span><span class="p">.</span><span class="nc">markdown-body</span> <span class="p">.</span><span class="nc">task-list-item</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">.</span><span class="nc">markdown-body</span> <span class="p">.</span><span class="nc">task-list-item</span> <span class="p">{</span>
   <span class="k">list-style-type</span><span class="p">:</span> <span class="kc">none</span> <span class="cp">!important</span><span class="p">;</span>
 <span class="p">}</span>
 
@@ -924,13 +924,13 @@ styles.</p>
   <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span> <span class="mi">4</span><span class="kt">px</span> <span class="mf">0.25</span><span class="kt">em</span> <span class="mi">-20</span><span class="kt">px</span><span class="p">;</span>
   <span class="k">vertical-align</span><span class="p">:</span> <span class="kc">middle</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </details>
 <details class="settings"><summary>Custom Tasklist CSS</summary><p>If custom check box icons are desired, custom styles can be used to give a unique look to the check marks.  Below is
 a very simple CSS example that creates a light gray square with rounded corners and displays a green Unicode check
 mark when the control is checked.  This can be adapted to use web fonts, images, etc.</p>
-<div class="codehilite"><pre><span></span><span class="p">.</span><span class="nc">markdown-body</span> <span class="p">.</span><span class="nc">task-list-item</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="p">.</span><span class="nc">markdown-body</span> <span class="p">.</span><span class="nc">task-list-item</span> <span class="p">{</span>
   <span class="k">list-style-type</span><span class="p">:</span> <span class="kc">none</span> <span class="cp">!important</span><span class="p">;</span>
 <span class="p">}</span>
 
@@ -977,7 +977,7 @@ mark when the control is checked.  This can be adapted to use web fonts, images,
   <span class="k">content</span><span class="p">:</span> <span class="s2">&quot;✔&quot;</span><span class="p">;</span>
   <span class="k">color</span><span class="p">:</span> <span class="mh">#1EBB52</span><span class="p">;</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </details>
 <h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
@@ -1007,7 +1007,6 @@ mark when the control is checked.  This can be adapted to use web fonts, images,
 </table>
                 
                   
-                
                 
               
               
@@ -1063,7 +1062,7 @@ mark when the control is checked.  This can be adapted to use web fonts, images,
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1089,7 +1088,7 @@ mark when the control is checked.  This can be adapted to use web fonts, images,
       
     </div>
     
-      <script src="../../assets/javascripts/application.808e90bb.js"></script>
+      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

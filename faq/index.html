@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.1b62728e.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.30686662.css">
       
         <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,19 +55,19 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.268332fc.js"></script>
+      <script src="../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../extra-174a536342.css">
+      <link rel="stylesheet" href="../extra-c035e56df5.css">
     
     
       
@@ -803,17 +803,17 @@ specifying function references may not be intuitive.</p>
 <a href="https://github.com/yaml/pyyaml">PyYAML</a> and are configured to allow Python objects.</p>
 <p>When specifying a function reference in PyYAML, you must prepend the function with <code>!!python/name:</code>. For instance, to
 specify Python Markdown's <abbr title="Table of Contents">Toc</abbr> extension to use one of PyMdown Extensions' slugs in MkDocs:</p>
-<div class="codehilite"><pre><span></span><span class="nt">markdown_extensions</span><span class="p">:</span>
+<div class="codehilite"><pre><span></span><code><span class="nt">markdown_extensions</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">markdown.extensions.toc</span><span class="p">:</span>
       <span class="nt">slugify</span><span class="p">:</span> <span class="kt">!!python/name:pymdownx.slugs.uslugify</span>
       <span class="nt">permalink</span><span class="p">:</span> <span class="s">&quot;</span><span class="se">\ue157</span><span class="s">&quot;</span>
-</pre></div>
+</code></pre></div>
 
 <p>To specify a particular emoji generator in the Emoji extension:</p>
-<div class="codehilite"><pre><span></span><span class="nt">markdown_extensions</span><span class="p">:</span>
+<div class="codehilite"><pre><span></span><code><span class="nt">markdown_extensions</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">pymdownx.emoji</span><span class="p">:</span>
       <span class="nt">emoji_generator</span><span class="p">:</span> <span class="kt">!!python/name:pymdownx.emoji.to_png</span>
-</pre></div>
+</code></pre></div>
 
 <h2 id="github-ish-configurations">GitHub-ish Configurations<a class="headerlink" href="#github-ish-configurations" title="Permanent link"></a></h2>
 <blockquote>
@@ -830,7 +830,7 @@ repository respectively. See <a href="../extensions/magiclink/">MagicLink</a> fo
 <p>If you are attempting to configure these options in a YAML based configuration (like in <a href="https://github.com/mkdocs/mkdocs">MkDocs</a>), please
 see the related <a href="#function-references-in-yaml"><abbr title="Frequent Asked Questions">FAQ</abbr> question</a> to see how to specify function references in YAML.</p>
 </div>
-<div class="codehilite"><pre><span></span><span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
+<div class="codehilite"><pre><span></span><code><span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;markdown.extensions.tables&#39;</span><span class="p">,</span>
     <span class="s1">&#39;pymdownx.magiclink&#39;</span><span class="p">,</span>
     <span class="s1">&#39;pymdownx.betterem&#39;</span><span class="p">,</span>
@@ -866,10 +866,9 @@ see the related <a href="#function-references-in-yaml"><abbr title="Frequent Ask
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
                 
                   
-                
                 
               
               
@@ -925,7 +924,7 @@ see the related <a href="#function-references-in-yaml"><abbr title="Frequent Ask
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -951,7 +950,7 @@ see the related <a href="#function-references-in-yaml"><abbr title="Frequent Ask
       
     </div>
     
-      <script src="../assets/javascripts/application.808e90bb.js"></script>
+      <script src="../assets/javascripts/application.ac79c3b0.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       

@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,19 +55,19 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../../extra-174a536342.css">
+      <link rel="stylesheet" href="../../extra-c035e56df5.css">
     
     
       
@@ -840,22 +840,22 @@ need something more complex, you may consider using a template environment to pr
 through Python Markdown.  If you are using a document generation system, this can likely be performed via a plugin for
 that document system (assuming a plugin environment is available).</p>
 <p>The Snippets extension can be included in Python Markdown by using the following:</p>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.snippets&#39;</span><span class="p">])</span>
-</pre></div>
+</code></pre></div>
 
 <h2 id="snippets-notation">Snippets Notation<a class="headerlink" href="#snippets-notation" title="Permanent link"></a></h2>
 <p>Snippets has two modes of inserting snippets: single line and block.</p>
 <p>Single line format is done by placing the following markup for the single line notation:</p>
-<div class="codehilite"><pre><span></span>--8&lt;-- &quot;filename.md&quot; 
-</pre></div>
+<div class="codehilite"><pre><span></span><code>--8&lt;-- &quot;filename.md&quot; 
+</code></pre></div>
 
 <p>Or you can insert multiple files with block notation:</p>
-<div class="codehilite"><pre><span></span>--8&lt;-- 
+<div class="codehilite"><pre><span></span><code>--8&lt;-- 
 filename.md
 filename2.md
 --8&lt;-- 
-</pre></div>
+</code></pre></div>
 
 <p>As you can see, the notation is ASCII scissors cutting a line followed by the file name.  In the case of the single line
 variant, the file name follows directly after the scissors and is quoted.  In the case of the block format, the file
@@ -866,40 +866,40 @@ single line notation.  If the file name is indented, the content will be indente
 confusion in block format, it is advised to ensure the entire block is indented to the same level.  If you need to
 escape the syntax, just make sure a minimum of a space is after the quoted file name for single line format, or a space
 after the start or end block markers in block format.</p>
-<div class="codehilite"><pre><span></span>--8&lt;-- &quot;escaped notation&quot;&lt;space&gt;
+<div class="codehilite"><pre><span></span><code>--8&lt;-- &quot;escaped notation&quot;&lt;space&gt;
 
 --8&lt;--&lt;space&gt;
 escaped notation
 --8&lt;--&lt;space&gt;
-</pre></div>
+</code></pre></div>
 
 <p>If you have a file you want to temporarily ignore, you can comment it out by prepending the path with <code>;</code> (notice the
 semicolon is followed by a space).  This works for both single line and block format:</p>
-<div class="codehilite"><pre><span></span>--8&lt;-- &quot;; skip.md&quot; 
+<div class="codehilite"><pre><span></span><code>--8&lt;-- &quot;; skip.md&quot; 
 
 --8&lt;-- 
 include.md
 ; skip.md
 --8&lt;-- 
-</pre></div>
+</code></pre></div>
 
 <h2 id="formatting-snippets">Formatting Snippets<a class="headerlink" href="#formatting-snippets" title="Permanent link"></a></h2>
 <p>When inserting your snippet, it is important to remember that some snippets may need whitespace around them.</p>
-<div class="codehilite"><pre><span></span>This is the file that is including the snippet.
+<div class="codehilite"><pre><span></span><code>This is the file that is including the snippet.
 We want blank lines before and after the insertion:
 
 --8&lt;-- &quot;insert.md&quot; 
 
 So we put blank lines around the insertion.
-</pre></div>
+</code></pre></div>
 
 <p>In block format, it is important to note that empty lines are preserved for formatting:</p>
-<div class="codehilite"><pre><span></span>--8&lt;-- 
+<div class="codehilite"><pre><span></span><code>--8&lt;-- 
 file1.md
 
 file2.md
 --8&lt;-- 
-</pre></div>
+</code></pre></div>
 
 <h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
 <table>
@@ -934,7 +934,6 @@ file2.md
 </table>
                 
                   
-                
                 
               
               
@@ -990,7 +989,7 @@ file2.md
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1016,7 +1015,7 @@ file2.md
       
     </div>
     
-      <script src="../../assets/javascripts/application.808e90bb.js"></script>
+      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       

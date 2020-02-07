@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/application.1b62728e.css">
+      <link rel="stylesheet" href="../assets/stylesheets/application.30686662.css">
       
         <link rel="stylesheet" href="../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,19 +55,19 @@
       
     
     
-      <script src="../assets/javascripts/modernizr.268332fc.js"></script>
+      <script src="../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../extra-174a536342.css">
+      <link rel="stylesheet" href="../extra-c035e56df5.css">
     
     
       
@@ -797,15 +797,15 @@ you had written your own custom fence formatters.</p>
 <p>If you've written your own custom fence formatters, the number of parameters needed has changed, so you must update
   your existing formatters.  The needed parameters are the same regardless of whether you are using an options validator
   or not.</p>
-<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="nf">custom_formatter</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span> <span class="n">css_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">md</span><span class="p">):</span>
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">custom_formatter</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span> <span class="n">css_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">md</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">string</span>
-</pre></div>
+</code></pre></div>
 
 </li>
 <li>
 <p><code>flow</code> and <code>sequence</code> are no longer defined by default. If you were relying on the default custom fences, you will
   have to define them manually now. The needed settings are found below:</p>
-<div class="codehilite"><pre><span></span><span class="n">extension_configs</span> <span class="o">=</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="n">extension_configs</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;pymdownx.superfences&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;custom_fences&quot;</span><span class="p">:</span> <span class="p">[</span>
             <span class="p">{</span>
@@ -821,7 +821,7 @@ you had written your own custom fence formatters.</p>
         <span class="p">]</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 <p>If you are attempting to configure these options in a YAML based configuration (like in <a href="https://github.com/mkdocs/mkdocs">MkDocs</a>), please
 see the <a href="../faq/#function-references-in-yaml"><abbr title="Frequent Asked Questions">FAQ</abbr></a> to see how to specify function references in YAML.</p>
@@ -829,7 +829,6 @@ see the <a href="../faq/#function-references-in-yaml"><abbr title="Frequent Aske
 </ol>
                 
                   
-                
                 
               
               
@@ -885,7 +884,7 @@ see the <a href="../faq/#function-references-in-yaml"><abbr title="Frequent Aske
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -911,7 +910,7 @@ see the <a href="../faq/#function-references-in-yaml"><abbr title="Frequent Aske
       
     </div>
     
-      <script src="../assets/javascripts/application.808e90bb.js"></script>
+      <script src="../assets/javascripts/application.ac79c3b0.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
       

@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.1b62728e.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,19 +55,19 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.268332fc.js"></script>
+      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../../extra-174a536342.css">
+      <link rel="stylesheet" href="../../extra-c035e56df5.css">
     
     
       
@@ -915,15 +915,15 @@ data is then converted into actual Unicode emoji characters and/or special HTML 
 the emoji.</p>
 <div class="admonition example">
 <p class="admonition-title">Emoji Example</p>
-<div class="codehilite"><pre><span></span>:smile: :heart: :thumbsup:
-</pre></div>
+<div class="codehilite"><pre><span></span><code>:smile: :heart: :thumbsup:
+</code></pre></div>
 
 <p><img alt="😄" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f604.svg" title=":smile:" /> <img alt="❤" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2764.svg" title=":heart:" /> <img alt="👍" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f44d.svg" title=":thumbsup:" /></p>
 </div>
 <p>The Emoji extension can be included in Python Markdown by using the following:</p>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">markdown</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.emoji&#39;</span><span class="p">])</span>
-</pre></div>
+</code></pre></div>
 
 <h2 id="supported-emoji-providers">Supported Emoji Providers<a class="headerlink" href="#supported-emoji-providers" title="Permanent link"></a></h2>
 <p>There are a number of emoji short name conventions that people may be aware of. These conventions are always tied to a
@@ -1011,10 +1011,10 @@ still required to comply with acknowledgments. JoyPixels 3.0+ graphical assets w
 as the license is too restrictive, tough the latest index of their friendly names is supported under the MIT license
 and is used to generate friendly, short names for Twemoji.</p>
 <p>You can always find out what tag it was built with by doing the following:</p>
-<div class="codehilite"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pymdownx.emoji1_db</span> <span class="k">as</span> <span class="nn">e1db</span>
+<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pymdownx.emoji1_db</span> <span class="k">as</span> <span class="nn">e1db</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">e1db</span><span class="o">.</span><span class="n">version</span>
 <span class="go">&#39;v2.2.7&#39;</span>
-</pre></div>
+</code></pre></div>
 
 <p>To see the full list of short names for this index, see the index <a href="https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/emoji1_db.py">source</a>.</p>
 </dd>
@@ -1031,7 +1031,7 @@ follows as we are using their short name index.</p>
 <p>The emoji are either some that only Twemoji supports, rarely supported by others, or emoji that have tone and/or
 gender modifiers that aren't supported in the Unicode specifications. We've also provided appropriate aliases
 for consistency with other like emoji.</p>
-<div class="codehilite"><pre><span></span>:pirate_flag:
+<div class="codehilite"><pre><span></span><code>:pirate_flag:
 :shibuya:
 
 :skier_tone1:
@@ -1067,16 +1067,16 @@ for consistency with other like emoji.</p>
 :couplekiss_man_man:
 
 :transgender_flag:
-</pre></div>
+</code></pre></div>
 
 </details>
 <p>You can always find out what tag it was built with by doing the following:</p>
-<div class="codehilite"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pymdownx.twemoji_db</span> <span class="k">as</span> <span class="nn">twdb</span>
+<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pymdownx.twemoji_db</span> <span class="k">as</span> <span class="nn">twdb</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">twdb</span><span class="o">.</span><span class="n">version</span>
 <span class="go">&#39;v12.1.3&#39;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">twdb</span><span class="o">.</span><span class="n">index_version</span>
 <span class="go">&#39;5.0.5&#39;</span>
-</pre></div>
+</code></pre></div>
 
 <p>To see the full list of short names for this index, see the index <a href="https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/twemoji_db.py">source</a>.</p>
 </dd>
@@ -1084,10 +1084,10 @@ for consistency with other like emoji.</p>
 <dd>
 <p>This function provides an index of the latest Gemoji supported emoji (at the time of release).</p>
 <p>You can always find out what tag it was built with by doing the following:</p>
-<div class="codehilite"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pymdownx.gemoji_db</span> <span class="k">as</span> <span class="nn">gmdb</span>
+<div class="codehilite"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pymdownx.gemoji_db</span> <span class="k">as</span> <span class="nn">gmdb</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">gmdb</span><span class="o">.</span><span class="n">version</span>
 <span class="go">&#39;v3.0.1&#39;</span>
-</pre></div>
+</code></pre></div>
 
 <p>To see the full list of short names for this index, see the index <a href="https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/gemoji_db.py">source</a>.</p>
 </dd>
@@ -1114,8 +1114,8 @@ sizes of 32, 64, and 128, but the default CDN path is the one for size 64:
 <code>https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/64/</code>. You can change it for a larger or smaller
 PNG size by updating the size in the URL and passing the new URL in through <code>image_path</code>. The PNG output form is as
 follows:</p>
-<div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">img</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;😄&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;emojione&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/64/1f604.png&quot;</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;:smile:&quot;</span> <span class="p">/&gt;</span>
-</pre></div>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;😄&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;emojione&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/64/1f604.png&quot;</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;:smile:&quot;</span> <span class="p">/&gt;</span>
+</code></pre></div>
 
 <p><strong>Generator Specific Options</strong></p>
 <table>
@@ -1161,8 +1161,8 @@ follows:</p>
 for the free 2.2.7 release, so the default CDN still references the 2.2.7 release. EmojiOne short names added after
 2.2.7 will not find images.  You can of course reference local SVG images as well by pointing <code>image_path</code> to them
 as well. The SVG image outputs as:</p>
-<div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">img</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;😄&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;emojione&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.jsdelivr.net/emojione/assets/svg/1f604.svg&quot;</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;:smile:&quot;</span> <span class="p">/&gt;</span>
-</pre></div>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;😄&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;emojione&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.jsdelivr.net/emojione/assets/svg/1f604.svg&quot;</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;:smile:&quot;</span> <span class="p">/&gt;</span>
+</code></pre></div>
 
 <p><strong>Generator Specific Options</strong></p>
 <table>
@@ -1206,8 +1206,8 @@ classes.</p>
 <code>https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/sprites/emojione.sprites.css</code>.</p>
 <p><code>to_png_sprite</code> outputs the emoji as a span in the form below.  The CSS will apply the appropriate mapping in the
 sprite PNG to the background image of the span.</p>
-<div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;emojione-64-people _1f604&quot;</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;:smile:&quot;</span><span class="p">&gt;</span>😄<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
-</pre></div>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;emojione-64-people _1f604&quot;</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;:smile:&quot;</span><span class="p">&gt;</span>😄<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>
+</code></pre></div>
 
 <p><strong>Generator Specific Options</strong></p>
 <table>
@@ -1247,8 +1247,8 @@ sprite PNG to the background image of the span.</p>
 EmojiOne source.  It is expected that the the user will provide a local version of the official SVG sprite and the
 path to it.  Unfortunately there is no free 3.0 SVG sprite, so you will need to <a href="https://github.com/Ranks/emojione/blob/v2.2.7/assets/sprites/emojione.sprites.svg">download</a> the
 old 2.27 one. The output is:</p>
-<div class="codehilite"><pre><span></span><span class="p">&lt;</span><span class="nt">svg</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;emojione&quot;</span><span class="p">&gt;&lt;</span><span class="nt">description</span><span class="p">&gt;</span>😄<span class="p">&lt;/</span><span class="nt">description</span><span class="p">&gt;&lt;</span><span class="nt">use</span> <span class="na">xlink:href</span><span class="o">=</span><span class="s">&quot;./../assets/sprites/emojione.sprites.svg#emoji-1f604&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">use</span><span class="p">&gt;&lt;/</span><span class="nt">svg</span><span class="p">&gt;</span>
-</pre></div>
+<div class="codehilite"><pre><span></span><code><span class="p">&lt;</span><span class="nt">svg</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;emojione&quot;</span><span class="p">&gt;&lt;</span><span class="nt">description</span><span class="p">&gt;</span>😄<span class="p">&lt;/</span><span class="nt">description</span><span class="p">&gt;&lt;</span><span class="nt">use</span> <span class="na">xlink:href</span><span class="o">=</span><span class="s">&quot;./../assets/sprites/emojione.sprites.svg#emoji-1f604&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">use</span><span class="p">&gt;&lt;/</span><span class="nt">svg</span><span class="p">&gt;</span>
+</code></pre></div>
 
 <p><strong>Generator Specific Options</strong></p>
 <table>
@@ -1281,8 +1281,8 @@ old 2.27 one. The output is:</p>
 <p>This generator supports all emoji indexes.  The generator outputs the alt value directly to the document.  The
 output can be Unicode characters, HTML entities, or even just the short name depending on what the global setting of
 <code>alt</code> is set to.</p>
-<div class="codehilite"><pre><span></span>😃
-</pre></div>
+<div class="codehilite"><pre><span></span><code>😃
+</code></pre></div>
 
 <p>There are no generator specific options.</p>
 </dd>
@@ -1290,7 +1290,7 @@ output can be Unicode characters, HTML entities, or even just the short name dep
 <h2 id="custom-emoji-indexes">Custom Emoji Indexes<a class="headerlink" href="#custom-emoji-indexes" title="Permanent link"></a></h2>
 <p>In order to provide a custom index, the Emoji extension must be given a function that returns a suitable emoji index. No
 parameters are passed to the function.  The function should simply return the custom index in the following format.</p>
-<div class="codehilite"><pre><span></span><span class="n">emoji_index</span> <span class="o">=</span> <span class="p">{</span>
+<div class="codehilite"><pre><span></span><code><span class="n">emoji_index</span> <span class="o">=</span> <span class="p">{</span>
     <span class="c1"># Name is the name of the index.  This is passed into the emoji</span>
     <span class="c1"># generator functions and can be used to differentiate logic</span>
     <span class="c1"># for different indexes if required.</span>
@@ -1360,7 +1360,7 @@ parameters are passed to the function.  The function should simply return the cu
         <span class="s2">&quot;:+1:&quot;</span><span class="p">:</span> <span class="s2">&quot;:thumbsup:&quot;</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 <h2 id="custom-emoji-generators">Custom Emoji Generators<a class="headerlink" href="#custom-emoji-generators" title="Permanent link"></a></h2>
 <p>Each different kind of output is controlled by a different emoji generator function, but all generator functions have
@@ -1439,10 +1439,10 @@ set the index or generator functions in MkDocs' YAML settings file, but it is ac
 referenced like you would import them in Python except you also append them with a special prefix to let the YAML module
 know that the setting value is a Python object.  For instance, to specify the <code>to_svg</code> generator, you would simply
 reference it like this: <code>!!python/name:pymdownx.emoji.to_svg</code> (or you could use your own custom module <img alt="😉" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f609.svg" title=":wink:" />).</p>
-<div class="codehilite"><pre><span></span><span class="nt">markdown_extensions</span><span class="p">:</span>
+<div class="codehilite"><pre><span></span><code><span class="nt">markdown_extensions</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">pymdownx.emoji</span><span class="p">:</span>
       <span class="nt">emoji_generator</span><span class="p">:</span> <span class="kt">!!python/name:pymdownx.emoji.to_svg</span>
-</pre></div>
+</code></pre></div>
 
 <h2 id="emoji-index-updates">Emoji Index Updates<a class="headerlink" href="#emoji-index-updates" title="Permanent link"></a></h2>
 <p>The Emoji extension might at times be behind on having indexes built from the latest repositories. We try to keep the
@@ -1505,7 +1505,7 @@ process for updating the indexes is automated, so it is fairly easy to do a pull
 much more flexible.  If you have a desire to configure the output to be like the legacy GitHubEmoji extension, you
 can use the settings below. This shows the full setup. To learn more about the settings used, continue reading the
 documentation.</p>
-<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">pymdownx.emoji</span>
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pymdownx.emoji</span>
 
 <span class="n">extension_configs</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;pymdownx.emoji&quot;</span><span class="p">:</span> <span class="p">{</span>
@@ -1523,12 +1523,11 @@ documentation.</p>
         <span class="p">}</span>
     <span class="p">}</span>
 <span class="p">}</span>
-</pre></div>
+</code></pre></div>
 
 </div>
                 
                   
-                
                 
               
               
@@ -1584,7 +1583,7 @@ documentation.</p>
       <div class="md-footer-copyright">
         
           <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2019 <a href="https://github.com/facelessuser">Isaac Muse</a>
+            Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser">Isaac Muse</a>
 <br><span class="md-footer-custom-text">emoji provided free by </span>
 <a href="https://github.com/twitter/twemoji">Twemoji</a>
 
@@ -1610,7 +1609,7 @@ documentation.</p>
       
     </div>
     
-      <script src="../../assets/javascripts/application.808e90bb.js"></script>
+      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
