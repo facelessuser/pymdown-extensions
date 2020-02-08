@@ -10,11 +10,6 @@ $tab-current-label: #FF5252;
 
 .md-typeset {
 
-  /* Handled pre with wrapped code */
-  div.codehilite > pre {
-    padding: 0;
-  }
-
   /* Code */
   a {
     > code {
@@ -40,10 +35,10 @@ $tab-current-label: #FF5252;
 
     .linenodiv {
       .special {
-        margin-right: -1.2rem;
-        margin-left: -1.2rem;
-        padding-right: 1.2rem;
-        padding-left: 1.2rem;
+        margin-right: -0.6rem;
+        margin-left: -0.6rem;
+        padding-right: 0.6rem;
+        padding-left: 0.6rem;
         background-color: $md-linenos-background-special-table;
       }
     }
