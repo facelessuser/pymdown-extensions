@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.4.3">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.1">
     
     
       
@@ -44,7 +44,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/application.30686662.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/application.adb8469c.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/application-palette.a8b3c06d.css">
       
@@ -55,19 +55,19 @@
       
     
     
-      <script src="../../assets/javascripts/modernizr.74668098.js"></script>
+      <script src="../../assets/javascripts/modernizr.86422ebf.js"></script>
     
     
       
         <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=fallback">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
         <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
       
     
     <link rel="stylesheet" href="../../assets/fonts/material-icons.css">
     
     
-      <link rel="stylesheet" href="../../extra-c035e56df5.css">
+      <link rel="stylesheet" href="../../extra-b1410d454c.css">
     
     
       
@@ -91,7 +91,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#critic" tabindex="1" class="md-skip">
+      <a href="#critic" tabindex="0" class="md-skip">
         Skip to content
       </a>
     
@@ -100,7 +100,7 @@
   <nav class="md-header-nav md-grid">
     <div class="md-flex">
       <div class="md-flex__cell md-flex__cell--shrink">
-        <a href="https://facelessuser.github.io/pymdown-extensions" title="PyMdown Extensions Documentation" class="md-header-nav__button md-logo">
+        <a href="https://facelessuser.github.io/pymdown-extensions" title="PyMdown Extensions Documentation" aria-label="PyMdown Extensions Documentation" class="md-header-nav__button md-logo">
           
             <i class="md-icon">description</i>
           
@@ -131,7 +131,7 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
       <label class="md-icon md-search__icon" for="__search"></label>
       <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
         &#xE5CD;
@@ -844,50 +844,50 @@ represent edits to a Markdown document.  This extension runs before all other ex
 <p>Critic allows you to automatically accept edits or reject the edits and render the output accordingly. It also allows
 for visually displaying the changes in HTML output (<a href="#limitations-with-previewing-critic-markup">mileage may vary</a>).</p>
 <p>The Critic extension can be included in Python Markdown by using the following:</p>
-<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.critic&#39;</span><span class="p">])</span>
 </code></pre></div>
 
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link"></a></h2>
 <p>Critic Markup uses special markup to insert, delete, substitute, highlight, and comment.</p>
-<p>To insert or remove text you can use <code class="codehilite"><span class="s">{++insert me++}</span></code> and <code class="codehilite"><span class="s">{--remove me--}</span></code>
-respectively.  You can also denote a substitution with <code class="codehilite"><span class="s">{~~substitute this~&gt;with this~~}</span></code>.</p>
-<p>You can also highlight specific text with <code class="codehilite"><span class="s">{==highlight me==}</span></code>. Or even comment, which is generally done
-by highlighting text and following it with a comment: <code class="codehilite"><span class="s">{==highlight me==}{&gt;&gt;Add a comment&lt;&lt;}</span></code>.</p>
+<p>To insert or remove text you can use <code class="highlight">{++insert me++}</code> and <code class="highlight">{--remove me--}</code>
+respectively.  You can also denote a substitution with <code class="highlight">{~~substitute this~&gt;with this~~}</code>.</p>
+<p>You can also highlight specific text with <code class="highlight">{==highlight me==}</code>. Or even comment, which is generally done
+by highlighting text and following it with a comment: <code class="highlight">{==highlight me==}{&gt;&gt;Add a comment&lt;&lt;}</code>.</p>
 <div class="admonition example">
 <p class="admonition-title">Critic Markup Accept Example</p>
-<div class="codehilite"><pre><span></span><code>Here<span class="w"> </span>is<span class="w"> </span>some<span class="w"> </span><span class="s">{--*incorrect*--}</span><span class="w"> </span>Markdown.<span class="w">  </span>I<span class="w"> </span>am<span class="w"> </span>adding<span class="w"> </span>this<span class="s">{++ here++}</span>.<span class="w">  </span>Here<span class="w"> </span>is<span class="w"> </span>some<span class="w"> </span>more<span class="w"> </span><span class="s">{--text</span>
-<span class="s"> that I am removing--}</span>text.<span class="w">  </span>And<span class="w"> </span>here<span class="w"> </span>is<span class="w"> </span>even<span class="w"> </span>more<span class="w"> </span><span class="s">{++text that I </span>
-<span class="s"> am ++}</span>adding.<span class="s">{~~</span>
+<div class="highlight"><pre><span></span><code>Here is some {--*incorrect*--} Markdown.  I am adding this{++ here++}.  Here is some more {--text
+ that I am removing--}text.  And here is even more {++text that I 
+ am ++}adding.{~~
 
-<span class="s">~&gt;  ~~}</span>Paragraph<span class="w"> </span>was<span class="w"> </span>deleted<span class="w"> </span>and<span class="w"> </span>replaced<span class="w"> </span>with<span class="w"> </span>some<span class="w"> </span>spaces.<span class="s">{~~  ~&gt;</span>
+~&gt;  ~~}Paragraph was deleted and replaced with some spaces.{~~  ~&gt;
 
-<span class="s">~~}</span>Spaces<span class="w"> </span>were<span class="w"> </span>removed<span class="w"> </span>and<span class="w"> </span>a<span class="w"> </span>paragraph<span class="w"> </span>was<span class="w"> </span>added.
+~~}Spaces were removed and a paragraph was added.
 
-And<span class="w"> </span>here<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>comment<span class="w"> </span>on<span class="w"> </span><span class="s">{==some</span>
-<span class="s"> text==}{&gt;&gt;This works quite well. I just wanted to comment on it.&lt;&lt;}</span>.<span class="w"> </span>Substitutions<span class="w"> </span><span class="s">{~~is~&gt;are~~}</span><span class="w"> </span>great!
+And here is a comment on {==some
+ text==}{&gt;&gt;This works quite well. I just wanted to comment on it.&lt;&lt;}. Substitutions {~~is~&gt;are~~} great!
 
-General<span class="w"> </span>block<span class="w"> </span>handling.
+General block handling.
 
-<span class="s">{--</span>
+{--
 
-<span class="s">* test remove</span>
-<span class="s">* test remove</span>
-<span class="s">* test remove</span>
-<span class="s">    * test remove</span>
-<span class="s">* test remove</span>
+* test remove
+* test remove
+* test remove
+    * test remove
+* test remove
 
-<span class="s">--}</span>
+--}
 
-<span class="s">{++</span>
+{++
 
-<span class="s">* test add</span>
-<span class="s">* test add</span>
-<span class="s">* test add</span>
-<span class="s">    * test add</span>
-<span class="s">* test add</span>
+* test add
+* test add
+* test add
+    * test add
+* test add
 
-<span class="s">++}</span>
+++}
 </code></pre></div>
 
 <p><p>Here is some  Markdown.  I am adding this here.  Here is some more text.  And here is even more text that I am adding.  Paragraph was deleted and replaced with some spaces.</p><p>Spaces were removed and a paragraph was added.</p><p>And here is a comment on some text. Substitutions are great!</p><p>General block handling.</p><ul><li>test add</li><li>test add</li><li>test add<ul><li>test add</li></ul></li><li>test add</li></ul></p>
@@ -895,38 +895,38 @@ General<span class="w"> </span>block<span class="w"> </span>handling.
 <p>When previewing, you can style them to stand out (see <a href="#css">CSS</a> for more information):</p>
 <div class="admonition example">
 <p class="admonition-title">Critic Markup Preview Example</p>
-<div class="codehilite"><pre><span></span><code>Here<span class="w"> </span>is<span class="w"> </span>some<span class="w"> </span><span class="s">{--*incorrect*--}</span><span class="w"> </span>Markdown.<span class="w">  </span>I<span class="w"> </span>am<span class="w"> </span>adding<span class="w"> </span>this<span class="s">{++ here++}</span>.<span class="w">  </span>Here<span class="w"> </span>is<span class="w"> </span>some<span class="w"> </span>more<span class="w"> </span><span class="s">{--text</span>
-<span class="s"> that I am removing--}</span>text.<span class="w">  </span>And<span class="w"> </span>here<span class="w"> </span>is<span class="w"> </span>even<span class="w"> </span>more<span class="w"> </span><span class="s">{++text that I </span>
-<span class="s"> am ++}</span>adding.<span class="s">{~~</span>
+<div class="highlight"><pre><span></span><code>Here is some {--*incorrect*--} Markdown.  I am adding this{++ here++}.  Here is some more {--text
+ that I am removing--}text.  And here is even more {++text that I 
+ am ++}adding.{~~
 
-<span class="s">~&gt;  ~~}</span>Paragraph<span class="w"> </span>was<span class="w"> </span>deleted<span class="w"> </span>and<span class="w"> </span>replaced<span class="w"> </span>with<span class="w"> </span>some<span class="w"> </span>spaces.<span class="s">{~~  ~&gt;</span>
+~&gt;  ~~}Paragraph was deleted and replaced with some spaces.{~~  ~&gt;
 
-<span class="s">~~}</span>Spaces<span class="w"> </span>were<span class="w"> </span>removed<span class="w"> </span>and<span class="w"> </span>a<span class="w"> </span>paragraph<span class="w"> </span>was<span class="w"> </span>added.
+~~}Spaces were removed and a paragraph was added.
 
-And<span class="w"> </span>here<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>comment<span class="w"> </span>on<span class="w"> </span><span class="s">{==some</span>
-<span class="s"> text==}{&gt;&gt;This works quite well. I just wanted to comment on it.&lt;&lt;}</span>.<span class="w"> </span>Substitutions<span class="w"> </span><span class="s">{~~is~&gt;are~~}</span><span class="w"> </span>great!
+And here is a comment on {==some
+ text==}{&gt;&gt;This works quite well. I just wanted to comment on it.&lt;&lt;}. Substitutions {~~is~&gt;are~~} great!
 
-General<span class="w"> </span>block<span class="w"> </span>handling.
+General block handling.
 
-<span class="s">{--</span>
+{--
 
-<span class="s">* test remove</span>
-<span class="s">* test remove</span>
-<span class="s">* test remove</span>
-<span class="s">    * test remove</span>
-<span class="s">* test remove</span>
+* test remove
+* test remove
+* test remove
+    * test remove
+* test remove
 
-<span class="s">--}</span>
+--}
 
-<span class="s">{++</span>
+{++
 
-<span class="s">* test add</span>
-<span class="s">* test add</span>
-<span class="s">* test add</span>
-<span class="s">    * test add</span>
-<span class="s">* test add</span>
+* test add
+* test add
+* test add
+    * test add
+* test add
 
-<span class="s">++}</span>
+++}
 </code></pre></div>
 
 <p><p>Here is some <del class="critic"><em>incorrect</em></del> Markdown.  I am adding this<ins class="critic"> here</ins>.  Here is some more <del class="critic">text that I am removing</del>text.  And here is even more <ins class="critic">text that I am </ins>adding.<del class="critic break">&nbsp;</del><ins class="critic">  </ins>Paragraph was deleted and replaced with some spaces.<del class="critic">  </del></p><ins class="critic break">&nbsp;</ins><p>Spaces were removed and a paragraph was added.</p><p>And here is a comment on <mark class="critic">some text</mark><span class="critic comment">This works quite well. I just wanted to comment on it.</span>. Substitutions <del class="critic">is</del><ins class="critic">are</ins> great!</p><p>General block handling.</p><del class="critic block"><ul><li>test remove</li><li>test remove</li><li>test remove<ul><li>test remove</li></ul></li><li>test remove</li></ul></del><ins class="critic block"><ul><li>test add</li><li>test add</li><li>test add<ul><li>test add</li></ul></li><li>test add</li></ul></ins></p>
@@ -972,7 +972,7 @@ further down that road has not yet been decided.</p>
 </tr>
 </tbody>
 </table>
-<details class="settings"><summary>Basic CSS Setup</summary><div class="codehilite"><pre><span></span><code><span class="c">/* Critic Markup */</span>
+<details class="settings"><summary>Basic CSS Setup</summary><div class="highlight"><pre><span></span><code><span class="c">/* Critic Markup */</span>
 <span class="p">.</span><span class="nc">markdown-body</span> <span class="p">.</span><span class="nc">critic</span> <span class="p">{</span>
   <span class="k">font-family</span><span class="p">:</span> <span class="kc">inherit</span><span class="p">;</span>
   <span class="kp">-webkit-</span><span class="k">border-radius</span><span class="p">:</span> <span class="mi">3</span><span class="kt">px</span><span class="p">;</span>
@@ -1101,13 +1101,14 @@ further down that road has not yet been decided.</p>
 <tr>
 <td><code>mode</code></td>
 <td>string</td>
-<td><code class="codehilite"><span class="n">view</span></code></td>
+<td><code class="highlight"><span class="n">view</span></code></td>
 <td><code>view</code> just parses the markup and displays it in its HTML equivalent rendering. <code>accept</code> strips out the critic markup and replaces them with the suggested changes.  <code>reject</code> rejects all the suggestions and strips the critic markup out replacing it with the original.</td>
 </tr>
 </tbody>
 </table>
                 
                   
+                
                 
               
               
@@ -1170,16 +1171,16 @@ further down that road has not yet been decided.</p>
           </div>
         
         powered by
-        <a href="https://www.mkdocs.org">MkDocs</a>
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
         and
-        <a href="https://squidfunk.github.io/mkdocs-material/">
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
           Material for MkDocs</a>
       </div>
       
   <div class="md-footer-social">
     <link rel="stylesheet" href="../../assets/fonts/font-awesome.css">
     
-      <a href="https://github.com/facelessuser" class="md-footer-social__link fa fa-github"></a>
+      <a href="https://github.com/facelessuser" target="_blank" rel="noopener" title="github" class="md-footer-social__link fa fa-github"></a>
     
   </div>
 
@@ -1189,7 +1190,7 @@ further down that road has not yet been decided.</p>
       
     </div>
     
-      <script src="../../assets/javascripts/application.ac79c3b0.js"></script>
+      <script src="../../assets/javascripts/application.df00da5d.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
