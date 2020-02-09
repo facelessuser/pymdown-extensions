@@ -24,7 +24,7 @@ The Highlight extension can be included in Python Markdown by using the followin
 
 ```py3
 import markdown
-md = markdown.Markdown(extensions=['pymdownx.highight'])
+md = markdown.Markdown(extensions=['pymdownx.highlight'])
 ```
 
 ## Syntax Highlighting
