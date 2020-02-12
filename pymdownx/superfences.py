@@ -84,7 +84,7 @@ FENCED_BLOCK_RE = re.compile(
 MSG_TAB_DEPRECATION = """
 The tab option in SuperFences has been deprecated in favor of the general purpose 'pymdownx.tabbed' extension.
 While you can continue to use this feature for now, it will be removed in the future.
-Also be mindful of the class changes, if you require old style classes, please enable the 'legacy_tab_class' option.
+Also be mindful of the class changes, if you require old style classes, please enable the 'legacy_tab_classes' option.
 """
 
 
@@ -214,7 +214,7 @@ class SuperFencesCodeExtension(Extension):
                 "Default: ''"
             ],
             'preserve_tabs': [False, "Preserve tabs in fences - Default: False"],
-            'legacy_tab_class': [
+            'legacy_tab_classes': [
                 False,
                 "Use legacy style classes for the deprecated tabbed code feature via 'tab=\"name\"'"
             ]
@@ -318,30 +318,30 @@ class SuperFencesTabPostProcessor(Postprocessor):
         """Replace grouped superfences tabs with a tab group."""
 
         self.count += 1
-        tab_count = 1
+        tab_count = 0
         tabs = []
 
         for entry in [x.strip() for x in m.group(1).split('</superfences></p>')]:
+            tab_count += 1
             tabs.append(
                 entry.replace('<p><superfences>', '') % {
                     'index': self.count,
                     'tab_index': tab_count,
                     'state': ('checked="checked" ' if tab_count == 1 else ''),
-                    'tab_title': 'Tab %d' % (tab_count + 1)
+                    'tab_title': 'Tab %d' % (tab_count)
                 }
             )
-            tab_count += 1
         return '<div class="%s" data-tabs="%d:%d">\n%s</div>\n' % (
             self.class_name,
             self.count,
-            tab_count,
+            tab_count - 1,
             '\n'.join(tabs)
         )
 
     def run(self, text):
         """Search for superfences tab and group consecutive tabs together."""
 
-        if self.config.get('legacy_tab_class', False):
+        if self.config.get('legacy_tab_classes', False):
             self.class_name = 'superfences-tabs'
         else:
             self.class_name = 'tabbed-set'
@@ -480,7 +480,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         return TAB % {
             'code': code.replace('%', '%%'),
             'title': title,
-            'content': 'superfences-content' if self.legacy_tab_class else 'tabbed-content'
+            'content': 'superfences-content' if self.legacy_tab_classes else 'tabbed-content'
         }
 
     def process_nested_block(self, ws, content, start, end):
@@ -775,7 +775,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         self.stack = []
         self.disabled_indented = self.config.get("disable_indented_code_blocks", False)
         self.preserve_tabs = self.config.get("preserve_tabs", False)
-        self.legacy_tab_class = self.config.get("legacy_tab_class", False)
+        self.legacy_tab_classes = self.config.get("legacy_tab_classes", False)
 
         if self.preserve_tabs:
             lines = self.restore_raw_text(lines)
