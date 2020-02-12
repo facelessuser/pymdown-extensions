@@ -57,11 +57,18 @@ RE_HL_LINES = re.compile(r'(?P<hl_lines>\d+(?:[ \t]+\d+)*)')
 RE_LINENUMS = re.compile(r'(?P<linestart>[\d]+)(?:[ \t]+(?P<linestep>[\d]+))?(?:[ \t]+(?P<linespecial>[\d]+))?')
 RE_OPTIONS = re.compile(r'''(?P<key>[a-zA-Z][a-zA-Z0-9_]*)=(?:(?P<quot>"|')(?P<value>.*?)(?P=quot))?''')
 
+RE_TAB_DIV = re.compile(
+    r'<div (?:class="superfences-tabs" data-tabs="(\d+:\d+)"|data-tabs="(\d+:\d+)" class="superfences-tabs")'
+)
 RE_TABS = re.compile(r'((?:<p><superfences>.*?</superfences></p>\s*)+)', re.DOTALL)
 
-TAB = r'''<superfences><input name="__tabs_%%(index)s" type="radio" id="__tab_%%(index)s_%%(tab_index)s" %%(state)s/>
-<label for="__tab_%%(index)s_%%(tab_index)s">%(title)s</label>
-<div class="superfences-content">%(code)s</div></superfences>'''
+TAB = (
+    '<superfences>'
+    '<input name="__tabbed_%%(index)s" type="radio" id="__tabbed_%%(index)s_%%(tab_index)s" %%(state)s/>'
+    '<label for="__tabbed_%%(index)s_%%(tab_index)s">%(title)s</label>'
+    '<div class="superfences-content">%(code)s</div>'
+    '</superfences>'
+)
 
 NESTED_FENCE_END = r'%s[ \t]*$'
 
@@ -298,14 +305,15 @@ class SuperFencesTabPostProcessor(Postprocessor):
         """Replace grouped superfences tabs with a tab group."""
 
         self.count += 1
-        tab_count = 0
+        tab_count = 1
         tabs = []
+
         for entry in [x.strip() for x in m.group(1).split('</superfences></p>')]:
             tabs.append(
                 entry.replace('<p><superfences>', '') % {
                     'index': self.count,
                     'tab_index': tab_count,
-                    'state': ('checked="checked" ' if tab_count == 0 else ''),
+                    'state': ('checked="checked" ' if tab_count == 1 else ''),
                     'tab_title': 'Tab %d' % (tab_count + 1)
                 }
             )
@@ -315,7 +323,13 @@ class SuperFencesTabPostProcessor(Postprocessor):
     def run(self, text):
         """Search for superfences tab and group consecutive tabs together."""
 
-        self.count = 0
+        highest_set = 0
+        for m in RE_TAB_DIV.finditer(text):
+            data = int((m.group(1) if m.group(1) else m.group(2)).split(':')[0])
+            if data > highest_set:
+                highest_set = data
+
+        self.count = highest_set
         return RE_TABS.sub(self.repl, text)
 
 
