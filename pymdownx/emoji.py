@@ -26,6 +26,7 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import InlineProcessor
 from markdown import util as md_util
+import xml.etree.ElementTree as etree
 from . import util
 
 RE_EMOJI = r'(:[+\-\w]+:)'
@@ -118,7 +119,7 @@ def to_png(index, shortname, alias, uc, alt, title, category, options, md):
 
     add_attriubtes(options, attributes)
 
-    return md_util.etree.Element("img", attributes)
+    return etree.Element("img", attributes)
 
 
 def to_svg(index, shortname, alias, uc, alt, title, category, options, md):
@@ -143,7 +144,7 @@ def to_svg(index, shortname, alias, uc, alt, title, category, options, md):
 
     add_attriubtes(options, attributes)
 
-    return md_util.etree.Element("img", attributes)
+    return etree.Element("img", attributes)
 
 
 def to_png_sprite(index, shortname, alias, uc, alt, title, category, options, md):
@@ -163,7 +164,7 @@ def to_png_sprite(index, shortname, alias, uc, alt, title, category, options, md
 
     add_attriubtes(options, attributes)
 
-    el = md_util.etree.Element("span", attributes)
+    el = etree.Element("span", attributes)
     el.text = md_util.AtomicString(alt)
 
     return el
@@ -182,10 +183,10 @@ def to_svg_sprite(index, shortname, alias, uc, alt, title, category, options, md
     xlink_href = '%s#emoji-%s' % (
         options.get('image_path', './../assets/sprites/emojione.sprites.svg'), uc
     )
-    svg = md_util.etree.Element("svg", {"class": options.get('classes', index)})
-    desc = md_util.etree.SubElement(svg, 'description')
+    svg = etree.Element("svg", {"class": options.get('classes', index)})
+    desc = etree.SubElement(svg, 'description')
     desc.text = md_util.AtomicString(alt)
-    md_util.etree.SubElement(svg, 'use', {'xlink:href': xlink_href})
+    etree.SubElement(svg, 'use', {'xlink:href': xlink_href})
 
     return svg
 

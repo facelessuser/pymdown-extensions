@@ -6,8 +6,9 @@ MIT license.
 Copyright (c) 2017 Isaac Muse <isaacmuse@gmail.com>
 """
 from __future__ import unicode_literals
-from markdown.inlinepatterns import InlineProcessor, util
+from markdown.inlinepatterns import InlineProcessor
 from markdown.__meta__ import __version_info__
+import xml.etree.ElementTree as etree
 from collections import namedtuple
 import sys
 import copy
@@ -169,7 +170,7 @@ class PatternSequenceProcessor(InlineProcessor):
 
     def build_single(self, m, tag, idx):
         """Return single tag."""
-        el1 = util.etree.Element(tag)
+        el1 = etree.Element(tag)
         text = m.group(2)
         self.parse_sub_patterns(text, el1, None, idx)
         return el1
@@ -178,8 +179,8 @@ class PatternSequenceProcessor(InlineProcessor):
         """Return double tag."""
 
         tag1, tag2 = tags.split(",")
-        el1 = util.etree.Element(tag1)
-        el2 = util.etree.Element(tag2)
+        el1 = etree.Element(tag1)
+        el2 = etree.Element(tag2)
         text = m.group(2)
         self.parse_sub_patterns(text, el2, None, idx)
         el1.append(el2)
@@ -192,8 +193,8 @@ class PatternSequenceProcessor(InlineProcessor):
         """Return double tags (variant 2): `<strong>text <em>text</em></strong>`."""
 
         tag1, tag2 = tags.split(",")
-        el1 = util.etree.Element(tag1)
-        el2 = util.etree.Element(tag2)
+        el1 = etree.Element(tag1)
+        el2 = etree.Element(tag2)
         text = m.group(2)
         self.parse_sub_patterns(text, el1, None, idx)
         text = m.group(3)

@@ -47,6 +47,7 @@ from markdown import Extension
 from markdown.inlinepatterns import InlineProcessor
 from markdown.blockprocessors import BlockProcessor
 from markdown import util as md_util
+import xml.etree.ElementTree as etree
 from . import util
 import re
 
@@ -73,13 +74,13 @@ def _inline_mathjax_format(math, preview=False):
     """Inline math formatter."""
 
     if preview:
-        el = md_util.etree.Element('span')
-        pre = md_util.etree.SubElement(el, 'span', {'class': 'MathJax_Preview'})
+        el = etree.Element('span')
+        pre = etree.SubElement(el, 'span', {'class': 'MathJax_Preview'})
         pre.text = md_util.AtomicString(math)
-        script = md_util.etree.SubElement(el, 'script', {'type': 'math/tex'})
+        script = etree.SubElement(el, 'script', {'type': 'math/tex'})
         script.text = md_util.AtomicString(math)
     else:
-        el = md_util.etree.Element('script', {'type': 'math/tex'})
+        el = etree.Element('script', {'type': 'math/tex'})
         el.text = md_util.AtomicString(math)
     return el
 
@@ -123,7 +124,7 @@ def inline_mathjax_format(math, language='math', class_name='arithmatex', md=Non
 def inline_generic_format(math, language='math', class_name='arithmatex', md=None, wrap='\\(%s\\)'):
     """Inline generic formatter."""
 
-    el = md_util.etree.Element('span', {'class': class_name})
+    el = etree.Element('span', {'class': class_name})
     el.text = md_util.AtomicString(wrap % math)
     return el
 
@@ -215,16 +216,16 @@ class BlockArithmatexProcessor(BlockProcessor):
 
         if self.preview:
             grandparent = parent
-            parent = md_util.etree.SubElement(grandparent, 'div')
-            preview = md_util.etree.SubElement(parent, 'div', {'class': 'MathJax_Preview'})
+            parent = etree.SubElement(grandparent, 'div')
+            preview = etree.SubElement(parent, 'div', {'class': 'MathJax_Preview'})
             preview.text = md_util.AtomicString(math)
-        el = md_util.etree.SubElement(parent, 'script', {'type': 'math/tex; mode=display'})
+        el = etree.SubElement(parent, 'script', {'type': 'math/tex; mode=display'})
         el.text = md_util.AtomicString(math)
 
     def generic_output(self, parent, math):
         """Generic output."""
 
-        el = md_util.etree.SubElement(parent, 'div', {'class': 'arithmatex'})
+        el = etree.SubElement(parent, 'div', {'class': 'arithmatex'})
         el.text = md_util.AtomicString(self.wrap % math)
 
     def run(self, parent, blocks):

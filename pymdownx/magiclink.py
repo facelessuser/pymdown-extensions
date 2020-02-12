@@ -27,6 +27,7 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
 from markdown import util as md_util
+import xml.etree.ElementTree as etree
 from . import util
 import re
 from markdown.inlinepatterns import LinkInlineProcessor, InlineProcessor
@@ -489,7 +490,7 @@ class MagiclinkPattern(LinkInlineProcessor):
     def handleMatch(self, m, data):
         """Handle URL matches."""
 
-        el = md_util.etree.Element("a")
+        el = etree.Element("a")
         el.text = md_util.AtomicString(m.group('link'))
         if m.group("www"):
             href = "http://%s" % m.group('link')
@@ -500,7 +501,7 @@ class MagiclinkPattern(LinkInlineProcessor):
         el.set("href", self.unescape(href.strip()))
 
         if self.config.get('repo_url_shortener', False):
-            el.set('magiclink', md_util.text_type(MAGIC_LINK))
+            el.set('magiclink', str(MAGIC_LINK))
 
         return el, m.start(0), m.end(0)
 
@@ -511,14 +512,14 @@ class MagiclinkAutoPattern(InlineProcessor):
     def handleMatch(self, m, data):
         """Return link optionally without protocol."""
 
-        el = md_util.etree.Element("a")
+        el = etree.Element("a")
         el.set('href', self.unescape(m.group(1)))
         el.text = md_util.AtomicString(m.group(1))
         if self.config['hide_protocol']:
             el.text = md_util.AtomicString(el.text[el.text.find("://") + 3:])
 
         if self.config.get('repo_url_shortener', False):
-            el.set('magiclink', md_util.text_type(MAGIC_AUTO_LINK))
+            el.set('magiclink', str(MAGIC_AUTO_LINK))
 
         return el, m.start(0), m.end(0)
 
@@ -535,7 +536,7 @@ class MagiclinkMailPattern(InlineProcessor):
     def handleMatch(self, m, data):
         """Handle email link patterns."""
 
-        el = md_util.etree.Element("a")
+        el = etree.Element("a")
         email = self.unescape(m.group('mail'))
         href = "mailto:%s" % email
         el.text = md_util.AtomicString(''.join([self.email_encode(ord(c)) for c in email]))
@@ -560,7 +561,7 @@ class MagiclinkMentionPattern(_MagiclinkShorthandPattern):
             provider = self.provider
             mention = parts[0]
 
-        el = md_util.etree.Element("a")
+        el = etree.Element("a")
         el.set('href', '%s/%s' % (PROVIDER_INFO[provider]['url'], mention))
         el.set(
             'title',
@@ -589,7 +590,7 @@ class MagiclinkRepositoryPattern(_MagiclinkShorthandPattern):
             user = parts[0]
         repo = m.group('mention_repo')
 
-        el = md_util.etree.Element("a")
+        el = etree.Element("a")
         el.set('href', '%s/%s/%s' % (PROVIDER_INFO[provider]['url'], user, repo))
         el.set(
             'title',
@@ -634,7 +635,7 @@ class MagiclinkExternalRefsPattern(_MagiclinkReferencePattern):
         self.my_user = user == self.user and provider == self.provider
         self.my_repo = self.my_user and repo == self.repo
 
-        el = md_util.etree.Element("a")
+        el = etree.Element("a")
         if is_diff:
             self.process_compare(el, provider, user, repo, value, value2)
         elif is_commit:
@@ -667,7 +668,7 @@ class MagiclinkInternalRefsPattern(_MagiclinkReferencePattern):
         self.my_repo = True
         self.my_user = True
 
-        el = md_util.etree.Element("a")
+        el = etree.Element("a")
         if is_diff:
             self.process_compare(el, provider, user, repo, value, value2)
         elif is_commit:

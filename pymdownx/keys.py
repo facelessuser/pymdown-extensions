@@ -87,6 +87,7 @@ import html
 from markdown import Extension
 from markdown.inlinepatterns import InlineProcessor
 from markdown import util as md_util
+import xml.etree.ElementTree as etree
 from . import util
 from . import keymap_db as keymap
 import re
@@ -173,7 +174,7 @@ class KeysPattern(InlineProcessor):
         if None in content:
             return None, None, None
 
-        el = md_util.etree.Element(
+        el = etree.Element(
             ('kbd' if self.strict else 'span'),
             ({'class': ' '.join(self.classes)} if self.classes else {})
         )
@@ -184,12 +185,12 @@ class KeysPattern(InlineProcessor):
             if item_class:
                 classes.append('key-' + item_class)
             if last is not None and self.ksep:
-                span = md_util.etree.SubElement(el, 'span')
+                span = etree.SubElement(el, 'span')
                 span.text = md_util.AtomicString(self.ksep)
             attr = {}
             if classes:
                 attr['class'] = ' '.join(classes)
-            kbd = md_util.etree.SubElement(el, 'kbd', attr)
+            kbd = etree.SubElement(el, 'kbd', attr)
             kbd.text = md_util.AtomicString(item_name)
             last = kbd
 
