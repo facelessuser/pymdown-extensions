@@ -20,6 +20,7 @@ from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import InlineProcessor
 from markdown import util as md_util
+import xml.etree.ElementTree as etree
 import functools
 
 ESCAPED_BSLASH = '%s%s%s' % (md_util.STX, ord('\\'), md_util.ETX)
@@ -140,7 +141,7 @@ class InlineHilitePattern(InlineProcessor):
             ).highlight(src, language, self.css_class, inline=True)
             el.text = self.md.htmlStash.store(el.text)
         else:
-            el = md_util.etree.Element('code')
+            el = etree.Element('code')
             el.text = self.md.htmlStash.store(_escape(src))
         return el
 

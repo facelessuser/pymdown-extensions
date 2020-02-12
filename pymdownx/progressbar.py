@@ -109,7 +109,7 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import InlineProcessor, dequote
-from markdown import util as md_util
+import xml.etree.ElementTree as etree
 from markdown.extensions.attr_list import AttrListTreeprocessor
 from . import util
 
@@ -160,12 +160,12 @@ class ProgressBarPattern(InlineProcessor):
             )
         )
         classes.sort()
-        el = md_util.etree.Element("div")
+        el = etree.Element("div")
         el.set('class', ' '.join(classes))
-        bar = md_util.etree.SubElement(el, 'div')
+        bar = etree.SubElement(el, 'div')
         bar.set('class', "progress-bar")
         bar.set('style', 'width:%s%%' % width)
-        p = md_util.etree.SubElement(bar, 'p')
+        p = etree.SubElement(bar, 'p')
         p.set('class', 'progress-label')
         p.text = label
         if alist is not None:

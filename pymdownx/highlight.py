@@ -26,7 +26,7 @@ from __future__ import unicode_literals
 import re
 from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
-from markdown import util as md_util
+import xml.etree.ElementTree as etree
 import copy
 from collections import OrderedDict
 try:
@@ -313,7 +313,7 @@ class Highlight(object):
             code = CODE_WRAP % (higlight_class, class_str, self.escape(src))
 
         if inline:
-            el = md_util.etree.Element('code', {'class': class_str} if class_str else {})
+            el = etree.Element('code', {'class': class_str} if class_str else {})
             el.text = code
             return el
         else:
