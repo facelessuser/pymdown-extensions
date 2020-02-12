@@ -49,6 +49,7 @@ nav:
     - SmartSymbols: extensions/smartsymbols.md
     - Snippets: extensions/snippets.md
     - SuperFences: extensions/superfences.md
+    - Tabbed: extensions/tabbed.md
     - Tasklist: extensions/tasklist.md
     - Tilde: extensions/tilde.md
   - Miscellaneous Extras: miscellaneous_extras.md

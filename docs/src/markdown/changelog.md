@@ -1,5 +1,16 @@
 # Changelog
 
+## 7.0.0
+
+Please see [Release Notes](./release.md) for details on upgrading to 7.0.0.
+
+- **NEW**: Add new Tabbed extension for general purpose tabbed content in Markdown.
+- **NEW**: Deprecate old SuperFences tabbed content feature. This will be removed in 8.0.0.
+- **NEW**: SuperFences' tabbed content classes have changed from `supferfences-tabs` and `superfences-content` to
+  `tabbed-set` and `tabbed-content` respectively. Old style classes can be enabled with the `legacy_tab_classes` option
+  in SuperFences. This new option will be retired with SuperFences tabbed content feature in 8.0.0.
+- **FIX**: Numerous deprecation warnings associated with the recent release of Python Markdown 3.2.
+
 ## 6.3.0
 
 - **NEW**: `pymdownx.extrarawhtml` is now deprecated in favor of Python Markdown's `md_in_html` extension found in the

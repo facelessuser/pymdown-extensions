@@ -99,13 +99,15 @@ replaced, only wrapped: `#!html <div class="arithmatex">\[\begin{}...\end{}\]</d
 Arithmatex requires you to provide the MathJax library and provide and configure it to your liking.  The recommended way
 of including MathJax is to use the CDN. Latest version at time of writing this is found below.
 
-```html tab="MathJax 2"
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"></script>
-```
+=== "MathJax 2"
+    ```html
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"></script>
+    ```
 
-```html tab="MathJax 3"
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-```
+=== "MathJax 3"
+    ```html
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    ```
 
 Generally, it is best to add your own configuration to get exactly what you want. Here we show some simple examples of
 configurations done in JavaScript. We've provided two basic configurations below: one that is configured for
@@ -114,70 +116,74 @@ Arithmatex's [MathJax Output Format](#mathjax-output-format), and one that works
 them and configure them further. Please see the [MathJax][mathjax] site for more info on using MathJax
 extensions/plugins and configuring those extensions/plugins.
 
-```js tab="Default - MathJax 2"
-MathJax.Hub.Config({
-  config: ["MMLorHTML.js"],
-  jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
-  extensions: ["MathMenu.js", "MathZoom.js"]
-});
-```
+=== "Default - MathJax 2"
+    ```js
+    MathJax.Hub.Config({
+      config: ["MMLorHTML.js"],
+      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+      extensions: ["MathMenu.js", "MathZoom.js"]
+    });
+    ```
 
-```js tab="Default - MathJax 3"
-window.MathJax = {
-  options: {
-    ignoreHtmlClass: 'tex2jax_ignore',
-    processHtmlClass: 'tex2jax_process',
-    renderActions: {
-      find: [10, function (doc) {
-        for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
-          const display = !!node.type.match(/; *mode=display/);
-          const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-          const text = document.createTextNode('');
-          const sibling = node.previousElementSibling;
-          node.parentNode.replaceChild(text, node);
-          math.start = {node: text, delim: '', n: 0};
-          math.end = {node: text, delim: '', n: 0};
-          doc.math.push(math);
-          if (sibling && sibling.matches('.MathJax_Preview')) {
-            sibling.parentNode.removeChild(sibling);
-          }
+=== "Default - MathJax 3"
+    ```js
+    window.MathJax = {
+      options: {
+        ignoreHtmlClass: 'tex2jax_ignore',
+        processHtmlClass: 'tex2jax_process',
+        renderActions: {
+          find: [10, function (doc) {
+            for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              const sibling = node.previousElementSibling;
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+              if (sibling && sibling.matches('.MathJax_Preview')) {
+                sibling.parentNode.removeChild(sibling);
+              }
+            }
+          }, '']
         }
-      }, '']
-    }
-  }
-};
-```
+      }
+    };
+    ```
 
-```js tab="Generic - MathJax 2"
-MathJax.Hub.Config({
-  config: ["MMLorHTML.js"],
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
-  tex2jax: {
-    inlineMath: [ ["\\(","\\)"] ],
-    displayMath: [ ["\\[","\\]"] ],
-    processEscapes: true,
-    processEnvironments: true,
-    ignoreClass: ".*|",
-    processClass: "arithmatex"
-  },
-});
-```
+=== "Generic - MathJax 2"
+    ```js
+    MathJax.Hub.Config({
+      config: ["MMLorHTML.js"],
+      extensions: ["tex2jax.js"],
+      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+      tex2jax: {
+        inlineMath: [ ["\\(","\\)"] ],
+        displayMath: [ ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true,
+        ignoreClass: ".*|",
+        processClass: "arithmatex"
+      },
+    });
+    ```
 
-```js tab="Generic - MathJax 3"
-window.MathJax = {
-  tex: {
-    inlineMath: [ ["\\(","\\)"] ],
-    displayMath: [ ["\\[","\\]"] ],
-    processEscapes: true,
-    processEnvironments: true
-  },
-  options: {
-    ignoreHtmlClass: ".*|",
-    processHtmlClass: "arithmatex"
-  }
-};
-```
+=== "Generic - MathJax 3"
+    ```js
+    window.MathJax = {
+      tex: {
+        inlineMath: [ ["\\(","\\)"] ],
+        displayMath: [ ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        ignoreHtmlClass: ".*|",
+        processHtmlClass: "arithmatex"
+      }
+    };
+    ```
 
 Notice that in our generic configuration, we set up `tex2jax` to only load `arithmatex` classes by excluding all
 elements and adding an exception for the `arithmatex` class. We also don't bother adding `#!tex $...$` and

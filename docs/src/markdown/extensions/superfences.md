@@ -86,6 +86,18 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
 
 ## Tabbed Fences
 
+!!! warning "Deprecated 7.0"
+    The tab option is deprecated in 7.0 due to the addition of the general purpose tab extension
+    [`pymdownx.tabbed`](./tabbed.md).
+
+    The feature is still usable, but by the class names on the output
+    have changed from `superfences-tabs` and `superfences-content` to `tabbed-set` and `tabbed-content` respectively.
+    This is to help create unity between the new extension and this feature as we guide people towards the new
+    extension.
+
+    To use the legacy class names, you can use the global `legacy_tab_classes` option to get the old style classes. This
+    option will be removed, along with the entire `tab=""` feature in 8.0.
+
 SuperFences has the ability to create tabbed code blocks.  Simply add `tab="tab-title"` to the fence's header, and the
 code block will will be rendered in a tab with the title `tab-title`.  If you do not provide a title with either `tab=`
 or `tab=""`, but you've specified a language, the language will be used as the title. No case transformation is applied
@@ -166,61 +178,63 @@ show the CSS and the HTML it targets. Keep in mind the CSS is just the minimum t
 modify it to get it how you like it.
 
 ??? settings "Tabbed Code Setup"
-    ```HTML tab=
-    <div class="superfences-tabs">
-    <input name="__tabs_1" type="radio" id="__tab_1_0" checked="checked">
-    <label for="__tab_1_0">Tab 0</label>
-    <div class="superfences-content">...</div>
-    ...
-    <input name="__tabs_1" type="radio" id="__tab_1_X" checked="checked">
-    <label for="__tab_1_X">Tab X</label>
-    <div class="superfences-content">...</div>
-    ...
-    </div>
-    ```
+    === "HTML"
+        ```HTML
+        <div class="tabbed-set">
+        <input name="__tabs_1" type="radio" id="__tab_1_0" checked="checked">
+        <label for="__tab_1_0">Tab 0</label>
+        <div class="tabbed-content">...</div>
+        ...
+        <input name="__tabs_1" type="radio" id="__tab_1_X" checked="checked">
+        <label for="__tab_1_X">Tab X</label>
+        <div class="tabbed-content">...</div>
+        ...
+        </div>
+        ```
 
-    ```CSS tab=
-    .superfences-tabs {
-      display: flex;
-      position: relative;
-      flex-wrap: wrap;
-    }
+    === "CSS"
+        ```CSS
+        .tabbed-set {
+          display: flex;
+          position: relative;
+          flex-wrap: wrap;
+        }
 
-    .superfences-tabs .highlight {
-      background: #ddd;
-    }
+        .tabbed-set .highlight {
+          background: #ddd;
+        }
 
-    .superfences-tabs .superfences-content {
-      display: none;
-      order: 99;
-      width: 100%;
-    }
+        .tabbed-set .tabbed-content {
+          display: none;
+          order: 99;
+          width: 100%;
+        }
 
-    .superfences-tabs label {
-      width: auto;
-      margin: 0 0.5em;
-      padding: 0.25em;
-      font-size: 120%;
-      cursor: pointer;
-    }
+        .tabbed-set label {
+          width: auto;
+          margin: 0 0.5em;
+          padding: 0.25em;
+          font-size: 120%;
+          cursor: pointer;
+        }
 
-    .superfences-tabs input {
-      position: absolute;
-      opacity: 0;
-    }
+        .tabbed-set input {
+          position: absolute;
+          opacity: 0;
+        }
 
-    .superfences-tabs input:nth-child(n+1) {
-      color: #333333;
-    }
+        .tabbed-set input:nth-child(n+1) {
+          color: #333333;
+        }
 
-    .superfences-tabs input:nth-child(n+1):checked + label {
-        color: #FF5252;
-    }
+        .tabbed-set input:nth-child(n+1):checked + label {
+            color: #FF5252;
+        }
 
-    .superfences-tabs input:nth-child(n+1):checked + label + .superfences-content {
-        display: block;
-    }
-    ```
+        .tabbed-set input:nth-child(n+1):checked + label + .tabbed-content {
+            display: block;
+        }
+        ```
 
 ## Preserve tabs
 
@@ -266,15 +280,17 @@ specifiers.
 
 !!! example "Highlight Example"
 
-    ````tab="Source"
-    ```py3
-    import foo.bar
-    ```
-    ````
+    === "Source"
+        ````
+        ```py3
+        import foo.bar
+        ```
+        ````
 
-    ```py3 tab="Output"
-    import foo.bar
-    ```
+    === "Output"
+        ```py3
+        import foo.bar
+        ```
 
 ## Showing Line Numbers
 
@@ -288,15 +304,17 @@ control the starting line shown in the block.
 
 !!! example "Line Number Example"
 
-    ````tab="Source"
-    ``` linenums="1"
-    import foo.bar
-    ```
-    ````
+    === "Source"
+        ````
+        ``` linenums="1"
+        import foo.bar
+        ```
+        ````
 
-    ```tab="Output" linenums="1"
-    import foo.bar
-    ```
+    === "Output"
+        ``` linenums="1"
+        import foo.bar
+        ```
 
 Pygments also has a few additional options in regards to line numbers. One is "line step" which, if set to a number n >
 1, will print only every n^th^ line number. The other option is a setting that can mark line numbers as "special" with a
@@ -308,42 +326,46 @@ So to set showing only every other line number, we could do the following. Line 
 
 !!! example "Nth Line Example"
 
-    ````tab="Source"
-    ``` linenums="2 2"
-    """Some file."""
-    import foo.bar
-    import boo.baz
-    import foo.bar.baz
-    ```
-    ````
+    === "Source"
+        ````
+        ``` linenums="2 2"
+        """Some file."""
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
+        ````
 
-    ```tab="Output" linenums="2 2"
-    """Some file."""
-    import foo.bar
-    import boo.baz
-    import foo.bar.baz
-    ```
+    === "Output"
+        ``` linenums="2 2"
+        """Some file."""
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
 
 To set every other line as special, you must set the third `linenums` option (specify line start and step before it).
 Special must be a value of n > 0.
 
 !!! example "Special Line Example"
 
-    ````tab="Source"
-    ``` linenums="1 1 2"
-    """Some file."""
-    import foo.bar
-    import boo.baz
-    import foo.bar.baz
-    ```
-    ````
+    === "Source"
+        ````
+        ``` linenums="1 1 2"
+        """Some file."""
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
+        ````
 
-    ```tab="Output" linenums="1 1 2"
-    """Some file."""
-    import foo.bar
-    import boo.baz
-    import foo.bar.baz
-    ```
+    === "Output"
+        ``` linenums="1 1 2"
+        """Some file."""
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
 
 For JavaScript libraries, a class of `linenums` is written to the block.  This may or may not be leveraged by your
 chosen highlighter.  It is uncertain at this time whether line number support for JavaScript highlighters will be
@@ -357,41 +379,45 @@ targeted line numbers separated by spaces.
 
 !!! example "Highlight Lines Example"
 
-    ````tab="Source"
-    ``` hl_lines="1 3"
-    """Some file."""
-    import foo.bar
-    import boo.baz
-    import foo.bar.baz
-    ```
-    ````
+    === "Source"
+        ````
+        ``` hl_lines="1 3"
+        """Some file."""
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
+        ````
 
-    ```tab="Output" hl_lines="1 3"
-    """Some file."""
-    import foo.bar
-    import boo.baz
-    import foo.bar.baz
-    ```
+    === "Output"
+        ``` hl_lines="1 3"
+        """Some file."""
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
 
 Line numbers are always referenced starting at 1 ignoring what the line number is labeled as when showing line numbers.
 
 !!! example "Highlight Lines with Line Numbers Example"
 
-    ````tab="Source"
-    ```hl_lines="1 3" linenums="2"
-    """Some file."""
-    import foo.bar
-    import boo.baz
-    import foo.bar.baz
-    ```
-    ````
+    === "Source"
+        ````
+        ```hl_lines="1 3" linenums="2"
+        """Some file."""
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
+        ````
 
-    ```tab="Output" hl_lines="1 3" linenums="2"
-    """Some file."""
-    import foo.bar
-    import boo.baz
-    import foo.bar.baz
-    ```
+    === "Output"
+        ``` hl_lines="1 3" linenums="2"
+        """Some file."""
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
 
 ## Custom Fences
 
@@ -399,55 +425,59 @@ SuperFences allows defining custom fences for special purposes, like flow charts
 
 !!! example "Flow Chart Example"
 
-    ````tab="Source"
-    ```flow
-    st=>start: Start:>http://www.google.com[blank]
-    e=>end:>http://www.google.com
-    op1=>operation: My Operation
-    sub1=>subroutine: My Subroutine
-    cond=>condition: Yes
-    or No?:>http://www.google.com
-    io=>inputoutput: catch something...
+    === "Source"
+        ````
+        ```flow
+        st=>start: Start:>http://www.google.com[blank]
+        e=>end:>http://www.google.com
+        op1=>operation: My Operation
+        sub1=>subroutine: My Subroutine
+        cond=>condition: Yes
+        or No?:>http://www.google.com
+        io=>inputoutput: catch something...
 
-    st->op1->cond
-    cond(yes)->io->e
-    cond(no)->sub1(right)->op1
-    ```
-    ````
+        st->op1->cond
+        cond(yes)->io->e
+        cond(no)->sub1(right)->op1
+        ```
+        ````
 
-    ```flow tab="Output"
-    st=>start: Start:>http://www.google.com[blank]
-    e=>end:>http://www.google.com
-    op1=>operation: My Operation
-    sub1=>subroutine: My Subroutine
-    cond=>condition: Yes
-    or No?:>http://www.google.com
-    io=>inputoutput: catch something...
+    === "Output"
+        ```flow
+        st=>start: Start:>http://www.google.com[blank]
+        e=>end:>http://www.google.com
+        op1=>operation: My Operation
+        sub1=>subroutine: My Subroutine
+        cond=>condition: Yes
+        or No?:>http://www.google.com
+        io=>inputoutput: catch something...
 
-    st->op1->cond
-    cond(yes)->io->e
-    cond(no)->sub1(right)->op1
-    ```
+        st->op1->cond
+        cond(yes)->io->e
+        cond(no)->sub1(right)->op1
+        ```
 
 !!! example "Sequence Diagram Example"
 
-    ````tab="Source"
-    ```sequence
-    Title: Here is a title
-    A->B: Normal line
-    B-->C: Dashed line
-    C->>D: Open arrow
-    D-->>A: Dashed open arrow
-    ```
-    ````
+    === "Source"
+        ````
+        ```sequence
+        Title: Here is a title
+        A->B: Normal line
+        B-->C: Dashed line
+        C->>D: Open arrow
+        D-->>A: Dashed open arrow
+        ```
+        ````
 
-    ```sequence tab="Output"
-    Title: Here is a title
-    A->B: Normal line
-    B-->C: Dashed line
-    C->>D: Open arrow
-    D-->>A: Dashed open arrow
-    ```
+    === "Output"
+        ```sequence
+        Title: Here is a title
+        A->B: Normal line
+        B-->C: Dashed line
+        C->>D: Open arrow
+        D-->>A: Dashed open arrow
+        ```
 
 As shown above, SuperFences defines two default custom fences (which can be removed if desired) called `flow` and
 `sequence`, for flowcharts and sequence diagrams respectively. The default custom fences simply preserve the content
@@ -761,6 +791,7 @@ Option                         | Type         | Default       | Description
 `custom_fences`                | [dictionary] | `#!py3 []`    | Custom fences.
 `highlight_code`               | bool         | `#!py3 True`  | Enable or disable code highlighting.
 `preserve_tabs`                | bool         | `#!py3 False` | Experimental feature that preserves tabs in fenced code blocks.
+`legacy_tab_classes`           | bool         | `#!py3 False` | Use legacy style classes for the deprecated tabbed code feature via `tab="name"`. This option will be dropped when the code tab interface is fully dropped for the general purpose [tabbed](./tabbed.md) extension.
 
 --8<-- "links.txt"
 

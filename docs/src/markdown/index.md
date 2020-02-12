@@ -105,21 +105,42 @@ Check out documentation on each extension to learn more about how to configure a
     admonitions, and other syntaxes. Combine multiple fences together in tabbed groups, and even create special custom
     fences for content like UML.
 
-    ```tab="Source"
-    Title: Here is a title
-    A->B: Normal line
-    B-->C: Dashed line
-    C->>D: Open arrow
-    D-->>A: Dashed open arrow
-    ```
+    === "Source"
+        ```
+        Title: Here is a title
+        A->B: Normal line
+        B-->C: Dashed line
+        C->>D: Open arrow
+        D-->>A: Dashed open arrow
+        ```
 
-    ```sequence tab="Result"
-    Title: Here is a title
-    A->B: Normal line
-    B-->C: Dashed line
-    C->>D: Open arrow
-    D-->>A: Dashed open arrow
-    ```
+    === "Result"
+        ```sequence
+        Title: Here is a title
+        A->B: Normal line
+        B-->C: Dashed line
+        C->>D: Open arrow
+        D-->>A: Dashed open arrow
+        ```
+
+!!! summary "Tabbed"
+    [Tabbed](extensions/tabbed.md) allows for tabbed Markdown content:
+
+    === "Source"
+        ```
+        === "Tab 1"
+            Markdown **content**.
+
+        === "Tab 2"
+            More Markdown **content**.
+        ```
+
+    === "Result"
+        === "Tab 1"
+            Markdown **content**.
+
+        === "Tab 2"
+            More Markdown **content**.
 
 !!! summary "Tasklist"
     [Tasklist](extensions/tasklist.md) allows inserting lists with check boxes.
