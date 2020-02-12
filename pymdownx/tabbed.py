@@ -24,6 +24,7 @@ DEALINGS IN THE SOFTWARE.
 from __future__ import absolute_import
 from __future__ import unicode_literals
 from markdown import Extension
+from markdown import util as md_util
 from markdown.blockprocessors import BlockProcessor
 import xml.etree.ElementTree as etree
 import re
@@ -114,7 +115,7 @@ class TabbedProcessor(BlockProcessor):
                     "for": "__tabbed_%d_%d" % (tab_set, tab_count)
                 }
             )
-            lab.text = title
+            lab.text = md_util.AtomicString(title)
 
             div = etree.SubElement(
                 sfences,
