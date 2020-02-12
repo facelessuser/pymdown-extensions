@@ -24,6 +24,71 @@ def custom_validator(language, options):
     return okay
 
 
+class TestLegacyTab(util.MdCase):
+    """Test legacy tab cases."""
+
+    extension = ['pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.superfences': {
+            'legacy_tab_classes': True
+        }
+    }
+
+    def test_legacy_css(self):
+        """Test legacy tab CSS classes."""
+
+        self.check_markdown(
+            r'''
+            ```python tab="Test"
+            This will be a tab.
+            ```
+            ''',
+            r'''
+            <div class="superfences-tabs" data-tabs="1:1">
+            <input name="__tabbed_1" type="radio" id="__tabbed_1_1" checked="checked" /><label for="__tabbed_1_1">Test</label><div class="superfences-content"><div class="highlight"><pre><span></span><code><span class="n">This</span> <span class="n">will</span> <span class="n">be</span> <span class="n">a</span> <span class="n">tab</span><span class="o">.</span>
+            </code></pre></div></div>
+            </div>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestTabbedFenceWithTabbedExtension(util.MdCase):
+    """Test legacy tab cases."""
+
+    extension = ['pymdownx.superfences', 'pymdownx.tabbed']
+    extension_configs = {}
+
+    def test_tabbed_together(self):
+        """
+        Test SuperFences' tabbed implementation along side Tabbed.
+
+        We should calculate the tab set number correctly based off of the biggest Tabbed tab set value.
+        """
+
+        self.check_markdown(
+            r'''
+            === "Test"
+                Content
+
+            ```python tab="Test"
+            This will be a tab.
+            ```
+            ''',
+            r'''
+            <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Test</label><div class="tabbed-content">
+            <p>Content</p>
+            </div>
+            </div>
+            <div class="tabbed-set" data-tabs="2:1">
+            <input name="__tabbed_2" type="radio" id="__tabbed_2_1" checked="checked" /><label for="__tabbed_2_1">Test</label><div class="tabbed-content"><div class="highlight"><pre><span></span><code><span class="n">This</span> <span class="n">will</span> <span class="n">be</span> <span class="n">a</span> <span class="n">tab</span><span class="o">.</span>
+            </code></pre></div></div>
+            </div>
+            ''',  # noqa: E501
+            True
+        )
+
+
 class TestSuperFences(util.MdCase):
     """Test Details."""
 
