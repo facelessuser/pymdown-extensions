@@ -52,7 +52,7 @@ class TabbedProcessor(BlockProcessor):
             self.START.search(block) or
             (
                 block.startswith(' ' * self.tab_length) and sibling is not None and
-                sibling.tag.lower() == 'div' and sibling.attrib.get('class', '') == 'superfences-tabs'
+                sibling.tag.lower() == 'div' and sibling.attrib.get('class', '') == 'tabbed-set'
             )
         )
 
