@@ -33,7 +33,7 @@ class TabbedProcessor(BlockProcessor):
     """Tabbed block processor."""
 
     START = re.compile(
-        r'(?:^|\n)={3}(\+|!)? +"(.*?)" *(?:\n|$)'
+        r'(?:^|\n)={3}(!)? +"(.*?)" *(?:\n|$)'
     )
     COMPRESS_SPACES = re.compile(r' {2,}')
 
@@ -102,14 +102,8 @@ class TabbedProcessor(BlockProcessor):
                 "id": "__tabbed_%d_%d" % (tab_set, tab_count)
             }
 
-            if first or special == '+':
+            if first:
                 attributes['checked'] = 'checked'
-
-            if special == '+' and not first:
-                for child in list(sibling):
-                    if child.tag.lower() == 'input':
-                        if 'checked' in child.attrib:
-                            del child.attrib['checked']
 
             inp = etree.SubElement(
                 sfences,
