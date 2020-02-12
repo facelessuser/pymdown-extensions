@@ -318,7 +318,7 @@ class SuperFencesTabPostProcessor(Postprocessor):
                 }
             )
             tab_count += 1
-        return '<div class="superfences-tabs">\n' + '\n'.join(tabs) + '</div>\n'
+        return '<div class="superfences-tabs" data-tabs="%d:%d">\n%s</div>\n' % (self.count, tab_count, '\n'.join(tabs))
 
     def run(self, text):
         """Search for superfences tab and group consecutive tabs together."""
