@@ -35,6 +35,7 @@ from markdown.preprocessors import Preprocessor
 from markdown.postprocessors import Postprocessor
 from markdown.blockprocessors import CodeBlockProcessor
 from markdown import util as md_util
+from . import util
 import functools
 import re
 
@@ -58,7 +59,7 @@ RE_LINENUMS = re.compile(r'(?P<linestart>[\d]+)(?:[ \t]+(?P<linestep>[\d]+))?(?:
 RE_OPTIONS = re.compile(r'''(?P<key>[a-zA-Z][a-zA-Z0-9_]*)=(?:(?P<quot>"|')(?P<value>.*?)(?P=quot))?''')
 
 RE_TAB_DIV = re.compile(
-    r'<div (?:class="superfences-tabs" data-tabs="(\d+:\d+)"|data-tabs="(\d+:\d+)" class="superfences-tabs")'
+    r'<div (?:class="tabbed-set" data-tabs="(\d+:\d+)"|data-tabs="(\d+:\d+)" class="tabbed-set")'
 )
 RE_TABS = re.compile(r'((?:<p><superfences>.*?</superfences></p>\s*)+)', re.DOTALL)
 
@@ -66,7 +67,7 @@ TAB = (
     '<superfences>'
     '<input name="__tabbed_%%(index)s" type="radio" id="__tabbed_%%(index)s_%%(tab_index)s" %%(state)s/>'
     '<label for="__tabbed_%%(index)s_%%(tab_index)s">%(title)s</label>'
-    '<div class="superfences-content">%(code)s</div>'
+    '<div class="%(content)s">%(code)s</div>'
     '</superfences>'
 )
 
@@ -79,6 +80,12 @@ FENCED_BLOCK_RE = re.compile(
         md_util.HTML_PLACEHOLDER[-1]
     )
 )
+
+MSG_TAB_DEPRECATION = """
+The tab option in SuperFences has been deprecated in favor of the general purpose 'pymdownx.tabbed' extension.
+While you can continue to use this feature for now, it will be removed in the future.
+Also be mindful of the class changes, if you require old style classes, please enable the 'legacy_tab_class' option.
+"""
 
 
 def _escape(txt):
@@ -206,7 +213,11 @@ class SuperFencesCodeExtension(Extension):
                 "if nothing is set. - "
                 "Default: ''"
             ],
-            'preserve_tabs': [False, "Preserve tabs in fences - Default: False"]
+            'preserve_tabs': [False, "Preserve tabs in fences - Default: False"],
+            'legacy_tab_class': [
+                False,
+                "Use legacy style classes for the deprecated tabbed code feature via 'tab=\"name\"'"
+            ]
         }
         super(SuperFencesCodeExtension, self).__init__(*args, **kwargs)
 
@@ -287,7 +298,9 @@ class SuperFencesCodeExtension(Extension):
             self.md.preprocessors.register(raw_fenced, "fenced_raw_block", 31.05)
             self.md.registerExtensions(["pymdownx._bypassnorm"], {})
 
-        self.md.postprocessors.register(SuperFencesTabPostProcessor(self.md), "fenced_tabs", 25)
+        tabbed = SuperFencesTabPostProcessor(self.md)
+        tabbed.config = config
+        self.md.postprocessors.register(tabbed, "fenced_tabs", 25)
 
         # Add the highlight extension, but do so in a disabled state so we can just retrieve default configurations
         self.md.registerExtensions(["pymdownx.highlight"], {"pymdownx.highlight": {"_enabled": False}})
@@ -318,10 +331,20 @@ class SuperFencesTabPostProcessor(Postprocessor):
                 }
             )
             tab_count += 1
-        return '<div class="superfences-tabs" data-tabs="%d:%d">\n%s</div>\n' % (self.count, tab_count, '\n'.join(tabs))
+        return '<div class="%s" data-tabs="%d:%d">\n%s</div>\n' % (
+            self.class_name,
+            self.count,
+            tab_count,
+            '\n'.join(tabs)
+        )
 
     def run(self, text):
         """Search for superfences tab and group consecutive tabs together."""
+
+        if self.config.get('legacy_tab_class', False):
+            self.class_name = 'superfences-tabs'
+        else:
+            self.class_name = 'tabbed-set'
 
         highest_set = 0
         for m in RE_TAB_DIV.finditer(text):
@@ -454,7 +477,11 @@ class SuperFencesBlockPreprocessor(Preprocessor):
     def get_tab(self, code, title):
         """Wrap code in tab div."""
 
-        return TAB % {'code': code.replace('%', '%%'), 'title': title}
+        return TAB % {
+            'code': code.replace('%', '%%'),
+            'title': title,
+            'content': 'superfences-content' if self.legacy_tab_class else 'tabbed-content'
+        }
 
     def process_nested_block(self, ws, content, start, end):
         """Process the contents of the nested block."""
@@ -551,6 +578,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
         # Global options (remove as we handle them)
         if 'tab' in self.options:
+            util.PymdownxDeprecationWarning(MSG_TAB_DEPRECATION)
             self.tab = self.options['tab']
             if not self.tab or self.tab is True:
                 self.tab = self.lang
@@ -747,6 +775,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         self.stack = []
         self.disabled_indented = self.config.get("disable_indented_code_blocks", False)
         self.preserve_tabs = self.config.get("preserve_tabs", False)
+        self.legacy_tab_class = self.config.get("legacy_tab_class", False)
 
         if self.preserve_tabs:
             lines = self.restore_raw_text(lines)

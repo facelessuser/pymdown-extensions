@@ -70,15 +70,12 @@ class TabbedProcessor(BlockProcessor):
         block, non_tabs = self.detab(block)
 
         if m:
-            state = m.group(1)
-            is_open = state is not None
-
             special = m.group(1) if m.group(1) else ''
             title = m.group(2) if m.group(2) else m.group(3)
 
             if (
-                sibling.tag.lower() == 'div' and
-                sibling.attrib.get('class', '') == 'superfences-tabs' and
+                sibling and sibling.tag.lower() == 'div' and
+                sibling.attrib.get('class', '') == 'tabbed-set' and
                 special != '!'
             ):
                 first = False
@@ -89,7 +86,7 @@ class TabbedProcessor(BlockProcessor):
                 sfences = etree.SubElement(
                     parent,
                     'div',
-                    {'class': 'superfences-tabs', 'data-tabs': '%d:0' % self.tab_group_count}
+                    {'class': 'tabbed-set', 'data-tabs': '%d:0' % self.tab_group_count}
                 )
 
             data = sfences.attrib['data-tabs'].split(':')
@@ -105,7 +102,7 @@ class TabbedProcessor(BlockProcessor):
             if first:
                 attributes['checked'] = 'checked'
 
-            inp = etree.SubElement(
+            etree.SubElement(
                 sfences,
                 'input',
                 attributes
@@ -123,7 +120,7 @@ class TabbedProcessor(BlockProcessor):
                 sfences,
                 "div",
                 {
-                    "class": "superfences-content"
+                    "class": "tabbed-content"
                 }
             )
             sfences.attrib['data-tabs'] = '%d:%d' % (tab_set, tab_count)
