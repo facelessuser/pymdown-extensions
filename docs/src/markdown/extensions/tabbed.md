@@ -2,8 +2,17 @@
 
 ## Overview
 
-Tabbed provides a syntax to easily add tabbed Markdown content. Tabs follow the Admonition and Details style blocks, but
-use the `===` token to distinguish itself.
+Tabbed provides a syntax to easily add tabbed Markdown content. The Tabbed extension can be included in Python Markdown
+by using the following:
+
+```py3
+import markdown
+md = markdown.Markdown(extensions=['pymdownx.tabbed'])
+```
+
+## Syntax
+
+Tabs start with `===` to signify a tab followed by a quoted title. Consecutive tabs are grouped into a tab set.
 
 ```
 === "Tab 1"
@@ -31,8 +40,8 @@ This will yield tabbed Markdown content:
     - list item a
     - list item b
 
-Tabs sets are created from consecutive tab blocks, but in the rare case that you want to follow two separate tab sets
-right after each other, you can explicitly mark the start of a new tab set with `!`:
+In the rare case that you want to follow two separate tab sets right after each other, you can explicitly mark the start
+of a new tab set with `!`:
 
 ```
 === "Tab 1"
