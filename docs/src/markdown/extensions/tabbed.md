@@ -84,3 +84,73 @@ Which should yield two tab sets.
     ```
     More content.
     ```
+
+## Styling
+
+In order to use tabbed blocks, some additional CSS is needed. You can check out the configuration below which will
+show the CSS and the HTML it targets. Keep in mind the CSS is just the minimum to get you started. You can tweak it and
+modify it to get it how you like it.
+
+In general, tabbed controls are wrapped in a `#!html <div>` with the class `tabbed-set`. They contain an
+`#!html <input>` with an ID of `__tabbed_<tab_set_number>_<tab_number>`. All the `#!html <input>` elements from a
+specific tab set will use the name `__tabbed_<tab_set_number>`. Particularly, a user should be mindful of the ID to keep
+from explicitly using a conflicting ID. Auto-generated slugs shouldn't conflict though.
+
+??? settings "Tabbed Code Setup"
+    === "HTML"
+        ```HTML
+        <div class="tabbed-set">
+        <input name="__tabbed_1" type="radio" id="__tabbed_1_1" checked="checked">
+        <label for="__tabbed_1_1">Tab 0</label>
+        <div class="tabbed-content">...</div>
+        ...
+        <input name="__tabbed_1" type="radio" id="__tabbed_1_X" checked="checked">
+        <label for="__tabbed_1_X">Tab X</label>
+        <div class="tabbed-content">...</div>
+        ...
+        </div>
+        ```
+
+    === "CSS"
+        ```CSS
+        .tabbed-set {
+          display: flex;
+          position: relative;
+          flex-wrap: wrap;
+        }
+
+        .tabbed-set .highlight {
+          background: #ddd;
+        }
+
+        .tabbed-set .tabbed-content {
+          display: none;
+          order: 99;
+          width: 100%;
+        }
+
+        .tabbed-set label {
+          width: auto;
+          margin: 0 0.5em;
+          padding: 0.25em;
+          font-size: 120%;
+          cursor: pointer;
+        }
+
+        .tabbed-set input {
+          position: absolute;
+          opacity: 0;
+        }
+
+        .tabbed-set input:nth-child(n+1) {
+          color: #333333;
+        }
+
+        .tabbed-set input:nth-child(n+1):checked + label {
+            color: #FF5252;
+        }
+
+        .tabbed-set input:nth-child(n+1):checked + label + .tabbed-content {
+            display: block;
+        }
+        ```

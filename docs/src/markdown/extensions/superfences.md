@@ -181,12 +181,12 @@ modify it to get it how you like it.
     === "HTML"
         ```HTML
         <div class="tabbed-set">
-        <input name="__tabs_1" type="radio" id="__tab_1_0" checked="checked">
-        <label for="__tab_1_0">Tab 0</label>
+        <input name="__tabbed_1" type="radio" id="__tabbed_1_1" checked="checked">
+        <label for="__tabbed_1_1">Tab 0</label>
         <div class="tabbed-content">...</div>
         ...
-        <input name="__tabs_1" type="radio" id="__tab_1_X" checked="checked">
-        <label for="__tab_1_X">Tab X</label>
+        <input name="__tabbed_1" type="radio" id="__tabbed_1_X" checked="checked">
+        <label for="__tabbed_1_X">Tab X</label>
         <div class="tabbed-content">...</div>
         ...
         </div>
