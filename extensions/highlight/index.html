@@ -36,7 +36,7 @@
         <meta name="lang:search.tokenizer" content="[\s\-]+">
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.1">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.6.2">
     
     
       
@@ -856,7 +856,7 @@ affect highlighting via Pygments except <code>use_pygments</code> and <code>css_
 highlighter, set <code>use_pygments</code> to <code class="highlight"><span class="kc">False</span></code> or make sure you don't have Pygments installed.</p>
 <p>The Highlight extension can be included in Python Markdown by using the following:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
-<span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.highight&#39;</span><span class="p">])</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.highlight&#39;</span><span class="p">])</span>
 </code></pre></div>
 
 <h2 id="syntax-highlighting">Syntax Highlighting<a class="headerlink" href="#syntax-highlighting" title="Permanent link"></a></h2>
@@ -878,7 +878,7 @@ dictionary of the options you wish to apply.</p>
 <p class="admonition-title">Highlight Example</p>
 <p>To create the above mentioned <code>php-inline</code> we would feed in the following to <code>extend_pygments_lang</code>:</p>
 <div class="highlight"><pre><span></span><code><span class="n">extended_pygments_lang</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;php-inline&quot;</span><span class="p">,</span> <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="s2">&quot;php&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;startinline&quot;</span><span class="p">:</span> <span class="bp">True</span><span class="p">}}</span>
+    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;php-inline&quot;</span><span class="p">,</span> <span class="s2">&quot;lang&quot;</span><span class="p">:</span> <span class="s2">&quot;php&quot;</span><span class="p">,</span> <span class="s2">&quot;options&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;startinline&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">}}</span>
 <span class="p">]</span>
 </code></pre></div>
 
@@ -1064,7 +1064,7 @@ displayed with CSS:</p>
       
     </div>
     
-      <script src="../../assets/javascripts/application.df00da5d.js"></script>
+      <script src="../../assets/javascripts/application.c33a9706.js"></script>
       
       <script>app.initialize({version:"1.0.4",url:{base:"../.."}})</script>
       
