@@ -1,6 +1,6 @@
 # Changelog
 
-## 7.0.0
+## 7.0.0b1
 
 Please see [Release Notes](./release.md) for details on upgrading to 7.0.0.
 
