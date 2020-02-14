@@ -1,6 +1,6 @@
 # Changelog
 
-## 7.0.0b1
+## 7.0b1
 
 Please see [Release Notes](./release.md) for details on upgrading to 7.0.0.
 
@@ -11,7 +11,7 @@ Please see [Release Notes](./release.md) for details on upgrading to 7.0.0.
   in SuperFences. This new option will be retired with SuperFences tabbed content feature in 8.0.0.
 - **FIX**: Numerous deprecation warnings associated with the recent release of Python Markdown 3.2.
 
-## 6.3.0
+## 6.3
 
 - **NEW**: `pymdownx.extrarawhtml` is now deprecated in favor of Python Markdown's `md_in_html` extension found in the
   3.2 release.
@@ -26,7 +26,7 @@ Please see [Release Notes](./release.md) for details on upgrading to 7.0.0.
 - **FIX**: Fix issue in PathConverter where Windows path conversion from relative to absolute doesn't always work in all
   browsers.
 
-## 6.2.0
+## 6.2
 
 - **NEW**: Upgrade Twemoji to use 12.1.3.
 - **NEW**: Downgrade and lock EmojiOne version 2.2.7. 2.2.7 is the last truly free version of EmojiOne. This is the
@@ -37,7 +37,7 @@ Please see [Release Notes](./release.md) for details on upgrading to 7.0.0.
 - **FIX**: MagicLink: match the auto-link pattern in the current Markdown package.
 - **FIX**: Fix fenced math escape issue when using MathJax script output format.
 
-## 6.1.0
+## 6.1
 
 - **NEW**: Upgrade Twemoji to 12.1.2 using the latest JoyPixels' (formally EmojiOne) short name index in
   @JoyPixels/emoji-toolkit 5.0.4.
@@ -54,7 +54,7 @@ Please see [Release Notes](./release.md) for details on upgrading to 7.0.0.
 - **FIX**: Fix for BetterEm case `**Strong*em,strong***`.
 - **FIX**: Fixes for non-word character boundary cases in BetterEm, Caret, Mark, and Tilde extensions.
 
-## 6.0.0
+## 6.0
 
 Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
 
@@ -74,7 +74,7 @@ Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
 - **FIX**: Remove unnecessary path code in B64.
 - **FIX**: Fix issues with double escaping entities in code blocks after Python Markdown 3.0 update.
 
-## 5.0.0
+## 5.0
 
 - **NEW**: Add validator to custom fences so custom options can be used. (!350)
 - **NEW**: Add global `linenums_special` option to Highlight extension. Can be overridden per fence in SuperFences.
@@ -87,12 +87,12 @@ Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
 - **FIX**: Add workaround in Highlight extension for line number alignment issues in Pygments with certain `step`
   values. (!360)
 
-## 4.12.0
+## 4.12
 
 - **NEW**: Add option to fail if specified snippet isn't found. (#335)
 - **FIX**: Windows issue with `preserve_tabs` option in SuperFences. (#328)
 
-## 4.11.0
+## 4.11
 
 - **NEW**: Allow Arithmatex's "smart dollar" logic to be turned off via setting the option `smart_dollar` to `False`.
   (#297)
@@ -106,7 +106,7 @@ Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
 
 - **FIX**: Update Twemoji to 2.6.0 and EmojiOne 3.1.3.
 
-## 4.10.0
+## 4.10
 
 - **NEW**: SuperFences now adds experimental support for preserving tabs in fenced code blocks. (#276)
 
@@ -119,24 +119,24 @@ Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
 
 - **FIX**: Output issue when no user and/or repository is specified.
 
-## 4.9.0
+## 4.9
 
 - **NEW**: Add option to make task lists editable. (!249)
 - **FIX**: Remove internal references to deprecated options.
 
-## 4.8.0
+## 4.8
 
 - **NEW**: Set progress bar class level increments via `progress_increment` instead of using the hard coded value of
   `20`.
 - **FIX**: Compatibility changes for next Markdown release.
 
-## 4.7.0
+## 4.7
 
 - **NEW**: Bring back generic output for Arithmatex. Now under the `generic` option. (#185)
 - **FIX**: StripHTML should allow space before close of opening tag.
 - **FIX**: MagicLink should not auto-link inside a link. (#151)
 
-## 4.6.0
+## 4.6
 
 - **NEW**: Arithmatex now *just* uses the script wrapper output as it is the most reliable output, and now previews can
   be achieved by providing a span with class `MathJax_Preview` that gets auto hidden when the math is rendered.
@@ -156,18 +156,18 @@ Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
 - **FIX**: If an invalid provider is given, default to `github`. If no `user` or `repo` is specified, do not convert
   links that depend on those default values. (#169)
 
-## 4.5.0
+## 4.5
 
 - **NEW**: Add GitLab style compare link shorthand and link shortening. (#160)
 - **NEW**: Deprecate GitHub extension. It is now recommended to just include the extensions you want to create a GitHub
   feel instead of relying on a an extension to package something close-ish. (#159)
 
-## 4.4.0
+## 4.4
 
 - **NEW**: Add social media mentions -- Twitter only right now. (#156)
 - **FIX**: Use correct regular expression for GitLab and Bitbucket.
 
-## 4.3.0
+## 4.3
 
 - **NEW**: Shorthand format for referencing non-default provider commits, issues, pulls, and mentions. (!147)
 - **NEW**: Shorthand format for mentioning a repo via `@user/repo`. (!149)
@@ -175,7 +175,7 @@ Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
 - **NEW**: Make repository labels configurable. (!149)
 - **FIX**: Adjust pattern boundaries auto-links.
 
-## 4.2.0
+## 4.2
 
 - **NEW**: MagicLink can now auto-link a GitHub like shorthand for repository references. (!139)
 - **NEW**: MagicLink now renders pull request links with a slightly different output from issues. (!139)
@@ -186,11 +186,11 @@ Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
 - **FIX**: MagicLink repository link outputs now better reflect default user and repository context. (!143)
 - **FIX**: PlainHTML should not strip tags that are part of JavaScript code. (!140)
 
-## 4.1.0
+## 4.1
 
 - **NEW**: Details can now have multiple classes defined.
 
-## 4.0.0
+## 4.0
 
 - **NEW**: Details extension will now derive a title from the class if only a class is provided. (#107)
 - **NEW**: Remove deprecated legacy emoji generator format.
@@ -198,7 +198,7 @@ Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
 - **NEW**: Remove deprecated `spoilers` extension redirect.
 - **NEW**: Update emoji databases: EmojiOne (3.1.2) and Twemoji to .(2.5.0)
 
-## 3.5.0
+## 3.5
 
 - **NEW**: Add new slugs to preserve case. (!103)
 - **NEW**: Add new GFM specific slug (both percent encoded and normal) that only lowercases ASCII chars just like GFM
@@ -209,13 +209,13 @@ Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
   will just pass through. (#95)
 - **FIX**: Replace CriticMarkup placeholders after replacing raw HTML placeholders. (#95)
 
-## 3.4.0
+## 3.4
 
 - **NEW**: Renamed Spoilers to Details
 - **NEW**: No longer attach the `spoilers` class to `details` tags.
 - **NEW**: Provide better example of UML script in documents.
 
-## 3.3.0
+## 3.3
 
 - **NEW**: Added support for pull request link shortening in MagicLink. (!88)
 - **NEW**: Added new Spoilers extension. (#85)
@@ -224,20 +224,20 @@ Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
 
 - **FIX**: Cannot set Highlight's CSS class.
 
-## 3.2.0
+## 3.2
 
 - **NEW**: Add support for Twemoji 2.3.5.
 - **NEW**: Update to EmojiOne 3.0.2.
 - **NEW**: Emoji generators now also take `category` which is also no included in all indexes.
 - **FIX**: Excessive new lines at end of code blocks.
 
-## 3.1.0
+## 3.1
 
 - **NEW**: Highlight extension now runs normal indented code blocks through highlighter.
 - **FIX**: When Pygments is disabled, `linenums` class was attached to code blocks even if `linenums` was disabled and
   not enabled via fence headers.
 
-## 3.0.0
+## 3.0
 
 - **NEW**: Added Keys extension.
 - **NEW**: Generalized custom fences (#60). `flow` and `sequence` fence are now just custom fences and can be disabled simply by overwriting the `custom_fences` setting.
@@ -255,7 +255,7 @@ Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
 - **FIX**: Fix MathJax CDN references and usage in documentation.  MathJax CDN is shutting down and must now use
   Cloudflare CDN. (#63)
 
-## 2.0.0
+## 2.0
 
 - **NEW**: SuperFences and InlineHilite can be configured via the new Highlight extension.
 - **NEW**: InlineHilite now has all highlighting features pushed to the Highlight extension.  This removes all the
@@ -263,7 +263,7 @@ Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
 - **NEW**: Deprecate the nesting option in SuperFences.  Nesting is default and the only acceptable behavior moving
   forward.  The ability to turn off nesting will be removed in 3.0.
 
-## 1.8.0
+## 1.8
 
 - **NEW**: MagicLink special repository link shortener for GitHub, GitLab, and Bitbucket. (#49)
 - **FIX**: GitHub asterisk emphasis should never have had smart enabled for it. (#50)
@@ -274,7 +274,7 @@ Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
   with it. (#48)
 - **FIX**: InlineHilite will no longer break if Pygments is not installed (478b410a2199d55f3e70b452516511d3810c61a5).
 
-## 1.7.0
+## 1.7
 
 - **NEW**: Arithmatex now supports `\(...\)`, `\[...\]`, and `\begin{}...\end{}`.
 - **NEW**: Arithmatex has an option to embed the math code in MathJax script tags.
@@ -288,7 +288,7 @@ Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
 
 - **FIX**: Don't install tools or tests folder when installing from Pypi.
 
-## 1.6.0
+## 1.6
 
 - **NEW**: EscapeAll has the option to perform more like Pandoc in that you can enable escaped newlines to be
   `hardbreaks`, and escaped spaces to be `nbsp`.
@@ -296,7 +296,7 @@ Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
   format.  Allow commenting out lines temporarily.  And allow a way to escape them by placing a space after them.
 - **FIX**: Fix documentation issues.
 
-## 1.5.0
+## 1.5
 
 - **NEW**: New EscapeAll extension.
 - **NEW**: New Snippets extension for including external files into a Markdown file.
@@ -311,14 +311,14 @@ Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
   behavior.
 - **FIX**: Critics shouldn't allow escaping critic marks as it is not in the spec.
 
-## 1.4.0
+## 1.4
 
 - **NEW**: HeaderAnchor extension is now deprecated.  It will be removed in a future version.
 - **NEW**: HeaderAnchor is no longer included in the `pymdownx.github` extension.
 - **NEW**: Slugify functions are moved to `pymdownx.slug` in preparation of HeaderAnchor removal.
 - **FIX**: GitHubEmoji is not "pending" deprecation, but is actually deprecated.
 
-## 1.3.0
+## 1.3
 
 - **NEW**: New Emoji extension that aims to replace GitHubEmoji.  By default it is configured for EmojiOne and Gemoji
   (GitHub's emoji).
@@ -328,11 +328,11 @@ Please see [Release Notes](./release.md) for details on upgrading to 6.0.0.
 - **NEW**: `github` extension now turns off `nl2br` by default in order properly emulate recent changes in GFM.
   `no_nl2br` option is deprecated and will be removed in the future as it no longer reflects GFM behavior.
 
-## 1.2.0
+## 1.2
 
 - **NEW**: Add option to output task lists in a more customizable way.
 
-## 1.1.0
+## 1.1
 
 - **NEW**: Add pypi 3.5 info in setup
 - **NEW**: Add option to MagicLink extension to allow the stripping of link protocols (`http://` etc.).
