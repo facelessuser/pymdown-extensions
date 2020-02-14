@@ -135,6 +135,6 @@ extra:
     - icon: brands/github
       link: https://github.com/facelessuser
 extra_css:
-  - extra-b1410d454c.css
+  - extra-7a6f6a9bd9.css
 extra_javascript:
   - extra-0d9305e748.js
