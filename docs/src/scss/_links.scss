@@ -1,27 +1,30 @@
 // General styling for repository link icons
 .md-typeset {
-  .magiclink {
+  .magiclink.magiclink-repository {
     &::before {
       position: relative;
-      padding-right: 0.25rem;
-      font-family: FontAwesome;
-      -moz-osx-font-smoothing: initial;
-      -webkit-font-smoothing: initial;
-      font-weight: 400;
+      width: 1em;
+      height: 1em;
+      padding-right: 1em;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 1em;
+      filter: invert(50%) sepia(93%) saturate(1300%) hue-rotate(197deg);
+      content: "\a0";
     }
   }
 }
 
 // Assign icons to repository links
 @each $name, $icon in (
-  "github": "\f09b",
-  "gitlab": "\f296",
-  "bitbucket": "\f171"
+  "github": "github",
+  "gitlab": "gitlab",
+  "bitbucket": "bitbucket"
 ) {
   .md-typeset {
     .magiclink-repository.magiclink-#{$name} {
       &::before {
-        content: "#{$icon}";
+        background-image: url("svg/#{$icon}.svg");
       }
     }
   }
