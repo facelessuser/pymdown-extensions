@@ -1,0 +1,1031 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+        <meta name="description" content="A Collection of Useful Extensions for Python Markdown">
+      
+      
+        <link rel="canonical" href="https://facelessuser.github.io/pymdown-extensions/extensions/tabbed/">
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0dev0">
+    
+    
+      
+        <title>Tabbed - PyMdown Extensions Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/app.82c13014.min.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/app-palette.8c25017f.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#2196f3">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../extra-7a6f6a9bd9.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    
+    
+    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    
+      <a href="#tabbed" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="https://facelessuser.github.io/pymdown-extensions" title="PyMdown Extensions Documentation" aria-label="PyMdown Extensions Documentation" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon">description</i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="header-title">
+          
+            <span class="md-header-nav__topic">
+              PyMdown Extensions Documentation
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Tabbed
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="search-reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap">
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+<a href="https://github.com/facelessuser/pymdown-extensions/" title="Go to repository" class="md-source">
+  <div class="md-source__icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+          
+
+  
+
+<nav class="md-tabs md-tabs--active" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../.." class="md-tabs__link">
+        PyMdown Extensions
+      </a>
+    
+  </li>
+
+      
+        
+      
+        
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../arithmatex/" class="md-tabs__link md-tabs__link--active">
+          Extensions
+        </a>
+      
+    </li>
+  
+
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="https://facelessuser.github.io/pymdown-extensions" title="PyMdown Extensions Documentation" class="md-nav__button md-logo">
+      
+        <i class="md-icon">description</i>
+      
+    </a>
+    PyMdown Extensions Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/facelessuser/pymdown-extensions/" title="Go to repository" class="md-source">
+  <div class="md-source__icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list">
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../.." title="PyMdown Extensions" class="md-nav__link">
+      PyMdown Extensions
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../installation/" title="Installation" class="md-nav__link">
+      Installation
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../usage_notes/" title="Usage Notes" class="md-nav__link">
+      Usage Notes
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+    
+    <label class="md-nav__link" for="nav-4">
+      Extensions
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        Extensions
+      </label>
+      <ul class="md-nav__list">
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../arithmatex/" title="Arithmatex" class="md-nav__link">
+      Arithmatex
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../b64/" title="B64" class="md-nav__link">
+      B64
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../betterem/" title="BetterEm" class="md-nav__link">
+      BetterEm
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../caret/" title="Caret" class="md-nav__link">
+      Caret
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../critic/" title="Critic" class="md-nav__link">
+      Critic
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../details/" title="Details" class="md-nav__link">
+      Details
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../emoji/" title="Emoji" class="md-nav__link">
+      Emoji
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../escapeall/" title="EscapeAll" class="md-nav__link">
+      EscapeAll
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../extra/" title="Extra" class="md-nav__link">
+      Extra
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../extrarawhtml/" title="ExtraRawHTML" class="md-nav__link">
+      ExtraRawHTML
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../highlight/" title="Highlight" class="md-nav__link">
+      Highlight
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../inlinehilite/" title="InlineHilite" class="md-nav__link">
+      InlineHilite
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../keys/" title="Keys" class="md-nav__link">
+      Keys
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../magiclink/" title="MagicLink" class="md-nav__link">
+      MagicLink
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../mark/" title="Mark" class="md-nav__link">
+      Mark
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../pathconverter/" title="PathConverter" class="md-nav__link">
+      PathConverter
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../striphtml/" title="StripHTML" class="md-nav__link">
+      StripHTML
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../progressbar/" title="ProgressBar" class="md-nav__link">
+      ProgressBar
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../smartsymbols/" title="SmartSymbols" class="md-nav__link">
+      SmartSymbols
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../snippets/" title="Snippets" class="md-nav__link">
+      Snippets
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../superfences/" title="SuperFences" class="md-nav__link">
+      SuperFences
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Tabbed
+      </label>
+    
+    <a href="./" title="Tabbed" class="md-nav__link md-nav__link--active">
+      Tabbed
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list">
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#syntax" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#styling" class="md-nav__link">
+    Styling
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tasklist/" title="Tasklist" class="md-nav__link">
+      Tasklist
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../tilde/" title="Tilde" class="md-nav__link">
+      Tilde
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../miscellaneous_extras/" title="Miscellaneous Extras" class="md-nav__link">
+      Miscellaneous Extras
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../contributing/" title="Contributing & Support" class="md-nav__link">
+      Contributing &amp; Support
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../development/" title="Development" class="md-nav__link">
+      Development
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../faq/" title="FAQ" class="md-nav__link">
+      FAQ
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../release/" title="Release Notes" class="md-nav__link">
+      Release Notes
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../changelog/" title="Changelog" class="md-nav__link">
+      Changelog
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../license/" title="License" class="md-nav__link">
+      License
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list">
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    Overview
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#syntax" class="md-nav__link">
+    Syntax
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#styling" class="md-nav__link">
+    Styling
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/facelessuser/pymdown-extensions/tree/master/docs/src/markdown/extensions/tabbed.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="tabbed">Tabbed<a class="headerlink" href="#tabbed" title="Permanent link"></a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
+<div class="admonition new">
+<p class="admonition-title">New 7.0</p>
+<p>Tabbed has been newly added in 7.0.</p>
+</div>
+<p>Tabbed provides a syntax to easily add tabbed Markdown content. The Tabbed extension can be included in Python Markdown
+by using the following:</p>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
+<span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.tabbed&#39;</span><span class="p">])</span>
+</code></pre></div>
+
+<h2 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link"></a></h2>
+<p>Tabs start with <code>===</code> to signify a tab followed by a quoted title. Consecutive tabs are grouped into a tab set.</p>
+<div class="highlight"><pre><span></span><code>=== &quot;Tab 1&quot;
+    Markdown **content**.
+
+    Multiple paragraphs.
+
+=== &quot;Tab 2&quot;
+    More Markdown **content**.
+
+    - list item a
+    - list item b
+</code></pre></div>
+
+<p>This will yield tabbed Markdown content:</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab 1</label><div class="tabbed-content">
+<p>Markdown <strong>content</strong>.</p>
+<p>Multiple paragraphs.</p>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Tab 2</label><div class="tabbed-content">
+<p>More Markdown <strong>content</strong>.</p>
+<ul>
+<li>list item a</li>
+<li>list item b</li>
+</ul>
+</div>
+</div>
+<p>In the rare case that you want to follow two separate tab sets right after each other, you can explicitly mark the start
+of a new tab set with <code>!</code>:</p>
+<div class="highlight"><pre><span></span><code>=== &quot;Tab 1&quot;
+    Markdown **content**.
+
+    Multiple paragraphs.
+
+=== &quot;Tab 2&quot;
+    More Markdown **content**.
+
+    - list item a
+    - list item b
+
+===! &quot;Tab A&quot;
+    Different tab set.
+
+=== &quot;Tab B&quot;
+    ```
+    More content.
+    ```
+</code></pre></div>
+
+<p>Which should yield two tab sets.</p>
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Tab 1</label><div class="tabbed-content">
+<p>Markdown <strong>content</strong>.</p>
+<p>Multiple paragraphs.</p>
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Tab 2</label><div class="tabbed-content">
+<p>More Markdown <strong>content</strong>.</p>
+<ul>
+<li>list item a</li>
+<li>list item b</li>
+</ul>
+</div>
+</div>
+<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Tab A</label><div class="tabbed-content">
+<p>Different tab set.</p>
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Tab B</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>More content.
+</code></pre></div>
+
+</div>
+</div>
+<h2 id="styling">Styling<a class="headerlink" href="#styling" title="Permanent link"></a></h2>
+<p>In order to use tabbed blocks, some additional CSS is needed. You can check out the configuration below which will
+show the CSS and the HTML it targets. Keep in mind the CSS is just the minimum to get you started. You can tweak it and
+modify it to get it how you like it.</p>
+<p>In general, tabbed controls are wrapped in a <code class="highlight"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span></code> with the class <code>tabbed-set</code>. They contain an
+<code class="highlight"><span class="p">&lt;</span><span class="nt">input</span><span class="p">&gt;</span></code> with an ID of <code>__tabbed_&lt;tab_set_number&gt;_&lt;tab_number&gt;</code>. All the <code class="highlight"><span class="p">&lt;</span><span class="nt">input</span><span class="p">&gt;</span></code> elements from a
+specific tab set will use the name <code>__tabbed_&lt;tab_set_number&gt;</code>. Particularly, a user should be mindful of the ID to keep
+from explicitly using a conflicting ID. Auto-generated slugs shouldn't conflict though.</p>
+<details class="settings"><summary>Tabbed Code Setup</summary><div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">HTML</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;tabbed-set&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;__tabbed_1&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;radio&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;__tabbed_1_1&quot;</span> <span class="na">checked</span><span class="o">=</span><span class="s">&quot;checked&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;__tabbed_1_1&quot;</span><span class="p">&gt;</span>Tab 0<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;tabbed-content&quot;</span><span class="p">&gt;</span>...<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+...
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;__tabbed_1&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;radio&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;__tabbed_1_X&quot;</span> <span class="na">checked</span><span class="o">=</span><span class="s">&quot;checked&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;__tabbed_1_X&quot;</span><span class="p">&gt;</span>Tab X<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;tabbed-content&quot;</span><span class="p">&gt;</span>...<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+...
+<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</code></pre></div>
+
+</div>
+<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">CSS</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="p">.</span><span class="nc">tabbed-set</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
+  <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
+  <span class="k">flex-wrap</span><span class="p">:</span> <span class="kc">wrap</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">tabbed-set</span> <span class="p">.</span><span class="nc">highlight</span> <span class="p">{</span>
+  <span class="k">background</span><span class="p">:</span> <span class="mh">#ddd</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">tabbed-set</span> <span class="p">.</span><span class="nc">tabbed-content</span> <span class="p">{</span>
+  <span class="k">display</span><span class="p">:</span> <span class="kc">none</span><span class="p">;</span>
+  <span class="k">order</span><span class="p">:</span> <span class="mi">99</span><span class="p">;</span>
+  <span class="k">width</span><span class="p">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">tabbed-set</span> <span class="nt">label</span> <span class="p">{</span>
+  <span class="k">width</span><span class="p">:</span> <span class="kc">auto</span><span class="p">;</span>
+  <span class="k">margin</span><span class="p">:</span> <span class="mi">0</span> <span class="mf">0.5</span><span class="kt">em</span><span class="p">;</span>
+  <span class="k">padding</span><span class="p">:</span> <span class="mf">0.25</span><span class="kt">em</span><span class="p">;</span>
+  <span class="k">font-size</span><span class="p">:</span> <span class="mi">120</span><span class="kt">%</span><span class="p">;</span>
+  <span class="k">cursor</span><span class="p">:</span> <span class="kc">pointer</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">tabbed-set</span> <span class="nt">input</span> <span class="p">{</span>
+  <span class="k">position</span><span class="p">:</span> <span class="kc">absolute</span><span class="p">;</span>
+  <span class="k">opacity</span><span class="p">:</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">tabbed-set</span> <span class="nt">input</span><span class="p">:</span><span class="nd">nth-child</span><span class="o">(</span><span class="nt">n</span><span class="o">+</span><span class="nt">1</span><span class="o">)</span> <span class="p">{</span>
+  <span class="k">color</span><span class="p">:</span> <span class="mh">#333333</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">tabbed-set</span> <span class="nt">input</span><span class="p">:</span><span class="nd">nth-child</span><span class="o">(</span><span class="nt">n</span><span class="o">+</span><span class="nt">1</span><span class="o">)</span><span class="p">:</span><span class="nd">checked</span> <span class="o">+</span> <span class="nt">label</span> <span class="p">{</span>
+    <span class="k">color</span><span class="p">:</span> <span class="mh">#FF5252</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">tabbed-set</span> <span class="nt">input</span><span class="p">:</span><span class="nd">nth-child</span><span class="o">(</span><span class="nt">n</span><span class="o">+</span><span class="nt">1</span><span class="o">)</span><span class="p">:</span><span class="nd">checked</span> <span class="o">+</span> <span class="nt">label</span> <span class="o">+</span> <span class="p">.</span><span class="nc">tabbed-content</span> <span class="p">{</span>
+    <span class="k">display</span><span class="p">:</span> <span class="kc">block</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+
+</div>
+</div>
+</details>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../superfences/" title="SuperFences" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                SuperFences
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../tasklist/" title="Tasklist" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Tasklist
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser">Isaac Muse</a>
+<br><span class="md-footer-custom-text">emoji provided free by </span>
+<a href="https://github.com/twitter/twemoji">Twemoji</a>
+
+          </div>
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">
+          MkDocs
+        </a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      <a href="https://github.com/facelessuser" target="_blank" rel="noopener" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/bundle.54e9a512.min.js"></script>
+      <script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
+      </script>
+      <script>app=initialize({base:"../..",worker:{search:"../../assets/javascripts/worker/search.91831cf6.min.js",packer:"../../assets/javascripts/worker/packer.c14659e8.min.js"}})</script>
+      
+        <script src="../../extra-0d9305e748.js"></script>
+      
+    
+  </body>
+</html>
