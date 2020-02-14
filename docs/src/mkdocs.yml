@@ -127,10 +127,11 @@ markdown_extensions:
   - pymdownx.keys:
       separator: "\uff0b"
   - pymdownx.details:
+  - pymdownx.tabbed:
 
 extra:
   social:
-    - type: github
+    - icon: brands/github
       link: https://github.com/facelessuser
 extra_css:
   - extra.css
