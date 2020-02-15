@@ -86,8 +86,8 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
 
 ## Tabbed Fences
 
-!!! warning "Deprecated 7.0"
-    The tab option is deprecated in 7.0 due to the addition of the general purpose tab extension
+!!! warning "Deprecated 7.0b1"
+    The tab option is deprecated in 7.0b1 due to the addition of the general purpose tab extension
     [`pymdownx.tabbed`](./tabbed.md).
 
     The feature is still usable, but by the class names on the output
@@ -793,7 +793,7 @@ Option                         | Type         | Default       | Description
 `preserve_tabs`                | bool         | `#!py3 False` | Experimental feature that preserves tabs in fenced code blocks.
 `legacy_tab_classes`           | bool         | `#!py3 False` | Use legacy style classes for the deprecated tabbed code feature via `tab="name"`. This option will be dropped when the code tab interface is fully dropped for the general purpose [tabbed](./tabbed.md) extension.
 
-!!! warning "Deprecated in 7.0"
+!!! warning "Deprecated in 7.0b1"
     While `legacy_tab_classes` is a new option, it is also tied to the deprecated code tab feature of SuperFences. It is
     only provided as an option to help with the transition of the code tab feature being deprecated in favor of the
     [Tabbed](./tabbed.md) extension. When the code tabs are removed from SuperFences, so will

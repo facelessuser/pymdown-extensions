@@ -2,8 +2,8 @@
 
 ## Overview
 
-!!! new "New 7.0"
-    Tabbed has been newly added in 7.0.
+!!! new "New 7.0b1"
+    Tabbed has been newly added in 7.0b1.
 
 Tabbed provides a syntax to easily add tabbed Markdown content. The Tabbed extension can be included in Python Markdown
 by using the following:
