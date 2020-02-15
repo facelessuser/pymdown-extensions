@@ -1,6 +1,11 @@
 // General styling for repository link icons
 .md-typeset {
-  .magiclink.magiclink-repository {
+  .magiclink-repository,
+  .magiclink-compare,
+  .magiclink-commit,
+  .magiclink-pull,
+  .magiclink-issue,
+  a[href^="mailto:"] {
     &::before {
       position: relative;
       width: 1em;
@@ -11,6 +16,26 @@
       background-size: 1em;
       filter: invert(50%) sepia(93%) saturate(1300%) hue-rotate(197deg);
       content: "\a0";
+    }
+  }
+
+  a[href^="mailto:"]::before {
+    background-image: url("svg/fontawesome/envelope.svg");
+  }
+}
+
+// Assign icons to repository links
+@each $name, $icon in (
+  "commit": "git-commit",
+  "compare": "git-compare",
+  "pull": "git-pull-request",
+  "issue": "issue-opened"
+) {
+  .md-typeset {
+    .magiclink-#{$name} {
+      &::before {
+        background-image: url("svg/octicons/#{$icon}.svg");
+      }
     }
   }
 }
@@ -24,7 +49,7 @@
   .md-typeset {
     .magiclink-repository.magiclink-#{$name} {
       &::before {
-        background-image: url("svg/#{$icon}.svg");
+        background-image: url("svg/fontawesome/#{$icon}.svg");
       }
     }
   }

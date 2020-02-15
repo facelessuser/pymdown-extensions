@@ -1,7 +1,7 @@
 recursive-include pymdownx *.py
 recursive-include tests *.txt *.html *.yml *.py *.css
 recursive-include docs/src/markdown *.md *.png *.gif *.html
-recursive-include docs/theme *.js *.css *.html *.svg
+recursive-include docs/theme *.js *.css *.html *.svg *.txt
 recursive-include requirements *.txt
 recursive-exclude site *
 include .dictionary

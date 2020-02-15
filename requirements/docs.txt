@@ -1,3 +1,4 @@
 git+https://github.com/squidfunk/mkdocs-material.git@refactor/rxjs-typescript
 git+https://github.com/facelessuser/pymdown-lexers.git
+mkdocs-git-revision-date-localized-plugin
 pyspelling
