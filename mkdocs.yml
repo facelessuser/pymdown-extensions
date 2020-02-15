@@ -16,7 +16,7 @@ theme:
     primary: blue
     accent: blue
   logo:
-    icon: description
+    icon: library_books
   font:
     text: Roboto
     code: Roboto Mono

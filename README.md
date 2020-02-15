@@ -1,4 +1,4 @@
-[![Gitter][gitter-image]][gitter-link]
+[![Discord][discord-image]][discord-link]
 [![Build][github-ci-image]][github-ci-link]
 [![Unix Build Status][travis-image]][travis-link]
 [![Windows Build Status][appveyor-image]][appveyor-link]
@@ -21,8 +21,8 @@ License is MIT except for a few exceptions.  See [LICENSE](https://github.com/fa
 
 [github-ci-image]: https://github.com/facelessuser/pymdown-extensions/workflows/build/badge.svg
 [github-ci-link]: https://github.com/facelessuser/pymdown-extensions/actions?workflow=build
-[gitter-image]: https://img.shields.io/gitter/room/facelessuser/pymdown-extensions.svg?logo=gitter&color=fuchsia&logoColor=cccccc
-[gitter-link]: https://gitter.im/facelessuser/pymdown-extensions
+[discord-image]: https://img.shields.io/discord/678289859768745989?logo=discord&logoColor=cccccc
+[discord-link]:https://discord.gg/fqQ7ypS
 [codecov-image]: https://img.shields.io/codecov/c/github/facelessuser/pymdown-extensions/master.svg?logo=codecov&logoColor=cccccc
 [codecov-link]: https://codecov.io/github/facelessuser/pymdown-extensions
 [appveyor-image]: https://img.shields.io/appveyor/ci/facelessuser/pymdown-extensions/master.svg?label=appveyor&logo=appveyor&logoColor=cccccc
