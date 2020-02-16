@@ -431,7 +431,7 @@ The Emoji extension might at times be behind on having indexes built from the la
 indexes updated with new releases, but if they fall out of date, you can open an issue on the this project's issue page
 to alert the maintainer(s) and they will update them when someone gets a chance.  Pull requests are also welcome.  The
 process for updating the indexes is automated, so it is fairly easy to do a pull request.  See
-[Generating Emoji Indexes](../development.md#generating-emoji-indexes) for more info.
+[Generating Emoji Indexes](../about/development.md#generating-emoji-indexes) for more info.
 
 ## Options
 

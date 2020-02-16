@@ -217,6 +217,10 @@ gulp.task("mkdocs:serve", () => {
     {stdio: "inherit"})
 })
 
+gulp.task("mkdocs:watch", () => {
+  gulp.watch(config.files.mkdocsSrc, gulp.series("mkdocs:update"))
+})
+
 gulp.task("mkdocs:update", () => {
   return gulp.src(config.files.mkdocsSrc)
     .pipe(gulp.dest("."))
@@ -256,6 +260,7 @@ gulp.task("serve", gulp.series(
   gulp.parallel(
     "scss:watch",
     "js:watch",
+    "mkdocs:watch",
     "mkdocs:serve"
   )
 ))

@@ -48,7 +48,14 @@ extension bundle. If you would like to build and preview the documentation, you 
 - @Python-Markdown/markdown: the Markdown parser.
 - @mkdocs/mkdocs: the document site generator.
 - @squidfunk/mkdocs-material: a material theme for MkDocs.
+- @timvink/mkdocs-git-revision-date-localized-plugin: inserts date a page was last updated.
 - @facelessuser/pymdown-extensions: this Python Markdown extension bundle.
+
+These can be installed via:
+
+```
+pip install -r requirements/docs.txt
+```
 
 In order to build and preview the documents, just run the command below from the root of the project and you should be
 able to view the documents at `localhost:8000` in your browser. After that, you should be able to update the documents
@@ -64,54 +71,83 @@ It isn't expected that people will need to mess with the theme, but if it is nee
 required. The documents use the [Material][mkdocs-material] theme for [MkDocs][mkdocs] with some additional local tweaks
 and additions.  JavaScript additions are provided in `docs/src/js` and are in es2015 syntax and are converted to es5.
 Stylesheets are located at `docs/src/scss` and are written in SCSS, and are converted to CSS.  All conversions are done
-in a `Node.js` environment.  In order to get up and running, download and install [`Yarn`](https://yarnpkg.com/). Also,
-install [`Node.js`](https://nodejs.org/en/) version 6+. From the root of the project, in a terminal, enter the command
-below.  This command will install all the needed `Node.js` modules.
+in a `Node.js` environment.  In order to get up and running, ensure you have a [`Node.js`](https://nodejs.org/en/)
+version >= 10. Then install the required modules with:
 
 ```
-yarn install
+npm install
 ```
 
 After that you can begin making changes. When ready, you can run the following commands to get a live preview while you
 make edits, lint your changes, or build the final output.
 
-Yarn\ Commands   | Description
----------------- | -----------
-`yarn serve`     | Create a live preview at `localhost:8000` that will pick up your changes as you make them.
-`yarn build`     | Build the final output which will package, minimize, and revision the scripts and stylesheets.  It will also update the `mkdocs.yml` file to point to the new revisioned files.
-`yarn lint`      | Run just lint on the files.
-`yarn clean_all` | This will clean out the generated CSS and JavaScript files. It will also cleanup the generated MkDocs' site.
+Commands            | Description
+------------------- | -----------
+`npm run serve`     | Create a live preview at `localhost:8000` that will pick up your changes as you make them.
+`npm run build`     | Build the final output which will package, minimize, and revision the scripts and stylesheets.  It will also update the `mkdocs.yml` file to point to the new revisioned files.
+`npm run lint`      | Run just lint on the files.
+`npm run clean_all` | This will clean out the generated CSS and JavaScript files. It will also cleanup the generated MkDocs' site.
 
 If you need to make changes to the `mkdocs.yml` file, do not update the one in project root directly, but update the one
 in `docs/src`. The build environment copies the one in `docs/src` to the project root and injects the revisioned script
 name(s) and stylesheet name(s).
 
-When serving via `yarn`, if you want to make sure that the local version of `pymdown-extensions` is used, you need to
-configure `yarn serve` to call with Python instead of calling the MkDocs binary:
-`yarn serve --mkdocs="python3 -m mkdocs"`.  This is because if you are calling Python, it will look in the current
+When serving via `npm`, if you want to make sure that the local version of `pymdown-extensions` is used, you need to
+configure `npm run serve` to call with Python instead of calling the MkDocs binary:
+`npm run serve --mkdocs="python3 -m mkdocs"`.  This is because if you are calling Python, it will look in the current
 working directory first for a given module when importing, but if you call the MkDocs binary, it will instead import the
 installed `pymdown-extensions`. Configuring the `--mkdocs` option is also useful if `mkdocs` is not in your path, or you
 want to call with a specific version of Python.
 
 ## Spell Checking Documents
 
-During validation we build the docs and run a spell checker on them.  The spell checker script uses [Aspell][aspell].
-Currently this project uses the latest Aspell.  As the latest Aspell is not available on Windows, it is not expected
-that everyone will install and run Aspell locally.  In order to perform the spell check, it is expected you are setup
-to build the documents, and that you have Aspell installed in the your system path. To initiate the spell check run the
-following command from the root of the project:
+During validation, we build the docs and run a spell checker on them.  The spell checker uses @facelessuser/pyspelling
+and [Aspell][aspell]. As it can be tricker to run Aspell under Windows, it is not expected that everyone will install
+and run the spell checker locally.  In order to perform the spell check, it is expected you are setup to build the
+documents, and that you have Aspell installed in the your system path.
+
+If you wish to run the spell checker locally, the recommended way is with Tox, which is covered in ["Running Validation
+With Tox"](#running-validation-with-tox).
+
+You can also run the spell checker by first installing the requirements (assuming a Linux system):
 
 ```
-python tests/spelling.py
+pip install -r requirements/docs.txt
+sudo apt-get install aspell aspell-en
+```
+
+Then build the docs:
+
+```
+mkdocs build --clean
+```
+
+And then run the spell checker:
+
+```
+pyspelling
 ```
 
 It should print out the files with the misspelled words if any are found.  If you find it prints words that are not
-misspelled, you can add them in `.dictionary` in the root of the project.
+misspelled, you can add them in the dictionary which is found in `docs/src/dictionary`.
 
 ## Validation Tests
 
 In order to preserve good code health, a test suite has been put together with pytest (@pytest-dev/pytest). There are
 currently two kinds of tests: syntax and targeted.  To run these tests, you can use the following command:
+
+If you wish to run the tests locally, the recommended way is with Tox, which is covered in ["Running Validation With
+Tox"](#running-validation-with-tox).
+
+You can also run the tests by first installing the requirements:
+
+```
+pip install -r requirements/project.txt
+pip install -r requirements/extra.txt
+pip install -r requirements/test.txt
+```
+
+And then run the tests with:
 
 ```
 python run_tests.py
@@ -198,25 +234,25 @@ To target a specific environment to test, you use the `-e` option to select the 
 lint:
 
 ```
-tox -elint
+tox -e lint
 ```
 
-To select PY27 unit tests (or other versions -- change accordingly):
+To select Python 3.7 unit tests (or other versions -- change accordingly):
 
 ```
-tox -epy27-unittests
+tox -e py37
 ```
 
 To select spelling and document building:
 
 ```
-tox -edocuments
+tox -e documents
 ```
 
 ## Code Coverage
 
 When running the validation tests through Tox, it is setup to track code coverage via the Coverage
-(@bitbucket:ned/coveragepy) module.  Coverage is run on each `pyxx-unittests` environment.  If you've made changes to
+(@bitbucket:ned/coveragepy) module.  Coverage is run on each `pyxx` environment.  If you've made changes to
 the code, you can clear the old coverage data:
 
 ```

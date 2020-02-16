@@ -8,7 +8,7 @@ for it's tabbed feature to match those of the new Tabbed extension. CSS should b
 
 The classes that have changed are `supferfences-tabs` and `superfences-content`, which have changed to `tabbed-set` and
 `tabbed-content` respectively. Example CSS is updated in SuperFences for
-[reference](./extensions/superfences.md#tabbed-fences).
+[reference](../extensions/superfences.md#tabbed-fences).
 
 To help with the transition though, you can quickly switch back to the old style classes by simply enabling the
 SuperFences' global option `legacy_tab_classes`:
@@ -21,7 +21,7 @@ extension_configs = {
 }
 ```
 
-To learn more about migrating to the Tabbed extension, checkout the [Tabbed documentation](./extensions/tabbed.md).
+To learn more about migrating to the Tabbed extension, checkout the [Tabbed documentation](../extensions/tabbed.md).
 
 SuperFences' tab content feature will be removed in 8.0.0. There is no formal date for when this will occur, but it is
 recommended to begin migrating as soon as possible, but `legacy_tab_classes` can be used as a stop gap for the short
@@ -78,6 +78,6 @@ you had written your own custom fence formatters.
     ```
 
     If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please
-    see the [FAQ](faq.md#function-references-in-yaml) to see how to specify function references in YAML.
+    see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify function references in YAML.
 
 --8<-- "refs.txt"

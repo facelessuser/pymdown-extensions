@@ -53,12 +53,13 @@ nav:
     - Tasklist: extensions/tasklist.md
     - Tilde: extensions/tilde.md
   - Miscellaneous Extras: miscellaneous_extras.md
-  - Contributing &amp; Support: contributing.md
-  - Development: development.md
   - FAQ: faq.md
-  - Release Notes: release.md
-  - Changelog: changelog.md
-  - License: license.md
+  - About:
+    - Contributing &amp; Support: about/contributing.md
+    - Development: about/development.md
+    - Changelog: about/changelog.md
+    - Release Notes: about/release.md
+    - License: about/license.md
 
 markdown_extensions:
   - markdown.extensions.toc:
