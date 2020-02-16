@@ -1,7 +1,7 @@
 $md-code-background: hsla(0, 0%, 92.5%, 0.5);
 $md-code-special: hsl(0, 0%, 100%);
 $md-linenos-background-special: hsl(0, 0%, 90%);
-$md-linenos-background-special-table: hsla(0, 0%, 60%, 0.2);
+$md-linenos-background-special-table: hsla(0, 0%, 60%, 0.1);
 $md-linenos-background: hsl(0, 0%, 97%);
 $md-linenos: #999999;
 $md-linenos-border: #DDDDDD;
@@ -58,8 +58,8 @@ $tab-current-label: #FF5252;
     [data-linenos] {
       &::before {
         display: inline-block;
-        // position: sticky;
-        // left: -1.2rem;
+        position: sticky;
+        left: -1.2rem;
         margin-right: 0.5rem;
         margin-left: -1.2rem;
         padding-left: 1.2rem;
@@ -86,8 +86,10 @@ $tab-current-label: #FF5252;
       .linenodiv {
         @media only screen and (max-width: 44.9375em) {
           .special {
-            margin-left: -1.6rem;
-            padding-left: 1.6rem;
+            margin-right: -0.8rem;
+            margin-left: -0.8rem;
+            padding-right: 0.8rem;
+            padding-left: 0.8rem;
           }
         }
       }
@@ -96,7 +98,7 @@ $tab-current-label: #FF5252;
     .codehilite {
       [data-linenos]::before {
         @media only screen and (max-width: 44.9375em) {
-          // left: -1.6rem;
+          left: -1.6rem;
           margin-left: -1.6rem;
           padding-left: 1.6rem;
         }
