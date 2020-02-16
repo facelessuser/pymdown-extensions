@@ -1,6 +1,6 @@
 # Release Notes
 
-## Upgrading to 7.0.0
+## Upgrading to 7.0b1
 
 A new extension called Tabbed has been added. With the arrival of this general purpose tabbed content extension, it has
 made the old SuperFences tabbed content feature redundant. By default, SuperFences will now change the classes it uses
