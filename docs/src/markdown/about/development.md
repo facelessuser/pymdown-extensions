@@ -102,7 +102,7 @@ want to call with a specific version of Python.
 ## Spell Checking Documents
 
 During validation, we build the docs and run a spell checker on them.  The spell checker uses @facelessuser/pyspelling
-and [Aspell][aspell]. As it can be tricker to run Aspell under Windows, it is not expected that everyone will install
+and [Aspell][aspell]. As it can be trickier to run Aspell under Windows, it is not expected that everyone will install
 and run the spell checker locally.  In order to perform the spell check, it is expected you are setup to build the
 documents, and that you have Aspell installed in the your system path.
 
