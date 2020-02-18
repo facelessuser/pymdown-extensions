@@ -142,6 +142,7 @@ html
 indepth
 injectable
 inline
+inlines
 ish
 isn't
 jQuery

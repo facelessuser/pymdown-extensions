@@ -400,7 +400,7 @@ class TestSuperFencesCustom5(util.MdCase):
     }
 
     def test_default_override(self):
-        """Test default overide."""
+        """Test default override."""
 
         self.check_markdown(
             r'''

@@ -16,7 +16,6 @@ def _default_format(src, language, class_name, md):
     return '<custom class="lang-%s %s">%s</custom>' % (language, class_name, src)
 
 
-
 class TestInlineHilite(util.MdCase):
     """Test general cases for inline highlight."""
 
