@@ -32,6 +32,102 @@ class TestHighlightInline(util.MdCase):
         )
 
 
+class TestNoClass(util.MdCase):
+    """Test no class."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'css_class': ''
+        }
+    }
+
+    def test_no_class(self):
+        """Test with no class."""
+
+        self.check_markdown(
+            r'''
+            ```python
+            import test
+            test.test()
+            ```
+            ''',
+            r'''
+            <div><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_no_class_and_user_class(self):
+        """Test with no class and user class."""
+
+        self.check_markdown(
+            r'''
+            ```{.python .more}
+            import test
+            test.test()
+            ```
+            ''',
+            r'''
+            <div class="more"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_no_class_and_user_class_linenums(self):
+        """Test with no class and user class and table format."""
+
+        self.check_markdown(
+            r'''
+            ```{.python .more linenums="1"}
+            import test
+            test.test()
+            ```
+            ''',
+            r'''
+            <table class="more table"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
+            2</pre></div></td><td class="code"><div class="more "><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
+            </code></pre></div>
+            </td></tr></table>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestNoClassNoPygments(util.MdCase):
+    """Test no class."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'css_class': '',
+            'use_pygments': False
+        }
+    }
+
+    def test_no_class_no_pygments(self):
+        """Test with no class and no Pygments."""
+
+        self.check_markdown(
+            r'''
+            ```python
+            import test
+            test.test()
+            ```
+            ''',
+            r'''
+            <pre><code class="language-python">import test
+            test.test()</code></pre>
+            ''',  # noqa: E501
+            True
+        )
+
+
 class TestHighlightSpecial(util.MdCase):
     """Test highlight global special."""
 

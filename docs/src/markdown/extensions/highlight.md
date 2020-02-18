@@ -103,6 +103,6 @@ Option                    | Type   | Default               | Description
 `legacy_no_wrap_code`     | bool   | `#!py3 False`         | A temporary option provided during the transition period to the new output format. From now on, all block code under `pre` elements will be wrapped in a `code` element as well under Pygments 2.4+. This disables this format. This option will be removed in the future.
 
 !!! new "New Option 6.2"
-    `legacy_no_wrap_code` was added in `6.2`, but is only provided to help transition to the format when using Pygments 2.4+. This option will be removed in the future.
+    `legacy_no_wrap_code` was added in `6.3`, but is only provided to help transition to the format when using Pygments 2.4+. This option will be removed in the future.
 
 --8<-- "refs.txt"

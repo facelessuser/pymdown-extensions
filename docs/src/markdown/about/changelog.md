@@ -1,14 +1,29 @@
 # Changelog
 
+## 7.0b2
+
+Please see [Release Notes](./release.md#upgrading-to-70) for details on upgrading to 7.0.
+
+- **NEW**: SuperFences, if using the attribute list format (` ``` {.lang .additional_class, linenums="1"} `) allows
+  adding additional classes. IDs can be added as well, though Pygments generated code blocks do not have a mechanism to
+  actually insert IDs. The first provided class will always be treated as the language class.
+- **NEW**: Custom SuperFences' formatters should now also include the keyword parameters`classes` and `id_value` to
+  allow injecting classes and IDs via the now supported attribute list format. If a code block defines no additional IDs
+  and classes, the old form will be used. Formatters should include `**kwargs` at the end to future proof them from
+  future changes.
+- **NEW**: Deprecate the SuperFences `highight_code` option. As SuperFences syntax has language classes built right in,
+  disabling the `highlight_code` option makes little sense. While `highlight_code` is still accepted, it currently does
+  nothing and will be removed at some future time.
+
 ## 7.0b1
 
-Please see [Release Notes](./release.md) for details on upgrading to 7.0.0.
+Please see [Release Notes](./release.md#upgrading-to-70) for details on upgrading to 7.0.
 
 - **NEW**: Add new Tabbed extension for general purpose tabbed content in Markdown.
-- **NEW**: Deprecate old SuperFences tabbed content feature. This will be removed in 8.0.0.
+- **NEW**: Deprecate old SuperFences tabbed content feature. This will be removed in 8.0.
 - **NEW**: SuperFences' tabbed content classes have changed from `supferfences-tabs` and `superfences-content` to
   `tabbed-set` and `tabbed-content` respectively. Old style classes can be enabled with the `legacy_tab_classes` option
-  in SuperFences. This new option will be retired with SuperFences tabbed content feature in 8.0.0.
+  in SuperFences. This new option will be retired with SuperFences tabbed content feature in 8.0.
 - **FIX**: Numerous deprecation warnings associated with the recent release of Python Markdown 3.2.
 
 ## 6.3

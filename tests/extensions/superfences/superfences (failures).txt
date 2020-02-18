@@ -90,3 +90,35 @@ Will
      Will
      break
 ```
+
+---
+
+- Bad attribute list
+
+    ``` { python }
+    import test
+    ```
+
+---
+
+- Missing closing bracket
+
+    ``` { .python
+    import test
+    ```
+
+---
+
+- Missing opening bracket
+
+    ``` .python }
+    import test
+    ```
+
+---
+
+- Additional class outside of attribute list
+
+    ```python .class
+    import test
+    ```

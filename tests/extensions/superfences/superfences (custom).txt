@@ -1,3 +1,11 @@
 ```test
 content
 ```
+
+```{.test .class #id}
+content
+```
+
+```{.test2 .class #id}
+content
+```
