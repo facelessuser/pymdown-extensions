@@ -14,6 +14,8 @@ Please see [Release Notes](./release.md#upgrading-to-70) for details on upgradin
 - **NEW**: Deprecate the SuperFences `highight_code` option. As SuperFences syntax has language classes built right in,
   disabling the `highlight_code` option makes little sense. While `highlight_code` is still accepted, it currently does
   nothing and will be removed at some future time.
+- **NEW**: If a custom fence (SuperFences) or inline (InlineHilite) is given the name of `*`, it will override the
+  default fence logic.
 
 ## 7.0b1
 

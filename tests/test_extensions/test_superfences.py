@@ -20,6 +20,12 @@ def custom_format(source, language, class_name, options, md, classes=None, value
     return '<div lang="%s" class_name="class-%s", option="%s">%s</div>' % (language, class_name, options['opt'], source)
 
 
+def default_format(source, language, class_name, options, md, classes=None, value_id='', **kwargs):
+    """Default format."""
+
+    return '<custom lang="%s" class_name="class-%s">%s</custom>' % (language, class_name, source)
+
+
 def custom_validator(language, options):
     """Custom validator."""
 
@@ -367,6 +373,51 @@ class TestSuperFencesCustom4(util.MdCase):
             <div class="arithmatex">\[
             E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
             \]</div>
+            ''',
+            True
+        )
+
+
+class TestSuperFencesCustom5(util.MdCase):
+    """Test Details."""
+
+    extension = ['pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.superfences': {
+            'custom_fences': [
+                {
+                    'name': '*',
+                    'class': '',
+                    'format': default_format
+                },
+                {
+                    'name': 'math',
+                    'class': 'arithmatex',
+                    'format': arithmatex.fence_generic_format
+                }
+            ]
+        }
+    }
+
+    def test_default_override(self):
+        """Test default override."""
+
+        self.check_markdown(
+            r'''
+            ```math
+            E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+            ```
+
+            ```python
+            test
+            ```
+            ''',
+            r'''
+            <div class="arithmatex">\[
+            E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+            \]</div>
+
+            <p><custom lang="python" class_name="class-">test</custom></p>
             ''',
             True
         )

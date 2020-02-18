@@ -48,7 +48,7 @@ def _escape(txt):
 def _test(language, test_language=None):
     """Test language."""
 
-    return test_language is None or language == test_language
+    return test_language is None or test_language == '*' or language == test_language
 
 
 def _formatter(source, language, md, class_name="", fmt=None):
@@ -92,13 +92,16 @@ class InlineHilitePattern(InlineProcessor):
     def extend_custom_inline(self, name, formatter):
         """Extend SuperFences with the given name, language, and formatter."""
 
-        self.formatters.append(
-            {
-                "name": name,
-                "test": functools.partial(_test, test_language=name),
-                "formatter": formatter
-            }
-        )
+        obj = {
+            "name": name,
+            "test": functools.partial(_test, test_language=name),
+            "formatter": formatter
+        }
+
+        if name == '*':
+            self.formatters[0] = obj
+        else:
+            self.formatters.append(obj)
 
     def get_settings(self):
         """Check for CodeHilite extension and gather its settings."""

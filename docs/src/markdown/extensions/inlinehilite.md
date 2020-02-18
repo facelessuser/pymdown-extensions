@@ -74,9 +74,15 @@ where each dictionary defines a custom inline code block. The dictionaries requi
 
 Keys        | Description
 ----------- | -----------
-`name`      | The language name that is specified when using the fence in Markdown.
+`name`      | The language name that is specified when using the fence in Markdown. If given `*`, it will override the base inline logic, the default for all inline names not handled by other custom inlines.
 `class`     | The class name assigned to the HTML element when converting from Markdown to HTML.
 `format`    | A function that formats the HTML output. The function should return either an ElementTree object or a string as HTML.
+
+!!! new "New in 7.0b2"
+    Starting in 7.0b2, you can override the base inline logic (the syntax highlighter) by specifying the custom inline
+    with a name of `*`. This means that if an inline does not match any other custom inline, the default, fallback
+    inline would be handled by your custom `*` inline. This can be useful for tailoring a inline for a specific,
+    favorite JavaScript highlighter.
 
 ### Formatters
 
