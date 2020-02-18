@@ -10,6 +10,13 @@ def _format(src, language, class_name, md):
     return '<span class="lang-%s %s">%s</span>' % (language, class_name, src)
 
 
+def _default_format(src, language, class_name, md):
+    """Inline math formatter."""
+
+    return '<custom class="lang-%s %s">%s</custom>' % (language, class_name, src)
+
+
+
 class TestInlineHilite(util.MdCase):
     """Test general cases for inline highlight."""
 
@@ -371,4 +378,38 @@ class TestInlineHiliteCustom4(util.MdCase):
         self.check_markdown(
             r'`#!test src test`',
             r'<p><span class="lang-test class-test">src test</span></p>'
+        )
+
+
+class TestInlineHiliteCustom5(util.MdCase):
+    """Test custom InlineHilite cases."""
+
+    extension = [
+        'pymdownx.highlight',
+        'pymdownx.inlinehilite',
+    ]
+    extension_configs = {
+        'pymdownx.inlinehilite': {
+            'css_class': 'inlinehilite',
+            'custom_inline': [
+                {
+                    'name': '*',
+                    'class': 'overwrite',
+                    'format': _default_format
+                },
+                {
+                    'name': 'test',
+                    'class': 'class-test',
+                    'format': _format
+                }
+            ]
+        }
+    }
+
+    def test_custom(self):
+        """Test custom formatter."""
+
+        self.check_markdown(
+            r'`#!test src test` `#!python src test`',
+            r'<p><span class="lang-test class-test">src test</span> <custom class="lang-python overwrite">src test</custom></p>'  # noqa: E501
         )

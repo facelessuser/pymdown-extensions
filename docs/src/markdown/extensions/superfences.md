@@ -528,10 +528,16 @@ dictionary defines a custom fence. The dictionaries requires the following keys:
 
 Keys        | Description
 ----------- | -----------
-`name`      | The language name that is specified when using the fence in Markdown.
+`name`      | The language name that is specified when using the fence in Markdown. If given `*`, it will override the base fence logic, the default for all fence names not handled by other custom fences.
 `class`     | The class name assigned to the HTML element when converting from Markdown to HTML.
 `format`    | A function that formats the HTML output. The function should return a string as HTML.
 `validator` | An optional parameter that is used to provide a function to validate custom fence parameters.
+
+!!! new "New in 7.0b2"
+    Starting in 7.0b2, you can override the base fence logic (the syntax highlighter) by specifying the custom fence
+    with a name of `*`. This means that if a fence does not match any other custom fences, the default, fallback fence
+    would be handled by your custom `*` fence. This can be useful for tailoring a fence output with custom parameters
+    for a specific, favorite JavaScript highlighter.
 
 ### Formatters
 

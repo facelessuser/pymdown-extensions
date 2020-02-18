@@ -213,7 +213,7 @@ def _formatter(source, language, options, md, class_name="", _fmt=None, **kwargs
 def _test(language, test_language=None):
     """Test language."""
 
-    return test_language is None or language == test_language
+    return test_language is None or test_language == "*" or language == test_language
 
 
 class SuperFencesCodeExtension(Extension):
@@ -244,14 +244,17 @@ class SuperFencesCodeExtension(Extension):
     def extend_super_fences(self, name, formatter, validator):
         """Extend SuperFences with the given name, language, and formatter."""
 
-        self.superfences.append(
-            {
-                "name": name,
-                "test": functools.partial(_test, test_language=name),
-                "formatter": formatter,
-                "validator": validator
-            }
-        )
+        obj = {
+            "name": name,
+            "test": functools.partial(_test, test_language=name),
+            "formatter": formatter,
+            "validator": validator
+        }
+
+        if name == '*':
+            self.superfences[0] = obj
+        else:
+            self.superfences.append(obj)
 
     def extendMarkdown(self, md):
         """Add fenced block preprocessor to the Markdown instance."""
@@ -302,7 +305,8 @@ class SuperFencesCodeExtension(Extension):
         fenced = SuperFencesBlockPreprocessor(self.md)
         fenced.config = config
         fenced.extension = self
-        self.superfences[0]["formatter"] = fenced.highlight
+        if self.superfences[0]['name'] == "superfences":
+            self.superfences[0]["formatter"] = fenced.highlight
         self.md.preprocessors.register(fenced, "fenced_code_block", 25)
 
         indented_code = SuperFencesCodeBlockProcessor(self.md.parser)
