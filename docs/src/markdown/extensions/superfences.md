@@ -408,9 +408,8 @@ Special must be a value of n > 0.
         import foo.bar.baz
         ```
 
-For JavaScript libraries, a class of `linenums` is written to the block.  This may or may not be leveraged by your
-chosen highlighter.  It is uncertain at this time whether line number support for JavaScript highlighters will be
-enhanced beyond this.
+For JavaScript libraries, nothing is injected into the output. Since every JavaScript library has different requirements
+to get line numbers to show, it is impossible for SuperFences to know what to inject.
 
 ## Highlighting Lines
 

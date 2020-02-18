@@ -34,7 +34,7 @@ SuperFences has deprecated `highlight_code`. This option now does nothing and wi
 If this option was used, you will have to use [custom fences](../extensions/superfences.md#custom-fences) to implement
 this behavior with your own custom formatter.
 
-### SuperFences Attribute List Style
+### SuperFences' Attribute List Style
 
 Additional classes and IDs can now be injected into fenced code blocks with the format ` ```{.lang .more-class} `.
 
@@ -57,6 +57,19 @@ Additional classes and IDs can now be injected into fenced code blocks with the 
 
     While it is recommended for a user to update their custom formatters to receive the new parameters, at the very
     least, users should add `**kwargs` to future proof their formatters.
+
+### Line Numbers and Non-Pygments Code Blocks
+
+In the past, SuperFences has injected the `linenums` class into code blocks when Pygments is turned off. The idea was
+maybe it could be used to help to specify that line numbers were wanted, and a JavaScript highlighter could use it in
+some way. Moving forward, non Pygments code blocks will not inject the `linenums` class if the `linenums` option is
+provided in a fenced code block header.
+
+The truth is that JavaScript Highlighters all have their own specific syntaxes to handle line numbers, and simply
+providing `linenums` isn't really that helpful. If it is, a user can now use the attribute list style and inject
+whatever class they find helpful to generate line numbers with their preferred JavaScript highlighter. Additionally,
+a user could use custom fences to more directly serve up exactly the format they prefer and even specify line numbers
+ranges etc.
 
 ## Upgrading to 6.0
 
