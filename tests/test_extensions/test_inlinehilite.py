@@ -113,6 +113,51 @@ class TestInlineHilitePlainText(util.MdCase):
         )
 
 
+class TestInlineHiliteNoClass(util.MdCase):
+    """Test with no class."""
+
+    extension = [
+        'pymdownx.highlight',
+        'pymdownx.inlinehilite',
+    ]
+    extension_configs = {
+        'pymdownx.highlight': {
+            'css_class': ''
+        }
+    }
+
+    def test_no_class(self):
+        """Test with no class."""
+
+        self.check_markdown(
+            r'Lets test inline highlight no guessing and no text styling `#!python import module`.',
+            r'<p>Lets test inline highlight no guessing and no text styling <code><span class="kn">import</span> <span class="nn">module</span></code>.</p>'
+        )
+
+
+class TestInlineHiliteNoClassNoPygments(util.MdCase):
+    """Test with no class and no Pygments."""
+
+    extension = [
+        'pymdownx.highlight',
+        'pymdownx.inlinehilite',
+    ]
+    extension_configs = {
+        'pymdownx.highlight': {
+            'css_class': '',
+            'use_pygments': False
+        }
+    }
+
+    def test_no_class_no_pygments(self):
+        """Test with no class and no pygments."""
+
+        self.check_markdown(
+            r'Lets test inline highlight no guessing and no text styling `#!python import module`.',
+            r'<p>Lets test inline highlight no guessing and no text styling <code class="language-python">import module</code>.</p>'  # noqa: E501
+        )
+
+
 class TestInlineHiliteNoPygments(util.MdCase):
     """Test inline highlight without Pygments."""
 

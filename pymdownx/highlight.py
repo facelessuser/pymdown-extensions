@@ -260,15 +260,17 @@ class Highlight(object):
         if pygments and self.use_pygments:
             # Setup language lexer.
             lexer = self.get_lexer(src, language)
+            linenums = self.linenums_style if (self.linenums or linestart >= 0) and not inline > 0 else False
 
             if class_names:
                 css_class = ' {}'.format('' if not css_class else css_class)
                 css_class = ' '.join(class_names) + css_class
-                if not css_class.strip():
-                    css_class = ''
+                stripped = css_class.strip()
+
+                if not isinstance(linenums, str) or linenums != 'table':
+                    css_class = stripped
 
             # Setup line specific settings.
-            linenums = self.linenums_style if (self.linenums or linestart >= 0) and not inline > 0 else False
             if not linenums or linestep < 1:
                 linestep = 1
             if not linenums or linestart < 1:
