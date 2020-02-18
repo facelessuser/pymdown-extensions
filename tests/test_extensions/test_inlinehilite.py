@@ -237,25 +237,25 @@ class TestInlineHiliteCodeHilite(util.MdCase):
         # Test #! original syntax
         self.check_markdown(
             r'`#!python import module`.',
-            r'<p><code class="codehilite"><span class="kn">import</span> <span class="nn">module</span></code>.</p>'
+            r'<p><code class="highlight"><span class="kn">import</span> <span class="nn">module</span></code>.</p>'
         )
 
         # Test ::: syntax
         self.check_markdown(
             r'`:::python import module`.',
-            r'<p><code class="codehilite"><span class="kn">import</span> <span class="nn">module</span></code>.</p>'
+            r'<p><code class="highlight"><span class="kn">import</span> <span class="nn">module</span></code>.</p>'
         )
 
         # Test escaping language with space
         self.check_markdown(
             r'` #!python import module`.',
-            r'<p><code class="codehilite">#!python import module</code>.</p>'
+            r'<p><code class="highlight">#!python import module</code>.</p>'
         )
 
         # Test bad language
         self.check_markdown(
             r'`#!bad import module`.',
-            r'<p><code class="codehilite">import module</code>.</p>'
+            r'<p><code class="highlight">import module</code>.</p>'
         )
 
 

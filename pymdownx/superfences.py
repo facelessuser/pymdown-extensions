@@ -410,7 +410,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         return '\n'.join([line[self.ws_virtual_len:] for line in lines])
 
     def get_hl_settings(self):
-        """Check for CodeHilite extension to get its configurations."""
+        """Check for Highlight extension to get its configurations."""
 
         if not self.checked_hl_settings:
             self.checked_hl_settings = True

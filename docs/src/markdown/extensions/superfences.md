@@ -306,11 +306,7 @@ installed, or disabled, code blocks will be created using HTML5 style tags for a
 `#!html <pre class="highlight"><code class="language-mylanguage"></code></pre>`. If you disable `highlight_code`,
 specified languages will be ignored, and the content will be wrapped in a simple `pre` and `code` tags with no classes.
 
-Highlighting can be further controlled if either the `pymdownx.highlight` extension is used or if Python Markdown's
-CodeHilite is used. If CodeHilite is configured, it's settings will be used to configure highlighting, but CodeHilite
-support is deprecated and will be removed in the next major release. It is recommended to instead use
-[`pymdownx.highlight`](./highlight.md) extension. If `pymdownx.highlight` is included and configured, CodeHilite will be
-ignored.
+Highlighting can be further controlled via the [`pymdownx.highlight`](./highlight.md) extension.
 
 When using fenced code blocks, you can specify a specific syntax language to highlight with by specifying the language
 name directly after the opening tokens (either ` ``` ` or `~~~`). Whether using Pygments or some other JavaScript
@@ -334,7 +330,7 @@ specifiers.
 ## Showing Line Numbers
 
 Line numbers are provided via Pygments and can either be shown per code block or globally for all. To show globally via
-CodeHilite or `pymdownx.highlight`, you must set `linenums` to `#!py3 True` in the respective extension.
+[`pymdownx.highlight`](./highlight.md), you must set `linenums` to `#!py3 True` in the respective extension.
 
 To set line numbers per code block, you can specify a special setting directly after the opening tokens (and language if
 present). Simply specify the starting line line number with option `linenums="1"`. The setting is followed by the equal
@@ -838,7 +834,7 @@ functionality is more than sufficient.
 
 Option                         | Type         | Default       | Description
 ------------------------------ | ------------ | ------------- | -----------
-`css_class`                    | string       | `#!py3 ''`    | Class name is applied to the wrapper element of the code. If configured, this setting will override the `css_class` option of either CodeHilite or Highlight. If nothing is configured here or via CodeHilite or Highlight, the class `highlight` will be used.
+`css_class`                    | string       | `#!py3 ''`    | Class name is applied to the wrapper element of the code. If configured, this setting will override the `css_class` option of Highlight. If nothing is configured here or in Highlight, the class `highlight` will be used.
 `disable_indented_code_blocks` | bool         | `#!py3 False` | Disables Python Markdown's indented code block parsing.  This is nice if you only ever use fenced blocks.
 `custom_fences`                | [dictionary] | `#!py3 []`    | Custom fences.
 `highlight_code`               | bool         | `#!py3 True`  | Enable or disable code highlighting.

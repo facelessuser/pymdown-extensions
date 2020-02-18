@@ -53,6 +53,12 @@ def custom_formatter(source, language, css_class, options, md, classes=None, id_
 While it is recommended for a user to update their custom formatters to receive the new parameters, at the very
 least, users should add `**kwargs` to future proof their formatters.
 
+### CodeHilite Separation
+
+SuperFences and InlineHilite no longer sync settings from CodeHilite. To configure either of the extensions, Pymdown
+Extension's Highlight extension must be used. CodeHilite can be run along side Highlight if desired, but CodeHilite
+cannot be used to augment SuperFences or InlineHilite's behavior.
+
 ## Upgrading to 6.0
 
 While there are a number of new features and bug fixes, the only backwards incompatible changes are with SuperFences'

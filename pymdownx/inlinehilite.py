@@ -104,7 +104,7 @@ class InlineHilitePattern(InlineProcessor):
             self.formatters.append(obj)
 
     def get_settings(self):
-        """Check for CodeHilite extension and gather its settings."""
+        """Check for Highlight extension settings."""
 
         if not self.get_hl_settings:
             self.get_hl_settings = True
@@ -188,7 +188,7 @@ class InlineHiliteExtension(Extension):
             ],
             'css_class': [
                 '',
-                "Set class name for wrapper element. The default of CodeHilite or Highlight will be used"
+                "Set class name for wrapper element. The default of Highlight will be used"
                 "if nothing is set. - "
                 "Default: ''"
             ],

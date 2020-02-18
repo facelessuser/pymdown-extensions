@@ -16,6 +16,7 @@ Please see [Release Notes](./release.md#upgrading-to-70) for details on upgradin
   nothing and will be removed at some future time.
 - **NEW**: If a custom fence (SuperFences) or inline (InlineHilite) is given the name of `*`, it will override the
   default fence logic.
+- **NEW**: SuperFences and InlineHilite no longer sync settings from CodeHilite.
 
 ## 7.0b1
 
