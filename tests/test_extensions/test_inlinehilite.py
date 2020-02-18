@@ -131,7 +131,7 @@ class TestInlineHiliteNoClass(util.MdCase):
 
         self.check_markdown(
             r'Lets test inline highlight no guessing and no text styling `#!python import module`.',
-            r'<p>Lets test inline highlight no guessing and no text styling <code><span class="kn">import</span> <span class="nn">module</span></code>.</p>'
+            r'<p>Lets test inline highlight no guessing and no text styling <code><span class="kn">import</span> <span class="nn">module</span></code>.</p>'  # noqa: E501
         )
 
 
@@ -150,7 +150,7 @@ class TestInlineHiliteNoClassNoPygments(util.MdCase):
     }
 
     def test_no_class_no_pygments(self):
-        """Test with no class and no pygments."""
+        """Test with no class and no Pygments."""
 
         self.check_markdown(
             r'Lets test inline highlight no guessing and no text styling `#!python import module`.',
