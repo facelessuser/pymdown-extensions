@@ -1,7 +1,8 @@
 # Release Notes
 
-## Upgrading to 7.0b1
+## Upgrading to 7.0
 
+### Tabbed Extension
 A new extension called Tabbed has been added. With the arrival of this general purpose tabbed content extension, it has
 made the old SuperFences tabbed content feature redundant. By default, SuperFences will now change the classes it uses
 for it's tabbed feature to match those of the new Tabbed extension. CSS should be updated accordingly.
@@ -23,11 +24,41 @@ extension_configs = {
 
 To learn more about migrating to the Tabbed extension, checkout the [Tabbed documentation](../extensions/tabbed.md).
 
-SuperFences' tab content feature will be removed in 8.0.0. There is no formal date for when this will occur, but it is
+SuperFences' tab content feature will be removed in 8.0. There is no formal date for when this will occur, but it is
 recommended to begin migrating as soon as possible, but `legacy_tab_classes` can be used as a stop gap for the short
 term.
 
-## Upgrading to 6.0.0
+### Option Deprecation in SuperFences
+
+SuperFences has deprecated `highlight_code`. This option now does nothing and will be removed in some future release.
+If this option was used, you will have to use [custom fences](../extensions/superfences.md#custom-fences) to implement
+this behavior with your own custom formatter.
+
+### SuperFences Attribute List Style
+
+Additional classes and IDs can now be injected into fenced code blocks with the format ` ```{.lang .more-class} `.
+
+1. When Pygments was disabled for traditional code blocks, the output for JavaScript syntax highlighters had the
+  generalized highlight class attached to the `#!html <pre>` element and the language class was attached to the
+  `#!html <code>` element. With the ability to add multiple classes, classes are now all attached to the `#!html <code>`
+  element for consistency.
+
+2. The attribute list feature also impacts the the custom formatter. While the default formatters will still inject
+  classes and IDs to the top level element to preserve backwards compatibility, the formatter now must accept the new
+  keyword parameters `classes` and `id_value`. If you have a custom formatter that does not adhere to this new
+  requirement, you will see a user warning.
+
+    The new format is:
+
+    ```py3
+    def custom_formatter(source, language, css_class, options, md, classes=None, id_value='', **kwargs):
+        return string
+    ```
+
+    While it is recommended for a user to update their custom formatters to receive the new parameters, at the very
+    least, users should add `**kwargs` to future proof their formatters.
+
+## Upgrading to 6.0
 
 While there are a number of new features and bug fixes, the only backwards incompatible changes are with SuperFences'
 custom fences. In an effort to make custom fences more useful, we wanted to be able to pass the `Markdown` object to the

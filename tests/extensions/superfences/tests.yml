@@ -7,11 +7,13 @@ superfences (custom):
         - name: test
           class: test
           format: !!python/name:pymdownx.superfences.fence_div_format
+        - name: test2
+          class: test2
+          format: !!python/name:pymdownx.superfences.fence_code_format
 
 superfences (failures):
   extensions:
     pymdownx.superfences:
-      highlight_code: false
       custom_fences:
         - name: flow
           class: uml-flowchart
@@ -26,18 +28,6 @@ superfences (no indent blocks):
       guess_lang: false
     pymdownx.superfences:
       disable_indented_code_blocks: true
-      custom_fences:
-        - name: flow
-          class: uml-flowchart
-          format: !!python/name:pymdownx.superfences.fence_code_format
-        - name: sequence
-          class: uml-sequence-diagram
-          format: !!python/name:pymdownx.superfences.fence_code_format
-
-superfences (no highlight):
-  extensions:
-    pymdownx.superfences:
-      highlight_code: false
       custom_fences:
         - name: flow
           class: uml-flowchart

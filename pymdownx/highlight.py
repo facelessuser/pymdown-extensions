@@ -44,6 +44,7 @@ except Exception:  # pragma: no cover
 
 CODE_WRAP = '<pre%s><code%s>%s</code></pre>'
 CLASS_ATTR = ' class="%s"'
+ID_ATTR = ' id="%s"'
 DEFAULT_CONFIG = {
     'use_pygments': [
         True,
@@ -249,7 +250,7 @@ class Highlight(object):
 
     def highlight(
         self, src, language, css_class='highlight', hl_lines=None,
-        linestart=-1, linestep=-1, linespecial=-1, inline=False
+        linestart=-1, linestep=-1, linespecial=-1, inline=False, id_value=''
     ):
         """Highlight code."""
 
@@ -300,17 +301,15 @@ class Highlight(object):
                 class_str = ' '.join(classes)
         else:
             # Format block code for a JavaScript Syntax Highlighter by specifying language.
-            classes = []
-            linenums = self.linenums_style if (self.linenums or linestart >= 0) and not inline > 0 else False
+            classes = [css_class] if css_class else []
             if language:
                 classes.append('language-%s' % language)
-            if linenums:
-                classes.append('linenums')
             class_str = ''
             if classes:
                 class_str = CLASS_ATTR % ' '.join(classes)
-            higlight_class = (CLASS_ATTR % css_class) if css_class else ''
-            code = CODE_WRAP % (higlight_class, class_str, self.escape(src))
+            if id_value:
+                id_value = ID_ATTR % id_value
+            code = CODE_WRAP % (id_value, class_str, self.escape(src))
 
         if inline:
             el = etree.Element('code', {'class': class_str} if class_str else {})

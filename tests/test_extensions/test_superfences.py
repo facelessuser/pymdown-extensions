@@ -1,10 +1,20 @@
 """Test cases for SuperFences."""
 from __future__ import unicode_literals
 from .. import util
+import unittest
+import markdown
 import pymdownx.arithmatex as arithmatex
+from pymdownx.util import PymdownxDeprecationWarning
+import warnings
 
 
-def custom_format(source, language, class_name, options, md):
+def custom_format_old(source, language, class_name, options, md):
+    """Custom format."""
+
+    return '<div lang="%s" class_name="class-%s", option="%s">%s</div>' % (language, class_name, options['opt'], source)
+
+
+def custom_format(source, language, class_name, options, md, classes=None, value_id='', **kwargs):
     """Custom format."""
 
     return '<div lang="%s" class_name="class-%s", option="%s">%s</div>' % (language, class_name, options['opt'], source)
@@ -51,6 +61,62 @@ class TestLegacyTab(util.MdCase):
             ''',  # noqa: E501
             True
         )
+
+
+class TestWaringings(unittest.TestCase):
+    """Test warnings."""
+
+    def test_highlight_code(self):
+        """Test highlight code warning."""
+
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+
+            markdown.Markdown(
+                extensions=['pymdownx.superfences'],
+                extension_configs={'pymdownx.superfences': {'highlight_code': False}}
+            ).convert('```\ntest\n```\n')
+
+            self.assertTrue(len(w) == 1)
+            self.assertTrue(issubclass(w[-1].category, PymdownxDeprecationWarning))
+
+    def test_tab(self):
+        """Test tab deprecation."""
+
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+
+            markdown.Markdown(
+                extensions=['pymdownx.superfences']
+            ).convert('```tab="Tab 1"\ntest\n```\n')
+
+            self.assertTrue(len(w) == 1)
+            self.assertTrue(issubclass(w[-1].category, PymdownxDeprecationWarning))
+
+    def test_format(self):
+        """Test warning using old format style."""
+
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+
+            markdown.Markdown(
+                extensions=['pymdownx.superfences'],
+                extension_configs={
+                    'pymdownx.superfences': {
+                        'custom_fences': [
+                            {
+                                'name': 'test',
+                                'class': 'test',
+                                'format': custom_format_old,
+                                'validator': custom_validator
+                            }
+                        ]
+                    }
+                }
+            ).convert('```test opt="A"\ncontent\n```\n')
+
+            self.assertTrue(len(w) == 1)
+            self.assertTrue(issubclass(w[-1].category, UserWarning))
 
 
 class TestTabbedFenceWithTabbedExtension(util.MdCase):

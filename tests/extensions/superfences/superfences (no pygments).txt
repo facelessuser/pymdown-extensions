@@ -7,3 +7,12 @@ Text after code.
 ```python linenums="1"
 import test
 ```
+
+# Attribute List
+
+```{ .python #id .another-class linenums="1" }
+"""Some file."""
+import foo.bar
+import boo.baz
+import foo.bar.baz
+```

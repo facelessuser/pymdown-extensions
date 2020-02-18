@@ -84,6 +84,47 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
     Another paragraph.
     ````
 
+## Injecting Classes and IDs
+
+You can use the attribute list format to specify classes and IDs (IDs are only injectable in non-Pygments code blocks).
+The first provided class is always used as the language class. Arbitrary attributes in the form `key="value"` cannot
+be inserted as those are reserved for options such has `linenums` etc.
+
+!!! example "Injecting Classes"
+    === "Source"
+        ````
+        ```{.python .extra-class linenums="1"}
+        import hello_world
+        ```
+        ````
+
+    === "HTML"
+        ```html
+        <table class="extra-class highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="extra-class highlight"><pre><span></span><code><span cv></td><td class="code"><div class="extra-class highlight"><pre><span></span><code><span class="kn">import</span> <spanlass="kn">import</span> <span class="nn">hello_world</span>\n</code></pre></div>\n</td></tr></table>
+        ```
+
+Previously, before this feature, the general `highlight` class was injected on the `#!html <pre>` element, while the
+language element was injected into the `#!html <code>` element. To avoid confusion as we can now inject multiple
+classes, we now group all classes into the `#!html <code>` element in non-Pygments, non-custom formatted code blocks.
+IDs in this scenario are inserted into the `#!html <pre>`.
+
+!!! example "Non-Pygments Injecting Classes"
+     === "Source"
+        ````
+        ```{.python .extra-class #id linenums="1"}
+        import hello_world
+        ```
+        ````
+
+    === "HTML"
+        ```html
+        <pre id="id"><code class="extra-class highlight language-python linenums">import hello_world</code></pre>
+        ```
+
+When using a built in [custom formatter](#custom-fences), all classes and IDs are injected on to the first element
+`#!html <div>` or `#!html <pre>`. This preserves previous behavior, but you can write your own and inject them in the
+way that suites your needs.
+
 ## Tabbed Fences
 
 !!! warning "Deprecated 7.0b1"
@@ -508,9 +549,16 @@ originally defined via the `class` option in the `custom_fence` entry, custom op
 you want access to meta data etc.).
 
 ```py3
-def custom_formatter(source, language, css_class, options, md):
+def custom_formatter(source, language, css_class, options, md, classes=None, id_value='', **kwargs):
     return string
 ```
+
+!!! new "New 7.0b2"
+    The addition of the parameters `classes` and `id_value` is new in 7.0b2. If injecting additional classes or ids via
+    the [attribute list style](#injecting-classes-and-ids), only then will `classes` and `id_value` be passed in to
+    preserve backwards compatibility with old custom formatters. Users, moving forward, should at the very least update
+    their formatters with `**kwargs` to future proof their custom formatters in case additional parameters are added
+    in the future.
 
 All formatters should return a string as HTML.
 
@@ -798,6 +846,9 @@ Option                         | Type         | Default       | Description
     only provided as an option to help with the transition of the code tab feature being deprecated in favor of the
     [Tabbed](./tabbed.md) extension. When the code tabs are removed from SuperFences, so will
     `legacy_tab_classes`.
+
+    `highlight_code` is also disabled and now does nothing. If a non-highlighted variant of fences is preferred, it is
+    recommend to use [custom fences](#custom-fences). This option will be removed in a future version.
 
 --8<-- "links.txt"
 
