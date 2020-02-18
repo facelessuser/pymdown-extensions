@@ -103,10 +103,8 @@ be inserted as those are reserved for options such has `linenums` etc.
         <table class="extra-class highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="extra-class highlight"><pre><span></span><code><span cv></td><td class="code"><div class="extra-class highlight"><pre><span></span><code><span class="kn">import</span> <spanlass="kn">import</span> <span class="nn">hello_world</span>\n</code></pre></div>\n</td></tr></table>
         ```
 
-Previously, before this feature, the general `highlight` class was injected on the `#!html <pre>` element, while the
-language element was injected into the `#!html <code>` element. To avoid confusion as we can now inject multiple
-classes, we now group all classes into the `#!html <code>` element in non-Pygments, non-custom formatted code blocks.
-IDs in this scenario are inserted into the `#!html <pre>`.
+When generating additional classes on a JavaScript style code block (non-Pygments code blocks), classes are injected in
+the `#!html code` block.
 
 !!! example "Non-Pygments Injecting Classes"
      === "Source"
@@ -118,7 +116,7 @@ IDs in this scenario are inserted into the `#!html <pre>`.
 
     === "HTML"
         ```html
-        <pre id="id"><code class="extra-class highlight language-python linenums">import hello_world</code></pre>
+        <pre id="id" class="highlight"><code class="extra-class language-python linenums">import hello_world</code></pre>
         ```
 
 When using a built in [custom formatter](#custom-fences), all classes and IDs are injected on to the first element
@@ -408,8 +406,9 @@ Special must be a value of n > 0.
         import foo.bar.baz
         ```
 
-For JavaScript libraries, nothing is injected into the output. Since every JavaScript library has different requirements
-to get line numbers to show, it is impossible for SuperFences to know what to inject.
+For JavaScript libraries, a class of `linenums` is written to the block.  This may or may not be leveraged by your
+chosen highlighter.  It is uncertain at this time whether line number support for JavaScript highlighters will be
+enhanced beyond this.w what to inject.
 
 ## Highlighting Lines
 

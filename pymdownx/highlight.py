@@ -42,7 +42,7 @@ try:
 except Exception:  # pragma: no cover
     CodeHiliteExtension = None
 
-CODE_WRAP = '<pre%s><code%s>%s</code></pre>'
+CODE_WRAP = '<pre%s%s><code%s>%s</code></pre>'
 CLASS_ATTR = ' class="%s"'
 ID_ATTR = ' id="%s"'
 DEFAULT_CONFIG = {
@@ -250,14 +250,22 @@ class Highlight(object):
 
     def highlight(
         self, src, language, css_class='highlight', hl_lines=None,
-        linestart=-1, linestep=-1, linespecial=-1, inline=False, id_value=''
+        linestart=-1, linestep=-1, linespecial=-1, inline=False, classes=None, id_value=''
     ):
         """Highlight code."""
+
+        class_names = classes[:] if classes else []
 
         # Convert with Pygments.
         if pygments and self.use_pygments:
             # Setup language lexer.
             lexer = self.get_lexer(src, language)
+
+            if class_names:
+                css_class = ' {}'.format('' if not css_class else css_class)
+                css_class = ' '.join(class_names) + css_class
+                if not css_class.strip():
+                    css_class = ''
 
             # Setup line specific settings.
             linenums = self.linenums_style if (self.linenums or linestart >= 0) and not inline > 0 else False
@@ -293,7 +301,7 @@ class Highlight(object):
         elif inline:
             # Format inline code for a JavaScript Syntax Highlighter by specifying language.
             code = self.escape(src)
-            classes = [css_class] if css_class else []
+            classes = class_names + ([css_class] if css_class else [])
             if language:
                 classes.append('language-%s' % language)
             class_str = ''
@@ -301,15 +309,19 @@ class Highlight(object):
                 class_str = ' '.join(classes)
         else:
             # Format block code for a JavaScript Syntax Highlighter by specifying language.
-            classes = [css_class] if css_class else []
+            classes = class_names
+            linenums = self.linenums_style if (self.linenums or linestart >= 0) and not inline > 0 else False
             if language:
                 classes.append('language-%s' % language)
             class_str = ''
+            if linenums:
+                classes.append('linenums')
             if classes:
                 class_str = CLASS_ATTR % ' '.join(classes)
             if id_value:
                 id_value = ID_ATTR % id_value
-            code = CODE_WRAP % (id_value, class_str, self.escape(src))
+            highlight_class = (CLASS_ATTR % css_class) if css_class else ''
+            code = CODE_WRAP % (id_value, highlight_class, class_str, self.escape(src))
 
         if inline:
             el = etree.Element('code', {'class': class_str} if class_str else {})

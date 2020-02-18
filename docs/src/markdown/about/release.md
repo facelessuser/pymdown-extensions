@@ -38,38 +38,20 @@ this behavior with your own custom formatter.
 
 Additional classes and IDs can now be injected into fenced code blocks with the format ` ```{.lang .more-class} `.
 
-1. When Pygments was disabled for traditional code blocks, the output for JavaScript syntax highlighters had the
-  generalized highlight class attached to the `#!html <pre>` element and the language class was attached to the
-  `#!html <code>` element. With the ability to add multiple classes, classes are now all attached to the `#!html <code>`
-  element for consistency.
+The attribute list feature also impacts the the custom formatter. While the default formatters will still inject
+classes and IDs to the top level element to preserve backwards compatibility, the formatter now must accept the new
+keyword parameters `classes` and `id_value`. If you have a custom formatter that does not adhere to this new
+requirement, you will see a user warning.
 
-2. The attribute list feature also impacts the the custom formatter. While the default formatters will still inject
-  classes and IDs to the top level element to preserve backwards compatibility, the formatter now must accept the new
-  keyword parameters `classes` and `id_value`. If you have a custom formatter that does not adhere to this new
-  requirement, you will see a user warning.
+The new format is:
 
-    The new format is:
+```py3
+def custom_formatter(source, language, css_class, options, md, classes=None, id_value='', **kwargs):
+    return string
+```
 
-    ```py3
-    def custom_formatter(source, language, css_class, options, md, classes=None, id_value='', **kwargs):
-        return string
-    ```
-
-    While it is recommended for a user to update their custom formatters to receive the new parameters, at the very
-    least, users should add `**kwargs` to future proof their formatters.
-
-### Line Numbers and Non-Pygments Code Blocks
-
-In the past, SuperFences has injected the `linenums` class into code blocks when Pygments is turned off. The idea was
-maybe it could be used to help to specify that line numbers were wanted, and a JavaScript highlighter could use it in
-some way. Moving forward, non Pygments code blocks will not inject the `linenums` class if the `linenums` option is
-provided in a fenced code block header.
-
-The truth is that JavaScript Highlighters all have their own specific syntaxes to handle line numbers, and simply
-providing `linenums` isn't really that helpful. If it is, a user can now use the attribute list style and inject
-whatever class they find helpful to generate line numbers with their preferred JavaScript highlighter. Additionally,
-a user could use custom fences to more directly serve up exactly the format they prefer and even specify line numbers
-ranges etc.
+While it is recommended for a user to update their custom formatters to receive the new parameters, at the very
+least, users should add `**kwargs` to future proof their formatters.
 
 ## Upgrading to 6.0
 

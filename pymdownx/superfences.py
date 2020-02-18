@@ -734,8 +734,6 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
         if classes is None:  # pragma: no cover
             classes = []
-        classes.append(self.css_class)
-        classes = ' '.join(classes)
 
         # Default format options
         linestep = None
@@ -770,11 +768,12 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         ).highlight(
             src,
             language,
-            classes,
+            self.css_class,
             hl_lines=hl_lines,
             linestart=linestart,
             linestep=linestep,
             linespecial=linespecial,
+            classes=classes,
             id_value=id_value
         )
 

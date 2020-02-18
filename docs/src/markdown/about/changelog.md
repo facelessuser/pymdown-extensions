@@ -7,10 +7,6 @@ Please see [Release Notes](./release.md#upgrading-to-70) for details on upgradin
 - **NEW**: SuperFences, if using the attribute list format (` ``` {.lang .additional_class, linenums="1"} `) allows
   adding additional classes. IDs can be added as well, though Pygments generated code blocks do not have a mechanism to
   actually insert IDs. The first provided class will always be treated as the language class.
-- **NEW**: In non-Pygments generated code blocks, the special `highlight` class (or whatever the user specifies) is now
-  generated on the `!#html <code>` element along with any extra classes and the language class. Pygments code blocks and
-  built in custom code blocks remain unchanged. This change was made to consolidate where the new attribute list's added
-  classes should go. This consistently includes all classes in the same place to avoid confusion.
 - **NEW**: Custom SuperFences' formatters should now also include the keyword parameters`classes` and `id_value` to
   allow injecting classes and IDs via the now supported attribute list format. If a code block defines no additional IDs
   and classes, the old form will be used. Formatters should include `**kwargs` at the end to future proof them from
