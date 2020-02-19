@@ -37,10 +37,6 @@ try:
     pygments = True
 except ImportError:  # pragma: no cover
     pygments = False
-try:
-    from markdown.extensions.codehilite import CodeHiliteExtension
-except Exception:  # pragma: no cover
-    CodeHiliteExtension = None
 
 CODE_WRAP = '<pre%s%s><code%s>%s</code></pre>'
 CLASS_ATTR = ' class="%s"'
@@ -199,7 +195,7 @@ class Highlight(object):
         self.linenums_special = linenums_special
         self.wrapcode = wrapcode
 
-        if extend_pygments_lang is None:
+        if extend_pygments_lang is None:  # pragma: no cover
             extend_pygments_lang = []
         self.extend_pygments_lang = {}
         for language in extend_pygments_lang:
@@ -397,12 +393,6 @@ class HighlightExtension(Extension):
 
         if self.enabled:
             target = self.getConfigs()
-
-        if target is None and CodeHiliteExtension:
-            for ext in self.md.registeredExtensions:
-                if isinstance(ext, CodeHiliteExtension):
-                    target = ext.getConfigs()
-                    break
 
         if target is None:
             target = {}

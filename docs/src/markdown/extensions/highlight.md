@@ -11,9 +11,7 @@ The Highlight extension is inspired by [CodeHilite][codehilite], but differs in 
 to implement special language headers for standard Markdown code blocks like CodeHilite does; PyMdown Extensions takes
 the position that language headers are better suited in fenced code blocks. So standard Markdown code blocks will just
 be styled as plain text unless `guess_language` is enabled. If you wish to highlight lines and define line numbers per
-code block, it is advised to use the SuperFences extension. Highlight also provides a feature CodeHilite doesn't, and
-that is the ability to configure Pygments lexer options by either overriding the language with additional options, or
-creating an alternate language name with your desired options.
+code block, it is advised to use the SuperFences extension.
 
 As previously mentioned, both InlineHilite's and SuperFences' highlighting can be controlled by Highlight. Both can use
 [Pygments][pygments] or JavaScript highlighters to do their code syntax highlighting, but all of the settings here only

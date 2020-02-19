@@ -37,11 +37,7 @@ Assuming Pygments is installed, code highlighting will be handled by [Pygments][
 installed, or disabled, code blocks will be output for JavaScript syntax highlighters as
 `#!html <code class="highlight language-mylanguage"></code>`.
 
-Highlighting can be further controlled if either the `pymdownx.highlight` extension is used or if Python Markdown's
-CodeHilite is used. If CodeHilite is configured, it's settings will be used to configure highlighting, but CodeHilite
-support is deprecated and will be removed in the next major release. It is recommended to instead use
-[`pymdownx.highlight`](./highlight.md) extension. If `pymdownx.highlight` is included and configured, CodeHilite will be
-ignored.
+Highlighting can be further controlled via the [`pymdownx.highlight`](./highlight.md) extension.
 
 ## Using JavaScript Highlighters
 
@@ -51,8 +47,8 @@ the general style of the inline block the way you like it.
 If you are using a JavaScript highlighter, such as [`highlight.js`][highlightjs], you will most likely need to construct
 a JavaScript method to target the inline blocks as these may not be targeted out of the box. You may also find it useful
 to tag inline code with a different class than what is used for block code so you can also process and style them
-differently. The CSS class used can be configured independently for inline code in the options if using
-`pymdownx.highight` instead of CodeHilite.
+differently. By default, it uses whatever [`pymdownx.highlight`](./highlight.md) uses, but this can be configured
+independently for inline code in the [options](#options).
 
 ## Custom Inline Blocks
 
@@ -107,7 +103,7 @@ def custom_formatter(source, language, css_class, md):
 
 Option                    | Type         | Default       | Description
 ------------------------- | ------------ | ------------- | -----------
-`css_class`               | string       | `#!py3 ''`    | Class name is applied to the wrapper element of the code. If configured, this setting will override the `css_class` option of either CodeHilite or Highlight. If nothing is configured here or via CodeHilite or Highlight, the class `highlight` will be used.
+`css_class`               | string       | `#!py3 ''`    | Class name is applied to the wrapper element of the code. If configured, this setting will override the `css_class` option of Highlight. If nothing is configured here or via or Highlight, the class `highlight` will be used.
 `style_plain_text`        | bool         | `#!py3 False` | When `guess_lang` is set to `#!py3 False`, InlineHilite will avoid applying classes to code blocks that do not explicitly set a language. If it is desired to have plain text styled like code, enable this to inject classes so that they can all be styled the same.
 `custom_inline`           | [dictionary] | `#!py3 []`    | Custom inline code blocks.
 
