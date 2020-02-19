@@ -60,7 +60,7 @@ $tab-current-label: #FF5252;
         display: inline-block;
         position: sticky;
         left: -0.6rem;
-        margin-right: 0.5rem;
+        margin-right: 0.6rem;
         margin-left: -0.6rem;
         padding-left: 0.6rem;
         border-right: 0.0625rem solid $md-linenos-border;
@@ -75,8 +75,8 @@ $tab-current-label: #FF5252;
       }
 
       + .hll {
-        margin: 0 -0.5rem;
-        padding: 0 0.5rem;
+        margin: 0 -0.6rem;
+        padding: 0 0.6rem;
       }
     }
   }
