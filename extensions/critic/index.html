@@ -17,7 +17,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0b1">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0b2">
     
     
       
@@ -25,7 +25,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/app.eacd7e91.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/app.0f079138.min.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/app-palette.3f90c815.min.css">
       
@@ -45,7 +45,7 @@
     
     
     
-      <link rel="stylesheet" href="../../extra-3e0384323a.css">
+      <link rel="stylesheet" href="../../extra-4177b12573.css">
     
     
       
@@ -61,7 +61,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" for="__drawer"></label>
     
-      <a href="#critic" tabindex="0" class="md-skip">
+      <a href="#critic" class="md-skip">
         Skip to content
       </a>
     
@@ -848,44 +848,44 @@ for visually displaying the changes in HTML output (<a href="#limitations-with-p
 
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link"></a></h2>
 <p>Critic Markup uses special markup to insert, delete, substitute, highlight, and comment.</p>
-<p>To insert or remove text you can use <code class="highlight"><span class="s">{++insert me++}</span></code> and <code class="highlight"><span class="s">{--remove me--}</span></code>
-respectively.  You can also denote a substitution with <code class="highlight"><span class="s">{~~substitute this~&gt;with this~~}</span></code>.</p>
-<p>You can also highlight specific text with <code class="highlight"><span class="s">{==highlight me==}</span></code>. Or even comment, which is generally done
-by highlighting text and following it with a comment: <code class="highlight"><span class="s">{==highlight me==}{&gt;&gt;Add a comment&lt;&lt;}</span></code>.</p>
+<p>To insert or remove text you can use <code class="highlight">{++insert me++}</code> and <code class="highlight">{--remove me--}</code>
+respectively.  You can also denote a substitution with <code class="highlight">{~~substitute this~&gt;with this~~}</code>.</p>
+<p>You can also highlight specific text with <code class="highlight">{==highlight me==}</code>. Or even comment, which is generally done
+by highlighting text and following it with a comment: <code class="highlight">{==highlight me==}{&gt;&gt;Add a comment&lt;&lt;}</code>.</p>
 <div class="admonition example">
 <p class="admonition-title">Critic Markup Accept Example</p>
-<div class="highlight"><pre><span></span><code>Here<span class="w"> </span>is<span class="w"> </span>some<span class="w"> </span><span class="s">{--*incorrect*--}</span><span class="w"> </span>Markdown.<span class="w">  </span>I<span class="w"> </span>am<span class="w"> </span>adding<span class="w"> </span>this<span class="s">{++ here++}</span>.<span class="w">  </span>Here<span class="w"> </span>is<span class="w"> </span>some<span class="w"> </span>more<span class="w"> </span><span class="s">{--text</span>
-<span class="s"> that I am removing--}</span>text.<span class="w">  </span>And<span class="w"> </span>here<span class="w"> </span>is<span class="w"> </span>even<span class="w"> </span>more<span class="w"> </span><span class="s">{++text that I </span>
-<span class="s"> am ++}</span>adding.<span class="s">{~~</span>
+<div class="highlight"><pre><span></span><code>Here is some {--*incorrect*--} Markdown.  I am adding this{++ here++}.  Here is some more {--text
+ that I am removing--}text.  And here is even more {++text that I 
+ am ++}adding.{~~
 
-<span class="s">~&gt;  ~~}</span>Paragraph<span class="w"> </span>was<span class="w"> </span>deleted<span class="w"> </span>and<span class="w"> </span>replaced<span class="w"> </span>with<span class="w"> </span>some<span class="w"> </span>spaces.<span class="s">{~~  ~&gt;</span>
+~&gt;  ~~}Paragraph was deleted and replaced with some spaces.{~~  ~&gt;
 
-<span class="s">~~}</span>Spaces<span class="w"> </span>were<span class="w"> </span>removed<span class="w"> </span>and<span class="w"> </span>a<span class="w"> </span>paragraph<span class="w"> </span>was<span class="w"> </span>added.
+~~}Spaces were removed and a paragraph was added.
 
-And<span class="w"> </span>here<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>comment<span class="w"> </span>on<span class="w"> </span><span class="s">{==some</span>
-<span class="s"> text==}{&gt;&gt;This works quite well. I just wanted to comment on it.&lt;&lt;}</span>.<span class="w"> </span>Substitutions<span class="w"> </span><span class="s">{~~is~&gt;are~~}</span><span class="w"> </span>great!
+And here is a comment on {==some
+ text==}{&gt;&gt;This works quite well. I just wanted to comment on it.&lt;&lt;}. Substitutions {~~is~&gt;are~~} great!
 
-General<span class="w"> </span>block<span class="w"> </span>handling.
+General block handling.
 
-<span class="s">{--</span>
+{--
 
-<span class="s">* test remove</span>
-<span class="s">* test remove</span>
-<span class="s">* test remove</span>
-<span class="s">    * test remove</span>
-<span class="s">* test remove</span>
+* test remove
+* test remove
+* test remove
+    * test remove
+* test remove
 
-<span class="s">--}</span>
+--}
 
-<span class="s">{++</span>
+{++
 
-<span class="s">* test add</span>
-<span class="s">* test add</span>
-<span class="s">* test add</span>
-<span class="s">    * test add</span>
-<span class="s">* test add</span>
+* test add
+* test add
+* test add
+    * test add
+* test add
 
-<span class="s">++}</span>
+++}
 </code></pre></div>
 
 <p><p>Here is some  Markdown.  I am adding this here.  Here is some more text.  And here is even more text that I am adding.  Paragraph was deleted and replaced with some spaces.</p><p>Spaces were removed and a paragraph was added.</p><p>And here is a comment on some text. Substitutions are great!</p><p>General block handling.</p><ul><li>test add</li><li>test add</li><li>test add<ul><li>test add</li></ul></li><li>test add</li></ul></p>
@@ -893,38 +893,38 @@ General<span class="w"> </span>block<span class="w"> </span>handling.
 <p>When previewing, you can style them to stand out (see <a href="#css">CSS</a> for more information):</p>
 <div class="admonition example">
 <p class="admonition-title">Critic Markup Preview Example</p>
-<div class="highlight"><pre><span></span><code>Here<span class="w"> </span>is<span class="w"> </span>some<span class="w"> </span><span class="s">{--*incorrect*--}</span><span class="w"> </span>Markdown.<span class="w">  </span>I<span class="w"> </span>am<span class="w"> </span>adding<span class="w"> </span>this<span class="s">{++ here++}</span>.<span class="w">  </span>Here<span class="w"> </span>is<span class="w"> </span>some<span class="w"> </span>more<span class="w"> </span><span class="s">{--text</span>
-<span class="s"> that I am removing--}</span>text.<span class="w">  </span>And<span class="w"> </span>here<span class="w"> </span>is<span class="w"> </span>even<span class="w"> </span>more<span class="w"> </span><span class="s">{++text that I </span>
-<span class="s"> am ++}</span>adding.<span class="s">{~~</span>
+<div class="highlight"><pre><span></span><code>Here is some {--*incorrect*--} Markdown.  I am adding this{++ here++}.  Here is some more {--text
+ that I am removing--}text.  And here is even more {++text that I 
+ am ++}adding.{~~
 
-<span class="s">~&gt;  ~~}</span>Paragraph<span class="w"> </span>was<span class="w"> </span>deleted<span class="w"> </span>and<span class="w"> </span>replaced<span class="w"> </span>with<span class="w"> </span>some<span class="w"> </span>spaces.<span class="s">{~~  ~&gt;</span>
+~&gt;  ~~}Paragraph was deleted and replaced with some spaces.{~~  ~&gt;
 
-<span class="s">~~}</span>Spaces<span class="w"> </span>were<span class="w"> </span>removed<span class="w"> </span>and<span class="w"> </span>a<span class="w"> </span>paragraph<span class="w"> </span>was<span class="w"> </span>added.
+~~}Spaces were removed and a paragraph was added.
 
-And<span class="w"> </span>here<span class="w"> </span>is<span class="w"> </span>a<span class="w"> </span>comment<span class="w"> </span>on<span class="w"> </span><span class="s">{==some</span>
-<span class="s"> text==}{&gt;&gt;This works quite well. I just wanted to comment on it.&lt;&lt;}</span>.<span class="w"> </span>Substitutions<span class="w"> </span><span class="s">{~~is~&gt;are~~}</span><span class="w"> </span>great!
+And here is a comment on {==some
+ text==}{&gt;&gt;This works quite well. I just wanted to comment on it.&lt;&lt;}. Substitutions {~~is~&gt;are~~} great!
 
-General<span class="w"> </span>block<span class="w"> </span>handling.
+General block handling.
 
-<span class="s">{--</span>
+{--
 
-<span class="s">* test remove</span>
-<span class="s">* test remove</span>
-<span class="s">* test remove</span>
-<span class="s">    * test remove</span>
-<span class="s">* test remove</span>
+* test remove
+* test remove
+* test remove
+    * test remove
+* test remove
 
-<span class="s">--}</span>
+--}
 
-<span class="s">{++</span>
+{++
 
-<span class="s">* test add</span>
-<span class="s">* test add</span>
-<span class="s">* test add</span>
-<span class="s">    * test add</span>
-<span class="s">* test add</span>
+* test add
+* test add
+* test add
+    * test add
+* test add
 
-<span class="s">++}</span>
+++}
 </code></pre></div>
 
 <p><p>Here is some <del class="critic"><em>incorrect</em></del> Markdown.  I am adding this<ins class="critic"> here</ins>.  Here is some more <del class="critic">text that I am removing</del>text.  And here is even more <ins class="critic">text that I am </ins>adding.<del class="critic break">&nbsp;</del><ins class="critic">  </ins>Paragraph was deleted and replaced with some spaces.<del class="critic">  </del></p><ins class="critic break">&nbsp;</ins><p>Spaces were removed and a paragraph was added.</p><p>And here is a comment on <mark class="critic">some text</mark><span class="critic comment">This works quite well. I just wanted to comment on it.</span>. Substitutions <del class="critic">is</del><ins class="critic">are</ins> great!</p><p>General block handling.</p><del class="critic block"><ul><li>test remove</li><li>test remove</li><li>test remove<ul><li>test remove</li></ul></li><li>test remove</li></ul></del><ins class="critic block"><ul><li>test add</li><li>test add</li><li>test add<ul><li>test add</li></ul></li><li>test add</li></ul></ins></p>
@@ -1202,10 +1202,20 @@ further down that road has not yet been decided.</p>
       
     </div>
     
-      <script src="../../assets/javascripts/bundle.bea14a0a.min.js"></script>
+      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script>
       <script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
       </script>
-      <script>app=initialize({base:"../..",worker:{search:"../../assets/javascripts/worker/search.0a5433f7.min.js",packer:"../../assets/javascripts/worker/packer.c14659e8.min.js"}})</script>
+      <script>
+        app = initialize({
+          base: "../..",
+          worker: {
+            search: "../../assets/javascripts/worker/search.926ffd9e.min.js"
+          },
+          feature: {
+            instant: false
+          }
+        });
+      </script>
       
         <script src="../../extra-0d9305e748.js"></script>
       
