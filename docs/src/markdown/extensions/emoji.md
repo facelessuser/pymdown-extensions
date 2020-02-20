@@ -28,13 +28,13 @@ There are a number of emoji short name conventions that people may be aware of. 
 specific emoji set. These conventions differ because there is no official Unicode short name convention. At the present,
 Emoji chooses to focus on three specific emoji sets:
 
-- [Gemoji][gemoji] (<img align="absmiddle" alt=":smile:" class="gemoji" height="20px" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" title=":smile:" width="20px" /> <img align="absmiddle" alt=":heart:" class="gemoji" height="20px" src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png" title=":heart:" width="20px" /> <img align="absmiddle" alt=":+1:" class="gemoji" height="20px" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44d.png" title=":+1:" width="20px" />):
+- [Gemoji][gemoji] (<img align="absmiddle" alt=":smile:" class="gemoji" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" title=":smile:"/> <img align="absmiddle" alt=":heart:" class="gemoji"src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png" title=":heart:"/> <img align="absmiddle" alt=":+1:" class="gemoji" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44d.png" title=":+1:" />):
   Gemoji is GitHub's open source emoji solution. It contains a lot of common emoji and a couple special, non Unicode
-  emoji (like Gemoji's `:octocat:` <img align="absmiddle" alt=":octocat:" class="gemoji" height="20px" src="https://github.githubassets.com/images/icons/emoji/octocat.png" title=":octocat:" width="20px" />).
+  emoji (like Gemoji's `:octocat:` <img align="absmiddle" alt=":octocat:" class="gemoji" src="https://github.githubassets.com/images/icons/emoji/octocat.png" title=":octocat:" />).
   If you are a GitHub user, you are probably familiar with some of the short names associated with it. Their associated
   CDN contains the emoji in 75x75 PNG format.
 
-- [EmojiOne][emojione] (<img align="absmiddle" alt=":smile:" class="emojione" height="20px" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/1f604.png" title=":smile:" width="20px" /> <img align="absmiddle" alt=":heart:" class="emojione" height="20px" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2764.png" title=":heart:" width="20px" /> <img align="absmiddle" alt=":thumbsup:" class="emojione" height="20px" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/1f44d.png" title=":thumbsup:" width="20px" />):
+- [EmojiOne][emojione] (<img align="absmiddle" alt=":smile:" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/1f604.png" title=":smile:" /> <img align="absmiddle" alt=":heart:" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2764.png" title=":heart:" /> <img align="absmiddle" alt=":thumbsup:" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/1f44d.png" title=":thumbsup:" />):
   EmojiOne is a high quality emoji set with support for gender and skin tone modifiers. Their free emoji set includes
   PNGs in sizes of 32x32, 64x64, and 128x128 which are all available via a CDN.
 
@@ -43,7 +43,7 @@ Emoji chooses to focus on three specific emoji sets:
     latest short name list is still used for Twemoji as that portion is available under the MIT license via their
     toolkit repo @JoyPixels/emoji-toolkit.
 
-- [Twemoji][twemoji] (<img align="absmiddle" alt=":smile:" class="twemoji" height="20px" src="https://twemoji.maxcdn.com/v/latest/72x72/1f604.png" title=":smile:" width="20px" /> <img align="absmiddle" alt=":heart:" class="twemoji" height="20px" src="https://twemoji.maxcdn.com/v/latest/72x72/2764.png" title=":heart:" width="20px" /> <img align="absmiddle" alt=":thumbsup:" class="twemoji" height="20px" src="https://twemoji.maxcdn.com/v/latest/72x72/1f44d.png" title=":thumbsup:" width="20px" />):
+- [Twemoji][twemoji] (<img align="absmiddle" alt=":smile:" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/72x72/1f604.png" title=":smile:" /> <img align="absmiddle" alt=":heart:" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/72x72/2764.png" title=":heart:" /> <img align="absmiddle" alt=":thumbsup:" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/72x72/1f44d.png" title=":thumbsup:" />):
   Twemoji is Twitter's open source emoji set which also covers a great many emoji with skin tones and gender modifiers.
   The hosted CDN provides 72x72 PNG emoji or SVG emoji.
 

@@ -58,13 +58,13 @@ $tab-current-label: #FF5252;
     [data-linenos] {
       &::before {
         display: inline-block;
-        position: sticky;
+        position: initial;  // sticky
         left: -0.6rem;
         margin-right: 0.6rem;
         margin-left: -0.6rem;
         padding-left: 0.6rem;
         border-right: 0.0625rem solid $md-linenos-border;
-        background-color: $md-linenos-background;
+        background-color: transparent;  // $md-linenos-background
         color: $md-linenos;
         content: attr(data-linenos);
         user-select: none;

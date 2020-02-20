@@ -22,6 +22,7 @@ theme:
     code: Roboto Mono
   feature:
     tabs: true
+    instant: true
 
 nav:
   - PyMdown Extensions: index.md

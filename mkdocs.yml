@@ -22,6 +22,7 @@ theme:
     code: Roboto Mono
   feature:
     tabs: true
+    instant: false
 
 nav:
   - PyMdown Extensions: index.md
@@ -136,7 +137,7 @@ extra:
     - icon: brands/github
       link: https://github.com/facelessuser
 extra_css:
-  - extra-3e0384323a.css
+  - extra-4177b12573.css
 extra_javascript:
   - extra-0d9305e748.js
 
