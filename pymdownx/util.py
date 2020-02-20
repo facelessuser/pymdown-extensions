@@ -17,8 +17,6 @@ import html
 from urllib.request import pathname2url, url2pathname
 from urllib.parse import urlparse
 
-MD32 = __version_info__ >= (3, 2)
-
 RE_WIN_DRIVE_LETTER = re.compile(r"^[A-Za-z]$")
 RE_WIN_DRIVE_PATH = re.compile(r"^[A-Za-z]:(?:\\.*)?$")
 RE_URL = re.compile('(http|ftp)s?|data|mailto|tel|news')
