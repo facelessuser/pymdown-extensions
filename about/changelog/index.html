@@ -17,7 +17,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0dev0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0b1">
     
     
       
@@ -25,9 +25,9 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/app.4918cd9c.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/app.eacd7e91.min.css">
       
-        <link rel="stylesheet" href="../../assets/stylesheets/app-palette.8c25017f.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/app-palette.3f90c815.min.css">
       
       
         
@@ -45,7 +45,7 @@
     
     
     
-      <link rel="stylesheet" href="../../extra-7af42efac1.css">
+      <link rel="stylesheet" href="../../extra-3e0384323a.css">
     
     
       
@@ -102,7 +102,7 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <input type="text" class="md-search__input" name="query" aria-label="search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
       <label class="md-icon md-search__icon" for="__search"></label>
       <button type="reset" class="md-icon md-search__icon" data-md-component="search-reset" tabindex="-1">
         &#xE5CD;
@@ -687,6 +687,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#70b2" class="md-nav__link">
+    7.0b2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#70b1" class="md-nav__link">
     7.0b1
   </a>
@@ -1055,6 +1062,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#70b2" class="md-nav__link">
+    7.0b2
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#70b1" class="md-nav__link">
     7.0b1
   </a>
@@ -1382,14 +1396,31 @@
                 
                 
                 <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link"></a></h1>
+<h2 id="70b2">7.0b2<a class="headerlink" href="#70b2" title="Permanent link"></a></h2>
+<p>Please see <a href="../release/#upgrading-to-70">Release Notes</a> for details on upgrading to 7.0.</p>
+<ul>
+<li><strong>NEW</strong>: SuperFences, if using the attribute list format (<code>``` {.lang .additional_class, linenums="1"}</code>) allows
+  adding additional classes. IDs can be added as well, though Pygments generated code blocks do not have a mechanism to
+  actually insert IDs. The first provided class will always be treated as the language class.</li>
+<li><strong>NEW</strong>: Custom SuperFences' formatters should now also include the keyword parameters<code>classes</code> and <code>id_value</code> to
+  allow injecting classes and IDs via the now supported attribute list format. If a code block defines no additional IDs
+  and classes, the old form will be used. Formatters should include <code>**kwargs</code> at the end to future proof them from
+  future changes.</li>
+<li><strong>NEW</strong>: Deprecate the SuperFences <code>highight_code</code> option. As SuperFences syntax has language classes built right in,
+  disabling the <code>highlight_code</code> option makes little sense. While <code>highlight_code</code> is still accepted, it currently does
+  nothing and will be removed at some future time.</li>
+<li><strong>NEW</strong>: If a custom fence (SuperFences) or inline (InlineHilite) is given the name of <code>*</code>, it will override the
+  default fence logic.</li>
+<li><strong>NEW</strong>: SuperFences and InlineHilite no longer sync settings from CodeHilite.</li>
+</ul>
 <h2 id="70b1">7.0b1<a class="headerlink" href="#70b1" title="Permanent link"></a></h2>
-<p>Please see <a href="../release/">Release Notes</a> for details on upgrading to 7.0.0.</p>
+<p>Please see <a href="../release/#upgrading-to-70">Release Notes</a> for details on upgrading to 7.0.</p>
 <ul>
 <li><strong>NEW</strong>: Add new Tabbed extension for general purpose tabbed content in Markdown.</li>
-<li><strong>NEW</strong>: Deprecate old SuperFences tabbed content feature. This will be removed in 8.0.0.</li>
+<li><strong>NEW</strong>: Deprecate old SuperFences tabbed content feature. This will be removed in 8.0.</li>
 <li><strong>NEW</strong>: SuperFences' tabbed content classes have changed from <code>supferfences-tabs</code> and <code>superfences-content</code> to
   <code>tabbed-set</code> and <code>tabbed-content</code> respectively. Old style classes can be enabled with the <code>legacy_tab_classes</code> option
-  in SuperFences. This new option will be retired with SuperFences tabbed content feature in 8.0.0.</li>
+  in SuperFences. This new option will be retired with SuperFences tabbed content feature in 8.0.</li>
 <li><strong>FIX</strong>: Numerous deprecation warnings associated with the recent release of Python Markdown 3.2.</li>
 </ul>
 <h2 id="63">6.3<a class="headerlink" href="#63" title="Permanent link"></a></h2>
@@ -1737,7 +1768,7 @@
                   <div class="md-source-date">
                     <small>
                       
-                        Last update: February 16, 2020
+                        Last update: February 19, 2020
                       
                     </small>
                   </div>
@@ -1826,10 +1857,10 @@
       
     </div>
     
-      <script src="../../assets/javascripts/bundle.a111dfc8.min.js"></script>
+      <script src="../../assets/javascripts/bundle.bea14a0a.min.js"></script>
       <script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
       </script>
-      <script>app=initialize({base:"../..",worker:{search:"../../assets/javascripts/worker/search.3144ce89.min.js",packer:"../../assets/javascripts/worker/packer.c14659e8.min.js"}})</script>
+      <script>app=initialize({base:"../..",worker:{search:"../../assets/javascripts/worker/search.0a5433f7.min.js",packer:"../../assets/javascripts/worker/packer.c14659e8.min.js"}})</script>
       
         <script src="../../extra-0d9305e748.js"></script>
       

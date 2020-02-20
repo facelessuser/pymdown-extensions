@@ -17,7 +17,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0dev0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0b1">
     
     
       
@@ -25,9 +25,9 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/app.4918cd9c.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/app.eacd7e91.min.css">
       
-        <link rel="stylesheet" href="../../assets/stylesheets/app-palette.8c25017f.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/app-palette.3f90c815.min.css">
       
       
         
@@ -45,7 +45,7 @@
     
     
     
-      <link rel="stylesheet" href="../../extra-7af42efac1.css">
+      <link rel="stylesheet" href="../../extra-3e0384323a.css">
     
     
       
@@ -102,7 +102,7 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <input type="text" class="md-search__input" name="query" aria-label="search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
       <label class="md-icon md-search__icon" for="__search"></label>
       <button type="reset" class="md-icon md-search__icon" data-md-component="search-reset" tabindex="-1">
         &#xE5CD;
@@ -581,6 +581,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#injecting-classes-and-ids" class="md-nav__link">
+    Injecting Classes and IDs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#tabbed-fences" class="md-nav__link">
     Tabbed Fences
   </a>
@@ -858,6 +865,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#injecting-classes-and-ids" class="md-nav__link">
+    Injecting Classes and IDs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#tabbed-fences" class="md-nav__link">
     Tabbed Fences
   </a>
@@ -1047,6 +1061,45 @@ Another paragraph.
 
 </li>
 </ol>
+<h2 id="injecting-classes-and-ids">Injecting Classes and IDs<a class="headerlink" href="#injecting-classes-and-ids" title="Permanent link"></a></h2>
+<p>You can use the attribute list format to specify classes and IDs (IDs are only injectable in non-Pygments code blocks).
+The first provided class is always used as the language class. Arbitrary attributes in the form <code>key="value"</code> cannot
+be inserted as those are reserved for options such has <code>linenums</code> etc.</p>
+<div class="admonition example">
+<p class="admonition-title">Injecting Classes</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Source</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>```{.python .extra-class linenums=&quot;1&quot;}
+import hello_world
+```
+</code></pre></div>
+
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">HTML</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">table</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;extra-class highlighttable&quot;</span><span class="p">&gt;&lt;</span><span class="nt">tr</span><span class="p">&gt;&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;linenos&quot;</span><span class="p">&gt;&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;linenodiv&quot;</span><span class="p">&gt;&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>1<span class="p">&lt;/</span><span class="nt">pre</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;code&quot;</span><span class="p">&gt;&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;extra-class highlight&quot;</span><span class="p">&gt;&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;</span><span class="nt">code</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">cv</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;code&quot;</span><span class="p">&gt;&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;extra-class highlight&quot;</span><span class="p">&gt;&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;</span><span class="nt">code</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;kn&quot;</span><span class="p">&gt;</span>import<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">spanlass</span><span class="err">=&quot;</span><span class="na">kn</span><span class="err">&quot;</span><span class="p">&gt;</span>import<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;nn&quot;</span><span class="p">&gt;</span>hello_world<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>\n<span class="p">&lt;/</span><span class="nt">code</span><span class="p">&gt;&lt;/</span><span class="nt">pre</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>\n<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;/</span><span class="nt">tr</span><span class="p">&gt;&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+</code></pre></div>
+
+</div>
+</div>
+</div>
+<p>When generating additional classes on a JavaScript style code block (non-Pygments code blocks), classes are injected in
+the <code class="highlight">code</code> block.</p>
+<div class="admonition example">
+<p class="admonition-title">Non-Pygments Injecting Classes</p>
+<p>=== "Source"
+    <div class="highlight"><pre><span></span><code>```{.python .extra-class #id linenums=&quot;1&quot;}
+import hello_world
+```
+</code></pre></div></p>
+<div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">HTML</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">pre</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;id&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;highlight&quot;</span><span class="p">&gt;&lt;</span><span class="nt">code</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;extra-class language-python linenums&quot;</span><span class="p">&gt;</span>import hello_world<span class="p">&lt;/</span><span class="nt">code</span><span class="p">&gt;&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span>
+</code></pre></div>
+
+</div>
+</div>
+</div>
+<p>When using a built in <a href="#custom-fences">custom formatter</a>, all classes and IDs are injected on to the first element
+<code class="highlight"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span></code> or <code class="highlight"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;</span></code>. This preserves previous behavior, but you can write your own and inject them in the
+way that suites your needs.</p>
 <h2 id="tabbed-fences">Tabbed Fences<a class="headerlink" href="#tabbed-fences" title="Permanent link"></a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Deprecated 7.0b1</p>
@@ -1099,25 +1152,25 @@ class Program {
 ```
 </code></pre></div>
 
-<div class="tabbed-set" data-tabs="10:4">
-<input name="__tabbed_10" type="radio" id="__tabbed_10_1" checked="checked" /><label for="__tabbed_10_1">Bash</label><div class="tabbed-content"><div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<div class="tabbed-set" data-tabs="12:4">
+<input name="__tabbed_12" type="radio" id="__tabbed_12_1" checked="checked" /><label for="__tabbed_12_1">Bash</label><div class="tabbed-content"><div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
 <span class="nv">STR</span><span class="o">=</span><span class="s2">&quot;Hello World!&quot;</span>
 <span class="nb">echo</span> <span class="nv">$STR</span>
 </code></pre></div></div>
-<input name="__tabbed_10" type="radio" id="__tabbed_10_2" /><label for="__tabbed_10_2">C</label><div class="tabbed-content"><div class="highlight"><pre><span></span><code><span class="cp">#include</span> 
+<input name="__tabbed_12" type="radio" id="__tabbed_12_2" /><label for="__tabbed_12_2">C</label><div class="tabbed-content"><div class="highlight"><pre><span></span><code><span class="cp">#include</span> 
 
 <span class="cpf">int main(void) {</span><span class="cp"></span>
   <span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello, world</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<input name="__tabbed_10" type="radio" id="__tabbed_10_3" /><label for="__tabbed_10_3">C++</label><div class="tabbed-content"><div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<input name="__tabbed_12" type="radio" id="__tabbed_12_3" /><label for="__tabbed_12_3">C++</label><div class="tabbed-content"><div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
 
 <span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
   <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello, world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
   <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 <span class="p">}</span>
 </code></pre></div></div>
-<input name="__tabbed_10" type="radio" id="__tabbed_10_4" /><label for="__tabbed_10_4">C#</label><div class="tabbed-content"><div class="highlight"><pre><span></span><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<input name="__tabbed_12" type="radio" id="__tabbed_12_4" /><label for="__tabbed_12_4">C#</label><div class="tabbed-content"><div class="highlight"><pre><span></span><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">Program</span> <span class="p">{</span>
   <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
@@ -1130,7 +1183,7 @@ class Program {
 <p>In order to use tabbed code blocks, some additional CSS is needed. You can check out the configuration below which will
 show the CSS and the HTML it targets. Keep in mind the CSS is just the minimum to get you started. You can tweak it and
 modify it to get it how you like it.</p>
-<details class="settings"><summary>Tabbed Code Setup</summary><div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">HTML</label><div class="tabbed-content">
+<details class="settings"><summary>Tabbed Code Setup</summary><div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">HTML</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;tabbed-set&quot;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;__tabbed_1&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;radio&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;__tabbed_1_1&quot;</span> <span class="na">checked</span><span class="o">=</span><span class="s">&quot;checked&quot;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;__tabbed_1_1&quot;</span><span class="p">&gt;</span>Tab 0<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
@@ -1144,7 +1197,7 @@ modify it to get it how you like it.</p>
 </code></pre></div>
 
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">CSS</label><div class="tabbed-content">
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">CSS</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="p">.</span><span class="nc">tabbed-set</span> <span class="p">{</span>
   <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
   <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
@@ -1215,25 +1268,21 @@ normalization for the code content.</p>
 installed, or disabled, code blocks will be created using HTML5 style tags for a JavaScript syntax highlighter:
 <code class="highlight"><span class="p">&lt;</span><span class="nt">pre</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;highlight&quot;</span><span class="p">&gt;&lt;</span><span class="nt">code</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;language-mylanguage&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">code</span><span class="p">&gt;&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span></code>. If you disable <code>highlight_code</code>,
 specified languages will be ignored, and the content will be wrapped in a simple <code>pre</code> and <code>code</code> tags with no classes.</p>
-<p>Highlighting can be further controlled if either the <code>pymdownx.highlight</code> extension is used or if Python Markdown's
-CodeHilite is used. If CodeHilite is configured, it's settings will be used to configure highlighting, but CodeHilite
-support is deprecated and will be removed in the next major release. It is recommended to instead use
-<a href="../highlight/"><code>pymdownx.highlight</code></a> extension. If <code>pymdownx.highlight</code> is included and configured, CodeHilite will be
-ignored.</p>
+<p>Highlighting can be further controlled via the <a href="../highlight/"><code>pymdownx.highlight</code></a> extension.</p>
 <p>When using fenced code blocks, you can specify a specific syntax language to highlight with by specifying the language
 name directly after the opening tokens (either <code>```</code> or <code>~~~</code>). Whether using Pygments or some other JavaScript
 highlighter, the syntax is the same, but please consult your highlighter's documentation for recognized language syntax
 specifiers.</p>
 <div class="admonition example">
 <p class="admonition-title">Highlight Example</p>
-<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Source</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Source</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>```py3
 import foo.bar
 ```
 </code></pre></div>
 
 </div>
-<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Output</label><div class="tabbed-content">
+<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">Output</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">foo.bar</span>
 </code></pre></div>
 
@@ -1242,21 +1291,21 @@ import foo.bar
 </div>
 <h2 id="showing-line-numbers">Showing Line Numbers<a class="headerlink" href="#showing-line-numbers" title="Permanent link"></a></h2>
 <p>Line numbers are provided via Pygments and can either be shown per code block or globally for all. To show globally via
-CodeHilite or <code>pymdownx.highlight</code>, you must set <code>linenums</code> to <code class="highlight"><span class="kc">True</span></code> in the respective extension.</p>
+<a href="../highlight/"><code>pymdownx.highlight</code></a>, you must set <code>linenums</code> to <code class="highlight"><span class="kc">True</span></code> in the respective extension.</p>
 <p>To set line numbers per code block, you can specify a special setting directly after the opening tokens (and language if
 present). Simply specify the starting line line number with option <code>linenums="1"</code>. The setting is followed by the equal
 sign and the value must be quoted.  Valid line numbers are n &gt; 0.  If <code>linenums</code> is enabled globally, this will just
 control the starting line shown in the block.</p>
 <div class="admonition example">
 <p class="admonition-title">Line Number Example</p>
-<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Source</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Source</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>``` linenums=&quot;1&quot;
 import foo.bar
 ```
 </code></pre></div>
 
 </div>
-<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Output</label><div class="tabbed-content">
+<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2">Output</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="lineno" data-linenos="1 "></span>import foo.bar
 </code></pre></div>
 
@@ -1271,7 +1320,7 @@ class <code>special</code>.</p>
 "line step" is always the second option, so you must specify line start before line step.</p>
 <div class="admonition example">
 <p class="admonition-title">Nth Line Example</p>
-<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Source</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><label for="__tabbed_6_1">Source</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>``` linenums=&quot;2 2&quot;
 &quot;&quot;&quot;Some file.&quot;&quot;&quot;
 import foo.bar
@@ -1281,7 +1330,7 @@ import foo.bar.baz
 </code></pre></div>
 
 </div>
-<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">Output</label><div class="tabbed-content">
+<input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><label for="__tabbed_6_2">Output</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="lineno" data-linenos="2 "></span>&quot;&quot;&quot;Some file.&quot;&quot;&quot;
 <span class="lineno" data-linenos="  "></span>import foo.bar
 <span class="lineno" data-linenos="4 "></span>import boo.baz
@@ -1295,7 +1344,7 @@ import foo.bar.baz
 Special must be a value of n &gt; 0.</p>
 <div class="admonition example">
 <p class="admonition-title">Special Line Example</p>
-<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Source</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">Source</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>``` linenums=&quot;1 1 2&quot;
 &quot;&quot;&quot;Some file.&quot;&quot;&quot;
 import foo.bar
@@ -1305,7 +1354,7 @@ import foo.bar.baz
 </code></pre></div>
 
 </div>
-<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2">Output</label><div class="tabbed-content">
+<input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><label for="__tabbed_7_2">Output</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="lineno" data-linenos="1 "></span>&quot;&quot;&quot;Some file.&quot;&quot;&quot;
 <span class="lineno special" data-linenos="2 "></span>import foo.bar
 <span class="lineno" data-linenos="3 "></span>import boo.baz
@@ -1317,14 +1366,14 @@ import foo.bar.baz
 </div>
 <p>For JavaScript libraries, a class of <code>linenums</code> is written to the block.  This may or may not be leveraged by your
 chosen highlighter.  It is uncertain at this time whether line number support for JavaScript highlighters will be
-enhanced beyond this.</p>
+enhanced beyond this.w what to inject.</p>
 <h2 id="highlighting-lines">Highlighting Lines<a class="headerlink" href="#highlighting-lines" title="Permanent link"></a></h2>
 <p>Via Pygments, certain lines can be specified for highlighting.  This is done by specifying a special setting directly
 after the opening tokens (and language if present).  The setting is named <code>hl_lines</code> and the value should be the
 targeted line numbers separated by spaces.</p>
 <div class="admonition example">
 <p class="admonition-title">Highlight Lines Example</p>
-<div class="tabbed-set" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><label for="__tabbed_6_1">Source</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><label for="__tabbed_8_1">Source</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>``` hl_lines=&quot;1 3&quot;
 &quot;&quot;&quot;Some file.&quot;&quot;&quot;
 import foo.bar
@@ -1334,7 +1383,7 @@ import foo.bar.baz
 </code></pre></div>
 
 </div>
-<input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><label for="__tabbed_6_2">Output</label><div class="tabbed-content">
+<input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><label for="__tabbed_8_2">Output</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="hll">&quot;&quot;&quot;Some file.&quot;&quot;&quot;
 </span>import foo.bar
 <span class="hll">import boo.baz
@@ -1347,7 +1396,7 @@ import foo.bar.baz
 <p>Line numbers are always referenced starting at 1 ignoring what the line number is labeled as when showing line numbers.</p>
 <div class="admonition example">
 <p class="admonition-title">Highlight Lines with Line Numbers Example</p>
-<div class="tabbed-set" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">Source</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><label for="__tabbed_9_1">Source</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>```hl_lines=&quot;1 3&quot; linenums=&quot;2&quot;
 &quot;&quot;&quot;Some file.&quot;&quot;&quot;
 import foo.bar
@@ -1357,7 +1406,7 @@ import foo.bar.baz
 </code></pre></div>
 
 </div>
-<input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><label for="__tabbed_7_2">Output</label><div class="tabbed-content">
+<input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><label for="__tabbed_9_2">Output</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="lineno" data-linenos="2 "></span><span class="hll">&quot;&quot;&quot;Some file.&quot;&quot;&quot;
 </span><span class="lineno" data-linenos="3 "></span>import foo.bar
 <span class="lineno" data-linenos="4 "></span><span class="hll">import boo.baz
@@ -1371,7 +1420,7 @@ import foo.bar.baz
 <p>SuperFences allows defining custom fences for special purposes, like flow charts and sequence diagrams:</p>
 <div class="admonition example">
 <p class="admonition-title">Flow Chart Example</p>
-<div class="tabbed-set" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><label for="__tabbed_8_1">Source</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="10:2"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><label for="__tabbed_10_1">Source</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>```flow
 st=&gt;start: Start:&gt;http://www.google.com[blank]
 e=&gt;end:&gt;http://www.google.com
@@ -1388,7 +1437,7 @@ cond(no)-&gt;sub1(right)-&gt;op1
 </code></pre></div>
 
 </div>
-<input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><label for="__tabbed_8_2">Output</label><div class="tabbed-content">
+<input id="__tabbed_10_2" name="__tabbed_10" type="radio" /><label for="__tabbed_10_2">Output</label><div class="tabbed-content">
 <pre class="uml-flowchart"><code>st=&gt;start: Start:&gt;http://www.google.com[blank]
 e=&gt;end:&gt;http://www.google.com
 op1=&gt;operation: My Operation
@@ -1406,7 +1455,7 @@ cond(no)-&gt;sub1(right)-&gt;op1</code></pre>
 </div>
 <div class="admonition example">
 <p class="admonition-title">Sequence Diagram Example</p>
-<div class="tabbed-set" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><label for="__tabbed_9_1">Source</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="11:2"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><label for="__tabbed_11_1">Source</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>```sequence
 Title: Here is a title
 A-&gt;B: Normal line
@@ -1417,7 +1466,7 @@ D--&gt;&gt;A: Dashed open arrow
 </code></pre></div>
 
 </div>
-<input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><label for="__tabbed_9_2">Output</label><div class="tabbed-content">
+<input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><label for="__tabbed_11_2">Output</label><div class="tabbed-content">
 <pre class="uml-sequence-diagram"><code>Title: Here is a title
 A-&gt;B: Normal line
 B--&gt;C: Dashed line
@@ -1443,7 +1492,7 @@ dictionary defines a custom fence. The dictionaries requires the following keys:
 <tbody>
 <tr>
 <td><code>name</code></td>
-<td>The language name that is specified when using the fence in Markdown.</td>
+<td>The language name that is specified when using the fence in Markdown. If given <code>*</code>, it will override the base fence logic, the default for all fence names not handled by other custom fences.</td>
 </tr>
 <tr>
 <td><code>class</code></td>
@@ -1459,6 +1508,13 @@ dictionary defines a custom fence. The dictionaries requires the following keys:
 </tr>
 </tbody>
 </table>
+<div class="admonition new">
+<p class="admonition-title">New in 7.0b2</p>
+<p>Starting in 7.0b2, you can override the base fence logic (the syntax highlighter) by specifying the custom fence
+with a name of <code>*</code>. This means that if a fence does not match any other custom fences, the default, fallback fence
+would be handled by your custom <code>*</code> fence. This can be useful for tailoring a fence output with custom parameters
+for a specific, favorite JavaScript highlighter.</p>
+</div>
 <h3 id="formatters">Formatters<a class="headerlink" href="#formatters" title="Permanent link"></a></h3>
 <p>SuperFences provides two format functions by default, but you can always write your own:</p>
 <table>
@@ -1482,10 +1538,18 @@ dictionary defines a custom fence. The dictionaries requires the following keys:
 <p>In general, formatters take five parameters: the source found between the fences, the specified language, the class name
 originally defined via the <code>class</code> option in the <code>custom_fence</code> entry, custom options, and the Markdown object (in case
 you want access to meta data etc.).</p>
-<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">custom_formatter</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span> <span class="n">css_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">md</span><span class="p">):</span>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">custom_formatter</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span> <span class="n">css_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">md</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">id_value</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="k">return</span> <span class="n">string</span>
 </code></pre></div>
 
+<div class="admonition new">
+<p class="admonition-title">New 7.0b2</p>
+<p>The addition of the parameters <code>classes</code> and <code>id_value</code> is new in 7.0b2. If injecting additional classes or ids via
+the <a href="#injecting-classes-and-ids">attribute list style</a>, only then will <code>classes</code> and <code>id_value</code> be passed in to
+preserve backwards compatibility with old custom formatters. Users, moving forward, should at the very least update
+their formatters with <code>**kwargs</code> to future proof their custom formatters in case additional parameters are added
+in the future.</p>
+</div>
 <p>All formatters should return a string as HTML.</p>
 <div class="admonition tip">
 <p class="admonition-title">Tip</p>
@@ -1747,7 +1811,7 @@ functionality is more than sufficient.</p>
 <td><code>css_class</code></td>
 <td>string</td>
 <td><code class="highlight"><span class="s1">&#39;&#39;</span></code></td>
-<td>Class name is applied to the wrapper element of the code. If configured, this setting will override the <code>css_class</code> option of either CodeHilite or Highlight. If nothing is configured here or via CodeHilite or Highlight, the class <code>highlight</code> will be used.</td>
+<td>Class name is applied to the wrapper element of the code. If configured, this setting will override the <code>css_class</code> option of Highlight. If nothing is configured here or in Highlight, the class <code>highlight</code> will be used.</td>
 </tr>
 <tr>
 <td><code>disable_indented_code_blocks</code></td>
@@ -1787,6 +1851,8 @@ functionality is more than sufficient.</p>
 only provided as an option to help with the transition of the code tab feature being deprecated in favor of the
 <a href="../tabbed/">Tabbed</a> extension. When the code tabs are removed from SuperFences, so will
 <code>legacy_tab_classes</code>.</p>
+<p><code>highlight_code</code> is also disabled and now does nothing. If a non-highlighted variant of fences is preferred, it is
+recommend to use <a href="#custom-fences">custom fences</a>. This option will be removed in a future version.</p>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script>
 
@@ -1804,7 +1870,7 @@ only provided as an option to help with the transition of the code tab feature b
                   <div class="md-source-date">
                     <small>
                       
-                        Last update: February 15, 2020
+                        Last update: February 19, 2020
                       
                     </small>
                   </div>
@@ -1893,10 +1959,10 @@ only provided as an option to help with the transition of the code tab feature b
       
     </div>
     
-      <script src="../../assets/javascripts/bundle.a111dfc8.min.js"></script>
+      <script src="../../assets/javascripts/bundle.bea14a0a.min.js"></script>
       <script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
       </script>
-      <script>app=initialize({base:"../..",worker:{search:"../../assets/javascripts/worker/search.3144ce89.min.js",packer:"../../assets/javascripts/worker/packer.c14659e8.min.js"}})</script>
+      <script>app=initialize({base:"../..",worker:{search:"../../assets/javascripts/worker/search.0a5433f7.min.js",packer:"../../assets/javascripts/worker/packer.c14659e8.min.js"}})</script>
       
         <script src="../../extra-0d9305e748.js"></script>
       

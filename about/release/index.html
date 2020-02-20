@@ -17,7 +17,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0dev0">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0b1">
     
     
       
@@ -25,9 +25,9 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/app.4918cd9c.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/app.eacd7e91.min.css">
       
-        <link rel="stylesheet" href="../../assets/stylesheets/app-palette.8c25017f.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/app-palette.3f90c815.min.css">
       
       
         
@@ -45,7 +45,7 @@
     
     
     
-      <link rel="stylesheet" href="../../extra-7af42efac1.css">
+      <link rel="stylesheet" href="../../extra-3e0384323a.css">
     
     
       
@@ -102,7 +102,7 @@
   <label class="md-search__overlay" for="__search"></label>
   <div class="md-search__inner" role="search">
     <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <input type="text" class="md-search__input" name="query" aria-label="search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
       <label class="md-icon md-search__icon" for="__search"></label>
       <button type="reset" class="md-icon md-search__icon" data-md-component="search-reset" tabindex="-1">
         &#xE5CD;
@@ -699,15 +699,49 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#upgrading-to-70b1" class="md-nav__link">
-    Upgrading to 7.0b1
+  <a href="#upgrading-to-70" class="md-nav__link">
+    Upgrading to 7.0
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tabbed-extension" class="md-nav__link">
+    Tabbed Extension
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-deprecation-in-superfences" class="md-nav__link">
+    Option Deprecation in SuperFences
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#superfences-attribute-list-style" class="md-nav__link">
+    SuperFences' Attribute List Style
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codehilite-separation" class="md-nav__link">
+    CodeHilite Separation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#upgrading-to-600" class="md-nav__link">
-    Upgrading to 6.0.0
+  <a href="#upgrading-to-60" class="md-nav__link">
+    Upgrading to 6.0
   </a>
   
 </li>
@@ -761,15 +795,49 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#upgrading-to-70b1" class="md-nav__link">
-    Upgrading to 7.0b1
+  <a href="#upgrading-to-70" class="md-nav__link">
+    Upgrading to 7.0
   </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tabbed-extension" class="md-nav__link">
+    Tabbed Extension
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-deprecation-in-superfences" class="md-nav__link">
+    Option Deprecation in SuperFences
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#superfences-attribute-list-style" class="md-nav__link">
+    SuperFences' Attribute List Style
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#codehilite-separation" class="md-nav__link">
+    CodeHilite Separation
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#upgrading-to-600" class="md-nav__link">
-    Upgrading to 6.0.0
+  <a href="#upgrading-to-60" class="md-nav__link">
+    Upgrading to 6.0
   </a>
   
 </li>
@@ -794,7 +862,8 @@
                 
                 
                 <h1 id="release-notes">Release Notes<a class="headerlink" href="#release-notes" title="Permanent link"></a></h1>
-<h2 id="upgrading-to-70b1">Upgrading to 7.0b1<a class="headerlink" href="#upgrading-to-70b1" title="Permanent link"></a></h2>
+<h2 id="upgrading-to-70">Upgrading to 7.0<a class="headerlink" href="#upgrading-to-70" title="Permanent link"></a></h2>
+<h3 id="tabbed-extension">Tabbed Extension<a class="headerlink" href="#tabbed-extension" title="Permanent link"></a></h3>
 <p>A new extension called Tabbed has been added. With the arrival of this general purpose tabbed content extension, it has
 made the old SuperFences tabbed content feature redundant. By default, SuperFences will now change the classes it uses
 for it's tabbed feature to match those of the new Tabbed extension. CSS should be updated accordingly.</p>
@@ -811,10 +880,31 @@ SuperFences' global option <code>legacy_tab_classes</code>:</p>
 </code></pre></div>
 
 <p>To learn more about migrating to the Tabbed extension, checkout the <a href="../../extensions/tabbed/">Tabbed documentation</a>.</p>
-<p>SuperFences' tab content feature will be removed in 8.0.0. There is no formal date for when this will occur, but it is
+<p>SuperFences' tab content feature will be removed in 8.0. There is no formal date for when this will occur, but it is
 recommended to begin migrating as soon as possible, but <code>legacy_tab_classes</code> can be used as a stop gap for the short
 term.</p>
-<h2 id="upgrading-to-600">Upgrading to 6.0.0<a class="headerlink" href="#upgrading-to-600" title="Permanent link"></a></h2>
+<h3 id="option-deprecation-in-superfences">Option Deprecation in SuperFences<a class="headerlink" href="#option-deprecation-in-superfences" title="Permanent link"></a></h3>
+<p>SuperFences has deprecated <code>highlight_code</code>. This option now does nothing and will be removed in some future release.
+If this option was used, you will have to use <a href="../../extensions/superfences/#custom-fences">custom fences</a> to implement
+this behavior with your own custom formatter.</p>
+<h3 id="superfences-attribute-list-style">SuperFences' Attribute List Style<a class="headerlink" href="#superfences-attribute-list-style" title="Permanent link"></a></h3>
+<p>Additional classes and IDs can now be injected into fenced code blocks with the format <code>```{.lang .more-class}</code>.</p>
+<p>The attribute list feature also impacts the the custom formatter. While the default formatters will still inject
+classes and IDs to the top level element to preserve backwards compatibility, the formatter now must accept the new
+keyword parameters <code>classes</code> and <code>id_value</code>. If you have a custom formatter that does not adhere to this new
+requirement, you will see a user warning.</p>
+<p>The new format is:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">custom_formatter</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">language</span><span class="p">,</span> <span class="n">css_class</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">md</span><span class="p">,</span> <span class="n">classes</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">id_value</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">string</span>
+</code></pre></div>
+
+<p>While it is recommended for a user to update their custom formatters to receive the new parameters, at the very
+least, users should add <code>**kwargs</code> to future proof their formatters.</p>
+<h3 id="codehilite-separation">CodeHilite Separation<a class="headerlink" href="#codehilite-separation" title="Permanent link"></a></h3>
+<p>SuperFences and InlineHilite no longer sync settings from CodeHilite. To configure either of the extensions, Pymdown
+Extension's Highlight extension must be used. CodeHilite can be run along side Highlight if desired, but CodeHilite
+cannot be used to augment SuperFences or InlineHilite's behavior.</p>
+<h2 id="upgrading-to-60">Upgrading to 6.0<a class="headerlink" href="#upgrading-to-60" title="Permanent link"></a></h2>
 <p>While there are a number of new features and bug fixes, the only backwards incompatible changes are with SuperFences'
 custom fences. In an effort to make custom fences more useful, we wanted to be able to pass the <code>Markdown</code> object to the
 formatters. This gives custom formats access to things like metadata if required.</p>
@@ -872,7 +962,7 @@ see the <a href="../../faq/#function-references-in-yaml"><abbr title="Frequent A
                   <div class="md-source-date">
                     <small>
                       
-                        Last update: February 16, 2020
+                        Last update: February 19, 2020
                       
                     </small>
                   </div>
@@ -961,10 +1051,10 @@ see the <a href="../../faq/#function-references-in-yaml"><abbr title="Frequent A
       
     </div>
     
-      <script src="../../assets/javascripts/bundle.a111dfc8.min.js"></script>
+      <script src="../../assets/javascripts/bundle.bea14a0a.min.js"></script>
       <script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
       </script>
-      <script>app=initialize({base:"../..",worker:{search:"../../assets/javascripts/worker/search.3144ce89.min.js",packer:"../../assets/javascripts/worker/packer.c14659e8.min.js"}})</script>
+      <script>app=initialize({base:"../..",worker:{search:"../../assets/javascripts/worker/search.0a5433f7.min.js",packer:"../../assets/javascripts/worker/packer.c14659e8.min.js"}})</script>
       
         <script src="../../extra-0d9305e748.js"></script>
       
