@@ -2,8 +2,8 @@
 
 Names from emojione database. Do not edit by hand.
 """
-version = "v12.1.3"
-index_version = "5.0.5"
+version = "v12.1.5"
+index_version = "5.5.0"
 name = "twemoji"
 emoji = {
     ":100:": {
@@ -63,27 +63,27 @@ emoji = {
     },
     ":adult_tone1:": {
         "category": "people",
-        "name": "adult: light skin tone",
+        "name": "person: light skin tone",
         "unicode": "1f9d1-1f3fb"
     },
     ":adult_tone2:": {
         "category": "people",
-        "name": "adult: medium-light skin tone",
+        "name": "person: medium-light skin tone",
         "unicode": "1f9d1-1f3fc"
     },
     ":adult_tone3:": {
         "category": "people",
-        "name": "adult: medium skin tone",
+        "name": "person: medium skin tone",
         "unicode": "1f9d1-1f3fd"
     },
     ":adult_tone4:": {
         "category": "people",
-        "name": "adult: medium-dark skin tone",
+        "name": "person: medium-dark skin tone",
         "unicode": "1f9d1-1f3fe"
     },
     ":adult_tone5:": {
         "category": "people",
-        "name": "adult: dark skin tone",
+        "name": "person: dark skin tone",
         "unicode": "1f9d1-1f3ff"
     },
     ":aerial_tramway:": {
@@ -321,6 +321,36 @@ emoji = {
         "name": "articulated lorry",
         "unicode": "1f69b"
     },
+    ":artist:": {
+        "category": "people",
+        "name": "artist",
+        "unicode": "1f9d1-200d-1f3a8"
+    },
+    ":artist_tone1:": {
+        "category": "people",
+        "name": "artist: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f3a8"
+    },
+    ":artist_tone2:": {
+        "category": "people",
+        "name": "artist: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f3a8"
+    },
+    ":artist_tone3:": {
+        "category": "people",
+        "name": "artist: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-1f3a8"
+    },
+    ":artist_tone4:": {
+        "category": "people",
+        "name": "artist: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-1f3a8"
+    },
+    ":artist_tone5:": {
+        "category": "people",
+        "name": "artist: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-1f3a8"
+    },
     ":asterisk:": {
         "category": "symbols",
         "name": "keycap: *",
@@ -331,6 +361,36 @@ emoji = {
         "category": "people",
         "name": "astonished face",
         "unicode": "1f632"
+    },
+    ":astronaut:": {
+        "category": "people",
+        "name": "astronaut",
+        "unicode": "1f9d1-200d-1f680"
+    },
+    ":astronaut_tone1:": {
+        "category": "people",
+        "name": "astronaut: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f680"
+    },
+    ":astronaut_tone2:": {
+        "category": "people",
+        "name": "astronaut: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f680"
+    },
+    ":astronaut_tone3:": {
+        "category": "people",
+        "name": "astronaut: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-1f680"
+    },
+    ":astronaut_tone4:": {
+        "category": "people",
+        "name": "astronaut: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-1f680"
+    },
+    ":astronaut_tone5:": {
+        "category": "people",
+        "name": "astronaut: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-1f680"
     },
     ":athletic_shoe:": {
         "category": "people",
@@ -1787,6 +1847,36 @@ emoji = {
         "name": "convenience store",
         "unicode": "1f3ea"
     },
+    ":cook:": {
+        "category": "people",
+        "name": "cook",
+        "unicode": "1f9d1-200d-1f373"
+    },
+    ":cook_tone1:": {
+        "category": "people",
+        "name": "cook: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f373"
+    },
+    ":cook_tone2:": {
+        "category": "people",
+        "name": "cook: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f373"
+    },
+    ":cook_tone3:": {
+        "category": "people",
+        "name": "cook: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-1f373"
+    },
+    ":cook_tone4:": {
+        "category": "people",
+        "name": "cook: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-1f373"
+    },
+    ":cook_tone5:": {
+        "category": "people",
+        "name": "cook: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-1f373"
+    },
     ":cookie:": {
         "category": "food",
         "name": "cookie",
@@ -2644,6 +2734,36 @@ emoji = {
         "name": "factory",
         "unicode": "1f3ed"
     },
+    ":factory_worker:": {
+        "category": "people",
+        "name": "factory worker",
+        "unicode": "1f9d1-200d-1f3ed"
+    },
+    ":factory_worker_tone1:": {
+        "category": "people",
+        "name": "factory worker: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f3ed"
+    },
+    ":factory_worker_tone2:": {
+        "category": "people",
+        "name": "factory worker: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f3ed"
+    },
+    ":factory_worker_tone3:": {
+        "category": "people",
+        "name": "factory worker: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-1f3ed"
+    },
+    ":factory_worker_tone4:": {
+        "category": "people",
+        "name": "factory worker: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-1f3ed"
+    },
+    ":factory_worker_tone5:": {
+        "category": "people",
+        "name": "factory worker: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-1f3ed"
+    },
     ":fairy:": {
         "category": "people",
         "name": "fairy",
@@ -2814,6 +2934,36 @@ emoji = {
         "name": "family: woman, woman, girl, girl",
         "unicode": "1f469-200d-1f469-200d-1f467-200d-1f467"
     },
+    ":farmer:": {
+        "category": "people",
+        "name": "farmer",
+        "unicode": "1f9d1-200d-1f33e"
+    },
+    ":farmer_tone1:": {
+        "category": "people",
+        "name": "farmer: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f33e"
+    },
+    ":farmer_tone2:": {
+        "category": "people",
+        "name": "farmer: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f33e"
+    },
+    ":farmer_tone3:": {
+        "category": "people",
+        "name": "farmer: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-1f33e"
+    },
+    ":farmer_tone4:": {
+        "category": "people",
+        "name": "farmer: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-1f33e"
+    },
+    ":farmer_tone5:": {
+        "category": "people",
+        "name": "farmer: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-1f33e"
+    },
     ":fast_forward:": {
         "category": "symbols",
         "name": "fast-forward button",
@@ -2918,6 +3068,36 @@ emoji = {
         "category": "objects",
         "name": "firecracker",
         "unicode": "1f9e8"
+    },
+    ":firefighter:": {
+        "category": "people",
+        "name": "firefighter",
+        "unicode": "1f9d1-200d-1f692"
+    },
+    ":firefighter_tone1:": {
+        "category": "people",
+        "name": "firefighter: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f692"
+    },
+    ":firefighter_tone2:": {
+        "category": "people",
+        "name": "firefighter: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f692"
+    },
+    ":firefighter_tone3:": {
+        "category": "people",
+        "name": "firefighter: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-1f692"
+    },
+    ":firefighter_tone4:": {
+        "category": "people",
+        "name": "firefighter: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-1f692"
+    },
+    ":firefighter_tone5:": {
+        "category": "people",
+        "name": "firefighter: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-1f692"
     },
     ":fireworks:": {
         "category": "travel",
@@ -4772,6 +4952,36 @@ emoji = {
         "name": "headphone",
         "unicode": "1f3a7"
     },
+    ":health_worker:": {
+        "category": "people",
+        "name": "health worker",
+        "unicode": "1f9d1-200d-2695-fe0f"
+    },
+    ":health_worker_tone1:": {
+        "category": "people",
+        "name": "health worker: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-2695-fe0f"
+    },
+    ":health_worker_tone2:": {
+        "category": "people",
+        "name": "health worker: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-2695-fe0f"
+    },
+    ":health_worker_tone3:": {
+        "category": "people",
+        "name": "health worker: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-2695-fe0f"
+    },
+    ":health_worker_tone4:": {
+        "category": "people",
+        "name": "health worker: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-2695-fe0f"
+    },
+    ":health_worker_tone5:": {
+        "category": "people",
+        "name": "health worker: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-2695-fe0f"
+    },
     ":hear_no_evil:": {
         "category": "nature",
         "name": "hear-no-evil monkey",
@@ -5082,11 +5292,6 @@ emoji = {
         "name": "exclamation question mark",
         "unicode": "2049"
     },
-    ":iphone:": {
-        "category": "objects",
-        "name": "mobile phone",
-        "unicode": "1f4f1"
-    },
     ":island:": {
         "category": "travel",
         "name": "desert island",
@@ -5147,6 +5352,36 @@ emoji = {
         "name": "joystick",
         "unicode": "1f579"
     },
+    ":judge:": {
+        "category": "people",
+        "name": "judge",
+        "unicode": "1f9d1-200d-2696-fe0f"
+    },
+    ":judge_tone1:": {
+        "category": "people",
+        "name": "judge: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-2696-fe0f"
+    },
+    ":judge_tone2:": {
+        "category": "people",
+        "name": "judge: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-2696-fe0f"
+    },
+    ":judge_tone3:": {
+        "category": "people",
+        "name": "judge: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-2696-fe0f"
+    },
+    ":judge_tone4:": {
+        "category": "people",
+        "name": "judge: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-2696-fe0f"
+    },
+    ":judge_tone5:": {
+        "category": "people",
+        "name": "judge: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-2696-fe0f"
+    },
     ":kaaba:": {
         "category": "travel",
         "name": "kaaba",
@@ -5186,6 +5421,21 @@ emoji = {
         "category": "people",
         "name": "kiss mark",
         "unicode": "1f48b"
+    },
+    ":kiss_mm:": {
+        "category": "people",
+        "name": "kiss: man, man",
+        "unicode": "1f468-200d-2764-fe0f-200d-1f48b-200d-1f468"
+    },
+    ":kiss_woman_man:": {
+        "category": "people",
+        "name": "kiss: woman, man",
+        "unicode": "1f469-200d-2764-fe0f-200d-1f48b-200d-1f468"
+    },
+    ":kiss_ww:": {
+        "category": "people",
+        "name": "kiss: woman, woman",
+        "unicode": "1f469-200d-2764-fe0f-200d-1f48b-200d-1f469"
     },
     ":kissing:": {
         "category": "people",
@@ -7722,6 +7972,36 @@ emoji = {
         "name": "meat on bone",
         "unicode": "1f356"
     },
+    ":mechanic:": {
+        "category": "people",
+        "name": "mechanic",
+        "unicode": "1f9d1-200d-1f527"
+    },
+    ":mechanic_tone1:": {
+        "category": "people",
+        "name": "mechanic: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f527"
+    },
+    ":mechanic_tone2:": {
+        "category": "people",
+        "name": "mechanic: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f527"
+    },
+    ":mechanic_tone3:": {
+        "category": "people",
+        "name": "mechanic: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-1f527"
+    },
+    ":mechanic_tone4:": {
+        "category": "people",
+        "name": "mechanic: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-1f527"
+    },
+    ":mechanic_tone5:": {
+        "category": "people",
+        "name": "mechanic: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-1f527"
+    },
     ":mechanical_arm:": {
         "category": "people",
         "name": "mechanical arm",
@@ -7757,6 +8037,26 @@ emoji = {
         "name": "men holding hands: light skin tone",
         "unicode": "1f46c-1f3fb"
     },
+    ":men_holding_hands_tone1_tone2:": {
+        "category": "people",
+        "name": "men holding hands: light skin tone, medium-light skin tone",
+        "unicode": "1f468-1f3fb-200d-1f91d-200d-1f468-1f3fc"
+    },
+    ":men_holding_hands_tone1_tone3:": {
+        "category": "people",
+        "name": "men holding hands: light skin tone, medium skin tone",
+        "unicode": "1f468-1f3fb-200d-1f91d-200d-1f468-1f3fd"
+    },
+    ":men_holding_hands_tone1_tone4:": {
+        "category": "people",
+        "name": "men holding hands: light skin tone, medium-dark skin tone",
+        "unicode": "1f468-1f3fb-200d-1f91d-200d-1f468-1f3fe"
+    },
+    ":men_holding_hands_tone1_tone5:": {
+        "category": "people",
+        "name": "men holding hands: light skin tone, dark skin tone",
+        "unicode": "1f468-1f3fb-200d-1f91d-200d-1f468-1f3ff"
+    },
     ":men_holding_hands_tone2:": {
         "category": "people",
         "name": "men holding hands: medium-light skin tone",
@@ -7766,6 +8066,21 @@ emoji = {
         "category": "people",
         "name": "men holding hands: medium-light skin tone, light skin tone",
         "unicode": "1f468-1f3fc-200d-1f91d-200d-1f468-1f3fb"
+    },
+    ":men_holding_hands_tone2_tone3:": {
+        "category": "people",
+        "name": "men holding hands: medium-light skin tone, medium skin tone",
+        "unicode": "1f468-1f3fc-200d-1f91d-200d-1f468-1f3fd"
+    },
+    ":men_holding_hands_tone2_tone4:": {
+        "category": "people",
+        "name": "men holding hands: medium-light skin tone, medium-dark skin tone",
+        "unicode": "1f468-1f3fc-200d-1f91d-200d-1f468-1f3fe"
+    },
+    ":men_holding_hands_tone2_tone5:": {
+        "category": "people",
+        "name": "men holding hands: medium-light skin tone, dark skin tone",
+        "unicode": "1f468-1f3fc-200d-1f91d-200d-1f468-1f3ff"
     },
     ":men_holding_hands_tone3:": {
         "category": "people",
@@ -7781,6 +8096,16 @@ emoji = {
         "category": "people",
         "name": "men holding hands: medium skin tone, medium-light skin tone",
         "unicode": "1f468-1f3fd-200d-1f91d-200d-1f468-1f3fc"
+    },
+    ":men_holding_hands_tone3_tone4:": {
+        "category": "people",
+        "name": "men holding hands: medium skin tone, medium-dark skin tone",
+        "unicode": "1f468-1f3fd-200d-1f91d-200d-1f468-1f3fe"
+    },
+    ":men_holding_hands_tone3_tone5:": {
+        "category": "people",
+        "name": "men holding hands: medium skin tone, dark skin tone",
+        "unicode": "1f468-1f3fd-200d-1f91d-200d-1f468-1f3ff"
     },
     ":men_holding_hands_tone4:": {
         "category": "people",
@@ -7801,6 +8126,11 @@ emoji = {
         "category": "people",
         "name": "men holding hands: medium-dark skin tone, medium skin tone",
         "unicode": "1f468-1f3fe-200d-1f91d-200d-1f468-1f3fd"
+    },
+    ":men_holding_hands_tone4_tone5:": {
+        "category": "people",
+        "name": "men holding hands: medium-dark skin tone, dark skin tone",
+        "unicode": "1f468-1f3fe-200d-1f91d-200d-1f468-1f3ff"
     },
     ":men_holding_hands_tone5:": {
         "category": "people",
@@ -8046,6 +8376,11 @@ emoji = {
         "category": "objects",
         "name": "computer disk",
         "unicode": "1f4bd"
+    },
+    ":mobile_phone:": {
+        "category": "objects",
+        "name": "mobile phone",
+        "unicode": "1f4f1"
     },
     ":mobile_phone_off:": {
         "category": "symbols",
@@ -8503,6 +8838,36 @@ emoji = {
         "name": "office building",
         "unicode": "1f3e2"
     },
+    ":office_worker:": {
+        "category": "people",
+        "name": "office worker",
+        "unicode": "1f9d1-200d-1f4bc"
+    },
+    ":office_worker_tone1:": {
+        "category": "people",
+        "name": "office worker: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f4bc"
+    },
+    ":office_worker_tone2:": {
+        "category": "people",
+        "name": "office worker: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f4bc"
+    },
+    ":office_worker_tone3:": {
+        "category": "people",
+        "name": "office worker: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-1f4bc"
+    },
+    ":office_worker_tone4:": {
+        "category": "people",
+        "name": "office worker: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-1f4bc"
+    },
+    ":office_worker_tone5:": {
+        "category": "people",
+        "name": "office worker: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-1f4bc"
+    },
     ":oil:": {
         "category": "objects",
         "name": "oil drum",
@@ -8550,27 +8915,27 @@ emoji = {
     },
     ":older_adult_tone1:": {
         "category": "people",
-        "name": "older adult: light skin tone",
+        "name": "older person: light skin tone",
         "unicode": "1f9d3-1f3fb"
     },
     ":older_adult_tone2:": {
         "category": "people",
-        "name": "older adult: medium-light skin tone",
+        "name": "older person: medium-light skin tone",
         "unicode": "1f9d3-1f3fc"
     },
     ":older_adult_tone3:": {
         "category": "people",
-        "name": "older adult: medium skin tone",
+        "name": "older person: medium skin tone",
         "unicode": "1f9d3-1f3fd"
     },
     ":older_adult_tone4:": {
         "category": "people",
-        "name": "older adult: medium-dark skin tone",
+        "name": "older person: medium-dark skin tone",
         "unicode": "1f9d3-1f3fe"
     },
     ":older_adult_tone5:": {
         "category": "people",
-        "name": "older adult: dark skin tone",
+        "name": "older person: dark skin tone",
         "unicode": "1f9d3-1f3ff"
     },
     ":older_man:": {
@@ -8969,6 +9334,26 @@ emoji = {
         "name": "people holding hands: light skin tone",
         "unicode": "1f9d1-1f3fb-200d-1f91d-200d-1f9d1-1f3fb"
     },
+    ":people_holding_hands_tone1_tone2:": {
+        "category": "people",
+        "name": "people holding hands: light skin tone, medium-light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f91d-200d-1f9d1-1f3fc"
+    },
+    ":people_holding_hands_tone1_tone3:": {
+        "category": "people",
+        "name": "people holding hands: light skin tone, medium skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f91d-200d-1f9d1-1f3fd"
+    },
+    ":people_holding_hands_tone1_tone4:": {
+        "category": "people",
+        "name": "people holding hands: light skin tone, medium-dark skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f91d-200d-1f9d1-1f3fe"
+    },
+    ":people_holding_hands_tone1_tone5:": {
+        "category": "people",
+        "name": "people holding hands: light skin tone, dark skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f91d-200d-1f9d1-1f3ff"
+    },
     ":people_holding_hands_tone2:": {
         "category": "people",
         "name": "people holding hands: medium-light skin tone",
@@ -8978,6 +9363,21 @@ emoji = {
         "category": "people",
         "name": "people holding hands: medium-light skin tone, light skin tone",
         "unicode": "1f9d1-1f3fc-200d-1f91d-200d-1f9d1-1f3fb"
+    },
+    ":people_holding_hands_tone2_tone3:": {
+        "category": "people",
+        "name": "people holding hands: medium-light skin tone, medium skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f91d-200d-1f9d1-1f3fd"
+    },
+    ":people_holding_hands_tone2_tone4:": {
+        "category": "people",
+        "name": "people holding hands: medium-light skin tone, medium-dark skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f91d-200d-1f9d1-1f3fe"
+    },
+    ":people_holding_hands_tone2_tone5:": {
+        "category": "people",
+        "name": "people holding hands: medium-light skin tone, dark skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f91d-200d-1f9d1-1f3ff"
     },
     ":people_holding_hands_tone3:": {
         "category": "people",
@@ -8993,6 +9393,16 @@ emoji = {
         "category": "people",
         "name": "people holding hands: medium skin tone, medium-light skin tone",
         "unicode": "1f9d1-1f3fd-200d-1f91d-200d-1f9d1-1f3fc"
+    },
+    ":people_holding_hands_tone3_tone4:": {
+        "category": "people",
+        "name": "people holding hands: medium skin tone, medium-dark skin tone",
+        "unicode": "1f9d1-1f3fd-200d-1f91d-200d-1f9d1-1f3fe"
+    },
+    ":people_holding_hands_tone3_tone5:": {
+        "category": "people",
+        "name": "people holding hands: medium skin tone, dark skin tone",
+        "unicode": "1f9d1-1f3fd-200d-1f91d-200d-1f9d1-1f3ff"
     },
     ":people_holding_hands_tone4:": {
         "category": "people",
@@ -9013,6 +9423,11 @@ emoji = {
         "category": "people",
         "name": "people holding hands: medium-dark skin tone, medium skin tone",
         "unicode": "1f9d1-1f3fe-200d-1f91d-200d-1f9d1-1f3fd"
+    },
+    ":people_holding_hands_tone4_tone5:": {
+        "category": "people",
+        "name": "people holding hands: medium-dark skin tone, dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-1f91d-200d-1f9d1-1f3ff"
     },
     ":people_holding_hands_tone5:": {
         "category": "people",
@@ -9058,6 +9473,11 @@ emoji = {
         "category": "people",
         "name": "persevering face",
         "unicode": "1f623"
+    },
+    ":person_bald:": {
+        "category": "people",
+        "name": "person: bald",
+        "unicode": "1f9d1-200d-1f9b2"
     },
     ":person_biking:": {
         "category": "activity",
@@ -9178,6 +9598,11 @@ emoji = {
         "category": "activity",
         "name": "person climbing: dark skin tone",
         "unicode": "1f9d7-1f3ff"
+    },
+    ":person_curly_hair:": {
+        "category": "people",
+        "name": "person: curly hair",
+        "unicode": "1f9d1-200d-1f9b1"
     },
     ":person_doing_cartwheel:": {
         "category": "activity",
@@ -9479,6 +9904,66 @@ emoji = {
         "name": "person in lotus position: dark skin tone",
         "unicode": "1f9d8-1f3ff"
     },
+    ":person_in_manual_wheelchair:": {
+        "category": "people",
+        "name": "person in manual wheelchair",
+        "unicode": "1f9d1-200d-1f9bd"
+    },
+    ":person_in_manual_wheelchair_tone1:": {
+        "category": "people",
+        "name": "person in manual wheelchair: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f9bd"
+    },
+    ":person_in_manual_wheelchair_tone2:": {
+        "category": "people",
+        "name": "person in manual wheelchair: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f9bd"
+    },
+    ":person_in_manual_wheelchair_tone3:": {
+        "category": "people",
+        "name": "person in manual wheelchair: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-1f9bd"
+    },
+    ":person_in_manual_wheelchair_tone4:": {
+        "category": "people",
+        "name": "person in manual wheelchair: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-1f9bd"
+    },
+    ":person_in_manual_wheelchair_tone5:": {
+        "category": "people",
+        "name": "person in manual wheelchair: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-1f9bd"
+    },
+    ":person_in_motorized_wheelchair:": {
+        "category": "people",
+        "name": "person in motorized wheelchair",
+        "unicode": "1f9d1-200d-1f9bc"
+    },
+    ":person_in_motorized_wheelchair_tone1:": {
+        "category": "people",
+        "name": "person in motorized wheelchair: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f9bc"
+    },
+    ":person_in_motorized_wheelchair_tone2:": {
+        "category": "people",
+        "name": "person in motorized wheelchair: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f9bc"
+    },
+    ":person_in_motorized_wheelchair_tone3:": {
+        "category": "people",
+        "name": "person in motorized wheelchair: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-1f9bc"
+    },
+    ":person_in_motorized_wheelchair_tone4:": {
+        "category": "people",
+        "name": "person in motorized wheelchair: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-1f9bc"
+    },
+    ":person_in_motorized_wheelchair_tone5:": {
+        "category": "people",
+        "name": "person in motorized wheelchair: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-1f9bc"
+    },
     ":person_in_steamy_room:": {
         "category": "people",
         "name": "person in steamy room",
@@ -9749,6 +10234,11 @@ emoji = {
         "name": "person raising hand: dark skin tone",
         "unicode": "1f64b-1f3ff"
     },
+    ":person_red_hair:": {
+        "category": "people",
+        "name": "person: red hair",
+        "unicode": "1f9d1-200d-1f9b0"
+    },
     ":person_rowing_boat:": {
         "category": "activity",
         "name": "person rowing boat",
@@ -9959,6 +10449,106 @@ emoji = {
         "name": "person tipping hand: dark skin tone",
         "unicode": "1f481-1f3ff"
     },
+    ":person_tone1_bald:": {
+        "category": "people",
+        "name": "person: light skin tone, bald",
+        "unicode": "1f9d1-1f3fb-200d-1f9b2"
+    },
+    ":person_tone1_curly_hair:": {
+        "category": "people",
+        "name": "person: light skin tone, curly hair",
+        "unicode": "1f9d1-1f3fb-200d-1f9b1"
+    },
+    ":person_tone1_red_hair:": {
+        "category": "people",
+        "name": "person: light skin tone, red hair",
+        "unicode": "1f9d1-1f3fb-200d-1f9b0"
+    },
+    ":person_tone1_white_hair:": {
+        "category": "people",
+        "name": "person: light skin tone, white hair",
+        "unicode": "1f9d1-1f3fb-200d-1f9b3"
+    },
+    ":person_tone2_bald:": {
+        "category": "people",
+        "name": "person: medium-light skin tone, bald",
+        "unicode": "1f9d1-1f3fc-200d-1f9b2"
+    },
+    ":person_tone2_curly_hair:": {
+        "category": "people",
+        "name": "person: medium-light skin tone, curly hair",
+        "unicode": "1f9d1-1f3fc-200d-1f9b1"
+    },
+    ":person_tone2_red_hair:": {
+        "category": "people",
+        "name": "person: medium-light skin tone, red hair",
+        "unicode": "1f9d1-1f3fc-200d-1f9b0"
+    },
+    ":person_tone2_white_hair:": {
+        "category": "people",
+        "name": "person: medium-light skin tone, white hair",
+        "unicode": "1f9d1-1f3fc-200d-1f9b3"
+    },
+    ":person_tone3_bald:": {
+        "category": "people",
+        "name": "person: medium skin tone, bald",
+        "unicode": "1f9d1-1f3fd-200d-1f9b2"
+    },
+    ":person_tone3_curly_hair:": {
+        "category": "people",
+        "name": "person: medium skin tone, curly hair",
+        "unicode": "1f9d1-1f3fd-200d-1f9b1"
+    },
+    ":person_tone3_red_hair:": {
+        "category": "people",
+        "name": "person: medium skin tone, red hair",
+        "unicode": "1f9d1-1f3fd-200d-1f9b0"
+    },
+    ":person_tone3_white_hair:": {
+        "category": "people",
+        "name": "person: medium skin tone, white hair",
+        "unicode": "1f9d1-1f3fd-200d-1f9b3"
+    },
+    ":person_tone4_bald:": {
+        "category": "people",
+        "name": "person: medium-dark skin tone, bald",
+        "unicode": "1f9d1-1f3fe-200d-1f9b2"
+    },
+    ":person_tone4_curly_hair:": {
+        "category": "people",
+        "name": "person: medium-dark skin tone, curly hair",
+        "unicode": "1f9d1-1f3fe-200d-1f9b1"
+    },
+    ":person_tone4_red_hair:": {
+        "category": "people",
+        "name": "person: medium-dark skin tone, red hair",
+        "unicode": "1f9d1-1f3fe-200d-1f9b0"
+    },
+    ":person_tone4_white_hair:": {
+        "category": "people",
+        "name": "person: medium-dark skin tone, white hair",
+        "unicode": "1f9d1-1f3fe-200d-1f9b3"
+    },
+    ":person_tone5_bald:": {
+        "category": "people",
+        "name": "person: dark skin tone, bald",
+        "unicode": "1f9d1-1f3ff-200d-1f9b2"
+    },
+    ":person_tone5_curly_hair:": {
+        "category": "people",
+        "name": "person: dark skin tone, curly hair",
+        "unicode": "1f9d1-1f3ff-200d-1f9b1"
+    },
+    ":person_tone5_red_hair:": {
+        "category": "people",
+        "name": "person: dark skin tone, red hair",
+        "unicode": "1f9d1-1f3ff-200d-1f9b0"
+    },
+    ":person_tone5_white_hair:": {
+        "category": "people",
+        "name": "person: dark skin tone, white hair",
+        "unicode": "1f9d1-1f3ff-200d-1f9b3"
+    },
     ":person_walking:": {
         "category": "people",
         "name": "person walking",
@@ -10019,6 +10609,41 @@ emoji = {
         "name": "person wearing turban: dark skin tone",
         "unicode": "1f473-1f3ff"
     },
+    ":person_white_hair:": {
+        "category": "people",
+        "name": "person: white hair",
+        "unicode": "1f9d1-200d-1f9b3"
+    },
+    ":person_with_probing_cane:": {
+        "category": "people",
+        "name": "person with probing cane",
+        "unicode": "1f9d1-200d-1f9af"
+    },
+    ":person_with_probing_cane_tone1:": {
+        "category": "people",
+        "name": "person with probing cane: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f9af"
+    },
+    ":person_with_probing_cane_tone2:": {
+        "category": "people",
+        "name": "person with probing cane: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f9af"
+    },
+    ":person_with_probing_cane_tone3:": {
+        "category": "people",
+        "name": "person with probing cane: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-1f9af"
+    },
+    ":person_with_probing_cane_tone4:": {
+        "category": "people",
+        "name": "person with probing cane: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-1f9af"
+    },
+    ":person_with_probing_cane_tone5:": {
+        "category": "people",
+        "name": "person with probing cane: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-1f9af"
+    },
     ":petri_dish:": {
         "category": "objects",
         "name": "petri dish",
@@ -10053,6 +10678,36 @@ emoji = {
         "category": "objects",
         "name": "pill",
         "unicode": "1f48a"
+    },
+    ":pilot:": {
+        "category": "people",
+        "name": "pilot",
+        "unicode": "1f9d1-200d-2708-fe0f"
+    },
+    ":pilot_tone1:": {
+        "category": "people",
+        "name": "pilot: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-2708-fe0f"
+    },
+    ":pilot_tone2:": {
+        "category": "people",
+        "name": "pilot: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-2708-fe0f"
+    },
+    ":pilot_tone3:": {
+        "category": "people",
+        "name": "pilot: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-2708-fe0f"
+    },
+    ":pilot_tone4:": {
+        "category": "people",
+        "name": "pilot: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-2708-fe0f"
+    },
+    ":pilot_tone5:": {
+        "category": "people",
+        "name": "pilot: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-2708-fe0f"
     },
     ":pinching_hand:": {
         "category": "people",
@@ -11230,6 +11885,36 @@ emoji = {
         "name": "backpack",
         "unicode": "1f392"
     },
+    ":scientist:": {
+        "category": "people",
+        "name": "scientist",
+        "unicode": "1f9d1-200d-1f52c"
+    },
+    ":scientist_tone1:": {
+        "category": "people",
+        "name": "scientist: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f52c"
+    },
+    ":scientist_tone2:": {
+        "category": "people",
+        "name": "scientist: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f52c"
+    },
+    ":scientist_tone3:": {
+        "category": "people",
+        "name": "scientist: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-1f52c"
+    },
+    ":scientist_tone4:": {
+        "category": "people",
+        "name": "scientist: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-1f52c"
+    },
+    ":scientist_tone5:": {
+        "category": "people",
+        "name": "scientist: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-1f52c"
+    },
     ":scissors:": {
         "category": "objects",
         "name": "scissors",
@@ -11425,6 +12110,36 @@ emoji = {
         "category": "symbols",
         "name": "antenna bars",
         "unicode": "1f4f6"
+    },
+    ":singer:": {
+        "category": "people",
+        "name": "singer",
+        "unicode": "1f9d1-200d-1f3a4"
+    },
+    ":singer_tone1:": {
+        "category": "people",
+        "name": "singer: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f3a4"
+    },
+    ":singer_tone2:": {
+        "category": "people",
+        "name": "singer: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f3a4"
+    },
+    ":singer_tone3:": {
+        "category": "people",
+        "name": "singer: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-1f3a4"
+    },
+    ":singer_tone4:": {
+        "category": "people",
+        "name": "singer: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-1f3a4"
+    },
+    ":singer_tone5:": {
+        "category": "people",
+        "name": "singer: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-1f3a4"
     },
     ":six:": {
         "category": "symbols",
@@ -11887,6 +12602,36 @@ emoji = {
         "name": "winking face with tongue",
         "unicode": "1f61c"
     },
+    ":student:": {
+        "category": "people",
+        "name": "student",
+        "unicode": "1f9d1-200d-1f393"
+    },
+    ":student_tone1:": {
+        "category": "people",
+        "name": "student: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f393"
+    },
+    ":student_tone2:": {
+        "category": "people",
+        "name": "student: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f393"
+    },
+    ":student_tone3:": {
+        "category": "people",
+        "name": "student: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-1f393"
+    },
+    ":student_tone4:": {
+        "category": "people",
+        "name": "student: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-1f393"
+    },
+    ":student_tone5:": {
+        "category": "people",
+        "name": "student: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-1f393"
+    },
     ":stuffed_flatbread:": {
         "category": "food",
         "name": "stuffed flatbread",
@@ -12076,6 +12821,66 @@ emoji = {
         "category": "food",
         "name": "teacup without handle",
         "unicode": "1f375"
+    },
+    ":teacher:": {
+        "category": "people",
+        "name": "teacher",
+        "unicode": "1f9d1-200d-1f3eb"
+    },
+    ":teacher_tone1:": {
+        "category": "people",
+        "name": "teacher: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f3eb"
+    },
+    ":teacher_tone2:": {
+        "category": "people",
+        "name": "teacher: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f3eb"
+    },
+    ":teacher_tone3:": {
+        "category": "people",
+        "name": "teacher: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-1f3eb"
+    },
+    ":teacher_tone4:": {
+        "category": "people",
+        "name": "teacher: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-1f3eb"
+    },
+    ":teacher_tone5:": {
+        "category": "people",
+        "name": "teacher: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-1f3eb"
+    },
+    ":technologist:": {
+        "category": "people",
+        "name": "technologist",
+        "unicode": "1f9d1-200d-1f4bb"
+    },
+    ":technologist_tone1:": {
+        "category": "people",
+        "name": "technologist: light skin tone",
+        "unicode": "1f9d1-1f3fb-200d-1f4bb"
+    },
+    ":technologist_tone2:": {
+        "category": "people",
+        "name": "technologist: medium-light skin tone",
+        "unicode": "1f9d1-1f3fc-200d-1f4bb"
+    },
+    ":technologist_tone3:": {
+        "category": "people",
+        "name": "technologist: medium skin tone",
+        "unicode": "1f9d1-1f3fd-200d-1f4bb"
+    },
+    ":technologist_tone4:": {
+        "category": "people",
+        "name": "technologist: medium-dark skin tone",
+        "unicode": "1f9d1-1f3fe-200d-1f4bb"
+    },
+    ":technologist_tone5:": {
+        "category": "people",
+        "name": "technologist: dark skin tone",
+        "unicode": "1f9d1-1f3ff-200d-1f4bb"
     },
     ":teddy_bear:": {
         "category": "objects",
@@ -12362,6 +13167,11 @@ emoji = {
         "category": "flags",
         "name": "transgender flag",
         "unicode": "1f3f3-fe0f-200d-26a7-fe0f"
+    },
+    ":transgender_sign:": {
+        "category": "symbols",
+        "name": "transgender sign",
+        "unicode": "26a7"
     },
     ":triangular_flag_on_post:": {
         "category": "flags",
@@ -15124,6 +15934,26 @@ emoji = {
         "name": "women holding hands: light skin tone",
         "unicode": "1f46d-1f3fb"
     },
+    ":women_holding_hands_tone1_tone2:": {
+        "category": "people",
+        "name": "women holding hands: light skin tone, medium-light skin tone",
+        "unicode": "1f469-1f3fb-200d-1f91d-200d-1f469-1f3fc"
+    },
+    ":women_holding_hands_tone1_tone3:": {
+        "category": "people",
+        "name": "women holding hands: light skin tone, medium skin tone",
+        "unicode": "1f469-1f3fb-200d-1f91d-200d-1f469-1f3fd"
+    },
+    ":women_holding_hands_tone1_tone4:": {
+        "category": "people",
+        "name": "women holding hands: light skin tone, medium-dark skin tone",
+        "unicode": "1f469-1f3fb-200d-1f91d-200d-1f469-1f3fe"
+    },
+    ":women_holding_hands_tone1_tone5:": {
+        "category": "people",
+        "name": "women holding hands: light skin tone, dark skin tone",
+        "unicode": "1f469-1f3fb-200d-1f91d-200d-1f469-1f3ff"
+    },
     ":women_holding_hands_tone2:": {
         "category": "people",
         "name": "women holding hands: medium-light skin tone",
@@ -15133,6 +15963,21 @@ emoji = {
         "category": "people",
         "name": "women holding hands: medium-light skin tone, light skin tone",
         "unicode": "1f469-1f3fc-200d-1f91d-200d-1f469-1f3fb"
+    },
+    ":women_holding_hands_tone2_tone3:": {
+        "category": "people",
+        "name": "women holding hands: medium-light skin tone, medium skin tone",
+        "unicode": "1f469-1f3fc-200d-1f91d-200d-1f469-1f3fd"
+    },
+    ":women_holding_hands_tone2_tone4:": {
+        "category": "people",
+        "name": "women holding hands: medium-light skin tone, medium-dark skin tone",
+        "unicode": "1f469-1f3fc-200d-1f91d-200d-1f469-1f3fe"
+    },
+    ":women_holding_hands_tone2_tone5:": {
+        "category": "people",
+        "name": "women holding hands: medium-light skin tone, dark skin tone",
+        "unicode": "1f469-1f3fc-200d-1f91d-200d-1f469-1f3ff"
     },
     ":women_holding_hands_tone3:": {
         "category": "people",
@@ -15148,6 +15993,16 @@ emoji = {
         "category": "people",
         "name": "women holding hands: medium skin tone, medium-light skin tone",
         "unicode": "1f469-1f3fd-200d-1f91d-200d-1f469-1f3fc"
+    },
+    ":women_holding_hands_tone3_tone4:": {
+        "category": "people",
+        "name": "women holding hands: medium skin tone, medium-dark skin tone",
+        "unicode": "1f469-1f3fd-200d-1f91d-200d-1f469-1f3fe"
+    },
+    ":women_holding_hands_tone3_tone5:": {
+        "category": "people",
+        "name": "women holding hands: medium skin tone, dark skin tone",
+        "unicode": "1f469-1f3fd-200d-1f91d-200d-1f469-1f3ff"
     },
     ":women_holding_hands_tone4:": {
         "category": "people",
@@ -15168,6 +16023,11 @@ emoji = {
         "category": "people",
         "name": "women holding hands: medium-dark skin tone, medium skin tone",
         "unicode": "1f469-1f3fe-200d-1f91d-200d-1f469-1f3fd"
+    },
+    ":women_holding_hands_tone4_tone5:": {
+        "category": "people",
+        "name": "women holding hands: medium-dark skin tone, dark skin tone",
+        "unicode": "1f469-1f3fe-200d-1f91d-200d-1f469-1f3ff"
     },
     ":women_holding_hands_tone5:": {
         "category": "people",
@@ -15372,7 +16232,17 @@ aliases = {
     ":aq:": ":flag_aq:",
     ":ar:": ":flag_ar:",
     ":archery:": ":bow_and_arrow:",
+    ":artist_dark_skin_tone:": ":artist_tone5:",
+    ":artist_light_skin_tone:": ":artist_tone1:",
+    ":artist_medium_dark_skin_tone:": ":artist_tone4:",
+    ":artist_medium_light_skin_tone:": ":artist_tone2:",
+    ":artist_medium_skin_tone:": ":artist_tone3:",
     ":as:": ":flag_as:",
+    ":astronaut_dark_skin_tone:": ":astronaut_tone5:",
+    ":astronaut_light_skin_tone:": ":astronaut_tone1:",
+    ":astronaut_medium_dark_skin_tone:": ":astronaut_tone4:",
+    ":astronaut_medium_light_skin_tone:": ":astronaut_tone2:",
+    ":astronaut_medium_skin_tone:": ":astronaut_tone3:",
     ":at:": ":flag_at:",
     ":atom_symbol:": ":atom:",
     ":au:": ":flag_au:",
@@ -15491,6 +16361,11 @@ aliases = {
     ":cn:": ":flag_cn:",
     ":co:": ":flag_co:",
     ":congo:": ":flag_cd:",
+    ":cook_dark_skin_tone:": ":cook_tone5:",
+    ":cook_light_skin_tone:": ":cook_tone1:",
+    ":cook_medium_dark_skin_tone:": ":cook_tone4:",
+    ":cook_medium_light_skin_tone:": ":cook_tone2:",
+    ":cook_medium_skin_tone:": ":cook_tone3:",
     ":cop:": ":police_officer:",
     ":cop_tone1:": ":police_officer_tone1:",
     ":cop_tone2:": ":police_officer_tone2:",
@@ -15500,6 +16375,8 @@ aliases = {
     ":couch_and_lamp:": ":couch:",
     ":couple_with_heart_mm:": ":couple_mm:",
     ":couple_with_heart_ww:": ":couple_ww:",
+    ":couplekiss_mm:": ":kiss_mm:",
+    ":couplekiss_ww:": ":kiss_ww:",
     ":cp:": ":flag_cp:",
     ":cr:": ":flag_cr:",
     ":cricket_bat_ball:": ":cricket_game:",
@@ -15583,15 +16460,30 @@ aliases = {
     ":facepalm_tone3:": ":person_facepalming_tone3:",
     ":facepalm_tone4:": ":person_facepalming_tone4:",
     ":facepalm_tone5:": ":person_facepalming_tone5:",
+    ":factory_worker_dark_skin_tone:": ":factory_worker_tone5:",
+    ":factory_worker_light_skin_tone:": ":factory_worker_tone1:",
+    ":factory_worker_medium_dark_skin_tone:": ":factory_worker_tone4:",
+    ":factory_worker_medium_light_skin_tone:": ":factory_worker_tone2:",
+    ":factory_worker_medium_skin_tone:": ":factory_worker_tone3:",
     ":fairy_dark_skin_tone:": ":fairy_tone5:",
     ":fairy_light_skin_tone:": ":fairy_tone1:",
     ":fairy_medium_dark_skin_tone:": ":fairy_tone4:",
     ":fairy_medium_light_skin_tone:": ":fairy_tone2:",
     ":fairy_medium_skin_tone:": ":fairy_tone3:",
+    ":farmer_dark_skin_tone:": ":farmer_tone5:",
+    ":farmer_light_skin_tone:": ":farmer_tone1:",
+    ":farmer_medium_dark_skin_tone:": ":farmer_tone4:",
+    ":farmer_medium_light_skin_tone:": ":farmer_tone2:",
+    ":farmer_medium_skin_tone:": ":farmer_tone3:",
     ":fencer:": ":person_fencing:",
     ":fencing:": ":person_fencing:",
     ":fi:": ":flag_fi:",
     ":film_projector:": ":projector:",
+    ":firefighter_dark_skin_tone:": ":firefighter_tone5:",
+    ":firefighter_light_skin_tone:": ":firefighter_tone1:",
+    ":firefighter_medium_dark_skin_tone:": ":firefighter_tone4:",
+    ":firefighter_medium_light_skin_tone:": ":firefighter_tone2:",
+    ":firefighter_medium_skin_tone:": ":firefighter_tone3:",
     ":first_place_medal:": ":first_place:",
     ":fj:": ":flag_fj:",
     ":fk:": ":flag_fk:",
@@ -15666,6 +16558,11 @@ aliases = {
     ":handball_tone4:": ":person_playing_handball_tone4:",
     ":handball_tone5:": ":person_playing_handball_tone5:",
     ":hankey:": ":poop:",
+    ":health_worker_dark_skin_tone:": ":health_worker_tone5:",
+    ":health_worker_light_skin_tone:": ":health_worker_tone1:",
+    ":health_worker_medium_dark_skin_tone:": ":health_worker_tone4:",
+    ":health_worker_medium_light_skin_tone:": ":health_worker_tone2:",
+    ":health_worker_medium_skin_tone:": ":health_worker_tone3:",
     ":heavy_heart_exclamation_mark_ornament:": ":heart_exclamation:",
     ":helmet_with_white_cross:": ":helmet_with_cross:",
     ":hk:": ":flag_hk:",
@@ -15698,6 +16595,11 @@ aliases = {
     ":jm:": ":flag_jm:",
     ":jo:": ":flag_jo:",
     ":jp:": ":flag_jp:",
+    ":judge_dark_skin_tone:": ":judge_tone5:",
+    ":judge_light_skin_tone:": ":judge_tone1:",
+    ":judge_medium_dark_skin_tone:": ":judge_tone4:",
+    ":judge_medium_light_skin_tone:": ":judge_tone2:",
+    ":judge_medium_skin_tone:": ":judge_tone3:",
     ":juggler:": ":person_juggling:",
     ":juggler_tone1:": ":person_juggling_tone1:",
     ":juggler_tone2:": ":person_juggling_tone2:",
@@ -16132,6 +17034,11 @@ aliases = {
     ":mc:": ":flag_mc:",
     ":md:": ":flag_md:",
     ":me:": ":flag_me:",
+    ":mechanic_dark_skin_tone:": ":mechanic_tone5:",
+    ":mechanic_light_skin_tone:": ":mechanic_tone1:",
+    ":mechanic_medium_dark_skin_tone:": ":mechanic_tone4:",
+    ":mechanic_medium_light_skin_tone:": ":mechanic_tone2:",
+    ":mechanic_medium_skin_tone:": ":mechanic_tone3:",
     ":memo:": ":pencil:",
     ":men_holding_hands_dark_skin_tone:": ":men_holding_hands_tone5:",
     ":men_holding_hands_dark_skin_tone_light_skin_tone:": ":men_holding_hands_tone5_tone1:",
@@ -16139,14 +17046,24 @@ aliases = {
     ":men_holding_hands_dark_skin_tone_medium_light_skin_tone:": ":men_holding_hands_tone5_tone2:",
     ":men_holding_hands_dark_skin_tone_medium_skin_tone:": ":men_holding_hands_tone5_tone3:",
     ":men_holding_hands_light_skin_tone:": ":men_holding_hands_tone1:",
+    ":men_holding_hands_light_skin_tone_dark_skin_tone:": ":men_holding_hands_tone1_tone5:",
+    ":men_holding_hands_light_skin_tone_medium_dark_skin_tone:": ":men_holding_hands_tone1_tone4:",
+    ":men_holding_hands_light_skin_tone_medium_light_skin_tone:": ":men_holding_hands_tone1_tone2:",
+    ":men_holding_hands_light_skin_tone_medium_skin_tone:": ":men_holding_hands_tone1_tone3:",
     ":men_holding_hands_medium_dark_skin_tone:": ":men_holding_hands_tone4:",
+    ":men_holding_hands_medium_dark_skin_tone_dark_skin_tone:": ":men_holding_hands_tone4_tone5:",
     ":men_holding_hands_medium_dark_skin_tone_light_skin_tone:": ":men_holding_hands_tone4_tone1:",
     ":men_holding_hands_medium_dark_skin_tone_medium_light_skin_tone:": ":men_holding_hands_tone4_tone2:",
     ":men_holding_hands_medium_dark_skin_tone_medium_skin_tone:": ":men_holding_hands_tone4_tone3:",
     ":men_holding_hands_medium_light_skin_tone:": ":men_holding_hands_tone2:",
+    ":men_holding_hands_medium_light_skin_tone_dark_skin_tone:": ":men_holding_hands_tone2_tone5:",
     ":men_holding_hands_medium_light_skin_tone_light_skin_tone:": ":men_holding_hands_tone2_tone1:",
+    ":men_holding_hands_medium_light_skin_tone_medium_dark_skin_tone:": ":men_holding_hands_tone2_tone4:",
+    ":men_holding_hands_medium_light_skin_tone_medium_skin_tone:": ":men_holding_hands_tone2_tone3:",
     ":men_holding_hands_medium_skin_tone:": ":men_holding_hands_tone3:",
+    ":men_holding_hands_medium_skin_tone_dark_skin_tone:": ":men_holding_hands_tone3_tone5:",
     ":men_holding_hands_medium_skin_tone_light_skin_tone:": ":men_holding_hands_tone3_tone1:",
+    ":men_holding_hands_medium_skin_tone_medium_dark_skin_tone:": ":men_holding_hands_tone3_tone4:",
     ":men_holding_hands_medium_skin_tone_medium_light_skin_tone:": ":men_holding_hands_tone3_tone2:",
     ":mermaid_dark_skin_tone:": ":mermaid_tone5:",
     ":mermaid_light_skin_tone:": ":mermaid_tone1:",
@@ -16217,6 +17134,11 @@ aliases = {
     ":nr:": ":flag_nr:",
     ":nu:": ":flag_nu:",
     ":nz:": ":flag_nz:",
+    ":office_worker_dark_skin_tone:": ":office_worker_tone5:",
+    ":office_worker_light_skin_tone:": ":office_worker_tone1:",
+    ":office_worker_medium_dark_skin_tone:": ":office_worker_tone4:",
+    ":office_worker_medium_light_skin_tone:": ":office_worker_tone2:",
+    ":office_worker_medium_skin_tone:": ":office_worker_tone3:",
     ":oil_drum:": ":oil:",
     ":ok_woman:": ":person_gesturing_ok:",
     ":ok_woman_tone1:": ":person_gesturing_ok_tone1:",
@@ -16248,20 +17170,34 @@ aliases = {
     ":people_holding_hands_dark_skin_tone_medium_light_skin_tone:": ":people_holding_hands_tone5_tone2:",
     ":people_holding_hands_dark_skin_tone_medium_skin_tone:": ":people_holding_hands_tone5_tone3:",
     ":people_holding_hands_light_skin_tone:": ":people_holding_hands_tone1:",
+    ":people_holding_hands_light_skin_tone_dark_skin_tone:": ":people_holding_hands_tone1_tone5:",
+    ":people_holding_hands_light_skin_tone_medium_dark_skin_tone:": ":people_holding_hands_tone1_tone4:",
+    ":people_holding_hands_light_skin_tone_medium_light_skin_tone:": ":people_holding_hands_tone1_tone2:",
+    ":people_holding_hands_light_skin_tone_medium_skin_tone:": ":people_holding_hands_tone1_tone3:",
     ":people_holding_hands_medium_dark_skin_tone:": ":people_holding_hands_tone4:",
+    ":people_holding_hands_medium_dark_skin_tone_dark_skin_tone:": ":people_holding_hands_tone4_tone5:",
     ":people_holding_hands_medium_dark_skin_tone_light_skin_tone:": ":people_holding_hands_tone4_tone1:",
     ":people_holding_hands_medium_dark_skin_tone_medium_light_skin_tone:": ":people_holding_hands_tone4_tone2:",
     ":people_holding_hands_medium_dark_skin_tone_medium_skin_tone:": ":people_holding_hands_tone4_tone3:",
     ":people_holding_hands_medium_light_skin_tone:": ":people_holding_hands_tone2:",
+    ":people_holding_hands_medium_light_skin_tone_dark_skin_tone:": ":people_holding_hands_tone2_tone5:",
     ":people_holding_hands_medium_light_skin_tone_light_skin_tone:": ":people_holding_hands_tone2_tone1:",
+    ":people_holding_hands_medium_light_skin_tone_medium_dark_skin_tone:": ":people_holding_hands_tone2_tone4:",
+    ":people_holding_hands_medium_light_skin_tone_medium_skin_tone:": ":people_holding_hands_tone2_tone3:",
     ":people_holding_hands_medium_skin_tone:": ":people_holding_hands_tone3:",
+    ":people_holding_hands_medium_skin_tone_dark_skin_tone:": ":people_holding_hands_tone3_tone5:",
     ":people_holding_hands_medium_skin_tone_light_skin_tone:": ":people_holding_hands_tone3_tone1:",
+    ":people_holding_hands_medium_skin_tone_medium_dark_skin_tone:": ":people_holding_hands_tone3_tone4:",
     ":people_holding_hands_medium_skin_tone_medium_light_skin_tone:": ":people_holding_hands_tone3_tone2:",
     ":person_climbing_dark_skin_tone:": ":person_climbing_tone5:",
     ":person_climbing_light_skin_tone:": ":person_climbing_tone1:",
     ":person_climbing_medium_dark_skin_tone:": ":person_climbing_tone4:",
     ":person_climbing_medium_light_skin_tone:": ":person_climbing_tone2:",
     ":person_climbing_medium_skin_tone:": ":person_climbing_tone3:",
+    ":person_dark_skin_tone_bald:": ":person_tone5_bald:",
+    ":person_dark_skin_tone_curly_hair:": ":person_tone5_curly_hair:",
+    ":person_dark_skin_tone_red_hair:": ":person_tone5_red_hair:",
+    ":person_dark_skin_tone_white_hair:": ":person_tone5_white_hair:",
     ":person_golfing_dark_skin_tone:": ":person_golfing_tone5:",
     ":person_golfing_light_skin_tone:": ":person_golfing_tone1:",
     ":person_golfing_medium_dark_skin_tone:": ":person_golfing_tone4:",
@@ -16277,6 +17213,16 @@ aliases = {
     ":person_in_lotus_position_medium_dark_skin_tone:": ":person_in_lotus_position_tone4:",
     ":person_in_lotus_position_medium_light_skin_tone:": ":person_in_lotus_position_tone2:",
     ":person_in_lotus_position_medium_skin_tone:": ":person_in_lotus_position_tone3:",
+    ":person_in_manual_wheelchair_dark_skin_tone:": ":person_in_manual_wheelchair_tone5:",
+    ":person_in_manual_wheelchair_light_skin_tone:": ":person_in_manual_wheelchair_tone1:",
+    ":person_in_manual_wheelchair_medium_dark_skin_tone:": ":person_in_manual_wheelchair_tone4:",
+    ":person_in_manual_wheelchair_medium_light_skin_tone:": ":person_in_manual_wheelchair_tone2:",
+    ":person_in_manual_wheelchair_medium_skin_tone:": ":person_in_manual_wheelchair_tone3:",
+    ":person_in_motorized_wheelchair_dark_skin_tone:": ":person_in_motorized_wheelchair_tone5:",
+    ":person_in_motorized_wheelchair_light_skin_tone:": ":person_in_motorized_wheelchair_tone1:",
+    ":person_in_motorized_wheelchair_medium_dark_skin_tone:": ":person_in_motorized_wheelchair_tone4:",
+    ":person_in_motorized_wheelchair_medium_light_skin_tone:": ":person_in_motorized_wheelchair_tone2:",
+    ":person_in_motorized_wheelchair_medium_skin_tone:": ":person_in_motorized_wheelchair_tone3:",
     ":person_in_steamy_room_dark_skin_tone:": ":person_in_steamy_room_tone5:",
     ":person_in_steamy_room_light_skin_tone:": ":person_in_steamy_room_tone1:",
     ":person_in_steamy_room_medium_dark_skin_tone:": ":person_in_steamy_room_tone4:",
@@ -16287,6 +17233,22 @@ aliases = {
     ":person_kneeling_medium_dark_skin_tone:": ":person_kneeling_tone4:",
     ":person_kneeling_medium_light_skin_tone:": ":person_kneeling_tone2:",
     ":person_kneeling_medium_skin_tone:": ":person_kneeling_tone3:",
+    ":person_light_skin_tone_bald:": ":person_tone1_bald:",
+    ":person_light_skin_tone_curly_hair:": ":person_tone1_curly_hair:",
+    ":person_light_skin_tone_red_hair:": ":person_tone1_red_hair:",
+    ":person_light_skin_tone_white_hair:": ":person_tone1_white_hair:",
+    ":person_medium_dark_skin_tone_bald:": ":person_tone4_bald:",
+    ":person_medium_dark_skin_tone_curly_hair:": ":person_tone4_curly_hair:",
+    ":person_medium_dark_skin_tone_red_hair:": ":person_tone4_red_hair:",
+    ":person_medium_dark_skin_tone_white_hair:": ":person_tone4_white_hair:",
+    ":person_medium_light_skin_tone_bald:": ":person_tone2_bald:",
+    ":person_medium_light_skin_tone_curly_hair:": ":person_tone2_curly_hair:",
+    ":person_medium_light_skin_tone_red_hair:": ":person_tone2_red_hair:",
+    ":person_medium_light_skin_tone_white_hair:": ":person_tone2_white_hair:",
+    ":person_medium_skin_tone_bald:": ":person_tone3_bald:",
+    ":person_medium_skin_tone_curly_hair:": ":person_tone3_curly_hair:",
+    ":person_medium_skin_tone_red_hair:": ":person_tone3_red_hair:",
+    ":person_medium_skin_tone_white_hair:": ":person_tone3_white_hair:",
     ":person_standing_dark_skin_tone:": ":person_standing_tone5:",
     ":person_standing_light_skin_tone:": ":person_standing_tone1:",
     ":person_standing_medium_dark_skin_tone:": ":person_standing_tone4:",
@@ -16310,9 +17272,19 @@ aliases = {
     ":person_with_pouting_face_tone3:": ":person_pouting_tone3:",
     ":person_with_pouting_face_tone4:": ":person_pouting_tone4:",
     ":person_with_pouting_face_tone5:": ":person_pouting_tone5:",
+    ":person_with_probing_cane_dark_skin_tone:": ":person_with_probing_cane_tone5:",
+    ":person_with_probing_cane_light_skin_tone:": ":person_with_probing_cane_tone1:",
+    ":person_with_probing_cane_medium_dark_skin_tone:": ":person_with_probing_cane_tone4:",
+    ":person_with_probing_cane_medium_light_skin_tone:": ":person_with_probing_cane_tone2:",
+    ":person_with_probing_cane_medium_skin_tone:": ":person_with_probing_cane_tone3:",
     ":pf:": ":flag_pf:",
     ":pg:": ":flag_pg:",
     ":ph:": ":flag_ph:",
+    ":pilot_dark_skin_tone:": ":pilot_tone5:",
+    ":pilot_light_skin_tone:": ":pilot_tone1:",
+    ":pilot_medium_dark_skin_tone:": ":pilot_tone4:",
+    ":pilot_medium_light_skin_tone:": ":pilot_tone2:",
+    ":pilot_medium_skin_tone:": ":pilot_tone3:",
     ":pinching_hand_dark_skin_tone:": ":pinching_hand_tone5:",
     ":pinching_hand_light_skin_tone:": ":pinching_hand_tone1:",
     ":pinching_hand_medium_dark_skin_tone:": ":pinching_hand_tone4:",
@@ -16392,6 +17364,11 @@ aliases = {
     ":saudiarabia:": ":flag_sa:",
     ":sb:": ":flag_sb:",
     ":sc:": ":flag_sc:",
+    ":scientist_dark_skin_tone:": ":scientist_tone5:",
+    ":scientist_light_skin_tone:": ":scientist_tone1:",
+    ":scientist_medium_dark_skin_tone:": ":scientist_tone4:",
+    ":scientist_medium_light_skin_tone:": ":scientist_tone2:",
+    ":scientist_medium_skin_tone:": ":scientist_tone3:",
     ":sd:": ":flag_sd:",
     ":se:": ":flag_se:",
     ":second_place_medal:": ":second_place:",
@@ -16415,6 +17392,11 @@ aliases = {
     ":sign_of_the_horns_tone3:": ":metal_tone3:",
     ":sign_of_the_horns_tone4:": ":metal_tone4:",
     ":sign_of_the_horns_tone5:": ":metal_tone5:",
+    ":singer_dark_skin_tone:": ":singer_tone5:",
+    ":singer_light_skin_tone:": ":singer_tone1:",
+    ":singer_medium_dark_skin_tone:": ":singer_tone4:",
+    ":singer_medium_light_skin_tone:": ":singer_tone2:",
+    ":singer_medium_skin_tone:": ":singer_tone3:",
     ":sj:": ":flag_sj:",
     ":sk:": ":flag_sk:",
     ":skeleton:": ":skull:",
@@ -16453,6 +17435,11 @@ aliases = {
     ":ss:": ":flag_ss:",
     ":st:": ":flag_st:",
     ":stop_sign:": ":octagonal_sign:",
+    ":student_dark_skin_tone:": ":student_tone5:",
+    ":student_light_skin_tone:": ":student_tone1:",
+    ":student_medium_dark_skin_tone:": ":student_tone4:",
+    ":student_medium_light_skin_tone:": ":student_tone2:",
+    ":student_medium_skin_tone:": ":student_tone3:",
     ":studio_microphone:": ":microphone2:",
     ":stuffed_pita:": ":stuffed_flatbread:",
     ":superhero_dark_skin_tone:": ":superhero_tone5:",
@@ -16485,6 +17472,16 @@ aliases = {
     ":table_tennis:": ":ping_pong:",
     ":tc:": ":flag_tc:",
     ":td:": ":flag_td:",
+    ":teacher_dark_skin_tone:": ":teacher_tone5:",
+    ":teacher_light_skin_tone:": ":teacher_tone1:",
+    ":teacher_medium_dark_skin_tone:": ":teacher_tone4:",
+    ":teacher_medium_light_skin_tone:": ":teacher_tone2:",
+    ":teacher_medium_skin_tone:": ":teacher_tone3:",
+    ":technologist_dark_skin_tone:": ":technologist_tone5:",
+    ":technologist_light_skin_tone:": ":technologist_tone1:",
+    ":technologist_medium_dark_skin_tone:": ":technologist_tone4:",
+    ":technologist_medium_light_skin_tone:": ":technologist_tone2:",
+    ":technologist_medium_skin_tone:": ":technologist_tone3:",
     ":tf:": ":flag_tf:",
     ":tg:": ":flag_tg:",
     ":th:": ":flag_th:",
@@ -16925,14 +17922,24 @@ aliases = {
     ":women_holding_hands_dark_skin_tone_medium_light_skin_tone:": ":women_holding_hands_tone5_tone2:",
     ":women_holding_hands_dark_skin_tone_medium_skin_tone:": ":women_holding_hands_tone5_tone3:",
     ":women_holding_hands_light_skin_tone:": ":women_holding_hands_tone1:",
+    ":women_holding_hands_light_skin_tone_dark_skin_tone:": ":women_holding_hands_tone1_tone5:",
+    ":women_holding_hands_light_skin_tone_medium_dark_skin_tone:": ":women_holding_hands_tone1_tone4:",
+    ":women_holding_hands_light_skin_tone_medium_light_skin_tone:": ":women_holding_hands_tone1_tone2:",
+    ":women_holding_hands_light_skin_tone_medium_skin_tone:": ":women_holding_hands_tone1_tone3:",
     ":women_holding_hands_medium_dark_skin_tone:": ":women_holding_hands_tone4:",
+    ":women_holding_hands_medium_dark_skin_tone_dark_skin_tone:": ":women_holding_hands_tone4_tone5:",
     ":women_holding_hands_medium_dark_skin_tone_light_skin_tone:": ":women_holding_hands_tone4_tone1:",
     ":women_holding_hands_medium_dark_skin_tone_medium_light_skin_tone:": ":women_holding_hands_tone4_tone2:",
     ":women_holding_hands_medium_dark_skin_tone_medium_skin_tone:": ":women_holding_hands_tone4_tone3:",
     ":women_holding_hands_medium_light_skin_tone:": ":women_holding_hands_tone2:",
+    ":women_holding_hands_medium_light_skin_tone_dark_skin_tone:": ":women_holding_hands_tone2_tone5:",
     ":women_holding_hands_medium_light_skin_tone_light_skin_tone:": ":women_holding_hands_tone2_tone1:",
+    ":women_holding_hands_medium_light_skin_tone_medium_dark_skin_tone:": ":women_holding_hands_tone2_tone4:",
+    ":women_holding_hands_medium_light_skin_tone_medium_skin_tone:": ":women_holding_hands_tone2_tone3:",
     ":women_holding_hands_medium_skin_tone:": ":women_holding_hands_tone3:",
+    ":women_holding_hands_medium_skin_tone_dark_skin_tone:": ":women_holding_hands_tone3_tone5:",
     ":women_holding_hands_medium_skin_tone_light_skin_tone:": ":women_holding_hands_tone3_tone1:",
+    ":women_holding_hands_medium_skin_tone_medium_dark_skin_tone:": ":women_holding_hands_tone3_tone4:",
     ":women_holding_hands_medium_skin_tone_medium_light_skin_tone:": ":women_holding_hands_tone3_tone2:",
     ":world_map:": ":map:",
     ":worship_symbol:": ":place_of_worship:",

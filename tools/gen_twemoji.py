@@ -157,6 +157,14 @@ SPECIAL_EMOJI = {
         "name": "kiss: man, man",
         "unicode": "1f468-200d-2764-fe0f-200d-1f48b-200d-1f468"
     },
+
+    # Transgender sign
+    ":transgender_sign:": {
+        "category": "symbols",
+        "name": "transgender sign",
+        "unicode": "26a7"
+    },
+
     # Transgender flag
     ":transgender_flag:": {
         "category": "flags",
@@ -191,7 +199,7 @@ IGNORE_EMOJI = [
 def parse(repo, tag, jtag, emojis, emoji_aliases):
     """Save test files."""
 
-    asset_path = os.path.join(current_dir, 'tags', repo, repo, 'assets', 'ai')
+    asset_path = os.path.join(current_dir, 'tags', repo, repo, 'assets', 'svg')
 
     emoji_db = {}
     shortnames = set()
@@ -199,8 +207,8 @@ def parse(repo, tag, jtag, emojis, emoji_aliases):
     unsupported = []
 
     for asset in os.listdir(asset_path):
-        if os.path.isfile(os.path.join(asset_path, asset)) and asset.endswith('.ai'):
-            unicode_value = asset[:-3]
+        if os.path.isfile(os.path.join(asset_path, asset)) and asset.endswith('.svg'):
+            unicode_value = asset[:-4]
             unicode_alt = unicode_value
             codes = unicode_alt.split('-')
             diff = 4 - len(codes[0])
