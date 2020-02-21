@@ -1,5 +1,0 @@
-__default__: {}
-
-extrarawhtml:
-  extensions:
-    pymdownx.extrarawhtml:

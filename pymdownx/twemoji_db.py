@@ -2,7 +2,6 @@
 
 Names from emojione database. Do not edit by hand.
 """
-from __future__ import unicode_literals
 version = "v12.1.3"
 index_version = "5.0.5"
 name = "twemoji"

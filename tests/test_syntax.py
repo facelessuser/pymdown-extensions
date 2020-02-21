@@ -1,5 +1,4 @@
 """Test extension syntax."""
-from __future__ import unicode_literals
 import os
 import markdown
 import difflib

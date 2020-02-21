@@ -11,14 +11,11 @@ for documentation.
 Copyright The Python Markdown Project
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 """
-from __future__ import unicode_literals
 from markdown import Extension
+import warnings
 import re
-from . import util
-if util.MD32:  # pragma: no cover
-    from markdown.extensions import md_in_html as module
-else:  # pragma: no cover
-    from markdown.extensions import extra as module
+from .util import PymdownxDeprecationWarning
+from markdown.extensions import md_in_html as module
 
 
 class ExtraRawHtmExtension(Extension):
@@ -27,8 +24,9 @@ class ExtraRawHtmExtension(Extension):
     def extendMarkdown(self, md):
         """Register extension instances."""
 
-        util.PymdownxDeprecationWarning(
-            "'extrarawhtml' extension is deprecated, 'markdown.extensions.md_in_html' should be used instead"
+        warnings.warn(
+            "'extrarawhtml' extension is deprecated, 'markdown.extensions.md_in_html' should be used instead",
+            PymdownxDeprecationWarning
         )
 
         md.registerExtension(self)

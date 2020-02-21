@@ -1,5 +1,4 @@
 """Test `uniprops`."""
-from __future__ import unicode_literals
 from pymdownx import util
 import unittest
 import pytest

@@ -1,5 +1,4 @@
 """Run the unittests or update unitest compare files."""
-from __future__ import unicode_literals
 import argparse
 from tests import test_syntax
 from tests import test_targeted

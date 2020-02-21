@@ -1,5 +1,4 @@
 """Test cases for Highlight."""
-from __future__ import unicode_literals
 from .. import util
 import pymdownx.arithmatex as arithmatex
 

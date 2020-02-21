@@ -13,8 +13,6 @@ strips out the `STX` and `ETX` characters.
 Copyright 2014 - 2018 Isaac Muse <isaacmuse@gmail.com>
 """
 
-from __future__ import absolute_import
-from __future__ import unicode_literals
 from markdown import Extension
 from markdown.util import STX, ETX
 from markdown.preprocessors import Preprocessor

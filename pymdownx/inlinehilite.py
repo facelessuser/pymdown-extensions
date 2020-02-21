@@ -15,8 +15,6 @@ use CodeHilite to source its settings or pymdownx.highlight.
 Copyright 2014 - 2017 Isaac Muse <isaacmuse@gmail.com>
 """
 
-from __future__ import absolute_import
-from __future__ import unicode_literals
 from markdown import Extension
 from markdown.inlinepatterns import InlineProcessor
 from markdown import util as md_util
