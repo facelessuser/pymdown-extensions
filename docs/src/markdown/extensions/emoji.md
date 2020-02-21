@@ -147,6 +147,7 @@ parameter.  Pass the actual function reference, not a string. If you need to cre
         :woman_levitate_tone3:
         :woman_levitate_tone4:
         :woman_levitate_tone5:
+
         :woman_in_business_suit_levitating_tone1:
         :woman_in_business_suit_levitating_tone2:
         :woman_in_business_suit_levitating_tone3:
@@ -160,13 +161,7 @@ parameter.  Pass the actual function reference, not a string. If you need to cre
         :woman_in_tuxedo_tone4:
         :woman_in_tuxedo_tone5:
 
-        :men_wrestling:
-        :women_wrestling:
-
-        :couplekiss_woman_man:
-        :couplekiss_woman_woman:
-        :couplekiss_man_man:
-
+        :transgender_sign:
         :transgender_flag:
         ```
 

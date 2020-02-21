@@ -130,33 +130,14 @@ SPECIAL_EMOJI = {
         "name": "woman in tuxedo: dark skin tone",
         "unicode": "1f935-1f3ff-200d-2640-fe0f"
     },
-    # Gendered wrestling (not supported in Unicode spec)
-    ":men_wrestling:": {
-        "category": "activity",
-        "name": "men wrestling",
-        "unicode": "1f93c-200d-2642-fe0f"
+
+    # Transgender sign
+    ":transgender_sign:": {
+        "category": "symbols",
+        "name": "transgender sign",
+        "unicode": "26a7"
     },
-    ":women_wrestling:": {
-        "category": "activity",
-        "name": "women wrestling",
-        "unicode": "1f93c-200d-2640-fe0f"
-    },
-    # Gendered couple kiss (not supported in Unicode spec)
-    ":couplekiss_woman_man:": {
-        "category": "people",
-        "name": "kiss: woman, man",
-        "unicode": "1f469-200d-2764-fe0f-200d-1f48b-200d-1f468"
-    },
-    ":couplekiss_woman_woman:": {
-        "category": "people",
-        "name": "kiss: woman, woman",
-        "unicode": "1f469-200d-2764-fe0f-200d-1f48b-200d-1f469"
-    },
-    ":couplekiss_man_man:": {
-        "category": "people",
-        "name": "kiss: man, man",
-        "unicode": "1f468-200d-2764-fe0f-200d-1f48b-200d-1f468"
-    },
+
     # Transgender flag
     ":transgender_flag:": {
         "category": "flags",
@@ -191,7 +172,7 @@ IGNORE_EMOJI = [
 def parse(repo, tag, jtag, emojis, emoji_aliases):
     """Save test files."""
 
-    asset_path = os.path.join(current_dir, 'tags', repo, repo, 'assets', 'ai')
+    asset_path = os.path.join(current_dir, 'tags', repo, repo, 'assets', 'svg')
 
     emoji_db = {}
     shortnames = set()
@@ -199,8 +180,8 @@ def parse(repo, tag, jtag, emojis, emoji_aliases):
     unsupported = []
 
     for asset in os.listdir(asset_path):
-        if os.path.isfile(os.path.join(asset_path, asset)) and asset.endswith('.ai'):
-            unicode_value = asset[:-3]
+        if os.path.isfile(os.path.join(asset_path, asset)) and asset.endswith('.svg'):
+            unicode_value = asset[:-4]
             unicode_alt = unicode_value
             codes = unicode_alt.split('-')
             diff = 4 - len(codes[0])

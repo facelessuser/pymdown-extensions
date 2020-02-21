@@ -1,5 +1,10 @@
 # Changelog
 
+## 7.0
+
+- **NEW**: Upgrade to Twemoji 12.1.5.
+- **FIX**: Ensure ExtraRawHTML raises a deprecation warning.
+
 ## 7.0b2
 
 Please see [Release Notes](./release.md#upgrading-to-70) for details on upgrading to 7.0.
