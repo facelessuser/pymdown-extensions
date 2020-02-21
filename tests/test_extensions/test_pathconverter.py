@@ -1,5 +1,4 @@
 """Test cases for PathConverter."""
-from __future__ import unicode_literals
 from .. import util
 import os
 

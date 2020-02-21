@@ -24,7 +24,7 @@ class TestWaringings(unittest.TestCase):
 
 
 class TestExtraRawHtml(util.MdCase):
-    """Test extr raw HTML."""
+    """Test extra raw HTML."""
 
     extension = ['pymdownx.extrarawhtml']
     extension_configs = {}

@@ -5,9 +5,7 @@ MIT license.
 
 Copyright (c) 2017 Isaac Muse <isaacmuse@gmail.com>
 """
-from __future__ import unicode_literals
 from markdown.inlinepatterns import InlineProcessor
-from markdown.__meta__ import __version_info__
 import xml.etree.ElementTree as etree
 from collections import namedtuple
 import sys

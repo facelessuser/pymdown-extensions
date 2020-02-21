@@ -1,5 +1,4 @@
 """Test cases for SuperFences."""
-from __future__ import unicode_literals
 from .. import util
 import unittest
 import markdown

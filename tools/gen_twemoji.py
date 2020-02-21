@@ -275,7 +275,6 @@ def parse(repo, tag, jtag, emojis, emoji_aliases):
     with open('../pymdownx/twemoji_db.py', 'w') as f:
         # Dump emoji db to file and strip out PY2 unicode specifiers
         f.write('"""Twemoji autogen.\n\nNames from emojione database. Do not edit by hand.\n"""\n')
-        f.write('from __future__ import unicode_literals\n')
         f.write('version = "%s"\n' % tag)
         f.write('index_version = "%s"\n' % jtag)
         f.write('name = "twemoji"\n')
