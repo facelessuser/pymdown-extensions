@@ -385,9 +385,6 @@ couple_with_heart :couple_with_heart:<br>
 couple_with_heart_woman_man :couple_with_heart_woman_man:<br>
 couple_ww :couple_ww:<br>
 couplekiss :couplekiss:<br>
-couplekiss_man_man :couplekiss_man_man:<br>
-couplekiss_woman_man :couplekiss_woman_man:<br>
-couplekiss_woman_woman :couplekiss_woman_woman:<br>
 cow2 :cow2:<br>
 cow :cow:<br>
 cowboy :cowboy:<br>

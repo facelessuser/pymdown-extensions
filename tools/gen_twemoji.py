@@ -130,33 +130,6 @@ SPECIAL_EMOJI = {
         "name": "woman in tuxedo: dark skin tone",
         "unicode": "1f935-1f3ff-200d-2640-fe0f"
     },
-    # Gendered wrestling (not supported in Unicode spec)
-    ":men_wrestling:": {
-        "category": "activity",
-        "name": "men wrestling",
-        "unicode": "1f93c-200d-2642-fe0f"
-    },
-    ":women_wrestling:": {
-        "category": "activity",
-        "name": "women wrestling",
-        "unicode": "1f93c-200d-2640-fe0f"
-    },
-    # Gendered couple kiss (not supported in Unicode spec)
-    ":couplekiss_woman_man:": {
-        "category": "people",
-        "name": "kiss: woman, man",
-        "unicode": "1f469-200d-2764-fe0f-200d-1f48b-200d-1f468"
-    },
-    ":couplekiss_woman_woman:": {
-        "category": "people",
-        "name": "kiss: woman, woman",
-        "unicode": "1f469-200d-2764-fe0f-200d-1f48b-200d-1f469"
-    },
-    ":couplekiss_man_man:": {
-        "category": "people",
-        "name": "kiss: man, man",
-        "unicode": "1f468-200d-2764-fe0f-200d-1f48b-200d-1f468"
-    },
 
     # Transgender sign
     ":transgender_sign:": {

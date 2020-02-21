@@ -1938,21 +1938,6 @@ emoji = {
         "name": "kiss",
         "unicode": "1f48f"
     },
-    ":couplekiss_man_man:": {
-        "category": "people",
-        "name": "kiss: man, man",
-        "unicode": "1f468-200d-2764-fe0f-200d-1f48b-200d-1f468"
-    },
-    ":couplekiss_woman_man:": {
-        "category": "people",
-        "name": "kiss: woman, man",
-        "unicode": "1f469-200d-2764-fe0f-200d-1f48b-200d-1f468"
-    },
-    ":couplekiss_woman_woman:": {
-        "category": "people",
-        "name": "kiss: woman, woman",
-        "unicode": "1f469-200d-2764-fe0f-200d-1f48b-200d-1f469"
-    },
     ":cow2:": {
         "category": "nature",
         "name": "cow",
