@@ -47,15 +47,15 @@ let mkdocs = null
 const config = {
   files: {
     scss: "./docs/src/scss/*.scss",
-    css: "./docs/theme/*.css",
+    css: "./docs/theme/assets/pymdownx-extras/*.css",
     es6: "./docs/src/js/*.js",
-    js: ["./docs/theme/*.js", "./docs/theme/*.js.map"],
+    js: ["./docs/theme/assets/pymdownx-extras/*.js", "./docs/theme/assets/pymdownx-extras/*.js.map"],
     gulp: "gulpfile.babel.js",
     mkdocsSrc: "./docs/src/mkdocs.yml"
   },
   folders: {
     mkdocs: "./site",
-    theme: "./docs/theme",
+    theme: "./docs/theme/assets/pymdownx-extras",
     src: "./docs/src"
   },
   compress: {
