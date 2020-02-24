@@ -1,50 +1,49 @@
 .md-typeset {
   .headerlink {
-    font: normal 400 1rem "Material Icons";
+    width: 0.9rem;
+    height: 0.9rem;
+    background-image: url("svg/material/link.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 0.9rem;
     vertical-align: middle;
+    filter: invert(60%);
+    visibility: visible;
 
     @media only screen and (min-width: 76.1876em) {
-      margin-left: -1.2rem;
+      margin-left: -1rem;
       float: left;
     }
   }
 
   h1 {
     .headerlink {
-      margin-top: -0.3rem;
-
       @media only screen and (min-width: 76.1876em) {
-        margin-top: 0.4rem;
+        margin-top: 0.5rem;
       }
     }
   }
 
   h2 {
     .headerlink {
-      margin-top: -0.2rem;
-
       @media only screen and (min-width: 76.1876em) {
-        margin-top: 0.3rem;
+        margin-top: 0.45rem;
       }
     }
   }
 
   h3 {
     .headerlink {
-      margin-top: -0.15rem;
-
       @media only screen and (min-width: 76.1876em) {
-        margin-top: 0.2rem;
+        margin-top: 0.35rem;
       }
     }
   }
 
   h4 {
     .headerlink {
-      margin-top: -0.1rem;
-
       @media only screen and (min-width: 76.1876em) {
-        margin-top: 0.1rem;
+        margin-top: 0.2rem;
       }
     }
   }
@@ -52,11 +51,14 @@
   h5,
   h6 {
     .headerlink {
-      margin-top: -0.1rem;
-
       @media only screen and (min-width: 76.1876em) {
-        margin-top: 0;
+        margin-top: 0.05rem;
       }
     }
+  }
+
+  .headerlink:hover,
+  [id]:target .headerlink {
+    filter: invert(50%) sepia(93%) saturate(1300%) hue-rotate(197deg);
   }
 }

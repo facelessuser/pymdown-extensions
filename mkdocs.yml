@@ -65,7 +65,7 @@ nav:
 markdown_extensions:
   - markdown.extensions.toc:
       slugify: !!python/name:pymdownx.slugs.uslugify
-      permalink: "\ue157"
+      permalink: ""
   - markdown.extensions.admonition:
   - markdown.extensions.smarty:
       smart_quotes: false
@@ -75,7 +75,7 @@ markdown_extensions:
   - markdown.extensions.tables:
   - markdown.extensions.abbr:
   - markdown.extensions.footnotes:
-  - pymdownx.extrarawhtml:
+  - markdown.extensions.md_in_html:
   - pymdownx.superfences:
       preserve_tabs: true
       custom_fences:
@@ -137,7 +137,7 @@ extra:
     - icon: brands/github
       link: https://github.com/facelessuser
 extra_css:
-  - assets/pymdownx-extras/extra-4177b12573.css
+  - assets/pymdownx-extras/extra-72a175a13b.css
 extra_javascript:
   - assets/pymdownx-extras/extra-0d9305e748.js
 
