@@ -1,14 +1,17 @@
+$md-link-color-hover: hsl(218, 100%, 63%);
+$md-link-color-deactivated: #888888;
+
 .md-typeset {
   .headerlink {
     width: 0.9rem;
     height: 0.9rem;
-    background-image: url("svg/material/link.svg");
-    background-repeat: no-repeat;
-    background-position: center;
+    background-color: $md-link-color-deactivated;
     background-size: 0.9rem;
+    mask-size: 0.9rem;
+    mask-repeat: no-repeat;
     vertical-align: middle;
-    filter: invert(60%);
     visibility: visible;
+    mask-image: inline-svg("./docs/src/svg/material/link.svg");
 
     @media only screen and (min-width: 76.1876em) {
       margin-left: -1rem;
@@ -59,6 +62,6 @@
 
   .headerlink:hover,
   [id]:target .headerlink {
-    filter: invert(50%) sepia(93%) saturate(1300%) hue-rotate(197deg);
+    background-color: $md-link-color-hover;
   }
 }

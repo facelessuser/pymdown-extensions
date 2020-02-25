@@ -1,5 +1,12 @@
+$md-link-color: hsl(207, 94%, 54%);
+$md-link-color-hover: hsl(218, 100%, 63%);
+
 // General styling for repository link icons
 .md-typeset {
+  a[href^="mailto:"]::before {
+    mask-image: inline-svg("./docs/src/svg/fontawesome/envelope.svg");
+  }
+
   .magiclink-repository,
   .magiclink-compare,
   .magiclink-commit,
@@ -11,16 +18,17 @@
       width: 1em;
       height: 1em;
       padding-right: 1em;
-      background-repeat: no-repeat;
-      background-position: center;
+      background-color: $md-link-color;
       background-size: 1em;
-      filter: invert(50%) sepia(93%) saturate(1300%) hue-rotate(197deg);
+      mask-size: 1em;
+      mask-repeat: no-repeat;
+      mask-position: 0.2em;
       content: "\a0";
     }
-  }
 
-  a[href^="mailto:"]::before {
-    background-image: url("svg/fontawesome/envelope.svg");
+    &:hover::before {
+      background-color: $md-link-color-hover;
+    }
   }
 }
 
@@ -34,7 +42,7 @@
   .md-typeset {
     .magiclink-#{$name} {
       &::before {
-        background-image: url("svg/octicons/#{$icon}.svg");
+        mask-image: inline-svg("./docs/src/svg/octicons/#{$icon}.svg");
       }
     }
   }
@@ -49,7 +57,7 @@
   .md-typeset {
     .magiclink-repository.magiclink-#{$name} {
       &::before {
-        background-image: url("svg/fontawesome/#{$icon}.svg");
+        mask-image: inline-svg("./docs/src/svg/fontawesome/#{$icon}.svg");
       }
     }
   }
