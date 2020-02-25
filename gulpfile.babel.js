@@ -26,6 +26,7 @@ import revReplace from "gulp-rev-replace"
 import vinylPaths from "vinyl-paths"
 import del from "del"
 import touch from "gulp-touch-fd"
+import sassInlineSVG from "sass-inline-svg-utf8"
 
 /* Argument Flags */
 const args = yargs
@@ -92,11 +93,13 @@ gulp.task("scss:build:sass", () => {
   ].filter(t => t)
 
   return gulp.src(config.files.scss)
-    .pipe(sass({includePaths: [
-      "node_modules/modularscale-sass/stylesheets",
-      "node_modules/material-design-color",
-      "node_modules/material-shadows"
-    ]}).on("error", sass.logError))
+    .pipe(sass({
+      functions: sassInlineSVG(),
+      includePaths: [
+        "node_modules/modularscale-sass/stylesheets",
+        "node_modules/material-design-color",
+        "node_modules/material-shadows"]
+    }).on("error", sass.logError))
     .pipe(postcss(processors))
     .pipe(concat("extra.css"))
 
