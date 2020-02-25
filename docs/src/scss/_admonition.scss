@@ -3,7 +3,7 @@
   .admonition {
     @each $names, $appearance in (
       settings config: $clr-purple-a700 "settings",
-      new: $clr-yellow-a700 "new_releases"
+      new: $clr-yellow-a700 "alert-decagram"
     ) {
       $tint: nth($appearance, 1);
       $icon: nth($appearance, 2);
@@ -20,8 +20,12 @@
 
           // Icon
           &::before {
-            color: $tint;
-            content: $icon;
+            width: 1rem;
+            height: 1rem;
+            background-color: $tint;
+            background-size: 1rem;
+            mask-image: inline-svg("./docs/src/svg/material/#{$icon}.svg");
+            content: "\a0";
           }
         }
       }

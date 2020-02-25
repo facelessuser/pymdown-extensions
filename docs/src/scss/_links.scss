@@ -4,7 +4,7 @@ $md-link-color-hover: hsl(218, 100%, 63%);
 // General styling for repository link icons
 .md-typeset {
   a[href^="mailto:"]::before {
-    mask-image: inline-svg("./docs/src/svg/fontawesome/envelope.svg");
+    mask-image: inline-svg("./docs/src/svg/material/mail.svg");
   }
 
   .magiclink-repository,
@@ -20,9 +20,6 @@ $md-link-color-hover: hsl(218, 100%, 63%);
       padding-right: 1em;
       background-color: $md-link-color;
       background-size: 1em;
-      mask-size: 1em;
-      mask-repeat: no-repeat;
-      mask-position: 0.2em;
       content: "\a0";
     }
 
@@ -34,15 +31,15 @@ $md-link-color-hover: hsl(218, 100%, 63%);
 
 // Assign icons to repository links
 @each $name, $icon in (
-  "commit": "git-commit",
-  "compare": "git-compare",
-  "pull": "git-pull-request",
-  "issue": "issue-opened"
+  "commit": "source-commit",
+  "compare": "source-branch",
+  "pull": "source-pull",
+  "issue": "alert-circle-outline"
 ) {
   .md-typeset {
     .magiclink-#{$name} {
       &::before {
-        mask-image: inline-svg("./docs/src/svg/octicons/#{$icon}.svg");
+        mask-image: inline-svg("./docs/src/svg/material/#{$icon}.svg");
       }
     }
   }
@@ -50,14 +47,14 @@ $md-link-color-hover: hsl(218, 100%, 63%);
 
 // Assign icons to repository links
 @each $name, $icon in (
-  "github": "github",
+  "github": "github-circle",
   "gitlab": "gitlab",
   "bitbucket": "bitbucket"
 ) {
   .md-typeset {
     .magiclink-repository.magiclink-#{$name} {
       &::before {
-        mask-image: inline-svg("./docs/src/svg/fontawesome/#{$icon}.svg");
+        mask-image: inline-svg("./docs/src/svg/material/#{$icon}.svg");
       }
     }
   }
