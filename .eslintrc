@@ -78,6 +78,9 @@
         "let": 2,
         "const": 3
       },
+      "ignoredNodes": [
+        "TemplateLiteral"
+      ],
       "SwitchCase": 1
     }],
     "init-declarations": 2,
@@ -181,7 +184,7 @@
       }
     }],
     "strict": 2,
-    "template-curly-spacing": 2,
+    "template-curly-spacing": "off",
     "unicode-bom": 2,
     "valid-jsdoc": [1, {
       "prefer": {
