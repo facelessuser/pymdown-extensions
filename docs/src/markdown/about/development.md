@@ -69,7 +69,7 @@ mkdocs serve
 
 It isn't expected that people will need to mess with the theme, but if it is needed, a little additional work is
 required. The documents use the [Material][mkdocs-material] theme for [MkDocs][mkdocs] with some additional local tweaks
-and additions.  JavaScript additions are provided in `docs/src/js` and are in es2015 syntax and are converted to es5.
+and additions.  JavaScript additions are provided in `docs/src/js` and are in es2020 syntax and are converted to es5.
 Stylesheets are located at `docs/src/scss` and are written in SCSS, and are converted to CSS.  All conversions are done
 in a `Node.js` environment.  In order to get up and running, ensure you have a [`Node.js`](https://nodejs.org/en/)
 version >= 10. Then install the required modules with:

@@ -49,7 +49,7 @@ const config = {
   files: {
     scss: "./docs/src/scss/*.scss",
     css: "./docs/theme/assets/pymdownx-extras/*.css",
-    es6: "./docs/src/js/*.js",
+    jsSrc: "./docs/src/js/*.js",
     js: ["./docs/theme/assets/pymdownx-extras/*.js", "./docs/theme/assets/pymdownx-extras/*.js.map"],
     gulp: "gulpfile.babel.js",
     mkdocsSrc: "./docs/src/mkdocs.yml"
@@ -142,7 +142,7 @@ gulp.task("scss:clean", () => {
 // JavaScript processing
 // ------------------------------
 gulp.task("js:build:rollup", () => {
-  return gulp.src(config.files.es6)
+  return gulp.src(config.files.jsSrc)
     .pipe(gulpif(config.sourcemaps, sourcemaps.init()))
     .pipe(rollup({
       "output": {
@@ -187,14 +187,14 @@ gulp.task("js:build", gulp.series("js:build:rollup", () => {
 }))
 
 gulp.task("js:lint", () => {
-  return gulp.src([config.files.es6, config.files.gulp])
+  return gulp.src([config.files.jsSrc, config.files.gulp])
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError())
 })
 
 gulp.task("js:watch", () => {
-  gulp.watch(config.files.es6, gulp.series("js:build:rollup", "mkdocs:update"))
+  gulp.watch(config.files.jsSrc, gulp.series("js:build:rollup", "mkdocs:update"))
 })
 
 gulp.task("js:clean", () => {
