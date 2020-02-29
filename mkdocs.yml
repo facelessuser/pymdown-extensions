@@ -137,7 +137,7 @@ extra:
     - icon: brands/github
       link: https://github.com/facelessuser
 extra_css:
-  - assets/pymdownx-extras/extra-c43896e083.css
+  - assets/pymdownx-extras/extra-821c6c252c.css
 extra_javascript:
   - assets/pymdownx-extras/extra-0d9305e748.js
 
