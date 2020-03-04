@@ -17,7 +17,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0b2">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.0.0b2-1">
     
     
       
@@ -45,7 +45,7 @@
     
     
     
-      <link rel="stylesheet" href="../../extra-4177b12573.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-821c6c252c.css">
     
     
       
@@ -931,8 +931,8 @@
                   <a href="https://github.com/facelessuser/pymdown-extensions/tree/master/docs/src/markdown/about/development.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="development">Development<a class="headerlink" href="#development" title="Permanent link"></a></h1>
-<h2 id="project-layout">Project Layout<a class="headerlink" href="#project-layout" title="Permanent link"></a></h2>
+                <h1 id="development">Development<a class="headerlink" href="#development" title="Permanent link"></a></h1>
+<h2 id="project-layout">Project Layout<a class="headerlink" href="#project-layout" title="Permanent link"></a></h2>
 <p>There are a number of files for build, test, and continuous integration in the root of the project, but in general, the
 project is broken up like so.</p>
 <div class="highlight"><pre><span></span><code>├── docs
@@ -972,7 +972,7 @@ project is broken up like so.</p>
 </tr>
 </tbody>
 </table>
-<h2 id="coding-standards">Coding Standards<a class="headerlink" href="#coding-standards" title="Permanent link"></a></h2>
+<h2 id="coding-standards">Coding Standards<a class="headerlink" href="#coding-standards" title="Permanent link"></a></h2>
 <p>When writing code, the code should roughly conform to PEP8 and PEP257 suggestions.  The PyMdown Extensions project
 utilizes the Flake8 linter (with some additional plugins) to ensure code conforms (give or take some of the rules).
 When in doubt follow the formatting hints of existing code when adding or modifying files. existing files.  Listed below
@@ -988,7 +988,7 @@ are the modules used:</p>
 <div class="highlight"><pre><span></span><code>flake8
 </code></pre></div>
 
-<h2 id="building-and-editing-documents">Building and Editing Documents<a class="headerlink" href="#building-and-editing-documents" title="Permanent link"></a></h2>
+<h2 id="building-and-editing-documents">Building and Editing Documents<a class="headerlink" href="#building-and-editing-documents" title="Permanent link"></a></h2>
 <p>Documents are in Markdown (with with some additional syntax) and converted to HTML via Python Markdown and this
 extension bundle. If you would like to build and preview the documentation, you must have these packages installed:</p>
 <ul>
@@ -1008,10 +1008,10 @@ and have your browser preview update live.</p>
 <div class="highlight"><pre><span></span><code>mkdocs serve
 </code></pre></div>
 
-<h2 id="editing-document-theme">Editing Document Theme<a class="headerlink" href="#editing-document-theme" title="Permanent link"></a></h2>
+<h2 id="editing-document-theme">Editing Document Theme<a class="headerlink" href="#editing-document-theme" title="Permanent link"></a></h2>
 <p>It isn't expected that people will need to mess with the theme, but if it is needed, a little additional work is
 required. The documents use the <a href="https://github.com/squidfunk/mkdocs-material">Material</a> theme for <a href="https://github.com/mkdocs/mkdocs">MkDocs</a> with some additional local tweaks
-and additions.  JavaScript additions are provided in <code>docs/src/js</code> and are in es2015 syntax and are converted to es5.
+and additions.  JavaScript additions are provided in <code>docs/src/js</code> and are in es2020 syntax and are converted to es5.
 Stylesheets are located at <code>docs/src/scss</code> and are written in SCSS, and are converted to CSS.  All conversions are done
 in a <code>Node.js</code> environment.  In order to get up and running, ensure you have a <a href="https://nodejs.org/en/"><code>Node.js</code></a>
 version &gt;= 10. Then install the required modules with:</p>
@@ -1055,7 +1055,7 @@ configure <code>npm run serve</code> to call with Python instead of calling the 
 working directory first for a given module when importing, but if you call the MkDocs binary, it will instead import the
 installed <code>pymdown-extensions</code>. Configuring the <code>--mkdocs</code> option is also useful if <code>mkdocs</code> is not in your path, or you
 want to call with a specific version of Python.</p>
-<h2 id="spell-checking-documents">Spell Checking Documents<a class="headerlink" href="#spell-checking-documents" title="Permanent link"></a></h2>
+<h2 id="spell-checking-documents">Spell Checking Documents<a class="headerlink" href="#spell-checking-documents" title="Permanent link"></a></h2>
 <p>During validation, we build the docs and run a spell checker on them.  The spell checker uses <a class="magiclink magiclink-github magiclink-repository" href="https://github.com/facelessuser/pyspelling" title="GitHub Repository: facelessuser/pyspelling">facelessuser/pyspelling</a>
 and <a href="http://aspell.net/">Aspell</a>. As it can be trickier to run Aspell under Windows, it is not expected that everyone will install
 and run the spell checker locally.  In order to perform the spell check, it is expected you are setup to build the
@@ -1077,7 +1077,7 @@ sudo apt-get install aspell aspell-en
 
 <p>It should print out the files with the misspelled words if any are found.  If you find it prints words that are not
 misspelled, you can add them in the dictionary which is found in <code>docs/src/dictionary</code>.</p>
-<h2 id="validation-tests">Validation Tests<a class="headerlink" href="#validation-tests" title="Permanent link"></a></h2>
+<h2 id="validation-tests">Validation Tests<a class="headerlink" href="#validation-tests" title="Permanent link"></a></h2>
 <p>In order to preserve good code health, a test suite has been put together with pytest (<a class="magiclink magiclink-github magiclink-repository" href="https://github.com/pytest-dev/pytest" title="GitHub Repository: pytest-dev/pytest">pytest-dev/pytest</a>). There are
 currently two kinds of tests: syntax and targeted.  To run these tests, you can use the following command:</p>
 <p>If you wish to run the tests locally, the recommended way is with Tox, which is covered in <a href="#running-validation-with-tox">"Running Validation With
@@ -1092,7 +1092,7 @@ pip install -r requirements/test.txt
 <div class="highlight"><pre><span></span><code>python run_tests.py
 </code></pre></div>
 
-<h3 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link"></a></h3>
+<h3 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link"></a></h3>
 <p>Syntax tests are essentially text files containing Markdown. They are found under <code>tests/extensions</code>.  <code>test_syntax.py</code>
 scans all the files and converts the files to HTML with the extensions and options defined in
 <code>tests/extensions/tests.yml</code>.  They are then compared to the current stored HTML output.  If the two differ, the test
@@ -1117,7 +1117,7 @@ fails.</p>
 <div class="highlight"><pre><span></span><code>python run_tests.py --update --file tests/extensions/arithmatex.txt
 </code></pre></div>
 
-<h3 id="targeted">Targeted<a class="headerlink" href="#targeted" title="Permanent link"></a></h3>
+<h3 id="targeted">Targeted<a class="headerlink" href="#targeted" title="Permanent link"></a></h3>
 <p>Targeted tests are unit tests that target specific areas in the code and exercises them to ensure proper functionality.
 These tests are found in <code>test_targeted.py</code>.</p>
 <p>You can run <strong>only</strong> these tests from the root of the project with:</p>
@@ -1128,7 +1128,7 @@ These tests are found in <code>test_targeted.py</code>.</p>
 <div class="highlight"><pre><span></span><code>py.test tests/test_targeted.py
 </code></pre></div>
 
-<h3 id="running-validation-with-tox">Running Validation With Tox<a class="headerlink" href="#running-validation-with-tox" title="Permanent link"></a></h3>
+<h3 id="running-validation-with-tox">Running Validation With Tox<a class="headerlink" href="#running-validation-with-tox" title="Permanent link"></a></h3>
 <p>Tox (<a class="magiclink magiclink-github magiclink-repository" href="https://github.com/tox-dev/tox" title="GitHub Repository: tox-dev/tox">tox-dev/tox</a>) is a great way to run the validation tests, spelling checks, and linting in virtual environments so
 as not to mess with your current working environment. Tox will use the specified Python version for the given
 environment and create a virtual environment and install all the needed requirements (minus Aspell).  You could also
@@ -1157,7 +1157,7 @@ lint:</p>
 <div class="highlight"><pre><span></span><code>tox -e documents
 </code></pre></div>
 
-<h2 id="code-coverage">Code Coverage<a class="headerlink" href="#code-coverage" title="Permanent link"></a></h2>
+<h2 id="code-coverage">Code Coverage<a class="headerlink" href="#code-coverage" title="Permanent link"></a></h2>
 <p>When running the validation tests through Tox, it is setup to track code coverage via the Coverage
 (<a class="magiclink magiclink-bitbucket magiclink-repository" href="https://bitbucket.org/ned/coveragepy" title="Bitbucket Repository: ned/coveragepy">ned/coveragepy</a>) module.  Coverage is run on each <code>pyxx</code> environment.  If you've made changes to
 the code, you can clear the old coverage data:</p>
@@ -1168,7 +1168,7 @@ the code, you can clear the old coverage data:</p>
 HTML is output for each file in <code>.tox/pyXX-unittests/tmp</code>.  You can use these to see areas that are not
 covered/exercised yet with testing.</p>
 <p>You can checkout <code>tox.ini</code> to see how this is accomplished.</p>
-<h2 id="generating-emoji-indexes">Generating Emoji Indexes<a class="headerlink" href="#generating-emoji-indexes" title="Permanent link"></a></h2>
+<h2 id="generating-emoji-indexes">Generating Emoji Indexes<a class="headerlink" href="#generating-emoji-indexes" title="Permanent link"></a></h2>
 <p>The Emoji extension has emoji indexes generated from the source of Gemoji, EmojiOne, and Twemoji.  Below is the process
 for auto-generating these indexes.  In the case of Twemoji, it will also reference EmojiOne's short name index, so you
 may need to do both EmojiOne and Twemoji if the support is not satisfactory.</p>
@@ -1196,7 +1196,7 @@ regardless.</p>
                   <div class="md-source-date">
                     <small>
                       
-                        Last update: February 16, 2020
+                        Last update: February 27, 2020
                       
                     </small>
                   </div>
@@ -1285,8 +1285,8 @@ regardless.</p>
       
     </div>
     
-      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script>
-      <script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
+      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script><script id="__lang" type="application/json">
+        {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
       </script>
       <script>
         app = initialize({
@@ -1295,12 +1295,12 @@ regardless.</p>
             search: "../../assets/javascripts/worker/search.926ffd9e.min.js"
           },
           feature: {
-            instant: false
+            instant: true
           }
         });
       </script>
       
-        <script src="../../extra-0d9305e748.js"></script>
+        <script src="../../assets/pymdownx-extras/extra-0d9305e748.js"></script>
       
     
   </body>

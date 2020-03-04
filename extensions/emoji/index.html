@@ -17,7 +17,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0b2">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.0.0b2-1">
     
     
       
@@ -45,7 +45,7 @@
     
     
     
-      <link rel="stylesheet" href="../../extra-4177b12573.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-821c6c252c.css">
     
     
       
@@ -905,8 +905,8 @@
                   <a href="https://github.com/facelessuser/pymdown-extensions/tree/master/docs/src/markdown/extensions/emoji.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="emoji">Emoji<a class="headerlink" href="#emoji" title="Permanent link"></a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
+                <h1 id="emoji">Emoji<a class="headerlink" href="#emoji" title="Permanent link"></a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
 <p>The Emoji extension adds support for inserting emoji via simple short names enclosed within colons: <code>:short_name:</code>.
 This is accomplished by using a short name index to map easy to remember names to associated Unicode data. The Unicode
 data is then converted into actual Unicode emoji characters and/or special HTML elements (usually images) that represent
@@ -923,7 +923,7 @@ the emoji.</p>
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.emoji&#39;</span><span class="p">])</span>
 </code></pre></div>
 
-<h2 id="supported-emoji-providers">Supported Emoji Providers<a class="headerlink" href="#supported-emoji-providers" title="Permanent link"></a></h2>
+<h2 id="supported-emoji-providers">Supported Emoji Providers<a class="headerlink" href="#supported-emoji-providers" title="Permanent link"></a></h2>
 <p>There are a number of emoji short name conventions that people may be aware of. These conventions are always tied to a
 specific emoji set. These conventions differ because there is no official Unicode short name convention. At the present,
 Emoji chooses to focus on three specific emoji sets:</p>
@@ -980,7 +980,7 @@ ensure proper usage and attributions.</p>
 uses JoyPixels' index as the Twemoji repository does not ship with a short name index. The indexes contain the emoji
 names, short names, values, etc.; everything needed to insert Unicode emoji characters or specially crafted HTML
 elements.</p>
-<h2 id="emoji-output-formats">Emoji Output Formats<a class="headerlink" href="#emoji-output-formats" title="Permanent link"></a></h2>
+<h2 id="emoji-output-formats">Emoji Output Formats<a class="headerlink" href="#emoji-output-formats" title="Permanent link"></a></h2>
 <p>Depending on your needs, you may have different requirements for how emoji get displayed in your documents. You may want
 to use PNG images, or maybe you really like SVG images. Maybe you just want to convert short names to the actual Unicode
 code points.  There are a variety of ways you may want to output emoji, and the Emoji extension has you covered.</p>
@@ -989,7 +989,7 @@ in the case of a custom emoji) and generates an HTML output. Not all of the prov
 emoji index, but there are a few that should work for all three. Check out
 <a href="#default-emoji-generators">Default Emoji Generators</a> or <a href="#custom-emoji-generators">Custom Emoji Generators</a> to learn
 more.</p>
-<h2 id="default-emoji-indexes">Default Emoji Indexes<a class="headerlink" href="#default-emoji-indexes" title="Permanent link"></a></h2>
+<h2 id="default-emoji-indexes">Default Emoji Indexes<a class="headerlink" href="#default-emoji-indexes" title="Permanent link"></a></h2>
 <p>By default, Emoji provides three indexes: <code>emojione</code>, <code>gemoji</code>, and <code>twemoji</code>.  All indexes are generated from the most
 recent official release tag source (in the case of Twemoji, short names are acquired from the generated index in
 <a class="magiclink magiclink-github magiclink-repository" href="https://github.com/JoyPixels/emoji-toolkit" title="GitHub Repository: JoyPixels/emoji-toolkit">JoyPixels/emoji-toolkit</a>). They can be used by passing in one of the three functions below via the <code>emoji_index</code>
@@ -1044,6 +1044,7 @@ for consistency with other like emoji.</p>
 :woman_levitate_tone3:
 :woman_levitate_tone4:
 :woman_levitate_tone5:
+
 :woman_in_business_suit_levitating_tone1:
 :woman_in_business_suit_levitating_tone2:
 :woman_in_business_suit_levitating_tone3:
@@ -1057,13 +1058,7 @@ for consistency with other like emoji.</p>
 :woman_in_tuxedo_tone4:
 :woman_in_tuxedo_tone5:
 
-:men_wrestling:
-:women_wrestling:
-
-:couplekiss_woman_man:
-:couplekiss_woman_woman:
-:couplekiss_man_man:
-
+:transgender_sign:
 :transgender_flag:
 </code></pre></div>
 
@@ -1090,7 +1085,7 @@ for consistency with other like emoji.</p>
 <p>To see the full list of short names for this index, see the index <a href="https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/gemoji_db.py">source</a>.</p>
 </dd>
 </dl>
-<h2 id="default-emoji-generators">Default Emoji Generators<a class="headerlink" href="#default-emoji-generators" title="Permanent link"></a></h2>
+<h2 id="default-emoji-generators">Default Emoji Generators<a class="headerlink" href="#default-emoji-generators" title="Permanent link"></a></h2>
 <p>Emoji provides six default emoji generators. PNG output and Unicode code point output are supported for all three
 indexes. SVG output is only supported for Twemoji and the older 2.2.7 EmojiOne set. PNG sprites and the "Font Awesome"
 like format are only supported by EmojiOne.  SVG sprites is only supported by the 2.2.7 EmojiOne.</p>
@@ -1285,7 +1280,7 @@ output can be Unicode characters, HTML entities, or even just the short name dep
 <p>There are no generator specific options.</p>
 </dd>
 </dl>
-<h2 id="custom-emoji-indexes">Custom Emoji Indexes<a class="headerlink" href="#custom-emoji-indexes" title="Permanent link"></a></h2>
+<h2 id="custom-emoji-indexes">Custom Emoji Indexes<a class="headerlink" href="#custom-emoji-indexes" title="Permanent link"></a></h2>
 <p>In order to provide a custom index, the Emoji extension must be given a function that returns a suitable emoji index. No
 parameters are passed to the function.  The function should simply return the custom index in the following format.</p>
 <div class="highlight"><pre><span></span><code><span class="n">emoji_index</span> <span class="o">=</span> <span class="p">{</span>
@@ -1360,7 +1355,7 @@ parameters are passed to the function.  The function should simply return the cu
 <span class="p">}</span>
 </code></pre></div>
 
-<h2 id="custom-emoji-generators">Custom Emoji Generators<a class="headerlink" href="#custom-emoji-generators" title="Permanent link"></a></h2>
+<h2 id="custom-emoji-generators">Custom Emoji Generators<a class="headerlink" href="#custom-emoji-generators" title="Permanent link"></a></h2>
 <p>Each different kind of output is controlled by a different emoji generator function, but all generator functions have
 the same input format. The format is shown below in case you need to create your own custom output generator.</p>
 <dl>
@@ -1431,7 +1426,7 @@ for <code>alt</code>.  If you are parsing an index with custom emoji, like Gemoj
 </div>
 </dd>
 </dl>
-<h2 id="using-with-mkdocs">Using with MkDocs<a class="headerlink" href="#using-with-mkdocs" title="Permanent link"></a></h2>
+<h2 id="using-with-mkdocs">Using with MkDocs<a class="headerlink" href="#using-with-mkdocs" title="Permanent link"></a></h2>
 <p>This project uses these extensions with <a href="https://github.com/mkdocs/mkdocs">MkDocs</a> to generate the documentation.  It might not be obvious how to
 set the index or generator functions in MkDocs' YAML settings file, but it is actually pretty easy.  The functions are
 referenced like you would import them in Python except you also append them with a special prefix to let the YAML module
@@ -1442,13 +1437,13 @@ reference it like this: <code>!!python/name:pymdownx.emoji.to_svg</code> (or you
       <span class="nt">emoji_generator</span><span class="p">:</span> <span class="kt">!!python/name:pymdownx.emoji.to_svg</span>
 </code></pre></div>
 
-<h2 id="emoji-index-updates">Emoji Index Updates<a class="headerlink" href="#emoji-index-updates" title="Permanent link"></a></h2>
+<h2 id="emoji-index-updates">Emoji Index Updates<a class="headerlink" href="#emoji-index-updates" title="Permanent link"></a></h2>
 <p>The Emoji extension might at times be behind on having indexes built from the latest repositories. We try to keep the
 indexes updated with new releases, but if they fall out of date, you can open an issue on the this project's issue page
 to alert the maintainer(s) and they will update them when someone gets a chance.  Pull requests are also welcome.  The
 process for updating the indexes is automated, so it is fairly easy to do a pull request.  See
 <a href="../../about/development/#generating-emoji-indexes">Generating Emoji Indexes</a> for more info.</p>
-<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
 <table>
 <thead>
 <tr>
@@ -1533,7 +1528,7 @@ documentation.</p>
                   <div class="md-source-date">
                     <small>
                       
-                        Last update: February 20, 2020
+                        Last update: February 21, 2020
                       
                     </small>
                   </div>
@@ -1622,8 +1617,8 @@ documentation.</p>
       
     </div>
     
-      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script>
-      <script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
+      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script><script id="__lang" type="application/json">
+        {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
       </script>
       <script>
         app = initialize({
@@ -1632,12 +1627,12 @@ documentation.</p>
             search: "../../assets/javascripts/worker/search.926ffd9e.min.js"
           },
           feature: {
-            instant: false
+            instant: true
           }
         });
       </script>
       
-        <script src="../../extra-0d9305e748.js"></script>
+        <script src="../../assets/pymdownx-extras/extra-0d9305e748.js"></script>
       
     
   </body>

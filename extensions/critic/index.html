@@ -17,7 +17,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0b2">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.0.0b2-1">
     
     
       
@@ -45,7 +45,7 @@
     
     
     
-      <link rel="stylesheet" href="../../extra-4177b12573.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-821c6c252c.css">
     
     
       
@@ -835,8 +835,8 @@
                   <a href="https://github.com/facelessuser/pymdown-extensions/tree/master/docs/src/markdown/extensions/critic.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="critic">Critic<a class="headerlink" href="#critic" title="Permanent link"></a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
+                <h1 id="critic">Critic<a class="headerlink" href="#critic" title="Permanent link"></a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
 <p>Critic is an extension that adds handling and support of <a href="http://criticmarkup.com/">Critic Markup</a> which uses a special syntax to
 represent edits to a Markdown document.  This extension runs before all other extensions to parse the critic edits.</p>
 <p>Critic allows you to automatically accept edits or reject the edits and render the output accordingly. It also allows
@@ -846,7 +846,7 @@ for visually displaying the changes in HTML output (<a href="#limitations-with-p
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.critic&#39;</span><span class="p">])</span>
 </code></pre></div>
 
-<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link"></a></h2>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link"></a></h2>
 <p>Critic Markup uses special markup to insert, delete, substitute, highlight, and comment.</p>
 <p>To insert or remove text you can use <code class="highlight">{++insert me++}</code> and <code class="highlight">{--remove me--}</code>
 respectively.  You can also denote a substitution with <code class="highlight">{~~substitute this~&gt;with this~~}</code>.</p>
@@ -929,7 +929,7 @@ General block handling.
 
 <p><p>Here is some <del class="critic"><em>incorrect</em></del> Markdown.  I am adding this<ins class="critic"> here</ins>.  Here is some more <del class="critic">text that I am removing</del>text.  And here is even more <ins class="critic">text that I am </ins>adding.<del class="critic break">&nbsp;</del><ins class="critic">  </ins>Paragraph was deleted and replaced with some spaces.<del class="critic">  </del></p><ins class="critic break">&nbsp;</ins><p>Spaces were removed and a paragraph was added.</p><p>And here is a comment on <mark class="critic">some text</mark><span class="critic comment">This works quite well. I just wanted to comment on it.</span>. Substitutions <del class="critic">is</del><ins class="critic">are</ins> great!</p><p>General block handling.</p><del class="critic block"><ul><li>test remove</li><li>test remove</li><li>test remove<ul><li>test remove</li></ul></li><li>test remove</li></ul></del><ins class="critic block"><ul><li>test add</li><li>test add</li><li>test add<ul><li>test add</li></ul></li><li>test add</li></ul></ins></p>
 </div>
-<h2 id="limitations-with-previewing-critic-markup">Limitations with Previewing Critic Markup<a class="headerlink" href="#limitations-with-previewing-critic-markup" title="Permanent link"></a></h2>
+<h2 id="limitations-with-previewing-critic-markup">Limitations with Previewing Critic Markup<a class="headerlink" href="#limitations-with-previewing-critic-markup" title="Permanent link"></a></h2>
 <p>Parsing CriticMarkup is very straight forward.  If you need to reject critic marks or accept them, the Critic extension
 will work quite well.  But when trying to render the edits visually <strong>and</strong> trying to convert the document to HTML,
 things can get ugly.  I think this is the one unfortunate problem with CriticMarkup.  The existence of the critic edits
@@ -942,7 +942,7 @@ post-processor to clean up some of the weird side effects of the injection (only
 difficult to fix).  It injects some classes into the edit region's HTML output which allows for CSS styling.  There is
 probably a lot more post-processing that could be done to fix more issues, but whether this extension will be going
 further down that road has not yet been decided.</p>
-<h2 id="css">CSS<a class="headerlink" href="#css" title="Permanent link"></a></h2>
+<h2 id="css">CSS<a class="headerlink" href="#css" title="Permanent link"></a></h2>
 <p>Critic renders the CriticMarkup with the following classes.</p>
 <table>
 <thead>
@@ -1085,7 +1085,7 @@ further down that road has not yet been decided.</p>
 </code></pre></div>
 
 </details>
-<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
 <table>
 <thead>
 <tr>
@@ -1202,8 +1202,8 @@ further down that road has not yet been decided.</p>
       
     </div>
     
-      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script>
-      <script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
+      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script><script id="__lang" type="application/json">
+        {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
       </script>
       <script>
         app = initialize({
@@ -1212,12 +1212,12 @@ further down that road has not yet been decided.</p>
             search: "../../assets/javascripts/worker/search.926ffd9e.min.js"
           },
           feature: {
-            instant: false
+            instant: true
           }
         });
       </script>
       
-        <script src="../../extra-0d9305e748.js"></script>
+        <script src="../../assets/pymdownx-extras/extra-0d9305e748.js"></script>
       
     
   </body>

@@ -17,7 +17,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0b2">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.0.0b2-1">
     
     
       
@@ -45,7 +45,7 @@
     
     
     
-      <link rel="stylesheet" href="../../extra-4177b12573.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-821c6c252c.css">
     
     
       
@@ -877,8 +877,8 @@
                   <a href="https://github.com/facelessuser/pymdown-extensions/tree/master/docs/src/markdown/extensions/arithmatex.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="arithmatex">Arithmatex<a class="headerlink" href="#arithmatex" title="Permanent link"></a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
+                <h1 id="arithmatex">Arithmatex<a class="headerlink" href="#arithmatex" title="Permanent link"></a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
 <p>Arithmatex is an extension that preserves LaTeX math equations during the Markdown conversion process so that they can
 be used with libraries like <a href="http://www.mathjax.org/">MathJax</a>. If you prefer to use something other than MathJax, Arithmatex can output
 a more generic format suitable for other libraries like <a href="https://github.com/Khan/KaTeX">KaTeX</a>.</p>
@@ -890,7 +890,7 @@ individually be disabled if desired.</p>
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.arithmatex&#39;</span><span class="p">])</span>
 </code></pre></div>
 
-<h2 id="input-format">Input Format<a class="headerlink" href="#input-format" title="Permanent link"></a></h2>
+<h2 id="input-format">Input Format<a class="headerlink" href="#input-format" title="Permanent link"></a></h2>
 <p>By default, <a href="#options"><code>smart_dollar</code></a> mode is enabled for the <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> inline variant. With <code>smart_dollar</code> it is
 expected that the opening token (<code class="highlight"><span class="s">$</span><span class="nb"></span></code>) is to be followed by a non-whitespace character, and the closing to be
 preceded by a non-white-space character.  This is to help avoid false positives when using the dollar sign in
@@ -909,7 +909,10 @@ will capture any <code class="highlight"><span class="s">$</span><span class="nb
 <p>When using MathJax, for best results, it is advised to not use <a href="#options"><code>generic</code></a> mode, and configure MathJax
 without the <code>text2jax</code> extension since MathJax automatically detects Arithmatex's default output.</p>
 <p>If using generic mode (for libraries like KaTeX), Arithmatex will convert dollars to the form <code class="highlight"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code> in the
-HTML output. This is because <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> is extremely problematic to scan for, which is why MathJax and KaTeX disable <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> by default in their plain text scanners, and why Arithmatex enables <code>smart_dollar</code> by default when scanning for <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code>. It is advised, if outputting in in <code>generic</code> mode, to not configure your JavaScript library to look for <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> and instead look for <code class="highlight"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code>, and let Arithmatex's handle <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code>.</p>
+HTML output. This is because <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> is extremely problematic to scan for, which is why MathJax and KaTeX
+disable <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> by default in their plain text scanners, and why Arithmatex enables <code>smart_dollar</code> by default
+when scanning for <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code>. It is advised, if outputting in in <code>generic</code> mode, to not configure your JavaScript
+library to look for <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> and instead look for <code class="highlight"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code>, and let Arithmatex's handle <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code>.</p>
 </div>
 <p>For block forms, the block must start with the appropriate opening for the block type: <code class="highlight"><span class="sb">$$</span><span class="nb"></span></code>, <code class="highlight"><span class="sb">\[</span><span class="nb"></span></code>, and
 <code class="highlight"><span class="k">\begin</span><span class="nb">{}</span></code> for the respective search pattern. The block must also end with the proper respective end: <code class="highlight"><span class="sb">$$</span><span class="nb"></span></code>,
@@ -952,14 +955,15 @@ E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c
 \end{align}</script>
 </div>
 </div>
-<h2 id="mathjax-output-format">MathJax Output Format<a class="headerlink" href="#mathjax-output-format" title="Permanent link"></a></h2>
-<p>The math equations will be wrapped in a special MathJax script tag and embedded into the HTML. MathJax can already find
-these scripts, so there is no need to include and configure the <code>tex2jax.js</code> extension when setting up MathJax. The tag
-will be <code class="highlight"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;math/tex&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code> for inline and
-<code class="highlight"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;math/tex; mode=display&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code> for block.</p>
-<p>By default, Arithmatex will also generate a preview span with the class <code>MathJax_Preview</code> that MathJax will hide when
-the math content is actually loaded. If you do not want to see the preview, simply set <code>preview</code> to <code class="highlight"><span class="kc">False</span></code>.</p>
-<h2 id="generic-output-format">Generic Output Format<a class="headerlink" href="#generic-output-format" title="Permanent link"></a></h2>
+<h2 id="mathjax-output-format">MathJax Output Format<a class="headerlink" href="#mathjax-output-format" title="Permanent link"></a></h2>
+<p>The math equations will be wrapped in a special MathJax script tag and embedded into the HTML. This format does not
+require the <code>tex2jax.js</code> extension when setting up MathJax. The tag will be in the form of
+<code class="highlight"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;math/tex&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code> for inline and <code class="highlight"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;math/tex; mode=display&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code> for
+block.</p>
+<p>By default, Arithmatex will also generate a preview span with the class <code>MathJax_Preview</code> that can/should be hidden when
+the math content is actually loaded. If you do not want to see generate the preview, simply set <code>preview</code> to
+<code class="highlight"><span class="kc">False</span></code>.</p>
+<h2 id="generic-output-format">Generic Output Format<a class="headerlink" href="#generic-output-format" title="Permanent link"></a></h2>
 <p>If <a href="#options"><code>generic</code></a> is enabled, the extension will escape necessary symbols and normalize all output to be wrapped
 in the more reliable <code class="highlight"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code> for inline math and <code class="highlight"><span class="sb">\[</span><span class="nb">...</span><span class="s">\]</span></code> for display math (unless changed via
 <code>tex_inline_wrap</code> and <code>tex_block_wrap</code> in the <a href="#options">options</a>). Lastly every everything is inserted into a <code>span</code> or
@@ -968,16 +972,17 @@ in the more reliable <code class="highlight"><span class="s">\(</span><span clas
 <code class="highlight"><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;arithmatex&quot;</span><span class="p">&gt;</span>\(...\)<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span></code> in the HTML. Blocks would be normalized from <code class="highlight"><span class="sb">$$</span><span class="nb">...</span><span class="s">$$</span></code> to
 <code class="highlight"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;arithmatex&quot;</span><span class="p">&gt;</span>\[...\]<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code>.  In the case of <code class="highlight"><span class="k">\begin</span><span class="nb">{}</span>...<span class="k">\end</span><span class="nb">{}</span></code>, begins and ends will not be
 replaced, only wrapped: <code class="highlight"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;arithmatex&quot;</span><span class="p">&gt;</span>\[\begin{}...\end{}\]<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code>.</p>
-<h2 id="loading-mathjax">Loading MathJax<a class="headerlink" href="#loading-mathjax" title="Permanent link"></a></h2>
+<h2 id="loading-mathjax">Loading MathJax<a class="headerlink" href="#loading-mathjax" title="Permanent link"></a></h2>
 <p>Arithmatex requires you to provide the MathJax library and provide and configure it to your liking.  The recommended way
 of including MathJax is to use the CDN. Latest version at time of writing this is found below.</p>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">MathJax 2</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">MathJax 3</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://polyfill.io/v3/polyfill.min.js?features=es6&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">MathJax 3</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Legacy: MathJax 2</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 
 </div>
@@ -988,16 +993,7 @@ Arithmatex's <a href="#mathjax-output-format">MathJax Output Format</a>, and one
 <a href="#generic-output-format">Generic Output Format</a> by using <code>tex2jax</code>. These are a good starting point,so feel free to take
 them and configure them further. Please see the <a href="http://www.mathjax.org/">MathJax</a> site for more info on using MathJax
 extensions/plugins and configuring those extensions/plugins.</p>
-<div class="tabbed-set" data-tabs="2:4"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Default - MathJax 2</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
-  <span class="nx">config</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;MMLorHTML.js&quot;</span><span class="p">],</span>
-  <span class="nx">jax</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;input/TeX&quot;</span><span class="p">,</span> <span class="s2">&quot;output/HTML-CSS&quot;</span><span class="p">,</span> <span class="s2">&quot;output/NativeMML&quot;</span><span class="p">],</span>
-  <span class="nx">extensions</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;MathMenu.js&quot;</span><span class="p">,</span> <span class="s2">&quot;MathZoom.js&quot;</span><span class="p">]</span>
-<span class="p">});</span>
-</code></pre></div>
-
-</div>
-<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Default - MathJax 3</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="2:4"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Default - MathJax 3</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nb">window</span><span class="p">.</span><span class="nx">MathJax</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">ignoreHtmlClass</span><span class="o">:</span> <span class="s1">&#39;tex2jax_ignore&#39;</span><span class="p">,</span>
@@ -1024,7 +1020,32 @@ extensions/plugins and configuring those extensions/plugins.</p>
 </code></pre></div>
 
 </div>
-<input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><label for="__tabbed_2_3">Generic - MathJax 2</label><div class="tabbed-content">
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Legacy: Default - MathJax 2</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
+  <span class="nx">config</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;MMLorHTML.js&quot;</span><span class="p">],</span>
+  <span class="nx">jax</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;input/TeX&quot;</span><span class="p">,</span> <span class="s2">&quot;output/HTML-CSS&quot;</span><span class="p">,</span> <span class="s2">&quot;output/NativeMML&quot;</span><span class="p">],</span>
+  <span class="nx">extensions</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;MathMenu.js&quot;</span><span class="p">,</span> <span class="s2">&quot;MathZoom.js&quot;</span><span class="p">]</span>
+<span class="p">});</span>
+</code></pre></div>
+
+</div>
+<input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><label for="__tabbed_2_3">Generic - MathJax 3</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="nb">window</span><span class="p">.</span><span class="nx">MathJax</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">tex</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">inlineMath</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s2">&quot;\\(&quot;</span><span class="p">,</span><span class="s2">&quot;\\)&quot;</span><span class="p">]</span> <span class="p">],</span>
+    <span class="nx">displayMath</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s2">&quot;\\[&quot;</span><span class="p">,</span><span class="s2">&quot;\\]&quot;</span><span class="p">]</span> <span class="p">],</span>
+    <span class="nx">processEscapes</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="nx">processEnvironments</span><span class="o">:</span> <span class="kc">true</span>
+  <span class="p">},</span>
+  <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">ignoreHtmlClass</span><span class="o">:</span> <span class="s2">&quot;.*|&quot;</span><span class="p">,</span>
+    <span class="nx">processHtmlClass</span><span class="o">:</span> <span class="s2">&quot;arithmatex&quot;</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+
+</div>
+<input id="__tabbed_2_4" name="__tabbed_2" type="radio" /><label for="__tabbed_2_4">Legacy: Generic - MathJax 2</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
   <span class="nx">config</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;MMLorHTML.js&quot;</span><span class="p">],</span>
   <span class="nx">extensions</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;tex2jax.js&quot;</span><span class="p">],</span>
@@ -1041,29 +1062,13 @@ extensions/plugins and configuring those extensions/plugins.</p>
 </code></pre></div>
 
 </div>
-<input id="__tabbed_2_4" name="__tabbed_2" type="radio" /><label for="__tabbed_2_4">Generic - MathJax 3</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="nb">window</span><span class="p">.</span><span class="nx">MathJax</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">tex</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">inlineMath</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s2">&quot;\\(&quot;</span><span class="p">,</span><span class="s2">&quot;\\)&quot;</span><span class="p">]</span> <span class="p">],</span>
-    <span class="nx">displayMath</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s2">&quot;\\[&quot;</span><span class="p">,</span><span class="s2">&quot;\\]&quot;</span><span class="p">]</span> <span class="p">],</span>
-    <span class="nx">processEscapes</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-    <span class="nx">processEnvironments</span><span class="o">:</span> <span class="kc">true</span>
-  <span class="p">},</span>
-  <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">ignoreHtmlClass</span><span class="o">:</span> <span class="s2">&quot;.*|&quot;</span><span class="p">,</span>
-    <span class="nx">processHtmlClass</span><span class="o">:</span> <span class="s2">&quot;arithmatex&quot;</span>
-  <span class="p">}</span>
-<span class="p">};</span>
-</code></pre></div>
-
-</div>
 </div>
 <p>Notice that in our generic configuration, we set up <code>tex2jax</code> to only load <code>arithmatex</code> classes by excluding all
 elements and adding an exception for the <code>arithmatex</code> class. We also don't bother adding <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> and
 <code class="highlight"><span class="sb">$$</span><span class="nb">...</span><span class="s">$$</span></code> to the <code>inlineMath</code> and <code>displayMath</code> options as Arithmatex converts them respectively to
 <code class="highlight"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code> and <code class="highlight"><span class="sb">\[</span><span class="nb">...</span><span class="s">\]</span></code> in the HTML output (unless altered in <a href="#options">Options</a>). But we do have to enable
 <code>processEnvironments</code> to properly process <code class="highlight"><span class="k">\begin</span><span class="nb">{}</span>...<span class="k">\end</span><span class="nb">{}</span></code> blocks.</p>
-<h2 id="loading-katex">Loading KaTeX<a class="headerlink" href="#loading-katex" title="Permanent link"></a></h2>
+<h2 id="loading-katex">Loading KaTeX<a class="headerlink" href="#loading-katex" title="Permanent link"></a></h2>
 <p>In order to use KaTeX, the generic output format is required. You will need to include the KaTeX library:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
@@ -1117,7 +1122,7 @@ to <code class="highlight"><span class="s">\(</span><span class="nb">...</span><
 <span class="p">}());</span>
 </code></pre></div>
 
-<h2 id="alternative-math-blocks">Alternative Math Blocks<a class="headerlink" href="#alternative-math-blocks" title="Permanent link"></a></h2>
+<h2 id="alternative-math-blocks">Alternative Math Blocks<a class="headerlink" href="#alternative-math-blocks" title="Permanent link"></a></h2>
 <div class="admonition tip">
 <p class="admonition-title">Alternate Math Format</p>
 <p>The alternate math format functions use the <strong>default</strong> style that embeds math content in scripts, not the
@@ -1223,7 +1228,7 @@ can create math fences:</p>
 </tr>
 </tbody>
 </table>
-<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
 <table>
 <thead>
 <tr>
@@ -1278,25 +1283,41 @@ can create math fences:</p>
 </tr>
 </tbody>
 </table>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    config: ["MMLorHTML.js"],
-    jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
-    extensions: ["MathMenu.js", "MathZoom.js"],
-    TeX: {
-        TagSide: "right",
-        TagIndent: ".8em",
-        MultLineWidth: "85%",
-        equationNumbers: {
-            autoNumber: "AMS",
+<script>
+window.MathJax = {
+  tex: {
+    tagSide: "right",
+    tagIndent: ".8em",
+    multlineWidth: "85%",
+    tags: "ams"
+  },
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process',
+    renderActions: {
+      find: [10, function (doc) {
+        for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+          const display = !!node.type.match(/; *mode=display/);
+          const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+          const text = document.createTextNode('');
+          const sibling = node.previousElementSibling;
+          node.parentNode.replaceChild(text, node);
+          math.start = {node: text, delim: '', n: 0};
+          math.end = {node: text, delim: '', n: 0};
+          doc.math.push(math);
+          if (sibling && sibling.matches('.MathJax_Preview')) {
+            sibling.parentNode.removeChild(sibling);
+          }
         }
-    },
-    showProcessingMessages: false,
-    messageStyle: 'none'
-});
+      }, '']
+    }
+  }
+};
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
                 
                   
                 
@@ -1306,7 +1327,7 @@ MathJax.Hub.Config({
                   <div class="md-source-date">
                     <small>
                       
-                        Last update: February 12, 2020
+                        Last update: March 4, 2020
                       
                     </small>
                   </div>
@@ -1395,8 +1416,8 @@ MathJax.Hub.Config({
       
     </div>
     
-      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script>
-      <script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
+      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script><script id="__lang" type="application/json">
+        {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
       </script>
       <script>
         app = initialize({
@@ -1405,12 +1426,12 @@ MathJax.Hub.Config({
             search: "../../assets/javascripts/worker/search.926ffd9e.min.js"
           },
           feature: {
-            instant: false
+            instant: true
           }
         });
       </script>
       
-        <script src="../../extra-0d9305e748.js"></script>
+        <script src="../../assets/pymdownx-extras/extra-0d9305e748.js"></script>
       
     
   </body>

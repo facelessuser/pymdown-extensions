@@ -17,7 +17,7 @@
       
       
       <link rel="shortcut icon" href="../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0b2">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.0.0b2-1">
     
     
       
@@ -45,7 +45,7 @@
     
     
     
-      <link rel="stylesheet" href="../extra-4177b12573.css">
+      <link rel="stylesheet" href="../assets/pymdownx-extras/extra-821c6c252c.css">
     
     
       
@@ -871,35 +871,35 @@
                   <a href="https://github.com/facelessuser/pymdown-extensions/tree/master/docs/src/markdown/miscellaneous_extras.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="miscellaneous-extras">Miscellaneous Extras<a class="headerlink" href="#miscellaneous-extras" title="Permanent link"></a></h1>
-<h2 id="alternate-slugify">Alternate Slugify<a class="headerlink" href="#alternate-slugify" title="Permanent link"></a></h2>
+                <h1 id="miscellaneous-extras">Miscellaneous Extras<a class="headerlink" href="#miscellaneous-extras" title="Permanent link"></a></h1>
+<h2 id="alternate-slugify">Alternate Slugify<a class="headerlink" href="#alternate-slugify" title="Permanent link"></a></h2>
 <p>Python Markdown's default slugify strips out all Unicode chars. To better handle Unicode, a couple of optional slugify
 options have been provided. These are very simple slugify options. There are many slugify options out there, some of
 which are very sophisticated. Some may prefer using one of those, but if you just want something simple, these might
 fill that requirement.</p>
-<h3 id="uslugify"><code>uslugify</code><a class="headerlink" href="#uslugify" title="Permanent link"></a></h3>
+<h3 id="uslugify"><code>uslugify</code><a class="headerlink" href="#uslugify" title="Permanent link"></a></h3>
 <p>In order to handle Unicode characters in slugs better, a slugify has been included at <code>pymdownx.slugs.uslugify</code>. This
 assumes you are encoding your HTML as UTF-8.  UTF-8 Unicode should be okay in your slugs in modern browsers. <code>uslugify</code>
 and normalizes the Unicode with the <a href="http://unicode.org/reports/tr15/#Norm_Forms"><code>NFC</code></a> form, and then strips out non-word Unicode characters (<code>-</code> is
 allowed to pass through as well). Spaces are replaced with the provided separator.  Lastly, the entire string is
 lowercased. You can override <abbr title="Table of Contents">Toc</abbr>'s default slugify by feeding in this function via the <code>slugify</code> parameter.</p>
-<h3 id="uslugify_encoded"><code>uslugify_encoded</code><a class="headerlink" href="#uslugify_encoded" title="Permanent link"></a></h3>
+<h3 id="uslugify_encoded"><code>uslugify_encoded</code><a class="headerlink" href="#uslugify_encoded" title="Permanent link"></a></h3>
 <p>If you aren't encoding your HTML as UTF-8, or prefer the safer percent encoded Unicode slugs, you can use
 <code>pymdownx.slugs.uslugify_encoded</code>. This is just like <a href="#uslugify"><code>uslugify</code></a> except that it percent encodes Unicode
 characters. You can override <abbr title="Table of Contents">Toc</abbr>'s default slugify by feeding in this function via the <code>slugify</code> parameter.</p>
-<h3 id="uslugify_cased"><code>uslugify_cased</code><a class="headerlink" href="#uslugify_cased" title="Permanent link"></a></h3>
+<h3 id="uslugify_cased"><code>uslugify_cased</code><a class="headerlink" href="#uslugify_cased" title="Permanent link"></a></h3>
 <p>If you prefer to keep the casing of your Unicode slugs, this might be the slug for you. This is just like
 <a href="#uslugify"><code>uslugify</code></a> except that it preserves the case of the original text. You can override <abbr title="Table of Contents">Toc</abbr>'s default slugify
 by feeding in this function via the <code>slugify</code> parameter.</p>
-<h3 id="uslugify_cased_encoded"><code>uslugify_cased_encoded</code><a class="headerlink" href="#uslugify_cased_encoded" title="Permanent link"></a></h3>
+<h3 id="uslugify_cased_encoded"><code>uslugify_cased_encoded</code><a class="headerlink" href="#uslugify_cased_encoded" title="Permanent link"></a></h3>
 <p>If you aren't encoding your HTML as UTF-8, or prefer the safer percent encoded Unicode slugs <em>and</em> you prefer to keep
 the casing of your Unicode slugs, you can use <code>pymdownx.slugs.uslugify_cased_encoded</code>. This is just like
 <a href="#uslugify"><code>uslugify</code></a> except that it percent encodes Unicode characters <em>and</em> it preserves the case of the original
 text. You can override <abbr title="Table of Contents">Toc</abbr>'s default slugify by feeding in this function via the <code>slugify</code> parameter.</p>
-<h3 id="gfm"><code>gfm</code><a class="headerlink" href="#gfm" title="Permanent link"></a></h3>
+<h3 id="gfm"><code>gfm</code><a class="headerlink" href="#gfm" title="Permanent link"></a></h3>
 <p>If you are looking for a GitHub like slug, this may be for you. This is just like <a href="#uslugify"><code>uslugify</code></a> except that
 ASCII chars are lowercased while Unicode chars are not.</p>
-<h3 id="gfm_encoded"><code>gfm_encoded</code><a class="headerlink" href="#gfm_encoded" title="Permanent link"></a></h3>
+<h3 id="gfm_encoded"><code>gfm_encoded</code><a class="headerlink" href="#gfm_encoded" title="Permanent link"></a></h3>
 <p>If you are looking for a GitHub like slug, this may be for you. This is just like <a href="#uslugify"><code>uslugify</code></a> except that it
 percent encodes Unicode characters and ASCII chars are lowercased while Unicode chars are not.</p>
                 
@@ -1000,8 +1000,8 @@ percent encodes Unicode characters and ASCII chars are lowercased while Unicode 
       
     </div>
     
-      <script src="../assets/javascripts/bundle.bd6ef04a.min.js"></script>
-      <script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
+      <script src="../assets/javascripts/bundle.bd6ef04a.min.js"></script><script id="__lang" type="application/json">
+        {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
       </script>
       <script>
         app = initialize({
@@ -1010,12 +1010,12 @@ percent encodes Unicode characters and ASCII chars are lowercased while Unicode 
             search: "../assets/javascripts/worker/search.926ffd9e.min.js"
           },
           feature: {
-            instant: false
+            instant: true
           }
         });
       </script>
       
-        <script src="../extra-0d9305e748.js"></script>
+        <script src="../assets/pymdownx-extras/extra-0d9305e748.js"></script>
       
     
   </body>

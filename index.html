@@ -17,7 +17,7 @@
       
       
       <link rel="shortcut icon" href="assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0b2">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.0.0b2-1">
     
     
       
@@ -45,7 +45,7 @@
     
     
     
-      <link rel="stylesheet" href="extra-4177b12573.css">
+      <link rel="stylesheet" href="assets/pymdownx-extras/extra-821c6c252c.css">
     
     
       
@@ -789,8 +789,8 @@
                   <a href="https://github.com/facelessuser/pymdown-extensions/tree/master/docs/src/markdown/index.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="pymdown-extensions">PyMdown Extensions<a class="headerlink" href="#pymdown-extensions" title="Permanent link"></a></h1>
-<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link"></a></h2>
+                <h1 id="pymdown-extensions">PyMdown Extensions<a class="headerlink" href="#pymdown-extensions" title="Permanent link"></a></h1>
+<h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link"></a></h2>
 <p>PyMdown Extensions is a collection of extensions for Python Markdown.  Keep in mind, the PyMdown extensions were
 designed to work with the default extensions, so your mileage may vary in regards to compatibility when paired with
 other 3<sup>rd</sup> party extensions.</p>
@@ -808,7 +808,7 @@ include it in Python Markdown like so:</p>
 <p>Please read the <a href="usage_notes/">Usage Notes</a> for information on extension compatibility and general notes to be
 aware of when using these extensions.</p>
 </div>
-<h2 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link"></a></h2>
+<h2 id="extensions">Extensions<a class="headerlink" href="#extensions" title="Permanent link"></a></h2>
 <div class="admonition summary">
 <p class="admonition-title">Arithmatex</p>
 <p><a href="extensions/arithmatex/">Arithmatex</a> is an extension that preserves LaTeX math equations (<span><span class="MathJax_Preview">\frac{\sqrt x}{y^3}</span><script type="math/tex">\frac{\sqrt x}{y^3}</script></span>)
@@ -978,25 +978,41 @@ sub<sub>scripts</sub> and adds an easy way to place <del>text</del> in a <code c
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script>
 
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    config: ["MMLorHTML.js"],
-    jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
-    extensions: ["MathMenu.js", "MathZoom.js"],
-    TeX: {
-        TagSide: "right",
-        TagIndent: ".8em",
-        MultLineWidth: "85%",
-        equationNumbers: {
-            autoNumber: "AMS",
+<script>
+window.MathJax = {
+  tex: {
+    tagSide: "right",
+    tagIndent: ".8em",
+    multlineWidth: "85%",
+    tags: "ams"
+  },
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process',
+    renderActions: {
+      find: [10, function (doc) {
+        for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+          const display = !!node.type.match(/; *mode=display/);
+          const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+          const text = document.createTextNode('');
+          const sibling = node.previousElementSibling;
+          node.parentNode.replaceChild(text, node);
+          math.start = {node: text, delim: '', n: 0};
+          math.end = {node: text, delim: '', n: 0};
+          doc.math.push(math);
+          if (sibling && sibling.matches('.MathJax_Preview')) {
+            sibling.parentNode.removeChild(sibling);
+          }
         }
-    },
-    showProcessingMessages: false,
-    messageStyle: 'none'
-});
+      }, '']
+    }
+  }
+};
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
                 
                   
                 
@@ -1081,8 +1097,8 @@ MathJax.Hub.Config({
       
     </div>
     
-      <script src="assets/javascripts/bundle.bd6ef04a.min.js"></script>
-      <script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
+      <script src="assets/javascripts/bundle.bd6ef04a.min.js"></script><script id="__lang" type="application/json">
+        {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
       </script>
       <script>
         app = initialize({
@@ -1091,12 +1107,12 @@ MathJax.Hub.Config({
             search: "assets/javascripts/worker/search.926ffd9e.min.js"
           },
           feature: {
-            instant: false
+            instant: true
           }
         });
       </script>
       
-        <script src="extra-0d9305e748.js"></script>
+        <script src="assets/pymdownx-extras/extra-0d9305e748.js"></script>
       
     
   </body>

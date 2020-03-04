@@ -17,7 +17,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0b2">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.0.0b2-1">
     
     
       
@@ -45,7 +45,7 @@
     
     
     
-      <link rel="stylesheet" href="../../extra-4177b12573.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-821c6c252c.css">
     
     
       
@@ -687,6 +687,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#70" class="md-nav__link">
+    7.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#70b2" class="md-nav__link">
     7.0b2
   </a>
@@ -1062,6 +1069,13 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
+  <a href="#70" class="md-nav__link">
+    7.0
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#70b2" class="md-nav__link">
     7.0b2
   </a>
@@ -1395,8 +1409,13 @@
                   <a href="https://github.com/facelessuser/pymdown-extensions/tree/master/docs/src/markdown/about/changelog.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link"></a></h1>
-<h2 id="70b2">7.0b2<a class="headerlink" href="#70b2" title="Permanent link"></a></h2>
+                <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link"></a></h1>
+<h2 id="70">7.0<a class="headerlink" href="#70" title="Permanent link"></a></h2>
+<ul>
+<li><strong>NEW</strong>: Upgrade to Twemoji 12.1.5.</li>
+<li><strong>FIX</strong>: Ensure ExtraRawHTML raises a deprecation warning.</li>
+</ul>
+<h2 id="70b2">7.0b2<a class="headerlink" href="#70b2" title="Permanent link"></a></h2>
 <p>Please see <a href="../release/#upgrading-to-70">Release Notes</a> for details on upgrading to 7.0.</p>
 <ul>
 <li><strong>NEW</strong>: SuperFences, if using the attribute list format (<code>``` {.lang .additional_class, linenums="1"}</code>) allows
@@ -1413,7 +1432,7 @@
   default fence logic.</li>
 <li><strong>NEW</strong>: SuperFences and InlineHilite no longer sync settings from CodeHilite.</li>
 </ul>
-<h2 id="70b1">7.0b1<a class="headerlink" href="#70b1" title="Permanent link"></a></h2>
+<h2 id="70b1">7.0b1<a class="headerlink" href="#70b1" title="Permanent link"></a></h2>
 <p>Please see <a href="../release/#upgrading-to-70">Release Notes</a> for details on upgrading to 7.0.</p>
 <ul>
 <li><strong>NEW</strong>: Add new Tabbed extension for general purpose tabbed content in Markdown.</li>
@@ -1423,7 +1442,7 @@
   in SuperFences. This new option will be retired with SuperFences tabbed content feature in 8.0.</li>
 <li><strong>FIX</strong>: Numerous deprecation warnings associated with the recent release of Python Markdown 3.2.</li>
 </ul>
-<h2 id="63">6.3<a class="headerlink" href="#63" title="Permanent link"></a></h2>
+<h2 id="63">6.3<a class="headerlink" href="#63" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: <code>pymdownx.extrarawhtml</code> is now deprecated in favor of Python Markdown's <code>md_in_html</code> extension found in the
   3.2 release.</li>
@@ -1433,12 +1452,12 @@
 <li><strong>NEW</strong>: Remove deprecated <code>version</code> and <code>version_info</code>.</li>
 <li><strong>FIX</strong>: Allow single word hostnames in MagicLink auto-link.</li>
 </ul>
-<h2 id="621">6.2.1<a class="headerlink" href="#621" title="Permanent link"></a></h2>
+<h2 id="621">6.2.1<a class="headerlink" href="#621" title="Permanent link"></a></h2>
 <ul>
 <li><strong>FIX</strong>: Fix issue in PathConverter where Windows path conversion from relative to absolute doesn't always work in all
   browsers.</li>
 </ul>
-<h2 id="62">6.2<a class="headerlink" href="#62" title="Permanent link"></a></h2>
+<h2 id="62">6.2<a class="headerlink" href="#62" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Upgrade Twemoji to use 12.1.3.</li>
 <li><strong>NEW</strong>: Downgrade and lock EmojiOne version 2.2.7. 2.2.7 is the last truly free version of EmojiOne. This is the
@@ -1449,7 +1468,7 @@
 <li><strong>FIX</strong>: MagicLink: match the auto-link pattern in the current Markdown package.</li>
 <li><strong>FIX</strong>: Fix fenced math escape issue when using MathJax script output format.</li>
 </ul>
-<h2 id="61">6.1<a class="headerlink" href="#61" title="Permanent link"></a></h2>
+<h2 id="61">6.1<a class="headerlink" href="#61" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Upgrade Twemoji to 12.1.2 using the latest JoyPixels' (formally EmojiOne) short name index in
   <a class="magiclink magiclink-github magiclink-repository" href="https://github.com/JoyPixels/emoji-toolkit" title="GitHub Repository: JoyPixels/emoji-toolkit">JoyPixels/emoji-toolkit</a> 5.0.4.</li>
@@ -1466,7 +1485,7 @@
 <li><strong>FIX</strong>: Fix for BetterEm case <code>**Strong*em,strong***</code>.</li>
 <li><strong>FIX</strong>: Fixes for non-word character boundary cases in BetterEm, Caret, Mark, and Tilde extensions.</li>
 </ul>
-<h2 id="60">6.0<a class="headerlink" href="#60" title="Permanent link"></a></h2>
+<h2 id="60">6.0<a class="headerlink" href="#60" title="Permanent link"></a></h2>
 <p>Please see <a href="../release/">Release Notes</a> for details on upgrading to 6.0.0.</p>
 <ul>
 <li><strong>NEW</strong>: Allow custom inline highlight code blocks. (<a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/380" title="GitHub Pull Request: facelessuser/pymdown-extensions!380">!380</a>)</li>
@@ -1485,7 +1504,7 @@
 <li><strong>FIX</strong>: Remove unnecessary path code in B64.</li>
 <li><strong>FIX</strong>: Fix issues with double escaping entities in code blocks after Python Markdown 3.0 update.</li>
 </ul>
-<h2 id="50">5.0<a class="headerlink" href="#50" title="Permanent link"></a></h2>
+<h2 id="50">5.0<a class="headerlink" href="#50" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Add validator to custom fences so custom options can be used. (<a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/350" title="GitHub Pull Request: facelessuser/pymdown-extensions!350">!350</a>)</li>
 <li><strong>NEW</strong>: Add global <code>linenums_special</code> option to Highlight extension. Can be overridden per fence in SuperFences.
@@ -1498,56 +1517,56 @@
 <li><strong>FIX</strong>: Add workaround in Highlight extension for line number alignment issues in Pygments with certain <code>step</code>
   values. (<a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/360" title="GitHub Pull Request: facelessuser/pymdown-extensions!360">!360</a>)</li>
 </ul>
-<h2 id="412">4.12<a class="headerlink" href="#412" title="Permanent link"></a></h2>
+<h2 id="412">4.12<a class="headerlink" href="#412" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Add option to fail if specified snippet isn't found. (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/335" title="GitHub Issue: facelessuser/pymdown-extensions#335">#335</a>)</li>
 <li><strong>FIX</strong>: Windows issue with <code>preserve_tabs</code> option in SuperFences. (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/328" title="GitHub Issue: facelessuser/pymdown-extensions#328">#328</a>)</li>
 </ul>
-<h2 id="411">4.11<a class="headerlink" href="#411" title="Permanent link"></a></h2>
+<h2 id="411">4.11<a class="headerlink" href="#411" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Allow Arithmatex's "smart dollar" logic to be turned off via setting the option <code>smart_dollar</code> to <code>False</code>.
   (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/297" title="GitHub Issue: facelessuser/pymdown-extensions#297">#297</a>)</li>
 <li><strong>NEW</strong>: Add support for tabbed groups in SuperFences.</li>
 </ul>
-<h2 id="4102">4.10.2<a class="headerlink" href="#4102" title="Permanent link"></a></h2>
+<h2 id="4102">4.10.2<a class="headerlink" href="#4102" title="Permanent link"></a></h2>
 <ul>
 <li><strong>FIX</strong>: Failure with code highlight when guessing is enabled, but a bad language name is provided.</li>
 </ul>
-<h2 id="4101">4.10.1<a class="headerlink" href="#4101" title="Permanent link"></a></h2>
+<h2 id="4101">4.10.1<a class="headerlink" href="#4101" title="Permanent link"></a></h2>
 <ul>
 <li><strong>FIX</strong>: Update Twemoji to 2.6.0 and EmojiOne 3.1.3.</li>
 </ul>
-<h2 id="410">4.10<a class="headerlink" href="#410" title="Permanent link"></a></h2>
+<h2 id="410">4.10<a class="headerlink" href="#410" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: SuperFences now adds experimental support for preserving tabs in fenced code blocks. (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/276" title="GitHub Issue: facelessuser/pymdown-extensions#276">#276</a>)</li>
 </ul>
-<h2 id="492">4.9.2<a class="headerlink" href="#492" title="Permanent link"></a></h2>
+<h2 id="492">4.9.2<a class="headerlink" href="#492" title="Permanent link"></a></h2>
 <ul>
 <li><strong>FIX</strong>: Issues with task lists that span multiple lines. (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/267" title="GitHub Issue: facelessuser/pymdown-extensions#267">#267</a>)</li>
 <li><strong>FIX</strong>: Require latest Python Markdown.</li>
 </ul>
-<h2 id="491">4.9.1<a class="headerlink" href="#491" title="Permanent link"></a></h2>
+<h2 id="491">4.9.1<a class="headerlink" href="#491" title="Permanent link"></a></h2>
 <ul>
 <li><strong>FIX</strong>: Output issue when no user and/or repository is specified.</li>
 </ul>
-<h2 id="49">4.9<a class="headerlink" href="#49" title="Permanent link"></a></h2>
+<h2 id="49">4.9<a class="headerlink" href="#49" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Add option to make task lists editable. (<a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/249" title="GitHub Pull Request: facelessuser/pymdown-extensions!249">!249</a>)</li>
 <li><strong>FIX</strong>: Remove internal references to deprecated options.</li>
 </ul>
-<h2 id="48">4.8<a class="headerlink" href="#48" title="Permanent link"></a></h2>
+<h2 id="48">4.8<a class="headerlink" href="#48" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Set progress bar class level increments via <code>progress_increment</code> instead of using the hard coded value of
   <code>20</code>.</li>
 <li><strong>FIX</strong>: Compatibility changes for next Markdown release.</li>
 </ul>
-<h2 id="47">4.7<a class="headerlink" href="#47" title="Permanent link"></a></h2>
+<h2 id="47">4.7<a class="headerlink" href="#47" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Bring back generic output for Arithmatex. Now under the <code>generic</code> option. (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/185" title="GitHub Issue: facelessuser/pymdown-extensions#185">#185</a>)</li>
 <li><strong>FIX</strong>: StripHTML should allow space before close of opening tag.</li>
 <li><strong>FIX</strong>: MagicLink should not auto-link inside a link. (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/151" title="GitHub Issue: facelessuser/pymdown-extensions#151">#151</a>)</li>
 </ul>
-<h2 id="46">4.6<a class="headerlink" href="#46" title="Permanent link"></a></h2>
+<h2 id="46">4.6<a class="headerlink" href="#46" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Arithmatex now <em>just</em> uses the script wrapper output as it is the most reliable output, and now previews can
   be achieved by providing a span with class <code>MathJax_Preview</code> that gets auto hidden when the math is rendered.
@@ -1562,23 +1581,23 @@
   style and script content. (<a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/174" title="GitHub Pull Request: facelessuser/pymdown-extensions!174">!174</a>)</li>
 <li><strong>FIX</strong>: PlainHTML can strip attributes that are not quoted. (<a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/174" title="GitHub Pull Request: facelessuser/pymdown-extensions!174">!174</a>)</li>
 </ul>
-<h2 id="451">4.5.1<a class="headerlink" href="#451" title="Permanent link"></a></h2>
+<h2 id="451">4.5.1<a class="headerlink" href="#451" title="Permanent link"></a></h2>
 <ul>
 <li><strong>FIX</strong>: If an invalid provider is given, default to <code>github</code>. If no <code>user</code> or <code>repo</code> is specified, do not convert
   links that depend on those default values. (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/169" title="GitHub Issue: facelessuser/pymdown-extensions#169">#169</a>)</li>
 </ul>
-<h2 id="45">4.5<a class="headerlink" href="#45" title="Permanent link"></a></h2>
+<h2 id="45">4.5<a class="headerlink" href="#45" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Add GitLab style compare link shorthand and link shortening. (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/160" title="GitHub Issue: facelessuser/pymdown-extensions#160">#160</a>)</li>
 <li><strong>NEW</strong>: Deprecate GitHub extension. It is now recommended to just include the extensions you want to create a GitHub
   feel instead of relying on a an extension to package something close-ish. (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/159" title="GitHub Issue: facelessuser/pymdown-extensions#159">#159</a>)</li>
 </ul>
-<h2 id="44">4.4<a class="headerlink" href="#44" title="Permanent link"></a></h2>
+<h2 id="44">4.4<a class="headerlink" href="#44" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Add social media mentions &ndash; Twitter only right now. (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/156" title="GitHub Issue: facelessuser/pymdown-extensions#156">#156</a>)</li>
 <li><strong>FIX</strong>: Use correct regular expression for GitLab and Bitbucket.</li>
 </ul>
-<h2 id="43">4.3<a class="headerlink" href="#43" title="Permanent link"></a></h2>
+<h2 id="43">4.3<a class="headerlink" href="#43" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Shorthand format for referencing non-default provider commits, issues, pulls, and mentions. (<a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/147" title="GitHub Pull Request: facelessuser/pymdown-extensions!147">!147</a>)</li>
 <li><strong>NEW</strong>: Shorthand format for mentioning a repo via <code>@user/repo</code>. (<a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/149" title="GitHub Pull Request: facelessuser/pymdown-extensions!149">!149</a>)</li>
@@ -1586,7 +1605,7 @@
 <li><strong>NEW</strong>: Make repository labels configurable. (<a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/149" title="GitHub Pull Request: facelessuser/pymdown-extensions!149">!149</a>)</li>
 <li><strong>FIX</strong>: Adjust pattern boundaries auto-links.</li>
 </ul>
-<h2 id="42">4.2<a class="headerlink" href="#42" title="Permanent link"></a></h2>
+<h2 id="42">4.2<a class="headerlink" href="#42" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: MagicLink can now auto-link a GitHub like shorthand for repository references. (<a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/139" title="GitHub Pull Request: facelessuser/pymdown-extensions!139">!139</a>)</li>
 <li><strong>NEW</strong>: MagicLink now renders pull request links with a slightly different output from issues. (<a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/139" title="GitHub Pull Request: facelessuser/pymdown-extensions!139">!139</a>)</li>
@@ -1597,11 +1616,11 @@
 <li><strong>FIX</strong>: MagicLink repository link outputs now better reflect default user and repository context. (<a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/143" title="GitHub Pull Request: facelessuser/pymdown-extensions!143">!143</a>)</li>
 <li><strong>FIX</strong>: PlainHTML should not strip tags that are part of JavaScript code. (<a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/140" title="GitHub Pull Request: facelessuser/pymdown-extensions!140">!140</a>)</li>
 </ul>
-<h2 id="41">4.1<a class="headerlink" href="#41" title="Permanent link"></a></h2>
+<h2 id="41">4.1<a class="headerlink" href="#41" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Details can now have multiple classes defined.</li>
 </ul>
-<h2 id="40">4.0<a class="headerlink" href="#40" title="Permanent link"></a></h2>
+<h2 id="40">4.0<a class="headerlink" href="#40" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Details extension will now derive a title from the class if only a class is provided. (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/107" title="GitHub Issue: facelessuser/pymdown-extensions#107">#107</a>)</li>
 <li><strong>NEW</strong>: Remove deprecated legacy emoji generator format.</li>
@@ -1609,7 +1628,7 @@
 <li><strong>NEW</strong>: Remove deprecated <code>spoilers</code> extension redirect.</li>
 <li><strong>NEW</strong>: Update emoji databases: EmojiOne (3.1.2) and Twemoji to .(2.5.0)</li>
 </ul>
-<h2 id="35">3.5<a class="headerlink" href="#35" title="Permanent link"></a></h2>
+<h2 id="35">3.5<a class="headerlink" href="#35" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Add new slugs to preserve case. (<a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/103" title="GitHub Pull Request: facelessuser/pymdown-extensions!103">!103</a>)</li>
 <li><strong>NEW</strong>: Add new <abbr title="GitHub Flavored Markdown">GFM</abbr> specific slug (both percent encoded and normal) that only lowercases ASCII chars just like <abbr title="GitHub Flavored Markdown">GFM</abbr>
@@ -1620,35 +1639,35 @@
   will just pass through. (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/95" title="GitHub Issue: facelessuser/pymdown-extensions#95">#95</a>)</li>
 <li><strong>FIX</strong>: Replace CriticMarkup placeholders after replacing raw HTML placeholders. (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/95" title="GitHub Issue: facelessuser/pymdown-extensions#95">#95</a>)</li>
 </ul>
-<h2 id="34">3.4<a class="headerlink" href="#34" title="Permanent link"></a></h2>
+<h2 id="34">3.4<a class="headerlink" href="#34" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Renamed Spoilers to Details</li>
 <li><strong>NEW</strong>: No longer attach the <code>spoilers</code> class to <code>details</code> tags.</li>
 <li><strong>NEW</strong>: Provide better example of UML script in documents.</li>
 </ul>
-<h2 id="33">3.3<a class="headerlink" href="#33" title="Permanent link"></a></h2>
+<h2 id="33">3.3<a class="headerlink" href="#33" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Added support for pull request link shortening in MagicLink. (<a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/88" title="GitHub Pull Request: facelessuser/pymdown-extensions!88">!88</a>)</li>
 <li><strong>NEW</strong>: Added new Spoilers extension. (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/85" title="GitHub Issue: facelessuser/pymdown-extensions#85">#85</a>)</li>
 </ul>
-<h2 id="321">3.2.1<a class="headerlink" href="#321" title="Permanent link"></a></h2>
+<h2 id="321">3.2.1<a class="headerlink" href="#321" title="Permanent link"></a></h2>
 <ul>
 <li><strong>FIX</strong>: Cannot set Highlight's CSS class.</li>
 </ul>
-<h2 id="32">3.2<a class="headerlink" href="#32" title="Permanent link"></a></h2>
+<h2 id="32">3.2<a class="headerlink" href="#32" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Add support for Twemoji 2.3.5.</li>
 <li><strong>NEW</strong>: Update to EmojiOne 3.0.2.</li>
 <li><strong>NEW</strong>: Emoji generators now also take <code>category</code> which is also no included in all indexes.</li>
 <li><strong>FIX</strong>: Excessive new lines at end of code blocks.</li>
 </ul>
-<h2 id="31">3.1<a class="headerlink" href="#31" title="Permanent link"></a></h2>
+<h2 id="31">3.1<a class="headerlink" href="#31" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Highlight extension now runs normal indented code blocks through highlighter.</li>
 <li><strong>FIX</strong>: When Pygments is disabled, <code>linenums</code> class was attached to code blocks even if <code>linenums</code> was disabled and
   not enabled via fence headers.</li>
 </ul>
-<h2 id="30">3.0<a class="headerlink" href="#30" title="Permanent link"></a></h2>
+<h2 id="30">3.0<a class="headerlink" href="#30" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Added Keys extension.</li>
 <li><strong>NEW</strong>: Generalized custom fences (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/60" title="GitHub Issue: facelessuser/pymdown-extensions#60">#60</a>). <code>flow</code> and <code>sequence</code> fence are now just custom fences and can be disabled simply by overwriting the <code>custom_fences</code> setting.</li>
@@ -1666,7 +1685,7 @@
 <li><strong>FIX</strong>: Fix MathJax CDN references and usage in documentation.  MathJax CDN is shutting down and must now use
   Cloudflare CDN. (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/63" title="GitHub Issue: facelessuser/pymdown-extensions#63">#63</a>)</li>
 </ul>
-<h2 id="20">2.0<a class="headerlink" href="#20" title="Permanent link"></a></h2>
+<h2 id="20">2.0<a class="headerlink" href="#20" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: SuperFences and InlineHilite can be configured via the new Highlight extension.</li>
 <li><strong>NEW</strong>: InlineHilite now has all highlighting features pushed to the Highlight extension.  This removes all the
@@ -1674,7 +1693,7 @@
 <li><strong>NEW</strong>: Deprecate the nesting option in SuperFences.  Nesting is default and the only acceptable behavior moving
   forward.  The ability to turn off nesting will be removed in 3.0.</li>
 </ul>
-<h2 id="18">1.8<a class="headerlink" href="#18" title="Permanent link"></a></h2>
+<h2 id="18">1.8<a class="headerlink" href="#18" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: MagicLink special repository link shortener for GitHub, GitLab, and Bitbucket. (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/49" title="GitHub Issue: facelessuser/pymdown-extensions#49">#49</a>)</li>
 <li><strong>FIX</strong>: GitHub asterisk emphasis should never have had smart enabled for it. (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/50" title="GitHub Issue: facelessuser/pymdown-extensions#50">#50</a>)</li>
@@ -1685,7 +1704,7 @@
   with it. (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/48" title="GitHub Issue: facelessuser/pymdown-extensions#48">#48</a>)</li>
 <li><strong>FIX</strong>: InlineHilite will no longer break if Pygments is not installed (<a class="magiclink magiclink-github magiclink-commit" href="https://github.com/facelessuser/pymdown-extensions/commit/478b410a2199d55f3e70b452516511d3810c61a5" title="GitHub Commit: facelessuser/pymdown-extensions@478b410">478b410</a>).</li>
 </ul>
-<h2 id="17">1.7<a class="headerlink" href="#17" title="Permanent link"></a></h2>
+<h2 id="17">1.7<a class="headerlink" href="#17" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Arithmatex now supports <code>\(...\)</code>, <code>\[...\]</code>, and <code>\begin{}...\end{}</code>.</li>
 <li><strong>NEW</strong>: Arithmatex has an option to embed the math code in MathJax script tags.</li>
@@ -1695,11 +1714,11 @@
 <li><strong>FIX</strong>: Update InlineHilite and SuperFences so that the language option can accept things like <code>c#</code> and <code>.net</code> etc.</li>
 <li><strong>FIX</strong>: Snippets now removes carriage returns from imported files to prevent breakage.</li>
 </ul>
-<h2 id="161">1.6.1<a class="headerlink" href="#161" title="Permanent link"></a></h2>
+<h2 id="161">1.6.1<a class="headerlink" href="#161" title="Permanent link"></a></h2>
 <ul>
 <li><strong>FIX</strong>: Don't install tools or tests folder when installing from Pypi.</li>
 </ul>
-<h2 id="16">1.6<a class="headerlink" href="#16" title="Permanent link"></a></h2>
+<h2 id="16">1.6<a class="headerlink" href="#16" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: EscapeAll has the option to perform more like Pandoc in that you can enable escaped newlines to be
   <code>hardbreaks</code>, and escaped spaces to be <code>nbsp</code>.</li>
@@ -1707,7 +1726,7 @@
   format.  Allow commenting out lines temporarily.  And allow a way to escape them by placing a space after them.</li>
 <li><strong>FIX</strong>: Fix documentation issues.</li>
 </ul>
-<h2 id="15">1.5<a class="headerlink" href="#15" title="Permanent link"></a></h2>
+<h2 id="15">1.5<a class="headerlink" href="#15" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: New EscapeAll extension.</li>
 <li><strong>NEW</strong>: New Snippets extension for including external files into a Markdown file.</li>
@@ -1722,14 +1741,14 @@
   behavior.</li>
 <li><strong>FIX</strong>: Critics shouldn't allow escaping critic marks as it is not in the spec.</li>
 </ul>
-<h2 id="14">1.4<a class="headerlink" href="#14" title="Permanent link"></a></h2>
+<h2 id="14">1.4<a class="headerlink" href="#14" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: HeaderAnchor extension is now deprecated.  It will be removed in a future version.</li>
 <li><strong>NEW</strong>: HeaderAnchor is no longer included in the <code>pymdownx.github</code> extension.</li>
 <li><strong>NEW</strong>: Slugify functions are moved to <code>pymdownx.slug</code> in preparation of HeaderAnchor removal.</li>
 <li><strong>FIX</strong>: GitHubEmoji is not "pending" deprecation, but is actually deprecated.</li>
 </ul>
-<h2 id="13">1.3<a class="headerlink" href="#13" title="Permanent link"></a></h2>
+<h2 id="13">1.3<a class="headerlink" href="#13" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: New Emoji extension that aims to replace GitHubEmoji.  By default it is configured for EmojiOne and Gemoji
   (GitHub's emoji).</li>
@@ -1739,11 +1758,11 @@
 <li><strong>NEW</strong>: <code>github</code> extension now turns off <code>nl2br</code> by default in order properly emulate recent changes in <abbr title="GitHub Flavored Markdown">GFM</abbr>.
   <code>no_nl2br</code> option is deprecated and will be removed in the future as it no longer reflects <abbr title="GitHub Flavored Markdown">GFM</abbr> behavior.</li>
 </ul>
-<h2 id="12">1.2<a class="headerlink" href="#12" title="Permanent link"></a></h2>
+<h2 id="12">1.2<a class="headerlink" href="#12" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Add option to output task lists in a more customizable way.</li>
 </ul>
-<h2 id="11">1.1<a class="headerlink" href="#11" title="Permanent link"></a></h2>
+<h2 id="11">1.1<a class="headerlink" href="#11" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Add pypi 3.5 info in setup</li>
 <li><strong>NEW</strong>: Add option to MagicLink extension to allow the stripping of link protocols (<code>http://</code> etc.).</li>
@@ -1751,11 +1770,11 @@
   Markdown.  Currently the default is the legacy (uses <code>nl2br</code>), but a warning will be displayed.  In the future, the
   option will be defaulted to not use <code>nl2br</code>.</li>
 </ul>
-<h2 id="101">1.0.1<a class="headerlink" href="#101" title="Permanent link"></a></h2>
+<h2 id="101">1.0.1<a class="headerlink" href="#101" title="Permanent link"></a></h2>
 <ul>
 <li><strong>FIX</strong>: Ordinal number 11<sup>th</sup>, 12<sup>th</sup>, and 13<sup>th</sup></li>
 </ul>
-<h2 id="100">1.0.0<a class="headerlink" href="#100" title="Permanent link"></a></h2>
+<h2 id="100">1.0.0<a class="headerlink" href="#100" title="Permanent link"></a></h2>
 <ul>
 <li><strong>NEW</strong>: Initial release.</li>
 </ul>
@@ -1768,7 +1787,7 @@
                   <div class="md-source-date">
                     <small>
                       
-                        Last update: February 19, 2020
+                        Last update: February 21, 2020
                       
                     </small>
                   </div>
@@ -1857,8 +1876,8 @@
       
     </div>
     
-      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script>
-      <script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
+      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script><script id="__lang" type="application/json">
+        {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
       </script>
       <script>
         app = initialize({
@@ -1867,12 +1886,12 @@
             search: "../../assets/javascripts/worker/search.926ffd9e.min.js"
           },
           feature: {
-            instant: false
+            instant: true
           }
         });
       </script>
       
-        <script src="../../extra-0d9305e748.js"></script>
+        <script src="../../assets/pymdownx-extras/extra-0d9305e748.js"></script>
       
     
   </body>

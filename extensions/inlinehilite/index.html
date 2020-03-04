@@ -17,7 +17,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0b2">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.0.0b2-1">
     
     
       
@@ -45,7 +45,7 @@
     
     
     
-      <link rel="stylesheet" href="../../extra-4177b12573.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-821c6c252c.css">
     
     
       
@@ -861,8 +861,8 @@
                   <a href="https://github.com/facelessuser/pymdown-extensions/tree/master/docs/src/markdown/extensions/inlinehilite.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="inlinehilite">InlineHilite<a class="headerlink" href="#inlinehilite" title="Permanent link"></a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
+                <h1 id="inlinehilite">InlineHilite<a class="headerlink" href="#inlinehilite" title="Permanent link"></a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
 <p>InlineHilite is an inline code highlighter inspired by <a href="https://python-markdown.github.io/extensions/code_hilite/">CodeHilite</a>. Borrowing from CodeHilite's existing
 syntax, InlineHilite utilizes the following syntax to insert inline highlighted code: <code>`:::language mycode`</code> or
 <code>`#!language mycode`</code>.  In CodeHilite, <code>#!</code> means "use line numbers", but line numbers will never be used in
@@ -886,12 +886,12 @@ code block, just put a space before it and it will be treated as part of the cod
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.inlinehilite&#39;</span><span class="p">])</span>
 </code></pre></div>
 
-<h2 id="code-highlighting">Code Highlighting<a class="headerlink" href="#code-highlighting" title="Permanent link"></a></h2>
+<h2 id="code-highlighting">Code Highlighting<a class="headerlink" href="#code-highlighting" title="Permanent link"></a></h2>
 <p>Assuming Pygments is installed, code highlighting will be handled by <a href="http://pygments.org/">Pygments</a> by default. If Pygments is not
 installed, or disabled, code blocks will be output for JavaScript syntax highlighters as
 <code class="highlight"><span class="p">&lt;</span><span class="nt">code</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;highlight language-mylanguage&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">code</span><span class="p">&gt;</span></code>.</p>
 <p>Highlighting can be further controlled via the <a href="../highlight/"><code>pymdownx.highlight</code></a> extension.</p>
-<h2 id="using-javascript-highlighters">Using JavaScript Highlighters<a class="headerlink" href="#using-javascript-highlighters" title="Permanent link"></a></h2>
+<h2 id="using-javascript-highlighters">Using JavaScript Highlighters<a class="headerlink" href="#using-javascript-highlighters" title="Permanent link"></a></h2>
 <p>If using <a href="http://pygments.org/">Pygments</a>, the elements will be highlighted without issues, but you may need to adjust CSS to get
 the general style of the inline block the way you like it.</p>
 <p>If you are using a JavaScript highlighter, such as <a href="https://highlightjs.org/"><code>highlight.js</code></a>, you will most likely need to construct
@@ -899,7 +899,7 @@ a JavaScript method to target the inline blocks as these may not be targeted out
 to tag inline code with a different class than what is used for block code so you can also process and style them
 differently. By default, it uses whatever <a href="../highlight/"><code>pymdownx.highlight</code></a> uses, but this can be configured
 independently for inline code in the <a href="#options">options</a>.</p>
-<h2 id="custom-inline-blocks">Custom Inline Blocks<a class="headerlink" href="#custom-inline-blocks" title="Permanent link"></a></h2>
+<h2 id="custom-inline-blocks">Custom Inline Blocks<a class="headerlink" href="#custom-inline-blocks" title="Permanent link"></a></h2>
 <p>Like <a href="../superfences/">SuperFences</a>, InlineHilite now provides a support for custom inline blocks.</p>
 <div class="admonition example">
 <p class="admonition-title">Inline Math</p>
@@ -946,7 +946,7 @@ with a name of <code>*</code>. This means that if an inline does not match any o
 inline would be handled by your custom <code>*</code> inline. This can be useful for tailoring a inline for a specific,
 favorite JavaScript highlighter.</p>
 </div>
-<h3 id="formatters">Formatters<a class="headerlink" href="#formatters" title="Permanent link"></a></h3>
+<h3 id="formatters">Formatters<a class="headerlink" href="#formatters" title="Permanent link"></a></h3>
 <p>In general, formatters take four parameters: the source found between the backticks, the specified language, the class
 name originally defined via the <code>class</code> option in the <code>custom_inline</code> entry, and the Markdown class object. Should
 return a either an ElementTree element or a string as HTML.</p>
@@ -960,7 +960,7 @@ objects or the Markdown parser may apply other conversion to your HTML content.<
     <span class="k">return</span> <span class="n">el</span>  <span class="c1"># Or string</span>
 </code></pre></div>
 
-<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
 <table>
 <thead>
 <tr>
@@ -991,25 +991,41 @@ objects or the Markdown parser may apply other conversion to your HTML content.<
 </tr>
 </tbody>
 </table>
-<script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-    config: ["MMLorHTML.js"],
-    jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
-    extensions: ["MathMenu.js", "MathZoom.js"],
-    TeX: {
-        TagSide: "right",
-        TagIndent: ".8em",
-        MultLineWidth: "85%",
-        equationNumbers: {
-            autoNumber: "AMS",
+<script>
+window.MathJax = {
+  tex: {
+    tagSide: "right",
+    tagIndent: ".8em",
+    multlineWidth: "85%",
+    tags: "ams"
+  },
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process',
+    renderActions: {
+      find: [10, function (doc) {
+        for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+          const display = !!node.type.match(/; *mode=display/);
+          const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+          const text = document.createTextNode('');
+          const sibling = node.previousElementSibling;
+          node.parentNode.replaceChild(text, node);
+          math.start = {node: text, delim: '', n: 0};
+          math.end = {node: text, delim: '', n: 0};
+          doc.math.push(math);
+          if (sibling && sibling.matches('.MathJax_Preview')) {
+            sibling.parentNode.removeChild(sibling);
+          }
         }
-    },
-    showProcessingMessages: false,
-    messageStyle: 'none'
-});
+      }, '']
+    }
+  }
+};
 </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
                 
                   
                 
@@ -1108,8 +1124,8 @@ MathJax.Hub.Config({
       
     </div>
     
-      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script>
-      <script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
+      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script><script id="__lang" type="application/json">
+        {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
       </script>
       <script>
         app = initialize({
@@ -1118,12 +1134,12 @@ MathJax.Hub.Config({
             search: "../../assets/javascripts/worker/search.926ffd9e.min.js"
           },
           feature: {
-            instant: false
+            instant: true
           }
         });
       </script>
       
-        <script src="../../extra-0d9305e748.js"></script>
+        <script src="../../assets/pymdownx-extras/extra-0d9305e748.js"></script>
       
     
   </body>

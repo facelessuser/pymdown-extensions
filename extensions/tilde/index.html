@@ -17,7 +17,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0b2">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.0.0b2-1">
     
     
       
@@ -45,7 +45,7 @@
     
     
     
-      <link rel="stylesheet" href="../../extra-4177b12573.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-821c6c252c.css">
     
     
       
@@ -821,8 +821,8 @@
                   <a href="https://github.com/facelessuser/pymdown-extensions/tree/master/docs/src/markdown/extensions/tilde.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="tilde">Tilde<a class="headerlink" href="#tilde" title="Permanent link"></a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
+                <h1 id="tilde">Tilde<a class="headerlink" href="#tilde" title="Permanent link"></a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
 <p>Tilde optionally adds two different features which are syntactically built around the <code>~</code> character: <strong>delete</strong> which
 inserts <code class="highlight"><span class="p">&lt;</span><span class="nt">del</span><span class="p">&gt;&lt;/</span><span class="nt">del</span><span class="p">&gt;</span></code> tags and <strong>subscript</strong> which inserts <code class="highlight"><span class="p">&lt;</span><span class="nt">sub</span><span class="p">&gt;&lt;/</span><span class="nt">sub</span><span class="p">&gt;</span></code> tags.</p>
 <p>The Tilde extension can be included in Python Markdown by using the following:</p>
@@ -830,7 +830,7 @@ inserts <code class="highlight"><span class="p">&lt;</span><span class="nt">del<
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.tilde&#39;</span><span class="p">])</span>
 </code></pre></div>
 
-<h2 id="delete">Delete<a class="headerlink" href="#delete" title="Permanent link"></a></h2>
+<h2 id="delete">Delete<a class="headerlink" href="#delete" title="Permanent link"></a></h2>
 <p>To wrap content in a <strong>delete</strong> tag, simply surround the text with double <code>~</code>. You can also enable <code>smart_delete</code> in the
 <a href="#options">options</a>. Smart behavior of <strong>delete</strong> models that of <a href="../betterem/#differences">BetterEm</a>.</p>
 <div class="admonition example">
@@ -840,7 +840,7 @@ inserts <code class="highlight"><span class="p">&lt;</span><span class="nt">del<
 
 <p><del>Delete me</del></p>
 </div>
-<h2 id="subscript">Subscript<a class="headerlink" href="#subscript" title="Permanent link"></a></h2>
+<h2 id="subscript">Subscript<a class="headerlink" href="#subscript" title="Permanent link"></a></h2>
 <p>To denote a subscript, you can surround the desired content in single <code>~</code>.  It uses Pandoc style logic, so if your
 subscript needs to have spaces, you must escape the spaces.</p>
 <div class="admonition example">
@@ -853,7 +853,7 @@ text~a\ subscript~
 <p>CH<sub>3</sub>CH<sub>2</sub>OH</p>
 <p>text<sub>a&nbsp;subscript</sub></p>
 </div>
-<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
 <table>
 <thead>
 <tr>
@@ -982,8 +982,8 @@ text~a\ subscript~
       
     </div>
     
-      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script>
-      <script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
+      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script><script id="__lang" type="application/json">
+        {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
       </script>
       <script>
         app = initialize({
@@ -992,12 +992,12 @@ text~a\ subscript~
             search: "../../assets/javascripts/worker/search.926ffd9e.min.js"
           },
           feature: {
-            instant: false
+            instant: true
           }
         });
       </script>
       
-        <script src="../../extra-0d9305e748.js"></script>
+        <script src="../../assets/pymdownx-extras/extra-0d9305e748.js"></script>
       
     
   </body>

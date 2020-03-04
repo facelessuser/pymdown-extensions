@@ -17,7 +17,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0b2">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.0.0b2-1">
     
     
       
@@ -45,7 +45,7 @@
     
     
     
-      <link rel="stylesheet" href="../../extra-4177b12573.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-821c6c252c.css">
     
     
       
@@ -973,8 +973,8 @@
                   <a href="https://github.com/facelessuser/pymdown-extensions/tree/master/docs/src/markdown/extensions/superfences.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="superfences">SuperFences<a class="headerlink" href="#superfences" title="Permanent link"></a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
+                <h1 id="superfences">SuperFences<a class="headerlink" href="#superfences" title="Permanent link"></a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
 <p>SuperFences provides a number of features:</p>
 <ol>
 <li>Allowing the <a href="#nested-fence-format">nesting of fences</a> under blockquotes, lists, or other block elements (see
@@ -996,7 +996,7 @@ extension!</p>
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.superfences&#39;</span><span class="p">])</span>
 </code></pre></div>
 
-<h2 id="nested-fence-format">Nested Fence Format<a class="headerlink" href="#nested-fence-format" title="Permanent link"></a></h2>
+<h2 id="nested-fence-format">Nested Fence Format<a class="headerlink" href="#nested-fence-format" title="Permanent link"></a></h2>
 <ol>
 <li>
 <p>Start and end fence boundaries are specified with either 3 or more backticks or tildes.</p>
@@ -1061,7 +1061,7 @@ Another paragraph.
 
 </li>
 </ol>
-<h2 id="injecting-classes-and-ids">Injecting Classes and IDs<a class="headerlink" href="#injecting-classes-and-ids" title="Permanent link"></a></h2>
+<h2 id="injecting-classes-and-ids">Injecting Classes and IDs<a class="headerlink" href="#injecting-classes-and-ids" title="Permanent link"></a></h2>
 <p>You can use the attribute list format to specify classes and IDs (IDs are only injectable in non-Pygments code blocks).
 The first provided class is always used as the language class. Arbitrary attributes in the form <code>key="value"</code> cannot
 be inserted as those are reserved for options such has <code>linenums</code> etc.</p>
@@ -1100,7 +1100,7 @@ import hello_world
 <p>When using a built in <a href="#custom-fences">custom formatter</a>, all classes and IDs are injected on to the first element
 <code class="highlight"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span></code> or <code class="highlight"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;</span></code>. This preserves previous behavior, but you can write your own and inject them in the
 way that suites your needs.</p>
-<h2 id="tabbed-fences">Tabbed Fences<a class="headerlink" href="#tabbed-fences" title="Permanent link"></a></h2>
+<h2 id="tabbed-fences">Tabbed Fences<a class="headerlink" href="#tabbed-fences" title="Permanent link"></a></h2>
 <div class="admonition warning">
 <p class="admonition-title">Deprecated 7.0b1</p>
 <p>The tab option is deprecated in 7.0b1 due to the addition of the general purpose tab extension
@@ -1243,7 +1243,7 @@ modify it to get it how you like it.</p>
 </div>
 </div>
 </details>
-<h2 id="preserve-tabs">Preserve tabs<a class="headerlink" href="#preserve-tabs" title="Permanent link"></a></h2>
+<h2 id="preserve-tabs">Preserve tabs<a class="headerlink" href="#preserve-tabs" title="Permanent link"></a></h2>
 <p>Python Markdown has an approach where it normalizes whitespace. This means <code>\r\n</code> is converted to <code>\n</code> and <code>\t</code> is
 converted to spaces. In 99% of Markdown, this is never really an issue, but with code blocks it can be. Tabs can
 sometimes be very useful for aligning certain kinds of data, especially when dealing with characters of varying width.</p>
@@ -1263,7 +1263,7 @@ converting tabs to spaces inside fenced code blocks. This <em>only</em> applies 
 inline code blocks will still be treated with Python Markdown's default behavior.</p>
 <p>This feature is experimental and actually applies the fences before whitespace normalization and bypasses the
 normalization for the code content.</p>
-<h2 id="code-highlighting">Code Highlighting<a class="headerlink" href="#code-highlighting" title="Permanent link"></a></h2>
+<h2 id="code-highlighting">Code Highlighting<a class="headerlink" href="#code-highlighting" title="Permanent link"></a></h2>
 <p>Assuming Pygments is installed, code highlighting will be handled by <a href="http://pygments.org/">Pygments</a> by default. If Pygments is not
 installed, or disabled, code blocks will be created using HTML5 style tags for a JavaScript syntax highlighter:
 <code class="highlight"><span class="p">&lt;</span><span class="nt">pre</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;highlight&quot;</span><span class="p">&gt;&lt;</span><span class="nt">code</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;language-mylanguage&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">code</span><span class="p">&gt;&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span></code>. If you disable <code>highlight_code</code>,
@@ -1289,7 +1289,7 @@ import foo.bar
 </div>
 </div>
 </div>
-<h2 id="showing-line-numbers">Showing Line Numbers<a class="headerlink" href="#showing-line-numbers" title="Permanent link"></a></h2>
+<h2 id="showing-line-numbers">Showing Line Numbers<a class="headerlink" href="#showing-line-numbers" title="Permanent link"></a></h2>
 <p>Line numbers are provided via Pygments and can either be shown per code block or globally for all. To show globally via
 <a href="../highlight/"><code>pymdownx.highlight</code></a>, you must set <code>linenums</code> to <code class="highlight"><span class="kc">True</span></code> in the respective extension.</p>
 <p>To set line numbers per code block, you can specify a special setting directly after the opening tokens (and language if
@@ -1367,7 +1367,7 @@ import foo.bar.baz
 <p>For JavaScript libraries, a class of <code>linenums</code> is written to the block.  This may or may not be leveraged by your
 chosen highlighter.  It is uncertain at this time whether line number support for JavaScript highlighters will be
 enhanced beyond this.w what to inject.</p>
-<h2 id="highlighting-lines">Highlighting Lines<a class="headerlink" href="#highlighting-lines" title="Permanent link"></a></h2>
+<h2 id="highlighting-lines">Highlighting Lines<a class="headerlink" href="#highlighting-lines" title="Permanent link"></a></h2>
 <p>Via Pygments, certain lines can be specified for highlighting.  This is done by specifying a special setting directly
 after the opening tokens (and language if present).  The setting is named <code>hl_lines</code> and the value should be the
 targeted line numbers separated by spaces.</p>
@@ -1416,7 +1416,7 @@ import foo.bar.baz
 </div>
 </div>
 </div>
-<h2 id="custom-fences">Custom Fences<a class="headerlink" href="#custom-fences" title="Permanent link"></a></h2>
+<h2 id="custom-fences">Custom Fences<a class="headerlink" href="#custom-fences" title="Permanent link"></a></h2>
 <p>SuperFences allows defining custom fences for special purposes, like flow charts and sequence diagrams:</p>
 <div class="admonition example">
 <p class="admonition-title">Flow Chart Example</p>
@@ -1515,7 +1515,7 @@ with a name of <code>*</code>. This means that if a fence does not match any oth
 would be handled by your custom <code>*</code> fence. This can be useful for tailoring a fence output with custom parameters
 for a specific, favorite JavaScript highlighter.</p>
 </div>
-<h3 id="formatters">Formatters<a class="headerlink" href="#formatters" title="Permanent link"></a></h3>
+<h3 id="formatters">Formatters<a class="headerlink" href="#formatters" title="Permanent link"></a></h3>
 <p>SuperFences provides two format functions by default, but you can always write your own:</p>
 <table>
 <thead>
@@ -1556,7 +1556,7 @@ in the future.</p>
 <p>If you are attempting to configure these options in a YAML based configuration (like in <a href="https://github.com/mkdocs/mkdocs">MkDocs</a>), please
 see the <a href="../../faq/#function-references-in-yaml">FAQ</a> to see how to specify function references in YAML.</p>
 </div>
-<h3 id="validators">Validators<a class="headerlink" href="#validators" title="Permanent link"></a></h3>
+<h3 id="validators">Validators<a class="headerlink" href="#validators" title="Permanent link"></a></h3>
 <p>The <code>validator</code> is used to provide functions that accept or reject provided fence options. The validator is sent two
 parameters: the language defined in the fence, and a dictionary of options to validate.</p>
 <p>Custom options can be used as keys with quoted values (<code>key="value"</code>), or as keys with no value which are used more as a
@@ -1609,7 +1609,7 @@ test
 <p>If you are attempting to configure these options in a YAML based configuration (like in <a href="https://github.com/mkdocs/mkdocs">MkDocs</a>), please
 see the <a href="../../faq/#function-references-in-yaml">FAQ</a> to see how to specify function references in YAML.</p>
 </div>
-<h3 id="uml-diagram-example">UML Diagram Example<a class="headerlink" href="#uml-diagram-example" title="Permanent link"></a></h3>
+<h3 id="uml-diagram-example">UML Diagram Example<a class="headerlink" href="#uml-diagram-example" title="Permanent link"></a></h3>
 <p>This example illustrates how this document uses the <code>custom_fences</code> option to do UML diagrams.  The settings below shows
 two new custom languages called <code>flow</code> and <code>sequence</code> and are the options that must be fed through the <code>custom_fences</code>
 <a href="#options">option</a>. The <code>flow</code> and <code>sequence</code> fences will pass the content through the <code>superfences.fence_code_format</code>
@@ -1784,7 +1784,7 @@ where it belongs throwing away the original element that had the instructions.</
 <span class="lineno" data-linenos="96 "></span><span class="p">}());</span>
 </code></pre></div>
 
-<h2 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link"></a></h2>
+<h2 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link"></a></h2>
 <p>This extension suffers from the same issues that the original fenced block extension suffers from.  Normally Python
 Markdown does not parse content inside HTML tags unless they are marked with the attribute <code>markdown='1'</code>.  But since
 this is run as a preprocessor, it is not aware of the HTML blocks.</p>
@@ -1796,7 +1796,7 @@ but there is much work to be done on Python Markdown's internal block handlers b
 encountered.</p>
 <p>For the reasons above, the nested fences feature really is just a workaround.  But for a lot of people, this
 functionality is more than sufficient.</p>
-<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
 <table>
 <thead>
 <tr>
@@ -1959,8 +1959,8 @@ recommend to use <a href="#custom-fences">custom fences</a>. This option will be
       
     </div>
     
-      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script>
-      <script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
+      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script><script id="__lang" type="application/json">
+        {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
       </script>
       <script>
         app = initialize({
@@ -1969,12 +1969,12 @@ recommend to use <a href="#custom-fences">custom fences</a>. This option will be
             search: "../../assets/javascripts/worker/search.926ffd9e.min.js"
           },
           feature: {
-            instant: false
+            instant: true
           }
         });
       </script>
       
-        <script src="../../extra-0d9305e748.js"></script>
+        <script src="../../assets/pymdownx-extras/extra-0d9305e748.js"></script>
       
     
   </body>

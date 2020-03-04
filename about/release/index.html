@@ -17,7 +17,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0b2">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.0.0b2-1">
     
     
       
@@ -45,7 +45,7 @@
     
     
     
-      <link rel="stylesheet" href="../../extra-4177b12573.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-821c6c252c.css">
     
     
       
@@ -861,9 +861,9 @@
                   <a href="https://github.com/facelessuser/pymdown-extensions/tree/master/docs/src/markdown/about/release.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="release-notes">Release Notes<a class="headerlink" href="#release-notes" title="Permanent link"></a></h1>
-<h2 id="upgrading-to-70">Upgrading to 7.0<a class="headerlink" href="#upgrading-to-70" title="Permanent link"></a></h2>
-<h3 id="tabbed-extension">Tabbed Extension<a class="headerlink" href="#tabbed-extension" title="Permanent link"></a></h3>
+                <h1 id="release-notes">Release Notes<a class="headerlink" href="#release-notes" title="Permanent link"></a></h1>
+<h2 id="upgrading-to-70">Upgrading to 7.0<a class="headerlink" href="#upgrading-to-70" title="Permanent link"></a></h2>
+<h3 id="tabbed-extension">Tabbed Extension<a class="headerlink" href="#tabbed-extension" title="Permanent link"></a></h3>
 <p>A new extension called Tabbed has been added. With the arrival of this general purpose tabbed content extension, it has
 made the old SuperFences tabbed content feature redundant. By default, SuperFences will now change the classes it uses
 for it's tabbed feature to match those of the new Tabbed extension. CSS should be updated accordingly.</p>
@@ -883,11 +883,11 @@ SuperFences' global option <code>legacy_tab_classes</code>:</p>
 <p>SuperFences' tab content feature will be removed in 8.0. There is no formal date for when this will occur, but it is
 recommended to begin migrating as soon as possible, but <code>legacy_tab_classes</code> can be used as a stop gap for the short
 term.</p>
-<h3 id="option-deprecation-in-superfences">Option Deprecation in SuperFences<a class="headerlink" href="#option-deprecation-in-superfences" title="Permanent link"></a></h3>
+<h3 id="option-deprecation-in-superfences">Option Deprecation in SuperFences<a class="headerlink" href="#option-deprecation-in-superfences" title="Permanent link"></a></h3>
 <p>SuperFences has deprecated <code>highlight_code</code>. This option now does nothing and will be removed in some future release.
 If this option was used, you will have to use <a href="../../extensions/superfences/#custom-fences">custom fences</a> to implement
 this behavior with your own custom formatter.</p>
-<h3 id="superfences-attribute-list-style">SuperFences' Attribute List Style<a class="headerlink" href="#superfences-attribute-list-style" title="Permanent link"></a></h3>
+<h3 id="superfences-attribute-list-style">SuperFences' Attribute List Style<a class="headerlink" href="#superfences-attribute-list-style" title="Permanent link"></a></h3>
 <p>Additional classes and IDs can now be injected into fenced code blocks with the format <code>```{.lang .more-class}</code>.</p>
 <p>The attribute list feature also impacts the the custom formatter. While the default formatters will still inject
 classes and IDs to the top level element to preserve backwards compatibility, the formatter now must accept the new
@@ -900,11 +900,11 @@ requirement, you will see a user warning.</p>
 
 <p>While it is recommended for a user to update their custom formatters to receive the new parameters, at the very
 least, users should add <code>**kwargs</code> to future proof their formatters.</p>
-<h3 id="codehilite-separation">CodeHilite Separation<a class="headerlink" href="#codehilite-separation" title="Permanent link"></a></h3>
+<h3 id="codehilite-separation">CodeHilite Separation<a class="headerlink" href="#codehilite-separation" title="Permanent link"></a></h3>
 <p>SuperFences and InlineHilite no longer sync settings from CodeHilite. To configure either of the extensions, Pymdown
 Extension's Highlight extension must be used. CodeHilite can be run along side Highlight if desired, but CodeHilite
 cannot be used to augment SuperFences or InlineHilite's behavior.</p>
-<h2 id="upgrading-to-60">Upgrading to 6.0<a class="headerlink" href="#upgrading-to-60" title="Permanent link"></a></h2>
+<h2 id="upgrading-to-60">Upgrading to 6.0<a class="headerlink" href="#upgrading-to-60" title="Permanent link"></a></h2>
 <p>While there are a number of new features and bug fixes, the only backwards incompatible changes are with SuperFences'
 custom fences. In an effort to make custom fences more useful, we wanted to be able to pass the <code>Markdown</code> object to the
 formatters. This gives custom formats access to things like metadata if required.</p>
@@ -1051,8 +1051,8 @@ see the <a href="../../faq/#function-references-in-yaml"><abbr title="Frequent A
       
     </div>
     
-      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script>
-      <script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
+      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script><script id="__lang" type="application/json">
+        {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
       </script>
       <script>
         app = initialize({
@@ -1061,12 +1061,12 @@ see the <a href="../../faq/#function-references-in-yaml"><abbr title="Frequent A
             search: "../../assets/javascripts/worker/search.926ffd9e.min.js"
           },
           feature: {
-            instant: false
+            instant: true
           }
         });
       </script>
       
-        <script src="../../extra-0d9305e748.js"></script>
+        <script src="../../assets/pymdownx-extras/extra-0d9305e748.js"></script>
       
     
   </body>

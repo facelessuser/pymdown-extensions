@@ -17,7 +17,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-5.0.0b2">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.0.0b2-1">
     
     
       
@@ -45,7 +45,7 @@
     
     
     
-      <link rel="stylesheet" href="../../extra-4177b12573.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-821c6c252c.css">
     
     
       
@@ -821,8 +821,8 @@
                   <a href="https://github.com/facelessuser/pymdown-extensions/tree/master/docs/src/markdown/extensions/snippets.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="snippets">Snippets<a class="headerlink" href="#snippets" title="Permanent link"></a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
+                <h1 id="snippets">Snippets<a class="headerlink" href="#snippets" title="Permanent link"></a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
 <p>Snippets is an extension to insert markdown or HTML snippets into another markdown file.  Snippets is great for
 situations where you have content you need to insert into multiple documents.  For instance, this document keeps all its
 hyperlinks in a separate file.  Then includes those hyperlinks at the bottom of a document via snippets. If a link needs
@@ -842,7 +842,7 @@ that document system (assuming a plugin environment is available).</p>
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.snippets&#39;</span><span class="p">])</span>
 </code></pre></div>
 
-<h2 id="snippets-notation">Snippets Notation<a class="headerlink" href="#snippets-notation" title="Permanent link"></a></h2>
+<h2 id="snippets-notation">Snippets Notation<a class="headerlink" href="#snippets-notation" title="Permanent link"></a></h2>
 <p>Snippets has two modes of inserting snippets: single line and block.</p>
 <p>Single line format is done by placing the following markup for the single line notation:</p>
 <div class="highlight"><pre><span></span><code>--8&lt;-- &quot;filename.md&quot; 
@@ -881,7 +881,7 @@ include.md
 --8&lt;-- 
 </code></pre></div>
 
-<h2 id="formatting-snippets">Formatting Snippets<a class="headerlink" href="#formatting-snippets" title="Permanent link"></a></h2>
+<h2 id="formatting-snippets">Formatting Snippets<a class="headerlink" href="#formatting-snippets" title="Permanent link"></a></h2>
 <p>When inserting your snippet, it is important to remember that some snippets may need whitespace around them.</p>
 <div class="highlight"><pre><span></span><code>This is the file that is including the snippet.
 We want blank lines before and after the insertion:
@@ -899,7 +899,7 @@ file2.md
 --8&lt;-- 
 </code></pre></div>
 
-<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
+<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
 <table>
 <thead>
 <tr>
@@ -1028,8 +1028,8 @@ file2.md
       
     </div>
     
-      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script>
-      <script id="__lang" type="application/json">{"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
+      <script src="../../assets/javascripts/bundle.bd6ef04a.min.js"></script><script id="__lang" type="application/json">
+        {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.language": "en", "search.pipeline.stopwords": "True", "search.pipeline.trimmer": "True", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.tokenizer": "[\\s\\-]+"}
       </script>
       <script>
         app = initialize({
@@ -1038,12 +1038,12 @@ file2.md
             search: "../../assets/javascripts/worker/search.926ffd9e.min.js"
           },
           feature: {
-            instant: false
+            instant: true
           }
         });
       </script>
       
-        <script src="../../extra-0d9305e748.js"></script>
+        <script src="../../assets/pymdownx-extras/extra-0d9305e748.js"></script>
       
     
   </body>
