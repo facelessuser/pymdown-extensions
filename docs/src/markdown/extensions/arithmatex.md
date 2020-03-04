@@ -39,7 +39,10 @@ will capture any `#!tex $...$` whose dollar symbols are not escaped (`#!tex \$`)
     without the `text2jax` extension since MathJax automatically detects Arithmatex's default output.
 
     If using generic mode (for libraries like KaTeX), Arithmatex will convert dollars to the form `#!tex \(...\)` in the
-    HTML output. This is because `#!tex $...$` is extremely problematic to scan for, which is why MathJax and KaTeX disable `#!tex $...$` by default in their plain text scanners, and why Arithmatex enables `smart_dollar` by default when scanning for `#!tex $...$`. It is advised, if outputting in in `generic` mode, to not configure your JavaScript library to look for `#!tex $...$` and instead look for `#!tex \(...\)`, and let Arithmatex's handle `#!tex $...$`.
+    HTML output. This is because `#!tex $...$` is extremely problematic to scan for, which is why MathJax and KaTeX
+    disable `#!tex $...$` by default in their plain text scanners, and why Arithmatex enables `smart_dollar` by default
+    when scanning for `#!tex $...$`. It is advised, if outputting in in `generic` mode, to not configure your JavaScript
+    library to look for `#!tex $...$` and instead look for `#!tex \(...\)`, and let Arithmatex's handle `#!tex $...$`.
 
 For block forms, the block must start with the appropriate opening for the block type: `#!tex $$`, `#!tex \[`, and
 `#!tex \begin{}` for the respective search pattern. The block must also end with the proper respective end: `#!tex $$`,
@@ -74,13 +77,14 @@ empty line.
 
 ## MathJax Output Format
 
-The math equations will be wrapped in a special MathJax script tag and embedded into the HTML. MathJax can already find
-these scripts, so there is no need to include and configure the `tex2jax.js` extension when setting up MathJax. The tag
-will be `#!html <script type="math/tex"></script>` for inline and
-`#!html <script type="math/tex; mode=display"></script>` for block.
+The math equations will be wrapped in a special MathJax script tag and embedded into the HTML. This format does not
+require the `tex2jax.js` extension when setting up MathJax. The tag will be in the form of
+`#!html <script type="math/tex"></script>` for inline and `#!html <script type="math/tex; mode=display"></script>` for
+block.
 
-By default, Arithmatex will also generate a preview span with the class `MathJax_Preview` that MathJax will hide when
-the math content is actually loaded. If you do not want to see the preview, simply set `preview` to `#!py3 False`.
+By default, Arithmatex will also generate a preview span with the class `MathJax_Preview` that can/should be hidden when
+the math content is actually loaded. If you do not want to see generate the preview, simply set `preview` to
+`#!py3 False`.
 
 ## Generic Output Format
 
@@ -99,15 +103,15 @@ replaced, only wrapped: `#!html <div class="arithmatex">\[\begin{}...\end{}\]</d
 Arithmatex requires you to provide the MathJax library and provide and configure it to your liking.  The recommended way
 of including MathJax is to use the CDN. Latest version at time of writing this is found below.
 
-=== "MathJax 2"
-    ```html
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"></script>
-    ```
-
 === "MathJax 3"
     ```html
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    ```
+
+=== "Legacy: MathJax 2"
+    ```html
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"></script>
     ```
 
 Generally, it is best to add your own configuration to get exactly what you want. Here we show some simple examples of
@@ -116,15 +120,6 @@ Arithmatex's [MathJax Output Format](#mathjax-output-format), and one that works
 [Generic Output Format](#generic-output-format) by using `tex2jax`. These are a good starting point,so feel free to take
 them and configure them further. Please see the [MathJax][mathjax] site for more info on using MathJax
 extensions/plugins and configuring those extensions/plugins.
-
-=== "Default - MathJax 2"
-    ```js
-    MathJax.Hub.Config({
-      config: ["MMLorHTML.js"],
-      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
-      extensions: ["MathMenu.js", "MathZoom.js"]
-    });
-    ```
 
 === "Default - MathJax 3"
     ```js
@@ -153,20 +148,12 @@ extensions/plugins and configuring those extensions/plugins.
     };
     ```
 
-=== "Generic - MathJax 2"
+=== "Legacy: Default - MathJax 2"
     ```js
     MathJax.Hub.Config({
       config: ["MMLorHTML.js"],
-      extensions: ["tex2jax.js"],
       jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
-      tex2jax: {
-        inlineMath: [ ["\\(","\\)"] ],
-        displayMath: [ ["\\[","\\]"] ],
-        processEscapes: true,
-        processEnvironments: true,
-        ignoreClass: ".*|",
-        processClass: "arithmatex"
-      },
+      extensions: ["MathMenu.js", "MathZoom.js"]
     });
     ```
 
@@ -184,6 +171,23 @@ extensions/plugins and configuring those extensions/plugins.
         processHtmlClass: "arithmatex"
       }
     };
+    ```
+
+=== "Legacy: Generic - MathJax 2"
+    ```js
+    MathJax.Hub.Config({
+      config: ["MMLorHTML.js"],
+      extensions: ["tex2jax.js"],
+      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+      tex2jax: {
+        inlineMath: [ ["\\(","\\)"] ],
+        displayMath: [ ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true,
+        ignoreClass: ".*|",
+        processClass: "arithmatex"
+      },
+    });
     ```
 
 Notice that in our generic configuration, we set up `tex2jax` to only load `arithmatex` classes by excluding all
