@@ -3,6 +3,49 @@ name: pull request
 on: [pull_request]
 
 jobs:
+  tests:
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        platform: [ubuntu-latest, windows-latest]
+        tox-env: [py35, py36, py37, py38]
+        include:
+          - tox-env: py35
+            python-version: 3.5
+          - tox-env: py36
+            python-version: 3.6
+          - tox-env: py37
+            python-version: 3.7
+          - tox-env: py38
+            python-version: 3.8
+
+    env:
+      TOXENV: ${{ matrix.tox-env }}
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip setuptools tox coverage codecov
+    - name: Test
+      run: |
+        python -m tox
+    - name: Upload Results
+      if: success()
+      uses: codecov/codecov-action@v1
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: ${{ matrix.platform }}-${{ matrix.tox-env }}
+        fail_ci_if_error: false
+
   lint:
     strategy:
       max-parallel: 4
@@ -15,7 +58,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
@@ -39,7 +82,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v1
       with:
