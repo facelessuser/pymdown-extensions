@@ -15,14 +15,12 @@ theme:
   palette:
     primary: blue
     accent: blue
-  logo:
-    icon: library_books
   font:
     text: Roboto
     code: Roboto Mono
-  feature:
-    tabs: true
-    instant: true
+  features:
+    tabs
+    instant
 
 nav:
   - PyMdown Extensions: index.md
@@ -134,8 +132,10 @@ markdown_extensions:
 
 extra:
   social:
-    - icon: brands/github
+    - icon: fontawesome/brands/github
       link: https://github.com/facelessuser
+    - icon: fontawesome/brands/discord
+      link: https://discord.gg/fqQ7ypS
 extra_css:
   - assets/pymdownx-extras/extra-821c6c252c.css
 extra_javascript:
