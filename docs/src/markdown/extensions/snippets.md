@@ -33,18 +33,14 @@ Snippets has two modes of inserting snippets: single line and block.
 
 Single line format is done by placing the following markup for the single line notation:
 
-```
---8<-- "filename.md" 
-```
+<pre><code>--8&lt;-- "filename.md"</code></pre>
 
 Or you can insert multiple files with block notation:
 
-```
---8<-- 
+<pre><code>--8&lt;--
 filename.md
 filename2.md
---8<-- 
-```
+--8&lt;--</code></pre>
 
 As you can see, the notation is ASCII scissors cutting a line followed by the file name.  In the case of the single line
 variant, the file name follows directly after the scissors and is quoted.  In the case of the block format, the file
@@ -57,48 +53,40 @@ confusion in block format, it is advised to ensure the entire block is indented 
 escape the syntax, just make sure a minimum of a space is after the quoted file name for single line format, or a space
 after the start or end block markers in block format.
 
-```
---8<-- "escaped notation"<space>
+<pre><code>--8&lt;-- "escaped notation"&lt;space&gt;
 
---8<--<space>
+--8&lt;--&lt;space&gt;
 escaped notation
---8<--<space>
-```
+--8&lt;--&lt;space&gt;</code></pre>
 
 If you have a file you want to temporarily ignore, you can comment it out by prepending the path with `; ` (notice the
 semicolon is followed by a space).  This works for both single line and block format:
 
-```
---8<-- "; skip.md" 
+<pre><code>--8&lt;-- "; skip.md"
 
---8<-- 
+--8&lt;--
 include.md
 ; skip.md
---8<-- 
-```
+--8&lt;--</code></pre>
 
 ## Formatting Snippets
 
 When inserting your snippet, it is important to remember that some snippets may need whitespace around them.
 
-```
-This is the file that is including the snippet.
+<pre><code>This is the file that is including the snippet.
 We want blank lines before and after the insertion:
 
---8<-- "insert.md" 
+--8&lt;-- "insert.md"
 
-So we put blank lines around the insertion.
-```
+So we put blank lines around the insertion.</code></pre>
 
 In block format, it is important to note that empty lines are preserved for formatting:
 
-```
---8<-- 
+<pre><code>--8&lt;--
 file1.md
 
 file2.md
---8<-- 
-```
+--8&lt;--</code></pre>
 
 ## Options
 
