@@ -16,7 +16,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.0.0b3-2">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.0.0b3-1">
     
     
       
@@ -24,7 +24,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.5ac791a0.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.14bb5ffa.min.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/palette.f5f04e6f.min.css">
       
@@ -44,7 +44,7 @@
     
     
     
-      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-821c6c252c.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-3f3f1e5abc.css">
     
     
       
@@ -55,7 +55,7 @@
   
     
     
-    <body dir="ltr" data-md-color-primary="blue" data-md-color-accent="blue">
+    <body dir="None" data-md-color-primary="blue" data-md-color-accent="blue">
   
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
@@ -863,15 +863,13 @@ that document system (assuming a plugin environment is available).</p>
 <h2 id="snippets-notation">Snippets Notation<a class="headerlink" href="#snippets-notation" title="Permanent link"></a></h2>
 <p>Snippets has two modes of inserting snippets: single line and block.</p>
 <p>Single line format is done by placing the following markup for the single line notation:</p>
-<div class="highlight"><pre><span></span><code>--8&lt;-- &quot;filename.md&quot; 
-</code></pre></div>
+<pre><code>--8&lt;-- "filename.md"</code></pre>
 
 <p>Or you can insert multiple files with block notation:</p>
-<div class="highlight"><pre><span></span><code>--8&lt;-- 
+<pre><code>--8&lt;--
 filename.md
 filename2.md
---8&lt;-- 
-</code></pre></div>
+--8&lt;--</code></pre>
 
 <p>As you can see, the notation is ASCII scissors cutting a line followed by the file name.  In the case of the single line
 variant, the file name follows directly after the scissors and is quoted.  In the case of the block format, the file
@@ -882,40 +880,36 @@ single line notation.  If the file name is indented, the content will be indente
 confusion in block format, it is advised to ensure the entire block is indented to the same level.  If you need to
 escape the syntax, just make sure a minimum of a space is after the quoted file name for single line format, or a space
 after the start or end block markers in block format.</p>
-<div class="highlight"><pre><span></span><code>--8&lt;-- &quot;escaped notation&quot;&lt;space&gt;
+<pre><code>--8&lt;-- "escaped notation"&lt;space&gt;
 
 --8&lt;--&lt;space&gt;
 escaped notation
---8&lt;--&lt;space&gt;
-</code></pre></div>
+--8&lt;--&lt;space&gt;</code></pre>
 
 <p>If you have a file you want to temporarily ignore, you can comment it out by prepending the path with <code>;</code> (notice the
 semicolon is followed by a space).  This works for both single line and block format:</p>
-<div class="highlight"><pre><span></span><code>--8&lt;-- &quot;; skip.md&quot; 
+<pre><code>--8&lt;-- "; skip.md"
 
---8&lt;-- 
+--8&lt;--
 include.md
 ; skip.md
---8&lt;-- 
-</code></pre></div>
+--8&lt;--</code></pre>
 
 <h2 id="formatting-snippets">Formatting Snippets<a class="headerlink" href="#formatting-snippets" title="Permanent link"></a></h2>
 <p>When inserting your snippet, it is important to remember that some snippets may need whitespace around them.</p>
-<div class="highlight"><pre><span></span><code>This is the file that is including the snippet.
+<pre><code>This is the file that is including the snippet.
 We want blank lines before and after the insertion:
 
---8&lt;-- &quot;insert.md&quot; 
+--8&lt;-- "insert.md"
 
-So we put blank lines around the insertion.
-</code></pre></div>
+So we put blank lines around the insertion.</code></pre>
 
 <p>In block format, it is important to note that empty lines are preserved for formatting:</p>
-<div class="highlight"><pre><span></span><code>--8&lt;-- 
+<pre><code>--8&lt;--
 file1.md
 
 file2.md
---8&lt;-- 
-</code></pre></div>
+--8&lt;--</code></pre>
 
 <h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
 <table>
@@ -956,7 +950,7 @@ file2.md
 <div class="md-source-date">
   <small>
     
-      Last update: December 17, 2019
+      Last update: March 7, 2020
     
   </small>
 </div>
@@ -1053,8 +1047,8 @@ file2.md
       <script>var __config={}</script>
     
     
-      <script src="../../assets/javascripts/vendor.dd2d8181.min.js"></script>
-      <script src="../../assets/javascripts/bundle.b806a4d5.min.js"></script><script id="__lang" type="application/json">
+      <script src="../../assets/javascripts/vendor.31a2e7b9.min.js"></script>
+      <script src="../../assets/javascripts/bundle.707c241f.min.js"></script><script id="__lang" type="application/json">
         {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}
       </script>
       <script>
@@ -1066,7 +1060,7 @@ file2.md
             }
           },
           features: "tabs instant"
-        }, typeof __config !== "undefined" ? __config : {}))
+        }, __config))
       </script>
       
         <script src="../../assets/pymdownx-extras/extra-0d9305e748.js"></script>
