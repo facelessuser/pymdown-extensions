@@ -1,0 +1,30 @@
+.md-typeset {
+  .tabbed-content {
+    // Reset background
+    background-color: initial;
+    box-shadow: inset 0 0.25rem 0.5rem -0.5rem hsla(0, 0%, 0%, 0.8);
+  }
+
+  .tabbed-set {
+    > input {
+      &:checked + label {
+        & + .tabbed-content {
+          > {
+            pre,
+            .highlight,
+            .highlighttable,
+            .codehilite,
+            .codehilitetable {
+              &:only-child {
+                pre {
+                  // Reset background
+                  background: var(--md-code-bg-color);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
