@@ -1,6 +1,3 @@
-$md-link-color: hsl(207, 94%, 54%);
-$md-link-color-hover: hsl(218, 100%, 63%);
-
 // General styling for repository link icons
 .md-typeset {
   a[href^="mailto:"]::before {
@@ -18,13 +15,13 @@ $md-link-color-hover: hsl(218, 100%, 63%);
       width: 1em;
       height: 1em;
       padding-right: 1em;
-      background-color: $md-link-color;
+      background-color: var(--md-primary-fg-color);
       background-size: 1em;
       content: "\a0";
     }
 
     &:hover::before {
-      background-color: $md-link-color-hover;
+      background-color: var(--md-accent-fg-color);
     }
   }
 }

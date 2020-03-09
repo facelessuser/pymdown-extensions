@@ -1,4 +1,12 @@
 /* Material colors and icons */
+$svg-settings: inline-svg("./docs/src/svg/material/settings.svg");
+$svg-alert-decagram: inline-svg("./docs/src/svg/material/alert-decagram.svg");
+
+:root {
+  --svg-settings: #{$svg-settings};
+  --svg-alert-decagram: #{$svg-alert-decagram};
+}
+
 .md-typeset {
   .admonition {
     @each $names, $appearance in (
@@ -24,7 +32,7 @@
             height: 1rem;
             background-color: $tint;
             background-size: 1rem;
-            mask-image: inline-svg("./docs/src/svg/material/#{$icon}.svg");
+            mask-image: var(--svg-#{$icon});
             content: "\a0";
           }
         }

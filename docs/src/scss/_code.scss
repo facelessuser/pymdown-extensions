@@ -1,13 +1,3 @@
-$md-code-background: hsla(0, 0%, 92.5%, 0.5);
-$md-code-special: hsl(0, 0%, 100%);
-$md-linenos-background-special: #EEEEEE;
-$md-linenos-background-special-table: hsla(0, 0%, 60%, 0.125);
-$md-linenos-background: hsl(0, 0%, 97%);
-$md-linenos: #999999;
-$md-linenos-border: #DDDDDD;
-$tab-label: #333333;
-$tab-current-label: #FF5252;
-
 .md-typeset {
 
   /* Code */
@@ -18,19 +8,19 @@ $tab-current-label: #FF5252;
       margin: 0 0.25em * $correct;
       padding: 0.0625em * $correct 0;
       border-radius: 0.2rem;
-      background-color: $md-code-background;
+      background-color: var(--md-code-bg-color);
       box-shadow:
-        +0.25em * $correct 0 0 $md-code-background,
-        -0.25em * $correct 0 0 $md-code-background;
+        +0.25em * $correct 0 0 var(--md-code-bg-color),
+        -0.25em * $correct 0 0 var(--md-code-bg-color);
       box-decoration-break: clone;
     }
   }
 
   .codehilitetable {
     .linenos {
-      border-right: 0.0625rem solid $md-linenos-border;
+      border-right: 0.0625rem solid var(--md-default-fg-color--lighter);
       border-radius: 0;
-      background-color: $md-code-background;
+      background-color: var(--md-code-bg-color);
     }
 
     .linenodiv {
@@ -39,7 +29,7 @@ $tab-current-label: #FF5252;
         margin-left: -0.6rem;
         padding-right: 0.6rem;
         padding-left: 0.6rem;
-        background-color: $md-linenos-background-special-table;
+        background-color: var(--md-default-fg-color--lightest);
       }
     }
   }
@@ -63,15 +53,15 @@ $tab-current-label: #FF5252;
         margin-right: 0.6rem;
         margin-left: -0.6rem;
         padding-left: 0.6rem;
-        border-right: 0.0625rem solid $md-linenos-border;
+        border-right: 0.0625rem solid var(--md-default-fg-color--lighter);
         background-color: transparent;  // `$md-linenos-background`
-        color: $md-linenos;
+        color: var(--md-default-fg-color--lighter);
         content: attr(data-linenos);
         user-select: none;
       }
 
       &.special::before {
-        background-color: $md-linenos-background-special;
+        background-color: var(--md-default-fg-color--lightest);
       }
 
       + .hll {
