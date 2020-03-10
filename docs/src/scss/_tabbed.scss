@@ -1,12 +1,19 @@
 .md-typeset {
   .tabbed-content {
     // Reset background
+    border-top: 0.0625rem solid var(--md-default-fg-color--lightest);
     background-color: initial;
-    box-shadow: inset 0 0.25rem 0.5rem -0.5rem var(--md-default-fg-color);
     overflow: auto;
   }
 
+  > label {
+    margin: 0;
+    padding: 0.6rem;
+  }
+
   .tabbed-set {
+    border: 0;
+
     > input {
       &:checked + label {
         & + .tabbed-content {
@@ -32,8 +39,11 @@
   @media only screen and (max-width: 44.9375em) {
     > .tabbed-set {
       margin: 1em 0;
-      border: 0.05rem solid var(--md-default-fg-color--lightest);
-      border-radius: 0.1rem;
+      border: 0;
+
+      input:first-child + label {
+        margin-left: 0;
+      }
     }
   }
 }
