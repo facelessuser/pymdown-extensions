@@ -21,23 +21,15 @@
     word-break: normal;
   }
 
-  /* Special line number coloring for tables */
-  .codehilitetable {
-    .linenodiv {
-      .special {
-        margin-right: -0.525em;
-        margin-left: -1.1764705882em;
-        padding-right: 0.525em;
-        padding-left: 1.1764705882em;
-        background-color: var(--md-default-fg-color--lightest);
-      }
-    }
-  }
-
   .codehilite {
 
     /* Needed for tab preserving mode */
     tab-size: 8;
+
+    .hll {
+      margin: 0 -0.6rem;
+      padding: 0 0.6rem;
+    }
 
     /* `inine` mode */
     span.lineno {
@@ -76,6 +68,24 @@
 
       /* Special line mode coloring */
       &.special::before {
+        background-color: var(--md-default-fg-color--lightest);
+      }
+    }
+  }
+
+  /* Special line number coloring for tables */
+  .codehilitetable {
+    .codehilite.hll {
+      margin: 0 -0.8rem;
+      padding: 0 0.8rem;
+    }
+
+    .linenodiv {
+      .special {
+        margin-right: -0.525em;
+        margin-left: -1.1764705882em;
+        padding-right: 0.525em;
+        padding-left: 1.1764705882em;
         background-color: var(--md-default-fg-color--lightest);
       }
     }
