@@ -1,6 +1,6 @@
 .md-typeset {
 
-  /* Code */
+  /* Code that is also a link */
   a {
     > code {
       $correct: 1 / 0.85;
@@ -16,82 +16,67 @@
     }
   }
 
-  .codehilitetable {
-    .linenos {
-      border-right: 0.0625rem solid var(--md-default-fg-color--lighter);
-      border-radius: 0;
-      background-color: var(--md-code-bg-color);
-    }
-
-    .linenodiv {
-      .special {
-        margin-right: -0.6rem;
-        margin-left: -0.6rem;
-        padding-right: 0.6rem;
-        padding-left: 0.6rem;
-        background-color: var(--md-default-fg-color--lightest);
-      }
-    }
-  }
-
+  /* Don't always like code breaking in table cells */
   td code {
     word-break: normal;
   }
 
-  .codehilite {
-    tab-size: 8;
-
-    .hll {
-      display: inline;
-    }
-
-    [data-linenos] {
-      &::before {
-        display: inline-block;
-        position: initial;  // `sticky`
-        left: -0.6rem;
-        margin-right: 0.6rem;
-        margin-left: -0.6rem;
-        padding-left: 0.6rem;
-        border-right: 0.0625rem solid var(--md-default-fg-color--lighter);
-        background-color: transparent;  // `$md-linenos-background`
-        color: var(--md-default-fg-color--lighter);
-        content: attr(data-linenos);
-        user-select: none;
-      }
-
-      &.special::before {
+  /* Special line number coloring for tables */
+  .codehilitetable {
+    .linenodiv {
+      .special {
+        margin-right: -0.525em;
+        margin-left: -1.1764705882em;
+        padding-right: 0.525em;
+        padding-left: 1.1764705882em;
         background-color: var(--md-default-fg-color--lightest);
-      }
-
-      + .hll {
-        margin: 0 -0.6rem;
-        padding: 0 0.6rem;
       }
     }
   }
 
-  > {
-    .codehilitetable {
-      .linenodiv {
-        @media only screen and (max-width: 44.9375em) {
-          .special {
-            margin-right: -0.8rem;
-            margin-left: -0.8rem;
-            padding-right: 0.8rem;
-            padding-left: 0.8rem;
-          }
-        }
+  .codehilite {
+
+    /* Needed for tab preserving mode */
+    tab-size: 8;
+
+    /* `inine` mode */
+    span.lineno {
+
+      /* Line number fixes for consistency */
+      &:not([data-linenos]) {
+        left: -1.1764705882em;
+        margin-right: 1.1764705882em;
+        margin-left: -1.1764705882em;
+        padding-left: 1.1764705882em;
+        float: left;
+        border-right: 0.0625rem solid var(--md-default-fg-color--lighter);
+        background-color: hsl(0, 0%, 97%);
+        color: var(--md-default-fg-color--lighter);
+      }
+
+      /* Special line mode coloring */
+      &.special {
+        background-color: var(--md-default-fg-color--lightest);
       }
     }
 
-    .codehilite {
-      [data-linenos]::before {
-        @media only screen and (max-width: 44.9375em) {
-          left: -1.6rem;
-          margin-left: -1.6rem;
-          padding-left: 1.6rem;
-        }
+    /* `pymdownx-inline` mode */
+    [data-linenos] {
+
+      /* Fix line number background and colors and interaction with highlight line */
+      &::before {
+        // position: initial;  // remove `sticky` mode
+        left: -1.1764705882em;
+        margin-right: 1.1764705882em;
+        margin-left: -1.1764705882em;
+        padding-left: 1.1764705882em;
+        float: left;
+        background-color: hsl(0, 0%, 97%);
+      }
+
+      /* Special line mode coloring */
+      &.special::before {
+        background-color: var(--md-default-fg-color--lightest);
       }
     }
   }

@@ -4,6 +4,17 @@
     mask-image: inline-svg("./docs/src/svg/material/mail.svg");
   }
 
+  .magiclink-compare,
+  .magiclink-commit,
+  .magiclink-pull,
+  .magiclink-issue {
+    &::before {
+      mask-position: bottom;
+      mask-repeat: no-repeat;
+      mask-size: 1em auto;
+    }
+  }
+
   .magiclink-repository,
   .magiclink-compare,
   .magiclink-commit,
@@ -28,15 +39,15 @@
 
 // Assign icons to repository links
 @each $name, $icon in (
-  "commit": "source-commit",
-  "compare": "source-branch",
-  "pull": "source-pull",
-  "issue": "alert-circle-outline"
+  "commit": "git-commit",
+  "compare": "diff",
+  "pull": "git-pull-request",
+  "issue": "issue-opened"
 ) {
   .md-typeset {
     .magiclink-#{$name} {
       &::before {
-        mask-image: inline-svg("./docs/src/svg/material/#{$icon}.svg");
+        mask-image: inline-svg("./docs/src/svg/octicons/#{$icon}.svg");
       }
     }
   }
