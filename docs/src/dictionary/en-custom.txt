@@ -18,6 +18,7 @@ CodeHilite's
 CriticMarkup
 Ctrl
 Dicts
+Donath
 ElementTree
 Emoji
 EmojiOne
