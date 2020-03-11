@@ -11,7 +11,7 @@
     &::before {
       mask-position: bottom;
       mask-repeat: no-repeat;
-      mask-size: 1em auto;
+      mask-size: px2em(16px) auto;
     }
   }
 
@@ -23,11 +23,11 @@
   a[href^="mailto:"] {
     &::before {
       position: relative;
-      width: 1em;
-      height: 1em;
-      padding-right: 1em;
+      width: px2em(16px);
+      height: px2em(16px);
+      padding-right: px2em(16px);
       background-color: var(--md-primary-fg-color);
-      background-size: 1em;
+      background-size: px2em(16px);
       content: "\a0";
     }
 

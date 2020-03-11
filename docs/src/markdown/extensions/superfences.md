@@ -107,7 +107,7 @@ When generating additional classes on a JavaScript style code block (non-Pygment
 the `#!html code` block.
 
 !!! example "Non-Pygments Injecting Classes"
-     === "Source"
+    === "Source"
         ````
         ```{.python .extra-class #id linenums="1"}
         import hello_world

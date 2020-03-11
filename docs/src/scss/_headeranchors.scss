@@ -3,50 +3,50 @@ $md-link-color-deactivated: #888888;
 
 .md-typeset {
   .headerlink {
-    width: 0.9rem;
-    height: 0.9rem;
-    background-color: var(--md-default-fg-color--lighter);
-    background-size: 0.9rem;
-    mask-size: 0.9rem;
-    mask-repeat: no-repeat;
+    width: px2rem(18px);
+    height: px2rem(18px);
     vertical-align: middle;
+    background-color: var(--md-default-fg-color--lighter);
+    background-size: px2rem(18px);
+    mask-size: px2rem(18px);
+    mask-repeat: no-repeat;
     visibility: visible;
     mask-image: inline-svg("./docs/src/svg/material/link.svg");
 
-    @media only screen and (min-width: 76.1876em) {
-      margin-left: -1rem;
+    @include break-from-device(mobile) {
       float: left;
+      margin-left: px2rem(-18px);
     }
   }
 
   h1 {
     .headerlink {
-      @media only screen and (min-width: 76.1876em) {
-        margin-top: 0.5rem;
+      @include break-from-device(mobile) {
+        margin-top: px2rem(10px);
       }
     }
   }
 
   h2 {
     .headerlink {
-      @media only screen and (min-width: 76.1876em) {
-        margin-top: 0.45rem;
+      @include break-from-device(mobile) {
+        margin-top: px2rem(9px);
       }
     }
   }
 
   h3 {
     .headerlink {
-      @media only screen and (min-width: 76.1876em) {
-        margin-top: 0.35rem;
+      @include break-from-device(mobile) {
+        margin-top: px2rem(7px);
       }
     }
   }
 
   h4 {
     .headerlink {
-      @media only screen and (min-width: 76.1876em) {
-        margin-top: 0.2rem;
+      @include break-from-device(mobile) {
+        margin-top: px2rem(4px);
       }
     }
   }
@@ -54,8 +54,8 @@ $md-link-color-deactivated: #888888;
   h5,
   h6 {
     .headerlink {
-      @media only screen and (min-width: 76.1876em) {
-        margin-top: 0.05rem;
+      @include break-from-device(mobile) {
+        margin-top: px2rem(1px);
       }
     }
   }

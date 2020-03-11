@@ -3,15 +3,14 @@
   /* Code that is also a link */
   a {
     > code {
-      $correct: 1 / 0.85;
-
-      margin: 0 0.25em * $correct;
-      padding: 0.0625em * $correct 0;
-      border-radius: 0.2rem;
+      margin: 0 px2em(4px, 13.6px);
+      padding: px2em(1px, 13.6px) 0;
+      font-size: px2em(13.6px);
       background-color: var(--md-code-bg-color);
+      border-radius: px2rem(2px);
       box-shadow:
-        +0.25em * $correct 0 0 var(--md-code-bg-color),
-        -0.25em * $correct 0 0 var(--md-code-bg-color);
+        px2em( 4px, 13.6px) 0 0 var(--md-code-bg-color),
+        px2em(-4px, 13.6px) 0 0 var(--md-code-bg-color);
       box-decoration-break: clone;
     }
   }
@@ -27,29 +26,8 @@
     tab-size: 8;
 
     .hll {
-      margin: 0 -0.6rem;
-      padding: 0 0.6rem;
-    }
-
-    /* `inine` mode */
-    span.lineno {
-
-      /* Line number fixes for consistency */
-      &:not([data-linenos]) {
-        left: -1.1764705882em;
-        margin-right: 1.1764705882em;
-        margin-left: -1.1764705882em;
-        padding-left: 1.1764705882em;
-        float: left;
-        border-right: 0.0625rem solid var(--md-default-fg-color--lighter);
-        background-color: hsl(0, 0%, 97%);
-        color: var(--md-default-fg-color--lighter);
-      }
-
-      /* Special line mode coloring */
-      &.special {
-        background-color: var(--md-default-fg-color--lightest);
-      }
+      margin: 0 px2rem(-16px);
+      padding: 0 px2rem(16px);
     }
 
     /* `pymdownx-inline` mode */
@@ -58,12 +36,12 @@
       /* Fix line number background and colors and interaction with highlight line */
       &::before {
         // position: initial;  // remove `sticky` mode
-        left: -1.1764705882em;
-        margin-right: 1.1764705882em;
-        margin-left: -1.1764705882em;
-        padding-left: 1.1764705882em;
+        left: px2em(-16px, 13.6px);
         float: left;
-        background-color: hsl(0, 0%, 97%);
+        margin-right: px2em(16px, 13.6px);
+        margin-left: px2em(-16px, 13.6px);
+        padding-left: px2em(16px, 13.6px);
+        background-color: hsla(0, 0%, 96%, 1);
       }
 
       /* Special line mode coloring */
@@ -73,20 +51,14 @@
     }
   }
 
-  /* Special line number coloring for tables */
-  .codehilitetable {
-    .codehilite.hll {
-      margin: 0 -0.8rem;
-      padding: 0 0.8rem;
-    }
+  // [mobile -]: Stretch to whole width
+  @include break-to-device(mobile) {
 
-    .linenodiv {
-      .special {
-        margin-right: -0.525em;
-        margin-left: -1.1764705882em;
-        padding-right: 0.525em;
-        padding-left: 1.1764705882em;
-        background-color: var(--md-default-fg-color--lightest);
+    // Full-width container
+    > .codehilite {
+      .hll {
+        margin: 0 px2rem(-16px);
+        padding: 0 px2rem(16px);
       }
     }
   }

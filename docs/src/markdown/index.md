@@ -136,6 +136,7 @@ Check out documentation on each extension to learn more about how to configure a
         ```
 
     === "Result"
+
         === "Tab 1"
             Markdown **content**.
 

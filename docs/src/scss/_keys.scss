@@ -8,15 +8,15 @@
         position: relative;
         margin: 0;
         color: $clr-grey-400;
+        font-weight: 400;
         font-family: sans-serif;
         -moz-osx-font-smoothing: initial;
         -webkit-font-smoothing: initial;
-        font-weight: 400;
       }
     }
 
     span {
-      padding: 0 0.2em;
+      padding: 0 px2em(3.2px);
       color: $clr-grey-400;
     }
 
@@ -33,7 +33,7 @@
     ) {
       .key-#{$name} {
         &::before {
-          padding-right: 0.2em;
+          padding-right: px2em(3.2px);
           content: $code;
         }
       }
@@ -47,7 +47,7 @@
     ) {
       .key-#{$name} {
         &::after {
-          padding-left: 0.2em;
+          padding-left: px2em(3.2px);
           content: $code;
         }
       }

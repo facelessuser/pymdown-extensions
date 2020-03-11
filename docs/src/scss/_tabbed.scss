@@ -1,0 +1,35 @@
+.md-typeset {
+  .tabbed-set > .tabbed-content {
+    padding: 0 px2rem(12px);
+    overflow: hidden;
+  }
+
+  .tabbed-set {
+    > input {
+      &:checked + label {
+        & + .tabbed-content {
+          > {
+            pre,
+            .codehilite,
+            .codehilitetable,
+            .highlight,
+            .highlighttable {
+
+           	  &:only-child code {
+                margin-right: px2rem(-12px);
+                margin-left: px2rem(-12px);
+                padding-right: px2rem(12px);
+                padding-left: px2rem(12px);
+
+                .hll {
+                  margin: 0 px2rem(-12px);
+                  padding: 0 px2rem(12px);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
