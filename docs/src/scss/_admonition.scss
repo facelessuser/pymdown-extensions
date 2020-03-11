@@ -9,6 +9,8 @@ $svg-alert-decagram: inline-svg("./docs/src/svg/material/alert-decagram.svg");
 
 .md-typeset {
   .admonition {
+    overflow: hidden;
+
     @each $names, $appearance in (
       settings config: $clr-purple-a700 "settings",
       new: $clr-yellow-a700 "alert-decagram"

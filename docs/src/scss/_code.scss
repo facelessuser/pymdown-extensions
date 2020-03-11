@@ -51,6 +51,19 @@
     }
   }
 
+    /* Special line number coloring for tables */
+  .codehilitetable {
+    .linenodiv {
+      .special {
+        margin-right: px2em(-8px, 13.6px);
+        margin-left: px2em(-16px, 13.6px);
+        padding-right: px2em(8px, 13.6px);
+        padding-left: px2em(16px, 13.6px);
+        background-color: var(--md-default-fg-color--lightest);
+      }
+    }
+  }
+
   // [mobile -]: Stretch to whole width
   @include break-to-device(mobile) {
 

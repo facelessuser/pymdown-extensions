@@ -8,6 +8,8 @@
     > input {
       &:checked + label {
         & + .tabbed-content {
+          font-size: ms(-1);
+
           > {
             pre,
             .codehilite,

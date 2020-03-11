@@ -11,7 +11,7 @@ import sass from "gulp-sass"
 import uglify from "gulp-uglify"
 import postcss from "gulp-postcss"
 import autoprefixer from "autoprefixer"
-import cssnano from "cssnano"
+import cssmin from "gulp-cssmin"
 import childProcess from "child_process"
 import gulpif from "gulp-if"
 import concat from "gulp-concat"
@@ -69,7 +69,7 @@ const config = {
       dead_code: true,    // eslint-disable-line camelcase
       evaluate: true,
       if_return: true,    // eslint-disable-line camelcase
-      join_vars: true     // eslint-disable-line camelcase
+      join_vars: true     // eslint-disable-line camelcase,
     }
   },
   lint: {
@@ -88,8 +88,7 @@ const config = {
 gulp.task("scss:build:sass", () => {
   const processors = [
     autoprefixer,
-    mqpacker,
-    (config.compress.enabled) ? cssnano : false
+    mqpacker
   ].filter(t => t)
 
   return gulp.src(config.files.scss)
@@ -101,6 +100,7 @@ gulp.task("scss:build:sass", () => {
         "node_modules/material-shadows"]
     }).on("error", sass.logError))
     .pipe(postcss(processors))
+    .pipe(gulpif(config.compress.enabled, cssmin()))
     .pipe(concat("extra.css"))
 
     // Revisioning
