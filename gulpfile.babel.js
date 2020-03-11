@@ -11,7 +11,7 @@ import sass from "gulp-sass"
 import uglify from "gulp-uglify"
 import postcss from "gulp-postcss"
 import autoprefixer from "autoprefixer"
-import cssmin from "gulp-cssmin"
+import cleanCSS from "gulp-clean-css"
 import childProcess from "child_process"
 import gulpif from "gulp-if"
 import concat from "gulp-concat"
@@ -100,7 +100,7 @@ gulp.task("scss:build:sass", () => {
         "node_modules/material-shadows"]
     }).on("error", sass.logError))
     .pipe(postcss(processors))
-    .pipe(gulpif(config.compress.enabled, cssmin()))
+    .pipe(gulpif(config.compress.enabled, cleanCSS()))
     .pipe(concat("extra.css"))
 
     // Revisioning

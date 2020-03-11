@@ -12,7 +12,9 @@
     "serve": "node_modules/.bin/gulp serve",
     "lint": "node_modules/.bin/gulp lint"
   },
-  "dependencies": {},
+  "dependencies": {
+    "gulp-clean-css": "^4.2.0"
+  },
   "engines": {
     "node": ">= 10",
     "yarn": "YARN NO LONGER USED - use npm instead."
@@ -26,12 +28,12 @@
     "autoprefixer": "^9.7.4",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
+    "clean-css": "^4.2.3",
     "css-mqpacker": "^7.0.0",
     "del": "^5.1.0",
     "eslint": "^6.8.0",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
-    "gulp-cssmin": "^0.2.0",
     "gulp-eslint": "^6.0.0",
     "gulp-if": "^3.0.0",
     "gulp-postcss": "^8.0.0",

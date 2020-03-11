@@ -137,7 +137,7 @@ extra:
     - icon: fontawesome/brands/discord
       link: https://discord.gg/fqQ7ypS
 extra_css:
-  - assets/pymdownx-extras/extra-5f2dd1097f.css
+  - assets/pymdownx-extras/extra-b730c971bf.css
 extra_javascript:
   - assets/pymdownx-extras/extra-52d8c68747.js
 
