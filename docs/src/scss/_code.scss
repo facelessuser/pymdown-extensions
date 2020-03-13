@@ -25,24 +25,8 @@
     /* Needed for tab preserving mode */
     tab-size: 8;
 
-    .hll {
-      margin: 0 px2rem(-16px);
-      padding: 0 px2rem(16px);
-    }
-
     /* `pymdownx-inline` mode */
     [data-linenos] {
-
-      /* Fix line number background and colors and interaction with highlight line */
-      &::before {
-        // position: initial;  // remove `sticky` mode
-        left: px2em(-16px, 13.6px);
-        float: left;
-        margin-right: px2em(16px, 13.6px);
-        margin-left: px2em(-16px, 13.6px);
-        padding-left: px2em(16px, 13.6px);
-        background-color: hsla(0, 0%, 96%, 1);
-      }
 
       /* Special line mode coloring */
       &.special::before {
@@ -60,18 +44,6 @@
         padding-right: px2em(8px, 13.6px);
         padding-left: px2em(16px, 13.6px);
         background-color: var(--md-default-fg-color--lightest);
-      }
-    }
-  }
-
-  // [mobile -]: Stretch to whole width
-  @include break-to-device(mobile) {
-
-    // Full-width container
-    > .codehilite {
-      .hll {
-        margin: 0 px2rem(-16px);
-        padding: 0 px2rem(16px);
       }
     }
   }
