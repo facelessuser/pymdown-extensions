@@ -1,7 +1,7 @@
 // General styling for repository link icons
 .md-typeset {
   a[href^="mailto:"]::before {
-    mask-image: inline-svg("./docs/src/svg/material/mail.svg");
+    mask-image: #{icon("material/mail")};
   }
 
   .magiclink-compare,
@@ -62,7 +62,7 @@
   .md-typeset {
     .magiclink-repository.magiclink-#{$name} {
       &::before {
-        mask-image: inline-svg("./docs/src/svg/material/#{$icon}.svg");
+        mask-image: #{icon("material/#{$icon}")};
       }
     }
   }

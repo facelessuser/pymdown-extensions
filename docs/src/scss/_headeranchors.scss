@@ -11,7 +11,7 @@ $md-link-color-deactivated: #888888;
     mask-size: px2rem(18px);
     mask-repeat: no-repeat;
     visibility: visible;
-    mask-image: inline-svg("./docs/src/svg/material/link.svg");
+    mask-image: #{icon("material/link")};
 
     @include break-from-device(mobile) {
       float: left;

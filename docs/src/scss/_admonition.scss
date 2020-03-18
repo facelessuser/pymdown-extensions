@@ -1,41 +1,44 @@
 /* Material colors and icons */
-$svg-settings: inline-svg("./docs/src/svg/material/settings.svg");
-$svg-alert-decagram: inline-svg("./docs/src/svg/material/alert-decagram.svg");
+$admonitions: (
+  settings config: $clr-purple-a700 "material/settings",
+  new: $clr-yellow-a700 "material/alert-decagram"
+);
 
 :root {
-  --svg-settings: #{$svg-settings};
-  --svg-alert-decagram: #{$svg-alert-decagram};
+  @each $names, $prop in $admonitions {
+    --md-admonition-icon--#{nth($names, 1)}: #{icon(nth($prop, 2))};
+  }
 }
 
-.md-typeset {
-  .admonition {
+@each $names, $prop in $admonitions {
+  $name: nth($names, 1);
+  $tint: nth($prop, 1);
 
-    @each $names, $appearance in (
-      settings config: $clr-purple-a700 "settings",
-      new: $clr-yellow-a700 "alert-decagram"
-    ) {
-      $tint: nth($appearance, 1);
-      $icon: nth($appearance, 2);
+    // Define base class
+  .md-typeset .admonition.#{$name} {
+    border-color: $tint;
+  }
 
-      // Define base class
-      &%#{nth($names, 1)},
-      &.#{nth($names, 1)} {
-        border-left: px2rem(4px) solid $tint;
+    // Define base class
+  .md-typeset .#{$name} > .admonition-title {
+    background-color: transparentize($tint, 0.9);
 
-        // Title
-        > .admonition-title {
-          background-color: transparentize($tint, 0.9);
+    // Icon
+    &::before {
+      width: px2rem(20px);
+      height: px2rem(20px);
+      background-color: $tint;
+      background-size: px2rem(20px);
+      mask-image: var(--md-admonition-icon--#{$name});
+      content: "\a0";
+    }
+  }
 
-          // Icon
-          &::before {
-            width: px2rem(20px);
-            height: px2rem(20px);
-            background-color: $tint;
-            background-size: px2rem(20px);
-            mask-image: var(--svg-#{$icon});
-            content: "\a0";
-          }
-        }
+  // Define synonyms for base class
+  @if length($names) > 1 {
+    @for $n from 2 through length($names) {
+      .#{nth($names, $n)} {
+        @extend .#{$name};
       }
     }
   }

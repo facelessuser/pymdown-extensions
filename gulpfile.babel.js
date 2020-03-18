@@ -47,7 +47,7 @@ let mkdocs = null
 // ------------------------------
 const config = {
   files: {
-    scss: "./docs/src/scss/*.scss",
+    scss: "./docs/src/scss/**/*.scss",
     css: "./docs/theme/assets/pymdownx-extras/*.css",
     jsSrc: "./docs/src/js/*.js",
     js: ["./docs/theme/assets/pymdownx-extras/*.js", "./docs/theme/assets/pymdownx-extras/*.js.map"],
