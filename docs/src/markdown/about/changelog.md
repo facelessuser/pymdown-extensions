@@ -3,6 +3,13 @@
 ## 7.0
 
 - **NEW**: Upgrade to Twemoji 12.1.5.
+- **NEW**: Keys extension adds `super`, `left-super`, and `right-super` key codes for an OS agnostic key.
+- **NEW**: Keys extension adds `left-option`, `right-option`, `left-command`, and `right-command` specifiers for
+  consistency across similar modifier keys.
+- **NEW**: Keys extension adds the following new aliases: `lwindows`, `rwindows`, `loption`, `roption`, `lopt`, `ropt`,
+  `left-opt`, `right-opt`, `lcommand`, `rcommand`, `lcmd`, `rcmd`, `left-cmd`, `right-cmd`. This adds new aliases for
+  new codes, but also adds some aliases to bring consistency across similar modifier keys.
+- **NEW**: Add `lwindows` and `rwindows` alias in Keys extension for consistency.
 - **FIX**: Ensure ExtraRawHTML raises a deprecation warning.
 
 ## 7.0b2
