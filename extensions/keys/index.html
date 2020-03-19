@@ -15,7 +15,7 @@
       
       
       <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.0.0rc1">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.0.0rc2">
     
     
       
@@ -23,7 +23,7 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.678c4af4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.97c3fac0.min.css">
       
         <link rel="stylesheet" href="../../assets/stylesheets/palette.31180ff2.min.css">
       
@@ -43,7 +43,7 @@
     
     
     
-      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-5f2dd1097f.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-783c47ae54.css">
     
     
       
@@ -71,6 +71,7 @@
   <nav class="md-header-nav md-grid">
     <a href="https://facelessuser.github.io/pymdown-extensions" title="PyMdown Extensions Documentation" aria-label="PyMdown Extensions Documentation" class="md-header-nav__button md-logo">
       
+        
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
       
     </a>
@@ -127,6 +128,7 @@
         
 <a href="https://github.com/facelessuser/pymdown-extensions/" title="Go to repository" class="md-source">
   <div class="md-source__icon md-icon">
+    
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
@@ -212,6 +214,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="https://facelessuser.github.io/pymdown-extensions" title="PyMdown Extensions Documentation" aria-label="PyMdown Extensions Documentation" class="md-nav__button md-logo">
       
+        
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
       
     </a>
@@ -222,6 +225,7 @@
       
 <a href="https://github.com/facelessuser/pymdown-extensions/" title="Go to repository" class="md-source">
   <div class="md-source__icon md-icon">
+    
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
   </div>
   <div class="md-source__repository">
@@ -1034,6 +1038,16 @@
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.keys&#39;</span><span class="p">])</span>
 </code></pre></div>
 
+<div class="admonition tip">
+<p class="admonition-title">Special Characters Before/After Key</p>
+<p>You might have noticed that in this page many keys show special Unicode symbols before (and sometimes after) a key's
+text. The Keys extension, only provides ASCII labels out of the box. Any special Unicode characters that are seen in
+this document are provided by additional CSS.</p>
+<p>To provide your own symbols, classes are provided that are derived from the main key code name (not the aliases)
+that you can target to provide special styling. Check out <a href="#formatting">Formatting</a> for more info.</p>
+<p>You can also override the label that is output for the key by provided your own overrides via the <code>key_map</code>
+parameter. This would require no additional CSS. More info is provided <a href="#extendingmodifying-key-map-index">here</a>.</p>
+</div>
 <h2 id="formatting">Formatting<a class="headerlink" href="#formatting" title="Permanent link"></a></h2>
 <p>By default, Keys outputs keys in the form (separator <code>span</code>s will be omitted if a separator is not provided via the
 <a href="#options">options</a>):</p>
@@ -1088,187 +1102,187 @@ There is also a separate alias dictionary which maps some aliases to entries in 
 <tbody>
 <tr>
 <td><code>0</code></td>
-<td><span class="keys"><kbd>0</kbd></span></td>
+<td><span class="keys"><kbd class="key-0">0</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>1</code></td>
-<td><span class="keys"><kbd>1</kbd></span></td>
+<td><span class="keys"><kbd class="key-1">1</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>2</code></td>
-<td><span class="keys"><kbd>2</kbd></span></td>
+<td><span class="keys"><kbd class="key-2">2</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>3</code></td>
-<td><span class="keys"><kbd>3</kbd></span></td>
+<td><span class="keys"><kbd class="key-3">3</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>4</code></td>
-<td><span class="keys"><kbd>4</kbd></span></td>
+<td><span class="keys"><kbd class="key-4">4</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>5</code></td>
-<td><span class="keys"><kbd>5</kbd></span></td>
+<td><span class="keys"><kbd class="key-5">5</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>6</code></td>
-<td><span class="keys"><kbd>6</kbd></span></td>
+<td><span class="keys"><kbd class="key-6">6</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>7</code></td>
-<td><span class="keys"><kbd>7</kbd></span></td>
+<td><span class="keys"><kbd class="key-7">7</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>8</code></td>
-<td><span class="keys"><kbd>8</kbd></span></td>
+<td><span class="keys"><kbd class="key-8">8</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>9</code></td>
-<td><span class="keys"><kbd>9</kbd></span></td>
+<td><span class="keys"><kbd class="key-9">9</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>a</code></td>
-<td><span class="keys"><kbd>A</kbd></span></td>
+<td><span class="keys"><kbd class="key-a">A</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>b</code></td>
-<td><span class="keys"><kbd>B</kbd></span></td>
+<td><span class="keys"><kbd class="key-b">B</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>c</code></td>
-<td><span class="keys"><kbd>C</kbd></span></td>
+<td><span class="keys"><kbd class="key-c">C</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>d</code></td>
-<td><span class="keys"><kbd>D</kbd></span></td>
+<td><span class="keys"><kbd class="key-d">D</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>e</code></td>
-<td><span class="keys"><kbd>E</kbd></span></td>
+<td><span class="keys"><kbd class="key-e">E</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f</code></td>
-<td><span class="keys"><kbd>F</kbd></span></td>
+<td><span class="keys"><kbd class="key-f">F</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>g</code></td>
-<td><span class="keys"><kbd>G</kbd></span></td>
+<td><span class="keys"><kbd class="key-g">G</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>h</code></td>
-<td><span class="keys"><kbd>H</kbd></span></td>
+<td><span class="keys"><kbd class="key-h">H</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>i</code></td>
-<td><span class="keys"><kbd>I</kbd></span></td>
+<td><span class="keys"><kbd class="key-i">I</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>j</code></td>
-<td><span class="keys"><kbd>J</kbd></span></td>
+<td><span class="keys"><kbd class="key-j">J</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>k</code></td>
-<td><span class="keys"><kbd>K</kbd></span></td>
+<td><span class="keys"><kbd class="key-k">K</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>l</code></td>
-<td><span class="keys"><kbd>L</kbd></span></td>
+<td><span class="keys"><kbd class="key-l">L</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>m</code></td>
-<td><span class="keys"><kbd>M</kbd></span></td>
+<td><span class="keys"><kbd class="key-m">M</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>n</code></td>
-<td><span class="keys"><kbd>N</kbd></span></td>
+<td><span class="keys"><kbd class="key-n">N</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>o</code></td>
-<td><span class="keys"><kbd>O</kbd></span></td>
+<td><span class="keys"><kbd class="key-o">O</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>p</code></td>
-<td><span class="keys"><kbd>P</kbd></span></td>
+<td><span class="keys"><kbd class="key-p">P</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>q</code></td>
-<td><span class="keys"><kbd>Q</kbd></span></td>
+<td><span class="keys"><kbd class="key-q">Q</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>r</code></td>
-<td><span class="keys"><kbd>R</kbd></span></td>
+<td><span class="keys"><kbd class="key-r">R</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>s</code></td>
-<td><span class="keys"><kbd>S</kbd></span></td>
+<td><span class="keys"><kbd class="key-s">S</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>t</code></td>
-<td><span class="keys"><kbd>T</kbd></span></td>
+<td><span class="keys"><kbd class="key-t">T</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>u</code></td>
-<td><span class="keys"><kbd>U</kbd></span></td>
+<td><span class="keys"><kbd class="key-u">U</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>v</code></td>
-<td><span class="keys"><kbd>V</kbd></span></td>
+<td><span class="keys"><kbd class="key-v">V</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>w</code></td>
-<td><span class="keys"><kbd>W</kbd></span></td>
+<td><span class="keys"><kbd class="key-w">W</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>x</code></td>
-<td><span class="keys"><kbd>X</kbd></span></td>
+<td><span class="keys"><kbd class="key-x">X</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>y</code></td>
-<td><span class="keys"><kbd>Y</kbd></span></td>
+<td><span class="keys"><kbd class="key-y">Y</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>z</code></td>
-<td><span class="keys"><kbd>Z</kbd></span></td>
+<td><span class="keys"><kbd class="key-z">Z</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>space</code></td>
-<td><span class="keys"><kbd>Space</kbd></span></td>
+<td><span class="keys"><kbd class="key-space">Space</kbd></span></td>
 <td><code>spc</code></td>
 </tr>
 </tbody>
@@ -1285,117 +1299,117 @@ There is also a separate alias dictionary which maps some aliases to entries in 
 <tbody>
 <tr>
 <td><code>backslash</code></td>
-<td><span class="keys"><kbd>\</kbd></span></td>
+<td><span class="keys"><kbd class="key-backslash">\</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>bar</code></td>
-<td><span class="keys"><kbd>|</kbd></span></td>
+<td><span class="keys"><kbd class="key-bar">|</kbd></span></td>
 <td><code>pipe</code></td>
 </tr>
 <tr>
 <td><code>brace-left</code></td>
-<td><span class="keys"><kbd>{</kbd></span></td>
+<td><span class="keys"><kbd class="key-brace-left">{</kbd></span></td>
 <td><code>open-brace</code></td>
 </tr>
 <tr>
 <td><code>brace-right</code></td>
-<td><span class="keys"><kbd>}</kbd></span></td>
+<td><span class="keys"><kbd class="key-brace-right">}</kbd></span></td>
 <td><code>close-bracket</code></td>
 </tr>
 <tr>
 <td><code>bracket-left</code></td>
-<td><span class="keys"><kbd>[</kbd></span></td>
+<td><span class="keys"><kbd class="key-bracket-left">[</kbd></span></td>
 <td><code>open-bracket</code></td>
 </tr>
 <tr>
 <td><code>bracket-right</code></td>
-<td><span class="keys"><kbd>]</kbd></span></td>
+<td><span class="keys"><kbd class="key-bracket-right">]</kbd></span></td>
 <td><code>close-brace</code></td>
 </tr>
 <tr>
 <td><code>colon</code></td>
-<td><span class="keys"><kbd>:</kbd></span></td>
+<td><span class="keys"><kbd class="key-colon">:</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>comma</code></td>
-<td><span class="keys"><kbd>,</kbd></span></td>
+<td><span class="keys"><kbd class="key-comma">,</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>double-quote</code></td>
-<td><span class="keys"><kbd>"</kbd></span></td>
+<td><span class="keys"><kbd class="key-double-quote">"</kbd></span></td>
 <td><code>dblquote</code></td>
 </tr>
 <tr>
 <td><code>equal</code></td>
-<td><span class="keys"><kbd>=</kbd></span></td>
+<td><span class="keys"><kbd class="key-equal">=</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>exclam</code></td>
-<td><span class="keys"><kbd>!</kbd></span></td>
+<td><span class="keys"><kbd class="key-exclam">!</kbd></span></td>
 <td><code>exclamation</code></td>
 </tr>
 <tr>
 <td><code>grave</code></td>
-<td><span class="keys"><kbd>`</kbd></span></td>
+<td><span class="keys"><kbd class="key-grave">`</kbd></span></td>
 <td><code>grave-accent</code></td>
 </tr>
 <tr>
 <td><code>greater</code></td>
-<td><span class="keys"><kbd>&gt;</kbd></span></td>
+<td><span class="keys"><kbd class="key-greater">&gt;</kbd></span></td>
 <td><code>greater-than</code>, <code>gt</code></td>
 </tr>
 <tr>
 <td><code>less</code></td>
-<td><span class="keys"><kbd>&lt;</kbd></span></td>
+<td><span class="keys"><kbd class="key-less">&lt;</kbd></span></td>
 <td><code>less-than</code>, <code>lt</code></td>
 </tr>
 <tr>
 <td><code>minus</code></td>
-<td><span class="keys"><kbd>-</kbd></span></td>
+<td><span class="keys"><kbd class="key-minus">-</kbd></span></td>
 <td><code>hyphen</code></td>
 </tr>
 <tr>
 <td><code>period</code></td>
-<td><span class="keys"><kbd>.</kbd></span></td>
+<td><span class="keys"><kbd class="key-period">.</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>plus</code></td>
-<td><span class="keys"><kbd>+</kbd></span></td>
+<td><span class="keys"><kbd class="key-plus">+</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>question</code></td>
-<td><span class="keys"><kbd>?</kbd></span></td>
+<td><span class="keys"><kbd class="key-question">?</kbd></span></td>
 <td><code>question-mark</code></td>
 </tr>
 <tr>
 <td><code>semicolon</code></td>
-<td><span class="keys"><kbd>;</kbd></span></td>
+<td><span class="keys"><kbd class="key-semicolon">;</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>single-quote</code></td>
-<td><span class="keys"><kbd>'</kbd></span></td>
+<td><span class="keys"><kbd class="key-single-quote">'</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>slash</code></td>
-<td><span class="keys"><kbd>/</kbd></span></td>
+<td><span class="keys"><kbd class="key-slash">/</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>tilde</code></td>
-<td><span class="keys"><kbd>~</kbd></span></td>
+<td><span class="keys"><kbd class="key-tilde">~</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>underscore</code></td>
-<td><span class="keys"><kbd>_</kbd></span></td>
+<td><span class="keys"><kbd class="key-underscore">_</kbd></span></td>
 <td></td>
 </tr>
 </tbody>
@@ -1412,47 +1426,47 @@ There is also a separate alias dictionary which maps some aliases to entries in 
 <tbody>
 <tr>
 <td><code>arrow-up</code></td>
-<td><span class="keys"><kbd>Up</kbd></span></td>
+<td><span class="keys"><kbd class="key-arrow-up">Up</kbd></span></td>
 <td><code>up</code></td>
 </tr>
 <tr>
 <td><code>arrow-down</code></td>
-<td><span class="keys"><kbd>Down</kbd></span></td>
+<td><span class="keys"><kbd class="key-arrow-down">Down</kbd></span></td>
 <td><code>down</code></td>
 </tr>
 <tr>
 <td><code>arrow-left</code></td>
-<td><span class="keys"><kbd>Left</kbd></span></td>
+<td><span class="keys"><kbd class="key-arrow-left">Left</kbd></span></td>
 <td><code>left</code></td>
 </tr>
 <tr>
 <td><code>arrow-right</code></td>
-<td><span class="keys"><kbd>Right</kbd></span></td>
+<td><span class="keys"><kbd class="key-arrow-right">Right</kbd></span></td>
 <td><code>right</code></td>
 </tr>
 <tr>
 <td><code>page-up</code></td>
-<td><span class="keys"><kbd>Page Up</kbd></span></td>
+<td><span class="keys"><kbd class="key-page-up">Page Up</kbd></span></td>
 <td><code>prior</code>, <code>page-up</code>, <code>pg-up</code></td>
 </tr>
 <tr>
 <td><code>page-down</code></td>
-<td><span class="keys"><kbd>Page Down</kbd></span></td>
+<td><span class="keys"><kbd class="key-page-down">Page Down</kbd></span></td>
 <td><code>next</code>, <code>page-dn</code>, <code>pg-dn</code></td>
 </tr>
 <tr>
 <td><code>home</code></td>
-<td><span class="keys"><kbd>Home</kbd></span></td>
+<td><span class="keys"><kbd class="key-home">Home</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>end</code></td>
-<td><span class="keys"><kbd>End</kbd></span></td>
+<td><span class="keys"><kbd class="key-end">End</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>tab</code></td>
-<td><span class="keys"><kbd>Tab</kbd></span></td>
+<td><span class="keys"><kbd class="key-tab">Tab</kbd></span></td>
 <td><code>tabulator</code></td>
 </tr>
 </tbody>
@@ -1469,17 +1483,17 @@ There is also a separate alias dictionary which maps some aliases to entries in 
 <tbody>
 <tr>
 <td><code>backspace</code></td>
-<td><span class="keys"><kbd>Backspace</kbd></span></td>
+<td><span class="keys"><kbd class="key-backspace">Backspace</kbd></span></td>
 <td><code>back</code>, <code>bksp</code></td>
 </tr>
 <tr>
 <td><code>delete</code></td>
-<td><span class="keys"><kbd>Del</kbd></span></td>
+<td><span class="keys"><kbd class="key-delete">Del</kbd></span></td>
 <td><code>del</code></td>
 </tr>
 <tr>
 <td><code>insert</code></td>
-<td><span class="keys"><kbd>Ins</kbd></span></td>
+<td><span class="keys"><kbd class="key-insert">Ins</kbd></span></td>
 <td><code>ins</code></td>
 </tr>
 </tbody>
@@ -1496,47 +1510,47 @@ There is also a separate alias dictionary which maps some aliases to entries in 
 <tbody>
 <tr>
 <td><code>break</code></td>
-<td><span class="keys"><kbd>Break</kbd></span></td>
+<td><span class="keys"><kbd class="key-break">Break</kbd></span></td>
 <td><code>cancel</code></td>
 </tr>
 <tr>
 <td><code>caps-lock</code></td>
-<td><span class="keys"><kbd>Caps Lock</kbd></span></td>
+<td><span class="keys"><kbd class="key-caps-lock">Caps Lock</kbd></span></td>
 <td><code>capital</code>, <code>cplk</code></td>
 </tr>
 <tr>
 <td><code>clear</code></td>
-<td><span class="keys"><kbd>Clear</kbd></span></td>
+<td><span class="keys"><kbd class="key-clear">Clear</kbd></span></td>
 <td><code>clr</code></td>
 </tr>
 <tr>
 <td><code>eject</code></td>
-<td><span class="keys"><kbd>Eject</kbd></span></td>
+<td><span class="keys"><kbd class="key-eject">Eject</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>enter</code></td>
-<td><span class="keys"><kbd>Enter</kbd></span></td>
+<td><span class="keys"><kbd class="key-enter">Enter</kbd></span></td>
 <td><code>return</code></td>
 </tr>
 <tr>
 <td><code>escape</code></td>
-<td><span class="keys"><kbd>Esc</kbd></span></td>
+<td><span class="keys"><kbd class="key-escape">Esc</kbd></span></td>
 <td><code>esc</code></td>
 </tr>
 <tr>
 <td><code>help</code></td>
-<td><span class="keys"><kbd>Help</kbd></span></td>
+<td><span class="keys"><kbd class="key-help">Help</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>print-screen</code></td>
-<td><span class="keys"><kbd>Print Screen</kbd></span></td>
+<td><span class="keys"><kbd class="key-print-screen">Print Screen</kbd></span></td>
 <td><code>prtsc</code></td>
 </tr>
 <tr>
 <td><code>scroll-lock</code></td>
-<td><span class="keys"><kbd>Scroll Lock</kbd></span></td>
+<td><span class="keys"><kbd class="key-scroll-lock">Scroll Lock</kbd></span></td>
 <td><code>scroll</code></td>
 </tr>
 </tbody>
@@ -1553,102 +1567,102 @@ There is also a separate alias dictionary which maps some aliases to entries in 
 <tbody>
 <tr>
 <td><code>num0</code></td>
-<td><span class="keys"><kbd>Num 0</kbd></span></td>
+<td><span class="keys"><kbd class="key-num0">Num 0</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>num1</code></td>
-<td><span class="keys"><kbd>Num 1</kbd></span></td>
+<td><span class="keys"><kbd class="key-num1">Num 1</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>num2</code></td>
-<td><span class="keys"><kbd>Num 2</kbd></span></td>
+<td><span class="keys"><kbd class="key-num2">Num 2</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>num3</code></td>
-<td><span class="keys"><kbd>Num 3</kbd></span></td>
+<td><span class="keys"><kbd class="key-num3">Num 3</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>num4</code></td>
-<td><span class="keys"><kbd>Num 4</kbd></span></td>
+<td><span class="keys"><kbd class="key-num4">Num 4</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>num5</code></td>
-<td><span class="keys"><kbd>Num 5</kbd></span></td>
+<td><span class="keys"><kbd class="key-num5">Num 5</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>num6</code></td>
-<td><span class="keys"><kbd>Num 6</kbd></span></td>
+<td><span class="keys"><kbd class="key-num6">Num 6</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>num7</code></td>
-<td><span class="keys"><kbd>Num 7</kbd></span></td>
+<td><span class="keys"><kbd class="key-num7">Num 7</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>num8</code></td>
-<td><span class="keys"><kbd>Num 8</kbd></span></td>
+<td><span class="keys"><kbd class="key-num8">Num 8</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>num9</code></td>
-<td><span class="keys"><kbd>Num 9</kbd></span></td>
+<td><span class="keys"><kbd class="key-num9">Num 9</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>num-asterisk</code></td>
-<td><span class="keys"><kbd>Num *</kbd></span></td>
+<td><span class="keys"><kbd class="key-num-asterisk">Num *</kbd></span></td>
 <td><code>multiply</code></td>
 </tr>
 <tr>
 <td><code>num-clear</code></td>
-<td><span class="keys"><kbd>Num Clear</kbd></span></td>
+<td><span class="keys"><kbd class="key-num-clear">Num Clear</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>num-delete</code></td>
-<td><span class="keys"><kbd>Num Del</kbd></span></td>
+<td><span class="keys"><kbd class="key-num-delete">Num Del</kbd></span></td>
 <td><code>num-del</code></td>
 </tr>
 <tr>
 <td><code>num-equal</code></td>
-<td><span class="keys"><kbd>Num =</kbd></span></td>
+<td><span class="keys"><kbd class="key-num-equal">Num =</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>num-lock</code></td>
-<td><span class="keys"><kbd>Num Lock</kbd></span></td>
+<td><span class="keys"><kbd class="key-num-lock">Num Lock</kbd></span></td>
 <td><code>numlk</code>, <code>numlock</code></td>
 </tr>
 <tr>
 <td><code>num-minus</code></td>
-<td><span class="keys"><kbd>Num -</kbd></span></td>
+<td><span class="keys"><kbd class="key-num-minus">Num -</kbd></span></td>
 <td><code>subtract</code></td>
 </tr>
 <tr>
 <td><code>num-plus</code></td>
-<td><span class="keys"><kbd>Num +</kbd></span></td>
+<td><span class="keys"><kbd class="key-num-plus">Num +</kbd></span></td>
 <td><code>add</code></td>
 </tr>
 <tr>
 <td><code>num-separator</code></td>
-<td><span class="keys"><kbd>Num .</kbd></span></td>
+<td><span class="keys"><kbd class="key-num-separator">Num .</kbd></span></td>
 <td><code>decimal</code>, <code>separator</code></td>
 </tr>
 <tr>
 <td><code>num-slash</code></td>
-<td><span class="keys"><kbd>Num /</kbd></span></td>
+<td><span class="keys"><kbd class="key-num-slash">Num /</kbd></span></td>
 <td><code>divide</code></td>
 </tr>
 <tr>
 <td><code>num-enter</code></td>
-<td><span class="keys"><kbd>Num Enter</kbd></span></td>
+<td><span class="keys"><kbd class="key-num-enter">Num Enter</kbd></span></td>
 <td></td>
 </tr>
 </tbody>
@@ -1665,83 +1679,133 @@ There is also a separate alias dictionary which maps some aliases to entries in 
 <tbody>
 <tr>
 <td><code>alt</code></td>
-<td><span class="keys"><kbd>Alt</kbd></span></td>
-<td><code>menu</code></td>
-</tr>
-<tr>
-<td><code>command</code></td>
-<td><span class="keys"><kbd>Cmd</kbd></span></td>
-<td><code>cmd</code></td>
-</tr>
-<tr>
-<td><code>control</code></td>
-<td><span class="keys"><kbd>Ctrl</kbd></span></td>
-<td><code>ctrl</code></td>
-</tr>
-<tr>
-<td><code>function</code></td>
-<td><span class="keys"><kbd>Fn</kbd></span></td>
-<td><code>fn</code></td>
+<td><span class="keys"><kbd class="key-alt">Alt</kbd></span></td>
+<td></td>
 </tr>
 <tr>
 <td><code>left-alt</code></td>
-<td><span class="keys"><kbd>Left Alt</kbd></span></td>
-<td><code>lalt</code>, <code>left-menu</code>, <code>lmenu</code></td>
-</tr>
-<tr>
-<td><code>left-control</code></td>
-<td><span class="keys"><kbd>Left Ctrl</kbd></span></td>
-<td><code>lcontrol</code>, <code>lctrl</code>, <code>left-ctrl</code></td>
-</tr>
-<tr>
-<td><code>left-shift</code></td>
-<td><span class="keys"><kbd>Left Shift</kbd></span></td>
-<td><code>lshift</code></td>
-</tr>
-<tr>
-<td><code>left-windows</code></td>
-<td><span class="keys"><kbd>Left Win</kbd></span></td>
-<td><code>left-win</code>, <code>lwin</code></td>
-</tr>
-<tr>
-<td><code>meta</code></td>
-<td><span class="keys"><kbd>Meta</kbd></span></td>
-<td></td>
-</tr>
-<tr>
-<td><code>option</code></td>
-<td><span class="keys"><kbd>Option</kbd></span></td>
-<td><code>opt</code></td>
+<td><span class="keys"><kbd class="key-left-alt">Left Alt</kbd></span></td>
+<td><code>lalt</code></td>
 </tr>
 <tr>
 <td><code>right-alt</code></td>
-<td><span class="keys"><kbd>Right Alt</kbd></span></td>
-<td><code>ralt</code>, <code>right-menu</code>, <code>rmenu</code></td>
+<td><span class="keys"><kbd class="key-right-alt">Right Alt</kbd></span></td>
+<td><code>ralt</code></td>
+</tr>
+<tr>
+<td><code>alt-graph</code></td>
+<td><span class="keys"><kbd class="key-alt-graph">AltGr</kbd></span></td>
+<td><code>altgr</code></td>
+</tr>
+<tr>
+<td><code>command</code></td>
+<td><span class="keys"><kbd class="key-command">Cmd</kbd></span></td>
+<td><code>cmd</code></td>
+</tr>
+<tr>
+<td><code>left-command</code></td>
+<td><span class="keys"><kbd class="key-left-command">Left Command</kbd></span></td>
+<td><code>lcommand</code>, <code>lcmd</code>, <code>left-cmd</code></td>
+</tr>
+<tr>
+<td><code>right-command</code></td>
+<td><span class="keys"><kbd class="key-right-command">Right Command</kbd></span></td>
+<td><code>rcommand</code>, <code>rcmd</code>, <code>right-cmd</code></td>
+</tr>
+<tr>
+<td><code>control</code></td>
+<td><span class="keys"><kbd class="key-control">Ctrl</kbd></span></td>
+<td><code>ctrl</code></td>
+</tr>
+<tr>
+<td><code>left-control</code></td>
+<td><span class="keys"><kbd class="key-left-control">Left Ctrl</kbd></span></td>
+<td><code>lcontrol</code>, <code>lctrl</code>, <code>left-ctrl</code></td>
 </tr>
 <tr>
 <td><code>right-control</code></td>
-<td><span class="keys"><kbd>Right Ctrl</kbd></span></td>
+<td><span class="keys"><kbd class="key-right-control">Right Ctrl</kbd></span></td>
 <td><code>rcontrol</code>, <code>rctrl</code>, <code>right-ctrl</code></td>
 </tr>
 <tr>
-<td><code>right-shift</code></td>
-<td><span class="keys"><kbd>Right Shift</kbd></span></td>
-<td><code>rshift</code></td>
+<td><code>function</code></td>
+<td><span class="keys"><kbd class="key-function">Fn</kbd></span></td>
+<td><code>fn</code></td>
 </tr>
 <tr>
-<td><code>right-windows</code></td>
-<td><span class="keys"><kbd>Right Win</kbd></span></td>
-<td><code>right-win</code>, <code>rwin</code></td>
-</tr>
-<tr>
-<td><code>shift</code></td>
-<td><span class="keys"><kbd>Shift</kbd></span></td>
+<td><code>meta</code></td>
+<td><span class="keys"><kbd class="key-meta">Meta</kbd></span></td>
 <td></td>
 </tr>
 <tr>
+<td><code>left-meta</code></td>
+<td><span class="keys"><kbd class="key-left-meta">Left Meta</kbd></span></td>
+<td><code>lmeta</code></td>
+</tr>
+<tr>
+<td><code>right-meta</code></td>
+<td><span class="keys"><kbd class="key-right-meta">Right Meta</kbd></span></td>
+<td><code>rmeta</code></td>
+</tr>
+<tr>
+<td><code>option</code></td>
+<td><span class="keys"><kbd class="key-option">Option</kbd></span></td>
+<td><code>opt</code></td>
+</tr>
+<tr>
+<td><code>left-option</code></td>
+<td><span class="keys"><kbd class="key-left-option">Left Option</kbd></span></td>
+<td><code>loption</code>, <code>lopt</code>, <code>left-opt</code></td>
+</tr>
+<tr>
+<td><code>right-option</code></td>
+<td><span class="keys"><kbd class="key-right-option">Right Option</kbd></span></td>
+<td><code>roption</code>, <code>ropt</code>, <code>right-opt</code></td>
+</tr>
+<tr>
+<td><code>shift</code></td>
+<td><span class="keys"><kbd class="key-shift">Shift</kbd></span></td>
+<td></td>
+</tr>
+<tr>
+<td><code>left-shift</code></td>
+<td><span class="keys"><kbd class="key-left-shift">Left Shift</kbd></span></td>
+<td><code>lshift</code></td>
+</tr>
+<tr>
+<td><code>right-shift</code></td>
+<td><span class="keys"><kbd class="key-right-shift">Right Shift</kbd></span></td>
+<td><code>rshift</code></td>
+</tr>
+<tr>
+<td><code>super</code></td>
+<td><span class="keys"><kbd class="key-super">Super</kbd></span></td>
+<td></td>
+</tr>
+<tr>
+<td><code>left-super</code></td>
+<td><span class="keys"><kbd class="key-left-super">Left Super</kbd></span></td>
+<td><code>lsuper</code></td>
+</tr>
+<tr>
+<td><code>right-super</code></td>
+<td><span class="keys"><kbd class="key-right-super">Right Super</kbd></span></td>
+<td><code>rsuper</code></td>
+</tr>
+<tr>
 <td><code>windows</code></td>
-<td><span class="keys"><kbd>Win</kbd></span></td>
+<td><span class="keys"><kbd class="key-windows">Win</kbd></span></td>
 <td><code>win</code></td>
+</tr>
+<tr>
+<td><code>left-windows</code></td>
+<td><span class="keys"><kbd class="key-left-windows">Left Win</kbd></span></td>
+<td><code>lwindows</code>, <code>left-win</code>, <code>lwin</code></td>
+</tr>
+<tr>
+<td><code>right-windows</code></td>
+<td><span class="keys"><kbd class="key-right-windows">Right Win</kbd></span></td>
+<td><code>rwindows</code>, <code>right-win</code>, <code>rwin</code></td>
 </tr>
 </tbody>
 </table>
@@ -1757,122 +1821,122 @@ There is also a separate alias dictionary which maps some aliases to entries in 
 <tbody>
 <tr>
 <td><code>f1</code></td>
-<td><span class="keys"><kbd>F1</kbd></span></td>
+<td><span class="keys"><kbd class="key-f1">F1</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f2</code></td>
-<td><span class="keys"><kbd>F2</kbd></span></td>
+<td><span class="keys"><kbd class="key-f2">F2</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f3</code></td>
-<td><span class="keys"><kbd>F3</kbd></span></td>
+<td><span class="keys"><kbd class="key-f3">F3</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f4</code></td>
-<td><span class="keys"><kbd>F4</kbd></span></td>
+<td><span class="keys"><kbd class="key-f4">F4</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f5</code></td>
-<td><span class="keys"><kbd>F5</kbd></span></td>
+<td><span class="keys"><kbd class="key-f5">F5</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f6</code></td>
-<td><span class="keys"><kbd>F6</kbd></span></td>
+<td><span class="keys"><kbd class="key-f6">F6</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f7</code></td>
-<td><span class="keys"><kbd>F7</kbd></span></td>
+<td><span class="keys"><kbd class="key-f7">F7</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f8</code></td>
-<td><span class="keys"><kbd>F8</kbd></span></td>
+<td><span class="keys"><kbd class="key-f8">F8</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f9</code></td>
-<td><span class="keys"><kbd>F9</kbd></span></td>
+<td><span class="keys"><kbd class="key-f9">F9</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f10</code></td>
-<td><span class="keys"><kbd>F10</kbd></span></td>
+<td><span class="keys"><kbd class="key-f10">F10</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f11</code></td>
-<td><span class="keys"><kbd>F11</kbd></span></td>
+<td><span class="keys"><kbd class="key-f11">F11</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f12</code></td>
-<td><span class="keys"><kbd>F12</kbd></span></td>
+<td><span class="keys"><kbd class="key-f12">F12</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f13</code></td>
-<td><span class="keys"><kbd>F13</kbd></span></td>
+<td><span class="keys"><kbd class="key-f13">F13</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f14</code></td>
-<td><span class="keys"><kbd>F14</kbd></span></td>
+<td><span class="keys"><kbd class="key-f14">F14</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f15</code></td>
-<td><span class="keys"><kbd>F15</kbd></span></td>
+<td><span class="keys"><kbd class="key-f15">F15</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f16</code></td>
-<td><span class="keys"><kbd>F16</kbd></span></td>
+<td><span class="keys"><kbd class="key-f16">F16</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f17</code></td>
-<td><span class="keys"><kbd>F17</kbd></span></td>
+<td><span class="keys"><kbd class="key-f17">F17</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f18</code></td>
-<td><span class="keys"><kbd>F18</kbd></span></td>
+<td><span class="keys"><kbd class="key-f18">F18</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f19</code></td>
-<td><span class="keys"><kbd>F19</kbd></span></td>
+<td><span class="keys"><kbd class="key-f19">F19</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f20</code></td>
-<td><span class="keys"><kbd>F20</kbd></span></td>
+<td><span class="keys"><kbd class="key-f20">F20</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f21</code></td>
-<td><span class="keys"><kbd>F21</kbd></span></td>
+<td><span class="keys"><kbd class="key-f21">F21</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f22</code></td>
-<td><span class="keys"><kbd>F22</kbd></span></td>
+<td><span class="keys"><kbd class="key-f22">F22</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f23</code></td>
-<td><span class="keys"><kbd>F23</kbd></span></td>
+<td><span class="keys"><kbd class="key-f23">F23</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>f24</code></td>
-<td><span class="keys"><kbd>F24</kbd></span></td>
+<td><span class="keys"><kbd class="key-f24">F24</kbd></span></td>
 <td></td>
 </tr>
 </tbody>
@@ -1889,132 +1953,132 @@ There is also a separate alias dictionary which maps some aliases to entries in 
 <tbody>
 <tr>
 <td><code>backtab</code></td>
-<td><span class="keys"><kbd>Back Tab</kbd></span></td>
+<td><span class="keys"><kbd class="key-backtab">Back Tab</kbd></span></td>
 <td><code>bktab</code></td>
 </tr>
 <tr>
 <td><code>browser-back</code></td>
-<td><span class="keys"><kbd>Browser Back</kbd></span></td>
+<td><span class="keys"><kbd class="key-browser-back">Browser Back</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>browser-favorites</code></td>
-<td><span class="keys"><kbd>Browser Favor</kbd></span></td>
+<td><span class="keys"><kbd class="key-browser-favorites">Browser Favorites</kbd></span></td>
 <td><code>favorites</code></td>
 </tr>
 <tr>
 <td><code>browser-forward</code></td>
-<td><span class="keys"><kbd>Browser Forward</kbd></span></td>
+<td><span class="keys"><kbd class="key-browser-forward">Browser Forward</kbd></span></td>
 <td><code>forward</code></td>
 </tr>
 <tr>
 <td><code>browser-home</code></td>
-<td><span class="keys"><kbd>Browser Home</kbd></span></td>
+<td><span class="keys"><kbd class="key-browser-home">Browser Home</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>browser-refresh</code></td>
-<td><span class="keys"><kbd>Browser Refresh</kbd></span></td>
+<td><span class="keys"><kbd class="key-browser-refresh">Browser Refresh</kbd></span></td>
 <td><code>refresh</code></td>
 </tr>
 <tr>
 <td><code>browser-search</code></td>
-<td><span class="keys"><kbd>Browser Search</kbd></span></td>
+<td><span class="keys"><kbd class="key-browser-search">Browser Search</kbd></span></td>
 <td><code>search</code></td>
 </tr>
 <tr>
 <td><code>browser-stop</code></td>
-<td><span class="keys"><kbd>Browser Stop</kbd></span></td>
+<td><span class="keys"><kbd class="key-browser-stop">Browser Stop</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>copy</code></td>
-<td><span class="keys"><kbd>Copy</kbd></span></td>
+<td><span class="keys"><kbd class="key-copy">Copy</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>context-menu</code></td>
-<td><span class="keys"><kbd>Context Menu</kbd></span></td>
-<td><code>apps</code></td>
+<td><span class="keys"><kbd class="key-context-menu">Menu</kbd></span></td>
+<td><code>apps</code>, <code>menu</code></td>
 </tr>
 <tr>
 <td><code>mail</code></td>
-<td><span class="keys"><kbd>Mail</kbd></span></td>
+<td><span class="keys"><kbd class="key-mail">Mail</kbd></span></td>
 <td><code>launch-mail</code></td>
 </tr>
 <tr>
 <td><code>media</code></td>
-<td><span class="keys"><kbd>Media</kbd></span></td>
+<td><span class="keys"><kbd class="key-media">Media</kbd></span></td>
 <td><code>launch-media</code></td>
 </tr>
 <tr>
 <td><code>media-next-track</code></td>
-<td><span class="keys"><kbd>Next Track</kbd></span></td>
+<td><span class="keys"><kbd class="key-media-next-track">Next Track</kbd></span></td>
 <td><code>next-track</code></td>
 </tr>
 <tr>
 <td><code>media-pause</code></td>
-<td><span class="keys"><kbd>Pause</kbd></span></td>
+<td><span class="keys"><kbd class="key-media-pause">Pause</kbd></span></td>
 <td><code>pause</code></td>
 </tr>
 <tr>
 <td><code>media-play</code></td>
-<td><span class="keys"><kbd>Play</kbd></span></td>
+<td><span class="keys"><kbd class="key-media-play">Play</kbd></span></td>
 <td><code>play</code></td>
 </tr>
 <tr>
 <td><code>media-play-pause</code></td>
-<td><span class="keys"><kbd>Play/Pause</kbd></span></td>
+<td><span class="keys"><kbd class="key-media-play-pause">Play/Pause</kbd></span></td>
 <td><code>play-pause</code></td>
 </tr>
 <tr>
 <td><code>media-prev-track</code></td>
-<td><span class="keys"><kbd>Previous Track</kbd></span></td>
+<td><span class="keys"><kbd class="key-media-prev-track">Previous Track</kbd></span></td>
 <td><code>prev-track</code></td>
 </tr>
 <tr>
 <td><code>media-stop</code></td>
-<td><span class="keys"><kbd>Stop</kbd></span></td>
+<td><span class="keys"><kbd class="key-media-stop">Stop</kbd></span></td>
 <td><code>stop</code></td>
 </tr>
 <tr>
 <td><code>print</code></td>
-<td><span class="keys"><kbd>Print</kbd></span></td>
+<td><span class="keys"><kbd class="key-print">Print</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>reset</code></td>
-<td><span class="keys"><kbd>Reset</kbd></span></td>
+<td><span class="keys"><kbd class="key-reset">Reset</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>select</code></td>
-<td><span class="keys"><kbd>Select</kbd></span></td>
+<td><span class="keys"><kbd class="key-select">Select</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>sleep</code></td>
-<td><span class="keys"><kbd>Sleep</kbd></span></td>
+<td><span class="keys"><kbd class="key-sleep">Sleep</kbd></span></td>
 <td></td>
 </tr>
 <tr>
 <td><code>volume-down</code></td>
-<td><span class="keys"><kbd>Volume Down</kbd></span></td>
+<td><span class="keys"><kbd class="key-volume-down">Volume Down</kbd></span></td>
 <td><code>vol-down</code></td>
 </tr>
 <tr>
 <td><code>volume-mute</code></td>
-<td><span class="keys"><kbd>Mute</kbd></span></td>
+<td><span class="keys"><kbd class="key-volume-mute">Mute</kbd></span></td>
 <td><code>mute</code></td>
 </tr>
 <tr>
 <td><code>volume-up</code></td>
-<td><span class="keys"><kbd>Volume Up</kbd></span></td>
+<td><span class="keys"><kbd class="key-volume-up">Volume Up</kbd></span></td>
 <td><code>vol-up</code></td>
 </tr>
 <tr>
 <td><code>zoom</code></td>
-<td><span class="keys"><kbd>Zoom</kbd></span></td>
+<td><span class="keys"><kbd class="key-zoom">Zoom</kbd></span></td>
 <td></td>
 </tr>
 </tbody>
@@ -2031,27 +2095,27 @@ There is also a separate alias dictionary which maps some aliases to entries in 
 <tbody>
 <tr>
 <td><code>left-button</code></td>
-<td><span class="keys"><kbd>Left Button</kbd></span></td>
+<td><span class="keys"><kbd class="key-left-button">Left Button</kbd></span></td>
 <td><code>lbutton</code></td>
 </tr>
 <tr>
 <td><code>middle-button</code></td>
-<td><span class="keys"><kbd>Middle Button</kbd></span></td>
+<td><span class="keys"><kbd class="key-middle-button">Middle Button</kbd></span></td>
 <td><code>mbutton</code></td>
 </tr>
 <tr>
 <td><code>right-button</code></td>
-<td><span class="keys"><kbd>Right Button</kbd></span></td>
+<td><span class="keys"><kbd class="key-right-button">Right Button</kbd></span></td>
 <td><code>rbutton</code></td>
 </tr>
 <tr>
 <td><code>x-button1</code></td>
-<td><span class="keys"><kbd>X Button 1</kbd></span></td>
+<td><span class="keys"><kbd class="key-x-button1">X Button 1</kbd></span></td>
 <td><code>xbutton1</code></td>
 </tr>
 <tr>
 <td><code>x-button2</code></td>
-<td><span class="keys"><kbd>X Button 2</kbd></span></td>
+<td><span class="keys"><kbd class="key-x-button2">X Button 2</kbd></span></td>
 <td><code>xbutton2</code></td>
 </tr>
 </tbody>
@@ -2114,7 +2178,7 @@ the output of the <code>option</code> key and change it from <code>Option</code>
 <div class="md-source-date">
   <small>
     
-      Last update: December 17, 2019
+      Last update: March 19, 2020
     
   </small>
 </div>
@@ -2215,8 +2279,8 @@ the output of the <code>option</code> key and change it from <code>Option</code>
       <script>var __config={}</script>
     
     
-      <script src="../../assets/javascripts/vendor.f6bd1725.min.js"></script>
-      <script src="../../assets/javascripts/bundle.67e3edfb.min.js"></script><script id="__lang" type="application/json">
+      <script src="../../assets/javascripts/vendor.b0b43276.min.js"></script>
+      <script src="../../assets/javascripts/bundle.65293e7c.min.js"></script><script id="__lang" type="application/json">
         {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}
       </script>
       <script>
@@ -2224,10 +2288,10 @@ the output of the <code>option</code> key and change it from <code>Option</code>
           url: {
             base: "../..",
             worker: {
-              search: "../../assets/javascripts/worker/search.542c1c70.min.js"
+              search: "../../assets/javascripts/worker/search.784c5235.min.js"
             }
           },
-          features: "tabs instant"
+          features: ["tabs"]
         }, typeof __config !== "undefined" ? __config : {}))
       </script>
       
