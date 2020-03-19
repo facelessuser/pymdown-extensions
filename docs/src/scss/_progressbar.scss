@@ -8,7 +8,7 @@ $pb-stripe: transparentize($clr-white, 0.2);
     position: absolute;
     width: 100%;
     margin: 0;
-    color: transparentize($clr-black, 0.5);
+    color: var(--md-default-fg-color--light);
     font-weight: 700;
     line-height: px2rem(28px);
     white-space: nowrap;
@@ -34,7 +34,7 @@ $pb-stripe: transparentize($clr-white, 0.2);
     width: 100%;
     height: px2rem(24px);
     margin: px2rem(10px) 0;
-    background-color: $clr-grey-200;
+    background-color: var(--md-default-fg-color--lightest);
 
     &.thin {
       height: px2rem(8px);
@@ -53,11 +53,11 @@ $pb-stripe: transparentize($clr-white, 0.2);
       background-image:
         linear-gradient(
           135deg,
-          $pb-stripe 27%,
+          var(--md-default-fg-color--lightest) 27%,
           transparent 27%,
           transparent 52%,
-          $pb-stripe 52%,
-          $pb-stripe 77%,
+          var(--md-default-fg-color--lightest) 52%,
+          var(--md-default-fg-color--lightest) 77%,
           transparent 77%,
           transparent
         );

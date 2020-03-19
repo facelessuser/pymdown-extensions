@@ -37,6 +37,9 @@ Though progress bars are rendered as block items, it accepts `attr_list`'s inlin
 !!! example "Progress Bar with Attributes"
 
     ```
+    [=85% "85%"]{: .candystripe}
+    [=100% "100%"]{: .candystripe .candystripe-animate}
+
     [=0%]{: .thin}
     [=5%]{: .thin}
     [=25%]{: .thin}
@@ -45,6 +48,9 @@ Though progress bars are rendered as block items, it accepts `attr_list`'s inlin
     [=85%]{: .thin}
     [=100%]{: .thin}
     ```
+
+    [=85% "85%"]{: .candystripe}
+    [=100% "100%"]{: .candystripe .candystripe-animate}
 
     [=0%]{: .thin}
     [=5%]{: .thin}
