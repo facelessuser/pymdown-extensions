@@ -1,4 +1,4 @@
-mkdocs-material==5.0.0rc2
+mkdocs-material==5.0.0rc3
 git+https://github.com/facelessuser/pymdown-lexers.git
 mkdocs-git-revision-date-localized-plugin
 pyspelling
