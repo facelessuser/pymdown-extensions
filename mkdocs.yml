@@ -19,8 +19,7 @@ theme:
     text: Roboto
     code: Roboto Mono
   features:
-    tabs
-    instant
+    - tabs
 
 nav:
   - PyMdown Extensions: index.md
@@ -137,7 +136,7 @@ extra:
     - icon: fontawesome/brands/discord
       link: https://discord.gg/fqQ7ypS
 extra_css:
-  - assets/pymdownx-extras/extra-f1fb910a62.css
+  - assets/pymdownx-extras/extra-783c47ae54.css
 extra_javascript:
   - assets/pymdownx-extras/extra-52d8c68747.js
 

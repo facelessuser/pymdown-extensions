@@ -19,8 +19,7 @@ theme:
     text: Roboto
     code: Roboto Mono
   features:
-    tabs
-    instant
+    - tabs
 
 nav:
   - PyMdown Extensions: index.md
