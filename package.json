@@ -13,7 +13,7 @@
     "lint": "node_modules/.bin/gulp lint"
   },
   "dependencies": {
-    "gulp-clean-css": "^4.2.0"
+    "gulp-clean-css": "^4.3.0"
   },
   "engines": {
     "node": ">= 10",
