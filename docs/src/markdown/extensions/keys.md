@@ -20,6 +20,17 @@ import markdown
 md = markdown.Markdown(extensions=['pymdownx.keys'])
 ```
 
+!!! tip "Special Characters Before/After Key"
+    You might have noticed that in this page many keys show special Unicode symbols before (and sometimes after) a key's
+    text. The Keys extension, only provides ASCII labels out of the box. Any special Unicode characters that are seen in
+    this document are provided by additional CSS.
+
+    To provide your own symbols, classes are provided that are derived from the main key code name (not the aliases)
+    that you can target to provide special styling. Check out [Formatting](#formatting) for more info.
+
+    You can also override the label that is output for the key by provided your own overrides via the `key_map`
+    parameter. This would require no additional CSS. More info is provided [here](#extendingmodifying-key-map-index).
+
 ## Formatting
 
 By default, Keys outputs keys in the form (separator `span`s will be omitted if a separator is not provided via the
@@ -77,224 +88,231 @@ There is also a separate alias dictionary which maps some aliases to entries in 
 
 ### Alphanumeric and Space Keys
 
-Name    | Display     | Aliases
-------- | ----------- | -------
-`0`     | ++"0"++     |
-`1`     | ++"1"++     |
-`2`     | ++"2"++     |
-`3`     | ++"3"++     |
-`4`     | ++"4"++     |
-`5`     | ++"5"++     |
-`6`     | ++"6"++     |
-`7`     | ++"7"++     |
-`8`     | ++"8"++     |
-`9`     | ++"9"++     |
-`a`     | ++"A"++     |
-`b`     | ++"B"++     |
-`c`     | ++"C"++     |
-`d`     | ++"D"++     |
-`e`     | ++"E"++     |
-`f`     | ++"F"++     |
-`g`     | ++"G"++     |
-`h`     | ++"H"++     |
-`i`     | ++"I"++     |
-`j`     | ++"J"++     |
-`k`     | ++"K"++     |
-`l`     | ++"L"++     |
-`m`     | ++"M"++     |
-`n`     | ++"N"++     |
-`o`     | ++"O"++     |
-`p`     | ++"P"++     |
-`q`     | ++"Q"++     |
-`r`     | ++"R"++     |
-`s`     | ++"S"++     |
-`t`     | ++"T"++     |
-`u`     | ++"U"++     |
-`v`     | ++"V"++     |
-`w`     | ++"W"++     |
-`x`     | ++"X"++     |
-`y`     | ++"Y"++     |
-`z`     | ++"Z"++     |
-`space` | ++"Space"++ | `spc`
+Name    | Display   | Aliases
+------- | --------- | -------
+`0`     | ++0++     |
+`1`     | ++1++     |
+`2`     | ++2++     |
+`3`     | ++3++     |
+`4`     | ++4++     |
+`5`     | ++5++     |
+`6`     | ++6++     |
+`7`     | ++7++     |
+`8`     | ++8++     |
+`9`     | ++9++     |
+`a`     | ++a++     |
+`b`     | ++b++     |
+`c`     | ++c++     |
+`d`     | ++d++     |
+`e`     | ++e++     |
+`f`     | ++f++     |
+`g`     | ++g++     |
+`h`     | ++h++     |
+`i`     | ++i++     |
+`j`     | ++j++     |
+`k`     | ++k++     |
+`l`     | ++l++     |
+`m`     | ++m++     |
+`n`     | ++n++     |
+`o`     | ++o++     |
+`p`     | ++p++     |
+`q`     | ++q++     |
+`r`     | ++r++     |
+`s`     | ++s++     |
+`t`     | ++t++     |
+`u`     | ++u++     |
+`v`     | ++v++     |
+`w`     | ++w++     |
+`x`     | ++x++     |
+`y`     | ++y++     |
+`z`     | ++z++     |
+`space` | ++space++ | `spc`
 
 ### Punctuation Keys
 
-Name            | Display  | Aliases
---------------- | -------- | -------
-`backslash`     | ++"\\"++ |
-`bar`           | ++"\|"++ | `pipe`
-`brace-left`    | ++"{"++  | `open-brace`
-`brace-right`   | ++"}"++  | `close-bracket`
-`bracket-left`  | ++"["++  | `open-bracket`
-`bracket-right` | ++"]"++  | `close-brace`
-`colon`         | ++":"++  |
-`comma`         | ++","++  |
-`double-quote`  | ++"\""++ | `dblquote`
-`equal`         | ++"="++  |
-`exclam`        | ++"!"++  | `exclamation`
-`grave`         | ++"\`"++ | `grave-accent`
-`greater`       | ++">"++  | `greater-than`, `gt`
-`less`          | ++"<"++  | `less-than`, `lt`
-`minus`         | ++"-"++  | `hyphen`
-`period`        | ++"."++  |
-`plus`          | ++"\+"++ |
-`question`      | ++"?"++  | `question-mark`
-`semicolon`     | ++";"++  |
-`single-quote`  | ++"'"++  |
-`slash`         | ++"/"++  |
-`tilde`         | ++"~"++  |
-`underscore`    | ++"_"++  |
+Name            | Display           | Aliases
+--------------- | ----------------- | -------
+`backslash`     | ++backslash++     |
+`bar`           | ++bar++           | `pipe`
+`brace-left`    | ++brace-left++    | `open-brace`
+`brace-right`   | ++brace-right++   | `close-bracket`
+`bracket-left`  | ++bracket-left++  | `open-bracket`
+`bracket-right` | ++bracket-right++ | `close-brace`
+`colon`         | ++colon++         |
+`comma`         | ++comma++         |
+`double-quote`  | ++double-quote++  | `dblquote`
+`equal`         | ++equal++         |
+`exclam`        | ++exclam++        | `exclamation`
+`grave`         | ++grave++         | `grave-accent`
+`greater`       | ++greater++       | `greater-than`, `gt`
+`less`          | ++less++          | `less-than`, `lt`
+`minus`         | ++minus++         | `hyphen`
+`period`        | ++period++        |
+`plus`          | ++plus++          |
+`question`      | ++question++      | `question-mark`
+`semicolon`     | ++semicolon++     |
+`single-quote`  | ++single-quote++  |
+`slash`         | ++slash++         |
+`tilde`         | ++tilde++         |
+`underscore`    | ++underscore++    |
 
 ### Navigation Keys
 
 Name          | Display         | Aliases
 ------------- | --------------- | -------
-`arrow-up`    | ++"Up"++        | `up`
-`arrow-down`  | ++"Down"++      | `down`
-`arrow-left`  | ++"Left"++      | `left`
-`arrow-right` | ++"Right"++     | `right`
-`page-up`     | ++"Page Up"++   | `prior`, `page-up`, `pg-up`
-`page-down`   | ++"Page Down"++ | `next`, `page-dn`, `pg-dn`
-`home`        | ++"Home"++      |
-`end`         | ++"End"++       |
-`tab`         | ++"Tab"++       | `tabulator`
+`arrow-up`    | ++arrow-up++    | `up`
+`arrow-down`  | ++arrow-down++  | `down`
+`arrow-left`  | ++arrow-left++  | `left`
+`arrow-right` | ++arrow-right++ | `right`
+`page-up`     | ++page-up++     | `prior`, `page-up`, `pg-up`
+`page-down`   | ++page-down++   | `next`, `page-dn`, `pg-dn`
+`home`        | ++home++        |
+`end`         | ++end++         |
+`tab`         | ++tab++         | `tabulator`
 
 ### Editing Keys
 
-Name        | Display         | Aliases
------------ | --------------- | -------
-`backspace` | ++"Backspace"++ | `back`, `bksp`
-`delete`    | ++"Del"++       | `del`
-`insert`    | ++"Ins"++       | `ins`
+Name        | Display       | Aliases
+----------- | ------------- | -------
+`backspace` | ++backspace++ | `back`, `bksp`
+`delete`    | ++delete++    | `del`
+`insert`    | ++insert++    | `ins`
 
 ### Action Keys
 Name           | Display            | Aliases
 -------------- | ------------------ | -------
-`break`        | ++"Break"++        | `cancel`
-`caps-lock`    | ++"Caps Lock"++    | `capital`, `cplk`
-`clear`        | ++"Clear"++        | `clr`
-`eject`        | ++"Eject"++        |
-`enter`        | ++"Enter"++        | `return`
-`escape`       | ++"Esc"++          | `esc`
-`help`         | ++"Help"++         |
-`print-screen` | ++"Print Screen"++ | `prtsc`
-`scroll-lock`  | ++"Scroll Lock"++  | `scroll`
+`break`        | ++break++        | `cancel`
+`caps-lock`    | ++caps-lock++    | `capital`, `cplk`
+`clear`        | ++clear++        | `clr`
+`eject`        | ++eject++        |
+`enter`        | ++enter++        | `return`
+`escape`       | ++escape++          | `esc`
+`help`         | ++help++         |
+`print-screen` | ++print-screen++ | `prtsc`
+`scroll-lock`  | ++scroll-lock++  | `scroll`
 
 ### Numeric Keypad Keys
 
-Name            | Display         | Aliases
---------------- | --------------- | -------
-`num0`          | ++"Num 0"++     |
-`num1`          | ++"Num 1"++     |
-`num2`          | ++"Num 2"++     |
-`num3`          | ++"Num 3"++     |
-`num4`          | ++"Num 4"++     |
-`num5`          | ++"Num 5"++     |
-`num6`          | ++"Num 6"++     |
-`num7`          | ++"Num 7"++     |
-`num8`          | ++"Num 8"++     |
-`num9`          | ++"Num 9"++     |
-`num-asterisk`  | ++"Num *"++     | `multiply`
-`num-clear`     | ++"Num Clear"++ |
-`num-delete`    | ++"Num Del"++   | `num-del`
-`num-equal`     | ++"Num ="++     |
-`num-lock`      | ++"Num Lock"++  | `numlk`, `numlock`
-`num-minus`     | ++"Num -"++     | `subtract`
-`num-plus`      | ++"Num \+"++    | `add`
-`num-separator` | ++"Num ."++     | `decimal`, `separator`
-`num-slash`     | ++"Num /"++     | `divide`
-`num-enter`     | ++"Num Enter"++ |
+Name            | Display           | Aliases
+--------------- | ----------------- | -------
+`num0`          | ++num0++          |
+`num1`          | ++num1++          |
+`num2`          | ++num2++          |
+`num3`          | ++num3++          |
+`num4`          | ++num4++          |
+`num5`          | ++num5++          |
+`num6`          | ++num6++          |
+`num7`          | ++num7++          |
+`num8`          | ++num8++          |
+`num9`          | ++num9++          |
+`num-asterisk`  | ++num-asterisk++  | `multiply`
+`num-clear`     | ++num-clear++     |
+`num-delete`    | ++num-delete++    | `num-del`
+`num-equal`     | ++num-equal++     |
+`num-lock`      | ++num-lock++      | `numlk`, `numlock`
+`num-minus`     | ++num-minus++     | `subtract`
+`num-plus`      | ++num-plus++      | `add`
+`num-separator` | ++num-separator++ | `decimal`, `separator`
+`num-slash`     | ++num-slash++     | `divide`
+`num-enter`     | ++num-enter++     |
 
 ### Modifier keys
 
 Name            | Display           | Aliases
 --------------- | ----------------- | -------
-`alt`           | ++"Alt"++         | `menu`
-`command`       | ++"Cmd"++         | `cmd`
-`control`       | ++"Ctrl"++        | `ctrl`
-`function`      | ++"Fn"++          | `fn`
-`left-alt`      | ++"Left Alt"++    | `lalt`, `left-menu`, `lmenu`
-`left-control`  | ++"Left Ctrl"++   | `lcontrol`, `lctrl`, `left-ctrl`
-`left-shift`    | ++"Left Shift"++  | `lshift`
-`left-windows`  | ++"Left Win"++    | `left-win`, `lwin`
-`meta`          | ++"Meta"++        |
-`option`        | ++"Option"++      | `opt`
-`right-alt`     | ++"Right Alt"++   | `ralt`, `right-menu`, `rmenu`
-`right-control` | ++"Right Ctrl"++  | `rcontrol`, `rctrl`, `right-ctrl`
-`right-shift`   | ++"Right Shift"++ | `rshift`
-`right-windows` | ++"Right Win"++   | `right-win`, `rwin`
-`shift`         | ++"Shift"++       |
-`windows`       | ++"Win"++         | `win`
+`alt`           | ++alt++           | `menu`
+`left-alt`      | ++left-alt++      | `lalt`, `left-menu`, `lmenu`
+`right-alt`     | ++right-alt++     | `ralt`, `right-menu`, `rmenu`
+`command`       | ++command++       | `cmd`
+`left-command`  | ++left-command++  | `lcommand`, `lcmd`, `left-cmd`
+`right-command` | ++right-command++ | `rcommand`, `rcmd`, `right-cmd`
+`control`       | ++control++       | `ctrl`
+`left-control`  | ++left-control++  | `lcontrol`, `lctrl`, `left-ctrl`
+`right-control` | ++right-control++ | `rcontrol`, `rctrl`, `right-ctrl`
+`function`      | ++function++      | `fn`
+`meta`          | ++meta++          |
+`option`        | ++option++        | `opt`
+`left-option`   | ++left-option++   | `loption`, `lopt`, `left-opt`
+`right-option`  | ++right-option++  | `roption`, `ropt`, `right-opt`
+`shift`         | ++shift++         |
+`left-shift`    | ++left-shift++    | `lshift`
+`right-shift`   | ++right-shift++   | `rshift`
+`super`         | ++super++         |
+`left-super`    | ++left-super++    | `lsuper`
+`right-super`   | ++right-super++   | `rsuper`
+`windows`       | ++windows++       | `win`
+`left-windows`  | ++left-windows++  | `lwindows`, `left-win`, `lwin`
+`right-windows` | ++right-windows++ | `rwindows`, `right-win`, `rwin`
 
 ### Function keys
 
-Name  | Display   | Aliases
------ | --------- | -------
-`f1`  | ++"F1"++  |
-`f2`  | ++"F2"++  |
-`f3`  | ++"F3"++  |
-`f4`  | ++"F4"++  |
-`f5`  | ++"F5"++  |
-`f6`  | ++"F6"++  |
-`f7`  | ++"F7"++  |
-`f8`  | ++"F8"++  |
-`f9`  | ++"F9"++  |
-`f10` | ++"F10"++ |
-`f11` | ++"F11"++ |
-`f12` | ++"F12"++ |
-`f13` | ++"F13"++ |
-`f14` | ++"F14"++ |
-`f15` | ++"F15"++ |
-`f16` | ++"F16"++ |
-`f17` | ++"F17"++ |
-`f18` | ++"F18"++ |
-`f19` | ++"F19"++ |
-`f20` | ++"F20"++ |
-`f21` | ++"F21"++ |
-`f22` | ++"F22"++ |
-`f23` | ++"F23"++ |
-`f24` | ++"F24"++ |
+Name  | Display | Aliases
+----- | ------- | -------
+`f1`  | ++f1++  |
+`f2`  | ++f2++  |
+`f3`  | ++f3++  |
+`f4`  | ++f4++  |
+`f5`  | ++f5++  |
+`f6`  | ++f6++  |
+`f7`  | ++f7++  |
+`f8`  | ++f8++  |
+`f9`  | ++f9++  |
+`f10` | ++f10++ |
+`f11` | ++f11++ |
+`f12` | ++f12++ |
+`f13` | ++f13++ |
+`f14` | ++f14++ |
+`f15` | ++f15++ |
+`f16` | ++f16++ |
+`f17` | ++f17++ |
+`f18` | ++f18++ |
+`f19` | ++f19++ |
+`f20` | ++f20++ |
+`f21` | ++f21++ |
+`f22` | ++f22++ |
+`f23` | ++f23++ |
+`f24` | ++f24++ |
 
 ### Extra Keys
 
 Name                | Display               | Aliases
 ------------------- | --------------------- | -------
-`backtab`           | ++"Back Tab"++        | `bktab`
-`browser-back`      | ++"Browser Back"++    |
-`browser-favorites` | ++"Browser Favor"++   | `favorites`
-`browser-forward`   | ++"Browser Forward"++ | `forward`
-`browser-home`      | ++"Browser Home"++    |
-`browser-refresh`   | ++"Browser Refresh"++ | `refresh`
-`browser-search`    | ++"Browser Search"++  | `search`
-`browser-stop`      | ++"Browser Stop"++    |
-`copy`              | ++"Copy"++            |
-`context-menu`      | ++"Context Menu"++    | `apps`
-`mail`              | ++"Mail"++            | `launch-mail`
-`media`             | ++"Media"++           | `launch-media`
-`media-next-track`  | ++"Next Track"++      | `next-track`
-`media-pause`       | ++"Pause"++           | `pause`
-`media-play`        | ++"Play"++            | `play`
-`media-play-pause`  | ++"Play/Pause"++      | `play-pause`
-`media-prev-track`  | ++"Previous Track"++  | `prev-track`
-`media-stop`        | ++"Stop"++            | `stop`
-`print`             | ++"Print"++           |
-`reset`             | ++"Reset"++           |
-`select`            | ++"Select"++          |
-`sleep`             | ++"Sleep"++           |
-`volume-down`       | ++"Volume Down"++     | `vol-down`
-`volume-mute`       | ++"Mute"++            | `mute`
-`volume-up`         | ++"Volume Up"++       | `vol-up`
-`zoom`              | ++"Zoom"++            |
+`backtab`           | ++backtab++           | `bktab`
+`browser-back`      | ++browser-back++      |
+`browser-favorites` | ++browser-favorites++ | `favorites`
+`browser-forward`   | ++browser-forward++   | `forward`
+`browser-home`      | ++browser-home++      |
+`browser-refresh`   | ++browser-refresh++   | `refresh`
+`browser-search`    | ++browser-search++    | `search`
+`browser-stop`      | ++browser-stop++      |
+`copy`              | ++copy++              |
+`context-menu`      | ++context-menu++      | `apps`
+`mail`              | ++mail++              | `launch-mail`
+`media`             | ++media++             | `launch-media`
+`media-next-track`  | ++media-next-track++  | `next-track`
+`media-pause`       | ++media-pause++       | `pause`
+`media-play`        | ++media-play++        | `play`
+`media-play-pause`  | ++media-play-pause++  | `play-pause`
+`media-prev-track`  | ++media-prev-track++  | `prev-track`
+`media-stop`        | ++media-stop++        | `stop`
+`print`             | ++print++             |
+`reset`             | ++reset++             |
+`select`            | ++select++            |
+`sleep`             | ++sleep++             |
+`volume-down`       | ++volume-down++       | `vol-down`
+`volume-mute`       | ++volume-mute++       | `mute`
+`volume-up`         | ++volume-up++         | `vol-up`
+`zoom`              | ++zoom++              |
 
 ### Mouse
 
-Name            | Display             | Aliases
---------------- | ------------------- | -------
-`left-button`   | ++"Left Button"++   | `lbutton`
-`middle-button` | ++"Middle Button"++ | `mbutton`
-`right-button`  | ++"Right Button"++  | `rbutton`
-`x-button1`     | ++"X Button 1"++    | `xbutton1`
-`x-button2`     | ++"X Button 2"++    | `xbutton2`
+Name            | Display           | Aliases
+--------------- | ----------------- | -------
+`left-button`   | ++left-button++   | `lbutton`
+`middle-button` | ++middle-button++ | `mbutton`
+`right-button`  | ++right-button++  | `rbutton`
+`x-button1`     | ++x-button1++     | `xbutton1`
+`x-button2`     | ++x-button2++     | `xbutton2`
 
 ## Extending/Modifying Key-Map Index
 
