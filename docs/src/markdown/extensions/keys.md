@@ -179,14 +179,14 @@ Name        | Display       | Aliases
 `insert`    | ++insert++    | `ins`
 
 ### Action Keys
-Name           | Display            | Aliases
--------------- | ------------------ | -------
+Name           | Display          | Aliases
+-------------- | -----------------| -------
 `break`        | ++break++        | `cancel`
 `caps-lock`    | ++caps-lock++    | `capital`, `cplk`
 `clear`        | ++clear++        | `clr`
 `eject`        | ++eject++        |
 `enter`        | ++enter++        | `return`
-`escape`       | ++escape++          | `esc`
+`escape`       | ++escape++       | `esc`
 `help`         | ++help++         |
 `print-screen` | ++print-screen++ | `prtsc`
 `scroll-lock`  | ++scroll-lock++  | `scroll`
@@ -220,9 +220,10 @@ Name            | Display           | Aliases
 
 Name            | Display           | Aliases
 --------------- | ----------------- | -------
-`alt`           | ++alt++           | `menu`
-`left-alt`      | ++left-alt++      | `lalt`, `left-menu`, `lmenu`
-`right-alt`     | ++right-alt++     | `ralt`, `right-menu`, `rmenu`
+`alt`           | ++alt++           |
+`left-alt`      | ++left-alt++      | `lalt`
+`right-alt`     | ++right-alt++     | `ralt`
+`alt-graph`     | ++alt-graph++     | `altgr`
 `command`       | ++command++       | `cmd`
 `left-command`  | ++left-command++  | `lcommand`, `lcmd`, `left-cmd`
 `right-command` | ++right-command++ | `rcommand`, `rcmd`, `right-cmd`
@@ -231,6 +232,8 @@ Name            | Display           | Aliases
 `right-control` | ++right-control++ | `rcontrol`, `rctrl`, `right-ctrl`
 `function`      | ++function++      | `fn`
 `meta`          | ++meta++          |
+`left-meta`     | ++left-meta++     | `lmeta`
+`right-meta`    | ++right-meta++    | `rmeta`
 `option`        | ++option++        | `opt`
 `left-option`   | ++left-option++   | `loption`, `lopt`, `left-opt`
 `right-option`  | ++right-option++  | `roption`, `ropt`, `right-opt`
@@ -286,7 +289,7 @@ Name                | Display               | Aliases
 `browser-search`    | ++browser-search++    | `search`
 `browser-stop`      | ++browser-stop++      |
 `copy`              | ++copy++              |
-`context-menu`      | ++context-menu++      | `apps`
+`context-menu`      | ++context-menu++      | `apps`, `menu`
 `mail`              | ++mail++              | `launch-mail`
 `media`             | ++media++             | `launch-media`
 `media-next-track`  | ++media-next-track++  | `next-track`
