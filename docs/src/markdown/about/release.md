@@ -59,6 +59,14 @@ SuperFences and InlineHilite no longer sync settings from CodeHilite. To configu
 Extension's Highlight extension must be used. CodeHilite can be run along side Highlight if desired, but CodeHilite
 cannot be used to augment SuperFences or InlineHilite's behavior.
 
+### Keys Alias Changes
+
+Previously `alt`, `left-alt`, and `right-alt` had aliases `menu`, `left-menu`, `right-menu`, `lmenu`, and `rmenu`. These
+aliases have been removed. `menu` will now be an alias for `context-menu`.
+
+It is known that *Alt* has been referred to as *Menu* in the real world, but so is the actual *Menu*/*Apps* key. This
+will hopefully create less confusion in the long term, even if there is a little in the short term.
+
 ## Upgrading to 6.0
 
 While there are a number of new features and bug fixes, the only backwards incompatible changes are with SuperFences'

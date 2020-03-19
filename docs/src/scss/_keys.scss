@@ -31,6 +31,8 @@
       "left-control":  "\2303",
       "right-control": "\2303",
       "meta":          "\25C6",
+      "left-meta":     "\25C6",
+      "right-meta":    "\25C6",
       "option":        "\2325",
       "left-option":   "\2325",
       "right-option":  "\2325",
@@ -50,6 +52,7 @@
       "arrow-right":   "\25b7",
       "arrow-up":      "\25b3",
       "backspace":     "\232B",
+      "backtab":       "\21E4",
       "caps-lock":     "\21EA",
       "clear":         "\2327",
       "context-menu":  "\2630",
@@ -59,8 +62,8 @@
       "escape":        "\238b",
       "home":          "\2912",
       "insert":        "\2380",
-      "page-down":     "\25bc",
-      "page-up":       "\25b2",
+      "page-down":     "\21df",
+      "page-up":       "\21de",
       "print-screen":  "\2399"
     ) {
       .key-#{$name} {

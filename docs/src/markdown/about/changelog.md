@@ -1,18 +1,6 @@
 # Changelog
 
-## 7.0
-
-- **NEW**: Upgrade to Twemoji 12.1.5.
-- **NEW**: Keys extension adds `super`, `left-super`, and `right-super` key codes for an OS agnostic key.
-- **NEW**: Keys extension adds `left-option`, `right-option`, `left-command`, and `right-command` specifiers for
-  consistency across similar modifier keys.
-- **NEW**: Keys extension adds the following new aliases: `lwindows`, `rwindows`, `loption`, `roption`, `lopt`, `ropt`,
-  `left-opt`, `right-opt`, `lcommand`, `rcommand`, `lcmd`, `rcmd`, `left-cmd`, `right-cmd`. This adds new aliases for
-  new codes, but also adds some aliases to bring consistency across similar modifier keys.
-- **NEW**: Add `lwindows` and `rwindows` alias in Keys extension for consistency.
-- **FIX**: Ensure ExtraRawHTML raises a deprecation warning.
-
-## 7.0b2
+## 7.0rc1
 
 Please see [Release Notes](./release.md#upgrading-to-70) for details on upgrading to 7.0.
 
@@ -29,17 +17,27 @@ Please see [Release Notes](./release.md#upgrading-to-70) for details on upgradin
 - **NEW**: If a custom fence (SuperFences) or inline (InlineHilite) is given the name of `*`, it will override the
   default fence logic.
 - **NEW**: SuperFences and InlineHilite no longer sync settings from CodeHilite.
-
-## 7.0b1
-
-Please see [Release Notes](./release.md#upgrading-to-70) for details on upgrading to 7.0.
-
 - **NEW**: Add new Tabbed extension for general purpose tabbed content in Markdown.
 - **NEW**: Deprecate old SuperFences tabbed content feature. This will be removed in 8.0.
 - **NEW**: SuperFences' tabbed content classes have changed from `supferfences-tabs` and `superfences-content` to
   `tabbed-set` and `tabbed-content` respectively. Old style classes can be enabled with the `legacy_tab_classes` option
   in SuperFences. This new option will be retired with SuperFences tabbed content feature in 8.0.
+- **NEW**: Upgrade to Twemoji 12.1.5.
+- **NEW**: New key codes and key code changes in Keys extension:
+    - Added `super`, `left-super`, and `right-super` key codes as an alternative to `meta`. Aliases `lsuper` and
+      `rsuper` were also added.
+    - Added the `alt-graph` key code with `altgr` alias.
+    - Added the following new aliases: `lwindows` and `rwindows` for consistency.
+    - Added new codes `left-meta` and `right-meta` for consistency with other modifiers. Aliases `lmeta` and `rmeta`
+      were also added.
+    - Added `left-option`, `right-option`, `left-command`, `right-command`, `left-meta`, and `right-meta` codes for
+      consistency across similar modifier keys. Additional aliases were added as well: `loption`, `roption`, `lopt`,
+      `ropt`, `left-opt`, `right-opt`, `lcommand`, `rcommand`, `lcmd`, `rcmd`, `left-cmd`, `right-cmd`, `lmeta`, and
+      `rmeta`.
+    -`alt` no lonter uses `menu`, `lmenu`, and `rmenu` as key aliases. `context-menu` now uses the alias `menu`.
+     `context-menu` will all dispaly with simply `Menu` now.
 - **FIX**: Numerous deprecation warnings associated with the recent release of Python Markdown 3.2.
+- **FIX**: Ensure ExtraRawHTML raises a deprecation warning.
 
 ## 6.3
 
