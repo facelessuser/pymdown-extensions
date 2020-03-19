@@ -189,6 +189,7 @@ pymdownx
 pypi
 pytest
 raphael
+rc
 rebranded
 regex
 reindent

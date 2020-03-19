@@ -34,8 +34,8 @@ Please see [Release Notes](./release.md#upgrading-to-70) for details on upgradin
       consistency across similar modifier keys. Additional aliases were added as well: `loption`, `roption`, `lopt`,
       `ropt`, `left-opt`, `right-opt`, `lcommand`, `rcommand`, `lcmd`, `rcmd`, `left-cmd`, `right-cmd`, `lmeta`, and
       `rmeta`.
-    -`alt` no lonter uses `menu`, `lmenu`, and `rmenu` as key aliases. `context-menu` now uses the alias `menu`.
-     `context-menu` will all dispaly with simply `Menu` now.
+    -`alt` no longer uses `menu`, `lmenu`, and `rmenu` as key aliases. `context-menu` now uses the alias `menu`.
+     `context-menu` will display with `Menu` now.
 - **FIX**: Numerous deprecation warnings associated with the recent release of Python Markdown 3.2.
 - **FIX**: Ensure ExtraRawHTML raises a deprecation warning.
 
