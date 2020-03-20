@@ -1,0 +1,21 @@
+.md-typeset {
+  del.critic {
+    padding: 0 0.25em;
+    background-color: #{transparentize($drac-pink, 0.5)};
+    box-shadow: none;
+  }
+
+  ins.critic {
+    padding: 0 0.25em;
+    background-color: #{transparentize($drac-green, 0.5)};
+    box-shadow: none;
+  }
+
+  .critic.comment {
+    color: $drac-blue;
+  }
+
+  .critic.break {
+    margin: 0;
+  }
+}

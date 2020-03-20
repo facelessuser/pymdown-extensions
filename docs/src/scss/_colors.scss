@@ -1,0 +1,93 @@
+$drac-fg: hsl(60, 30%, 96%);
+$drac-bg: hsl(231, 15%, 18%);
+$drac-highlight: hsl(66, 94%, 73%);
+$drac-selection: hsl(232, 14%, 31%);
+$drac-blue: hsl(225, 27%, 51%);
+$drac-cyan: hsl(191, 97%, 77%);
+$drac-green: hsl(135, 94%, 65%);
+$drac-orange: hsl(31, 100%, 71%);
+$drac-pink: hsl(326, 100%, 74%);
+$drac-purple: hsl(265, 89%, 78%);
+$drac-red: hsl(0, 100%, 67%);
+$drac-yellow: hsl(65, 92%, 76%);
+
+// Non-standard Dracula colors
+$drac-grey: hsl(225, 8%, 51%);
+$drac-teal: hsl(161, 97%, 77%);
+$drac-light-blue: hsl(190, 94%, 87%);
+$drac-light-green: hsl(135, 92%, 79%);
+$drac-dark-pink: hsl(325, 100%, 64%);
+$drac-dark-red: hsl(0, 100%, 59%);
+
+$drac-default-bg: lighten($drac-bg, 3%);
+
+:root {
+  --md-code-fg-color: #{$drac-fg};
+  --md-code-bg-color: #{$drac-bg};
+
+  // Default color shades
+  --md-default-fg-color:               #{transparentize($drac-fg, 0.13)};
+  --md-default-fg-color--light:        #{transparentize($drac-fg, 0.46)};
+  --md-default-fg-color--lighter:      #{transparentize($drac-fg, 0.84)};
+  --md-default-fg-color--lightest:     #{transparentize($drac-fg, 0.93)};
+
+  --md-default-bg-color:               #{$drac-default-bg};
+  --md-default-bg-color--light:        #{transparentize($drac-default-bg, 0.3)};
+  --md-default-bg-color--lighter:      #{transparentize($drac-default-bg, 0.7)};
+  --md-default-bg-color--lightest:     #{transparentize($drac-default-bg, 0.88)};
+
+  --md-default-bg-color--dark:         #{darken($drac-default-bg, 3%)};
+  --md-default-bg-color--darker:       #{darken($drac-default-bg, 6%)};
+  --md-default-bg-color--darkest:      #{darken($drac-default-bg, 9%)};
+}
+
+// ----------------------------------------------------------------------------
+// Rules: primary colors
+// ----------------------------------------------------------------------------
+
+@each $name, $colors in (
+  "red":         $drac-red         lighten($drac-red, 5%)   darken($drac-red, 5%),
+  "pink":        $drac-pink        lighten($drac-pink, 5%)   darken($drac-pink, 5%),
+  "purple":      $drac-purple      lighten($drac-purple, 5%)   darken($drac-purple, 5%),
+  "blue":        $drac-blue        lighten($drac-blue, 5%)   darken($drac-blue, 5%),
+  "cyan":        $drac-cyan        lighten($drac-cyan, 5%)   darken($drac-cyan, 5%),
+  "green":       $drac-green       lighten($drac-green, 5%)   darken($drac-green, 5%),
+  "yellow":      $drac-yellow      lighten($drac-yellow, 5%)   darken($drac-yellow, 5%),
+  "orange":      $drac-orange      lighten($drac-orange, 5%)   darken($drac-orange, 5%)
+) {
+
+  // Color palette
+  [data-md-color-primary="#{$name}"] {
+
+    --md-primary-fg-color:              hsla(#{hex2hsl(nth($colors, 1))}, 1);
+    --md-primary-fg-color--transparent: hsla(#{hex2hsl(nth($colors, 1))}, 0.1);
+    --md-primary-fg-color--light:       hsla(#{hex2hsl(nth($colors, 2))}, 1);
+    --md-primary-fg-color--dark:        hsla(#{hex2hsl(nth($colors, 3))}, 1);
+    --md-primary-bg-color:              var(--md-default-bg-color);
+    --md-primary-bg-color--light:       var(--md-default-bg-color--light);
+  }
+}
+
+// ----------------------------------------------------------------------------
+// Rules: accent colors
+// ----------------------------------------------------------------------------
+
+@each $name, $color in (
+  "red":         darken($drac-red, 5%),
+  "pink":        darken($drac-pink, 5%),
+  "purple":      darken($drac-purple, 5%),
+  "blue":        darken($drac-blue, 5%),
+  "cyan":        darken($drac-cyan, 5%),
+  "green":       darken($drac-green, 5%),
+  "yellow":      darken($drac-yellow, 5%),
+  "orange":      darken($drac-orange, 5%)
+) {
+
+  // Color palette
+  [data-md-color-accent="#{$name}"] {
+    --md-accent-fg-color:              hsla(#{hex2hsl($color)}, 1);
+    --md-accent-fg-color--transparent: hsla(#{hex2hsl($color)}, 0.1);
+    --md-accent-bg-color:              var(--md-default-bg-color);
+    --md-accent-bg-color--light:       var(--md-default-bg-color--light);
+  }
+}

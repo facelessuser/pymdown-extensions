@@ -13,8 +13,8 @@ theme:
   name: material
   custom_dir: docs/theme
   palette:
-    primary: blue
-    accent: blue
+    primary: purple
+    accent: purple
   font:
     text: Roboto
     code: Roboto Mono
@@ -136,7 +136,7 @@ extra:
     - icon: fontawesome/brands/discord
       link: https://discord.gg/fqQ7ypS
 extra_css:
-  - assets/pymdownx-extras/extra-783c47ae54.css
+  - assets/pymdownx-extras/extra-cdbd1b995a.css
 extra_javascript:
   - assets/pymdownx-extras/extra-52d8c68747.js
 

@@ -1,0 +1,98 @@
+$old-admonitions: (
+  note:                       $drac-blue,
+  abstract summary tldr:      $drac-cyan,
+  info todo:                  $drac-light-blue,
+  tip hint important:         $drac-teal,
+  success check done:         $drac-green,
+  question help faq:          $drac-light-green,
+  warning caution attention:  $drac-orange,
+  failure fail missing:       $drac-dark-red,
+  danger error:               $drac-red,
+  bug:                        $drac-dark-pink,
+  example:                    $drac-purple,
+  quote cite:                 $drac-grey
+) !default;
+
+$new-admonitions: (
+  settings config: $drac-pink "material/settings",
+  new: $drac-yellow "material/alert-decagram"
+) !default;
+
+@each $names, $tint in $old-admonitions {
+
+  $name: nth($names, 1);
+
+  // Define base class
+  .md-typeset .admonition.#{$name} {
+    border-color: $tint;
+
+    // Define base class
+    > :first-child {
+      background-color: transparentize($tint, 0.6);
+
+      // Icon
+      &::before {
+        background-color: $tint;
+      }
+    }
+  }
+
+  // Define synonyms for base class
+  @if length($names) > 1 {
+    @for $n from 2 through length($names) {
+      .#{nth($names, $n)} {
+        @extend .#{$name};
+      }
+    }
+  }
+}
+
+:root {
+  @each $names, $prop in $new-admonitions {
+    --md-admonition-icon--#{nth($names, 1)}: #{icon(nth($prop, 2))};
+  }
+}
+
+@each $names, $prop in $new-admonitions {
+  $name: nth($names, 1);
+  $tint: nth($prop, 1);
+
+    // Define base class
+  .md-typeset .admonition.#{$name} {
+    border-color: $tint;
+  }
+
+    // Define base class
+  .md-typeset .#{$name} > .admonition-title {
+    background-color: transparentize($tint, 0.6);
+
+    // Icon
+    &::before {
+      width: px2rem(20px);
+      height: px2rem(20px);
+      background-color: $tint;
+      background-size: px2rem(20px);
+      mask-image: var(--md-admonition-icon--#{$name});
+      content: "\a0";
+    }
+  }
+
+  // Define synonyms for base class
+  @if length($names) > 1 {
+    @for $n from 2 through length($names) {
+      .#{nth($names, $n)} {
+        @extend .#{$name};
+      }
+    }
+  }
+}
+
+.md-typeset .admonition, .md-typeset table:not([class]) {
+  box-shadow:
+      0 px2rem(4px) px2rem(10px) hsla(0, 0%, 0%, 0.15),
+      0 0           px2rem(1px)  hsla(0, 0%, 0%, 0.2);
+}
+
+.md-typeset summary::after {
+  background-color: var(--md-default-fg-color--light);
+}

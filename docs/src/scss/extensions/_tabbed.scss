@@ -2,6 +2,7 @@
   .tabbed-set > .tabbed-content {
     padding: 0 px2rem(12px);
     overflow: hidden;
+    box-shadow: 0 px2rem(-1px) var(--md-default-fg-color--lighter);
   }
 
   .tabbed-set {
