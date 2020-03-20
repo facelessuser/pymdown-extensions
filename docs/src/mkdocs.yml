@@ -13,8 +13,8 @@ theme:
   name: material
   custom_dir: docs/theme
   palette:
-    primary: blue
-    accent: blue
+    primary: purple
+    accent: purple
   font:
     text: Roboto
     code: Roboto Mono

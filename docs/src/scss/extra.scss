@@ -2,18 +2,25 @@
 @import "material-color";
 @import "material-shadows";
 
+
 @import "utilities/break";
 @import "utilities/convert";
 @import "utilities/icons";
 
 @import "config";
-@import "links";
-@import "keys";
-@import "admonition";
-@import "details";
-@import "uml";
-@import "code";
-@import "headeranchors";
-@import "progressbar";
-@import "footer";
-@import "tabbed";
+@import "colors";
+
+@import "extensions/admonition";
+@import "extensions/critic";
+@import "extensions/details";
+@import "extensions/highlight";
+@import "extensions/keys";
+@import "extensions/magiclink";
+@import "extensions/mark";
+@import "extensions/progressbar";
+@import "extensions/superfences";
+@import "extensions/tabbed";
+@import "extensions/tables";
+@import "extensions/tasklist";
+
+@import "material";

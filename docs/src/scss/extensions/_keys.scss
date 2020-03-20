@@ -1,5 +1,12 @@
 .md-typeset {
 
+  kbd {
+    background-color: var(--md-default-fg-color--lightest);
+    box-shadow: 0 px2rem(2px) 0 px2rem(1px) var(--md-default-bg-color--darkest),
+                0 px2rem(2px) 0 var(--md-default-bg-color--dark),
+                inset 0 px2rem(-2px) px2rem(4px) var(--md-default-fg-color--lighter);
+  }
+
   /* Keys */
   .keys {
     kbd {

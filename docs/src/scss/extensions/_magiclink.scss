@@ -1,5 +1,9 @@
 // General styling for repository link icons
 .md-typeset {
+  a {
+    color: $drac-cyan;
+  }
+
   a[href^="mailto:"]::before {
     mask-image: #{icon("material/mail")};
   }
@@ -26,8 +30,9 @@
       width: px2em(16px);
       height: px2em(16px);
       padding-right: px2em(16px);
-      background-color: var(--md-primary-fg-color);
+      background-color: $drac-cyan;
       background-size: px2em(16px);
+      transition: background-color 125ms;
       content: "\a0";
     }
 

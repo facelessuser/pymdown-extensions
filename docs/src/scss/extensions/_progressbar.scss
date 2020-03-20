@@ -8,11 +8,16 @@ $pb-stripe: transparentize($clr-white, 0.2);
     position: absolute;
     width: 100%;
     margin: 0;
-    color: var(--md-default-fg-color--light);
+    color: var(--md-default-fg-color);
     font-weight: 700;
     line-height: px2rem(28px);
     white-space: nowrap;
     text-align: center;
+    text-shadow:
+      px2em(-1px) px2em(-1px) px2em(6px) var(--md-default-bg-color--light),
+      px2em(1px) px2em(-1px) px2em(6px) var(--md-default-bg-color--light),
+      px2em(-1px) px2em(1px) px2em(6px) var(--md-default-bg-color--light),
+      px2em(1px) px2em(1px) px2em(6px) var(--md-default-bg-color--light);
   }
 
   .progress-bar {
@@ -53,11 +58,11 @@ $pb-stripe: transparentize($clr-white, 0.2);
       background-image:
         linear-gradient(
           135deg,
-          var(--md-default-fg-color--lightest) 27%,
+          var(--md-default-bg-color--lightest) 27%,
           transparent 27%,
           transparent 52%,
-          var(--md-default-fg-color--lightest) 52%,
-          var(--md-default-fg-color--lightest) 77%,
+          var(--md-default-bg-color--lightest) 52%,
+          var(--md-default-bg-color--lightest) 77%,
           transparent 77%,
           transparent
         );
@@ -66,32 +71,14 @@ $pb-stripe: transparentize($clr-white, 0.2);
   }
 
   @each $percent, $color in (
-    "100": $clr-green-a400,
-    "80":  $clr-green-a400,
-    "60":  $clr-yellow-700,
-    "40":  $clr-orange-a400,
-    "20":  $clr-red-a200,
-    "0":   $clr-red-a400
+    "100": $drac-green,
+    "80":  $drac-light-green,
+    "60":  $drac-yellow,
+    "40":  $drac-orange,
+    "20":  $drac-pink,
+    "0":   $drac-red
   ) {
     .progress-#{$percent}plus {
-      .progress-bar {
-        background-color: $color;
-      }
-    }
-  }
-
-  @each $names, $color in (
-    note seealso: $clr-blue-a400,
-    summary tldr: $clr-light-blue-a400,
-    tip hint important : $clr-teal-a700,
-    success check done: $clr-green-a400,
-    warning caution attention: $clr-orange-a400,
-    failure fail missing: $clr-red-a200,
-    danger error: $clr-red-a400,
-    bug: $clr-pink-a400,
-    quote cite: $clr-grey
-  ) {
-    .progress.#{nth($names, 1)} {
       .progress-bar {
         background-color: $color;
       }
