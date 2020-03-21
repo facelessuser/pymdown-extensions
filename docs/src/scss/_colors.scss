@@ -46,14 +46,14 @@ $drac-default-bg: lighten($drac-bg, 3%);
 // ----------------------------------------------------------------------------
 
 @each $name, $colors in (
-  "red":         $drac-red         lighten($drac-red, 5%)   darken($drac-red, 5%),
-  "pink":        $drac-pink        lighten($drac-pink, 5%)   darken($drac-pink, 5%),
-  "purple":      $drac-purple      lighten($drac-purple, 5%)   darken($drac-purple, 5%),
-  "blue":        $drac-blue        lighten($drac-blue, 5%)   darken($drac-blue, 5%),
-  "cyan":        $drac-cyan        lighten($drac-cyan, 5%)   darken($drac-cyan, 5%),
-  "green":       $drac-green       lighten($drac-green, 5%)   darken($drac-green, 5%),
-  "yellow":      $drac-yellow      lighten($drac-yellow, 5%)   darken($drac-yellow, 5%),
-  "orange":      $drac-orange      lighten($drac-orange, 5%)   darken($drac-orange, 5%)
+  "drac-red":         $drac-red         lighten($drac-red, 5%)   darken($drac-red, 5%),
+  "drac-pink":        $drac-pink        lighten($drac-pink, 5%)   darken($drac-pink, 5%),
+  "drac-purple":      $drac-purple      lighten($drac-purple, 5%)   darken($drac-purple, 5%),
+  "drac-blue":        $drac-blue        lighten($drac-blue, 5%)   darken($drac-blue, 5%),
+  "drac-cyan":        $drac-cyan        lighten($drac-cyan, 5%)   darken($drac-cyan, 5%),
+  "drac-green":       $drac-green       lighten($drac-green, 5%)   darken($drac-green, 5%),
+  "drac-yellow":      $drac-yellow      lighten($drac-yellow, 5%)   darken($drac-yellow, 5%),
+  "drac-orange":      $drac-orange      lighten($drac-orange, 5%)   darken($drac-orange, 5%)
 ) {
 
   // Color palette
@@ -73,14 +73,14 @@ $drac-default-bg: lighten($drac-bg, 3%);
 // ----------------------------------------------------------------------------
 
 @each $name, $color in (
-  "red":         darken($drac-red, 5%),
-  "pink":        darken($drac-pink, 5%),
-  "purple":      darken($drac-purple, 5%),
-  "blue":        darken($drac-blue, 5%),
-  "cyan":        darken($drac-cyan, 5%),
-  "green":       darken($drac-green, 5%),
-  "yellow":      darken($drac-yellow, 5%),
-  "orange":      darken($drac-orange, 5%)
+  "drac-red":         darken($drac-red, 5%),
+  "drac-pink":        darken($drac-pink, 5%),
+  "drac-purple":      darken($drac-purple, 5%),
+  "drac-blue":        darken($drac-blue, 5%),
+  "drac-cyan":        darken($drac-cyan, 5%),
+  "drac-green":       darken($drac-green, 5%),
+  "drac-yellow":      darken($drac-yellow, 5%),
+  "drac-orange":      darken($drac-orange, 5%)
 ) {
 
   // Color palette
