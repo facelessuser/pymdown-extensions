@@ -1,4 +1,7 @@
-# Miscellaneous Extras
+path: tree/master
+source: pymdownx/slugs.py
+
+# Slugs
 
 ## Alternate Slugify
 

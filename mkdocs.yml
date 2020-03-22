@@ -50,7 +50,8 @@ nav:
     - Tabbed: extensions/tabbed.md
     - Tasklist: extensions/tasklist.md
     - Tilde: extensions/tilde.md
-  - Miscellaneous Extras: miscellaneous_extras.md
+  - Extras:
+    - Slugs: extras/slugs.md
   - FAQ: faq.md
   - About:
     - Contributing &amp; Support: about/contributing.md
