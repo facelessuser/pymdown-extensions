@@ -1,3 +1,6 @@
+path: tree/master
+source: pymdownx/magiclink.py
+
 # MagicLink
 
 ## Overview
@@ -26,13 +29,15 @@ part of links. If you have a link that cannot be detected, you can always use th
 
 !!! example "Auto-Linking Example"
 
-    ```
-    - Just paste links directly in the document like this: https://google.com.
-    - Or even an email address: fake.email@email.com.
-    ```
+    === "Output"
+        - Just paste links directly in the document like this: https://google.com.
+        - Or even an email address: fake.email@email.com.
 
-    - Just paste links directly in the document like this: https://google.com.
-    - Or even an email address: fake.email@email.com.
+    === "Markdown"
+        ```
+        - Just paste links directly in the document like this: https://google.com.
+        - Or even an email address: fake.email@email.com.
+        ```
 
 ## Shorthand Links
 
@@ -74,15 +79,17 @@ default, use the format `@{provider}:{user}`
 
 !!! example "Mention Example"
 
-    ```
-    @facelessuser
+    === "Output"
+        @facelessuser
 
-    @twitter:twitter
-    ```
+        @twitter:twitter
 
-    @facelessuser
+    === "Markdown"
+        ```
+        @facelessuser
 
-    @twitter:twitter
+        @twitter:twitter
+        ```
 
 For code repository providers, you can also mention repositories.  This feature is actually inspired by the GitHub only
 extension @Python-Markdown/github-links, which performs *similar* auto-linking.  The syntax to auto-link a repository
@@ -93,15 +100,17 @@ style it with CSS to make it stand out more like has been done in this document.
 
 !!! example "Repository Mention Example"
 
-    ```
-    @facelessuser/pymdown-extensions
+    === "Output"
+        @facelessuser/pymdown-extensions
 
-    @gitlab:pycqa/flake8
-    ```
+        @gitlab:pycqa/flake8
 
-    @facelessuser/pymdown-extensions
+    === "Markdown"
+        ```
+        @facelessuser/pymdown-extensions
 
-    @gitlab:pycqa/flake8
+        @gitlab:pycqa/flake8
+        ```
 
 ### Issues and Pull Requests
 
@@ -113,39 +122,41 @@ syntax can be used.
 
 !!! example "Issue Example"
 
-    ```
-    Issue #1
+    === "Output"
+        Issue #1
 
-    Issue backrefs#1
+        Issue backrefs#1
 
-    Issue Python-Markdown/markdown#1
+        Issue Python-Markdown/markdown#1
 
-    Issue gitlab:pycqa/flake8#385
+        Issue gitlab:pycqa/flake8#385
 
-    Pull request !13
+        Pull request !13
 
-    Pull request backrefs!4
+        Pull request backrefs!4
 
-    Pull request Python-Markdown/markdown!598
+        Pull request Python-Markdown/markdown!598
 
-    Pull request gitlab:pycqa/flake8!213
-    ```
+        Pull request gitlab:pycqa/flake8!213
 
-    Issue #1
+    === "Markdown"
+        ```
+        Issue #1
 
-    Issue backrefs#1
+        Issue backrefs#1
 
-    Issue Python-Markdown/markdown#1
+        Issue Python-Markdown/markdown#1
 
-    Issue gitlab:pycqa/flake8#385
+        Issue gitlab:pycqa/flake8#385
 
-    Pull request !13
+        Pull request !13
 
-    Pull request backrefs!4
+        Pull request backrefs!4
 
-    Pull request Python-Markdown/markdown!598
+        Pull request Python-Markdown/markdown!598
 
-    Pull request gitlab:pycqa/flake8!213
+        Pull request gitlab:pycqa/flake8!213
+        ```
 
 !!! note "Note"
     GitHub actually gives pull requests and issues unique values while GitLab and Bitbucket can have pulls with the same
@@ -164,23 +175,25 @@ the default provider is a social media provider, then only the latter syntax can
 
 !!! example "Commit Example"
 
-    ```
-    181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+    === "Output"
+        181c06d1f11fa29961b334e90606ed1f1ec7a7cc
 
-    backrefs@cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
+        backrefs@cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
 
-    Python-Markdown/markdown@de5c696f94e8dde242c29d4be50b7bbf3c17fedb
+        Python-Markdown/markdown@de5c696f94e8dde242c29d4be50b7bbf3c17fedb
 
-    gitlab:pycqa/flake8@8acf55e0f85233c51c291816d73d828cc62d30d1
-    ```
+        gitlab:pycqa/flake8@8acf55e0f85233c51c291816d73d828cc62d30d1
 
-    181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+    === "Markdown"
+        ```
+        181c06d1f11fa29961b334e90606ed1f1ec7a7cc
 
-    backrefs@cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
+        backrefs@cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
 
-    Python-Markdown/markdown@de5c696f94e8dde242c29d4be50b7bbf3c17fedb
+        Python-Markdown/markdown@de5c696f94e8dde242c29d4be50b7bbf3c17fedb
 
-    gitlab:pycqa/flake8@8acf55e0f85233c51c291816d73d828cc62d30d1
+        gitlab:pycqa/flake8@8acf55e0f85233c51c291816d73d828cc62d30d1
+        ```
 
 ### Diff/Compare
 
@@ -195,23 +208,25 @@ the user and repository: `{user}/{repo}@{hash1}...{hash2}`. Lastly, to reference
 
 !!! example "Compare Example"
 
-    ```
-    e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+    === "Output"
+        e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
 
-    backrefs@88c6238a1c2cf71a96eb9abb4b0213f79d6ca81f...cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
+        backrefs@88c6238a1c2cf71a96eb9abb4b0213f79d6ca81f...cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
 
-    Python-Markdown/markdown@007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8dde242c29d4be50b7bbf3c17fedb
+        Python-Markdown/markdown@007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8dde242c29d4be50b7bbf3c17fedb
 
-    gitlab:pycqa/flake8@1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e
-    ```
+        gitlab:pycqa/flake8@1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e
 
-    e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+    === "Markdown"
+        ```
+        e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
 
-    backrefs@88c6238a1c2cf71a96eb9abb4b0213f79d6ca81f...cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
+        backrefs@88c6238a1c2cf71a96eb9abb4b0213f79d6ca81f...cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
 
-    Python-Markdown/markdown@007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8dde242c29d4be50b7bbf3c17fedb
+        Python-Markdown/markdown@007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8dde242c29d4be50b7bbf3c17fedb
 
-    gitlab:pycqa/flake8@1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e
+        gitlab:pycqa/flake8@1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e
+        ```
 
 ## Repository Link Shortener
 
@@ -225,13 +240,15 @@ If we specify long form URLs from external providers, they will be shortened app
 
 !!! example "External Provider Example"
 
-    ```
-    - https://gitlab.com/pycqa/flake8/issues/385
-    - https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
-    ```
+    === "Output"
+        - https://gitlab.com/pycqa/flake8/issues/385
+        - https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
 
-    - https://gitlab.com/pycqa/flake8/issues/385
-    - https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
+    === "Markdown"
+        ```
+        - https://gitlab.com/pycqa/flake8/issues/385
+        - https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
+        ```
 
 
 When specifying links that reference the configured `provider`, `user`, and `repo`, links will be shortened differently
@@ -239,19 +256,21 @@ in light of that context.
 
 !!! example "Internal Provider Example"
 
-    ```
-    - https://github.com/facelessuser/pymdown-extensions/issues/1
-    - https://github.com/facelessuser/pymdown-extensions/pull/13
-    - https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a
-    - https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
-    - https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
-    ```
+    === "Output"
+        - https://github.com/facelessuser/pymdown-extensions/issues/1
+        - https://github.com/facelessuser/pymdown-extensions/pull/13
+        - https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+        - https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+        - https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
 
-    - https://github.com/facelessuser/pymdown-extensions/issues/1
-    - https://github.com/facelessuser/pymdown-extensions/pull/13
-    - https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a
-    - https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
-    - https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+    === "Markdown"
+        ```
+        - https://github.com/facelessuser/pymdown-extensions/issues/1
+        - https://github.com/facelessuser/pymdown-extensions/pull/13
+        - https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+        - https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+        - https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+        ```
 
 ## CSS
 

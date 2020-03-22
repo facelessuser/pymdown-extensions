@@ -1,3 +1,6 @@
+path: tree/master
+source: pymdownx/pathconverter.py
+
 # PathConverter
 
 ## Overview

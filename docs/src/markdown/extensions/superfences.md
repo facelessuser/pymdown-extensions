@@ -1,3 +1,6 @@
+path: tree/master
+source: pymdownx/superfences.py
+
 # SuperFences
 
 ## Overview
@@ -91,33 +94,35 @@ The first provided class is always used as the language class. Arbitrary attribu
 be inserted as those are reserved for options such has `linenums` etc.
 
 !!! example "Injecting Classes"
-    === "Source"
-        ````
-        ```{.python .extra-class linenums="1"}
-        import hello_world
-        ```
-        ````
 
     === "HTML"
         ```html
         <table class="extra-class highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="extra-class highlight"><pre><span></span><code><span cv></td><td class="code"><div class="extra-class highlight"><pre><span></span><code><span class="kn">import</span> <spanlass="kn">import</span> <span class="nn">hello_world</span>\n</code></pre></div>\n</td></tr></table>
         ```
 
+    === "Markdown"
+        ````
+        ```{.python .extra-class linenums="1"}
+        import hello_world
+        ```
+        ````
+
 When generating additional classes on a JavaScript style code block (non-Pygments code blocks), classes are injected in
 the `#!html code` block.
 
 !!! example "Non-Pygments Injecting Classes"
-    === "Source"
-        ````
-        ```{.python .extra-class #id linenums="1"}
-        import hello_world
-        ```
-        ````
 
     === "HTML"
         ```html
         <pre id="id" class="highlight"><code class="extra-class language-python linenums">import hello_world</code></pre>
         ```
+
+    === "Markdown"
+        ````
+        ```{.python .extra-class #id linenums="1"}
+        import hello_world
+        ```
+        ````
 
 When using a built in [custom formatter](#custom-fences), all classes and IDs are injected on to the first element
 `#!html <div>` or `#!html <pre>`. This preserves previous behavior, but you can write your own and inject them in the
@@ -125,8 +130,8 @@ way that suites your needs.
 
 ## Tabbed Fences
 
-!!! warning "Deprecated 7.0b1"
-    The tab option is deprecated in 7.0b1 due to the addition of the general purpose tab extension
+!!! warning "Deprecated 7.0"
+    The tab option is deprecated in 7.0 due to the addition of the general purpose tab extension
     [`pymdownx.tabbed`](./tabbed.md).
 
     The feature is still usable, but by the class names on the output
@@ -144,73 +149,76 @@ or `tab=""`, but you've specified a language, the language will be used as the t
 
 !!! example "Tabbed Code"
 
-    ````
-    ```Bash tab=
-    #!/bin/bash
-    STR="Hello World!"
-    echo $STR
-    ```
+    === "Output"
+        ```Bash tab=
+        #!/bin/bash
+        STR="Hello World!"
+        echo $STR
+        ```
 
-    ```C tab=
-    #include 
+        ```C tab=
+        #include 
 
-    int main(void) {
-      printf("hello, world\n");
-    }
-    ```
+        int main(void) {
+          printf("hello, world\n");
+        }
+        ```
 
-    ```C++ tab=
-    #include <iostream>
+        ```C++ tab=
+        #include <iostream>
 
-    int main() {
-      std::cout << "Hello, world!\n";
-      return 0;
-    }
-    ```
+        int main() {
+          std::cout << "Hello, world!\n";
+          return 0;
+        }
+        ```
 
-    ```C# tab=
-    using System;
+        ```C# tab=
+        using System;
 
-    class Program {
-      static void Main(string[] args) {
-        Console.WriteLine("Hello, world!");
-      }
-    }
-    ```
-    ````
+        class Program {
+          static void Main(string[] args) {
+            Console.WriteLine("Hello, world!");
+          }
+        }
+        ```
 
-    ```Bash tab=
-    #!/bin/bash
-    STR="Hello World!"
-    echo $STR
-    ```
+    === "Markdown"
 
-    ```C tab=
-    #include 
+        ````
+        ```Bash tab=
+        #!/bin/bash
+        STR="Hello World!"
+        echo $STR
+        ```
 
-    int main(void) {
-      printf("hello, world\n");
-    }
-    ```
+        ```C tab=
+        #include 
 
-    ```C++ tab=
-    #include <iostream>
+        int main(void) {
+          printf("hello, world\n");
+        }
+        ```
 
-    int main() {
-      std::cout << "Hello, world!\n";
-      return 0;
-    }
-    ```
+        ```C++ tab=
+        #include <iostream>
 
-    ```C# tab=
-    using System;
+        int main() {
+          std::cout << "Hello, world!\n";
+          return 0;
+        }
+        ```
 
-    class Program {
-      static void Main(string[] args) {
-        Console.WriteLine("Hello, world!");
-      }
-    }
-    ```
+        ```C# tab=
+        using System;
+
+        class Program {
+          static void Main(string[] args) {
+            Console.WriteLine("Hello, world!");
+          }
+        }
+        ```
+        ````
 
 In order to use tabbed code blocks, some additional CSS is needed. You can check out the configuration below which will
 show the CSS and the HTML it targets. Keep in mind the CSS is just the minimum to get you started. You can tweak it and
@@ -275,7 +283,7 @@ modify it to get it how you like it.
         }
         ```
 
-## Preserve tabs
+## Preserve Tabs
 
 Python Markdown has an approach where it normalizes whitespace. This means `\r\n` is converted to `\n` and `\t` is
 converted to spaces. In 99% of Markdown, this is never really an issue, but with code blocks it can be. Tabs can
@@ -283,14 +291,27 @@ sometimes be very useful for aligning certain kinds of data, especially when dea
 
 !!! example "Tabs in Content"
 
-    ```
-    ============================================================
-    T	Tp	Sp	D	Dp	S	D7	T
-    ------------------------------------------------------------
-    A	F#m	Bm	E	C#m	D	E7	A
-    A#	Gm	Cm	F	Dm	D#	F7	A#
-    B♭	Gm	Cm	F	Dm	E♭m	F7	B♭
-    ```
+    === "Output"
+        ```
+        ============================================================
+        T	Tp	Sp	D	Dp	S	D7	T
+        ------------------------------------------------------------
+        A	F#m	Bm	E	C#m	D	E7	A
+        A#	Gm	Cm	F	Dm	D#	F7	A#
+        B♭	Gm	Cm	F	Dm	E♭m	F7	B♭
+        ```
+
+    === "Markdown"
+        ````
+        ```
+        ============================================================
+        T	Tp	Sp	D	Dp	S	D7	T
+        ------------------------------------------------------------
+        A	F#m	Bm	E	C#m	D	E7	A
+        A#	Gm	Cm	F	Dm	D#	F7	A#
+        B♭	Gm	Cm	F	Dm	E♭m	F7	B♭
+        ```
+        ````
 
 If you have a scenario where preserving tabs is a requirement, you can use SuperFences `preserve_tabs` option to prevent
 converting tabs to spaces inside fenced code blocks. This *only* applies to fenced code blocks. Indented code blocks and
@@ -315,17 +336,17 @@ specifiers.
 
 !!! example "Highlight Example"
 
-    === "Source"
-        ````
-        ```py3
-        import foo.bar
-        ```
-        ````
-
     === "Output"
         ```py3
         import foo.bar
         ```
+
+    === "Markdown"
+        ````
+        ```py3
+        import foo.bar
+        ```
+        ````
 
 ## Showing Line Numbers
 
@@ -339,17 +360,17 @@ control the starting line shown in the block.
 
 !!! example "Line Number Example"
 
-    === "Source"
-        ````
-        ``` linenums="1"
-        import foo.bar
-        ```
-        ````
-
     === "Output"
         ``` linenums="1"
         import foo.bar
         ```
+
+    === "Markdown"
+        ````
+        ``` linenums="1"
+        import foo.bar
+        ```
+        ````
 
 Pygments also has a few additional options in regards to line numbers. One is "line step" which, if set to a number n >
 1, will print only every n^th^ line number. The other option is a setting that can mark line numbers as "special" with a
@@ -361,16 +382,6 @@ So to set showing only every other line number, we could do the following. Line 
 
 !!! example "Nth Line Example"
 
-    === "Source"
-        ````
-        ``` linenums="2 2"
-        """Some file."""
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-        ````
-
     === "Output"
         ``` linenums="2 2"
         """Some file."""
@@ -378,22 +389,22 @@ So to set showing only every other line number, we could do the following. Line 
         import boo.baz
         import foo.bar.baz
         ```
+
+    === "Markdown"
+        ````
+        ``` linenums="2 2"
+        """Some file."""
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
+        ````
 
 To set every other line as special, you must set the third `linenums` option (specify line start and step before it).
 Special must be a value of n > 0.
 
 !!! example "Special Line Example"
 
-    === "Source"
-        ````
-        ``` linenums="1 1 2"
-        """Some file."""
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-        ````
-
     === "Output"
         ``` linenums="1 1 2"
         """Some file."""
@@ -401,6 +412,16 @@ Special must be a value of n > 0.
         import boo.baz
         import foo.bar.baz
         ```
+
+    === "Markdown"
+        ````
+        ``` linenums="1 1 2"
+        """Some file."""
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
+        ````
 
 For JavaScript libraries, a class of `linenums` is written to the block.  This may or may not be leveraged by your
 chosen highlighter.  It is uncertain at this time whether line number support for JavaScript highlighters will be
@@ -414,16 +435,6 @@ targeted line numbers separated by spaces.
 
 !!! example "Highlight Lines Example"
 
-    === "Source"
-        ````
-        ``` hl_lines="1 3"
-        """Some file."""
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-        ````
-
     === "Output"
         ``` hl_lines="1 3"
         """Some file."""
@@ -432,19 +443,19 @@ targeted line numbers separated by spaces.
         import foo.bar.baz
         ```
 
-Line numbers are always referenced starting at 1 ignoring what the line number is labeled as when showing line numbers.
-
-!!! example "Highlight Lines with Line Numbers Example"
-
-    === "Source"
+    === "Markdown"
         ````
-        ```hl_lines="1 3" linenums="2"
+        ``` hl_lines="1 3"
         """Some file."""
         import foo.bar
         import boo.baz
         import foo.bar.baz
         ```
         ````
+
+Line numbers are always referenced starting at 1 ignoring what the line number is labeled as when showing line numbers.
+
+!!! example "Highlight Lines with Line Numbers Example"
 
     === "Output"
         ``` hl_lines="1 3" linenums="2"
@@ -454,29 +465,22 @@ Line numbers are always referenced starting at 1 ignoring what the line number i
         import foo.bar.baz
         ```
 
+    === "Markdown"
+        ````
+        ```hl_lines="1 3" linenums="2"
+        """Some file."""
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
+        ````
+
 ## Custom Fences
 
 SuperFences allows defining custom fences for special purposes, like flow charts and sequence diagrams:
 
 !!! example "Flow Chart Example"
 
-    === "Source"
-        ````
-        ```flow
-        st=>start: Start:>http://www.google.com[blank]
-        e=>end:>http://www.google.com
-        op1=>operation: My Operation
-        sub1=>subroutine: My Subroutine
-        cond=>condition: Yes
-        or No?:>http://www.google.com
-        io=>inputoutput: catch something...
-
-        st->op1->cond
-        cond(yes)->io->e
-        cond(no)->sub1(right)->op1
-        ```
-        ````
-
     === "Output"
         ```flow
         st=>start: Start:>http://www.google.com[blank]
@@ -491,20 +495,26 @@ SuperFences allows defining custom fences for special purposes, like flow charts
         cond(yes)->io->e
         cond(no)->sub1(right)->op1
         ```
+
+    === "Markdown"
+        ````
+        ```flow
+        st=>start: Start:>http://www.google.com[blank]
+        e=>end:>http://www.google.com
+        op1=>operation: My Operation
+        sub1=>subroutine: My Subroutine
+        cond=>condition: Yes
+        or No?:>http://www.google.com
+        io=>inputoutput: catch something...
+
+        st->op1->cond
+        cond(yes)->io->e
+        cond(no)->sub1(right)->op1
+        ```
+        ````
 
 !!! example "Sequence Diagram Example"
 
-    === "Source"
-        ````
-        ```sequence
-        Title: Here is a title
-        A->B: Normal line
-        B-->C: Dashed line
-        C->>D: Open arrow
-        D-->>A: Dashed open arrow
-        ```
-        ````
-
     === "Output"
         ```sequence
         Title: Here is a title
@@ -513,6 +523,17 @@ SuperFences allows defining custom fences for special purposes, like flow charts
         C->>D: Open arrow
         D-->>A: Dashed open arrow
         ```
+
+    === "Markdown"
+        ````
+        ```sequence
+        Title: Here is a title
+        A->B: Normal line
+        B-->C: Dashed line
+        C->>D: Open arrow
+        D-->>A: Dashed open arrow
+        ```
+        ````
 
 As shown above, SuperFences defines two default custom fences (which can be removed if desired) called `flow` and
 `sequence`, for flowcharts and sequence diagrams respectively. The default custom fences simply preserve the content
@@ -529,8 +550,8 @@ Keys        | Description
 `format`    | A function that formats the HTML output. The function should return a string as HTML.
 `validator` | An optional parameter that is used to provide a function to validate custom fence parameters.
 
-!!! new "New in 7.0b2"
-    Starting in 7.0b2, you can override the base fence logic (the syntax highlighter) by specifying the custom fence
+!!! new "New in 7.0"
+    Starting in 7.0, you can override the base fence logic (the syntax highlighter) by specifying the custom fence
     with a name of `*`. This means that if a fence does not match any other custom fences, the default, fallback fence
     would be handled by your custom `*` fence. This can be useful for tailoring a fence output with custom parameters
     for a specific, favorite JavaScript highlighter.
@@ -553,8 +574,8 @@ def custom_formatter(source, language, css_class, options, md, classes=None, id_
     return string
 ```
 
-!!! new "New 7.0b2"
-    The addition of the parameters `classes` and `id_value` is new in 7.0b2. If injecting additional classes or ids via
+!!! new "New 7.0"
+    The addition of the parameters `classes` and `id_value` is new in 7.0. If injecting additional classes or ids via
     the [attribute list style](#injecting-classes-and-ids), only then will `classes` and `id_value` be passed in to
     preserve backwards compatibility with old custom formatters. Users, moving forward, should at the very least update
     their formatters with `**kwargs` to future proof their custom formatters in case additional parameters are added
@@ -841,7 +862,7 @@ Option                         | Type         | Default       | Description
 `preserve_tabs`                | bool         | `#!py3 False` | Experimental feature that preserves tabs in fenced code blocks.
 `legacy_tab_classes`           | bool         | `#!py3 False` | Use legacy style classes for the deprecated tabbed code feature via `tab="name"`. This option will be dropped when the code tab interface is fully dropped for the general purpose [tabbed](./tabbed.md) extension.
 
-!!! warning "Deprecated in 7.0b1"
+!!! warning "Deprecated in 7.0"
     While `legacy_tab_classes` is a new option, it is also tied to the deprecated code tab feature of SuperFences. It is
     only provided as an option to help with the transition of the code tab feature being deprecated in favor of the
     [Tabbed](./tabbed.md) extension. When the code tabs are removed from SuperFences, so will

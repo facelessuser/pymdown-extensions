@@ -59,13 +59,10 @@ Check out documentation on each extension to learn more about how to configure a
     [Extra](extensions/extra.md) is just like Python Markdown's Extra package except it uses PyMdown Extensions to
     substitute similar extensions.
 
-!!! summary "ExtraRawHTML"
-    [ExtraRawHTML](extensions/extrarawhtml.md) exposes Python Markdown's feature of parsing markdown in HTML blocks. No
-    longer do you have to include all of Extra when all you want to do is parse Markdown in HTML blocks.
-
 !!! summary "Highlight"
-    [Highlight](extensions/highlight.md) allows you to configure the syntax highlighting of SuperFences and
-    InlineHilite.  Also passes standard Markdown indented code blocks through the syntax highlighter.
+    [Highlight](extensions/highlight.md) allows you to configure the syntax highlighting of
+    [SuperFences](extensions/superfences.md) and [InlineHilite](extensions/inlinehilite.md).  Also passes standard
+    Markdown indented code blocks through the syntax highlighter.
 
 !!! summary "InlineHilite"
     [InlineHilite](extensions/inlinehilite.md) highlights inline code: `#!py3 from module import function as func`.
@@ -87,7 +84,7 @@ Check out documentation on each extension to learn more about how to configure a
 !!! summary "ProgressBar"
     [ProgressBar](extensions/progressbar.md) creates progress bars quick and easy.
 
-    [== 75%]{: .success}
+    [== 80%]{: .candystripe .candystripe-animate}
 
 !!! summary "SmartSymbols"
     [SmartSymbols](extensions/smartsymbols.md) inserts commonly used Unicode characters via simple ASCII
@@ -105,7 +102,7 @@ Check out documentation on each extension to learn more about how to configure a
     admonitions, and other syntaxes. Combine multiple fences together in tabbed groups, and even create special custom
     fences for content like UML.
 
-    === "Source"
+    === "Markdown"
         ```
         Title: Here is a title
         A->B: Normal line
@@ -114,7 +111,7 @@ Check out documentation on each extension to learn more about how to configure a
         D-->>A: Dashed open arrow
         ```
 
-    === "Result"
+    === "Output"
         ```sequence
         Title: Here is a title
         A->B: Normal line
@@ -126,22 +123,11 @@ Check out documentation on each extension to learn more about how to configure a
 !!! summary "Tabbed"
     [Tabbed](extensions/tabbed.md) allows for tabbed Markdown content:
 
-    === "Source"
-        ```
-        === "Tab 1"
-            Markdown **content**.
+    === "Tab 1"
+        Markdown **content**.
 
-        === "Tab 2"
-            More Markdown **content**.
-        ```
-
-    === "Result"
-
-        === "Tab 1"
-            Markdown **content**.
-
-        === "Tab 2"
-            More Markdown **content**.
+    === "Tab 2"
+        More Markdown **content**.
 
 !!! summary "Tasklist"
     [Tasklist](extensions/tasklist.md) allows inserting lists with check boxes.

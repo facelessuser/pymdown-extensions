@@ -1,3 +1,6 @@
+path: tree/master
+source: pymdownx/tilde.py
+
 # Tilde
 
 ## Overview
@@ -19,11 +22,13 @@ To wrap content in a **delete** tag, simply surround the text with double `~`. Y
 
 !!! example "Delete Example"
 
-    ```
-    ~~Delete me~~
-    ```
+    === "Output"
+        ~~Delete me~~
 
-    ~~Delete me~~
+    === "Markdown"
+        ```
+        ~~Delete me~~
+        ```
 
 ## Subscript
 
@@ -32,15 +37,17 @@ subscript needs to have spaces, you must escape the spaces.
 
 !!! example "Subscript Example"
 
-    ```
-    CH~3~CH~2~OH
+    === "Output"
+        CH~3~CH~2~OH
 
-    text~a\ subscript~
-    ```
+        text~a\ subscript~
 
-    CH~3~CH~2~OH
+    === "Markdown"
+        ```
+        CH~3~CH~2~OH
 
-    text~a\ subscript~
+        text~a\ subscript~
+        ```
 
 ## Options
 

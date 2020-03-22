@@ -1,3 +1,6 @@
+path: tree/master
+source: pymdownx/striphtml.py
+
 # StripHTML
 
 ## Overview
@@ -8,16 +11,18 @@ end of the process, it helps to include this one last when loading up your exten
 
 !!! example "Strip Comment"
 
-    ```
-    <!-- We are only allowing strip_comments and strip_js_on_attributes
-         in this example. -->
+    === "HTML"
+        ```html
+        <p>Here is a <strong>test</strong>.</p>
+        ```
 
-    Here is a <strong onclick="myFunction();">test</strong>.
-    ```
+    === "Markdown"
+        ```
+        <!-- We are only allowing strip_comments and strip_js_on_attributes
+             in this example. -->
 
-    ```html
-    <p>Here is a <strong>test</strong>.</p>
-    ```
+        Here is a <strong onclick="myFunction();">test</strong>.
+        ```
 
 Because comments aren't stripped until the end in a post-processing step, they are present throughout the entire
 Markdown conversion process and could possibly affect parsing, so be careful how you generally insert comments.

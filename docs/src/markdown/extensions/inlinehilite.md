@@ -1,3 +1,6 @@
+path: tree/master
+source: pymdownx/inlinehilite.py
+
 # InlineHilite
 
 ## Overview
@@ -6,23 +9,26 @@ InlineHilite is an inline code highlighter inspired by [CodeHilite][codehilite].
 syntax, InlineHilite utilizes the following syntax to insert inline highlighted code: `` `:::language mycode` `` or
 `` `#!language mycode` ``.  In CodeHilite, ` #! ` means "use line numbers", but line numbers will never be used in
 inline code regardless of which form is used. Use of one form or the other is purely for personal preference. As this
-feature is discussed further, we will call these specifiers (` #! ` and ` ::: `) mock shebangs.
+feature is discussed further, we will call these specifiers (` #! ` and ` ::: `) mock shebangs, mainly due to the first
+options similar syntax to a real shebang.
 
 !!! example "Inline Highlighted Code Example"
 
-    ```
-    Here is some code: `#!js function pad(v){return ('0'+v).split('').reverse().splice(0,2).reverse().join('')}`.
+    === "Output"
+        Here is some code: `#!py3 import pymdownx; pymdownx.__version__`
 
-    The mock shebang will be treated like text here: ` #!js var test = 0; `.
-    ```
+        The mock shebang will be treated like text here: ` #!js var test = 0; `.
 
-    Here is some code: `#!js function pad(v){return ('0'+v).split('').reverse().splice(0,2).reverse().join('')}`
+    === "Markdown"
+        ```
+        Here is some code: `#!py3 import pymdownx; pymdownx.__version__`.
 
-    The mock shebang will be treated like text here: ` #!js var test = 0; `.
+        The mock shebang will be treated like text here: ` #!js var test = 0; `.
+        ```
 
 When using the colon mock shebang, 3 or more colons can be used.  Mock shebangs must come **immediately** after the
-opening backtick(s) and must be followed by at least one space.  If you need to escape a mock shebang at the start of a
-code block, just put a space before it and it will be treated as part of the code.
+opening backtick(s) and must be followed by at least one space.  If you need to escape a mock shebang, at the start of a
+code block, just put a space before it, and it will be treated as part of the code.
 
 The InlineHilite extension can be included in Python Markdown by using the following:
 
@@ -33,9 +39,13 @@ md = markdown.Markdown(extensions=['pymdownx.inlinehilite'])
 
 ## Code Highlighting
 
-Assuming Pygments is installed, code highlighting will be handled by [Pygments][pygments] by default. If Pygments is not
-installed, or disabled, code blocks will be output for JavaScript syntax highlighters as
-`#!html <code class="highlight language-mylanguage"></code>`.
+Assuming Pygments is installed, code highlighting will be handled by [Pygments][pygments]. If Pygments is not installed,
+or disabled, code blocks will be output for JavaScript syntax highlighters as:
+
+
+```html
+<code class="highlight language-mylanguage"></code>
+```
 
 Highlighting can be further controlled via the [`pymdownx.highlight`](./highlight.md) extension.
 
@@ -55,15 +65,16 @@ independently for inline code in the [options](#options).
 Like [SuperFences](./superfences.md), InlineHilite now provides a support for custom inline blocks.
 
 !!! example "Inline Math"
-    ```
-    `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
-    ```
+    For more indepth information on how to reproduce the example above, check out [Arithmatex Documentation
+    ](./arithmatex.md#alternative-math-blocks).
 
-    `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+    === "Output"
+        `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
 
-!!! tip "Math Example"
-    For more indepth information on how to reproduce the example above, check out
-    [Arithmatex Documentation](./arithmatex.md#alternative-math-blocks).
+    === "Markdown"
+        ```
+        `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+        ```
 
 Custom inline code blocks are created via the `custom_inline` option.  `custom_inline` takes an array of dictionaries
 where each dictionary defines a custom inline code block. The dictionaries requires the following keys:
@@ -74,30 +85,34 @@ Keys        | Description
 `class`     | The class name assigned to the HTML element when converting from Markdown to HTML.
 `format`    | A function that formats the HTML output. The function should return either an ElementTree object or a string as HTML.
 
-!!! new "New in 7.0b2"
-    Starting in 7.0b2, you can override the base inline logic (the syntax highlighter) by specifying the custom inline
+!!! new "New in 7.0"
+    Starting in 7.0, you can override the base inline logic (the syntax highlighter) by specifying the custom inline
     with a name of `*`. This means that if an inline does not match any other custom inline, the default, fallback
     inline would be handled by your custom `*` inline. This can be useful for tailoring a inline for a specific,
     favorite JavaScript highlighter.
 
 ### Formatters
 
-In general, formatters take four parameters: the source found between the backticks, the specified language, the class
-name originally defined via the `class` option in the `custom_inline` entry, and the Markdown class object. Should
-return a either an ElementTree element or a string as HTML.
+```py3
+def custom_formatter(source, language, css_class, md):
+    return el  # Or string
+```
 
-When returning a string, InlineHilite will treat the string as ready for HTML, so escape what needs to be escaped as it
-is expected to be fully ready HTML and will be stashed and re-inserted at post processing.
+In general, formatters take four parameters:
+
+1. The source found between the backticks.
+2. The specified language.
+3. The class name originally defined via the `class` option in the `custom_inline` entry.
+4. The Markdown class object.
+
+It Should return a either an ElementTree element or a string as HTML. When returning a string, InlineHilite will treat
+the string as ready for HTML, so escape what needs to be escaped as it is expected to be fully ready HTML and will be
+stashed and re-inserted at post processing.
 
 When returning an ElementTree object, remember to wrap string content as `markdown.util.AtomicString` to prevent it from
 being processed further, you can also stash raw HTML string content assigned to elements like InlineHilite does by
 default above. InlineHilite will not try and guess what you intend, you must manage your content in the ElementTree
 objects or the Markdown parser may apply other conversion to your HTML content.
-
-```py3
-def custom_formatter(source, language, css_class, md):
-    return el  # Or string
-```
 
 ## Options
 

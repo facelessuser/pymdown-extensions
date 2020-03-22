@@ -1,3 +1,6 @@
+path: tree/master
+source: pymdownx/progressbar.py
+
 # ProgressBar
 
 ## Overview
@@ -13,52 +16,56 @@ quotes.
 
 !!! example "Progress Bar Example"
 
-    ```
-    [=0% "0%"]
-    [=5% "5%"]
-    [=25% "25%"]
-    [=45% "45%"]
-    [=65% "65%"]
-    [=85% "85%"]
-    [=100% "100%"]
-    ```
+    === "Output"
+        [=0% "0%"]
+        [=5% "5%"]
+        [=25% "25%"]
+        [=45% "45%"]
+        [=65% "65%"]
+        [=85% "85%"]
+        [=100% "100%"]
 
-    [=0% "0%"]
-    [=5% "5%"]
-    [=25% "25%"]
-    [=45% "45%"]
-    [=65% "65%"]
-    [=85% "85%"]
-    [=100% "100%"]
+    === "Markdown"
+        ```
+        [=0% "0%"]
+        [=5% "5%"]
+        [=25% "25%"]
+        [=45% "45%"]
+        [=65% "65%"]
+        [=85% "85%"]
+        [=100% "100%"]
+        ```
 
 Though progress bars are rendered as block items, it accepts `attr_list`'s inline format.
 `markdown.extensions.attr_list` must be enabled for the following to work.
 
 !!! example "Progress Bar with Attributes"
 
-    ```
-    [=85% "85%"]{: .candystripe}
-    [=100% "100%"]{: .candystripe .candystripe-animate}
+    === "Output"
+        [=85% "85%"]{: .candystripe}
+        [=100% "100%"]{: .candystripe .candystripe-animate}
 
-    [=0%]{: .thin}
-    [=5%]{: .thin}
-    [=25%]{: .thin}
-    [=45%]{: .thin}
-    [=65%]{: .thin}
-    [=85%]{: .thin}
-    [=100%]{: .thin}
-    ```
+        [=0%]{: .thin}
+        [=5%]{: .thin}
+        [=25%]{: .thin}
+        [=45%]{: .thin}
+        [=65%]{: .thin}
+        [=85%]{: .thin}
+        [=100%]{: .thin}
 
-    [=85% "85%"]{: .candystripe}
-    [=100% "100%"]{: .candystripe .candystripe-animate}
+    === "Markdown"
+        ```
+        [=85% "85%"]{: .candystripe}
+        [=100% "100%"]{: .candystripe .candystripe-animate}
 
-    [=0%]{: .thin}
-    [=5%]{: .thin}
-    [=25%]{: .thin}
-    [=45%]{: .thin}
-    [=65%]{: .thin}
-    [=85%]{: .thin}
-    [=100%]{: .thin}
+        [=0%]{: .thin}
+        [=5%]{: .thin}
+        [=25%]{: .thin}
+        [=45%]{: .thin}
+        [=65%]{: .thin}
+        [=85%]{: .thin}
+        [=100%]{: .thin}
+        ```
 
 The ProgressBar extension can be included in Python Markdown by using the following:
 

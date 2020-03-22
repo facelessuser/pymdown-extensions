@@ -1,3 +1,6 @@
+path: tree/master
+source: pymdownx/details.py
+
 # Details
 
 ## Overview
@@ -22,46 +25,46 @@ with spaces) and the summary contained in quotes. Content is placed below the he
 ```
 ??? optional-class "Summary"
     Here's some content.
-```
 
-```
 ??? multiple optional-class "Summary"
     Here's some content.
 ```
 
 !!! example "Example Details"
 
-    ```
-    ???+ note "Open styled details"
+    === "Output"
+        ???+ note "Open styled details"
 
-        ??? danger "Nested details!"
-            And more content again.
-    ```
+            ??? danger "Nested details!"
+                And more content again.
 
-    ???+ note "Open styled details"
+    === "Markdown"
+        ```
+        ???+ note "Open styled details"
 
-        ??? danger "Nested details!"
-            And more content again.
+            ??? danger "Nested details!"
+                And more content again.
+        ```
 
 It is also possible to provide only a class.  If this is done, the title will be derived from the *first* class.
 
 !!! example "Example Class from Title"
 
-    ```
-    ??? success
-       Content.
-    ```
+    === "Output"
+        ??? success
+            Content.
 
-    ??? success
-        Content.
+        ??? warning classes
+            Content.
 
-    ```
-    ??? warning classes
-       Content.
-    ```
+    === "Markdown"
+        ```
+        ??? success
+           Content.
 
-    ??? warning classes
-        Content.
+        ??? warning classes
+           Content.
+        ```
 
 Details will be output in the format below. The content will always be encapsulated in tags of some kind.
 
