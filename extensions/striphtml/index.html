@@ -43,7 +43,7 @@
     
     
     
-      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-de904731d5.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-fccca6ed0a.css">
     
     
       
@@ -812,6 +812,18 @@
                 
                 
                   
+                    
+
+
+  
+
+
+<a href="https://github.com/facelessuser/pymdown-extensions/tree/master/pymdownx/striphtml.py" title="pymdownx/striphtml.py" class="md-content__button md-icon">
+  Source
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+</a>
+                  
                 
                 
                 <h1 id="striphtml">StripHTML<a class="headerlink" href="#striphtml" title="Permanent link"></a></h1>
@@ -821,15 +833,20 @@ the final output stripping out unwanted comments and/or tag attributes. Though i
 end of the process, it helps to include this one last when loading up your extensions.</p>
 <div class="admonition example">
 <p class="admonition-title">Strip Comment</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">HTML</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Here is a <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>test<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</code></pre></div>
+
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>&lt;!-- We are only allowing strip_comments and strip_js_on_attributes
      in this example. --&gt;
 
 Here is a &lt;strong onclick=&quot;myFunction();&quot;&gt;test&lt;/strong&gt;.
 </code></pre></div>
 
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Here is a <span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>test<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
-</code></pre></div>
-
+</div>
+</div>
 </div>
 <p>Because comments aren't stripped until the end in a post-processing step, they are present throughout the entire
 Markdown conversion process and could possibly affect parsing, so be careful how you generally insert comments.</p>
@@ -886,7 +903,7 @@ and comments.</p>
 <div class="md-source-date">
   <small>
     
-      Last update: December 17, 2019
+      Last update: March 22, 2020
     
   </small>
 </div>

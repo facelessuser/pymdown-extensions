@@ -43,7 +43,7 @@
     
     
     
-      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-de904731d5.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-fccca6ed0a.css">
     
     
       
@@ -896,6 +896,18 @@
                 
                 
                   
+                    
+
+
+  
+
+
+<a href="https://github.com/facelessuser/pymdown-extensions/tree/master/pymdownx/arithmatex.py" title="pymdownx/arithmatex.py" class="md-content__button md-icon">
+  Source
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+</a>
+                  
                 
                 
                 <h1 id="arithmatex">Arithmatex<a class="headerlink" href="#arithmatex" title="Permanent link"></a></h1>
@@ -915,25 +927,31 @@ individually be disabled if desired.</p>
 <p>By default, <a href="#options"><code>smart_dollar</code></a> mode is enabled for the <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> inline variant. With <code>smart_dollar</code> it is
 expected that the opening token (<code class="highlight"><span class="s">$</span><span class="nb"></span></code>) is to be followed by a non-whitespace character, and the closing to be
 preceded by a non-white-space character.  This is to help avoid false positives when using the dollar sign in
-traditional ways such as: I have $2.00 and Bob has $10.00.  The previous statement requires no escaping of the <code class="highlight"><span class="s">$</span><span class="nb"></span></code>
-character.  But when needed, the <code class="highlight"><span class="s">$</span><span class="nb"></span></code> character can be escaped using <code class="highlight"><span class="k">\$</span></code>. <code>smart_dollar</code> can be disabled and
-will capture any <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> whose dollar symbols are not escaped (<code class="highlight"><span class="k">\$</span></code>).</p>
+traditional ways such as: <em>I have $2.00 and Bob has $10.00</em>.  The previous statement requires no escaping of the
+<code class="highlight"><span class="s">$</span><span class="nb"></span></code> character.  But when needed, the <code class="highlight"><span class="s">$</span><span class="nb"></span></code> character can be escaped using <code class="highlight"><span class="k">\$</span></code>. <code>smart_dollar</code> can be
+disabled and will capture any <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> whose dollar symbols are not escaped (<code class="highlight"><span class="k">\$</span></code>).</p>
 <div class="admonition example">
 <p class="admonition-title">Inline Examples</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Output</label><div class="tabbed-content">
+<p><span><span class="MathJax_Preview">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</span><script type="math/tex">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</script></span>, <span><span class="MathJax_Preview">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</span><script type="math/tex">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</script></span>.</p>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="s">$</span><span class="nb">p</span><span class="o">(</span><span class="nb">x|y</span><span class="o">)</span><span class="nb"> </span><span class="o">=</span><span class="nb"> </span><span class="nv">\frac</span><span class="nb">{p</span><span class="o">(</span><span class="nb">y|x</span><span class="o">)</span><span class="nb">p</span><span class="o">(</span><span class="nb">x</span><span class="o">)</span><span class="nb">}{p</span><span class="o">(</span><span class="nb">y</span><span class="o">)</span><span class="nb">}</span><span class="s">$</span>, <span class="s">\(</span><span class="nb">p</span><span class="o">(</span><span class="nb">x|y</span><span class="o">)</span><span class="nb"> </span><span class="o">=</span><span class="nb"> </span><span class="nv">\frac</span><span class="nb">{p</span><span class="o">(</span><span class="nb">y|x</span><span class="o">)</span><span class="nb">p</span><span class="o">(</span><span class="nb">x</span><span class="o">)</span><span class="nb">}{p</span><span class="o">(</span><span class="nb">y</span><span class="o">)</span><span class="nb">}</span><span class="s">\)</span>.
 </code></pre></div>
 
-<p><span><span class="MathJax_Preview">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</span><script type="math/tex">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</script></span>, <span><span class="MathJax_Preview">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</span><script type="math/tex">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</script></span>.</p>
+</div>
+</div>
 </div>
 <div class="admonition tip">
-<p class="admonition-title">Tip</p>
+<p class="admonition-title">Inline Configuration</p>
 <p>When using MathJax, for best results, it is advised to not use <a href="#options"><code>generic</code></a> mode, and configure MathJax
 without the <code>text2jax</code> extension since MathJax automatically detects Arithmatex's default output.</p>
 <p>If using generic mode (for libraries like KaTeX), Arithmatex will convert dollars to the form <code class="highlight"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code> in the
 HTML output. This is because <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> is extremely problematic to scan for, which is why MathJax and KaTeX
 disable <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> by default in their plain text scanners, and why Arithmatex enables <code>smart_dollar</code> by default
-when scanning for <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code>. It is advised, if outputting in in <code>generic</code> mode, to not configure your JavaScript
-library to look for <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> and instead look for <code class="highlight"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code>, and let Arithmatex's handle <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code>.</p>
+when scanning for <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code>.</p>
+<p>It is advised that if you are outputting in in <code>generic</code> mode that you do not configure your JavaScript library to
+look for <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> and instead look for <code class="highlight"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code>, and let Arithmatex's handle <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code>.</p>
 </div>
 <p>For block forms, the block must start with the appropriate opening for the block type: <code class="highlight"><span class="sb">$$</span><span class="nb"></span></code>, <code class="highlight"><span class="sb">\[</span><span class="nb"></span></code>, and
 <code class="highlight"><span class="k">\begin</span><span class="nb">{}</span></code> for the respective search pattern. The block must also end with the proper respective end: <code class="highlight"><span class="sb">$$</span><span class="nb"></span></code>,
@@ -941,18 +959,7 @@ library to look for <code class="highlight"><span class="s">$</span><span class=
 empty line.</p>
 <div class="admonition example">
 <p class="admonition-title">Block Examples</p>
-<div class="highlight"><pre><span></span><code><span class="sb">$$</span><span class="nb"></span>
-<span class="nb">E</span><span class="o">(</span><span class="nv">\mathbf</span><span class="nb">{v}, </span><span class="nv">\mathbf</span><span class="nb">{h}</span><span class="o">)</span><span class="nb"> </span><span class="o">=</span><span class="nb"> </span><span class="o">-</span><span class="nv">\sum</span><span class="nb">_{i,j}w_{ij}v_i h_j </span><span class="o">-</span><span class="nb"> </span><span class="nv">\sum</span><span class="nb">_i b_i v_i </span><span class="o">-</span><span class="nb"> </span><span class="nv">\sum</span><span class="nb">_j c_j h_j</span>
-<span class="s">$$</span>
-
-<span class="sb">\[</span><span class="m">3</span><span class="nb"> &lt; </span><span class="m">4</span><span class="s">\]</span>
-
-<span class="k">\begin</span><span class="nb">{</span>align<span class="nb">}</span>
-    p(v<span class="nb">_</span>i=1|<span class="k">\mathbf</span><span class="nb">{</span>h<span class="nb">}</span>) <span class="nb">&amp;</span> = <span class="k">\sigma\left</span>(<span class="k">\sum</span><span class="nb">_</span>j w<span class="nb">_{</span>ij<span class="nb">}</span>h<span class="nb">_</span>j + b<span class="nb">_</span>i<span class="k">\right</span>) <span class="k">\\</span>
-    p(h<span class="nb">_</span>j=1|<span class="k">\mathbf</span><span class="nb">{</span>v<span class="nb">}</span>) <span class="nb">&amp;</span> = <span class="k">\sigma\left</span>(<span class="k">\sum</span><span class="nb">_</span>i w<span class="nb">_{</span>ij<span class="nb">}</span>v<span class="nb">_</span>i + c<span class="nb">_</span>j<span class="k">\right</span>)
-<span class="k">\end</span><span class="nb">{</span>align<span class="nb">}</span>
-</code></pre></div>
-
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Output</label><div class="tabbed-content">
 <div>
 <div class="MathJax_Preview">
 E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
@@ -976,19 +983,35 @@ E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c
 \end{align}</script>
 </div>
 </div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Markdown</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="sb">$$</span><span class="nb"></span>
+<span class="nb">E</span><span class="o">(</span><span class="nv">\mathbf</span><span class="nb">{v}, </span><span class="nv">\mathbf</span><span class="nb">{h}</span><span class="o">)</span><span class="nb"> </span><span class="o">=</span><span class="nb"> </span><span class="o">-</span><span class="nv">\sum</span><span class="nb">_{i,j}w_{ij}v_i h_j </span><span class="o">-</span><span class="nb"> </span><span class="nv">\sum</span><span class="nb">_i b_i v_i </span><span class="o">-</span><span class="nb"> </span><span class="nv">\sum</span><span class="nb">_j c_j h_j</span>
+<span class="s">$$</span>
+
+<span class="sb">\[</span><span class="m">3</span><span class="nb"> &lt; </span><span class="m">4</span><span class="s">\]</span>
+
+<span class="k">\begin</span><span class="nb">{</span>align<span class="nb">}</span>
+    p(v<span class="nb">_</span>i=1|<span class="k">\mathbf</span><span class="nb">{</span>h<span class="nb">}</span>) <span class="nb">&amp;</span> = <span class="k">\sigma\left</span>(<span class="k">\sum</span><span class="nb">_</span>j w<span class="nb">_{</span>ij<span class="nb">}</span>h<span class="nb">_</span>j + b<span class="nb">_</span>i<span class="k">\right</span>) <span class="k">\\</span>
+    p(h<span class="nb">_</span>j=1|<span class="k">\mathbf</span><span class="nb">{</span>v<span class="nb">}</span>) <span class="nb">&amp;</span> = <span class="k">\sigma\left</span>(<span class="k">\sum</span><span class="nb">_</span>i w<span class="nb">_{</span>ij<span class="nb">}</span>v<span class="nb">_</span>i + c<span class="nb">_</span>j<span class="k">\right</span>)
+<span class="k">\end</span><span class="nb">{</span>align<span class="nb">}</span>
+</code></pre></div>
+
+</div>
+</div>
+</div>
 <h2 id="mathjax-output-format">MathJax Output Format<a class="headerlink" href="#mathjax-output-format" title="Permanent link"></a></h2>
 <p>The math equations will be wrapped in a special MathJax script tag and embedded into the HTML. This format does not
 require the <code>tex2jax.js</code> extension when setting up MathJax. The tag will be in the form of
 <code class="highlight"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;math/tex&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code> for inline and <code class="highlight"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;math/tex; mode=display&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code> for
 block.</p>
 <p>By default, Arithmatex will also generate a preview span with the class <code>MathJax_Preview</code> that can/should be hidden when
-the math content is actually loaded. If you do not want to see generate the preview, simply set <code>preview</code> to
+the math content is actually loaded. If you do not want to generate the preview, simply set <code>preview</code> to
 <code class="highlight"><span class="kc">False</span></code>.</p>
 <h2 id="generic-output-format">Generic Output Format<a class="headerlink" href="#generic-output-format" title="Permanent link"></a></h2>
 <p>If <a href="#options"><code>generic</code></a> is enabled, the extension will escape necessary symbols and normalize all output to be wrapped
 in the more reliable <code class="highlight"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code> for inline math and <code class="highlight"><span class="sb">\[</span><span class="nb">...</span><span class="s">\]</span></code> for display math (unless changed via
-<code>tex_inline_wrap</code> and <code>tex_block_wrap</code> in the <a href="#options">options</a>). Lastly every everything is inserted into a <code>span</code> or
-<code>div</code> for inline and display math respectively.</p>
+<code>tex_inline_wrap</code> and <code>tex_block_wrap</code> in the <a href="#options">options</a>). Lastly, everything is inserted into a
+<code class="highlight"><span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span></code> or <code class="highlight"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span></code> for inline and display math respectively.</p>
 <p>With the default settings, if in your Markdown you used <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> for inline math, it would be converted to
 <code class="highlight"><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;arithmatex&quot;</span><span class="p">&gt;</span>\(...\)<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span></code> in the HTML. Blocks would be normalized from <code class="highlight"><span class="sb">$$</span><span class="nb">...</span><span class="s">$$</span></code> to
 <code class="highlight"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;arithmatex&quot;</span><span class="p">&gt;</span>\[...\]<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code>.  In the case of <code class="highlight"><span class="k">\begin</span><span class="nb">{}</span>...<span class="k">\end</span><span class="nb">{}</span></code>, begins and ends will not be
@@ -996,13 +1019,13 @@ replaced, only wrapped: <code class="highlight"><span class="p">&lt;</span><span
 <h2 id="loading-mathjax">Loading MathJax<a class="headerlink" href="#loading-mathjax" title="Permanent link"></a></h2>
 <p>Arithmatex requires you to provide the MathJax library and provide and configure it to your liking.  The recommended way
 of including MathJax is to use the CDN. Latest version at time of writing this is found below.</p>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">MathJax 3</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">MathJax 3</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://polyfill.io/v3/polyfill.min.js?features=es6&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Legacy: MathJax 2</label><div class="tabbed-content">
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Legacy: MathJax 2</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 
@@ -1011,10 +1034,10 @@ of including MathJax is to use the CDN. Latest version at time of writing this i
 <p>Generally, it is best to add your own configuration to get exactly what you want. Here we show some simple examples of
 configurations done in JavaScript. We've provided two basic configurations below: one that is configured for
 Arithmatex's <a href="#mathjax-output-format">MathJax Output Format</a>, and one that works with the
-<a href="#generic-output-format">Generic Output Format</a> by using <code>tex2jax</code>. These are a good starting point,so feel free to take
-them and configure them further. Please see the <a href="http://www.mathjax.org/">MathJax</a> site for more info on using MathJax
+<a href="#generic-output-format">Generic Output Format</a> by using <code>tex2jax</code>. These are a good starting point, so feel free to
+take them and configure them further. Please see the <a href="http://www.mathjax.org/">MathJax</a> site for more info on using MathJax
 extensions/plugins and configuring those extensions/plugins.</p>
-<div class="tabbed-set" data-tabs="2:4"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Default - MathJax 3</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="4:4"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Default - MathJax 3</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nb">window</span><span class="p">.</span><span class="nx">MathJax</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">ignoreHtmlClass</span><span class="o">:</span> <span class="s1">&#39;tex2jax_ignore&#39;</span><span class="p">,</span>
@@ -1041,16 +1064,7 @@ extensions/plugins and configuring those extensions/plugins.</p>
 </code></pre></div>
 
 </div>
-<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Legacy: Default - MathJax 2</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
-  <span class="nx">config</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;MMLorHTML.js&quot;</span><span class="p">],</span>
-  <span class="nx">jax</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;input/TeX&quot;</span><span class="p">,</span> <span class="s2">&quot;output/HTML-CSS&quot;</span><span class="p">,</span> <span class="s2">&quot;output/NativeMML&quot;</span><span class="p">],</span>
-  <span class="nx">extensions</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;MathMenu.js&quot;</span><span class="p">,</span> <span class="s2">&quot;MathZoom.js&quot;</span><span class="p">]</span>
-<span class="p">});</span>
-</code></pre></div>
-
-</div>
-<input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><label for="__tabbed_2_3">Generic - MathJax 3</label><div class="tabbed-content">
+<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">Generic - MathJax 3</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nb">window</span><span class="p">.</span><span class="nx">MathJax</span> <span class="o">=</span> <span class="p">{</span>
   <span class="nx">tex</span><span class="o">:</span> <span class="p">{</span>
     <span class="nx">inlineMath</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s2">&quot;\\(&quot;</span><span class="p">,</span><span class="s2">&quot;\\)&quot;</span><span class="p">]</span> <span class="p">],</span>
@@ -1066,7 +1080,16 @@ extensions/plugins and configuring those extensions/plugins.</p>
 </code></pre></div>
 
 </div>
-<input id="__tabbed_2_4" name="__tabbed_2" type="radio" /><label for="__tabbed_2_4">Legacy: Generic - MathJax 2</label><div class="tabbed-content">
+<input id="__tabbed_4_3" name="__tabbed_4" type="radio" /><label for="__tabbed_4_3">Legacy: Default - MathJax 2</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
+  <span class="nx">config</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;MMLorHTML.js&quot;</span><span class="p">],</span>
+  <span class="nx">jax</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;input/TeX&quot;</span><span class="p">,</span> <span class="s2">&quot;output/HTML-CSS&quot;</span><span class="p">,</span> <span class="s2">&quot;output/NativeMML&quot;</span><span class="p">],</span>
+  <span class="nx">extensions</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;MathMenu.js&quot;</span><span class="p">,</span> <span class="s2">&quot;MathZoom.js&quot;</span><span class="p">]</span>
+<span class="p">});</span>
+</code></pre></div>
+
+</div>
+<input id="__tabbed_4_4" name="__tabbed_4" type="radio" /><label for="__tabbed_4_4">Legacy: Generic - MathJax 2</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
   <span class="nx">config</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;MMLorHTML.js&quot;</span><span class="p">],</span>
   <span class="nx">extensions</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;tex2jax.js&quot;</span><span class="p">],</span>
@@ -1171,12 +1194,17 @@ extension), you can create a familiar inline math format:</p>
 
 <div class="admonition example">
 <p class="admonition-title">Inline Math</p>
-<div class="highlight"><pre><span></span><code>`#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
-</code></pre></div>
-
+<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Output</label><div class="tabbed-content">
 <p>
 <script type="math/tex">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</script>
 </p>
+</div>
+<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2">Markdown</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>`#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+</code></pre></div>
+
+</div>
+</div>
 </div>
 <p>In SuperFences, by providing the following configuration (no need to include <code>pymdownx.arithmatex</code> as an extension), you
 can create math fences:</p>
@@ -1197,14 +1225,7 @@ can create math fences:</p>
 
 <div class="admonition example">
 <p class="admonition-title">Math Fences</p>
-<div class="highlight"><pre><span></span><code>```math
-\begin{align}
-    p(v_i=1|\mathbf{h}) &amp; = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
-    p(h_j=1|\mathbf{v}) &amp; = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
-\end{align}
-```
-</code></pre></div>
-
+<div class="tabbed-set" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><label for="__tabbed_6_1">Output</label><div class="tabbed-content">
 <script type="math/tex; mode=display">
 \begin{align}
     p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
@@ -1213,6 +1234,18 @@ can create math fences:</p>
 </script>
 
 
+</div>
+<input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><label for="__tabbed_6_2">Markdown</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>```math
+\begin{align}
+    p(v_i=1|\mathbf{h}) &amp; = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
+    p(h_j=1|\mathbf{v}) &amp; = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
+\end{align}
+```
+</code></pre></div>
+
+</div>
+</div>
 </div>
 <p>Provided formats are found below:</p>
 <table>
@@ -1347,7 +1380,7 @@ window.MathJax = {
 <div class="md-source-date">
   <small>
     
-      Last update: March 4, 2020
+      Last update: March 22, 2020
     
   </small>
 </div>

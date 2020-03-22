@@ -43,7 +43,7 @@
     
     
     
-      <link rel="stylesheet" href="../assets/pymdownx-extras/extra-de904731d5.css">
+      <link rel="stylesheet" href="../assets/pymdownx-extras/extra-fccca6ed0a.css">
     
     
       
@@ -820,8 +820,8 @@ you are using a project like <a href="https://github.com/mkdocs/mkdocs">MkDocs</
 specifying function references may not be intuitive.</p>
 <p>Keep in mind that the following examples specifically reference YAML configurations that are implemented via
 <a href="https://github.com/yaml/pyyaml">PyYAML</a> and are configured to allow Python objects.</p>
-<p>When specifying a function reference in PyYAML, you must prepend the function with <code>!!python/name:</code>. For instance, to
-specify Python Markdown's <abbr title="Table of Contents">Toc</abbr> extension to use one of PyMdown Extensions' slugs in MkDocs:</p>
+<p>When specifying a function reference in PyYAML, you must prepend the function with <code class="highlight"><span class="nt">!!python/name</span><span class="p">:</span></code>. For
+instance, to specify Python Markdown's <abbr title="Table of Contents">Toc</abbr> extension to use one of PyMdown Extensions' slugs in MkDocs:</p>
 <div class="highlight"><pre><span></span><code><span class="nt">markdown_extensions</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">markdown.extensions.toc</span><span class="p">:</span>
       <span class="nt">slugify</span><span class="p">:</span> <span class="kt">!!python/name:pymdownx.slugs.uslugify</span>
@@ -838,10 +838,9 @@ specify Python Markdown's <abbr title="Table of Contents">Toc</abbr> extension t
 <blockquote>
 <p>How do I get GitHub Flavored Markdown?</p>
 </blockquote>
-<p>As the GitHub extension is now deprecated, a recommended GitHub configuration is provided below to emulate a setup that
-gives a GitHub feel.</p>
+<p>A recommended GitHub configuration is provided below to emulate a setup that gives a GitHub feel.</p>
 <p>For GitHub issue, commit, pull request, and mention shorthand syntax, you will also need to specify a <code>provider</code>, <code>user</code>
-and <code>repo</code> in the MagicLink extension to give relative context for shorthand links (like <code>#1</code>) so that links can
+and <code>repo</code> in MagicLink's options below. This gives relative context for shorthand links (like <code>#1</code>) so that links can
 properly be generated.  In the example below, we will use <code>facelessuser</code> and <code>pymdown-extensions</code> as the user and
 repository respectively. See <a href="../extensions/magiclink/">MagicLink</a> for more details.</p>
 <div class="admonition tip">
@@ -849,7 +848,9 @@ repository respectively. See <a href="../extensions/magiclink/">MagicLink</a> fo
 <p>If you are attempting to configure these options in a YAML based configuration (like in <a href="https://github.com/mkdocs/mkdocs">MkDocs</a>), please
 see the related <a href="#function-references-in-yaml"><abbr title="Frequent Asked Questions">FAQ</abbr> question</a> to see how to specify function references in YAML.</p>
 </div>
-<div class="highlight"><pre><span></span><code><span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pymdownx</span>
+
+<span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
     <span class="s1">&#39;markdown.extensions.tables&#39;</span><span class="p">,</span>
     <span class="s1">&#39;pymdownx.magiclink&#39;</span><span class="p">,</span>
     <span class="s1">&#39;pymdownx.betterem&#39;</span><span class="p">,</span>
@@ -894,7 +895,7 @@ see the related <a href="#function-references-in-yaml"><abbr title="Frequent Ask
 <div class="md-source-date">
   <small>
     
-      Last update: December 17, 2019
+      Last update: March 22, 2020
     
   </small>
 </div>

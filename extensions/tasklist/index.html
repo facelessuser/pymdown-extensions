@@ -43,7 +43,7 @@
     
     
     
-      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-de904731d5.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-fccca6ed0a.css">
     
     
       
@@ -611,8 +611,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#css" class="md-nav__link">
-    CSS
+  <a href="#styling-with-css" class="md-nav__link">
+    Styling with CSS
   </a>
   
 </li>
@@ -795,8 +795,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#css" class="md-nav__link">
-    CSS
+  <a href="#styling-with-css" class="md-nav__link">
+    Styling with CSS
   </a>
   
 </li>
@@ -826,6 +826,18 @@
                 
                 
                   
+                    
+
+
+  
+
+
+<a href="https://github.com/facelessuser/pymdown-extensions/tree/master/pymdownx/tasklist.py" title="pymdownx/tasklist.py" class="md-content__button md-icon">
+  Source
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+</a>
+                  
                 
                 
                 <h1 id="tasklist">Tasklist<a class="headerlink" href="#tasklist" title="Permanent link"></a></h1>
@@ -835,20 +847,7 @@ a square bracket pair containing either a space (an unchecked item) or a <code>x
 <div class="admonition example">
 <p class="admonition-title">Task List Example</p>
 <p>All task lists in this documentation are generated with <a href="#options"><code>custom_checkbox</code></a> enabled.</p>
-<div class="highlight"><pre><span></span><code>Task List
-
-- [X] item 1
-    * [X] item A
-    * [ ] item B
-        more text
-        + [x] item a
-        + [ ] item b
-        + [x] item c
-    * [X] item C
-- [ ] item 2
-- [ ] item 3
-</code></pre></div>
-
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Output</label><div class="tabbed-content">
 <p>Task List</p>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> item 1<ul class="task-list">
@@ -867,13 +866,33 @@ a square bracket pair containing either a space (an unchecked item) or a <code>x
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> item 3</li>
 </ul>
 </div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Markdown</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>Task List
+
+- [X] item 1
+    * [X] item A
+    * [ ] item B
+        more text
+        + [x] item a
+        + [ ] item b
+        + [x] item c
+    * [X] item C
+- [ ] item 2
+- [ ] item 3
+</code></pre></div>
+
+</div>
+</div>
+</div>
 <p>The Tasklist extension can be included in Python Markdown by using the following:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
 <span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.tasklist&#39;</span><span class="p">])</span>
 </code></pre></div>
 
-<h2 id="css">CSS<a class="headerlink" href="#css" title="Permanent link"></a></h2>
-<p>The default HTML structure of a task list is found below:</p>
+<h2 id="styling-with-css">Styling with CSS<a class="headerlink" href="#styling-with-css" title="Permanent link"></a></h2>
+<p>The HTML structure of a task list is found below:</p>
+<div class="tabbed-set" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Default</label><div class="tabbed-content">
+<p>This is the default output.</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list&quot;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list-item&quot;</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;checkbox&quot;</span> <span class="na">disabled</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">checked</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">&gt;</span>
@@ -882,6 +901,8 @@ a square bracket pair containing either a space (an unchecked item) or a <code>x
 <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
 </code></pre></div>
 
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Custom</label><div class="tabbed-content">
 <p>If <code>custom_checkbox</code> is enabled, the structure will be as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list&quot;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list-item&quot;</span><span class="p">&gt;</span>
@@ -894,8 +915,10 @@ a square bracket pair containing either a space (an unchecked item) or a <code>x
 <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
 </code></pre></div>
 
+</div>
+<input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><label for="__tabbed_2_3">Clickable</label><div class="tabbed-content">
 <p>If <code>clickable_checkbox</code> is enabled, user interaction will be allowed by removing the <code>disabled</code> attribute from the
-<code>input</code> element:</p>
+<code>input</code> element. <code>clickable_checkbox</code> can be a applied to either the default or custom form.</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">ul</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list&quot;</span><span class="p">&gt;</span>
     <span class="p">&lt;</span><span class="nt">li</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list-item&quot;</span><span class="p">&gt;</span>
         <span class="p">&lt;</span><span class="nt">label</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;task-list-control&quot;</span><span class="p">&gt;</span>
@@ -907,6 +930,8 @@ a square bracket pair containing either a space (an unchecked item) or a <code>x
 <span class="p">&lt;/</span><span class="nt">ul</span><span class="p">&gt;</span>
 </code></pre></div>
 
+</div>
+</div>
 <table>
 <thead>
 <tr>
@@ -933,7 +958,8 @@ a square bracket pair containing either a space (an unchecked item) or a <code>x
 </tr>
 </tbody>
 </table>
-<details class="settings"><summary>Basic Tasklist CSS</summary><p>In order to style these we mainly remove the list type style and adjust the margins to align with normal list
+<details class="settings"><summary>CSS Setup</summary><div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Basic Tasklist</label><div class="tabbed-content">
+<p>In order to style these we mainly remove the list type style and adjust the margins to align with normal list
 styles.</p>
 <div class="highlight"><pre><span></span><code><span class="p">.</span><span class="nc">markdown-body</span> <span class="p">.</span><span class="nc">task-list-item</span> <span class="p">{</span>
   <span class="k">list-style-type</span><span class="p">:</span> <span class="kc">none</span> <span class="cp">!important</span><span class="p">;</span>
@@ -945,10 +971,11 @@ styles.</p>
 <span class="p">}</span>
 </code></pre></div>
 
-</details>
-<details class="settings"><summary>Custom Tasklist CSS</summary><p>If custom check box icons are desired, custom styles can be used to give a unique look to the check marks.  Below is
-a very simple CSS example that creates a light gray square with rounded corners and displays a green Unicode check
-mark when the control is checked.  This can be adapted to use web fonts, images, etc.</p>
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Custom Tasklist</label><div class="tabbed-content">
+<p>If custom check box icons are desired, custom styles can be used to give a unique look to the check marks.
+Below is a very simple CSS example that creates a light gray square with rounded corners and displays a green
+Unicode check mark when the control is checked.  This can be adapted to use web fonts, images, etc.</p>
 <div class="highlight"><pre><span></span><code><span class="p">.</span><span class="nc">markdown-body</span> <span class="p">.</span><span class="nc">task-list-item</span> <span class="p">{</span>
   <span class="k">list-style-type</span><span class="p">:</span> <span class="kc">none</span> <span class="cp">!important</span><span class="p">;</span>
 <span class="p">}</span>
@@ -998,6 +1025,8 @@ mark when the control is checked.  This can be adapted to use web fonts, images,
 <span class="p">}</span>
 </code></pre></div>
 
+</div>
+</div>
 </details>
 <h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
 <table>
@@ -1032,7 +1061,7 @@ mark when the control is checked.  This can be adapted to use web fonts, images,
 <div class="md-source-date">
   <small>
     
-      Last update: December 17, 2019
+      Last update: March 22, 2020
     
   </small>
 </div>

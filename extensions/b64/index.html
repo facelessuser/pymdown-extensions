@@ -43,7 +43,7 @@
     
     
     
-      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-de904731d5.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-fccca6ed0a.css">
     
     
       
@@ -812,6 +812,18 @@
                 
                 
                   
+                    
+
+
+  
+
+
+<a href="https://github.com/facelessuser/pymdown-extensions/tree/master/pymdownx/b64.py" title="pymdownx/b64.py" class="md-content__button md-icon">
+  Source
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+</a>
+                  
                 
                 
                 <h1 id="b64">B64<a class="headerlink" href="#b64" title="Permanent link"></a></h1>
@@ -824,12 +836,17 @@ relative) and base64 encode and embed them in the HTML output.</p>
 In a normal website, this would probably not be desired.</p>
 <div class="admonition example">
 <p class="admonition-title">B64 Example</p>
-<div class="highlight"><pre><span></span><code>![picture](../_assets/bg.png)
-</code></pre></div>
-
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">HTML</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">img</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;picture&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAMAAAAOusbgAAAAqFBMVEU5eZdll66Yucjd7h7d7h7d7h5ll65ll65ll65ll65ll65ll65ll65ll65ll65ll65ll65ll65ll65ll65ll65ll65ll65ll65ll65ll65ll65ll65ll65ll65ll66YuciYuciYuciYuciYuciYuciYuciYuciYuciYuciYuciYuciYuciYuciYuciYuciYuciYuciYuciYuciYuciYuciYuciYuciYucgXVONTAAABDklEQVRoge3XR3ICQRBE0b/Ce2+FAAnkLeb+N9MRNBvFR0H2vuJFT3dX5VAqV6q1eqPZane6vf5gOBpPprP5YnnD72t1u95s7+53+4fHp+eX17f3j8+v78PxdC5Qi+SWkNwykltBcqtIbg3JrSO5DSS3ieS2kNw2kttBcrtIbg/J7SO5AyR3iOSOkNwxkjtBcqdI7gzJnSO5CyR3WaD0T1xrv3Hjxo0bN27cuHHjxo0bN27c63Sx9ov1nbHOF+teYd1nrHeE9X6x+gZWv8Lqk1j9GWsuYM0jrDmINX+x5j5W3sDKOVj5CivXYeVJrByLlZ+xcnuB0n/5vxA3bty4cePGjRs3bty4cePGvUj3B2JzyvcNRmTGAAAAAElFTkSuQmCC&quot;</span> <span class="p">/&gt;</span>
 </code></pre></div>
 
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Markdown</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>![picture](../_assets/bg.png)
+</code></pre></div>
+
+</div>
+</div>
 </div>
 <p>The B64 extension can be included in Python Markdown by using the following:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
@@ -863,7 +880,7 @@ In a normal website, this would probably not be desired.</p>
 <div class="md-source-date">
   <small>
     
-      Last update: December 17, 2019
+      Last update: March 22, 2020
     
   </small>
 </div>

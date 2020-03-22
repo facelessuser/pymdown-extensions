@@ -43,7 +43,7 @@
     
     
     
-      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-de904731d5.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-fccca6ed0a.css">
     
     
       
@@ -976,6 +976,18 @@
                 
                 
                   
+                    
+
+
+  
+
+
+<a href="https://github.com/facelessuser/pymdown-extensions/tree/master/pymdownx/magiclink.py" title="pymdownx/magiclink.py" class="md-content__button md-icon">
+  Source
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+</a>
+                  
                 
                 
                 <h1 id="magiclink">MagicLink<a class="headerlink" href="#magiclink" title="Permanent link"></a></h1>
@@ -998,14 +1010,19 @@ part of links. If you have a link that cannot be detected, you can always use th
 <code class="highlight">&lt;https://www.link.com&gt;</code>.</p>
 <div class="admonition example">
 <p class="admonition-title">Auto-Linking Example</p>
-<div class="highlight"><pre><span></span><code>- Just paste links directly in the document like this: https://google.com.
-- Or even an email address: fake.email@email.com.
-</code></pre></div>
-
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Output</label><div class="tabbed-content">
 <ul>
 <li>Just paste links directly in the document like this: <a href="https://google.com">https://google.com</a>.</li>
 <li>Or even an email address: <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#97;&#107;&#101;&#46;&#101;&#109;&#97;&#105;&#108;&#64;&#101;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#102;&#97;&#107;&#101;&#46;&#101;&#109;&#97;&#105;&#108;&#64;&#101;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>.</li>
 </ul>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Markdown</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>- Just paste links directly in the document like this: https://google.com.
+- Or even an email address: fake.email@email.com.
+</code></pre></div>
+
+</div>
+</div>
 </div>
 <h2 id="shorthand-links">Shorthand Links<a class="headerlink" href="#shorthand-links" title="Permanent link"></a></h2>
 <p>MagicLink supports shorthand references for GitHub, GitLab, and Bitbucket issues (<a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/1" title="GitHub Issue: facelessuser/pymdown-extensions#1">#1</a>), pull/merge requests (<a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/13" title="GitHub Pull Request: facelessuser/pymdown-extensions!13">!13</a>),
@@ -1039,13 +1056,18 @@ auto-linked even if they are not valid.</p>
 default, use the format <code>@{provider}:{user}</code></p>
 <div class="admonition example">
 <p class="admonition-title">Mention Example</p>
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Output</label><div class="tabbed-content">
+<p><a class="magiclink magiclink-github magiclink-mention" href="https://github.com/facelessuser" title="GitHub User: facelessuser">@facelessuser</a></p>
+<p><a class="magiclink magiclink-twitter magiclink-mention" href="https://twitter.com/twitter" title="Twitter User: twitter">@twitter</a></p>
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>@facelessuser
 
 @twitter:twitter
 </code></pre></div>
 
-<p><a class="magiclink magiclink-github magiclink-mention" href="https://github.com/facelessuser" title="GitHub User: facelessuser">@facelessuser</a></p>
-<p><a class="magiclink magiclink-twitter magiclink-mention" href="https://twitter.com/twitter" title="Twitter User: twitter">@twitter</a></p>
+</div>
+</div>
 </div>
 <p>For code repository providers, you can also mention repositories.  This feature is actually inspired by the GitHub only
 extension <a class="magiclink magiclink-github magiclink-repository" href="https://github.com/Python-Markdown/github-links" title="GitHub Repository: Python-Markdown/github-links">Python-Markdown/github-links</a>, which performs <em>similar</em> auto-linking.  The syntax to auto-link a repository
@@ -1055,13 +1077,18 @@ output for repository mentions omits the <code>@</code> symbol and will just sho
 style it with CSS to make it stand out more like has been done in this document.</p>
 <div class="admonition example">
 <p class="admonition-title">Repository Mention Example</p>
+<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Output</label><div class="tabbed-content">
+<p><a class="magiclink magiclink-github magiclink-repository" href="https://github.com/facelessuser/pymdown-extensions" title="GitHub Repository: facelessuser/pymdown-extensions">facelessuser/pymdown-extensions</a></p>
+<p><a class="magiclink magiclink-gitlab magiclink-repository" href="https://gitlab.com/pycqa/flake8" title="GitLab Repository: pycqa/flake8">pycqa/flake8</a></p>
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>@facelessuser/pymdown-extensions
 
 @gitlab:pycqa/flake8
 </code></pre></div>
 
-<p><a class="magiclink magiclink-github magiclink-repository" href="https://github.com/facelessuser/pymdown-extensions" title="GitHub Repository: facelessuser/pymdown-extensions">facelessuser/pymdown-extensions</a></p>
-<p><a class="magiclink magiclink-gitlab magiclink-repository" href="https://gitlab.com/pycqa/flake8" title="GitLab Repository: pycqa/flake8">pycqa/flake8</a></p>
+</div>
+</div>
 </div>
 <h3 id="issues-and-pull-requests">Issues and Pull Requests<a class="headerlink" href="#issues-and-pull-requests" title="Permanent link"></a></h3>
 <p>Issues and pull requests are specified with <code>#{num}</code> and <code>!{num}</code> respectively. To specify an issue for a non-default
@@ -1071,6 +1098,17 @@ the format <code>{provider}:{user}/{repo}#{num}</code>. If the default provider 
 syntax can be used.</p>
 <div class="admonition example">
 <p class="admonition-title">Issue Example</p>
+<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Output</label><div class="tabbed-content">
+<p>Issue <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/1" title="GitHub Issue: facelessuser/pymdown-extensions#1">#1</a></p>
+<p>Issue <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/backrefs/issues/1" title="GitHub Issue: facelessuser/backrefs#1">backrefs#1</a></p>
+<p>Issue <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/Python-Markdown/markdown/issues/1" title="GitHub Issue: Python-Markdown/markdown#1">Python-Markdown/markdown#1</a></p>
+<p>Issue <a class="magiclink magiclink-gitlab magiclink-issue" href="https://gitlab.com/pycqa/flake8/issues/385" title="GitLab Issue: pycqa/flake8#385">pycqa/flake8#385</a></p>
+<p>Pull request <a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/13" title="GitHub Pull Request: facelessuser/pymdown-extensions!13">!13</a></p>
+<p>Pull request <a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/backrefs/pull/4" title="GitHub Pull Request: facelessuser/backrefs!4">backrefs!4</a></p>
+<p>Pull request <a class="magiclink magiclink-github magiclink-pull" href="https://github.com/Python-Markdown/markdown/pull/598" title="GitHub Pull Request: Python-Markdown/markdown!598">Python-Markdown/markdown!598</a></p>
+<p>Pull request <a class="magiclink magiclink-gitlab magiclink-pull" href="https://gitlab.com/pycqa/flake8/merge_requests/213" title="GitLab Pull Request: pycqa/flake8!213">pycqa/flake8!213</a></p>
+</div>
+<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>Issue #1
 
 Issue backrefs#1
@@ -1088,14 +1126,8 @@ Pull request Python-Markdown/markdown!598
 Pull request gitlab:pycqa/flake8!213
 </code></pre></div>
 
-<p>Issue <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/1" title="GitHub Issue: facelessuser/pymdown-extensions#1">#1</a></p>
-<p>Issue <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/backrefs/issues/1" title="GitHub Issue: facelessuser/backrefs#1">backrefs#1</a></p>
-<p>Issue <a class="magiclink magiclink-github magiclink-issue" href="https://github.com/Python-Markdown/markdown/issues/1" title="GitHub Issue: Python-Markdown/markdown#1">Python-Markdown/markdown#1</a></p>
-<p>Issue <a class="magiclink magiclink-gitlab magiclink-issue" href="https://gitlab.com/pycqa/flake8/issues/385" title="GitLab Issue: pycqa/flake8#385">pycqa/flake8#385</a></p>
-<p>Pull request <a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/13" title="GitHub Pull Request: facelessuser/pymdown-extensions!13">!13</a></p>
-<p>Pull request <a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/backrefs/pull/4" title="GitHub Pull Request: facelessuser/backrefs!4">backrefs!4</a></p>
-<p>Pull request <a class="magiclink magiclink-github magiclink-pull" href="https://github.com/Python-Markdown/markdown/pull/598" title="GitHub Pull Request: Python-Markdown/markdown!598">Python-Markdown/markdown!598</a></p>
-<p>Pull request <a class="magiclink magiclink-gitlab magiclink-pull" href="https://gitlab.com/pycqa/flake8/merge_requests/213" title="GitLab Pull Request: pycqa/flake8!213">pycqa/flake8!213</a></p>
+</div>
+</div>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1112,6 +1144,13 @@ you can denote a repository under the default user with <code>{repo}@{hash}</cod
 the default provider is a social media provider, then only the latter syntax can be used.</p>
 <div class="admonition example">
 <p class="admonition-title">Commit Example</p>
+<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Output</label><div class="tabbed-content">
+<p><a class="magiclink magiclink-github magiclink-commit" href="https://github.com/facelessuser/pymdown-extensions/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc" title="GitHub Commit: facelessuser/pymdown-extensions@181c06d">181c06d</a></p>
+<p><a class="magiclink magiclink-github magiclink-commit" href="https://github.com/facelessuser/backrefs/commit/cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61" title="GitHub Commit: facelessuser/backrefs@cb4ecc5">backrefs@cb4ecc5</a></p>
+<p><a class="magiclink magiclink-github magiclink-commit" href="https://github.com/Python-Markdown/markdown/commit/de5c696f94e8dde242c29d4be50b7bbf3c17fedb" title="GitHub Commit: Python-Markdown/markdown@de5c696">Python-Markdown/markdown@de5c696</a></p>
+<p><a class="magiclink magiclink-gitlab magiclink-commit" href="https://gitlab.com/pycqa/flake8/commit/8acf55e0f85233c51c291816d73d828cc62d30d1" title="GitLab Commit: pycqa/flake8@8acf55e0">pycqa/flake8@8acf55e0</a></p>
+</div>
+<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>181c06d1f11fa29961b334e90606ed1f1ec7a7cc
 
 backrefs@cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
@@ -1121,10 +1160,8 @@ Python-Markdown/markdown@de5c696f94e8dde242c29d4be50b7bbf3c17fedb
 gitlab:pycqa/flake8@8acf55e0f85233c51c291816d73d828cc62d30d1
 </code></pre></div>
 
-<p><a class="magiclink magiclink-github magiclink-commit" href="https://github.com/facelessuser/pymdown-extensions/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc" title="GitHub Commit: facelessuser/pymdown-extensions@181c06d">181c06d</a></p>
-<p><a class="magiclink magiclink-github magiclink-commit" href="https://github.com/facelessuser/backrefs/commit/cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61" title="GitHub Commit: facelessuser/backrefs@cb4ecc5">backrefs@cb4ecc5</a></p>
-<p><a class="magiclink magiclink-github magiclink-commit" href="https://github.com/Python-Markdown/markdown/commit/de5c696f94e8dde242c29d4be50b7bbf3c17fedb" title="GitHub Commit: Python-Markdown/markdown@de5c696">Python-Markdown/markdown@de5c696</a></p>
-<p><a class="magiclink magiclink-gitlab magiclink-commit" href="https://gitlab.com/pycqa/flake8/commit/8acf55e0f85233c51c291816d73d828cc62d30d1" title="GitLab Commit: pycqa/flake8@8acf55e0">pycqa/flake8@8acf55e0</a></p>
+</div>
+</div>
 </div>
 <h3 id="diffcompare">Diff/Compare<a class="headerlink" href="#diffcompare" title="Permanent link"></a></h3>
 <p>GitLab offers a useful shorthand to specify links to compare differences between two commits. This has been adopted for
@@ -1136,6 +1173,13 @@ the user and repository: <code>{user}/{repo}@{hash1}...{hash2}</code>. Lastly, t
 <code>{provider}:{user}/{repo}@{hash1}...{hash2}</code>.</p>
 <div class="admonition example">
 <p class="admonition-title">Compare Example</p>
+<div class="tabbed-set" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><label for="__tabbed_6_1">Output</label><div class="tabbed-content">
+<p><a class="magiclink magiclink-github magiclink-compare" href="https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac" title="GitHub Compare: facelessuser/pymdown-extensions@e2ed7e0...90b6fb8">e2ed7e0...90b6fb8</a></p>
+<p><a class="magiclink magiclink-github magiclink-compare" href="https://github.com/facelessuser/backrefs/compare/88c6238a1c2cf71a96eb9abb4b0213f79d6ca81f...cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61" title="GitHub Compare: facelessuser/backrefs@88c6238...cb4ecc5">backrefs@88c6238...cb4ecc5</a></p>
+<p><a class="magiclink magiclink-github magiclink-compare" href="https://github.com/Python-Markdown/markdown/compare/007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8dde242c29d4be50b7bbf3c17fedb" title="GitHub Compare: Python-Markdown/markdown@007bd2a...de5c696">Python-Markdown/markdown@007bd2a...de5c696</a></p>
+<p><a class="magiclink magiclink-gitlab magiclink-compare" href="https://gitlab.com/pycqa/flake8/compare/1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e" title="GitLab Compare: pycqa/flake8@1ecf9700...9bea7576">pycqa/flake8@1ecf9700...9bea7576</a></p>
+</div>
+<input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><label for="__tabbed_6_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
 
 backrefs@88c6238a1c2cf71a96eb9abb4b0213f79d6ca81f...cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
@@ -1145,10 +1189,8 @@ Python-Markdown/markdown@007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8
 gitlab:pycqa/flake8@1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e
 </code></pre></div>
 
-<p><a class="magiclink magiclink-github magiclink-compare" href="https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac" title="GitHub Compare: facelessuser/pymdown-extensions@e2ed7e0...90b6fb8">e2ed7e0...90b6fb8</a></p>
-<p><a class="magiclink magiclink-github magiclink-compare" href="https://github.com/facelessuser/backrefs/compare/88c6238a1c2cf71a96eb9abb4b0213f79d6ca81f...cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61" title="GitHub Compare: facelessuser/backrefs@88c6238...cb4ecc5">backrefs@88c6238...cb4ecc5</a></p>
-<p><a class="magiclink magiclink-github magiclink-compare" href="https://github.com/Python-Markdown/markdown/compare/007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8dde242c29d4be50b7bbf3c17fedb" title="GitHub Compare: Python-Markdown/markdown@007bd2a...de5c696">Python-Markdown/markdown@007bd2a...de5c696</a></p>
-<p><a class="magiclink magiclink-gitlab magiclink-compare" href="https://gitlab.com/pycqa/flake8/compare/1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e" title="GitLab Compare: pycqa/flake8@1ecf9700...9bea7576">pycqa/flake8@1ecf9700...9bea7576</a></p>
+</div>
+</div>
 </div>
 <h2 id="repository-link-shortener">Repository Link Shortener<a class="headerlink" href="#repository-link-shortener" title="Permanent link"></a></h2>
 <p>MagicLink can also recognize issue, pull request, commit, and compare links, and render them in the same output format
@@ -1158,26 +1200,25 @@ legitimate links can look like user links, but are not.</p>
 <p>If we specify long form URLs from external providers, they will be shortened appropriately.</p>
 <div class="admonition example">
 <p class="admonition-title">External Provider Example</p>
-<div class="highlight"><pre><span></span><code>- https://gitlab.com/pycqa/flake8/issues/385
-- https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
-</code></pre></div>
-
+<div class="tabbed-set" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">Output</label><div class="tabbed-content">
 <ul>
 <li><a class="magiclink magiclink-gitlab magiclink-issue" href="https://gitlab.com/pycqa/flake8/issues/385" title="GitLab Issue: pycqa/flake8#385">pycqa/flake8#385</a></li>
 <li><a class="magiclink magiclink-bitbucket magiclink-issue" href="https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase" title="Bitbucket Issue: mrabarnett/mrab-regex#260">mrabarnett/mrab-regex#260</a></li>
 </ul>
 </div>
+<input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><label for="__tabbed_7_2">Markdown</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>- https://gitlab.com/pycqa/flake8/issues/385
+- https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
+</code></pre></div>
+
+</div>
+</div>
+</div>
 <p>When specifying links that reference the configured <code>provider</code>, <code>user</code>, and <code>repo</code>, links will be shortened differently
 in light of that context.</p>
 <div class="admonition example">
 <p class="admonition-title">Internal Provider Example</p>
-<div class="highlight"><pre><span></span><code>- https://github.com/facelessuser/pymdown-extensions/issues/1
-- https://github.com/facelessuser/pymdown-extensions/pull/13
-- https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a
-- https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
-- https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
-</code></pre></div>
-
+<div class="tabbed-set" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><label for="__tabbed_8_1">Output</label><div class="tabbed-content">
 <ul>
 <li><a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/1" title="GitHub Issue: facelessuser/pymdown-extensions#1">#1</a></li>
 <li><a class="magiclink magiclink-github magiclink-pull" href="https://github.com/facelessuser/pymdown-extensions/pull/13" title="GitHub Pull Request: facelessuser/pymdown-extensions!13">!13</a></li>
@@ -1185,6 +1226,17 @@ in light of that context.</p>
 <li><a class="magiclink magiclink-github magiclink-compare" href="https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac" title="GitHub Compare: facelessuser/pymdown-extensions@e2ed7e0...90b6fb8">e2ed7e0...90b6fb8</a></li>
 <li><a class="magiclink magiclink-github magiclink-commit" href="https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc" title="GitHub Commit: facelessuser/Rummage@181c06d">Rummage@181c06d</a></li>
 </ul>
+</div>
+<input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><label for="__tabbed_8_2">Markdown</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>- https://github.com/facelessuser/pymdown-extensions/issues/1
+- https://github.com/facelessuser/pymdown-extensions/pull/13
+- https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+- https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+- https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+</code></pre></div>
+
+</div>
+</div>
 </div>
 <h2 id="css">CSS<a class="headerlink" href="#css" title="Permanent link"></a></h2>
 <p>For normal links, no classes are added to the anchor tags. For repository links, <code>magiclink</code> will be added as a class.
@@ -1332,7 +1384,7 @@ requests, we could simply set <code>labels</code> to:</p>
 <div class="md-source-date">
   <small>
     
-      Last update: December 17, 2019
+      Last update: March 22, 2020
     
   </small>
 </div>

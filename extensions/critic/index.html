@@ -43,7 +43,7 @@
     
     
     
-      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-de904731d5.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-fccca6ed0a.css">
     
     
       
@@ -854,6 +854,18 @@
                 
                 
                   
+                    
+
+
+  
+
+
+<a href="https://github.com/facelessuser/pymdown-extensions/tree/master/pymdownx/critic.py" title="pymdownx/critic.py" class="md-content__button md-icon">
+  Source
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+</a>
+                  
                 
                 
                 <h1 id="critic">Critic<a class="headerlink" href="#critic" title="Permanent link"></a></h1>
@@ -875,6 +887,10 @@ respectively.  You can also denote a substitution with <code class="highlight"><
 by highlighting text and following it with a comment: <code class="highlight"><span class="s">{==highlight me==}{&gt;&gt;Add a comment&lt;&lt;}</span></code>.</p>
 <div class="admonition example">
 <p class="admonition-title">Critic Markup Accept Example</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Output</label><div class="tabbed-content">
+<p><p>Here is some  Markdown.  I am adding this here.  Here is some more text.  And here is even more text that I am adding.  Paragraph was deleted and replaced with some spaces.</p><p>Spaces were removed and a paragraph was added.</p><p>And here is a comment on some text. Substitutions are great!</p><p>General block handling.</p><ul><li>test add</li><li>test add</li><li>test add<ul><li>test add</li></ul></li><li>test add</li></ul></p>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>Here<span class="w"> </span>is<span class="w"> </span>some<span class="w"> </span><span class="s">{--*incorrect*--}</span><span class="w"> </span>Markdown.<span class="w">  </span>I<span class="w"> </span>am<span class="w"> </span>adding<span class="w"> </span>this<span class="s">{++ here++}</span>.<span class="w">  </span>Here<span class="w"> </span>is<span class="w"> </span>some<span class="w"> </span>more<span class="w"> </span><span class="s">{--text</span>
 <span class="s"> that I am removing--}</span>text.<span class="w">  </span>And<span class="w"> </span>here<span class="w"> </span>is<span class="w"> </span>even<span class="w"> </span>more<span class="w"> </span><span class="s">{++text that I </span>
 <span class="s"> am ++}</span>adding.<span class="s">{~~</span>
@@ -909,11 +925,16 @@ General<span class="w"> </span>block<span class="w"> </span>handling.
 <span class="s">++}</span>
 </code></pre></div>
 
-<p><p>Here is some  Markdown.  I am adding this here.  Here is some more text.  And here is even more text that I am adding.  Paragraph was deleted and replaced with some spaces.</p><p>Spaces were removed and a paragraph was added.</p><p>And here is a comment on some text. Substitutions are great!</p><p>General block handling.</p><ul><li>test add</li><li>test add</li><li>test add<ul><li>test add</li></ul></li><li>test add</li></ul></p>
+</div>
+</div>
 </div>
 <p>When previewing, you can style them to stand out (see <a href="#css">CSS</a> for more information):</p>
 <div class="admonition example">
 <p class="admonition-title">Critic Markup Preview Example</p>
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Output</label><div class="tabbed-content">
+<p><p>Here is some <del class="critic"><em>incorrect</em></del> Markdown.  I am adding this<ins class="critic"> here</ins>.  Here is some more <del class="critic">text that I am removing</del>text.  And here is even more <ins class="critic">text that I am </ins>adding.<del class="critic break">&nbsp;</del><ins class="critic">  </ins>Paragraph was deleted and replaced with some spaces.<del class="critic">  </del></p><ins class="critic break">&nbsp;</ins><p>Spaces were removed and a paragraph was added.</p><p>And here is a comment on <mark class="critic">some text</mark><span class="critic comment">This works quite well. I just wanted to comment on it.</span>. Substitutions <del class="critic">is</del><ins class="critic">are</ins> great!</p><p>General block handling.</p><del class="critic block"><ul><li>test remove</li><li>test remove</li><li>test remove<ul><li>test remove</li></ul></li><li>test remove</li></ul></del><ins class="critic block"><ul><li>test add</li><li>test add</li><li>test add<ul><li>test add</li></ul></li><li>test add</li></ul></ins></p>
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>Here<span class="w"> </span>is<span class="w"> </span>some<span class="w"> </span><span class="s">{--*incorrect*--}</span><span class="w"> </span>Markdown.<span class="w">  </span>I<span class="w"> </span>am<span class="w"> </span>adding<span class="w"> </span>this<span class="s">{++ here++}</span>.<span class="w">  </span>Here<span class="w"> </span>is<span class="w"> </span>some<span class="w"> </span>more<span class="w"> </span><span class="s">{--text</span>
 <span class="s"> that I am removing--}</span>text.<span class="w">  </span>And<span class="w"> </span>here<span class="w"> </span>is<span class="w"> </span>even<span class="w"> </span>more<span class="w"> </span><span class="s">{++text that I </span>
 <span class="s"> am ++}</span>adding.<span class="s">{~~</span>
@@ -948,7 +969,8 @@ General<span class="w"> </span>block<span class="w"> </span>handling.
 <span class="s">++}</span>
 </code></pre></div>
 
-<p><p>Here is some <del class="critic"><em>incorrect</em></del> Markdown.  I am adding this<ins class="critic"> here</ins>.  Here is some more <del class="critic">text that I am removing</del>text.  And here is even more <ins class="critic">text that I am </ins>adding.<del class="critic break">&nbsp;</del><ins class="critic">  </ins>Paragraph was deleted and replaced with some spaces.<del class="critic">  </del></p><ins class="critic break">&nbsp;</ins><p>Spaces were removed and a paragraph was added.</p><p>And here is a comment on <mark class="critic">some text</mark><span class="critic comment">This works quite well. I just wanted to comment on it.</span>. Substitutions <del class="critic">is</del><ins class="critic">are</ins> great!</p><p>General block handling.</p><del class="critic block"><ul><li>test remove</li><li>test remove</li><li>test remove<ul><li>test remove</li></ul></li><li>test remove</li></ul></del><ins class="critic block"><ul><li>test add</li><li>test add</li><li>test add<ul><li>test add</li></ul></li><li>test add</li></ul></ins></p>
+</div>
+</div>
 </div>
 <h2 id="limitations-with-previewing-critic-markup">Limitations with Previewing Critic Markup<a class="headerlink" href="#limitations-with-previewing-critic-markup" title="Permanent link"></a></h2>
 <p>Parsing CriticMarkup is very straight forward.  If you need to reject critic marks or accept them, the Critic extension
@@ -956,8 +978,27 @@ will work quite well.  But when trying to render the edits visually <strong>and<
 things can get ugly.  I think this is the one unfortunate problem with CriticMarkup.  The existence of the critic edits
 can alter the actual source.  Its a fantastic idea, but it should be understood that when using CriticMarkup beyond
 inline or block paragraphs, there is a possibility that invalid HTML will be created for the preview (especially in
-relation to lists or if breaking up Markdown syntax).  I think Fletcher said it best here:
-<a href="http://fletcher.github.io/MultiMarkdown-4/criticmarkup">http://fletcher.github.io/MultiMarkdown-4/criticmarkup</a>.</p>
+relation to lists or if breaking up Markdown syntax).  I think Fletcher of [MultiMarkdown][multi-markdown] said it best
+here:</p>
+<blockquote>
+<p>I view CriticMarkup as two things:</p>
+<ol>
+<li>
+<p>A syntax for documenting editing notes and changes, and for collaborating amongst coauthors.</p>
+</li>
+<li>
+<p>A means to display those notes/changes in the HTML output.</p>
+</li>
+</ol>
+<p>I believe that #1 is a really great idea, and well implemented. #2 is not so well implemented, largely due to the
+  "orthogonal" nature of CriticMarkup and the underlying Markdown syntax.</p>
+<p>CM is designed as a separate layer on top of Markdown/MultiMarkdown. This means that a Markdown span could, for
+  example, start in the middle of a CriticMarkup structure, but end outside of it. This means that an algorithm to
+  properly convert a CM/Markdown document to HTML would be quite complex, with a huge number of edge cases to consider.
+  I've tried a few (fairly creative, in my opinion) approaches, but they didn't work. Perhaps someone else will come up
+  with a better solution, or will be so interested that they put the work in to create the complex algorithm. I have no
+  current plans to do so.</p>
+</blockquote>
 <p>The Critic extension does its best by employing a preprocessor to inject the critic tags before all other parsing and a
 post-processor to clean up some of the weird side effects of the injection (only selected odd cases as others are more
 difficult to fix).  It injects some classes into the edit region's HTML output which allows for CSS styling.  There is
@@ -1133,7 +1174,7 @@ further down that road has not yet been decided.</p>
 <div class="md-source-date">
   <small>
     
-      Last update: December 17, 2019
+      Last update: March 22, 2020
     
   </small>
 </div>

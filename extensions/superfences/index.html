@@ -43,7 +43,7 @@
     
     
     
-      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-de904731d5.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-fccca6ed0a.css">
     
     
       
@@ -609,7 +609,7 @@
       
         <li class="md-nav__item">
   <a href="#preserve-tabs" class="md-nav__link">
-    Preserve tabs
+    Preserve Tabs
   </a>
   
 </li>
@@ -900,7 +900,7 @@
       
         <li class="md-nav__item">
   <a href="#preserve-tabs" class="md-nav__link">
-    Preserve tabs
+    Preserve Tabs
   </a>
   
 </li>
@@ -991,6 +991,18 @@
                   </a>
                 
                 
+                  
+                    
+
+
+  
+
+
+<a href="https://github.com/facelessuser/pymdown-extensions/tree/master/pymdownx/superfences.py" title="pymdownx/superfences.py" class="md-content__button md-icon">
+  Source
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+</a>
                   
                 
                 
@@ -1088,15 +1100,15 @@ The first provided class is always used as the language class. Arbitrary attribu
 be inserted as those are reserved for options such has <code>linenums</code> etc.</p>
 <div class="admonition example">
 <p class="admonition-title">Injecting Classes</p>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Source</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>```{.python .extra-class linenums=&quot;1&quot;}
-import hello_world
-```
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">HTML</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">table</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;extra-class highlighttable&quot;</span><span class="p">&gt;&lt;</span><span class="nt">tr</span><span class="p">&gt;&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;linenos&quot;</span><span class="p">&gt;&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;linenodiv&quot;</span><span class="p">&gt;&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>1<span class="p">&lt;/</span><span class="nt">pre</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;code&quot;</span><span class="p">&gt;&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;extra-class highlight&quot;</span><span class="p">&gt;&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;</span><span class="nt">code</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">cv</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;code&quot;</span><span class="p">&gt;&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;extra-class highlight&quot;</span><span class="p">&gt;&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;</span><span class="nt">code</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;kn&quot;</span><span class="p">&gt;</span>import<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">spanlass</span><span class="err">=&quot;</span><span class="na">kn</span><span class="err">&quot;</span><span class="p">&gt;</span>import<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;nn&quot;</span><span class="p">&gt;</span>hello_world<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>\n<span class="p">&lt;/</span><span class="nt">code</span><span class="p">&gt;&lt;/</span><span class="nt">pre</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>\n<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;/</span><span class="nt">tr</span><span class="p">&gt;&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
 </code></pre></div>
 
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">HTML</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">table</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;extra-class highlighttable&quot;</span><span class="p">&gt;&lt;</span><span class="nt">tr</span><span class="p">&gt;&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;linenos&quot;</span><span class="p">&gt;&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;linenodiv&quot;</span><span class="p">&gt;&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>1<span class="p">&lt;/</span><span class="nt">pre</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;code&quot;</span><span class="p">&gt;&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;extra-class highlight&quot;</span><span class="p">&gt;&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;</span><span class="nt">code</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">cv</span><span class="p">&gt;&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;</span><span class="nt">td</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;code&quot;</span><span class="p">&gt;&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;extra-class highlight&quot;</span><span class="p">&gt;&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;</span><span class="nt">code</span><span class="p">&gt;&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;kn&quot;</span><span class="p">&gt;</span>import<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">spanlass</span><span class="err">=&quot;</span><span class="na">kn</span><span class="err">&quot;</span><span class="p">&gt;</span>import<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span> <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;nn&quot;</span><span class="p">&gt;</span>hello_world<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>\n<span class="p">&lt;/</span><span class="nt">code</span><span class="p">&gt;&lt;/</span><span class="nt">pre</span><span class="p">&gt;&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>\n<span class="p">&lt;/</span><span class="nt">td</span><span class="p">&gt;&lt;/</span><span class="nt">tr</span><span class="p">&gt;&lt;/</span><span class="nt">table</span><span class="p">&gt;</span>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Markdown</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>```{.python .extra-class linenums=&quot;1&quot;}
+import hello_world
+```
 </code></pre></div>
 
 </div>
@@ -1106,15 +1118,15 @@ import hello_world
 the <code class="highlight">code</code> block.</p>
 <div class="admonition example">
 <p class="admonition-title">Non-Pygments Injecting Classes</p>
-<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Source</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>```{.python .extra-class #id linenums=&quot;1&quot;}
-import hello_world
-```
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">HTML</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">pre</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;id&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;highlight&quot;</span><span class="p">&gt;&lt;</span><span class="nt">code</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;extra-class language-python linenums&quot;</span><span class="p">&gt;</span>import hello_world<span class="p">&lt;/</span><span class="nt">code</span><span class="p">&gt;&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span>
 </code></pre></div>
 
 </div>
-<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">HTML</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">pre</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;id&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;highlight&quot;</span><span class="p">&gt;&lt;</span><span class="nt">code</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;extra-class language-python linenums&quot;</span><span class="p">&gt;</span>import hello_world<span class="p">&lt;/</span><span class="nt">code</span><span class="p">&gt;&lt;/</span><span class="nt">pre</span><span class="p">&gt;</span>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Markdown</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>```{.python .extra-class #id linenums=&quot;1&quot;}
+import hello_world
+```
 </code></pre></div>
 
 </div>
@@ -1125,8 +1137,8 @@ import hello_world
 way that suites your needs.</p>
 <h2 id="tabbed-fences">Tabbed Fences<a class="headerlink" href="#tabbed-fences" title="Permanent link"></a></h2>
 <div class="admonition warning">
-<p class="admonition-title">Deprecated 7.0b1</p>
-<p>The tab option is deprecated in 7.0b1 due to the addition of the general purpose tab extension
+<p class="admonition-title">Deprecated 7.0</p>
+<p>The tab option is deprecated in 7.0 due to the addition of the general purpose tab extension
 <a href="../tabbed/"><code>pymdownx.tabbed</code></a>.</p>
 <p>The feature is still usable, but by the class names on the output
 have changed from <code>superfences-tabs</code> and <code>superfences-content</code> to <code>tabbed-set</code> and <code>tabbed-content</code> respectively.
@@ -1141,6 +1153,36 @@ or <code>tab=""</code>, but you've specified a language, the language will be us
 &ndash; what you type is what you get. Consecutive code tabs will be grouped together.</p>
 <div class="admonition example">
 <p class="admonition-title">Tabbed Code</p>
+<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Output</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="14:4">
+<input name="__tabbed_14" type="radio" id="__tabbed_14_1" checked="checked" /><label for="__tabbed_14_1">Bash</label><div class="tabbed-content"><div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
+<span class="nv">STR</span><span class="o">=</span><span class="s2">&quot;Hello World!&quot;</span>
+<span class="nb">echo</span> <span class="nv">$STR</span>
+</code></pre></div></div>
+<input name="__tabbed_14" type="radio" id="__tabbed_14_2" /><label for="__tabbed_14_2">C</label><div class="tabbed-content"><div class="highlight"><pre><span></span><code><span class="cp">#include</span> 
+
+<span class="cpf">int main(void) {</span><span class="cp"></span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello, world</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<input name="__tabbed_14" type="radio" id="__tabbed_14_3" /><label for="__tabbed_14_3">C++</label><div class="tabbed-content"><div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello, world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<input name="__tabbed_14" type="radio" id="__tabbed_14_4" /><label for="__tabbed_14_4">C#</label><div class="tabbed-content"><div class="highlight"><pre><span></span><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Program</span> <span class="p">{</span>
+  <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+</div>
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>```Bash tab=
 #!/bin/bash
 STR=&quot;Hello World!&quot;
@@ -1175,38 +1217,13 @@ class Program {
 ```
 </code></pre></div>
 
-<div class="tabbed-set" data-tabs="12:4">
-<input name="__tabbed_12" type="radio" id="__tabbed_12_1" checked="checked" /><label for="__tabbed_12_1">Bash</label><div class="tabbed-content"><div class="highlight"><pre><span></span><code><span class="ch">#!/bin/bash</span>
-<span class="nv">STR</span><span class="o">=</span><span class="s2">&quot;Hello World!&quot;</span>
-<span class="nb">echo</span> <span class="nv">$STR</span>
-</code></pre></div></div>
-<input name="__tabbed_12" type="radio" id="__tabbed_12_2" /><label for="__tabbed_12_2">C</label><div class="tabbed-content"><div class="highlight"><pre><span></span><code><span class="cp">#include</span> 
-
-<span class="cpf">int main(void) {</span><span class="cp"></span>
-  <span class="n">printf</span><span class="p">(</span><span class="s">&quot;hello, world</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
-<span class="p">}</span>
-</code></pre></div></div>
-<input name="__tabbed_12" type="radio" id="__tabbed_12_3" /><label for="__tabbed_12_3">C++</label><div class="tabbed-content"><div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
-
-<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello, world!</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-<span class="p">}</span>
-</code></pre></div></div>
-<input name="__tabbed_12" type="radio" id="__tabbed_12_4" /><label for="__tabbed_12_4">C#</label><div class="tabbed-content"><div class="highlight"><pre><span></span><code><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
-
-<span class="k">class</span> <span class="nc">Program</span> <span class="p">{</span>
-  <span class="k">static</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">(</span><span class="kt">string</span><span class="p">[]</span> <span class="n">args</span><span class="p">)</span> <span class="p">{</span>
-    <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="s">&quot;Hello, world!&quot;</span><span class="p">);</span>
-  <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div></div>
+</div>
 </div>
 </div>
 <p>In order to use tabbed code blocks, some additional CSS is needed. You can check out the configuration below which will
 show the CSS and the HTML it targets. Keep in mind the CSS is just the minimum to get you started. You can tweak it and
 modify it to get it how you like it.</p>
-<details class="settings"><summary>Tabbed Code Setup</summary><div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">HTML</label><div class="tabbed-content">
+<details class="settings"><summary>Tabbed Code Setup</summary><div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">HTML</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;tabbed-set&quot;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;__tabbed_1&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;radio&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;__tabbed_1_1&quot;</span> <span class="na">checked</span><span class="o">=</span><span class="s">&quot;checked&quot;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;__tabbed_1_1&quot;</span><span class="p">&gt;</span>Tab 0<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
@@ -1220,7 +1237,7 @@ modify it to get it how you like it.</p>
 </code></pre></div>
 
 </div>
-<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">CSS</label><div class="tabbed-content">
+<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">CSS</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="p">.</span><span class="nc">tabbed-set</span> <span class="p">{</span>
   <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
   <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
@@ -1266,12 +1283,13 @@ modify it to get it how you like it.</p>
 </div>
 </div>
 </details>
-<h2 id="preserve-tabs">Preserve tabs<a class="headerlink" href="#preserve-tabs" title="Permanent link"></a></h2>
+<h2 id="preserve-tabs">Preserve Tabs<a class="headerlink" href="#preserve-tabs" title="Permanent link"></a></h2>
 <p>Python Markdown has an approach where it normalizes whitespace. This means <code>\r\n</code> is converted to <code>\n</code> and <code>\t</code> is
 converted to spaces. In 99% of Markdown, this is never really an issue, but with code blocks it can be. Tabs can
 sometimes be very useful for aligning certain kinds of data, especially when dealing with characters of varying width.</p>
 <div class="admonition example">
 <p class="admonition-title">Tabs in Content</p>
+<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Output</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>============================================================
 T	Tp	Sp	D	Dp	S	D7	T
 ------------------------------------------------------------
@@ -1280,6 +1298,20 @@ A#	Gm	Cm	F	Dm	D#	F7	A#
 B♭	Gm	Cm	F	Dm	E♭m	F7	B♭
 </code></pre></div>
 
+</div>
+<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2">Markdown</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>```
+============================================================
+T	Tp	Sp	D	Dp	S	D7	T
+------------------------------------------------------------
+A	F#m	Bm	E	C#m	D	E7	A
+A#	Gm	Cm	F	Dm	D#	F7	A#
+B♭	Gm	Cm	F	Dm	E♭m	F7	B♭
+```
+</code></pre></div>
+
+</div>
+</div>
 </div>
 <p>If you have a scenario where preserving tabs is a requirement, you can use SuperFences <code>preserve_tabs</code> option to prevent
 converting tabs to spaces inside fenced code blocks. This <em>only</em> applies to fenced code blocks. Indented code blocks and
@@ -1298,15 +1330,15 @@ highlighter, the syntax is the same, but please consult your highlighter's docum
 specifiers.</p>
 <div class="admonition example">
 <p class="admonition-title">Highlight Example</p>
-<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Source</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>```py3
-import foo.bar
-```
+<div class="tabbed-set" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><label for="__tabbed_6_1">Output</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">foo.bar</span>
 </code></pre></div>
 
 </div>
-<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">Output</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">foo.bar</span>
+<input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><label for="__tabbed_6_2">Markdown</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>```py3
+import foo.bar
+```
 </code></pre></div>
 
 </div>
@@ -1321,15 +1353,15 @@ sign and the value must be quoted.  Valid line numbers are n &gt; 0.  If <code>l
 control the starting line shown in the block.</p>
 <div class="admonition example">
 <p class="admonition-title">Line Number Example</p>
-<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Source</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>``` linenums=&quot;1&quot;
-import foo.bar
-```
+<div class="tabbed-set" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">Output</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="lineno" data-linenos="1 "></span>import foo.bar
 </code></pre></div>
 
 </div>
-<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2">Output</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="lineno" data-linenos="1 "></span>import foo.bar
+<input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><label for="__tabbed_7_2">Markdown</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>``` linenums=&quot;1&quot;
+import foo.bar
+```
 </code></pre></div>
 
 </div>
@@ -1343,7 +1375,15 @@ class <code>special</code>.</p>
 "line step" is always the second option, so you must specify line start before line step.</p>
 <div class="admonition example">
 <p class="admonition-title">Nth Line Example</p>
-<div class="tabbed-set" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><label for="__tabbed_6_1">Source</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><label for="__tabbed_8_1">Output</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="lineno" data-linenos="2 "></span>&quot;&quot;&quot;Some file.&quot;&quot;&quot;
+<span class="lineno" data-linenos="  "></span>import foo.bar
+<span class="lineno" data-linenos="4 "></span>import boo.baz
+<span class="lineno" data-linenos="  "></span>import foo.bar.baz
+</code></pre></div>
+
+</div>
+<input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><label for="__tabbed_8_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>``` linenums=&quot;2 2&quot;
 &quot;&quot;&quot;Some file.&quot;&quot;&quot;
 import foo.bar
@@ -1353,35 +1393,27 @@ import foo.bar.baz
 </code></pre></div>
 
 </div>
-<input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><label for="__tabbed_6_2">Output</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="lineno" data-linenos="2 "></span>&quot;&quot;&quot;Some file.&quot;&quot;&quot;
-<span class="lineno" data-linenos="  "></span>import foo.bar
-<span class="lineno" data-linenos="4 "></span>import boo.baz
-<span class="lineno" data-linenos="  "></span>import foo.bar.baz
-</code></pre></div>
-
-</div>
 </div>
 </div>
 <p>To set every other line as special, you must set the third <code>linenums</code> option (specify line start and step before it).
 Special must be a value of n &gt; 0.</p>
 <div class="admonition example">
 <p class="admonition-title">Special Line Example</p>
-<div class="tabbed-set" data-tabs="7:2"><input checked="checked" id="__tabbed_7_1" name="__tabbed_7" type="radio" /><label for="__tabbed_7_1">Source</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><label for="__tabbed_9_1">Output</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="lineno" data-linenos="1 "></span>&quot;&quot;&quot;Some file.&quot;&quot;&quot;
+<span class="lineno special" data-linenos="2 "></span>import foo.bar
+<span class="lineno" data-linenos="3 "></span>import boo.baz
+<span class="lineno special" data-linenos="4 "></span>import foo.bar.baz
+</code></pre></div>
+
+</div>
+<input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><label for="__tabbed_9_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>``` linenums=&quot;1 1 2&quot;
 &quot;&quot;&quot;Some file.&quot;&quot;&quot;
 import foo.bar
 import boo.baz
 import foo.bar.baz
 ```
-</code></pre></div>
-
-</div>
-<input id="__tabbed_7_2" name="__tabbed_7" type="radio" /><label for="__tabbed_7_2">Output</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="lineno" data-linenos="1 "></span>&quot;&quot;&quot;Some file.&quot;&quot;&quot;
-<span class="lineno special" data-linenos="2 "></span>import foo.bar
-<span class="lineno" data-linenos="3 "></span>import boo.baz
-<span class="lineno special" data-linenos="4 "></span>import foo.bar.baz
 </code></pre></div>
 
 </div>
@@ -1396,7 +1428,15 @@ after the opening tokens (and language if present).  The setting is named <code>
 targeted line numbers separated by spaces.</p>
 <div class="admonition example">
 <p class="admonition-title">Highlight Lines Example</p>
-<div class="tabbed-set" data-tabs="8:2"><input checked="checked" id="__tabbed_8_1" name="__tabbed_8" type="radio" /><label for="__tabbed_8_1">Source</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="10:2"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><label for="__tabbed_10_1">Output</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="hll">&quot;&quot;&quot;Some file.&quot;&quot;&quot;
+</span>import foo.bar
+<span class="hll">import boo.baz
+</span>import foo.bar.baz
+</code></pre></div>
+
+</div>
+<input id="__tabbed_10_2" name="__tabbed_10" type="radio" /><label for="__tabbed_10_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>``` hl_lines=&quot;1 3&quot;
 &quot;&quot;&quot;Some file.&quot;&quot;&quot;
 import foo.bar
@@ -1406,20 +1446,20 @@ import foo.bar.baz
 </code></pre></div>
 
 </div>
-<input id="__tabbed_8_2" name="__tabbed_8" type="radio" /><label for="__tabbed_8_2">Output</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="hll">&quot;&quot;&quot;Some file.&quot;&quot;&quot;
-</span>import foo.bar
-<span class="hll">import boo.baz
-</span>import foo.bar.baz
-</code></pre></div>
-
-</div>
 </div>
 </div>
 <p>Line numbers are always referenced starting at 1 ignoring what the line number is labeled as when showing line numbers.</p>
 <div class="admonition example">
 <p class="admonition-title">Highlight Lines with Line Numbers Example</p>
-<div class="tabbed-set" data-tabs="9:2"><input checked="checked" id="__tabbed_9_1" name="__tabbed_9" type="radio" /><label for="__tabbed_9_1">Source</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="11:2"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><label for="__tabbed_11_1">Output</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code><span class="lineno" data-linenos="2 "></span><span class="hll">&quot;&quot;&quot;Some file.&quot;&quot;&quot;
+</span><span class="lineno" data-linenos="3 "></span>import foo.bar
+<span class="lineno" data-linenos="4 "></span><span class="hll">import boo.baz
+</span><span class="lineno" data-linenos="5 "></span>import foo.bar.baz
+</code></pre></div>
+
+</div>
+<input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><label for="__tabbed_11_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>```hl_lines=&quot;1 3&quot; linenums=&quot;2&quot;
 &quot;&quot;&quot;Some file.&quot;&quot;&quot;
 import foo.bar
@@ -1429,21 +1469,27 @@ import foo.bar.baz
 </code></pre></div>
 
 </div>
-<input id="__tabbed_9_2" name="__tabbed_9" type="radio" /><label for="__tabbed_9_2">Output</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="lineno" data-linenos="2 "></span><span class="hll">&quot;&quot;&quot;Some file.&quot;&quot;&quot;
-</span><span class="lineno" data-linenos="3 "></span>import foo.bar
-<span class="lineno" data-linenos="4 "></span><span class="hll">import boo.baz
-</span><span class="lineno" data-linenos="5 "></span>import foo.bar.baz
-</code></pre></div>
-
-</div>
 </div>
 </div>
 <h2 id="custom-fences">Custom Fences<a class="headerlink" href="#custom-fences" title="Permanent link"></a></h2>
 <p>SuperFences allows defining custom fences for special purposes, like flow charts and sequence diagrams:</p>
 <div class="admonition example">
 <p class="admonition-title">Flow Chart Example</p>
-<div class="tabbed-set" data-tabs="10:2"><input checked="checked" id="__tabbed_10_1" name="__tabbed_10" type="radio" /><label for="__tabbed_10_1">Source</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="12:2"><input checked="checked" id="__tabbed_12_1" name="__tabbed_12" type="radio" /><label for="__tabbed_12_1">Output</label><div class="tabbed-content">
+<pre class="uml-flowchart"><code>st=&gt;start: Start:&gt;http://www.google.com[blank]
+e=&gt;end:&gt;http://www.google.com
+op1=&gt;operation: My Operation
+sub1=&gt;subroutine: My Subroutine
+cond=&gt;condition: Yes
+or No?:&gt;http://www.google.com
+io=&gt;inputoutput: catch something...
+
+st-&gt;op1-&gt;cond
+cond(yes)-&gt;io-&gt;e
+cond(no)-&gt;sub1(right)-&gt;op1</code></pre>
+
+</div>
+<input id="__tabbed_12_2" name="__tabbed_12" type="radio" /><label for="__tabbed_12_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>```flow
 st=&gt;start: Start:&gt;http://www.google.com[blank]
 e=&gt;end:&gt;http://www.google.com
@@ -1460,25 +1506,19 @@ cond(no)-&gt;sub1(right)-&gt;op1
 </code></pre></div>
 
 </div>
-<input id="__tabbed_10_2" name="__tabbed_10" type="radio" /><label for="__tabbed_10_2">Output</label><div class="tabbed-content">
-<pre class="uml-flowchart"><code>st=&gt;start: Start:&gt;http://www.google.com[blank]
-e=&gt;end:&gt;http://www.google.com
-op1=&gt;operation: My Operation
-sub1=&gt;subroutine: My Subroutine
-cond=&gt;condition: Yes
-or No?:&gt;http://www.google.com
-io=&gt;inputoutput: catch something...
-
-st-&gt;op1-&gt;cond
-cond(yes)-&gt;io-&gt;e
-cond(no)-&gt;sub1(right)-&gt;op1</code></pre>
-
-</div>
 </div>
 </div>
 <div class="admonition example">
 <p class="admonition-title">Sequence Diagram Example</p>
-<div class="tabbed-set" data-tabs="11:2"><input checked="checked" id="__tabbed_11_1" name="__tabbed_11" type="radio" /><label for="__tabbed_11_1">Source</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="13:2"><input checked="checked" id="__tabbed_13_1" name="__tabbed_13" type="radio" /><label for="__tabbed_13_1">Output</label><div class="tabbed-content">
+<pre class="uml-sequence-diagram"><code>Title: Here is a title
+A-&gt;B: Normal line
+B--&gt;C: Dashed line
+C-&gt;&gt;D: Open arrow
+D--&gt;&gt;A: Dashed open arrow</code></pre>
+
+</div>
+<input id="__tabbed_13_2" name="__tabbed_13" type="radio" /><label for="__tabbed_13_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>```sequence
 Title: Here is a title
 A-&gt;B: Normal line
@@ -1487,14 +1527,6 @@ C-&gt;&gt;D: Open arrow
 D--&gt;&gt;A: Dashed open arrow
 ```
 </code></pre></div>
-
-</div>
-<input id="__tabbed_11_2" name="__tabbed_11" type="radio" /><label for="__tabbed_11_2">Output</label><div class="tabbed-content">
-<pre class="uml-sequence-diagram"><code>Title: Here is a title
-A-&gt;B: Normal line
-B--&gt;C: Dashed line
-C-&gt;&gt;D: Open arrow
-D--&gt;&gt;A: Dashed open arrow</code></pre>
 
 </div>
 </div>
@@ -1532,8 +1564,8 @@ dictionary defines a custom fence. The dictionaries requires the following keys:
 </tbody>
 </table>
 <div class="admonition new">
-<p class="admonition-title">New in 7.0b2</p>
-<p>Starting in 7.0b2, you can override the base fence logic (the syntax highlighter) by specifying the custom fence
+<p class="admonition-title">New in 7.0</p>
+<p>Starting in 7.0, you can override the base fence logic (the syntax highlighter) by specifying the custom fence
 with a name of <code>*</code>. This means that if a fence does not match any other custom fences, the default, fallback fence
 would be handled by your custom <code>*</code> fence. This can be useful for tailoring a fence output with custom parameters
 for a specific, favorite JavaScript highlighter.</p>
@@ -1566,8 +1598,8 @@ you want access to meta data etc.).</p>
 </code></pre></div>
 
 <div class="admonition new">
-<p class="admonition-title">New 7.0b2</p>
-<p>The addition of the parameters <code>classes</code> and <code>id_value</code> is new in 7.0b2. If injecting additional classes or ids via
+<p class="admonition-title">New 7.0</p>
+<p>The addition of the parameters <code>classes</code> and <code>id_value</code> is new in 7.0. If injecting additional classes or ids via
 the <a href="#injecting-classes-and-ids">attribute list style</a>, only then will <code>classes</code> and <code>id_value</code> be passed in to
 preserve backwards compatibility with old custom formatters. Users, moving forward, should at the very least update
 their formatters with <code>**kwargs</code> to future proof their custom formatters in case additional parameters are added
@@ -1869,7 +1901,7 @@ functionality is more than sufficient.</p>
 </tbody>
 </table>
 <div class="admonition warning">
-<p class="admonition-title">Deprecated in 7.0b1</p>
+<p class="admonition-title">Deprecated in 7.0</p>
 <p>While <code>legacy_tab_classes</code> is a new option, it is also tied to the deprecated code tab feature of SuperFences. It is
 only provided as an option to help with the transition of the code tab feature being deprecated in favor of the
 <a href="../tabbed/">Tabbed</a> extension. When the code tabs are removed from SuperFences, so will
@@ -1892,7 +1924,7 @@ recommend to use <a href="#custom-fences">custom fences</a>. This option will be
 <div class="md-source-date">
   <small>
     
-      Last update: March 11, 2020
+      Last update: March 22, 2020
     
   </small>
 </div>

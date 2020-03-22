@@ -43,7 +43,7 @@
     
     
     
-      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-de904731d5.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-fccca6ed0a.css">
     
     
       
@@ -826,12 +826,24 @@
                 
                 
                   
+                    
+
+
+  
+
+
+<a href="https://github.com/facelessuser/pymdown-extensions/tree/master/pymdownx/betterem.py" title="pymdownx/betterem.py" class="md-content__button md-icon">
+  Source
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+</a>
+                  
                 
                 
                 <h1 id="betterem">BetterEm<a class="headerlink" href="#betterem" title="Permanent link"></a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
 <p>BetterEm is an extension that aims to improve emphasis (bold and italic) handling.  It provides two modes that control
-both asterisk's and underscore's bold and italic syntax: <strong>smart</strong> when <code>smart_enable</code> is turned on and normal if
+both asterisk's and underscore's bold and italic syntax: <strong>smart</strong> when <code>smart_enable</code> is turned on and <strong>normal</strong> if
 <code>smart_enable</code> is turned off.  BetterEm overrides all the current bold and italic rules in Python Markdown with its own.
 When <strong>smart</strong> is enabled for either asterisks and/or underscores, it is enabled for all variants: single and double.
 When <strong>smart</strong> is enabled, the behavior will be very similar in feel to <abbr title="GitHub Flavored Markdown">GFM</abbr> bold and italic (but not necessarily exact).</p>
@@ -853,40 +865,62 @@ extension!</p>
 <p>BetterEm requires that non-whitespace characters follow the opening token(s) and precede the closing token(s).</p>
 <div class="admonition example">
 <p class="admonition-title">Whitespace Example</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Output</label><div class="tabbed-content">
+<p>This * won't emphasize *</p>
+<p>This <em>will emphasize</em></p>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>* Won&#39;t highlight *
 
 *Will highlight*
 </code></pre></div>
 
-<p>This * won't emphasize *</p>
-<p>This <em>will emphasize</em></p>
+</div>
+</div>
 </div>
 <p>BetterEm allows for a more natural nested token feel.</p>
 <div class="admonition example">
 <p class="admonition-title">Nested Token Example</p>
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Output</label><div class="tabbed-content">
+<p><strong><em>I'm italic and bold</em> I am just bold.</strong></p>
+<p><em><strong>I'm bold and italic!</strong> I am just italic.</em></p>
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>***I&#39;m italic and bold* I am just bold.**
 
 ***I&#39;m bold and italic!** I am just italic.*
 </code></pre></div>
 
-<p><strong><em>I'm italic and bold</em> I am just bold.</strong></p>
-<p><em><strong>I'm bold and italic!</strong> I am just italic.</em></p>
+</div>
+</div>
 </div>
 <p>BetterEm will ensure smart mode doesn't terminate in scenarios where there are a large amount of consecutive tokens
 inside.</p>
 <div class="admonition example">
 <p class="admonition-title">Consecutive Token Example</p>
+<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Output</label><div class="tabbed-content">
+<p><strong><em>A lot of underscores____________is okay</em></strong></p>
+<p><strong><em>A lot of underscores____________is okay</em></strong></p>
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>___A lot of underscores____________is okay___
 
 ___A lot of underscores____________is okay___
 </code></pre></div>
 
-<p><strong><em>A lot of underscores____________is okay</em></strong></p>
-<p><strong><em>A lot of underscores____________is okay</em></strong></p>
+</div>
+</div>
 </div>
 <p>BetterEm will also ensure that smart mode breaks proper when an inner like token signifies an end.</p>
 <div class="admonition example">
 <p class="admonition-title">Smart Break Example</p>
+<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Output</label><div class="tabbed-content">
+<p><strong>This will all be bold __because of the placement of the center underscores.</strong></p>
+<p><strong>This will all be bold __ because of the placement of the center asterisks.</strong></p>
+<p><strong>This will NOT all be bold</strong> because of the placement of the center underscores.__</p>
+<p><strong>This will all be bold_ because the token count is less than that of the surrounding.</strong></p>
+</div>
+<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>__This will all be bold __because of the placement of the center underscores.__
 
 __This will all be bold __ because of the placement of the center underscores.__
@@ -896,31 +930,13 @@ __This will NOT all be bold__ because of the placement of the center underscores
 __This will all be bold_ because of the token is less than that of the surrounding.__
 </code></pre></div>
 
-<p><strong>This will all be bold __because of the placement of the center underscores.</strong></p>
-<p><strong>This will all be bold __ because of the placement of the center asterisks.</strong></p>
-<p><strong>This will NOT all be bold</strong> because of the placement of the center underscores.__</p>
-<p><strong>This will all be bold_ because the token count is less than that of the surrounding.</strong></p>
+</div>
+</div>
 </div>
 <p>BetterEm will allow non-smart emphasis to contain "floating" like tokens.</p>
 <div class="admonition example">
 <p class="admonition-title">Floating Token Example</p>
-<div class="highlight"><pre><span></span><code>`*All will * be italic*
-
-`*All will *be italic*
-
-`*All will not* be italic*
-
-`*All will not ** be italic*
-
-`**All will * be bold**
-
-`**All will *be bold**
-
-`**All will not*** be bold**
-
-`**All will not *** be bold**
-</code></pre></div>
-
+<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Output</label><div class="tabbed-content">
 <p><em>All will * be italic</em></p>
 <p><em>All will *be italic</em></p>
 <p><em>All will not</em> be italic*</p>
@@ -929,6 +945,27 @@ __This will all be bold_ because of the token is less than that of the surroundi
 <p><strong>All will *be bold</strong></p>
 <p><strong>All will not</strong>* be bold**</p>
 <p><strong>All will not *</strong>be bold**</p>
+</div>
+<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2">Markdown</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>*All will * be italic*
+
+*All will *be italic*
+
+*All will not* be italic*
+
+*All will not ** be italic*
+
+**All will * be bold**
+
+**All will *be bold**
+
+**All will not*** be bold**
+
+**All will not *** be bold**
+</code></pre></div>
+
+</div>
+</div>
 </div>
 <h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
 <table>
@@ -957,7 +994,7 @@ __This will all be bold_ because of the token is less than that of the surroundi
 <div class="md-source-date">
   <small>
     
-      Last update: December 17, 2019
+      Last update: March 22, 2020
     
   </small>
 </div>

@@ -43,7 +43,7 @@
     
     
     
-      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-de904731d5.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-fccca6ed0a.css">
     
     
       
@@ -606,8 +606,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#styling" class="md-nav__link">
-    Styling
+  <a href="#styling-with-css" class="md-nav__link">
+    Styling with CSS
   </a>
   
 </li>
@@ -802,8 +802,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#styling" class="md-nav__link">
-    Styling
+  <a href="#styling-with-css" class="md-nav__link">
+    Styling with CSS
   </a>
   
 </li>
@@ -826,13 +826,25 @@
                 
                 
                   
+                    
+
+
+  
+
+
+<a href="https://github.com/facelessuser/pymdown-extensions/tree/master/pymdownx/tabbed.py" title="pymdownx/tabbed.py" class="md-content__button md-icon">
+  Source
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+</a>
+                  
                 
                 
                 <h1 id="tabbed">Tabbed<a class="headerlink" href="#tabbed" title="Permanent link"></a></h1>
 <h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
 <div class="admonition new">
-<p class="admonition-title">New 7.0b1</p>
-<p>Tabbed has been newly added in 7.0b1.</p>
+<p class="admonition-title">New 7.0</p>
+<p>Tabbed has been newly added in 7.0.</p>
 </div>
 <p>Tabbed provides a syntax to easily add tabbed Markdown content. The Tabbed extension can be included in Python Markdown
 by using the following:</p>
@@ -842,6 +854,23 @@ by using the following:</p>
 
 <h2 id="syntax">Syntax<a class="headerlink" href="#syntax" title="Permanent link"></a></h2>
 <p>Tabs start with <code>===</code> to signify a tab followed by a quoted title. Consecutive tabs are grouped into a tab set.</p>
+<div class="admonition example">
+<p class="admonition-title">Example Tabs</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Output</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Tab 1</label><div class="tabbed-content">
+<p>Markdown <strong>content</strong>.</p>
+<p>Multiple paragraphs.</p>
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Tab 2</label><div class="tabbed-content">
+<p>More Markdown <strong>content</strong>.</p>
+<ul>
+<li>list item a</li>
+<li>list item b</li>
+</ul>
+</div>
+</div>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>=== &quot;Tab 1&quot;
     Markdown **content**.
 
@@ -854,12 +883,19 @@ by using the following:</p>
     - list item b
 </code></pre></div>
 
-<p>This will yield tabbed Markdown content:</p>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab 1</label><div class="tabbed-content">
+</div>
+</div>
+</div>
+<p>In the rare case that you want to follow two separate tab sets right after each other, you can explicitly mark the start
+of a new tab set with <code>!</code>.</p>
+<div class="admonition example">
+<p class="admonition-title">Example Tab Breaks</p>
+<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Output</label><div class="tabbed-content">
+<div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Tab 1</label><div class="tabbed-content">
 <p>Markdown <strong>content</strong>.</p>
 <p>Multiple paragraphs.</p>
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Tab 2</label><div class="tabbed-content">
+<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">Tab 2</label><div class="tabbed-content">
 <p>More Markdown <strong>content</strong>.</p>
 <ul>
 <li>list item a</li>
@@ -867,8 +903,17 @@ by using the following:</p>
 </ul>
 </div>
 </div>
-<p>In the rare case that you want to follow two separate tab sets right after each other, you can explicitly mark the start
-of a new tab set with <code>!</code>:</p>
+<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Tab A</label><div class="tabbed-content">
+<p>Different tab set.</p>
+</div>
+<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2">Tab B</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>More content.
+</code></pre></div>
+
+</div>
+</div>
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>=== &quot;Tab 1&quot;
     Markdown **content**.
 
@@ -889,29 +934,10 @@ of a new tab set with <code>!</code>:</p>
     ```
 </code></pre></div>
 
-<p>Which should yield two tab sets.</p>
-<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Tab 1</label><div class="tabbed-content">
-<p>Markdown <strong>content</strong>.</p>
-<p>Multiple paragraphs.</p>
-</div>
-<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Tab 2</label><div class="tabbed-content">
-<p>More Markdown <strong>content</strong>.</p>
-<ul>
-<li>list item a</li>
-<li>list item b</li>
-</ul>
 </div>
 </div>
-<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">Tab A</label><div class="tabbed-content">
-<p>Different tab set.</p>
 </div>
-<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Tab B</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>More content.
-</code></pre></div>
-
-</div>
-</div>
-<h2 id="styling">Styling<a class="headerlink" href="#styling" title="Permanent link"></a></h2>
+<h2 id="styling-with-css">Styling with CSS<a class="headerlink" href="#styling-with-css" title="Permanent link"></a></h2>
 <p>In order to use tabbed blocks, some additional CSS is needed. You can check out the configuration below which will
 show the CSS and the HTML it targets. Keep in mind the CSS is just the minimum to get you started. You can tweak it and
 modify it to get it how you like it.</p>
@@ -919,7 +945,7 @@ modify it to get it how you like it.</p>
 <code class="highlight"><span class="p">&lt;</span><span class="nt">input</span><span class="p">&gt;</span></code> with an ID of <code>__tabbed_&lt;tab_set_number&gt;_&lt;tab_number&gt;</code>. All the <code class="highlight"><span class="p">&lt;</span><span class="nt">input</span><span class="p">&gt;</span></code> elements from a
 specific tab set will use the name <code>__tabbed_&lt;tab_set_number&gt;</code>. Particularly, a user should be mindful of the ID to keep
 from explicitly using a conflicting ID. Auto-generated slugs shouldn't conflict though.</p>
-<details class="settings"><summary>Tabbed Code Setup</summary><div class="tabbed-set" data-tabs="4:2"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">HTML</label><div class="tabbed-content">
+<details class="settings"><summary>Tabbed Code Setup</summary><div class="tabbed-set" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><label for="__tabbed_6_1">HTML</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;tabbed-set&quot;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">input</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;__tabbed_1&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;radio&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;__tabbed_1_1&quot;</span> <span class="na">checked</span><span class="o">=</span><span class="s">&quot;checked&quot;</span><span class="p">&gt;</span>
 <span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;__tabbed_1_1&quot;</span><span class="p">&gt;</span>Tab 0<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
@@ -933,7 +959,7 @@ from explicitly using a conflicting ID. Auto-generated slugs shouldn't conflict 
 </code></pre></div>
 
 </div>
-<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">CSS</label><div class="tabbed-content">
+<input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><label for="__tabbed_6_2">CSS</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code><span class="p">.</span><span class="nc">tabbed-set</span> <span class="p">{</span>
   <span class="k">display</span><span class="p">:</span> <span class="kc">flex</span><span class="p">;</span>
   <span class="k">position</span><span class="p">:</span> <span class="kc">relative</span><span class="p">;</span>
@@ -987,7 +1013,7 @@ from explicitly using a conflicting ID. Auto-generated slugs shouldn't conflict 
 <div class="md-source-date">
   <small>
     
-      Last update: February 15, 2020
+      Last update: March 22, 2020
     
   </small>
 </div>

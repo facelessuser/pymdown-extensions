@@ -43,7 +43,7 @@
     
     
     
-      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-de904731d5.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-fccca6ed0a.css">
     
     
       
@@ -826,6 +826,18 @@
                 
                 
                   
+                    
+
+
+  
+
+
+<a href="https://github.com/facelessuser/pymdown-extensions/tree/master/pymdownx/progressbar.py" title="pymdownx/progressbar.py" class="md-content__button md-icon">
+  Source
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+</a>
+                  
                 
                 
                 <h1 id="progressbar">ProgressBar<a class="headerlink" href="#progressbar" title="Permanent link"></a></h1>
@@ -839,15 +851,7 @@ a fraction or percentage and can optionally be followed by a title surrounded in
 quotes.</p>
 <div class="admonition example">
 <p class="admonition-title">Progress Bar Example</p>
-<div class="highlight"><pre><span></span><code>[=0% &quot;0%&quot;]
-[=5% &quot;5%&quot;]
-[=25% &quot;25%&quot;]
-[=45% &quot;45%&quot;]
-[=65% &quot;65%&quot;]
-[=85% &quot;85%&quot;]
-[=100% &quot;100%&quot;]
-</code></pre></div>
-
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Output</label><div class="tabbed-content">
 <p>
 <div class="progress progress-0plus">
 <div class="progress-bar" style="width:0.00%">
@@ -886,22 +890,24 @@ quotes.</p>
 </div>
 </p>
 </div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Markdown</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>[=0% &quot;0%&quot;]
+[=5% &quot;5%&quot;]
+[=25% &quot;25%&quot;]
+[=45% &quot;45%&quot;]
+[=65% &quot;65%&quot;]
+[=85% &quot;85%&quot;]
+[=100% &quot;100%&quot;]
+</code></pre></div>
+
+</div>
+</div>
+</div>
 <p>Though progress bars are rendered as block items, it accepts <code>attr_list</code>'s inline format.
 <code>markdown.extensions.attr_list</code> must be enabled for the following to work.</p>
 <div class="admonition example">
 <p class="admonition-title">Progress Bar with Attributes</p>
-<div class="highlight"><pre><span></span><code>[=85% &quot;85%&quot;]{: .candystripe}
-[=100% &quot;100%&quot;]{: .candystripe .candystripe-animate}
-
-[=0%]{: .thin}
-[=5%]{: .thin}
-[=25%]{: .thin}
-[=45%]{: .thin}
-[=65%]{: .thin}
-[=85%]{: .thin}
-[=100%]{: .thin}
-</code></pre></div>
-
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Output</label><div class="tabbed-content">
 <p>
 <div class="progress progress-80plus candystripe">
 <div class="progress-bar" style="width:85.00%">
@@ -951,6 +957,22 @@ quotes.</p>
 </div>
 </div>
 </p>
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Markdown</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>[=85% &quot;85%&quot;]{: .candystripe}
+[=100% &quot;100%&quot;]{: .candystripe .candystripe-animate}
+
+[=0%]{: .thin}
+[=5%]{: .thin}
+[=25%]{: .thin}
+[=45%]{: .thin}
+[=65%]{: .thin}
+[=85%]{: .thin}
+[=100%]{: .thin}
+</code></pre></div>
+
+</div>
+</div>
 </div>
 <p>The ProgressBar extension can be included in Python Markdown by using the following:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
@@ -1097,7 +1119,7 @@ quotes.</p>
 <div class="md-source-date">
   <small>
     
-      Last update: March 19, 2020
+      Last update: March 22, 2020
     
   </small>
 </div>

@@ -43,7 +43,7 @@
     
     
     
-      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-de904731d5.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-fccca6ed0a.css">
     
     
       
@@ -826,6 +826,18 @@
                 
                 
                   
+                    
+
+
+  
+
+
+<a href="https://github.com/facelessuser/pymdown-extensions/tree/master/pymdownx/details.py" title="pymdownx/details.py" class="md-content__button md-icon">
+  Source
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+</a>
+                  
                 
                 
                 <h1 id="details">Details<a class="headerlink" href="#details" title="Permanent link"></a></h1>
@@ -844,39 +856,47 @@ details block whose default state is 'open'.  Follow the start of the block with
 with spaces) and the summary contained in quotes. Content is placed below the header and must be indented.</p>
 <div class="highlight"><pre><span></span><code>??? optional-class &quot;Summary&quot;
     Here&#39;s some content.
-</code></pre></div>
 
-<div class="highlight"><pre><span></span><code>??? multiple optional-class &quot;Summary&quot;
+??? multiple optional-class &quot;Summary&quot;
     Here&#39;s some content.
 </code></pre></div>
 
 <div class="admonition example">
 <p class="admonition-title">Example Details</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Output</label><div class="tabbed-content">
+<details class="note" open="open"><summary>Open styled details</summary><details class="danger"><summary>Nested details!</summary><p>And more content again.</p>
+</details>
+</details>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>???+ note &quot;Open styled details&quot;
 
     ??? danger &quot;Nested details!&quot;
         And more content again.
 </code></pre></div>
 
-<details class="note" open="open"><summary>Open styled details</summary><details class="danger"><summary>Nested details!</summary><p>And more content again.</p>
-</details>
-</details>
+</div>
+</div>
 </div>
 <p>It is also possible to provide only a class.  If this is done, the title will be derived from the <em>first</em> class.</p>
 <div class="admonition example">
 <p class="admonition-title">Example Class from Title</p>
-<div class="highlight"><pre><span></span><code>??? success
-   Content.
-</code></pre></div>
-
+<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Output</label><div class="tabbed-content">
 <details class="success"><summary>Success</summary><p>Content.</p>
 </details>
-<div class="highlight"><pre><span></span><code>??? warning classes
+<details class="warning classes"><summary>Warning</summary><p>Content.</p>
+</details>
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Markdown</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>??? success
+   Content.
+
+??? warning classes
    Content.
 </code></pre></div>
 
-<details class="warning classes"><summary>Warning</summary><p>Content.</p>
-</details>
+</div>
+</div>
 </div>
 <p>Details will be output in the format below. The content will always be encapsulated in tags of some kind.</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">details</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;optional-class&quot;</span><span class="p">&gt;&lt;</span><span class="nt">summary</span><span class="p">&gt;</span>Text<span class="p">&lt;/</span><span class="nt">summary</span><span class="p">&gt;&lt;</span><span class="nt">p</span><span class="p">&gt;</span>Content<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;&lt;/</span><span class="nt">details</span><span class="p">&gt;</span>
@@ -1027,7 +1047,7 @@ detail element, but this is left up to the user to figure out, or for a complete
 <div class="md-source-date">
   <small>
     
-      Last update: December 17, 2019
+      Last update: March 22, 2020
     
   </small>
 </div>

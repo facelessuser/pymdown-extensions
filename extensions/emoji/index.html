@@ -43,7 +43,7 @@
     
     
     
-      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-de904731d5.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-fccca6ed0a.css">
     
     
       
@@ -924,6 +924,18 @@
                 
                 
                   
+                    
+
+
+  
+
+
+<a href="https://github.com/facelessuser/pymdown-extensions/tree/master/pymdownx/emoji.py" title="pymdownx/emoji.py" class="md-content__button md-icon">
+  Source
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+</a>
+                  
                 
                 
                 <h1 id="emoji">Emoji<a class="headerlink" href="#emoji" title="Permanent link"></a></h1>
@@ -934,10 +946,15 @@ data is then converted into actual Unicode emoji characters and/or special HTML 
 the emoji.</p>
 <div class="admonition example">
 <p class="admonition-title">Emoji Example</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Output</label><div class="tabbed-content">
+<p><img alt="😄" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f604.svg" title=":smile:" /> <img alt="❤" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2764.svg" title=":heart:" /> <img alt="👍" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f44d.svg" title=":thumbsup:" /></p>
+</div>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>:smile: :heart: :thumbsup:
 </code></pre></div>
 
-<p><img alt="😄" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f604.svg" title=":smile:" /> <img alt="❤" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/2764.svg" title=":heart:" /> <img alt="👍" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f44d.svg" title=":thumbsup:" /></p>
+</div>
+</div>
 </div>
 <p>The Emoji extension can be included in Python Markdown by using the following:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
@@ -948,54 +965,55 @@ the emoji.</p>
 <p>There are a number of emoji short name conventions that people may be aware of. These conventions are always tied to a
 specific emoji set. These conventions differ because there is no official Unicode short name convention. At the present,
 Emoji chooses to focus on three specific emoji sets:</p>
-<ul>
-<li>
-<p><a href="https://github.com/github/gemoji">Gemoji</a> (<img align="absmiddle" alt=":smile:" class="gemoji" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" title=":smile:"/> <img align="absmiddle" alt=":heart:" class="gemoji"src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png" title=":heart:"/> <img align="absmiddle" alt=":+1:" class="gemoji" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44d.png" title=":+1:" />):
-  Gemoji is GitHub's open source emoji solution. It contains a lot of common emoji and a couple special, non Unicode
-  emoji (like Gemoji's <code>:octocat:</code> <img align="absmiddle" alt=":octocat:" class="gemoji" src="https://github.githubassets.com/images/icons/emoji/octocat.png" title=":octocat:" />).
-  If you are a GitHub user, you are probably familiar with some of the short names associated with it. Their associated
-  CDN contains the emoji in 75x75 PNG format.</p>
-</li>
-<li>
+<div class="tabbed-set" data-tabs="2:3"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">EmojiOne</label><div class="tabbed-content">
 <p><a href="https://github.com/Ranks/emojione">EmojiOne</a> (<img align="absmiddle" alt=":smile:" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/1f604.png" title=":smile:" /> <img align="absmiddle" alt=":heart:" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/2764.png" title=":heart:" /> <img align="absmiddle" alt=":thumbsup:" class="emojione" src="https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/1f44d.png" title=":thumbsup:" />):
-  EmojiOne is a high quality emoji set with support for gender and skin tone modifiers. Their free emoji set includes
-  PNGs in sizes of 32x32, 64x64, and 128x128 which are all available via a CDN.</p>
+EmojiOne is a high quality emoji set with support for gender and skin tone modifiers. Their free emoji set includes
+PNGs in sizes of 32x32, 64x64, and 128x128 which are all available via a CDN.</p>
 <p>The older EmojiOne (version 2.2.7), is what is used by default. It is the last truly free version. EmojiOne has
 rebranded with the name JoyPixels and now has an even more restrictive license for their graphical assets. Their
 latest short name list is still used for Twemoji as that portion is available under the MIT license via their
 toolkit repo <a class="magiclink magiclink-github magiclink-repository" href="https://github.com/JoyPixels/emoji-toolkit" title="GitHub Repository: JoyPixels/emoji-toolkit">JoyPixels/emoji-toolkit</a>.</p>
-</li>
-<li>
+</div>
+<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Twemoji</label><div class="tabbed-content">
 <p><a href="https://github.com/twitter/twemoji">Twemoji</a> (<img align="absmiddle" alt=":smile:" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/72x72/1f604.png" title=":smile:" /> <img align="absmiddle" alt=":heart:" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/72x72/2764.png" title=":heart:" /> <img align="absmiddle" alt=":thumbsup:" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/72x72/1f44d.png" title=":thumbsup:" />):
-  Twemoji is Twitter's open source emoji set which also covers a great many emoji with skin tones and gender modifiers.
-  The hosted CDN provides 72x72 PNG emoji or SVG emoji.</p>
+Twemoji is Twitter's open source emoji set which also covers a great many emoji with skin tones and gender modifiers.
+The hosted CDN provides 72x72 PNG emoji or SVG emoji.</p>
 <p>While Gemoji and EmojiOne have a short name convention, Twemoji does not, and there are very few 3<sup>rd</sup> party projects
 that provide short names anywhere close to all the provided emoji that Twemoji supports. Since JoyPixels has an MIT
 licensed index of short names closest to what Twemoji supports, we use their short name list for Twemoji. There will
 be a reasonable attempt to patch in emoji not found in JoyPixels' index, but if JoyPixels is ever significantly
 behind, we may wait for JoyPixels to catch up.</p>
-</li>
-</ul>
+</div>
+<input id="__tabbed_2_3" name="__tabbed_2" type="radio" /><label for="__tabbed_2_3">Gemoji</label><div class="tabbed-content">
+<p><a href="https://github.com/github/gemoji">Gemoji</a> (<img align="absmiddle" alt=":smile:" class="gemoji" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" title=":smile:"/> <img align="absmiddle" alt=":heart:" class="gemoji"src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png" title=":heart:"/> <img align="absmiddle" alt=":+1:" class="gemoji" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44d.png" title=":+1:" />):
+Gemoji is GitHub's open source emoji solution. It contains a lot of common emoji and a couple special, non Unicode
+emoji (like Gemoji's <code>:octocat:</code> <img align="absmiddle" alt=":octocat:" class="gemoji" src="https://github.githubassets.com/images/icons/emoji/octocat.png" title=":octocat:" />).
+If you are a GitHub user, you are probably familiar with some of the short names associated with it. Their
+associated CDN contains the emoji in 75x75 PNG format.</p>
+</div>
+</div>
 <div class="admonition warning">
 <p class="admonition-title">Emoji Image Licensing</p>
 <p>PyMdown Extensions has no affiliation with EmojiOne, Gemoji, or Twemoji.  The indexes generated from their sources
 are covered under their respective licensing.  When using their images or CSS, please see their licensing terms to
 ensure proper usage and attributions.</p>
+<div class="tabbed-set" data-tabs="3:3"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">EmojiOne</label><div class="tabbed-content">
 <ul>
-<li>EmojiOne 2.2.7:<ul>
 <li><a href="https://github.com/joypixels/emoji-toolkit#joypixels-version-2">https://github.com/joypixels/emoji-toolkit#joypixels-version-2</a></li>
 <li><a href="http://creativecommons.org/licenses/by/4.0/">http://creativecommons.org/licenses/by/4.0/</a></li>
 </ul>
-</li>
-<li>Gemoji:<ul>
-<li><a href="https://github.com/github/gemoji/blob/master/LICENSE">https://github.com/github/gemoji/blob/master/LICENSE</a></li>
-</ul>
-</li>
-<li>Twemoji:<ul>
+</div>
+<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Twemoji</label><div class="tabbed-content">
+<ul>
 <li><a href="https://github.com/twitter/twemoji/blob/gh-pages/LICENSE-GRAPHICS">https://github.com/twitter/twemoji/blob/gh-pages/LICENSE-GRAPHICS</a></li>
 </ul>
-</li>
+</div>
+<input id="__tabbed_3_3" name="__tabbed_3" type="radio" /><label for="__tabbed_3_3">Gemoji</label><div class="tabbed-content">
+<ul>
+<li><a href="https://github.com/github/gemoji/blob/master/LICENSE">https://github.com/github/gemoji/blob/master/LICENSE</a></li>
 </ul>
+</div>
+</div>
 </div>
 <p>All short name indexes that Emoji uses are generated from EmojiOne's or Gemoji's latest official source tag &ndash; Twemoji
 uses JoyPixels' index as the Twemoji repository does not ship with a short name index. The indexes contain the emoji
@@ -1021,14 +1039,15 @@ parameter.  Pass the actual function reference, not a string. If you need to cre
 <p>If you are attempting to configure these options in a YAML based configuration (like in <a href="https://github.com/mkdocs/mkdocs">MkDocs</a>), please
 see the <a href="../../faq/#function-references-in-yaml"><abbr title="Frequent Asked Questions">FAQ</abbr></a> to see how to specify function references in YAML.</p>
 </div>
-<dl>
-<dt><code>pymdownx.emoji.emojione</code></dt>
-<dd>
-<p>This is the default function that is used. EmojiOne was rebranded as JoyPixels and is no longer permissible enough
-to be used. The release used here is for 2.2.7 which is the last usable, truly free version of EmojiOne. Users are
-still required to comply with acknowledgments. JoyPixels 3.0+ graphical assets will not be supported moving forward
-as the license is too restrictive, tough the latest index of their friendly names is supported under the MIT license
-and is used to generate friendly, short names for Twemoji.</p>
+<div class="tabbed-set" data-tabs="4:3"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">EmojiOne</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>pymdownx.emoji.emojione
+</code></pre></div>
+
+<p>This is the default function that is used. EmojiOne was rebranded as JoyPixels and is no longer permissible
+enough to be used. The release used here is for 2.2.7 which is the last usable, truly free version of EmojiOne.
+Users are still required to comply with acknowledgments. JoyPixels 3.0+ graphical assets will not be supported
+moving forward as the license is too restrictive, tough the latest index of their friendly names is supported
+under the MIT license and is used to generate friendly, short names for Twemoji.</p>
 <p>You can always find out what tag it was built with by doing the following:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pymdownx.emoji1_db</span> <span class="k">as</span> <span class="nn">e1db</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">e1db</span><span class="o">.</span><span class="n">version</span>
@@ -1036,20 +1055,22 @@ and is used to generate friendly, short names for Twemoji.</p>
 </code></pre></div>
 
 <p>To see the full list of short names for this index, see the index <a href="https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/emoji1_db.py">source</a>.</p>
-</dd>
-<dt><code>pymdownx.emoji.twemoji</code></dt>
-<dd>
+</div>
+<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">Twemoji</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>pymdownx.emoji.twemoji
+</code></pre></div>
+
 <p>This function provides an index of the latest Twemoji supported emoji (at the time of release).  The associated
 short names are currently borrowed from JoyPixels' index found in their <a class="magiclink magiclink-github magiclink-repository" href="https://github.com/JoyPixels/emoji-toolkit" title="GitHub Repository: JoyPixels/emoji-toolkit">JoyPixels/emoji-toolkit</a> repo. JoyPixels
-short name index is available under the MIT license and is used as Twemoji does not provide its own list of short
-names.</p>
-<p>There are a few emoji that are currently Twemoji specific, two of which are likely to always be as they are not part
-of the official emoji spec. The short names are listed below.</p>
-<details class="info"><summary>Twemoji Specific Emoji</summary><p>Twemoji provides some non-standard emoji. We've made them available following the naming patterns that EmojiOne
-follows as we are using their short name index.</p>
-<p>The emoji are either some that only Twemoji supports, rarely supported by others, or emoji that have tone and/or
-gender modifiers that aren't supported in the Unicode specifications. We've also provided appropriate aliases
-for consistency with other like emoji.</p>
+short name index is available under the MIT license and is used as Twemoji does not provide its own list of
+short names.</p>
+<p>There are a few emoji that are currently Twemoji specific, two of which are likely to always be as they are not
+part of the official emoji spec. The short names are listed below.</p>
+<details class="info"><summary>Twemoji Specific Emoji</summary><p>Twemoji provides some non-standard emoji. We've made them available following the naming patterns that
+EmojiOne follows as we are using their short name index.</p>
+<p>The emoji are either some that only Twemoji supports, rarely supported by others, or emoji that have tone
+and/or gender modifiers that aren't supported in the Unicode specifications. We've also provided appropriate
+aliases for consistency with other like emoji.</p>
 <div class="highlight"><pre><span></span><code>:pirate_flag:
 :shibuya:
 
@@ -1093,9 +1114,11 @@ for consistency with other like emoji.</p>
 </code></pre></div>
 
 <p>To see the full list of short names for this index, see the index <a href="https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/twemoji_db.py">source</a>.</p>
-</dd>
-<dt><code>pymdownx.emoji.gemoji</code></dt>
-<dd>
+</div>
+<input id="__tabbed_4_3" name="__tabbed_4" type="radio" /><label for="__tabbed_4_3">Gemoji</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>pymdownx.emoji.gemoji
+</code></pre></div>
+
 <p>This function provides an index of the latest Gemoji supported emoji (at the time of release).</p>
 <p>You can always find out what tag it was built with by doing the following:</p>
 <div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pymdownx.gemoji_db</span> <span class="k">as</span> <span class="nn">gmdb</span>
@@ -1104,8 +1127,8 @@ for consistency with other like emoji.</p>
 </code></pre></div>
 
 <p>To see the full list of short names for this index, see the index <a href="https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/gemoji_db.py">source</a>.</p>
-</dd>
-</dl>
+</div>
+</div>
 <h2 id="default-emoji-generators">Default Emoji Generators<a class="headerlink" href="#default-emoji-generators" title="Permanent link"></a></h2>
 <p>Emoji provides six default emoji generators. PNG output and Unicode code point output are supported for all three
 indexes. SVG output is only supported for Twemoji and the older 2.2.7 EmojiOne set. PNG sprites and the "Font Awesome"
@@ -1118,16 +1141,17 @@ the actual function reference, not a string. If you need to create your own, jus
 <p>If you are attempting to configure these options in a YAML based configuration (like in <a href="https://github.com/mkdocs/mkdocs">MkDocs</a>), please
 see the <a href="../../faq/#function-references-in-yaml"><abbr title="Frequent Asked Questions">FAQ</abbr></a> to see how to specify function references in YAML.</p>
 </div>
-<dl>
-<dt><code>pymdownx.emoji.to_png</code></dt>
-<dd>
+<div class="tabbed-set" data-tabs="5:5"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">PNG</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>pymdownx.emoji.to_png
+</code></pre></div>
+
 <p>This is a general purpose generator which provides EmojiOne, GitHub, and Twemoji CDN path(s) out of the box.
-Depending on the index you've chosen, you the appropriate CDN will be provided.  If this ever gets out of date, a
-new CDN can be passed in via <code>image_path</code> and/or <code>non_standard_image_path</code>. EmojiOne actually has multiple PNGs
-sizes of 32, 64, and 128, but the default CDN path is the one for size 64:
-<code>https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/64/</code>. You can change it for a larger or smaller
-PNG size by updating the size in the URL and passing the new URL in through <code>image_path</code>. The PNG output form is as
-follows:</p>
+Depending on the index you've chosen, you the appropriate CDN will be provided.  If this ever gets out of date,
+a new CDN can be passed in via <code>image_path</code> and/or <code>non_standard_image_path</code>. EmojiOne actually has multiple
+PNGs sizes of 32, 64, and 128, but the default CDN path is the one for size 64:
+<code>https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/64/</code>. You can change it for a larger or
+smaller PNG size by updating the size in the URL and passing the new URL in through <code>image_path</code>. The PNG output
+form is as follows:</p>
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">img</span> <span class="na">alt</span><span class="o">=</span><span class="s">&quot;😄&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;emojione&quot;</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/64/1f604.png&quot;</span> <span class="na">title</span><span class="o">=</span><span class="s">&quot;:smile:&quot;</span> <span class="p">/&gt;</span>
 </code></pre></div>
 
@@ -1168,9 +1192,11 @@ follows:</p>
 </tr>
 </tbody>
 </table>
-</dd>
-<dt><code>pymdownx.emoji.to_svg</code></dt>
-<dd>
+</div>
+<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2">SVG</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>pymdownx.emoji.to_svg
+</code></pre></div>
+
 <p>This generator was written to output SVG images and supports EmojiOne and Twemoji. EmojiOne's SVG support is only
 for the free 2.2.7 release, so the default CDN still references the 2.2.7 release. EmojiOne short names added after
 2.2.7 will not find images.  You can of course reference local SVG images as well by pointing <code>image_path</code> to them
@@ -1209,9 +1235,11 @@ as well. The SVG image outputs as:</p>
 </tr>
 </tbody>
 </table>
-</dd>
-<dt><code>pymdownx.emoji.to_png_sprite</code></dt>
-<dd>
+</div>
+<input id="__tabbed_5_3" name="__tabbed_5" type="radio" /><label for="__tabbed_5_3">PNG Sprite</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>pymdownx.emoji.to_png_sprite
+</code></pre></div>
+
 <p>This generator was written to support PNG sprite output for EmojiOne.  It is expected that this will be used in
 conjunction with the the official EmojiOne CSS.  You can include the CSS from the CDN in your document. The CSS
 comes in three sizes: 32, 64, 128. Make sure to set the correct size in the options to generate the appropriate
@@ -1254,9 +1282,11 @@ sprite PNG to the background image of the span.</p>
 </tr>
 </tbody>
 </table>
-</dd>
-<dt><code>pymdownx.emoji.to_svg_sprite</code></dt>
-<dd>
+</div>
+<input id="__tabbed_5_4" name="__tabbed_5" type="radio" /><label for="__tabbed_5_4">SVG Sprite</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>pymdownx.emoji.to_svg_sprite
+</code></pre></div>
+
 <p>This was written to support EmojiOne SVG sprite output.  The output form was taken directly from an example in the
 EmojiOne source.  It is expected that the the user will provide a local version of the official SVG sprite and the
 path to it.  Unfortunately there is no free 3.0 SVG sprite, so you will need to <a href="https://github.com/Ranks/emojione/blob/v2.2.7/assets/sprites/emojione.sprites.svg">download</a> the
@@ -1289,9 +1319,11 @@ old 2.27 one. The output is:</p>
 </tr>
 </tbody>
 </table>
-</dd>
-<dt><code>pymdownx.emoji.to_alt</code></dt>
-<dd>
+</div>
+<input id="__tabbed_5_5" name="__tabbed_5" type="radio" /><label for="__tabbed_5_5">Alt</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>pymdownx.emoji.to_alt
+</code></pre></div>
+
 <p>This generator supports all emoji indexes.  The generator outputs the alt value directly to the document.  The
 output can be Unicode characters, HTML entities, or even just the short name depending on what the global setting of
 <code>alt</code> is set to.</p>
@@ -1299,8 +1331,8 @@ output can be Unicode characters, HTML entities, or even just the short name dep
 </code></pre></div>
 
 <p>There are no generator specific options.</p>
-</dd>
-</dl>
+</div>
+</div>
 <h2 id="custom-emoji-indexes">Custom Emoji Indexes<a class="headerlink" href="#custom-emoji-indexes" title="Permanent link"></a></h2>
 <p>In order to provide a custom index, the Emoji extension must be given a function that returns a suitable emoji index. No
 parameters are passed to the function.  The function should simply return the custom index in the following format.</p>
@@ -1379,9 +1411,9 @@ parameters are passed to the function.  The function should simply return the cu
 <h2 id="custom-emoji-generators">Custom Emoji Generators<a class="headerlink" href="#custom-emoji-generators" title="Permanent link"></a></h2>
 <p>Each different kind of output is controlled by a different emoji generator function, but all generator functions have
 the same input format. The format is shown below in case you need to create your own custom output generator.</p>
-<dl>
-<dt><code class="highlight"><span class="k">def</span> <span class="nf">emoji_generator</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">shortname</span><span class="p">,</span> <span class="n">alias</span><span class="p">,</span> <span class="n">uc</span><span class="p">,</span> <span class="n">alt</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">md</span><span class="p">)</span></code></dt>
-<dd>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">emoji_generator</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">shortname</span><span class="p">,</span> <span class="n">alias</span><span class="p">,</span> <span class="n">uc</span><span class="p">,</span> <span class="n">alt</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">category</span><span class="p">,</span> <span class="n">options</span><span class="p">,</span> <span class="n">md</span><span class="p">)</span>
+</code></pre></div>
+
 <table>
 <thead>
 <tr>
@@ -1445,14 +1477,12 @@ points.  <code>uc</code> and <code>alt</code> are affected by this and will retu
 strings describing the Unicode points.  For example <code>:octocat:</code> will just return <code>None</code> for <code>uc</code> and <code>:octocat:</code>
 for <code>alt</code>.  If you are parsing an index with custom emoji, like Gemoji has, then you need to be aware of this.</p>
 </div>
-</dd>
-</dl>
 <h2 id="using-with-mkdocs">Using with MkDocs<a class="headerlink" href="#using-with-mkdocs" title="Permanent link"></a></h2>
 <p>This project uses these extensions with <a href="https://github.com/mkdocs/mkdocs">MkDocs</a> to generate the documentation.  It might not be obvious how to
 set the index or generator functions in MkDocs' YAML settings file, but it is actually pretty easy.  The functions are
 referenced like you would import them in Python except you also append them with a special prefix to let the YAML module
 know that the setting value is a Python object.  For instance, to specify the <code>to_svg</code> generator, you would simply
-reference it like this: <code>!!python/name:pymdownx.emoji.to_svg</code> (or you could use your own custom module <img alt="😉" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f609.svg" title=":wink:" />).</p>
+reference it like this: <code class="highlight"><span class="kt">!!python/name:pymdownx.emoji.to_svg</span></code> (or you could use your own custom module <img alt="😉" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/svg/1f609.svg" title=":wink:" />).</p>
 <div class="highlight"><pre><span></span><code><span class="nt">markdown_extensions</span><span class="p">:</span>
   <span class="p p-Indicator">-</span> <span class="nt">pymdownx.emoji</span><span class="p">:</span>
       <span class="nt">emoji_generator</span><span class="p">:</span> <span class="kt">!!python/name:pymdownx.emoji.to_svg</span>
@@ -1548,7 +1578,7 @@ documentation.</p>
 <div class="md-source-date">
   <small>
     
-      Last update: February 21, 2020
+      Last update: March 22, 2020
     
   </small>
 </div>

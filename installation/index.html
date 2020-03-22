@@ -43,7 +43,7 @@
     
     
     
-      <link rel="stylesheet" href="../assets/pymdownx-extras/extra-de904731d5.css">
+      <link rel="stylesheet" href="../assets/pymdownx-extras/extra-fccca6ed0a.css">
     
     
       
@@ -823,26 +823,35 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="https://github.com/Python-Markdown/markdown">Python Markdown 2.6.0+</a></td>
+<td><a href="https://github.com/Python-Markdown/markdown">Python Markdown</a></td>
 <td>Yes</td>
 <td>Python Markdown must be installed as it is the Markdown parser that is being used.</td>
 </tr>
 <tr>
-<td><a href="http://pygments.org/">Pygments 2.0.1+ (optional)</a></td>
+<td><a href="http://pygments.org/">Pygments (optional)</a></td>
 <td>No</td>
-<td>If Pygments Syntax highlighting is desired, Pygments must be installed.  This can be omitted, and code blocks (if using the CodeHilite extension) will be formatter for use with JavaScript code highlighters.</td>
+<td>If Pygments Syntax highlighting is desired, Pygments must be installed.  This can be omitted, and code blocks will be formatted for use with JavaScript code highlighters.</td>
 </tr>
 </tbody>
 </table>
 <h2 id="installation_1">Installation<a class="headerlink" href="#installation_1" title="Permanent link"></a></h2>
 <p>Installation is easy with pip:</p>
-<div class="highlight"><pre><span></span><code>pip install pymdown-extensions
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> pip install pymdown-extensions
 </code></pre></div>
 
-<p>If you want to manually install it, run <code class="highlight">python setup.py build</code> and <code class="highlight">python setup.py install</code>.  You should
-be able to access the extensions in Python Markdown under the namespace <code>pymdownx.&lt;extension&gt;</code>.</p>
-<p>If you would like to modify the code, you can install it via: <code class="highlight">pip install --editable .</code>.  This method will allow
-you to instantly see your changes without reinstalling.  If you want to do this in a virtual machine, you can.</p>
+<p>If you want to manually install it, run:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> python setup.py build
+<span class="gp">$</span> python setup.py install
+</code></pre></div>
+
+<p>After installing, you should be able to access the extensions in Python Markdown under the namespace
+<code>pymdownx.&lt;extension&gt;</code>.</p>
+<p>If you would like to modify the code, you can install it via:</p>
+<div class="highlight"><pre><span></span><code><span class="gp">$</span> pip install --editable .
+</code></pre></div>
+
+<p>This method will allow you to instantly see your changes without reinstalling.  If you want to do this in a virtual
+machine, you can.</p>
                 
                   
                     
@@ -851,7 +860,7 @@ you to instantly see your changes without reinstalling.  If you want to do this 
 <div class="md-source-date">
   <small>
     
-      Last update: December 17, 2019
+      Last update: March 22, 2020
     
   </small>
 </div>
