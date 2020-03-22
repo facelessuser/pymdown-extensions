@@ -1,3 +1,6 @@
+path: tree/master
+source: pymdownx/mark.py
+
 # Mark
 
 ## Overview
@@ -10,15 +13,17 @@ To Mark some text, simply surround the text with double `=`.
 
 !!! example "Mark Example"
 
-    ```
-    ==mark me==
+    === "Output"
+        ==mark me==
 
-    ==smart==mark==
-    ```
+        ==smart==mark==
 
-    ==mark me==
+    === "Markdown"
+        ```
+        ==mark me==
 
-    ==smart==mark==
+        ==smart==mark==
+        ```
 
 The Mark extension can be included in Python Markdown by using the following:
 

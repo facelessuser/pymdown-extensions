@@ -1,3 +1,6 @@
+path: tree/master
+source: pymdownx/extrarawhtml.py
+
 # ExtraRawHTML
 
 ## Overview
@@ -19,17 +22,19 @@ parsing.  For more info see [Python Markdown's Extra documentation][nested-markd
 
 !!! example "Raw HTML Example"
 
-    ```html
-    <div class="some-class" markdown="1">
+    === "HTML"
+        ```html
+        <div class="some-class"><p>Some <em>Markdown</em>! <img alt="😄" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/3.1/png/64/1f604.png" title=":smile:">
+        </p></div>
+        ```
 
-    Some *Markdown*! :smile:
-    </div>
-    ```
+    === "Markdown"
+        ```html
+        <div class="some-class" markdown="1">
 
-    ```html
-    <div class="some-class"><p>Some <em>Markdown</em>! <img alt="😄" class="emojione" src="https://cdn.jsdelivr.net/emojione/assets/3.1/png/64/1f604.png" title=":smile:">
-    </p></div>
-    ```
+        Some *Markdown*! :smile:
+        </div>
+        ```
 
 The ExtraRawHTML extension can be included in Python Markdown by using the following:
 

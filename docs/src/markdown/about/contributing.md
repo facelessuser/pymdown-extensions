@@ -15,7 +15,7 @@
     - Examples for reproducing the error.  You can post pictures, but if specific text or code is required to reproduce
       the issue, please provide the text in a plain text format for easy copy/paste.
 
-    The more info provided the greater the chance someone will take the time to answer, implement, or fix the issue.
+    The more info provided, the greater the chance someone will take the time to answer, implement, or fix the issue.
 
 3. Be prepared to answer questions and provide additional information if required.  Issues in which the creator refuses
   to respond to follow up questions will be marked as stale and closed.

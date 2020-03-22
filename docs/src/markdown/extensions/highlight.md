@@ -1,10 +1,13 @@
+path: tree/master
+source: pymdownx/highlight.py
+
 # Highlight
 
 ## Overview
 
 Highlight is an extension that adds support for code highlighting. Its purpose is to provide a single place to configure
 syntax highlighting for code blocks. Both [InlineHilite](./inlinehilite.md) and [SuperFences](./superfences.md) can use
-Highlight to configure their highlight settings, but highlight will also run all non-fence code blocks through the
+Highlight to configure their highlight settings, but Highlight will also run all non-fence code blocks through the
 highlighter as well.
 
 The Highlight extension is inspired by [CodeHilite][codehilite], but differs in features. PyMdown Extensions chooses not
@@ -36,41 +39,45 @@ off, code tags will be rendered in the HTML5 format for JavaScript highlighting:
 
 ## Extended Pygments Lexer Options
 
-If using Pygments, some lexers have special options.  For instance, the `php` lexer has the option `startinline` which,
-if enabled, will parse PHP syntax without requiring `#!php <?` at the beginning.  InlineHilite takes the approach of
-allowing you to create a special Pygments language with options.  So if you wanted to enable `startinline` for `php`,
-you might create a language name called `php-inline` that maps to `php` with `startinline` enabled.  This is done via
-the `extend_pygments_lang` option.
+If using Pygments, some lexers have special settings.  For instance, the `php` lexer has the option `startinline` which,
+if enabled, will parse PHP syntax without requiring `#!php <?` at the beginning. Highlight allows you to configure
+these settings via the option `extend_pygments_lang`. 
 
-`extend_pygments_lang` is an option that takes an array of dictionaries.  Each dictionary contains three keys: `name`
-which is the new name you are adding, `lang` which is the language the new name maps to, and `options` which is a
-dictionary of the options you wish to apply.
+`extend_pygments_lang` allows you to create a special Pygments alias language where you can configure the language
+settings to your liking.  So if you wanted to enable `startinline` for `php`, you might create a language alias called
+`php-inline` that maps to `php` with `startinline` enabled.  This would allow you to use `php` for normal PHP blocks,
+but also allow you to do inline PHP code without the block specifiers. You can also use `extend_pygments_lang` to
+completely override the base language's options -- assuming your specified name overrides an existing name.
+
+`extend_pygments_lang` an array of dictionaries.  Each dictionary contains three keys: `name` which is the new name you
+are adding, `lang` which is the language the new name maps to, and `options` which is a dictionary of the options you
+wish to apply.
 
 !!! example "Highlight Example"
 
-    To create the above mentioned `php-inline` we would feed in the following to `extend_pygments_lang`:
+    To create the above mentioned `php-inline`, this example illustrates the configuration, and Markdown syntax you
+    would use.
 
-    ```py
-    extended_pygments_lang = [
-        {"name": "php-inline", "lang": "php", "options": {"startinline": True}}
-    ]
-    ```
+    === "Output"
+        `#!php-inline $a = array("foo" => 0, "bar" => 1);`
 
-    Now we can do this:
+    === "Markdown"
+        ````
+        `#!php-inline $a = array("foo" => 0, "bar" => 1);`
+        ````
 
-    ````
-    `#!php-inline $a = array("foo" => 0, "bar" => 1);`
-    ````
-
-    To get this:
-
-    `#!php-inline $a = array("foo" => 0, "bar" => 1);`
+    === "Config"
+        ```py
+        extended_pygments_lang = [
+            {"name": "php-inline", "lang": "php", "options": {"startinline": True}}
+        ]
+        ```
 
 ## Line Number Styles
 
 Pygments has two available styles when outputting source code with line numbers enabled: `table` and `inline`. `table`
 is the default output and creates a table output for lines with numbers.  `inline` places the line numbers directly in
-the source code output and can sometimes be undesirable as it copy and paste will always copy the line numbers as well.
+the source code output and can sometimes be undesirable as copy and paste will always copy the line numbers as well.
 
 The Highlight extension provides a third line number style called `pymdownx-inline`.  Instead of writing line numbers
 directly in the pre like Pygments' default `inline` style does, it writes the line numbers as

@@ -19,12 +19,12 @@ multiple extensions; be aware of what they include so you do not accidentally re
   extensions or doubles of extensions.  Here is the full list of included extensions:
 
     ```
-    'pymdownx.betterem',
-    'pymdownx.superfences',
-    'markdown.extensions.footnotes',
-    'markdown.extensions.attr_list',
-    'markdown.extensions.def_list',
-    'markdown.extensions.tables',
-    'markdown.extensions.abbr',
-    'pymdownx.extrarawhtml'
+    pymdownx.betterem
+    pymdownx.superfences
+    markdown.extensions.footnotes
+    markdown.extensions.attr_list
+    markdown.extensions.def_list
+    markdown.extensions.tables
+    markdown.extensions.abbr
+    markdown.extensions.md_in_html
     ```

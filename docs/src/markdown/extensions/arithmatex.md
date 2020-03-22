@@ -1,3 +1,6 @@
+path: tree/master
+source: pymdownx/arithmatex.py
+
 # Arithmatex
 
 ## Overview
@@ -22,27 +25,31 @@ md = markdown.Markdown(extensions=['pymdownx.arithmatex'])
 By default, [`smart_dollar`](#options) mode is enabled for the `#!tex $...$` inline variant. With `smart_dollar` it is
 expected that the opening token (`#!tex $`) is to be followed by a non-whitespace character, and the closing to be
 preceded by a non-white-space character.  This is to help avoid false positives when using the dollar sign in
-traditional ways such as: I have $2.00 and Bob has $10.00.  The previous statement requires no escaping of the `#!tex $`
-character.  But when needed, the `#!tex $` character can be escaped using `#!tex \$`. `smart_dollar` can be disabled and
-will capture any `#!tex $...$` whose dollar symbols are not escaped (`#!tex \$`).
+traditional ways such as: *I have $2.00 and Bob has $10.00*.  The previous statement requires no escaping of the
+`#!tex $` character.  But when needed, the `#!tex $` character can be escaped using `#!tex \$`. `smart_dollar` can be
+disabled and will capture any `#!tex $...$` whose dollar symbols are not escaped (`#!tex \$`).
 
 !!! example "Inline Examples"
 
-    ```tex
-    $p(x|y) = \frac{p(y|x)p(x)}{p(y)}$, \(p(x|y) = \frac{p(y|x)p(x)}{p(y)}\).
-    ```
+    === "Output"
+        $p(x|y) = \frac{p(y|x)p(x)}{p(y)}$, \(p(x|y) = \frac{p(y|x)p(x)}{p(y)}\).
 
-    $p(x|y) = \frac{p(y|x)p(x)}{p(y)}$, \(p(x|y) = \frac{p(y|x)p(x)}{p(y)}\).
+    === "Markdown"
+        ```tex
+        $p(x|y) = \frac{p(y|x)p(x)}{p(y)}$, \(p(x|y) = \frac{p(y|x)p(x)}{p(y)}\).
+        ```
 
-!!! tip
+!!! tip "Inline Configuration"
     When using MathJax, for best results, it is advised to not use [`generic`](#options) mode, and configure MathJax
     without the `text2jax` extension since MathJax automatically detects Arithmatex's default output.
 
     If using generic mode (for libraries like KaTeX), Arithmatex will convert dollars to the form `#!tex \(...\)` in the
     HTML output. This is because `#!tex $...$` is extremely problematic to scan for, which is why MathJax and KaTeX
     disable `#!tex $...$` by default in their plain text scanners, and why Arithmatex enables `smart_dollar` by default
-    when scanning for `#!tex $...$`. It is advised, if outputting in in `generic` mode, to not configure your JavaScript
-    library to look for `#!tex $...$` and instead look for `#!tex \(...\)`, and let Arithmatex's handle `#!tex $...$`.
+    when scanning for `#!tex $...$`.
+
+    It is advised that if you are outputting in in `generic` mode that you do not configure your JavaScript library to
+    look for `#!tex $...$` and instead look for `#!tex \(...\)`, and let Arithmatex's handle `#!tex $...$`.
 
 For block forms, the block must start with the appropriate opening for the block type: `#!tex $$`, `#!tex \[`, and
 `#!tex \begin{}` for the respective search pattern. The block must also end with the proper respective end: `#!tex $$`,
@@ -51,29 +58,31 @@ empty line.
 
 !!! example "Block Examples"
 
-    ```tex
-    $$
-    E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
-    $$
+    === "Output"
+        $$
+        E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+        $$
 
-    \[3 < 4\]
+        \[3 < 4\]
 
-    \begin{align}
-        p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
-        p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
-    \end{align}
-    ```
+        \begin{align}
+            p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
+            p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
+        \end{align}
 
-    $$
-    E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
-    $$
+    === "Markdown"
+        ```tex
+        $$
+        E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+        $$
 
-    \[3 < 4\]
+        \[3 < 4\]
 
-    \begin{align}
-        p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
-        p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
-    \end{align}
+        \begin{align}
+            p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
+            p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
+        \end{align}
+        ```
 
 ## MathJax Output Format
 
@@ -83,15 +92,15 @@ require the `tex2jax.js` extension when setting up MathJax. The tag will be in t
 block.
 
 By default, Arithmatex will also generate a preview span with the class `MathJax_Preview` that can/should be hidden when
-the math content is actually loaded. If you do not want to see generate the preview, simply set `preview` to
+the math content is actually loaded. If you do not want to generate the preview, simply set `preview` to
 `#!py3 False`.
 
 ## Generic Output Format
 
 If [`generic`](#options) is enabled, the extension will escape necessary symbols and normalize all output to be wrapped
 in the more reliable `#!tex \(...\)` for inline math and `#!tex \[...\]` for display math (unless changed via
-`tex_inline_wrap` and `tex_block_wrap` in the [options](#options)). Lastly every everything is inserted into a `span` or
-`div` for inline and display math respectively.
+`tex_inline_wrap` and `tex_block_wrap` in the [options](#options)). Lastly, everything is inserted into a
+`#!html <span>` or `#!html <div>` for inline and display math respectively.
 
 With the default settings, if in your Markdown you used `#!tex $...$` for inline math, it would be converted to
 `#!html <span class="arithmatex">\(...\)</span>` in the HTML. Blocks would be normalized from `#!tex $$...$$` to
@@ -117,8 +126,8 @@ of including MathJax is to use the CDN. Latest version at time of writing this i
 Generally, it is best to add your own configuration to get exactly what you want. Here we show some simple examples of
 configurations done in JavaScript. We've provided two basic configurations below: one that is configured for
 Arithmatex's [MathJax Output Format](#mathjax-output-format), and one that works with the
-[Generic Output Format](#generic-output-format) by using `tex2jax`. These are a good starting point,so feel free to take
-them and configure them further. Please see the [MathJax][mathjax] site for more info on using MathJax
+[Generic Output Format](#generic-output-format) by using `tex2jax`. These are a good starting point, so feel free to
+take them and configure them further. Please see the [MathJax][mathjax] site for more info on using MathJax
 extensions/plugins and configuring those extensions/plugins.
 
 === "Default - MathJax 3"
@@ -148,15 +157,6 @@ extensions/plugins and configuring those extensions/plugins.
     };
     ```
 
-=== "Legacy: Default - MathJax 2"
-    ```js
-    MathJax.Hub.Config({
-      config: ["MMLorHTML.js"],
-      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
-      extensions: ["MathMenu.js", "MathZoom.js"]
-    });
-    ```
-
 === "Generic - MathJax 3"
     ```js
     window.MathJax = {
@@ -171,6 +171,15 @@ extensions/plugins and configuring those extensions/plugins.
         processHtmlClass: "arithmatex"
       }
     };
+    ```
+
+=== "Legacy: Default - MathJax 2"
+    ```js
+    MathJax.Hub.Config({
+      config: ["MMLorHTML.js"],
+      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+      extensions: ["MathMenu.js", "MathZoom.js"]
+    });
     ```
 
 === "Legacy: Generic - MathJax 2"
@@ -287,11 +296,14 @@ extension_config = {
 ```
 
 !!! example "Inline Math"
-    ```
-    `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
-    ```
 
-    `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+    === "Output"
+        `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+
+    === "Markdown"
+        ```
+        `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+        ```
 
 
 In SuperFences, by providing the following configuration (no need to include `pymdownx.arithmatex` as an extension), you
@@ -314,21 +326,24 @@ extension_config = {
 ```
 
 !!! example "Math Fences"
-    ````
-    ```math
-    \begin{align}
-        p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
-        p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
-    \end{align}
-    ```
-    ````
 
-    ```math
-    \begin{align}
-        p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
-        p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
-    \end{align}
-    ```
+    === "Output"
+        ```math
+        \begin{align}
+            p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
+            p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
+        \end{align}
+        ```
+
+    === "Markdown"
+        ````
+        ```math
+        \begin{align}
+            p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
+            p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
+        \end{align}
+        ```
+        ````
 
 Provided formats are found below:
 

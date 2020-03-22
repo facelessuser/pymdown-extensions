@@ -1,0 +1,20 @@
+// Header anchors
+
+.md-typeset {
+  .headerlink {
+    width: px2em(16px);
+    height: px2em(16px);
+    vertical-align: middle;
+    background-color: var(--md-default-fg-color--light);
+    background-size: px2em(16px);
+    mask-size: px2em(16px);
+    mask-repeat: no-repeat;
+    visibility: visible;
+    mask-image: #{icon("material/link")};
+  }
+
+  .headerlink:hover,
+  [id]:target .headerlink {
+    background-color: var(--md-accent-fg-color);
+  }
+}

@@ -27,6 +27,11 @@
     }
 }
 
+.md-hero {
+    color: var(--md-default-fg-color);
+    background-color: var(--md-primary-fg-color--transparent);
+}
+
 @include break-to-device(tablet) {
 
   // Site title in main navigation
@@ -89,38 +94,29 @@
     border-top: px2rem(1px) solid var(--md-primary-fg-color);
   }
 
-  &-copyright__highlight,
-  &-copyright,
-  &-custom-text {
-    color: var(--md-default-fg-color--light);
+  &-copyright {
+    color: #{lighten($drac-bg, 15%)};
+    .md-footer-copyright__highlight {
+      color: var(--md-default-fg-color--light);
+
+      .md-footer-custom-text {
+        color: #{lighten($drac-bg, 15%)};
+      }
+    }
   }
 }
 
 html .md-footer-meta.md-typeset a {
-    color: var(--md-default-fg-color--lighter);
+    color: var(--md-default-fg-color--light);
 
     &:hover {
-      color: var(--md-default-fg-color--light);
+      color: var(--md-default-fg-color);
     }
 }
 
-// Header anchors
-
 .md-typeset {
-  .headerlink {
-    width: px2em(16px);
-    height: px2em(16px);
-    vertical-align: middle;
-    background-color: var(--md-default-fg-color--light);
-    background-size: px2em(16px);
-    mask-size: px2em(16px);
-    mask-repeat: no-repeat;
-    visibility: visible;
-    mask-image: #{icon("material/link")};
-  }
-
-  .headerlink:hover,
-  [id]:target .headerlink {
-    background-color: var(--md-accent-fg-color);
+  h5 {
+    color: var(--md-default-fg-color);
+    text-transform: none;
   }
 }

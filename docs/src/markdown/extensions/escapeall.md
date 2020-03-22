@@ -1,23 +1,28 @@
+path: tree/master
+source: pymdownx/escapeall.py
+
 # EscapeAll
 
 ## Overview
 
-If you ever have to stop and try to remember, *Can I escape this char?* or *Will backslash escape this?*, you are not
+If you ever have to stop and try to remember, *Can I escape this char?* or *Will a backslash escape this?*, you are not
 alone.  EscapeAll makes `\` escape everything making such questions moot.  Now instead of questioning or looking up what
 can be escaped, you can expect that `\` will escape the character following it.  So if you need a literal `\`, just
 escape it: `\\`.  Keep in mind this will not escape things in code blocks of any kind.
 
 !!! example "Escape Example"
 
-    ```
-    \W\e\ \c\a\n\ \e\s\c\a\p\e
-    \e\v\e\r\y\t\h\i\n\g\!\ \
-    \❤\😄
-    ```
+    === "Output"
+        \W\e\ \c\a\n\ \e\s\c\a\p\e
+        \e\v\e\r\y\t\h\i\n\g\!\ \
+        \❤\😄
 
-    \W\e\ \c\a\n\ \e\s\c\a\p\e
-    \e\v\e\r\y\t\h\i\n\g\!\ \
-    \❤\😄
+    === "Markdown"
+        ```
+        \W\e\ \c\a\n\ \e\s\c\a\p\e
+        \e\v\e\r\y\t\h\i\n\g\!\ \
+        \❤\😄
+        ```
 
 There are two special escapes among all of these escapes though: escaping "space" characters and escaping "newline"
 characters. If `nbsp` is enabled, an escaped space will be converted into a non-breaking space: `#!html &nbsp;`. If

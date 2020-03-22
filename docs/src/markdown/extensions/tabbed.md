@@ -1,9 +1,12 @@
+path: tree/master
+source: pymdownx/tabbed.py
+
 # Tabbed
 
 ## Overview
 
-!!! new "New 7.0b1"
-    Tabbed has been newly added in 7.0b1.
+!!! new "New 7.0"
+    Tabbed has been newly added in 7.0.
 
 Tabbed provides a syntax to easily add tabbed Markdown content. The Tabbed extension can be included in Python Markdown
 by using the following:
@@ -17,78 +20,84 @@ md = markdown.Markdown(extensions=['pymdownx.tabbed'])
 
 Tabs start with `===` to signify a tab followed by a quoted title. Consecutive tabs are grouped into a tab set.
 
-```
-=== "Tab 1"
-    Markdown **content**.
+!!! example "Example Tabs"
 
-    Multiple paragraphs.
+    === "Output"
+        === "Tab 1"
+            Markdown **content**.
 
-=== "Tab 2"
-    More Markdown **content**.
+            Multiple paragraphs.
 
-    - list item a
-    - list item b
-```
+        === "Tab 2"
+            More Markdown **content**.
 
-This will yield tabbed Markdown content:
+            - list item a
+            - list item b
 
-=== "Tab 1"
-    Markdown **content**.
+    === "Markdown"
+        ```
+        === "Tab 1"
+            Markdown **content**.
 
-    Multiple paragraphs.
+            Multiple paragraphs.
 
-=== "Tab 2"
-    More Markdown **content**.
+        === "Tab 2"
+            More Markdown **content**.
 
-    - list item a
-    - list item b
+            - list item a
+            - list item b
+        ```
 
 In the rare case that you want to follow two separate tab sets right after each other, you can explicitly mark the start
-of a new tab set with `!`:
+of a new tab set with `!`.
 
-```
-=== "Tab 1"
-    Markdown **content**.
 
-    Multiple paragraphs.
+!!! example "Example Tab Breaks"
 
-=== "Tab 2"
-    More Markdown **content**.
+    === "Output"
+        === "Tab 1"
+            Markdown **content**.
 
-    - list item a
-    - list item b
+            Multiple paragraphs.
 
-===! "Tab A"
-    Different tab set.
+        === "Tab 2"
+            More Markdown **content**.
 
-=== "Tab B"
-    ```
-    More content.
-    ```
-```
+            - list item a
+            - list item b
 
-Which should yield two tab sets.
+        ===! "Tab A"
+            Different tab set.
 
-=== "Tab 1"
-    Markdown **content**.
+        === "Tab B"
+            ```
+            More content.
+            ```
 
-    Multiple paragraphs.
+    === "Markdown"
 
-=== "Tab 2"
-    More Markdown **content**.
+        ```
+        === "Tab 1"
+            Markdown **content**.
 
-    - list item a
-    - list item b
+            Multiple paragraphs.
 
-===! "Tab A"
-    Different tab set.
+        === "Tab 2"
+            More Markdown **content**.
 
-=== "Tab B"
-    ```
-    More content.
-    ```
+            - list item a
+            - list item b
 
-## Styling
+        ===! "Tab A"
+            Different tab set.
+
+        === "Tab B"
+            ```
+            More content.
+            ```
+        ```
+
+## Styling with CSS
 
 In order to use tabbed blocks, some additional CSS is needed. You can check out the configuration below which will
 show the CSS and the HTML it targets. Keep in mind the CSS is just the minimum to get you started. You can tweak it and
