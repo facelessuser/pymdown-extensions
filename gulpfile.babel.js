@@ -26,7 +26,10 @@ import revReplace from "gulp-rev-replace"
 import vinylPaths from "vinyl-paths"
 import del from "del"
 import touch from "gulp-touch-fd"
-import sassInlineSVG from "sass-inline-svg-utf8"
+import fs from "fs"
+import mime from "mime"
+import replaceall from "replaceall"
+import nodeSass from "node-sass"
 
 /* Argument Flags */
 const args = yargs
@@ -83,6 +86,64 @@ const config = {
 }
 
 // ------------------------------
+// SVG inine (modified to do a minimal encoding)
+// ------------------------------
+
+/* The MIT License (MIT)
+
+Copyright (c) Franz Heidl, 2017.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+*/
+
+const inlineImage = function(filepath, replace, done) {
+  const mimeType = mime.getType(filepath)
+  if (mimeType !== "image/svg+xml") {
+    throw new Error(`File ${filepath} is not of type image/svg+xml.`)
+  } else {
+    const data = fs.readFileSync(filepath)
+    if (!data || !data.length) {
+      throw new Error(`File ${filepath} is empty or cannot be read.`)
+    }
+    let result = data.toString("utf8")
+    if (replace.getLength()) {
+      for (let i = 0; i < replace.getLength(); i++) {
+        result = replaceall(replace.getKey(i).getValue(), replace.getValue(i).getValue(), result)
+      }
+    }
+    done(result)
+  }
+}
+
+const inlineSvg = function() {
+  return {
+    "inline-svg($filename, $replace: ())": (filename, replace, done) => {
+      inlineImage(filename.getValue(), replace, dataUrl => {
+        // Minimaly encode SVG
+        const encodedUrl = dataUrl.replace(/"/g, "'").replace(/#/g, "%23")
+        done(new nodeSass.types.String(`url("data:image/svg+xml;charset=utf-8,${encodedUrl}")`))
+      })
+    }
+  }
+}
+
+// ------------------------------
 // SASS/SCSS processing
 // ------------------------------
 gulp.task("scss:build:sass", () => {
@@ -93,7 +154,7 @@ gulp.task("scss:build:sass", () => {
 
   return gulp.src(config.files.scss)
     .pipe(sass({
-      functions: sassInlineSVG(),
+      functions: inlineSvg(),
       includePaths: [
         "node_modules/modularscale-sass/stylesheets",
         "node_modules/material-design-color",

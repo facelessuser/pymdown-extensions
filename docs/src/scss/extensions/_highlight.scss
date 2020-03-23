@@ -36,12 +36,12 @@
   .gd { color: $drac-pink; font-weight: 700; background-color: $drac-bg } // Generic.Deleted
   .ge { color: $drac-fg; text-decoration: underline } // Generic.Emph
   .gr { color: $drac-fg } // Generic.Error
-  .gh { color: $drac-fg; font-weight: 700;} // Generic.Heading
+  .gh { color: #{transparentize($drac-fg, 0.46)}; font-weight: 700;} // Generic.Heading
   .gi { color: $drac-green; font-weight: 700; background-color: $drac-bg } // Generic.Inserted
   .go { color: $drac-blue } // Generic.Output
   .gp { color: $drac-fg } // Generic.Prompt
   .gs { color: $drac-fg } // Generic.Strong
-  .gu { color: $drac-fg; font-weight: 700;} // Generic.Subheading
+  .gu { color: #{transparentize($drac-fg, 0.46)}; font-weight: 700;} // Generic.Subheading
   .gt { color: $drac-fg } // Generic.Traceback
   .kc { color: $drac-pink } // Keyword.Constant
   .kd { color: $drac-cyan; font-style: italic } // Keyword.Declaration
