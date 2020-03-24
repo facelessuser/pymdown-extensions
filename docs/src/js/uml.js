@@ -24,39 +24,20 @@ export default className => {
     return text
   }
 
-  // Change article to whatever element your main Markdown content lives.
-  const article = document.querySelectorAll("article")
   const blocks = document.querySelectorAll(`pre.${className}`)
-
-  // Find the UML source element and get the text
   for (let i = 0; i < blocks.length; i++) {
     const parentEl = blocks[i]
-    const text = getFromCode(parentEl)
 
-    // Insert our new div at the end of our content to get general
-    // typeset and page sizes as our parent might be `display:none`
-    // keeping us from getting the right sizes for our SVG.
-    // Our new div will be hidden via "visibility" and take no space
-    // via `position: absolute`. When we are all done, use the
-    // original node as a reference to insert our SVG back
-    // into the proper place, and then make our SVG visible again.
-    // Lastly, clean up the old node.
-    const temp = document.createElement("div")
-    temp.style.visibility = "hidden"
-    temp.style.position = "absolute"
-
-    article[0].appendChild(temp)
     mermaid.mermaidAPI.render(
       `_mermaind_${i}`,
-      text,
+      getFromCode(parentEl),
       content => {
         const el = document.createElement("div")
         el.className = className
         el.innerHTML = content
         parentEl.parentNode.insertBefore(el, parentEl)
         parentEl.parentNode.removeChild(parentEl)
-      },
-      temp
+      }
     )
   }
 }

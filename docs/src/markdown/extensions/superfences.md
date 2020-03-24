@@ -688,9 +688,9 @@ will automatically find the `#!html <div>` elements with the `mermaid` class and
 
     Mermaid has it's own ability to auto load content, but we turn it off in this document. This is because we implement
     a number of special elements in our documents such as [details](./details.md) and [tabbed interfaces](./tabbed.md),
-    both of which will hide content. Mermaid, when rendering content in a hidden element, will not properly size the
-    render leading to tiny, unreadable content. We create our own auto loader in this document to ensure the render is
-    always done properly.
+    both of which will hide content. Mermaid, when auto loading content in a hidden element, seems to have trouble, and
+    will not properly size the render leading to tiny, unreadable content. We create our own auto loader in this
+    document which seems to work without issues.
 
     To turn off the [Mermaid's][mermaid] auto loading we initialize the library with a configuration that disables auto
     loading:
@@ -757,28 +757,13 @@ will automatically find the `#!html <div>` elements with the `mermaid` class and
           }
 
           return text;
-        }; // Change article to whatever element your main Markdown content lives.
+        };
 
-
-        var article = document.querySelectorAll("article");
-        var blocks = document.querySelectorAll("pre.".concat(className)); // Find the UML source element and get the text
-
+        var blocks = document.querySelectorAll("pre.".concat(className));
         for (var i = 0; i < blocks.length; i++) {
           var parentEl = blocks[i];
-          var text = getFromCode(parentEl); // Insert our new div at the end of our content to get general
-          // typeset and page sizes as our parent might be `display:none`
-          // keeping us from getting the right sizes for our SVG.
-          // Our new div will be hidden via "visibility" and take no space
-          // via `position: absolute`. When we are all done, use the
-          // original node as a reference to insert our SVG back
-          // into the proper place, and then make our SVG visible again.
-          // Lastly, clean up the old node.
 
-          var temp = document.createElement('div');
-          temp.style.visibility = "hidden";
-          temp.style.position = "absolute";
-          article[0].appendChild(temp);
-          mermaid.mermaidAPI.render("_mermaind_".concat(i), text, function (content) {
+          mermaid.mermaidAPI.render("_mermaind_".concat(i), getFromCode(parentEl), function (content) {
             var el = document.createElement("div");
             el.className = className;
             el.innerHTML = content;
