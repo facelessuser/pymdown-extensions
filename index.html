@@ -43,7 +43,7 @@
     
     
     
-      <link rel="stylesheet" href="assets/pymdownx-extras/extra-fccca6ed0a.css">
+      <link rel="stylesheet" href="assets/pymdownx-extras/extra-aaae20cd6f.css">
     
     
       
@@ -970,23 +970,24 @@ parsed.</p>
 <div class="admonition summary">
 <p class="admonition-title">SuperFences</p>
 <p><a href="extensions/superfences/">SuperFences</a> is like Python Markdown's fences, but better. Nest fences under lists,
-admonitions, and other syntaxes. Combine multiple fences together in tabbed groups, and even create special custom
-fences for content like UML.</p>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Markdown</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>Title: Here is a title
-A-&gt;B: Normal line
-B--&gt;C: Dashed line
-C-&gt;&gt;D: Open arrow
-D--&gt;&gt;A: Dashed open arrow
-</code></pre></div>
+admonitions, and other syntaxes. You can even create special custom fences for content like UML.</p>
+<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Output</label><div class="tabbed-content">
+<pre class="mermaid"><code>graph TD;
+    A--&gt;B;
+    A--&gt;C;
+    B--&gt;D;
+    C--&gt;D;</code></pre>
 
 </div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Output</label><div class="tabbed-content">
-<pre class="uml-sequence-diagram"><code>Title: Here is a title
-A-&gt;B: Normal line
-B--&gt;C: Dashed line
-C-&gt;&gt;D: Open arrow
-D--&gt;&gt;A: Dashed open arrow</code></pre>
+<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Markdown</label><div class="tabbed-content">
+<div class="highlight"><pre><span></span><code>```mermaid
+graph TD;
+    A--&gt;B;
+    A--&gt;C;
+    B--&gt;D;
+    C--&gt;D;
+```
+</code></pre></div>
 
 </div>
 </div>
@@ -1016,13 +1017,15 @@ D--&gt;&gt;A: Dashed open arrow</code></pre>
 <p><a href="extensions/tilde/">Tilde</a> is syntactically built around the <code>~</code> character. It adds support for inserting
 sub<sub>scripts</sub> and adds an easy way to place <del>text</del> in a <code class="highlight"><span class="p">&lt;</span><span class="nt">del</span><span class="p">&gt;</span></code> tag.</p>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script>
+<script src="https://unpkg.com/mermaid@8.4.8/dist/mermaid.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script>
+<script>
+  var config = {
+    startOnLoad: false,
+    theme:'dark'
+  };
+  mermaid.initialize(config);
+</script>
 
 <script>
 window.MathJax = {
@@ -1067,7 +1070,7 @@ window.MathJax = {
 <div class="md-source-date">
   <small>
     
-      Last update: March 22, 2020
+      Last update: March 24, 2020
     
   </small>
 </div>
@@ -1170,7 +1173,7 @@ window.MathJax = {
         }, typeof __config !== "undefined" ? __config : {}))
       </script>
       
-        <script src="assets/pymdownx-extras/extra-52d8c68747.js"></script>
+        <script src="assets/pymdownx-extras/extra-e840130d1d.js"></script>
       
     
   </body>

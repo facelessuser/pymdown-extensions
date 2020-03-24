@@ -43,7 +43,7 @@
     
     
     
-      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-fccca6ed0a.css">
+      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-aaae20cd6f.css">
     
     
       
@@ -1517,32 +1517,20 @@ import foo.bar.baz
 <div class="admonition example">
 <p class="admonition-title">Flow Chart Example</p>
 <div class="tabbed-set" data-tabs="12:2"><input checked="checked" id="__tabbed_12_1" name="__tabbed_12" type="radio" /><label for="__tabbed_12_1">Output</label><div class="tabbed-content">
-<pre class="uml-flowchart"><code>st=&gt;start: Start:&gt;http://www.google.com[blank]
-e=&gt;end:&gt;http://www.google.com
-op1=&gt;operation: My Operation
-sub1=&gt;subroutine: My Subroutine
-cond=&gt;condition: Yes
-or No?:&gt;http://www.google.com
-io=&gt;inputoutput: catch something...
-
-st-&gt;op1-&gt;cond
-cond(yes)-&gt;io-&gt;e
-cond(no)-&gt;sub1(right)-&gt;op1</code></pre>
+<pre class="mermaid"><code>graph TD;
+    A--&gt;B;
+    A--&gt;C;
+    B--&gt;D;
+    C--&gt;D;</code></pre>
 
 </div>
 <input id="__tabbed_12_2" name="__tabbed_12" type="radio" /><label for="__tabbed_12_2">Markdown</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>```flow
-st=&gt;start: Start:&gt;http://www.google.com[blank]
-e=&gt;end:&gt;http://www.google.com
-op1=&gt;operation: My Operation
-sub1=&gt;subroutine: My Subroutine
-cond=&gt;condition: Yes
-or No?:&gt;http://www.google.com
-io=&gt;inputoutput: catch something...
-
-st-&gt;op1-&gt;cond
-cond(yes)-&gt;io-&gt;e
-cond(no)-&gt;sub1(right)-&gt;op1
+<div class="highlight"><pre><span></span><code>```mermaid
+graph TD;
+    A--&gt;B;
+    A--&gt;C;
+    B--&gt;D;
+    C--&gt;D;
 ```
 </code></pre></div>
 
@@ -1552,32 +1540,44 @@ cond(no)-&gt;sub1(right)-&gt;op1
 <div class="admonition example">
 <p class="admonition-title">Sequence Diagram Example</p>
 <div class="tabbed-set" data-tabs="13:2"><input checked="checked" id="__tabbed_13_1" name="__tabbed_13" type="radio" /><label for="__tabbed_13_1">Output</label><div class="tabbed-content">
-<pre class="uml-sequence-diagram"><code>Title: Here is a title
-A-&gt;B: Normal line
-B--&gt;C: Dashed line
-C-&gt;&gt;D: Open arrow
-D--&gt;&gt;A: Dashed open arrow</code></pre>
+<pre class="mermaid"><code>sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice-&gt;&gt;John: Hello John, how are you?
+    loop Healthcheck
+        John-&gt;&gt;John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts &lt;br/&gt;prevail!
+    John--&gt;&gt;Alice: Great!
+    John-&gt;&gt;Bob: How about you?
+    Bob--&gt;&gt;John: Jolly good!</code></pre>
 
 </div>
 <input id="__tabbed_13_2" name="__tabbed_13" type="radio" /><label for="__tabbed_13_2">Markdown</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>```sequence
-Title: Here is a title
-A-&gt;B: Normal line
-B--&gt;C: Dashed line
-C-&gt;&gt;D: Open arrow
-D--&gt;&gt;A: Dashed open arrow
+<div class="highlight"><pre><span></span><code>```mermaid
+sequenceDiagram
+    participant Alice
+    participant Bob
+    Alice-&gt;&gt;John: Hello John, how are you?
+    loop Healthcheck
+        John-&gt;&gt;John: Fight against hypochondria
+    end
+    Note right of John: Rational thoughts &lt;br/&gt;prevail!
+    John--&gt;&gt;Alice: Great!
+    John-&gt;&gt;Bob: How about you?
+    Bob--&gt;&gt;John: Jolly good!
 ```
 </code></pre></div>
 
 </div>
 </div>
 </div>
-<p>As shown above, SuperFences defines two default custom fences (which can be removed if desired) called <code>flow</code> and
-<code>sequence</code>, for flowcharts and sequence diagrams respectively. The default custom fences simply preserve the content
-between the fences so a JavaScript UML library can convert the content and render the UML. To see <em>exactly</em> how to set
-up UML like in this documentation, see <a href="#uml-diagram-example">UML Diagram Example</a>.</p>
+<p>In the above example, we have set up a custom fence called <code>mermaid</code> which allows us to process special charts with
+<a href="https://mermaid-js.github.io/mermaid/#/">Mermaid</a>. In this case, our special fence preserves the content and sends them to a an element so that
+<a href="https://mermaid-js.github.io/mermaid/#/">Mermaid</a> can then find them and convert them when the document is loaded. To learn more see <a href="#uml-diagram-example">UML Diagram
+Example</a>.</p>
 <p>Custom fences are created via the <code>custom_fences</code> option.  <code>custom_fences</code> takes an array of dictionaries where each
-dictionary defines a custom fence. The dictionaries requires the following keys:</p>
+dictionary defines a custom fence. The dictionaries require the following keys:</p>
 <table>
 <thead>
 <tr>
@@ -1706,23 +1706,52 @@ test
 see the <a href="../../faq/#function-references-in-yaml">FAQ</a> to see how to specify function references in YAML.</p>
 </div>
 <h3 id="uml-diagram-example">UML Diagram Example<a class="headerlink" href="#uml-diagram-example" title="Permanent link"></a></h3>
-<p>This example illustrates how this document uses the <code>custom_fences</code> option to do UML diagrams.  The settings below shows
-two new custom languages called <code>flow</code> and <code>sequence</code> and are the options that must be fed through the <code>custom_fences</code>
-<a href="#options">option</a>. The <code>flow</code> and <code>sequence</code> fences will pass the content through the <code>superfences.fence_code_format</code>
-format function which will wrap the content in <code class="highlight"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">code</span></code> blocks and attach the class <code>uml-flowchart</code> or
-<code>uml-sequence-diagram</code> to the respective <code class="highlight"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;</span></code> block. <code>superfences.fence_div_format</code> could just as easily be
-used to wrap the content in a <code class="highlight"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span></code> instead, or a new custom function could have been written and used.</p>
+<p>This example illustrates how this you can use the <code>custom_fences</code> option to do UML diagrams with <a href="https://mermaid-js.github.io/mermaid/#/">Mermaid</a>.
+The settings below show us creating a new custom fence called <code>mermaid</code>. The special fence is set under the
+<code>custom_fences</code> <a href="#options">option</a>.</p>
+<p>The <code>mermaid</code> fences will pass the content through the <code>superfences.fence_div_format</code> format function which will wrap
+the content in <code class="highlight"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span></code> blocks and attach the class <code>mermaid</code> to the <code class="highlight"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span></code> block.</p>
 <div class="highlight"><pre><span></span><code><span class="n">extension_configs</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;pymdownx.superfences&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;custom_fences&quot;</span><span class="p">:</span> <span class="p">[</span>
             <span class="p">{</span>
-                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;flow&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;uml-flowchart&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="n">pymdownx</span><span class="o">.</span><span class="n">superfences</span><span class="o">.</span><span class="n">fence_code_format</span>
-            <span class="p">},</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;mermaid&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;mermaid&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="n">pymdownx</span><span class="o">.</span><span class="n">superfences</span><span class="o">.</span><span class="n">fence_div_format</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The format function we used in this example only escapes the content to be included in HTML. We will rely on the
+<a href="https://mermaid-js.github.io/mermaid/#/">Mermaid</a> JavaScript library to render our flowcharts/diagrams in the browser. <a href="https://mermaid-js.github.io/mermaid/#/">Mermaid</a>, on load,
+will automatically find the <code class="highlight"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span></code> elements with the <code>mermaid</code> class and render them. We can include
+<a href="https://mermaid-js.github.io/mermaid/#/">Mermaid</a> via its CDN.</p>
+<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://unpkg.com/mermaid@8.4.8/dist/mermaid.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</code></pre></div>
+
+<details class="tip"><summary>How We Do It in This Document</summary><p>Mermaid has it's own ability to auto load content, but we turn it off in this document. This is because we implement
+a number of special elements in our documents such as <a href="../details/">details</a> and <a href="../tabbed/">tabbed interfaces</a>,
+both of which will hide content. Mermaid, when rendering content in a hidden element, will not properly size the
+render leading to tiny, unreadable content. We create our own auto loader in this document to ensure the render is
+always done properly.</p>
+<p>To turn off the <a href="https://mermaid-js.github.io/mermaid/#/">Mermaid's</a> auto loading we initialize the library with a configuration that disables auto
+loading:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="nx">startOnLoad</span><span class="o">:</span> <span class="kc">false</span>
+<span class="p">};</span>
+<span class="nx">mermaid</span><span class="p">.</span><span class="nx">initialize</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
+</code></pre></div>
+
+<p>We actually output our content into <code class="highlight"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">code</span><span class="p">&gt;</span></code> elements so that if something goes wrong, the diagram
+source is rendered as code.</p>
+<div class="highlight"><pre><span></span><code><span class="n">extension_configs</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;pymdownx.superfences&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s2">&quot;custom_fences&quot;</span><span class="p">:</span> <span class="p">[</span>
             <span class="p">{</span>
-                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;sequence&#39;</span><span class="p">,</span>
-                <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;uml-sequence-diagram&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;name&#39;</span><span class="p">:</span> <span class="s1">&#39;mermaid&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;mermaid&#39;</span><span class="p">,</span>
                 <span class="s1">&#39;format&#39;</span><span class="p">:</span> <span class="n">pymdownx</span><span class="o">.</span><span class="n">superfences</span><span class="o">.</span><span class="n">fence_code_format</span>
             <span class="p">}</span>
         <span class="p">]</span>
@@ -1730,160 +1759,100 @@ used to wrap the content in a <code class="highlight"><span class="p">&lt;</span
 <span class="p">}</span>
 </code></pre></div>
 
-<p>As defined above, the custom UML diagrams are recognized when defining a fenced code block with either the language
-<code>flow</code> or <code>sequence</code>.  When they are converted, the HTML element containing this content will have the respective
-classes <code>uml-flowchart</code> or <code>uml-sequence-diagram</code>. The format function we used in this example only escapes the content
-to be included in HTML. We will rely on JavaScript libraries to render our flowcharts/diagrams in the browser.</p>
-<p>The JavaScript libraries used to render UML in this document are <a href="http://adrai.github.io/flowchart.js/">flowchart.js</a> and
-<a href="http://bramp.github.io/js-sequence-diagrams/">sequence-diagram.js</a>. This extension does not provide these JavaScript libraries; you must provide
-the necessary JavaScript files for your custom fences yourself. If you wish to follow along with this example to enable
-UML, see the requirements below.</p>
-<dl>
-<dt>flowcharts</dt>
-<dd>
-<ul>
-<li><a href="http://dmitrybaranovskiy.github.io/raphael/">raphael.js</a></li>
-<li><a href="http://adrai.github.io/flowchart.js/">flowchart.js</a></li>
-</ul>
-</dd>
-<dt>sequence diagrams</dt>
-<dd>
-<p>Minimum requirements for the latest version available via CDN (at the time of writing this).</p>
-<ul>
-<li><a href="http://dmitrybaranovskiy.github.io/raphael/">raphael.js</a></li>
-<li><a href="http://underscorejs.org/">underscore.js</a></li>
-<li><a href="http://bramp.github.io/js-sequence-diagrams/">sequence-diagram.js</a></li>
-</ul>
-</dd>
-</dl>
-<p>All of the above mentioned libraries can be included using CDNs (you can use the version of your choice):</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
-
-<p>Simply including the libraries above is not enough as these libraries need to be pointed at the elements they need to
-convert.  Also, we need to configure the libraries with the settings we would like.</p>
-<p>As mentioned earlier, our flowchart elements have the <code>uml-flowchart</code> class assigned to them, and the sequence diagram
-elements have the <code>uml-sequence-diagram</code> class assigned to them. Below shows an example script to convert the UML
-diagrams for both flowcharts and sequence diagrams using the listed libraries above. This script will target the
-elements with the classes <code>uml-flowchart</code> and <code>uml-sequence-diagram</code>. The script will pass the content to the correct
-library to render the content.  It will then insert the rendered UML and remove the original source. This is just an
-example, and you are not required to use the following script. You are free to modify the example script or write your
-own to suite your specific custom fence.</p>
-<p>In the below example we create an <code>onReady</code> function to execute the conversion when the HTML is loaded.  We create a
-<code>convertUML</code> function that takes the class name to search for, the converter to use, and a settings object to feed into
-the converter.  We then call <code>onReady</code> and feed it a callback function that will execute <code>convertUML</code> for flowcharts and
-for sequence diagrams. Notice that <code>convertUML</code> can handle both the <code class="highlight"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">code</span><span class="p">&gt;</span></code> format or the <code class="highlight"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span></code>
-format we mentioned earlier.</p>
-<p>The actual <code>convertUML</code> function reads UML instructions from our element and sticks it in a div that gets appended to
-our main HTML content (in this case we look for the the <code>body</code> tag, but it could be anything). We don't want to do it in
-place where our UML instructions are because it might be under an element that is hiding it with <code>display: none</code> (like a
-<code>details</code> tag); it won't render correctly if its parent is not displayed.  After we render the SVG, we insert it back
-where it belongs throwing away the original element that had the instructions.</p>
+<p>Next we use a simple script that targets the source and extracts the text. It renders the content in a hidden
+element at the end of our <code>article</code> element (which contains the current pages source) to get basic typesetting and
+sizes. Once rendered, we then replace the original content so that we are left with just the rendered chart.</p>
+<p>We implement an event on load, and if <code>mermaid</code> is present, we run the <code>uml</code> function that targets the
+<code class="highlight"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;</span></code> elements with the <code>mermaid</code> class, converting them and replacing the source elements.</p>
 <div class="highlight"><pre><span></span><code><span class="lineno" data-linenos=" 1 "></span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-<span class="lineno" data-linenos=" 2 "></span><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+<span class="lineno" data-linenos=" 2 "></span>  <span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
 <span class="lineno" data-linenos=" 3 "></span>
-<span class="lineno" data-linenos=" 4 "></span><span class="cm">/**</span>
-<span class="lineno" data-linenos=" 5 "></span><span class="cm"> * Targets special code or div blocks and converts them to UML.</span>
-<span class="lineno" data-linenos=" 6 "></span><span class="cm"> * @param {object} converter is the object that transforms the text to UML.</span>
-<span class="lineno" data-linenos=" 7 "></span><span class="cm"> * @param {string} className is the name of the class to target.</span>
-<span class="lineno" data-linenos=" 8 "></span><span class="cm"> * @param {object} settings is the settings for converter.</span>
-<span class="lineno" data-linenos=" 9 "></span><span class="cm"> * @return {void}</span>
-<span class="lineno" data-linenos="10 "></span><span class="cm"> */</span>
-<span class="lineno" data-linenos="11 "></span><span class="kd">var</span> <span class="nx">uml</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">converter</span><span class="p">,</span> <span class="nx">className</span><span class="p">,</span> <span class="nx">settings</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno" data-linenos="12 "></span>
-<span class="lineno" data-linenos="13 "></span>  <span class="kd">var</span> <span class="nx">getFromCode</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">getFromCode</span><span class="p">(</span><span class="nx">parent</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno" data-linenos="14 "></span>    <span class="c1">// Handles &lt;pre&gt;&lt;code&gt;</span>
-<span class="lineno" data-linenos="15 "></span>    <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
-<span class="lineno" data-linenos="16 "></span>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno" data-linenos="17 "></span>      <span class="kd">var</span> <span class="nx">subEl</span> <span class="o">=</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span>
-<span class="lineno" data-linenos="18 "></span>      <span class="k">if</span> <span class="p">(</span><span class="nx">subEl</span><span class="p">.</span><span class="nx">tagName</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">===</span> <span class="s2">&quot;code&quot;</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno" data-linenos="19 "></span>        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">k</span> <span class="o">&lt;</span> <span class="nx">subEl</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno" data-linenos="20 "></span>          <span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="nx">subEl</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="nx">k</span><span class="p">];</span>
-<span class="lineno" data-linenos="21 "></span>          <span class="kd">var</span> <span class="nx">whitespace</span> <span class="o">=</span> <span class="sr">/^\s*$/</span><span class="p">;</span>
-<span class="lineno" data-linenos="22 "></span>          <span class="k">if</span> <span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">nodeName</span> <span class="o">===</span> <span class="s2">&quot;#text&quot;</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">whitespace</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">nodeValue</span><span class="p">))</span> <span class="p">{</span>
-<span class="lineno" data-linenos="23 "></span>            <span class="nx">text</span> <span class="o">=</span> <span class="nx">child</span><span class="p">.</span><span class="nx">nodeValue</span><span class="p">;</span>
-<span class="lineno" data-linenos="24 "></span>            <span class="k">break</span><span class="p">;</span>
-<span class="lineno" data-linenos="25 "></span>          <span class="p">}</span>
-<span class="lineno" data-linenos="26 "></span>        <span class="p">}</span>
-<span class="lineno" data-linenos="27 "></span>      <span class="p">}</span>
-<span class="lineno" data-linenos="28 "></span>    <span class="p">}</span>
-<span class="lineno" data-linenos="29 "></span>    <span class="k">return</span> <span class="nx">text</span><span class="p">;</span>
-<span class="lineno" data-linenos="30 "></span>  <span class="p">};</span>
-<span class="lineno" data-linenos="31 "></span>
-<span class="lineno" data-linenos="32 "></span>  <span class="kd">var</span> <span class="nx">getFromDiv</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">getFromDiv</span><span class="p">(</span><span class="nx">parent</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno" data-linenos="33 "></span>    <span class="c1">// Handles &lt;div&gt;</span>
-<span class="lineno" data-linenos="34 "></span>    <span class="k">return</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">textContent</span> <span class="o">||</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">innerText</span><span class="p">;</span>
-<span class="lineno" data-linenos="35 "></span>  <span class="p">};</span>
+<span class="lineno" data-linenos=" 4 "></span>  <span class="cm">/**</span>
+<span class="lineno" data-linenos=" 5 "></span><span class="cm">   * Targets special code or div blocks and converts them to UML.</span>
+<span class="lineno" data-linenos=" 6 "></span><span class="cm">   * @param {string} className is the name of the class to target.</span>
+<span class="lineno" data-linenos=" 7 "></span><span class="cm">   * @return {void}</span>
+<span class="lineno" data-linenos=" 8 "></span><span class="cm">   */</span>
+<span class="lineno" data-linenos=" 9 "></span>  <span class="kd">var</span> <span class="nx">uml</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">className</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno" data-linenos="10 "></span>    <span class="kd">var</span> <span class="nx">getFromCode</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">getFromCode</span><span class="p">(</span><span class="nx">parent</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno" data-linenos="11 "></span>      <span class="c1">// Handles &lt;pre&gt;&lt;code&gt;</span>
+<span class="lineno" data-linenos="12 "></span>      <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="p">;</span>
+<span class="lineno" data-linenos="13 "></span>
+<span class="lineno" data-linenos="14 "></span>      <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno" data-linenos="15 "></span>        <span class="kd">var</span> <span class="nx">subEl</span> <span class="o">=</span> <span class="nx">parent</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="nx">j</span><span class="p">];</span>
+<span class="lineno" data-linenos="16 "></span>
+<span class="lineno" data-linenos="17 "></span>        <span class="k">if</span> <span class="p">(</span><span class="nx">subEl</span><span class="p">.</span><span class="nx">tagName</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">===</span> <span class="s2">&quot;code&quot;</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno" data-linenos="18 "></span>          <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">k</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">k</span> <span class="o">&lt;</span> <span class="nx">subEl</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">k</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno" data-linenos="19 "></span>            <span class="kd">var</span> <span class="nx">child</span> <span class="o">=</span> <span class="nx">subEl</span><span class="p">.</span><span class="nx">childNodes</span><span class="p">[</span><span class="nx">k</span><span class="p">];</span>
+<span class="lineno" data-linenos="20 "></span>            <span class="kd">var</span> <span class="nx">whitespace</span> <span class="o">=</span> <span class="sr">/^\s*$/</span><span class="p">;</span>
+<span class="lineno" data-linenos="21 "></span>
+<span class="lineno" data-linenos="22 "></span>            <span class="k">if</span> <span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">nodeName</span> <span class="o">===</span> <span class="s2">&quot;#text&quot;</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="nx">whitespace</span><span class="p">.</span><span class="nx">test</span><span class="p">(</span><span class="nx">child</span><span class="p">.</span><span class="nx">nodeValue</span><span class="p">))</span> <span class="p">{</span>
+<span class="lineno" data-linenos="23 "></span>              <span class="nx">text</span> <span class="o">=</span> <span class="nx">child</span><span class="p">.</span><span class="nx">nodeValue</span><span class="p">;</span>
+<span class="lineno" data-linenos="24 "></span>              <span class="k">break</span><span class="p">;</span>
+<span class="lineno" data-linenos="25 "></span>            <span class="p">}</span>
+<span class="lineno" data-linenos="26 "></span>          <span class="p">}</span>
+<span class="lineno" data-linenos="27 "></span>        <span class="p">}</span>
+<span class="lineno" data-linenos="28 "></span>      <span class="p">}</span>
+<span class="lineno" data-linenos="29 "></span>
+<span class="lineno" data-linenos="30 "></span>      <span class="k">return</span> <span class="nx">text</span><span class="p">;</span>
+<span class="lineno" data-linenos="31 "></span>    <span class="p">};</span> <span class="c1">// Change article to whatever element your main Markdown content lives.</span>
+<span class="lineno" data-linenos="32 "></span>
+<span class="lineno" data-linenos="33 "></span>
+<span class="lineno" data-linenos="34 "></span>    <span class="kd">var</span> <span class="nx">article</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s2">&quot;article&quot;</span><span class="p">);</span>
+<span class="lineno" data-linenos="35 "></span>    <span class="kd">var</span> <span class="nx">blocks</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s2">&quot;pre.&quot;</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">className</span><span class="p">));</span> <span class="c1">// Find the UML source element and get the text</span>
 <span class="lineno" data-linenos="36 "></span>
-<span class="lineno" data-linenos="37 "></span>  <span class="c1">// Change body to whatever element your main Markdown content lives.</span>
-<span class="lineno" data-linenos="38 "></span>  <span class="kd">var</span> <span class="nx">body</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s2">&quot;body&quot;</span><span class="p">);</span>
-<span class="lineno" data-linenos="39 "></span>  <span class="kd">var</span> <span class="nx">blocks</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s2">&quot;pre.&quot;</span> <span class="o">+</span> <span class="nx">className</span> <span class="o">+</span> <span class="s2">&quot;,div.&quot;</span> <span class="o">+</span> <span class="nx">className</span>
-<span class="lineno" data-linenos="40 "></span>
-<span class="lineno" data-linenos="41 "></span>  <span class="c1">// Is there a settings object?</span>
-<span class="lineno" data-linenos="42 "></span>  <span class="p">);</span><span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="nx">settings</span> <span class="o">===</span> <span class="k">void</span> <span class="mi">0</span> <span class="o">?</span> <span class="p">{}</span> <span class="o">:</span> <span class="nx">settings</span><span class="p">;</span>
-<span class="lineno" data-linenos="43 "></span>
-<span class="lineno" data-linenos="44 "></span>  <span class="c1">// Find the UML source element and get the text</span>
-<span class="lineno" data-linenos="45 "></span>  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">blocks</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno" data-linenos="46 "></span>    <span class="kd">var</span> <span class="nx">parentEl</span> <span class="o">=</span> <span class="nx">blocks</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
-<span class="lineno" data-linenos="47 "></span>    <span class="kd">var</span> <span class="nx">el</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">);</span>
-<span class="lineno" data-linenos="48 "></span>    <span class="nx">el</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="nx">className</span><span class="p">;</span>
-<span class="lineno" data-linenos="49 "></span>    <span class="nx">el</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">visibility</span> <span class="o">=</span> <span class="s2">&quot;hidden&quot;</span><span class="p">;</span>
-<span class="lineno" data-linenos="50 "></span>    <span class="nx">el</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">position</span> <span class="o">=</span> <span class="s2">&quot;absolute&quot;</span><span class="p">;</span>
-<span class="lineno" data-linenos="51 "></span>
-<span class="lineno" data-linenos="52 "></span>    <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">parentEl</span><span class="p">.</span><span class="nx">tagName</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">()</span> <span class="o">===</span> <span class="s2">&quot;pre&quot;</span> <span class="o">?</span> <span class="nx">getFromCode</span><span class="p">(</span><span class="nx">parentEl</span><span class="p">)</span> <span class="o">:</span> <span class="nx">getFromDiv</span><span class="p">(</span><span class="nx">parentEl</span><span class="p">);</span>
-<span class="lineno" data-linenos="53 "></span>
-<span class="lineno" data-linenos="54 "></span>    <span class="c1">// Insert our new div at the end of our content to get general</span>
-<span class="lineno" data-linenos="55 "></span>    <span class="c1">// typeset and page sizes as our parent might be `display:none`</span>
-<span class="lineno" data-linenos="56 "></span>    <span class="c1">// keeping us from getting the right sizes for our SVG.</span>
-<span class="lineno" data-linenos="57 "></span>    <span class="c1">// Our new div will be hidden via &quot;visibility&quot; and take no space</span>
-<span class="lineno" data-linenos="58 "></span>    <span class="c1">// via `position: absolute`. When we are all done, use the</span>
-<span class="lineno" data-linenos="59 "></span>    <span class="c1">// original node as a reference to insert our SVG back</span>
-<span class="lineno" data-linenos="60 "></span>    <span class="c1">// into the proper place, and then make our SVG visible again.</span>
-<span class="lineno" data-linenos="61 "></span>    <span class="c1">// Lastly, clean up the old node.</span>
-<span class="lineno" data-linenos="62 "></span>    <span class="nx">body</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">el</span><span class="p">);</span>
-<span class="lineno" data-linenos="63 "></span>    <span class="kd">var</span> <span class="nx">diagram</span> <span class="o">=</span> <span class="nx">converter</span><span class="p">.</span><span class="nx">parse</span><span class="p">(</span><span class="nx">text</span><span class="p">);</span>
-<span class="lineno" data-linenos="64 "></span>    <span class="nx">diagram</span><span class="p">.</span><span class="nx">drawSVG</span><span class="p">(</span><span class="nx">el</span><span class="p">,</span> <span class="nx">config</span><span class="p">);</span>
-<span class="lineno" data-linenos="65 "></span>    <span class="nx">el</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">visibility</span> <span class="o">=</span> <span class="s2">&quot;visible&quot;</span><span class="p">;</span>
-<span class="lineno" data-linenos="66 "></span>    <span class="nx">el</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">position</span> <span class="o">=</span> <span class="s2">&quot;static&quot;</span><span class="p">;</span>
-<span class="lineno" data-linenos="67 "></span>    <span class="nx">parentEl</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">el</span><span class="p">,</span> <span class="nx">parentEl</span><span class="p">);</span>
-<span class="lineno" data-linenos="68 "></span>    <span class="nx">parentEl</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">parentEl</span><span class="p">);</span>
-<span class="lineno" data-linenos="69 "></span>  <span class="p">}</span>
-<span class="lineno" data-linenos="70 "></span><span class="p">});</span>
-<span class="lineno" data-linenos="71 "></span>
-<span class="lineno" data-linenos="72 "></span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-<span class="lineno" data-linenos="73 "></span>  <span class="kd">var</span> <span class="nx">onReady</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">onReady</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno" data-linenos="74 "></span>    <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno" data-linenos="75 "></span>      <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;DOMContentLoaded&quot;</span><span class="p">,</span> <span class="nx">fn</span><span class="p">);</span>
-<span class="lineno" data-linenos="76 "></span>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<span class="lineno" data-linenos="77 "></span>      <span class="nb">document</span><span class="p">.</span><span class="nx">attachEvent</span><span class="p">(</span><span class="s2">&quot;onreadystatechange&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-<span class="lineno" data-linenos="78 "></span>        <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">===</span> <span class="s2">&quot;interactive&quot;</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno" data-linenos="79 "></span>          <span class="nx">fn</span><span class="p">();</span>
-<span class="lineno" data-linenos="80 "></span>        <span class="p">}</span>
-<span class="lineno" data-linenos="81 "></span>      <span class="p">});</span>
-<span class="lineno" data-linenos="82 "></span>    <span class="p">}</span>
-<span class="lineno" data-linenos="83 "></span>  <span class="p">};</span>
-<span class="lineno" data-linenos="84 "></span>
-<span class="lineno" data-linenos="85 "></span>  <span class="nx">onReady</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-<span class="lineno" data-linenos="86 "></span>    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">flowchart</span> <span class="o">!==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno" data-linenos="87 "></span>      <span class="nx">uml</span><span class="p">(</span><span class="nx">flowchart</span><span class="p">,</span> <span class="s2">&quot;uml-flowchart&quot;</span><span class="p">);</span>
-<span class="lineno" data-linenos="88 "></span>    <span class="p">}</span>
-<span class="lineno" data-linenos="89 "></span>
-<span class="lineno" data-linenos="90 "></span>    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">Diagram</span> <span class="o">!==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno" data-linenos="91 "></span>      <span class="nx">uml</span><span class="p">(</span><span class="nx">Diagram</span><span class="p">,</span> <span class="s2">&quot;uml-sequence-diagram&quot;</span><span class="p">,</span> <span class="p">{</span> <span class="nx">theme</span><span class="o">:</span> <span class="s2">&quot;simple&quot;</span> <span class="p">});</span>
-<span class="lineno" data-linenos="92 "></span>    <span class="p">}</span>
-<span class="lineno" data-linenos="93 "></span>  <span class="p">});</span>
-<span class="lineno" data-linenos="94 "></span><span class="p">})();</span>
-<span class="lineno" data-linenos="95 "></span>
-<span class="lineno" data-linenos="96 "></span><span class="p">}());</span>
+<span class="lineno" data-linenos="37 "></span>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">blocks</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno" data-linenos="38 "></span>      <span class="kd">var</span> <span class="nx">parentEl</span> <span class="o">=</span> <span class="nx">blocks</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+<span class="lineno" data-linenos="39 "></span>      <span class="kd">var</span> <span class="nx">text</span> <span class="o">=</span> <span class="nx">getFromCode</span><span class="p">(</span><span class="nx">parentEl</span><span class="p">);</span> <span class="c1">// Insert our new div at the end of our content to get general</span>
+<span class="lineno" data-linenos="40 "></span>      <span class="c1">// typeset and page sizes as our parent might be `display:none`</span>
+<span class="lineno" data-linenos="41 "></span>      <span class="c1">// keeping us from getting the right sizes for our SVG.</span>
+<span class="lineno" data-linenos="42 "></span>      <span class="c1">// Our new div will be hidden via &quot;visibility&quot; and take no space</span>
+<span class="lineno" data-linenos="43 "></span>      <span class="c1">// via `position: absolute`. When we are all done, use the</span>
+<span class="lineno" data-linenos="44 "></span>      <span class="c1">// original node as a reference to insert our SVG back</span>
+<span class="lineno" data-linenos="45 "></span>      <span class="c1">// into the proper place, and then make our SVG visible again.</span>
+<span class="lineno" data-linenos="46 "></span>      <span class="c1">// Lastly, clean up the old node.</span>
+<span class="lineno" data-linenos="47 "></span>
+<span class="lineno" data-linenos="48 "></span>      <span class="kd">var</span> <span class="nx">temp</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
+<span class="lineno" data-linenos="49 "></span>      <span class="nx">temp</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">visibility</span> <span class="o">=</span> <span class="s2">&quot;hidden&quot;</span><span class="p">;</span>
+<span class="lineno" data-linenos="50 "></span>      <span class="nx">temp</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">position</span> <span class="o">=</span> <span class="s2">&quot;absolute&quot;</span><span class="p">;</span>
+<span class="lineno" data-linenos="51 "></span>      <span class="nx">article</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">temp</span><span class="p">);</span>
+<span class="lineno" data-linenos="52 "></span>      <span class="nx">mermaid</span><span class="p">.</span><span class="nx">mermaidAPI</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s2">&quot;_mermaind_&quot;</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">i</span><span class="p">),</span> <span class="nx">text</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">content</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno" data-linenos="53 "></span>        <span class="kd">var</span> <span class="nx">el</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">);</span>
+<span class="lineno" data-linenos="54 "></span>        <span class="nx">el</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="nx">className</span><span class="p">;</span>
+<span class="lineno" data-linenos="55 "></span>        <span class="nx">el</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">content</span><span class="p">;</span>
+<span class="lineno" data-linenos="56 "></span>        <span class="nx">parentEl</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">el</span><span class="p">,</span> <span class="nx">parentEl</span><span class="p">);</span>
+<span class="lineno" data-linenos="57 "></span>        <span class="nx">parentEl</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">parentEl</span><span class="p">);</span>
+<span class="lineno" data-linenos="58 "></span>      <span class="p">},</span> <span class="nx">temp</span><span class="p">);</span>
+<span class="lineno" data-linenos="59 "></span>    <span class="p">};</span>
+<span class="lineno" data-linenos="60 "></span>  <span class="p">});</span>
+<span class="lineno" data-linenos="61 "></span>
+<span class="lineno" data-linenos="62 "></span>  <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="lineno" data-linenos="63 "></span>    <span class="kd">var</span> <span class="nx">onReady</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">onReady</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno" data-linenos="64 "></span>      <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno" data-linenos="65 "></span>        <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;DOMContentLoaded&quot;</span><span class="p">,</span> <span class="nx">fn</span><span class="p">);</span>
+<span class="lineno" data-linenos="66 "></span>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<span class="lineno" data-linenos="67 "></span>        <span class="nb">document</span><span class="p">.</span><span class="nx">attachEvent</span><span class="p">(</span><span class="s2">&quot;onreadystatechange&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="lineno" data-linenos="68 "></span>          <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">===</span> <span class="s2">&quot;interactive&quot;</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno" data-linenos="69 "></span>            <span class="nx">fn</span><span class="p">();</span>
+<span class="lineno" data-linenos="70 "></span>          <span class="p">}</span>
+<span class="lineno" data-linenos="71 "></span>        <span class="p">});</span>
+<span class="lineno" data-linenos="72 "></span>      <span class="p">}</span>
+<span class="lineno" data-linenos="73 "></span>    <span class="p">};</span>
+<span class="lineno" data-linenos="74 "></span>
+<span class="lineno" data-linenos="75 "></span>    <span class="nx">onReady</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="lineno" data-linenos="76 "></span>      <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">mermaid</span> <span class="o">!==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno" data-linenos="77 "></span>        <span class="nx">uml</span><span class="p">(</span><span class="s2">&quot;mermaid&quot;</span><span class="p">);</span>
+<span class="lineno" data-linenos="78 "></span>      <span class="p">}</span>
+<span class="lineno" data-linenos="79 "></span>    <span class="p">});</span>
+<span class="lineno" data-linenos="80 "></span>  <span class="p">})();</span>
+<span class="lineno" data-linenos="81 "></span>
+<span class="lineno" data-linenos="82 "></span><span class="p">}());</span>
 </code></pre></div>
 
+</details>
 <h2 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link"></a></h2>
-<p>This extension suffers from the same issues that the original fenced block extension suffers from.  Normally Python
-Markdown does not parse content inside HTML tags unless they are marked with the attribute <code>markdown='1'</code>.  But since
-this is run as a preprocessor, it is not aware of the HTML blocks.</p>
+<p>This extension suffers from some of the same quirks that the original fenced block extension suffers from.  Normally
+Python Markdown does not parse content inside HTML tags unless they are marked with the attribute <code>markdown='1'</code>.  But
+since this is run as a preprocessor, it is not aware of the HTML blocks.</p>
 <p>SuperFences is made to work with the default extensions out of the box.  It will probably not work with other extensions
 such as Grid Tables, since that extension allows for characters to obscure the blocks like the blockquote syntax does
 (though this has been designed to work with blockquotes).  Ideally fenced blocks need to be handled by a block parser,
@@ -1950,13 +1919,15 @@ only provided as an option to help with the transition of the code tab feature b
 <p><code>highlight_code</code> is also disabled and now does nothing. If a non-highlighted variant of fences is preferred, it is
 recommend to use <a href="#custom-fences">custom fences</a>. This option will be removed in a future version.</p>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script>
+<script src="https://unpkg.com/mermaid@8.4.8/dist/mermaid.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js"></script>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script>
+<script>
+  var config = {
+    startOnLoad: false,
+    theme:'dark'
+  };
+  mermaid.initialize(config);
+</script>
                 
                   
                     
@@ -1965,7 +1936,7 @@ recommend to use <a href="#custom-fences">custom fences</a>. This option will be
 <div class="md-source-date">
   <small>
     
-      Last update: March 22, 2020
+      Last update: March 24, 2020
     
   </small>
 </div>
@@ -2082,7 +2053,7 @@ recommend to use <a href="#custom-fences">custom fences</a>. This option will be
         }, typeof __config !== "undefined" ? __config : {}))
       </script>
       
-        <script src="../../assets/pymdownx-extras/extra-52d8c68747.js"></script>
+        <script src="../../assets/pymdownx-extras/extra-e840130d1d.js"></script>
       
     
   </body>
