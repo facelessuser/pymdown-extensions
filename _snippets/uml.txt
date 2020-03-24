@@ -5,6 +5,9 @@
     theme:'dark',
     flowchart: {
       htmlLabels: false
+    },
+    sequence: {
+      useMaxWidth: false
     }
   };
   mermaid.initialize(config);
