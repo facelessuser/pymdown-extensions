@@ -42,12 +42,6 @@ $footer-meta-fg-color: #{lighten($drac-bg, 15%)};
     background-color: var(--md-default-bg-color--darkest);
     border-bottom: px2rem(1px) solid var(--md-primary-fg-color);
   }
-
-  html & .md-nav .md-nav__title {
-    color: var(--md-default-fg-color);
-    background-color: var(--md-default-bg-color--darkest);
-    border-bottom: px2rem(1px) solid var(--md-primary-fg-color);
-  }
 }
 
 // [tablet portrait -]: Layered navigation
@@ -57,6 +51,12 @@ $footer-meta-fg-color: #{lighten($drac-bg, 15%)};
   .md-nav__source {
     color: var(--md-default-fg-color);
     background-color: var(--md-primary-fg-color--transparent);
+  }
+
+  html & .md-nav .md-nav__title {
+    color: var(--md-default-fg-color);
+    background-color: var(--md-default-bg-color--darkest);
+    border-bottom: px2rem(1px) solid var(--md-primary-fg-color);
   }
 }
 
