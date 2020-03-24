@@ -48,7 +48,9 @@ export default className => {
       content => {
         const el = document.createElement("div")
         el.className = className
-        el.innerHTML = content
+        const el2 = document.createElement("div")
+        el2.innerHTML = content
+        el.appendChild(el2)
         parentEl.parentNode.insertBefore(el, parentEl)
         parentEl.parentNode.removeChild(parentEl)
       },

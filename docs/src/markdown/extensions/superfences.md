@@ -483,21 +483,21 @@ SuperFences allows defining custom fences for special purposes, like flow charts
 
     === "Output"
         ```mermaid
-        graph TD;
-            A-->B;
-            A-->C;
-            B-->D;
-            C-->D;
+        graph TD
+            A[Hard] -->|Text| B(Round)
+            B --> C{Decision}
+            C -->|One| D[Result 1]
+            C -->|Two| E[Result 2]
         ```
 
     === "Markdown"
         ````
         ```mermaid
-        graph TD;
-            A-->B;
-            A-->C;
-            B-->D;
-            C-->D;
+        graph TD
+            A[Hard] -->|Text| B(Round)
+            B --> C{Decision}
+            C -->|One| D[Result 1]
+            C -->|Two| E[Result 2]
         ```
         ````
 
