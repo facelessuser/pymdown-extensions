@@ -24,10 +24,24 @@ export default className => {
     return text
   }
 
+  const article = document.querySelector("article")
   const blocks = document.querySelectorAll(`pre.${className}`)
   for (let i = 0; i < blocks.length; i++) {
     const parentEl = blocks[i]
 
+    // Insert our new div at the end of our content to get general
+    // typeset and page sizes as our parent might be `display:none`
+    // keeping us from getting the right sizes for our SVG.
+    // Our new div will be hidden via "visibility" and take no space
+    // via `position: absolute`. When we are all done, we use the
+    // callback to insert our content where we want it. Mermaid will
+    // delete the temporary element when done, but we delete the
+    // original source element.
+    const temp = document.createElement("div")
+    temp.style.visibility = "hidden"
+    temp.style.position = "absolute"
+
+    article.appendChild(temp)
     mermaid.mermaidAPI.render(
       `_mermaind_${i}`,
       getFromCode(parentEl),
@@ -37,7 +51,8 @@ export default className => {
         el.innerHTML = content
         parentEl.parentNode.insertBefore(el, parentEl)
         parentEl.parentNode.removeChild(parentEl)
-      }
+      },
+      temp
     )
   }
 }

@@ -654,9 +654,9 @@ test
 
 ### UML Diagram Example
 
-This example illustrates how this you can use the `custom_fences` option to do UML diagrams with [Mermaid][mermaid].
-The settings below show us creating a new custom fence called `mermaid`. The special fence is set under the
-`custom_fences` [option](#options).
+This example illustrates how you can use the `custom_fences` option to do UML diagrams with [Mermaid][mermaid]. The
+settings below show us creating a new custom fence called `mermaid`. The special fence is set under the `custom_fences`
+[option](#options).
 
 The `mermaid` fences will pass the content through the `superfences.fence_div_format` format function which will wrap
 the content in `#!html <div>` blocks and attach the class `mermaid` to the `#!html <div>` block.
@@ -684,6 +684,11 @@ will automatically find the `#!html <div>` elements with the `mermaid` class and
 <script src="https://unpkg.com/mermaid@8.4.8/dist/mermaid.min.js"></script>
 ```
 
+!!! warning "Support"
+    Please reference [Mermaid's][mermaid] documents for more information in configuring features. PyMdown Extensions
+    does not offer direct support for issues you may have in using [Mermaid][mermaid], feel free to use their issue
+    tracker to report problems with their library.
+
 ??? tip "How We Do It in This Document"
 
     Mermaid has it's own ability to auto load content, but we turn it off in this document. This is because we implement
@@ -697,13 +702,22 @@ will automatically find the `#!html <div>` elements with the `mermaid` class and
 
     ```js
     var config = {
-      startOnLoad: false
+      startOnLoad: false,
+      flowchart: {
+        htmlLabels: false
+      }
     };
     mermaid.initialize(config);
     ```
 
+    !!! warning "Flowcharts and HTML Labels"
+        It has been noted in our use of [Mermaid][mermaid] that using `htmlLables` with `flowcharts` can be problematic.
+        On some systems it can cause undesirable scaling issues. We disable `htmlLabels` in `flowcharts` for now. It is
+        left up to the user to find what works best for them.
+
     We actually output our content into `#!html <pre><code>` elements so that if something goes wrong, the diagram
-    source is rendered as code.
+    source is rendered as code. We could have easily used `#!html <div>` as well, but it was our personal preference
+    to use `#!html <pre><code>`.
 
     ```py3
     extension_configs = {
@@ -725,6 +739,9 @@ will automatically find the `#!html <div>` elements with the `mermaid` class and
 
     We implement an event on load, and if `mermaid` is present, we run the `uml` function that targets the
     `#!html <pre>` elements with the `mermaid` class, converting them and replacing the source elements.
+
+    Remember, this is just an example of what we do, feel free to modify the following script accordingly if you feel
+    something similar is needed for your use cases.
 
     ```js linenums="1"
     (function () {
@@ -761,8 +778,19 @@ will automatically find the `#!html <div>` elements with the `mermaid` class and
 
         var blocks = document.querySelectorAll("pre.".concat(className));
         for (var i = 0; i < blocks.length; i++) {
-          var parentEl = blocks[i];
+          var parentEl = blocks[i]; // Insert our new div at the end of our content to get general
+          // typeset and page sizes as our parent might be `display:none`
+          // keeping us from getting the right sizes for our SVG.
+          // Our new div will be hidden via "visibility" and take no space
+          // via `position: absolute`. When we are all done, we use the
+          // callback to insert our content where we want it. Mermaid will
+          // delete the temporary element when done, but we delete the
+          // original source element.
 
+          var temp = document.createElement("div");
+          temp.style.visibility = "hidden";
+          temp.style.position = "absolute";
+          article.appendChild(temp);
           mermaid.mermaidAPI.render("_mermaind_".concat(i), getFromCode(parentEl), function (content) {
             var el = document.createElement("div");
             el.className = className;

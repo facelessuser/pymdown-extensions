@@ -136,7 +136,7 @@ extra:
 extra_css:
   - assets/pymdownx-extras/extra-aaae20cd6f.css
 extra_javascript:
-  - assets/pymdownx-extras/extra-309b4dc0e8.js
+  - assets/pymdownx-extras/extra-04e9cb500c.js
 
 plugins:
   - search
