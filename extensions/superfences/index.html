@@ -1706,9 +1706,9 @@ test
 see the <a href="../../faq/#function-references-in-yaml">FAQ</a> to see how to specify function references in YAML.</p>
 </div>
 <h3 id="uml-diagram-example">UML Diagram Example<a class="headerlink" href="#uml-diagram-example" title="Permanent link"></a></h3>
-<p>This example illustrates how this you can use the <code>custom_fences</code> option to do UML diagrams with <a href="https://mermaid-js.github.io/mermaid/#/">Mermaid</a>.
-The settings below show us creating a new custom fence called <code>mermaid</code>. The special fence is set under the
-<code>custom_fences</code> <a href="#options">option</a>.</p>
+<p>This example illustrates how you can use the <code>custom_fences</code> option to do UML diagrams with <a href="https://mermaid-js.github.io/mermaid/#/">Mermaid</a>. The
+settings below show us creating a new custom fence called <code>mermaid</code>. The special fence is set under the <code>custom_fences</code>
+<a href="#options">option</a>.</p>
 <p>The <code>mermaid</code> fences will pass the content through the <code>superfences.fence_div_format</code> format function which will wrap
 the content in <code class="highlight"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span></code> blocks and attach the class <code>mermaid</code> to the <code class="highlight"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span></code> block.</p>
 <div class="highlight"><pre><span></span><code><span class="n">extension_configs</span> <span class="o">=</span> <span class="p">{</span>
@@ -1731,6 +1731,12 @@ will automatically find the <code class="highlight"><span class="p">&lt;</span><
 <div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://unpkg.com/mermaid@8.4.8/dist/mermaid.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
 </code></pre></div>
 
+<div class="admonition warning">
+<p class="admonition-title">Support</p>
+<p>Please reference <a href="https://mermaid-js.github.io/mermaid/#/">Mermaid's</a> documents for more information in configuring features. PyMdown Extensions
+does not offer direct support for issues you may have in using <a href="https://mermaid-js.github.io/mermaid/#/">Mermaid</a>, feel free to use their issue
+tracker to report problems with their library.</p>
+</div>
 <details class="tip"><summary>How We Do It in This Document</summary><p>Mermaid has it's own ability to auto load content, but we turn it off in this document. This is because we implement
 a number of special elements in our documents such as <a href="../details/">details</a> and <a href="../tabbed/">tabbed interfaces</a>,
 both of which will hide content. Mermaid, when auto loading content in a hidden element, seems to have trouble, and
@@ -1739,13 +1745,23 @@ document which seems to work without issues.</p>
 <p>To turn off the <a href="https://mermaid-js.github.io/mermaid/#/">Mermaid's</a> auto loading we initialize the library with a configuration that disables auto
 loading:</p>
 <div class="highlight"><pre><span></span><code><span class="kd">var</span> <span class="nx">config</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">startOnLoad</span><span class="o">:</span> <span class="kc">false</span>
+  <span class="nx">startOnLoad</span><span class="o">:</span> <span class="kc">false</span><span class="p">,</span>
+  <span class="nx">flowchart</span><span class="o">:</span> <span class="p">{</span>
+    <span class="nx">htmlLabels</span><span class="o">:</span> <span class="kc">false</span>
+  <span class="p">}</span>
 <span class="p">};</span>
 <span class="nx">mermaid</span><span class="p">.</span><span class="nx">initialize</span><span class="p">(</span><span class="nx">config</span><span class="p">);</span>
 </code></pre></div>
 
+<div class="admonition warning">
+<p class="admonition-title">Flowcharts and HTML Labels</p>
+<p>It has been noted in our use of <a href="https://mermaid-js.github.io/mermaid/#/">Mermaid</a> that using <code>htmlLables</code> with <code>flowcharts</code> can be problematic.
+On some systems it can cause undesirable scaling issues. We disable <code>htmlLabels</code> in <code>flowcharts</code> for now. It is
+left up to the user to find what works best for them.</p>
+</div>
 <p>We actually output our content into <code class="highlight"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">code</span><span class="p">&gt;</span></code> elements so that if something goes wrong, the diagram
-source is rendered as code.</p>
+source is rendered as code. We could have easily used <code class="highlight"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span></code> as well, but it was our personal preference
+to use <code class="highlight"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;&lt;</span><span class="nt">code</span><span class="p">&gt;</span></code>.</p>
 <div class="highlight"><pre><span></span><code><span class="n">extension_configs</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s2">&quot;pymdownx.superfences&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s2">&quot;custom_fences&quot;</span><span class="p">:</span> <span class="p">[</span>
@@ -1764,6 +1780,8 @@ element at the end of our <code>article</code> element (which contains the curre
 sizes. Once rendered, we then replace the original content so that we are left with just the rendered chart.</p>
 <p>We implement an event on load, and if <code>mermaid</code> is present, we run the <code>uml</code> function that targets the
 <code class="highlight"><span class="p">&lt;</span><span class="nt">pre</span><span class="p">&gt;</span></code> elements with the <code>mermaid</code> class, converting them and replacing the source elements.</p>
+<p>Remember, this is just an example of what we do, feel free to modify the following script accordingly if you feel
+something similar is needed for your use cases.</p>
 <div class="highlight"><pre><span></span><code><span class="lineno" data-linenos=" 1 "></span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
 <span class="lineno" data-linenos=" 2 "></span>  <span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
 <span class="lineno" data-linenos=" 3 "></span>
@@ -1798,39 +1816,50 @@ sizes. Once rendered, we then replace the original content so that we are left w
 <span class="lineno" data-linenos="32 "></span>
 <span class="lineno" data-linenos="33 "></span>    <span class="kd">var</span> <span class="nx">blocks</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s2">&quot;pre.&quot;</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">className</span><span class="p">));</span>
 <span class="lineno" data-linenos="34 "></span>    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">blocks</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno" data-linenos="35 "></span>      <span class="kd">var</span> <span class="nx">parentEl</span> <span class="o">=</span> <span class="nx">blocks</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
-<span class="lineno" data-linenos="36 "></span>
-<span class="lineno" data-linenos="37 "></span>      <span class="nx">mermaid</span><span class="p">.</span><span class="nx">mermaidAPI</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s2">&quot;_mermaind_&quot;</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">i</span><span class="p">),</span> <span class="nx">getFromCode</span><span class="p">(</span><span class="nx">parentEl</span><span class="p">),</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">content</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno" data-linenos="38 "></span>        <span class="kd">var</span> <span class="nx">el</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">);</span>
-<span class="lineno" data-linenos="39 "></span>        <span class="nx">el</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="nx">className</span><span class="p">;</span>
-<span class="lineno" data-linenos="40 "></span>        <span class="nx">el</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">content</span><span class="p">;</span>
-<span class="lineno" data-linenos="41 "></span>        <span class="nx">parentEl</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">el</span><span class="p">,</span> <span class="nx">parentEl</span><span class="p">);</span>
-<span class="lineno" data-linenos="42 "></span>        <span class="nx">parentEl</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">parentEl</span><span class="p">);</span>
-<span class="lineno" data-linenos="43 "></span>      <span class="p">},</span> <span class="nx">temp</span><span class="p">);</span>
-<span class="lineno" data-linenos="44 "></span>    <span class="p">};</span>
-<span class="lineno" data-linenos="45 "></span>  <span class="p">});</span>
-<span class="lineno" data-linenos="46 "></span>
-<span class="lineno" data-linenos="47 "></span>  <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-<span class="lineno" data-linenos="48 "></span>    <span class="kd">var</span> <span class="nx">onReady</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">onReady</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno" data-linenos="49 "></span>      <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno" data-linenos="50 "></span>        <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;DOMContentLoaded&quot;</span><span class="p">,</span> <span class="nx">fn</span><span class="p">);</span>
-<span class="lineno" data-linenos="51 "></span>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-<span class="lineno" data-linenos="52 "></span>        <span class="nb">document</span><span class="p">.</span><span class="nx">attachEvent</span><span class="p">(</span><span class="s2">&quot;onreadystatechange&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-<span class="lineno" data-linenos="53 "></span>          <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">===</span> <span class="s2">&quot;interactive&quot;</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno" data-linenos="54 "></span>            <span class="nx">fn</span><span class="p">();</span>
-<span class="lineno" data-linenos="55 "></span>          <span class="p">}</span>
-<span class="lineno" data-linenos="56 "></span>        <span class="p">});</span>
-<span class="lineno" data-linenos="57 "></span>      <span class="p">}</span>
-<span class="lineno" data-linenos="58 "></span>    <span class="p">};</span>
-<span class="lineno" data-linenos="59 "></span>
-<span class="lineno" data-linenos="60 "></span>    <span class="nx">onReady</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-<span class="lineno" data-linenos="61 "></span>      <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">mermaid</span> <span class="o">!==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
-<span class="lineno" data-linenos="62 "></span>        <span class="nx">uml</span><span class="p">(</span><span class="s2">&quot;mermaid&quot;</span><span class="p">);</span>
-<span class="lineno" data-linenos="63 "></span>      <span class="p">}</span>
-<span class="lineno" data-linenos="64 "></span>    <span class="p">});</span>
-<span class="lineno" data-linenos="65 "></span>  <span class="p">})();</span>
-<span class="lineno" data-linenos="66 "></span>
-<span class="lineno" data-linenos="67 "></span><span class="p">}());</span>
+<span class="lineno" data-linenos="35 "></span>      <span class="kd">var</span> <span class="nx">parentEl</span> <span class="o">=</span> <span class="nx">blocks</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span> <span class="c1">// Insert our new div at the end of our content to get general</span>
+<span class="lineno" data-linenos="36 "></span>      <span class="c1">// typeset and page sizes as our parent might be `display:none`</span>
+<span class="lineno" data-linenos="37 "></span>      <span class="c1">// keeping us from getting the right sizes for our SVG.</span>
+<span class="lineno" data-linenos="38 "></span>      <span class="c1">// Our new div will be hidden via &quot;visibility&quot; and take no space</span>
+<span class="lineno" data-linenos="39 "></span>      <span class="c1">// via `position: absolute`. When we are all done, we use the</span>
+<span class="lineno" data-linenos="40 "></span>      <span class="c1">// callback to insert our content where we want it. Mermaid will</span>
+<span class="lineno" data-linenos="41 "></span>      <span class="c1">// delete the temporary element when done, but we delete the</span>
+<span class="lineno" data-linenos="42 "></span>      <span class="c1">// original source element.</span>
+<span class="lineno" data-linenos="43 "></span>
+<span class="lineno" data-linenos="44 "></span>      <span class="kd">var</span> <span class="nx">temp</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">);</span>
+<span class="lineno" data-linenos="45 "></span>      <span class="nx">temp</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">visibility</span> <span class="o">=</span> <span class="s2">&quot;hidden&quot;</span><span class="p">;</span>
+<span class="lineno" data-linenos="46 "></span>      <span class="nx">temp</span><span class="p">.</span><span class="nx">style</span><span class="p">.</span><span class="nx">position</span> <span class="o">=</span> <span class="s2">&quot;absolute&quot;</span><span class="p">;</span>
+<span class="lineno" data-linenos="47 "></span>      <span class="nx">article</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">temp</span><span class="p">);</span>
+<span class="lineno" data-linenos="48 "></span>      <span class="nx">mermaid</span><span class="p">.</span><span class="nx">mermaidAPI</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="s2">&quot;_mermaind_&quot;</span><span class="p">.</span><span class="nx">concat</span><span class="p">(</span><span class="nx">i</span><span class="p">),</span> <span class="nx">getFromCode</span><span class="p">(</span><span class="nx">parentEl</span><span class="p">),</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">content</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno" data-linenos="49 "></span>        <span class="kd">var</span> <span class="nx">el</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s2">&quot;div&quot;</span><span class="p">);</span>
+<span class="lineno" data-linenos="50 "></span>        <span class="nx">el</span><span class="p">.</span><span class="nx">className</span> <span class="o">=</span> <span class="nx">className</span><span class="p">;</span>
+<span class="lineno" data-linenos="51 "></span>        <span class="nx">el</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">content</span><span class="p">;</span>
+<span class="lineno" data-linenos="52 "></span>        <span class="nx">parentEl</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">insertBefore</span><span class="p">(</span><span class="nx">el</span><span class="p">,</span> <span class="nx">parentEl</span><span class="p">);</span>
+<span class="lineno" data-linenos="53 "></span>        <span class="nx">parentEl</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">parentEl</span><span class="p">);</span>
+<span class="lineno" data-linenos="54 "></span>      <span class="p">},</span> <span class="nx">temp</span><span class="p">);</span>
+<span class="lineno" data-linenos="55 "></span>    <span class="p">};</span>
+<span class="lineno" data-linenos="56 "></span>  <span class="p">});</span>
+<span class="lineno" data-linenos="57 "></span>
+<span class="lineno" data-linenos="58 "></span>  <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="lineno" data-linenos="59 "></span>    <span class="kd">var</span> <span class="nx">onReady</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">onReady</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno" data-linenos="60 "></span>      <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno" data-linenos="61 "></span>        <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;DOMContentLoaded&quot;</span><span class="p">,</span> <span class="nx">fn</span><span class="p">);</span>
+<span class="lineno" data-linenos="62 "></span>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<span class="lineno" data-linenos="63 "></span>        <span class="nb">document</span><span class="p">.</span><span class="nx">attachEvent</span><span class="p">(</span><span class="s2">&quot;onreadystatechange&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="lineno" data-linenos="64 "></span>          <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">===</span> <span class="s2">&quot;interactive&quot;</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno" data-linenos="65 "></span>            <span class="nx">fn</span><span class="p">();</span>
+<span class="lineno" data-linenos="66 "></span>          <span class="p">}</span>
+<span class="lineno" data-linenos="67 "></span>        <span class="p">});</span>
+<span class="lineno" data-linenos="68 "></span>      <span class="p">}</span>
+<span class="lineno" data-linenos="69 "></span>    <span class="p">};</span>
+<span class="lineno" data-linenos="70 "></span>
+<span class="lineno" data-linenos="71 "></span>    <span class="nx">onReady</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="lineno" data-linenos="72 "></span>      <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">mermaid</span> <span class="o">!==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno" data-linenos="73 "></span>        <span class="nx">uml</span><span class="p">(</span><span class="s2">&quot;mermaid&quot;</span><span class="p">);</span>
+<span class="lineno" data-linenos="74 "></span>      <span class="p">}</span>
+<span class="lineno" data-linenos="75 "></span>    <span class="p">});</span>
+<span class="lineno" data-linenos="76 "></span>  <span class="p">})();</span>
+<span class="lineno" data-linenos="77 "></span>
+<span class="lineno" data-linenos="78 "></span><span class="p">}());</span>
 </code></pre></div>
 
 </details>
@@ -1909,7 +1938,10 @@ recommend to use <a href="#custom-fences">custom fences</a>. This option will be
 <script>
   var config = {
     startOnLoad: false,
-    theme:'dark'
+    theme:'dark',
+    flowchart: {
+      htmlLabels: false
+    }
   };
   mermaid.initialize(config);
 </script>
@@ -2038,7 +2070,7 @@ recommend to use <a href="#custom-fences">custom fences</a>. This option will be
         }, typeof __config !== "undefined" ? __config : {}))
       </script>
       
-        <script src="../../assets/pymdownx-extras/extra-309b4dc0e8.js"></script>
+        <script src="../../assets/pymdownx-extras/extra-04e9cb500c.js"></script>
       
     
   </body>

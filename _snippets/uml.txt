@@ -2,7 +2,10 @@
 <script>
   var config = {
   	startOnLoad: false,
-    theme:'dark'
+    theme:'dark',
+    flowchart: {
+      htmlLabels: false
+    }
   };
   mermaid.initialize(config);
 </script>
