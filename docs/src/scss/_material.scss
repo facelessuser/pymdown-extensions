@@ -1,4 +1,6 @@
 // Header, navigation, and tabs
+$footer-meta-fg-color: #{lighten($drac-bg, 15%)};
+
 .md-header {
     background-color: var(--md-default-bg-color--darkest);
     border-bottom: px2rem(1px) solid var(--md-primary-fg-color);
@@ -95,12 +97,12 @@
   }
 
   &-copyright {
-    color: #{lighten($drac-bg, 15%)};
+    color: $footer-meta-fg-color;
     .md-footer-copyright__highlight {
       color: var(--md-default-fg-color--light);
 
       .md-footer-custom-text {
-        color: #{lighten($drac-bg, 15%)};
+        color: $footer-meta-fg-color;
       }
     }
   }

@@ -99,26 +99,29 @@ Check out documentation on each extension to learn more about how to configure a
 
 !!! summary "SuperFences"
     [SuperFences](extensions/superfences.md) is like Python Markdown's fences, but better. Nest fences under lists,
-    admonitions, and other syntaxes. Combine multiple fences together in tabbed groups, and even create special custom
-    fences for content like UML.
-
-    === "Markdown"
-        ```
-        Title: Here is a title
-        A->B: Normal line
-        B-->C: Dashed line
-        C->>D: Open arrow
-        D-->>A: Dashed open arrow
-        ```
+    admonitions, and other syntaxes. You can even create special custom fences for content like UML.
 
     === "Output"
-        ```sequence
-        Title: Here is a title
-        A->B: Normal line
-        B-->C: Dashed line
-        C->>D: Open arrow
-        D-->>A: Dashed open arrow
+
+        ```mermaid
+        graph TD;
+            A-->B;
+            A-->C;
+            B-->D;
+            C-->D;
         ```
+
+    === "Markdown"
+
+        ````
+        ```mermaid
+        graph TD;
+            A-->B;
+            A-->C;
+            B-->D;
+            C-->D;
+        ```
+        ````
 
 !!! summary "Tabbed"
     [Tabbed](extensions/tabbed.md) allows for tabbed Markdown content:

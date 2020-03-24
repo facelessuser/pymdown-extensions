@@ -6,9 +6,7 @@
     "node": true
   },
   "globals": {
-    "Clipboard": true,
-    "flowchart": true,
-    "Diagram": true
+    "mermaid": true
   },
   "parser": "babel-eslint",
   "parserOptions": {
