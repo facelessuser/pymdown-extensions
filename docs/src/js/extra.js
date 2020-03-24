@@ -16,12 +16,8 @@ import uml from "./uml"
 
   onReady(() => {
 
-    if (typeof flowchart !== "undefined") {
-      uml(flowchart, "uml-flowchart")
-    }
-
-    if (typeof Diagram !== "undefined") {
-      uml(Diagram, "uml-sequence-diagram", {theme: "simple"})
+    if (typeof mermaid !== "undefined") {
+      uml("mermaid")
     }
   })
 })()

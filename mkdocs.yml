@@ -77,11 +77,8 @@ markdown_extensions:
   - pymdownx.superfences:
       preserve_tabs: true
       custom_fences:
-        - name: flow
-          class: uml-flowchart
-          format: !!python/name:pymdownx.superfences.fence_code_format
-        - name: sequence
-          class: uml-sequence-diagram
+        - name: mermaid
+          class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
         - name: math
           class: arithmatex
@@ -137,9 +134,9 @@ extra:
     - icon: fontawesome/brands/discord
       link: https://discord.gg/fqQ7ypS
 extra_css:
-  - assets/pymdownx-extras/extra-fccca6ed0a.css
+  - assets/pymdownx-extras/extra-aaae20cd6f.css
 extra_javascript:
-  - assets/pymdownx-extras/extra-52d8c68747.js
+  - assets/pymdownx-extras/extra-e840130d1d.js
 
 plugins:
   - search

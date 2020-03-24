@@ -4,6 +4,7 @@
 
 Please see [Release Notes](./release.md#upgrading-to-70) for details on upgrading to 7.0.
 
+- **NEW**: UML examples are now demonstrated with Mermaid in documentation.
 - **NEW**: SuperFences, if using the attribute list format (` ``` {.lang .additional_class, linenums="1"} `) allows
   adding additional classes. IDs can be added as well, though Pygments generated code blocks do not have a mechanism to
   actually insert IDs. The first provided class will always be treated as the language class.
