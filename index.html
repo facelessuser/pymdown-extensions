@@ -43,7 +43,7 @@
     
     
     
-      <link rel="stylesheet" href="assets/pymdownx-extras/extra-b27c7e6cd8.css">
+      <link rel="stylesheet" href="assets/pymdownx-extras/extra-5f51055b29.css">
     
     
       
@@ -972,20 +972,32 @@ parsed.</p>
 <p><a href="extensions/superfences/">SuperFences</a> is like Python Markdown's fences, but better. Nest fences under lists,
 admonitions, and other syntaxes. You can even create special custom fences for content like UML.</p>
 <div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Output</label><div class="tabbed-content">
-<pre class="mermaid"><code>graph TD;
-    A--&gt;B;
-    A--&gt;C;
-    B--&gt;D;
-    C--&gt;D;</code></pre>
+<pre class="mermaid"><code>graph TB
+    c1--&gt;a2
+    subgraph one
+    a1--&gt;a2
+    end
+    subgraph two
+    b1--&gt;b2
+    end
+    subgraph three
+    c1--&gt;c2
+    end</code></pre>
 
 </div>
 <input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Markdown</label><div class="tabbed-content">
 <div class="highlight"><pre><span></span><code>```mermaid
-graph TD;
-    A--&gt;B;
-    A--&gt;C;
-    B--&gt;D;
-    C--&gt;D;
+graph TB
+    c1--&gt;a2
+    subgraph one
+    a1--&gt;a2
+    end
+    subgraph two
+    b1--&gt;b2
+    end
+    subgraph three
+    c1--&gt;c2
+    end
 ```
 </code></pre></div>
 
@@ -1022,7 +1034,7 @@ sub<sub>scripts</sub> and adds an easy way to place <del>text</del> in a <code c
 <script>
   var config = {
     startOnLoad: false,
-    theme:'dark',
+    theme: null,
     flowchart: {
       htmlLabels: false
     },
@@ -1076,7 +1088,7 @@ window.MathJax = {
 <div class="md-source-date">
   <small>
     
-      Last update: March 24, 2020
+      Last update: March 26, 2020
     
   </small>
 </div>
@@ -1179,7 +1191,7 @@ window.MathJax = {
         }, typeof __config !== "undefined" ? __config : {}))
       </script>
       
-        <script src="assets/pymdownx-extras/extra-cd7772167d.js"></script>
+        <script src="assets/pymdownx-extras/extra-e90c03b995.js"></script>
       
     
   </body>
