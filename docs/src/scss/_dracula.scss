@@ -1,0 +1,22 @@
+$drac-fg: hsl(60, 30%, 96%);
+$drac-bg: hsl(231, 15%, 18%);
+$drac-highlight: hsl(66, 94%, 73%);
+$drac-selection: hsl(232, 14%, 31%);
+$drac-blue: hsl(225, 27%, 51%);
+$drac-cyan: hsl(191, 97%, 77%);
+$drac-green: hsl(135, 94%, 65%);
+$drac-orange: hsl(31, 100%, 71%);
+$drac-pink: hsl(326, 100%, 74%);
+$drac-purple: hsl(265, 89%, 78%);
+$drac-red: hsl(0, 100%, 67%);
+$drac-yellow: hsl(65, 92%, 76%);
+
+// Non-standard Dracula colors
+$drac-grey: hsl(225, 8%, 51%);
+$drac-teal: hsl(161, 97%, 77%);
+$drac-light-blue: hsl(190, 94%, 87%);
+$drac-light-green: hsl(135, 92%, 79%);
+$drac-dark-pink: hsl(325, 100%, 64%);
+$drac-dark-red: hsl(0, 100%, 59%);
+
+$drac-default-bg: lighten($drac-bg, 3%);

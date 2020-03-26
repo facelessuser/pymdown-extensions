@@ -30,6 +30,7 @@ ExtraRawHtml
 Formatters
 GFM
 GIF
+Gantt
 Gemoji
 Gemoji's
 Gendered
@@ -134,6 +135,7 @@ escaper
 facelessuser
 formatter
 formatters
+gantt
 gemoji
 gfm
 gforcada
@@ -207,6 +209,7 @@ shortnames
 slugify
 sortable
 squidfunk
+stylelint
 stylesheet
 stylesheets
 sublicense

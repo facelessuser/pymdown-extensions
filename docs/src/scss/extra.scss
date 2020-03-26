@@ -9,6 +9,7 @@
 @import "utilities/color_tools";
 
 @import "config";
+@import "dracula";
 @import "colors";
 
 @import "extensions/admonition";
@@ -24,5 +25,7 @@
 @import "extensions/tables";
 @import "extensions/tasklist";
 @import "extensions/toc";
+
+@import "mermaid_dracula";
 
 @import "material";

@@ -1,0 +1,146 @@
+$mainBkg: shade($drac-purple, 50%);
+$secondBkg: shade($drac-blue, 50%);
+$mainContrastColor: $drac-purple;
+$darkTextColor: $drac-bg;
+$lineColor: $mainContrastColor;
+$border1: $drac-purple;
+$border2: $drac-blue;
+$arrowheadColor: $mainContrastColor;
+
+/* Flowchart variables */
+$nodeBkg: $mainBkg;
+$nodeBorder: $drac-purple;
+$clusterBkg: $secondBkg;
+$clusterBorder: $border2;
+$defaultLinkColor: $lineColor;
+$titleColor: $drac-purple;
+$edgeLabelBackground: shade($drac-purple, 70%);
+
+/* Sequence Diagram variables */
+$actorBorder: $border1;
+$actorBkg: $mainBkg;
+$actorTextColor: $drac-purple;
+$actorLineColor: $mainContrastColor;
+$signalColor: $mainContrastColor;
+$signalTextColor: $mainContrastColor;
+$labelBoxBkgColor: $actorBkg;
+$labelBoxBorderColor: $actorBorder;
+$labelTextColor: $darkTextColor;
+$loopTextColor: $mainContrastColor;
+$noteBorderColor: $drac-yellow;
+$noteBkgColor: shade($drac-yellow, 50%);
+$activationBorderColor: $drac-blue;
+$activationBkgColor: shade($drac-blue, 60%);
+$sequenceNumberColor: $drac-purple;
+
+/* Gantt chart variables */
+$sectionBkgColor: transparentize($drac-purple, 0.7);
+$altSectionBkgColor: $drac-default-bg;
+$sectionBkgColor2: transparentize($drac-purple, 0.4);
+$taskBorderColor: $drac-purple;
+$taskBkgColor: $mainBkg;
+$taskTextColor: $drac-purple;
+$taskTextLightColor: $drac-purple;
+$taskTextOutsideColor: $taskTextLightColor;
+$taskTextClickableColor: $drac-cyan;
+$activeTaskBorderColor: $drac-pink;
+$activeTaskBkgColor: shade($drac-pink, 50%);
+$gridColor: $mainContrastColor;
+$doneTaskBkgColor: shade($drac-blue, 50%);
+$doneTaskBorderColor: $drac-blue;
+$critBorderColor: $drac-red;
+$critBkgColor: shade($drac-red, 50%);
+$taskTextDarkColor: $darkTextColor;
+$todayLineColor: $drac-pink;
+
+/* state colors */
+$labelColor: $drac-purple;
+
+.md-typeset div.mermaid svg {
+  /* stylelint-disable selector-class-pattern */
+
+  @import "mermaid";
+
+  max-width: none;
+  font-size: 16px !important;
+
+  // Flowchart
+  .labelText,
+  .label text {
+    fill: $drac-purple;
+  }
+
+  .edgeLabel {
+    text {
+      fill: $drac-purple;
+    }
+    rect {
+      opacity: 0.5 !important;
+      fill: shade($drac-purple, 50%) !important;
+    }
+  }
+
+  // Sequence
+  .noteText {
+    fill: $drac-yellow;
+  }
+
+  // Gantt
+  .sectionTitle,
+  .taskTextOutsideRight,
+  .taskTextOutsideLeft {
+    fill: $drac-purple !important;
+  }
+
+  .taskText {
+    fill: $drac-purple !important;
+
+    &[class*="doneText"] {
+      fill: $drac-blue !important;
+    }
+
+    &[class*="activeText"] {
+      fill: $drac-pink !important;
+    }
+
+    &[class*="critText"] {
+      fill: $drac-red !important;
+    }
+  }
+
+  .grid .tick {
+    line {
+      stroke: transparentize($drac-purple, 0.3) !important;
+    }
+    text {
+      fill: $drac-purple;
+    }
+  }
+
+  // class Diagram
+  .stateGroup {
+    circle {
+      &[style$="fill: black;"] {
+        fill: $mainBkg !important;
+        stroke: $mainBkg !important;
+      }
+
+      &[style$="fill: white;"] {
+        fill: $mainBkg !important;
+        stroke: $drac-purple !important;
+      }
+    }
+
+    .composit {
+      fill: $drac-default-bg;
+    }
+  }
+
+  .classGroup .title,
+  .classLabel .label,
+  .classGroup text {
+    font-size: 16px !important;
+  }
+
+  /* stylelint-enable selector-class-pattern */
+}

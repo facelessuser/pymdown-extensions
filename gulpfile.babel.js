@@ -30,6 +30,7 @@ import fs from "fs"
 import mime from "mime"
 import replaceall from "replaceall"
 import nodeSass from "node-sass"
+import path from "path"
 
 /* Argument Flags */
 const args = yargs
@@ -152,7 +153,7 @@ gulp.task("scss:build:sass", () => {
     mqpacker
   ].filter(t => t)
 
-  return gulp.src(config.files.scss)
+  return gulp.src("./docs/src/scss/extra*.scss")
     .pipe(sass({
       functions: inlineSvg(),
       includePaths: [
@@ -163,7 +164,11 @@ gulp.task("scss:build:sass", () => {
     }).on("error", sass.logError))
     .pipe(postcss(processors))
     .pipe(gulpif(config.compress.enabled, cleanCSS()))
-    .pipe(concat("extra.css"))
+    .pipe(
+      vinylPaths(
+        filepath => {
+          return concat(path.basename(filepath, ".scss"))
+        }))
 
     // Revisioning
     .pipe(gulpif(config.revision, rev()))

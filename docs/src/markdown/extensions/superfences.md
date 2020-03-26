@@ -689,140 +689,21 @@ will automatically find the `#!html <div>` elements with the `mermaid` class and
     does not offer direct support for issues you may have in using [Mermaid][mermaid], feel free to use their issue
     tracker to report problems with their library.
 
-??? tip "How We Do It in This Document"
+!!! tip "Custom Loading"
 
-    Mermaid has it's own ability to auto load content, but we turn it off in this document. This is because we implement
-    a number of special elements in our documents such as [details](./details.md) and [tabbed interfaces](./tabbed.md),
-    both of which will hide content. Mermaid, when auto loading content in a hidden element, seems to have trouble, and
-    will not properly size the render leading to tiny, unreadable content. We create our own auto loader in this
-    document which seems to work without issues.
+    We've found that Mermaid diagrams that are found in tabbed interfaces or details, where the element may be hidden
+    on page load, don't always render at a visible size if using Mermaids default loader. We've opted to create our own.
 
-    To turn off the [Mermaid's][mermaid] auto loading we initialize the library with a configuration that disables auto
-    loading:
+    We also render ours in `#!html <pre><code>` tags. This allows for the cases were something goes wrong and the
+    diagrams don't get rendered, we can still show the source as code blocks.
 
-    ```js
-    var config = {
-      startOnLoad: false,
-      flowchart: {
-        htmlLabels: false
-      }
-    };
-    mermaid.initialize(config);
-    ```
+    Our custom loader also adjusts for quirks and ensuring good typesetting for our document environment. All of this
+    can be viewed in the source.
 
-    !!! warning "Flowcharts and HTML Labels"
-        It has been noted in our use of [Mermaid][mermaid] that using `htmlLables` with `flowcharts` can be problematic.
-        On some systems it can cause undesirable scaling issues. We disable `htmlLabels` in `flowcharts` for now. It is
-        left up to the user to find what works best for them.
+    - [Loader][mermaid-loader]
+    - [Mermaid configuration settings][mermaid-config]
 
-    We actually output our content into `#!html <pre><code>` elements so that if something goes wrong, the diagram
-    source is rendered as code. We could have easily used `#!html <div>` as well, but it was our personal preference
-    to use `#!html <pre><code>`.
-
-    ```py3
-    extension_configs = {
-        "pymdownx.superfences": {
-            "custom_fences": [
-                {
-                    'name': 'mermaid',
-                    'class': 'mermaid',
-                    'format': pymdownx.superfences.fence_code_format
-                }
-            ]
-        }
-    }
-    ```
-
-    Next we use a simple script that targets the source and extracts the text. It renders the content in a hidden
-    element at the end of our `article` element (which contains the current pages source) to get basic typesetting and
-    sizes. Once rendered, we then replace the original content so that we are left with just the rendered chart.
-
-    We implement an event on load, and if `mermaid` is present, we run the `uml` function that targets the
-    `#!html <pre>` elements with the `mermaid` class, converting them and replacing the source elements.
-
-    Remember, this is just an example of what we do, feel free to modify the following script accordingly if you feel
-    something similar is needed for your use cases.
-
-    ```js linenums="1"
-    (function () {
-      'use strict';
-
-      /**
-       * Targets special code or div blocks and converts them to UML.
-       * @param {string} className is the name of the class to target.
-       * @return {void}
-       */
-      var uml = (function (className) {
-        var getFromCode = function getFromCode(parent) {
-          // Handles <pre><code>
-          var text = "";
-
-          for (var j = 0; j < parent.childNodes.length; j++) {
-            var subEl = parent.childNodes[j];
-
-            if (subEl.tagName.toLowerCase() === "code") {
-              for (var k = 0; k < subEl.childNodes.length; k++) {
-                var child = subEl.childNodes[k];
-                var whitespace = /^\s*$/;
-
-                if (child.nodeName === "#text" && !whitespace.test(child.nodeValue)) {
-                  text = child.nodeValue;
-                  break;
-                }
-              }
-            }
-          }
-
-          return text;
-        };
-
-        var blocks = document.querySelectorAll("pre.".concat(className));
-        for (var i = 0; i < blocks.length; i++) {
-          var parentEl = blocks[i]; // Insert our new div at the end of our content to get general
-          // typeset and page sizes as our parent might be `display:none`
-          // keeping us from getting the right sizes for our SVG.
-          // Our new div will be hidden via "visibility" and take no space
-          // via `position: absolute`. When we are all done, we use the
-          // callback to insert our content where we want it. Mermaid will
-          // delete the temporary element when done, but we delete the
-          // original source element.
-
-          var temp = document.createElement("div");
-          temp.style.visibility = "hidden";
-          temp.style.position = "absolute";
-          article.appendChild(temp);
-          mermaid.mermaidAPI.render("_mermaind_".concat(i), getFromCode(parentEl), function (content) {
-            var el = document.createElement("div");
-            el.className = className;
-            el.innerHTML = content;
-            parentEl.parentNode.insertBefore(el, parentEl);
-            parentEl.parentNode.removeChild(parentEl);
-          }, temp);
-        };
-      });
-
-      (function () {
-        var onReady = function onReady(fn) {
-          if (document.addEventListener) {
-            document.addEventListener("DOMContentLoaded", fn);
-          } else {
-            document.attachEvent("onreadystatechange", function () {
-              if (document.readyState === "interactive") {
-                fn();
-              }
-            });
-          }
-        };
-
-        onReady(function () {
-          if (typeof mermaid !== "undefined") {
-            uml("mermaid");
-          }
-        });
-      })();
-
-    }());
-    ```
+    This is just for reference.
 
 ## Limitations
 
