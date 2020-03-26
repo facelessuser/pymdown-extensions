@@ -12,6 +12,8 @@ docs_dir: docs/src/markdown
 theme:
   name: material
   custom_dir: docs/theme
+  icon:
+    logo: material/book-open-page-variant
   palette:
     primary: drac-purple
     accent: drac-purple
@@ -141,3 +143,5 @@ extra_javascript:
 plugins:
   - search
   - git-revision-date-localized
+  - minify:
+      minify_html: true
