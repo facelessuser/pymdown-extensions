@@ -24,7 +24,7 @@ export default className => {
     return text
   }
 
-  const article = document.querySelector("article")
+  const main = document.querySelector("body")
   const blocks = document.querySelectorAll(`pre.${className}`)
   for (let i = 0; i < blocks.length; i++) {
     const parentEl = blocks[i]
@@ -40,19 +40,23 @@ export default className => {
     const temp = document.createElement("div")
     temp.style.visibility = "hidden"
     temp.style.position = "absolute"
+    temp.style.width = "100%"
+    temp.style.fontSize = "16px"
 
-    article.appendChild(temp)
+    main.appendChild(temp)
     mermaid.mermaidAPI.render(
       `_mermaind_${i}`,
       getFromCode(parentEl),
       content => {
         const el = document.createElement("div")
         el.className = className
-        const el2 = document.createElement("div")
-        el2.innerHTML = content
-        el.appendChild(el2)
+        el.innerHTML = content
+        const child = el.childNodes[0]
         parentEl.parentNode.insertBefore(el, parentEl)
         parentEl.parentNode.removeChild(parentEl)
+        if (!child.hasAttribute("height")) {
+          child.setAttribute("height", child.getBoundingClientRect().height)
+        }
       },
       temp
     )

@@ -158,7 +158,8 @@ gulp.task("scss:build:sass", () => {
       includePaths: [
         "node_modules/modularscale-sass/stylesheets",
         "node_modules/material-design-color",
-        "node_modules/material-shadows"]
+        "node_modules/material-shadows",
+        "node_modules/mermaid/src/themes"]
     }).on("error", sass.logError))
     .pipe(postcss(processors))
     .pipe(gulpif(config.compress.enabled, cleanCSS()))
