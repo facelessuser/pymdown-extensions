@@ -100,6 +100,11 @@ $labelColor: $drac-purple;
         }
       }
 
+      // Sequence
+      .noteText {
+        fill: $drac-yellow;
+      }
+
       // Gantt
       .sectionTitle,
       .taskTextOutsideRight,
@@ -132,6 +137,7 @@ $labelColor: $drac-purple;
         }
       }
 
+      // class Diagram
       .stateGroup {
         circle {
           &[style$="fill: black;"] {
@@ -145,10 +151,15 @@ $labelColor: $drac-purple;
           }
         }
 
-        // Class diagram
         .composit {
           fill: var(--md-default-bg-color);
         }
+      }
+
+      .classGroup .title,
+      .classLabel .label,
+      .classGroup text {
+        font-size: 16px !important;
       }
 
       /* stylelint-enable selector-class-pattern */

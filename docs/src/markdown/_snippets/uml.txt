@@ -8,6 +8,10 @@
     },
     sequence: {
       useMaxWidth: false
+    },
+    class: {
+      textHeight: 16,
+      dividerMargin: 16
     }
   };
   mermaid.initialize(config);

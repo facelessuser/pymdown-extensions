@@ -55,7 +55,7 @@ export default className => {
         parentEl.parentNode.insertBefore(el, parentEl)
         parentEl.parentNode.removeChild(parentEl)
         if (!child.hasAttribute("height")) {
-          child.setAttribute("height", child.getBoundingClientRect().height)
+          child.setAttribute("height", temp.childNodes[0].getBoundingClientRect().height)
         }
       },
       temp
