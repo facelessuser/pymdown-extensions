@@ -21,6 +21,8 @@
 [katex]: https://github.com/Khan/KaTeX
 [mathjax]: http://www.mathjax.org/
 [mermaid]: https://mermaid-js.github.io/mermaid/#/
+[mermaid-config]: https://github.com/facelessuser/pymdown-extensions/blob/master/docs/src/markdown/_snippets/links.txt
+[mermaid-loader]: https://github.com/facelessuser/pymdown-extensions/blob/master/docs/src/js/uml.js
 [md-in-html]: https://python-markdown.github.io/extensions/md_in_html/
 [mkdocs]: https://github.com/mkdocs/mkdocs
 [mkdocs-material]: https://github.com/squidfunk/mkdocs-material

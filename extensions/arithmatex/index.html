@@ -1,1384 +1,156 @@
-
-
-
-<!doctype html>
-<html lang="en" class="no-js">
-  <head>
-    
-      <meta charset="utf-8">
-      <meta name="viewport" content="width=device-width,initial-scale=1">
-      
-        <meta name="description" content="A Collection of Useful Extensions for Python Markdown">
-      
-      
-        <link rel="canonical" href="https://facelessuser.github.io/pymdown-extensions/extensions/arithmatex/">
-      
-      
-      <link rel="shortcut icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.1, mkdocs-material-5.0.0rc2">
-    
-    
-      
-        <title>Arithmatex - PyMdown Extensions Documentation</title>
-      
-    
-    
-      <link rel="stylesheet" href="../../assets/stylesheets/main.97c3fac0.min.css">
-      
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.31180ff2.min.css">
-      
-      
-        
-        
-        <meta name="theme-color" content="">
-      
-    
-    
-    
-      
-        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
-        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
-      
-    
-    
-    
-      <link rel="stylesheet" href="../../assets/pymdownx-extras/extra-592d55346b.css">
-    
-    
-      
-    
-    
-  </head>
-  
-  
-    
-    
-    <body dir="ltr" data-md-color-primary="drac-purple" data-md-color-accent="drac-purple">
-  
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
-    
-      
-      <a href="#arithmatex" class="md-skip" data-md-component="skip">
-        Skip to content
-      </a>
-    
-    
-    
-      <header class="md-header" data-md-component="header">
-  <nav class="md-header-nav md-grid">
-    <a href="https://facelessuser.github.io/pymdown-extensions" title="PyMdown Extensions Documentation" aria-label="PyMdown Extensions Documentation" class="md-header-nav__button md-logo">
-      
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
-      
-    </a>
-    <label class="md-header-nav__button md-icon" for="__drawer">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z" /></svg>
-    </label>
-    <div class="md-header-nav__title" data-md-component="header-title">
-      <div class="md-header-nav__ellipsis md-ellipsis">
-        
-          <span class="md-header-nav__topic">
-            PyMdown Extensions Documentation
-          </span>
-          <span class="md-header-nav__topic">
-            
-              Arithmatex
-            
-          </span>
-        
-      </div>
-    </div>
-    
-      <label class="md-header-nav__button md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
-      </label>
-      
-<div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
-      <label class="md-search__icon md-icon" for="__search">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" /></svg>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-      </label>
-      <button type="reset" class="md-search__icon md-icon" aria-label="reset" data-md-component="search-reset" tabindex="-1">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" /></svg>
-      </button>
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Type to start searching
-          </div>
-          <ol class="md-search-result__list"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-    
-    
-      <div class="md-header-nav__source">
-        
-<a href="https://github.com/facelessuser/pymdown-extensions/" title="Go to repository" class="md-source">
-  <div class="md-source__icon md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
-  </div>
-  <div class="md-source__repository">
-    GitHub
-  </div>
-</a>
-      </div>
-    
-  </nav>
-</header>
-    
-    <div class="md-container" data-md-component="container">
-      
-        
-      
-      
-        
-          
-
-  
-
-<nav class="md-tabs md-tabs--active" data-md-component="tabs">
-  <div class="md-tabs__inner md-grid">
-    <ul class="md-tabs__list">
-      
-        
-  <li class="md-tabs__item">
-    
-      <a href="../.." class="md-tabs__link">
-        PyMdown Extensions
-      </a>
-    
-  </li>
-
-      
-        
-      
-        
-      
-        
-  
-  
-    <li class="md-tabs__item">
-      
-        <a href="./" class="md-tabs__link md-tabs__link--active">
-          Extensions
-        </a>
-      
-    </li>
-  
-
-      
-        
-  
-  
-    <li class="md-tabs__item">
-      
-        <a href="../../extras/slugs/" class="md-tabs__link">
-          Extras
-        </a>
-      
-    </li>
-  
-
-      
-        
-      
-        
-  
-  
-    <li class="md-tabs__item">
-      
-        <a href="../../about/contributing/" class="md-tabs__link">
-          About
-        </a>
-      
-    </li>
-  
-
-      
-    </ul>
-  </div>
-</nav>
-        
-      
-      <main class="md-main" data-md-component="main">
-        <div class="md-main__inner md-grid">
-          
-            
-              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    <nav class="md-nav md-nav--primary" data-md-level="0">
-  <label class="md-nav__title" for="__drawer">
-    <a href="https://facelessuser.github.io/pymdown-extensions" title="PyMdown Extensions Documentation" aria-label="PyMdown Extensions Documentation" class="md-nav__button md-logo">
-      
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,8A3,3 0 0,0 15,5A3,3 0 0,0 12,2A3,3 0 0,0 9,5A3,3 0 0,0 12,8M12,11.54C9.64,9.35 6.5,8 3,8V19C6.5,19 9.64,20.35 12,22.54C14.36,20.35 17.5,19 21,19V8C17.5,8 14.36,9.35 12,11.54Z" /></svg>
-      
-    </a>
-    PyMdown Extensions Documentation
-  </label>
-  
-    <div class="md-nav__source">
-      
-<a href="https://github.com/facelessuser/pymdown-extensions/" title="Go to repository" class="md-source">
-  <div class="md-source__icon md-icon">
-    
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
-  </div>
-  <div class="md-source__repository">
-    GitHub
-  </div>
-</a>
-    </div>
-  
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../.." title="PyMdown Extensions" class="md-nav__link">
-      PyMdown Extensions
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../../installation/" title="Installation" class="md-nav__link">
-      Installation
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../../usage_notes/" title="Usage Notes" class="md-nav__link">
-      Usage Notes
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-  
-
-
-  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-    
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
-    
-    <label class="md-nav__link" for="nav-4">
-      Extensions
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
-      </span>
-    </label>
-    <nav class="md-nav" data-md-level="1">
-      <label class="md-nav__title" for="nav-4">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-        </span>
-        Extensions
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-  
-
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Arithmatex
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z" /></svg>
-        </span>
-      </label>
-    
-    <a href="./" title="Arithmatex" class="md-nav__link md-nav__link--active">
-      Arithmatex
-    </a>
-    
-      
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-      </span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#input-format" class="md-nav__link">
-    Input Format
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mathjax-output-format" class="md-nav__link">
-    MathJax Output Format
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#generic-output-format" class="md-nav__link">
-    Generic Output Format
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#loading-mathjax" class="md-nav__link">
-    Loading MathJax
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#loading-katex" class="md-nav__link">
-    Loading KaTeX
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#alternative-math-blocks" class="md-nav__link">
-    Alternative Math Blocks
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#options" class="md-nav__link">
-    Options
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-    
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../b64/" title="B64" class="md-nav__link">
-      B64
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../betterem/" title="BetterEm" class="md-nav__link">
-      BetterEm
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../caret/" title="Caret" class="md-nav__link">
-      Caret
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../critic/" title="Critic" class="md-nav__link">
-      Critic
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../details/" title="Details" class="md-nav__link">
-      Details
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../emoji/" title="Emoji" class="md-nav__link">
-      Emoji
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../escapeall/" title="EscapeAll" class="md-nav__link">
-      EscapeAll
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../extra/" title="Extra" class="md-nav__link">
-      Extra
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../extrarawhtml/" title="ExtraRawHTML" class="md-nav__link">
-      ExtraRawHTML
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../highlight/" title="Highlight" class="md-nav__link">
-      Highlight
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../inlinehilite/" title="InlineHilite" class="md-nav__link">
-      InlineHilite
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../keys/" title="Keys" class="md-nav__link">
-      Keys
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../magiclink/" title="MagicLink" class="md-nav__link">
-      MagicLink
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../mark/" title="Mark" class="md-nav__link">
-      Mark
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../pathconverter/" title="PathConverter" class="md-nav__link">
-      PathConverter
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../striphtml/" title="StripHTML" class="md-nav__link">
-      StripHTML
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../progressbar/" title="ProgressBar" class="md-nav__link">
-      ProgressBar
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../smartsymbols/" title="SmartSymbols" class="md-nav__link">
-      SmartSymbols
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../snippets/" title="Snippets" class="md-nav__link">
-      Snippets
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../superfences/" title="SuperFences" class="md-nav__link">
-      SuperFences
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../tabbed/" title="Tabbed" class="md-nav__link">
-      Tabbed
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../tasklist/" title="Tasklist" class="md-nav__link">
-      Tasklist
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../tilde/" title="Tilde" class="md-nav__link">
-      Tilde
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5">
-    
-    <label class="md-nav__link" for="nav-5">
-      Extras
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
-      </span>
-    </label>
-    <nav class="md-nav" data-md-level="1">
-      <label class="md-nav__title" for="nav-5">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-        </span>
-        Extras
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../extras/slugs/" title="Slugs" class="md-nav__link">
-      Slugs
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item">
-    <a href="../../faq/" title="FAQ" class="md-nav__link">
-      FAQ
-    </a>
-  </li>
-
-    
-      
-      
-      
-
-
-  <li class="md-nav__item md-nav__item--nested">
-    
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7">
-    
-    <label class="md-nav__link" for="nav-7">
-      About
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z" /></svg>
-      </span>
-    </label>
-    <nav class="md-nav" data-md-level="1">
-      <label class="md-nav__title" for="nav-7">
-        <span class="md-nav__icon md-icon">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-        </span>
-        About
-      </label>
-      <ul class="md-nav__list" data-md-scrollfix>
-        
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../about/contributing/" title="Contributing & Support" class="md-nav__link">
-      Contributing &amp; Support
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../about/development/" title="Development" class="md-nav__link">
-      Development
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../about/changelog/" title="Changelog" class="md-nav__link">
-      Changelog
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../about/release/" title="Release Notes" class="md-nav__link">
-      Release Notes
-    </a>
-  </li>
-
-        
-          
-          
-          
-
-
-  <li class="md-nav__item">
-    <a href="../../about/license/" title="License" class="md-nav__link">
-      License
-    </a>
-  </li>
-
-        
-      </ul>
-    </nav>
-  </li>
-
-    
-  </ul>
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-            
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-<nav class="md-nav md-nav--secondary">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-      </span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#input-format" class="md-nav__link">
-    Input Format
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#mathjax-output-format" class="md-nav__link">
-    MathJax Output Format
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#generic-output-format" class="md-nav__link">
-    Generic Output Format
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#loading-mathjax" class="md-nav__link">
-    Loading MathJax
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#loading-katex" class="md-nav__link">
-    Loading KaTeX
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#alternative-math-blocks" class="md-nav__link">
-    Alternative Math Blocks
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#options" class="md-nav__link">
-    Options
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-                  </div>
-                </div>
-              </div>
-            
-          
-          <div class="md-content">
-            <article class="md-content__inner md-typeset">
-              
-                
-                  <a href="https://github.com/facelessuser/pymdown-extensions/tree/master/docs/src/markdown/extensions/arithmatex.md" title="Edit this page" class="md-content__button md-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z" /></svg>
-                  </a>
-                
-                
-                  
-                    
-
-
-  
-
-
-<a href="https://github.com/facelessuser/pymdown-extensions/tree/master/pymdownx/arithmatex.py" title="pymdownx/arithmatex.py" class="md-content__button md-icon">
-  Source
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
-</a>
-                  
-                
-                
-                <h1 id="arithmatex">Arithmatex<a class="headerlink" href="#arithmatex" title="Permanent link"></a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link"></a></h2>
-<p>Arithmatex is an extension that preserves LaTeX math equations during the Markdown conversion process so that they can
-be used with libraries like <a href="http://www.mathjax.org/">MathJax</a>. If you prefer to use something other than MathJax, Arithmatex can output
-a more generic format suitable for other libraries like <a href="https://github.com/Khan/KaTeX">KaTeX</a>.</p>
-<p>Arithmatex searches for the patterns <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> and <code class="highlight"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code> for inline math, and <code class="highlight"><span class="sb">$$</span><span class="nb">...</span><span class="s">$$</span></code>,
-<code class="highlight"><span class="sb">\[</span><span class="nb">...</span><span class="s">\]</span></code>, and <code class="highlight"><span class="k">\begin</span><span class="nb">{}</span>...<span class="k">\end</span><span class="nb">{}</span></code> for block math. By default, all formats are enabled, but each format can
-individually be disabled if desired.</p>
-<p>The Arithmatex extension can be included in Python Markdown by using the following:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">markdown</span>
-<span class="n">md</span> <span class="o">=</span> <span class="n">markdown</span><span class="o">.</span><span class="n">Markdown</span><span class="p">(</span><span class="n">extensions</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;pymdownx.arithmatex&#39;</span><span class="p">])</span>
-</code></pre></div>
-
-<h2 id="input-format">Input Format<a class="headerlink" href="#input-format" title="Permanent link"></a></h2>
-<p>By default, <a href="#options"><code>smart_dollar</code></a> mode is enabled for the <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> inline variant. With <code>smart_dollar</code> it is
-expected that the opening token (<code class="highlight"><span class="s">$</span><span class="nb"></span></code>) is to be followed by a non-whitespace character, and the closing to be
-preceded by a non-white-space character.  This is to help avoid false positives when using the dollar sign in
-traditional ways such as: <em>I have $2.00 and Bob has $10.00</em>.  The previous statement requires no escaping of the
-<code class="highlight"><span class="s">$</span><span class="nb"></span></code> character.  But when needed, the <code class="highlight"><span class="s">$</span><span class="nb"></span></code> character can be escaped using <code class="highlight"><span class="k">\$</span></code>. <code>smart_dollar</code> can be
-disabled and will capture any <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> whose dollar symbols are not escaped (<code class="highlight"><span class="k">\$</span></code>).</p>
-<div class="admonition example">
-<p class="admonition-title">Inline Examples</p>
-<div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Output</label><div class="tabbed-content">
-<p><span><span class="MathJax_Preview">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</span><script type="math/tex">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</script></span>, <span><span class="MathJax_Preview">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</span><script type="math/tex">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</script></span>.</p>
-</div>
-<input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Markdown</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="s">$</span><span class="nb">p</span><span class="o">(</span><span class="nb">x|y</span><span class="o">)</span><span class="nb"> </span><span class="o">=</span><span class="nb"> </span><span class="nv">\frac</span><span class="nb">{p</span><span class="o">(</span><span class="nb">y|x</span><span class="o">)</span><span class="nb">p</span><span class="o">(</span><span class="nb">x</span><span class="o">)</span><span class="nb">}{p</span><span class="o">(</span><span class="nb">y</span><span class="o">)</span><span class="nb">}</span><span class="s">$</span>, <span class="s">\(</span><span class="nb">p</span><span class="o">(</span><span class="nb">x|y</span><span class="o">)</span><span class="nb"> </span><span class="o">=</span><span class="nb"> </span><span class="nv">\frac</span><span class="nb">{p</span><span class="o">(</span><span class="nb">y|x</span><span class="o">)</span><span class="nb">p</span><span class="o">(</span><span class="nb">x</span><span class="o">)</span><span class="nb">}{p</span><span class="o">(</span><span class="nb">y</span><span class="o">)</span><span class="nb">}</span><span class="s">\)</span>.
-</code></pre></div>
-
-</div>
-</div>
-</div>
-<div class="admonition tip">
-<p class="admonition-title">Inline Configuration</p>
-<p>When using MathJax, for best results, it is advised to not use <a href="#options"><code>generic</code></a> mode, and configure MathJax
-without the <code>text2jax</code> extension since MathJax automatically detects Arithmatex's default output.</p>
-<p>If using generic mode (for libraries like KaTeX), Arithmatex will convert dollars to the form <code class="highlight"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code> in the
-HTML output. This is because <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> is extremely problematic to scan for, which is why MathJax and KaTeX
-disable <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> by default in their plain text scanners, and why Arithmatex enables <code>smart_dollar</code> by default
-when scanning for <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code>.</p>
-<p>It is advised that if you are outputting in in <code>generic</code> mode that you do not configure your JavaScript library to
-look for <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> and instead look for <code class="highlight"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code>, and let Arithmatex's handle <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code>.</p>
-</div>
-<p>For block forms, the block must start with the appropriate opening for the block type: <code class="highlight"><span class="sb">$$</span><span class="nb"></span></code>, <code class="highlight"><span class="sb">\[</span><span class="nb"></span></code>, and
-<code class="highlight"><span class="k">\begin</span><span class="nb">{}</span></code> for the respective search pattern. The block must also end with the proper respective end: <code class="highlight"><span class="sb">$$</span><span class="nb"></span></code>,
-<code class="highlight"><span class="k">\]</span></code>, and <code class="highlight"><span class="k">\end</span><span class="nb">{}</span></code>. A block also must contain no empty lines and should be both preceded and followed by an
-empty line.</p>
-<div class="admonition example">
-<p class="admonition-title">Block Examples</p>
-<div class="tabbed-set" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Output</label><div class="tabbed-content">
-<div>
-<div class="MathJax_Preview">
+<!doctype html><html lang=en class=no-js> <head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="A Collection of Useful Extensions for Python Markdown"><link href=https://facelessuser.github.io/pymdown-extensions/extensions/arithmatex/ rel=canonical><link rel="shortcut icon" href=../../assets/images/favicon.png><meta name=generator content="mkdocs-1.1, mkdocs-material-5.0.0rc2"><title>Arithmatex - PyMdown Extensions Documentation</title><link rel=stylesheet href=../../assets/stylesheets/main.97c3fac0.min.css><link rel=stylesheet href=../../assets/stylesheets/palette.31180ff2.min.css><meta name=theme-color content><link href=https://fonts.gstatic.com rel=preconnect crossorigin><link rel=stylesheet href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback"><style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style><link rel=stylesheet href=../../assets/pymdownx-extras/extra-9dc654756b.css></head> <body dir=ltr data-md-color-primary=drac-purple data-md-color-accent=drac-purple> <input class=md-toggle data-md-toggle=drawer type=checkbox id=__drawer autocomplete=off> <input class=md-toggle data-md-toggle=search type=checkbox id=__search autocomplete=off> <label class=md-overlay for=__drawer></label> <a href=#arithmatex class=md-skip data-md-component=skip> Skip to content </a> <header class=md-header data-md-component=header> <nav class="md-header-nav md-grid"> <a href=https://facelessuser.github.io/pymdown-extensions title="PyMdown Extensions Documentation" aria-label="PyMdown Extensions Documentation" class="md-header-nav__button md-logo"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M19,2L14,6.5V17.5L19,13V2M6.5,5C4.55,5 2.45,5.4 1,6.5V21.16C1,21.41 1.25,21.66 1.5,21.66C1.6,21.66 1.65,21.59 1.75,21.59C3.1,20.94 5.05,20.5 6.5,20.5C8.45,20.5 10.55,20.9 12,22C13.35,21.15 15.8,20.5 17.5,20.5C19.15,20.5 20.85,20.81 22.25,21.56C22.35,21.61 22.4,21.59 22.5,21.59C22.75,21.59 23,21.34 23,21.09V6.5C22.4,6.05 21.75,5.75 21,5.5V7.5L21,13V19C19.9,18.65 18.7,18.5 17.5,18.5C15.8,18.5 13.35,19.15 12,20V13L12,8.5V6.5C10.55,5.4 8.45,5 6.5,5V5Z"/></svg> </a> <label class="md-header-nav__button md-icon" for=__drawer> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z /></svg> </label> <div class=md-header-nav__title data-md-component=header-title> <div class="md-header-nav__ellipsis md-ellipsis"> <span class=md-header-nav__topic> PyMdown Extensions Documentation </span> <span class=md-header-nav__topic> Arithmatex </span> </div> </div> <label class="md-header-nav__button md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/></svg> </label> <div class=md-search data-md-component=search role=dialog> <label class=md-search__overlay for=__search></label> <div class=md-search__inner role=search> <form class=md-search__form name=search> <input type=text class=md-search__input name=query aria-label=search placeholder=Search autocapitalize=off autocorrect=off autocomplete=off spellcheck=false data-md-component=search-query data-md-state=active required> <label class="md-search__icon md-icon" for=__search> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/></svg> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z /></svg> </label> <button type=reset class="md-search__icon md-icon" aria-label=reset data-md-component=search-reset tabindex=-1> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z /></svg> </button> </form> <div class=md-search__output> <div class=md-search__scrollwrap data-md-scrollfix> <div class=md-search-result data-md-component=search-result> <div class=md-search-result__meta> Type to start searching </div> <ol class=md-search-result__list></ol> </div> </div> </div> </div> </div> <div class=md-header-nav__source> <a href=https://github.com/facelessuser/pymdown-extensions/ title="Go to repository" class=md-source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> GitHub </div> </a> </div> </nav> </header> <div class=md-container data-md-component=container> <nav class="md-tabs md-tabs--active" data-md-component=tabs> <div class="md-tabs__inner md-grid"> <ul class=md-tabs__list> <li class=md-tabs__item> <a href=../.. class=md-tabs__link> PyMdown Extensions </a> </li> <li class=md-tabs__item> <a href=./ class="md-tabs__link md-tabs__link--active"> Extensions </a> </li> <li class=md-tabs__item> <a href=../../extras/slugs/ class=md-tabs__link> Extras </a> </li> <li class=md-tabs__item> <a href=../../about/contributing/ class=md-tabs__link> About </a> </li> </ul> </div> </nav> <main class=md-main data-md-component=main> <div class="md-main__inner md-grid"> <div class="md-sidebar md-sidebar--primary" data-md-component=navigation> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--primary" data-md-level=0> <label class=md-nav__title for=__drawer> <a href=https://facelessuser.github.io/pymdown-extensions title="PyMdown Extensions Documentation" aria-label="PyMdown Extensions Documentation" class="md-nav__button md-logo"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M19,2L14,6.5V17.5L19,13V2M6.5,5C4.55,5 2.45,5.4 1,6.5V21.16C1,21.41 1.25,21.66 1.5,21.66C1.6,21.66 1.65,21.59 1.75,21.59C3.1,20.94 5.05,20.5 6.5,20.5C8.45,20.5 10.55,20.9 12,22C13.35,21.15 15.8,20.5 17.5,20.5C19.15,20.5 20.85,20.81 22.25,21.56C22.35,21.61 22.4,21.59 22.5,21.59C22.75,21.59 23,21.34 23,21.09V6.5C22.4,6.05 21.75,5.75 21,5.5V7.5L21,13V19C19.9,18.65 18.7,18.5 17.5,18.5C15.8,18.5 13.35,19.15 12,20V13L12,8.5V6.5C10.55,5.4 8.45,5 6.5,5V5Z"/></svg> </a> PyMdown Extensions Documentation </label> <div class=md-nav__source> <a href=https://github.com/facelessuser/pymdown-extensions/ title="Go to repository" class=md-source> <div class="md-source__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </div> <div class=md-source__repository> GitHub </div> </a> </div> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../.. title="PyMdown Extensions" class=md-nav__link> PyMdown Extensions </a> </li> <li class=md-nav__item> <a href=../../installation/ title=Installation class=md-nav__link> Installation </a> </li> <li class=md-nav__item> <a href=../../usage_notes/ title="Usage Notes" class=md-nav__link> Usage Notes </a> </li> <li class="md-nav__item md-nav__item--active md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=nav-4 type=checkbox id=nav-4 checked> <label class=md-nav__link for=nav-4> Extensions <span class="md-nav__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z /></svg> </span> </label> <nav class=md-nav data-md-level=1> <label class=md-nav__title for=nav-4> <span class="md-nav__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z /></svg> </span> Extensions </label> <ul class=md-nav__list data-md-scrollfix> <li class="md-nav__item md-nav__item--active"> <input class="md-nav__toggle md-toggle" data-md-toggle=toc type=checkbox id=__toc> <label class="md-nav__link md-nav__link--active" for=__toc> Arithmatex <span class="md-nav__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M3,9H17V7H3V9M3,13H17V11H3V13M3,17H17V15H3V17M19,17H21V15H19V17M19,7V9H21V7H19M19,13H21V11H19V13Z /></svg> </span> </label> <a href=./ title=Arithmatex class="md-nav__link md-nav__link--active"> Arithmatex </a> <nav class="md-nav md-nav--secondary"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z /></svg> </span> Table of contents </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=#overview class=md-nav__link> Overview </a> </li> <li class=md-nav__item> <a href=#input-format class=md-nav__link> Input Format </a> </li> <li class=md-nav__item> <a href=#mathjax-output-format class=md-nav__link> MathJax Output Format </a> </li> <li class=md-nav__item> <a href=#generic-output-format class=md-nav__link> Generic Output Format </a> </li> <li class=md-nav__item> <a href=#loading-mathjax class=md-nav__link> Loading MathJax </a> </li> <li class=md-nav__item> <a href=#loading-katex class=md-nav__link> Loading KaTeX </a> </li> <li class=md-nav__item> <a href=#alternative-math-blocks class=md-nav__link> Alternative Math Blocks </a> </li> <li class=md-nav__item> <a href=#options class=md-nav__link> Options </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=../b64/ title=B64 class=md-nav__link> B64 </a> </li> <li class=md-nav__item> <a href=../betterem/ title=BetterEm class=md-nav__link> BetterEm </a> </li> <li class=md-nav__item> <a href=../caret/ title=Caret class=md-nav__link> Caret </a> </li> <li class=md-nav__item> <a href=../critic/ title=Critic class=md-nav__link> Critic </a> </li> <li class=md-nav__item> <a href=../details/ title=Details class=md-nav__link> Details </a> </li> <li class=md-nav__item> <a href=../emoji/ title=Emoji class=md-nav__link> Emoji </a> </li> <li class=md-nav__item> <a href=../escapeall/ title=EscapeAll class=md-nav__link> EscapeAll </a> </li> <li class=md-nav__item> <a href=../extra/ title=Extra class=md-nav__link> Extra </a> </li> <li class=md-nav__item> <a href=../extrarawhtml/ title=ExtraRawHTML class=md-nav__link> ExtraRawHTML </a> </li> <li class=md-nav__item> <a href=../highlight/ title=Highlight class=md-nav__link> Highlight </a> </li> <li class=md-nav__item> <a href=../inlinehilite/ title=InlineHilite class=md-nav__link> InlineHilite </a> </li> <li class=md-nav__item> <a href=../keys/ title=Keys class=md-nav__link> Keys </a> </li> <li class=md-nav__item> <a href=../magiclink/ title=MagicLink class=md-nav__link> MagicLink </a> </li> <li class=md-nav__item> <a href=../mark/ title=Mark class=md-nav__link> Mark </a> </li> <li class=md-nav__item> <a href=../pathconverter/ title=PathConverter class=md-nav__link> PathConverter </a> </li> <li class=md-nav__item> <a href=../striphtml/ title=StripHTML class=md-nav__link> StripHTML </a> </li> <li class=md-nav__item> <a href=../progressbar/ title=ProgressBar class=md-nav__link> ProgressBar </a> </li> <li class=md-nav__item> <a href=../smartsymbols/ title=SmartSymbols class=md-nav__link> SmartSymbols </a> </li> <li class=md-nav__item> <a href=../snippets/ title=Snippets class=md-nav__link> Snippets </a> </li> <li class=md-nav__item> <a href=../superfences/ title=SuperFences class=md-nav__link> SuperFences </a> </li> <li class=md-nav__item> <a href=../tabbed/ title=Tabbed class=md-nav__link> Tabbed </a> </li> <li class=md-nav__item> <a href=../tasklist/ title=Tasklist class=md-nav__link> Tasklist </a> </li> <li class=md-nav__item> <a href=../tilde/ title=Tilde class=md-nav__link> Tilde </a> </li> </ul> </nav> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=nav-5 type=checkbox id=nav-5> <label class=md-nav__link for=nav-5> Extras <span class="md-nav__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z /></svg> </span> </label> <nav class=md-nav data-md-level=1> <label class=md-nav__title for=nav-5> <span class="md-nav__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z /></svg> </span> Extras </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../extras/slugs/ title=Slugs class=md-nav__link> Slugs </a> </li> </ul> </nav> </li> <li class=md-nav__item> <a href=../../faq/ title=FAQ class=md-nav__link> FAQ </a> </li> <li class="md-nav__item md-nav__item--nested"> <input class="md-nav__toggle md-toggle" data-md-toggle=nav-7 type=checkbox id=nav-7> <label class=md-nav__link for=nav-7> About <span class="md-nav__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z /></svg> </span> </label> <nav class=md-nav data-md-level=1> <label class=md-nav__title for=nav-7> <span class="md-nav__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z /></svg> </span> About </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=../../about/contributing/ title="Contributing & Support" class=md-nav__link> Contributing &amp; Support </a> </li> <li class=md-nav__item> <a href=../../about/development/ title=Development class=md-nav__link> Development </a> </li> <li class=md-nav__item> <a href=../../about/changelog/ title=Changelog class=md-nav__link> Changelog </a> </li> <li class=md-nav__item> <a href=../../about/release/ title="Release Notes" class=md-nav__link> Release Notes </a> </li> <li class=md-nav__item> <a href=../../about/license/ title=License class=md-nav__link> License </a> </li> </ul> </nav> </li> </ul> </nav> </div> </div> </div> <div class="md-sidebar md-sidebar--secondary" data-md-component=toc> <div class=md-sidebar__scrollwrap> <div class=md-sidebar__inner> <nav class="md-nav md-nav--secondary"> <label class=md-nav__title for=__toc> <span class="md-nav__icon md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z /></svg> </span> Table of contents </label> <ul class=md-nav__list data-md-scrollfix> <li class=md-nav__item> <a href=#overview class=md-nav__link> Overview </a> </li> <li class=md-nav__item> <a href=#input-format class=md-nav__link> Input Format </a> </li> <li class=md-nav__item> <a href=#mathjax-output-format class=md-nav__link> MathJax Output Format </a> </li> <li class=md-nav__item> <a href=#generic-output-format class=md-nav__link> Generic Output Format </a> </li> <li class=md-nav__item> <a href=#loading-mathjax class=md-nav__link> Loading MathJax </a> </li> <li class=md-nav__item> <a href=#loading-katex class=md-nav__link> Loading KaTeX </a> </li> <li class=md-nav__item> <a href=#alternative-math-blocks class=md-nav__link> Alternative Math Blocks </a> </li> <li class=md-nav__item> <a href=#options class=md-nav__link> Options </a> </li> </ul> </nav> </div> </div> </div> <div class=md-content> <article class="md-content__inner md-typeset"> <a href=https://github.com/facelessuser/pymdown-extensions/tree/master/docs/src/markdown/extensions/arithmatex.md title="Edit this page" class="md-content__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d="M20.71,7.04C21.1,6.65 21.1,6 20.71,5.63L18.37,3.29C18,2.9 17.35,2.9 16.96,3.29L15.12,5.12L18.87,8.87M3,17.25V21H6.75L17.81,9.93L14.06,6.18L3,17.25Z"/></svg> </a> <a href=https://github.com/facelessuser/pymdown-extensions/tree/master/pymdownx/arithmatex.py title=pymdownx/arithmatex.py class="md-content__button md-icon"> Source <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><path d="M439.55 236.05L244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg> </a> <h1 id=arithmatex>Arithmatex<a class=headerlink href=#arithmatex title="Permanent link"></a></h1> <h2 id=overview>Overview<a class=headerlink href=#overview title="Permanent link"></a></h2> <p>Arithmatex is an extension that preserves LaTeX math equations during the Markdown conversion process so that they can be used with libraries like <a href=http://www.mathjax.org/ >MathJax</a>. If you prefer to use something other than MathJax, Arithmatex can output a more generic format suitable for other libraries like <a href=https://github.com/Khan/KaTeX>KaTeX</a>.</p> <p>Arithmatex searches for the patterns <code class=highlight><span class=s>$</span><span class=nb>...</span><span class=s>$</span></code> and <code class=highlight><span class=s>\(</span><span class=nb>...</span><span class=s>\)</span></code> for inline math, and <code class=highlight><span class=sb>$$</span><span class=nb>...</span><span class=s>$$</span></code>, <code class=highlight><span class=sb>\[</span><span class=nb>...</span><span class=s>\]</span></code>, and <code class=highlight><span class=k>\begin</span><span class=nb>{}</span>...<span class=k>\end</span><span class=nb>{}</span></code> for block math. By default, all formats are enabled, but each format can individually be disabled if desired.</p> <p>The Arithmatex extension can be included in Python Markdown by using the following:</p> <div class=highlight><pre><span></span><code><span class=kn>import</span> <span class=nn>markdown</span>
+<span class=n>md</span> <span class=o>=</span> <span class=n>markdown</span><span class=o>.</span><span class=n>Markdown</span><span class=p>(</span><span class=n>extensions</span><span class=o>=</span><span class=p>[</span><span class=s1>&#39;pymdownx.arithmatex&#39;</span><span class=p>])</span>
+</code></pre></div> <h2 id=input-format>Input Format<a class=headerlink href=#input-format title="Permanent link"></a></h2> <p>By default, <a href=#options><code>smart_dollar</code></a> mode is enabled for the <code class=highlight><span class=s>$</span><span class=nb>...</span><span class=s>$</span></code> inline variant. With <code>smart_dollar</code> it is expected that the opening token (<code class=highlight><span class=s>$</span><span class=nb></span></code>) is to be followed by a non-whitespace character, and the closing to be preceded by a non-white-space character. This is to help avoid false positives when using the dollar sign in traditional ways such as: <em>I have $2.00 and Bob has $10.00</em>. The previous statement requires no escaping of the <code class=highlight><span class=s>$</span><span class=nb></span></code> character. But when needed, the <code class=highlight><span class=s>$</span><span class=nb></span></code> character can be escaped using <code class=highlight><span class=k>\$</span></code>. <code>smart_dollar</code> can be disabled and will capture any <code class=highlight><span class=s>$</span><span class=nb>...</span><span class=s>$</span></code> whose dollar symbols are not escaped (<code class=highlight><span class=k>\$</span></code>).</p> <div class="admonition example"> <p class=admonition-title>Inline Examples</p> <div class=tabbed-set data-tabs=1:2><input checked=checked id=__tabbed_1_1 name=__tabbed_1 type=radio><label for=__tabbed_1_1>Output</label><div class=tabbed-content> <p><span><span class=MathJax_Preview>p(x|y) = \frac{p(y|x)p(x)}{p(y)}</span><script type=math/tex>p(x|y) = \frac{p(y|x)p(x)}{p(y)}</script></span>, <span><span class=MathJax_Preview>p(x|y) = \frac{p(y|x)p(x)}{p(y)}</span><script type=math/tex>p(x|y) = \frac{p(y|x)p(x)}{p(y)}</script></span>.</p> </div> <input id=__tabbed_1_2 name=__tabbed_1 type=radio><label for=__tabbed_1_2>Markdown</label><div class=tabbed-content> <div class=highlight><pre><span></span><code><span class=s>$</span><span class=nb>p</span><span class=o>(</span><span class=nb>x|y</span><span class=o>)</span><span class=nb> </span><span class=o>=</span><span class=nb> </span><span class=nv>\frac</span><span class=nb>{p</span><span class=o>(</span><span class=nb>y|x</span><span class=o>)</span><span class=nb>p</span><span class=o>(</span><span class=nb>x</span><span class=o>)</span><span class=nb>}{p</span><span class=o>(</span><span class=nb>y</span><span class=o>)</span><span class=nb>}</span><span class=s>$</span>, <span class=s>\(</span><span class=nb>p</span><span class=o>(</span><span class=nb>x|y</span><span class=o>)</span><span class=nb> </span><span class=o>=</span><span class=nb> </span><span class=nv>\frac</span><span class=nb>{p</span><span class=o>(</span><span class=nb>y|x</span><span class=o>)</span><span class=nb>p</span><span class=o>(</span><span class=nb>x</span><span class=o>)</span><span class=nb>}{p</span><span class=o>(</span><span class=nb>y</span><span class=o>)</span><span class=nb>}</span><span class=s>\)</span>.
+</code></pre></div> </div> </div> </div> <div class="admonition tip"> <p class=admonition-title>Inline Configuration</p> <p>When using MathJax, for best results, it is advised to not use <a href=#options><code>generic</code></a> mode, and configure MathJax without the <code>text2jax</code> extension since MathJax automatically detects Arithmatex's default output.</p> <p>If using generic mode (for libraries like KaTeX), Arithmatex will convert dollars to the form <code class=highlight><span class=s>\(</span><span class=nb>...</span><span class=s>\)</span></code> in the HTML output. This is because <code class=highlight><span class=s>$</span><span class=nb>...</span><span class=s>$</span></code> is extremely problematic to scan for, which is why MathJax and KaTeX disable <code class=highlight><span class=s>$</span><span class=nb>...</span><span class=s>$</span></code> by default in their plain text scanners, and why Arithmatex enables <code>smart_dollar</code> by default when scanning for <code class=highlight><span class=s>$</span><span class=nb>...</span><span class=s>$</span></code>.</p> <p>It is advised that if you are outputting in in <code>generic</code> mode that you do not configure your JavaScript library to look for <code class=highlight><span class=s>$</span><span class=nb>...</span><span class=s>$</span></code> and instead look for <code class=highlight><span class=s>\(</span><span class=nb>...</span><span class=s>\)</span></code>, and let Arithmatex's handle <code class=highlight><span class=s>$</span><span class=nb>...</span><span class=s>$</span></code>.</p> </div> <p>For block forms, the block must start with the appropriate opening for the block type: <code class=highlight><span class=sb>$$</span><span class=nb></span></code>, <code class=highlight><span class=sb>\[</span><span class=nb></span></code>, and <code class=highlight><span class=k>\begin</span><span class=nb>{}</span></code> for the respective search pattern. The block must also end with the proper respective end: <code class=highlight><span class=sb>$$</span><span class=nb></span></code>, <code class=highlight><span class=k>\]</span></code>, and <code class=highlight><span class=k>\end</span><span class=nb>{}</span></code>. A block also must contain no empty lines and should be both preceded and followed by an empty line.</p> <div class="admonition example"> <p class=admonition-title>Block Examples</p> <div class=tabbed-set data-tabs=2:2><input checked=checked id=__tabbed_2_1 name=__tabbed_2 type=radio><label for=__tabbed_2_1>Output</label><div class=tabbed-content> <div> <div class=MathJax_Preview> E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j </div> <script type="math/tex; mode=display">
 E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
-</div>
-<script type="math/tex; mode=display">
-E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
-</script>
-</div>
-<div>
-<div class="MathJax_Preview">3 &lt; 4</div>
-<script type="math/tex; mode=display">3 < 4</script>
-</div>
-<div>
-<div class="MathJax_Preview">\begin{align}
-    p(v_i=1|\mathbf{h}) &amp; = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
-    p(h_j=1|\mathbf{v}) &amp; = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
-\end{align}</div>
-<script type="math/tex; mode=display">\begin{align}
+</script> </div> <div> <div class=MathJax_Preview>3 &lt; 4</div> <script type="math/tex; mode=display">3 < 4</script> </div> <div> <div class=MathJax_Preview>\begin{align} p(v_i=1|\mathbf{h}) &amp; = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\ p(h_j=1|\mathbf{v}) &amp; = \sigma\left(\sum_i w_{ij}v_i + c_j\right) \end{align}</div> <script type="math/tex; mode=display">\begin{align}
     p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
     p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
-\end{align}</script>
-</div>
-</div>
-<input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><label for="__tabbed_2_2">Markdown</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="sb">$$</span><span class="nb"></span>
-<span class="nb">E</span><span class="o">(</span><span class="nv">\mathbf</span><span class="nb">{v}, </span><span class="nv">\mathbf</span><span class="nb">{h}</span><span class="o">)</span><span class="nb"> </span><span class="o">=</span><span class="nb"> </span><span class="o">-</span><span class="nv">\sum</span><span class="nb">_{i,j}w_{ij}v_i h_j </span><span class="o">-</span><span class="nb"> </span><span class="nv">\sum</span><span class="nb">_i b_i v_i </span><span class="o">-</span><span class="nb"> </span><span class="nv">\sum</span><span class="nb">_j c_j h_j</span>
-<span class="s">$$</span>
+\end{align}</script> </div> </div> <input id=__tabbed_2_2 name=__tabbed_2 type=radio><label for=__tabbed_2_2>Markdown</label><div class=tabbed-content> <div class=highlight><pre><span></span><code><span class=sb>$$</span><span class=nb></span>
+<span class=nb>E</span><span class=o>(</span><span class=nv>\mathbf</span><span class=nb>{v}, </span><span class=nv>\mathbf</span><span class=nb>{h}</span><span class=o>)</span><span class=nb> </span><span class=o>=</span><span class=nb> </span><span class=o>-</span><span class=nv>\sum</span><span class=nb>_{i,j}w_{ij}v_i h_j </span><span class=o>-</span><span class=nb> </span><span class=nv>\sum</span><span class=nb>_i b_i v_i </span><span class=o>-</span><span class=nb> </span><span class=nv>\sum</span><span class=nb>_j c_j h_j</span>
+<span class=s>$$</span>
 
-<span class="sb">\[</span><span class="m">3</span><span class="nb"> &lt; </span><span class="m">4</span><span class="s">\]</span>
+<span class=sb>\[</span><span class=m>3</span><span class=nb> &lt; </span><span class=m>4</span><span class=s>\]</span>
 
-<span class="k">\begin</span><span class="nb">{</span>align<span class="nb">}</span>
-    p(v<span class="nb">_</span>i=1|<span class="k">\mathbf</span><span class="nb">{</span>h<span class="nb">}</span>) <span class="nb">&amp;</span> = <span class="k">\sigma\left</span>(<span class="k">\sum</span><span class="nb">_</span>j w<span class="nb">_{</span>ij<span class="nb">}</span>h<span class="nb">_</span>j + b<span class="nb">_</span>i<span class="k">\right</span>) <span class="k">\\</span>
-    p(h<span class="nb">_</span>j=1|<span class="k">\mathbf</span><span class="nb">{</span>v<span class="nb">}</span>) <span class="nb">&amp;</span> = <span class="k">\sigma\left</span>(<span class="k">\sum</span><span class="nb">_</span>i w<span class="nb">_{</span>ij<span class="nb">}</span>v<span class="nb">_</span>i + c<span class="nb">_</span>j<span class="k">\right</span>)
-<span class="k">\end</span><span class="nb">{</span>align<span class="nb">}</span>
-</code></pre></div>
+<span class=k>\begin</span><span class=nb>{</span>align<span class=nb>}</span>
+    p(v<span class=nb>_</span>i=1|<span class=k>\mathbf</span><span class=nb>{</span>h<span class=nb>}</span>) <span class=nb>&amp;</span> = <span class=k>\sigma\left</span>(<span class=k>\sum</span><span class=nb>_</span>j w<span class=nb>_{</span>ij<span class=nb>}</span>h<span class=nb>_</span>j + b<span class=nb>_</span>i<span class=k>\right</span>) <span class=k>\\</span>
+    p(h<span class=nb>_</span>j=1|<span class=k>\mathbf</span><span class=nb>{</span>v<span class=nb>}</span>) <span class=nb>&amp;</span> = <span class=k>\sigma\left</span>(<span class=k>\sum</span><span class=nb>_</span>i w<span class=nb>_{</span>ij<span class=nb>}</span>v<span class=nb>_</span>i + c<span class=nb>_</span>j<span class=k>\right</span>)
+<span class=k>\end</span><span class=nb>{</span>align<span class=nb>}</span>
+</code></pre></div> </div> </div> </div> <h2 id=mathjax-output-format>MathJax Output Format<a class=headerlink href=#mathjax-output-format title="Permanent link"></a></h2> <p>The math equations will be wrapped in a special MathJax script tag and embedded into the HTML. This format does not require the <code>tex2jax.js</code> extension when setting up MathJax. The tag will be in the form of <code class=highlight><span class=p>&lt;</span><span class=nt>script</span> <span class=na>type</span><span class=o>=</span><span class=s>&quot;math/tex&quot;</span><span class=p>&gt;&lt;/</span><span class=nt>script</span><span class=p>&gt;</span></code> for inline and <code class=highlight><span class=p>&lt;</span><span class=nt>script</span> <span class=na>type</span><span class=o>=</span><span class=s>&quot;math/tex; mode=display&quot;</span><span class=p>&gt;&lt;/</span><span class=nt>script</span><span class=p>&gt;</span></code> for block.</p> <p>By default, Arithmatex will also generate a preview span with the class <code>MathJax_Preview</code> that can/should be hidden when the math content is actually loaded. If you do not want to generate the preview, simply set <code>preview</code> to <code class=highlight><span class=kc>False</span></code>.</p> <h2 id=generic-output-format>Generic Output Format<a class=headerlink href=#generic-output-format title="Permanent link"></a></h2> <p>If <a href=#options><code>generic</code></a> is enabled, the extension will escape necessary symbols and normalize all output to be wrapped in the more reliable <code class=highlight><span class=s>\(</span><span class=nb>...</span><span class=s>\)</span></code> for inline math and <code class=highlight><span class=sb>\[</span><span class=nb>...</span><span class=s>\]</span></code> for display math (unless changed via <code>tex_inline_wrap</code> and <code>tex_block_wrap</code> in the <a href=#options>options</a>). Lastly, everything is inserted into a <code class=highlight><span class=p>&lt;</span><span class=nt>span</span><span class=p>&gt;</span></code> or <code class=highlight><span class=p>&lt;</span><span class=nt>div</span><span class=p>&gt;</span></code> for inline and display math respectively.</p> <p>With the default settings, if in your Markdown you used <code class=highlight><span class=s>$</span><span class=nb>...</span><span class=s>$</span></code> for inline math, it would be converted to <code class=highlight><span class=p>&lt;</span><span class=nt>span</span> <span class=na>class</span><span class=o>=</span><span class=s>&quot;arithmatex&quot;</span><span class=p>&gt;</span>\(...\)<span class=p>&lt;/</span><span class=nt>span</span><span class=p>&gt;</span></code> in the HTML. Blocks would be normalized from <code class=highlight><span class=sb>$$</span><span class=nb>...</span><span class=s>$$</span></code> to <code class=highlight><span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&quot;arithmatex&quot;</span><span class=p>&gt;</span>\[...\]<span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span></code>. In the case of <code class=highlight><span class=k>\begin</span><span class=nb>{}</span>...<span class=k>\end</span><span class=nb>{}</span></code>, begins and ends will not be replaced, only wrapped: <code class=highlight><span class=p>&lt;</span><span class=nt>div</span> <span class=na>class</span><span class=o>=</span><span class=s>&quot;arithmatex&quot;</span><span class=p>&gt;</span>\[\begin{}...\end{}\]<span class=p>&lt;/</span><span class=nt>div</span><span class=p>&gt;</span></code>.</p> <h2 id=loading-mathjax>Loading MathJax<a class=headerlink href=#loading-mathjax title="Permanent link"></a></h2> <p>Arithmatex requires you to provide the MathJax library and provide and configure it to your liking. The recommended way of including MathJax is to use the CDN. Latest version at time of writing this is found below.</p> <div class=tabbed-set data-tabs=3:2><input checked=checked id=__tabbed_3_1 name=__tabbed_3 type=radio><label for=__tabbed_3_1>MathJax 3</label><div class=tabbed-content> <div class=highlight><pre><span></span><code><span class=p>&lt;</span><span class=nt>script</span> <span class=na>src</span><span class=o>=</span><span class=s>&quot;https://polyfill.io/v3/polyfill.min.js?features=es6&quot;</span><span class=p>&gt;&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
+<span class=p>&lt;</span><span class=nt>script</span> <span class=na>src</span><span class=o>=</span><span class=s>&quot;https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js&quot;</span><span class=p>&gt;&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
+</code></pre></div> </div> <input id=__tabbed_3_2 name=__tabbed_3 type=radio><label for=__tabbed_3_2>Legacy: MathJax 2</label><div class=tabbed-content> <div class=highlight><pre><span></span><code><span class=p>&lt;</span><span class=nt>script</span> <span class=na>src</span><span class=o>=</span><span class=s>&quot;https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js&quot;</span><span class=p>&gt;&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
+</code></pre></div> </div> </div> <p>Generally, it is best to add your own configuration to get exactly what you want. Here we show some simple examples of configurations done in JavaScript. We've provided two basic configurations below: one that is configured for Arithmatex's <a href=#mathjax-output-format>MathJax Output Format</a>, and one that works with the <a href=#generic-output-format>Generic Output Format</a> by using <code>tex2jax</code>. These are a good starting point, so feel free to take them and configure them further. Please see the <a href=http://www.mathjax.org/ >MathJax</a> site for more info on using MathJax extensions/plugins and configuring those extensions/plugins.</p> <div class=tabbed-set data-tabs=4:4><input checked=checked id=__tabbed_4_1 name=__tabbed_4 type=radio><label for=__tabbed_4_1>Default - MathJax 3</label><div class=tabbed-content> <div class=highlight><pre><span></span><code><span class=nb>window</span><span class=p>.</span><span class=nx>MathJax</span> <span class=o>=</span> <span class=p>{</span>
+  <span class=nx>options</span><span class=o>:</span> <span class=p>{</span>
+    <span class=nx>ignoreHtmlClass</span><span class=o>:</span> <span class=s1>&#39;tex2jax_ignore&#39;</span><span class=p>,</span>
+    <span class=nx>processHtmlClass</span><span class=o>:</span> <span class=s1>&#39;tex2jax_process&#39;</span><span class=p>,</span>
+    <span class=nx>renderActions</span><span class=o>:</span> <span class=p>{</span>
+      <span class=nx>find</span><span class=o>:</span> <span class=p>[</span><span class=mi>10</span><span class=p>,</span> <span class=kd>function</span> <span class=p>(</span><span class=nx>doc</span><span class=p>)</span> <span class=p>{</span>
+        <span class=k>for</span> <span class=p>(</span><span class=kr>const</span> <span class=nx>node</span> <span class=k>of</span> <span class=nb>document</span><span class=p>.</span><span class=nx>querySelectorAll</span><span class=p>(</span><span class=s1>&#39;script[type^=&quot;math/tex&quot;]&#39;</span><span class=p>))</span> <span class=p>{</span>
+          <span class=kr>const</span> <span class=nx>display</span> <span class=o>=</span> <span class=o>!!</span><span class=nx>node</span><span class=p>.</span><span class=nx>type</span><span class=p>.</span><span class=nx>match</span><span class=p>(</span><span class=sr>/; *mode=display/</span><span class=p>);</span>
+          <span class=kr>const</span> <span class=nx>math</span> <span class=o>=</span> <span class=k>new</span> <span class=nx>doc</span><span class=p>.</span><span class=nx>options</span><span class=p>.</span><span class=nx>MathItem</span><span class=p>(</span><span class=nx>node</span><span class=p>.</span><span class=nx>textContent</span><span class=p>,</span> <span class=nx>doc</span><span class=p>.</span><span class=nx>inputJax</span><span class=p>[</span><span class=mi>0</span><span class=p>],</span> <span class=nx>display</span><span class=p>);</span>
+          <span class=kr>const</span> <span class=nx>text</span> <span class=o>=</span> <span class=nb>document</span><span class=p>.</span><span class=nx>createTextNode</span><span class=p>(</span><span class=s1>&#39;&#39;</span><span class=p>);</span>
+          <span class=kr>const</span> <span class=nx>sibling</span> <span class=o>=</span> <span class=nx>node</span><span class=p>.</span><span class=nx>previousElementSibling</span><span class=p>;</span>
+          <span class=nx>node</span><span class=p>.</span><span class=nx>parentNode</span><span class=p>.</span><span class=nx>replaceChild</span><span class=p>(</span><span class=nx>text</span><span class=p>,</span> <span class=nx>node</span><span class=p>);</span>
+          <span class=nx>math</span><span class=p>.</span><span class=nx>start</span> <span class=o>=</span> <span class=p>{</span><span class=nx>node</span><span class=o>:</span> <span class=nx>text</span><span class=p>,</span> <span class=nx>delim</span><span class=o>:</span> <span class=s1>&#39;&#39;</span><span class=p>,</span> <span class=nx>n</span><span class=o>:</span> <span class=mi>0</span><span class=p>};</span>
+          <span class=nx>math</span><span class=p>.</span><span class=nx>end</span> <span class=o>=</span> <span class=p>{</span><span class=nx>node</span><span class=o>:</span> <span class=nx>text</span><span class=p>,</span> <span class=nx>delim</span><span class=o>:</span> <span class=s1>&#39;&#39;</span><span class=p>,</span> <span class=nx>n</span><span class=o>:</span> <span class=mi>0</span><span class=p>};</span>
+          <span class=nx>doc</span><span class=p>.</span><span class=nx>math</span><span class=p>.</span><span class=nx>push</span><span class=p>(</span><span class=nx>math</span><span class=p>);</span>
+          <span class=k>if</span> <span class=p>(</span><span class=nx>sibling</span> <span class=o>&amp;&amp;</span> <span class=nx>sibling</span><span class=p>.</span><span class=nx>matches</span><span class=p>(</span><span class=s1>&#39;.MathJax_Preview&#39;</span><span class=p>))</span> <span class=p>{</span>
+            <span class=nx>sibling</span><span class=p>.</span><span class=nx>parentNode</span><span class=p>.</span><span class=nx>removeChild</span><span class=p>(</span><span class=nx>sibling</span><span class=p>);</span>
+          <span class=p>}</span>
+        <span class=p>}</span>
+      <span class=p>},</span> <span class=s1>&#39;&#39;</span><span class=p>]</span>
+    <span class=p>}</span>
+  <span class=p>}</span>
+<span class=p>};</span>
+</code></pre></div> </div> <input id=__tabbed_4_2 name=__tabbed_4 type=radio><label for=__tabbed_4_2>Generic - MathJax 3</label><div class=tabbed-content> <div class=highlight><pre><span></span><code><span class=nb>window</span><span class=p>.</span><span class=nx>MathJax</span> <span class=o>=</span> <span class=p>{</span>
+  <span class=nx>tex</span><span class=o>:</span> <span class=p>{</span>
+    <span class=nx>inlineMath</span><span class=o>:</span> <span class=p>[</span> <span class=p>[</span><span class=s2>&quot;\\(&quot;</span><span class=p>,</span><span class=s2>&quot;\\)&quot;</span><span class=p>]</span> <span class=p>],</span>
+    <span class=nx>displayMath</span><span class=o>:</span> <span class=p>[</span> <span class=p>[</span><span class=s2>&quot;\\[&quot;</span><span class=p>,</span><span class=s2>&quot;\\]&quot;</span><span class=p>]</span> <span class=p>],</span>
+    <span class=nx>processEscapes</span><span class=o>:</span> <span class=kc>true</span><span class=p>,</span>
+    <span class=nx>processEnvironments</span><span class=o>:</span> <span class=kc>true</span>
+  <span class=p>},</span>
+  <span class=nx>options</span><span class=o>:</span> <span class=p>{</span>
+    <span class=nx>ignoreHtmlClass</span><span class=o>:</span> <span class=s2>&quot;.*|&quot;</span><span class=p>,</span>
+    <span class=nx>processHtmlClass</span><span class=o>:</span> <span class=s2>&quot;arithmatex&quot;</span>
+  <span class=p>}</span>
+<span class=p>};</span>
+</code></pre></div> </div> <input id=__tabbed_4_3 name=__tabbed_4 type=radio><label for=__tabbed_4_3>Legacy: Default - MathJax 2</label><div class=tabbed-content> <div class=highlight><pre><span></span><code><span class=nx>MathJax</span><span class=p>.</span><span class=nx>Hub</span><span class=p>.</span><span class=nx>Config</span><span class=p>({</span>
+  <span class=nx>config</span><span class=o>:</span> <span class=p>[</span><span class=s2>&quot;MMLorHTML.js&quot;</span><span class=p>],</span>
+  <span class=nx>jax</span><span class=o>:</span> <span class=p>[</span><span class=s2>&quot;input/TeX&quot;</span><span class=p>,</span> <span class=s2>&quot;output/HTML-CSS&quot;</span><span class=p>,</span> <span class=s2>&quot;output/NativeMML&quot;</span><span class=p>],</span>
+  <span class=nx>extensions</span><span class=o>:</span> <span class=p>[</span><span class=s2>&quot;MathMenu.js&quot;</span><span class=p>,</span> <span class=s2>&quot;MathZoom.js&quot;</span><span class=p>]</span>
+<span class=p>});</span>
+</code></pre></div> </div> <input id=__tabbed_4_4 name=__tabbed_4 type=radio><label for=__tabbed_4_4>Legacy: Generic - MathJax 2</label><div class=tabbed-content> <div class=highlight><pre><span></span><code><span class=nx>MathJax</span><span class=p>.</span><span class=nx>Hub</span><span class=p>.</span><span class=nx>Config</span><span class=p>({</span>
+  <span class=nx>config</span><span class=o>:</span> <span class=p>[</span><span class=s2>&quot;MMLorHTML.js&quot;</span><span class=p>],</span>
+  <span class=nx>extensions</span><span class=o>:</span> <span class=p>[</span><span class=s2>&quot;tex2jax.js&quot;</span><span class=p>],</span>
+  <span class=nx>jax</span><span class=o>:</span> <span class=p>[</span><span class=s2>&quot;input/TeX&quot;</span><span class=p>,</span> <span class=s2>&quot;output/HTML-CSS&quot;</span><span class=p>,</span> <span class=s2>&quot;output/NativeMML&quot;</span><span class=p>],</span>
+  <span class=nx>tex2jax</span><span class=o>:</span> <span class=p>{</span>
+    <span class=nx>inlineMath</span><span class=o>:</span> <span class=p>[</span> <span class=p>[</span><span class=s2>&quot;\\(&quot;</span><span class=p>,</span><span class=s2>&quot;\\)&quot;</span><span class=p>]</span> <span class=p>],</span>
+    <span class=nx>displayMath</span><span class=o>:</span> <span class=p>[</span> <span class=p>[</span><span class=s2>&quot;\\[&quot;</span><span class=p>,</span><span class=s2>&quot;\\]&quot;</span><span class=p>]</span> <span class=p>],</span>
+    <span class=nx>processEscapes</span><span class=o>:</span> <span class=kc>true</span><span class=p>,</span>
+    <span class=nx>processEnvironments</span><span class=o>:</span> <span class=kc>true</span><span class=p>,</span>
+    <span class=nx>ignoreClass</span><span class=o>:</span> <span class=s2>&quot;.*|&quot;</span><span class=p>,</span>
+    <span class=nx>processClass</span><span class=o>:</span> <span class=s2>&quot;arithmatex&quot;</span>
+  <span class=p>},</span>
+<span class=p>});</span>
+</code></pre></div> </div> </div> <p>Notice that in our generic configuration, we set up <code>tex2jax</code> to only load <code>arithmatex</code> classes by excluding all elements and adding an exception for the <code>arithmatex</code> class. We also don't bother adding <code class=highlight><span class=s>$</span><span class=nb>...</span><span class=s>$</span></code> and <code class=highlight><span class=sb>$$</span><span class=nb>...</span><span class=s>$$</span></code> to the <code>inlineMath</code> and <code>displayMath</code> options as Arithmatex converts them respectively to <code class=highlight><span class=s>\(</span><span class=nb>...</span><span class=s>\)</span></code> and <code class=highlight><span class=sb>\[</span><span class=nb>...</span><span class=s>\]</span></code> in the HTML output (unless altered in <a href=#options>Options</a>). But we do have to enable <code>processEnvironments</code> to properly process <code class=highlight><span class=k>\begin</span><span class=nb>{}</span>...<span class=k>\end</span><span class=nb>{}</span></code> blocks.</p> <h2 id=loading-katex>Loading KaTeX<a class=headerlink href=#loading-katex title="Permanent link"></a></h2> <p>In order to use KaTeX, the generic output format is required. You will need to include the KaTeX library:</p> <div class=highlight><pre><span></span><code><span class=p>&lt;</span><span class=nt>script</span> <span class=na>src</span><span class=o>=</span><span class=s>&quot;https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js&quot;</span><span class=p>&gt;&lt;/</span><span class=nt>script</span><span class=p>&gt;</span>
+</code></pre></div> <p>And the KaTeX CSS:</p> <div class=highlight><pre><span></span><code><span class=p>&lt;</span><span class=nt>link</span> <span class=na>rel</span><span class=o>=</span><span class=s>&quot;stylesheet&quot;</span> <span class=na>type</span><span class=o>=</span><span class=s>&quot;text/css&quot;</span> <span class=na>href</span><span class=o>=</span><span class=s>&quot;https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css&quot;</span><span class=p>&gt;</span>
+</code></pre></div> <p>Though KaTeX does have its own auto load script, we want to ensure it <em>only</em> loads math content from elements with the <code>arithmatex</code> class. Below is a script that would do just that. Notice we check for and strip wrappers <code class=highlight><span class=s>\(</span><span class=nb>...</span><span class=s>\)</span></code> and <code class=highlight><span class=sb>\[</span><span class=nb>...</span><span class=s>\]</span></code> off the content of the elements and send it through the renderer. We also don't bother adding <code class=highlight><span class=s>$</span><span class=nb>...</span><span class=s>$</span></code> and <code class=highlight><span class=sb>$$</span><span class=nb>...</span><span class=s>$$</span></code> to the <code>inlineMath</code> and <code>displayMath</code> options as Arithmatex converts them respectively to <code class=highlight><span class=s>\(</span><span class=nb>...</span><span class=s>\)</span></code> and <code class=highlight><span class=sb>\[</span><span class=nb>...</span><span class=s>\]</span></code> in the HTML output (unless altered in <a href=#options>Options</a>).</p> <div class=highlight><pre><span></span><code><span class=p>(</span><span class=kd>function</span> <span class=p>()</span> <span class=p>{</span>
+<span class=s1>&#39;use strict&#39;</span><span class=p>;</span>
 
-</div>
-</div>
-</div>
-<h2 id="mathjax-output-format">MathJax Output Format<a class="headerlink" href="#mathjax-output-format" title="Permanent link"></a></h2>
-<p>The math equations will be wrapped in a special MathJax script tag and embedded into the HTML. This format does not
-require the <code>tex2jax.js</code> extension when setting up MathJax. The tag will be in the form of
-<code class="highlight"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;math/tex&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code> for inline and <code class="highlight"><span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;math/tex; mode=display&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span></code> for
-block.</p>
-<p>By default, Arithmatex will also generate a preview span with the class <code>MathJax_Preview</code> that can/should be hidden when
-the math content is actually loaded. If you do not want to generate the preview, simply set <code>preview</code> to
-<code class="highlight"><span class="kc">False</span></code>.</p>
-<h2 id="generic-output-format">Generic Output Format<a class="headerlink" href="#generic-output-format" title="Permanent link"></a></h2>
-<p>If <a href="#options"><code>generic</code></a> is enabled, the extension will escape necessary symbols and normalize all output to be wrapped
-in the more reliable <code class="highlight"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code> for inline math and <code class="highlight"><span class="sb">\[</span><span class="nb">...</span><span class="s">\]</span></code> for display math (unless changed via
-<code>tex_inline_wrap</code> and <code>tex_block_wrap</code> in the <a href="#options">options</a>). Lastly, everything is inserted into a
-<code class="highlight"><span class="p">&lt;</span><span class="nt">span</span><span class="p">&gt;</span></code> or <code class="highlight"><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span></code> for inline and display math respectively.</p>
-<p>With the default settings, if in your Markdown you used <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> for inline math, it would be converted to
-<code class="highlight"><span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;arithmatex&quot;</span><span class="p">&gt;</span>\(...\)<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span></code> in the HTML. Blocks would be normalized from <code class="highlight"><span class="sb">$$</span><span class="nb">...</span><span class="s">$$</span></code> to
-<code class="highlight"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;arithmatex&quot;</span><span class="p">&gt;</span>\[...\]<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code>.  In the case of <code class="highlight"><span class="k">\begin</span><span class="nb">{}</span>...<span class="k">\end</span><span class="nb">{}</span></code>, begins and ends will not be
-replaced, only wrapped: <code class="highlight"><span class="p">&lt;</span><span class="nt">div</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;arithmatex&quot;</span><span class="p">&gt;</span>\[\begin{}...\end{}\]<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span></code>.</p>
-<h2 id="loading-mathjax">Loading MathJax<a class="headerlink" href="#loading-mathjax" title="Permanent link"></a></h2>
-<p>Arithmatex requires you to provide the MathJax library and provide and configure it to your liking.  The recommended way
-of including MathJax is to use the CDN. Latest version at time of writing this is found below.</p>
-<div class="tabbed-set" data-tabs="3:2"><input checked="checked" id="__tabbed_3_1" name="__tabbed_3" type="radio" /><label for="__tabbed_3_1">MathJax 3</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://polyfill.io/v3/polyfill.min.js?features=es6&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
+<span class=kd>var</span> <span class=nx>katexMath</span> <span class=o>=</span> <span class=p>(</span><span class=kd>function</span> <span class=p>()</span> <span class=p>{</span>
+    <span class=kd>var</span> <span class=nx>maths</span> <span class=o>=</span> <span class=nb>document</span><span class=p>.</span><span class=nx>querySelectorAll</span><span class=p>(</span><span class=s1>&#39;.arithmatex&#39;</span><span class=p>),</span>
+        <span class=nx>tex</span><span class=p>;</span>
 
-</div>
-<input id="__tabbed_3_2" name="__tabbed_3" type="radio" /><label for="__tabbed_3_2">Legacy: MathJax 2</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
+    <span class=k>for</span> <span class=p>(</span><span class=kd>var</span> <span class=nx>i</span> <span class=o>=</span> <span class=mi>0</span><span class=p>;</span> <span class=nx>i</span> <span class=o>&lt;</span> <span class=nx>maths</span><span class=p>.</span><span class=nx>length</span><span class=p>;</span> <span class=nx>i</span><span class=o>++</span><span class=p>)</span> <span class=p>{</span>
+      <span class=nx>tex</span> <span class=o>=</span> <span class=nx>maths</span><span class=p>[</span><span class=nx>i</span><span class=p>].</span><span class=nx>textContent</span> <span class=o>||</span> <span class=nx>maths</span><span class=p>[</span><span class=nx>i</span><span class=p>].</span><span class=nx>innerText</span><span class=p>;</span>
+      <span class=k>if</span> <span class=p>(</span><span class=nx>tex</span><span class=p>.</span><span class=nx>startsWith</span><span class=p>(</span><span class=s1>&#39;\\(&#39;</span><span class=p>)</span> <span class=o>&amp;&amp;</span> <span class=nx>tex</span><span class=p>.</span><span class=nx>endsWith</span><span class=p>(</span><span class=s1>&#39;\\)&#39;</span><span class=p>))</span> <span class=p>{</span>
+        <span class=nx>katex</span><span class=p>.</span><span class=nx>render</span><span class=p>(</span><span class=nx>tex</span><span class=p>.</span><span class=nx>slice</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span> <span class=o>-</span><span class=mi>2</span><span class=p>),</span> <span class=nx>maths</span><span class=p>[</span><span class=nx>i</span><span class=p>],</span> <span class=p>{</span><span class=s1>&#39;displayMode&#39;</span><span class=o>:</span> <span class=kc>false</span><span class=p>});</span>
+      <span class=p>}</span> <span class=k>else</span> <span class=k>if</span> <span class=p>(</span><span class=nx>tex</span><span class=p>.</span><span class=nx>startsWith</span><span class=p>(</span><span class=s1>&#39;\\[&#39;</span><span class=p>)</span> <span class=o>&amp;&amp;</span> <span class=nx>tex</span><span class=p>.</span><span class=nx>endsWith</span><span class=p>(</span><span class=s1>&#39;\\]&#39;</span><span class=p>))</span> <span class=p>{</span>
+        <span class=nx>katex</span><span class=p>.</span><span class=nx>render</span><span class=p>(</span><span class=nx>tex</span><span class=p>.</span><span class=nx>slice</span><span class=p>(</span><span class=mi>2</span><span class=p>,</span> <span class=o>-</span><span class=mi>2</span><span class=p>),</span> <span class=nx>maths</span><span class=p>[</span><span class=nx>i</span><span class=p>],</span> <span class=p>{</span><span class=s1>&#39;displayMode&#39;</span><span class=o>:</span> <span class=kc>true</span><span class=p>});</span>
+      <span class=p>}</span>
+    <span class=p>}</span>
+<span class=p>});</span>
 
-</div>
-</div>
-<p>Generally, it is best to add your own configuration to get exactly what you want. Here we show some simple examples of
-configurations done in JavaScript. We've provided two basic configurations below: one that is configured for
-Arithmatex's <a href="#mathjax-output-format">MathJax Output Format</a>, and one that works with the
-<a href="#generic-output-format">Generic Output Format</a> by using <code>tex2jax</code>. These are a good starting point, so feel free to
-take them and configure them further. Please see the <a href="http://www.mathjax.org/">MathJax</a> site for more info on using MathJax
-extensions/plugins and configuring those extensions/plugins.</p>
-<div class="tabbed-set" data-tabs="4:4"><input checked="checked" id="__tabbed_4_1" name="__tabbed_4" type="radio" /><label for="__tabbed_4_1">Default - MathJax 3</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="nb">window</span><span class="p">.</span><span class="nx">MathJax</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">ignoreHtmlClass</span><span class="o">:</span> <span class="s1">&#39;tex2jax_ignore&#39;</span><span class="p">,</span>
-    <span class="nx">processHtmlClass</span><span class="o">:</span> <span class="s1">&#39;tex2jax_process&#39;</span><span class="p">,</span>
-    <span class="nx">renderActions</span><span class="o">:</span> <span class="p">{</span>
-      <span class="nx">find</span><span class="o">:</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">doc</span><span class="p">)</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="p">(</span><span class="kr">const</span> <span class="nx">node</span> <span class="k">of</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;script[type^=&quot;math/tex&quot;]&#39;</span><span class="p">))</span> <span class="p">{</span>
-          <span class="kr">const</span> <span class="nx">display</span> <span class="o">=</span> <span class="o">!!</span><span class="nx">node</span><span class="p">.</span><span class="nx">type</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/; *mode=display/</span><span class="p">);</span>
-          <span class="kr">const</span> <span class="nx">math</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">doc</span><span class="p">.</span><span class="nx">options</span><span class="p">.</span><span class="nx">MathItem</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">textContent</span><span class="p">,</span> <span class="nx">doc</span><span class="p">.</span><span class="nx">inputJax</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">display</span><span class="p">);</span>
-          <span class="kr">const</span> <span class="nx">text</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createTextNode</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
-          <span class="kr">const</span> <span class="nx">sibling</span> <span class="o">=</span> <span class="nx">node</span><span class="p">.</span><span class="nx">previousElementSibling</span><span class="p">;</span>
-          <span class="nx">node</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">replaceChild</span><span class="p">(</span><span class="nx">text</span><span class="p">,</span> <span class="nx">node</span><span class="p">);</span>
-          <span class="nx">math</span><span class="p">.</span><span class="nx">start</span> <span class="o">=</span> <span class="p">{</span><span class="nx">node</span><span class="o">:</span> <span class="nx">text</span><span class="p">,</span> <span class="nx">delim</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">n</span><span class="o">:</span> <span class="mi">0</span><span class="p">};</span>
-          <span class="nx">math</span><span class="p">.</span><span class="nx">end</span> <span class="o">=</span> <span class="p">{</span><span class="nx">node</span><span class="o">:</span> <span class="nx">text</span><span class="p">,</span> <span class="nx">delim</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="nx">n</span><span class="o">:</span> <span class="mi">0</span><span class="p">};</span>
-          <span class="nx">doc</span><span class="p">.</span><span class="nx">math</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">math</span><span class="p">);</span>
-          <span class="k">if</span> <span class="p">(</span><span class="nx">sibling</span> <span class="o">&amp;&amp;</span> <span class="nx">sibling</span><span class="p">.</span><span class="nx">matches</span><span class="p">(</span><span class="s1">&#39;.MathJax_Preview&#39;</span><span class="p">))</span> <span class="p">{</span>
-            <span class="nx">sibling</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">.</span><span class="nx">removeChild</span><span class="p">(</span><span class="nx">sibling</span><span class="p">);</span>
-          <span class="p">}</span>
-        <span class="p">}</span>
-      <span class="p">},</span> <span class="s1">&#39;&#39;</span><span class="p">]</span>
-    <span class="p">}</span>
-  <span class="p">}</span>
-<span class="p">};</span>
-</code></pre></div>
+<span class=p>(</span><span class=kd>function</span> <span class=p>()</span> <span class=p>{</span>
+  <span class=kd>var</span> <span class=nx>onReady</span> <span class=o>=</span> <span class=kd>function</span> <span class=nx>onReady</span><span class=p>(</span><span class=nx>fn</span><span class=p>)</span> <span class=p>{</span>
+    <span class=k>if</span> <span class=p>(</span><span class=nb>document</span><span class=p>.</span><span class=nx>addEventListener</span><span class=p>)</span> <span class=p>{</span>
+      <span class=nb>document</span><span class=p>.</span><span class=nx>addEventListener</span><span class=p>(</span><span class=s2>&quot;DOMContentLoaded&quot;</span><span class=p>,</span> <span class=nx>fn</span><span class=p>);</span>
+    <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+      <span class=nb>document</span><span class=p>.</span><span class=nx>attachEvent</span><span class=p>(</span><span class=s2>&quot;onreadystatechange&quot;</span><span class=p>,</span> <span class=kd>function</span> <span class=p>()</span> <span class=p>{</span>
+        <span class=k>if</span> <span class=p>(</span><span class=nb>document</span><span class=p>.</span><span class=nx>readyState</span> <span class=o>===</span> <span class=s2>&quot;interactive&quot;</span><span class=p>)</span> <span class=p>{</span>
+          <span class=nx>fn</span><span class=p>();</span>
+        <span class=p>}</span>
+      <span class=p>});</span>
+    <span class=p>}</span>
+  <span class=p>};</span>
 
-</div>
-<input id="__tabbed_4_2" name="__tabbed_4" type="radio" /><label for="__tabbed_4_2">Generic - MathJax 3</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="nb">window</span><span class="p">.</span><span class="nx">MathJax</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="nx">tex</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">inlineMath</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s2">&quot;\\(&quot;</span><span class="p">,</span><span class="s2">&quot;\\)&quot;</span><span class="p">]</span> <span class="p">],</span>
-    <span class="nx">displayMath</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s2">&quot;\\[&quot;</span><span class="p">,</span><span class="s2">&quot;\\]&quot;</span><span class="p">]</span> <span class="p">],</span>
-    <span class="nx">processEscapes</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-    <span class="nx">processEnvironments</span><span class="o">:</span> <span class="kc">true</span>
-  <span class="p">},</span>
-  <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">ignoreHtmlClass</span><span class="o">:</span> <span class="s2">&quot;.*|&quot;</span><span class="p">,</span>
-    <span class="nx">processHtmlClass</span><span class="o">:</span> <span class="s2">&quot;arithmatex&quot;</span>
-  <span class="p">}</span>
-<span class="p">};</span>
-</code></pre></div>
+  <span class=nx>onReady</span><span class=p>(</span><span class=kd>function</span> <span class=p>()</span> <span class=p>{</span>
+    <span class=k>if</span> <span class=p>(</span><span class=k>typeof</span> <span class=nx>katex</span> <span class=o>!==</span> <span class=s2>&quot;undefined&quot;</span><span class=p>)</span> <span class=p>{</span>
+      <span class=nx>katexMath</span><span class=p>();</span>
+    <span class=p>}</span>
+  <span class=p>});</span>
+<span class=p>})();</span>
 
-</div>
-<input id="__tabbed_4_3" name="__tabbed_4" type="radio" /><label for="__tabbed_4_3">Legacy: Default - MathJax 2</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
-  <span class="nx">config</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;MMLorHTML.js&quot;</span><span class="p">],</span>
-  <span class="nx">jax</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;input/TeX&quot;</span><span class="p">,</span> <span class="s2">&quot;output/HTML-CSS&quot;</span><span class="p">,</span> <span class="s2">&quot;output/NativeMML&quot;</span><span class="p">],</span>
-  <span class="nx">extensions</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;MathMenu.js&quot;</span><span class="p">,</span> <span class="s2">&quot;MathZoom.js&quot;</span><span class="p">]</span>
-<span class="p">});</span>
-</code></pre></div>
+<span class=p>}());</span>
+</code></pre></div> <h2 id=alternative-math-blocks>Alternative Math Blocks<a class=headerlink href=#alternative-math-blocks title="Permanent link"></a></h2> <div class="admonition tip"> <p class=admonition-title>Alternate Math Format</p> <p>The alternate math format functions use the <strong>default</strong> style that embeds math content in scripts, not the <strong>generic</strong> format that just escapes the content in plain text.</p> </div> <p><a href=../inlinehilite/ >InlineHilite</a> and <a href=../superfences/ >SuperFences</a> both have a feature where you can specify your own custom inline and fence blocks respectively. Arithmatex provides a number of compatible formats that can be used in conjunction with InlineHilite and SuperFences to create an alternative (and possibly more preferable) syntax for math.</p> <p>In InlineHilite, by simply providing the following configuration (no need to include <code>pymdownx.arithmatex</code> as an extension), you can create a familiar inline math format:</p> <div class=highlight><pre><span></span><code><span class=kn>import</span> <span class=nn>pymdownx.arithmatex</span> <span class=k>as</span> <span class=nn>arithmatex</span>
 
-</div>
-<input id="__tabbed_4_4" name="__tabbed_4" type="radio" /><label for="__tabbed_4_4">Legacy: Generic - MathJax 2</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code><span class="nx">MathJax</span><span class="p">.</span><span class="nx">Hub</span><span class="p">.</span><span class="nx">Config</span><span class="p">({</span>
-  <span class="nx">config</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;MMLorHTML.js&quot;</span><span class="p">],</span>
-  <span class="nx">extensions</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;tex2jax.js&quot;</span><span class="p">],</span>
-  <span class="nx">jax</span><span class="o">:</span> <span class="p">[</span><span class="s2">&quot;input/TeX&quot;</span><span class="p">,</span> <span class="s2">&quot;output/HTML-CSS&quot;</span><span class="p">,</span> <span class="s2">&quot;output/NativeMML&quot;</span><span class="p">],</span>
-  <span class="nx">tex2jax</span><span class="o">:</span> <span class="p">{</span>
-    <span class="nx">inlineMath</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s2">&quot;\\(&quot;</span><span class="p">,</span><span class="s2">&quot;\\)&quot;</span><span class="p">]</span> <span class="p">],</span>
-    <span class="nx">displayMath</span><span class="o">:</span> <span class="p">[</span> <span class="p">[</span><span class="s2">&quot;\\[&quot;</span><span class="p">,</span><span class="s2">&quot;\\]&quot;</span><span class="p">]</span> <span class="p">],</span>
-    <span class="nx">processEscapes</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-    <span class="nx">processEnvironments</span><span class="o">:</span> <span class="kc">true</span><span class="p">,</span>
-    <span class="nx">ignoreClass</span><span class="o">:</span> <span class="s2">&quot;.*|&quot;</span><span class="p">,</span>
-    <span class="nx">processClass</span><span class="o">:</span> <span class="s2">&quot;arithmatex&quot;</span>
-  <span class="p">},</span>
-<span class="p">});</span>
-</code></pre></div>
+<span class=n>extensions</span> <span class=o>=</span> <span class=p>[</span>
+    <span class=s2>&quot;pymdownx.inlinehilite&quot;</span>
+<span class=p>]</span>
 
-</div>
-</div>
-<p>Notice that in our generic configuration, we set up <code>tex2jax</code> to only load <code>arithmatex</code> classes by excluding all
-elements and adding an exception for the <code>arithmatex</code> class. We also don't bother adding <code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> and
-<code class="highlight"><span class="sb">$$</span><span class="nb">...</span><span class="s">$$</span></code> to the <code>inlineMath</code> and <code>displayMath</code> options as Arithmatex converts them respectively to
-<code class="highlight"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code> and <code class="highlight"><span class="sb">\[</span><span class="nb">...</span><span class="s">\]</span></code> in the HTML output (unless altered in <a href="#options">Options</a>). But we do have to enable
-<code>processEnvironments</code> to properly process <code class="highlight"><span class="k">\begin</span><span class="nb">{}</span>...<span class="k">\end</span><span class="nb">{}</span></code> blocks.</p>
-<h2 id="loading-katex">Loading KaTeX<a class="headerlink" href="#loading-katex" title="Permanent link"></a></h2>
-<p>In order to use KaTeX, the generic output format is required. You will need to include the KaTeX library:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
-</code></pre></div>
+<span class=n>extension_config</span> <span class=o>=</span> <span class=p>{</span>
+    <span class=s2>&quot;pymdownx.inlinehilite&quot;</span><span class=p>:</span> <span class=p>{</span>
+        <span class=s2>&quot;custom_inline&quot;</span><span class=p>:</span> <span class=p>[</span>
+            <span class=p>{</span><span class=s2>&quot;name&quot;</span><span class=p>:</span> <span class=s2>&quot;math&quot;</span><span class=p>,</span> <span class=s2>&quot;class&quot;</span><span class=p>:</span> <span class=s2>&quot;arithmatex&quot;</span><span class=p>,</span> <span class=n>arithmatex</span><span class=o>.</span><span class=n>inline_mathjax_format</span><span class=p>}</span>
+        <span class=p>]</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div> <div class="admonition example"> <p class=admonition-title>Inline Math</p> <div class=tabbed-set data-tabs=5:2><input checked=checked id=__tabbed_5_1 name=__tabbed_5 type=radio><label for=__tabbed_5_1>Output</label><div class=tabbed-content> <p> <script type=math/tex>p(x|y) = \frac{p(y|x)p(x)}{p(y)}</script> </p> </div> <input id=__tabbed_5_2 name=__tabbed_5 type=radio><label for=__tabbed_5_2>Markdown</label><div class=tabbed-content> <div class=highlight><pre><span></span><code>`#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+</code></pre></div> </div> </div> </div> <p>In SuperFences, by providing the following configuration (no need to include <code>pymdownx.arithmatex</code> as an extension), you can create math fences:</p> <div class=highlight><pre><span></span><code><span class=kn>import</span> <span class=nn>pymdownx.arithmatex</span> <span class=k>as</span> <span class=nn>arithmatex</span>
 
-<p>And the KaTeX CSS:</p>
-<div class="highlight"><pre><span></span><code><span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/css&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.9.0/katex.min.css&quot;</span><span class="p">&gt;</span>
-</code></pre></div>
+<span class=n>extensions</span> <span class=o>=</span> <span class=p>[</span>
+    <span class=s2>&quot;pymdownx.inlinehilite&quot;</span>
+<span class=p>]</span>
 
-<p>Though KaTeX does have its own auto load script, we want to ensure it <em>only</em> loads math content from elements with the
-<code>arithmatex</code> class. Below is a script that would do just that. Notice we check for and strip wrappers <code class="highlight"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code>
-and <code class="highlight"><span class="sb">\[</span><span class="nb">...</span><span class="s">\]</span></code> off the content of the elements and send it through the renderer. We also don't bother adding
-<code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> and <code class="highlight"><span class="sb">$$</span><span class="nb">...</span><span class="s">$$</span></code> to the <code>inlineMath</code> and <code>displayMath</code> options as Arithmatex converts them respectively
-to <code class="highlight"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code> and <code class="highlight"><span class="sb">\[</span><span class="nb">...</span><span class="s">\]</span></code> in the HTML output (unless altered in <a href="#options">Options</a>).</p>
-<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-<span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
-
-<span class="kd">var</span> <span class="nx">katexMath</span> <span class="o">=</span> <span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="kd">var</span> <span class="nx">maths</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;.arithmatex&#39;</span><span class="p">),</span>
-        <span class="nx">tex</span><span class="p">;</span>
-
-    <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">maths</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">tex</span> <span class="o">=</span> <span class="nx">maths</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">textContent</span> <span class="o">||</span> <span class="nx">maths</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">innerText</span><span class="p">;</span>
-      <span class="k">if</span> <span class="p">(</span><span class="nx">tex</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s1">&#39;\\(&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">tex</span><span class="p">.</span><span class="nx">endsWith</span><span class="p">(</span><span class="s1">&#39;\\)&#39;</span><span class="p">))</span> <span class="p">{</span>
-        <span class="nx">katex</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">tex</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">),</span> <span class="nx">maths</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="p">{</span><span class="s1">&#39;displayMode&#39;</span><span class="o">:</span> <span class="kc">false</span><span class="p">});</span>
-      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="p">(</span><span class="nx">tex</span><span class="p">.</span><span class="nx">startsWith</span><span class="p">(</span><span class="s1">&#39;\\[&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">tex</span><span class="p">.</span><span class="nx">endsWith</span><span class="p">(</span><span class="s1">&#39;\\]&#39;</span><span class="p">))</span> <span class="p">{</span>
-        <span class="nx">katex</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">tex</span><span class="p">.</span><span class="nx">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">),</span> <span class="nx">maths</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="p">{</span><span class="s1">&#39;displayMode&#39;</span><span class="o">:</span> <span class="kc">true</span><span class="p">});</span>
-      <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">});</span>
-
-<span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-  <span class="kd">var</span> <span class="nx">onReady</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">onReady</span><span class="p">(</span><span class="nx">fn</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nb">document</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s2">&quot;DOMContentLoaded&quot;</span><span class="p">,</span> <span class="nx">fn</span><span class="p">);</span>
-    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-      <span class="nb">document</span><span class="p">.</span><span class="nx">attachEvent</span><span class="p">(</span><span class="s2">&quot;onreadystatechange&quot;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">===</span> <span class="s2">&quot;interactive&quot;</span><span class="p">)</span> <span class="p">{</span>
-          <span class="nx">fn</span><span class="p">();</span>
-        <span class="p">}</span>
-      <span class="p">});</span>
-    <span class="p">}</span>
-  <span class="p">};</span>
-
-  <span class="nx">onReady</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">katex</span> <span class="o">!==</span> <span class="s2">&quot;undefined&quot;</span><span class="p">)</span> <span class="p">{</span>
-      <span class="nx">katexMath</span><span class="p">();</span>
-    <span class="p">}</span>
-  <span class="p">});</span>
-<span class="p">})();</span>
-
-<span class="p">}());</span>
-</code></pre></div>
-
-<h2 id="alternative-math-blocks">Alternative Math Blocks<a class="headerlink" href="#alternative-math-blocks" title="Permanent link"></a></h2>
-<div class="admonition tip">
-<p class="admonition-title">Alternate Math Format</p>
-<p>The alternate math format functions use the <strong>default</strong> style that embeds math content in scripts, not the
-<strong>generic</strong> format that just escapes the content in plain text.</p>
-</div>
-<p><a href="../inlinehilite/">InlineHilite</a> and <a href="../superfences/">SuperFences</a> both have a feature where you can specify your own
-custom inline and fence blocks respectively. Arithmatex provides a number of compatible formats that can be used in
-conjunction with InlineHilite and SuperFences to create an alternative (and possibly more preferable) syntax for math.</p>
-<p>In InlineHilite, by simply providing the following configuration (no need to include <code>pymdownx.arithmatex</code> as an
-extension), you can create a familiar inline math format:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pymdownx.arithmatex</span> <span class="k">as</span> <span class="nn">arithmatex</span>
-
-<span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;pymdownx.inlinehilite&quot;</span>
-<span class="p">]</span>
-
-<span class="n">extension_config</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;pymdownx.inlinehilite&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;custom_inline&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;math&quot;</span><span class="p">,</span> <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;arithmatex&quot;</span><span class="p">,</span> <span class="n">arithmatex</span><span class="o">.</span><span class="n">inline_mathjax_format</span><span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<div class="admonition example">
-<p class="admonition-title">Inline Math</p>
-<div class="tabbed-set" data-tabs="5:2"><input checked="checked" id="__tabbed_5_1" name="__tabbed_5" type="radio" /><label for="__tabbed_5_1">Output</label><div class="tabbed-content">
-<p>
-<script type="math/tex">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</script>
-</p>
-</div>
-<input id="__tabbed_5_2" name="__tabbed_5" type="radio" /><label for="__tabbed_5_2">Markdown</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>`#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
-</code></pre></div>
-
-</div>
-</div>
-</div>
-<p>In SuperFences, by providing the following configuration (no need to include <code>pymdownx.arithmatex</code> as an extension), you
-can create math fences:</p>
-<div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">pymdownx.arithmatex</span> <span class="k">as</span> <span class="nn">arithmatex</span>
-
-<span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="s2">&quot;pymdownx.inlinehilite&quot;</span>
-<span class="p">]</span>
-
-<span class="n">extension_config</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;pymdownx.superfences&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="s2">&quot;custom_fences&quot;</span><span class="p">:</span> <span class="p">[</span>
-            <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;math&quot;</span><span class="p">,</span> <span class="s2">&quot;class&quot;</span><span class="p">:</span> <span class="s2">&quot;arithmatex&quot;</span><span class="p">,</span> <span class="n">arithmatex</span><span class="o">.</span><span class="n">inline_mathjax_format</span><span class="p">}</span>
-        <span class="p">]</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</code></pre></div>
-
-<div class="admonition example">
-<p class="admonition-title">Math Fences</p>
-<div class="tabbed-set" data-tabs="6:2"><input checked="checked" id="__tabbed_6_1" name="__tabbed_6" type="radio" /><label for="__tabbed_6_1">Output</label><div class="tabbed-content">
-<script type="math/tex; mode=display">
+<span class=n>extension_config</span> <span class=o>=</span> <span class=p>{</span>
+    <span class=s2>&quot;pymdownx.superfences&quot;</span><span class=p>:</span> <span class=p>{</span>
+        <span class=s2>&quot;custom_fences&quot;</span><span class=p>:</span> <span class=p>[</span>
+            <span class=p>{</span><span class=s2>&quot;name&quot;</span><span class=p>:</span> <span class=s2>&quot;math&quot;</span><span class=p>,</span> <span class=s2>&quot;class&quot;</span><span class=p>:</span> <span class=s2>&quot;arithmatex&quot;</span><span class=p>,</span> <span class=n>arithmatex</span><span class=o>.</span><span class=n>inline_mathjax_format</span><span class=p>}</span>
+        <span class=p>]</span>
+    <span class=p>}</span>
+<span class=p>}</span>
+</code></pre></div> <div class="admonition example"> <p class=admonition-title>Math Fences</p> <div class=tabbed-set data-tabs=6:2><input checked=checked id=__tabbed_6_1 name=__tabbed_6 type=radio><label for=__tabbed_6_1>Output</label><div class=tabbed-content> <script type="math/tex; mode=display">
 \begin{align}
     p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
     p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
 \end{align}
-</script>
-
-
-</div>
-<input id="__tabbed_6_2" name="__tabbed_6" type="radio" /><label for="__tabbed_6_2">Markdown</label><div class="tabbed-content">
-<div class="highlight"><pre><span></span><code>```math
+</script> </div> <input id=__tabbed_6_2 name=__tabbed_6 type=radio><label for=__tabbed_6_2>Markdown</label><div class=tabbed-content> <div class=highlight><pre><span></span><code>```math
 \begin{align}
     p(v_i=1|\mathbf{h}) &amp; = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
     p(h_j=1|\mathbf{v}) &amp; = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
 \end{align}
 ```
-</code></pre></div>
-
-</div>
-</div>
-</div>
-<p>Provided formats are found below:</p>
-<table>
-<thead>
-<tr>
-<th>Name</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>inline_mathjax_preview_format</code></td>
-<td>Inline format suitable for InlineHilite that preserves math in MathJax script format with an appropriate preview.</td>
-</tr>
-<tr>
-<td><code>inline_mathjax_format</code></td>
-<td>Inline format suitable for InlineHilite that preserves math in MathJax script format without a preview.</td>
-</tr>
-<tr>
-<td><code>inline_generic_format</code></td>
-<td>Inline format suitable for InlineHilite that preserves math in generic spans with <code>arithmatex</code> class. Content will be wrapped with <code>\(</code> and <code>\)</code>, so your math library should target those for conversion.</td>
-</tr>
-<tr>
-<td><code>block_mathjax_preview_format</code></td>
-<td>Display/block format suitable for SuperFences that preserves math in MathJax script format with an appropriate preview.</td>
-</tr>
-<tr>
-<td><code>block_mathjax_format</code></td>
-<td>Display/block format suitable for SuperFences that preserves math in MathJax script format without a preview.</td>
-</tr>
-<tr>
-<td><code>block_generic_format</code></td>
-<td>Display/block format suitable for SuperFences that preserves math in generic spans with <code>arithmatex</code> class. Content will be wrapped with <code>\[</code> and <code>\]</code>, so your math library should target those for conversion.</td>
-</tr>
-</tbody>
-</table>
-<h2 id="options">Options<a class="headerlink" href="#options" title="Permanent link"></a></h2>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Type</th>
-<th>Default</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>inline_syntax</code></td>
-<td>[string]</td>
-<td><code class="highlight"><span class="p">[</span><span class="s1">&#39;dollar&#39;</span><span class="p">,</span> <span class="s1">&#39;round&#39;</span><span class="p">]</span></code></td>
-<td>Syntax to search for: dollar=<code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code> and round=<code class="highlight"><span class="s">\(</span><span class="nb">...</span><span class="s">\)</span></code>.</td>
-</tr>
-<tr>
-<td><code>block_syntax</code></td>
-<td>[string]</td>
-<td><code class="highlight"><span class="p">[</span><span class="s1">&#39;dollar&#39;</span><span class="p">,</span> <span class="s1">&#39;square&#39;</span><span class="p">,</span> <span class="s1">&#39;begin&#39;</span><span class="p">]</span></code></td>
-<td>Syntax to search for: dollar=<code class="highlight"><span class="s">$</span><span class="nb">...</span><span class="s">$</span></code>, square=<code class="highlight"><span class="sb">\[</span><span class="nb">...</span><span class="s">\]</span></code>, and <code class="highlight"><span class="k">\begin</span><span class="nb">{}</span>...<span class="k">\end</span><span class="nb">{}</span></code>.</td>
-</tr>
-<tr>
-<td><code>generic</code></td>
-<td>bool</td>
-<td><code class="highlight"><span class="kc">False</span></code></td>
-<td>Output in a generic format suitable for non MathJax libraries.</td>
-</tr>
-<tr>
-<td><code>tex_inline_wrap</code></td>
-<td>[string]</td>
-<td><code class="highlight"><span class="p">[</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">(&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">)&#39;</span><span class="p">]</span></code></td>
-<td>An array containing the opening and closing portion of the <code>generic</code> wrap.</td>
-</tr>
-<tr>
-<td><code>tex_block_wrap</code></td>
-<td>[string]</td>
-<td><code class="highlight"><span class="p">[</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">[&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">]&#39;</span><span class="p">]</span></code></td>
-<td>An array containing the opening and closing portion of the <code>generic</code> wrap.</td>
-</tr>
-<tr>
-<td><code>smart_dollar</code></td>
-<td>bool</td>
-<td><code class="highlight"><span class="kc">True</span></code></td>
-<td>Enable Arithmatex's smart dollar logic to minimize math detection issues with <code class="highlight"><span class="s">$</span><span class="nb"></span></code>.</td>
-</tr>
-<tr>
-<td><code>preview</code></td>
-<td>bool</td>
-<td><code class="highlight"><span class="kc">True</span></code></td>
-<td>Insert a preview to show until MathJax finishes loading the equations.</td>
-</tr>
-</tbody>
-</table>
-<script>
+</code></pre></div> </div> </div> </div> <p>Provided formats are found below:</p> <table> <thead> <tr> <th>Name</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>inline_mathjax_preview_format</code></td> <td>Inline format suitable for InlineHilite that preserves math in MathJax script format with an appropriate preview.</td> </tr> <tr> <td><code>inline_mathjax_format</code></td> <td>Inline format suitable for InlineHilite that preserves math in MathJax script format without a preview.</td> </tr> <tr> <td><code>inline_generic_format</code></td> <td>Inline format suitable for InlineHilite that preserves math in generic spans with <code>arithmatex</code> class. Content will be wrapped with <code>\(</code> and <code>\)</code>, so your math library should target those for conversion.</td> </tr> <tr> <td><code>block_mathjax_preview_format</code></td> <td>Display/block format suitable for SuperFences that preserves math in MathJax script format with an appropriate preview.</td> </tr> <tr> <td><code>block_mathjax_format</code></td> <td>Display/block format suitable for SuperFences that preserves math in MathJax script format without a preview.</td> </tr> <tr> <td><code>block_generic_format</code></td> <td>Display/block format suitable for SuperFences that preserves math in generic spans with <code>arithmatex</code> class. Content will be wrapped with <code>\[</code> and <code>\]</code>, so your math library should target those for conversion.</td> </tr> </tbody> </table> <h2 id=options>Options<a class=headerlink href=#options title="Permanent link"></a></h2> <table> <thead> <tr> <th>Option</th> <th>Type</th> <th>Default</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>inline_syntax</code></td> <td>[string]</td> <td><code class=highlight><span class=p>[</span><span class=s1>&#39;dollar&#39;</span><span class=p>,</span> <span class=s1>&#39;round&#39;</span><span class=p>]</span></code></td> <td>Syntax to search for: dollar=<code class=highlight><span class=s>$</span><span class=nb>...</span><span class=s>$</span></code> and round=<code class=highlight><span class=s>\(</span><span class=nb>...</span><span class=s>\)</span></code>.</td> </tr> <tr> <td><code>block_syntax</code></td> <td>[string]</td> <td><code class=highlight><span class=p>[</span><span class=s1>&#39;dollar&#39;</span><span class=p>,</span> <span class=s1>&#39;square&#39;</span><span class=p>,</span> <span class=s1>&#39;begin&#39;</span><span class=p>]</span></code></td> <td>Syntax to search for: dollar=<code class=highlight><span class=s>$</span><span class=nb>...</span><span class=s>$</span></code>, square=<code class=highlight><span class=sb>\[</span><span class=nb>...</span><span class=s>\]</span></code>, and <code class=highlight><span class=k>\begin</span><span class=nb>{}</span>...<span class=k>\end</span><span class=nb>{}</span></code>.</td> </tr> <tr> <td><code>generic</code></td> <td>bool</td> <td><code class=highlight><span class=kc>False</span></code></td> <td>Output in a generic format suitable for non MathJax libraries.</td> </tr> <tr> <td><code>tex_inline_wrap</code></td> <td>[string]</td> <td><code class=highlight><span class=p>[</span><span class=s1>&#39;</span><span class=se>\\</span><span class=s1>(&#39;</span><span class=p>,</span> <span class=s1>&#39;</span><span class=se>\\</span><span class=s1>)&#39;</span><span class=p>]</span></code></td> <td>An array containing the opening and closing portion of the <code>generic</code> wrap.</td> </tr> <tr> <td><code>tex_block_wrap</code></td> <td>[string]</td> <td><code class=highlight><span class=p>[</span><span class=s1>&#39;</span><span class=se>\\</span><span class=s1>[&#39;</span><span class=p>,</span> <span class=s1>&#39;</span><span class=se>\\</span><span class=s1>]&#39;</span><span class=p>]</span></code></td> <td>An array containing the opening and closing portion of the <code>generic</code> wrap.</td> </tr> <tr> <td><code>smart_dollar</code></td> <td>bool</td> <td><code class=highlight><span class=kc>True</span></code></td> <td>Enable Arithmatex's smart dollar logic to minimize math detection issues with <code class=highlight><span class=s>$</span><span class=nb></span></code>.</td> </tr> <tr> <td><code>preview</code></td> <td>bool</td> <td><code class=highlight><span class=kc>True</span></code></td> <td>Insert a preview to show until MathJax finishes loading the equations.</td> </tr> </tbody> </table> <script>
 window.MathJax = {
   tex: {
     tagSide: "right",
@@ -1408,125 +180,9 @@ window.MathJax = {
     }
   }
 };
-</script>
-
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-
-<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-                
-                  
-                    
-
-<hr>
-<div class="md-source-date">
-  <small>
-    
-      Last update: March 22, 2020
-    
-  </small>
-</div>
-                  
-                
-              
-              
-                
-
-
-              
-            </article>
-          </div>
-        </div>
-      </main>
-      
-        
-<footer class="md-footer">
-  
-    <div class="md-footer-nav">
-      <nav class="md-footer-nav__inner md-grid">
-        
-          <a href="../../usage_notes/" title="Usage Notes" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
-            <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" /></svg>
-            </div>
-            <div class="md-footer-nav__title">
-              <div class="md-ellipsis">
-                <span class="md-footer-nav__direction">
-                  Previous
-                </span>
-                Usage Notes
-              </div>
-            </div>
-          </a>
-        
-        
-          <a href="../b64/" title="B64" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
-            <div class="md-footer-nav__title">
-              <div class="md-ellipsis">
-                <span class="md-footer-nav__direction">
-                  Next
-                </span>
-                B64
-              </div>
-            </div>
-            <div class="md-footer-nav__button md-icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z" /></svg>
-            </div>
-          </a>
-        
-      </nav>
-    </div>
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-footer-copyright">
-        
-          <div class="md-footer-copyright__highlight">
-            Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser">Isaac Muse</a>
-<br><span class="md-footer-custom-text">emoji provided free by </span>
-<a href="https://github.com/twitter/twemoji">Twemoji</a>
-
-          </div>
-        
-        powered by
-        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">
-          MkDocs
-        </a>
-        and
-        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-          Material for MkDocs
-        </a>
-      </div>
-      
-  <div class="md-footer-social">
-    
-      
-      
-      <a href="https://github.com/facelessuser" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
-      </a>
-    
-      
-      
-      <a href="https://discord.gg/fqQ7ypS" target="_blank" rel="noopener" title="discord.gg" class="md-footer-social__link">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M297.216 243.2c0 15.616-11.52 28.416-26.112 28.416-14.336 0-26.112-12.8-26.112-28.416s11.52-28.416 26.112-28.416c14.592 0 26.112 12.8 26.112 28.416zm-119.552-28.416c-14.592 0-26.112 12.8-26.112 28.416s11.776 28.416 26.112 28.416c14.592 0 26.112-12.8 26.112-28.416.256-15.616-11.52-28.416-26.112-28.416zM448 52.736V512c-64.494-56.994-43.868-38.128-118.784-107.776l13.568 47.36H52.48C23.552 451.584 0 428.032 0 398.848V52.736C0 23.552 23.552 0 52.48 0h343.04C424.448 0 448 23.552 448 52.736zm-72.96 242.688c0-82.432-36.864-149.248-36.864-149.248-36.864-27.648-71.936-26.88-71.936-26.88l-3.584 4.096c43.52 13.312 63.744 32.512 63.744 32.512-60.811-33.329-132.244-33.335-191.232-7.424-9.472 4.352-15.104 7.424-15.104 7.424s21.248-20.224 67.328-33.536l-2.56-3.072s-35.072-.768-71.936 26.88c0 0-36.864 66.816-36.864 149.248 0 0 21.504 37.12 78.08 38.912 0 0 9.472-11.52 17.152-21.248-32.512-9.728-44.8-30.208-44.8-30.208 3.766 2.636 9.976 6.053 10.496 6.4 43.21 24.198 104.588 32.126 159.744 8.96 8.96-3.328 18.944-8.192 29.44-15.104 0 0-12.8 20.992-46.336 30.464 7.68 9.728 16.896 20.736 16.896 20.736 56.576-1.792 78.336-38.912 78.336-38.912z"/></svg>
-      </a>
-    
-  </div>
-
-    </div>
-  </div>
-</footer>
-      
-    </div>
-    
-      <script>var __config={}</script>
-    
-    
-      <script src="../../assets/javascripts/vendor.b0b43276.min.js"></script>
-      <script src="../../assets/javascripts/bundle.65293e7c.min.js"></script><script id="__lang" type="application/json">
+</script> <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> <script id=MathJax-script async src=https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js></script> <hr> <div class=md-source-date> <small> Last update: March 22, 2020 </small> </div> </article> </div> </div> </main> <footer class=md-footer> <div class=md-footer-nav> <nav class="md-footer-nav__inner md-grid"> <a href=../../usage_notes/ title="Usage Notes" class="md-footer-nav__link md-footer-nav__link--prev" rel=prev> <div class="md-footer-nav__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z /></svg> </div> <div class=md-footer-nav__title> <div class=md-ellipsis> <span class=md-footer-nav__direction> Previous </span> Usage Notes </div> </div> </a> <a href=../b64/ title=B64 class="md-footer-nav__link md-footer-nav__link--next" rel=next> <div class=md-footer-nav__title> <div class=md-ellipsis> <span class=md-footer-nav__direction> Next </span> B64 </div> </div> <div class="md-footer-nav__button md-icon"> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 24 24"><path d=M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z /></svg> </div> </a> </nav> </div> <div class="md-footer-meta md-typeset"> <div class="md-footer-meta__inner md-grid"> <div class=md-footer-copyright> <div class=md-footer-copyright__highlight> Copyright &copy; 2014 - 2020 <a href=https://github.com/facelessuser>Isaac Muse</a> <br><span class=md-footer-custom-text>emoji provided free by </span> <a href=https://github.com/twitter/twemoji>Twemoji</a> </div> powered by <a href=https://www.mkdocs.org target=_blank rel=noopener> MkDocs </a> and <a href=https://squidfunk.github.io/mkdocs-material/ target=_blank rel=noopener> Material for MkDocs </a> </div> <div class=md-footer-social> <a href=https://github.com/facelessuser target=_blank rel=noopener title=github.com class=md-footer-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg> </a> <a href=https://discord.gg/fqQ7ypS target=_blank rel=noopener title=discord.gg class=md-footer-social__link> <svg xmlns=http://www.w3.org/2000/svg viewbox="0 0 448 512"><path d="M297.216 243.2c0 15.616-11.52 28.416-26.112 28.416-14.336 0-26.112-12.8-26.112-28.416s11.52-28.416 26.112-28.416c14.592 0 26.112 12.8 26.112 28.416zm-119.552-28.416c-14.592 0-26.112 12.8-26.112 28.416s11.776 28.416 26.112 28.416c14.592 0 26.112-12.8 26.112-28.416.256-15.616-11.52-28.416-26.112-28.416zM448 52.736V512c-64.494-56.994-43.868-38.128-118.784-107.776l13.568 47.36H52.48C23.552 451.584 0 428.032 0 398.848V52.736C0 23.552 23.552 0 52.48 0h343.04C424.448 0 448 23.552 448 52.736zm-72.96 242.688c0-82.432-36.864-149.248-36.864-149.248-36.864-27.648-71.936-26.88-71.936-26.88l-3.584 4.096c43.52 13.312 63.744 32.512 63.744 32.512-60.811-33.329-132.244-33.335-191.232-7.424-9.472 4.352-15.104 7.424-15.104 7.424s21.248-20.224 67.328-33.536l-2.56-3.072s-35.072-.768-71.936 26.88c0 0-36.864 66.816-36.864 149.248 0 0 21.504 37.12 78.08 38.912 0 0 9.472-11.52 17.152-21.248-32.512-9.728-44.8-30.208-44.8-30.208 3.766 2.636 9.976 6.053 10.496 6.4 43.21 24.198 104.588 32.126 159.744 8.96 8.96-3.328 18.944-8.192 29.44-15.104 0 0-12.8 20.992-46.336 30.464 7.68 9.728 16.896 20.736 16.896 20.736 56.576-1.792 78.336-38.912 78.336-38.912z"/></svg> </a> </div> </div> </div> </footer> </div> <script>var __config={}</script> <script src=../../assets/javascripts/vendor.b0b43276.min.js></script> <script src=../../assets/javascripts/bundle.65293e7c.min.js></script><script id=__lang type=application/json>
         {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents"}
-      </script>
-      <script>
+      </script> <script>
         __material = initialize(Object.assign({
           url: {
             base: "../..",
@@ -1536,10 +192,4 @@ window.MathJax = {
           },
           features: ["tabs"]
         }, typeof __config !== "undefined" ? __config : {}))
-      </script>
-      
-        <script src="../../assets/pymdownx-extras/extra-e373f7cffd.js"></script>
-      
-    
-  </body>
-</html>
+      </script> <script src=../../assets/pymdownx-extras/extra-835d408546.js></script> </body> </html>
