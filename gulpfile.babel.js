@@ -137,7 +137,7 @@ const inlineSvg = function() {
     "inline-svg($filename, $replace: ())": (filename, replace, done) => {
       inlineImage(filename.getValue(), replace, dataUrl => {
         // Minimaly encode SVG
-        const encodedUrl = dataUrl.replace(/"/g, "'").replace(/#/g, "%23")
+        const encodedUrl = dataUrl.replace(/"/g, "'").replace(/#/g, "%23").replace(/(?:\r\n|(?!\r\n)[\r\n])/g, "\\n")
         done(new nodeSass.types.String(`url("data:image/svg+xml;charset=utf-8,${encodedUrl}")`))
       })
     }
