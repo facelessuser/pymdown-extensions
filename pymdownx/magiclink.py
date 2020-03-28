@@ -118,7 +118,7 @@ RE_GIT_INT_MICRO_REFS = r'''(?x)
 # Repository link shortening pattern
 RE_REPO_LINK = re.compile(
     r'''(?xi)
-    (?:
+    ^(?:
         (?P<github>(?P<github_base>https://(?:w{3}\.)?github.com/(?P<github_user_repo>[^/]+/[^/]+))/
             (?:issues/(?P<github_issue>\d+)/?|
                pull/(?P<github_pull>\d+)/?|
@@ -136,7 +136,21 @@ RE_REPO_LINK = re.compile(
                merge_requests/(?P<gitlab_pull>\d+)/?|
                commit/(?P<gitlab_commit>[\da-f]{40})/?|
                compare/(?P<gitlab_diff1>[\da-f]{40})\.{3}(?P<gitlab_diff2>[\da-f]{40})))
-    )
+    )/?$
+    '''
+)
+
+# Repository link shortening pattern
+RE_USER_REPO_LINK = re.compile(
+    r'''(?xi)
+    ^(?:
+        (?P<github>(?P<github_base>https://(?:w{3}\.)?github.com/
+            (?P<github_user_repo>(?P<github_user>[^/]+)(/(?P<github_repo>[^/]+))?))) |
+        (?P<bitbucket>(?P<bitbucket_base>https://(?:w{3}\.)?bitbucket.org/
+            (?P<bitbucket_user_repo>(?P<bitbucket_user>[^/]+)(/(?P<bitbucket_repo>[^/]+)/?)?))) |
+        (?P<gitlab>(?P<gitlab_base>https://(?:w{3}\.)?gitlab.com/
+            (?P<gitlab_user_repo>(?P<gitlab_user>[^/]+)(/(?P<gitlab_repo>[^/]+))?)))
+    )/?$
     '''
 )
 
@@ -295,6 +309,8 @@ class MagicShortenerTreeprocessor(Treeprocessor):
     PULL = 1
     COMMIT = 2
     DIFF = 3
+    REPO = 4
+    USER = 5
 
     def __init__(self, md, base_url, base_user_url, labels):
         """Initialize."""
@@ -308,6 +324,40 @@ class MagicShortenerTreeprocessor(Treeprocessor):
             "gitlab": "GitLab"
         }
         Treeprocessor.__init__(self, md)
+
+    def shorten_repo(self, link, class_name, label, user_repo):
+        """Shorten repo link."""
+
+        if self.my_user:
+            text = '%s' % user_repo.split('/')[1]
+        else:
+            text = '%s' % user_repo
+        link.text = md_util.AtomicString(text)
+
+        if 'magiclink-repository' not in class_name:
+            class_name.append('magiclink-repository')
+
+        link.set(
+            'title',
+            "%s %s: %s" % (
+                label, self.repo_labels.get('repository', 'Repository'), user_repo
+            )
+        )
+
+    def shorten_user(self, link, class_name, label, user_repo):
+        """Shorten user link."""
+
+        link.text = md_util.AtomicString('@' + user_repo)
+
+        if 'magiclink-mention' not in class_name:
+            class_name.append('magiclink-mention')
+
+        link.set(
+            'title',
+            "%s %s: %s" % (
+                label, self.repo_labels.get('metion', 'User'), user_repo
+            )
+        )
 
     def shorten_diff(self, link, class_name, label, user_repo, value, hash_size):
         """Shorten diff/compare links."""
@@ -375,7 +425,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         link.text = md_util.AtomicString(text)
         link.set('title', '%s %s: %s%s%s' % (label, issue_type, user_repo.rstrip('/'), separator, value))
 
-    def shorten(self, link, provider, link_type, user_repo, value, url, hash_size):
+    def shorten_issue_commit(self, link, provider, link_type, user_repo, value, hash_size):
         """Shorten URL."""
 
         label = PROVIDER_INFO[provider]['provider']
@@ -398,6 +448,27 @@ class MagicShortenerTreeprocessor(Treeprocessor):
             self.shorten_issue(link, class_name, label, user_repo, value, link_type)
         link.set('class', ' '.join(class_name))
 
+    def shorten_user_repo(self, link, provider, link_type, user_repo):
+        """Shorten URL."""
+
+        label = PROVIDER_INFO[provider]['provider']
+        prov_class = 'magiclink-%s' % provider
+        class_attr = link.get('class', '')
+        class_name = class_attr.split(' ') if class_attr else []
+
+        if 'magiclink' not in class_name:
+            class_name.append('magiclink')
+
+        if prov_class not in class_name:
+            class_name.append(prov_class)
+
+        # Link specific shortening logic
+        if link_type is self.REPO:
+            self.shorten_repo(link, class_name, label, user_repo)
+        else:
+            self.shorten_user(link, class_name, label, user_repo)
+        link.set('class', ' '.join(class_name))
+
     def get_provider(self, match):
         """Get the provider and hash size."""
 
@@ -413,19 +484,28 @@ class MagicShortenerTreeprocessor(Treeprocessor):
     def get_type(self, provider, match):
         """Get the link type."""
 
-        # Gather info about link type
-        if match.group(provider + '_diff1') is not None:
-            value = (match.group(provider + '_diff1'), match.group(provider + '_diff2'))
-            link_type = self.DIFF
-        elif match.group(provider + '_commit') is not None:
-            value = match.group(provider + '_commit')
-            link_type = self.COMMIT
-        elif match.group(provider + '_pull') is not None:
-            value = match.group(provider + '_pull')
-            link_type = self.PULL
-        else:
-            value = match.group(provider + '_issue')
-            link_type = self.ISSUE
+        try:
+            # Gather info about link type
+            if match.group(provider + '_diff1') is not None:
+                value = (match.group(provider + '_diff1'), match.group(provider + '_diff2'))
+                link_type = self.DIFF
+            elif match.group(provider + '_commit') is not None:
+                value = match.group(provider + '_commit')
+                link_type = self.COMMIT
+            elif match.group(provider + '_pull') is not None:
+                value = match.group(provider + '_pull')
+                link_type = self.PULL
+            else:
+                value = match.group(provider + '_issue')
+                link_type = self.ISSUE
+        except IndexError:
+            # Gather info about link type
+            if match.group(provider + '_repo') is not None:
+                value = None
+                link_type = self.REPO
+            else:
+                value = None
+                link_type = self.USER
         return value, link_type
 
     def is_my_repo(self, provider, match):
@@ -469,15 +549,29 @@ class MagicShortenerTreeprocessor(Treeprocessor):
                     value, link_type = self.get_type(provider, m)
 
                     # All right, everything set, let's shorten.
-                    self.shorten(
+                    self.shorten_issue_commit(
                         link,
                         provider,
                         link_type,
                         m.group(provider + '_user_repo'),
                         value,
-                        href,
                         PROVIDER_INFO[provider]['hash_size']
                     )
+                else:
+                    m = RE_USER_REPO_LINK.match(href)
+                    if m:
+                        provider = self.get_provider(m)
+                        self.my_repo = self.is_my_repo(provider, m)
+                        self.my_user = self.my_repo or self.is_my_user(provider, m)
+                        value, link_type = self.get_type(provider, m)
+
+                        # All right, everything set, let's shorten.
+                        self.shorten_user_repo(
+                            link,
+                            provider,
+                            link_type,
+                            m.group(provider + '_user_repo')
+                        )
         return root
 
 
