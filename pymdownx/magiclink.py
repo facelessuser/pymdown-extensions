@@ -34,6 +34,12 @@ from markdown.inlinepatterns import LinkInlineProcessor, InlineProcessor
 MAGIC_LINK = 1
 MAGIC_AUTO_LINK = 2
 
+DEFAULT_EXCLUDES = {
+    "bitbucket": ['dashboard', 'account', 'plans', 'support', 'repo'],
+    "github": ['marketeplace', 'notifications', 'issues', 'pull', 'sponsors', 'settings', 'support'],
+    "gitlab": ['dashboard', '-', 'explore', 'help', 'projects'],
+    "twitter": ['i', 'messages', 'bookmarks', 'home']
+}
 
 # Bare link/email detection
 RE_MAIL = r'''(?xi)
@@ -982,7 +988,7 @@ class MagiclinkExtension(Extension):
         self.social_short = config.get('social_url_shorthand', False)
         self.repo_shortner = config.get('repo_url_shortener', False)
         self.social_shortener = config.get('social_url_shortener', False)
-        self.shortener_exclusions = {}
+        self.shortener_exclusions = {k: set(v) for k, v in DEFAULT_EXCLUDES.items()}
         for key, value in config.get('shortener_user_exclude', {}).items():
             if key in ('github', 'bitbucket', 'gitlab', 'twitter') and isinstance(value, (list, tuple, set)):
                 self.shortener_exclusions[key] = set([x.lower() for x in value])

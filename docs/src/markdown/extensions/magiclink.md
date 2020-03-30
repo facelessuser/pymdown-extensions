@@ -327,6 +327,8 @@ Option                          | Type   | Default         | Description
     }
     ```
 
+    When overriding, only the providers that are explicitly provided get overridden.
+
 ### Labels
 
 By default, MagicLink provides titles for the repository links in the form `{provider} {label}: {info}`. You can specify
