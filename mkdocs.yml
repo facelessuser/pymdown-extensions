@@ -105,6 +105,7 @@ markdown_extensions:
       repo_url_shortener: true
       repo_url_shorthand: true
       social_url_shorthand: true
+      social_url_shortener: true
       user: facelessuser
       repo: pymdown-extensions
   - pymdownx.tilde:
@@ -136,7 +137,7 @@ extra:
     - icon: fontawesome/brands/discord
       link: https://discord.gg/fqQ7ypS
 extra_css:
-  - assets/pymdownx-extras/extra-9dc654756b.css
+  - assets/pymdownx-extras/extra-8d532f7233.css
 extra_javascript:
   - assets/pymdownx-extras/extra-835d408546.js
 
