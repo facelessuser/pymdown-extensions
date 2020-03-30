@@ -1,6 +1,6 @@
 # Changelog
 
-## 7.0rc1
+## 7.0rc2
 
 Please see [Release Notes](./release.md#upgrading-to-70) for details on upgrading to 7.0.
 
