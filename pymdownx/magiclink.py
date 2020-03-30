@@ -119,39 +119,53 @@ RE_GIT_INT_MICRO_REFS = r'''(?x)
 RE_REPO_LINK = re.compile(
     r'''(?xi)
     ^(?:
-        (?P<github>(?P<github_base>https://(?:w{3}\.)?github.com/(?P<github_user_repo>[^/]+/[^/]+))/
-            (?:issues/(?P<github_issue>\d+)/?|
-               pull/(?P<github_pull>\d+)/?|
-               commit/(?P<github_commit>[\da-f]{40})/?|
-               compare/(?P<github_diff1>[\da-f]{40})\.{3}(?P<github_diff2>[\da-f]{40}))) |
+        (?P<github>(?P<github_base>https://(?:w{{3}}\.)?github\.com/
+            (?P<github_user_repo>(?P<github_user>{})/[^/]+))/
+                (?:issues/(?P<github_issue>\d+)/?|
+                    pull/(?P<github_pull>\d+)/?|
+                    commit/(?P<github_commit>[\da-f]{{40}})/?|
+                    compare/(?P<github_diff1>[\da-f]{{40}})\.{{3}}
+                        (?P<github_diff2>[\da-f]{{40}})))|
 
-        (?P<bitbucket>(?P<bitbucket_base>https://(?:w{3}\.)?bitbucket.org/(?P<bitbucket_user_repo>[^/]+/[^/]+))/
-            (?:issues/(?P<bitbucket_issue>\d+)(?:/[^/]+)?/?|
-               pull-requests/(?P<bitbucket_pull>\d+)(?:/[^/]+(?:/diff)?)?/?|
-               commits/commit/(?P<bitbucket_commit>[\da-f]{40})/?|
-               branches/commits/(?P<bitbucket_diff1>[\da-f]{40})(?:\.{2}|%0d)(?P<bitbucket_diff2>[\da-f]{40})\#diff)) |
+        (?P<bitbucket>(?P<bitbucket_base>https://(?:w{{3}}\.)?bitbucket\.org/
+            (?P<bitbucket_user_repo>(?P<bitbucket_user>{})/[^/]+))/
+                (?:issues/(?P<bitbucket_issue>\d+)(?:/[^/]+)?/?|
+                    pull-requests/(?P<bitbucket_pull>\d+)(?:/[^/]+(?:/diff)?)?/?|
+                    commits/commit/(?P<bitbucket_commit>[\da-f]{{40}})/?|
+                    branches/commits/(?P<bitbucket_diff1>[\da-f]{{40}})
+                        (?:\.{{2}}|%0d)(?P<bitbucket_diff2>[\da-f]{{40}})\#diff))|
 
-        (?P<gitlab>(?P<gitlab_base>https://(?:w{3}\.)?gitlab.com/(?P<gitlab_user_repo>[^/]+/[^/]+))/
-            (?:issues/(?P<gitlab_issue>\d+)/?|
-               merge_requests/(?P<gitlab_pull>\d+)/?|
-               commit/(?P<gitlab_commit>[\da-f]{40})/?|
-               compare/(?P<gitlab_diff1>[\da-f]{40})\.{3}(?P<gitlab_diff2>[\da-f]{40})))
+        (?P<gitlab>(?P<gitlab_base>https://(?:w{{3}}\.)?gitlab\.com/
+            (?P<gitlab_user_repo>(?P<gitlab_user>{})/[^/]+))/
+                (?:issues/(?P<gitlab_issue>\d+)/?|
+                    merge_requests/(?P<gitlab_pull>\d+)/?|
+                    commit/(?P<gitlab_commit>[\da-f]{{40}})/?|
+                    compare/(?P<gitlab_diff1>[\da-f]{{40}})\.{{3}}
+                        (?P<gitlab_diff2>[\da-f]{{40}})))
     )/?$
-    '''
+    '''.format(RE_GITHUB_USER, RE_BITBUCKET_USER, RE_GITLAB_USER)
 )
 
 # Repository link shortening pattern
 RE_USER_REPO_LINK = re.compile(
     r'''(?xi)
     ^(?:
-        (?P<github>(?P<github_base>https://(?:w{3}\.)?github.com/
-            (?P<github_user_repo>(?P<github_user>[^/]+)(/(?P<github_repo>[^/]+))?))) |
-        (?P<bitbucket>(?P<bitbucket_base>https://(?:w{3}\.)?bitbucket.org/
-            (?P<bitbucket_user_repo>(?P<bitbucket_user>[^/]+)(/(?P<bitbucket_repo>[^/]+)/?)?))) |
-        (?P<gitlab>(?P<gitlab_base>https://(?:w{3}\.)?gitlab.com/
-            (?P<gitlab_user_repo>(?P<gitlab_user>[^/]+)(/(?P<gitlab_repo>[^/]+))?)))
+        (?P<github>(?P<github_base>https://(?:w{{3}}\.)?github\.com/
+            (?P<github_user_repo>(?P<github_user>{})(?:/(?P<github_repo>[^/]+))?))) |
+        (?P<bitbucket>(?P<bitbucket_base>https://(?:w{{3}}\.)?bitbucket\.org/
+            (?P<bitbucket_user_repo>(?P<bitbucket_user>{})(?:/(?P<bitbucket_repo>[^/]+)/?)?))) |
+        (?P<gitlab>(?P<gitlab_base>https://(?:w{{3}}\.)?gitlab\.com/
+            (?P<gitlab_user_repo>(?P<gitlab_user>{})(?:/(?P<gitlab_repo>[^/]+))?))) |
     )/?$
-    '''
+    '''.format(RE_GITHUB_USER, RE_BITBUCKET_USER, RE_GITLAB_USER)
+)
+
+RE_SOCIAL_LINK = re.compile(
+    r'''(?xi)
+    ^(?:
+        (?P<twitter>(?P<twitter_base>https://(?:w{{3}}\.)?twitter\.com/(?P<twitter_user>{})))
+    )/?$
+    '''.format(RE_TWITTER_USER)
 )
 
 # Provider specific info (links, names, specific patterns, etc.)
@@ -312,10 +326,12 @@ class MagicShortenerTreeprocessor(Treeprocessor):
     REPO = 4
     USER = 5
 
-    def __init__(self, md, base_url, base_user_url, labels):
+    def __init__(self, md, base_url, base_user_url, labels, repo_shortner, social_shortener, excludes):
         """Initialize."""
 
         self.base = base_url
+        self.repo_shortner = repo_shortner
+        self.social_shortener = social_shortener
         self.base_user = base_user_url
         self.repo_labels = labels
         self.labels = {
@@ -323,15 +339,13 @@ class MagicShortenerTreeprocessor(Treeprocessor):
             "bitbucket": "Bitbucket",
             "gitlab": "GitLab"
         }
+        self.excludes = excludes
         Treeprocessor.__init__(self, md)
 
     def shorten_repo(self, link, class_name, label, user_repo):
         """Shorten repo link."""
 
-        if self.my_user:
-            text = '%s' % user_repo.split('/')[1]
-        else:
-            text = '%s' % user_repo
+        text = '%s' % user_repo
         link.text = md_util.AtomicString(text)
 
         if 'magiclink-repository' not in class_name:
@@ -481,6 +495,13 @@ class MagicShortenerTreeprocessor(Treeprocessor):
             provider = 'gitlab'
         return provider
 
+    def get_social_provider(self, match):
+        """Get social provider."""
+
+        if match.group('twitter'):
+            provider = 'twitter'
+        return provider
+
     def get_type(self, provider, match):
         """Get the link type."""
 
@@ -500,10 +521,15 @@ class MagicShortenerTreeprocessor(Treeprocessor):
                 link_type = self.ISSUE
         except IndexError:
             # Gather info about link type
-            if match.group(provider + '_repo') is not None:
-                value = None
-                link_type = self.REPO
-            else:
+            found = False
+            try:
+                if match.group(provider + '_repo') is not None:
+                    value = None
+                    link_type = self.REPO
+                    found = True
+            except IndexError:
+                pass
+            if not found:
                 value = None
                 link_type = self.USER
         return value, link_type
@@ -519,6 +545,12 @@ class MagicShortenerTreeprocessor(Treeprocessor):
 
         return self.base_user and match.group(provider + '_base').startswith(self.base_user)
 
+    def excluded(self, provider, match):
+        """Check if user has been excluded."""
+
+        user = match.group(provider + '_user')
+        return user.lower() in self.excludes.get(provider, set())
+
     def run(self, root):
         """Shorten popular git repository links."""
 
@@ -530,6 +562,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
             is_magic = link.attrib.get('magiclink')
             href = link.attrib.get('href', '')
             text = link.text
+            found = False
 
             if is_magic:
                 del link.attrib['magiclink']
@@ -541,37 +574,58 @@ class MagicShortenerTreeprocessor(Treeprocessor):
             # Make sure the text matches the `href`.  If needed, add back protocol to be sure.
             # Not all links will pass through MagicLink, so we try both with and without protocol.
             if (text == href or (is_magic and self.hide_protocol and ('https://' + text) == href)):
-                m = RE_REPO_LINK.match(href)
-                if m:
-                    provider = self.get_provider(m)
-                    self.my_repo = self.is_my_repo(provider, m)
-                    self.my_user = self.my_repo or self.is_my_user(provider, m)
-                    value, link_type = self.get_type(provider, m)
+                if self.repo_shortner:
+                    m = RE_REPO_LINK.match(href)
+                    if m:
+                        provider = self.get_provider(m)
+                        self.my_repo = self.is_my_repo(provider, m)
+                        self.my_user = self.my_repo or self.is_my_user(provider, m)
+                        value, link_type = self.get_type(provider, m)
+                        found = True
 
-                    # All right, everything set, let's shorten.
-                    self.shorten_issue_commit(
-                        link,
-                        provider,
-                        link_type,
-                        m.group(provider + '_user_repo'),
-                        value,
-                        PROVIDER_INFO[provider]['hash_size']
-                    )
-                else:
+                        # All right, everything set, let's shorten.
+                        if not self.excluded(provider, m):
+                            self.shorten_issue_commit(
+                                link,
+                                provider,
+                                link_type,
+                                m.group(provider + '_user_repo'),
+                                value,
+                                PROVIDER_INFO[provider]['hash_size']
+                            )
+                if not found and self.repo_shortner:
                     m = RE_USER_REPO_LINK.match(href)
                     if m:
                         provider = self.get_provider(m)
                         self.my_repo = self.is_my_repo(provider, m)
                         self.my_user = self.my_repo or self.is_my_user(provider, m)
                         value, link_type = self.get_type(provider, m)
+                        found = True
 
-                        # All right, everything set, let's shorten.
-                        self.shorten_user_repo(
-                            link,
-                            provider,
-                            link_type,
-                            m.group(provider + '_user_repo')
-                        )
+                        if not self.excluded(provider, m):
+                            # All right, everything set, let's shorten.
+                            self.shorten_user_repo(
+                                link,
+                                provider,
+                                link_type,
+                                m.group(provider + '_user_repo')
+                            )
+                if not found and self.social_shortener:
+                    m = RE_SOCIAL_LINK.match(href)
+                    if m:
+                        provider = self.get_social_provider(m)
+                        self.my_repo = self.is_my_repo(provider, m)
+                        self.my_user = self.my_repo or self.is_my_user(provider, m)
+                        value, link_type = self.get_type(provider, m)
+
+                        if not self.excluded(provider, m):
+                            # All right, everything set, let's shorten.
+                            self.shorten_user_repo(
+                                link,
+                                provider,
+                                link_type,
+                                m.group(provider + '_user')
+                            )
         return root
 
 
@@ -787,6 +841,19 @@ class MagiclinkExtension(Extension):
                 False,
                 "If 'True' repo commit and issue links are shortened - Default: False"
             ],
+            'social_url_shortener': [
+                False,
+                "If 'True' social links are shortened - Default: False"
+            ],
+            'shortener_user_exclude': [
+                {
+                    "bitbucket": ['dashboard', 'account', 'plans', 'support', 'repo'],
+                    "github": ['marketeplace', 'notifications', 'issues', 'pull', 'sponsors', 'settings', 'support'],
+                    "gitlab": ['dashboard', '-', 'explore', 'help', 'projects'],
+                    "twitter": ['i', 'messages', 'bookmarks', 'home']
+                },
+                "A list of user names to exclude from URL shortening."
+            ],
             'repo_url_shorthand': [
                 False,
                 "If 'True' repo shorthand syntax is converted to links - Default: False"
@@ -875,10 +942,13 @@ class MagiclinkExtension(Extension):
                 )
                 md.inlinePatterns.register(git_int_micro_refs, "magic-int-micro-refs", 79.3)
 
-    def setup_shortener(self, md, base_url, base_user_url, config):
+    def setup_shortener(self, md, base_url, base_user_url, config, repo_shortner, social_shortener):
         """Setup shortener."""
 
-        shortener = MagicShortenerTreeprocessor(md, base_url, base_user_url, self.labels)
+        shortener = MagicShortenerTreeprocessor(
+            md, base_url, base_user_url, self.labels, repo_shortner, social_shortener,
+            self.shortener_exclusions
+        )
         shortener.config = config
         md.treeprocessors.register(shortener, "magic-repo-shortener", 9.9)
 
@@ -910,6 +980,12 @@ class MagiclinkExtension(Extension):
         self.is_social = self.provider in SOCIAL_PROVIDERS
         self.git_short = config.get('repo_url_shorthand', False)
         self.social_short = config.get('social_url_shorthand', False)
+        self.repo_shortner = config.get('repo_url_shortener', False)
+        self.social_shortener = config.get('social_url_shortener', False)
+        self.shortener_exclusions = {}
+        for key, value in config.get('shortener_user_exclude', {}).items():
+            if key in ('github', 'bitbucket', 'gitlab', 'twitter') and isinstance(value, (list, tuple, set)):
+                self.shortener_exclusions[key] = set([x.lower() for x in value])
 
         # Ensure valid provider
         if self.provider not in PROVIDER_INFO:
@@ -932,9 +1008,9 @@ class MagiclinkExtension(Extension):
             self.setup_shorthand(md, int_mentions, ext_mentions, config)
 
         # Setup link post processor for shortening repository links
-        if config.get('repo_url_shortener', False):
+        if self.repo_shortner or self.social_shortener:
             base_url, base_user_url = self.get_base_urls(config)
-            self.setup_shortener(md, base_url, base_user_url, config)
+            self.setup_shortener(md, base_url, base_user_url, config, self.repo_shortner, self.social_shortener)
 
 
 def makeExtension(*args, **kwargs):

@@ -4,6 +4,8 @@
 
 Please see [Release Notes](./release.md#upgrading-to-70) for details on upgrading to 7.0.
 
+- **NEW**: MagicLink will now shorten user name and repository links when link shortening is enabled.
+- **NEW**: Added MagicLink options `social_url_shortener` and `shortener_user_exclude` were added.
 - **NEW**: UML examples are now demonstrated with Mermaid in documentation.
 - **NEW**: SuperFences, if using the attribute list format (` ``` {.lang .additional_class, linenums="1"} `) allows
   adding additional classes. IDs can be added as well, though Pygments generated code blocks do not have a mechanism to

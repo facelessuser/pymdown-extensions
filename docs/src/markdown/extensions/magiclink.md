@@ -231,28 +231,28 @@ the user and repository: `{user}/{repo}@{hash1}...{hash2}`. Lastly, to reference
 ## Repository Link Shortener
 
 MagicLink can also recognize issue, pull request, commit, and compare links, and render them in the same output format
-as the [repository shortcut links](#shorthand-links) feature. Unfortunately, mention link shortening is not presently
-supported due to the fact that MagicLink does not use any of the providers' API to verify user links, and some
-legitimate links can look like user links, but are not.
+as the [repository shortcut links](#shorthand-links) feature.
 
 If we specify long form URLs from external providers, they will be shortened appropriately.
-
 
 !!! example "External Provider Example"
 
     === "Output"
+        - https://github.com/facelessuser
+        - https://github.com/facelessuser/pymdown-extensions
         - https://gitlab.com/pycqa/flake8/issues/385
         - https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
 
     === "Markdown"
         ```
+        - https://github.com/facelessuser
+        - https://github.com/facelessuser/pymdown-extensions
         - https://gitlab.com/pycqa/flake8/issues/385
         - https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
         ```
 
-
-When specifying links that reference the configured `provider`, `user`, and `repo`, links will be shortened differently
-in light of that context.
+When specifying links that reference the configured `provider`, `user`, and `repo`, some links will be shortened
+differently in light of that context.
 
 !!! example "Internal Provider Example"
 
@@ -271,6 +271,15 @@ in light of that context.
         - https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
         - https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
         ```
+
+MagicLink will shorten user name and repository name links, but every site has some links that will conflict, or better
+stated, will have links that follow the pattern of user name and repository name links, but are not actually either.
+For example, `https://github.com/support` is not a user name, nor are any links under `support` repository names. By
+default, MagicLink has provided a list of exclusions for each provider to avoid treating such links as a user name or
+repository name. You can override them and add more via the option `shortener_user_exclude`.
+
+!!! new "New 7.0"
+    MagicLink added user name and repository name link shortening along.
 
 ## CSS
 
@@ -297,12 +306,26 @@ Option                          | Type   | Default         | Description
 ------------------------------- | ------ | --------------- | -----------
 `hide_protocol`                 | bool   | `#!py3 False`    | If `True`, links are displayed without the initial `ftp://`, `http://`, `https://`, or `ftps://`.
 `repo_url_shortener`            | bool   | `#!py3 False`    | If `True`, GitHub, Bitbucket, and GitLab commit, pull, and issue links are are rendered in a shorthand syntax.
+`social_url_shortener`          | bool   | `#!py3 False`    | if `True`, Twitter user links are rendered in a shorthand syntax.
+`shortener_user_exclude`        | dict   | See below        | Specifies a list of user names to avoid when attempting to shorten links.
 `repo_url_shorthand`            | bool   | `#!py3 False`    | If `True`, you can directly use a shorthand syntax to represent commit, pull, issue, and mention links for repository providers and they will be auto-linked.
 `social_url_shorthand`          | bool   | `#!py3 False`    | If `True`, you can directly use a shorthand syntax to represent mention links for social media providers and they will be auto-linked.
 `provider`                      | string | `#!py3 'github'` | The provider to use for repository shorthand syntax and shortener.
 `user`                          | string | `#!py3 ''`       | The default user name to use for the specified provider.
 `repo`                          | string | `#!py3 ''`       | The default repository name to use for the specified user and provider.
 `labels`                        | dict   | `#!py3 {}`       | A dictionary for overriding repository link title text. See [labels](#labels) for more info.
+
+!!! note "User Excludes"
+    Default user excludes are:
+
+    ```py
+    {
+        "bitbucket": ['dashboard', 'account', 'plans', 'support', 'repo'],
+        "github": ['marketeplace', 'notifications', 'issues', 'pull', 'sponsors', 'settings', 'support'],
+        "gitlab": ['dashboard', '-', 'explore', 'help', 'projects'],
+        "twitter": ['i', 'messages', 'bookmarks', 'home']
+    }
+    ```
 
 ### Labels
 

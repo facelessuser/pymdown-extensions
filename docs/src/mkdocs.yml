@@ -105,6 +105,7 @@ markdown_extensions:
       repo_url_shortener: true
       repo_url_shorthand: true
       social_url_shorthand: true
+      social_url_shortener: true
       user: facelessuser
       repo: pymdown-extensions
   - pymdownx.tilde:
