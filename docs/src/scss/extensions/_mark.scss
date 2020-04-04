@@ -1,6 +1,13 @@
+/* Dark mode changes */
+[data-md-color-primary^="drac-"] {
+  .md-typeset mark {
+    color: var(--md-default-bg-color);
+    background-color: $drac-yellow;
+  }
+}
+
+/* Shadow boxes sometimes give issues, so just pad. */
 .md-typeset mark {
-  padding: 0 0.25em;
-  color: var(--md-default-bg-color);
-  background-color: $drac-highlight;
+  padding: px2em(1px, 16px) px2em(4px, 16px);
   box-shadow: none;
 }

@@ -1,19 +1,22 @@
-.md-typeset table:not([class]) {
-  box-shadow:
-      0 px2rem(4px) px2rem(10px) hsla(0, 0%, 0%, 0.15),
-      0 0           px2rem(1px)  hsla(0, 0%, 0%, 0.2);
+/* Dark mode changes */
+[data-md-color-primary^="drac-"] {
+  .md-typeset table:not([class]) {
+    box-shadow:
+        0 px2rem(4px) px2rem(10px) hsla(0, 0%, 0%, 0.15),
+        0 0           px2rem(1px)  hsla(0, 0%, 0%, 0.2);
 
-  tr:hover {
-    background-color: rgba(0,0,0,.08);
-  }
+    tr:hover {
+      background-color: rgba(0,0,0,.08);
+    }
 
-  th {
-    color: var(--md-default-fg-color);
-    background-color: var(--md-default-bg-color--dark);
-    border-bottom: px2rem(1px) solid var(--md-primary-fg-color);
-  }
+    th {
+      color: var(--md-default-fg-color);
+      background-color: var(--md-default-bg-color--darker);
+      border-bottom: px2rem(1px) solid var(--md-primary-fg-color);
+    }
 
-  td {
-    border-top: px2rem(1px) solid var(--md-default-fg-color--lighter);
+    td {
+      border-top: px2rem(1px) solid var(--md-default-fg-color--lighter);
+    }
   }
 }

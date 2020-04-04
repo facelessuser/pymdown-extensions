@@ -1,20 +1,30 @@
 @import "./dracula";
 
 :root {
-  --md-code-fg-color: #{$drac-fg};
-  --md-code-bg-color: #{$drac-bg};
+  // We like our links blue
+  --md-link-color: #{$clr-cyan-500};
+  --md-link-code-bg-color: #{mix(hsla(0, 0%, 96%, 1), $clr-cyan-500, 85%)};
 
-  // Default color shades
-  --md-default-fg-color:               #{transparentize($drac-fg, 0.13)};
-  --md-default-fg-color--light:        #{transparentize($drac-fg, 0.46)};
-  --md-default-fg-color--lighter:      #{transparentize($drac-fg, 0.84)};
-  --md-default-fg-color--lightest:     #{transparentize($drac-fg, 0.93)};
+  // Dark mode color changes
+  [data-md-color-primary^="drac-"] {
+    --md-code-fg-color: #{$drac-fg};
+    --md-code-bg-color: #{$drac-bg};
+    --md-link-color: #{$drac-cyan};
+    --md-link-code-bg-color: #{mix($drac-bg, $drac-cyan, 85%)};
 
-  --md-default-bg-color:               #{$drac-default-bg};
-  --md-default-bg-color--light:        #{transparentize($drac-default-bg, 0.3)};
-  --md-default-bg-color--lighter:      #{transparentize($drac-default-bg, 0.7)};
-  --md-default-bg-color--lightest:     #{transparentize($drac-default-bg, 0.88)};
+    // Default color shades
+    --md-default-fg-color:               #{transparentize($drac-fg, 0.13)};
+    --md-default-fg-color--light:        #{transparentize($drac-fg, 0.46)};
+    --md-default-fg-color--lighter:      #{transparentize($drac-fg, 0.84)};
+    --md-default-fg-color--lightest:     #{transparentize($drac-fg, 0.93)};
 
+    --md-default-bg-color:               #{$drac-default-bg};
+    --md-default-bg-color--light:        #{transparentize($drac-default-bg, 0.3)};
+    --md-default-bg-color--lighter:      #{transparentize($drac-default-bg, 0.7)};
+    --md-default-bg-color--lightest:     #{transparentize($drac-default-bg, 0.88)};
+  }
+
+  // Dark specific colors
   --md-default-bg-color--dark:         #{darken($drac-default-bg, 3%)};
   --md-default-bg-color--darker:       #{darken($drac-default-bg, 6%)};
   --md-default-bg-color--darkest:      #{darken($drac-default-bg, 9%)};
@@ -38,6 +48,7 @@
   // Color palette
   [data-md-color-primary="#{$name}"] {
 
+    --md-primary-code-bg-color:         #{mix($drac-bg, nth($colors, 1), 85%)};
     --md-primary-fg-color:              hsla(#{hex2hsl(nth($colors, 1))}, 1);
     --md-primary-fg-color--transparent: hsla(#{hex2hsl(nth($colors, 1))}, 0.1);
     --md-primary-fg-color--light:       hsla(#{hex2hsl(nth($colors, 2))}, 1);
@@ -64,6 +75,7 @@
 
   // Color palette
   [data-md-color-accent="#{$name}"] {
+    --md-accent-link-code-bg-color:    #{mix($drac-bg, $color, 85%)};
     --md-accent-fg-color:              hsla(#{hex2hsl($color)}, 1);
     --md-accent-fg-color--transparent: hsla(#{hex2hsl($color)}, 0.1);
     --md-accent-bg-color:              var(--md-default-bg-color);

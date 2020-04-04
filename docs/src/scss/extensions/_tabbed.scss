@@ -1,8 +1,18 @@
+/* Dark mode changes */
+[data-md-color-primary^="drac-"] {
+  .md-typeset {
+    .tabbed-set > .tabbed-content {
+      box-shadow: 0 px2rem(-1px) var(--md-default-fg-color--lighter);
+    }
+  }
+}
+
+/* Style code blocks to fill full tab,
+   but otherwise, pad content. */
 .md-typeset {
   .tabbed-set > .tabbed-content {
     padding: 0 px2rem(12px);
     overflow: hidden;
-    box-shadow: 0 px2rem(-1px) var(--md-default-fg-color--lighter);
   }
 
   .tabbed-set {

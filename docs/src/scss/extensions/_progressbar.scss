@@ -1,5 +1,22 @@
-/* Stripes */
-$pb-stripe: transparentize($clr-white, 0.2);
+/* Normal colors */
+:root {
+  --md-progress-100: #{$clr-green-a400};
+  --md-progress-80: #{$clr-green-a400};
+  --md-progress-60: #{$clr-yellow-700};
+  --md-progress-40: #{$clr-orange-a400};
+  --md-progress-20: #{$clr-red-a200};
+  --md-progress-0: #{$clr-red-a400};
+}
+
+/* Dark mode colors */
+[data-md-color-primary^="drac-"] {
+  --md-progress-100: #{$drac-green};
+  --md-progress-80: #{$drac-light-green};
+  --md-progress-60: #{$drac-yellow};
+  --md-progress-40: #{$drac-orange};
+  --md-progress-20: #{$drac-pink};
+  --md-progress-0: #{$drac-red};
+}
 
 .md-typeset {
 
@@ -71,12 +88,12 @@ $pb-stripe: transparentize($clr-white, 0.2);
   }
 
   @each $percent, $color in (
-    "100": $drac-green,
-    "80":  $drac-light-green,
-    "60":  $drac-yellow,
-    "40":  $drac-orange,
-    "20":  $drac-pink,
-    "0":   $drac-red
+    "100": var(--md-progress-100),
+    "80": var(--md-progress-80),
+    "60": var(--md-progress-60),
+    "40": var(--md-progress-40),
+    "20": var(--md-progress-20),
+    "0": var(--md-progress-0)
   ) {
     .progress-#{$percent}plus {
       .progress-bar {

@@ -1,9 +1,12 @@
-.md-typeset .task-list-control {
-  .task-list-indicator::before {
-  	background-color: var(--md-default-fg-color--lighter);
-  }
+/* Dark mode changes */
+[data-md-color-primary^="drac-"] {
+  .md-typeset .task-list-control {
+    .task-list-indicator::before {
+    	background-color: var(--md-default-fg-color--lighter);
+    }
 
-  [type=checkbox]:checked + .task-list-indicator::before {
-  	background-color: $drac-green;
+    [type=checkbox]:checked + .task-list-indicator::before {
+    	background-color: $drac-green;
+    }
   }
 }

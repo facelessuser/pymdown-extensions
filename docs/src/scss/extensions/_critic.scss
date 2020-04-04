@@ -1,18 +1,24 @@
+/* Dark mode style */
+[data-md-color-primary^="drac-"] {
+  .md-typeset {
+    del.critic {
+      background-color: #{transparentize($drac-pink, 0.5)};
+    }
+
+    ins.critic {
+      background-color: #{transparentize($drac-green, 0.5)};
+    }
+  }
+}
+
+/* Don't use box shadows */
 .md-typeset {
-  del.critic {
-    padding: 0 0.25em;
-    background-color: #{transparentize($drac-pink, 0.5)};
-    box-shadow: none;
-  }
-
-  ins.critic {
-    padding: 0 0.25em;
-    background-color: #{transparentize($drac-green, 0.5)};
-    box-shadow: none;
-  }
-
-  .critic.comment {
-    color: $drac-blue;
+  del,
+  ins {
+    &.critic {
+      padding: px2em(1px, 16px) px2em( 4px, 16px);
+      box-shadow: none;
+    }
   }
 
   .critic.break {

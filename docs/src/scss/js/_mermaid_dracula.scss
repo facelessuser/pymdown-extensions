@@ -56,90 +56,93 @@ $todayLineColor: $drac-pink;
 /* state colors */
 $labelColor: $drac-purple;
 
-.md-typeset div.mermaid svg {
-  /* stylelint-disable selector-class-pattern */
+.md-typeset div.mermaid {
+  svg {
+    /* stylelint-disable selector-class-pattern */
 
-  @import "mermaid";
+    @import "mermaid";
 
-  max-width: none;
-  font-size: 16px !important;
-
-  // Flowchart
-  .labelText,
-  .label text {
-    fill: $drac-purple;
-  }
-
-  .edgeLabel {
-    text {
-      fill: $drac-purple;
-    }
-    rect {
-      opacity: 0.5 !important;
-      fill: shade($drac-purple, 50%) !important;
-    }
-  }
-
-  // Sequence
-  .noteText {
-    fill: $drac-yellow;
-  }
-
-  // Gantt
-  .sectionTitle,
-  .taskTextOutsideRight,
-  .taskTextOutsideLeft {
-    fill: $drac-purple !important;
-  }
-
-  .taskText {
-    fill: $drac-purple !important;
-
-    &[class*="doneText"] {
-      fill: $drac-blue !important;
-    }
-
-    &[class*="activeText"] {
-      fill: $drac-pink !important;
-    }
-
-    &[class*="critText"] {
-      fill: $drac-red !important;
-    }
-  }
-
-  .grid .tick {
-    line {
-      stroke: transparentize($drac-purple, 0.3) !important;
-    }
-    text {
-      fill: $drac-purple;
-    }
-  }
-
-  // class Diagram
-  .stateGroup {
-    circle {
-      &[style$="fill: black;"] {
-        fill: $mainBkg !important;
-        stroke: $mainBkg !important;
-      }
-
-      &[style$="fill: white;"] {
-        fill: $mainBkg !important;
-        stroke: $drac-purple !important;
-      }
-    }
-
-    .composit {
-      fill: $drac-default-bg;
-    }
-  }
-
-  .classGroup .title,
-  .classLabel .label,
-  .classGroup text {
+    max-width: none;
     font-size: 16px !important;
+    background-color: #{$drac-default-bg};
+
+    // Flowchart
+    .labelText,
+    .label text {
+      fill: $drac-purple;
+    }
+
+    .edgeLabel {
+      text {
+        fill: $drac-purple;
+      }
+      rect {
+        opacity: 0.5 !important;
+        fill: shade($drac-purple, 50%) !important;
+      }
+    }
+
+    // Sequence
+    .noteText {
+      fill: $drac-yellow;
+    }
+
+    // Gantt
+    .sectionTitle,
+    .taskTextOutsideRight,
+    .taskTextOutsideLeft {
+      fill: $drac-purple !important;
+    }
+
+    .taskText {
+      fill: $drac-purple !important;
+
+      &[class*="doneText"] {
+        fill: $drac-blue !important;
+      }
+
+      &[class*="activeText"] {
+        fill: $drac-pink !important;
+      }
+
+      &[class*="critText"] {
+        fill: $drac-red !important;
+      }
+    }
+
+    .grid .tick {
+      line {
+        stroke: transparentize($drac-purple, 0.3) !important;
+      }
+      text {
+        fill: $drac-purple;
+      }
+    }
+
+    // class Diagram
+    .stateGroup {
+      circle {
+        &[style$="fill: black;"] {
+          fill: $mainBkg !important;
+          stroke: $mainBkg !important;
+        }
+
+        &[style$="fill: white;"] {
+          fill: $mainBkg !important;
+          stroke: $drac-purple !important;
+        }
+      }
+
+      .composit {
+        fill: $drac-default-bg;
+      }
+    }
+
+    .classGroup .title,
+    .classLabel .label,
+    .classGroup text {
+      font-size: 16px !important;
+    }
   }
 
   /* stylelint-enable selector-class-pattern */
