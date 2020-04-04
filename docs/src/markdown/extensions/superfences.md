@@ -132,12 +132,12 @@ way that suites your needs.
 
 !!! warning "Deprecated 7.0"
     The tab option is deprecated in 7.0 due to the addition of the general purpose tab extension
-    [`pymdownx.tabbed`](./tabbed.md).
+    [`pymdownx.tabbed`](./tabbed.md). This feature will be removed in 8.0, and at that time, users will be required to
+    use [`pymdownx.tabbed`](./tabbed.md) if they would like to have tabbed code blocks.
 
-    The feature is still usable, but by the class names on the output
-    have changed from `superfences-tabs` and `superfences-content` to `tabbed-set` and `tabbed-content` respectively.
-    This is to help create unity between the new extension and this feature as we guide people towards the new
-    extension.
+    The feature is still usable, but the class names on the output have changed from `superfences-tabs` and
+    `superfences-content` to `tabbed-set` and `tabbed-content` respectively. This is to help create unity between the
+    new extension and this feature as we guide people towards the new extension.
 
     To use the legacy class names, you can use the global `legacy_tab_classes` option to get the old style classes. This
     option will be removed, along with the entire `tab=""` feature in 8.0.

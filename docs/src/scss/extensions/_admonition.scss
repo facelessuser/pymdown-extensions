@@ -1,41 +1,73 @@
-$old-admonitions: (
-  note:                       $drac-dark-yellow,
-  abstract summary tldr:      $drac-cyan,
-  info todo:                  $drac-light-blue,
-  tip hint important:         $drac-teal,
-  success check done:         $drac-green,
-  question help faq:          $drac-light-green,
-  warning caution attention:  $drac-orange,
-  failure fail missing:       $drac-dark-red,
-  danger error:               $drac-red,
-  bug:                        $drac-dark-pink,
-  example:                    $drac-purple,
-  quote cite:                 $drac-grey
-) !default;
-
 $new-admonitions: (
   settings config: $drac-pink $clr-purple-a700 "material/settings",
   new: $drac-yellow $clr-yellow-a700 "material/alert-decagram"
 ) !default;
 
+  $old-admonitions: (
+    note:                       $drac-dark-yellow,
+    abstract summary tldr:      $drac-cyan,
+    info todo:                  $drac-light-blue,
+    tip hint important:         $drac-teal,
+    success check done:         $drac-green,
+    question help faq:          $drac-light-green,
+    warning caution attention:  $drac-orange,
+    failure fail missing:       $drac-dark-red,
+    danger error:               $drac-red,
+    bug:                        $drac-dark-pink,
+    example:                    $drac-purple,
+    quote cite:                 $drac-grey
+  ) !default;
+
+/* Style new admonitions with dark or light colors */
+:root {
+  @each $names, $prop in $new-admonitions {
+    $tint: nth($prop, 1);
+    $tint2: nth($prop, 2);
+    $name: nth($names, 1);
+
+    --md-admonition-icon--#{$name}: #{icon(nth($prop, 3))};
+    --md-admonition-bg-color--#{$name}: #{transparentize($tint2, 0.9)};
+    --md-admonition-icon-color--#{$name}: #{$tint2};
+
+    [data-md-color-primary^="drac-"] {
+      --md-admonition-bg-color--#{$name}: #{transparentize($tint, 0.7)};
+      --md-admonition-icon-color--#{$name}: #{$tint};
+    }
+  }
+
+  @each $names, $tint in $old-admonitions {
+    $name: nth($names, 1);
+    --md-admonition-bg-color--#{$name}: #{transparentize($tint, 0.7)};
+    --md-admonition-icon-color--#{$name}: #{$tint};
+  }
+}
+
+/* Dark mode changes */
+[data-md-color-primary^="drac-"] .md-typeset .admonition {
+  box-shadow:
+    0 px2rem(4px) px2rem(10px) hsla(0, 0%, 0%, 0.15),
+    0 0           px2rem(1px)  hsla(0, 0%, 0%, 0.2);
+}
+
 /* Style existing admonitions with dark mode colors */
 [data-md-color-primary^="drac-"] {
-  @each $names, $tint in $old-admonitions {
+
+  @each $names, $prop in $old-admonitions {
 
     $name: nth($names, 1);
 
     // Define base class
     .md-typeset .admonition.#{$name} {
-      border-color: $tint;
+      border-color: var(--md-admonition-icon-color--#{$name});
 
       // Define base class
       > .admonition-title {
         // `background-color: var(--md-default-bg-color--darkest);`
-        background-color: transparentize($tint, 0.7);
+        background-color: var(--md-admonition-bg-color--#{$name});
 
         // Icon
         &::before {
-          background-color: $tint;
+          background-color: var(--md-admonition-icon-color--#{$name});
         }
       }
     }
@@ -51,49 +83,24 @@ $new-admonitions: (
   }
 }
 
-/* Style new admonitions with dark or light colors */
-:root {
-  @each $names, $prop in $new-admonitions {
-    --md-admonition-icon--#{nth($names, 1)}: #{icon(nth($prop, 3))};
-  }
-}
-
 @each $names, $prop in $new-admonitions {
   $name: nth($names, 1);
-  $tint: nth($prop, 1);
-  $tint2: nth($prop, 2);
 
     // Define base class
   .md-typeset .admonition.#{$name} {
-    border-color: $tint2;
+    border-color: var(--md-admonition-icon-color--#{$name});
 
     > .admonition-title {
-      background-color: transparentize($tint2, 0.9);
+      background-color: var(--md-admonition-bg-color--#{$name});
 
       // Icon
       &::before {
         width: px2rem(20px);
         height: px2rem(20px);
-        background-color: $tint2;
+        background-color: var(--md-admonition-icon-color--#{$name});
         background-size: px2rem(20px);
         mask-image: var(--md-admonition-icon--#{$name});
         content: "\a0";
-      }
-    }
-  }
-
-  [data-md-color-primary^="drac-"] {
-    .md-typeset .admonition.#{$name} {
-      border-color: $tint;
-
-      > .admonition-title {
-        // Use dark title bars
-        // `background-color: var(--md-default-bg-color--darkest);`
-        background-color: transparentize($tint, 0.7);
-
-        &::before {
-          background-color: $tint;
-        }
       }
     }
   }
@@ -106,11 +113,4 @@ $new-admonitions: (
       }
     }
   }
-}
-
-/* Dark mode changes */
-[data-md-color-primary^="drac-"] .md-typeset .admonition {
-  box-shadow:
-    0 px2rem(4px) px2rem(10px) hsla(0, 0%, 0%, 0.15),
-    0 0           px2rem(1px)  hsla(0, 0%, 0%, 0.2);
 }

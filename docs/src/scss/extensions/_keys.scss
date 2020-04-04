@@ -1,19 +1,29 @@
 /* Dark mode changes */
-[data-md-color-primary^="drac-"] {
-  .md-typeset {
-    kbd {
-      background-color: var(--md-default-fg-color--lightest);
-      box-shadow: 0 px2rem(2px) 0 px2rem(1px) var(--md-default-bg-color--darkest),
-                  0 px2rem(2px) 0 var(--md-default-bg-color--dark),
-                  inset 0 px2rem(-2px) px2rem(4px) var(--md-default-fg-color--lighter);
-    }
+:root {
+  --md-key-face-color: #{shade(hsla(0, 100%, 100%, 1), 8%)};
+  --md-key-border-color: #{shade(hsla(0, 100%, 100%, 1), 28%)};
+  --md-key-accent-color: hsla(0, 100%, 100%, 1);
+
+  [data-md-color-primary^="drac-"] {
+    --md-key-face-color: var(--md-default-fg-color--lightest);
+    --md-key-border-color: var(--md-default-bg-color--darkest);
+    --md-key-accent-color: var(--md-default-fg-color--lighter);
   }
 }
 
 /* Special symbols before or after keys */
 .md-typeset {
+  kbd {
+    background-color: var(--md-key-face-color);
+    box-shadow: 0 px2rem(2px) 0 px2rem(1px) var(--md-key-border-color),
+                0 px2rem(2px) 0 var(--md-key-border-color),
+                inset 0 px2rem(-2px) px2rem(4px) var(--md-key-accent-color);
+  }
+
   .keys {
     kbd {
+      color: var(--md-default-fg-color);
+
       &::before,
       &::after {
         position: relative;

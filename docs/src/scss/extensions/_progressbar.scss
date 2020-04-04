@@ -6,16 +6,16 @@
   --md-progress-40: #{$clr-orange-a400};
   --md-progress-20: #{$clr-red-a200};
   --md-progress-0: #{$clr-red-a400};
-}
 
-/* Dark mode colors */
-[data-md-color-primary^="drac-"] {
-  --md-progress-100: #{$drac-green};
-  --md-progress-80: #{$drac-light-green};
-  --md-progress-60: #{$drac-yellow};
-  --md-progress-40: #{$drac-orange};
-  --md-progress-20: #{$drac-pink};
-  --md-progress-0: #{$drac-red};
+  /* Dark mode colors */
+  [data-md-color-primary^="drac-"] {
+    --md-progress-100: #{$drac-green};
+    --md-progress-80: #{$drac-light-green};
+    --md-progress-60: #{$drac-yellow};
+    --md-progress-40: #{$drac-orange};
+    --md-progress-20: #{$drac-pink};
+    --md-progress-0: #{$drac-red};
+  }
 }
 
 .md-typeset {
