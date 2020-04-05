@@ -1,4 +1,4 @@
-git+https://github.com/squidfunk/mkdocs-material.git@dff96cbf62814b227380f1ddce5aba649053fb9b
+git+https://github.com/squidfunk/mkdocs-material.git@db6e133648af13e45faa95c6e37a59cf53450033
 git+https://github.com/facelessuser/pymdown-lexers.git
 mkdocs-git-revision-date-localized-plugin
 mkdocs-minify-plugin

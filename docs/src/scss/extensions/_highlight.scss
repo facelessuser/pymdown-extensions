@@ -1,5 +1,14 @@
 /* Dark mode color scheme */
 [data-md-color-primary^="drac-"] {
+
+  .highlight code *,
+  code.highlight * {
+    color: unset;
+    font-weight: unset; /* stylelint-disable-line font-weight-notation */
+    text-decoration: unset;
+    background-color: unset;
+  }
+
   .highlight {
 
     /* Dracula Theme v1.2.5
@@ -38,11 +47,11 @@
     .cpf { color: $drac-blue } // Comment.PreprocFile
     .c1 { color: $drac-blue } // Comment.Single
     .cs { color: $drac-blue } // Comment.Special
-    .gd { color: $drac-pink; font-weight: 700; background-color: $drac-bg } // Generic.Deleted
+    .gd { color: $drac-pink; font-weight: 700; } // Generic.Deleted
     .ge { color: $drac-fg; text-decoration: underline } // Generic.Emph
     .gr { color: $drac-fg } // Generic.Error
     .gh { color: $code-header-fg-color; font-weight: 700;} // Generic.Heading
-    .gi { color: $drac-green; font-weight: 700; background-color: $drac-bg } // Generic.Inserted
+    .gi { color: $drac-green; font-weight: 700; } // Generic.Inserted
     .go { color: $drac-blue } // Generic.Output
     .gp { color: $drac-fg } // Generic.Prompt
     .gs { color: $drac-fg } // Generic.Strong
@@ -106,7 +115,7 @@
   /* Allow code to look like code everywhere despite Material's current preference */
   *:not(pre) > code {
     margin: 0;
-    padding: px2em(1px, 13.6px) px2em( 4px, 13.6px);
+    padding: 0 px2em( 4px, 13.6px);
     color: var(--md-code-fg-color);
     background-color: var(--md-code-bg-color);
     border-radius: px2rem(2px);

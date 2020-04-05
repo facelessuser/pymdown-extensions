@@ -13,6 +13,10 @@
       color: var(--md-default-fg-color);
       background-color: var(--md-default-bg-color--darker);
       border-bottom: px2rem(1px) solid var(--md-primary-fg-color);
+
+      code {
+        background-color: tint($drac-bg, 5%);
+      }
     }
 
     td {
