@@ -700,8 +700,9 @@ will automatically find the `#!html <div>` elements with the `mermaid` class and
     Our custom loader also adjusts for quirks and ensuring good typesetting for our document environment. All of this
     can be viewed in the source.
 
-    - [Loader][mermaid-loader]
-    - [Mermaid configuration settings][mermaid-config]
+    - [Loader][mermaid-loader].
+    - [Mermaid configuration settings][mermaid-config]. Note that we turn off themes so that we can use our own, remove
+      the `theme` option, or set your favorite.
 
     This is just for reference.
 
