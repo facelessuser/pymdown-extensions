@@ -29,7 +29,7 @@
      */
 
      $code-header-fg-color: transparentize($drac-fg, 0.46);
-     $code-hll-bg-color: transparentize($drac-selection, 0.6);
+     $code-hll-bg-color: transparentize($drac-blue, 0.8);
 
     .hll { background-color: $code-hll-bg-color; }
     .c { color: $drac-blue } // Comment
@@ -156,7 +156,7 @@
 
       /* Special line mode coloring */
       &.special::before {
-        background-color: var(--md-default-fg-color--lightest);
+        background-color: var(--md-default-bg-color--dark);
       }
     }
   }
@@ -169,7 +169,7 @@
         margin-left: px2em(-16px, 13.6px);
         padding-right: px2em(8px, 13.6px);
         padding-left: px2em(16px, 13.6px);
-        background-color: var(--md-default-fg-color--lightest);
+        background-color: var(--md-default-bg-color--dark);
       }
     }
   }
