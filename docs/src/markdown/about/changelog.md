@@ -1,7 +1,8 @@
 # Changelog
 
-## Next
+## 7.1
 
+- **NEW**: SuperFences will now allow number ranges in `hl_lines` option. (#878)
 - **FIX**: Better Arithmatex patterns. Fix issue #888 which caused a hang due to a regular expression typo. Also ensure
   `#!tex $$..$$` and `#!tex begin{}...end{}` patterns properly don't match if the tail markers are escaped.
 

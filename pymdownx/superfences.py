@@ -57,7 +57,7 @@ RE_NESTED_FENCE_START = re.compile(
     '''
 )
 
-RE_HL_LINES = re.compile(r'(?P<hl_lines>\d+(?:[ \t]+\d+)*)')
+RE_HL_LINES = re.compile(r'^(?P<hl_lines>\d+(?:-\d+)?(?:[ \t]+\d+(?:-\d+)?)*)$')
 RE_LINENUMS = re.compile(r'(?P<linestart>[\d]+)(?:[ \t]+(?P<linestep>[\d]+))?(?:[ \t]+(?P<linespecial>[\d]+))?')
 RE_OPTIONS = re.compile(
     r'''(?x)
@@ -519,6 +519,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         for entry in reversed(self.extension.superfences):
             if entry["test"](self.lang):
 
+                self.line_count = end - start - 2
+
                 try:
                     code = entry["formatter"](
                         self.rebuild_block(self.code),
@@ -543,10 +545,35 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             self._store(self.normalize_ws('\n'.join(self.code)) + '\n', code, start, end)
         self.clear()
 
+    def normalize_hl_line(self, number):
+        """
+        Normalize highlight line number.
+        
+        Clamp outrages numbers. Numbers out of range will be only one increment out range.
+        This prevents people from create massive buffers of line numbers that exceed real
+        number of code lines.
+        """
+
+        number = int(number)
+        if number < 1:
+            number = 0
+        elif number > self.line_count:
+            number = self.line_count + 1
+        return number
+
     def parse_hl_lines(self, hl_lines):
         """Parse the lines to highlight."""
 
-        return list(map(int, hl_lines.strip().split())) if hl_lines else []
+        lines = []
+        if hl_lines:
+            for entry in hl_lines.split():
+                line_range = [self.normalize_hl_line(e) for e in entry.split('-')]
+                if len(line_range) > 1:
+                    if line_range[0] <= line_range[1]:
+                        lines.extend(list(range(line_range[0], line_range[1] + 1)))
+                elif 1 <= line_range[0] <= self.line_count:
+                    lines.extend(line_range)
+        return lines
 
     def parse_line_start(self, linestart):
         """Parse line start."""
