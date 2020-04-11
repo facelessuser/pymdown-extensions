@@ -1,5 +1,10 @@
 # Changelog
 
+## Next
+
+- **FIX**: Better Arithmatex patterns. Fix issue #888 which caused a hang due to a regular expression typo. Also ensure
+  `#!tex $$..$$` and `#!tex begin{}...end{}` patterns properly don't match if the tail markers are escaped.
+
 ## 7.0
 
 Please see [Release Notes](./release.md#upgrading-to-70) for details on upgrading to 7.0.
