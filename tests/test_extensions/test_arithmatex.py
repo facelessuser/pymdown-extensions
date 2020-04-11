@@ -118,7 +118,7 @@ class TestArithmatexHang(util.MdCase):
         """
         We are just making sure this works.
 
-        Previously this pattern would hang. It isn't supposed to match due to the space before the last dolloar,
+        Previously this pattern would hang. It isn't supposed to match due to the space before the last dollar,
         but it definitely shouldn't hang the process.
         """
 
