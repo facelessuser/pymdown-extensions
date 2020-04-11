@@ -548,7 +548,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
     def normalize_hl_line(self, number):
         """
         Normalize highlight line number.
-        
+
         Clamp outrages numbers. Numbers out of range will be only one increment out range.
         This prevents people from create massive buffers of line numbers that exceed real
         number of code lines.
