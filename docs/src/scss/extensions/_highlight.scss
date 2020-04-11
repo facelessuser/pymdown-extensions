@@ -113,20 +113,24 @@
 .md-typeset {
 
   /* Allow code to look like code everywhere despite Material's current preference */
-  *:not(pre) > code {
-    margin: 0;
-    padding: 0 px2em( 4px, 13.6px);
-    color: var(--md-code-fg-color);
-    background-color: var(--md-code-bg-color);
-    border-radius: px2rem(2px);
-    box-shadow: none;
+  *:not(pre) > code,
+  .admonition-title code,
+  summary code {
+      margin: 0;
+      padding: 0 px2em( 4px, 13.6px);
+      color: var(--md-code-fg-color);
+      background-color: var(--md-code-bg-color);
+      border-radius: px2rem(2px);
+      box-shadow: none;
   }
 
   /* Code that is also a link */
   a {
     > code {
-      color: inherit;
+      color: inherit !important;
+      background-color: var(--md-link-code-bg-color) !important;
       transition: color 125ms;
+      transition: background-color 125ms;
 
       /* If we are linking highlighted, inline code, force it to just look like a code link */
       * {
@@ -134,6 +138,8 @@
       }
 
       &:hover {
+        background-color: var(--md-accent-link-code-bg-color) !important;
+
         * {
           color: var(--md-accent-fg-color) !important;
         }

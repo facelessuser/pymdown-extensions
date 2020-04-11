@@ -1,12 +1,12 @@
+html {
+  background-color: transparent;
+}
+
 /* Style custom footer content */
 .md-footer {
   &-copyright {
     .md-footer-copyright__highlight {
       color: var(--md-default-bg-color--light);
-
-      .md-footer-custom-text {
-        color: var(--md-default-bg-color--lighter);
-      }
     }
   }
 }
@@ -117,10 +117,6 @@
       color: $footer-meta-fg-color;
       .md-footer-copyright__highlight {
         color: var(--md-default-fg-color--light);
-
-        .md-footer-custom-text {
-          color: $footer-meta-fg-color;
-        }
       }
     }
   }

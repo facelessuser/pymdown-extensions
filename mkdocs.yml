@@ -4,9 +4,7 @@ repo_url: https://github.com/facelessuser/pymdown-extensions
 edit_uri: tree/master/docs/src/markdown
 site_description: A Collection of Useful Extensions for Python Markdown
 copyright: |
-  Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser">Isaac Muse</a>
-  <br><span class="md-footer-custom-text">emoji provided free by </span>
-  <a href="https://github.com/twitter/twemoji">Twemoji</a>
+  Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser"  target="_blank" rel="noopener">Isaac Muse</a>
 
 docs_dir: docs/src/markdown
 theme:
@@ -137,7 +135,7 @@ extra:
     - icon: fontawesome/brands/discord
       link: https://discord.gg/fqQ7ypS
 extra_css:
-  - assets/pymdownx-extras/extra-d6b3939c22.css
+  - assets/pymdownx-extras/extra-ab2d96273e.css
 extra_javascript:
   - assets/pymdownx-extras/extra-835d408546.js
 
