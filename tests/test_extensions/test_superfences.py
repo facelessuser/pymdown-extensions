@@ -68,6 +68,109 @@ class TestLegacyTab(util.MdCase):
         )
 
 
+class TestHighlightLines(util.MdCase):
+    """Test line highlighting."""
+
+    extension = ['pymdownx.superfences']
+    extension_configs = {}
+
+    def test_highlight_range(self):
+        """Test highlight ranges."""
+
+        self.check_markdown(
+            r'''
+            ```py3 hl_lines="1-2 5 7-8"
+            import foo
+            import boo.baz
+            import foo.bar.baz
+
+            class Foo:
+               def __init__(self):
+                   self.foo = None
+                   self.bar = None
+                   self.baz = None
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code><span class="hll"><span class="kn">import</span> <span class="nn">foo</span>
+            </span><span class="hll"><span class="kn">import</span> <span class="nn">boo.baz</span>
+            </span><span class="kn">import</span> <span class="nn">foo.bar.baz</span>
+
+            <span class="hll"><span class="k">class</span> <span class="nc">Foo</span><span class="p">:</span>
+            </span>   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="hll">       <span class="bp">self</span><span class="o">.</span><span class="n">foo</span> <span class="o">=</span> <span class="kc">None</span>
+            </span><span class="hll">       <span class="bp">self</span><span class="o">.</span><span class="n">bar</span> <span class="o">=</span> <span class="kc">None</span>
+            </span>       <span class="bp">self</span><span class="o">.</span><span class="n">baz</span> <span class="o">=</span> <span class="kc">None</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_highlight_out_of_range(self):
+        """Test highlight ranges."""
+
+        self.check_markdown(
+            r'''
+            ```py3 hl_lines="0 10"
+            import foo
+            import boo.baz
+            import foo.bar.baz
+
+            class Foo:
+               def __init__(self):
+                   self.foo = None
+                   self.bar = None
+                   self.baz = None
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">foo</span>
+            <span class="kn">import</span> <span class="nn">boo.baz</span>
+            <span class="kn">import</span> <span class="nn">foo.bar.baz</span>
+
+            <span class="k">class</span> <span class="nc">Foo</span><span class="p">:</span>
+               <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">foo</span> <span class="o">=</span> <span class="kc">None</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">bar</span> <span class="o">=</span> <span class="kc">None</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">baz</span> <span class="o">=</span> <span class="kc">None</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_highlight_in_range_only(self):
+        """Test highlight ranges."""
+
+        self.check_markdown(
+            r'''
+            ```py3 hl_lines="0-10"
+            import foo
+            import boo.baz
+            import foo.bar.baz
+
+            class Foo:
+               def __init__(self):
+                   self.foo = None
+                   self.bar = None
+                   self.baz = None
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code><span class="hll"><span class="kn">import</span> <span class="nn">foo</span>
+            </span><span class="hll"><span class="kn">import</span> <span class="nn">boo.baz</span>
+            </span><span class="hll"><span class="kn">import</span> <span class="nn">foo.bar.baz</span>
+            </span><span class="hll">
+            </span><span class="hll"><span class="k">class</span> <span class="nc">Foo</span><span class="p">:</span>
+            </span><span class="hll">   <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            </span><span class="hll">       <span class="bp">self</span><span class="o">.</span><span class="n">foo</span> <span class="o">=</span> <span class="kc">None</span>
+            </span><span class="hll">       <span class="bp">self</span><span class="o">.</span><span class="n">bar</span> <span class="o">=</span> <span class="kc">None</span>
+            </span><span class="hll">       <span class="bp">self</span><span class="o">.</span><span class="n">baz</span> <span class="o">=</span> <span class="kc">None</span>
+            </span></code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+
 class TestWaringings(unittest.TestCase):
     """Test warnings."""
 

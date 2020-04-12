@@ -436,7 +436,7 @@ targeted line numbers separated by spaces.
 !!! example "Highlight Lines Example"
 
     === "Output"
-        ``` hl_lines="1 3"
+        ```py3 hl_lines="1 3"
         """Some file."""
         import foo.bar
         import boo.baz
@@ -445,7 +445,7 @@ targeted line numbers separated by spaces.
 
     === "Markdown"
         ````
-        ``` hl_lines="1 3"
+        ```py3 hl_lines="1 3"
         """Some file."""
         import foo.bar
         import boo.baz
@@ -458,7 +458,7 @@ Line numbers are always referenced starting at 1 ignoring what the line number i
 !!! example "Highlight Lines with Line Numbers Example"
 
     === "Output"
-        ``` hl_lines="1 3" linenums="2"
+        ```py3 hl_lines="1 3" linenums="2"
         """Some file."""
         import foo.bar
         import boo.baz
@@ -467,11 +467,44 @@ Line numbers are always referenced starting at 1 ignoring what the line number i
 
     === "Markdown"
         ````
-        ```hl_lines="1 3" linenums="2"
+        ```py3 hl_lines="1 3" linenums="2"
         """Some file."""
         import foo.bar
         import boo.baz
         import foo.bar.baz
+        ```
+        ````
+
+If you'd like to do a range of lines, you can use the notation `x-y` where `x` is the starting line and `y` is the
+ending line. You can do multiple ranges and even mix them with non ranges.
+
+!!! example "Highlight Ranges"
+
+    === "Output"
+        ```py3 hl_lines="1-2 5 7-8"
+        import foo
+        import boo.baz
+        import foo.bar.baz
+
+        class Foo:
+           def __init__(self):
+               self.foo = None
+               self.bar = None
+               self.baz = None
+        ```
+
+    === "Markdown"
+        ````
+        ```py3 hl_lines="1-2 5 7-8"
+        import foo
+        import boo.baz
+        import foo.bar.baz
+
+        class Foo:
+           def __init__(self):
+               self.foo = None
+               self.bar = None
+               self.baz = None
         ```
         ````
 
