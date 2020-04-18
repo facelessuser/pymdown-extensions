@@ -128,7 +128,7 @@ class TestNoClassNoPygments(util.MdCase):
 
 
 class TestNoPygments(util.MdCase):
-    """Test no pygments."""
+    """Test no Pygments."""
 
     extension = ['pymdownx.highlight', 'pymdownx.superfences']
     extension_configs = {
@@ -173,7 +173,7 @@ class TestNoPygments(util.MdCase):
 
 
 class TestNoPygmentsCustomLineClass(util.MdCase):
-    """Test no pygments with custom line number class."""
+    """Test no Pygments with custom line number class."""
 
     extension = ['pymdownx.highlight', 'pymdownx.superfences']
     extension_configs = {
