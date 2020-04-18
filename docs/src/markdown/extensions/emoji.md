@@ -342,8 +342,15 @@ the actual function reference, not a string. If you need to create your own, jus
 
 ## Custom Emoji Indexes
 
-In order to provide a custom index, the Emoji extension must be given a function that returns a suitable emoji index. No
-parameters are passed to the function.  The function should simply return the custom index in the following format.
+```py3
+def emoji_index(options, md)
+```
+
+In order to provide a custom index, the Emoji extension must be given a function that returns a suitable emoji index.
+The function should simply return the custom index. It accepts both on options dictionary and the markdown object. The
+options object is the same object that is specified in in the extensions [settings](#options).
+
+The index should be returned in the following format:
 
 ```py3
 emoji_index = {
@@ -418,15 +425,19 @@ emoji_index = {
 }
 ```
 
-## Custom Emoji Generators
+!!! new "New 7.1"
+    Emoji indexes now accept `options` and `md`. The old sans argument format will still be accepted, but in the future
+    the arguments will be expected.
 
-Each different kind of output is controlled by a different emoji generator function, but all generator functions have
-the same input format. The format is shown below in case you need to create your own custom output generator.
+## Custom Emoji Generators
 
 ```py3
 def emoji_generator(index, shortname, alias, uc, alt, title, category, options, md)
 ```
 
+Each different kind of output is controlled by a different emoji generator function, but all generator functions have
+the same input format. The options object is the same object that is specified in in the extensions [settings](#options)
+and is shared with the index as well.
 
 Parameter   | Type       |Description
 ----------- | ---------- | ----------
@@ -437,10 +448,10 @@ Parameter   | Type       |Description
 `alt`       | string     | This is the alternative emoji value (or fallback value).  Its format will differ depending on the extension setting `alt` and also the index being used. This will be returned as either the full valid Unicode characters or HTML entities, or it will be the short name used.  See the `alt` setting for more info.
 `title`     | string     | This is the title that can be used in image elements.  Depending on the global extension setting `title`, this will either return the full long description, the short name, or `None`.  See the `title` setting for more info.
 `category`  | string     | Category of the emoji, or `None` if there is no category for the emoji.
-`options`   | dictionary | This is a dictionary to specify generator function specific options.  This can be anything, and it is up to the generator function to parse and provide defaults.
+`options`   | dictionary | This is a dictionary to specify generator and index function specific options.  This can be anything, and it is up to the generator function and the index function to parse relevant options and provide defaults.
 `md`        | class      | This is the Markdown class object.  This is mainly used to access specific things needed from the Markdown class when formatting your output.  If you needed to stash your output, you would do something like: `#!py3 md.htmlStash.store(alt, safe=True)`.
 
-!!! Warning "Non-Unicode emoji"
+!!! warning "Non-Unicode emoji"
     Keep in mind that Gemoji ships with some non-standard emoji like `:octocat:` that do not have Unicode code
     points.  `uc` and `alt` are affected by this and will return `None` and the short name respectively instead of
     strings describing the Unicode points.  For example `:octocat:` will just return `None` for `uc` and `:octocat:`
@@ -478,6 +489,11 @@ Option                      | Type       | Default              | Description
 `alt`                       | string     | `#!py3thon 'unicode'` | Specifies the format for the alt value that is passed to the emoji generator function. If `alt` is set to `short`, the short name will be passed to the generator.  If `alt` is set to `unicode` the Unicode characters are passed to the generator.  Lastly, if `alt` is set to `html_entity`, the Unicode characters are passed encoded as HTML entities.
 `remove_variation_selector` | bool       | `#!py3thon False`     | Specifies whether variation selectors should be removed from Unicode alt. Currently, only `fe0f` is removed as it is the only one presently found in the current emoji sets.
 `options`                   | dictionary | `#!py3thon {}`        | Options that are specific to emoji generator functions.  Supported parameters can vary from function to function.
+
+!!! new "New 7.1"
+    `options` is now shared between index and generator functions opposed to being passed to the generator function
+    only. The generator and/or index function should decide which of the arguments are relevant for its usage and parse
+    accordingly.
 
 !!! tip "Legacy GitHubEmoji Emulation"
     The Emoji extension was actually created to replace the now retired GitHubEmoji extension. Emoji was written to be
