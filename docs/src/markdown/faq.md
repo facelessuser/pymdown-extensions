@@ -45,7 +45,7 @@ repository respectively. See [MagicLink](./extensions/magiclink.md) for more det
     see the related [FAQ question](#function-references-in-yaml) to see how to specify function references in YAML.
 
 ```py3
-import pymdownx
+from pymdownx import emoji
 
 extensions = [
     'markdown.extensions.tables',
@@ -57,7 +57,7 @@ extensions = [
     'pymdownx.superfences'
 ]
 
-extension_config = {
+extension_configs = {
     "pymdownx.magiclink": {
         "repo_url_shortener": True,
         "repo_url_shorthand": True,
@@ -69,8 +69,8 @@ extension_config = {
         "subscript": False
     },
     "pymdownx.emoji": {
-        "emoji_index": pymdownx.emoji.gemoji,
-        "emoji_generator": pymdownx.emoji.to_png,
+        "emoji_index": emoji.gemoji,
+        "emoji_generator": emoji.to_png,
         "alt": "short",
         "options": {
             "attributes": {
