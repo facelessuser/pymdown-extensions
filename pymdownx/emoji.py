@@ -26,6 +26,9 @@ from markdown import Extension
 from markdown.inlinepatterns import InlineProcessor
 from markdown import util as md_util
 import xml.etree.ElementTree as etree
+import inspect
+import copy
+import warnings
 from . import util
 
 RE_EMOJI = r'(:[+\-\w]+:)'
@@ -45,6 +48,11 @@ UNICODE_ENTITY = 'html_entity'
 UNICODE_ALT = ('unicode', UNICODE_ENTITY)
 LEGACY_ARG_COUNT = 8
 
+MSG_INDEX_WARN = """Using emoji indexes with no arguments is now deprecated.
+Emoji indexes now take 2 arguments: 'options' and 'md'.
+Please update your custom index accordingly.
+"""
+
 
 def add_attriubtes(options, attributes):
     """Add additional attributes from options."""
@@ -55,25 +63,37 @@ def add_attriubtes(options, attributes):
             attributes[k] = v
 
 
-def emojione():
+def emojione(options, md):
     """The EmojiOne index."""
 
     from . import emoji1_db as emoji_map
-    return {"name": emoji_map.name, "emoji": emoji_map.emoji, "aliases": emoji_map.aliases}
+    return {
+        "name": emoji_map.name,
+        "emoji": copy.deepcopy(emoji_map.emoji),
+        "aliases": copy.deepcopy(emoji_map.aliases)
+    }
 
 
-def gemoji():
+def gemoji(options, md):
     """The Gemoji index."""
 
     from . import gemoji_db as emoji_map
-    return {"name": emoji_map.name, "emoji": emoji_map.emoji, "aliases": emoji_map.aliases}
+    return {
+        "name": emoji_map.name,
+        "emoji": copy.deepcopy(emoji_map.emoji),
+        "aliases": copy.deepcopy(emoji_map.aliases)
+    }
 
 
-def twemoji():
+def twemoji(options, md):
     """The Twemoji index."""
 
     from . import twemoji_db as emoji_map
-    return {"name": emoji_map.name, "emoji": emoji_map.emoji, "aliases": emoji_map.aliases}
+    return {
+        "name": emoji_map.name,
+        "emoji": copy.deepcopy(emoji_map.emoji),
+        "aliases": copy.deepcopy(emoji_map.aliases)
+    }
 
 
 ###################
@@ -205,22 +225,26 @@ class EmojiPattern(InlineProcessor):
     def __init__(self, pattern, config, md):
         """Initialize."""
 
+        InlineProcessor.__init__(self, pattern, md)
+
         title = config['title']
         alt = config['alt']
-
+        self.options = config['options']
         self._set_index(config["emoji_index"])
         self.unicode_alt = alt in UNICODE_ALT
         self.encoded_alt = alt == UNICODE_ENTITY
         self.remove_var_sel = config['remove_variation_selector']
         self.title = title if title in VALID_TITLE else NO_TITLE
         self.generator = config['emoji_generator']
-        self.options = config['options']
-        InlineProcessor.__init__(self, pattern, md)
 
     def _set_index(self, index):
         """Set the index."""
 
-        self.emoji_index = index()
+        if len(inspect.getfullargspec(index).args):
+            self.emoji_index = index(self.options, self.md)
+        else:
+            warnings.warn(MSG_INDEX_WARN, util.PymdownxDeprecationWarning)
+            self.emoji_index = index()
 
     def _remove_variation_selector(self, value):
         """Remove variation selectors."""
