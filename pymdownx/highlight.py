@@ -76,6 +76,10 @@ DEFAULT_CONFIG = {
         -1,
         'Globally make nth line special - Default: -1'
     ],
+    'linenums_class': [
+        "linenums",
+        "Control the linenums class name when not using Pygments - Default: 'linenums'"
+    ],
     'extend_pygments_lang': [
         [],
         'Extend pygments language with special language entry - Default: {}'
@@ -180,7 +184,7 @@ class Highlight(object):
     def __init__(
         self, guess_lang=True, pygments_style='default', use_pygments=True,
         noclasses=False, extend_pygments_lang=None, linenums=False, linenums_special=-1,
-        linenums_style='table', wrapcode=True
+        linenums_style='table', linenums_class='linenums', wrapcode=True
     ):
         """Initialize."""
 
@@ -191,6 +195,7 @@ class Highlight(object):
         self.linenums = linenums
         self.linenums_style = linenums_style
         self.linenums_special = linenums_special
+        self.linenums_class = linenums_class
         self.wrapcode = wrapcode
 
         if extend_pygments_lang is None:  # pragma: no cover
@@ -311,7 +316,7 @@ class Highlight(object):
                 classes.append('language-%s' % language)
             class_str = ''
             if linenums:
-                classes.append('linenums')
+                classes.append(self.linenums_class)
             if classes:
                 class_str = CLASS_ATTR % ' '.join(classes)
             if id_value:
@@ -356,6 +361,7 @@ class HighlightTreeprocessor(Treeprocessor):
                     linenums=self.config['linenums'],
                     linenums_style=self.config['linenums_style'],
                     linenums_special=self.config['linenums_special'],
+                    linenums_class=self.config['linenums_class'],
                     extend_pygments_lang=self.config['extend_pygments_lang'],
                     wrapcode=not self.config['legacy_no_wrap_code']
                 )
