@@ -127,6 +127,104 @@ class TestNoClassNoPygments(util.MdCase):
         )
 
 
+class TestNoPygments(util.MdCase):
+    """Test no Pygments."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'use_pygments': False
+        }
+    }
+
+    def test_no_pygments(self):
+        """Test with no Pygments."""
+
+        self.check_markdown(
+            r'''
+            ```python
+            import test
+            test.test()
+            ```
+            ''',
+            r'''
+            <pre class="highlight"><code class="language-python">import test
+            test.test()</code></pre>
+            ''',
+            True
+        )
+
+    def test_no_pygments_linenums(self):
+        """Test with no Pygments and line numbers."""
+
+        self.check_markdown(
+            r'''
+            ```python linenums="1"
+            import test
+            test.test()
+            ```
+            ''',
+            r'''
+            <pre class="highlight"><code class="language-python linenums">import test
+            test.test()</code></pre>
+            ''',
+            True
+        )
+
+
+class TestNoPygmentsCustomLineClass(util.MdCase):
+    """Test no Pygments with custom line number class."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'use_pygments': False,
+            'linenums_class': 'line-numbers',
+            'linenums': True
+        }
+    }
+
+    def test_no_pygments_linenums_custom_class(self):
+        """Test with no Pygments and line numbers."""
+
+        self.check_markdown(
+            r'''
+            Text
+
+                import test
+                test.test()
+
+            Text
+            ''',
+            r'''
+            <p>Text</p>
+            <pre class="highlight"><code class="line-numbers">import test
+            test.test()
+            </code></pre>
+
+            <p>Text</p>
+            ''',
+            True
+        )
+
+    def test_no_pygments_linenums_custom_class_fences(self):
+        """Test with no Pygments and line numbers in fences."""
+
+        self.check_markdown(
+            r'''
+            ```python
+            import test
+            test.test()
+            ```
+            ''',
+            r'''
+            <pre class="highlight"><code class="language-python line-numbers">import test
+            test.test()</code></pre>
+            ''',
+            True
+        )
+
+
 class TestHighlightSpecial(util.MdCase):
     """Test highlight global special."""
 

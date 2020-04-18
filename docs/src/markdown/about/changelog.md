@@ -6,6 +6,7 @@
 - **NEW**: Emoji extension now requires custom emoji indexes to take an `options` and `md` argument. The old
   non-argument format is deprecated and still accepted, but support for indexes with no arguments will be removed at a
   future time.
+- **NEW**: Highlight now allows the specifying of a custom line number class when not using Pygments.
 - **FIX**: Better Arithmatex patterns. Fix issue #888 which caused a hang due to a regular expression typo. Also ensure
   `#!tex $$..$$` and `#!tex begin{}...end{}` patterns properly don't match if the tail markers are escaped.
 
