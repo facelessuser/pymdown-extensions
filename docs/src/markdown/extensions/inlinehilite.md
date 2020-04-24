@@ -121,6 +121,7 @@ Option                    | Type         | Default       | Description
 `css_class`               | string       | `#!py3 ''`    | Class name is applied to the wrapper element of the code. If configured, this setting will override the `css_class` option of Highlight. If nothing is configured here or via or Highlight, the class `highlight` will be used.
 `style_plain_text`        | bool         | `#!py3 False` | When `guess_lang` is set to `#!py3 False`, InlineHilite will avoid applying classes to code blocks that do not explicitly set a language. If it is desired to have plain text styled like code, enable this to inject classes so that they can all be styled the same.
 `custom_inline`           | [dictionary] | `#!py3 []`    | Custom inline code blocks.
+`default_lang`            | string       | `#!py3 ''`    | Code blocks that do not explicitly set a language will default to this; useful for documents that primarily expect to use a single language.
 
 ---8<---
 links.txt

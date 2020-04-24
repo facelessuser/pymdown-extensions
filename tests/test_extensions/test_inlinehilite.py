@@ -214,6 +214,33 @@ class TestInlineHiliteGuess(util.MdCase):
         )
 
 
+class TestInlineHiliteDefaultLang(util.MdCase):
+    """Test inline highlight with default language."""
+
+    extension = [
+        'pymdownx.highlight',
+        'pymdownx.inlinehilite',
+    ]
+    extension_configs = {
+        'pymdownx.highlight': {
+            'guess_lang': False
+        },
+        'pymdownx.inlinehilite': {
+            'css_class': 'inlinehilite',
+            'style_plain_text': False,
+            'default_lang': 'py3'
+        }
+    }
+
+    def test_default_language(self):
+        """Ensure a default language is used."""
+
+        self.check_markdown(
+            r'`import module`.',
+            r'<p><code class="inlinehilite"><span class="kn">import</span> <span class="nn">module</span></code>.</p>'
+        )
+
+
 class TestInlineHiliteCodeHilite(util.MdCase):
     """Test inline highlight with CodeHilite."""
 
