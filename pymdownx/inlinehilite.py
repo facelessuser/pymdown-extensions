@@ -107,7 +107,7 @@ class InlineHilitePattern(InlineProcessor):
         if not self.get_hl_settings:
             self.get_hl_settings = True
             self.style_plain_text = self.config['style_plain_text']
-            self.default_lang = self.config['default_lang']
+            self.default_lang = self.config['default_lang'] or None
 
             config = None
             self.highlighter = None
@@ -186,7 +186,7 @@ class InlineHiliteExtension(Extension):
                 "- Default: False"
             ],
             'default_lang': [
-                None,
+                '',
                 "When no language is specified, default to this language."
             ],
             'css_class': [
