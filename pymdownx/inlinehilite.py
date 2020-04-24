@@ -107,6 +107,7 @@ class InlineHilitePattern(InlineProcessor):
         if not self.get_hl_settings:
             self.get_hl_settings = True
             self.style_plain_text = self.config['style_plain_text']
+            self.default_lang = self.config['default_lang']
 
             config = None
             self.highlighter = None
@@ -130,7 +131,7 @@ class InlineHilitePattern(InlineProcessor):
     def highlight_code(self, src, language, classname=None, md=None):
         """Syntax highlight the inline code block."""
 
-        process_text = self.style_plain_text or language or self.guess_lang
+        process_text = self.style_plain_text or language or self.default_lang or self.guess_lang
 
         if process_text:
             el = self.highlighter(
@@ -139,7 +140,7 @@ class InlineHilitePattern(InlineProcessor):
                 use_pygments=self.use_pygments,
                 noclasses=self.noclasses,
                 extend_pygments_lang=self.extend_pygments_lang
-            ).highlight(src, language, self.css_class, inline=True)
+            ).highlight(src, language or self.default_lang, self.css_class, inline=True)
             el.text = self.md.htmlStash.store(el.text)
         else:
             el = etree.Element('code')
@@ -183,6 +184,10 @@ class InlineHiliteExtension(Extension):
                 "When 'False', no classes will be added to 'text' code blocks"
                 "and no scoping will performed. The content will just be escaped."
                 "- Default: False"
+            ],
+            'default_lang': [
+                None,
+                "When no language is specified, default to this language."
             ],
             'css_class': [
                 '',
