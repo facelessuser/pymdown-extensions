@@ -59,7 +59,7 @@
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^20.0.0",
     "stylelint-order": "^4.0.0",
-    "stylelint-scss": "^3.17.0",
+    "stylelint-scss": "^3.17.1",
     "vinyl-paths": "^3.0.1",
     "yargs": "^15.3.1"
   }
