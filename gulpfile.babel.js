@@ -26,11 +26,9 @@ import revReplace from "gulp-rev-replace"
 import vinylPaths from "vinyl-paths"
 import del from "del"
 import touch from "gulp-touch-fd"
-import fs from "fs"
-import mime from "mime"
-import replaceall from "replaceall"
-import nodeSass from "node-sass"
 import path from "path"
+import inlineSvg from "postcss-inline-svg"
+import cssSvgo from "postcss-svgo"
 
 /* Argument Flags */
 const args = yargs
@@ -87,84 +85,40 @@ const config = {
 }
 
 // ------------------------------
-// SVG inine (modified to do a minimal encoding)
-// ------------------------------
-
-/* The MIT License (MIT)
-
-Copyright (c) Franz Heidl, 2017.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
-
-const inlineImage = function(filepath, replace, done) {
-  const mimeType = mime.getType(filepath)
-  if (mimeType !== "image/svg+xml") {
-    throw new Error(`File ${filepath} is not of type image/svg+xml.`)
-  } else {
-    const data = fs.readFileSync(filepath)
-    if (!data || !data.length) {
-      throw new Error(`File ${filepath} is empty or cannot be read.`)
-    }
-    let result = data.toString("utf8")
-    if (replace.getLength()) {
-      for (let i = 0; i < replace.getLength(); i++) {
-        result = replaceall(replace.getKey(i).getValue(), replace.getValue(i).getValue(), result)
-      }
-    }
-    done(result)
-  }
-}
-
-const inlineSvg = function() {
-  return {
-    "inline-svg($filename, $replace: ())": (filename, replace, done) => {
-      inlineImage(filename.getValue(), replace, dataUrl => {
-        // Minimaly encode SVG
-        const encodedUrl = dataUrl.replace(/"/g, "'")
-          .replace(/#/g, "%23")
-          .replace(/(?:\r\n|(?!\r\n)[\r\n])/g, "\\n")
-        done(new nodeSass.types.String(`url("data:image/svg+xml;charset=utf-8,${encodedUrl}")`))
-      })
-    }
-  }
-}
-
-// ------------------------------
 // SASS/SCSS processing
 // ------------------------------
 gulp.task("scss:build:sass", () => {
-  const processors = [
+  const plugins = [
     autoprefixer,
-    mqpacker
+    mqpacker,
+    inlineSvg(
+      {
+        paths: [
+          "node_modules"
+        ],
+        encode: false
+      }
+    ),
+    cssSvgo(
+      {
+        plugins: [
+          {removeDimensions: true},
+          {removeViewBox: false}
+        ],
+        encode: false
+      }
+    )
   ].filter(t => t)
 
   return gulp.src("./docs/src/scss/extra*.scss")
     .pipe(sass({
-      functions: inlineSvg(),
       includePaths: [
         "node_modules/modularscale-sass/stylesheets",
         "node_modules/material-design-color",
         "node_modules/material-shadows",
         "node_modules/mermaid/src/themes"]
     }).on("error", sass.logError))
-    .pipe(postcss(processors))
+    .pipe(postcss(plugins))
     .pipe(gulpif(config.compress.enabled, cleanCSS()))
     .pipe(
       vinylPaths(

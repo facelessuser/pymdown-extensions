@@ -1,3 +1,0 @@
-@function icon($name) {
-  @return inline-svg("./docs/src/svg/#{$name}.svg");
-}

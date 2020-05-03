@@ -1,6 +1,6 @@
 $new-admonitions: (
-  settings config: $drac-pink $clr-purple-a700 "material/settings",
-  new: $drac-yellow $clr-yellow-a700 "material/alert-decagram"
+  settings config: $drac-pink $clr-purple-a700 "@mdi/svg/svg/cog.svg",
+  new: $drac-yellow $clr-yellow-a700 "@mdi/svg/svg/alert-decagram.svg"
 ) !default;
 
   $old-admonitions: (
@@ -25,7 +25,7 @@ $new-admonitions: (
     $tint2: nth($prop, 2);
     $name: nth($names, 1);
 
-    --md-admonition-icon--#{$name}: #{icon(nth($prop, 3))};
+    --md-admonition-icon--#{$name}: svg-load("#{nth($prop, 3)}");
     --md-admonition-bg-color--#{$name}: #{transparentize($tint2, 0.9)};
     --md-admonition-icon-color--#{$name}: #{$tint2};
 
@@ -62,7 +62,6 @@ $new-admonitions: (
 
       // Define base class
       > .admonition-title {
-        // `background-color: var(--md-default-bg-color--darkest);`
         background-color: var(--md-admonition-bg-color--#{$name});
 
         // Icon

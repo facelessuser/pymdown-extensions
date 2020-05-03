@@ -6,7 +6,7 @@
   }
 
   a[href^="mailto:"]::before {
-    mask-image: #{icon("material/mail")};
+    mask-image: svg-load("@mdi/svg/svg/mail.svg");
   }
 
   .magiclink-compare,
@@ -53,7 +53,7 @@
   .md-typeset {
     .magiclink-#{$name} {
       &::before {
-        mask-image: inline-svg("./docs/src/svg/octicons/#{$icon}.svg");
+        mask-image: svg-load("@primer/octicons/build/svg/#{$icon}.svg");
       }
     }
   }
@@ -61,14 +61,14 @@
 
 // Assign icons to repository links
 @each $name, $icon in (
-  "github": "github-circle",
+  "github": "github",
   "gitlab": "gitlab",
   "bitbucket": "bitbucket"
 ) {
   .md-typeset {
     .magiclink-repository.magiclink-#{$name} {
       &::before {
-        mask-image: #{icon("material/#{$icon}")};
+        mask-image: svg-load("@mdi/svg/svg/#{$icon}.svg");
       }
     }
   }
