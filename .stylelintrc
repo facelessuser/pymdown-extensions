@@ -33,6 +33,7 @@
     "property-no-vendor-prefix": true,
     "selector-class-pattern": "^[a-z0-9]+(-[a-z0-9]+)*(__[a-z]+)?(--[a-z]+)?$",
     "selector-descendant-combinator-no-non-space": null,
+    "selector-type-no-unknown": [true, {"ignore": ["custom-elements"]}],
     "string-quotes": "double",
     "unit-whitelist": ["px", "em", "deg", "ms", "%", "mm", "vh", "dppx", "s"],
     "value-keyword-case": "lower",

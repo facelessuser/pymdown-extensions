@@ -1,0 +1,7 @@
+mjx-container[display=true] {
+  font-size: 120% !important;
+}
+
+mjx-container:not([display]) {
+  font-size: 100% !important;
+}

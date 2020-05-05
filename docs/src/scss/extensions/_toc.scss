@@ -9,7 +9,7 @@
     mask-size: px2em(16px);
     mask-repeat: no-repeat;
     visibility: visible;
-    mask-image: #{icon("material/link")};
+    mask-image: svg-load("@mdi/svg/svg/link.svg");
   }
 
   .headerlink:hover,

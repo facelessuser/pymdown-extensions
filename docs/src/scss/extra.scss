@@ -5,7 +5,6 @@
 
 @import "utilities/break";
 @import "utilities/convert";
-@import "utilities/icons";
 @import "utilities/color_tools";
 
 @import "config";
@@ -13,6 +12,7 @@
 @import "palette/colors";
 
 @import "extensions/admonition";
+@import "extensions/arithmatex";
 @import "extensions/critic";
 @import "extensions/details";
 @import "extensions/highlight";
