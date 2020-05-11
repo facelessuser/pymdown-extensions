@@ -101,7 +101,7 @@ Option                    | Type   | Default               | Description
 `pygments_style`          | string | `#!py3thon 'default'` | Set the Pygments' style to use.  This really only has an effect when used with `noclasses`.
 `noclasses`               | bool   | `#!py3 False`         | This will cause the styles to directly be written to the tag's style attribute instead of requiring a stylesheet.
 `use_pygments`            | bool   | `#!py3 True`          | Controls whether Pygments (if available) is used to style the code, or if the code will just be escaped and prepped for a JavaScript syntax highlighter.
-`linenums`                | bool   | `#!py3 False`         | Enable line numbers globally for *block* code.  This will be ignored for *inline* code.
+`linenums`                | bool   | `#!py3 None`          | Enable line numbers globally for *block* code.  This will be ignored for *inline* code. If set to `#!py3 False` line numbers will be disabled globally and can not be turned on, not even per code block.
 `linenums_special`        | int    | `#!py3 1`             | Globally sets the specified nth lines' gutter with the class "special".  This can be overridden in [SuperFences](./superfences.md) per fence if desired.
 `linenums_style`          | string | `#!py3 'table'`       | Controls the output style when `linenums` are enabled. Supported styles are Pygments default `table` and `inline`, but also supported is the pymdown-extensions `pymdownx-inline` which provides a special inline mode, see [Line Number Styles](#line-number-styles) for more info.
 `linenums_class`          | string | `#!py3 'linenums'`    | Controls the name of the line number class when Pygments is not used.
@@ -113,5 +113,10 @@ Option                    | Type   | Default               | Description
 
 !!! new "New 7.1"
     `linenums_class` was added in `7.1`.
+
+!!! new "New 7.2"
+    `linenums` now accepts `#!py3 None` as the default for allow line numbers to be enabled per code block.
+    `#!py3 False` now disables line numbers globally preventing line numbers even if specified per code block. `True`
+    still enables globally.
 
 --8<-- "refs.txt"

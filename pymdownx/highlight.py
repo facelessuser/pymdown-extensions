@@ -65,7 +65,7 @@ DEFAULT_CONFIG = {
         'Default false'
     ],
     'linenums': [
-        False,
+        None,
         'Display line numbers in block code output (not inline) - Default: False'
     ],
     'linenums_style': [
@@ -183,7 +183,7 @@ class Highlight(object):
 
     def __init__(
         self, guess_lang=True, pygments_style='default', use_pygments=True,
-        noclasses=False, extend_pygments_lang=None, linenums=False, linenums_special=-1,
+        noclasses=False, extend_pygments_lang=None, linenums=None, linenums_special=-1,
         linenums_style='table', linenums_class='linenums', wrapcode=True
     ):
         """Initialize."""
@@ -254,12 +254,13 @@ class Highlight(object):
         """Highlight code."""
 
         class_names = classes[:] if classes else []
+        linenums_enabled = (self.linenums or (self.linenums is not False and linestart >= 0)) and not inline > 0
 
         # Convert with Pygments.
         if pygments and self.use_pygments:
             # Setup language lexer.
             lexer = self.get_lexer(src, language)
-            linenums = self.linenums_style if (self.linenums or linestart >= 0) and not inline > 0 else False
+            linenums = self.linenums_style if linenums_enabled else False
 
             if class_names:
                 css_class = ' {}'.format('' if not css_class else css_class)
@@ -311,7 +312,7 @@ class Highlight(object):
         else:
             # Format block code for a JavaScript Syntax Highlighter by specifying language.
             classes = class_names
-            linenums = self.linenums_style if (self.linenums or linestart >= 0) and not inline > 0 else False
+            linenums = self.linenums_style if linenums_enabled else False
             if language:
                 classes.append('language-%s' % language)
             class_str = ''
