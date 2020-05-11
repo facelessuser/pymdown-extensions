@@ -1,5 +1,11 @@
 # Changelog
 
+## 7.2
+
+- **NEW**: Highlight option `linenums` now defaults to `None` and accepts `None`, `True`, or `False`. `None` is
+  disabled by default, but can be enabled per code block. `True` enables line numbers globally. `False` disables
+  globally and cannot be enabled manually per code block.
+
 ## 7.1
 
 - **NEW**: SuperFences will now allow number ranges in `hl_lines` option. (#878)
