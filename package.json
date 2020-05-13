@@ -56,7 +56,7 @@
     "postcss-pseudo-classes": "^0.2.1",
     "postcss-svgo": "^4.0.2",
     "promise": "^8.1.0",
-    "rollup": "^2.8.2",
+    "rollup": "^2.10.0",
     "rollup-plugin-babel": "^4.4.0",
     "stylelint": "^13.3.3",
     "stylelint-config-rational-order": "^0.1.2",
