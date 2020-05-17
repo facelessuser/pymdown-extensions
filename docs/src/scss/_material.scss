@@ -2,24 +2,24 @@ html {
   background-color: transparent;
 }
 
-/* Style custom footer content */
-.md-footer {
-  &-copyright {
-    .md-footer-copyright__highlight {
-      color: var(--md-default-bg-color--light);
-    }
-  }
-}
-
 /* Dark mode changes */
 [data-md-color-primary^="drac-"] {
-  // Header, navigation, and tabs
-  $footer-meta-fg-color: #{lighten($drac-bg, 15%)};
-  color: var(--md-default-fg-color);
+
+  --md-text-color: var(--md-default-fg-color);
   background-color: var(--md-default-bg-color);
 
+  // Footer color shades
+  --md-footer-bg-color:                transparent;
+  --md-footer-bg-color--dark:          var(--md-default-bg-color--darkest);
+
+  // Header colors
+  --md-header-fg-color: var(--md-text-color);
+  --md-header-bg-color: var(--md-default-bg-color--darkest);
+
+  // Header
   .md-header {
-    background-color: var(--md-default-bg-color--darkest);
+    color: var(--md-text-color);
+    background-color: var(--md-header-bg-color);
     border-bottom: px2rem(1px) solid var(--md-primary-fg-color);
 
     &[data-md-state=shadow] {
@@ -28,13 +28,9 @@ html {
     }
   }
 
-  .md-header,
-  .md-nav__source,
+  // Tabs
   .md-tabs {
-    color: var(--md-default-fg-color);
-  }
-
-  .md-tabs {
+    color: var(--md-text-color);
     background-color: var(--md-primary-fg-color--transparent);
 
     &__link--active {
@@ -46,40 +42,45 @@ html {
     }
   }
 
+  // Hero
   .md-hero {
-    color: var(--md-default-fg-color);
+    color: var(--md-text-color);
     background-color: var(--md-primary-fg-color--transparent);
+  }
+
+  // Navigation
+  .md-nav__source {
+    color: var(--md-text-color);
   }
 
   @include break-to-device(tablet) {
 
     // Site title in main navigation
     .md-nav--primary .md-nav__title {
-      color: var(--md-default-fg-color);
-      background-color: var(--md-default-bg-color--darkest);
+      color: var(--md-text-color);
+      background-color: var(--md-header-bg-color);
       border-bottom: px2rem(1px) solid var(--md-primary-fg-color);
     }
   }
 
-  // [tablet portrait -]: Layered navigation
   @include break-to-device(tablet portrait) {
 
     // Repository containing source
     .md-nav__source {
-      color: var(--md-default-fg-color);
+      color: var(--md-text-color);
       background-color: var(--md-primary-fg-color--transparent);
     }
 
     .md-nav .md-nav__title {
-      color: var(--md-default-fg-color);
-      background-color: var(--md-default-bg-color--darkest);
+      color: var(--md-text-color);
+      background-color: var(--md-header-bg-color);
       border-bottom: px2rem(1px) solid var(--md-primary-fg-color);
     }
   }
 
   // Search
   .md-search__input {
-    color: var(--md-default-fg-color);
+    color: var(--md-text-color);
     background-color: var(--md-accent-bg-color--light);
 
     &:hover {
@@ -87,7 +88,7 @@ html {
     }
 
     ~ .md-search__icon {
-      color: var(--md-default-fg-color);
+      color: var(--md-text-color);
     }
     &::placeholder {
       color: var(--md-default-fg-color--light);
@@ -95,44 +96,25 @@ html {
   }
 
   .md-search__overlay, .md-overlay {
-      background-color: var(--md-default-bg-color--light);
+    background-color: var(--md-default-bg-color--light);
   }
 
   // Footer
   .md-footer {
-
-    color: var(--md-default-fg-color--light);
-    background-color: transparent;
-
     &-nav__direction {
       color: var(--md-primary-fg-color);
     }
 
     &-meta {
-      background-color: var(--md-default-bg-color--darkest);
       border-top: px2rem(1px) solid var(--md-primary-fg-color);
     }
-
-    &-copyright {
-      color: $footer-meta-fg-color;
-      .md-footer-copyright__highlight {
-        color: var(--md-default-fg-color--light);
-      }
-    }
   }
+}
 
-  .md-footer-meta.md-typeset a {
-      color: var(--md-default-fg-color--light);
-
-      &:hover {
-        color: var(--md-default-fg-color);
-      }
-  }
-
-  .md-typeset {
-    h5 {
-      color: var(--md-default-fg-color);
-      text-transform: none;
-    }
+/* Don't force capitalization of `H5` elements. */
+.md-typeset {
+  h5 {
+    color: var(--md-text-color);
+    text-transform: none;
   }
 }

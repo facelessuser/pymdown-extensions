@@ -2,16 +2,20 @@
 
 :root {
   // We like our links blue
-  --md-link-color: #{$clr-cyan-500};
-  --md-link-code-bg-color: hsla(0, 0%, 96%, 1);
-  --md-accent-link-code-bg-color: var(--md-link-code-bg-color);
+  --md-text-link-color: #{$clr-cyan-500};
+
+  // Special code link style
+  --md-code-link-bg-color: hsla(0, 0%, 96%, 1);
+  --md-code-link-accent-bg-color: var(--md-code-link-bg-color);
 
   // Dark mode color changes
   [data-md-color-primary^="drac-"] {
+    // Main code colors
     --md-code-fg-color: #{$drac-fg};
     --md-code-bg-color: #{$drac-bg};
-    --md-link-color: #{$drac-cyan};
-    --md-link-code-bg-color: #{mix($drac-cyan, $drac-bg, 15%)};
+
+    --md-text-link-color: #{$drac-cyan};
+    --md-code-link-bg-color: #{mix($drac-cyan, $drac-bg, 15%)};
 
     // Default color shades
     --md-default-fg-color:               #{transparentize($drac-fg, 0.13)};
@@ -76,7 +80,7 @@
 
   // Color palette
   [data-md-color-accent="#{$name}"] {
-    --md-accent-link-code-bg-color:    #{mix($color, $drac-bg, 15%)};
+    --md-code-link-accent-bg-color:    #{mix($color, $drac-bg, 15%)};
     --md-accent-fg-color:              hsla(#{hex2hsl($color)}, 1);
     --md-accent-fg-color--transparent: hsla(#{hex2hsl($color)}, 0.1);
     --md-accent-bg-color:              var(--md-default-bg-color);

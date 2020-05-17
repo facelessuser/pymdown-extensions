@@ -20,6 +20,8 @@ $new-admonitions: (
 
 /* Style new admonitions with dark or light colors */
 :root {
+  --md-admonition-bg-color: transparent;
+
   @each $names, $prop in $new-admonitions {
     $tint: nth($prop, 1);
     $tint2: nth($prop, 2);
