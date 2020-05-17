@@ -287,19 +287,19 @@ class TestDisabledLinenums(util.MdCase):
         """Test with line numbers globally disabled."""
 
         self.check_markdown(
-                r'''
-                ```python linenums="1"
-                import test
-                test.test()
-                ```
-                ''',
-                r'''
-                <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
-                <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
-                </code></pre></div>
-                ''',  # noqa: E501
-                True
-            )
+            r'''
+            ```python linenums="1"
+            import test
+            test.test()
+            ```
+            ''',
+            r'''
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
 
 
 class TestDisabledLinenumsNoPygments(util.MdCase):
@@ -317,15 +317,15 @@ class TestDisabledLinenumsNoPygments(util.MdCase):
         """Test with line numbers globally disabled and no Pygments."""
 
         self.check_markdown(
-                r'''
-                ```python linenums="1"
-                import test
-                test.test()
-                ```
-                ''',
-                r'''
-                <pre class="highlight"><code class="language-python">import test
-                test.test()</code></pre>
-                ''',  # noqa: E501
-                True
-            )
+            r'''
+            ```python linenums="1"
+            import test
+            test.test()
+            ```
+            ''',
+            r'''
+            <pre class="highlight"><code class="language-python">import test
+            test.test()</code></pre>
+            ''',  # noqa: E501
+            True
+        )
