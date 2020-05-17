@@ -1,8 +1,10 @@
 @import "./dracula";
 
 :root {
-  // We like our links blue
-  --md-text-link-color: #{$clr-cyan-500};
+  > * {
+    // We like our links blue
+    --md-text-link-color: #{$clr-cyan-500};
+  }
 
   // Special code link style
   --md-code-link-bg-color: hsla(0, 0%, 96%, 1);
