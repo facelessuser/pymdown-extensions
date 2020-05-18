@@ -11,7 +11,7 @@
   --md-code-link-accent-bg-color: var(--md-code-link-bg-color);
 
   // Dark mode color changes
-  [data-md-color-primary^="drac-"] {
+  [data-md-color-scheme=slate][data-md-color-primary^="drac-"] {
     // Main code colors
     --md-code-fg-color: #{$drac-fg};
     --md-code-bg-color: #{$drac-bg};
@@ -53,7 +53,7 @@
 ) {
 
   // Color palette
-  [data-md-color-primary="#{$name}"] {
+  [data-md-color-scheme=slate][data-md-color-primary="#{$name}"] {
 
     --md-primary-code-bg-color:         #{mix($drac-bg, nth($colors, 1), 85%)};
     --md-primary-fg-color:              hsla(#{hex2hsl(nth($colors, 1))}, 1);
@@ -81,7 +81,7 @@
 ) {
 
   // Color palette
-  [data-md-color-accent="#{$name}"] {
+  [data-md-color-scheme=slate][data-md-color-accent="#{$name}"] {
     --md-code-link-accent-bg-color:    #{mix($color, $drac-bg, 15%)};
     --md-accent-fg-color:              hsla(#{hex2hsl($color)}, 1);
     --md-accent-fg-color--transparent: hsla(#{hex2hsl($color)}, 0.1);

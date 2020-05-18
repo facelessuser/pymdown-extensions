@@ -13,6 +13,7 @@ theme:
   icon:
     logo: material/book-open-page-variant
   palette:
+    scheme: slate
     primary: drac-purple
     accent: drac-purple
   font:

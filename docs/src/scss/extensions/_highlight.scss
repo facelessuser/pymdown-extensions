@@ -4,7 +4,7 @@
   --md-code-special-bg-color: #{darken(hsl(0, 0%, 96%), 5%)};
 }
 
-[data-md-color-primary^="drac-"] {
+[data-md-color-scheme=slate][data-md-color-primary^="drac-"] {
 
   --md-code-special-bg-color: var(--md-default-bg-color--dark);
 

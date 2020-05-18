@@ -1,5 +1,5 @@
 /* Dark mode changes */
-[data-md-color-primary^="drac-"] {
+[data-md-color-scheme=slate][data-md-color-primary^="drac-"] {
   .md-typeset mark:not(.critic) {
     color: var(--md-default-bg-color);
     background-color: $drac-yellow;
