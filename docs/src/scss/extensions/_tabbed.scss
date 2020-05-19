@@ -1,5 +1,5 @@
 /* Dark mode changes */
-[data-md-color-scheme=slate][data-md-color-primary^="drac-"] {
+[data-md-color-primary^="drac-"] {
   .md-typeset {
     .tabbed-set > .tabbed-content {
       box-shadow: 0 px2rem(-1px) var(--md-default-fg-color--lighter);

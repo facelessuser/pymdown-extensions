@@ -1,5 +1,5 @@
 /* Dark mode style */
-[data-md-color-scheme=slate][data-md-color-primary^="drac-"] {
+[data-md-color-primary^="drac-"] {
   .md-typeset {
     del.critic {
       background-color: #{mix($drac-pink, $drac-bg, 50%)};
