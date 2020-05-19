@@ -1,5 +1,6 @@
 /* Normal colors */
 :root {
+  --md-progress-stripe: var(--md-default-bg-color--lighter);
   --md-progress-100: #{$clr-green-a400};
   --md-progress-80: #{$clr-green-a400};
   --md-progress-60: #{$clr-yellow-700};
@@ -9,6 +10,7 @@
 
   /* Dark mode colors */
   [data-md-color-primary^="drac-"] {
+    --md-progress-stripe: var(--md-default-bg-color--lightest);
     --md-progress-100: #{$drac-green};
     --md-progress-80: #{$drac-light-green};
     --md-progress-60: #{$drac-yellow};
@@ -25,7 +27,7 @@
     position: absolute;
     width: 100%;
     margin: 0;
-    color: var(--md-default-fg-color);
+    color: var(--md-text-color);
     font-weight: 700;
     line-height: px2rem(28px);
     white-space: nowrap;
@@ -75,11 +77,11 @@
       background-image:
         linear-gradient(
           135deg,
-          var(--md-default-bg-color--lightest) 27%,
+          var(--md-progress-stripe) 27%,
           transparent 27%,
           transparent 52%,
-          var(--md-default-bg-color--lightest) 52%,
-          var(--md-default-bg-color--lightest) 77%,
+          var(--md-progress-stripe) 52%,
+          var(--md-progress-stripe) 77%,
           transparent 77%,
           transparent
         );

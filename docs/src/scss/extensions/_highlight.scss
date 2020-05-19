@@ -1,5 +1,12 @@
 /* Dark mode color scheme */
+
+:root {
+  --md-code-special-bg-color: #{darken(hsl(0, 0%, 96%), 5%)};
+}
+
 [data-md-color-primary^="drac-"] {
+
+  --md-code-special-bg-color: var(--md-default-bg-color--dark);
 
   .highlight code *,
   code.highlight * {
@@ -128,17 +135,17 @@
   a {
     > code {
       color: inherit !important;
-      background-color: var(--md-link-code-bg-color) !important;
+      background-color: var(--md-code-link-bg-color) !important;
       transition: color 125ms;
       transition: background-color 125ms;
 
       /* If we are linking highlighted, inline code, force it to just look like a code link */
       * {
-        color: var(--md-link-color) !important;
+        color: var(--md-text-link-color) !important;
       }
 
       &:hover {
-        background-color: var(--md-accent-link-code-bg-color) !important;
+        background-color: var(--md-code-link-accent-bg-color) !important;
 
         * {
           color: var(--md-accent-fg-color) !important;
@@ -162,7 +169,7 @@
 
       /* Special line mode coloring */
       &.special::before {
-        background-color: var(--md-default-bg-color--dark);
+        background-color: var(--md-code-special-bg-color);
       }
     }
   }
@@ -175,7 +182,7 @@
         margin-left: px2em(-16px, 13.6px);
         padding-right: px2em(8px, 13.6px);
         padding-left: px2em(16px, 13.6px);
-        background-color: var(--md-default-bg-color--dark);
+        background-color: var(--md-code-special-bg-color);
       }
     }
   }

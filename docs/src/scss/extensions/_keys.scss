@@ -22,13 +22,13 @@
 
   .keys {
     kbd {
-      color: var(--md-default-fg-color);
+      color: var(--md-text-color);
 
       &::before,
       &::after {
         position: relative;
         margin: 0;
-        color: var(--md-default-fg-color);
+        color: var(--md-text-color);
         -moz-osx-font-smoothing: initial;
         -webkit-font-smoothing: initial;
       }
