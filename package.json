@@ -58,7 +58,7 @@
     "promise": "^8.1.0",
     "rollup": "^2.10.2",
     "rollup-plugin-babel": "^4.4.0",
-    "stylelint": "^13.3.3",
+    "stylelint": "^13.4.1",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^20.0.0",
     "stylelint-order": "^4.0.0",
