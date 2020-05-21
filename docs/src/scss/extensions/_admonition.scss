@@ -47,7 +47,7 @@ $new-admonitions: (
 /* Dark mode changes */
 [data-md-color-primary^="drac-"] .md-typeset .admonition {
   box-shadow:
-    0 px2rem(4px) px2rem(10px) hsla(0, 0%, 0%, 0.15),
+    0 px2rem(4px) px2rem(10px) hsla(0, 0%, 0%, 0.3),
     0 0           px2rem(1px)  hsla(0, 0%, 0%, 0.2);
 }
 

@@ -87,6 +87,7 @@ Reindent
 SCSS
 SVG
 SVGs
+Scrollbar
 Slugify
 SmartSymbols
 StripHTML
@@ -202,6 +203,7 @@ repo
 requesters
 revisioned
 sanitizer
+scrollbar
 selectable
 shortener
 shortname
