@@ -118,3 +118,34 @@ html {
     text-transform: none;
   }
 }
+
+.md-typeset__scrollwrap,
+.md-sidebar__scrollwrap,
+.md-search__scrollwrap,
+.md-typeset pre > code,
+.md-typeset div.mermaid {
+  // Override native scrollbar styles
+  &::-webkit-scrollbar {
+    width: px2rem(4px);
+    height: px2rem(4px);
+  }
+
+  // Scrollbar thumb
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--md-default-fg-color--lighter);
+
+    // Hovered scrollbar thumb
+    &:hover {
+      background-color: var(--md-accent-fg-color);
+    }
+  }
+
+  // Firefox scrollbar and thumb
+  scrollbar-color: var(--md-default-fg-color--lighter) transparent;
+  scrollbar-width: thin;
+
+  // Firefox hovered scrollbar and thumb
+  &:hover {
+    scrollbar-color: var(--md-accent-fg-color) transparent;
+  }
+}
