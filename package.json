@@ -24,7 +24,7 @@
     "@babel/core": "^7.9.6",
     "@babel/plugin-external-helpers": "^7.8.3",
     "@babel/preset-env": "^7.9.6",
-    "@babel/register": "^7.9.0",
+    "@babel/register": "^7.10.1",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@mdi/svg": "^5.3.45",
     "@primer/octicons": "^9.6.0",
