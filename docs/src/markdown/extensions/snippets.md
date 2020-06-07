@@ -10,9 +10,10 @@ situations where you have content you need to insert into multiple documents.  F
 hyperlinks in a separate file.  Then includes those hyperlinks at the bottom of a document via snippets. If a link needs
 to be updated, it can be updated in one location instead of updating them in multiple files.
 
-Snippets is run as a preprocessor, so if a snippet is found in a fenced code block etc., it will still get processed. If
-the specified file cannot be found, the the markup will be removed.  If you need to show a snippet example in fenced
-code, please escape it as listed in [Snippets Notation](#snippets-notation).
+Snippets is run as a preprocessor, so if a snippet is found in a fenced code block etc., it will still get processed.
+This is great for including the current version of program code.  If the specified file cannot be found, the the markup
+will be removed.  If you need to show a snippet example in fenced code, please escape it as listed in
+[Snippets Notation](#snippets-notation).
 
 Snippets can handle recursive file inclusion.  And if Snippets encounters the same file in the current stack, it will
 avoid re-processing it in order to avoid an infinite loop (or crash on hitting max recursion depth).  Though it should
@@ -32,17 +33,18 @@ md = markdown.Markdown(extensions=['pymdownx.snippets'])
 
 ## Snippets Notation
 
-Snippets has two modes of inserting snippets: single line and block.
+Snippets does not care what the extension or the content of the ASCII file is.  There are two modes of inserting snippets:
+single line and block.
 
 Single line format is done by placing the following markup for the single line notation:
 
-<pre><code>--8&lt;-- "filename.md"</code></pre>
+<pre><code>--8&lt;-- "filename.ext"</code></pre>
 
 Or you can insert multiple files with block notation:
 
 <pre><code>--8&lt;--
 filename.md
-filename2.md
+filename.log
 --8&lt;--</code></pre>
 
 As you can see, the notation is ASCII scissors cutting a line followed by the file name.  In the case of the single line
