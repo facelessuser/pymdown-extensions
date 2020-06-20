@@ -15,6 +15,7 @@ class TestBetterEmNoSmart(util.MdCase):
     }
 
     def test_complex_multple_emphasis_type(self):
+        """Test complex case where `**text*text***` may be detected on accident."""
 
         self.check_markdown(
             'traced ***along*** bla **blocked** if other ***or***',
@@ -22,6 +23,7 @@ class TestBetterEmNoSmart(util.MdCase):
         )
 
     def test_complex_multple_emphasis_type_variant2(self):
+        """Test another complex case where `**text*text***` may be detected on accident."""
 
         self.check_markdown(
             'on the **1-4 row** of the AP Combat Table ***and*** receive',
@@ -29,6 +31,7 @@ class TestBetterEmNoSmart(util.MdCase):
         )
 
     def test_complex_multple_underscore_type(self):
+        """Test complex case where `__text_text___` may be detected on accident."""
 
         self.check_markdown(
             'traced ___along___ bla __blocked__ if other ___or___',
@@ -36,6 +39,7 @@ class TestBetterEmNoSmart(util.MdCase):
         )
 
     def test_complex_multple_underscore_type_variant2(self):
+        """Test another complex case where `__text_text___` may be detected on accident."""
 
         self.check_markdown(
             'on the __1-4 row__ of the AP Combat Table ___and___ receive',
