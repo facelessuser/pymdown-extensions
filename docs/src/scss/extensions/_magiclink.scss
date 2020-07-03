@@ -45,10 +45,10 @@
 
 // Assign icons to repository links
 @each $name, $icon in (
-  "commit": "git-commit",
-  "compare": "diff",
-  "pull": "git-pull-request",
-  "issue": "issue-opened"
+  "commit": "git-commit-24",
+  "compare": "file-diff-24",
+  "pull": "git-pull-request-24",
+  "issue": "issue-opened-24"
 ) {
   .md-typeset {
     .magiclink-#{$name} {

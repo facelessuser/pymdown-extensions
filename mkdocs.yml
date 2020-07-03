@@ -42,7 +42,6 @@ nav:
     - MagicLink: extensions/magiclink.md
     - Mark: extensions/mark.md
     - PathConverter: extensions/pathconverter.md
-    - SaneHeaders: extensions/saneheaders.md
     - StripHTML: extensions/striphtml.md
     - ProgressBar: extensions/progressbar.md
     - SmartSymbols: extensions/smartsymbols.md
@@ -135,9 +134,9 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/facelessuser
     - icon: fontawesome/brands/discord
-      link: https://discord.gg/TWs8Tgr
+      link: https://discord.gg/fqQ7ypS
 extra_css:
-  - assets/pymdownx-extras/extra-e7142372b2.css
+  - assets/pymdownx-extras/extra-5bc58b8274.css
 extra_javascript:
   - assets/pymdownx-extras/extra-835d408546.js
 
