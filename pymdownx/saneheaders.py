@@ -12,7 +12,7 @@ from markdown.blockprocessors import HashHeaderProcessor
 
 
 class SaneHeadersProcessor(HashHeaderProcessor):
-    """ Process hash headers syntax. """
+    """Process hash headers syntax."""
 
     RE = re.compile(r'(?:^|\n)(?P<level>#{1,6})(?=[ ])(?P<header>(?:\\.|[^\\])*?)#*(?:\n|$)')
 

@@ -87,7 +87,7 @@ Check out documentation on each extension to learn more about how to configure a
     [== 80%]{: .candystripe .candystripe-animate}
 
 !!! summary "SaneHeaders"
-    [SaneHeaders](extensions/SaneHeaders.md) modifies hash headers to only be evaluated if the hash symbol starting hash
+    [SaneHeaders](extensions/saneheaders.md) modifies hash headers to only be evaluated if the hash symbol starting hash
     symbols are followed by at least one space.
 
 !!! summary "SmartSymbols"
