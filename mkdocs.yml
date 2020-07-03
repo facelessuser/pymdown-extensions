@@ -42,6 +42,7 @@ nav:
     - MagicLink: extensions/magiclink.md
     - Mark: extensions/mark.md
     - PathConverter: extensions/pathconverter.md
+    - SaneHeaders: extensions/saneheaders.md
     - StripHTML: extensions/striphtml.md
     - ProgressBar: extensions/progressbar.md
     - SmartSymbols: extensions/smartsymbols.md
@@ -127,13 +128,14 @@ markdown_extensions:
       separator: "\uff0b"
   - pymdownx.details:
   - pymdownx.tabbed:
+  - pymdownx.saneheaders:
 
 extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/facelessuser
     - icon: fontawesome/brands/discord
-      link: https://discord.gg/fqQ7ypS
+      link: https://discord.gg/TWs8Tgr
 extra_css:
   - assets/pymdownx-extras/extra-e7142372b2.css
 extra_javascript:

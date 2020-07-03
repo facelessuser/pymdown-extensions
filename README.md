@@ -23,7 +23,7 @@ License is MIT except for a few exceptions.  See [LICENSE](https://github.com/fa
 [github-ci-image]: https://github.com/facelessuser/pymdown-extensions/workflows/build/badge.svg
 [github-ci-link]: https://github.com/facelessuser/pymdown-extensions/actions?workflow=build
 [discord-image]: https://img.shields.io/discord/678289859768745989?logo=discord&logoColor=aaaaaa&color=mediumpurple&labelColor=333333
-[discord-link]: https://discord.gg/fqQ7ypS
+[discord-link]: https://discord.gg/TWs8Tgr
 [codecov-image]: https://img.shields.io/codecov/c/github/facelessuser/pymdown-extensions/master.svg?logo=codecov&logoColor=aaaaaa&labelColor=333333
 [codecov-link]: https://codecov.io/github/facelessuser/pymdown-extensions
 [pypi-image]: https://img.shields.io/pypi/v/pymdown-extensions.svg?logo=pypi&logoColor=aaaaaa&labelColor=333333

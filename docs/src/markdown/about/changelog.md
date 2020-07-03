@@ -2,6 +2,8 @@
 
 ## 7.2
 
+- **NEW**: Add new extension called SaneHeaders which restricts hash headers to only evaluate if the hashes (`#`) are
+  followed by a space. Allows extensions like MagicLink to have issues links at the start of a line.
 - **NEW**: Highlight option `linenums` now defaults to `None` and accepts `None`, `True`, or `False`. `None` is
   disabled by default, but can be enabled per code block. `True` enables line numbers globally. `False` disables
   globally and cannot be enabled manually per code block.
