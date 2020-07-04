@@ -127,6 +127,7 @@ markdown_extensions:
       separator: "\uff0b"
   - pymdownx.details:
   - pymdownx.tabbed:
+  - pymdownx.saneheaders:
 
 extra:
   social:
@@ -135,7 +136,7 @@ extra:
     - icon: fontawesome/brands/discord
       link: https://discord.gg/fqQ7ypS
 extra_css:
-  - assets/pymdownx-extras/extra-e7142372b2.css
+  - assets/pymdownx-extras/extra-5bc58b8274.css
 extra_javascript:
   - assets/pymdownx-extras/extra-835d408546.js
 
