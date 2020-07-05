@@ -184,7 +184,7 @@ class TestInlineHiliteNoPygments(util.MdCase):
 
         self.check_markdown(
             r'`#!python import module`.',
-            r'<p><code class="inlinehilite language-python">import module</code>.</p>'
+            r'<p><code class="language-python inlinehilite">import module</code>.</p>'
         )
 
 

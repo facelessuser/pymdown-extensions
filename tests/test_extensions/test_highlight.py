@@ -202,7 +202,7 @@ class TestNoPygments(util.MdCase):
             ```
             ''',
             r'''
-            <pre class="highlight"><code class="language-python linenums">import test
+            <pre class="highlight"><code class="language-python">import test
             test.test()</code></pre>
             ''',
             True
@@ -235,7 +235,7 @@ class TestNoPygmentsCustomLineClass(util.MdCase):
             ''',
             r'''
             <p>Text</p>
-            <pre class="highlight"><code class="line-numbers">import test
+            <pre class="highlight"><code>import test
             test.test()
             </code></pre>
 
@@ -255,7 +255,7 @@ class TestNoPygmentsCustomLineClass(util.MdCase):
             ```
             ''',
             r'''
-            <pre class="highlight"><code class="language-python line-numbers">import test
+            <pre class="highlight"><code class="language-python">import test
             test.test()</code></pre>
             ''',
             True

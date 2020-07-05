@@ -4,7 +4,7 @@ import test
 
 Text after code.
 
-```python linenums="1"
+```python
 import test
 ```
 

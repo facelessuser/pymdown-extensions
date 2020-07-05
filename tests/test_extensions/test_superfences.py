@@ -7,65 +7,33 @@ from pymdownx.util import PymdownxDeprecationWarning
 import warnings
 
 
-def custom_format_old(source, language, class_name, options, md):
+def custom_format(source, language, class_name, md, options=None, classes=None, value_id='', **kwargs):
     """Custom format."""
 
     return '<div lang="%s" class_name="class-%s", option="%s">%s</div>' % (language, class_name, options['opt'], source)
 
 
-def custom_format(source, language, class_name, options, md, classes=None, value_id='', **kwargs):
-    """Custom format."""
-
-    return '<div lang="%s" class_name="class-%s", option="%s">%s</div>' % (language, class_name, options['opt'], source)
-
-
-def default_format(source, language, class_name, options, md, classes=None, value_id='', **kwargs):
+def default_format(source, language, class_name, md, options=None, classes=None, value_id='', **kwargs):
     """Default format."""
 
     return '<custom lang="%s" class_name="class-%s">%s</custom>' % (language, class_name, source)
 
 
-def custom_validator(language, options):
+def custom_validator(language, md, values, options, attrs):
     """Custom validator."""
 
     okay = True
-    for k in options.keys():
+    for k in values.keys():
         if k != 'opt':
             okay = False
             break
     if okay:
-        if options['opt'] != "A":
+        if values['opt'] != "A":
             okay = False
+        else:
+            options['opt'] = values['opt']
+
     return okay
-
-
-class TestLegacyTab(util.MdCase):
-    """Test legacy tab cases."""
-
-    extension = ['pymdownx.superfences']
-    extension_configs = {
-        'pymdownx.superfences': {
-            'legacy_tab_classes': True
-        }
-    }
-
-    def test_legacy_css(self):
-        """Test legacy tab CSS classes."""
-
-        self.check_markdown(
-            r'''
-            ```python tab="Test"
-            This will be a tab.
-            ```
-            ''',
-            r'''
-            <div class="superfences-tabs" data-tabs="1:1">
-            <input name="__tabbed_1" type="radio" id="__tabbed_1_1" checked="checked" /><label for="__tabbed_1_1">Test</label><div class="superfences-content"><div class="highlight"><pre><span></span><code><span class="n">This</span> <span class="n">will</span> <span class="n">be</span> <span class="n">a</span> <span class="n">tab</span><span class="o">.</span>
-            </code></pre></div></div>
-            </div>
-            ''',  # noqa: E501
-            True
-        )
 
 
 class TestHighlightLines(util.MdCase):
@@ -187,80 +155,6 @@ class TestWaringings(unittest.TestCase):
 
             self.assertTrue(len(w) == 1)
             self.assertTrue(issubclass(w[-1].category, PymdownxDeprecationWarning))
-
-    def test_tab(self):
-        """Test tab deprecation."""
-
-        with warnings.catch_warnings(record=True) as w:
-            warnings.simplefilter("always")
-
-            markdown.Markdown(
-                extensions=['pymdownx.superfences']
-            ).convert('```tab="Tab 1"\ntest\n```\n')
-
-            self.assertTrue(len(w) == 1)
-            self.assertTrue(issubclass(w[-1].category, PymdownxDeprecationWarning))
-
-    def test_format(self):
-        """Test warning using old format style."""
-
-        with warnings.catch_warnings(record=True) as w:
-            warnings.simplefilter("always")
-
-            markdown.Markdown(
-                extensions=['pymdownx.superfences'],
-                extension_configs={
-                    'pymdownx.superfences': {
-                        'custom_fences': [
-                            {
-                                'name': 'test',
-                                'class': 'test',
-                                'format': custom_format_old,
-                                'validator': custom_validator
-                            }
-                        ]
-                    }
-                }
-            ).convert('```test opt="A"\ncontent\n```\n')
-
-            self.assertTrue(len(w) == 1)
-            self.assertTrue(issubclass(w[-1].category, UserWarning))
-
-
-class TestTabbedFenceWithTabbedExtension(util.MdCase):
-    """Test legacy tab cases."""
-
-    extension = ['pymdownx.superfences', 'pymdownx.tabbed']
-    extension_configs = {}
-
-    def test_tabbed_together(self):
-        """
-        Test SuperFences' tabbed implementation along side Tabbed.
-
-        We should calculate the tab set number correctly based off of the biggest Tabbed tab set value.
-        """
-
-        self.check_markdown(
-            r'''
-            === "Test"
-                Content
-
-            ```python tab="Test"
-            This will be a tab.
-            ```
-            ''',
-            r'''
-            <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Test</label><div class="tabbed-content">
-            <p>Content</p>
-            </div>
-            </div>
-            <div class="tabbed-set" data-tabs="2:1">
-            <input name="__tabbed_2" type="radio" id="__tabbed_2_1" checked="checked" /><label for="__tabbed_2_1">Test</label><div class="tabbed-content"><div class="highlight"><pre><span></span><code><span class="n">This</span> <span class="n">will</span> <span class="n">be</span> <span class="n">a</span> <span class="n">tab</span><span class="o">.</span>
-            </code></pre></div></div>
-            </div>
-            ''',  # noqa: E501
-            True
-        )
 
 
 class TestSuperFences(util.MdCase):
