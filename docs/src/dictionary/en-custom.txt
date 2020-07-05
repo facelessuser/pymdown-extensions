@@ -95,6 +95,7 @@ SmartSymbols
 StripHTML
 Stylesheets
 SuperFences
+TODO
 Tasklist
 Toc
 Tox
