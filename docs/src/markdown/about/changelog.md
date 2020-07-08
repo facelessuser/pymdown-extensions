@@ -8,6 +8,7 @@
   disabled by default, but can be enabled per code block. `True` enables line numbers globally. `False` disables
   globally and cannot be enabled manually per code block.
 - **FIX**: Fix issues with complex emphasis combinations in BetterEm.
+- **NEW**: Remove ExtraRawHTML extension.
 
 ## 7.1
 
