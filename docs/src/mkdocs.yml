@@ -35,7 +35,6 @@ nav:
     - Emoji: extensions/emoji.md
     - EscapeAll: extensions/escapeall.md
     - Extra: extensions/extra.md
-    - ExtraRawHTML: extensions/extrarawhtml.md
     - Highlight: extensions/highlight.md
     - InlineHilite: extensions/inlinehilite.md
     - Keys: extensions/keys.md
