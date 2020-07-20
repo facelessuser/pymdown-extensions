@@ -57,6 +57,17 @@ html {
     color: var(--md-default-fg-color--light);
   }
 
+  .md-nav__item .md-nav__link--active {
+    color: var(--md-primary-fg-color);
+  }
+
+  .md-nav__link {
+    &:focus,
+    &:hover {
+      color: var(--md-accent-fg-color);
+    }
+  }
+
   @include break-to-device(tablet) {
 
     // Site title in main navigation
