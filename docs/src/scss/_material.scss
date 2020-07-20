@@ -53,6 +53,10 @@ html {
     color: var(--md-text-color);
   }
 
+  .md-nav__link[data-md-state=blur] {
+    color: var(--md-default-fg-color--light);
+  }
+
   @include break-to-device(tablet) {
 
     // Site title in main navigation
