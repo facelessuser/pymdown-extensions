@@ -1,5 +1,4 @@
-path: tree/master
-source: pymdownx/highlight.py
+[:octicons-file-code-24:][_highlight]{: .source-link }
 
 # Highlight
 

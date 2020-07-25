@@ -1,5 +1,4 @@
-path: tree/master
-source: pymdownx/tabbed.py
+[:octicons-file-code-24:][_tabbed]{: .source-link }
 
 # Tabbed
 
@@ -166,3 +165,5 @@ from explicitly using a conflicting ID. Auto-generated slugs shouldn't conflict 
             display: block;
         }
         ```
+
+--8<-- "links.txt"

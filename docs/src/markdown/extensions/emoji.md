@@ -1,5 +1,4 @@
-path: tree/master
-source: pymdownx/emoji.py
+[:octicons-file-code-24:][_emoji]{: .source-link }
 
 # Emoji
 

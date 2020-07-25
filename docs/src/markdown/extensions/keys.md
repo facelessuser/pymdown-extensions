@@ -1,5 +1,4 @@
-path: tree/master
-source: pymdownx/keys.py
+[:octicons-file-code-24:][_keys]{: .source-link }
 
 # Keys
 
@@ -361,3 +360,5 @@ Option       | Type   | Default        | Description
 `class`      | string | `#!py3 'keys'` | Defines a class(es) to apply to the HTML wrapper element.
 `camel_case` | bool   | `#!py3 False`  | Allow the use of camel case for key names `PgUp` --> `pg-up`.
 `key_map`    | dict   | `#!py3 {}`     | Add additional keys to the key-map index or override output of existing outputs. See [Extending/Modifying Key-Map Index](#extendingmodifying-key-map-index) for more info.
+
+--8<-- "links.txt"

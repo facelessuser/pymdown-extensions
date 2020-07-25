@@ -1,5 +1,4 @@
-path: tree/master
-source: pymdownx/saneheaders.py
+[:octicons-file-code-24:][_saneheaders]{: .source-link }
 
 # SaneHeaders
 
@@ -32,3 +31,5 @@ With SaneHeaders, only the first is a header:
 
 ##Not a Header
 ```
+
+--8<-- "links.txt"

@@ -1,5 +1,4 @@
-path: tree/master
-source: pymdownx/inlinehilite.py
+[:octicons-file-code-24:][_inlinehilite]{: .source-link }
 
 # InlineHilite
 

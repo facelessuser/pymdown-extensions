@@ -1,5 +1,4 @@
-path: tree/master
-source: pymdownx/smartsymbols.py
+[:octicons-file-code-24:][_smartsymbols]{: .source-link }
 
 # SmartSymbols
 
@@ -43,3 +42,5 @@ Option            | Type | Default     | Description
 `notequal`        | bool | `#!py3 True` | Add syntax for not equal symbol.
 `fractions`       | bool | `#!py3 True` | Add syntax for common fractions.
 `ordinal_numbers` | bool | `#!py3 True` | Add syntax for ordinal numbers.
+
+--8<-- "links.txt"

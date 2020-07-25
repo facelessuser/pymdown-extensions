@@ -1,5 +1,4 @@
-path: tree/master
-source: pymdownx/magiclink.py
+[:octicons-file-code-24:][_magiclink]{: .source-link }
 
 # MagicLink
 

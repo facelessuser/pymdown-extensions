@@ -1,5 +1,4 @@
-path: tree/master
-source: pymdownx/snippets.py
+[:octicons-file-code-24:][_snippets]{: .source-link }
 
 # Snippets
 
@@ -100,3 +99,5 @@ Option         | Type   | Default         | Description
 `base_path`    | string | `#!py3 '.'`     | A string indicating a base path to be used resolve snippet locations.
 `encoding`     | string | `#!py3 'utf-8'` | Encoding to use when reading in the snippets.
 `check_paths`  | bool   | `#!py3 false`   | Make the build fail if a snippet can't be found.
+
+--8<-- "links.txt"

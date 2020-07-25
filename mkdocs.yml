@@ -41,10 +41,11 @@ nav:
     - MagicLink: extensions/magiclink.md
     - Mark: extensions/mark.md
     - PathConverter: extensions/pathconverter.md
-    - StripHTML: extensions/striphtml.md
     - ProgressBar: extensions/progressbar.md
+    - SaneHeaders: extensions/saneheaders.md
     - SmartSymbols: extensions/smartsymbols.md
     - Snippets: extensions/snippets.md
+    - StripHTML: extensions/striphtml.md
     - SuperFences: extensions/superfences.md
     - Tabbed: extensions/tabbed.md
     - Tasklist: extensions/tasklist.md
@@ -135,7 +136,7 @@ extra:
     - icon: fontawesome/brands/discord
       link: https://discord.gg/TWs8Tgr
 extra_css:
-  - assets/pymdownx-extras/extra-50b6232f8a.css
+  - assets/pymdownx-extras/extra-8abaeeb5ce.css
 extra_javascript:
   - assets/pymdownx-extras/extra-835d408546.js
 
