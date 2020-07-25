@@ -1,5 +1,4 @@
-path: tree/master
-source: pymdownx/tasklist.py
+[:octicons-file-code-24:][_tasklist]{: .source-link }
 
 # Tasklist
 
@@ -185,4 +184,4 @@ Option               | Type | Default      | Description
 `clickable_checkbox` | bool | `#!py3 False` | Enable user to interact with checkboxes.
 
 
---8<-- "abbr.txt"
+--8<-- "refs.txt"

@@ -1,5 +1,4 @@
-path: tree/master
-source: pymdownx/superfences.py
+[:octicons-file-code-24:][_superfences]{: .source-link }
 
 # SuperFences
 

@@ -1,5 +1,4 @@
-path: tree/master
-source: pymdownx/critic.py
+[:octicons-file-code-24:][_critic]{: .source-link }
 
 # Critic
 

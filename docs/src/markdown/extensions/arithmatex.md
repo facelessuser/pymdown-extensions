@@ -1,5 +1,4 @@
-path: tree/master
-source: pymdownx/arithmatex.py
+[:octicons-file-code-24:][_arithmatex]{: .source-link }
 
 # Arithmatex
 

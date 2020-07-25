@@ -1,5 +1,4 @@
-path: tree/master
-source: pymdownx/caret.py
+[:octicons-file-code-24:][_caret]{: .source-link }
 
 # Caret
 
@@ -58,3 +57,5 @@ Option         | Type | Default      | Description
 `smart_insert` | bool | `#!py3 True` | Use smart logic with insert characters.
 `insert`       | bool | `#!py3 True` | Enable insert feature.
 `superscript`  | bool | `#!py3 True` | Enable superscript feature.
+
+--8<-- "refs.txt"

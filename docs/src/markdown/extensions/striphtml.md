@@ -1,5 +1,4 @@
-path: tree/master
-source: pymdownx/striphtml.py
+[:octicons-file-code-24:][_striphtml]{: .source-link }
 
 # StripHTML
 

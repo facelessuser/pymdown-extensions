@@ -1,5 +1,4 @@
-path: tree/master
-source: pymdownx/extra.py
+[:octicons-file-code-24:][_extra]{: .source-link }
 
 # Extra
 

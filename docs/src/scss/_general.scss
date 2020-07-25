@@ -1,0 +1,18 @@
+.md-typeset {
+    a.source-link {
+        position: relative;
+        top: px2rem(-12px);
+        float: right;
+        color: var(--md-default-fg-color--lighter);
+        transition: color 125ms;
+
+        &:hover {
+          color: var(--md-accent-fg-color);
+        }
+
+        svg {
+            width: px2rem(24px);
+            height: px2rem(24px);
+        }
+    }
+}
