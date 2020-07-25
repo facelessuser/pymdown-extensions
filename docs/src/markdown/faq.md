@@ -54,7 +54,8 @@ extensions = [
     'pymdownx.tilde',
     'pymdownx.emoji',
     'pymdownx.tasklist',
-    'pymdownx.superfences'
+    'pymdownx.superfences',
+    'pymdownx.saneheaders'
 ]
 
 extension_configs = {
