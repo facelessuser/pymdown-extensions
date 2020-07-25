@@ -133,7 +133,7 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/facelessuser
     - icon: fontawesome/brands/discord
-      link: https://discord.gg/fqQ7ypS
+      link: https://discord.gg/TWs8Tgr
 extra_css:
   - assets/pymdownx-extras/extra-50b6232f8a.css
 extra_javascript:
