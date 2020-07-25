@@ -10,9 +10,13 @@
           color: var(--md-accent-fg-color);
         }
 
-        svg {
-            width: px2rem(24px);
+        .twemoji {
             height: px2rem(24px);
+
+            svg {
+                width: px2rem(24px);
+                height: px2rem(24px);
+            }
         }
     }
 }
