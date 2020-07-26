@@ -7,8 +7,9 @@
 - **NEW**: Highlight option `linenums` now defaults to `None` and accepts `None`, `True`, or `False`. `None` is
   disabled by default, but can be enabled per code block. `True` enables line numbers globally. `False` disables
   globally and cannot be enabled manually per code block.
-- **FIX**: Fix issues with complex emphasis combinations in BetterEm.
 - **NEW**: Remove ExtraRawHTML extension.
+- **NEW**: Fix corner cases related to Details extension and lists.
+- **FIX**: Fix issues with complex emphasis combinations in BetterEm.
 
 ## 7.1
 

@@ -153,3 +153,108 @@ class TestDetails(util.MdCase):
             expected,
             True
         )
+
+    def test_with_lists(self):
+        self.check_markdown(
+            '''
+            - List
+
+                ??? note "Details"
+
+                    - Paragraph
+
+                        Paragraph
+            ''',
+
+            '''
+            <ul>
+            <li>
+            <p>List</p>
+            <details class="note"><summary>Details</summary><ul>
+            <li>
+            <p>Paragraph</p>
+            <p>Paragraph</p>
+            </li>
+            </ul>
+            </details>
+            </li>
+            </ul>
+            ''',
+            True
+        )
+
+    def test_with_big_lists(self):
+        self.check_markdown(
+            '''
+            - List
+
+                ??? note "Details"
+
+                    - Paragraph
+
+                        Paragraph
+
+                    - Paragraph
+
+                        paragraph
+            ''',
+            '''
+            <ul>
+            <li>
+            <p>List</p>
+            <details class="note"><summary>Details</summary><ul>
+            <li>
+            <p>Paragraph</p>
+            <p>Paragraph</p>
+            </li>
+            <li>
+            <p>Paragraph</p>
+            <p>paragraph</p>
+            </li>
+            </ul>
+            </details>
+            </li>
+            </ul>
+            ''',
+            True
+        )
+
+    def test_with_complex_lists(self):
+        self.check_markdown(
+            '''
+            - List
+
+                ??? note "Details"
+
+                    - Paragraph
+
+                        ??? note "Details"
+
+                            1. Paragraph
+
+                                Paragraph
+            ''',
+            self.dedent(
+                '''
+                <ul>
+                <li>
+                <p>List</p>
+                <details class="note"><summary>Details</summary><ul>
+                <li>
+                <p>Paragraph</p>
+                <details class="note"><summary>Details</summary><ol>
+                <li>
+                <p>Paragraph</p>
+                <p>Paragraph</p>
+                </li>
+                </ol>
+                </details>
+                </li>
+                </ul>
+                </details>
+                </li>
+                </ul>
+                '''
+            ),
+            True
+        )
