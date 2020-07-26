@@ -155,6 +155,8 @@ class TestDetails(util.MdCase):
         )
 
     def test_with_lists(self):
+        """Test with lists."""
+
         self.check_markdown(
             '''
             - List
@@ -184,6 +186,8 @@ class TestDetails(util.MdCase):
         )
 
     def test_with_big_lists(self):
+        """Test details with a longer list."""
+
         self.check_markdown(
             '''
             - List
@@ -220,6 +224,8 @@ class TestDetails(util.MdCase):
         )
 
     def test_with_complex_lists(self):
+        """Test details in a complex list scenario."""
+
         self.check_markdown(
             '''
             - List
