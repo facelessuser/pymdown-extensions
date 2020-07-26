@@ -124,6 +124,15 @@ html {
       border-top: px2rem(1px) solid var(--md-primary-fg-color);
     }
   }
+
+  // Announcements
+  [data-md-component="announce"] {
+    background-color: var(--md-primary-fg-color--transparent);
+  }
+
+  [data-md-component="announce"] .twemoji {
+    color: var(--md-primary-fg-color);
+  }
 }
 
 /* Don't force capitalization of `H5` elements. */
