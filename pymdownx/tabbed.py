@@ -41,29 +41,81 @@ class TabbedProcessor(BlockProcessor):
 
         super().__init__(*args)
         self.tab_group_count = 0
+        self.current_sibling = None
+        self.content_indention = 0
 
-    def test(self, parent, block):
-        """Test block."""
+    def get_sibling(self, parent, block):
+        """Get sibling admontion.
+
+        Retrieve the appropriate siblimg element. This can get trickly when
+        dealing with lists.
+
+        """
+
+        # We already acquired the block via test
+        if self.current_sibling is not None:
+            sibling = self.current_sibling
+            block = block[self.content_indent:]
+            self.current_sibling = None
+            self.content_indent = 0
+            return sibling, block
 
         sibling = self.lastChild(parent)
-        return (
-            self.START.search(block) or
-            (
-                block.startswith(' ' * self.tab_length) and sibling is not None and
-                sibling.tag.lower() == 'div' and sibling.attrib.get('class', '') == 'tabbed-set'
-            )
-        )
+
+        if sibling is None or sibling.tag.lower() != 'div' or sibling.attrib.get('class', '') != 'tabbed-set':
+            sibling = None
+        else:
+            # If the last child is a list and the content is idented sufficient
+            # to be under it, then the content's is sibling is in the list.
+            last_child = self.lastChild(sibling)
+            indent = 0
+            while last_child:
+                if (
+                    sibling and block.startswith(' ' * self.tab_length * 2) and
+                    last_child and last_child.tag in ('ul', 'ol', 'dl')
+                ):
+
+                    # The expectation is that we'll find an <li>.
+                    # We should get it's last child as well.
+                    sibling = self.lastChild(last_child)
+                    last_child = self.lastChild(sibling) if sibling else None
+
+                    # Context has been lost at this point, so we must adjust the
+                    # text's identation level so it will be evaluated correctly
+                    # under the list.
+                    block = block[self.tab_length:]
+                    indent += self.tab_length
+                else:
+                    last_child = None
+
+            if not block.startswith(' ' * self.tab_length):
+                sibling = None
+
+            if sibling is not None:
+                self.current_sibling = sibling
+                self.content_indent = indent
+
+        return sibling, block
+
+    def test(self, parent, block):
+
+        if self.START.search(block):
+            return True
+        else:
+            return self.get_sibling(parent, block)[0] is not None
 
     def run(self, parent, blocks):
         """Convert to tabbed block."""
 
-        sibling = self.lastChild(parent)
         block = blocks.pop(0)
-
         m = self.START.search(block)
+
         if m:
-            # remove the first line
+            # removes the first line
             block = block[m.end():]
+            sibling = self.lastChild(parent)
+        else:
+            sibling, block = self.get_sibling(parent, block)
 
         # Get the tabs block and the non-tab content
         block, non_tabs = self.detab(block)
@@ -124,12 +176,18 @@ class TabbedProcessor(BlockProcessor):
             )
             sfences.attrib['data-tabs'] = '%d:%d' % (tab_set, tab_count)
         else:
+            if sibling.tag in ('li', 'dd') and sibling.text:
+                text = sibling.text
+                sibling.text = ''
+                p = etree.SubElement(sibling, 'p')
+                p.text = text
+
             div = self.lastChild(sibling)
 
         self.parser.parseChunk(div, block)
 
         if non_tabs:
-            # Insert the non-details content back into blocks
+            # Insert the tabbed content back into blocks
             blocks.insert(0, non_tabs)
 
 
