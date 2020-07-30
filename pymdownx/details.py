@@ -71,7 +71,7 @@ class DetailsProcessor(BlockProcessor):
             while last_child:
                 if (
                     sibling and block.startswith(' ' * self.tab_length * 2) and
-                    last_child and last_child.tag in ('ul', 'ol')
+                    last_child and last_child.tag in ('ul', 'ol', 'dl')
                 ):
 
                     # The expectation is that we'll find an <li>.
@@ -138,7 +138,7 @@ class DetailsProcessor(BlockProcessor):
             summary.text = title
         else:
             # Sibling is a list item, but we need to wrap it's content should be wrapped in <p>
-            if sibling.tag == 'li' and sibling.text:
+            if sibling.tag in ('li', 'dd') and sibling.text:
                 text = sibling.text
                 sibling.text = ''
                 p = etree.SubElement(sibling, 'p')
