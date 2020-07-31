@@ -28,7 +28,7 @@
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@mdi/svg": "^5.4.55",
     "@primer/octicons": "^10.0.0",
-    "autoprefixer": "^9.8.5",
+    "autoprefixer": "^9.8.6",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "clean-css": "^4.2.3",
