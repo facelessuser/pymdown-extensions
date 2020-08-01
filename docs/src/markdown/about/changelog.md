@@ -27,8 +27,8 @@ Please see [Release Notes](./release.md#upgrading-to-80) for details on upgradin
   Please use the Tabbed extension to create general purpose tabs for code blocks or other content.
 - **FIX**: Fix issues with complex emphasis combinations in BetterEm.
 - **NEW**: ExtraRawHTML: remove extension.
-- **FIX**: Fix corner cases related to Details extension and lists.
-- **FIX**: Fix corner cases related to Tabbed extension and lists.
+- **FIX**: Details: fix corner cases related to extension and lists.
+- **FIX**: Tabbed: fix corner cases related to extension and lists.
 - **FIX**: BetterEm: Fix issues with complex emphasis combinations.
 
 ## 7.1
