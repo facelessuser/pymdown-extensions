@@ -44,9 +44,9 @@ class DetailsProcessor(BlockProcessor):
         self.content_indention = 0
 
     def get_sibling(self, parent, block):
-        """Get sibling admontion.
+        """Get sibling details.
 
-        Retrieve the appropriate siblimg element. This can get trickly when
+        Retrieve the appropriate sibling element. This can get tricky when
         dealing with lists.
 
         """
@@ -64,7 +64,7 @@ class DetailsProcessor(BlockProcessor):
         if sibling is None or sibling.tag.lower() != 'details':
             sibling = None
         else:
-            # If the last child is a list and the content is idented sufficient
+            # If the last child is a list and the content is indented sufficient
             # to be under it, then the content's is sibling is in the list.
             last_child = self.lastChild(sibling)
             indent = 0
@@ -74,13 +74,13 @@ class DetailsProcessor(BlockProcessor):
                     last_child and last_child.tag in ('ul', 'ol', 'dl')
                 ):
 
-                    # The expectation is that we'll find an <li>.
+                    # The expectation is that we'll find an `<li>`.
                     # We should get it's last child as well.
                     sibling = self.lastChild(last_child)
                     last_child = self.lastChild(sibling) if sibling else None
 
                     # Context has been lost at this point, so we must adjust the
-                    # text's identation level so it will be evaluated correctly
+                    # text's indentation level so it will be evaluated correctly
                     # under the list.
                     block = block[self.tab_length:]
                     indent += self.tab_length

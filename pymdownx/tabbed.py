@@ -45,9 +45,9 @@ class TabbedProcessor(BlockProcessor):
         self.content_indention = 0
 
     def get_sibling(self, parent, block):
-        """Get sibling admontion.
+        """Get sibling tab.
 
-        Retrieve the appropriate siblimg element. This can get trickly when
+        Retrieve the appropriate sibling element. This can get tricky when
         dealing with lists.
 
         """
@@ -65,23 +65,36 @@ class TabbedProcessor(BlockProcessor):
         if sibling is None or sibling.tag.lower() != 'div' or sibling.attrib.get('class', '') != 'tabbed-set':
             sibling = None
         else:
-            # If the last child is a list and the content is idented sufficient
+            # If the last child is a list and the content is indented sufficient
             # to be under it, then the content's is sibling is in the list.
             last_child = self.lastChild(sibling)
+            child_class = last_child.attrib.get('class', '') if last_child else ''
             indent = 0
             while last_child:
                 if (
                     sibling and block.startswith(' ' * self.tab_length * 2) and
-                    last_child and last_child.tag in ('ul', 'ol', 'dl')
+                    last_child and (
+                        last_child.tag in ('ul', 'ol', 'dl') or
+                        (
+                            last_child.tag == 'div' and
+                            child_class in ('tabbed-content',)
+                        )
+                    )
                 ):
 
-                    # The expectation is that we'll find an <li>.
+                    # Handle nested tabbed content
+                    if last_child.tag == 'div' and child_class == 'tabbed-content':
+                        last_child = self.lastChild(last_child)
+                        child_class = last_child.attrib.get('class', '') if last_child else ''
+
+                    # The expectation is that we'll find an `<li>`.
                     # We should get it's last child as well.
                     sibling = self.lastChild(last_child)
                     last_child = self.lastChild(sibling) if sibling else None
+                    child_class = last_child.attrib.get('class', '') if last_child else ''
 
                     # Context has been lost at this point, so we must adjust the
-                    # text's identation level so it will be evaluated correctly
+                    # text's indentation level so it will be evaluated correctly
                     # under the list.
                     block = block[self.tab_length:]
                     indent += self.tab_length
@@ -177,12 +190,18 @@ class TabbedProcessor(BlockProcessor):
             sfences.attrib['data-tabs'] = '%d:%d' % (tab_set, tab_count)
         else:
             if sibling.tag in ('li', 'dd') and sibling.text:
+                # Sibling is a list item, but we need to wrap it's content should be wrapped in <p>
                 text = sibling.text
                 sibling.text = ''
                 p = etree.SubElement(sibling, 'p')
                 p.text = text
-
-            div = self.lastChild(sibling)
+                div = sibling
+            elif sibling.tag == 'div' and sibling.attrib.get('class', '') == 'tabbed-set':
+                # Get `tabbed-content` under `tabbed-set`
+                div = self.lastChild(sibling)
+            else:
+                # Pass anything else as the parent
+                div = sibling
 
         self.parser.parseChunk(div, block)
 

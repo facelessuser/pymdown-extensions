@@ -5,7 +5,7 @@ from .. import util
 class TestDetails(util.MdCase):
     """Test Details."""
 
-    extension = ['pymdownx.details']
+    extension = ['pymdownx.details', 'markdown.extensions.def_list']
     extension_configs = {}
 
     def test_nested(self):
@@ -240,27 +240,68 @@ class TestDetails(util.MdCase):
 
                                 Paragraph
             ''',
-            self.dedent(
-                '''
-                <ul>
-                <li>
-                <p>List</p>
-                <details class="note"><summary>Details</summary><ul>
-                <li>
-                <p>Paragraph</p>
-                <details class="note"><summary>Details</summary><ol>
-                <li>
-                <p>Paragraph</p>
-                <p>Paragraph</p>
-                </li>
-                </ol>
-                </details>
-                </li>
-                </ul>
-                </details>
-                </li>
-                </ul>
-                '''
-            ),
+            '''
+            <ul>
+            <li>
+            <p>List</p>
+            <details class="note"><summary>Details</summary><ul>
+            <li>
+            <p>Paragraph</p>
+            <details class="note"><summary>Details</summary><ol>
+            <li>
+            <p>Paragraph</p>
+            <p>Paragraph</p>
+            </li>
+            </ol>
+            </details>
+            </li>
+            </ul>
+            </details>
+            </li>
+            </ul>
+            ''',
+            True
+        )
+
+    def test_definition_list(self):
+        """Test with definition list."""
+
+        self.check_markdown(
+            '''
+            - List
+
+                ??? note "Details"
+
+                    Term
+
+                    :   Definition
+
+                        More text
+
+                    :   Another
+                        definition
+
+                        Even more text
+            ''',
+            '''
+            <ul>
+            <li>
+            <p>List</p>
+            <details class="note"><summary>Details</summary><dl>
+            <dt>Term</dt>
+            <dd>
+            <p>Definition</p>
+            <p>More text</p>
+            </dd>
+            <dd>
+            <p>Another
+            definition</p>
+            <p>Even more text</p>
+            </dd>
+            </dl>
+            </details>
+            </li>
+            </ul>
+            ''',
             True
         )
