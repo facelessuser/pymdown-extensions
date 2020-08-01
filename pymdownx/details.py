@@ -35,28 +35,86 @@ class DetailsProcessor(BlockProcessor):
     )
     COMPRESS_SPACES = re.compile(r' {2,}')
 
+    def __init__(self, parser):
+        """Initialization."""
+
+        super().__init__(parser)
+
+        self.current_sibling = None
+        self.content_indention = 0
+
+    def get_sibling(self, parent, block):
+        """Get sibling details.
+
+        Retrieve the appropriate sibling element. This can get tricky when
+        dealing with lists.
+
+        """
+
+        # We already acquired the block via test
+        if self.current_sibling is not None:
+            sibling = self.current_sibling
+            block = block[self.content_indent:]
+            self.current_sibling = None
+            self.content_indent = 0
+            return sibling, block
+
+        sibling = self.lastChild(parent)
+
+        if sibling is None or sibling.tag.lower() != 'details':
+            sibling = None
+        else:
+            # If the last child is a list and the content is indented sufficient
+            # to be under it, then the content's is sibling is in the list.
+            last_child = self.lastChild(sibling)
+            indent = 0
+            while last_child:
+                if (
+                    sibling and block.startswith(' ' * self.tab_length * 2) and
+                    last_child and last_child.tag in ('ul', 'ol', 'dl')
+                ):
+
+                    # The expectation is that we'll find an `<li>`.
+                    # We should get it's last child as well.
+                    sibling = self.lastChild(last_child)
+                    last_child = self.lastChild(sibling) if sibling else None
+
+                    # Context has been lost at this point, so we must adjust the
+                    # text's indentation level so it will be evaluated correctly
+                    # under the list.
+                    block = block[self.tab_length:]
+                    indent += self.tab_length
+                else:
+                    last_child = None
+
+            if not block.startswith(' ' * self.tab_length):
+                sibling = None
+
+            if sibling is not None:
+                self.current_sibling = sibling
+                self.content_indent = indent
+
+        return sibling, block
+
     def test(self, parent, block):
         """Test block."""
 
-        sibling = self.lastChild(parent)
-        return (
-            self.START.search(block) or
-            (
-                block.startswith(' ' * self.tab_length) and sibling is not None and
-                sibling.tag.lower() == 'details'
-            )
-        )
+        if self.START.search(block):
+            return True
+        else:
+            return self.get_sibling(parent, block)[0] is not None
 
     def run(self, parent, blocks):
         """Convert to details/summary block."""
 
-        sibling = self.lastChild(parent)
         block = blocks.pop(0)
-
         m = self.START.search(block)
+
         if m:
             # remove the first line
             block = block[m.end():]
+        else:
+            sibling, block = self.get_sibling(parent, block)
 
         # Get the details block and and the non-details content
         block, non_details = self.detab(block)
@@ -79,6 +137,13 @@ class DetailsProcessor(BlockProcessor):
             summary = etree.SubElement(div, 'summary')
             summary.text = title
         else:
+            # Sibling is a list item, but we need to wrap it's content should be wrapped in <p>
+            if sibling.tag in ('li', 'dd') and sibling.text:
+                text = sibling.text
+                sibling.text = ''
+                p = etree.SubElement(sibling, 'p')
+                p.text = text
+
             div = sibling
 
         self.parser.parseChunk(div, block)

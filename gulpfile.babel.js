@@ -217,7 +217,7 @@ gulp.task("js:lint", () => {
 })
 
 gulp.task("js:watch", () => {
-  gulp.watch(config.files.jsSrc, gulp.series("js:build:rollup", "mkdocs:update"))
+  gulp.watch(config.files.jsSrc, gulp.series("js:build", "mkdocs:update"))
 })
 
 gulp.task("js:clean", () => {

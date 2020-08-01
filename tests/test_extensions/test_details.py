@@ -5,7 +5,7 @@ from .. import util
 class TestDetails(util.MdCase):
     """Test Details."""
 
-    extension = ['pymdownx.details']
+    extension = ['pymdownx.details', 'markdown.extensions.def_list']
     extension_configs = {}
 
     def test_nested(self):
@@ -151,5 +151,157 @@ class TestDetails(util.MdCase):
                 content
             ''',
             expected,
+            True
+        )
+
+    def test_with_lists(self):
+        """Test with lists."""
+
+        self.check_markdown(
+            '''
+            - List
+
+                ??? note "Details"
+
+                    - Paragraph
+
+                        Paragraph
+            ''',
+
+            '''
+            <ul>
+            <li>
+            <p>List</p>
+            <details class="note"><summary>Details</summary><ul>
+            <li>
+            <p>Paragraph</p>
+            <p>Paragraph</p>
+            </li>
+            </ul>
+            </details>
+            </li>
+            </ul>
+            ''',
+            True
+        )
+
+    def test_with_big_lists(self):
+        """Test details with a longer list."""
+
+        self.check_markdown(
+            '''
+            - List
+
+                ??? note "Details"
+
+                    - Paragraph
+
+                        Paragraph
+
+                    - Paragraph
+
+                        paragraph
+            ''',
+            '''
+            <ul>
+            <li>
+            <p>List</p>
+            <details class="note"><summary>Details</summary><ul>
+            <li>
+            <p>Paragraph</p>
+            <p>Paragraph</p>
+            </li>
+            <li>
+            <p>Paragraph</p>
+            <p>paragraph</p>
+            </li>
+            </ul>
+            </details>
+            </li>
+            </ul>
+            ''',
+            True
+        )
+
+    def test_with_complex_lists(self):
+        """Test details in a complex list scenario."""
+
+        self.check_markdown(
+            '''
+            - List
+
+                ??? note "Details"
+
+                    - Paragraph
+
+                        ??? note "Details"
+
+                            1. Paragraph
+
+                                Paragraph
+            ''',
+            '''
+            <ul>
+            <li>
+            <p>List</p>
+            <details class="note"><summary>Details</summary><ul>
+            <li>
+            <p>Paragraph</p>
+            <details class="note"><summary>Details</summary><ol>
+            <li>
+            <p>Paragraph</p>
+            <p>Paragraph</p>
+            </li>
+            </ol>
+            </details>
+            </li>
+            </ul>
+            </details>
+            </li>
+            </ul>
+            ''',
+            True
+        )
+
+    def test_definition_list(self):
+        """Test with definition list."""
+
+        self.check_markdown(
+            '''
+            - List
+
+                ??? note "Details"
+
+                    Term
+
+                    :   Definition
+
+                        More text
+
+                    :   Another
+                        definition
+
+                        Even more text
+            ''',
+            '''
+            <ul>
+            <li>
+            <p>List</p>
+            <details class="note"><summary>Details</summary><dl>
+            <dt>Term</dt>
+            <dd>
+            <p>Definition</p>
+            <p>More text</p>
+            </dd>
+            <dd>
+            <p>Another
+            definition</p>
+            <p>Even more text</p>
+            </dd>
+            </dl>
+            </details>
+            </li>
+            </ul>
+            ''',
             True
         )

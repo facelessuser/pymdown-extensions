@@ -5,7 +5,7 @@ from .. import util
 class TestLegacyTab(util.MdCase):
     """Test legacy tab cases."""
 
-    extension = ['pymdownx.tabbed', 'pymdownx.superfences']
+    extension = ['pymdownx.tabbed', 'pymdownx.superfences', 'markdown.extensions.def_list']
     extension_configs = {}
 
     def test_tabbed(self):
@@ -147,6 +147,168 @@ class TestLegacyTab(util.MdCase):
             </div>
             </div>
             <p>Content</p>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_with_lists(self):
+        """Test with lists."""
+
+        self.check_markdown(
+            '''
+            - List
+
+                === "Tab"
+
+                    - Paragraph
+
+                        Paragraph
+            ''',
+
+            '''
+            <ul>
+            <li>
+            <p>List</p>
+            <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab</label><div class="tabbed-content">
+            <ul>
+            <li>
+            <p>Paragraph</p>
+            <p>Paragraph</p>
+            </li>
+            </ul>
+            </div>
+            </div>
+            </li>
+            </ul>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_with_big_lists(self):
+        """Test details with a longer list."""
+
+        self.check_markdown(
+            '''
+            - List
+
+                === "Tab"
+
+                    - Paragraph
+
+                        Paragraph
+
+                    - Paragraph
+
+                        paragraph
+            ''',
+            '''
+            <ul>
+            <li>
+            <p>List</p>
+            <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab</label><div class="tabbed-content">
+            <ul>
+            <li>
+            <p>Paragraph</p>
+            <p>Paragraph</p>
+            </li>
+            <li>
+            <p>Paragraph</p>
+            <p>paragraph</p>
+            </li>
+            </ul>
+            </div>
+            </div>
+            </li>
+            </ul>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_with_complex_lists(self):
+        """Test details in a complex list scenario."""
+
+        self.check_markdown(
+            '''
+            - List
+
+                === "Tab"
+
+                    - Paragraph
+
+                        === "Tab"
+
+                            1. Paragraph
+
+                                Paragraph
+            ''',
+            '''
+            <ul>
+            <li>
+            <p>List</p>
+            <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab</label><div class="tabbed-content">
+            <ul>
+            <li>
+            <p>Paragraph</p>
+            <div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Tab</label><div class="tabbed-content">
+            <ol>
+            <li>
+            <p>Paragraph</p>
+            <p>Paragraph</p>
+            </li>
+            </ol>
+            </div>
+            </div>
+            </li>
+            </ul>
+            </div>
+            </div>
+            </li>
+            </ul>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_definition_list(self):
+        """Test with definition list."""
+
+        self.check_markdown(
+            '''
+            - List
+
+                === "Tab"
+
+                    Term
+
+                    :   Definition
+
+                        More text
+
+                    :   Another
+                        definition
+
+                        Even more text
+            ''',
+            '''
+            <ul>
+            <li>
+            <p>List</p>
+            <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab</label><div class="tabbed-content">
+            <dl>
+            <dt>Term</dt>
+            <dd>
+            <p>Definition</p>
+            <p>More text</p>
+            </dd>
+            <dd>
+            <p>Another
+            definition</p>
+            <p>Even more text</p>
+            </dd>
+            </dl>
+            </div>
+            </div>
+            </li>
+            </ul>
             ''',  # noqa: E501
             True
         )
