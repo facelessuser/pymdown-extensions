@@ -111,6 +111,7 @@ class TabbedProcessor(BlockProcessor):
         return sibling, block
 
     def test(self, parent, block):
+        """Test block."""
 
         if self.START.search(block):
             return True

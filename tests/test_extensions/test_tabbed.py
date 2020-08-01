@@ -180,7 +180,7 @@ class TestLegacyTab(util.MdCase):
             </div>
             </li>
             </ul>
-            ''',
+            ''',  # noqa: E501
             True
         )
 
@@ -220,7 +220,7 @@ class TestLegacyTab(util.MdCase):
             </div>
             </li>
             </ul>
-            ''',
+            ''',  # noqa: E501
             True
         )
 
@@ -264,7 +264,7 @@ class TestLegacyTab(util.MdCase):
             </div>
             </li>
             </ul>
-            ''',
+            ''',  # noqa: E501
             True
         )
 
@@ -309,6 +309,6 @@ class TestLegacyTab(util.MdCase):
             </div>
             </li>
             </ul>
-            ''',
+            ''',  # noqa: E501
             True
         )
