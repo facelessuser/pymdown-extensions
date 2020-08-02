@@ -5,7 +5,7 @@ from .. import util
 class TestLegacyTab(util.MdCase):
     """Test legacy tab cases."""
 
-    extension = ['pymdownx.tabbed', 'pymdownx.superfences', 'markdown.extensions.def_list']
+    extension = ['pymdownx.tabbed', 'pymdownx.superfences', 'markdown.extensions.def_list', 'pymdownx.details']
     extension_configs = {}
 
     def test_tabbed(self):
@@ -309,6 +309,28 @@ class TestLegacyTab(util.MdCase):
             </div>
             </li>
             </ul>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_with_details(self):
+        """Test with definition list."""
+
+        self.check_markdown(
+            '''
+            === "Output"
+                ???+ note "Open styled details"
+
+                    ??? danger "Nested details!"
+                        And more content again.
+            ''',
+            '''
+            <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Output</label><div class="tabbed-content">
+            <details class="note" open="open"><summary>Open styled details</summary><details class="danger"><summary>Nested details!</summary><p>And more content again.</p>
+            </details>
+            </details>
+            </div>
+            </div>
             ''',  # noqa: E501
             True
         )

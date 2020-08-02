@@ -84,7 +84,10 @@ class TabbedProcessor(BlockProcessor):
 
                     # Handle nested tabbed content
                     if last_child.tag == 'div' and child_class == 'tabbed-content':
-                        last_child = self.lastChild(last_child)
+                        temp_child = self.lastChild(last_child)
+                        if temp_child.tag not in ('ul', 'ol', 'dl'):
+                            break
+                        last_child = temp_child
                         child_class = last_child.attrib.get('class', '') if last_child else ''
 
                     # The expectation is that we'll find an `<li>`.
