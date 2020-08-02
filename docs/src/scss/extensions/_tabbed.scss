@@ -16,10 +16,14 @@
   }
 
   .tabbed-set {
+    label {
+      font-size: px2rem(12.8px);
+    }
+
     > input {
       &:checked + label {
         & + .tabbed-content {
-          font-size: ms(-1);
+          font-size: px2rem(12.8px);
 
           > {
             pre,

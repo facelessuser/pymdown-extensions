@@ -51,7 +51,6 @@
     "material-design-color": "^2.3.2",
     "material-shadows": "^3.0.1",
     "mermaid": "https://github.com/mermaid-js/mermaid/tarball/8.4.8",
-    "modularscale-sass": "^3.0.10",
     "postcss-inline-svg": "^4.1.0",
     "postcss-pseudo-classes": "^0.2.1",
     "postcss-svgo": "^4.0.2",
