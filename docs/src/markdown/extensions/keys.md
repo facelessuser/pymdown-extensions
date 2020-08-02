@@ -171,7 +171,7 @@ Name            | Display           | Aliases
 `brace-left`    | ++brace-left++    | `open-brace`
 `brace-right`   | ++brace-right++   | `close-bracket`
 `bracket-left`  | ++bracket-left++  | `open-bracket`
-`bracket-right` | ++bracket-right++ | `close-brace`
+`bracket-right` | ++bracket-right++ | `close-bracket`
 `colon`         | ++colon++         |
 `comma`         | ++comma++         |
 `double-quote`  | ++double-quote++  | `dblquote`
