@@ -130,7 +130,7 @@ class TestNoClassNoPygments(util.MdCase):
 class TestCustomLangPrefixNoPygments(util.MdCase):
     """Test custom language prefix."""
 
-    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension = ['pymdownx.highlight', 'pymdownx.superfences', 'pymdownx.inlinehilite']
     extension_configs = {
         'pymdownx.highlight': {
             'language_prefix': 'lang-',
@@ -153,6 +153,14 @@ class TestCustomLangPrefixNoPygments(util.MdCase):
             test.test()</code></pre>
             ''',  # noqa: E501
             True
+        )
+
+    def test_custom_prefix_no_pygments_inline(self):
+        """Test with custom prefix and no Pygments with inline code."""
+
+        self.check_markdown(
+            '`#!python import test`',
+            '<p><code class="highlight lang-python">import test</code></p>'
         )
 
 

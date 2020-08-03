@@ -310,7 +310,7 @@ class Highlight(object):
             code = self.escape(src)
             classes = class_names + ([css_class] if css_class else [])
             if language:
-                classes.append('language-%s' % language)
+                classes.append(self.language_prefix + language)
             class_str = ''
             if len(classes):
                 class_str = ' '.join(classes)
