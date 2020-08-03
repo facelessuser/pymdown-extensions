@@ -160,7 +160,7 @@ class TestCustomLangPrefixNoPygments(util.MdCase):
 
         self.check_markdown(
             '`#!python import test`',
-            '<p><code class="highlight lang-python">import test</code></p>'
+            '<p><code class="lang-python highlight">import test</code></p>'
         )
 
 
