@@ -2,6 +2,8 @@
 
 ## 7.2
 
+- **NEW**: Highlight: add new option `language_prefix` which controls the prefix applied to language classes when
+  Pygments is not being used.
 - **NEW**: Add new extension called SaneHeaders which restricts hash headers to only evaluate if the hashes (`#`) are
   followed by a space. Allows extensions like MagicLink to have issues links at the start of a line.
 - **NEW**: Highlight option `linenums` now defaults to `None` and accepts `None`, `True`, or `False`. `None` is
