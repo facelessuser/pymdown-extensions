@@ -106,6 +106,7 @@ Option                    | Type   | Default               | Description
 `linenums_class`          | string | `#!py3 'linenums'`    | Controls the name of the line number class when Pygments is not used.
 `extend_pygments_lang`    | list   | `#!py3 []`            | A list of extended languages to add.  See [Extended Pygments Lexer Options](#extended-pygments-lexer-options) for more info.
 `legacy_no_wrap_code`     | bool   | `#!py3 False`         | A temporary option provided during the transition period to the new output format. From now on, all block code under `pre` elements will be wrapped in a `code` element as well under Pygments 2.4+. This disables this format. This option will be removed in the future.
+`language_prefix`         | string | `#!py3 'language-'`   | Controls the prefix applied to the language class when Pygments is not used. By default, uses the HTML5 `language-`.
 
 !!! new "New 6.2"
     `legacy_no_wrap_code` was added in `6.3`, but is only provided to help transition to the format when using Pygments 2.4+. This option will be removed in the future.

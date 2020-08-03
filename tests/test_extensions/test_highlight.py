@@ -127,6 +127,35 @@ class TestNoClassNoPygments(util.MdCase):
         )
 
 
+class TestCustomLangPrefixNoPygments(util.MdCase):
+    """Test custom language prefix."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'language_prefix': 'lang-',
+            'use_pygments': False
+        }
+    }
+
+    def test_custom_prefix_no_pygments(self):
+        """Test with custom prefix and no Pygments."""
+
+        self.check_markdown(
+            r'''
+            ```python
+            import test
+            test.test()
+            ```
+            ''',
+            r'''
+            <pre class="highlight"><code class="lang-python">import test
+            test.test()</code></pre>
+            ''',  # noqa: E501
+            True
+        )
+
+
 class TestNoPygments(util.MdCase):
     """Test no Pygments."""
 

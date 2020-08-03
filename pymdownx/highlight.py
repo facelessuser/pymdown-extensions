@@ -88,6 +88,10 @@ DEFAULT_CONFIG = {
         False,
         'Do not wrap block code under pre elements with code elements - Default: False'
     ],
+    'language_prefix': [
+        'language-',
+        'Controls the language prefix for non-Pygments code blocks. - Defaults: "language-"'
+    ],
     '_enabled': [
         True,
         'Used internally to communicate if extension has been explicitly enabled - Default: False'
@@ -184,7 +188,7 @@ class Highlight(object):
     def __init__(
         self, guess_lang=True, pygments_style='default', use_pygments=True,
         noclasses=False, extend_pygments_lang=None, linenums=None, linenums_special=-1,
-        linenums_style='table', linenums_class='linenums', wrapcode=True
+        linenums_style='table', linenums_class='linenums', wrapcode=True, language_prefix='language-'
     ):
         """Initialize."""
 
@@ -197,6 +201,7 @@ class Highlight(object):
         self.linenums_special = linenums_special
         self.linenums_class = linenums_class
         self.wrapcode = wrapcode
+        self.language_prefix = language_prefix
 
         if extend_pygments_lang is None:  # pragma: no cover
             extend_pygments_lang = []
@@ -314,7 +319,7 @@ class Highlight(object):
             classes = class_names
             linenums = self.linenums_style if linenums_enabled else False
             if language:
-                classes.append('language-%s' % language)
+                classes.append(self.language_prefix + language)
             class_str = ''
             if linenums:
                 classes.append(self.linenums_class)
@@ -364,7 +369,8 @@ class HighlightTreeprocessor(Treeprocessor):
                     linenums_special=self.config['linenums_special'],
                     linenums_class=self.config['linenums_class'],
                     extend_pygments_lang=self.config['extend_pygments_lang'],
-                    wrapcode=not self.config['legacy_no_wrap_code']
+                    wrapcode=not self.config['legacy_no_wrap_code'],
+                    language_prefix=self.config['language_prefix']
                 )
                 placeholder = self.md.htmlStash.store(
                     code.highlight(
