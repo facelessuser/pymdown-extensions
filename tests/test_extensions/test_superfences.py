@@ -7,31 +7,31 @@ from pymdownx.util import PymdownxDeprecationWarning
 import warnings
 
 
-def custom_format(source, language, class_name, md, options=None, classes=None, value_id='', **kwargs):
+def custom_format(source, language, class_name, options, md, classes=None, value_id='', **kwargs):
     """Custom format."""
 
     return '<div lang="%s" class_name="class-%s", option="%s">%s</div>' % (language, class_name, options['opt'], source)
 
 
-def default_format(source, language, class_name, md, options=None, classes=None, value_id='', **kwargs):
+def default_format(source, language, class_name, optioons, md, classes=None, value_id='', **kwargs):
     """Default format."""
 
     return '<custom lang="%s" class_name="class-%s">%s</custom>' % (language, class_name, source)
 
 
-def custom_validator(language, md, values, options, attrs):
+def custom_validator(language, inputs, options, attrs, md):
     """Custom validator."""
 
     okay = True
-    for k in values.keys():
+    for k in inputs.keys():
         if k != 'opt':
             okay = False
             break
     if okay:
-        if values['opt'] != "A":
+        if inputs['opt'] != "A":
             okay = False
         else:
-            options['opt'] = values['opt']
+            options['opt'] = inputs['opt']
 
     return okay
 

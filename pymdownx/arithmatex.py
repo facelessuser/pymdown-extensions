@@ -129,20 +129,20 @@ def inline_generic_format(math, language='math', class_name='arithmatex', md=Non
 
 
 # Formatters usable with SuperFences
-def fence_mathjax_preview_format(math, language='math', class_name='arithmatex', md=None, **kwargs):
+def fence_mathjax_preview_format(math, language='math', class_name='arithmatex', options=None, md=None, **kwargs):
     """Block MathJax formatter with preview."""
 
     return _fence_mathjax_format(math, True)
 
 
-def fence_mathjax_format(math, language='math', class_name='arithmatex', md=None, **kwargs):
+def fence_mathjax_format(math, language='math', class_name='arithmatex', options=None, md=None, **kwargs):
     """Block MathJax formatter."""
 
     return _fence_mathjax_format(math, False)
 
 
 def fence_generic_format(
-    math, language='math', class_name='arithmatex', md=None, wrap='\\[\n%s\n\\]', **kwargs
+    math, language='math', class_name='arithmatex', options=None, md=None, wrap='\\[\n%s\n\\]', **kwargs
 ):
     """Generic block formatter."""
 

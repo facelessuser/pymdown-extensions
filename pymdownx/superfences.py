@@ -128,7 +128,7 @@ class CodeStash(object):
         self.stash = {}
 
 
-def fence_code_format(source, language, class_name, md, **kwargs):
+def fence_code_format(source, language, class_name, options, md, **kwargs):
     """Format source as code blocks."""
 
     classes = kwargs['classes']
@@ -145,7 +145,7 @@ def fence_code_format(source, language, class_name, md, **kwargs):
     return '<pre%s%s%s><code>%s</code></pre>' % (id_value, classes, attrs, _escape(source))
 
 
-def fence_div_format(source, language, class_name, md, **kwargs):
+def fence_div_format(source, language, class_name, options, md, **kwargs):
     """Format source as div."""
 
     classes = kwargs['classes']
@@ -162,13 +162,13 @@ def fence_div_format(source, language, class_name, md, **kwargs):
     return '<div%s%s%s>%s</div>' % (id_value, classes, attrs, _escape(source))
 
 
-def highlight_validator(language, md, values, options, attrs):
+def highlight_validator(language, inputs, options, attrs, md):
     """Highlight validator."""
 
     okay = True
     use_pygments = md.preprocessors['fenced_code_block'].use_pygments
 
-    for k, v in values.items():
+    for k, v in inputs.items():
         matched = False
         for opt, validator in (('hl_lines', RE_HL_LINES), ('linenums', RE_LINENUMS)):
             if k == opt:
@@ -187,25 +187,25 @@ def highlight_validator(language, md, values, options, attrs):
     return okay
 
 
-def default_validator(language, md, values, options, attrs):
+def default_validator(language, inputs, options, attrs, md):
     """Default validator."""
 
-    for k, v in values.items():
+    for k, v in inputs.items():
         attrs[k] = v
     return True
 
 
-def _validator(language, md, values, options, attrs, validator=None):
+def _validator(language, inputs, options, attrs, md, validator=None):
     """Validator wrapper."""
 
     md.preprocessors['fenced_code_block'].get_hl_settings()
-    return validator(language, md, values, options, attrs)
+    return validator(language, inputs, options, attrs, md)
 
 
-def _formatter(source, language, md, class_name="", _fmt=None, **kwargs):
+def _formatter(src='', language='', options=None, md=None, class_name="", _fmt=None, **kwargs):
     """Formatter wrapper."""
 
-    return _fmt(source, language, class_name, md, **kwargs)
+    return _fmt(src, language, class_name, options, md, **kwargs)
 
 
 def _test(language, test_language=None):
@@ -465,12 +465,12 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 self.line_count = end - start - 2
 
                 code = entry["formatter"](
-                    self.rebuild_block(self.code),
-                    self.lang,
-                    self.md,
+                    src=self.rebuild_block(self.code),
+                    language=self.lang,
+                    md=self.md,
+                    options=self.options,
                     classes=self.classes,
                     id_value=self.id,
-                    options=self.options,
                     attrs=self.attrs if self.attr_list else {}
                 )
                 break
@@ -593,7 +593,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         for entry in reversed(self.extension.superfences):
             if entry["test"](self.lang):
                 validator = entry.get("validator", functools.partial(_validator, validator=default_validator))
-                okay = validator(self.lang, self.md, values, self.options, self.attrs)
+                okay = validator(self.lang, values, self.options, self.attrs, self.md)
                 break
 
         if self.attrs:
@@ -624,7 +624,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         for entry in reversed(self.extension.superfences):
             if entry["test"](self.lang):
                 validator = entry.get("validator", functools.partial(_validator, validator=default_validator))
-                okay = validator(self.lang, self.md, values, self.options, self.attrs)
+                okay = validator(self.lang, values, self.options, self.attrs, self.md)
                 break
 
         if not self.attr_list and self.attrs:
@@ -706,7 +706,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             lines = lines[:start] + [fenced] + lines[end:]
         return lines
 
-    def highlight(self, src, language, md, **kwargs):
+    def highlight(self, src="", language="", options=None, md=None, **kwargs):
         """
         Syntax highlight the code block.
 
@@ -716,7 +716,6 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
         classes = kwargs['classes']
         id_value = kwargs['id_value']
-        options = kwargs['options']
         attrs = kwargs['attrs']
 
         if classes is None:  # pragma: no cover

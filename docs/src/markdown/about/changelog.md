@@ -13,7 +13,7 @@ Please see [Release Notes](./release.md#upgrading-to-80) for details on upgradin
   longer do anything. If `attr_list` is enabled, such options will be treated as HTML attributes. JavaScript highlighter
   options should be defined in the attribute list header form with `attr_list` enabled in order to generate appropriate
   HTML compatible with your JavaScript highlighter of choice.
-- **NEW**: SupferFences: backwards incompatible changes where made to custom fence API. See
+- **NEW**: SuperFences: backwards incompatible changes where made to custom fence API. See
  [Release Notes](./release.md#upgrading-to-80) for instructions on how to migrate to the new API.
 - **NEW**: SuperFences: has removed legacy code tab feature. Associated `legacy_tab_classes` option has been removed.
   Please use the Tabbed extension to create general purpose tabs for code blocks or other content.
