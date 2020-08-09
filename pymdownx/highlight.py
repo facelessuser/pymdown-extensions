@@ -342,12 +342,19 @@ class Highlight(object):
 
         if inline:
             attributes = {}
+
             if class_str:
                 attributes['class'] = class_str
-            if id_str:
+
+            # This code exists for consistency, but we currently don't
+            # ever feed extra ids or attributes for inline code.
+            # We let `attr_list` handle this directly, but if we did
+            # need this, we would then want to exercise this logic.
+            if id_str:  # pragma: no cover
                 attributes['id'] = id_str
-            for k, v in attrs:
+            for k, v in attrs:  # pragma: no cover
                 attributes[k] = v
+
             el = etree.Element('code', attributes)
             el.text = code
             return el

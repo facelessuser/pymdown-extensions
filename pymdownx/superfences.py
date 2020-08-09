@@ -51,7 +51,7 @@ RE_NESTED_FENCE_START = re.compile(
         (?:\.?(?P<lang>[\w#.+-]*))?[ \t]*                                           # Language
         (?P<options>
             (?:
-                (?:\b[a-zA-Z][a-zA-Z0-9_]*=(?:(?P<quot>"|').*?(?P=quot))?[ \t]*) |  # Options
+                (?:\b[a-zA-Z][a-zA-Z0-9_]*(?:=(?P<quot>"|').*?(?P=quot))?[ \t]*) |  # Options
             )*
         )
     )[ \t]*$
@@ -63,7 +63,7 @@ RE_LINENUMS = re.compile(r'(?P<linestart>[\d]+)(?:[ \t]+(?P<linestep>[\d]+))?(?:
 RE_OPTIONS = re.compile(
     r'''(?x)
     (?:
-        (?P<key>[a-zA-Z][a-zA-Z0-9_]*)=(?:(?P<quot>"|')(?P<value>.*?)(?P=quot))?
+        (?P<key>[a-zA-Z][a-zA-Z0-9_]*)(?:=(?P<quot>"|')(?P<value>.*?)(?P=quot))?
     )
     '''
 )
@@ -602,7 +602,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 key = m.group('key')
                 value = m.group('value')
                 if value is None:
-                    value = True
+                    value = key
                 values[key] = value
 
         # Run per language validator

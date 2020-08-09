@@ -3,6 +3,7 @@ from .. import util
 import unittest
 import markdown
 import pymdownx.arithmatex as arithmatex
+import pymdownx.superfences as superfences
 from pymdownx.util import PymdownxDeprecationWarning
 import warnings
 
@@ -547,7 +548,7 @@ class TestSuperFencesCustom(util.MdCase):
     }
 
     def test_bad_options(self):
-        """Test bad options."""
+        """Test bad option."""
 
         self.check_markdown(
             r'''
@@ -563,7 +564,7 @@ class TestSuperFencesCustom(util.MdCase):
         )
 
     def test_bad_option_value(self):
-        """Test bad options."""
+        """Test option with bad value."""
 
         self.check_markdown(
             r'''
@@ -578,8 +579,24 @@ class TestSuperFencesCustom(util.MdCase):
             True
         )
 
+    def test_bad_option_no_value(self):
+        """Test option with no value."""
+
+        self.check_markdown(
+            r'''
+            ```test opt
+            test
+            ```
+            ''',
+            r'''
+            <p><code>test opt
+            test</code></p>
+            ''',
+            True
+        )
+
     def test_custom_options(self):
-        """Test options."""
+        """Test option with correct value."""
 
         self.check_markdown(
             r'''
@@ -589,6 +606,39 @@ class TestSuperFencesCustom(util.MdCase):
             ''',
             r'''
             <div lang="test" class_name="class-test", option="A">test</div>
+            ''',
+            True
+        )
+
+
+class TestSuperFencesCustomDefaultValidator(util.MdCase):
+    """Test custom format with default validator."""
+
+    extension = ['pymdownx.superfences', 'markdown.extensions.attr_list']
+    extension_configs = {
+        'pymdownx.superfences': {
+            'custom_fences': [
+                {
+                    'name': 'test',
+                    'class': 'test',
+                    'format': superfences.fence_div_format,
+                    'validator': superfences.default_validator
+                }
+            ]
+        }
+    }
+
+    def test_default_validator(self):
+        """Test default validator."""
+
+        self.check_markdown(
+            r'''
+            ```{.test opt="A"}
+            test
+            ```
+            ''',
+            r'''
+            <div class="test" opt="A">test</div>
             ''',
             True
         )
