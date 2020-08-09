@@ -37,6 +37,7 @@ from .util import PymdownxDeprecationWarning
 import warnings
 import functools
 import re
+from inspect import signature
 
 SOH = '\u0001'  # start
 EOT = '\u0004'  # end
@@ -171,7 +172,7 @@ def highlight_validator(language, inputs, options, attrs, md):
     for k, v in inputs.items():
         matched = False
         for opt, validator in (('hl_lines', RE_HL_LINES), ('linenums', RE_LINENUMS)):
-            if k == opt:
+            if k == opt and use_pygments:
                 if v is True or validator.match(v) is None:
                     okay = False
                     break
@@ -195,11 +196,17 @@ def default_validator(language, inputs, options, attrs, md):
     return True
 
 
-def _validator(language, inputs, options, attrs, md, validator=None):
+def _validator(language, inputs, options, attrs, md, validator=None, _legacy=False):
     """Validator wrapper."""
 
     md.preprocessors['fenced_code_block'].get_hl_settings()
-    return validator(language, inputs, options, attrs, md)
+    if _legacy:
+        value = validator(language, inputs)
+        for k, v in inputs.items():
+            options[k] = v
+        return value
+    else:
+        return validator(language, inputs, options, attrs, md)
 
 
 def _formatter(src='', language='', options=None, md=None, class_name="", _fmt=None, **kwargs):
@@ -275,11 +282,20 @@ class SuperFencesCodeExtension(Extension):
             class_name = custom.get('class')
             fence_format = custom.get('format', fence_code_format)
             validator = custom.get('validator', default_validator)
+            legacy = False
             if name is not None and class_name is not None:
+                sig = signature(validator)
+                if len(sig.parameters) == 2:
+                    legacy = True
+                    warnings.warn(
+                        "Old format of custom validators is deprectated, please migrate to the new format"
+                        ": validator(language, inputs, options, attrs, md)",
+                        PymdownxDeprecationWarning
+                    )
                 self.extend_super_fences(
                     name,
                     functools.partial(_formatter, class_name=class_name, _fmt=fence_format),
-                    functools.partial(_validator, validator=validator)
+                    functools.partial(_validator, validator=validator, _legacy=legacy)
                 )
 
         self.md = md
@@ -627,7 +643,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 okay = validator(self.lang, values, self.options, self.attrs, self.md)
                 break
 
-        if not self.attr_list and self.attrs:
+        if not self.attr_list and (self.attrs or self.id or self.classes):
             okay = False
 
         return okay

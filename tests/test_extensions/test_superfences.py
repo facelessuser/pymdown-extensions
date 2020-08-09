@@ -7,13 +7,13 @@ from pymdownx.util import PymdownxDeprecationWarning
 import warnings
 
 
-def custom_format(source, language, class_name, options, md, classes=None, value_id='', **kwargs):
+def custom_format(source, language, class_name, options, md, **kwargs):
     """Custom format."""
 
     return '<div lang="%s" class_name="class-%s", option="%s">%s</div>' % (language, class_name, options['opt'], source)
 
 
-def default_format(source, language, class_name, optioons, md, classes=None, value_id='', **kwargs):
+def default_format(source, language, class_name, options, md, **kwargs):
     """Default format."""
 
     return '<custom lang="%s" class_name="class-%s">%s</custom>' % (language, class_name, source)
@@ -33,6 +33,20 @@ def custom_validator(language, inputs, options, attrs, md):
         else:
             options['opt'] = inputs['opt']
 
+    return okay
+
+
+def custom_validator_legacy(language, options):
+    """Custom validator."""
+
+    okay = True
+    for k in options.keys():
+        if k != 'opt':
+            okay = False
+            break
+    if okay:
+        if options['opt'] != "A":
+            okay = False
     return okay
 
 
@@ -139,6 +153,229 @@ class TestHighlightLines(util.MdCase):
         )
 
 
+class TestSuperFencesClassesIds(util.MdCase):
+    """Test classes and ids without attribute lists."""
+
+    extension = ['pymdownx.superfences']
+    extension_configs = {}
+
+    def test_classes(self):
+        """Test extra classes."""
+
+        self.check_markdown(
+            r'''
+            ```{.python .more}
+            import test
+            ```
+            ''',
+            r'''
+            <p><code>{.python .more}
+            import test</code></p>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_id(self):
+        """Test extra id."""
+
+        self.check_markdown(
+            r'''
+            ```{.python #id}
+            import test
+            ```
+            ''',
+            r'''
+            <p><code>{.python #id}
+            import test</code></p>
+            ''',
+            True
+        )
+
+    def test_attr(self):
+        """Test extra attributes."""
+
+        self.check_markdown(
+            r'''
+            ```{.python #id attr="test"}
+            import test
+            ```
+            ''',
+            r'''
+            <p><code>{.python #id attr="test"}
+            import test</code></p>
+            ''',
+            True
+        )
+
+
+class TestSuperFencesClassesIdsAttrList(util.MdCase):
+    """Test fence ids and classes with attribute lists."""
+
+    extension = ['pymdownx.superfences', 'markdown.extensions.attr_list']
+    extension_configs = {}
+
+    def test_classes(self):
+        """Test extra classes."""
+
+        self.check_markdown(
+            r'''
+            ```{.python .more}
+            import test
+            ```
+            ''',
+            r'''
+            <div class="more highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_id(self):
+        """Test extra id."""
+
+        self.check_markdown(
+            r'''
+            ```{.python #id}
+            import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',
+            True
+        )
+
+    def test_attr(self):
+        """Test extra attributes."""
+
+        self.check_markdown(
+            r'''
+            ```{.python #id attr="test"}
+            import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',
+            True
+        )
+
+
+class TestSuperFencesClassesIdsAttrListNoPygments(util.MdCase):
+    """Test fence ids and classes with attribute lists and with no Pygments."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences', 'markdown.extensions.attr_list']
+    extension_configs = {
+        "pymdownx.highlight": {
+            "use_pygments": False
+        }
+    }
+
+    def test_classes(self):
+        """Test extra classes."""
+
+        self.check_markdown(
+            r'''
+            ```{.python .more}
+            import test
+            ```
+            ''',
+            r'''
+            <pre class="highlight"><code class="language-python more">import test</code></pre>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_id(self):
+        """Test extra id."""
+
+        self.check_markdown(
+            r'''
+            ```{.python #id}
+            import test
+            ```
+            ''',
+            r'''
+            <pre class="highlight"><code id="id" class="language-python">import test</code></pre>
+            ''',
+            True
+        )
+
+    def test_attr(self):
+        """Test extra attributes."""
+
+        self.check_markdown(
+            r'''
+            ```{.python #id attr="test"}
+            import test
+            ```
+            ''',
+            r'''
+            <pre class="highlight"><code id="id" class="language-python" attr="test">import test</code></pre>
+            ''',
+            True
+        )
+
+
+class TestSuperFencesClassesIdsAttrListNoPygmentsOnPre(util.MdCase):
+    """Test fence ids and classes with attribute lists and with no Pygments and classes and ids on pre."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences', 'markdown.extensions.attr_list']
+    extension_configs = {
+        "pymdownx.highlight": {
+            "use_pygments": False,
+            "code_attr_on_pre": True
+        }
+    }
+
+    def test_classes(self):
+        """Test extra classes."""
+
+        self.check_markdown(
+            r'''
+            ```{.python .more}
+            import test
+            ```
+            ''',
+            r'''
+            <pre class="language-python highlight more"><code>import test</code></pre>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_id(self):
+        """Test extra id."""
+
+        self.check_markdown(
+            r'''
+            ```{.python #id}
+            import test
+            ```
+            ''',
+            r'''
+            <pre id="id" class="language-python highlight"><code>import test</code></pre>
+            ''',
+            True
+        )
+
+    def test_attr(self):
+        """Test extra attributes."""
+
+        self.check_markdown(
+            r'''
+            ```{.python #id attr="test"}
+            import test
+            ```
+            ''',
+            r'''
+            <pre id="id" class="language-python highlight" attr="test"><code>import test</code></pre>
+            ''',
+            True
+        )
+
+
 class TestWaringings(unittest.TestCase):
     """Test warnings."""
 
@@ -156,9 +393,34 @@ class TestWaringings(unittest.TestCase):
             self.assertTrue(len(w) == 1)
             self.assertTrue(issubclass(w[-1].category, PymdownxDeprecationWarning))
 
+    def test_legacy_validator_code(self):
+        """Test legacy validator."""
 
-class TestSuperFences(util.MdCase):
-    """Test Details."""
+        with warnings.catch_warnings(record=True) as w:
+            warnings.simplefilter("always")
+
+            markdown.Markdown(
+                extensions=['pymdownx.superfences'],
+                extension_configs={
+                    'pymdownx.superfences': {
+                        'custom_fences': [
+                            {
+                                'name': 'test',
+                                'class': 'test',
+                                'format': custom_format,
+                                'validator': custom_validator_legacy
+                            }
+                        ]
+                    }
+                }
+            ).convert('```\ntest\n```\n')
+
+            self.assertTrue(len(w) == 1)
+            self.assertTrue(issubclass(w[-1].category, PymdownxDeprecationWarning))
+
+
+class TestSuperFencesBad(util.MdCase):
+    """Test bad options."""
 
     extension = ['pymdownx.superfences']
     extension_configs = {}
@@ -202,8 +464,73 @@ class TestSuperFences(util.MdCase):
         )
 
 
-class TestSuperFencesCustom1(util.MdCase):
-    """Test Details."""
+class TestSuperFencesCustomLegacy(util.MdCase):
+    """Test custom legacy validator."""
+
+    extension = ['pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.superfences': {
+            'custom_fences': [
+                {
+                    'name': 'test',
+                    'class': 'test',
+                    'format': custom_format,
+                    'validator': custom_validator_legacy
+                }
+            ]
+        }
+    }
+
+    def test_bad_options(self):
+        """Test bad options."""
+
+        self.check_markdown(
+            r'''
+            ```test bad="bad"
+            test
+            ```
+            ''',
+            r'''
+            <p><code>test bad="bad"
+            test</code></p>
+            ''',
+            True
+        )
+
+    def test_bad_option_value(self):
+        """Test bad options."""
+
+        self.check_markdown(
+            r'''
+            ```test opt="B"
+            test
+            ```
+            ''',
+            r'''
+            <p><code>test opt="B"
+            test</code></p>
+            ''',
+            True
+        )
+
+    def test_custom_options(self):
+        """Test options."""
+
+        self.check_markdown(
+            r'''
+            ```test opt="A"
+            test
+            ```
+            ''',
+            r'''
+            <div lang="test" class_name="class-test", option="A">test</div>
+            ''',
+            True
+        )
+
+
+class TestSuperFencesCustom(util.MdCase):
+    """Test custom validator and format."""
 
     extension = ['pymdownx.superfences']
     extension_configs = {
@@ -267,8 +594,8 @@ class TestSuperFencesCustom1(util.MdCase):
         )
 
 
-class TestSuperFencesCustom2(util.MdCase):
-    """Test Details."""
+class TestSuperFencesCustomArithmatex(util.MdCase):
+    """Test custom Arithmatex format."""
 
     extension = ['pymdownx.superfences']
     extension_configs = {
@@ -301,8 +628,8 @@ class TestSuperFencesCustom2(util.MdCase):
         )
 
 
-class TestSuperFencesCustom3(util.MdCase):
-    """Test Details."""
+class TestSuperFencesCustomArithmatexPreview(util.MdCase):
+    """Test custom Arithmatex preview format."""
 
     extension = ['pymdownx.superfences']
     extension_configs = {
@@ -340,8 +667,8 @@ class TestSuperFencesCustom3(util.MdCase):
         )
 
 
-class TestSuperFencesCustom4(util.MdCase):
-    """Test Details."""
+class TestSuperFencesCustomArithmatexGeneric(util.MdCase):
+    """Test custom Arithmatex generic format."""
 
     extension = ['pymdownx.superfences']
     extension_configs = {
@@ -374,8 +701,8 @@ class TestSuperFencesCustom4(util.MdCase):
         )
 
 
-class TestSuperFencesCustom5(util.MdCase):
-    """Test Details."""
+class TestSuperFencesCustomDefault(util.MdCase):
+    """Test overriding the default format."""
 
     extension = ['pymdownx.superfences']
     extension_configs = {

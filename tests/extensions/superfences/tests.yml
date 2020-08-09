@@ -2,6 +2,7 @@ __default__: {}
 
 superfences (custom):
   extensions:
+    markdown.extensions.attr_list:
     pymdownx.superfences:
       custom_fences:
         - name: test
@@ -52,6 +53,7 @@ superfences (no pygments):
 
 superfences (normal):
   extensions:
+    markdown.extensions.attr_list:
     pymdownx.highlight:
       extend_pygments_lang:
         - name: php-inline

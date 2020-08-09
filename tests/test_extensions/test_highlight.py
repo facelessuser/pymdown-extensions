@@ -34,7 +34,7 @@ class TestHighlightInline(util.MdCase):
 class TestNoClass(util.MdCase):
     """Test no class."""
 
-    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension = ['pymdownx.highlight', 'pymdownx.superfences', 'markdown.extensions.attr_list']
     extension_configs = {
         'pymdownx.highlight': {
             'css_class': ''
@@ -202,8 +202,9 @@ class TestNoPygments(util.MdCase):
             ```
             ''',
             r'''
-            <pre class="highlight"><code class="language-python">import test
-            test.test()</code></pre>
+            <p><code>python linenums="1"
+            import test
+            test.test()</code></p>
             ''',
             True
         )
@@ -361,8 +362,9 @@ class TestDisabledLinenumsNoPygments(util.MdCase):
             ```
             ''',
             r'''
-            <pre class="highlight"><code class="language-python">import test
-            test.test()</code></pre>
+            <p><code>python linenums="1"
+            import test
+            test.test()</code></p>
             ''',  # noqa: E501
             True
         )
