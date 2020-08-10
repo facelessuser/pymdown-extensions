@@ -237,7 +237,7 @@ class SuperFencesCodeExtension(Extension):
             ],
             'preserve_tabs': [False, "Preserve tabs in fences - Default: False"]
         }
-        super(SuperFencesCodeExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def extend_super_fences(self, name, formatter, validator):
         """Extend SuperFences with the given name, language, and formatter."""
@@ -352,7 +352,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
     def __init__(self, md):
         """Initialize."""
 
-        super(SuperFencesBlockPreprocessor, self).__init__(md)
+        super().__init__(md)
         self.tab_len = self.md.tab_length
         self.checked_hl_settings = False
         self.codehilite_conf = {}
@@ -904,6 +904,7 @@ class SuperFencesRawBlockPreprocessor(SuperFencesBlockPreprocessor):
     def run(self, lines):
         """Search for fenced blocks."""
 
+        self.get_hl_settings()
         self.clear()
         self.stack = []
         self.disabled_indented = self.config.get("disable_indented_code_blocks", False)

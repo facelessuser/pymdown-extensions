@@ -205,13 +205,13 @@ control the starting line shown in the block.
 !!! example "Line Number Example"
 
     === "Output"
-        ``` linenums="1"
+        ``` {linenums="1"}
         import foo.bar
         ```
 
     === "Markdown"
         ````
-        ``` linenums="1"
+        ``` {linenums="1"}
         import foo.bar
         ```
         ````
@@ -227,7 +227,7 @@ So to set showing only every other line number, we could do the following. Line 
 !!! example "Nth Line Example"
 
     === "Output"
-        ``` linenums="2 2"
+        ``` {linenums="2 2"}
         """Some file."""
         import foo.bar
         import boo.baz
@@ -236,7 +236,7 @@ So to set showing only every other line number, we could do the following. Line 
 
     === "Markdown"
         ````
-        ``` linenums="2 2"
+        ``` {linenums="2 2"}
         """Some file."""
         import foo.bar
         import boo.baz
@@ -250,7 +250,7 @@ Special must be a value of n > 0.
 !!! example "Special Line Example"
 
     === "Output"
-        ``` linenums="1 1 2"
+        ``` {linenums="1 1 2"}
         """Some file."""
         import foo.bar
         import boo.baz
@@ -259,7 +259,7 @@ Special must be a value of n > 0.
 
     === "Markdown"
         ````
-        ``` linenums="1 1 2"
+        ``` {linenums="1 1 2"}
         """Some file."""
         import foo.bar
         import boo.baz
@@ -280,7 +280,7 @@ targeted line numbers separated by spaces.
 !!! example "Highlight Lines Example"
 
     === "Output"
-        ```py3 hl_lines="1 3"
+        ```{.py3 hl_lines="1 3"}
         """Some file."""
         import foo.bar
         import boo.baz
@@ -289,7 +289,7 @@ targeted line numbers separated by spaces.
 
     === "Markdown"
         ````
-        ```py3 hl_lines="1 3"
+        ```{.py3 hl_lines="1 3"}
         """Some file."""
         import foo.bar
         import boo.baz
@@ -302,7 +302,7 @@ Line numbers are always referenced starting at 1 ignoring what the line number i
 !!! example "Highlight Lines with Line Numbers Example"
 
     === "Output"
-        ```py3 hl_lines="1 3" linenums="2"
+        ```{.py3 hl_lines="1 3" linenums="2"}
         """Some file."""
         import foo.bar
         import boo.baz
@@ -311,7 +311,7 @@ Line numbers are always referenced starting at 1 ignoring what the line number i
 
     === "Markdown"
         ````
-        ```py3 hl_lines="1 3" linenums="2"
+        ```{.py3 hl_lines="1 3" linenums="2"}
         """Some file."""
         import foo.bar
         import boo.baz
@@ -325,7 +325,7 @@ ending line. You can do multiple ranges and even mix them with non ranges.
 !!! example "Highlight Ranges"
 
     === "Output"
-        ```py3 hl_lines="1-2 5 7-8"
+        ```{.py3 hl_lines="1-2 5 7-8"}
         import foo
         import boo.baz
         import foo.bar.baz
@@ -339,7 +339,7 @@ ending line. You can do multiple ranges and even mix them with non ranges.
 
     === "Markdown"
         ````
-        ```py3 hl_lines="1-2 5 7-8"
+        ```{.py3 hl_lines="1-2 5 7-8"}
         import foo
         import boo.baz
         import foo.bar.baz
@@ -443,11 +443,19 @@ Format\ Function                | Description
 `superfences.fence_div_format`  | Places the HTML escaped content of the fence under a `#!html <div>` block.
 
 In general, formatters take five parameters: the source found between the fences, the specified language, the class name
-originally defined via the `class` option in the `custom_fence` entry, custom options, and the Markdown object (in case
-you want access to meta data etc.).
+originally defined via the `class` option in the `custom_fence` entry, custom options, additional classes defined in
+attribute list style headers, an optional ID, any attributes defined in the attribute list style header, and the
+Markdown object (in case you want access to meta data etc.).
 
 ```py3
-def custom_formatter(source, language, css_class, options, md, classes=None, id_value='', **kwargs):
+def custom_formatter(source, language, css_class, options, md, classes=None, id_value='', attrs=None, **kwargs):
+    return string
+```
+
+or
+
+```py3
+def custom_formatter(source, language, css_class, options, md, **kwargs):
     return string
 ```
 
@@ -460,58 +468,62 @@ def custom_formatter(source, language, css_class, options, md, classes=None, id_
 
 All formatters should return a string as HTML.
 
-!!! tip
+!!! tip "YAML Configuration Format"
     If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please
     see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify function references in YAML.
 
+!!! new "Changes 8.0"
+    Formatters now take the keyword parameter `attrs`.
+
 ### Validators
 
-The `validator` is used to provide functions that accept or reject provided fence options. The validator is sent two
-parameters: the language defined in the fence, and a dictionary of options to validate.
+The `validator` is used to provide a function that allows the validation of inputs. Inputs are then sorted to either
+`attrs` or `options`. While a `formatter` can treat `attrs` and `options` however they like, the intention is that key
+value pairs assigned to `attrs` are assigned directly to the fenced block's element, while `options` are used to
+conditionally control logic within the formatter. If no validator is defined, the default is used which assigns all
+inputs to `attrs`.
 
-Custom options can be used as keys with quoted values (`key="value"`), or as keys with no value which are used more as a
-boolean (`key=`). SuperFences will parse the options in the fence and then pass them to the validator. If the validator
-returns true, the options will be accepted and later passed to the formatter.
+SuperFences will only pass `attrs` to a formatter if an attribute style header is used for a fenced block
+(` ``` {.lang attr="value"}`) and the `attr_list` extension is enabled. Attribute are not supported in the form
+(` ```lang attr=value`) and will cause the parsing of the fenced block to abort.
 
-This custom fence:
+Custom options can be used as keys with quoted values (`key="value"`), or as keys with no value (`key`). If a key is
+given with no value, the value will be the key value. SuperFences will parse the options in the fence and then pass them
+to the validator. If the validator returns true, the options will be accepted and later passed to the formatter. `attrs`
+will only be passed to the formatter if the `attr_list` extension is enabled. `attrs` will also be ignored during
+Pygments highlighting.
 
-````
-```custom_fence custom_option="value" other_custom_option=
-content
-```
-````
-
-Would yield this option dictionary:
-
-```py3
-{
-    "custom_option": "value",
-    "other_custom_option": True
-}
-```
+Assuming a validator fails, the next `validator`/`formatter` defined will be tried.
 
 For a contrived example: if we wanted to define a custom fence named `test` that accepts an option `opt` that can only
-be assigned a value of `A`, we would write the following validator:
+be assigned a value of `A`, we could define the validator below. Notice that if we get an input that matches `opt`, but
+doesn't validate with the appropriate value, we abort handling the fenced block for this `validator`/`formatter` by
+returning `False`. All other inputs are assigned as `attrs` which will be passed to the formatter if the `attr_list`
+extension is enabled.
 
 ```py3
-def custom_validator(language, options):
+def custom_validator(language, inputs, options, attrs, md):
     """Custom validator."""
 
     okay = True
-    for k in options.keys():
-        if k != 'opt':
-            okay = False
-            break
-    if okay:
-        if options['opt'] != "A":
-            okay = False
+    for k, v in inputs.items():
+        if k == 'opt':
+            if v != "A":
+                okay = False
+                break
+            else:
+                options[k] = v
+        else:
+            attrs[k] = v
+
     return okay
 ```
 
-Then later the formatter would be given the options:
+Assuming validation passed, the formatter would be given the option and any attributes (though the formatter below
+doesn't use the attributes).
 
 ```py3
-def custom_format(source, language, class_name, options, md):
+def custom_format(source, language, class_name, options, md, **kwargs):
     """Custom format."""
 
     return '<div class_name="%s %s", data-option="%s">%s</div>' % (language, class_name, options['opt'], html_escape(source))
@@ -520,14 +532,26 @@ def custom_format(source, language, class_name, options, md):
 This would allow us to use the following custom fence:
 
 ````
-```test opt="A"
+```{.test opt="A"}
 test
 ```
 ````
 
-!!! tip
+!!! tip "YAML Configuration Format"
     If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please
     see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify function references in YAML.
+
+!!! new "Changes 8.0"
+    - `validator` now accepts the following variables:
+        - `inputs`: with all the parsed options/attributes (validator should not modify this structure).
+        - `options`: a dictionary to which all valid options should be assigned to.
+        - `attrs`: a dictionary to which all valid attributes should be assigned to.
+        - `md`: the `Markdown` object.
+    - If the `attr_list` extension is enabled and the attribute list style header is used, any key/value pairs that were
+      assigned as attributes by the `validator` will be passed to the `formatter`'s `attrs` parameter.
+    - Options in the form of `key=` (which have no value) will are no longer be allowed. A `key` with no value will
+      assume the `value` to be the `key` name. This brings consistency as options are now parsed with `attr_list`.
+    - If a `validator` fails, the next `validator`/`formatter` pair will be tired.
 
 ### UML Diagram Example
 

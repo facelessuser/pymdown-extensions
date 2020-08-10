@@ -4,27 +4,28 @@
 
 Please see [Release Notes](./release.md#upgrading-to-80) for details on upgrading to 8.0.
 
-- **NEW**: Highlight: add new option `language_prefix` which controls the prefix applied to language classes when
-  Pygments is not being used.
-- **NEW**: SuperFences: if `attr_list` extension is enabled and Pygments is disabled (or unavailable), fenced code that
-  use brace attribute list style headers (` ```{lang #id .class attr=value}`) will attach arbitrary attributes that are
-  included in the header to the code element.
+- **NEW**: SuperFences: if a custom fence validator fails, try the next custom fence until all are exhausted.
+- **NEW**: SuperFences: no longer allow custom options in the form `key=`. Only keys with values or keys with no value
+  and no `=` are accepted. Keys with no value will now assume the value to be the key name.
+- **NEW**: SuperFences: if `attr_list` extension is enabled, fenced code that use brace attribute list style headers
+  (` ```{lang #id .class attr=value}`) will attach arbitrary attributes that are included in the header to the code
+  element.
 - **NEW**: SuperFences: when Pygments is disabled, options (such as `linenums`) included in fenced code headers no
-  longer do anything. If `attr_list` is enabled, such options will be treated as HTML attributes. JavaScript highlighter
-  options should be defined in the attribute list header form with `attr_list` enabled in order to generate appropriate
-  HTML compatible with your JavaScript highlighter of choice.
+  longer do anything. If `attr_list` is enabled, and the brace header is used, such options will be treated as HTML
+  attributes. JavaScript highlighter options should be defined in the brace header form with `attr_list` enabled in
+  order to generate appropriate HTML compatible with the chosen JavaScript highlighter.
 - **NEW**: SuperFences: backwards incompatible changes where made to custom fence API. See
  [Release Notes](./release.md#upgrading-to-80) for instructions on how to migrate to the new API.
 - **NEW**: SuperFences: has removed legacy code tab feature. Associated `legacy_tab_classes` option has been removed.
   Please use the Tabbed extension to create general purpose tabs for code blocks or other content.
+- **NEW**: Highlight: add new option `language_prefix` which controls the prefix applied to language classes when
+  Pygments is not being used.
 - **NEW**: Highlight: A new option called `code_attr_on_pre` was added to the Highlight extension and controls whether
   language classes, and any ids, attributes, and classes that are defined in fenced code attribute list style headers,
   are attached to the code element or pre element. This has effect when using Pygments.
 - **NEW**: Highlight: option `linenums` now defaults to `None` and accepts `None`, `True`, or `False`. `None` is
   disabled by default, but can be enabled per code block. `True` enables line numbers globally. `False` disables
   globally and cannot be enabled manually per code block.
-- **NEW**: SuperFences has removed legacy code tab feature. Associated `legacy_tab_classes` option has been removed.
-  Please use the Tabbed extension to create general purpose tabs for code blocks or other content.
 - **FIX**: Fix issues with complex emphasis combinations in BetterEm.
 - **NEW**: ExtraRawHTML: remove extension.
 - **FIX**: Details: fix corner cases related to extension and lists.
