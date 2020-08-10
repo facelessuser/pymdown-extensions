@@ -166,26 +166,23 @@ def fence_div_format(source, language, class_name, options, md, **kwargs):
 def highlight_validator(language, inputs, options, attrs, md):
     """Highlight validator."""
 
-    okay = True
     use_pygments = md.preprocessors['fenced_code_block'].use_pygments
 
     for k, v in inputs.items():
         matched = False
         for opt, validator in (('hl_lines', RE_HL_LINES), ('linenums', RE_LINENUMS)):
             if k == opt and use_pygments:
+                matched = True
                 if v is True or validator.match(v) is None:
-                    okay = False
-                    break
+                    attrs[k] = v
                 elif use_pygments:
                     options[k] = v
-                matched = True
-        if not matched and okay:
+                break
+
+        if not matched:
             attrs[k] = v
 
-        if okay is False:
-            break
-
-    return okay
+    return True
 
 
 def default_validator(language, inputs, options, attrs, md):
@@ -425,6 +422,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         self.classes = []
         self.id = ''
         self.attrs = {}
+        self.formatter = None
 
     def eval_fence(self, ws, content, start, end):
         """Evaluate a normal fence."""
@@ -438,7 +436,10 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             self.clear()
         elif self.fence_end.match(content) is not None and not content.startswith((' ', '\t')):
             # End of fence
-            self.process_nested_block(ws, content, start, end)
+            try:
+                self.process_nested_block(ws, content, start, end)
+            except Exception:
+                self.clear()
         else:
             # Content line
             self.empty_lines = 0
@@ -475,21 +476,18 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
         self.last = ws + self.normalize_ws(content)
         code = None
-        for entry in reversed(self.extension.superfences):
-            if entry["test"](self.lang):
+        if self.formatter is not None:
+            self.line_count = end - start - 2
 
-                self.line_count = end - start - 2
-
-                code = entry["formatter"](
-                    src=self.rebuild_block(self.code),
-                    language=self.lang,
-                    md=self.md,
-                    options=self.options,
-                    classes=self.classes,
-                    id_value=self.id,
-                    attrs=self.attrs if self.attr_list else {}
-                )
-                break
+            code = self.formatter(
+                src=self.rebuild_block(self.code),
+                language=self.lang,
+                md=self.md,
+                options=self.options,
+                classes=self.classes,
+                id_value=self.id,
+                attrs=self.attrs if self.attr_list else {}
+            )
 
         if code is not None:
             self._store(self.normalize_ws('\n'.join(self.code)) + '\n', code, start, end)
@@ -587,7 +585,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
     def parse_options(self, m):
         """Get options."""
 
-        okay = True
+        okay = False
 
         if m.group('lang'):
             self.lang = m.group('lang')
@@ -596,6 +594,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
         self.options = {}
         self.attrs = {}
+        self.formatter = None
         values = {}
         if string:
             for m in RE_OPTIONS.finditer(string):
@@ -608,25 +607,30 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         # Run per language validator
         for entry in reversed(self.extension.superfences):
             if entry["test"](self.lang):
+                options = {}
+                attrs = {}
                 validator = entry.get("validator", functools.partial(_validator, validator=default_validator))
-                okay = validator(self.lang, values, self.options, self.attrs, self.md)
-                break
-
-        if self.attrs:
-            okay = False
+                okay = validator(self.lang, values, options, attrs, self.md)
+                if attrs:
+                    okay = False
+                if okay:
+                    self.formatter = entry.get("formatter")
+                    self.options = options
+                    break
 
         return okay
 
     def handle_attrs(self, m):
         """Handle attribute list."""
 
-        okay = True
-        attrs = get_attrs(m.group('attrs').replace('\t', ' ' * self.tab_len))
+        okay = False
+        attributes = get_attrs(m.group('attrs').replace('\t', ' ' * self.tab_len))
 
-        values = {}
         self.options = {}
         self.attrs = {}
-        for k, v in attrs:
+        self.formatter = None
+        values = {}
+        for k, v in attributes:
             if k == 'id':
                 self.id = v
             elif k == '.':
@@ -639,12 +643,16 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         # Run per language validator
         for entry in reversed(self.extension.superfences):
             if entry["test"](self.lang):
+                options = {}
+                attrs = {}
                 validator = entry.get("validator", functools.partial(_validator, validator=default_validator))
-                okay = validator(self.lang, values, self.options, self.attrs, self.md)
-                break
-
-        if not self.attr_list and (self.attrs or self.id or self.classes):
-            okay = False
+                okay = validator(self.lang, values, options, attrs, self.md)
+                if okay:
+                    self.formatter = entry.get("formatter")
+                    self.options = options
+                    if self.attr_list:
+                        self.attrs = attrs
+                    break
 
         return okay
 

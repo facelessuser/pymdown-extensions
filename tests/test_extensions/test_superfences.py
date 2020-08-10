@@ -170,8 +170,8 @@ class TestSuperFencesClassesIds(util.MdCase):
             ```
             ''',
             r'''
-            <p><code>{.python .more}
-            import test</code></p>
+            <div class="more highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
             ''',  # noqa: E501
             True
         )
@@ -186,8 +186,8 @@ class TestSuperFencesClassesIds(util.MdCase):
             ```
             ''',
             r'''
-            <p><code>{.python #id}
-            import test</code></p>
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
             ''',
             True
         )
@@ -202,8 +202,8 @@ class TestSuperFencesClassesIds(util.MdCase):
             ```
             ''',
             r'''
-            <p><code>{.python #id attr="test"}
-            import test</code></p>
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
             ''',
             True
         )
