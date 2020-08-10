@@ -34,7 +34,7 @@ class TestHighlightInline(util.MdCase):
 class TestNoClass(util.MdCase):
     """Test no class."""
 
-    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension = ['pymdownx.highlight', 'pymdownx.superfences', 'markdown.extensions.attr_list']
     extension_configs = {
         'pymdownx.highlight': {
             'css_class': ''
@@ -160,7 +160,7 @@ class TestCustomLangPrefixNoPygments(util.MdCase):
 
         self.check_markdown(
             '`#!python import test`',
-            '<p><code class="highlight lang-python">import test</code></p>'
+            '<p><code class="lang-python highlight">import test</code></p>'
         )
 
 
@@ -202,8 +202,9 @@ class TestNoPygments(util.MdCase):
             ```
             ''',
             r'''
-            <pre class="highlight"><code class="language-python linenums">import test
-            test.test()</code></pre>
+            <p><code>python linenums="1"
+            import test
+            test.test()</code></p>
             ''',
             True
         )
@@ -235,7 +236,7 @@ class TestNoPygmentsCustomLineClass(util.MdCase):
             ''',
             r'''
             <p>Text</p>
-            <pre class="highlight"><code class="line-numbers">import test
+            <pre class="highlight"><code>import test
             test.test()
             </code></pre>
 
@@ -255,7 +256,7 @@ class TestNoPygmentsCustomLineClass(util.MdCase):
             ```
             ''',
             r'''
-            <pre class="highlight"><code class="language-python line-numbers">import test
+            <pre class="highlight"><code class="language-python">import test
             test.test()</code></pre>
             ''',
             True
@@ -361,8 +362,9 @@ class TestDisabledLinenumsNoPygments(util.MdCase):
             ```
             ''',
             r'''
-            <pre class="highlight"><code class="language-python">import test
-            test.test()</code></pre>
+            <p><code>python linenums="1"
+            import test
+            test.test()</code></p>
             ''',  # noqa: E501
             True
         )

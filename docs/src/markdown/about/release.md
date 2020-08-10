@@ -1,5 +1,9 @@
 # Release Notes
 
+## Upgrading to 8.0
+
+TODO
+
 ## Upgrading to 7.0
 
 ### Tabbed Extension
@@ -9,7 +13,7 @@ for it's tabbed feature to match those of the new Tabbed extension. CSS should b
 
 The classes that have changed are `supferfences-tabs` and `superfences-content`, which have changed to `tabbed-set` and
 `tabbed-content` respectively. Example CSS is updated in SuperFences for
-[reference](../extensions/superfences.md#tabbed-fences).
+[reference](../extensions/superfences.md).
 
 To help with the transition though, you can quickly switch back to the old style classes by simply enabling the
 SuperFences' global option `legacy_tab_classes`:

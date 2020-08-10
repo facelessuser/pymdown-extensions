@@ -95,6 +95,7 @@ SmartSymbols
 StripHTML
 Stylesheets
 SuperFences
+TODO
 Tasklist
 Toc
 Tox
@@ -230,6 +231,7 @@ unittest
 unstyled
 uslugify
 validator
+validators
 versa
 whitespace
 whynne

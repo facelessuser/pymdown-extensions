@@ -86,11 +86,12 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
     Another paragraph.
     ````
 
-## Injecting Classes and IDs
+## Injecting Classes, IDs, and Attributes
 
-You can use the attribute list format to specify classes and IDs (IDs are only injectable in non-Pygments code blocks).
-The first provided class is always used as the language class. Arbitrary attributes in the form `key="value"` cannot
-be inserted as those are reserved for options such has `linenums` etc.
+You can use the brace format to specify classes and IDs (IDs are only injectable in non-Pygments code blocks).
+The first provided class is always used as the language class. IDs (`#id`) and arbitrary attributes in the form
+`key="value"` can be inserted as well, but only when Pygments isn't being used as Pygments does not support arbitrary
+attributes or IDs.
 
 !!! example "Injecting Classes"
 
@@ -126,161 +127,6 @@ the `#!html code` block.
 When using a built in [custom formatter](#custom-fences), all classes and IDs are injected on to the first element
 `#!html <div>` or `#!html <pre>`. This preserves previous behavior, but you can write your own and inject them in the
 way that suites your needs.
-
-## Tabbed Fences
-
-!!! warning "Deprecated 7.0"
-    The tab option is deprecated in 7.0 due to the addition of the general purpose tab extension
-    [`pymdownx.tabbed`](./tabbed.md). This feature will be removed in 8.0, and at that time, users will be required to
-    use [`pymdownx.tabbed`](./tabbed.md) if they would like to have tabbed code blocks.
-
-    The feature is still usable, but the class names on the output have changed from `superfences-tabs` and
-    `superfences-content` to `tabbed-set` and `tabbed-content` respectively. This is to help create unity between the
-    new extension and this feature as we guide people towards the new extension.
-
-    To use the legacy class names, you can use the global `legacy_tab_classes` option to get the old style classes. This
-    option will be removed, along with the entire `tab=""` feature in 8.0.
-
-SuperFences has the ability to create tabbed code blocks.  Simply add `tab="tab-title"` to the fence's header, and the
-code block will will be rendered in a tab with the title `tab-title`.  If you do not provide a title with either `tab=`
-or `tab=""`, but you've specified a language, the language will be used as the title. No case transformation is applied
--- what you type is what you get. Consecutive code tabs will be grouped together.
-
-!!! example "Tabbed Code"
-
-    === "Output"
-        ```Bash tab=
-        #!/bin/bash
-        STR="Hello World!"
-        echo $STR
-        ```
-
-        ```C tab=
-        #include 
-
-        int main(void) {
-          printf("hello, world\n");
-        }
-        ```
-
-        ```C++ tab=
-        #include <iostream>
-
-        int main() {
-          std::cout << "Hello, world!\n";
-          return 0;
-        }
-        ```
-
-        ```C# tab=
-        using System;
-
-        class Program {
-          static void Main(string[] args) {
-            Console.WriteLine("Hello, world!");
-          }
-        }
-        ```
-
-    === "Markdown"
-
-        ````
-        ```Bash tab=
-        #!/bin/bash
-        STR="Hello World!"
-        echo $STR
-        ```
-
-        ```C tab=
-        #include 
-
-        int main(void) {
-          printf("hello, world\n");
-        }
-        ```
-
-        ```C++ tab=
-        #include <iostream>
-
-        int main() {
-          std::cout << "Hello, world!\n";
-          return 0;
-        }
-        ```
-
-        ```C# tab=
-        using System;
-
-        class Program {
-          static void Main(string[] args) {
-            Console.WriteLine("Hello, world!");
-          }
-        }
-        ```
-        ````
-
-In order to use tabbed code blocks, some additional CSS is needed. You can check out the configuration below which will
-show the CSS and the HTML it targets. Keep in mind the CSS is just the minimum to get you started. You can tweak it and
-modify it to get it how you like it.
-
-??? settings "Tabbed Code Setup"
-    === "HTML"
-        ```HTML
-        <div class="tabbed-set">
-        <input name="__tabbed_1" type="radio" id="__tabbed_1_1" checked="checked">
-        <label for="__tabbed_1_1">Tab 0</label>
-        <div class="tabbed-content">...</div>
-        ...
-        <input name="__tabbed_1" type="radio" id="__tabbed_1_X" checked="checked">
-        <label for="__tabbed_1_X">Tab X</label>
-        <div class="tabbed-content">...</div>
-        ...
-        </div>
-        ```
-
-    === "CSS"
-        ```CSS
-        .tabbed-set {
-          display: flex;
-          position: relative;
-          flex-wrap: wrap;
-        }
-
-        .tabbed-set .highlight {
-          background: #ddd;
-        }
-
-        .tabbed-set .tabbed-content {
-          display: none;
-          order: 99;
-          width: 100%;
-        }
-
-        .tabbed-set label {
-          width: auto;
-          margin: 0 0.5em;
-          padding: 0.25em;
-          font-size: 120%;
-          cursor: pointer;
-        }
-
-        .tabbed-set input {
-          position: absolute;
-          opacity: 0;
-        }
-
-        .tabbed-set input:nth-child(n+1) {
-          color: #333333;
-        }
-
-        .tabbed-set input:nth-child(n+1):checked + label {
-            color: #FF5252;
-        }
-
-        .tabbed-set input:nth-child(n+1):checked + label + .tabbed-content {
-            display: block;
-        }
-        ```
 
 ## Preserve Tabs
 
@@ -360,13 +206,13 @@ control the starting line shown in the block.
 !!! example "Line Number Example"
 
     === "Output"
-        ``` linenums="1"
+        ``` {linenums="1"}
         import foo.bar
         ```
 
     === "Markdown"
         ````
-        ``` linenums="1"
+        ``` {linenums="1"}
         import foo.bar
         ```
         ````
@@ -382,7 +228,7 @@ So to set showing only every other line number, we could do the following. Line 
 !!! example "Nth Line Example"
 
     === "Output"
-        ``` linenums="2 2"
+        ``` {linenums="2 2"}
         """Some file."""
         import foo.bar
         import boo.baz
@@ -391,7 +237,7 @@ So to set showing only every other line number, we could do the following. Line 
 
     === "Markdown"
         ````
-        ``` linenums="2 2"
+        ``` {linenums="2 2"}
         """Some file."""
         import foo.bar
         import boo.baz
@@ -405,7 +251,7 @@ Special must be a value of n > 0.
 !!! example "Special Line Example"
 
     === "Output"
-        ``` linenums="1 1 2"
+        ``` {linenums="1 1 2"}
         """Some file."""
         import foo.bar
         import boo.baz
@@ -414,7 +260,7 @@ Special must be a value of n > 0.
 
     === "Markdown"
         ````
-        ``` linenums="1 1 2"
+        ``` {linenums="1 1 2"}
         """Some file."""
         import foo.bar
         import boo.baz
@@ -435,7 +281,7 @@ targeted line numbers separated by spaces.
 !!! example "Highlight Lines Example"
 
     === "Output"
-        ```py3 hl_lines="1 3"
+        ```{.py3 hl_lines="1 3"}
         """Some file."""
         import foo.bar
         import boo.baz
@@ -444,7 +290,7 @@ targeted line numbers separated by spaces.
 
     === "Markdown"
         ````
-        ```py3 hl_lines="1 3"
+        ```{.py3 hl_lines="1 3"}
         """Some file."""
         import foo.bar
         import boo.baz
@@ -457,7 +303,7 @@ Line numbers are always referenced starting at 1 ignoring what the line number i
 !!! example "Highlight Lines with Line Numbers Example"
 
     === "Output"
-        ```py3 hl_lines="1 3" linenums="2"
+        ```{.py3 hl_lines="1 3" linenums="2"}
         """Some file."""
         import foo.bar
         import boo.baz
@@ -466,7 +312,7 @@ Line numbers are always referenced starting at 1 ignoring what the line number i
 
     === "Markdown"
         ````
-        ```py3 hl_lines="1 3" linenums="2"
+        ```{.py3 hl_lines="1 3" linenums="2"}
         """Some file."""
         import foo.bar
         import boo.baz
@@ -480,7 +326,7 @@ ending line. You can do multiple ranges and even mix them with non ranges.
 !!! example "Highlight Ranges"
 
     === "Output"
-        ```py3 hl_lines="1-2 5 7-8"
+        ```{.py3 hl_lines="1-2 5 7-8"}
         import foo
         import boo.baz
         import foo.bar.baz
@@ -494,7 +340,7 @@ ending line. You can do multiple ranges and even mix them with non ranges.
 
     === "Markdown"
         ````
-        ```py3 hl_lines="1-2 5 7-8"
+        ```{.py3 hl_lines="1-2 5 7-8"}
         import foo
         import boo.baz
         import foo.bar.baz
@@ -598,11 +444,19 @@ Format\ Function                | Description
 `superfences.fence_div_format`  | Places the HTML escaped content of the fence under a `#!html <div>` block.
 
 In general, formatters take five parameters: the source found between the fences, the specified language, the class name
-originally defined via the `class` option in the `custom_fence` entry, custom options, and the Markdown object (in case
-you want access to meta data etc.).
+originally defined via the `class` option in the `custom_fence` entry, custom options, additional classes defined in
+attribute list style headers, an optional ID, any attributes defined in the attribute list style header, and the
+Markdown object (in case you want access to meta data etc.).
 
 ```py3
-def custom_formatter(source, language, css_class, options, md, classes=None, id_value='', **kwargs):
+def custom_formatter(source, language, css_class, options, md, classes=None, id_value='', attrs=None, **kwargs):
+    return string
+```
+
+or
+
+```py3
+def custom_formatter(source, language, css_class, options, md, **kwargs):
     return string
 ```
 
@@ -615,58 +469,62 @@ def custom_formatter(source, language, css_class, options, md, classes=None, id_
 
 All formatters should return a string as HTML.
 
-!!! tip
+!!! tip "YAML Configuration Format"
     If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please
     see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify function references in YAML.
 
+!!! new "Changes 8.0"
+    Formatters now take the keyword parameter `attrs`.
+
 ### Validators
 
-The `validator` is used to provide functions that accept or reject provided fence options. The validator is sent two
-parameters: the language defined in the fence, and a dictionary of options to validate.
+The `validator` is used to provide a function that allows the validation of inputs. Inputs are then sorted to either
+`attrs` or `options`. While a `formatter` can treat `attrs` and `options` however they like, the intention is that key
+value pairs assigned to `attrs` are assigned directly to the fenced block's element, while `options` are used to
+conditionally control logic within the formatter. If no validator is defined, the default is used which assigns all
+inputs to `attrs`.
 
-Custom options can be used as keys with quoted values (`key="value"`), or as keys with no value which are used more as a
-boolean (`key=`). SuperFences will parse the options in the fence and then pass them to the validator. If the validator
-returns true, the options will be accepted and later passed to the formatter.
+SuperFences will only pass `attrs` to a formatter if an attribute style header is used for a fenced block
+(` ``` {.lang attr="value"}`) and the `attr_list` extension is enabled. Attribute are not supported in the form
+(` ```lang attr=value`) and will cause the parsing of the fenced block to abort.
 
-This custom fence:
+Custom options can be used as keys with quoted values (`key="value"`), or as keys with no value (`key`). If a key is
+given with no value, the value will be the key value. SuperFences will parse the options in the fence and then pass them
+to the validator. If the validator returns true, the options will be accepted and later passed to the formatter. `attrs`
+will only be passed to the formatter if the `attr_list` extension is enabled. `attrs` will also be ignored during
+Pygments highlighting.
 
-````
-```custom_fence custom_option="value" other_custom_option=
-content
-```
-````
-
-Would yield this option dictionary:
-
-```py3
-{
-    "custom_option": "value",
-    "other_custom_option": True
-}
-```
+Assuming a validator fails, the next `validator`/`formatter` defined will be tried.
 
 For a contrived example: if we wanted to define a custom fence named `test` that accepts an option `opt` that can only
-be assigned a value of `A`, we would write the following validator:
+be assigned a value of `A`, we could define the validator below. Notice that if we get an input that matches `opt`, but
+doesn't validate with the appropriate value, we abort handling the fenced block for this `validator`/`formatter` by
+returning `False`. All other inputs are assigned as `attrs` which will be passed to the formatter if the `attr_list`
+extension is enabled.
 
 ```py3
-def custom_validator(language, options):
+def custom_validator(language, inputs, options, attrs, md):
     """Custom validator."""
 
     okay = True
-    for k in options.keys():
-        if k != 'opt':
-            okay = False
-            break
-    if okay:
-        if options['opt'] != "A":
-            okay = False
+    for k, v in inputs.items():
+        if k == 'opt':
+            if v != "A":
+                okay = False
+                break
+            else:
+                options[k] = v
+        else:
+            attrs[k] = v
+
     return okay
 ```
 
-Then later the formatter would be given the options:
+Assuming validation passed, the formatter would be given the option and any attributes (though the formatter below
+doesn't use the attributes).
 
 ```py3
-def custom_format(source, language, class_name, options, md):
+def custom_format(source, language, class_name, options, md, **kwargs):
     """Custom format."""
 
     return '<div class_name="%s %s", data-option="%s">%s</div>' % (language, class_name, options['opt'], html_escape(source))
@@ -675,14 +533,26 @@ def custom_format(source, language, class_name, options, md):
 This would allow us to use the following custom fence:
 
 ````
-```test opt="A"
+```{.test opt="A"}
 test
 ```
 ````
 
-!!! tip
+!!! tip "YAML Configuration Format"
     If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please
     see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify function references in YAML.
+
+!!! new "Changes 8.0"
+    - `validator` now accepts the following variables:
+        - `inputs`: with all the parsed options/attributes (validator should not modify this structure).
+        - `options`: a dictionary to which all valid options should be assigned to.
+        - `attrs`: a dictionary to which all valid attributes should be assigned to.
+        - `md`: the `Markdown` object.
+    - If the `attr_list` extension is enabled and the attribute list style header is used, any key/value pairs that were
+      assigned as attributes by the `validator` will be passed to the `formatter`'s `attrs` parameter.
+    - Options in the form of `key=` (which have no value) will are no longer be allowed. A `key` with no value will
+      assume the `value` to be the `key` name. This brings consistency as options are now parsed with `attr_list`.
+    - If a `validator` fails, the next `validator`/`formatter` pair will be tired.
 
 ### UML Diagram Example
 

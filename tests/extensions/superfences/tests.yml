@@ -2,6 +2,7 @@ __default__: {}
 
 superfences (custom):
   extensions:
+    markdown.extensions.attr_list:
     pymdownx.superfences:
       custom_fences:
         - name: test
@@ -38,6 +39,7 @@ superfences (no indent blocks):
 
 superfences (no pygments):
   extensions:
+    markdown.extensions.attr_list:
     pymdownx.superfences:
       custom_fences:
         - name: flow
@@ -51,6 +53,7 @@ superfences (no pygments):
 
 superfences (normal):
   extensions:
+    markdown.extensions.attr_list:
     pymdownx.highlight:
       extend_pygments_lang:
         - name: php-inline
@@ -76,20 +79,6 @@ superfences (preserve tabs):
             startinline: true
     pymdownx.superfences:
       preserve_tabs: true
-      custom_fences:
-        - name: flow
-          class: uml-flowchart
-          format: !!python/name:pymdownx.superfences.fence_code_format
-        - name: sequence
-          class: uml-sequence-diagram
-          format: !!python/name:pymdownx.superfences.fence_code_format
-
-superfences (tabs):
-  css:
-    - ../_assets/tabs.css
-  extensions:
-    pymdownx.highlight:
-    pymdownx.superfences:
       custom_fences:
         - name: flow
           class: uml-flowchart
