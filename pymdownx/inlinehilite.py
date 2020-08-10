@@ -171,7 +171,10 @@ class InlineHilitePattern(InlineProcessor):
             lang = m.group('lang') if m.group('lang') else ''
             src = m.group('code').strip()
             self.get_settings()
-            return self.handle_code(lang, src), m.start(0), m.end(0)
+            try:
+                return self.handle_code(lang, src), m.start(0), m.end(0)
+            except Exception:
+                return m.group(0), None, None
 
 
 class InlineHiliteExtension(Extension):

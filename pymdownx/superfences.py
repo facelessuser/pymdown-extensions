@@ -610,7 +610,10 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 options = {}
                 attrs = {}
                 validator = entry.get("validator", functools.partial(_validator, validator=default_validator))
-                okay = validator(self.lang, values, options, attrs, self.md)
+                try:
+                    okay = validator(self.lang, values, options, attrs, self.md)
+                except Exception:
+                    pass
                 if attrs:
                     okay = False
                 if okay:
@@ -646,7 +649,10 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 options = {}
                 attrs = {}
                 validator = entry.get("validator", functools.partial(_validator, validator=default_validator))
-                okay = validator(self.lang, values, options, attrs, self.md)
+                try:
+                    okay = validator(self.lang, values, options, attrs, self.md)
+                except Exception:
+                    pass
                 if okay:
                     self.formatter = entry.get("formatter")
                     self.options = options

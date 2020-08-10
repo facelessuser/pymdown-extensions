@@ -86,11 +86,12 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
     Another paragraph.
     ````
 
-## Injecting Classes and IDs
+## Injecting Classes, IDs, and Attributes
 
-You can use the attribute list format to specify classes and IDs (IDs are only injectable in non-Pygments code blocks).
-The first provided class is always used as the language class. Arbitrary attributes in the form `key="value"` cannot
-be inserted as those are reserved for options such has `linenums` etc.
+You can use the brace format to specify classes and IDs (IDs are only injectable in non-Pygments code blocks).
+The first provided class is always used as the language class. IDs (`#id`) and arbitrary attributes in the form
+`key="value"` can be inserted as well, but only when Pygments isn't being used as Pygments does not support arbitrary
+attributes or IDs.
 
 !!! example "Injecting Classes"
 

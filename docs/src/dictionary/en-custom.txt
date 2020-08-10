@@ -231,6 +231,7 @@ unittest
 unstyled
 uslugify
 validator
+validators
 versa
 whitespace
 whynne

@@ -15,6 +15,12 @@ def _default_format(src, language, class_name, md):
     return '<custom class="lang-%s %s">%s</custom>' % (language, class_name, src)
 
 
+def _format_exploder(src, language, class_name, md):
+    """Inline math formatter."""
+
+    raise Exception('Boom!')
+
+
 class TestInlineHilite(util.MdCase):
     """Test general cases for inline highlight."""
 
@@ -410,4 +416,32 @@ class TestInlineHiliteCustom5(util.MdCase):
         self.check_markdown(
             r'`#!test src test` `#!python src test`',
             r'<p><span class="lang-test class-test">src test</span> <custom class="lang-python overwrite">src test</custom></p>'  # noqa: E501
+        )
+
+
+class TestInlineHiliteCustomBrokenFormatter(util.MdCase):
+    """Test custom broken InlineHilite cases."""
+
+    extension = [
+        'pymdownx.highlight',
+        'pymdownx.inlinehilite',
+    ]
+    extension_configs = {
+        'pymdownx.inlinehilite': {
+            'custom_inline': [
+                {
+                    'name': 'test',
+                    'class': 'test',
+                    'format': _format_exploder
+                }
+            ]
+        }
+    }
+
+    def test_broken(self):
+        """Test custom broken formatter."""
+
+        self.check_markdown(
+            r'`#!test boom`',
+            r'<p>`#!test boom`</p>'  # noqa: E501
         )

@@ -20,6 +20,18 @@ def default_format(source, language, class_name, options, md, **kwargs):
     return '<custom lang="%s" class_name="class-%s">%s</custom>' % (language, class_name, source)
 
 
+def custom_exploder(source, language, class_name, options, md, **kwargs):
+    """Broken format."""
+
+    raise Exception('Boom!')
+
+
+def custom_validater_exploder(language, inputs, options, attrs, md):
+    """Broken validator."""
+
+    raise Exception('Boom!')
+
+
 def custom_validator(language, inputs, options, attrs, md):
     """Custom validator."""
 
@@ -791,6 +803,89 @@ class TestSuperFencesCustomDefault(util.MdCase):
             \]</div>
 
             <p><custom lang="python" class_name="class-">test</custom></p>
+            ''',
+            True
+        )
+
+
+class TestSuperFencesCustomBroken(util.MdCase):
+    """Test custom formatter that is broken."""
+
+    extension = ['pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.superfences': {
+            'custom_fences': [
+                {
+                    'name': 'test',
+                    'class': 'test',
+                    'format': custom_exploder,
+                }
+            ]
+        }
+    }
+
+    def test_broken(self):
+        """Test broken fence."""
+
+        self.check_markdown(
+            '''
+            ```test
+            doesn't matter
+            ```
+            ''',
+            '''
+            <p><code>test
+            doesn't matter</code></p>
+            ''',
+            True
+        )
+
+
+class TestSuperFencesCustomValidatorBroken(util.MdCase):
+    """Test custom legacy validator that is broken."""
+
+    extension = ['pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.superfences': {
+            'custom_fences': [
+                {
+                    'name': 'test',
+                    'class': 'test',
+                    'format': custom_format,
+                    'validator': custom_validater_exploder
+                }
+            ]
+        }
+    }
+
+    def test_broken(self):
+        """Test broken fence."""
+
+        self.check_markdown(
+            '''
+            ```test
+            doesn't matter
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code>doesn&#39;t matter
+            </code></pre></div>
+            ''',
+            True
+        )
+
+    def test_broken_brace(self):
+        """Test broken fence."""
+
+        self.check_markdown(
+            '''
+            ```{.test}
+            doesn't matter
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code>doesn&#39;t matter
+            </code></pre></div>
             ''',
             True
         )

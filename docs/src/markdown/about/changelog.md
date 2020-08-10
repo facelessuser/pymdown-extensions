@@ -4,6 +4,8 @@
 
 Please see [Release Notes](./release.md#upgrading-to-80) for details on upgrading to 8.0.
 
+- **NEW**: SuperFences \& InlineHilite: gracefully handle failing custom formatters and/or validators. Users should add
+  their own debug code to their formatter/validator if they suspect it isn't working.
 - **NEW**: SuperFences: if a custom fence validator fails, try the next custom fence until all are exhausted.
 - **NEW**: SuperFences: no longer allow custom options in the form `key=`. Only keys with values or keys with no value
   and no `=` are accepted. Keys with no value will now assume the value to be the key name.
