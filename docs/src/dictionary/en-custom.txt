@@ -138,6 +138,7 @@ emojione
 escaper
 facelessuser
 formatter
+formatter's
 formatters
 gantt
 gemoji

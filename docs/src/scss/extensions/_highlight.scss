@@ -126,9 +126,14 @@
       margin: 0;
       padding: 0 px2em( 4px, 13.6px);
       color: var(--md-code-fg-color);
-      background-color: var(--md-code-bg-color);
+      background-color: #{$drac-bg};
       border-radius: px2rem(2px);
       box-shadow: none;
+  }
+
+  .admonition-title code,
+  summary code {
+    background-color: #{tint($drac-bg, 5%)};
   }
 
   /* Code that is also a link */

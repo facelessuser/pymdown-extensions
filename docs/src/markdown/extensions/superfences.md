@@ -445,8 +445,8 @@ Format\ Function                | Description
 
 In general, formatters take five parameters: the source found between the fences, the specified language, the class name
 originally defined via the `class` option in the `custom_fence` entry, custom options, additional classes defined in
-attribute list style headers, an optional ID, any attributes defined in the attribute list style header, and the
-Markdown object (in case you want access to meta data etc.).
+brace style headers, an optional ID, any attributes defined in the brace style header, and the Markdown object (in case
+you want access to meta data etc.).
 
 ```py3
 def custom_formatter(source, language, css_class, options, md, classes=None, id_value='', attrs=None, **kwargs):
@@ -460,18 +460,18 @@ def custom_formatter(source, language, css_class, options, md, **kwargs):
     return string
 ```
 
-!!! new "New 7.0"
-    The addition of the parameters `classes` and `id_value` is new in 7.0. If injecting additional classes or ids via
-    the [attribute list style](#injecting-classes-and-ids), only then will `classes` and `id_value` be passed in to
-    preserve backwards compatibility with old custom formatters. Users, moving forward, should at the very least update
-    their formatters with `**kwargs` to future proof their custom formatters in case additional parameters are added
-    in the future.
-
 All formatters should return a string as HTML.
 
 !!! tip "YAML Configuration Format"
     If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please
     see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify function references in YAML.
+
+!!! new "New 7.0"
+    The addition of the parameters `classes` and `id_value` is new in 7.0. If injecting additional classes or ids via
+    [brace headers](#injecting-classes-and-ids), only then will `classes` and `id_value` be passed in to preserve
+    backwards compatibility with old custom formatters. Users, moving forward, should at the very least update their
+    formatters with `**kwargs` to future proof their custom formatters in case additional parameters are added in the
+    future.
 
 !!! new "Changes 8.0"
     Formatters now take the keyword parameter `attrs`.
@@ -548,7 +548,7 @@ test
         - `options`: a dictionary to which all valid options should be assigned to.
         - `attrs`: a dictionary to which all valid attributes should be assigned to.
         - `md`: the `Markdown` object.
-    - If the `attr_list` extension is enabled and the attribute list style header is used, any key/value pairs that were
+    - If the `attr_list` extension is enabled and the brace style header is used, any key/value pairs that were
       assigned as attributes by the `validator` will be passed to the `formatter`'s `attrs` parameter.
     - Options in the form of `key=` (which have no value) will are no longer be allowed. A `key` with no value will
       assume the `value` to be the `key` name. This brings consistency as options are now parsed with `attr_list`.
