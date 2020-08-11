@@ -32,14 +32,14 @@ $new-admonitions: (
     --md-admonition-icon-color--#{$name}: #{$tint2};
 
     [data-md-color-primary^="drac-"] {
-      --md-admonition-bg-color--#{$name}: #{transparentize($tint, 0.7)};
+      --md-admonition-bg-color--#{$name}: var(--md-default-bg-color--darkest);
       --md-admonition-icon-color--#{$name}: #{$tint};
     }
   }
 
   @each $names, $tint in $old-admonitions {
     $name: nth($names, 1);
-    --md-admonition-bg-color--#{$name}: #{transparentize($tint, 0.7)};
+    --md-admonition-bg-color--#{$name}: var(--md-default-bg-color--darkest);
     --md-admonition-icon-color--#{$name}: #{$tint};
   }
 }
