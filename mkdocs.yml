@@ -57,7 +57,10 @@ nav:
     - Contributing &amp; Support: about/contributing.md
     - Development: about/development.md
     - Changelog: about/changelog.md
-    - Release Notes: about/release.md
+    - Release Notes:
+        - '6.0': about/releases/6.0.md
+        - '7.0': about/releases/7.0.md
+        - '8.0': about/releases/8.0.md
     - License: about/license.md
 
 markdown_extensions:
