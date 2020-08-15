@@ -2,11 +2,13 @@
 
 :root {
   --md-code-special-bg-color: #{darken(hsl(0, 0%, 96%), 5%)};
+  --md-code-alternate-bg-color: var(--md-code-bg-color);
 }
 
 [data-md-color-primary^="drac-"] {
 
   --md-code-special-bg-color: var(--md-default-bg-color--dark);
+  --md-code-alternate-bg-color: #{tint($drac-bg, 10%)};
 
   .highlight code *,
   code.highlight * {
@@ -115,25 +117,23 @@
     .vm { color: $drac-cyan; font-style: italic } // Name.Variable.Magic
     .il { color: $drac-purple } // Literal.Number.Integer.Long
   }
+
+  .admonition-title code,
+  table:not([class]) th code {
+    background-color: var(--md-code-alternate-bg-color);
+  }
 }
 
 .md-typeset {
 
   /* Allow code to look like code everywhere despite Material's current preference */
-  *:not(pre) > code,
-  .admonition-title code,
-  summary code {
+  *:not(pre) > code {
       margin: 0;
       padding: 0 px2em( 4px, 13.6px);
       color: var(--md-code-fg-color);
-      background-color: #{$drac-bg};
+      background-color: var(--md-code-bg-color);
       border-radius: px2rem(2px);
       box-shadow: none;
-  }
-
-  .admonition-title code,
-  summary code {
-    background-color: #{tint($drac-bg, 5%)};
   }
 
   /* Code that is also a link */

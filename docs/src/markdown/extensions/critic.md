@@ -156,7 +156,7 @@ Classes   | Description
 
 ??? settings "Basic CSS Setup"
 
-    ```css
+    ```{.css .md-max-height}
     /* Critic Markup */
     .markdown-body .critic {
       font-family: inherit;

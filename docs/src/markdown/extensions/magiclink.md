@@ -122,39 +122,39 @@ syntax can be used.
 !!! example "Issue Example"
 
     === "Output"
-        Issue #1
+        #1
 
-        Issue backrefs#1
+        backrefs#1
 
-        Issue Python-Markdown/markdown#1
+        Python-Markdown/markdown#1
 
-        Issue gitlab:pycqa/flake8#385
+        gitlab:pycqa/flake8#385
 
-        Pull request !13
+        !13
 
-        Pull request backrefs!4
+        backrefs!4
 
-        Pull request Python-Markdown/markdown!598
+        Python-Markdown/markdown!598
 
-        Pull request gitlab:pycqa/flake8!213
+        gitlab:pycqa/flake8!213
 
     === "Markdown"
         ```
-        Issue #1
+        #1
 
-        Issue backrefs#1
+        backrefs#1
 
-        Issue Python-Markdown/markdown#1
+        Python-Markdown/markdown#1
 
-        Issue gitlab:pycqa/flake8#385
+        gitlab:pycqa/flake8#385
 
-        Pull request !13
+        !13
 
-        Pull request backrefs!4
+        backrefs!4
 
-        Pull request Python-Markdown/markdown!598
+        Python-Markdown/markdown!598
 
-        Pull request gitlab:pycqa/flake8!213
+        gitlab:pycqa/flake8!213
         ```
 
 !!! note "Note"

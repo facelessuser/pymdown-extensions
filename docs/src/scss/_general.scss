@@ -1,3 +1,15 @@
+/* Normal colors */
+:root {
+  --md-heart: #{$clr-red-a200};
+  --md-heart-big: #{$clr-red-a400};
+
+  /* Dark mode colors */
+  [data-md-color-primary^="drac-"] {
+    --md-heart: #{$drac-pink};
+    --md-heart-big: #{$drac-red};
+  }
+}
+
 .md-typeset {
     a.source-link {
         position: relative;
@@ -19,13 +31,17 @@
             }
         }
     }
+
+    div.highlight.md-max-height pre > code {
+      max-height: px2rem(300px);
+    }
 }
 
 .twemoji {
   &.heart-throb, &.heart-throb-hover {
     svg {
       position: relative;
-      color: #{$drac-pink};
+      color: var(--md-heart);
       animation: pulse 1.5s ease infinite;
     }
   }
@@ -33,9 +49,9 @@
 
 @keyframes pulse {
   0% { transform: scale(1); }
-  40% { color: #{$drac-red}; transform: scale(1.3); }
+  40% { color: var(--md-heart-big); transform: scale(1.3); }
   50% { transform: scale(1.2); }
-  60% { color: #{$drac-red}; transform: scale(1.3); }
+  60% { color: var(--md-heart-big); transform: scale(1.3); }
   100% { transform: scale(1); }
 }
 

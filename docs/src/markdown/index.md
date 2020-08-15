@@ -1,13 +1,15 @@
 # PyMdown Extensions
 
+## Overview
+
+PyMdown Extensions is a collection of extensions for Python Markdown. They were originally written to make writing
+documentation more enjoyable. They cover a wide range of solutions, and while not every extension is needed by all
+people, there is usually at least one useful extension for everybody.
+
 ## Usage
 
-PyMdown Extensions is a collection of extensions for Python Markdown.  Keep in mind, the PyMdown extensions were
-designed to work with the default extensions, so your mileage may vary in regards to compatibility when paired with
-other 3rd party extensions.
-
-All extensions are found under `pymdownx`.  Assuming we wanted to specify the use of the MagicLink extension, we would
-include it in Python Markdown like so:
+All extensions are found under the module namespace of `pymdownx`.  Assuming we wanted to specify the use of the
+MagicLink extension, we would include it in Python Markdown like so:
 
 ```pycon3
 >>> import markdown
@@ -72,8 +74,8 @@ Check out documentation on each extension to learn more about how to configure a
 
 !!! summary "MagicLink"
     [MagicLink](extensions/magiclink.md) linkafies URL and email links without having to wrap them in Markdown syntax.
-    Also, allows shortens repository issue, pull request, and commit links. You can even use easily insert mentions:
-    @twitter:twitter.
+    Also, shortens repository issue, pull request, and commit links automatically for popular code hosting providers.
+    You can even use special shorthand syntax to link to issues, diffs, and even mention people
 
 !!! summary "Mark"
     [Mark](extensions/mark.md) allows you to ==mark== words easily.
@@ -87,8 +89,9 @@ Check out documentation on each extension to learn more about how to configure a
     [== 80%]{: .candystripe .candystripe-animate}
 
 !!! summary "SaneHeaders"
-    [SaneHeaders](extensions/saneheaders.md) modifies hash headers to only be evaluated if the hash symbol starting hash
-    symbols are followed by at least one space.
+    [SaneHeaders](extensions/saneheaders.md) modifies hash headers to only be evaluated if the starting hash symbols are
+    followed by at least one space. This is useful if you use other extensions that also use the hash symbol (like our
+    own MagicLink extension).
 
 !!! summary "SmartSymbols"
     [SmartSymbols](extensions/smartsymbols.md) inserts commonly used Unicode characters via simple ASCII

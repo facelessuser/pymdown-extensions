@@ -85,7 +85,7 @@ IE8. Feel free to modify what is here or find a solution that fits your needs.
     Here is the basic CSS that that can be used.  It is meant to provide a consistent CSS in both browsers that support
     `#!html <details><summary>` tags and those that do not.
 
-    ```css
+    ```{.css .md-max-height}
     details {
       display: block;
     }
@@ -132,7 +132,7 @@ IE8. Feel free to modify what is here or find a solution that fits your needs.
     There are plenty of things that aren't covered here, like jumping to a footnote or ID inside a closed polyfilled
     detail element, but this is left up to the user to figure out, or for a complete 3rd party polyfill.
 
-    ```js
+    ```{.js .md-max-height}
     (function () {
     'use strict';
     /**
