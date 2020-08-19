@@ -8,11 +8,10 @@ SuperFences provides a number of features:
 
 1. Allowing the [nesting of fences](#nested-fence-format) under blockquotes, lists, or other block elements (see
   [Limitations](#limitations) for more info).
-2. Create [tabbed fenced code blocks](#tabbed-fences).
-3. Ability to specify [custom fences](#custom-fences) to provide features like flowcharts, sequence diagrams, or other
+2. Ability to specify [custom fences](#custom-fences) to provide features like flowcharts, sequence diagrams, or other
   custom blocks.
-4. Allow disabling of indented code blocks in favor of only using the fenced variant (off by default).
-5. Experimental feature that preserves tabs within a code block instead of converting them to spaces which is Python
+3. Allow disabling of indented code blocks in favor of only using the fenced variant (off by default).
+4. Experimental feature that preserves tabs within a code block instead of converting them to spaces which is Python
   Markdown's default behavior.
 
 !!! danger "Reminder"
