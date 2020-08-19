@@ -25,6 +25,7 @@ export default className => {
   }
 
   // Find all of our Mermaid sources and render them.
+  const config = mermaid.mermaidAPI.getConfig()
   const blocks = document.querySelectorAll(`pre.${className}`)
   const surogate = document.querySelector("html")
   for (let i = 0; i < blocks.length; i++) {
@@ -36,7 +37,7 @@ export default className => {
     temp.style.visibility = "hidden"
     temp.style.width = "100%"
     temp.style.minWidth = "100%"
-    temp.style.fontSize = "16px"
+    temp.style.fontSize = config.themeVariables.fontSize || "16px"
     surogate.appendChild(temp)
 
     mermaid.mermaidAPI.render(
