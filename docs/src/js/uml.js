@@ -26,6 +26,7 @@ export default className => {
 
   // Find all of our Mermaid sources and render them.
   const blocks = document.querySelectorAll(`pre.${className}`)
+  const surogate = document.querySelector("html")
   for (let i = 0; i < blocks.length; i++) {
     const parentEl = blocks[i]
 
@@ -36,7 +37,7 @@ export default className => {
     temp.style.width = "100%"
     temp.style.minWidth = "100%"
     temp.style.fontSize = "16px"
-    parentEl.parentNode.appendChild(temp)
+    surogate.appendChild(temp)
 
     mermaid.mermaidAPI.render(
       `_mermaind_${i}`,
