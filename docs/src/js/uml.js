@@ -5,6 +5,94 @@
  */
 export default className => {
 
+  // Themes themes 99% of what we want, but there are still some stubborn things that require CSS
+  // `https://github.com/facelessuser/pymdown-extensions/blob/master/docs/src/scss/js/_mermaid_dracula.scss`
+  const configDark = {
+    startOnLoad: false,
+    theme: "base",
+    themeVariables: {
+      darkMode: true,
+
+      background: "#323443",
+      mainBkg: "#604b7d",
+      textColor: "#bf95f9",
+      lineColor: "#bf95f9",
+      errorBkgColor: "#802c2c",
+      errorTextColor: "#ff5757",
+      primaryColor: "#604b7d",
+      primaryTextColor: "#bf95f9",
+      primaryBorderColor: "#bf95f9",
+      secondaryColor: "#297d3e",
+      secondaryTextColor: "#52fa7c",
+      secondaryBorderColor: "#52fa7c",
+      tertiaryColor: "#303952",
+      tertiaryTextColor: "#6071a4",
+      tertiaryBorderColor: "#6071a4",
+      noteBkgColor: "#797d45",
+      noteTextColor: "#f1fa89",
+      noteBorderColor: "#f1fa89",
+      edgeLabelBackground: "#604b7d",
+      edgeLabelText: "#604b7d",
+
+      actorLineColor: "#6071a4",
+
+      activeTaskBkgColor: "#803d63",
+      activeTaskBorderColor: "#ff7ac6",
+      doneTaskBkgColor: "#297d3e",
+      doneTaskBorderColor: "#52fa7c",
+      critBkgColor: "#802c2c",
+      critBorderColor: "#ff5757",
+      taskTextColor: "#bf95f9",
+      taskTextOutsideColor: "#bf95f9",
+      taskTextLightColor: "#bf95f9",
+      sectionBkgColor: "#bf95f9b3",
+      sectionBkgColor2: "#bf95f966",
+      altSectionBkgColor: "#323443",
+      todayLineColor: "#ff7ac6",
+      gridColor: "#6071a4",
+      defaultLinkColor: "#8be8fd",
+
+      altBackground: "#bf95f9",
+
+      classText: "#bf95f9",
+
+      fillType0: "#406080",
+      fillType1: "#46747f",
+      fillType2: "#297d3e",
+      fillType3: "#805c36",
+      fillType4: "#803d63",
+      fillType5: "#604b7d",
+      fillType6: "#802c2c",
+      fillType7: "#797d45",
+      fillType8: "#7c7c79"
+    },
+    flowchart: {
+      htmlLabels: false
+    },
+    sequence: {
+      useMaxWidth: false
+    },
+    class: {
+      textHeight: 16,
+      dividerMargin: 16
+    }
+  }
+
+  const configLight = {
+    startOnLoad: false,
+    theme: "base",
+    flowchart: {
+      htmlLabels: false
+    },
+    sequence: {
+      useMaxWidth: false
+    },
+    class: {
+      textHeight: 16,
+      dividerMargin: 16
+    }
+  }
+
   const getFromCode = function(parent) {
     // Handles <pre><code> text extraction.
     let text = ""
@@ -22,6 +110,13 @@ export default className => {
       }
     }
     return text
+  }
+
+  // Get the proper theme color
+  if (document.querySelector("[data-md-color-primary^=\"drac-\"]")) {
+    mermaid.initialize(configDark)
+  } else {
+    mermaid.initialize(configLight)
   }
 
   // Find all of our Mermaid sources and render them.
