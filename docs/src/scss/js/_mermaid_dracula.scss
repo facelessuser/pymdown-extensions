@@ -3,6 +3,11 @@
   div.mermaid {
     margin: px2em(16px) 0;
     overflow: auto;
+
+    svg {
+      max-width: none;
+      font-size: 16px !important;
+    }
   }
 }
 
@@ -12,9 +17,6 @@
   .md-typeset div.mermaid {
     svg {
       /* stylelint-disable selector-class-pattern */
-
-      max-width: none;
-      font-size: 16px !important;
       background-color: #{$drac-default-bg};
 
       defs marker#ZERO_OR_MORE_END circle {
