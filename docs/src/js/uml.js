@@ -5,6 +5,116 @@
  */
 export default className => {
 
+  // Custom element to encapsulate Mermaid content.
+  class MermaidDiv extends HTMLElement {
+
+    /**
+    * Creates a special Mermaid div shadow DOM.
+    * Works around issues of shared IDs.
+    * @return {void}
+    */
+    constructor() {
+      // Always call super first in constructor
+      super()
+
+      // write element functionality in here
+
+      let css = `
+      div.mermaid {
+        margin: 0;
+        overflow: visible;
+      }
+
+      div.mermaid svg {
+        max-width: none;
+        font-size: 16px !important;
+      }
+      `
+
+      if (document.querySelector("[data-md-color-primary^=\"drac-\"]")) {
+        css = css.concat(
+          `
+          :root {
+            --drac-page-bg: hsl(233, 15%, 23%);
+            --drac-purple-fg: hsl(265, 89%, 78%);
+            --drac-purple-bg: hsl(265, 25%, 39%);
+            --drac-yellow-fg: hsl(65, 92%, 76%);
+          }
+
+          /* General */
+          div.mermaid svg {
+            background-color: var(--drac-page-bg);
+          }
+
+          /* Entity Relationship */
+          div.mermaid svg  defs marker#ZERO_OR_MORE_END circle {
+            fill: #bf95f9 !important;
+          }
+
+          /* Flowchart */
+          div.mermaid svg .labelText,
+          div.mermaid svg .label text {
+            fill: var(--drac-purple-fg);
+          }
+
+          div.mermaid svg .edgeLabel text {
+            fill: var(--drac-purple-fg) !important;
+          }
+          div.mermaid svg .edgeLabel rect {
+            opacity: 0.5 !important;
+            fill: var(--drac-purple-bg) !important;
+          }
+
+          /* Sequence */
+          div.mermaid svg .noteText {
+            fill: var(--drac-yellow-fg);
+          }
+
+          /* Gantt */
+          div.mermaid svg .sectionTitle {
+            fill: var(--drac-purple-fg) !important;
+          }
+
+          div.mermaid svg .grid .tick line {
+            stroke: var(--drac-blue-fg) !important;
+          }
+
+          div.mermaid svg .grid .tick text {
+            fill: var(--drac-purple-fg);
+          }
+
+          /* Class Diagram */
+          div.mermaid svg .statediagram-state rect.divider {
+            fill: transparent !important;
+          }
+
+          /* State Diagram */
+          div.mermaid svg .stateGroup circle[style$="fill: black;"] {
+            fill: var(--drac-purple-bg) !important;
+            stroke: var(--drac-purple-bg) !important;
+          }
+
+          div.mermaid svg .stateGroup circle[style$="fill: white;"] {
+            fill: var(--drac-purple-bg) !important;
+            stroke: var(--drac-purple-fg) !important;
+          }
+
+          div.mermaid svg .stateGroup .composit {
+            fill: var(--drac-page-bg);
+          }
+          `
+        )
+      }
+
+      const shadow = this.attachShadow({mode: "open"})
+      const style = document.createElement("style")
+      style.textContent = css
+      shadow.appendChild(style)
+    }
+  }
+
+  customElements.define("mermaid-div", MermaidDiv)
+
   // Themes themes 99% of what we want, but there are still some stubborn things that require CSS
   // `https://github.com/facelessuser/pymdown-extensions/blob/master/docs/src/scss/js/_mermaid_dracula.scss`
   const configDark = {
@@ -163,7 +273,9 @@ export default className => {
 
         // Insert the render where we want it and remove the original text source.
         // Mermaid will clean up the temporary element.
-        parentEl.parentNode.insertBefore(el, parentEl)
+        const shadow = document.createElement("mermaid-div")
+        shadow.shadowRoot.appendChild(el)
+        parentEl.parentNode.insertBefore(shadow, parentEl)
         parentEl.parentNode.removeChild(parentEl)
       },
       temp

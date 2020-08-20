@@ -18,6 +18,7 @@ CodeHilite's
 CommonMark
 CriticMarkup
 Ctrl
+DOM
 Dicts
 Donath
 ElementTree
