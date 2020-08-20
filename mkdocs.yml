@@ -13,8 +13,9 @@ theme:
   icon:
     logo: material/book-open-page-variant
   palette:
-    primary: drac-purple
-    accent: drac-purple
+    scheme: dracula
+    primary: purple
+    accent: purple
   font:
     text: Roboto
     code: Roboto Mono
@@ -139,9 +140,9 @@ extra:
     - icon: fontawesome/brands/discord
       link: https://discord.gg/TWs8Tgr
 extra_css:
-  - assets/pymdownx-extras/extra-cce78a5bc1.css
+  - assets/pymdownx-extras/extra-ccf8fcccf4.css
 extra_javascript:
-  - assets/pymdownx-extras/extra-045cb6445e.js
+  - assets/pymdownx-extras/extra-ba4c817901.js
 
 plugins:
   - search

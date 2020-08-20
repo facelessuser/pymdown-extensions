@@ -13,8 +13,9 @@ theme:
   icon:
     logo: material/book-open-page-variant
   palette:
-    primary: drac-purple
-    accent: drac-purple
+    scheme: dracula
+    primary: purple
+    accent: purple
   font:
     text: Roboto
     code: Roboto Mono

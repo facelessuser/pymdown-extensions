@@ -4,7 +4,13 @@
   --md-key-border-color: #{shade(hsla(0, 100%, 100%, 1), 28%)};
   --md-key-accent-color: hsla(0, 100%, 100%, 1);
 
-  [data-md-color-primary^="drac-"] {
+  [data-md-color-scheme="slate"] {
+    --md-key-face-color: var(--md-default-fg-color--lightest);
+    --md-key-border-color: #{darken(rgb(46, 48, 62), 9%)};
+    --md-key-accent-color: var(--md-default-fg-color--lighter);
+  }
+
+  [data-md-color-scheme="dracula"] {
     --md-key-face-color: var(--md-default-fg-color--lightest);
     --md-key-border-color: var(--md-default-bg-color--darkest);
     --md-key-accent-color: var(--md-default-fg-color--lighter);

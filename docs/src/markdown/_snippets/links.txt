@@ -59,6 +59,7 @@
 [_pathconverter]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/pathconverter.py "Source"
 [_progressbar]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/progressbar.py "Source"
 [_saneheaders]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/saneheaders.py "Source"
+[_slugs]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/slugs.py "Source"
 [_smartsymbols]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/smartsymbols.py "Source"
 [_snippets]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/snippets.py "Source"
 [_striphtml]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/striphtml.py "Source"

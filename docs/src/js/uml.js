@@ -5,6 +5,20 @@
  */
 export default className => {
 
+  // We use this to determine if we want the dark or light theme.
+  // Could be changed to anything. This script can't support dynamic theme
+  // changes yet. We'd probably need to store the mermaid instructions in
+  // a special script tag or hidden tag and then provide a reloader to update
+  // the existing renders.
+  let preferences = null
+  if (document.querySelector("[data-md-color-scheme=\"dracula\"]")) {
+    preferences = window.mermaidConfig.dracula
+  } else if (document.querySelector("[data-md-color-scheme=\"slate\"]")) {
+    preferences = window.mermaidConfig.dark
+  } else {
+    preferences = window.mermaidConfig.light
+  }
+
   // Custom element to encapsulate Mermaid content.
   class MermaidDiv extends HTMLElement {
 
@@ -14,194 +28,17 @@ export default className => {
     * @return {void}
     */
     constructor() {
-      // Always call super first in constructor
       super()
 
-      // write element functionality in here
-
-      let css = `
-      div.mermaid {
-        margin: 0;
-        overflow: visible;
-      }
-
-      div.mermaid svg {
-        max-width: none;
-        font-size: 16px !important;
-      }
-      `
-
-      if (document.querySelector("[data-md-color-primary^=\"drac-\"]")) {
-        css = css.concat(
-          `
-          :root {
-            --drac-page-bg: hsl(233, 15%, 23%);
-            --drac-purple-fg: hsl(265, 89%, 78%);
-            --drac-purple-bg: hsl(265, 25%, 39%);
-            --drac-yellow-fg: hsl(65, 92%, 76%);
-          }
-
-          /* General */
-          div.mermaid svg {
-            background-color: var(--drac-page-bg);
-          }
-
-          /* Entity Relationship */
-          div.mermaid svg  defs marker#ZERO_OR_MORE_END circle {
-            fill: #bf95f9 !important;
-          }
-
-          /* Flowchart */
-          div.mermaid svg .labelText,
-          div.mermaid svg .label text {
-            fill: var(--drac-purple-fg);
-          }
-
-          div.mermaid svg .edgeLabel text {
-            fill: var(--drac-purple-fg) !important;
-          }
-          div.mermaid svg .edgeLabel rect {
-            opacity: 0.5 !important;
-            fill: var(--drac-purple-bg) !important;
-          }
-
-          /* Sequence */
-          div.mermaid svg .noteText {
-            fill: var(--drac-yellow-fg);
-          }
-
-          /* Gantt */
-          div.mermaid svg .sectionTitle {
-            fill: var(--drac-purple-fg) !important;
-          }
-
-          div.mermaid svg .grid .tick line {
-            stroke: var(--drac-blue-fg) !important;
-          }
-
-          div.mermaid svg .grid .tick text {
-            fill: var(--drac-purple-fg);
-          }
-
-          /* Class Diagram */
-          div.mermaid svg .statediagram-state rect.divider {
-            fill: transparent !important;
-          }
-
-          /* State Diagram */
-          div.mermaid svg .stateGroup circle[style$="fill: black;"] {
-            fill: var(--drac-purple-bg) !important;
-            stroke: var(--drac-purple-bg) !important;
-          }
-
-          div.mermaid svg .stateGroup circle[style$="fill: white;"] {
-            fill: var(--drac-purple-bg) !important;
-            stroke: var(--drac-purple-fg) !important;
-          }
-
-          div.mermaid svg .stateGroup .composit {
-            fill: var(--drac-page-bg);
-          }
-          `
-        )
-      }
-
+      // Create the Shadow DOM and attach style
       const shadow = this.attachShadow({mode: "open"})
       const style = document.createElement("style")
-      style.textContent = css
+      style.textContent = preferences.themeCss || ""
       shadow.appendChild(style)
     }
   }
 
   customElements.define("mermaid-div", MermaidDiv)
-
-  // Themes themes 99% of what we want, but there are still some stubborn things that require CSS
-  // `https://github.com/facelessuser/pymdown-extensions/blob/master/docs/src/scss/js/_mermaid_dracula.scss`
-  const configDark = {
-    startOnLoad: false,
-    theme: "base",
-    themeVariables: {
-      darkMode: true,
-
-      background: "#323443",
-      mainBkg: "#604b7d",
-      textColor: "#bf95f9",
-      lineColor: "#bf95f9",
-      errorBkgColor: "#802c2c",
-      errorTextColor: "#ff5757",
-      primaryColor: "#604b7d",
-      primaryTextColor: "#bf95f9",
-      primaryBorderColor: "#bf95f9",
-      secondaryColor: "#297d3e",
-      secondaryTextColor: "#52fa7c",
-      secondaryBorderColor: "#52fa7c",
-      tertiaryColor: "#303952",
-      tertiaryTextColor: "#6071a4",
-      tertiaryBorderColor: "#6071a4",
-      noteBkgColor: "#797d45",
-      noteTextColor: "#f1fa89",
-      noteBorderColor: "#f1fa89",
-      edgeLabelBackground: "#604b7d",
-      edgeLabelText: "#604b7d",
-
-      actorLineColor: "#6071a4",
-
-      activeTaskBkgColor: "#803d63",
-      activeTaskBorderColor: "#ff7ac6",
-      doneTaskBkgColor: "#297d3e",
-      doneTaskBorderColor: "#52fa7c",
-      critBkgColor: "#802c2c",
-      critBorderColor: "#ff5757",
-      taskTextColor: "#bf95f9",
-      taskTextOutsideColor: "#bf95f9",
-      taskTextLightColor: "#bf95f9",
-      sectionBkgColor: "#bf95f9b3",
-      sectionBkgColor2: "#bf95f966",
-      altSectionBkgColor: "#323443",
-      todayLineColor: "#ff7ac6",
-      gridColor: "#6071a4",
-      defaultLinkColor: "#8be8fd",
-
-      altBackground: "#bf95f9",
-
-      classText: "#bf95f9",
-
-      fillType0: "#406080",
-      fillType1: "#46747f",
-      fillType2: "#297d3e",
-      fillType3: "#805c36",
-      fillType4: "#803d63",
-      fillType5: "#604b7d",
-      fillType6: "#802c2c",
-      fillType7: "#797d45",
-      fillType8: "#7c7c79"
-    },
-    flowchart: {
-      htmlLabels: false
-    },
-    sequence: {
-      useMaxWidth: false
-    },
-    class: {
-      textHeight: 16,
-      dividerMargin: 16
-    }
-  }
-
-  const configLight = {
-    startOnLoad: false,
-    theme: "base",
-    flowchart: {
-      htmlLabels: false
-    },
-    sequence: {
-      useMaxWidth: false
-    },
-    class: {
-      textHeight: 16,
-      dividerMargin: 16
-    }
-  }
 
   const getFromCode = function(parent) {
     // Handles <pre><code> text extraction.
@@ -222,15 +59,10 @@ export default className => {
     return text
   }
 
-  // Get the proper theme color
-  if (document.querySelector("[data-md-color-primary^=\"drac-\"]")) {
-    mermaid.initialize(configDark)
-  } else {
-    mermaid.initialize(configLight)
-  }
+  mermaid.initialize(preferences)
+  const config = mermaid.mermaidAPI.getConfig()
 
   // Find all of our Mermaid sources and render them.
-  const config = mermaid.mermaidAPI.getConfig()
   const blocks = document.querySelectorAll(`pre.${className}`)
   const surogate = document.querySelector("html")
   for (let i = 0; i < blocks.length; i++) {
