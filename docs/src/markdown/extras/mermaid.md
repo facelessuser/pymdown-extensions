@@ -18,7 +18,7 @@ Our setup is found below. We use a custom loader and configuration to get what w
 our own personal use. We will explain some of our reasoning later, but below are reference links to main parts.
 
 !!! settings "Setup"
-    - ["On ready" event][onready-event].
+    - [Events][onready-event].
     - [UML Loader][mermaid-loader].
     - [Mermaid configuration settings][mermaid-config].
     - [MkDocs configuration][mkdocs-config].
@@ -201,7 +201,7 @@ trigger it.
        within their parent element, we rather them overflow with a scrollbar. You can leave these enabled if you like.
        Since we render our diagrams under a custom element with a shadow DOM, to get scrollbars, we simply enable
        `#!css overflow: auto` on the custom `mermaid-div` element (under the host DOM, not the shadow DOM). You can
-       check our our stylesheet that does this [here][mermaid-style].
+       check out our stylesheet that does this [here][mermaid-style].
 
     3. We disable `startOnLoad` as we provide our own loader (for reasons we will get into later).
 
@@ -215,9 +215,13 @@ While using Mermaid, we've found a couple of issues which we were able to solve 
 [custom loader][mermaid-loader]. The loader contains all the logic needed to find the Mermaid diagrams, convert them,
 wrap them in a shadow DOM, and inserts them into the current document.
 
-In order to use the loader, it should be attached to an `DOMContentLoaded` event to execute only after the document is
+In order to use the loader, it should be attached to a `DOMContentLoaded` event to execute only after the document is
 loaded. We create our own [`onReady`][onready-event] function that checks if the Mermaid library is loaded, and only if
 it is, we execute our loader.
+
+We also create an `observer` event that watches for when the attribute that controls the color scheme on our site
+changes. When a color change occurs, we run our loader again and regenerate our diagrams. This is possible because we
+hide away the original content in our shadow DOM along with the generated diagram.
 
 !!! bug "Issues"
 

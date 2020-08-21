@@ -37,7 +37,9 @@ export default className => {
     }
   }
 
-  customElements.define("mermaid-div", MermaidDiv)
+  if (typeof customElements.get("mermaid-div") === "undefined") {
+    customElements.define("mermaid-div", MermaidDiv)
+  }
 
   const getFromCode = function(parent) {
     // Handles <pre><code> text extraction.
@@ -71,18 +73,21 @@ export default className => {
   }
 
   // Find all of our Mermaid sources and render them.
-  const blocks = document.querySelectorAll(`pre.${className}`)
+  const blocks = document.querySelectorAll(`pre.${className}, mermaid-div`)
   const surrogate = document.querySelector("body")
   for (let i = 0; i < blocks.length; i++) {
-    const parentEl = blocks[i]
+    const block = blocks[i]
+    const parentEl = (block.tagName.toLowerCase() === "mermaid-div") ?
+      block.shadowRoot.querySelector(`pre.${className}`) :
+      block
 
     // Create a temporary element with the typeset and size we desire.
     // Insert it at the end of our parent to render the SVG.
     const temp = document.createElement("div")
-    temp.style.visibility = "hidden !important"
-    temp.style.display = "display !important"
-    temp.style.padding = "0 !important"
-    temp.style.margin = "0 !important"
+    temp.style.visibility = "hidden"
+    temp.style.display = "display"
+    temp.style.padding = "0"
+    temp.style.margin = "0"
     surrogate.appendChild(temp)
 
     mermaid.mermaidAPI.render(
@@ -97,8 +102,12 @@ export default className => {
         // Mermaid will clean up the temporary element.
         const shadow = document.createElement("mermaid-div")
         shadow.shadowRoot.appendChild(el)
-        parentEl.parentNode.insertBefore(shadow, parentEl)
-        parentEl.parentNode.removeChild(parentEl)
+        block.parentNode.insertBefore(shadow, block)
+        parentEl.style.display = "none"
+        shadow.shadowRoot.appendChild(parentEl)
+        if (parentEl !== block) {
+          block.parentNode.removeChild(block)
+        }
       },
       temp
     )
