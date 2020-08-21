@@ -124,6 +124,7 @@ checkbox
 checkboxes
 cmd
 config
+configs
 coveragepy
 customizable
 deprecations
@@ -210,6 +211,7 @@ requesters
 revisioned
 sanitizer
 scrollbar
+scrollbars
 selectable
 shortener
 shortname
@@ -224,6 +226,7 @@ sublicense
 superfences
 syntaxes
 th
+theming
 thumbsup
 tox
 uc

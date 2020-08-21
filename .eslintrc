@@ -6,7 +6,8 @@
     "node": true
   },
   "globals": {
-    "mermaid": true
+    "mermaid": true,
+    "mermaidConfig": true
   },
   "parser": "babel-eslint",
   "parserOptions": {

@@ -53,6 +53,7 @@ nav:
     - Tilde: extensions/tilde.md
   - Extras:
     - Slugs: extras/slugs.md
+    - Advanced Mermaid Notes: extras/mermaid.md
   - FAQ: faq.md
   - About:
     - Contributing &amp; Support: about/contributing.md
@@ -142,7 +143,7 @@ extra:
 extra_css:
   - assets/pymdownx-extras/extra-ccf8fcccf4.css
 extra_javascript:
-  - assets/pymdownx-extras/extra-ba4c817901.js
+  - assets/pymdownx-extras/extra-52ccfbf8e7.js
 
 plugins:
   - search

@@ -23,12 +23,15 @@
 [mermaid]: https://mermaid-js.github.io/mermaid/#/
 [mermaid-config]: https://github.com/facelessuser/pymdown-extensions/blob/master/docs/src/markdown/_snippets/uml.txt
 [mermaid-loader]: https://github.com/facelessuser/pymdown-extensions/blob/master/docs/src/js/uml.js
+[mermaid-style]: https://github.com/facelessuser/pymdown-extensions/blob/master/docs/src/scss/js/_mermaid.scss
 [md-in-html]: https://python-markdown.github.io/extensions/md_in_html/
 [mkdocs]: https://github.com/mkdocs/mkdocs
 [mkdocs-material]: https://github.com/squidfunk/mkdocs-material
+[mkdocs-config]: https://github.com/facelessuser/pymdown-extensions/blob/master/mkdocs.yml
 [nested-markdown]: https://python-markdown.github.io/extensions/extra/#nested-markdown-inside-html-blocks
 [nl2br]: https://python-markdown.github.io/extensions/nl2br/
 [octicons]: https://octicons.github.com/
+[onready-event]: https://github.com/facelessuser/pymdown-extensions/blob/master/docs/src/js/extra.js
 [pep8-naming]: https://pypi.python.org/pypi/pep8-naming
 [pygments]: http://pygments.org/
 [pymdown-styles]: https://github.com/facelessuser/pymdown-styles/tree/master/pymdown_styles
