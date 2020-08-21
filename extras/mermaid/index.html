@@ -314,8 +314,16 @@ merge newbranch</code></pre> </div> <input id=__tabbed_2_2 name=__tabbed_2 type=
         <span class=nx>useMaxWidth</span><span class=o>:</span> <span class=kc>false</span>
       <span class=p>}</span>
     <span class=p>};</span>
-    <span class=nx>mermaid</span><span class=p>.</span><span class=nx>mermaidAPI</span><span class=p>.</span><span class=nx>globalReset</span><span class=p>();</span>
-    <span class=kd>var</span> <span class=nx>scheme</span> <span class=o>=</span> <span class=nb>document</span><span class=p>.</span><span class=nx>querySelector</span><span class=p>(</span><span class=s2>&quot;[data-md-color-scheme]&quot;</span><span class=p>).</span><span class=nx>getAttribute</span><span class=p>(</span><span class=s2>&quot;data-md-color-scheme&quot;</span><span class=p>);</span>
+    <span class=nx>mermaid</span><span class=p>.</span><span class=nx>mermaidAPI</span><span class=p>.</span><span class=nx>globalReset</span><span class=p>();</span> <span class=c1>// Non Material themes should just use &quot;default&quot;</span>
+
+    <span class=kd>var</span> <span class=nx>scheme</span> <span class=o>=</span> <span class=kc>null</span><span class=p>;</span>
+
+    <span class=k>try</span> <span class=p>{</span>
+      <span class=nx>scheme</span> <span class=o>=</span> <span class=nb>document</span><span class=p>.</span><span class=nx>querySelector</span><span class=p>(</span><span class=s2>&quot;[data-md-color-scheme]&quot;</span><span class=p>).</span><span class=nx>getAttribute</span><span class=p>(</span><span class=s2>&quot;data-md-color-scheme&quot;</span><span class=p>);</span>
+    <span class=p>}</span> <span class=k>catch</span> <span class=p>(</span><span class=nx>err</span><span class=p>)</span> <span class=p>{</span>
+      <span class=nx>scheme</span> <span class=o>=</span> <span class=s2>&quot;default&quot;</span><span class=p>;</span>
+    <span class=p>}</span>
+
     <span class=kd>var</span> <span class=nx>config</span> <span class=o>=</span> <span class=k>typeof</span> <span class=nx>mermaidConfig</span> <span class=o>===</span> <span class=s2>&quot;undefined&quot;</span> <span class=o>?</span> <span class=nx>defaultConfig</span> <span class=o>:</span> <span class=nx>mermaidConfig</span><span class=p>[</span><span class=nx>scheme</span><span class=p>]</span> <span class=o>||</span> <span class=nx>mermaidConfig</span><span class=p>[</span><span class=s2>&quot;default&quot;</span><span class=p>]</span> <span class=o>||</span> <span class=nx>defaultConfig</span><span class=p>;</span>
     <span class=nx>mermaid</span><span class=p>.</span><span class=nx>initialize</span><span class=p>(</span><span class=nx>config</span><span class=p>);</span> <span class=c1>// Find all of our Mermaid sources and render them.</span>
 
@@ -574,4 +582,4 @@ window.mermaidConfig = {
             worker: "../../assets/javascripts/worker/search.fae956e7.min.js"
           }, typeof search !== "undefined" && search)
         })
-      </script> <script src=../../assets/pymdownx-extras/extra-fbe5f1cd83.js></script> </body> </html>
+      </script> <script src=../../assets/pymdownx-extras/extra-2aa57f6c49.js></script> </body> </html>
