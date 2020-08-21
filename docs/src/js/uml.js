@@ -81,7 +81,13 @@ export default className => {
     }
   }
   mermaid.mermaidAPI.globalReset()
-  const scheme = document.querySelector("[data-md-color-scheme]").getAttribute("data-md-color-scheme")
+  // Non Material themes should just use "default"
+  let scheme = null
+  try {
+    scheme = document.querySelector("[data-md-color-scheme]").getAttribute("data-md-color-scheme")
+  } catch (err) {
+    scheme = "default"
+  }
   const config = (typeof mermaidConfig === "undefined") ?
     defaultConfig :
     mermaidConfig[scheme] || (mermaidConfig.default || defaultConfig)

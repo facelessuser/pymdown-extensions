@@ -231,8 +231,16 @@
         useMaxWidth: false
       }
     };
-    mermaid.mermaidAPI.globalReset();
-    var scheme = document.querySelector("[data-md-color-scheme]").getAttribute("data-md-color-scheme");
+    mermaid.mermaidAPI.globalReset(); // Non Material themes should just use "default"
+
+    var scheme = null;
+
+    try {
+      scheme = document.querySelector("[data-md-color-scheme]").getAttribute("data-md-color-scheme");
+    } catch (err) {
+      scheme = "default";
+    }
+
     var config = typeof mermaidConfig === "undefined" ? defaultConfig : mermaidConfig[scheme] || mermaidConfig["default"] || defaultConfig;
     mermaid.initialize(config); // Find all of our Mermaid sources and render them.
 
