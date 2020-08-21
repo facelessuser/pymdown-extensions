@@ -3,7 +3,7 @@ html {
 }
 
 /* Dark mode changes */
-[data-md-color-primary^="drac-"] {
+[data-md-color-scheme="dracula"] {
 
   --md-text-color: var(--md-default-fg-color);
   background-color: var(--md-default-bg-color);
@@ -147,7 +147,8 @@ html {
 .md-sidebar__scrollwrap,
 .md-search__scrollwrap,
 .md-typeset pre > code,
-.md-typeset div.mermaid {
+.md-typeset div.mermaid,
+.md-typeset mermaid-div {
   // Override native scrollbar styles
   &::-webkit-scrollbar {
     width: px2rem(4px);

@@ -18,6 +18,7 @@ CodeHilite's
 CommonMark
 CriticMarkup
 Ctrl
+DOM
 Dicts
 Donath
 ElementTree
@@ -123,6 +124,7 @@ checkbox
 checkboxes
 cmd
 config
+configs
 coveragepy
 customizable
 deprecations
@@ -202,12 +204,14 @@ rebranded
 regex
 reindent
 reinstalling
+reloader
 renderer
 repo
 requesters
 revisioned
 sanitizer
 scrollbar
+scrollbars
 selectable
 shortener
 shortname
@@ -222,6 +226,7 @@ sublicense
 superfences
 syntaxes
 th
+theming
 thumbsup
 tox
 uc

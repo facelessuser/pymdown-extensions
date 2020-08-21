@@ -1,5 +1,4 @@
-path: tree/master
-source: pymdownx/slugs.py
+[:octicons-file-code-24:][_slugs]{: .source-link }
 
 # Slugs
 

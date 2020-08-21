@@ -13,8 +13,9 @@ theme:
   icon:
     logo: material/book-open-page-variant
   palette:
-    primary: drac-purple
-    accent: drac-purple
+    scheme: dracula
+    primary: purple
+    accent: purple
   font:
     text: Roboto
     code: Roboto Mono
@@ -52,6 +53,7 @@ nav:
     - Tilde: extensions/tilde.md
   - Extras:
     - Slugs: extras/slugs.md
+    - Advanced Mermaid Notes: extras/mermaid.md
   - FAQ: faq.md
   - About:
     - Contributing &amp; Support: about/contributing.md

@@ -4,7 +4,7 @@
   --md-heart-big: #{$clr-red-a400};
 
   /* Dark mode colors */
-  [data-md-color-primary^="drac-"] {
+  [data-md-color-scheme="dracula"] {
     --md-heart: #{$drac-pink};
     --md-heart-big: #{$drac-red};
   }

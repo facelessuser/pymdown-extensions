@@ -9,7 +9,7 @@
   --md-progress-0: #{$clr-red-a400};
 
   /* Dark mode colors */
-  [data-md-color-primary^="drac-"] {
+  [data-md-color-scheme="dracula"] {
     --md-progress-stripe: var(--md-default-bg-color--lightest);
     --md-progress-100: #{$drac-green};
     --md-progress-80: #{$drac-light-green};

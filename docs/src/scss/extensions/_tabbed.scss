@@ -1,5 +1,5 @@
 /* Dark mode changes */
-[data-md-color-primary^="drac-"] {
+[data-md-color-scheme="dracula"] {
   .md-typeset {
     .tabbed-set > .tabbed-content {
       box-shadow: 0 px2rem(-1px) var(--md-default-fg-color--lighter);
@@ -39,6 +39,13 @@
                   padding: 0 px2rem(12px);
                 }
               }
+            }
+
+            mermaid-div {
+              margin-right: px2rem(-12px);
+              margin-left: px2rem(-12px);
+              padding-right: px2rem(12px);
+              padding-left: px2rem(12px);
             }
           }
         }

@@ -354,7 +354,8 @@ ending line. You can do multiple ranges and even mix them with non ranges.
 
 ## Custom Fences
 
-SuperFences allows defining custom fences for special purposes, like flow charts and sequence diagrams:
+SuperFences allows defining custom fences for special purposes. For instance, we could create special fences for
+diagrams that we could later run Mermaid on.
 
 !!! example "Flow Chart Example"
 
@@ -378,39 +379,8 @@ SuperFences allows defining custom fences for special purposes, like flow charts
         ```
         ````
 
-!!! example "Sequence Diagram Example"
-
-    === "Output"
-        ```mermaid
-        sequenceDiagram
-            participant Alice
-            participant Bob
-            Alice->>John: Hello John, how are you?
-            loop Healthcheck
-                John->>John: Fight against hypochondria
-            end
-            Note right of John: Rational thoughts <br/>prevail!
-            John-->>Alice: Great!
-            John->>Bob: How about you?
-            Bob-->>John: Jolly good!
-        ```
-
-    === "Markdown"
-        ````
-        ```mermaid
-        sequenceDiagram
-            participant Alice
-            participant Bob
-            Alice->>John: Hello John, how are you?
-            loop Healthcheck
-                John->>John: Fight against hypochondria
-            end
-            Note right of John: Rational thoughts <br/>prevail!
-            John-->>Alice: Great!
-            John->>Bob: How about you?
-            Bob-->>John: Jolly good!
-        ```
-        ````
+This would allow us access to all the diagrams Mermaid offers. Some Mermaid diagrams are less practical to use as they
+don't scale well, but many work great.
 
 In the above example, we have set up a custom fence called `mermaid` which allows us to process special charts with
 [Mermaid][mermaid]. In this case, our special fence preserves the content and sends them to a an element so that
@@ -582,30 +552,17 @@ will automatically find the `#!html <div>` elements with the `mermaid` class and
 [Mermaid][mermaid] via its CDN.
 
 ```html
-<script src="https://unpkg.com/mermaid@8.4.8/dist/mermaid.min.js"></script>
+<script src="https://unpkg.com/mermaid@8.7.0/dist/mermaid.min.js"></script>
 ```
 
 !!! warning "Support"
+
     Please reference [Mermaid's][mermaid] documents for more information in configuring features. PyMdown Extensions
     does not offer direct support for issues you may have in using [Mermaid][mermaid], feel free to use their issue
     tracker to report problems with their library.
 
-!!! tip "Custom Loading"
-
-    We've found that Mermaid diagrams that are found in tabbed interfaces or details, where the element may be hidden
-    on page load, don't always render at a visible size if using Mermaids default loader. We've opted to create our own.
-
-    We also render ours in `#!html <pre><code>` tags. This allows for the cases were something goes wrong and the
-    diagrams don't get rendered, we can still show the source as code blocks.
-
-    Our custom loader also adjusts for quirks and ensuring good typesetting for our document environment. All of this
-    can be viewed in the source.
-
-    - [Loader][mermaid-loader].
-    - [Mermaid configuration settings][mermaid-config]. Note that we turn off themes so that we can use our own, remove
-      the `theme` option, or set your favorite.
-
-    This is just for reference.
+    We do provide some [advanced notes on Mermaid](../extras/mermaid.md) if you are interested in learning how we use
+    and configure it.
 
 ## Limitations
 

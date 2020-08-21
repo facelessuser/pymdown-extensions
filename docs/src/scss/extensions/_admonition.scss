@@ -31,7 +31,7 @@ $new-admonitions: (
     --md-admonition-bg-color--#{$name}: #{transparentize($tint2, 0.9)};
     --md-admonition-icon-color--#{$name}: #{$tint2};
 
-    [data-md-color-primary^="drac-"] {
+    [data-md-color-scheme="dracula"] {
       --md-admonition-bg-color--#{$name}: var(--md-default-bg-color--darkest);
       --md-admonition-icon-color--#{$name}: #{$tint};
     }
@@ -45,14 +45,14 @@ $new-admonitions: (
 }
 
 /* Dark mode changes */
-[data-md-color-primary^="drac-"] .md-typeset .admonition {
+[data-md-color-scheme="dracula"] .md-typeset .admonition {
   box-shadow:
     0 px2rem(4px) px2rem(10px) hsla(0, 0%, 0%, 0.3),
     0 0           px2rem(1px)  hsla(0, 0%, 0%, 0.2);
 }
 
 /* Style existing admonitions with dark mode colors */
-[data-md-color-primary^="drac-"] {
+[data-md-color-scheme="dracula"] {
 
   @each $names, $prop in $old-admonitions {
 

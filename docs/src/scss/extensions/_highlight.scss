@@ -3,11 +3,15 @@
 :root {
   --md-code-special-bg-color: #{darken(hsl(0, 0%, 96%), 5%)};
   --md-code-alternate-bg-color: var(--md-code-bg-color);
+
+  [data-md-color-scheme="slate"] {
+    --md-code-special-bg-color: #{lighten(hsl(232, 15%, 15%), 5%)};
+  }
 }
 
-[data-md-color-primary^="drac-"] {
+[data-md-color-scheme="dracula"] {
 
-  --md-code-special-bg-color: var(--md-default-bg-color--dark);
+  --md-code-special-bg-color: #{lighten($drac-bg, 5%)};
   --md-code-alternate-bg-color: #{tint($drac-bg, 10%)};
 
   .highlight code *,
