@@ -525,6 +525,18 @@ test
 
 ### UML Diagram Example
 
+!!! warning "Support"
+
+    This example is mainly used to illustrate how custom fences work. While Mermaid is used in the example, it is the
+    bare minimum needed to get diagrams working.
+
+    Please reference [Mermaid's][mermaid] documents for more information on configuring features. PyMdown Extensions
+    does not offer direct support for issues you may have in using [Mermaid][mermaid], feel free to use their issue
+    tracker to report problems with their library.
+
+    We do provide some [advanced notes on Mermaid](../extras/mermaid.md) if you are interested in learning how we use
+    and configure it in our own documentation.
+
 This example illustrates how you can use the `custom_fences` option to do UML diagrams with [Mermaid][mermaid]. The
 settings below show us creating a new custom fence called `mermaid`. The special fence is set under the `custom_fences`
 [option](#options).
@@ -554,15 +566,6 @@ will automatically find the `#!html <div>` elements with the `mermaid` class and
 ```html
 <script src="https://unpkg.com/mermaid@8.7.0/dist/mermaid.min.js"></script>
 ```
-
-!!! warning "Support"
-
-    Please reference [Mermaid's][mermaid] documents for more information in configuring features. PyMdown Extensions
-    does not offer direct support for issues you may have in using [Mermaid][mermaid], feel free to use their issue
-    tracker to report problems with their library.
-
-    We do provide some [advanced notes on Mermaid](../extras/mermaid.md) if you are interested in learning how we use
-    and configure it.
 
 ## Limitations
 

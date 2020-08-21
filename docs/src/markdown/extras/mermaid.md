@@ -2,6 +2,16 @@
 
 ## Overview
 
+!!! warning "Support"
+
+    This is provided to help users get Mermaid running, but we do not officially offer technical support for Mermaid.
+    Any issues encounter will require the user to debug it themselves.
+
+    Thee may or may not be issues using an older or newer version of Mermaid than what we have documented here. We may
+    not be always be up to date with the latest and greatest Mermaid version.
+
+    We would be happy to accept pull requests that offer to improve things here or to correct misinformation.
+
 In [SuperFences](../extensions/superfences.md) we cover [custom fences](../extensions/superfences.md#custom-fences)
 and provide an example for using [Mermaid diagrams](../extensions/superfences.md#uml-diagram-example). What we showed in
 the example is the bare minimum required to get Mermaid working. While our example was mainly meant to instruct users on
@@ -15,7 +25,7 @@ of our users to implement a robust Mermaid solution.
 ## Setup
 
 Our setup is found below. We use a custom loader and configuration to get what we feel is the best implementation for
-our own personal use. We will explain some of our reasoning later, but below are reference links to main parts.
+our own personal use. We will explain some of our reasoning later, but below are reference links to the relevant code.
 
 !!! settings "Setup"
     - [Events][onready-event].
@@ -27,7 +37,7 @@ our own personal use. We will explain some of our reasoning later, but below are
 
 There are a few diagrams that we feel do not work well for us, and we thought it useful to share why. The main reason is
 that a few of the diagrams are a bit impractical to use due to sizing and scaling issues. While there may be a way to
-massage these to work, it was frankly not worth the effort for us to spend time on.
+massage them to work, we have not currently invested any time in workarounds for these diagrams.
 
 Some of the less practical examples may work better if they were pre-rendered and included as an image instead. This
 seems to be what Mermaid does in their own [documents][mermaid].
@@ -188,7 +198,7 @@ disabling of problematic features.
 
 We only include the Mermaid library and the configuration options in pages that are actively rendering Mermaid diagrams.
 This is to cut down on loading libraries in pages that aren't utilizing them. We do this by using
-[Snippets](../extensions/snippets.md), we simply attach the necessary [snippet][mermaid-config] at the bottom of the
+[Snippets](../extensions/snippets.md). We simply attach the necessary [snippet][mermaid-config] at the bottom of the
 page. Our custom loader will only execute if the Mermaid library is loaded, so simply including the library will
 trigger it.
 
@@ -213,7 +223,7 @@ trigger it.
 
 While using Mermaid, we've found a couple of issues which we were able to solve by using our own
 [custom loader][mermaid-loader]. The loader contains all the logic needed to find the Mermaid diagrams, convert them,
-wrap them in a shadow DOM, and inserts them into the current document.
+wrap them in a shadow DOM, and insert them into the current document.
 
 In order to use the loader, it should be attached to a `DOMContentLoaded` event to execute only after the document is
 loaded. We create our own [`onReady`][onready-event] function that checks if the Mermaid library is loaded, and only if
@@ -234,16 +244,25 @@ hide away the original content in our shadow DOM along with the generated diagra
     3. Mermaid does not always use unique IDs. This can cause some elements of a diagram to disappear if one diagram
        happens to have the same ID and it is hidden in a details element or a tabbed interface.
 
+    4. We'd like to be able to have different configs for different color schemes (light mode, dark mode, etc.) and we'd
+       like to be able to dynamically reload all the diagrams on theme change.
+
 We solve these issues doing a couple things in our own custom loader.
 
 !!! success "Solutions"
 
-    1. Using the `#!html <html>` element as a parent we attach a surrogate element to it and render the diagram there.
+    1. Using the `#!html <body>` element as a parent, we attach a surrogate element to it and render the diagram there.
        Once rendered, we then insert the diagram back to where the original custom fence was. This ensures it renders
        under a visible parent, and renders at a normal size.
 
     2. We wrap each diagram in a shadow DOM element. This prevents ID leakage from one diagram to another or to the
        host.
+
+    3. We accept our own config structure that allows us to specify different configs based on the scheme being used.
+       We currently adopt what MkDocs Material uses and look for the `data-md-color-scheme` on the `body` tag. Depending
+       on the scheme that is set there, we pick the config under that name. If none are found we try the `default`
+       config, and if that is not found, we provide a sane default. We use a `MutationObserver` to watch for changes
+       to that attribute and render the diagrams again with a new config.
 
 Apart from the issues we were trying to solve, we also use a custom loader for personal aesthetics as we like to render
 our diagrams in `#!html <pre><code>` tags. This allows us to render the diagrams as normal code blocks in the rare case
@@ -255,6 +274,91 @@ that we cannot load the Mermaid library from the specified CDN.
     ```{.js .md-max-height}
     --8<-- ".code/extra.js"
     ```
+
+## Putting it All Together
+
+Your document should include the following:
+
+```html
+<script src="https://unpkg.com/mermaid@8.7.0/dist/mermaid.min.js"></script>
+<script>
+// Optional config
+// If your document is not specifying `data-md-color-scheme` for color schemes,
+// you just need to specify `default`.
+window.mermaidConfig = {
+  default: {
+    startOnLoad: false,
+    theme: "default",
+    themeCSS:"\
+      {\
+        max-width: none;\
+      }",
+    flowchart: {
+      htmlLabels: false
+    },
+    er: {
+      useMaxWidth: false
+    },
+    sequence: {
+      useMaxWidth: false
+    }
+  },
+
+  slate: {
+    startOnLoad: false,
+    theme: "dark",
+    themeCSS:"\
+      {\
+        max-width: none;\
+      }",
+    flowchart: {
+      htmlLabels: false
+    },
+    er: {
+      useMaxWidth: false
+    },
+    sequence: {
+      useMaxWidth: false
+    }
+  }
+}
+</script>
+<script>
+// The loader from "Custom Loader" should go here.
+</script>
+```
+
+If you are using MkDocs, you would probably reference the `extra.js` from your `docs` folder. You may also reference
+your config from your `docs` folder as well, or maybe embed it in your document page directly.
+
+```yaml
+extra_javascript:
+  - https://unpkg.com/mermaid@8.7.0/dist/mermaid.min.js
+  - optionalConfig.js
+  - extra.js
+```
+
+Then in your documents, do something like this:
+
+````
+```mermaid
+graph TD
+    A[Hard] -->|Text| B(Round)
+    B --> C{Decision}
+    C -->|One| D[Result 1]
+    C -->|Two| E[Result 2]
+```
+````
+
+To get something like this:
+
+```mermaid
+graph TD
+    A[Hard] -->|Text| B(Round)
+    B --> C{Decision}
+    C -->|One| D[Result 1]
+    C -->|Two| E[Result 2]
+```
 
 --8<-- "links.txt"
 
