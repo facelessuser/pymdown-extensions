@@ -190,6 +190,7 @@ gulp.task("js:build:rollup", () => {
       ],
       "input": `${config.folders.src}/js/extra.js`
     }))
+    .pipe(gulp.dest("docs/src/markdown/_snippets/.code"))
     .pipe(gulpif(config.compress.enabled, uglify({compress: config.compress.jsOptions, warnings: false})))
     .pipe(gulpif(config.sourcemaps, sourcemaps.write(config.folders.theme)))
 

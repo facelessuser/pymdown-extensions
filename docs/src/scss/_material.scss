@@ -155,6 +155,10 @@ html {
     height: px2rem(4px);
   }
 
+  &::-webkit-scrollbar-corner {
+    background-color: transparent;
+  }
+
   // Scrollbar thumb
   &::-webkit-scrollbar-thumb {
     background-color: var(--md-default-fg-color--lighter);

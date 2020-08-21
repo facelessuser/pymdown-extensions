@@ -249,6 +249,13 @@ Apart from the issues we were trying to solve, we also use a custom loader for p
 our diagrams in `#!html <pre><code>` tags. This allows us to render the diagrams as normal code blocks in the rare case
 that we cannot load the Mermaid library from the specified CDN.
 
+??? settings "Latest Generated Loader"
+    This is genterated by [babel](https://babeljs.io/) during our build process.
+
+    ```{.js .md-max-height}
+    --8<-- ".code/extra.js"
+    ```
+
 --8<-- "links.txt"
 
 --8<-- "uml.txt"
