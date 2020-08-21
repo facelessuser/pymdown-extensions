@@ -10,7 +10,7 @@ hyperlinks in a separate file.  Then includes those hyperlinks at the bottom of 
 to be updated, it can be updated in one location instead of updating them in multiple files.
 
 Snippets is run as a preprocessor, so if a snippet is found in a fenced code block etc., it will still get processed.
-This is great for including the current version of program code.  If the specified file cannot be found, the the markup
+This is great for including the current version of program code.  If the specified file cannot be found, then the markup
 will be removed.  If you need to show a snippet example in fenced code, please escape it as listed in
 [Snippets Notation](#snippets-notation).
 
