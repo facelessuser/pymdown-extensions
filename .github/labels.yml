@@ -3,10 +3,11 @@ template: 'facelessuser:master-labels:labels.yml:master'
 # Wildcard labels
 brace_expansion: true
 extended_glob: true
+minus_negate: false
 
 rules:
   - labels: ['C: infrastructure']
-    patterns: ['*|@(requirements|.github)/**|-*.md']
+    patterns: ['*|@(requirements|.github)/**|!*.md']
 
   - labels: ['C: source']
     patterns: ['pymdownx/**']
@@ -36,7 +37,7 @@ rules:
     patterns: ['**/?(test_)escapeall*.py|tests/**/escapeall/**']
 
   - labels: ['C: extra']
-    patterns: ['**/?(test_)extra!(rawhtml)*.py|tests/**/extra!(rawhtml)/**|-docs/theme/**|-docs/src/@(js|scss)/**']
+    patterns: ['**/?(test_)extra!(rawhtml)*.py|tests/**/extra!(rawhtml)/**|!docs/theme/**|!docs/src/@(js|scss)/**']
 
   - labels: ['C: extrarawhtml']
     patterns: ['**/?(test_)extrarawhtml*.py|tests/**/extrarawhtml/**']
