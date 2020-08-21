@@ -61,16 +61,31 @@ export default className => {
   }
 
   // We use this to determine if we want the dark or light theme.
-  // This is specific for our MkDocs environment.
+  // This is specific for our MkDocs Material environment.
   // You should load your configs based on your own environment's needs.
-  mermaid.mermaidAPI.globalReset()
-  if (document.querySelector("[data-md-color-scheme='dracula']")) {
-    mermaid.initialize(mermaidConfig.dracula || {startOnLoad: false})
-  } else if (document.querySelector("[data-md-color-scheme='slate']")) {
-    mermaid.initialize(mermaidConfig.dark || {startOnLoad: false})
-  } else {
-    mermaid.initialize(mermaidConfig.light || {startOnLoad: false})
+  const defaultConfig = {
+    startOnLoad: false,
+    theme: "default",
+    themeCSS: `
+      {
+        max-width: none;
+      }`,
+    flowchart: {
+      htmlLabels: false
+    },
+    er: {
+      useMaxWidth: false
+    },
+    sequence: {
+      useMaxWidth: false
+    }
   }
+  mermaid.mermaidAPI.globalReset()
+  const scheme = document.querySelector("[data-md-color-scheme]").getAttribute("data-md-color-scheme")
+  const config = (typeof mermaidConfig === "undefined") ?
+    defaultConfig :
+    mermaidConfig[scheme] || (mermaidConfig.default || defaultConfig)
+  mermaid.initialize(config)
 
   // Find all of our Mermaid sources and render them.
   const blocks = document.querySelectorAll(`pre.${className}, mermaid-div`)

@@ -147,9 +147,9 @@ window.mermaidConfig = {
     }
   },
 
-  light: {
+  default: {
     startOnLoad: false,
-    theme: "base",
+    theme: "default",
     themeCSS:"\
       {\
         max-width: none;\
@@ -165,7 +165,8 @@ window.mermaidConfig = {
     }
   },
 
-  dark: {
+  slate: {
+    startOnLoad: false,
     theme: "dark",
     themeCSS:"\
       {\
