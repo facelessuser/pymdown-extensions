@@ -1,5 +1,45 @@
 {% extends "base.html" %}
 
+{% block libs %}
+<script type="text/javascript">
+// Watch for body creation and add the last used scheme
+"use strict";
+
+(function () {
+  var observer = new MutationObserver(function (mutations) {
+    mutations.forEach(function (mutation) {
+      if (mutation.type === "childList") {
+        if (mutation.addedNodes.length) {
+          for (var i = 0; i < mutation.addedNodes.length; i++) {
+            var el = mutation.addedNodes[i];
+
+            if (el.nodeType === 1 && el.tagName.toLowerCase() === "body") {
+              var scheme = localStorage.getItem('data-md-color-scheme');
+
+              if (scheme) {
+                el.setAttribute("data-md-color-scheme", scheme);
+              }
+            }
+          }
+        }
+      }
+    });
+  });
+  observer.observe(document.querySelector("html"), {
+    childList: true
+  });
+})();
+
+function toggleScheme() {
+  var body = document.querySelector("body"),
+      scheme = body.getAttribute("data-md-color-scheme");
+
+  scheme = (scheme !== "dracula") ? "dracula" : "default";
+  body.setAttribute("data-md-color-scheme", scheme);
+}
+</script>
+{% endblock %}
+
 {% block announce %}{% include "announce.html" ignore missing %}{% endblock %}
 
 {% block content %}

@@ -292,7 +292,13 @@
     var observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
         if (mutation.type === "attributes") {
-          localStorage.setItem("scheme", mutation.target.getAttribute("data-md-color-scheme"));
+          var scheme = mutation.target.getAttribute("data-md-color-scheme");
+
+          if (!scheme) {
+            scheme = "default";
+          }
+
+          localStorage.setItem("data-md-color-scheme", scheme);
 
           if (typeof mermaid !== "undefined") {
             uml("mermaid");

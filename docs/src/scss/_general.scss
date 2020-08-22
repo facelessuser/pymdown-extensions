@@ -78,3 +78,46 @@ footer.sponsorship {
     }
   }
 }
+
+// Scheme toggle
+body {
+  &[data-md-color-scheme="dracula"] .md-icon .dark-mode {
+    display:  none;
+  }
+
+  &:not([data-md-color-scheme="dracula"]) .md-icon .bright-mode {
+    display:  none;
+  }
+}
+
+.md-nav__scheme  {
+  display: none;
+}
+
+@include break-to-device(tablet portrait) {
+  .md-nav__scheme  {
+    position: absolute;
+    top: px2rem(10px);
+    right: px2rem(10px);
+    display: block;
+  }
+
+  .md-header-nav__scheme {
+    display: none;
+  }
+}
+
+@include break-to-device(mobile) {
+  [id="__md_scheme_toggle"] {
+    display: none;
+  }
+}
+
+// Repository containing source
+.md-header-nav__source {
+
+  @include break-from-device(tablet landscape) {
+    width: px2rem(194px);
+    max-width: px2rem(194px);
+  }
+}

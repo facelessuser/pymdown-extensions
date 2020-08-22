@@ -2,6 +2,10 @@ html {
   background-color: transparent;
 }
 
+[data-md-component="announce"] .twemoji {
+  color: var(--md-primary-fg-color);
+}
+
 /* Dark mode changes */
 [data-md-color-scheme="dracula"] {
 
@@ -128,10 +132,6 @@ html {
   // Announcements
   [data-md-component="announce"] {
     background-color: var(--md-default-bg-color--ultra-dark);
-  }
-
-  [data-md-component="announce"] .twemoji {
-    color: var(--md-primary-fg-color);
   }
 }
 

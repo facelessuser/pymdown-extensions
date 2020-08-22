@@ -9,7 +9,11 @@ import uml from "./uml"
   const observer = new MutationObserver(mutations => {
     mutations.forEach(mutation => {
       if (mutation.type === "attributes") {
-        localStorage.setItem("scheme", mutation.target.getAttribute("data-md-color-scheme"))
+        let scheme = mutation.target.getAttribute("data-md-color-scheme")
+        if (!scheme) {
+          scheme = "default"
+        }
+        localStorage.setItem("data-md-color-scheme", scheme)
         if (typeof mermaid !== "undefined") {
           uml("mermaid")
         }
