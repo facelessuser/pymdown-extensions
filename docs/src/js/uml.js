@@ -66,10 +66,6 @@ export default className => {
   const defaultConfig = {
     startOnLoad: false,
     theme: "default",
-    themeCSS: `
-      {
-        max-width: none;
-      }`,
     flowchart: {
       htmlLabels: false
     },
@@ -77,7 +73,10 @@ export default className => {
       useMaxWidth: false
     },
     sequence: {
-      useMaxWidth: false
+      useMaxWidth: false,
+      noteFontWeight: "14px",
+      actorFontSize: "14px",
+      messageFontSize: "16px"
     }
   }
   mermaid.mermaidAPI.globalReset()

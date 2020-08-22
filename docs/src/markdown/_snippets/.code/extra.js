@@ -220,7 +220,6 @@
     var defaultConfig = {
       startOnLoad: false,
       theme: "default",
-      themeCSS: "\n      {\n        max-width: none;\n      }",
       flowchart: {
         htmlLabels: false
       },
@@ -228,7 +227,10 @@
         useMaxWidth: false
       },
       sequence: {
-        useMaxWidth: false
+        useMaxWidth: false,
+        noteFontWeight: "14px",
+        actorFontSize: "14px",
+        messageFontSize: "16px"
       }
     };
     mermaid.mermaidAPI.globalReset(); // Non Material themes should just use "default"
