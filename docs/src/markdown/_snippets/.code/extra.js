@@ -291,7 +291,9 @@
 
     var observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
-        if (mutation.type === "attributes" && mutation.attributeName === "data-md-color-scheme") {
+        if (mutation.type === "attributes") {
+          localStorage.setItem("scheme", mutation.target.getAttribute("data-md-color-scheme"));
+
           if (typeof mermaid !== "undefined") {
             uml("mermaid");
           }
@@ -299,12 +301,13 @@
       });
     });
     onReady(function () {
+      observer.observe(document.querySelector("body"), {
+        attributeFilter: ["data-md-color-scheme"]
+      });
+
       if (typeof mermaid !== "undefined") {
         uml("mermaid");
       }
-    });
-    observer.observe(document.querySelector("body"), {
-      attributes: true
     });
   })();
 

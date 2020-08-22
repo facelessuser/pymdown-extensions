@@ -8,7 +8,8 @@ import uml from "./uml"
 
   const observer = new MutationObserver(mutations => {
     mutations.forEach(mutation => {
-      if (mutation.type === "attributes" && mutation.attributeName === "data-md-color-scheme") {
+      if (mutation.type === "attributes") {
+        localStorage.setItem("scheme", mutation.target.getAttribute("data-md-color-scheme"))
         if (typeof mermaid !== "undefined") {
           uml("mermaid")
         }
@@ -17,10 +18,10 @@ import uml from "./uml"
   })
 
   onReady(() => {
+    observer.observe(document.querySelector("body"), {attributeFilter: ["data-md-color-scheme"]})
+
     if (typeof mermaid !== "undefined") {
       uml("mermaid")
     }
   })
-
-  observer.observe(document.querySelector("body"), {attributes: true})
 })()

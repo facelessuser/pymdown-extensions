@@ -143,7 +143,7 @@ extra:
 extra_css:
   - assets/pymdownx-extras/extra-5ca3398d4d.css
 extra_javascript:
-  - assets/pymdownx-extras/extra-f4e4891315.js
+  - assets/pymdownx-extras/extra-a57a8d9e00.js
 
 plugins:
   - search
