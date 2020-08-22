@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - 'master'
+    tags:
+    - '**'
+  pull_request:
+    branches:
+    - '**'
 
 jobs:
   tests:
@@ -12,16 +17,21 @@ jobs:
       max-parallel: 4
       matrix:
         platform: [ubuntu-latest, windows-latest]
-        tox-env: [py35, py36, py37, py38]
+        python-version: [3.5, 3.6, 3.7, 3.8, 3.9-dev]
         include:
-          - tox-env: py35
-            python-version: 3.5
-          - tox-env: py36
-            python-version: 3.6
-          - tox-env: py37
-            python-version: 3.7
-          - tox-env: py38
-            python-version: 3.8
+          - python-version: 3.5
+            tox-env: py35
+          - python-version: 3.6
+            tox-env: py36
+          - python-version: 3.7
+            tox-env: py37
+          - python-version: 3.8
+            tox-env: py38
+          - python-version: 3.9-dev
+            tox-env: py39
+        exclude:
+          - platform: windows-latest
+            python-version: 3.9-dev
 
     env:
       TOXENV: ${{ matrix.tox-env }}
@@ -31,7 +41,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
+      if: "!endsWith(matrix.python-version, '-dev')"
       uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Set up development Python ${{ matrix.python-version }}
+      if: endsWith(matrix.python-version, '-dev')
+      uses: deadsnakes/action@v1.0.0
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
@@ -53,7 +69,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.7]
+        python-version: [3.8]
 
     env:
       TOXENV: lint
@@ -77,7 +93,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.7]
+        python-version: [3.8]
 
     env:
       TOXENV: documents
