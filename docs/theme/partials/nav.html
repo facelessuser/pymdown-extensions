@@ -41,15 +41,18 @@
         <a
           href="javascript:toggleScheme();"
           title="Toggle Dark Mode"
+          class="dark-mode"
         >
-          <span class="dark-mode">
-            {% set icon = "octicons/moon-16" %}
-            {% include ".icons/" ~ icon ~ ".svg" %}
-          </span>
-          <span class="bright-mode">
-            {% set icon = "octicons/sun-16" %}
-            {% include ".icons/" ~ icon ~ ".svg" %}
-          </span>
+        {% set icon = "material/weather-night" %}
+        {% include ".icons/" ~ icon ~ ".svg" %}
+        </a>
+        <a
+          href="javascript:toggleScheme();"
+          title="Toggle Light Mode"
+          class="bright-mode"
+        >
+        {% set icon = "material/white-balance-sunny" %}
+        {% include ".icons/" ~ icon ~ ".svg" %}
         </a>
     </label>
     {{ config.site_name }}
