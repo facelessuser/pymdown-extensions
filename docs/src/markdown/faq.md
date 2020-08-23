@@ -86,4 +86,12 @@ extension_configs = {
 }
 ```
 
+## Mermaid Diagrams
+
+The short answer is to use [SuperFences' custom fence feature](./extensions/superfences.md#custom-fences). We provide
+a basic [example using SuperFences](./extensions/superfences.md#uml-diagram-example), but in order to get a really
+solid Mermaid experience, we actually go a bit further in our documents. While we don't often have time to answer
+everyone's questions regarding Mermaid, we have provided some fairly extensive notes on how we achieved Mermaid diagrams
+in this documents. Check out the notes [here](./extras/mermaid.md).
+
 --8<-- "refs.txt"

@@ -19,7 +19,6 @@
     > input {
       &:checked + label {
         & + .tabbed-content {
-          font-size: px2rem(12.8px);
 
           > {
             pre,

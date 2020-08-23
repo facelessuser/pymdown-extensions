@@ -8,7 +8,7 @@ any tier you feel comfortable with. No amount is too little. We also accept one 
 [:octicons-mark-github-16: GitHub Sponsors](https://github.com/sponsors/facelessuser){: .md-button .md-button--primary }
 [:fontawesome-brands-paypal: PayPal](https://www.paypal.me/facelessuser){ .md-button}
 
-## Bug Reports
+## Bug Reports :material-bug:
 
 1. Please **read the documentation** and **search the issue tracker** to try and find the answer to your question
   **before** posting an issue.
@@ -28,23 +28,23 @@ any tier you feel comfortable with. No amount is too little. We also accept one 
 3. Be prepared to answer questions and provide additional information if required.  Issues in which the creator refuses
   to respond to follow up questions will be marked as stale and closed.
 
-## Reviewing Code
+## Reviewing Code :material-glasses:
 
 Take part in reviewing pull requests and/or reviewing direct commits.  Make suggestions to improve the code and discuss
 solutions to overcome weakness in the algorithm.
 
-## Answer Questions in Issues
+## Answer Questions in Issues :material-comment-question:
 
 Take time and answer questions and offer suggestions to people who've created issues in the issue tracker. Often people
 will have questions that you might have an answer for.  Or maybe you know how to help them accomplish a specific task
 they are asking about. Feel free to share your experience to help others out.
 
-## Pull Requests
+## Pull Requests :octicons-git-pull-request-24:
 
 Pull requests are welcome, and a great way to help fix bugs and add new features. If you you are interested in directly
 contributing to the code, please check out [Development](./development.md) for more info on the environment and process.
 
-## Documentation Improvements
+## Documentation Improvements :material-pencil:
 
 A ton of time has been spent not only creating and supporting this tool and related extensions, but also spent making
 this documentation.  If you feel it is still lacking, show your appreciation for the tool and/or extensions by helping
