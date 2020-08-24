@@ -280,7 +280,7 @@ that we cannot load the Mermaid library from the specified CDN.
 Your document should include the following:
 
 ```html
-<script src="https://unpkg.com/mermaid@8.7.0/dist/mermaid.min.js"></script>
+<script src="https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js"></script>
 <script>
 // Optional config
 // If your document is not specifying `data-md-color-scheme` for color schemes,
@@ -334,7 +334,7 @@ your config from your `docs` folder as well, or maybe embed it in your document 
 
 ```yaml
 extra_javascript:
-  - https://unpkg.com/mermaid@8.7.0/dist/mermaid.min.js
+  - https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js
   - optionalConfig.js
   - extra.js
 ```
