@@ -63,24 +63,7 @@
       {% endif %}
     </div>
 
-    <!-- Button to open search dialogue -->
-    {% if "search" in config["plugins"] %}
-      <label class="md-header-nav__button md-icon" for="__search">
-        {% include ".icons/material/magnify.svg" %}
-      </label>
-
-      <!-- Search interface -->
-      {% include "partials/search.html" %}
-    {% endif %}
-
-    <!-- Repository containing source -->
-    {% if config.repo_url %}
-      <div class="md-header-nav__source">
-        {% include "partials/source.html" %}
-      </div>
-    {% endif %}
-
-    <label class="md-header-nav__scheme md-header-nav__button md-icon">
+    <div class="md-header-nav__scheme md-header-nav__button md-icon">
         <a
           href="javascript:toggleScheme();"
           title="Toggle dark mode"
@@ -97,7 +80,24 @@
         {% set icon = "material/white-balance-sunny" %}
         {% include ".icons/" ~ icon ~ ".svg" %}
         </a>
-    </label>
+    </div>
+
+    <!-- Button to open search dialogue -->
+    {% if "search" in config["plugins"] %}
+      <label class="md-header-nav__button md-icon" for="__search">
+        {% include ".icons/material/magnify.svg" %}
+      </label>
+
+      <!-- Search interface -->
+      {% include "partials/search.html" %}
+    {% endif %}
+
+    <!-- Repository containing source -->
+    {% if config.repo_url %}
+      <div class="md-header-nav__source">
+        {% include "partials/source.html" %}
+      </div>
+    {% endif %}
 
   </nav>
 </header>
