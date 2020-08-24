@@ -138,6 +138,7 @@ ebeweber
 emoji
 emojione
 escaper
+eslint
 facelessuser
 formatter
 formatter's
