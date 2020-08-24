@@ -179,7 +179,7 @@
         });
 
         var style = document.createElement("style");
-        style.textContent = "\n      div.mermaid {\n        margin: 0;\n        overflow: visible;\n      }";
+        style.textContent = "\n      :host {\n        display: block;\n        line-height: initial;\n        font-size: 16px;\n      }\n      div.mermaid {\n        margin: 0;\n        overflow: visible;\n      }";
         shadow.appendChild(style);
         return _this;
       }
@@ -247,7 +247,7 @@
     mermaid.initialize(config); // Find all of our Mermaid sources and render them.
 
     var blocks = document.querySelectorAll("pre.".concat(className, ", mermaid-div"));
-    var surrogate = document.querySelector("body");
+    var surrogate = document.querySelector("html");
 
     var _loop = function _loop(i) {
       var block = blocks[i];
@@ -259,23 +259,33 @@
       temp.style.display = "display";
       temp.style.padding = "0";
       temp.style.margin = "0";
+      temp.style.lineHeight = "initial";
+      temp.style.fontSize = "16px";
       surrogate.appendChild(temp);
-      mermaid.mermaidAPI.render("_mermaind_".concat(i), getFromCode(parentEl), function (content) {
-        var el = document.createElement("div");
-        el.className = className;
-        el.innerHTML = content; // Insert the render where we want it and remove the original text source.
-        // Mermaid will clean up the temporary element.
 
-        var shadow = document.createElement("mermaid-div");
-        shadow.shadowRoot.appendChild(el);
-        block.parentNode.insertBefore(shadow, block);
-        parentEl.style.display = "none";
-        shadow.shadowRoot.appendChild(parentEl);
+      try {
+        mermaid.mermaidAPI.render("_mermaind_".concat(i), getFromCode(parentEl), function (content) {
+          var el = document.createElement("div");
+          el.className = className;
+          el.innerHTML = content; // Insert the render where we want it and remove the original text source.
+          // Mermaid will clean up the temporary element.
 
-        if (parentEl !== block) {
-          block.parentNode.removeChild(block);
-        }
-      }, temp);
+          var shadow = document.createElement("mermaid-div");
+          shadow.shadowRoot.appendChild(el);
+          block.parentNode.insertBefore(shadow, block);
+          parentEl.style.display = "none";
+          shadow.shadowRoot.appendChild(parentEl);
+
+          if (parentEl !== block) {
+            block.parentNode.removeChild(block);
+          }
+        }, temp);
+      } catch (err) {} // eslint-disable-line no-empty
+
+
+      if (surrogate.contains(temp)) {
+        surrogate.removeChild(temp);
+      }
     };
 
     for (var i = 0; i < blocks.length; i++) {

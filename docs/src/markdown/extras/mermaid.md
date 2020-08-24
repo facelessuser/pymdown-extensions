@@ -207,6 +207,11 @@ trigger it.
     1. We disable `htmlLabels` in flowcharts as we've had issues with it in the past. It may or may not be okay to
        enable. Your mileage may vary.
 
+        !!! warning
+            The custom loader we use does not extract HTML tags from our blocks, it only extracts text. If `htmlLabels`
+            is enabled, and the expectation is that the loader will extract that content and format it appropriately for
+            Mermaid, it will not. A modification to the script would be needed.
+
     2. If the option is available in a diagram, we disable `useMaxWidth` as we prefer that our diagrams do not scale
        within their parent element, we rather them overflow with a scrollbar. You can leave these enabled if you like.
        Since we render our diagrams under a custom element with a shadow DOM, to get scrollbars, we simply enable

@@ -29,6 +29,11 @@ export default className => {
       const shadow = this.attachShadow({mode: "open"})
       const style = document.createElement("style")
       style.textContent = `
+      :host {
+        display: block;
+        line-height: initial;
+        font-size: 16px;
+      }
       div.mermaid {
         margin: 0;
         overflow: visible;
@@ -94,7 +99,7 @@ export default className => {
 
   // Find all of our Mermaid sources and render them.
   const blocks = document.querySelectorAll(`pre.${className}, mermaid-div`)
-  const surrogate = document.querySelector("body")
+  const surrogate = document.querySelector("html")
   for (let i = 0; i < blocks.length; i++) {
     const block = blocks[i]
     const parentEl = (block.tagName.toLowerCase() === "mermaid-div") ?
@@ -108,28 +113,36 @@ export default className => {
     temp.style.display = "display"
     temp.style.padding = "0"
     temp.style.margin = "0"
+    temp.style.lineHeight = "initial"
+    temp.style.fontSize = "16px"
     surrogate.appendChild(temp)
 
-    mermaid.mermaidAPI.render(
-      `_mermaind_${i}`,
-      getFromCode(parentEl),
-      content => {
-        const el = document.createElement("div")
-        el.className = className
-        el.innerHTML = content
+    try {
+      mermaid.mermaidAPI.render(
+        `_mermaind_${i}`,
+        getFromCode(parentEl),
+        content => {
+          const el = document.createElement("div")
+          el.className = className
+          el.innerHTML = content
 
-        // Insert the render where we want it and remove the original text source.
-        // Mermaid will clean up the temporary element.
-        const shadow = document.createElement("mermaid-div")
-        shadow.shadowRoot.appendChild(el)
-        block.parentNode.insertBefore(shadow, block)
-        parentEl.style.display = "none"
-        shadow.shadowRoot.appendChild(parentEl)
-        if (parentEl !== block) {
-          block.parentNode.removeChild(block)
-        }
-      },
-      temp
-    )
+          // Insert the render where we want it and remove the original text source.
+          // Mermaid will clean up the temporary element.
+          const shadow = document.createElement("mermaid-div")
+          shadow.shadowRoot.appendChild(el)
+          block.parentNode.insertBefore(shadow, block)
+          parentEl.style.display = "none"
+          shadow.shadowRoot.appendChild(parentEl)
+          if (parentEl !== block) {
+            block.parentNode.removeChild(block)
+          }
+        },
+        temp
+      )
+    } catch (err) {} // eslint-disable-line no-empty
+
+    if (surrogate.contains(temp)) {
+      surrogate.removeChild(temp)
+    }
   }
 }
