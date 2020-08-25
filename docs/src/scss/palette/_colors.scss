@@ -51,15 +51,23 @@
   "red":         $drac-red         lighten($drac-red, 5%)   darken($drac-red, 5%),
   "pink":        $drac-pink        lighten($drac-pink, 5%)   darken($drac-pink, 5%),
   "purple":      $drac-purple      lighten($drac-purple, 5%)   darken($drac-purple, 5%),
+  "deep-purple": $drac-purple      lighten($drac-purple, 5%)   darken($drac-purple, 5%),
   "blue":        $drac-blue        lighten($drac-blue, 5%)   darken($drac-blue, 5%),
+  "indigo":      $drac-blue        lighten($drac-blue, 5%)   darken($drac-blue, 5%),
+  "light-blue":  $drac-blue        lighten($drac-blue, 5%)   darken($drac-blue, 5%),
   "cyan":        $drac-cyan        lighten($drac-cyan, 5%)   darken($drac-cyan, 5%),
+  "teal":        $drac-cyan        lighten($drac-cyan, 5%)   darken($drac-cyan, 5%),
   "green":       $drac-green       lighten($drac-green, 5%)   darken($drac-green, 5%),
+  "light-green": $drac-green       lighten($drac-green, 5%)   darken($drac-green, 5%),
+  "lime":        $drac-green       lighten($drac-green, 5%)   darken($drac-green, 5%),
   "yellow":      $drac-yellow      lighten($drac-yellow, 5%)   darken($drac-yellow, 5%),
-  "orange":      $drac-orange      lighten($drac-orange, 5%)   darken($drac-orange, 5%)
+  "amber":       $drac-yellow      lighten($drac-yellow, 5%)   darken($drac-yellow, 5%),
+  "orange":      $drac-orange      lighten($drac-orange, 5%)   darken($drac-orange, 5%),
+  "deep-orange": $drac-orange      lighten($drac-orange, 5%)   darken($drac-orange, 5%)
 ) {
 
   // Color palette
-  [data-md-color-primary="#{$name}"] {
+  [data-md-color-scheme="dracula"][data-md-color-primary="#{$name}"] {
 
     --md-primary-code-bg-color:         #{mix($drac-bg, nth($colors, 1), 85%)};
     --md-primary-fg-color:              hsla(#{hex2hsl(nth($colors, 1))}, 1);
@@ -79,15 +87,23 @@
   "red":         darken($drac-red, 5%),
   "pink":        darken($drac-pink, 5%),
   "purple":      darken($drac-purple, 5%),
+  "deep-purple": darken($drac-purple, 5%),
   "blue":        darken($drac-blue, 5%),
+  "indigo":      darken($drac-blue, 5%),
+  "light-blue":  darken($drac-blue, 5%),
   "cyan":        darken($drac-cyan, 5%),
+  "teal":        darken($drac-cyan, 5%),
   "green":       darken($drac-green, 5%),
+  "light-green": darken($drac-green, 5%),
+  "lime":        darken($drac-green, 5%),
   "yellow":      darken($drac-yellow, 5%),
-  "orange":      darken($drac-orange, 5%)
+  "amber":       darken($drac-yellow, 5%),
+  "orange":      darken($drac-orange, 5%),
+  "deep-orange": darken($drac-orange, 5%)
 ) {
 
   // Color palette
-  [data-md-color-accent="#{$name}"] {
+  [data-md-color-scheme="dracula"][data-md-color-accent="#{$name}"] {
     --md-code-link-accent-bg-color:    #{mix($color, $drac-bg, 15%)};
     --md-accent-fg-color:              hsla(#{hex2hsl($color)}, 1);
     --md-accent-fg-color--transparent: hsla(#{hex2hsl($color)}, 0.1);
