@@ -81,12 +81,26 @@ footer.sponsorship {
 
 // Scheme toggle
 body {
-  &[data-md-color-scheme="dracula"] .md-icon .dark-mode {
-    display:  none;
+  &:not([data-md-prefers-color-scheme="true"])[data-md-color-scheme="dracula"] .md-icon {
+    .light-mode,
+    .system-mode {
+      display:  none;
+    }
   }
 
-  &:not([data-md-color-scheme="dracula"]) .md-icon .bright-mode {
-    display:  none;
+
+  &:not([data-md-prefers-color-scheme="true"])[data-md-color-scheme="default"] .md-icon {
+    .dark-mode,
+    .system-mode {
+      display:  none;
+    }
+  }
+
+  &[data-md-prefers-color-scheme="true"] .md-icon {
+    .dark-mode,
+    .light-mode {
+      display: none;
+    }
   }
 }
 

@@ -66,7 +66,15 @@
     <div class="md-header-nav__scheme md-header-nav__button md-icon">
         <a
           href="javascript:toggleScheme();"
-          title="Toggle dark mode"
+          title="Light mode"
+          class="light-mode"
+        >
+        {% set icon = "material/white-balance-sunny" %}
+        {% include ".icons/" ~ icon ~ ".svg" %}
+        </a>
+        <a
+          href="javascript:toggleScheme();"
+          title="Dark mode"
           class="dark-mode"
         >
         {% set icon = "material/weather-night" %}
@@ -74,10 +82,10 @@
         </a>
         <a
           href="javascript:toggleScheme();"
-          title="Toggle light mode"
-          class="bright-mode"
+          title="System preference"
+          class="system-mode"
         >
-        {% set icon = "material/white-balance-sunny" %}
+        {% set icon = "material/theme-light-dark" %}
         {% include ".icons/" ~ icon ~ ".svg" %}
         </a>
     </div>

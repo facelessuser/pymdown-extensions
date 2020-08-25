@@ -6,6 +6,13 @@
 "use strict";
 
 (function () {
+
+  var preferToggle = function(e) {
+    if (localStorage.getItem("data-md-prefers-color-scheme") === "true") {
+      document.querySelector("body").setAttribute("data-md-color-scheme", (e.matches) ? "dracula" : "default");
+    }
+  };
+
   var observer = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
       if (mutation.type === "childList") {
@@ -15,9 +22,26 @@
 
             if (el.nodeType === 1 && el.tagName.toLowerCase() === "body") {
               var scheme = localStorage.getItem('data-md-color-scheme');
-
-              if (scheme) {
+              var prefers = localStorage.getItem('data-md-prefers-color-scheme')
+              var preferSupported = window.matchMedia('(prefers-color-scheme)').media !== 'not all';
+              if (!scheme) {
+                scheme = "default"
+              }
+              if (!prefers) {
+                prefers == "false";
+              }
+              if (prefers === "true" && preferSupported) {
+                var mm = window.matchMedia('(prefers-color-scheme: dark)');
+                scheme = (mm.matches) ? 'dracula' : 'default';
                 el.setAttribute("data-md-color-scheme", scheme);
+                el.setAttribute("data-md-prefers-color-scheme", prefers);
+              } else {
+                el.setAttribute("data-md-color-scheme", scheme);
+              }
+
+              if (preferSupported) {
+                var matchListener = window.matchMedia("(prefers-color-scheme: dark)");
+                matchListener.addListener(preferToggle);
               }
             }
           }
@@ -32,9 +56,22 @@
 
 function toggleScheme() {
   var body = document.querySelector("body"),
-      scheme = body.getAttribute("data-md-color-scheme");
+      scheme = body.getAttribute("data-md-color-scheme"),
+      prefer = body.getAttribute("data-md-prefers-color-scheme"),
+      preferSupported = window.matchMedia('(prefers-color-scheme)').media !== 'not all';
 
-  scheme = (scheme !== "dracula") ? "dracula" : "default";
+  if (preferSupported && scheme === "default" && prefer !== "true") {
+    prefer = "true"
+    scheme = (window.matchMedia('(prefers-color-scheme: dark)').matches) ? "dracula" : "default"
+  } else if ((preferSupported && prefer === "true") || scheme == "default") {
+    prefer = "false"
+    scheme = "dracula"
+  } else if (scheme === "dracula") {
+    prefer = "false"
+    scheme = "default"
+  }
+  localStorage.setItem("data-md-prefers-color-scheme", prefer);
+  body.setAttribute("data-md-prefers-color-scheme", prefer);
   body.setAttribute("data-md-color-scheme", scheme);
 }
 </script>
