@@ -68,7 +68,7 @@ node_modules/*
 
 *.js.map
 
-manifest.json
+manifest*.json
 *.dic
 
 # IDE

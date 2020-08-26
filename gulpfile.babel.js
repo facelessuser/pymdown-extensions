@@ -8,7 +8,6 @@ import Promise from "promise"
 import yargs from "yargs"
 import gulp from "gulp"
 import sass from "gulp-sass"
-import uglify from "gulp-uglify"
 import postcss from "gulp-postcss"
 import autoprefixer from "autoprefixer"
 import cleanCSS from "gulp-clean-css"
@@ -16,9 +15,9 @@ import childProcess from "child_process"
 import gulpif from "gulp-if"
 import concat from "gulp-concat"
 import mqpacker from "css-mqpacker"
-import sourcemaps from "gulp-sourcemaps"
-import rollup from "gulp-rollup"
-import rollupBabel from "rollup-plugin-babel"
+import {terser} from "rollup-plugin-terser"
+import {rollup} from "rollup"
+import rollupBabel, {getBabelOutputPlugin} from "@rollup/plugin-babel"
 import stylelint from "gulp-stylelint"
 import eslint from "gulp-eslint"
 import rev from "gulp-rev"
@@ -29,9 +28,9 @@ import touch from "gulp-touch-fd"
 import path from "path"
 import inlineSvg from "postcss-inline-svg"
 import cssSvgo from "postcss-svgo"
-import filter from "gulp-filter"
-import clone from "gulp-clone"
 import replace from "gulp-replace"
+import outputManifest from "rollup-plugin-output-manifest"
+import sourcemaps from "gulp-sourcemaps"
 
 /* Argument Flags */
 const args = yargs
@@ -87,6 +86,39 @@ const config = {
   mkdocsCmd: args.mkdocs
 }
 
+const rollupjs = (sources, options) => {
+
+  const pluginModules = [rollupBabel({babelHelpers: "bundled"})]
+  if (options.minify) {
+    pluginModules.push(terser())
+  }
+  if (options.revision) {
+    pluginModules.push(outputManifest({fileName: "manifest-js.json", isMerge: options.merge}))
+  }
+
+  for (let i = 0; i < sources.length; i++) {
+    const src = sources[i]
+
+    rollup({
+      input: src,
+      plugins: pluginModules
+    }).then(bundle => {
+      bundle.write({
+        dir: options.dest,
+        format: "iife",
+        entryFileNames: (options.revision) ? "[name]-[hash].js" : "[name].js",
+        chunkFileNames: (options.revision) ? "[name]-[hash].js" : "[name].js",
+        sourcemap: options.sourcemap,
+        plugins: [
+          getBabelOutputPlugin({allowAllFormats: true, presets: ["@babel/preset-env"]})
+        ]
+      })
+    })
+  }
+
+  return gulp.src(sources)
+}
+
 // ------------------------------
 // SASS/SCSS processing
 // ------------------------------
@@ -113,7 +145,11 @@ gulp.task("scss:build:sass", () => {
     )
   ].filter(t => t)
 
+  gulp.src(`${config.folders.theme}/manifest-css.json`, {allowEmpty: true})
+    .pipe(vinylPaths(del))
+
   return gulp.src("./docs/src/scss/extra*.scss")
+    .pipe(sourcemaps.init())
     .pipe(sass({
       includePaths: [
         "node_modules/modularscale-sass/stylesheets",
@@ -131,15 +167,20 @@ gulp.task("scss:build:sass", () => {
 
     // Revisioning
     .pipe(gulpif(config.revision, rev()))
+    .pipe(sourcemaps.write("."))
     .pipe(gulp.dest(config.folders.theme))
-    .pipe(gulpif(config.revision, rev.manifest("manifest.json", {base: config.folders.theme, merge: true})))
+    .pipe(
+      gulpif(
+        config.revision,
+        rev.manifest(`${config.folders.theme}/manifest-css.json`, {base: config.folders.theme, merge: true})
+      ))
     .pipe(gulpif(config.revision, gulp.dest(config.folders.theme)))
 })
 
 gulp.task("scss:build", gulp.series("scss:build:sass", () => {
   return gulp.src(config.files.mkdocsSrc)
     .pipe(gulpif(config.revision, revReplace({
-      manifest: gulp.src("manifest.json", {allowEmpty: true}),
+      manifest: gulp.src(`${config.folders.theme}/manifest*.json`, {allowEmpty: true}),
       replaceInExtensions: [".yml"]
     })))
     .pipe(gulp.dest("."))
@@ -165,59 +206,52 @@ gulp.task("scss:clean", () => {
 })
 
 gulp.task("js:build:rollup", () => {
-  const onlyJs = filter(["**/*.js"], {restore: true})
-  const onlyUML = filter(["**/extra-uml.js"], {restore: true})
+  gulp.src(`${config.folders.src}/manifest-js.json`, {allowEmpty: true})
+    .pipe(vinylPaths(del))
 
-  const scripts = gulp.src(config.files.jsSrc)
-    .pipe(rollup({
-      "output": {
-        "format": "iife",
-        "sourcemap": true
-      },
-      "plugins": [
-        rollupBabel({
-          "presets": [
-            ["@babel/preset-env", {"modules": false}]
-          ],
-          babelrc: false
-        })
-      ],
-      "input": [`${config.folders.src}/js/material-extra-theme.js`, `${config.folders.src}/js/extra-uml.js`]
-    }))
+  if (config.revision) {
+    rollupjs(
+      [`${config.folders.src}/js/extra-uml.js`],
+      {
+        dest: "docs/src/markdown/_snippets/.code",
+        minify: false,
+        revision: false,
+        sourcemap: false,
+        merge: false
+      }
+    )
+  }
 
-    .pipe(gulpif(config.sourcemaps, sourcemaps.init({loadmap: true})))
-    .pipe(onlyUML)
-
-  // Copy are built extras so that people can use it.
-  const cloned = scripts.pipe(clone())
-  cloned.pipe(gulp.dest("docs/src/markdown/_snippets/.code"))
-
-  // // Revisioning
-  return scripts.pipe(onlyUML.restore)
-    .pipe(gulpif(config.revision, rev()))
-    .pipe(onlyJs)
-    .pipe(gulpif(config.compress.enabled, uglify({compress: config.compress.jsOptions, warnings: false})))
-    .pipe(onlyJs.restore)
-    .pipe(gulpif(config.sourcemaps, sourcemaps.write(".", {destPath: config.folders.theme})))
-    .pipe(gulp.dest(config.folders.theme))
-    .pipe(gulpif(config.revision, rev.manifest("manifest.json", {base: config.folders.theme, merge: true})))
-    .pipe(gulpif(config.revision, gulp.dest(config.folders.theme)))
+  return rollupjs(
+    [`${config.folders.src}/js/material-extra-theme.js`, `${config.folders.src}/js/extra-uml.js`],
+    {
+      dest: `${config.folders.theme}`,
+      minify: config.compress.enabled,
+      revision: config.revision,
+      sourcemap: config.sourcemaps,
+      merge: true
+    }
+  )
 })
 
 gulp.task("html:build", () => {
   return gulp.src("./docs/src/html/*")
     .pipe(gulpif(config.revision, revReplace({
-      manifest: gulp.src("manifest.json", {allowEmpty: true}),
+      manifest: gulp.src(`${config.folders.theme}/manifest*.json`, {allowEmpty: true}),
       replaceInExtensions: [".html"]
     })))
     .pipe(replace(/((?:\r?\n?\s*)<!--[\s\S]*?-->(?:\s*)(?=\r?\n)|<!--[\s\S]*?-->)/g, ""))
     .pipe(gulp.dest("./docs/theme/partials"))
 })
 
+gulp.task("html:watch", () => {
+  gulp.watch("./docs/src/html/*", gulp.series("html:build", "mkdocs:update"))
+})
+
 gulp.task("js:build", gulp.series("js:build:rollup", "html:build", () => {
   return gulp.src(config.files.mkdocsSrc)
     .pipe(gulpif(config.revision, revReplace({
-      manifest: gulp.src("manifest.json", {allowEmpty: true}),
+      manifest: gulp.src(`${config.folders.theme}/manifest*.json`, {allowEmpty: true}),
       replaceInExtensions: [".yml"]
     })))
     .pipe(gulp.dest("."))
@@ -300,6 +334,7 @@ gulp.task("serve", gulp.series(
   gulp.parallel(
     "scss:watch",
     "js:watch",
+    "html:watch",
     "mkdocs:watch",
     "mkdocs:serve"
   )

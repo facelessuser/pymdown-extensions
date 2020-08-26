@@ -1,3 +1,5 @@
+function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 (function () {
   'use strict';
 
@@ -115,7 +117,7 @@
   }
 
   function _possibleConstructorReturn(self, call) {
-    if (call && (typeof call === "object" || typeof call === "function")) {
+    if (call && (_typeof(call) === "object" || typeof call === "function")) {
       return call;
     }
 
@@ -140,7 +142,6 @@
       return _possibleConstructorReturn(this, result);
     };
   }
-
   /* Notes (as of Mermaid 8.7.0):
    * - Gantt: width is always relative to the parent, if you have a small parent, the chart will be squashed.
    *   Can't help it.
@@ -155,18 +156,21 @@
    * @param {string} className is the name of the class to target.
    * @return {void}
    */
-  var uml = (function (className) {
+
+
+  var uml = function uml(className) {
     // Custom element to encapsulate Mermaid content.
     var MermaidDiv = /*#__PURE__*/function (_HTMLElement) {
       _inherits(MermaidDiv, _HTMLElement);
 
       var _super = _createSuper(MermaidDiv);
-
       /**
       * Creates a special Mermaid div shadow DOM.
       * Works around issues of shared IDs.
       * @return {void}
       */
+
+
       function MermaidDiv() {
         var _this;
 
@@ -291,7 +295,7 @@
     for (var i = 0; i < blocks.length; i++) {
       _loop(i);
     }
-  });
+  };
 
   (function () {
     var onReady = function onReady(fn) {
@@ -326,5 +330,4 @@
       }
     });
   })();
-
-}());
+})();
