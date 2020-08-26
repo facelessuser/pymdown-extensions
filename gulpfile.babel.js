@@ -29,6 +29,9 @@ import touch from "gulp-touch-fd"
 import path from "path"
 import inlineSvg from "postcss-inline-svg"
 import cssSvgo from "postcss-svgo"
+import filter from "gulp-filter"
+import clone from "gulp-clone"
+import replace from "gulp-replace"
 
 /* Argument Flags */
 const args = yargs
@@ -51,7 +54,7 @@ const config = {
   files: {
     scss: "./docs/src/scss/**/*.scss",
     css: "./docs/theme/assets/pymdownx-extras/*.css",
-    jsSrc: "./docs/src/js/*.js",
+    jsSrc: "./docs/src/js/**/*.js",
     js: ["./docs/theme/assets/pymdownx-extras/*.js", "./docs/theme/assets/pymdownx-extras/*.js.map"],
     gulp: "gulpfile.babel.js",
     mkdocsSrc: "./docs/src/mkdocs.yml"
@@ -161,25 +164,16 @@ gulp.task("scss:clean", () => {
     .pipe(vinylPaths(del))
 })
 
-// ------------------------------
-// JavaScript processing
-// ------------------------------
 gulp.task("js:build:rollup", () => {
-  return gulp.src(config.files.jsSrc)
-    .pipe(gulpif(config.sourcemaps, sourcemaps.init()))
+  const onlyJs = filter(["**/*.js"], {restore: true})
+  const onlyUML = filter(["**/extra-uml.js"], {restore: true})
+
+  const scripts = gulp.src(config.files.jsSrc)
     .pipe(rollup({
       "output": {
-        "name": "extra",
         "format": "iife",
-        "globals": {
-          "flowchart": "flowchart",
-          "sequence-diagram": "Diagram"
-        }
+        "sourcemap": true
       },
-      "external": [
-        "flowchart",
-        "sequence-diagram"
-      ],
       "plugins": [
         rollupBabel({
           "presets": [
@@ -188,20 +182,39 @@ gulp.task("js:build:rollup", () => {
           babelrc: false
         })
       ],
-      "input": `${config.folders.src}/js/extra.js`
+      "input": [`${config.folders.src}/js/material-extra-theme.js`, `${config.folders.src}/js/extra-uml.js`]
     }))
-    .pipe(gulp.dest("docs/src/markdown/_snippets/.code"))
-    .pipe(gulpif(config.compress.enabled, uglify({compress: config.compress.jsOptions, warnings: false})))
-    .pipe(gulpif(config.sourcemaps, sourcemaps.write(config.folders.theme)))
 
-    // Revisioning
+    .pipe(gulpif(config.sourcemaps, sourcemaps.init({loadmap: true})))
+    .pipe(onlyUML)
+
+  // Copy are built extras so that people can use it.
+  const cloned = scripts.pipe(clone())
+  cloned.pipe(gulp.dest("docs/src/markdown/_snippets/.code"))
+
+  // // Revisioning
+  return scripts.pipe(onlyUML.restore)
     .pipe(gulpif(config.revision, rev()))
+    .pipe(onlyJs)
+    .pipe(gulpif(config.compress.enabled, uglify({compress: config.compress.jsOptions, warnings: false})))
+    .pipe(onlyJs.restore)
+    .pipe(gulpif(config.sourcemaps, sourcemaps.write(".", {destPath: config.folders.theme})))
     .pipe(gulp.dest(config.folders.theme))
     .pipe(gulpif(config.revision, rev.manifest("manifest.json", {base: config.folders.theme, merge: true})))
     .pipe(gulpif(config.revision, gulp.dest(config.folders.theme)))
 })
 
-gulp.task("js:build", gulp.series("js:build:rollup", () => {
+gulp.task("html:build", () => {
+  return gulp.src("./docs/src/html/*")
+    .pipe(gulpif(config.revision, revReplace({
+      manifest: gulp.src("manifest.json", {allowEmpty: true}),
+      replaceInExtensions: [".html"]
+    })))
+    .pipe(replace(/((?:\r?\n?\s*)<!--[\s\S]*?-->(?:\s*)(?=\r?\n)|<!--[\s\S]*?-->)/g, ""))
+    .pipe(gulp.dest("./docs/theme/partials"))
+})
+
+gulp.task("js:build", gulp.series("js:build:rollup", "html:build", () => {
   return gulp.src(config.files.mkdocsSrc)
     .pipe(gulpif(config.revision, revReplace({
       manifest: gulp.src("manifest.json", {allowEmpty: true}),

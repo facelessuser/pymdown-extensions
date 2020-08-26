@@ -31,7 +31,7 @@
 [nested-markdown]: https://python-markdown.github.io/extensions/extra/#nested-markdown-inside-html-blocks
 [nl2br]: https://python-markdown.github.io/extensions/nl2br/
 [octicons]: https://octicons.github.com/
-[onready-event]: https://github.com/facelessuser/pymdown-extensions/blob/master/docs/src/js/extra.js
+[onready-event]: https://github.com/facelessuser/pymdown-extensions/blob/master/docs/src/js/extra-uml.js
 [pep8-naming]: https://pypi.python.org/pypi/pep8-naming
 [pygments]: http://pygments.org/
 [pymdown-styles]: https://github.com/facelessuser/pymdown-styles/tree/master/pymdown_styles
