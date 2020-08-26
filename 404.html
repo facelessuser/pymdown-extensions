@@ -32,80 +32,8 @@
       
     
     
-<script type="text/javascript">
-// Watch for body creation and add the last used scheme
-"use strict";
 
-(function () {
-
-  var preferToggle = function(e) {
-    if (localStorage.getItem("data-md-prefers-color-scheme") === "true") {
-      document.querySelector("body").setAttribute("data-md-color-scheme", (e.matches) ? "dracula" : "default");
-    }
-  };
-
-  var observer = new MutationObserver(function (mutations) {
-    mutations.forEach(function (mutation) {
-      if (mutation.type === "childList") {
-        if (mutation.addedNodes.length) {
-          for (var i = 0; i < mutation.addedNodes.length; i++) {
-            var el = mutation.addedNodes[i];
-
-            if (el.nodeType === 1 && el.tagName.toLowerCase() === "body") {
-              var scheme = localStorage.getItem('data-md-color-scheme');
-              var prefers = localStorage.getItem('data-md-prefers-color-scheme')
-              var preferSupported = window.matchMedia('(prefers-color-scheme)').media !== 'not all';
-              if (!scheme) {
-                scheme = "dracula"
-              }
-              if (!prefers) {
-                prefers == "false";
-              }
-              if (prefers === "true" && preferSupported) {
-                var mm = window.matchMedia('(prefers-color-scheme: dark)');
-                scheme = (mm.matches) ? 'dracula' : 'default';
-                el.setAttribute("data-md-color-scheme", scheme);
-                el.setAttribute("data-md-prefers-color-scheme", prefers);
-              } else {
-                el.setAttribute("data-md-color-scheme", scheme);
-              }
-
-              if (preferSupported) {
-                var matchListener = window.matchMedia("(prefers-color-scheme: dark)");
-                matchListener.addListener(preferToggle);
-              }
-            }
-          }
-        }
-      }
-    });
-  });
-  observer.observe(document.querySelector("html"), {
-    childList: true
-  });
-})();
-
-function toggleScheme() {
-  var body = document.querySelector("body"),
-      scheme = body.getAttribute("data-md-color-scheme"),
-      prefer = body.getAttribute("data-md-prefers-color-scheme"),
-      preferSupported = window.matchMedia('(prefers-color-scheme)').media !== 'not all';
-
-  if (preferSupported && scheme === "default" && prefer !== "true") {
-    prefer = "true"
-    scheme = (window.matchMedia('(prefers-color-scheme: dark)').matches) ? "dracula" : "default"
-  } else if ((preferSupported && prefer === "true") || scheme == "default") {
-    prefer = "false"
-    scheme = "dracula"
-  } else if (scheme === "dracula") {
-    prefer = "false"
-    scheme = "default"
-  }
-  localStorage.setItem("data-md-prefers-color-scheme", prefer);
-  body.setAttribute("data-md-prefers-color-scheme", prefer);
-  body.setAttribute("data-md-color-scheme", scheme);
-}
-</script>
+<script src="assets/pymdownx-extras/material-extra-theme-829e3157ff.js" type="text/javascript"></script>
 
     
       
@@ -158,35 +86,9 @@ is now available!
       
     </div>
     
-      <!--
-  Copyright (c) 2016-2020 Martin Donath <martin.donath@squidfunk.com>
-
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to
-  deal in the Software without restriction, including without limitation the
-  rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
-  sell copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
-
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
-
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-  FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-  IN THE SOFTWARE.
--->
-
-<!-- Application header -->
+      
 <header class="md-header" data-md-component="header">
-
-  <!-- Top-level navigation -->
   <nav class="md-header-nav md-grid" aria-label="Header">
-
-    <!-- Link to home -->
     <a
       href="https://facelessuser.github.io/pymdown-extensions"
       title="PyMdown Extensions Documentation"
@@ -198,13 +100,9 @@ is now available!
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 2l-5 4.5v11l5-4.5V2M6.5 5C4.55 5 2.45 5.4 1 6.5v14.66c0 .25.25.5.5.5.1 0 .15-.07.25-.07 1.35-.65 3.3-1.09 4.75-1.09 1.95 0 4.05.4 5.5 1.5 1.35-.85 3.8-1.5 5.5-1.5 1.65 0 3.35.31 4.75 1.06.1.05.15.03.25.03.25 0 .5-.25.5-.5V6.5c-.6-.45-1.25-.75-2-1V19c-1.1-.35-2.3-.5-3.5-.5-1.7 0-4.15.65-5.5 1.5V6.5C10.55 5.4 8.45 5 6.5 5z"/></svg>
 
     </a>
-
-    <!-- Button to open drawer -->
     <label class="md-header-nav__button md-icon" for="__drawer">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
     </label>
-
-    <!-- Header title -->
     <div class="md-header-nav__title" data-md-component="header-title">
       
         <div class="md-header-nav__ellipsis">
@@ -246,14 +144,10 @@ is now available!
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M7.5 2c-1.79 1.15-3 3.18-3 5.5s1.21 4.35 3.03 5.5C4.46 13 2 10.54 2 7.5A5.5 5.5 0 017.5 2m11.57 1.5l1.43 1.43L4.93 20.5 3.5 19.07 19.07 3.5m-6.18 2.43L11.41 5 9.97 6l.42-1.7L9 3.24l1.75-.12.58-1.65L12 3.1l1.73.03-1.35 1.13.51 1.67m-3.3 3.61l-1.16-.73-1.12.78.34-1.32-1.09-.83 1.36-.09.45-1.29.51 1.27 1.36.03-1.05.87.4 1.31M19 13.5a5.5 5.5 0 01-5.5 5.5c-1.22 0-2.35-.4-3.26-1.07l7.69-7.69c.67.91 1.07 2.04 1.07 3.26m-4.4 6.58l2.77-1.15-.24 3.35-2.53-2.2m4.33-2.7l1.15-2.77 2.2 2.54-3.35.23m1.15-4.96l-1.14-2.78 3.34.24-2.2 2.54M9.63 18.93l2.77 1.15-2.53 2.19-.24-3.34z"/></svg>
         </a>
     </div>
-
-    <!-- Button to open search dialogue -->
     
       <label class="md-header-nav__button md-icon" for="__search">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
       </label>
-
-      <!-- Search interface -->
       
 <div class="md-search" data-md-component="search" role="dialog">
   <label class="md-search__overlay" for="__search"></label>
@@ -281,8 +175,6 @@ is now available!
   </div>
 </div>
     
-
-    <!-- Repository containing source -->
     
       <div class="md-header-nav__source">
         
@@ -994,6 +886,7 @@ is now available!
       </main>
       
         
+
 <footer class="md-footer">
   
   <div class="md-footer-meta md-typeset">
@@ -1054,7 +947,7 @@ is now available!
         })
       </script>
       
-        <script src="/pymdown-extensions/assets/pymdownx-extras/extra-454fdc2cd3.js"></script>
+        <script src="/pymdown-extensions/assets/pymdownx-extras/extra-uml-88d46eda86.js"></script>
       
     
   </body>
