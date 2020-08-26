@@ -52,7 +52,7 @@ let mkdocs = null
 const config = {
   files: {
     scss: "./docs/src/scss/**/*.scss",
-    css: "./docs/theme/assets/pymdownx-extras/*.css",
+    css: ["./docs/theme/assets/pymdownx-extras/*.css", "./docs/theme/assets/pymdownx-extras/*.css.map"],
     jsSrc: "./docs/src/js/**/*.js",
     js: ["./docs/theme/assets/pymdownx-extras/*.js", "./docs/theme/assets/pymdownx-extras/*.js.map"],
     gulp: "gulpfile.babel.js",
