@@ -116,6 +116,9 @@ const rollupjs = (sources, options) => {
     })
   }
 
+  // Just return something so gulp knows we finished.
+  // We could return one of the `r`ollup` instances, since they are compatible,
+  // but we don't do anything whith them anyways.
   return gulp.src(sources)
 }
 
@@ -154,8 +157,7 @@ gulp.task("scss:build:sass", () => {
       includePaths: [
         "node_modules/modularscale-sass/stylesheets",
         "node_modules/material-design-color",
-        "node_modules/material-shadows",
-        "node_modules/mermaid/src/themes"]
+        "node_modules/material-shadows"]
     }).on("error", sass.logError))
     .pipe(postcss(plugins))
     .pipe(gulpif(config.compress.enabled, cleanCSS()))
