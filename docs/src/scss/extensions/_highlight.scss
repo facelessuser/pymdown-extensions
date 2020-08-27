@@ -150,7 +150,7 @@
 
       /* If we are linking highlighted, inline code, force it to just look like a code link */
       * {
-        color: var(--md-text-link-color) !important;
+        color: var(--md-typeset-a-color) !important;
       }
 
       &:hover {

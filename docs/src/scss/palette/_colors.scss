@@ -3,7 +3,7 @@
 :root {
   > * {
     // We like our links blue
-    --md-text-link-color: #{$clr-cyan-500};
+    --md-typeset-a-color: #{$clr-cyan-500};
   }
 
   // Special code link style
@@ -21,7 +21,7 @@
     --md-code-fg-color: #{$drac-fg};
     --md-code-bg-color: #{$drac-bg};
 
-    --md-text-link-color: #{$drac-cyan};
+    --md-typeset-a-color: #{$drac-cyan};
     --md-code-link-bg-color: #{mix($drac-cyan, $drac-bg, 15%)};
 
     // Default color shades

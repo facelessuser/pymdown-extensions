@@ -1,10 +1,5 @@
 // General styling for repository link icons
 .md-typeset {
-  // We like our links blue regardless of theme color
-  a {
-    color: var(--md-text-link-color);
-  }
-
   a[href^="mailto:"]::before {
     mask-image: svg-load("@mdi/svg/svg/mail.svg");
   }
@@ -31,7 +26,7 @@
       width: px2em(16px);
       height: px2em(16px);
       padding-right: px2em(16px);
-      background-color: var(--md-text-link-color);
+      background-color: var(--md-typeset-a-color);
       background-size: px2em(16px);
       transition: background-color 125ms;
       content: "\a0";
