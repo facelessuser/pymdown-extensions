@@ -1,13 +1,25 @@
 @import "./dracula";
 
 :root > * {
-  // We like our links blue
-  --md-typeset-a-color: #{$clr-cyan-500};
-
-  // Special code link style
+  // Custom code colors
   --md-code-link-bg-color: hsla(0, 0%, 96%, 1);
   --md-code-link-accent-bg-color: var(--md-code-link-bg-color);
 
+  --md-code-special-bg-color: #{darken(hsl(0, 0%, 96%), 5%)};
+  --md-code-alternate-bg-color: var(--md-code-bg-color);
+
+  --md-code-hl-punctuation-color: var(--md-code-fg-color);
+  --md-code-hl-namespace-color: var(--md-code-fg-color);
+
+  --md-code-hl-entity-color: var(--md-code-hl-keyword-color);
+  --md-code-hl-tag-color: var(--md-code-hl-keyword-color);
+  --md-code-hl-builtin-color: var(--md-code-hl-constant-color);
+  --md-code-hl-class-color: var(--md-code-hl-function-color);
+
+  // Various Material related color variables
+  --md-typeset-a-color: #{$clr-cyan-500};
+
+  // Progressbar colors
   --md-progress-stripe: var(--md-default-bg-color--lighter);
   --md-progress-100: #{$clr-green-a400};
   --md-progress-80: #{$clr-green-a400};
@@ -16,28 +28,18 @@
   --md-progress-20: #{$clr-red-a200};
   --md-progress-0: #{$clr-red-a400};
 
-  --md-code-special-bg-color: #{darken(hsl(0, 0%, 96%), 5%)};
-  --md-code-alternate-bg-color: var(--md-code-bg-color);
-
-  // Don't colorize these
-  --md-code-hl-punctuation-color: var(--md-code-fg-color);
-  --md-code-hl-namespace-color: var(--md-code-fg-color);
-
-  // We'll just do what Material does.
-  --md-code-hl-entity-color: var(--md-code-hl-keyword-color);
-  --md-code-hl-tag-color: var(--md-code-hl-keyword-color);
-  --md-code-hl-builtin-color: var(--md-code-hl-constant-color);
-  --md-code-hl-class-color: var(--md-code-hl-function-color);
-
+  // Keys colors
   --md-typeset-kbd-color: #{shade(hsla(0, 100%, 100%, 1), 8%)};
   --md-typeset-kbd-border-color: #{shade(hsla(0, 100%, 100%, 1), 28%)};
   --md-typeset-kbd-accent-color: hsla(0, 100%, 100%, 1);
 
   &[data-md-color-scheme="slate"] {
+    // Custom code colors
     --md-code-link-bg-color: hsla(232, 15%, 15%, 1);
     --md-code-link-accent-bg-color: var(--md-code-link-bg-color);
     --md-code-special-bg-color: #{lighten(hsl(232, 15%, 15%), 5%)};
 
+    // Keys colors
     --md-typeset-kbd-color: var(--md-default-fg-color--lightest);
     --md-typeset-kbd-border-color: #{darken(rgb(46, 48, 62), 9%)};
     --md-typeset-kbd-accent-color: var(--md-default-fg-color--lighter);
@@ -45,17 +47,6 @@
 
   // Dark mode color changes
   &[data-md-color-scheme="dracula"] {
-    // Main code colors
-    --md-code-fg-color: #{$drac-fg};
-    --md-code-bg-color: #{$drac-bg};
-
-    --md-typeset-a-color: #{$drac-cyan};
-    --md-typeset-mark-color: #{mix($drac-yellow, $drac-bg, 35%)};
-    --md-typeset-del-color: #{mix($drac-pink, $drac-bg, 35%)};
-    --md-typeset-ins-color: #{mix($drac-green, $drac-bg, 35%)};
-
-    --md-code-link-bg-color: #{mix($drac-cyan, $drac-bg, 15%)};
-
     // Default color shades
     --md-default-fg-color:               #{transparentize($drac-fg, 0.13)};
     --md-default-fg-color--light:        #{transparentize($drac-fg, 0.46)};
@@ -67,17 +58,9 @@
     --md-default-bg-color--lighter:      #{transparentize($drac-default-bg, 0.7)};
     --md-default-bg-color--lightest:     #{transparentize($drac-default-bg, 0.88)};
 
-    --md-progress-stripe: var(--md-default-bg-color--lightest);
-    --md-progress-100: #{$drac-green};
-    --md-progress-80: #{$drac-light-green};
-    --md-progress-60: #{$drac-yellow};
-    --md-progress-40: #{$drac-orange};
-    --md-progress-20: #{$drac-pink};
-    --md-progress-0: #{$drac-red};
-
-    --md-code-special-bg-color: #{lighten($drac-bg, 5%)};
-    --md-code-alternate-bg-color: #{tint($drac-bg, 10%)};
-
+    // Code colors
+    --md-code-fg-color: #{$drac-fg};
+    --md-code-bg-color: #{$drac-bg};
     --md-code-hl-operator-color: #{$drac-pink};
     --md-code-hl-punctuation-color: #{$drac-fg};
     --md-code-hl-string-color: #{$drac-yellow};
@@ -92,12 +75,33 @@
     --md-code-hl-generic-color: #{$drac-blue};
     --md-code-hl-color: #{$drac-selection};
 
+    // Custom code colors
     --md-code-hl-entity-color: #{$drac-green};
     --md-code-hl-tag-color: #{$drac-pink};
     --md-code-hl-namespace-color: #{$drac-fg};
     --md-code-hl-builtin-color: #{$drac-cyan};
     --md-code-hl-class-color: #{$drac-cyan};
 
+    --md-code-special-bg-color: #{lighten($drac-bg, 5%)};
+    --md-code-alternate-bg-color: #{tint($drac-bg, 10%)};
+    --md-code-link-bg-color: #{mix($drac-cyan, $drac-bg, 15%)};
+
+    // Various Material related color variables
+    --md-typeset-a-color: #{$drac-cyan};
+    --md-typeset-mark-color: #{mix($drac-yellow, $drac-bg, 35%)};
+    --md-typeset-del-color: #{mix($drac-pink, $drac-bg, 35%)};
+    --md-typeset-ins-color: #{mix($drac-green, $drac-bg, 35%)};
+
+    // Progressbar colors
+    --md-progress-stripe: var(--md-default-bg-color--lightest);
+    --md-progress-100: #{$drac-green};
+    --md-progress-80: #{$drac-light-green};
+    --md-progress-60: #{$drac-yellow};
+    --md-progress-40: #{$drac-orange};
+    --md-progress-20: #{$drac-pink};
+    --md-progress-0: #{$drac-red};
+
+    // Keys colors
     --md-typeset-kbd-color: var(--md-default-fg-color--lightest);
     --md-typeset-kbd-border-color: var(--md-default-bg-color--darkest);
     --md-typeset-kbd-accent-color: var(--md-default-fg-color--lighter);
