@@ -67,7 +67,9 @@
 ) {
 
   // Color palette
-  [data-md-color-scheme="dracula"][data-md-color-primary="#{$name}"] {
+  [data-md-color-scheme="dracula"][data-md-color-primary="#{$name}"],
+  [data-md-color-scheme="dracula"] :not([data-md-color-scheme])[data-md-color-primary="#{$name}"]
+   {
 
     --md-primary-code-bg-color:         #{mix($drac-bg, nth($colors, 1), 85%)};
     --md-primary-fg-color:              hsla(#{hex2hsl(nth($colors, 1))}, 1);
@@ -103,7 +105,8 @@
 ) {
 
   // Color palette
-  [data-md-color-scheme="dracula"][data-md-color-accent="#{$name}"] {
+  [data-md-color-scheme="dracula"][data-md-color-accent="#{$name}"],
+  [data-md-color-scheme="dracula"] :not([data-md-color-scheme])[data-md-color-primary="#{$name}"] {
     --md-code-link-accent-bg-color:    #{mix($color, $drac-bg, 15%)};
     --md-accent-fg-color:              hsla(#{hex2hsl($color)}, 1);
     --md-accent-fg-color--transparent: hsla(#{hex2hsl($color)}, 0.1);
