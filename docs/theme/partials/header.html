@@ -58,6 +58,14 @@
         {% set icon = "material/theme-light-dark" %}
         {% include ".icons/" ~ icon ~ ".svg" %}
         </a>
+         <a
+          href="javascript:toggleScheme();"
+          title="Unknown scheme"
+          class="unknown-mode"
+        >
+        {% set icon = "material/help-circle" %}
+        {% include ".icons/" ~ icon ~ ".svg" %}
+        </a>
     </div>
     {% if "search" in config["plugins"] %}
       <label class="md-header-nav__button md-icon" for="__search">

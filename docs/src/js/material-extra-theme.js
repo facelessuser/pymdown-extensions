@@ -62,12 +62,15 @@ window.toggleScheme = function() {
   if (preferSupported && scheme === "default" && prefer !== "true") {
     prefer = "true"
     scheme = (window.matchMedia("(prefers-color-scheme: dark)").matches) ? "dracula" : "default"
-  } else if ((preferSupported && prefer === "true") || scheme === "default") {
+  } else if (preferSupported && prefer === "true") {
     prefer = "false"
     scheme = "dracula"
   } else if (scheme === "dracula") {
     prefer = "false"
     scheme = "default"
+  } else {
+    prefer = "false"
+    scheme = "dracula"
   }
   localStorage.setItem("data-md-prefers-color-scheme", prefer)
   body.setAttribute("data-md-prefers-color-scheme", prefer)

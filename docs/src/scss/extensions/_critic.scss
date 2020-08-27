@@ -1,20 +1,3 @@
-/* Dark mode style */
-[data-md-color-scheme="dracula"] {
-  .md-typeset {
-    del.critic {
-      background-color: #{mix($drac-pink, $drac-bg, 50%)};
-    }
-
-    ins.critic {
-      background-color: #{mix($drac-green, $drac-bg, 50%)};
-    }
-
-    mark.critic {
-      background-color: #{mix($drac-orange, $drac-bg, 50%)};
-    }
-  }
-}
-
 /* Don't use box shadows */
 .md-typeset {
   del,

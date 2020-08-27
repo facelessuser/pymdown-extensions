@@ -19,7 +19,7 @@ $new-admonitions: (
   ) !default;
 
 /* Style new admonitions with dark or light colors */
-:root {
+:root > * {
   --md-admonition-bg-color: transparent;
 
   @each $names, $prop in $new-admonitions {
@@ -31,7 +31,7 @@ $new-admonitions: (
     --md-admonition-bg-color--#{$name}: #{transparentize($tint2, 0.9)};
     --md-admonition-icon-color--#{$name}: #{$tint2};
 
-    [data-md-color-scheme="dracula"] {
+    &[data-md-color-scheme="dracula"] {
       --md-admonition-bg-color--#{$name}: var(--md-default-bg-color--darkest);
       --md-admonition-icon-color--#{$name}: #{$tint};
     }

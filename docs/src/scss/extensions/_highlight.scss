@@ -1,127 +1,31 @@
-/* Dark mode color scheme */
+.highlight {
+  .nc,  // Name, class
+  .ne,  // Name, exception
+  {
+    color: var(--md-code-hl-class-color);
+  }
 
-:root {
-  --md-code-special-bg-color: #{darken(hsl(0, 0%, 96%), 5%)};
-  --md-code-alternate-bg-color: var(--md-code-bg-color);
+  .nb,  // Name, builtin
+  .bp { // Name, builtin pseudo
+    color: var(--md-code-hl-builtin-color);
+  }
 
-  [data-md-color-scheme="slate"] {
-    --md-code-special-bg-color: #{lighten(hsl(232, 15%, 15%), 5%)};
+  .nn { // Name, namespace Name, namespace Name, namespace Name, namespace
+    color: var(--md-code-hl-namespace-color);
+  }
+
+  .na,  // Name, attribute
+  .nd,  // Name, decorator
+  .ni { // Name, entity
+    color: var(--md-code-hl-entity-color);
+  }
+  .nl,  // Name, label
+  .nt { // Name, tag
+    color: var(--md-code-hl-tag-color);
   }
 }
 
 [data-md-color-scheme="dracula"] {
-
-  --md-code-special-bg-color: #{lighten($drac-bg, 5%)};
-  --md-code-alternate-bg-color: #{tint($drac-bg, 10%)};
-
-  .highlight code *,
-  code.highlight * {
-    color: unset;
-    font-weight: unset; /* stylelint-disable-line font-weight-notation */
-    text-decoration: unset;
-    background-color: unset;
-  }
-
-  .highlight {
-
-    /* Dracula Theme v1.2.5
-     *
-     * https://github.com/zenorocha/dracula-theme
-     *
-     * Copyright 2016, All rights reserved
-     *
-     * Code licensed under the MIT license
-     * http://zenorocha.mit-license.org
-     *
-     * @author Rob G <wowmotty@gmail.com>
-     * @author Chris Bracco <chris@cbracco.me>
-     * @author Zeno Rocha <hi@zenorocha.com>
-     * @author Isaac Muse <isaacmuse@gmail.com>
-     *
-     * Modified to fix issues and adapt for this Material theme.
-     */
-
-     $code-header-fg-color: transparentize($drac-fg, 0.46);
-     $code-hll-bg-color: $drac-selection;
-
-    .hll { background-color: $code-hll-bg-color; }
-    .c { color: $drac-blue } // Comment
-    .err { color: $drac-fg } // Error
-    .g { color: $drac-fg } // Generic
-    .k { color: $drac-pink } // Keyword
-    .l { color: $drac-fg } // Literal
-    .n { color: $drac-fg } // Name
-    .o { color: $drac-pink } // Operator
-    .x { color: $drac-fg } // Other
-    .p { color: $drac-fg } // Punctuation
-    .ch { color: $drac-blue } // Comment.Hashbang
-    .cm { color: $drac-blue } // Comment.Multiline
-    .cp { color: $drac-pink } // Comment.Preproc
-    .cpf { color: $drac-blue } // Comment.PreprocFile
-    .c1 { color: $drac-blue } // Comment.Single
-    .cs { color: $drac-blue } // Comment.Special
-    .gd { color: $drac-pink; font-weight: 700; } // Generic.Deleted
-    .ge { color: $drac-fg; text-decoration: underline } // Generic.Emph
-    .gr { color: $drac-fg } // Generic.Error
-    .gh { color: $code-header-fg-color; font-weight: 700;} // Generic.Heading
-    .gi { color: $drac-green; font-weight: 700; } // Generic.Inserted
-    .go { color: $drac-blue } // Generic.Output
-    .gp { color: $drac-fg } // Generic.Prompt
-    .gs { color: $drac-fg } // Generic.Strong
-    .gu { color: $code-header-fg-color; font-weight: 700;} // Generic.Subheading
-    .gt { color: $drac-fg } // Generic.Traceback
-    .kc { color: $drac-pink } // Keyword.Constant
-    .kd { color: $drac-cyan; font-style: italic } // Keyword.Declaration
-    .kn { color: $drac-pink } // Keyword.Namespace
-    .kp { color: $drac-pink } // Keyword.Pseudo
-    .kr { color: $drac-pink } // Keyword.Reserved
-    .kt { color: $drac-cyan } // Keyword.Type
-    .ld { color: $drac-fg } // Literal.Date
-    .m { color: $drac-purple } // Literal.Number
-    .s { color: $drac-yellow } // Literal.String
-    .na { color: $drac-green } // Name.Attribute
-    .nb { color: $drac-cyan; font-style: italic } // Name.Builtin
-    .nc { color: $drac-green } // Name.Class
-    .no { color: $drac-fg } // Name.Constant
-    .nd { color: $drac-fg } // Name.Decorator
-    .ni { color: $drac-fg } // Name.Entity
-    .ne { color: $drac-fg } // Name.Exception
-    .nf { color: $drac-green } // Name.Function
-    .nl { color: $drac-cyan; font-style: italic } // Name.Label
-    .nn { color: $drac-fg } // Name.Namespace
-    .nx { color: $drac-fg } // Name.Other
-    .py { color: $drac-fg } // Name.Property
-    .nt { color: $drac-pink } // Name.Tag
-    .nv { color: $drac-cyan; font-style: italic } // Name.Variable
-    .ow { color: $drac-pink } // Operator.Word
-    .w { color: $drac-fg } // Text.Whitespace
-    .mb { color: $drac-purple } // Literal.Number.Bin
-    .mf { color: $drac-purple } // Literal.Number.Float
-    .mh { color: $drac-purple } // Literal.Number.Hex
-    .mi { color: $drac-purple } // Literal.Number.Integer
-    .mo { color: $drac-purple } // Literal.Number.Oct
-    .sa { color: $drac-yellow } // Literal.String.Affix
-    .sb { color: $drac-yellow } // Literal.String.Backtick
-    .sc { color: $drac-yellow } // Literal.String.Char
-    .dl { color: $drac-yellow } // Literal.String.Delimiter
-    .sd { color: $drac-yellow } // Literal.String.Doc
-    .s2 { color: $drac-yellow } // Literal.String.Double
-    .se { color: $drac-yellow } // Literal.String.Escape
-    .sh { color: $drac-yellow } // Literal.String.Heredoc
-    .si { color: $drac-yellow } // Literal.String.Interpol
-    .sx { color: $drac-yellow } // Literal.String.Other
-    .sr { color: $drac-yellow } // Literal.String.Regex
-    .s1 { color: $drac-yellow } // Literal.String.Single
-    .ss { color: $drac-yellow } // Literal.String.Symbol
-    .bp { color: $drac-fg; font-style: italic } // Name.Builtin.Pseudo
-    .fm { color: $drac-green } // Name.Function.Magic
-    .vc { color: $drac-cyan; font-style: italic } // Name.Variable.Class
-    .vg { color: $drac-cyan; font-style: italic } // Name.Variable.Global
-    .vi { color: $drac-cyan; font-style: italic } // Name.Variable.Instance
-    .vm { color: $drac-cyan; font-style: italic } // Name.Variable.Magic
-    .il { color: $drac-purple } // Literal.Number.Integer.Long
-  }
-
   .admonition-title code,
   table:not([class]) th code {
     background-color: var(--md-code-alternate-bg-color);

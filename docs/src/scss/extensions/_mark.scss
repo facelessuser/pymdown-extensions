@@ -1,11 +1,3 @@
-/* Dark mode changes */
-[data-md-color-scheme="dracula"] {
-  .md-typeset mark:not(.critic) {
-    color: var(--md-default-bg-color);
-    background-color: $drac-yellow;
-  }
-}
-
 /* Shadow boxes sometimes give issues, so just pad. */
 .md-typeset mark:not(.critic) {
   padding: 0 px2em(4px, 16px);

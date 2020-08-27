@@ -83,7 +83,8 @@ footer.sponsorship {
 body {
   &:not([data-md-prefers-color-scheme="true"])[data-md-color-scheme="dracula"] .md-icon {
     .light-mode,
-    .system-mode {
+    .system-mode,
+    .unknown-mode {
       display:  none;
     }
   }
@@ -91,6 +92,15 @@ body {
 
   &:not([data-md-prefers-color-scheme="true"])[data-md-color-scheme="default"] .md-icon {
     .dark-mode,
+    .system-mode,
+    .unknown-mode {
+      display:  none;
+    }
+  }
+
+  &:not([data-md-prefers-color-scheme="true"]):not([data-md-color-scheme="default"]):not([data-md-color-scheme="dracula"]) .md-icon {
+    .dark-mode,
+    .light-mode,
     .system-mode {
       display:  none;
     }
@@ -98,7 +108,8 @@ body {
 
   &[data-md-prefers-color-scheme="true"] .md-icon {
     .dark-mode,
-    .light-mode {
+    .light-mode,
+    .unknown-mode {
       display: none;
     }
   }
