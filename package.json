@@ -25,7 +25,7 @@
     "@babel/register": "^7.11.5",
     "@fortawesome/fontawesome-free": "^5.14.0",
     "@mdi/svg": "^5.5.55",
-    "@primer/octicons": "^10.1.0",
+    "@primer/octicons": "^11.0.0",
     "@rollup/plugin-babel": "^5.2.0",
     "autoprefixer": "^9.8.6",
     "babel-core": "^7.0.0-bridge.0",
