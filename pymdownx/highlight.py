@@ -124,7 +124,7 @@ if pygments:
         """Adds ability to output line numbers in a new way."""
 
         # Capture `<span class="lineno">   1 </span>`
-        RE_SPAN_NUMS = re.compile(r'(<span[^>]*?)(class="[^"]*\blineno\b[^"]*)"([^>]*)>([^<]+)(</span>)')
+        RE_SPAN_NUMS = re.compile(r'(<span[^>]*?)(class="[^"]*\blinenos?\b[^"]*)"([^>]*)>([^<]+)(</span>)')
         # Capture `<pre>` that is not followed by `<span></span>`
         RE_TABLE_NUMS = re.compile(r'(<pre[^>]*>)(?!<span></span>)')
 
@@ -148,7 +148,7 @@ if pygments:
                 m.group(2) +
                 '"' +
                 m.group(3) +
-                ' data-linenos="' + m.group(4) + '">' +
+                ' data-linenos="' + m.group(4).rstrip() + ' ">' +
                 m.group(5)
             )
 

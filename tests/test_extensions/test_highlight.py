@@ -23,8 +23,8 @@ class TestHighlightInline(util.MdCase):
             ```
             ''',
             r'''
-            <div class="highlight"><pre><span></span><code><span class="lineno" data-linenos="1 "></span><span class="kn">import</span> <span class="nn">test</span>
-            <span class="lineno" data-linenos="2 "></span><span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
+            <div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="kn">import</span> <span class="nn">test</span>
+            <span class="linenos" data-linenos="2 "></span><span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div>
             ''',  # noqa: E501
             True
@@ -285,8 +285,8 @@ class TestHighlightSpecial(util.MdCase):
             ```
             ''',
             r'''
-            <div class="highlight"><pre><span></span><code><span class="lineno" data-linenos="1 "></span><span class="kn">import</span> <span class="nn">test</span>
-            <span class="lineno special" data-linenos="2 "></span><span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
+            <div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="kn">import</span> <span class="nn">test</span>
+            <span class="linenos special" data-linenos="2 "></span><span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div>
             ''',  # noqa: E501
             True
@@ -303,8 +303,8 @@ class TestHighlightSpecial(util.MdCase):
             ```
             ''',
             r'''
-            <div class="highlight"><pre><span></span><code><span class="lineno special" data-linenos="1 "></span><span class="kn">import</span> <span class="nn">test</span>
-            <span class="lineno special" data-linenos="2 "></span><span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
+            <div class="highlight"><pre><span></span><code><span class="linenos special" data-linenos="1 "></span><span class="kn">import</span> <span class="nn">test</span>
+            <span class="linenos special" data-linenos="2 "></span><span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div>
             ''',  # noqa: E501
             True
