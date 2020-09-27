@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.0.1
+
+- **FIX**: Fix issue with `pymdownx-inline` an Pygments 2.7+.
+
 ## 8.0
 
 Please see [Release Notes](./releases/8.0.md#8.0) for details on upgrading to 8.0.
