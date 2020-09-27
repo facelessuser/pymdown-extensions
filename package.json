@@ -55,7 +55,7 @@
     "promise": "^8.1.0",
     "rollup": "^2.26.7",
     "rollup-plugin-output-manifest": "^1.0.2",
-    "rollup-plugin-terser": "^7.0.1",
+    "rollup-plugin-terser": "^7.0.2",
     "stylelint": "^13.7.0",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^20.0.0",
