@@ -35,7 +35,7 @@
     "selector-descendant-combinator-no-non-space": null,
     "selector-type-no-unknown": [true, {"ignore": ["custom-elements"]}],
     "string-quotes": "double",
-    "unit-whitelist": ["px", "em", "deg", "ms", "%", "mm", "vh", "dppx", "s"],
+    "unit-allowed-list": ["px", "em", "deg", "ms", "%", "mm", "vh", "dppx", "s"],
     "value-keyword-case": "lower",
     "value-no-vendor-prefix": true
   }
