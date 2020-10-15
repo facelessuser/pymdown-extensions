@@ -67,6 +67,10 @@
     }
   }
 
+  pre > code {
+    outline: none;
+  }
+
   /* Don't always like code breaking in table cells */
   td code {
     word-break: normal;
