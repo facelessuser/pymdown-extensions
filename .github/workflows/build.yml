@@ -17,10 +17,8 @@ jobs:
       max-parallel: 4
       matrix:
         platform: [ubuntu-latest, windows-latest]
-        python-version: [3.5, 3.6, 3.7, 3.8, 3.9-dev]
+        python-version: [3.6, 3.7, 3.8, 3.9-dev]
         include:
-          - python-version: 3.5
-            tox-env: py35
           - python-version: 3.6
             tox-env: py36
           - python-version: 3.7
