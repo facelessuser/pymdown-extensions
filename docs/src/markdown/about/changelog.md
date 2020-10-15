@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.1.0
+
+- **NEW**: Drop support for Python 3.5.
+
 ## 8.0.1
 
 - **FIX**: Fix issue with `pymdownx-inline` an Pygments 2.7+.
