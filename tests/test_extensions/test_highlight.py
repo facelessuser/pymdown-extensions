@@ -239,7 +239,6 @@ class TestNoPygmentsCustomLineClass(util.MdCase):
             <pre class="highlight"><code>import test
             test.test()
             </code></pre>
-
             <p>Text</p>
             ''',
             True

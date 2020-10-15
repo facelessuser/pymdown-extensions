@@ -801,7 +801,6 @@ class TestSuperFencesCustomDefault(util.MdCase):
             <div class="arithmatex">\[
             E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
             \]</div>
-
             <p><custom lang="python" class_name="class-">test</custom></p>
             ''',
             True

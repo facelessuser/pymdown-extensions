@@ -34,7 +34,6 @@ class TestLegacyTab(util.MdCase):
             <p>Some more content.</p>
             <div class="highlight"><pre><span></span><code>code
             </code></pre></div>
-
             </div>
             </div>
             ''',  # noqa: E501
@@ -122,7 +121,6 @@ class TestLegacyTab(util.MdCase):
             <p>Some more content.</p>
             <div class="highlight"><pre><span></span><code>code
             </code></pre></div>
-
             </div>
             </div>
             ''',  # noqa: E501
