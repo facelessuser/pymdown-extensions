@@ -22,6 +22,10 @@ $new-admonitions: (
 :root > * {
   --md-admonition-bg-color: transparent;
 
+  &[data-md-color-scheme="dracula"] {
+    --md-admonition-icon-color: $drac-dark-yellow;
+  }
+
   @each $names, $prop in $new-admonitions {
     $tint: nth($prop, 1);
     $tint2: nth($prop, 2);
@@ -46,6 +50,14 @@ $new-admonitions: (
 
 /* Dark mode changes */
 [data-md-color-scheme="dracula"] .md-typeset .admonition {
+  border-color: var(--md-admonition-icon-color--note);
+  > .admonition-title {
+    background-color: var(--md-admonition-bg-color--note);
+    &::before {
+      background-color: var(--md-admonition-icon-color--note);
+    }
+  }
+
   box-shadow:
     0 px2rem(4px) px2rem(10px) hsla(0, 0%, 0%, 0.3),
     0 0           px2rem(1px)  hsla(0, 0%, 0%, 0.2);

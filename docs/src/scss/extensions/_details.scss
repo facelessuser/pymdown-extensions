@@ -7,6 +7,9 @@
     > summary {
       @extend .admonition-title;
 
+      // TODO: remove when Material fixes this.
+      margin: 0 px2rem(-12px);
+
       // Disable accessibility focus
       &:focus {
         outline-style: none;
