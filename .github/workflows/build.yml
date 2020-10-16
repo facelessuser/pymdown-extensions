@@ -91,7 +91,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.9]
+        python-version: [3.8]
 
     env:
       TOXENV: documents
