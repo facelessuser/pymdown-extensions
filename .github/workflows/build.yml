@@ -27,9 +27,9 @@ jobs:
             tox-env: py38
           - python-version: 3.9
             tox-env: py39
-        # exclude:
-        #   - platform: windows-latest
-        #     python-version: 3.10-dev
+        exclude:
+          - platform: windows-latest
+            python-version: 3.9
 
     env:
       TOXENV: ${{ matrix.tox-env }}
