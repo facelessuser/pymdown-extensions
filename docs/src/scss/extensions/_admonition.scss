@@ -53,6 +53,7 @@ $new-admonitions: (
   border-color: var(--md-admonition-icon-color--note);
   > .admonition-title {
     background-color: var(--md-admonition-bg-color--note);
+    border-color: var(--md-admonition-icon-color--note);
     &::before {
       background-color: var(--md-admonition-icon-color--note);
     }
@@ -77,6 +78,7 @@ $new-admonitions: (
       // Define base class
       > .admonition-title {
         background-color: var(--md-admonition-bg-color--#{$name});
+        border-color: var(--md-admonition-icon-color--#{$name});
 
         // Icon
         &::before {
@@ -105,6 +107,7 @@ $new-admonitions: (
 
     > .admonition-title {
       background-color: var(--md-admonition-bg-color--#{$name});
+      border-color: var(--md-admonition-icon-color--#{$name});
 
       // Icon
       &::before {
