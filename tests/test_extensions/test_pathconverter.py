@@ -17,20 +17,37 @@ class TestRelative(util.MdCase):
         }
     }
 
+    def test_in_script(self):
+        """Test that we do not parse image in script."""
+
+        self.check_markdown(
+            r'''
+            <script>
+            var str = '<img alt="picture" src="../test_extensions/_assets/bg.png" />'
+            </script>
+            ''',
+            r'''
+            <script>
+            var str = '<img alt="picture" src="../test_extensions/_assets/bg.png" />'
+            </script>
+            ''',
+            True
+        )
+
     def test_comment(self):
         """Test comment."""
 
         self.check_markdown(
-            r'<!-- ![picture](../_assets/bg.png) -->',
-            r'<!-- ![picture](../_assets/bg.png) -->'
+            r'<!-- ![picture](../test_extensions/_assets/bg.png) -->',
+            r'<!-- ![picture](../test_extensions/_assets/bg.png) -->'
         )
 
     def test_relative_path(self):
         """Test relative path."""
 
         self.check_markdown(
-            r'![picture](../extensions/_assets/bg.png)',
-            r'<p><img alt="picture" src="extensions/_assets/bg.png" /></p>'
+            r'![picture](../test_extensions/_assets/bg.png)',
+            r'<p><img alt="picture" src="test_extensions/_assets/bg.png" /></p>'
         )
 
     def test_file_win_file_path_root(self):
@@ -134,20 +151,37 @@ class TestAbsolute(util.MdCase):
         }
     }
 
+    def test_in_script(self):
+        """Test that we do not parse image in script."""
+
+        self.check_markdown(
+            r'''
+            <script>
+            var str = '<img alt="picture" src="../test_extensions/_assets/bg.png" />'
+            </script>
+            ''',
+            r'''
+            <script>
+            var str = '<img alt="picture" src="../test_extensions/_assets/bg.png" />'
+            </script>
+            ''',
+            True
+        )
+
     def test_comment(self):
         """Test comment."""
 
         self.check_markdown(
-            r'<!-- ![picture](../_assets/bg.png) -->',
-            r'<!-- ![picture](../_assets/bg.png) -->'
+            r'<!-- ![picture](../test_extensions/_assets/bg.png) -->',
+            r'<!-- ![picture](../test_extensions/_assets/bg.png) -->'
         )
 
     def test_relative_path(self):
         """Test relative path."""
 
         self.check_markdown(
-            r'![picture](./extensions/_assets/bg.png)',
-            r'<p><img alt="picture" src="/Some/fake/path/extensions/_assets/bg.png" /></p>'
+            r'![picture](./test_extensions/_assets/bg.png)',
+            r'<p><img alt="picture" src="/Some/fake/path/test_extensions/_assets/bg.png" /></p>'
         )
 
     def test_file_win_file_path_root(self):

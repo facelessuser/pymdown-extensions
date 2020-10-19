@@ -1,6 +1,0 @@
-__default__: {}
-
-b64:
-  extensions:
-    pymdownx.b64:
-      base_path: '{{BASE}}'

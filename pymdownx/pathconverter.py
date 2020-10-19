@@ -42,8 +42,11 @@ from urllib.parse import urlunparse
 
 RE_TAG_HTML = r'''(?xus)
     (?:
-        (?P<comments>(\r?\n?\s*)<!--[\s\S]*?-->(\s*)(?=\r?\n)|<!--[\s\S]*?-->)|
-        (?P<open><(?P<tag>(?:%s)))
+        (?P<avoid>
+            <\s*(?P<script_name>script|style)[^>]*>.*?</\s*(?P=script_name)\s*> |
+            (?:(\r?\n?\s*)<!--[\s\S]*?-->(\s*)(?=\r?\n)|<!--[\s\S]*?-->)
+        )|
+        (?P<open><\s*(?P<tag>(?:%s)))
         (?P<attr>(?:\s+[\w\-:]+(?:\s*=\s*(?:"[^"]*"|'[^']*'))?)*)
         (?P<close>\s*(?:\/?)>)
     )
@@ -118,8 +121,8 @@ def repl_absolute(m, base_path):
 def repl(m, base_path, rel_path=None):
     """Replace."""
 
-    if m.group('comments'):
-        tag = m.group('comments')
+    if m.group('avoid'):
+        tag = m.group('avoid')
     else:
         tag = m.group('open')
         if rel_path is None:

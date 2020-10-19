@@ -41,8 +41,11 @@ file_types = {
 RE_TAG_HTML = re.compile(
     r'''(?xus)
     (?:
-        (?P<comments>(\r?\n?\s*)<!--[\s\S]*?-->(\s*)(?=\r?\n)|<!--[\s\S]*?-->)|
-        (?P<open><(?P<tag>img))
+        (?P<avoid>
+            <\s*(?P<script_name>script|style)[^>]*>.*?</\s*(?P=script_name)\s*> |
+            (?:(\r?\n?\s*)<!--[\s\S]*?-->(\s*)(?=\r?\n)|<!--[\s\S]*?-->)
+        )|
+        (?P<open><\s*(?P<tag>img))
         (?P<attr>(?:\s+[\w\-:]+(?:\s*=\s*(?:"[^"]*"|'[^']*'))?)*)
         (?P<close>\s*(?:\/?)>)
     )
@@ -95,8 +98,8 @@ def repl_path(m, base_path):
 def repl(m, base_path):
     """Replace."""
 
-    if m.group('comments'):
-        tag = m.group('comments')
+    if m.group('avoid'):
+        tag = m.group('avoid')
     else:
         tag = m.group('open')
         tag += RE_TAG_LINK_ATTR.sub(lambda m2: repl_path(m2, base_path), m.group('attr'))
