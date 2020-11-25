@@ -3,6 +3,8 @@
 ## 8.1.0
 
 - **NEW**: Drop support for Python 3.5.
+- **NEW**: Officially support Python 3.9.
+- **FIX**: Avoid parsing script tags in PathConverter and B64 extensions.
 
 ## 8.0.1
 
