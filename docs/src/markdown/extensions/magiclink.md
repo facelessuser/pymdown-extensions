@@ -12,6 +12,10 @@ If you happen to have some conflicts with syntax for a specific case, you can al
 as well: `#!md <https://www.link.com>`. If enabled, repository link shortening will be applied to the the angle
 bracketed auto-link format as well.
 
+It is also recommended to use [SaneHeaders](./saneheaders.md) when using MagicLink to avoid problems when specifying a
+repository bug (using the syntax `#1`) at the start of a line. Python Markdown, by default, will treat `#1` as a header
+if detected at the start of a line without SaneHeaders.
+
 The MagicLink extension can be included in Python Markdown by using the following:
 
 ```py3
