@@ -397,6 +397,10 @@ Keys        | Description
 `format`    | A function that formats the HTML output. The function should return a string as HTML.
 `validator` | An optional parameter that is used to provide a function to validate custom fence parameters.
 
+!!! warning "Logging"
+    When a custom fence fails, the error will be swallowed up and the error will be handled gracefully. If logging is
+    desired, custom logging should be added into the custom function. SuperFences will not provide any.
+
 !!! new "New in 7.0"
     Starting in 7.0, you can override the base fence logic (the syntax highlighter) by specifying the custom fence
     with a name of `*`. This means that if a fence does not match any other custom fences, the default, fallback fence
