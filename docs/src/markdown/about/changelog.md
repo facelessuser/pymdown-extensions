@@ -4,7 +4,6 @@
 
 - **NEW**: Drop support for Python 3.5.
 - **NEW**: Officially support Python 3.9.
-- **NEW**: Tasklist extension will now attach a label with the value `task` to task lists for accessibility purposes.
 - **FIX**: Avoid parsing script tags in PathConverter and B64 extensions.
 
 ## 8.0.1
