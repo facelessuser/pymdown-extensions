@@ -4,6 +4,7 @@
 
 - **NEW**: Drop support for Python 3.5.
 - **NEW**: Officially support Python 3.9.
+- **NEW**: Tabbed titles can now have simple Markdown in them which can be parsed and rendered (like emoji, bold, etc.).
 - **FIX**: Avoid parsing script tags in PathConverter and B64 extensions.
 
 ## 8.0.1
