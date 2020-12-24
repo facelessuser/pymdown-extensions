@@ -22,7 +22,6 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 DEALINGS IN THE SOFTWARE.
 """
 from markdown import Extension
-from markdown import util as md_util
 from markdown.blockprocessors import BlockProcessor
 import xml.etree.ElementTree as etree
 import re
@@ -182,7 +181,7 @@ class TabbedProcessor(BlockProcessor):
                     "for": "__tabbed_%d_%d" % (tab_set, tab_count)
                 }
             )
-            lab.text = md_util.AtomicString(title)
+            lab.text = title
 
             div = etree.SubElement(
                 sfences,

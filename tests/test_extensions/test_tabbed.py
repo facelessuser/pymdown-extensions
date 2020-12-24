@@ -40,6 +40,38 @@ class TestLegacyTab(util.MdCase):
             True
         )
 
+    def test_tabbed_markdown_title(self):
+        """Test tabbed."""
+
+        self.check_markdown(
+            r'''
+            === "**Tab**"
+                Some *content*
+
+                And more `content`.
+
+            === "_Another Tab_"
+                Some more content.
+
+                ```
+                code
+                ```
+            ''',
+            r'''
+            <div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1"><strong>Tab</strong></label><div class="tabbed-content">
+            <p>Some <em>content</em></p>
+            <p>And more <code>content</code>.</p>
+            </div>
+            <input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2"><em>Another Tab</em></label><div class="tabbed-content">
+            <p>Some more content.</p>
+            <div class="highlight"><pre><span></span><code>code
+            </code></pre></div>
+            </div>
+            </div>
+            ''',  # noqa: E501
+            True
+        )
+
     def test_nested_tabbed(self):
         """Test nested tabbed."""
 
