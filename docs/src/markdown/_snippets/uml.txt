@@ -21,14 +21,18 @@ window.mermaidConfig = {
       }\
       \
       /* Entity Relationship */\
-      defs marker#ZERO_OR_MORE_END circle,\
-      defs marker#ZERO_OR_MORE_END path {\
+      defs marker#ZERO_OR_MORE_END circle {\
         fill: var(--drac-page-bg) !important;\
         stroke: var(--drac-purple-fg) !important;\
       }\
-      defs marker#ZERO_OR_MORE_START circle,\
-      defs marker#ZERO_OR_MORE_START path {\
+      defs marker#ZERO_OR_MORE_END path {\
+        stroke: var(--drac-purple-fg) !important;\
+      }\
+      defs marker#ZERO_OR_MORE_START circle{\
         fill: var(--drac-page-bg) !important;\
+        stroke: var(--drac-purple-fg) !important;\
+      }\
+      defs marker#ZERO_OR_MORE_START path {\
         stroke: var(--drac-purple-fg) !important;\
       }\
       defs marker#ONLY_ONE_START path {\
