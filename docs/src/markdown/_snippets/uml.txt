@@ -1,4 +1,4 @@
-<script src="https://unpkg.com/mermaid@8.7.0/dist/mermaid.min.js"></script>
+<script src="https://unpkg.com/mermaid@8.8.4/dist/mermaid.min.js"></script>
 <script>
 // Our loader looks for `mermaidConfig` and will load the the appropriate
 // config based on our current scheme: light, dark, etc.
