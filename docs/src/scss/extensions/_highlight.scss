@@ -5,6 +5,10 @@
     color: var(--md-code-hl-class-color);
   }
 
+  .mb {
+    color: var(--md-code-hl-number-color);
+  }
+
   .nb,  // Name, builtin
   .bp { // Name, builtin pseudo
     color: var(--md-code-hl-builtin-color);

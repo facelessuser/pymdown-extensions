@@ -268,7 +268,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       surrogate.appendChild(temp);
 
       try {
-        mermaid.mermaidAPI.render("_mermaind_".concat(i), getFromCode(parentEl), function (content) {
+        mermaid.mermaidAPI.render("_mermaid_".concat(i), getFromCode(parentEl), function (content) {
           var el = document.createElement("div");
           el.className = className;
           el.innerHTML = content; // Insert the render where we want it and remove the original text source.
