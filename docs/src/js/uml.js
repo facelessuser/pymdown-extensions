@@ -119,7 +119,7 @@ export default className => {
 
     try {
       mermaid.mermaidAPI.render(
-        `_mermaind_${i}`,
+        `_mermaid_${i}`,
         getFromCode(parentEl),
         content => {
           const el = document.createElement("div")
