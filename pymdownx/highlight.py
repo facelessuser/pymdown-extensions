@@ -49,7 +49,7 @@ DEFAULT_CONFIG = {
     ],
     'guess_lang': [
         False,
-        "Automatic language detection - Default: True"
+        "Automatic language detection - Default: False"
     ],
     'css_class': [
         'highlight',
@@ -191,7 +191,7 @@ class Highlight(object):
     """Highlight class."""
 
     def __init__(
-        self, guess_lang=True, pygments_style='default', use_pygments=True,
+        self, guess_lang=False, pygments_style='default', use_pygments=True,
         noclasses=False, extend_pygments_lang=None, linenums=None, linenums_special=-1,
         linenums_style='table', linenums_class='linenums', wrapcode=True, language_prefix='language-',
         code_attr_on_pre=False
