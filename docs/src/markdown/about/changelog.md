@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.1.1
+
+- **FIX**: Ensure content immediately before Details content or Tabbed content gets preserved.
+
 ## 8.1
 
 - **NEW**: Drop support for Python 3.5.

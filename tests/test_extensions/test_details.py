@@ -8,6 +8,25 @@ class TestDetails(util.MdCase):
     extension = ['pymdownx.details', 'markdown.extensions.def_list']
     extension_configs = {}
 
+    def test_with_preceding_text(self):
+        """Test content right before details."""
+
+        expected = r'''
+            <p>foo
+            <strong>foo</strong></p>
+            <details class="note"><summary>Details</summary></details>
+            '''
+
+        self.check_markdown(
+            r'''
+            foo
+            **foo**
+            ??? note "Details"
+            ''',
+            expected,
+            True
+        )
+
     def test_nested(self):
         """Test nested."""
 
