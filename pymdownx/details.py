@@ -112,6 +112,8 @@ class DetailsProcessor(BlockProcessor):
 
         if m:
             # remove the first line
+            if m.start() > 0:
+                self.parser.parseBlocks(parent, [block[:m.start()]])
             block = block[m.end():]
         else:
             sibling, block = self.get_sibling(parent, block)

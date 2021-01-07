@@ -8,6 +8,26 @@ class TestLegacyTab(util.MdCase):
     extension = ['pymdownx.tabbed', 'pymdownx.superfences', 'markdown.extensions.def_list', 'pymdownx.details']
     extension_configs = {}
 
+    def test_with_preceding_text(self):
+        """Test content directly before tabs."""
+
+        expected = r'''
+            <p>foo
+            <strong>foo</strong></p>
+            <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab</label><div class="tabbed-content"></div>
+            </div>
+            '''  # noqa: E501
+
+        self.check_markdown(
+            r'''
+            foo
+            **foo**
+            === "Tab"
+            ''',
+            expected,
+            True
+        )
+
     def test_tabbed(self):
         """Test tabbed."""
 

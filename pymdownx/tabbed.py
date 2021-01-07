@@ -128,6 +128,8 @@ class TabbedProcessor(BlockProcessor):
 
         if m:
             # removes the first line
+            if m.start() > 0:
+                self.parser.parseBlocks(parent, [block[:m.start()]])
             block = block[m.end():]
             sibling = self.lastChild(parent)
         else:
