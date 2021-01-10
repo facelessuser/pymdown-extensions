@@ -14,3 +14,4 @@ include .coveragerc
 include LICENSE.md
 include README.md
 include MANIFEST.in
+include pyproject.toml
