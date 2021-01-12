@@ -31,7 +31,7 @@ import re
 RE_TAG_HTML = re.compile(
     r'''(?x)
     (?:
-        (?P<comments>(?:\r?\n?\s*)<!--[\s\S]*?-->(?:\s*)(?=\r?\n)|<!--[\s\S]*?-->)|
+        (?P<comments>(?:\r?\n?\s*)<!--(?:-(?!->)|[^-])*?-->(?:\s*)(?=\r?\n)|<!--[\s\S]*?-->)|
         (?P<scripts>
             (?P<script_open><(?P<script_name>style|script))
             (?P<script_attr>(?:\s+[\w\-:]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'`=<>]+))?)*)
