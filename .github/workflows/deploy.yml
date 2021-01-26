@@ -53,7 +53,7 @@ jobs:
           pip install --upgrade setuptools wheel
           python setup.py ${{ matrix.distribution }}
       - name: Publish
-        uses: pypa/gh-action-pypi-publish@v1.0.0a0
+        uses: pypa/gh-action-pypi-publish@v1.4.1
         with:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
