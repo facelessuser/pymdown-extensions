@@ -1,12 +1,9 @@
 # Changelog
 
-## 8.1.2
-
-- **FIX**: StripHTML: Fix some corner cases related to stripping comments.
-
 ## 8.1.1
 
 - **FIX**: Ensure content immediately before Details content or Tabbed content gets preserved.
+- **FIX**: StripHTML: Fix some corner cases related to stripping comments.
 
 ## 8.1
 
