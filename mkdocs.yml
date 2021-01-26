@@ -23,9 +23,10 @@ theme:
     - navigation.tabs
 
 nav:
-  - PyMdown Extensions: index.md
-  - Installation: installation.md
-  - Usage Notes: usage_notes.md
+  - Home:
+    - Introduction: index.md
+    - Installation: installation.md
+    - Usage Notes: usage_notes.md
   - Extensions:
     - Arithmatex: extensions/arithmatex.md
     - B64: extensions/b64.md
