@@ -20,7 +20,7 @@
   "devDependencies": {
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
-    "@babel/plugin-external-helpers": "^7.12.1",
+    "@babel/plugin-external-helpers": "^7.12.13",
     "@babel/preset-env": "^7.12.11",
     "@babel/register": "^7.12.10",
     "@fortawesome/fontawesome-free": "^5.15.2",
