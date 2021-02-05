@@ -324,3 +324,59 @@ class TestDetails(util.MdCase):
             ''',
             True
         )
+
+    def test_details_complex_list(self):
+        """Test details complex list scenario."""
+
+        self.check_markdown(
+            '''
+            ???+ "With details block with loose lists"
+                - Parent 1
+
+                    - Child 1
+                    - Child 2
+            ''',
+            '''
+            <details open="open"><summary>With details block with loose lists</summary><ul>
+            <li>
+            <p>Parent 1</p>
+            <ul>
+            <li>Child 1</li>
+            <li>Child 2</li>
+            </ul>
+            </li>
+            </ul>
+            </details>
+            ''',
+            True
+        )
+
+    def test_details_complex_list_unindentd_content(self):
+        """Test details complex list scenario with un-indented content."""
+
+        self.check_markdown(
+            '''
+            ???+ "With details block with loose lists"
+                - Parent 1
+
+                    - Child 1
+                    - Child 2
+            - Parent 2
+            ''',
+            '''
+            <details open="open"><summary>With details block with loose lists</summary><ul>
+            <li>
+            <p>Parent 1</p>
+            <ul>
+            <li>Child 1</li>
+            <li>Child 2</li>
+            </ul>
+            </li>
+            </ul>
+            </details>
+            <ul>
+            <li>Parent 2</li>
+            </ul>
+            ''',
+            True
+        )

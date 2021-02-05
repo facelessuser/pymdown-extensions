@@ -43,7 +43,21 @@ class TabbedProcessor(BlockProcessor):
         self.current_sibling = None
         self.content_indention = 0
 
-    def get_sibling(self, parent, block):
+    def detab_by_length(self, text, length):
+        """Remove a tab from the front of each line of the given text."""
+
+        newtext = []
+        lines = text.split('\n')
+        for line in lines:
+            if line.startswith(' ' * length):
+                newtext.append(line[length:])
+            elif not line.strip():
+                newtext.append('')  # pragma: no cover
+            else:
+                break
+        return '\n'.join(newtext), '\n'.join(lines[len(newtext):])
+
+    def parse_content(self, parent, block):
         """Get sibling tab.
 
         Retrieve the appropriate sibling element. This can get tricky when
@@ -51,13 +65,16 @@ class TabbedProcessor(BlockProcessor):
 
         """
 
+        old_block = block
+        non_tabs = ''
+
         # We already acquired the block via test
         if self.current_sibling is not None:
             sibling = self.current_sibling
-            block = block[self.content_indent:]
+            block, non_tabs = self.detab_by_length(block, self.content_indent)
             self.current_sibling = None
             self.content_indent = 0
-            return sibling, block
+            return sibling, block, non_tabs
 
         sibling = self.lastChild(parent)
 
@@ -107,10 +124,12 @@ class TabbedProcessor(BlockProcessor):
                 sibling = None
 
             if sibling is not None:
+                indent += self.tab_length
+                block, non_tabs = self.detab_by_length(old_block, indent)
                 self.current_sibling = sibling
                 self.content_indent = indent
 
-        return sibling, block
+        return sibling, block, non_tabs
 
     def test(self, parent, block):
         """Test block."""
@@ -118,7 +137,7 @@ class TabbedProcessor(BlockProcessor):
         if self.START.search(block):
             return True
         else:
-            return self.get_sibling(parent, block)[0] is not None
+            return self.parse_content(parent, block)[0] is not None
 
     def run(self, parent, blocks):
         """Convert to tabbed block."""
@@ -132,11 +151,9 @@ class TabbedProcessor(BlockProcessor):
                 self.parser.parseBlocks(parent, [block[:m.start()]])
             block = block[m.end():]
             sibling = self.lastChild(parent)
+            block, non_tabs = self.detab(block)
         else:
-            sibling, block = self.get_sibling(parent, block)
-
-        # Get the tabs block and the non-tab content
-        block, non_tabs = self.detab(block)
+            sibling, block, non_tabs = self.parse_content(parent, block)
 
         if m:
             special = m.group(1) if m.group(1) else ''
