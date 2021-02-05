@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.1.2
+
+- **FIX**: Tabbed &amp; Details: Fix corner case with lists. (#1225)
+
 ## 8.1.1
 
 - **FIX**: Ensure content immediately before Details content or Tabbed content gets preserved.
@@ -334,7 +338,8 @@ Please see [Release Notes](./releases/6.0.md#6.0) for details on upgrading to 6.
 ## 3.0
 
 - **NEW**: Added Keys extension.
-- **NEW**: Generalized custom fences (#60). `flow` and `sequence` fence are now just custom fences and can be disabled simply by overwriting the `custom_fences` setting.
+- **NEW**: Generalized custom fences (#60). `flow` and `sequence` fence are now just custom fences and can be disabled
+  simply by overwriting the `custom_fences` setting.
 - **NEW**: Remove deprecated `no_nl2br` in GitHub extension. (#24)
 - **NEW**: Remove deprecated HeaderAnchor extension. (#24)
 - **NEW**: Remove deprecated PyMdown extension. (#24)
@@ -372,7 +377,9 @@ Please see [Release Notes](./releases/6.0.md#6.0) for details on upgrading to 6.
 
 - **NEW**: Arithmatex now supports `\(...\)`, `\[...\]`, and `\begin{}...\end{}`.
 - **NEW**: Arithmatex has an option to embed the math code in MathJax script tags.
-- **FIX**: Unfortunately the wrap option is now run through an HTML escaper and HTML tags can no longer be fed in this way.  Arithmatex also now wraps "wrapped" content with spans to containerize content and keep one equation from bleeding into the next.
+- **FIX**: Unfortunately the wrap option is now run through an HTML escaper and HTML tags can no longer be fed in this
+  way.  Arithmatex also now wraps "wrapped" content with spans to containerize content and keep one equation from
+  bleeding into the next.
 - **FIX**: Better handling of escaped Arithmatex inline tokens.
 - **FIX**: Better handling of escaped InlineHilite tokens.
 - **FIX**: Update InlineHilite and SuperFences so that the language option can accept things like `c#` and `.net` etc.

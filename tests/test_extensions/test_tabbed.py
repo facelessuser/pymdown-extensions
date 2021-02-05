@@ -384,3 +384,63 @@ class TestLegacyTab(util.MdCase):
             ''',  # noqa: E501
             True
         )
+
+    def test_tabbed_complex_list(self):
+        """Test tabbed complex list scenario."""
+
+        self.check_markdown(
+            '''
+            === "Tab with loose lists"
+                - Parent 1
+
+                    - Child 1
+                    - Child 2
+            ''',
+            '''
+            <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab with loose lists</label><div class="tabbed-content">
+            <ul>
+            <li>
+            <p>Parent 1</p>
+            <ul>
+            <li>Child 1</li>
+            <li>Child 2</li>
+            </ul>
+            </li>
+            </ul>
+            </div>
+            </div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_tabbed_complex_list_unindented_content(self):
+        """Test tabbed complex list scenario with un-indented content."""
+
+        self.check_markdown(
+            '''
+            === "Tab with loose lists"
+                - Parent 1
+
+                    - Child 1
+                    - Child 2
+            - Parent 2
+            ''',
+            '''
+            <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab with loose lists</label><div class="tabbed-content">
+            <ul>
+            <li>
+            <p>Parent 1</p>
+            <ul>
+            <li>Child 1</li>
+            <li>Child 2</li>
+            </ul>
+            </li>
+            </ul>
+            </div>
+            </div>
+            <ul>
+            <li>Parent 2</li>
+            </ul>
+            ''',  # noqa: E501
+            True
+        )
