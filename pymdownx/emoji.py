@@ -54,13 +54,18 @@ Please update your custom index accordingly.
 """
 
 
-def add_attriubtes(options, attributes):
+def add_attributes(options, attributes):
     """Add additional attributes from options."""
 
     attr = options.get('attributes', {})
     if attr:
         for k, v in attr.items():
             attributes[k] = v
+
+
+# Exists for backwards compatibility as this function
+# was initially spelled incorrectly.
+add_attriubtes = add_attributes
 
 
 def emojione(options, md):
@@ -136,7 +141,7 @@ def to_png(index, shortname, alias, uc, alt, title, category, options, md):
     if title:
         attributes['title'] = title
 
-    add_attriubtes(options, attributes)
+    add_attributes(options, attributes)
 
     return etree.Element("img", attributes)
 
@@ -161,7 +166,7 @@ def to_svg(index, shortname, alias, uc, alt, title, category, options, md):
     if title:
         attributes['title'] = title
 
-    add_attriubtes(options, attributes)
+    add_attributes(options, attributes)
 
     return etree.Element("img", attributes)
 
@@ -181,7 +186,7 @@ def to_png_sprite(index, shortname, alias, uc, alt, title, category, options, md
     if title:
         attributes['title'] = title
 
-    add_attriubtes(options, attributes)
+    add_attributes(options, attributes)
 
     el = etree.Element("span", attributes)
     el.text = md_util.AtomicString(alt)
