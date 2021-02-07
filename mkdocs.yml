@@ -24,7 +24,7 @@ theme:
 
 nav:
   - Home:
-    - Introduction: index.md
+    - Overview: index.md
     - Installation: installation.md
     - Usage Notes: usage_notes.md
   - Extensions:

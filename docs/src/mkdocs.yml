@@ -4,7 +4,7 @@ repo_url: https://github.com/facelessuser/pymdown-extensions
 edit_uri: tree/master/docs/src/markdown
 site_description: A Collection of Useful Extensions for Python Markdown
 copyright: |
-  Copyright &copy; 2014 - 2020 <a href="https://github.com/facelessuser"  target="_blank" rel="noopener">Isaac Muse</a>
+  Copyright &copy; 2014 - 2021 <a href="https://github.com/facelessuser"  target="_blank" rel="noopener">Isaac Muse</a>
 
 docs_dir: docs/src/markdown
 theme:
@@ -23,9 +23,10 @@ theme:
     - navigation.tabs
 
 nav:
-  - PyMdown Extensions: index.md
-  - Installation: installation.md
-  - Usage Notes: usage_notes.md
+  - Home:
+    - Overview: index.md
+    - Installation: installation.md
+    - Usage Notes: usage_notes.md
   - Extensions:
     - Arithmatex: extensions/arithmatex.md
     - B64: extensions/b64.md
