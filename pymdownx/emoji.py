@@ -112,7 +112,7 @@ def to_png(index, shortname, alias, uc, alt, title, category, options, md):
         def_non_std_image_path = GITHUB_CDN
     elif index == 'twemoji':
         def_image_path = TWEMOJI_PNG_CDN
-        def_image_path = TWEMOJI_PNG_CDN
+        def_non_std_image_path = TWEMOJI_PNG_CDN
     else:
         def_image_path = EMOJIONE_PNG_CDN
         def_non_std_image_path = EMOJIONE_PNG_CDN
