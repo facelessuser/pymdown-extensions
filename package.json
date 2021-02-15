@@ -1,6 +1,6 @@
 {
   "name": "pymdown-extensions",
-  "version": "5.0.0",
+  "version": "8.1.2",
   "description": "Extensions for Python Markdown",
   "repository": "https://github.com/facelessuser/pymdown-extensions.git",
   "author": "Isaac Muse <isaacmuse@gmail.com>",
@@ -12,7 +12,6 @@
     "serve": "node_modules/.bin/gulp serve",
     "lint": "node_modules/.bin/gulp lint"
   },
-  "dependencies": {},
   "engines": {
     "node": ">= 10",
     "yarn": "YARN NO LONGER USED - use npm instead."
