@@ -2,6 +2,12 @@
 
 # MagicLink
 
+!!! note "Icons"
+    This documentation implements additional styling with CSS that inserts icons before special links, such as GitHub,
+    logos, bug icons, etc. MagicLink does not inject icons or CSS to insert icons, but it is left to the user to
+    implement (if desired) via the provided [classes](#css). User's are free to reference this
+    [documentation's source][magiclink-icons] to learn how.
+
 ## Overview
 
 MagicLink is an extension that provides a number of useful link related features. MagicLink can auto-link HTML, FTP, and

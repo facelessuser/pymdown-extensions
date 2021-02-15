@@ -19,6 +19,7 @@
 [github-api-oauth]: https://developer.github.com/v3/oauth/
 [highlightjs]: https://highlightjs.org/
 [katex]: https://github.com/Khan/KaTeX
+[magiclink-icons]: https://github.com/facelessuser/pymdown-extensions/blob/master/docs/src/scss/extensions/_magiclink.scss
 [mathjax]: http://www.mathjax.org/
 [mermaid]: https://mermaid-js.github.io/mermaid/#/
 [mermaid-config]: https://github.com/facelessuser/pymdown-extensions/blob/master/docs/src/markdown/_snippets/uml.txt
