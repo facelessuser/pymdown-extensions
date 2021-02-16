@@ -88,8 +88,8 @@ class TestNoClass(util.MdCase):
             ```
             ''',
             r'''
-            <table class="more table"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1
-            2</pre></div></td><td class="code"><div class="more "><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <table class="more table"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+            <span class="normal">2</span></pre></div></td><td class="code"><div class="more "><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
             <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div>
             </td></tr></table>
