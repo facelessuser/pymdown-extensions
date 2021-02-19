@@ -42,7 +42,7 @@ flake8
 
 ## Building and Editing Documents
 
-Documents are in Markdown (with with some additional syntax) and converted to HTML via Python Markdown and this
+Documents are in Markdown (with some additional syntax) and converted to HTML via Python Markdown and this
 extension bundle. If you would like to build and preview the documentation, you must have these packages installed:
 
 - @Python-Markdown/markdown: the Markdown parser.
