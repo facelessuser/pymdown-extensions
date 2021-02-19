@@ -20,7 +20,7 @@
     "@babel/cli": "^7.12.16",
     "@babel/core": "^7.12.16",
     "@babel/plugin-external-helpers": "^7.12.13",
-    "@babel/preset-env": "^7.12.16",
+    "@babel/preset-env": "^7.12.17",
     "@babel/register": "^7.12.13",
     "@fortawesome/fontawesome-free": "^5.15.2",
     "@mdi/svg": "^5.9.55",
