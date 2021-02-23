@@ -24,7 +24,7 @@ theme:
 
 nav:
   - Home:
-    - Overview: index.md
+    - Pymdown Extensions: index.md
     - Installation: installation.md
     - Usage Notes: usage_notes.md
   - Extensions:
@@ -55,7 +55,8 @@ nav:
   - Extras:
     - Slugs: extras/slugs.md
     - Advanced Mermaid Notes: extras/mermaid.md
-  - FAQ: faq.md
+  - FAQ:
+    - Frequently Asked Questions: faq.md
   - About:
     - Contributing &amp; Support: about/contributing.md
     - Development: about/development.md

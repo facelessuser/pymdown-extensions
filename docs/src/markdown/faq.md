@@ -1,4 +1,4 @@
-# FAQ
+# Frequently Asked Questions
 
 ## Function References in YAML
 
