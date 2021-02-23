@@ -144,7 +144,7 @@ extra:
 extra_css:
   - assets/pymdownx-extras/extra-5ee9fa49a5.css
 extra_javascript:
-  - assets/pymdownx-extras/extra-uml-792ac706.js
+  - assets/pymdownx-extras/extra-uml-51b11a9a.js
 
 plugins:
   - search
