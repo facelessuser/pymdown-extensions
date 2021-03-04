@@ -288,7 +288,7 @@ extensions = [
 extension_config = {
     "pymdownx.inlinehilite": {
         "custom_inline": [
-            {"name": "math", "class": "arithmatex", arithmatex.inline_mathjax_format}
+            {"name": "math", "class": "arithmatex", "format": arithmatex.inline_mathjax_format}
         ]
     }
 }
