@@ -1,4 +1,8 @@
 .highlight {
+  .kc { // Keyword constant
+    color: var(--md-code-hl-constant-color);
+  }
+
   .nc,  // Name, class
   .ne,  // Name, exception
   {
