@@ -21,7 +21,7 @@
     "@babel/cli": "^7.13.0",
     "@babel/core": "^7.13.8",
     "@babel/plugin-external-helpers": "^7.12.13",
-    "@babel/preset-env": "^7.13.9",
+    "@babel/preset-env": "^7.13.10",
     "@babel/register": "^7.13.8",
     "@fortawesome/fontawesome-free": "^5.15.2",
     "@mdi/svg": "^5.9.55",
