@@ -95,5 +95,5 @@ class TestSaneHeadersWithMagicLink(util.MdCase):
 
         self.check_markdown(
             r'#3',
-            r'<p><a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/3" title="GitHub Issue: facelessuser/pymdown-extensions#3">#3</a></p>'  # noqa: E501
+            r'<p><a class="magiclink magiclink-github magiclink-issue" href="https://github.com/facelessuser/pymdown-extensions/issues/3" title="GitHub Issue: facelessuser/pymdown-extensions #3">#3</a></p>'  # noqa: E501
         )

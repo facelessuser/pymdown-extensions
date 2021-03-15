@@ -269,12 +269,11 @@ class _MagiclinkReferencePattern(_MagiclinkShorthandPattern):
         el.set('class', 'magiclink magiclink-{} {}'.format(provider, class_name))
         el.set(
             'title',
-            '{} {}: {}/{}{}{}'.format(
+            '{} {}: {}/{} #{}'.format(
                 PROVIDER_INFO[provider]['provider'],
                 issue_label,
                 user,
                 repo,
-                icon,
                 issue_value
             )
         )
@@ -391,7 +390,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
 
         link.set(
             'title',
-            "{} {}: @{}".format(
+            "{} {}: {}".format(
                 label, self.repo_labels.get('metion', 'User'), user_repo
             )
         )
@@ -466,7 +465,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         else:
             link.text = md_util.AtomicString("{}{}{}".format(user_repo, icon, value))
 
-        link.set('title', '{} {}: {}{}{}'.format(label, issue_type, user_repo.rstrip('/'), icon, value))
+        link.set('title', '{} {}: {} #{}'.format(label, issue_type, user_repo.rstrip('/'), value))
 
     def shorten_issue_commit(self, link, provider, link_type, user_repo, value, hash_size):
         """Shorten URL."""
@@ -744,7 +743,7 @@ class MagiclinkMentionPattern(_MagiclinkShorthandPattern):
         el.set('href', '{}/{}'.format(PROVIDER_INFO[provider]['url'], mention))
         el.set(
             'title',
-            "{} {}: @{}".format(PROVIDER_INFO[provider]['provider'], self.labels.get('mention', "User"), mention)
+            "{} {}: {}".format(PROVIDER_INFO[provider]['provider'], self.labels.get('mention', "User"), mention)
         )
         el.set('class', 'magiclink magiclink-{} magiclink-mention'.format(provider))
         el.text = md_util.AtomicString('@{}'.format(mention))
