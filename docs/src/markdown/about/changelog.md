@@ -1,7 +1,13 @@
 # Changelog
 
-## 8.1.2
+## 8.2
 
+- **NEW**: MagicLink: add GitHub Discussions support to MagicLink. Can now use `?<num>` to link discussions. Full
+  discussion links will also be shortened if shortening is enabled. (#1187)
+- **NEW**: MagicLink: add new `normalize_issue_symbols` option to make issues, pull request, and discussion links all
+  render with `#` instead of `#`, `!`, and `?` respectively. Input syntax is still the same.
+- **FIX**: MagicLink: documentation will not render links with special icons added via CSS so as not to confuse users
+  that may think that is part of MagicLink. While possible with CSS, MagicLink provides no CSS automatically.
 - **FIX**: Tabbed &amp; Details: Fix corner case with lists. (#1225)
 
 ## 8.1.1

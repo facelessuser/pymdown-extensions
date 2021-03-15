@@ -1,15 +1,16 @@
 // General styling for repository link icons
 .md-typeset {
-  a[href^="mailto:"]::before {
+  a[href^="mailto:"]:not(.magiclink-ignore)::before {
     mask-image: svg-load("@mdi/svg/svg/mail.svg");
   }
 
   .magiclink-compare,
   .magiclink-commit,
   .magiclink-pull,
-  .magiclink-issue {
-    &::before {
-      mask-position: bottom;
+  .magiclink-issue,
+  .magiclink-discussion {
+    &:not(.magiclink-ignore)::before {
+      mask-position: center;
       mask-repeat: no-repeat;
       mask-size: px2em(15px) auto;
     }
@@ -20,8 +21,9 @@
   .magiclink-commit,
   .magiclink-pull,
   .magiclink-issue,
+  .magiclink-discussion,
   a[href^="mailto:"] {
-    &::before {
+    &:not(.magiclink-ignore)::before {
       position: relative;
       width: px2em(16px);
       height: px2em(16px);
@@ -43,10 +45,11 @@
   "commit": "git-commit-24",
   "compare": "file-diff-24",
   "pull": "git-pull-request-24",
-  "issue": "issue-opened-24"
+  "issue": "issue-opened-24",
+  "discussion": "comment-discussion-24"
 ) {
   .md-typeset {
-    .magiclink-#{$name} {
+    .magiclink-#{$name}:not(.magiclink-ignore) {
       &::before {
         mask-image: svg-load("@primer/octicons/build/svg/#{$icon}.svg");
       }
@@ -61,7 +64,7 @@
   "bitbucket": "bitbucket"
 ) {
   .md-typeset {
-    .magiclink-repository.magiclink-#{$name} {
+    .magiclink-repository.magiclink-#{$name}:not(.magiclink-ignore) {
       &::before {
         mask-image: svg-load("@mdi/svg/svg/#{$icon}.svg");
       }
