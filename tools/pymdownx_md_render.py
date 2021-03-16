@@ -7,7 +7,7 @@ from collections import OrderedDict
 
 def yaml_load(stream, loader=yaml.Loader, object_pairs_hook=OrderedDict):
     """
-    Custom yaml loader.
+    Custom YAML loader.
 
     Make all YAML dictionaries load as ordered dictionary.
     http://stackoverflow.com/a/21912744/3609487
@@ -43,7 +43,7 @@ def yaml_load(stream, loader=yaml.Loader, object_pairs_hook=OrderedDict):
 
 
 def get_frontmatter(text):
-    """Get frontmatter from string."""
+    """Get front matter from string."""
 
     frontmatter = OrderedDict()
 
@@ -55,7 +55,7 @@ def get_frontmatter(text):
                 frontmatter = yaml_load(m.group(2))
                 if frontmatter is None:
                     frontmatter = OrderedDict()
-                # If we didn't get a dictionary, we don't want this as it isn't frontmatter.
+                # If we didn't get a dictionary, we don't want this as it isn't front matter.
                 assert isinstance(frontmatter, (dict, OrderedDict)), TypeError
             except Exception:
                 # We had a parsing error. This is not the YAML we are looking for.
