@@ -5,21 +5,13 @@ import re
 from collections import OrderedDict
 
 
-def yaml_load(stream, loader=yaml.Loader, object_pairs_hook=OrderedDict):
+def yaml_load(stream, loader=yaml.Loader):
     """
     Custom YAML loader.
 
-    Make all YAML dictionaries load as ordered dictionary.
-    http://stackoverflow.com/a/21912744/3609487
     Load all strings as Unicode.
     http://stackoverflow.com/a/2967461/3609487
     """
-
-    def construct_mapping(loader, node):
-        """Convert to ordered dictionary."""
-
-        loader.flatten_mapping(node)
-        return object_pairs_hook(loader.construct_pairs(node))
 
     def construct_yaml_str(self, node):
         """Override the default string handling function to always return Unicode objects."""
@@ -28,11 +20,6 @@ def yaml_load(stream, loader=yaml.Loader, object_pairs_hook=OrderedDict):
 
     class Loader(loader):
         """Custom Loader."""
-
-    Loader.add_constructor(
-        yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG,
-        construct_mapping
-    )
 
     Loader.add_constructor(
         'tag:yaml.org,2002:str',
