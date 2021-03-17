@@ -6,7 +6,7 @@
 
 Python Markdown has an `extra` extension that provides features similar to PHP Markdown Extra.  PyMdown Extensions aims
 to provide not only new features, but to improve behavior in Python Markdown's existing feature set.  Some of these
-things can be at odds.Python Markdown's `smartstrong` and `fenced_code` are not compatible with PyMdown Extensions'
+things can be at odds.  Python Markdown's `smartstrong` and `fenced_code` are not compatible with PyMdown Extensions'
 `betterem` and `superfences`.  `smartstong` should never be loaded at the same time as `betterem`, and `superfences`
 should not be loaded at the same time as `fenced_code`.  For these reasons, it is not possible to use Python Markdown's
 `extra` and PyMdown Extensions' `superfences` and `betterem` at the same time. To make this less frustrating, PyMdown
