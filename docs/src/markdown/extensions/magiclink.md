@@ -18,9 +18,10 @@ If you happen to have some conflicts with syntax for a specific case, you can al
 as well: `#!md <https://www.link.com>`. If enabled, repository link shortening will be applied to the the angle
 bracketed auto-link format as well.
 
-It is also recommended to use [SaneHeaders](./saneheaders.md) when using MagicLink to avoid problems when specifying a
-repository bug (using the syntax `#1`) at the start of a line. Python Markdown, by default, will treat `#1` as a header
-if detected at the start of a line without SaneHeaders.
+!!! tip "SaneHeaders"
+    It is also recommended to use [SaneHeaders](./saneheaders.md) when using MagicLink to avoid problems when specifying
+    a repository bug (using the syntax `#1`) at the start of a line. Python Markdown, by default, will treat `#1` as a
+    header if detected at the start of a line without SaneHeaders.
 
 The MagicLink extension can be included in Python Markdown by using the following:
 
@@ -39,8 +40,25 @@ part of links. If you have a link that cannot be detected, you can always use th
 !!! example "Auto-Linking Example"
 
     === "Output"
+        ```md-render
+        ---
+        extensions:
+        - pymdownx.magiclink
+        - pymdownx.saneheaders
+        - markdown.extensions.attr_list
+
+        extension_configs:
+          pymdownx.magiclink:
+            repo_url_shortener: true
+            repo_url_shorthand: true
+            social_url_shorthand: true
+            social_url_shortener: true
+            user: facelessuser
+            repo: pymdown-extensions
+        ---
         - Just paste links directly in the document like this: https://google.com.
-        - Or even an email address: fake.email@email.com.
+        - Or even an email address: fake.email@email.com{.magiclink-ignore}.
+        ```
 
     === "Markdown"
         ```
@@ -50,16 +68,35 @@ part of links. If you have a link that cannot be detected, you can always use th
 
 ## Shorthand Links
 
-MagicLink supports shorthand references for GitHub, GitLab, and Bitbucket issues (#1), pull/merge requests (!13),
-commits (7d1b1902ea7fe00043a249564ed5032f08dd7152), and compares
-(e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac). You can also reference
-repositories (@facelessuser/pymdown-extensions) and it supports mentioning users (@facelessuser). Mentions also works
-for social media (only Twitter is supported at this time).
 
-The syntax for repository providers is actually very similar to GitLab's syntax. GitLab was chosen as its syntax bridges
-the gaps between the three providers. GitLab and Bitbucket require a pull specific syntax while GitHub does not have
-one. I also preferred the subtle differences in GitLab's commit references as it was consistent with pull and issue
-syntax.
+```md-render
+---
+extensions:
+- pymdownx.magiclink
+- pymdownx.saneheaders
+- markdown.extensions.attr_list
+
+extension_configs:
+  pymdownx.magiclink:
+    repo_url_shortener: true
+    repo_url_shorthand: true
+    social_url_shorthand: true
+    social_url_shortener: true
+    user: facelessuser
+    repo: pymdown-extensions
+---
+MagicLink supports shorthand references for GitHub, GitLab, and Bitbucket issues (#1{.magiclink-ignore}), pull/merge
+requests (!13{.magiclink-ignore}), GitHub Discussion (?1173{.magiclink-ignore}), commits
+(7d1b1902ea7fe00043a249564ed5032f08dd7152{.magiclink-ignore}), and compares
+(e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac{.magiclink-ignore}). You can also
+reference repositories (@facelessuser/pymdown-extensions{.magiclink-ignore}) and users
+(@facelessuser{.magiclink-ignore}). Mentions also works for social media (only Twitter is supported at this time).
+```
+
+The syntax used is actually very similar to GitLab's syntax. GitLab was chosen as its syntax bridges the gaps between
+the three providers. GitLab and Bitbucket require a pull specific syntax while GitHub does not have one. Also, while
+GitHub uses `#<num>` for issues, pulls, and discussions, the idea of using a different symbol for issue
+types gives us the context we need to generate the correct links for issues vs pulls, etc.
 
 ### Configuring
 
@@ -89,9 +126,26 @@ default, use the format `@{provider}:{user}`
 !!! example "Mention Example"
 
     === "Output"
+        ```md-render
+        ---
+        extensions:
+        - pymdownx.magiclink
+        - pymdownx.saneheaders
+        - markdown.extensions.attr_list
+
+        extension_configs:
+          pymdownx.magiclink:
+            repo_url_shortener: true
+            repo_url_shorthand: true
+            social_url_shorthand: true
+            social_url_shortener: true
+            user: facelessuser
+            repo: pymdown-extensions
+        ---
         @facelessuser
 
         @twitter:twitter
+        ```
 
     === "Markdown"
         ```
@@ -110,9 +164,26 @@ style it with CSS to make it stand out more like has been done in this document.
 !!! example "Repository Mention Example"
 
     === "Output"
-        @facelessuser/pymdown-extensions
+        ```md-render
+        ---
+        extensions:
+        - pymdownx.magiclink
+        - pymdownx.saneheaders
+        - markdown.extensions.attr_list
 
-        @gitlab:pycqa/flake8
+        extension_configs:
+          pymdownx.magiclink:
+            repo_url_shortener: true
+            repo_url_shorthand: true
+            social_url_shorthand: true
+            social_url_shortener: true
+            user: facelessuser
+            repo: pymdown-extensions
+        ---
+        @facelessuser/pymdown-extensions{.magiclink-ignore}
+
+        @gitlab:pycqa/flake8{.magiclink-ignore}
+        ```
 
     === "Markdown"
         ```
@@ -121,32 +192,58 @@ style it with CSS to make it stand out more like has been done in this document.
         @gitlab:pycqa/flake8
         ```
 
-### Issues and Pull Requests
+### Issues, Pull Requests, and Discussions
 
-Issues and pull requests are specified with `#{num}` and `!{num}` respectively. To specify an issue for a non-default
-repository under the default user, prefix the repository: `{repo}#{num}`. And to specify a repository under a
-non-default user, prefix both the user and repository: `{user}/{repo}#{num}`. And to reference an external provider, use
-the format `{provider}:{user}/{repo}#{num}`. If the default provider is a social media provider, then only the latter
-syntax can be used.
+Issues, pull requests, and GitHub discussions are specified with `#{num}`, `!{num}`, and `?{num}` respectively. When
+specified in this manner, the links will assume the default repository and default user for generated links.
+
+To specify an issue for a non-default repository under the default user, prefix the repository: `{repo}#{num}`.
+
+To specify a repository under a non-default user, prefix both the user and repository: `{user}/{repo}#{num}`.
+
+Lastly, to reference an external provider, use the format `{provider}:{user}/{repo}#{num}`.
+
+The syntax was borrowed and adapted from GitLab as they use `!{num}` for pulls and `#{num}` for issues, `?{num}` is our
+own take for discussions. This syntax was
+mainly used to ensure we could provide context to the link generator. When rendering the actual links in your documents,
+it will use the syntax associated with the specified provider. If this is unsatisfactory, you can override this behavior
+with the `icons` option and all links will will use the same specified convention on output regardless of the provider.
 
 !!! example "Issue Example"
 
     === "Output"
-        #1
+        ```md-render
+        ---
+        extensions:
+        - pymdownx.magiclink
+        - pymdownx.saneheaders
+        - markdown.extensions.attr_list
 
-        backrefs#1
+        extension_configs:
+          pymdownx.magiclink:
+            repo_url_shortener: true
+            repo_url_shorthand: true
+            social_url_shorthand: true
+            social_url_shortener: true
+            user: facelessuser
+            repo: pymdown-extensions
+        ---
+        #1{.magiclink-ignore}
 
-        Python-Markdown/markdown#1
+        backrefs#1{.magiclink-ignore}
 
-        gitlab:pycqa/flake8#385
+        Python-Markdown/markdown#1{.magiclink-ignore}
 
-        !13
+        gitlab:pycqa/flake8#385{.magiclink-ignore}
 
-        backrefs!4
+        !13{.magiclink-ignore}
 
-        Python-Markdown/markdown!598
+        backrefs!4{.magiclink-ignore}
 
-        gitlab:pycqa/flake8!213
+        Python-Markdown/markdown!598{.magiclink-ignore}
+
+        gitlab:pycqa/flake8!213{.magiclink-ignore}
+        ```
 
     === "Markdown"
         ```
@@ -185,13 +282,30 @@ the default provider is a social media provider, then only the latter syntax can
 !!! example "Commit Example"
 
     === "Output"
-        181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+        ```md-render
+        ---
+        extensions:
+        - pymdownx.magiclink
+        - pymdownx.saneheaders
+        - markdown.extensions.attr_list
 
-        backrefs@cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
+        extension_configs:
+          pymdownx.magiclink:
+            repo_url_shortener: true
+            repo_url_shorthand: true
+            social_url_shorthand: true
+            social_url_shortener: true
+            user: facelessuser
+            repo: pymdown-extensions
+        ---
+        181c06d1f11fa29961b334e90606ed1f1ec7a7cc{.magiclink-ignore}
 
-        Python-Markdown/markdown@de5c696f94e8dde242c29d4be50b7bbf3c17fedb
+        backrefs@cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61{.magiclink-ignore}
 
-        gitlab:pycqa/flake8@8acf55e0f85233c51c291816d73d828cc62d30d1
+        Python-Markdown/markdown@de5c696f94e8dde242c29d4be50b7bbf3c17fedb{.magiclink-ignore}
+
+        gitlab:pycqa/flake8@8acf55e0f85233c51c291816d73d828cc62d30d1{.magiclink-ignore}
+        ```
 
     === "Markdown"
         ```
@@ -218,13 +332,30 @@ the user and repository: `{user}/{repo}@{hash1}...{hash2}`. Lastly, to reference
 !!! example "Compare Example"
 
     === "Output"
-        e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+        ```md-render
+        ---
+        extensions:
+        - pymdownx.magiclink
+        - pymdownx.saneheaders
+        - markdown.extensions.attr_list
 
-        backrefs@88c6238a1c2cf71a96eb9abb4b0213f79d6ca81f...cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
+        extension_configs:
+          pymdownx.magiclink:
+            repo_url_shortener: true
+            repo_url_shorthand: true
+            social_url_shorthand: true
+            social_url_shortener: true
+            user: facelessuser
+            repo: pymdown-extensions
+        ---
+        e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac{.magiclink-ignore}
 
-        Python-Markdown/markdown@007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8dde242c29d4be50b7bbf3c17fedb
+        backrefs@88c6238a1c2cf71a96eb9abb4b0213f79d6ca81f...cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61{.magiclink-ignore}
 
-        gitlab:pycqa/flake8@1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e
+        Python-Markdown/markdown@007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8dde242c29d4be50b7bbf3c17fedb{.magiclink-ignore}
+
+        gitlab:pycqa/flake8@1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e{.magiclink-ignore}
+        ```
 
     === "Markdown"
         ```
@@ -247,10 +378,27 @@ If we specify long form URLs from external providers, they will be shortened app
 !!! example "External Provider Example"
 
     === "Output"
+        ```md-render
+        ---
+        extensions:
+        - pymdownx.magiclink
+        - pymdownx.saneheaders
+        - markdown.extensions.attr_list
+
+        extension_configs:
+          pymdownx.magiclink:
+            repo_url_shortener: true
+            repo_url_shorthand: true
+            social_url_shorthand: true
+            social_url_shortener: true
+            user: facelessuser
+            repo: pymdown-extensions
+        ---
         - https://github.com/facelessuser
-        - https://github.com/facelessuser/pymdown-extensions
-        - https://gitlab.com/pycqa/flake8/issues/385
-        - https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
+        - <https://github.com/facelessuser/pymdown-extensions>{.magiclink-ignore}
+        - <https://gitlab.com/pycqa/flake8/issues/385>{.magiclink-ignore}
+        - <https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase>{.magiclink-ignore}
+        ```
 
     === "Markdown"
         ```
@@ -266,11 +414,28 @@ differently in light of that context.
 !!! example "Internal Provider Example"
 
     === "Output"
-        - https://github.com/facelessuser/pymdown-extensions/issues/1
-        - https://github.com/facelessuser/pymdown-extensions/pull/13
-        - https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a
-        - https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
-        - https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+        ```md-render
+        ---
+        extensions:
+        - pymdownx.magiclink
+        - pymdownx.saneheaders
+        - markdown.extensions.attr_list
+
+        extension_configs:
+          pymdownx.magiclink:
+            repo_url_shortener: true
+            repo_url_shorthand: true
+            social_url_shorthand: true
+            social_url_shortener: true
+            user: facelessuser
+            repo: pymdown-extensions
+        ---
+        - <https://github.com/facelessuser/pymdown-extensions/issues/1>{.magiclink-ignore}
+        - <https://github.com/facelessuser/pymdown-extensions/pull/13>{.magiclink-ignore}
+        - <https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a>{.magiclink-ignore}
+        - <https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac>{.magiclink-ignore}
+        - <https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc>{.magiclink-ignore}
+        ```
 
     === "Markdown"
         ```
@@ -309,6 +474,16 @@ Bitbucket            | `magiclink-bitbucket`
 GitLab               | `magiclink-gitlab`
 Twitter              | `magiclink-twitter`
 
+!!! tip "Styling Links"
+    With a little bit of CSS^[†](#_fn_1)^, you can also add icons in front: 7d1b1902ea7fe00043a249564ed5032f08dd7152,
+    e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac, etc.
+
+    You can also use the [`normalize_issue_symbols`](#options) option to make issue type links all render with `#` and
+    then use CSS^[†](#_fn_1)^ to add fancy icons to distinguish them: #1, !13, and ?1173.
+
+    ^†^{#\_fn_1} _CSS is not included and the examples are just to illustrate what is possible, and to explain why our
+    documents will often have links with special icons._
+
 ## Options
 
 Option                          | Type   | Default                     | Description
@@ -323,6 +498,7 @@ Option                          | Type   | Default                     | Descrip
 `user`                          | string | `#!py3 ''`                  | The default user name to use for the specified provider.
 `repo`                          | string | `#!py3 ''`                  | The default repository name to use for the specified user and provider.
 `labels`                        | dict   | `#!py3 {}`                  | A dictionary for overriding repository link title text. See [Labels](#labels) for more info.
+`normalize_issue_symbols`       | bool   | `#!py3 False`               | Normalize issue type links (issues, pulls, and discussions) to all use `#` instead of the respective `#`, `!`, and `?`.
 
 ### User Excludes
 
