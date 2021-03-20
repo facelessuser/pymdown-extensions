@@ -57,6 +57,71 @@ class TestMagicLinkShortner(util.MdCase):
             r'<p><a href="https://github.com/support/repo">https://github.com/support/repo</a></p>'
         )
 
+    def test_discuss(self):
+        """Test discuss."""
+
+        self.check_markdown(
+            r'https://github.com/facelessuser/pymdown-extensions/discussions/1173',
+            r'<p><a class="magiclink magiclink-github magiclink-discussion" href="https://github.com/facelessuser/pymdown-extensions/discussions/1173" title="GitHub Discussion: facelessuser/pymdown-extensions #1173">facelessuser/pymdown-extensions?1173</a></p>'  # noqa: E501
+        )
+
+
+class TestMagicLinkShorthand(util.MdCase):
+    """Test cases for repo link shortening."""
+
+    extension = [
+        'pymdownx.magiclink',
+    ]
+
+    extension_configs = {
+        'pymdownx.magiclink': {
+            'repo_url_shorthand': True,
+            'user': 'facelessuser',
+            'repo': 'pymdown-extensions'
+        }
+    }
+
+    def test_discuss(self):
+        """Test discuss."""
+
+        self.check_markdown(
+            r'?1173',
+            r'<p><a class="magiclink magiclink-github magiclink-discussion" href="https://github.com/facelessuser/pymdown-extensions/discussions/1173" title="GitHub Discussion: facelessuser/pymdown-extensions #1173">?1173</a></p>'  # noqa: E501
+        )
+
+    def test_bad_discss(self):
+        """Test repo that doesn't support discussions."""
+
+        self.check_markdown(
+            r'gitlab:user/repo?1173',
+            r'<p>gitlab:user/repo?1173</p>'
+        )
+
+
+class TestMagicLinkExternalShorthand(util.MdCase):
+    """Test cases for repo link shortening."""
+
+    extension = [
+        'pymdownx.magiclink',
+    ]
+
+    extension_configs = {
+        'pymdownx.magiclink': {
+            'repo_url_shorthand': True,
+            'user': 'facelessuser',
+            'repo': 'pymdown-extensions',
+            'provider': 'gitlab'
+        }
+    }
+
+    def test_bad_discss(self):
+        """Test repo that doesn't support discussions."""
+
+        self.check_markdown(
+            r'?1173',
+            r'<p>?1173</p>'
+        )
+
 
 class TestMagicLinkShortnerSocial(util.MdCase):
     """Test cases for social link shortener."""

@@ -821,7 +821,7 @@ class MagiclinkExternalRefsPattern(_MagiclinkReferencePattern):
             self.process_commit(el, provider, user, repo, value)
         else:
             if not self.process_issues(el, provider, user, repo, value):
-                return None, None, None
+                return m.group(0), m.start(0), m.end(0)
         return el, m.start(0), m.end(0)
 
 
@@ -854,7 +854,8 @@ class MagiclinkInternalRefsPattern(_MagiclinkReferencePattern):
         elif is_commit:
             self.process_commit(el, provider, user, repo, value)
         else:
-            self.process_issues(el, provider, user, repo, value)
+            if not self.process_issues(el, provider, user, repo, value):
+                return m.group(0), m.start(0), m.end(0)
         return el, m.start(0), m.end(0)
 
 
