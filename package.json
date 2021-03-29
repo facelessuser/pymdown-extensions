@@ -33,7 +33,7 @@
     "clean-css": "^5.1.2",
     "css-mqpacker": "^7.0.0",
     "del": "^6.0.0",
-    "eslint": "^7.22.0",
+    "eslint": "^7.23.0",
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
