@@ -51,7 +51,7 @@
     "material-shadows": "^3.0.1",
     "postcss-inline-svg": "^4.1.0",
     "postcss-pseudo-classes": "^0.2.1",
-    "postcss-svgo": "^4.0.2",
+    "postcss-svgo": "^4.0.3",
     "promise": "^8.1.0",
     "rollup": "^2.44.0",
     "rollup-plugin-output-manifest": "^1.0.2",
