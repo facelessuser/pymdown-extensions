@@ -1,0 +1,127 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: eslint
+    versions:
+    - "< 5.0.2, >= 5.0.1.a"
+  - dependency-name: eslint
+    versions:
+    - "< 5.1.1, >= 5.1.0.a"
+  - dependency-name: eslint
+    versions:
+    - "< 5.2.1, >= 5.2.0.a"
+  - dependency-name: eslint
+    versions:
+    - "< 5.3.1, >= 5.3.0.a"
+  - dependency-name: eslint
+    versions:
+    - "< 6, >= 5.a"
+  - dependency-name: gulp-eslint
+    versions:
+    - "< 5.0.1, >= 5.0.0.a"
+  - dependency-name: eslint
+    versions:
+    - 7.19.0
+    - 7.20.0
+    - 7.21.0
+    - 7.22.0
+    - 7.23.0
+    - 7.24.0
+  - dependency-name: rollup
+    versions:
+    - 2.38.1
+    - 2.38.2
+    - 2.38.3
+    - 2.38.4
+    - 2.39.0
+    - 2.39.1
+    - 2.40.0
+    - 2.41.0
+    - 2.41.1
+    - 2.41.2
+    - 2.41.4
+    - 2.41.5
+    - 2.42.2
+    - 2.42.3
+    - 2.42.4
+    - 2.43.1
+    - 2.44.0
+    - 2.45.0
+    - 2.45.1
+  - dependency-name: "@babel/core"
+    versions:
+    - 7.12.13
+    - 7.12.16
+    - 7.12.17
+    - 7.13.1
+    - 7.13.10
+    - 7.13.13
+    - 7.13.15
+    - 7.13.8
+  - dependency-name: "@primer/octicons"
+    versions:
+    - 11.3.0
+    - 12.0.0
+    - 12.1.0
+  - dependency-name: "@babel/cli"
+    versions:
+    - 7.12.13
+    - 7.12.16
+    - 7.12.17
+    - 7.13.10
+    - 7.13.14
+  - dependency-name: "@babel/preset-env"
+    versions:
+    - 7.12.13
+    - 7.12.16
+    - 7.12.17
+    - 7.13.10
+    - 7.13.12
+    - 7.13.8
+    - 7.13.9
+  - dependency-name: terser
+    versions:
+    - 5.6.0
+    - 5.6.1
+  - dependency-name: "@fortawesome/fontawesome-free"
+    versions:
+    - 5.15.3
+  - dependency-name: stylelint
+    versions:
+    - 13.10.0
+    - 13.11.0
+    - 13.12.0
+  - dependency-name: clean-css
+    versions:
+    - 5.1.0
+    - 5.1.1
+  - dependency-name: "@babel/register"
+    versions:
+    - 7.12.13
+    - 7.13.8
+  - dependency-name: autoprefixer
+    versions:
+    - 10.2.4
+  - dependency-name: gulp-postcss
+    versions:
+    - 9.0.0
+  - dependency-name: postcss-inline-svg
+    versions:
+    - 5.0.0
+  - dependency-name: "@rollup/plugin-babel"
+    versions:
+    - 5.2.3
+    - 5.3.0
+  - dependency-name: "@babel/plugin-external-helpers"
+    versions:
+    - 7.12.13
+- package-ecosystem: pip
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
