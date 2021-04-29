@@ -233,6 +233,7 @@ tox
 uc
 un
 underscore's
+unescaping
 unicode
 unittest
 unstyled
