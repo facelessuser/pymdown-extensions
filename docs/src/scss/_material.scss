@@ -74,6 +74,10 @@ html {
 
   @include break-to-device(tablet) {
 
+    .md-nav--primary .md-nav__item--active > .md-nav__link:not(:hover) {
+      color: var(--md-primary-fg-color);
+    }
+
     // Site title in main navigation
     .md-nav--primary .md-nav__title {
       color: var(--md-text-color);
