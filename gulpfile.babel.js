@@ -31,6 +31,7 @@ import cssSvgo from "postcss-svgo"
 import replace from "gulp-replace"
 import outputManifest from "rollup-plugin-output-manifest"
 import sourcemaps from "gulp-sourcemaps"
+import {extendDefaultPlugins} from "svgo"
 
 /* Argument Flags */
 const args = yargs
@@ -127,8 +128,6 @@ const rollupjs = (sources, options) => {
 // ------------------------------
 gulp.task("scss:build:sass", () => {
   const plugins = [
-    autoprefixer,
-    mqpacker,
     inlineSvg(
       {
         paths: [
@@ -139,13 +138,15 @@ gulp.task("scss:build:sass", () => {
     ),
     cssSvgo(
       {
-        plugins: [
-          {removeDimensions: true},
-          {removeViewBox: false}
-        ],
+        plugins: extendDefaultPlugins([
+          {name: "removeDimensions"},
+          {name: "removeViewBox", active: false}
+        ]),
         encode: false
       }
-    )
+    ),
+    mqpacker,
+    autoprefixer
   ].filter(t => t)
 
   gulp.src(`${config.folders.theme}/manifest-css.json`, {allowEmpty: true})
