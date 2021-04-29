@@ -16,6 +16,7 @@
 - **FIX**: MagicLink: documentation will not render links with special icons added via CSS so as not to confuse users
   that may think that is part of MagicLink. While possible with CSS, MagicLink provides no CSS automatically.
 - **FIX**: Tabbed &amp; Details: Fix corner case with lists. (#1225)
+- **FIX**: Fix issue with unescaping logic in code blocks.
 
 ## 8.1.1
 

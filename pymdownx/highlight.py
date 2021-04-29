@@ -372,9 +372,9 @@ class HighlightTreeprocessor(Treeprocessor):
 
     def code_unescape(self, text):
         """Unescape code."""
-        text = text.replace("&amp;", "&")
         text = text.replace("&lt;", "<")
         text = text.replace("&gt;", ">")
+        text = text.replace("&amp;", "&")
         return text
 
     def run(self, root):
