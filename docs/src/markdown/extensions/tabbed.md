@@ -165,5 +165,3 @@ from explicitly using a conflicting ID. Auto-generated slugs shouldn't conflict 
             display: block;
         }
         ```
-
---8<-- "links.txt"

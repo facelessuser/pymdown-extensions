@@ -121,8 +121,4 @@ Option                    | Type         | Default       | Description
 `style_plain_text`        | bool         | `#!py3 False` | When `guess_lang` is set to `#!py3 False`, InlineHilite will avoid applying classes to code blocks that do not explicitly set a language. If it is desired to have plain text styled like code, enable this to inject classes so that they can all be styled the same.
 `custom_inline`           | [dictionary] | `#!py3 []`    | Custom inline code blocks.
 
----8<---
-links.txt
-
-mathjax.txt
----8<---
+---8<--- "mathjax.txt"

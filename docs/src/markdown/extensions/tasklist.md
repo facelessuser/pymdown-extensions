@@ -182,6 +182,3 @@ Option               | Type | Default      | Description
 -------------------- | ---- | ------------ | ------------
 `custom_checkbox`    | bool | `#!py3 False` | Generate task lists in such a way as to allow for styling the check box with CSS.
 `clickable_checkbox` | bool | `#!py3 False` | Enable user to interact with checkboxes.
-
-
---8<-- "refs.txt"

@@ -124,6 +124,13 @@ def gather_test_params():
                                     ).replace(
                                         '{{RELATIVE}}', CURRENT_DIR
                                     )
+                                elif k2 == 'base_path' and isinstance(v2, list):
+                                    for i, v3 in enumerate(v2, 0):
+                                        v1[k2][i] = v3.replace(
+                                            '{{BASE}}', base
+                                        ).replace(
+                                            '{{RELATIVE}}', CURRENT_DIR
+                                        )
                         test_cfg[k][k1] = v1
                 target = os.path.join(base, testfile)
                 if target_file is not None and target != target_file:

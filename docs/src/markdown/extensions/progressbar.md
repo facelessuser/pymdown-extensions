@@ -168,5 +168,3 @@ Option               | Type    | Default      | Description
 `level_class`        | bool    | `#!py3 True` | Enables or disables the level class feature.  The level class feature adds level classes in increments defined by `progress_increment`.
 `add_classes`        | string  | `#!py3 ''`   | This option accepts a string of classes separated by spaces.
 `progress_increment` | integer | `#!py3 20`   | Defines the increment at which the `level_class` classes are generated at.
-
---8<-- "links.txt"

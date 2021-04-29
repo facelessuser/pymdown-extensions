@@ -215,5 +215,3 @@ IE8. Feel free to modify what is here or find a solution that fits your needs.
 
     }());
     ```
-
---8<-- "links.txt"

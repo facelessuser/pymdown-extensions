@@ -163,8 +163,6 @@ Check out documentation on each extension to learn more about how to configure a
     sub~scripts~ and adds an easy way to place ~~text~~ in a `#!html <del>` tag.
 
 --8<--
-refs.txt
-
 uml.txt
 
 mathjax.txt

@@ -133,7 +133,12 @@ markdown_extensions:
   - pymdownx.mark:
   - pymdownx.striphtml:
   - pymdownx.snippets:
-      base_path: docs/src/markdown/_snippets
+      base_path:
+      - docs/src/markdown/_snippets
+      - LICENSE.md
+      auto_append:
+      - refs.txt
+      check_paths: true
   - pymdownx.keys:
       separator: "\uff0b"
   - pymdownx.details:

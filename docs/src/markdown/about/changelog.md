@@ -2,6 +2,13 @@
 
 ## 8.2
 
+- **NEW**: Snippets: now accepts a list of base paths which will be resolved in the order they are specified.
+  Compatibility is present with legacy behavior, and a single string path will still be accepted.
+- **NEW**: Snippets: allow for specifying certain snippets to auto-append to every file. Useful for appending
+  abbreviations, reference links, etc.
+- **NEW**: Snippets: a snippet base path can be a full path to a file. When a base path is a full path to a file, only
+  that file will be included from the specified folder. This allows for targeting a one off file outside of the normal
+  snippet paths(s).
 - **NEW**: MagicLink: add GitHub Discussions support to MagicLink. Can now use `?<num>` to link discussions. Full
   discussion links will also be shortened if shortening is enabled. (#1187)
 - **NEW**: MagicLink: add new `normalize_issue_symbols` option to make issues, pull request, and discussion links all
@@ -454,5 +461,3 @@ Please see [Release Notes](./releases/6.0.md#6.0) for details on upgrading to 6.
 ## 1.0.0
 
 - **NEW**: Initial release.
-
---8<-- "refs.txt"

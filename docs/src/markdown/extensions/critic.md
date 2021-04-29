@@ -353,6 +353,3 @@ Classes   | Description
 Option    | Type   | Default     | Description
 --------- |------- | ----------- | -----------
 `mode`    | string | `#!py3 view` | `view` just parses the markup and displays it in its HTML equivalent rendering. `accept` strips out the critic markup and replaces them with the suggested changes.  `reject` rejects all the suggestions and strips the critic markup out replacing it with the original.
-
-
---8<-- "links.txt"

@@ -93,5 +93,3 @@ a basic [example using SuperFences](./extensions/superfences.md#uml-diagram-exam
 solid Mermaid experience, we actually go a bit further in our documents. While we don't often have time to answer
 everyone's questions regarding Mermaid, we have provided some fairly extensive notes on how we achieved Mermaid diagrams
 in this documents. Check out the notes [here](./extras/mermaid.md).
-
---8<-- "refs.txt"

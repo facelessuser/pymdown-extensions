@@ -285,5 +285,3 @@ Nothing is fool proof.  If they make a breaking change to the files that the scr
 change, the auto-update tool may need to be updated itself (hopefully this would be a rare occurrence).  If such a
 change does occur, and you are feeling brave, a pull request would be appreciated, but in time, they will be resolved
 regardless.
-
---8<-- "links.txt"

@@ -35,5 +35,3 @@ $ pip install --editable .
 
 This method will allow you to instantly see your changes without reinstalling.  If you want to do this in a virtual
 machine, you can.
-
---8<-- "links.txt"
