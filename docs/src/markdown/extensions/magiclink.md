@@ -541,5 +541,3 @@ requests, we could simply set `labels` to:
         'pull': 'Merge Request'
     }
 ```
-
---8<-- "refs.txt"

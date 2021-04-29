@@ -14,3 +14,17 @@ snippets (mixed):
   extensions:
     pymdownx.snippets:
       base_path: '{{BASE}}/../_snippets'
+
+snippets (file):
+  extensions:
+    pymdownx.snippets:
+      base_path:
+      - '{{BASE}}/../_snippets/b.txt'
+
+snippets (auto-append):
+  extensions:
+    pymdownx.snippets:
+      base_path:
+      - '{{BASE}}/../_snippets'
+      auto_append:
+      - 'b.txt'

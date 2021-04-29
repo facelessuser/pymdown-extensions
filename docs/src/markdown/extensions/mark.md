@@ -36,5 +36,3 @@ md = markdown.Markdown(extensions=['pymdownx.mark'])
 Option       | Type | Default     | Description
 ------------ | ---- | ----------- |------------
 `smart_mark` | bool | `#!py3 True` | Use smart logic with mark characters.
-
---8<-- "links.txt"

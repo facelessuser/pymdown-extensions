@@ -57,5 +57,3 @@ extension_configs = {
     }
 }
 ```
-
---8<-- "links.txt"

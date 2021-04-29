@@ -49,5 +49,3 @@ Option          | Type   | Default                     | Description
 `relative_path` | string | `#!py3 ''`                  | A string indicating an absolute path that the references are to be relative to (not used when `absolute` is set `True`).
 `absolute`      | bool   | `#!py3 False`               | Determines whether paths are converted to absolute or relative.
 `tags`          | string | `#!py3 'a script img link'` | Tags (separated by spaces) that are searched to find `href` and `src` attributes.
-
---8<-- "links.txt"
