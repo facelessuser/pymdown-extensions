@@ -25,7 +25,7 @@
   a[href^="mailto:"] {
     &:not(.magiclink-ignore) {
       position: relative;
-      padding-left: px2em(24px);
+      padding-left: px2em(22px);
 
       &::before {
         position: absolute;
