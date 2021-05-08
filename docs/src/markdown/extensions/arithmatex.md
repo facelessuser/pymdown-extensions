@@ -312,13 +312,13 @@ can create math fences:
 import pymdownx.arithmatex as arithmatex
 
 extensions = [
-    "pymdownx.inlinehilite"
+    "pymdownx.superfences"
 ]
 
 extension_config = {
     "pymdownx.superfences": {
         "custom_fences": [
-            {"name": "math", "class": "arithmatex", arithmatex.inline_mathjax_format}
+            {"name": "math", "class": "arithmatex", arithmatex.fence_mathjax_format}
         ]
     }
 }
