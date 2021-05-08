@@ -1,19 +1,19 @@
 // General styling for repository link icons
+:root > * {
+  --magiclink-email-icon: svg-load("@mdi/svg/svg/mail.svg");
+  --magiclink-github-icon: svg-load("@mdi/svg/svg/github.svg");
+  --magiclink-bitbucket-icon: svg-load("@mdi/svg/svg/bitbucket.svg");
+  --magiclink-gitlab-icon: svg-load("@mdi/svg/svg/gitlab.svg");
+  --magiclink-commit-icon: svg-load("@primer/octicons/build/svg/git-commit-24.svg");
+  --magiclink-compare-icon: svg-load("@primer/octicons/build/svg/file-diff-24.svg");
+  --magiclink-pull-icon: svg-load("@primer/octicons/build/svg/git-pull-request-24.svg");
+  --magiclink-issue-icon: svg-load("@primer/octicons/build/svg/issue-opened-24.svg");
+  --magiclink-discussion-icon: svg-load("@primer/octicons/build/svg/comment-discussion-24.svg");
+}
+
 .md-typeset {
   a[href^="mailto:"]:not(.magiclink-ignore)::before {
-    mask-image: svg-load("@mdi/svg/svg/mail.svg");
-  }
-
-  .magiclink-compare,
-  .magiclink-commit,
-  .magiclink-pull,
-  .magiclink-issue,
-  .magiclink-discussion {
-    &:not(.magiclink-ignore)::before {
-      mask-position: center;
-      mask-repeat: no-repeat;
-      mask-size: px2em(15px) auto;
-    }
+    mask-image: var(--magiclink-email-icon);
   }
 
   .magiclink-repository,
@@ -23,15 +23,23 @@
   .magiclink-issue,
   .magiclink-discussion,
   a[href^="mailto:"] {
+    position: relative;
+    padding-left: px2em(24px);
+
     &:not(.magiclink-ignore)::before {
-      position: relative;
-      width: px2em(16px);
-      height: px2em(16px);
-      padding-right: px2em(16px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: block;
+      box-sizing: border-box;
+      width: px2em(20px);
+      height: px2em(20px);
       background-color: var(--md-typeset-a-color);
-      background-size: px2em(16px);
+      background-size: px2em(20px);
       transition: background-color 125ms;
-      content: "\a0";
+      mask-repeat: no-repeat;
+      mask-size: contain;
+      content: "";
     }
 
     &:hover::before {
@@ -42,16 +50,16 @@
 
 // Assign icons to repository links
 @each $name, $icon in (
-  "commit": "git-commit-24",
-  "compare": "file-diff-24",
-  "pull": "git-pull-request-24",
-  "issue": "issue-opened-24",
-  "discussion": "comment-discussion-24"
+  "commit": "commit",
+  "compare": "compare",
+  "pull": "pull",
+  "issue": "issue",
+  "discussion": "discussion"
 ) {
   .md-typeset {
     .magiclink-#{$name}:not(.magiclink-ignore) {
       &::before {
-        mask-image: svg-load("@primer/octicons/build/svg/#{$icon}.svg");
+        mask-image: var(--magiclink-#{$icon}-icon);
       }
     }
   }
@@ -66,7 +74,7 @@
   .md-typeset {
     .magiclink-repository.magiclink-#{$name}:not(.magiclink-ignore) {
       &::before {
-        mask-image: svg-load("@mdi/svg/svg/#{$icon}.svg");
+        mask-image: var(--magiclink-#{$icon}-icon);
       }
     }
   }

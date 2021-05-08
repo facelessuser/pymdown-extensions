@@ -138,6 +138,7 @@ markdown_extensions:
       - LICENSE.md
       auto_append:
       - refs.txt
+      check_paths: true
   - pymdownx.keys:
       separator: "\uff0b"
   - pymdownx.details:
