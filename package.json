@@ -52,7 +52,7 @@
     "postcss-pseudo-classes": "^0.2.1",
     "postcss-svgo": "^5.0.0",
     "promise": "^8.1.0",
-    "rollup": "^2.47.0",
+    "rollup": "^2.49.0",
     "rollup-plugin-output-manifest": "^2.0.0",
     "rollup-plugin-terser": "^7.0.2",
     "stylelint": "^13.13.1",
