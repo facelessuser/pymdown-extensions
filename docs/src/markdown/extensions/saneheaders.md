@@ -11,6 +11,11 @@ as long as no spaces follow the `#` at the beginning of a line. For instance,
 (`#998`) to represent issue links. There may extensions that use names after hashes to provide tags (`#tag`). With
 SaneHeaders, these syntaxes can coexist. Those familiar with CommonMark may recognize this behavior.
 
+```py3
+import markdown
+md = markdown.Markdown(extensions=['pymdownx.saneheaders'])
+```
+
 ## Syntax
 
 The syntax when using SaneHeaders is exactly like Python Markdown's default logic with the only exception being that
