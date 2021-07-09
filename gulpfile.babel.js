@@ -7,7 +7,8 @@
 import Promise from "promise"
 import yargs from "yargs"
 import gulp from "gulp"
-import sass from "gulp-sass"
+import gulpSass from "gulp-sass"
+import sassCompiler from "sass"
 import postcss from "gulp-postcss"
 import autoprefixer from "autoprefixer"
 import cleanCSS from "gulp-clean-css"
@@ -32,6 +33,8 @@ import replace from "gulp-replace"
 import outputManifest from "rollup-plugin-output-manifest"
 import sourcemaps from "gulp-sourcemaps"
 import {extendDefaultPlugins} from "svgo"
+
+const sass = gulpSass(sassCompiler)
 
 /* Argument Flags */
 const args = yargs
