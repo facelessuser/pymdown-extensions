@@ -20,6 +20,8 @@
 /// DEALINGS
 ////
 
+@use "sass:math";
+
 // ----------------------------------------------------------------------------
 // Helpers
 // ----------------------------------------------------------------------------
@@ -42,7 +44,7 @@
 @function px2em($size, $base: 16px) {
   @if unit($size) == px {
     @if unit($base) == px {
-      @return ($size / $base) * 1em;
+      @return math.div($size, $base) * 1em;
     } @else {
       @error "Invalid base: #{$base} - unit must be 'px'";
     }
@@ -57,7 +59,7 @@
 @function px2rem($size, $base: 20px) {
   @if unit($size) == px {
     @if unit($base) == px {
-      @return ($size / $base) * 1.0rem;
+      @return math.div($size, $base) * 1.0rem;
     } @else {
       @error "Invalid base: #{$base} - unit must be 'px'";
     }
