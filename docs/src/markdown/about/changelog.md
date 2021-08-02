@@ -1,5 +1,10 @@
 # Changelog
 
+## 8.3
+
+- **FIX**: Fix issue that occurs when showing only nth line numbers and using `pymdownx-inline`. Lines not showing a
+  line number would not render with the proper leading space.
+
 ## 8.2
 
 - **NEW**: Snippets: now accepts a list of base paths which will be resolved in the order they are specified.

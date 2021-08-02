@@ -216,6 +216,22 @@ control the starting line shown in the block.
         ```
         ````
 
+And, if we wanted to start with a different starting line number, we would just specify something other than `1`.
+
+!!! example "Custom Line Number Start Example"
+
+    === "Output"
+        ``` {linenums="2"}
+        import foo.bar
+        ```
+
+    === "Markdown"
+        ````
+        ``` {linenums="2"}
+        import foo.bar
+        ```
+        ````
+
 Pygments also has a few additional options in regards to line numbers. One is "line step" which, if set to a number n >
 1, will print only every n^th^ line number. The other option is a setting that can mark line numbers as "special" with a
 span and class `special`. If the special parameter is set to a number n > 0, every n^th^ line number is given the CSS
@@ -227,7 +243,7 @@ So to set showing only every other line number, we could do the following. Line 
 !!! example "Nth Line Example"
 
     === "Output"
-        ``` {linenums="2 2"}
+        ``` {linenums="1 2"}
         """Some file."""
         import foo.bar
         import boo.baz
@@ -236,7 +252,7 @@ So to set showing only every other line number, we could do the following. Line 
 
     === "Markdown"
         ````
-        ``` {linenums="2 2"}
+        ``` {linenums="1 2"}
         """Some file."""
         import foo.bar
         import boo.baz
