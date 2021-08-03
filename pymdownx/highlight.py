@@ -31,10 +31,13 @@ try:
     from pygments import highlight
     from pygments.lexers import get_lexer_by_name, guess_lexer
     from pygments.formatters import find_formatter_class
+    from pygments import __version__ as pygments_ver
+    p_ver = tuple([int(n) for n in pygments_ver.split('.')[:2]])
     HtmlFormatter = find_formatter_class('html')
     pygments = True
 except ImportError:  # pragma: no cover
     pygments = False
+    p_ver = (0, 0)
 
 CODE_WRAP = '<pre%s><code%s%s%s>%s</code></pre>'
 CODE_WRAP_ON_PRE = '<pre%s%s%s><code>%s</code></pre>'
@@ -143,12 +146,18 @@ if pygments:
             # move the line number value to `data-linenos`, but we could
             # wrap the gutter number in the future with a highlight class.
             # The decision to do this has still not be made.
+
+            if p_ver >= (2, 7):
+                lnum = m.group(4) if not m.group(4).rstrip() else m.group(4)
+            else:  # pragma: no cover
+                lnum = m.group(4)
+
             return (
                 m.group(1) +
                 m.group(2) +
                 '"' +
                 m.group(3) +
-                ' data-linenos="' + m.group(4).rstrip() + ' ">' +
+                ' data-linenos="' + lnum + ' ">' +
                 m.group(5)
             )
 
