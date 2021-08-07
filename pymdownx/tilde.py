@@ -28,8 +28,7 @@ import re
 from markdown import Extension
 from . import util
 
-SMART_CONTENT = r'((?:(?<=\s)~+?(?=\s)|.)+?~*?)'
-SMART_MIXED_CONTENT = r'((?:~(?=[^\s])|(?<=\s)~+?(?=\s))+?~*)'
+SMART_CONTENT = r'(.+?~*?)'
 CONTENT = r'(~|[^\s]+?)'
 CONTENT2 = r'((?:[^~]|(?<!~{2})~)+?)'
 
