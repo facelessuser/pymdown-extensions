@@ -87,7 +87,7 @@ class TabbedProcessor(BlockProcessor):
             # to be under it, then the content's is sibling is in the list.
             if self.alternate_style:
                 last_child = self.lastChild(self.lastChild(sibling))
-                tabbed_content = 'tabbed-subcontent'
+                tabbed_content = 'tabbed-block'
             else:
                 last_child = self.lastChild(sibling)
                 tabbed_content = 'tabbed-content'
@@ -237,7 +237,7 @@ class TabbedProcessor(BlockProcessor):
                 div = etree.SubElement(
                     content,
                     "div",
-                    {'class': 'tabbed-subcontent'}
+                    {'class': 'tabbed-block'}
                 )
             else:
                 etree.SubElement(

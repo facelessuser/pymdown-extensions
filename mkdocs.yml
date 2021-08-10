@@ -148,6 +148,7 @@ markdown_extensions:
       separator: "\uff0b"
   - pymdownx.details:
   - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.saneheaders:
 
 extra:

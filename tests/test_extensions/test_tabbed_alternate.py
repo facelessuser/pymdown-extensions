@@ -16,7 +16,7 @@ class TestLegacyTab(util.MdCase):
             <strong>foo</strong></p>
             <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab</label></div>
             <div class="tabbed-content">
-            <div class="tabbed-subcontent"></div>
+            <div class="tabbed-block"></div>
             </div>
             </div>
             '''  # noqa: E501
@@ -51,11 +51,11 @@ class TestLegacyTab(util.MdCase):
             r'''
             <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab</label><label for="__tabbed_1_2">Another Tab</label></div>
             <div class="tabbed-content">
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <p>Some <em>content</em></p>
             <p>And more <code>content</code>.</p>
             </div>
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <p>Some more content.</p>
             <div class="highlight"><pre><span></span><code>code
             </code></pre></div>
@@ -86,11 +86,11 @@ class TestLegacyTab(util.MdCase):
             r'''
             <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1"><strong>Tab</strong></label><label for="__tabbed_1_2"><em>Another Tab</em></label></div>
             <div class="tabbed-content">
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <p>Some <em>content</em></p>
             <p>And more <code>content</code>.</p>
             </div>
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <p>Some more content.</p>
             <div class="highlight"><pre><span></span><code>code
             </code></pre></div>
@@ -125,11 +125,11 @@ class TestLegacyTab(util.MdCase):
             r'''
             <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab</label><label for="__tabbed_1_2">Another Tab</label></div>
             <div class="tabbed-content">
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <p>Some <em>content</em></p>
             <div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><input id="__tabbed_2_2" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Tab A</label><label for="__tabbed_2_2">Tab B</label></div>
             <div class="tabbed-content">
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <ul>
             <li>
             <p>item 1</p>
@@ -139,7 +139,7 @@ class TestLegacyTab(util.MdCase):
             </li>
             </ul>
             </div>
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <ul>
             <li>
             <p>item A</p>
@@ -152,7 +152,7 @@ class TestLegacyTab(util.MdCase):
             </div>
             </div>
             </div>
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <p>Some more content.</p>
             </div>
             </div>
@@ -181,7 +181,7 @@ class TestLegacyTab(util.MdCase):
             r'''
             <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab</label></div>
             <div class="tabbed-content">
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <p>Some <em>content</em></p>
             <p>And more <code>content</code>.</p>
             </div>
@@ -189,7 +189,7 @@ class TestLegacyTab(util.MdCase):
             </div>
             <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Another Tab</label></div>
             <div class="tabbed-content">
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <p>Some more content.</p>
             <div class="highlight"><pre><span></span><code>code
             </code></pre></div>
@@ -214,7 +214,7 @@ class TestLegacyTab(util.MdCase):
             r'''
             <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab</label></div>
             <div class="tabbed-content">
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <p>Some <em>content</em></p>
             <p>And more <code>content</code>.</p>
             </div>
@@ -245,7 +245,7 @@ class TestLegacyTab(util.MdCase):
             <p>List</p>
             <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab</label></div>
             <div class="tabbed-content">
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <ul>
             <li>
             <p>Paragraph</p>
@@ -284,7 +284,7 @@ class TestLegacyTab(util.MdCase):
             <p>List</p>
             <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab</label></div>
             <div class="tabbed-content">
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <ul>
             <li>
             <p>Paragraph</p>
@@ -327,13 +327,13 @@ class TestLegacyTab(util.MdCase):
             <p>List</p>
             <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab</label></div>
             <div class="tabbed-content">
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <ul>
             <li>
             <p>Paragraph</p>
             <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Tab</label></div>
             <div class="tabbed-content">
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <ol>
             <li>
             <p>Paragraph</p>
@@ -380,7 +380,7 @@ class TestLegacyTab(util.MdCase):
             <p>List</p>
             <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab</label></div>
             <div class="tabbed-content">
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <dl>
             <dt>Term</dt>
             <dd>
@@ -416,7 +416,7 @@ class TestLegacyTab(util.MdCase):
             '''
             <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Output</label></div>
             <div class="tabbed-content">
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <details class="note" open="open"><summary>Open styled details</summary><details class="danger"><summary>Nested details!</summary><p>And more content again.</p>
             </details>
             </details>
@@ -441,7 +441,7 @@ class TestLegacyTab(util.MdCase):
             '''
             <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab with loose lists</label></div>
             <div class="tabbed-content">
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <ul>
             <li>
             <p>Parent 1</p>
@@ -473,7 +473,7 @@ class TestLegacyTab(util.MdCase):
             '''
             <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab with loose lists</label></div>
             <div class="tabbed-content">
-            <div class="tabbed-subcontent">
+            <div class="tabbed-block">
             <ul>
             <li>
             <p>Parent 1</p>
