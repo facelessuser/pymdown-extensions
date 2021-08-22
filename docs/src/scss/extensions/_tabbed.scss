@@ -1,8 +1,8 @@
 /* Dark mode changes */
 [data-md-color-scheme="dracula"] {
   .md-typeset {
-    .tabbed-set > .tabbed-content {
-      box-shadow: 0 px2rem(-1px) var(--md-default-fg-color--lighter);
+    .tabbed-set > .tabbed-labels {
+      box-shadow: 0 px2rem(-1px) var(--md-default-fg-color--lighter) inset;
     }
   }
 }
@@ -10,53 +10,63 @@
 /* Style code blocks to fill full tab,
    but otherwise, pad content. */
 .md-typeset {
-  .tabbed-set > .tabbed-content {
-    padding: 0 px2rem(12px);
-    overflow: hidden;
+
+  .tabbed-labels {
+    // padding: 0 px2rem(12px);
+    scroll-snap-type: none;
+    margin: 0 px2rem(-16px);
+    padding: 0 px2rem(16px);
+    scroll-padding: 0 px2rem(16px);
   }
 
-  .tabbed-set {
-    > input {
-      &:checked + label {
-        & + .tabbed-content {
+  .tabbed-set > .tabbed-content > .tabbed-subcontent {
+    padding: 0 px2rem(12px);
+    overflow: hidden;
 
-          > {
-            pre,
-            .codehilite,
-            .codehilitetable,
-            .highlight,
-            .highlighttable {
+    > {
+      pre,
+      .codehilite,
+      .codehilitetable,
+      .highlight,
+      .highlighttable {
 
-              &:only-child {
-                span.filename {
-                  margin-top: 0;
-                  margin-right: px2rem(-12px);
-                  margin-left: px2rem(-12px);
-                }
+        &:only-child {
+          span.filename {
+            margin-top: 0;
+            margin-right: px2rem(-12px);
+            margin-left: px2rem(-12px);
+          }
 
-                code {
-                  margin-right: px2rem(-12px);
-                  margin-left: px2rem(-12px);
-                  padding-right: px2rem(12px);
-                  padding-left: px2rem(12px);
-
-                  .hll {
-                    margin: 0 px2rem(-12px);
-                    padding: 0 px2rem(12px);
-                  }
-                }
-              }
-            }
-
-            mermaid-div {
-              margin-right: px2rem(-12px);
-              margin-left: px2rem(-12px);
-              padding-right: px2rem(12px);
-              padding-left: px2rem(12px);
+          code {
+            margin-right: px2rem(-12px);
+            margin-left: px2rem(-12px);
+            padding-right: px2rem(12px);
+            padding-left: px2rem(12px);
+  
+            .hll {
+              margin: 0 px2rem(-12px);
+              padding: 0 px2rem(12px);
             }
           }
         }
       }
+
+      mermaid-div:only-child {
+        margin-right: px2rem(-12px);
+        margin-left: px2rem(-12px);
+        padding-right: px2rem(12px);
+        padding-left: px2rem(12px);
+      }
     }
   }
 }
+
+// @include break-from-device(mobile) {
+
+//   // Top-level tab label containers
+//   .md-typeset > .tabbed-alternate .tabbed-labels {
+//     margin: 0 px2rem(-16px);
+//     padding: 0 px2rem(16px);
+//     scroll-padding: 0 0;
+//   }
+// }

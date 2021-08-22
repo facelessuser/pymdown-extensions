@@ -3,6 +3,8 @@
   details {
     @extend .admonition;
 
+    overflow: hidden;
+
     // Title
     > summary {
       @extend .admonition-title;
