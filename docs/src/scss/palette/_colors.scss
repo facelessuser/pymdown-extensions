@@ -82,7 +82,7 @@
     --md-code-hl-builtin-color: #{$drac-cyan};
     --md-code-hl-class-color: #{$drac-cyan};
 
-    --md-code-special-bg-color: #{lighten($drac-bg, 5%)};
+    --md-code-special-bg-color: #{darken($drac-bg, 5%)};
     --md-code-alternate-bg-color: #{tint($drac-bg, 10%)};
     --md-code-link-bg-color: #{mix($drac-cyan, $drac-bg, 15%)};
 

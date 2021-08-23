@@ -86,7 +86,7 @@ DEFAULT_CONFIG = {
     ],
     'extend_pygments_lang': [
         [],
-        'Extend pygments language with special language entry - Default: {}'
+        'Extend pygments language with special language entry - Default: []'
     ],
     'legacy_no_wrap_code': [
         False,
@@ -99,6 +99,14 @@ DEFAULT_CONFIG = {
     'code_attr_on_pre': [
         False,
         "Attach attribute list values on pre element instead of code element - Default: False"
+    ],
+    'auto_filename': [
+        False,
+        'Inject the code block language name as the "filename" title. Defaults: False'
+    ],
+    'auto_filename_mapping': [
+        {},
+        'User defined mappings for a given language name to filename title. Defaults: {}'
     ],
     '_enabled': [
         True,
@@ -203,7 +211,7 @@ class Highlight(object):
         self, guess_lang=False, pygments_style='default', use_pygments=True,
         noclasses=False, extend_pygments_lang=None, linenums=None, linenums_special=-1,
         linenums_style='table', linenums_class='linenums', wrapcode=True, language_prefix='language-',
-        code_attr_on_pre=False
+        code_attr_on_pre=False, auto_filename=False, auto_filename_mapping=None
     ):
         """Initialize."""
 
@@ -218,6 +226,11 @@ class Highlight(object):
         self.wrapcode = wrapcode
         self.language_prefix = language_prefix
         self.code_attr_on_pre = code_attr_on_pre
+        self.auto_filename = auto_filename
+
+        if auto_filename_mapping is None:
+            auto_filename_mapping = {}
+        self.auto_filename_mapping = auto_filename_mapping
 
         if extend_pygments_lang is None:  # pragma: no cover
             extend_pygments_lang = []
@@ -270,7 +283,8 @@ class Highlight(object):
 
     def highlight(
         self, src, language, css_class='highlight', hl_lines=None,
-        linestart=-1, linestep=-1, linespecial=-1, inline=False, classes=None, id_value='', attrs=None
+        linestart=-1, linestep=-1, linespecial=-1, inline=False, classes=None, id_value='', attrs=None,
+        filename=None
     ):
         """Highlight code."""
 
@@ -305,6 +319,10 @@ class Highlight(object):
             if hl_lines is None or inline:
                 hl_lines = []
 
+            if filename is None and self.auto_filename:
+                name = lexer.name.title()
+                filename = self.auto_filename_mapping.get(name, name)
+
             # Setup formatter
             html_formatter = InlineHtmlFormatter if inline else BlockHtmlFormatter
             formatter = html_formatter(
@@ -316,7 +334,8 @@ class Highlight(object):
                 style=self.pygments_style,
                 noclasses=self.noclasses,
                 hl_lines=hl_lines,
-                wrapcode=self.wrapcode
+                wrapcode=self.wrapcode,
+                filename=filename
             )
 
             # Convert
@@ -404,7 +423,9 @@ class HighlightTreeprocessor(Treeprocessor):
                     extend_pygments_lang=self.config['extend_pygments_lang'],
                     wrapcode=not self.config['legacy_no_wrap_code'],
                     language_prefix=self.config['language_prefix'],
-                    code_attr_on_pre=self.config['code_attr_on_pre']
+                    code_attr_on_pre=self.config['code_attr_on_pre'],
+                    auto_filename=self.config['auto_filename'],
+                    auto_filename_mapping=self.config['auto_filename_mapping']
                 )
                 placeholder = self.md.htmlStash.store(
                     code.highlight(

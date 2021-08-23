@@ -106,6 +106,10 @@ markdown_extensions:
           lang: pycon
           options:
             python3: true
+      auto_filename: true
+      auto_filename_mapping:
+        Text Only: Text
+        Python Console Session: Python
       linenums_style: pymdownx-inline
   - pymdownx.inlinehilite:
       custom_inline:

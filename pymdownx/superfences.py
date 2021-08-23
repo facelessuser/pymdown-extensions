@@ -169,10 +169,10 @@ def highlight_validator(language, inputs, options, attrs, md):
 
     for k, v in inputs.items():
         matched = False
-        for opt, validator in (('hl_lines', RE_HL_LINES), ('linenums', RE_LINENUMS)):
+        for opt, validator in (('hl_lines', RE_HL_LINES), ('linenums', RE_LINENUMS), ('filename', None)):
             if k == opt and use_pygments:
                 matched = True
-                if v is True or validator.match(v) is None:
+                if v is True or (validator is not None and validator.match(v) is None):
                     attrs[k] = v
                 elif use_pygments:
                     options[k] = v
@@ -402,6 +402,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             self.wrapcode = not config.get('legacy_no_wrap_code', False)
             self.language_prefix = config.get('language_prefix', 'language-')
             self.code_attr_on_pre = config.get('code_attr_on_pre', False)
+            self.auto_filename = config.get('auto_filename', False)
+            self.auto_filename_mapping = config.get('auto_filename_mapping', {})
 
     def clear(self):
         """Reset the class variables."""
@@ -753,6 +755,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         linestart = None
         linespecial = None
         hl_lines = None
+        filename = None
 
         if self.use_pygments:
             if 'hl_lines' in options:
@@ -765,6 +768,9 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 linestep = m.group('linestep')
                 linespecial = m.group('linespecial')
                 del options['linenums']
+            if 'filename' in options:
+                filename = options['filename']
+                del options['filename']
 
         linestep = self.parse_line_step(linestep)
         linestart = self.parse_line_start(linestart)
@@ -783,7 +789,9 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             extend_pygments_lang=self.extend_pygments_lang,
             wrapcode=self.wrapcode,
             language_prefix=self.language_prefix,
-            code_attr_on_pre=self.code_attr_on_pre
+            code_attr_on_pre=self.code_attr_on_pre,
+            auto_filename=self.auto_filename,
+            auto_filename_mapping=self.auto_filename_mapping
         ).highlight(
             src,
             language,
@@ -794,7 +802,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             linespecial=linespecial,
             classes=classes,
             id_value=id_value,
-            attrs=attrs
+            attrs=attrs,
+            filename=filename
         )
 
         return el
