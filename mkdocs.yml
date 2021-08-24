@@ -152,9 +152,9 @@ extra:
     - icon: fontawesome/brands/discord
       link: https://discord.gg/TWs8Tgr
 extra_css:
-  - assets/pymdownx-extras/extra-9f2612b5f7.css
+  - assets/pymdownx-extras/extra-4ca32c29f0.css
 extra_javascript:
-  - assets/pymdownx-extras/extra-uml-51b11a9a.js
+  - assets/pymdownx-extras/extra-uml-fcd33c93.js
 
 plugins:
   - search

@@ -6,6 +6,7 @@
 */
 import Promise from "promise"
 import yargs from "yargs"
+import {hideBin} from "yargs/helpers"
 import gulp from "gulp"
 import gulpSass from "gulp-sass"
 import sassCompiler from "sass"
@@ -18,7 +19,7 @@ import concat from "gulp-concat"
 import mqpacker from "css-mqpacker"
 import {terser} from "rollup-plugin-terser"
 import {rollup} from "rollup"
-import rollupBabel, {getBabelOutputPlugin} from "@rollup/plugin-babel"
+import {babel as rollupBabel, getBabelOutputPlugin} from "@rollup/plugin-babel"
 import stylelint from "gulp-stylelint"
 import eslint from "gulp-eslint"
 import rev from "gulp-rev"
@@ -32,12 +33,11 @@ import cssSvgo from "postcss-svgo"
 import replace from "gulp-replace"
 import outputManifest from "rollup-plugin-output-manifest"
 import sourcemaps from "gulp-sourcemaps"
-import {extendDefaultPlugins} from "svgo"
 
 const sass = gulpSass(sassCompiler)
 
 /* Argument Flags */
-const args = yargs
+const args = yargs(hideBin(process.argv))
   .boolean("compress")
   .boolean("lint")
   .boolean("clean")
@@ -97,7 +97,7 @@ const rollupjs = (sources, options) => {
     pluginModules.push(terser())
   }
   if (options.revision) {
-    pluginModules.push(outputManifest({fileName: "manifest-js.json", isMerge: options.merge}))
+    pluginModules.push(outputManifest.default({fileName: "manifest-js.json", isMerge: options.merge}))
   }
 
   for (let i = 0; i < sources.length; i++) {
@@ -141,10 +141,19 @@ gulp.task("scss:build:sass", () => {
     ),
     cssSvgo(
       {
-        plugins: extendDefaultPlugins([
-          {name: "removeDimensions"},
-          {name: "removeViewBox", active: false}
-        ]),
+        plugins: [
+          {
+            name: "preset-default",
+            params: {
+              overrides: {
+                removeDimensions: true,
+                removeViewBox: {
+                  active: false
+                }
+              }
+            }
+          }
+        ],
         encode: false
       }
     ),
