@@ -338,7 +338,7 @@ class Highlight(object):
                 hl_lines = []
 
             if filename is None and self.auto_filename:
-                name = lexer.name.title()
+                name = " ".join([w.title() if w.islower() else w for w in lexer.name.split()])
                 filename = self.auto_filename_mapping.get(name, name)
 
             # Setup formatter
