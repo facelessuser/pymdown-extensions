@@ -102,11 +102,15 @@ DEFAULT_CONFIG = {
     ],
     'auto_filename': [
         False,
-        'Inject the code block language name as the "filename" title. Defaults: False'
+        'Inject the code block language name as the "filename" title - Defaults: False'
     ],
     'auto_filename_mapping': [
         {},
-        'User defined mappings for a given language name to filename title. Defaults: {}'
+        'User defined mappings for a given language name to filename title - Defaults: {}'
+    ],
+    'linespans': [
+        '',
+        'Wrap lines with a span of of <user-string>-<linenum>. - Defaults: ""'
     ],
     '_enabled': [
         True,
@@ -211,7 +215,7 @@ class Highlight(object):
         self, guess_lang=False, pygments_style='default', use_pygments=True,
         noclasses=False, extend_pygments_lang=None, linenums=None, linenums_special=-1,
         linenums_style='table', linenums_class='linenums', wrapcode=True, language_prefix='language-',
-        code_attr_on_pre=False, auto_filename=False, auto_filename_mapping=None
+        code_attr_on_pre=False, auto_filename=False, auto_filename_mapping=None, linespans=''
     ):
         """Initialize."""
 
@@ -227,6 +231,7 @@ class Highlight(object):
         self.language_prefix = language_prefix
         self.code_attr_on_pre = code_attr_on_pre
         self.auto_filename = auto_filename
+        self.linespans = linespans
 
         if auto_filename_mapping is None:
             auto_filename_mapping = {}
@@ -335,7 +340,8 @@ class Highlight(object):
                 noclasses=self.noclasses,
                 hl_lines=hl_lines,
                 wrapcode=self.wrapcode,
-                filename=filename
+                filename=filename,
+                linespans=self.linespans
             )
 
             # Convert
