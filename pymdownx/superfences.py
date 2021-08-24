@@ -405,6 +405,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             self.auto_filename = config.get('auto_filename', False)
             self.auto_filename_mapping = config.get('auto_filename_mapping', {})
             self.linespans = config.get('linespans', '')
+            self.lineanchors = config.get('lineanchors', '')
+            self.anchorlinenos = config.get('anchorlinenos', False)
 
     def clear(self):
         """Reset the class variables."""
@@ -793,7 +795,9 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             code_attr_on_pre=self.code_attr_on_pre,
             auto_filename=self.auto_filename,
             auto_filename_mapping=self.auto_filename_mapping,
-            linespans=self.linespans
+            linespans=self.linespans,
+            lineanchors=self.lineanchors,
+            anchorlinenos=self.anchorlinenos
         ).highlight(
             src,
             language,

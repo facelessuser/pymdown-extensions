@@ -13,6 +13,8 @@
 - **NEW**: Highlight: Add support for Pygments option `filename`. Also add new option `auto_filename` which will use
   the current lexer's name as the title. Also add `auto_filename_mapping` which allows a user to override a given
   lexer's name automatically.
+- **NEW**: Highlight: Add support for Pygments option `lineanchors`.
+- **NEW**: Highlight: Add support for Pygments option `anchorlinenos`.
 - **FIX**: BetterEm: Fix some complex cases related to "smart" logic. (#1413)
 - **FIX**: Highlight: Fix issue that occurs when showing only nth line numbers and using `pymdownx-inline`. Lines not
   showing a line number would not render with the proper leading space.

@@ -112,6 +112,16 @@ DEFAULT_CONFIG = {
         '',
         'Wrap lines with a span of of <user-string>-<linenum>. - Defaults: ""'
     ],
+    'anchorlinenos': [
+        False,
+        'If set to True, will wrap line numbers in <a> tags. Used in combination with linenos and lineanchors.'
+        ' - Defaults: False'
+    ],
+    'lineanchors': [
+        '',
+        'If set to a nonempty string, e.g. foo, the formatter will wrap each output line in an anchor tag with'
+        ' an id (and name) of foo-linenumber. - Defaults: ""'
+    ],
     '_enabled': [
         True,
         'Used internally to communicate if extension has been explicitly enabled - Default: False'
@@ -215,7 +225,8 @@ class Highlight(object):
         self, guess_lang=False, pygments_style='default', use_pygments=True,
         noclasses=False, extend_pygments_lang=None, linenums=None, linenums_special=-1,
         linenums_style='table', linenums_class='linenums', wrapcode=True, language_prefix='language-',
-        code_attr_on_pre=False, auto_filename=False, auto_filename_mapping=None, linespans=''
+        code_attr_on_pre=False, auto_filename=False, auto_filename_mapping=None, linespans='',
+        anchorlinenos=False, lineanchors=''
     ):
         """Initialize."""
 
@@ -232,6 +243,8 @@ class Highlight(object):
         self.code_attr_on_pre = code_attr_on_pre
         self.auto_filename = auto_filename
         self.linespans = linespans
+        self.lineanchors = lineanchors
+        self.anchorlinenos = anchorlinenos
 
         if auto_filename_mapping is None:
             auto_filename_mapping = {}
@@ -341,7 +354,9 @@ class Highlight(object):
                 hl_lines=hl_lines,
                 wrapcode=self.wrapcode,
                 filename=filename,
-                linespans=self.linespans
+                linespans=self.linespans,
+                lineanchors=self.lineanchors,
+                anchorlinenos=self.anchorlinenos
             )
 
             # Convert
