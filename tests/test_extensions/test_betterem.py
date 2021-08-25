@@ -45,3 +45,39 @@ class TestBetterEmNoSmart(util.MdCase):
             'on the __1-4 row__ of the AP Combat Table ___and___ receive',
             '<p>on the <strong>1-4 row</strong> of the AP Combat Table <strong><em>and</em></strong> receive</p>'
         )
+
+
+class TestBetterSmartAll(util.MdCase):
+    """Test escaping cases for BetterEm with smart enabled everywhere."""
+
+    def test_smart_complex_cases_star(self):
+        """Test some complex cases with star."""
+
+        self.check_markdown(
+            '''
+            ***I'm italic and bold* I am just bold.**
+
+            ***I'm bold and italic!** I am just italic.*
+            ''',
+            '''
+            <p><strong><em>I'm italic and bold</em> I am just bold.</strong></p>
+            <p><em><strong>I'm bold and italic!</strong> I am just italic.</em></p>
+            ''',
+            True
+        )
+
+    def test_smart_complex_cases_underscore(self):
+        """Test some complex cases with underscore."""
+
+        self.check_markdown(
+            '''
+            ___I'm italic and bold_ I am just bold.__
+
+            ___I'm bold and italic!__ I am just italic._
+            ''',
+            '''
+            <p><strong><em>I'm italic and bold</em> I am just bold.</strong></p>
+            <p><em><strong>I'm bold and italic!</strong> I am just italic.</em></p>
+            ''',
+            True
+        )
