@@ -15,11 +15,6 @@ the position that language headers are better suited in fenced code blocks. So s
 be styled as plain text unless `guess_language` is enabled. If you wish to highlight lines and define line numbers per
 code block, it is advised to use the SuperFences extension.
 
-As previously mentioned, both InlineHilite's and SuperFences' highlighting can be controlled by Highlight. Both can use
-[Pygments][pygments] or JavaScript highlighters to do their code syntax highlighting, but all of the settings here only
-affect highlighting via Pygments except `use_pygments` and `css_class`.  If you want to use a JavaScript syntax
-highlighter, set `use_pygments` to `#!py3 False` or make sure you don't have Pygments installed.
-
 The Highlight extension can be included in Python Markdown by using the following:
 
 ```py3
@@ -29,26 +24,38 @@ md = markdown.Markdown(extensions=['pymdownx.highlight'])
 
 ## Syntax Highlighting
 
-If Pygments is installed, it will be the default syntax highlighter, but if it is not, or if `use_pygments` is turned
-off, code tags will be rendered in the HTML5 format for JavaScript highlighting: 
+If [Pygments][pygments] is installed, it will be the default syntax highlighter, but if it is not, or if `use_pygments`
+is turned off, code tags will be rendered in the HTML5 format for JavaScript highlighting:
 
 ```html
 <pre class="highlight"><code class="language-mylanguage"></code></pre>
 ```
 
+`highlight` is the default class name, and will be applied to code blocks, whether Pygments is disabled or not. This
+class name can be changed with the `css_class` option.
+
+By default, the prefix `language-` is applied to language classes when Pygments is disabled. This prefix can be changed
+via the `language_prefix` option.
+
+The language class, and any attributes added via the [`attr_list`][attr-list] extension, are added to the
+`#!html <code>` element. The `code_attr_on_pre` option will force them to be attached to the `#!html <pre>` element.
+
+All other options specifically control the Pygments highlighter and will have no affect if Pygments usage is disabled.
+
 ## Extended Pygments Lexer Options
 
-If using Pygments, some lexers have special settings.  For instance, the `php` lexer has the option `startinline` which,
+If using Pygments, some lexers have special settings. For instance, the `php` lexer has the option `startinline` which,
 if enabled, will parse PHP syntax without requiring `#!php <?` at the beginning. Highlight allows you to configure
-these settings via the option `extend_pygments_lang`. 
+these settings via the option `extend_pygments_lang`.
 
 `extend_pygments_lang` allows you to create a special Pygments alias language where you can configure the language
 settings to your liking.  So if you wanted to enable `startinline` for `php`, you might create a language alias called
 `php-inline` that maps to `php` with `startinline` enabled.  This would allow you to use `php` for normal PHP blocks,
-but also allow you to do inline PHP code without the block specifiers. You can also use `extend_pygments_lang` to
-completely override the base language's options -- assuming your specified name overrides an existing name.
+but also allow you to do use `php-inline` for code without specifying `#!php <?`. You can also use
+`extend_pygments_lang` to completely override the base language's options -- assuming your specified name overrides an
+existing name.
 
-`extend_pygments_lang` an array of dictionaries.  Each dictionary contains three keys: `name` which is the new name you
+`extend_pygments_lang`is an array of dictionaries. Each dictionary contains three keys: `name` which is the new name you
 are adding, `lang` which is the language the new name maps to, and `options` which is a dictionary of the options you
 wish to apply.
 
@@ -93,6 +100,11 @@ Line number styles are set with the option `linenums_style` as described in [Opt
 
 ## Options
 
+All options below control the Pygments' output. The two exceptions are `use_pygments` which disables Pygments,
+`css_class` which sets the name of the class assigned to the generated code blocks, and `language_prefix`, and
+`code_attr_on_pre` which only apply when Pygments is disabled. Many of these options are demonstrated in the
+[SuperFences](./superfences.md) documentation.
+
 Option                    | Type   | Default               | Description
 ------------------------- | ------ | ----------------------| -----------
 `css_class`               | string | `#!py3 'highlight`    | Default class to apply to the wrapper element on code blocks. Other extensions can override this.
@@ -105,8 +117,15 @@ Option                    | Type   | Default               | Description
 `linenums_style`          | string | `#!py3 'table'`       | Controls the output style when `linenums` are enabled. Supported styles are Pygments default `table` and `inline`, but also supported is the pymdown-extensions `pymdownx-inline` which provides a special inline mode, see [Line Number Styles](#line-number-styles) for more info.
 `linenums_class`          | string | `#!py3 'linenums'`    | Controls the name of the line number class when Pygments is not used.
 `extend_pygments_lang`    | list   | `#!py3 []`            | A list of extended languages to add.  See [Extended Pygments Lexer Options](#extended-pygments-lexer-options) for more info.
-`legacy_no_wrap_code`     | bool   | `#!py3 False`         | A temporary option provided during the transition period to the new output format. From now on, all block code under `pre` elements will be wrapped in a `code` element as well under Pygments 2.4+. This disables this format. This option will be removed in the future.
+`legacy_no_wrap_code`     | bool   | `#!py3 False`         | A temporary option provided during the transition period to the new output format. Under Pygments 2.4+, code blocks are wrapped in `#!html <pre><code>` as recommend by HTML5. Enabling this allows the old way of just using `<pre>`.
 `language_prefix`         | string | `#!py3 'language-'`   | Controls the prefix applied to the language class when Pygments is not used. By default, uses the HTML5 `language-`.
+`code_attr_on_pre`        | bool   | `#!py3 False`         | By default, the language class and all attributes added via the [`attr_list`][attr-list] extension are attached to the `#!html <code>` element. This forces them to be attached to the `#!html <pre>` element.
+`auto_filename`           | bool   | `#!py3 False`         | For all code blocks, use the Pygments' `filename` option to specify a special header with the name of the lexer being used. The lexer is name is pulled directly from Pygments and title cased appropriately.
+`auto_filename_map`       | dict   | `#!py3 {}`            | A dictionary used to override certain titles returned by `auto_filename`. Simply specify the title to override as the key and the desired title as the value.
+`linespans`               | string | `#!py3 ''`            | Controls the Pygments of the same name. If set to a nonempty string, e.g. foo, the formatter will wrap each output line in a span tag with an id of `foo-<code_block_number>-<line_number>`.
+`anchorlinenos`           | bool   | `#!py3 False`         | Enables the Pygments of the same name. If set to True, will wrap line numbers in `#!html <a>` tags. Used in combination with `linenos` and `lineanchors`.
+`lineanchors`             | bool   | `#!py3 False`         | Controls the Pygments of the same name. If set to a nonempty string, e.g. foo, the formatter will wrap each output line in an anchor tag with an id (and name) of `foo-<code_block_number>-<line_number>`.
+
 
 !!! new "New 6.2"
     `legacy_no_wrap_code` was added in `6.3`, but is only provided to help transition to the format when using Pygments 2.4+. This option will be removed in the future.

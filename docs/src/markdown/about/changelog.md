@@ -11,8 +11,8 @@
   formatter functions are configurable. All others are marked as deprecated and will be removed at some future date.
 - **NEW**: Highlight: Add support for Pygments option `linespans`.
 - **NEW**: Highlight: Add support for Pygments option `filename`. Also add new option `auto_filename` which will use
-  the current lexer's name as the title. Also add `auto_filename_mapping` which allows a user to override a given
-  lexer's name automatically.
+  the current lexer's name as the title. Also add `auto_filename_map` which allows a user to override a given lexer's
+  name automatically.
 - **NEW**: Highlight: Add support for Pygments option `lineanchors`.
 - **NEW**: Highlight: Add support for Pygments option `anchorlinenos`.
 - **FIX**: BetterEm: Fix some complex cases related to "smart" logic. (#1413)

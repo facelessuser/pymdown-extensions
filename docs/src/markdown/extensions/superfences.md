@@ -261,7 +261,8 @@ So to set showing only every other line number, we could do the following. Line 
         ````
 
 To set every other line as special, you must set the third `linenums` option (specify line start and step before it).
-Special must be a value of n > 0.
+Special must be a value of n > 0. Additionally, you can set this globally with `linenums_special` in the
+[Highlight extension](./highlight.md).
 
 !!! example "Special Line Example"
 
@@ -367,6 +368,216 @@ ending line. You can do multiple ranges and even mix them with non ranges.
                self.baz = None
         ```
         ````
+
+## Code Block Headers
+
+When Pygments is enabled, a header title can be applied with the `filename` option. This controls the Pygments option of
+the same name. The feature allows a user to display a filename or any arbitrary text in a header on code blocks.
+
+Pygments will simply output the HTML below. The user is responsible for provided CSS to style the header.
+
+```html
+<div class="highlight">
+<span class="filename">Some Title</span>
+<pre><code></code></pre>
+</div>
+```
+
+!!! example "Filename"
+
+    === "Output"
+        ```{.py3 filename="My Cool Header"}
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
+
+    === "Markdown"
+        ````
+        ```{.py3 filename="My Cool Header"}
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
+        ````
+
+If the `auto_filename` option is enabled in the [Highlight extension](./highlight.md), the filename will be auto
+populated with the name of the lexer used to highlight the code (unless `filename` is manually specified). In the
+example below, no `filename` is specified, but the the filename is extracted from the Python lexer.
+
+!!! example "Auto Filename"
+
+    === "Output"
+        ````md-render
+        ---
+        extensions:
+        - pymdownx.highlight
+        - pymdownx.superfences
+
+        extension_configs:
+          pymdownx.highlight:
+            auto_filename: true
+        ---
+        ```python
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
+        ````
+
+    === "Markdown"
+        ````
+        ```python
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
+        ````
+
+There may be some cases where a Lexer returns a result that is undesired. For example, when a user specifies `pycon`
+lexer, the title that is returned is quite verbose.
+
+!!! example "Auto Filename"
+
+    === "Output"
+        ````md-render
+        ---
+        extensions:
+        - pymdownx.highlight
+        - pymdownx.superfences
+
+        extension_configs:
+          pymdownx.highlight:
+            auto_filename: true
+        ---
+        ```pycon
+        >>> 3 + 3
+        6
+        ```
+        ````
+
+    === "Markdown"
+        ````
+        ```pycon
+        >>> 3 + 3
+        6
+        ```
+        ````
+
+In a case like above, it may be desired to simply use the title `Python`. We can configure the [Highlight extension](./highlight.md)
+to override any auto returned title of "Python Console Session" with simply "Python".
+
+```py3
+extension_configs = {
+    "pymdownx.highlight": {
+        "auto_filename": True,
+        "auto_filename_map": {
+            "Python Console Session": "Python"
+        }
+    }
+}
+```
+
+Now whenever we use `pycon`, we get "Python" instead of "Python Console Session".
+
+````md-render
+---
+extensions:
+- pymdownx.highlight
+- pymdownx.superfences
+
+extension_configs:
+  pymdownx.highlight:
+    auto_filename: true
+    auto_filename_map: {"Python Console Session": "Python"}
+---
+```pycon
+>>> 3 + 3
+6
+```
+````
+
+## Pygments Line Wrappers
+
+Pygments offers a couple of options that will wrap line numbers, lines, or simply insert spans or anchors into the code
+content.
+
+Here we will wrap the whole line in a span. Pygments will assign an ID to it with a "prefix". We can enable the wrapping
+by setting the global config option `linespans` and specify the "prefix". Then every line will be wrapped in a span with
+the ID `prefix-x-y` where `x` is a unique number for the code block and `y` is the line number. After that, it is up to
+the user to do as they to target the ID with either JavaScript and/or CSS.
+
+HTML formatted for easy reading:
+
+=== "Config"
+
+    ```py3
+    extension_configs = {
+        "pymdownx.highlight": {
+            'linenums_style': 'inline',
+            'linespans': '__codeline'
+        }
+    }
+    ```
+
+=== "Markdown"
+    ````
+    ```{.python linenums="1 1" }
+    import foo
+    ```
+    ````
+
+=== "HTML"
+    ```html
+    <div class="highlight">
+    <pre>
+    <span></span>
+    <code>
+    <span id="__codeline-0-1"><span class="linenos">1</span><span class="kn">import</span> <span class="nn">foo</span>
+    </span>
+    </code>
+    </pre>
+    </div>
+    ```
+
+We can also wrap line numbers with with a link and anchor them so you can click line numbers and be taken to said line
+number. To do this, `anchorlinenos` must be enabled and then a prefix should be provided via `lineanchors`, just like
+`linespans`, `lineanchors` will produce an ID in the form `prefix-x-y` where `x` is a unique number for the code block
+and `y` is the line number. If you wish to not have the line anchors clickable, and just have the anchors inserted,
+you can omit enabling `anchorlinenos`.
+
+=== "Config"
+
+    ```py3
+    extension_configs = {
+        "pymdownx.highlight": {
+            'linenums_style': 'inline',
+            'linespans': '__codeline',
+            'lineanchors': '__codelineno',
+            'anchorlinenos': True
+        }
+    }
+    ```
+
+=== "Markdown"
+    ````
+    ```{.python linenums="1 1" }
+    import foo
+    ```
+    ````
+
+=== "HTML"
+    ```html
+    <div class="highlight">
+    <pre>
+    <span></span>
+    <code>
+    <span id="__codeline-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><a href="#__codelineno-0-1"><span class="linenos">1</span></a><span class="kn">import</span> <span class="nn">foo</span>
+    </span>
+    </code>
+    </pre>
+    </div>
+    ```
 
 ## Custom Fences
 

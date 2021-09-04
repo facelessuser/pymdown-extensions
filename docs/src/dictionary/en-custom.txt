@@ -161,6 +161,7 @@ jQuery
 js
 kbd
 keymap
+lexer's
 linkafies
 linter
 lowercased

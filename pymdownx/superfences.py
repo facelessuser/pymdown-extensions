@@ -378,6 +378,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             config = None
             self.highlighter = None
             for ext in self.md.registeredExtensions:
+                self.highlight_ext = ext
                 try:
                     config = getattr(ext, "get_pymdownx_highlight_settings")()
                     self.highlighter = getattr(ext, "get_pymdownx_highlighter")()
@@ -403,7 +404,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             self.language_prefix = config.get('language_prefix', 'language-')
             self.code_attr_on_pre = config.get('code_attr_on_pre', False)
             self.auto_filename = config.get('auto_filename', False)
-            self.auto_filename_mapping = config.get('auto_filename_mapping', {})
+            self.auto_filename_map = config.get('auto_filename_map', {})
             self.linespans = config.get('linespans', '')
             self.lineanchors = config.get('lineanchors', '')
             self.anchorlinenos = config.get('anchorlinenos', False)
@@ -780,6 +781,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         linespecial = self.parse_line_special(linespecial)
         hl_lines = self.parse_hl_lines(hl_lines)
 
+        self.highlight_ext.pygments_code_block += 1
+
         el = self.highlighter(
             guess_lang=self.guess_lang,
             pygments_style=self.pygments_style,
@@ -794,7 +797,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             language_prefix=self.language_prefix,
             code_attr_on_pre=self.code_attr_on_pre,
             auto_filename=self.auto_filename,
-            auto_filename_mapping=self.auto_filename_mapping,
+            auto_filename_map=self.auto_filename_map,
             linespans=self.linespans,
             lineanchors=self.lineanchors,
             anchorlinenos=self.anchorlinenos
@@ -809,7 +812,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             classes=classes,
             id_value=id_value,
             attrs=attrs,
-            filename=filename
+            filename=filename,
+            code_block_count=self.highlight_ext.pygments_code_block
         )
 
         return el

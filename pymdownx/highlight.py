@@ -104,13 +104,14 @@ DEFAULT_CONFIG = {
         False,
         'Inject the code block language name as the "filename" title - Defaults: False'
     ],
-    'auto_filename_mapping': [
+    'auto_filename_map': [
         {},
         'User defined mappings for a given language name to filename title - Defaults: {}'
     ],
     'linespans': [
         '',
-        'Wrap lines with a span of of <user-string>-<linenum>. - Defaults: ""'
+        'If set to a nonempty string, e.g. foo, the formatter will wrap each output line '
+        'in a span tag with an id of foo-<code_block_number>-<line_number>. . - Defaults: ""'
     ],
     'anchorlinenos': [
         False,
@@ -120,7 +121,7 @@ DEFAULT_CONFIG = {
     'lineanchors': [
         '',
         'If set to a nonempty string, e.g. foo, the formatter will wrap each output line in an anchor tag with'
-        ' an id (and name) of foo-linenumber. - Defaults: ""'
+        ' an id (and name) of foo-<code_block_number>-<line_number>. - Defaults: ""'
     ],
     '_enabled': [
         True,
@@ -225,7 +226,7 @@ class Highlight(object):
         self, guess_lang=False, pygments_style='default', use_pygments=True,
         noclasses=False, extend_pygments_lang=None, linenums=None, linenums_special=-1,
         linenums_style='table', linenums_class='linenums', wrapcode=True, language_prefix='language-',
-        code_attr_on_pre=False, auto_filename=False, auto_filename_mapping=None, linespans='',
+        code_attr_on_pre=False, auto_filename=False, auto_filename_map=None, linespans='',
         anchorlinenos=False, lineanchors=''
     ):
         """Initialize."""
@@ -246,9 +247,9 @@ class Highlight(object):
         self.lineanchors = lineanchors
         self.anchorlinenos = anchorlinenos
 
-        if auto_filename_mapping is None:
-            auto_filename_mapping = {}
-        self.auto_filename_mapping = auto_filename_mapping
+        if auto_filename_map is None:
+            auto_filename_map = {}
+        self.auto_filename_map = auto_filename_map
 
         if extend_pygments_lang is None:  # pragma: no cover
             extend_pygments_lang = []
@@ -302,7 +303,7 @@ class Highlight(object):
     def highlight(
         self, src, language, css_class='highlight', hl_lines=None,
         linestart=-1, linestep=-1, linespecial=-1, inline=False, classes=None, id_value='', attrs=None,
-        filename=None
+        filename=None, code_block_count=0
     ):
         """Highlight code."""
 
@@ -339,7 +340,7 @@ class Highlight(object):
 
             if filename is None and self.auto_filename:
                 name = " ".join([w.title() if w.islower() else w for w in lexer.name.split()])
-                filename = self.auto_filename_mapping.get(name, name)
+                filename = self.auto_filename_map.get(name, name)
 
             # Setup formatter
             html_formatter = InlineHtmlFormatter if inline else BlockHtmlFormatter
@@ -353,10 +354,12 @@ class Highlight(object):
                 noclasses=self.noclasses,
                 hl_lines=hl_lines,
                 wrapcode=self.wrapcode,
-                filename=filename,
-                linespans=self.linespans,
-                lineanchors=self.lineanchors,
-                anchorlinenos=self.anchorlinenos
+                filename=filename if not inline else "",
+                linespans="{}-{:d}".format(self.linespans, code_block_count) if self.linespans and not inline else '',
+                lineanchors=(
+                    "{}-{:d}".format(self.lineanchors, code_block_count) if self.lineanchors and not inline else ""
+                ),
+                anchorlinenos=self.anchorlinenos if not inline else False
             )
 
             # Convert
@@ -414,9 +417,10 @@ class Highlight(object):
 class HighlightTreeprocessor(Treeprocessor):
     """Highlight source code in code blocks."""
 
-    def __init__(self, md):
+    def __init__(self, md, ext):
         """Initialize."""
 
+        self.ext = ext
         super(HighlightTreeprocessor, self).__init__(md)
 
     def code_unescape(self, text):
@@ -432,6 +436,8 @@ class HighlightTreeprocessor(Treeprocessor):
         blocks = root.iter('pre')
         for block in blocks:
             if len(block) == 1 and block[0].tag == 'code':
+
+                self.ext.pygments_code_block += 1
                 code = Highlight(
                     guess_lang=self.config['guess_lang'],
                     pygments_style=self.config['pygments_style'],
@@ -446,13 +452,14 @@ class HighlightTreeprocessor(Treeprocessor):
                     language_prefix=self.config['language_prefix'],
                     code_attr_on_pre=self.config['code_attr_on_pre'],
                     auto_filename=self.config['auto_filename'],
-                    auto_filename_mapping=self.config['auto_filename_mapping']
+                    auto_filename_map=self.config['auto_filename_map']
                 )
                 placeholder = self.md.htmlStash.store(
                     code.highlight(
                         self.code_unescape(block[0].text),
                         '',
-                        self.config['css_class']
+                        self.config['css_class'],
+                        code_block_count=self.ext.pygments_code_block
                     )
                 )
 
@@ -498,11 +505,12 @@ class HighlightExtension(Extension):
         """Add support for code highlighting."""
 
         config = self.getConfigs()
+        self.pygments_code_block = -1
         self.md = md
         self.enabled = config.get("_enabled", False)
 
         if self.enabled:
-            ht = HighlightTreeprocessor(self.md)
+            ht = HighlightTreeprocessor(self.md, self)
             ht.config = self.getConfigs()
             self.md.treeprocessors.register(ht, "indent-highlight", 30)
 
@@ -522,6 +530,11 @@ class HighlightExtension(Extension):
                 self.md.registerExtension(self)
             else:
                 self.md.registeredExtensions[index] = self
+
+    def reset(self):
+        """Reset."""
+
+        self.pygments_code_block = -1
 
 
 def makeExtension(*args, **kwargs):
