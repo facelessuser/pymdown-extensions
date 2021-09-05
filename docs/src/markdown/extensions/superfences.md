@@ -87,10 +87,10 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
 
 ## Injecting Classes, IDs, and Attributes
 
-You can use the brace format to specify classes and IDs (IDs are only injectable in non-Pygments code blocks).
+You can use the brace format to specify classes and IDs.
 The first provided class is always used as the language class. IDs (`#id`) and arbitrary attributes in the form
-`key="value"` can be inserted as well, but only when Pygments isn't being used as Pygments does not support arbitrary
-attributes or IDs.
+`key="value"` can be inserted as well, but when using Pygments, only `key="value"` attributes when that start with the
+`data-` prefix will be recognized, all others will be treated as options for Pygments and will be rejected if not valid.
 
 !!! example "Injecting Classes"
 
@@ -122,6 +122,8 @@ the `#!html code` block.
         import hello_world
         ```
         ````
+
+When using Pygments, all extra classes and attributes will be attached to the Pygments' wrapper `#!html <div>`.
 
 When using a built in [custom formatter](#custom-fences), all classes and IDs are injected on to the first element
 `#!html <div>` or `#!html <pre>`. This preserves previous behavior, but you can write your own and inject them in the

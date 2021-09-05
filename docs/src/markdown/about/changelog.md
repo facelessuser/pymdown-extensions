@@ -18,6 +18,8 @@
 - **FIX**: BetterEm: Fix some complex cases related to "smart" logic. (#1413)
 - **FIX**: Highlight: Fix issue that occurs when showing only nth line numbers and using `pymdownx-inline`. Lines not
   showing a line number would not render with the proper leading space.
+- **NEW**: Allow adding ID attribute on Pygments code blocks. Also allow adding arbitrary `data-` attributes on Pygments
+  code blocks if `attr_list` extension is enabled.
 
 ## 8.2
 

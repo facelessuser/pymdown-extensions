@@ -39,10 +39,11 @@ except ImportError:  # pragma: no cover
     pygments = False
     p_ver = (0, 0)
 
-CODE_WRAP = '<pre%s><code%s%s%s>%s</code></pre>'
-CODE_WRAP_ON_PRE = '<pre%s%s%s><code>%s</code></pre>'
-CLASS_ATTR = ' class="%s"'
-ID_ATTR = ' id="%s"'
+RE_PYG_CODE = re.compile(r'^<div(\s*class=".*?")?\s*>')
+CODE_WRAP = '<pre{}><code{}{}{}>{}</code></pre>'
+CODE_WRAP_ON_PRE = '<pre{}{}{}><code>{}</code></pre>'
+CLASS_ATTR = ' class="{}"'
+ID_ATTR = ' id="{}"'
 DEFAULT_CONFIG = {
     'use_pygments': [
         True,
@@ -326,6 +327,17 @@ class Highlight(object):
                 if not isinstance(linenums, str) or linenums != 'table':
                     css_class = stripped
 
+            id_str = ID_ATTR.format(id_value) if id_value else ''
+
+            if not attrs:
+                attr_str = ''
+            else:
+                temp = []
+                for k, v in attrs.items():
+                    if k.startswith('data-'):
+                        temp.append('{k}="{v}"'.format(k=k, v=v))
+                attr_str = ' ' + ' '.join(temp) if temp else ''
+
             # Setup line specific settings.
             if not linenums or linestep < 1:
                 linestep = 1
@@ -367,7 +379,13 @@ class Highlight(object):
             if inline:
                 class_str = css_class
                 attr_str = ''
-                id_str = ''
+            else:
+                m = RE_PYG_CODE.match(code)
+                if m is not None:
+                    end = m.end(0)
+                    classes = ' ' + m.group(1).lstrip() if m.group(1) else ''
+                    code = '<div{}{}{}>{}'.format(id_str, classes, attr_str, code[end:])
+
         elif inline:
             # Format inline code for a JavaScript Syntax Highlighter by specifying language.
             code = self.escape(src)
@@ -383,14 +401,14 @@ class Highlight(object):
                 class_names.insert(0, css_class)
             if language:
                 class_names.insert(0, self.language_prefix + language)
-            class_str = CLASS_ATTR % ' '.join(class_names) if class_names else ''
-            id_str = ID_ATTR % id_value if id_value else ''
+            class_str = CLASS_ATTR.format(' '.join(class_names)) if class_names else ''
+            id_str = ID_ATTR.format(id_value) if id_value else ''
             attr_str = ' ' + ' '.join('{k}="{v}"'.format(k=k, v=v) for k, v in attrs.items()) if attrs else ''
             if not self.code_attr_on_pre:
-                highlight_class = (CLASS_ATTR % css_class) if css_class else ''
-                code = CODE_WRAP % (highlight_class, id_str, class_str, attr_str, self.escape(src))
+                highlight_class = (CLASS_ATTR.format(css_class)) if css_class else ''
+                code = CODE_WRAP.format(highlight_class, id_str, class_str, attr_str, self.escape(src))
             else:
-                code = CODE_WRAP_ON_PRE % (id_str, class_str, attr_str, self.escape(src))
+                code = CODE_WRAP_ON_PRE.format(id_str, class_str, attr_str, self.escape(src))
 
         if inline:
             attributes = {}

@@ -169,15 +169,16 @@ def highlight_validator(language, inputs, options, attrs, md):
 
     for k, v in inputs.items():
         matched = False
-        for opt, validator in (('hl_lines', RE_HL_LINES), ('linenums', RE_LINENUMS), ('filename', None)):
-            if k == opt and use_pygments:
-                matched = True
-                if v is True or (validator is not None and validator.match(v) is None):
-                    attrs[k] = v
-                elif use_pygments:
-                    options[k] = v
-                break
-
+        if use_pygments:
+            if k.startswith('data-'):
+                attrs[k] = v
+                continue
+            for opt, validator in (('hl_lines', RE_HL_LINES), ('linenums', RE_LINENUMS), ('filename', None)):
+                if k == opt:
+                    if v is not True and (validator is None or validator.match(v) is not None):
+                        options[k] = v
+                        matched = True
+                        break
         if not matched:
             attrs[k] = v
 

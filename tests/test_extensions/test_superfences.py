@@ -197,9 +197,9 @@ class TestSuperFencesClassesIds(util.MdCase):
             ```
             ''',
             r'''
-            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <div id="id" class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
             </code></pre></div>
-            ''',
+            ''',  # noqa: E501
             True
         )
 
@@ -213,9 +213,9 @@ class TestSuperFencesClassesIds(util.MdCase):
             ```
             ''',
             r'''
-            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <div id="id" class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
             </code></pre></div>
-            ''',
+            ''',  # noqa: E501
             True
         )
 
@@ -252,14 +252,14 @@ class TestSuperFencesClassesIdsAttrList(util.MdCase):
             ```
             ''',
             r'''
-            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <div id="id" class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
             </code></pre></div>
-            ''',
+            ''',  # noqa: E501
             True
         )
 
-    def test_attr(self):
-        """Test extra attributes."""
+    def test_bad_attr(self):
+        """Test bad attribute."""
 
         self.check_markdown(
             r'''
@@ -268,9 +268,25 @@ class TestSuperFencesClassesIdsAttrList(util.MdCase):
             ```
             ''',
             r'''
-            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <div id="id" class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
             </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_data_attr(self):
+        """Test data attributes."""
+
+        self.check_markdown(
+            r'''
+            ```{.python #id data-attr="test"}
+            import test
+            ```
             ''',
+            r'''
+            <div id="id" class="highlight" data-attr="test"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
             True
         )
 
