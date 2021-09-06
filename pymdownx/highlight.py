@@ -248,6 +248,9 @@ class Highlight(object):
         self.lineanchors = lineanchors
         self.anchorlinenos = anchorlinenos
 
+        if self.anchorlinenos and not self.lineanchors:
+            self.lineanchors = '__codelineno'
+
         if auto_filename_map is None:
             auto_filename_map = {}
         self.auto_filename_map = auto_filename_map

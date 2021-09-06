@@ -123,7 +123,7 @@ Option                    | Type   | Default               | Description
 `auto_filename`           | bool   | `#!py3 False`         | For all code blocks, use the Pygments' `filename` option to specify a special header with the name of the lexer being used. The lexer is name is pulled directly from Pygments and title cased appropriately.
 `auto_filename_map`       | dict   | `#!py3 {}`            | A dictionary used to override certain titles returned by `auto_filename`. Simply specify the title to override as the key and the desired title as the value.
 `linespans`               | string | `#!py3 ''`            | Controls the Pygments of the same name. If set to a nonempty string, e.g. foo, the formatter will wrap each output line in a span tag with an id of `foo-<code_block_number>-<line_number>`.
-`anchorlinenos`           | bool   | `#!py3 False`         | Enables the Pygments of the same name. If set to True, will wrap line numbers in `#!html <a>` tags. Used in combination with `linenos` and `lineanchors`.
+`anchorlinenos`           | bool   | `#!py3 False`         | Enables the Pygments of the same name. If set to True, will wrap line numbers in `#!html <a>` tags. Used in combination with `linenos` and `lineanchors`. If `lineanchors` is not defined, `__codelineno` will be assumed as the ID prefix.
 `lineanchors`             | bool   | `#!py3 False`         | Controls the Pygments of the same name. If set to a nonempty string, e.g. foo, the formatter will wrap each output line in an anchor tag with an id (and name) of `foo-<code_block_number>-<line_number>`.
 
 
