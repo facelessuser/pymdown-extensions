@@ -15,7 +15,7 @@ import uml from "./uml"
         }
         localStorage.setItem("data-md-color-scheme", scheme)
         if (typeof mermaid !== "undefined") {
-          uml("mermaid")
+          uml("diagram")
         }
       }
     })
@@ -25,7 +25,7 @@ import uml from "./uml"
     observer.observe(document.querySelector("body"), {attributeFilter: ["data-md-color-scheme"]})
 
     if (typeof mermaid !== "undefined") {
-      uml("mermaid")
+      uml("diagram")
     }
   })
 })()

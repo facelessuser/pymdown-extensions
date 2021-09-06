@@ -34,7 +34,7 @@ export default className => {
         line-height: initial;
         font-size: 16px;
       }
-      div.mermaid {
+      div.diagram {
         margin: 0;
         overflow: visible;
       }`
@@ -42,8 +42,8 @@ export default className => {
     }
   }
 
-  if (typeof customElements.get("mermaid-div") === "undefined") {
-    customElements.define("mermaid-div", MermaidDiv)
+  if (typeof customElements.get("diagram-div") === "undefined") {
+    customElements.define("diagram-div", MermaidDiv)
   }
 
   const getFromCode = function(parent) {
@@ -98,11 +98,11 @@ export default className => {
   mermaid.initialize(config)
 
   // Find all of our Mermaid sources and render them.
-  const blocks = document.querySelectorAll(`pre.${className}, mermaid-div`)
+  const blocks = document.querySelectorAll(`pre.${className}, diagram-div`)
   const surrogate = document.querySelector("html")
   for (let i = 0; i < blocks.length; i++) {
     const block = blocks[i]
-    const parentEl = (block.tagName.toLowerCase() === "mermaid-div") ?
+    const parentEl = (block.tagName.toLowerCase() === "diagram-div") ?
       block.shadowRoot.querySelector(`pre.${className}`) :
       block
 
@@ -119,7 +119,7 @@ export default className => {
 
     try {
       mermaid.mermaidAPI.render(
-        `_mermaid_${i}`,
+        `_diagram_${i}`,
         getFromCode(parentEl),
         content => {
           const el = document.createElement("div")
@@ -128,7 +128,7 @@ export default className => {
 
           // Insert the render where we want it and remove the original text source.
           // Mermaid will clean up the temporary element.
-          const shadow = document.createElement("mermaid-div")
+          const shadow = document.createElement("diagram-div")
           shadow.shadowRoot.appendChild(el)
           block.parentNode.insertBefore(shadow, block)
           parentEl.style.display = "none"

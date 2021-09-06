@@ -185,7 +185,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
         });
 
         var style = document.createElement("style");
-        style.textContent = "\n      :host {\n        display: block;\n        line-height: initial;\n        font-size: 16px;\n      }\n      div.mermaid {\n        margin: 0;\n        overflow: visible;\n      }";
+        style.textContent = "\n      :host {\n        display: block;\n        line-height: initial;\n        font-size: 16px;\n      }\n      div.diagram {\n        margin: 0;\n        overflow: visible;\n      }";
         shadow.appendChild(style);
         return _this;
       }
@@ -193,8 +193,8 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       return MermaidDiv;
     }( /*#__PURE__*/_wrapNativeSuper(HTMLElement));
 
-    if (typeof customElements.get("mermaid-div") === "undefined") {
-      customElements.define("mermaid-div", MermaidDiv);
+    if (typeof customElements.get("diagram-div") === "undefined") {
+      customElements.define("diagram-div", MermaidDiv);
     }
 
     var getFromCode = function getFromCode(parent) {
@@ -252,12 +252,12 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     var config = typeof mermaidConfig === "undefined" ? defaultConfig : mermaidConfig[scheme] || mermaidConfig["default"] || defaultConfig;
     mermaid.initialize(config); // Find all of our Mermaid sources and render them.
 
-    var blocks = document.querySelectorAll("pre.".concat(className, ", mermaid-div"));
+    var blocks = document.querySelectorAll("pre.".concat(className, ", diagram-div"));
     var surrogate = document.querySelector("html");
 
     var _loop = function _loop(i) {
       var block = blocks[i];
-      var parentEl = block.tagName.toLowerCase() === "mermaid-div" ? block.shadowRoot.querySelector("pre.".concat(className)) : block; // Create a temporary element with the typeset and size we desire.
+      var parentEl = block.tagName.toLowerCase() === "diagram-div" ? block.shadowRoot.querySelector("pre.".concat(className)) : block; // Create a temporary element with the typeset and size we desire.
       // Insert it at the end of our parent to render the SVG.
 
       var temp = document.createElement("div");
@@ -270,13 +270,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       surrogate.appendChild(temp);
 
       try {
-        mermaid.mermaidAPI.render("_mermaid_".concat(i), getFromCode(parentEl), function (content) {
+        mermaid.mermaidAPI.render("_diagram_".concat(i), getFromCode(parentEl), function (content) {
           var el = document.createElement("div");
           el.className = className;
           el.innerHTML = content; // Insert the render where we want it and remove the original text source.
           // Mermaid will clean up the temporary element.
 
-          var shadow = document.createElement("mermaid-div");
+          var shadow = document.createElement("diagram-div");
           shadow.shadowRoot.appendChild(el);
           block.parentNode.insertBefore(shadow, block);
           parentEl.style.display = "none";
@@ -317,7 +317,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
           localStorage.setItem("data-md-color-scheme", scheme);
 
           if (typeof mermaid !== "undefined") {
-            uml("mermaid");
+            uml("diagram");
           }
         }
       });
@@ -328,7 +328,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       });
 
       if (typeof mermaid !== "undefined") {
-        uml("mermaid");
+        uml("diagram");
       }
     });
   })();

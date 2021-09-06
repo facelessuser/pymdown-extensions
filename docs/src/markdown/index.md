@@ -110,7 +110,7 @@ Check out documentation on each extension to learn more about how to configure a
 
     === "Output"
 
-        ```mermaid
+        ```diagram
         graph TB
             c1-->a2
             subgraph one
@@ -127,7 +127,7 @@ Check out documentation on each extension to learn more about how to configure a
     === "Markdown"
 
         ````
-        ```mermaid
+        ```diagram
         graph TB
             c1-->a2
             subgraph one

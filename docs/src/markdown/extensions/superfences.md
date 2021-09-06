@@ -376,7 +376,7 @@ diagrams that we could later run Mermaid on.
 !!! example "Flow Chart Example"
 
     === "Output"
-        ```mermaid
+        ```diagram
         graph TD
             A[Hard] -->|Text| B(Round)
             B --> C{Decision}
@@ -386,7 +386,7 @@ diagrams that we could later run Mermaid on.
 
     === "Markdown"
         ````
-        ```mermaid
+        ```diagram
         graph TD
             A[Hard] -->|Text| B(Round)
             B --> C{Decision}
@@ -398,7 +398,7 @@ diagrams that we could later run Mermaid on.
 This would allow us access to all the diagrams Mermaid offers. Some Mermaid diagrams are less practical to use as they
 don't scale well, but many work great.
 
-In the above example, we have set up a custom fence called `mermaid` which allows us to process special charts with
+In the above example, we have set up a custom fence called `diagram` which allows us to process special charts with
 [Mermaid][mermaid]. In this case, our special fence preserves the content and sends them to a an element so that
 [Mermaid][mermaid] can then find them and convert them when the document is loaded. To learn more see [UML Diagram
 Example](#uml-diagram-example).
@@ -569,14 +569,22 @@ extension_configs = {
     "pymdownx.superfences": {
         "custom_fences": [
             {
-                'name': 'mermaid',
-                'class': 'mermaid',
+                'name': 'diagram',
+                'class': 'diagram',
                 'format': pymdownx.superfences.fence_div_format
             }
         ]
     }
 }
 ```
+
+This would allow a user to create fenced blocks with the `mermaid` specifier:
+
+````
+```mermaid
+...content here
+```
+````
 
 The format function we used in this example only escapes the content to be included in HTML. We will rely on the
 [Mermaid][mermaid] JavaScript library to render our flowcharts/diagrams in the browser. [Mermaid][mermaid], on load,

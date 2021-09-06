@@ -45,7 +45,7 @@ seems to be what Mermaid does in their own [documents][mermaid].
 !!! success "Practical"
 
     === "Flowcharts"
-        ```mermaid
+        ```diagram
         graph TD
             A[Hard] -->|Text| B(Round)
             B --> C{Decision}
@@ -54,7 +54,7 @@ seems to be what Mermaid does in their own [documents][mermaid].
         ```
 
     === "Sequence Diagrams"
-        ```mermaid
+        ```diagram
         sequenceDiagram
             participant Alice
             participant Bob
@@ -69,7 +69,7 @@ seems to be what Mermaid does in their own [documents][mermaid].
         ```
 
     === "Class Diagrams"
-        ```mermaid
+        ```diagram
         classDiagram
             Class01 <|-- AveryLongClass : Cool
             Class03 *-- Class04
@@ -87,7 +87,7 @@ seems to be what Mermaid does in their own [documents][mermaid].
         ```
 
     === "Entity Relationships"
-        ```mermaid
+        ```diagram
         erDiagram
             CUSTOMER ||--o{ ORDER : places
             ORDER ||--|{ LINE-ITEM : contains
@@ -95,7 +95,7 @@ seems to be what Mermaid does in their own [documents][mermaid].
         ```
 
     === "State Diagrams"
-        ```mermaid
+        ```diagram
         stateDiagram
             [*] --> First
             First --> Second
@@ -121,7 +121,7 @@ seems to be what Mermaid does in their own [documents][mermaid].
         Git diagrams are experimental and often don't render to a reasonable size. They overflow, but won't trigger
         scrollbars. They are the only diagram that often renders too large for the element they are assigned to.
 
-        ```mermaid
+        ```diagram
         gitGraph:
         options
         {
@@ -146,7 +146,7 @@ seems to be what Mermaid does in their own [documents][mermaid].
         chart is large, they render too small to see. If the element is not wide enough, the chart can sometimes render
         squished and hard to read.
 
-        ```mermaid
+        ```diagram
         gantt
             dateFormat  YYYY-MM-DD
             title Adding GANTT diagram to mermaid
@@ -164,7 +164,7 @@ seems to be what Mermaid does in their own [documents][mermaid].
         Journey diagrams suffer from the same issues as Gantt charts. They just do not scale well and are often hard to
         read.
 
-        ```mermaid
+        ```diagram
         journey
             title My working day
             section Go to work
@@ -182,7 +182,7 @@ seems to be what Mermaid does in their own [documents][mermaid].
         Like the others in this list, it relates to sizing and scaling. For instance, if you were to view this on a
         mobile device, you'd likely see the key for the pie chart missing.
 
-        ```mermaid
+        ```diagram
         pie
             title Key elements in Product X
             "Calcium" : 42.96
@@ -210,7 +210,7 @@ trigger it.
     2. If the option is available in a diagram, we disable `useMaxWidth` as we prefer that our diagrams do not scale
        within their parent element, we rather them overflow with a scrollbar. You can leave these enabled if you like.
        Since we render our diagrams under a custom element with a shadow DOM, to get scrollbars, we simply enable
-       `#!css overflow: auto` on the custom `mermaid-div` element (under the host DOM, not the shadow DOM). You can
+       `#!css overflow: auto` on the custom `diagram-div` element (under the host DOM, not the shadow DOM). You can
        check out our stylesheet that does this [here][mermaid-style].
 
     3. We disable `startOnLoad` as we provide our own loader (for reasons we will get into later).
@@ -344,7 +344,7 @@ extra_javascript:
 Then in your documents, do something like this:
 
 ````
-```mermaid
+```diagram
 graph TD
     A[Hard] -->|Text| B(Round)
     B --> C{Decision}
@@ -355,7 +355,7 @@ graph TD
 
 To get something like this:
 
-```mermaid
+```diagram
 graph TD
     A[Hard] -->|Text| B(Round)
     B --> C{Decision}

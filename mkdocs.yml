@@ -84,8 +84,9 @@ markdown_extensions:
   - pymdownx.superfences:
       preserve_tabs: true
       custom_fences:
-        - name: mermaid
-          class: mermaid
+        # Mermaid diagrams
+        - name: diagram
+          class: diagram
           format: !!python/name:pymdownx.superfences.fence_code_format
         - name: math
           class: arithmatex
@@ -152,9 +153,9 @@ extra:
     - icon: fontawesome/brands/discord
       link: https://discord.gg/TWs8Tgr
 extra_css:
-  - assets/pymdownx-extras/extra-4ca32c29f0.css
+  - assets/pymdownx-extras/extra-06b446b511.css
 extra_javascript:
-  - assets/pymdownx-extras/extra-uml-fcd33c93.js
+  - assets/pymdownx-extras/extra-uml-0f55b1d5.js
 
 plugins:
   - search

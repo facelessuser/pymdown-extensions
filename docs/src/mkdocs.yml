@@ -84,8 +84,9 @@ markdown_extensions:
   - pymdownx.superfences:
       preserve_tabs: true
       custom_fences:
-        - name: mermaid
-          class: mermaid
+        # Mermaid diagrams
+        - name: diagram
+          class: diagram
           format: !!python/name:pymdownx.superfences.fence_code_format
         - name: math
           class: arithmatex
