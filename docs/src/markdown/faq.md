@@ -93,3 +93,14 @@ a basic [example using SuperFences](./extensions/superfences.md#uml-diagram-exam
 solid Mermaid experience, we actually go a bit further in our documents. While we don't often have time to answer
 everyone's questions regarding Mermaid, we have provided some fairly extensive notes on how we achieved Mermaid diagrams
 in this documents. Check out the notes [here](./extras/mermaid.md).
+
+## Arithmatex Generic Mode Not Working in MkDocs
+
+This question comes up every now and as there are a number of people that like to use Arithmatex in the MkDocs
+environment. For whatever reason, people often gravitate towards the "generic" mode over the "default" mode. And
+inevitably, we'll get an issue regarding why math rendering isn't working with Arithmatex in MkDocs.
+
+If you are affected by this issue, the first question you should ask yourself is whether you are using the
+[`mkdocs-minify-plugin`](https://github.com/byrnereese/mkdocs-minify-plugin). If you are using this plugin, you must
+either discontinue using it (which is not usually the desired approach) or use Arithmatex's "default" mode and MathJax
+configuration as outlined in its [documentation](./extensions/arithmatex.md#loading-mathjax).
