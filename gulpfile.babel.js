@@ -47,9 +47,6 @@ const args = yargs(hideBin(process.argv))
   .default("mkdocs", "mkdocs")
   .argv
 
-/* Mkdocs server */
-let mkdocs = null
-
 // ------------------------------
 // Configuration
 // ------------------------------
@@ -291,21 +288,6 @@ gulp.task("js:clean", () => {
 // ------------------------------
 // MkDocs
 // ------------------------------
-gulp.task("mkdocs:serve", () => {
-  if (mkdocs) {
-    mkdocs.kill()
-  }
-
-  const cmdParts = (`${config.mkdocsCmd} serve --dev-addr=0.0.0.0:8000`).split(/ +/)
-  const cmd = cmdParts[0]
-  const cmdArgs = cmdParts.slice(1, cmdParts.length - 1)
-
-  mkdocs = childProcess.spawn(
-    cmd,
-    cmdArgs,
-    {stdio: "inherit"})
-})
-
 gulp.task("mkdocs:watch", () => {
   gulp.watch(config.files.mkdocsSrc, gulp.series("mkdocs:update"))
 })
@@ -350,8 +332,7 @@ gulp.task("serve", gulp.series(
     "scss:watch",
     "js:watch",
     "html:watch",
-    "mkdocs:watch",
-    "mkdocs:serve"
+    "mkdocs:watch"
   )
 ))
 
