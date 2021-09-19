@@ -5,3 +5,40 @@ mjx-container[display=true] {
 mjx-container:not([display]) {
   font-size: 100% !important;
 }
+
+[data-md-color-scheme="slate"],
+[data-md-color-scheme="dracula"] {
+  /* stylelint-disable selector-class-pattern */
+  .CtxtMenu_InfoSignature input,
+  .CtxtMenu_InfoContent pre {
+    color: rgb(0, 0, 0);
+  }
+  /* stylelint-enable selector-class-pattern */
+}
+
+.md-typeset .arithmatex {
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+}
+
+// Fix tag overlap in `KaTeX`
+.katex-display {
+  .katex-html {
+    display: flex !important;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: baseline;
+    justify-content: space-between;
+    // overflow-x: auto;
+
+    .base {
+      display: inline !important;
+    }
+
+    .tag {
+      position: relative !important;
+      display: inline !important;
+      margin-left: var(--margin-small);
+    }
+  }
+}

@@ -46,7 +46,7 @@ export default className => {
     customElements.define("diagram-div", MermaidDiv)
   }
 
-  const getFromCode = function(parent) {
+  const getFromCode = parent => {
     // Handles <pre><code> text extraction.
     let text = ""
     for (let j = 0; j < parent.childNodes.length; j++) {

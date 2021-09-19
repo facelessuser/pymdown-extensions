@@ -299,7 +299,31 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     }
   };
 
+  var arithmatex = function arithmatex(className, mode) {
+    if (mode === 'katex') {
+      var maths = document.querySelectorAll(".".concat(className));
+
+      for (var i = 0; i < maths.length; i++) {
+        var tex = maths[i].textContent || maths[i].innerText;
+
+        if (tex.startsWith('\\(') && tex.endsWith('\\)')) {
+          katex.render(tex.slice(2, -2), maths[i], {
+            'displayMode': false
+          });
+        } else if (tex.startsWith('\\[') && tex.endsWith('\\]')) {
+          katex.render(tex.slice(2, -2), maths[i], {
+            'displayMode': true
+          });
+        }
+      }
+    } else if (mode === 'mathjax') {
+      MathJax.typesetPromise();
+    }
+  };
+
   (function () {
+    var umlPromise = Promise.resolve();
+    var mathPromise = Promise.resolve();
     var observer = new MutationObserver(function (mutations) {
       mutations.forEach(function (mutation) {
         if (mutation.type === "attributes") {
@@ -324,7 +348,25 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
       });
 
       if (typeof mermaid !== "undefined") {
-        uml("diagram");
+        umlPromise = umlPromise.then(function () {
+          uml("diagram");
+        })["catch"](function (err) {
+          console.log("UML loading failed...".concat(err)); // eslint-disable-line no-console
+        });
+      }
+
+      if (typeof katex !== "undefined") {
+        mathPromise = mathPromise.then(function () {
+          arithmatex("arithmatex", "katex");
+        })["catch"](function (err) {
+          console.log("Math loading failed...".concat(err)); // eslint-disable-line no-console
+        });
+      } else if (typeof MathJax !== "undefined" && 'typesetPromise' in MathJax) {
+        mathPromise = mathPromise.then(function () {
+          arithmatex("arithmatex", "mathjax");
+        })["catch"](function (err) {
+          console.log("Math loading failed...".concat(err)); // eslint-disable-line no-console
+        });
       }
     };
 

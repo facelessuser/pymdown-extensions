@@ -1,12 +1,12 @@
 (() => {
 
-  const preferToggle = function(e) {
+  const preferToggle = e => {
     if (localStorage.getItem("data-md-prefers-color-scheme") === "true") {
       document.querySelector("body").setAttribute("data-md-color-scheme", (e.matches) ? "dracula" : "default")
     }
   }
 
-  const setupTheme = function(body) {
+  const setupTheme = body => {
     const preferSupported = window.matchMedia("(prefers-color-scheme)").media !== "not all"
     let scheme = localStorage.getItem("data-md-color-scheme")
     let prefers = localStorage.getItem("data-md-prefers-color-scheme")
@@ -53,7 +53,7 @@
   observer.observe(document.querySelector("html"), {childList: true})
 })()
 
-window.toggleScheme = function() {
+window.toggleScheme = () => {
   const body = document.querySelector("body")
   const preferSupported = window.matchMedia("(prefers-color-scheme)").media !== "not all"
   let scheme = body.getAttribute("data-md-color-scheme")

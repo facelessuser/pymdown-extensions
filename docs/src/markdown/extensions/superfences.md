@@ -630,6 +630,4 @@ Option                         | Type         | Default       | Description
     `legacy_tab_classes`.
 
     `highlight_code` is also disabled and now does nothing. If a non-highlighted variant of fences is preferred, it is
-    recommend to use [custom fences](#custom-fences). This option will be removed in a future version.
-
---8<-- "uml.txt"
+    recommended to use [custom fences](#custom-fences). This option will be removed in a future version.
