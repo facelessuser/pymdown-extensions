@@ -13,6 +13,10 @@ mjx-container:not([display]) {
   .CtxtMenu_InfoContent pre {
     color: rgb(0, 0, 0);
   }
+  .CtxtMenu_Info,
+  .CtxtMenu_Menu {
+    box-shadow: 0px 10px 20px rgb(0 0 0 / 0.5);
+  }
   /* stylelint-enable selector-class-pattern */
 }
 
