@@ -28,7 +28,6 @@ from markdown import util as md_util
 import xml.etree.ElementTree as etree
 import inspect
 import copy
-import warnings
 from . import util
 
 RE_EMOJI = r'(:[+\-\w]+:)'
@@ -248,7 +247,7 @@ class EmojiPattern(InlineProcessor):
         if len(inspect.getfullargspec(index).args):
             self.emoji_index = index(self.options, self.md)
         else:
-            warnings.warn(MSG_INDEX_WARN, util.PymdownxDeprecationWarning)
+            util.warn_deprecated(MSG_INDEX_WARN)
             self.emoji_index = index()
 
     def _remove_variation_selector(self, value):

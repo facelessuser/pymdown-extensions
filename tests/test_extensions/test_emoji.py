@@ -3,7 +3,6 @@ from .. import util
 import pymdownx.emoji as emoji
 import warnings
 import markdown
-from pymdownx.util import PymdownxDeprecationWarning
 
 
 def _old_style_index():
@@ -56,7 +55,7 @@ class TestEmojiOldIndex(util.MdCase):
             ).convert(':smile:')
 
             self.assertTrue(len(w) == 1)
-            self.assertTrue(issubclass(w[-1].category, PymdownxDeprecationWarning))
+            self.assertTrue(issubclass(w[-1].category, DeprecationWarning))
 
 
 class TestEmojiNewIndex(util.MdCase):

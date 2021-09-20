@@ -92,7 +92,7 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
         - name: math
           class: arithmatex
-          format: !!python/object/apply:pymdownx.arithmatex.fence_format ['generic', 'pre']
+          format: !!python/object/apply:pymdownx.arithmatex.arithmatex_fenced_format {mode: generic, tag: pre}
         - name: md-render
           class: md-render
           format: !!python/name:tools.pymdownx_md_render.md_sub_render
@@ -111,7 +111,7 @@ markdown_extensions:
       custom_inline:
         - name: math
           class: arithmatex
-          format: !!python/object/apply:pymdownx.arithmatex.inline_format ['generic']
+          format: !!python/object/apply:pymdownx.arithmatex.arithmatex_inline_format {mode: generic}
   - pymdownx.magiclink:
       repo_url_shortener: true
       repo_url_shorthand: true

@@ -3,39 +3,40 @@
 <h1>Dollar Sign Escape</h1>
 <p>$E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j$</p>
 <h1>Use Dollar sign</h1>
-<p>
-<script type="math/tex">\$3.00 + \$5.00 = \$8.00</script>
-</p>
+<p><span class="arithmatex"><script type="math/tex">\$3.00 + \$5.00 = \$8.00</script></span></p>
 <h1>Dollar Sign Escaped Escape</h1>
-<p>\<script type="math/tex">3+3</script>
-</p>
+<p>\<span class="arithmatex"><script type="math/tex">3+3</script></span></p>
 <h1>Dollar Double escaped escape</h1>
 <p>\$3+3$</p>
 <h1>Keep equations separate</h1>
-<p>
-<script type="math/tex">3+3</script>
+<p><span class="arithmatex"><script type="math/tex">3+3</script></span>
 \(3+3)
-\<script type="math/tex">3+3</script>
-</p>
+\<span class="arithmatex"><script type="math/tex">3+3</script></span></p>
 <h1>Equations</h1>
+<div class="arithmatex">
 <script type="math/tex; mode=display">
 E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
 </script>
+</div>
+<div class="arithmatex">
 <script type="math/tex; mode=display">
 E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
 </script>
+</div>
 <ul>
 <li>
 <p>Here are some more equations:</p>
+<div class="arithmatex">
 <script type="math/tex; mode=display">
     \begin{align}
         p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
         p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
     \end{align}
 </script>
+</div>
 </li>
 <li>
-<p>Inline equations: <script type="math/tex">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</script>, <script type="math/tex">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</script>.</p>
+<p>Inline equations: <span class="arithmatex"><script type="math/tex">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</script></span>, <span class="arithmatex"><script type="math/tex">p(x|y) = \frac{p(y|x)p(x)}{p(y)}</script></span>.</p>
 </li>
 </ul>
 <h1>Code</h1>

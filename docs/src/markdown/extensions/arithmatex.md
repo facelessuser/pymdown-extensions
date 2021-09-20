@@ -85,6 +85,14 @@ empty line.
 
 ## MathJax Output Format
 
+!!! note "Form Dropped in MathJax 3"
+    The title is a bit misleading. Yes, MathJax 3 dropped supporting the format as a default recognized form, but you
+    can still use the form with MathJax 3, you just have to add a little more configuration.
+
+    This used to be a supported format for MathJax 2. It appears this form was dropped in MathJax 3. While it is the
+    current default for Arithmatex, it may be relegated to a secondary option in the future. If this output is preferred 
+    method, setting `generic` to `#!py False` will prevent any surprises in the future if/when the default changes.
+
 The math equations will be wrapped in a special MathJax script tag and embedded into the HTML. This format does not
 require the `tex2jax.js` extension when setting up MathJax. The tag will be in the form of
 `#!html <script type="math/tex"></script>` for inline and `#!html <script type="math/tex; mode=display"></script>` for
@@ -93,6 +101,9 @@ block.
 By default, Arithmatex will also generate a preview span with the class `MathJax_Preview` that can/should be hidden when
 the math content is actually loaded. If you do not want to generate the preview, simply set `preview` to
 `#!py3 False`.
+
+All elements are additionally wrapped in a `#!html <div class="arithmatex"></div>` container by default (`span` if outputting
+inline math).
 
 ## Generic Output Format
 
@@ -129,7 +140,26 @@ Arithmatex's [MathJax Output Format](#mathjax-output-format), and one that works
 take them and configure them further. Please see the [MathJax][mathjax] site for more info on using MathJax
 extensions/plugins and configuring those extensions/plugins.
 
-=== "Default - MathJax 3"
+As noted below, the non-generic methodology is more complicated in MathJax 3 as they abandoned the approach via wrapping
+math in script tags, but the solution is easily configurable as a simple copy/paste configuration.
+
+=== "Generic - MathJax 3"
+    ```js
+    window.MathJax = {
+      tex: {
+        inlineMath: [ ["\\(","\\)"] ],
+        displayMath: [ ["\\[","\\]"] ],
+        processEscapes: true,
+        processEnvironments: true
+      },
+      options: {
+        ignoreHtmlClass: ".*",
+        processHtmlClass: "arithmatex"
+      }
+    };
+    ```
+
+=== "Script - MathJax 3"
     ```js
     window.MathJax = {
       options: {
@@ -156,31 +186,6 @@ extensions/plugins and configuring those extensions/plugins.
     };
     ```
 
-=== "Generic - MathJax 3"
-    ```js
-    window.MathJax = {
-      tex: {
-        inlineMath: [ ["\\(","\\)"] ],
-        displayMath: [ ["\\[","\\]"] ],
-        processEscapes: true,
-        processEnvironments: true
-      },
-      options: {
-        ignoreHtmlClass: ".*|",
-        processHtmlClass: "arithmatex"
-      }
-    };
-    ```
-
-=== "Legacy: Default - MathJax 2"
-    ```js
-    MathJax.Hub.Config({
-      config: ["MMLorHTML.js"],
-      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
-      extensions: ["MathMenu.js", "MathZoom.js"]
-    });
-    ```
-
 === "Legacy: Generic - MathJax 2"
     ```js
     MathJax.Hub.Config({
@@ -195,6 +200,15 @@ extensions/plugins and configuring those extensions/plugins.
         ignoreClass: ".*|",
         processClass: "arithmatex"
       },
+    });
+    ```
+
+=== "Legacy: Script - MathJax 2"
+    ```js
+    MathJax.Hub.Config({
+      config: ["MMLorHTML.js"],
+      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+      extensions: ["MathMenu.js", "MathZoom.js"]
     });
     ```
 
@@ -267,9 +281,16 @@ var katexMath = (function () {
 
 ## Alternative Math Blocks
 
-!!! tip "Alternate Math Format"
-    The alternate math format functions use the **default** style that embeds math content in scripts, not the
-    **generic** format that just escapes the content in plain text.
+!!! new "New 9.0"
+    Added new formats `arithmatex_inline_format` and `arithmatex_fenced_format`. Both are configurable and effectively
+    replace all other previously available formats.
+
+!!! warning "Deprecated 9.0"
+    The old formatters `inline_mathjax_format`, `inline_mathjax_preview_format`, and `inline_generic_format` have all
+    been deprecated and will be removed at some future time.
+
+    It is advised to use the new `arithmatex_inline_format` which is configurable and will give the same results as the
+    above three.
 
 [InlineHilite](./inlinehilite.md) and [SuperFences](./superfences.md) both have a feature where you can specify your own
 custom inline and fence blocks respectively. Arithmatex provides a number of compatible formats that can be used in
@@ -288,7 +309,7 @@ extensions = [
 extension_config = {
     "pymdownx.inlinehilite": {
         "custom_inline": [
-            {"name": "math", "class": "arithmatex", "format": arithmatex.inline_mathjax_format}
+            {"name": "math", "class": "arithmatex", "format": arithmatex.arithmatex_inline_format(which="generic")}
         ]
     }
 }
@@ -318,7 +339,7 @@ extensions = [
 extension_config = {
     "pymdownx.superfences": {
         "custom_fences": [
-            {"name": "math", "class": "arithmatex", arithmatex.fence_mathjax_format}
+            {"name": "math", "class": "arithmatex", arithmatex.arithmatex_fenced_format(which="generic")}
         ]
     }
 }
@@ -348,12 +369,16 @@ Provided formats are found below:
 
 Name                            | Description
 ------------------------------- | -----------
-`inline_mathjax_preview_format` | Inline format suitable for InlineHilite that preserves math in MathJax script format with an appropriate preview.
-`inline_mathjax_format`         | Inline format suitable for InlineHilite that preserves math in MathJax script format without a preview.
-`inline_generic_format`         | Inline format suitable for InlineHilite that preserves math in generic spans with `arithmatex` class. Content will be wrapped with `\(` and `\)`, so your math library should target those for conversion.
-`block_mathjax_preview_format`  | Display/block format suitable for SuperFences that preserves math in MathJax script format with an appropriate preview.
-`block_mathjax_format`          | Display/block format suitable for SuperFences that preserves math in MathJax script format without a preview.
-`block_generic_format`          | Display/block format suitable for SuperFences that preserves math in generic spans with `arithmatex` class. Content will be wrapped with `\[` and `\]`, so your math library should target those for conversion.
+`arithmatex_inline_format`      | Returns a formatter for creating inline math. Generic mode will wrap math in `#!tex \(...\)`.
+`arithmatex_fenced_format`      | Returns a formatter for creating block math. Generic mode will wrap math in `#!tex \[...\]`
+
+Options apply to both formatters:
+
+Name      | Description
+--------- | -----------
+`mode`    | Sets to output mode to either `generic` or `mathjax` (script output). `generic` is the default.
+`tag`     | Sets the tag type of the parent container. By default, it is `div` of fenced blocks and `span` on inline.
+`preview` | Sets whether a preview is generated for `mathjax` mode only.
 
 ## Options
 
@@ -366,3 +391,5 @@ Option            | Type     | Default                               | Descripti
 `tex_block_wrap`  | [string] | `#!py3 ['\\[', '\\]']`                | An array containing the opening and closing portion of the `generic` wrap.
 `smart_dollar`    | bool     | `#!py3 True`                          | Enable Arithmatex's smart dollar logic to minimize math detection issues with `#!tex $`.
 `preview`         | bool     | `#!py3 True`                          | Insert a preview to show until MathJax finishes loading the equations.
+`block_tag`       | string   | `#!py3 'div'`                         | Change the default block tag element wrapper.
+`inline_tag`      | string   | `#!py3 'span'`                        | Change the default inline tag element wrapper.
