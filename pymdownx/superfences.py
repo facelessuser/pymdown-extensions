@@ -173,7 +173,7 @@ def highlight_validator(language, inputs, options, attrs, md):
             if k.startswith('data-'):
                 attrs[k] = v
                 continue
-            for opt, validator in (('hl_lines', RE_HL_LINES), ('linenums', RE_LINENUMS), ('filename', None)):
+            for opt, validator in (('hl_lines', RE_HL_LINES), ('linenums', RE_LINENUMS), ('title', None)):
                 if k == opt:
                     if v is not True and (validator is None or validator.match(v) is not None):
                         options[k] = v
@@ -228,7 +228,6 @@ class SuperFencesCodeExtension(Extension):
         self.config = {
             'disable_indented_code_blocks': [False, "Disable indented code blocks - Default: False"],
             'custom_fences': [[], 'Specify custom fences. Default: See documentation.'],
-            'highlight_code': [True, "Deprecated and does nothing"],
             'css_class': [
                 '',
                 "Set class name for wrapper element. The default of CodeHilite or Highlight will be used"
@@ -371,10 +370,6 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
         if not self.checked_hl_settings:
             self.checked_hl_settings = True
-            if not self.config['highlight_code']:
-                warn_deprecated(
-                    "Disabling of 'highlight_code' is deprecated and no longer does anything.",
-                )
 
             config = None
             self.highlighter = None
@@ -404,11 +399,11 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             self.wrapcode = not config.get('legacy_no_wrap_code', False)
             self.language_prefix = config.get('language_prefix', 'language-')
             self.code_attr_on_pre = config.get('code_attr_on_pre', False)
-            self.auto_filename = config.get('auto_filename', False)
-            self.auto_filename_map = config.get('auto_filename_map', {})
-            self.linespans = config.get('linespans', '')
-            self.lineanchors = config.get('lineanchors', '')
-            self.anchorlinenos = config.get('anchorlinenos', False)
+            self.auto_title = config.get('auto_title', False)
+            self.auto_title_map = config.get('auto_title_map', {})
+            self.line_spans = config.get('line_spans', '')
+            self.line_anchors = config.get('line_anchors', '')
+            self.anchor_linenums = config.get('anchor_linenums', False)
 
     def clear(self):
         """Reset the class variables."""
@@ -760,7 +755,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         linestart = None
         linespecial = None
         hl_lines = None
-        filename = None
+        title = None
 
         if self.use_pygments:
             if 'hl_lines' in options:
@@ -773,9 +768,9 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 linestep = m.group('linestep')
                 linespecial = m.group('linespecial')
                 del options['linenums']
-            if 'filename' in options:
-                filename = options['filename']
-                del options['filename']
+            if 'title' in options:
+                title = options['title']
+                del options['title']
 
         linestep = self.parse_line_step(linestep)
         linestart = self.parse_line_start(linestart)
@@ -797,11 +792,11 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             wrapcode=self.wrapcode,
             language_prefix=self.language_prefix,
             code_attr_on_pre=self.code_attr_on_pre,
-            auto_filename=self.auto_filename,
-            auto_filename_map=self.auto_filename_map,
-            linespans=self.linespans,
-            lineanchors=self.lineanchors,
-            anchorlinenos=self.anchorlinenos
+            auto_title=self.auto_title,
+            auto_title_map=self.auto_title_map,
+            line_spans=self.line_spans,
+            line_anchors=self.line_anchors,
+            anchor_linenums=self.anchor_linenums
         ).highlight(
             src,
             language,
@@ -813,7 +808,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             classes=classes,
             id_value=id_value,
             attrs=attrs,
-            filename=filename,
+            title=title,
             code_block_count=self.highlight_ext.pygments_code_block
         )
 

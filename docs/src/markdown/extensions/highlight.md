@@ -109,7 +109,7 @@ Option                    | Type   | Default               | Description
 ------------------------- | ------ | ----------------------| -----------
 `css_class`               | string | `#!py3 'highlight`    | Default class to apply to the wrapper element on code blocks. Other extensions can override this.
 `guess_lang`              | bool   | `#!py3 False`         | Guess what syntax language should be used if no language is specified. 
-`pygments_style`          | string | `#!py3thon 'default'` | Set the Pygments' style to use.  This really only has an effect when used with `noclasses`.
+`pygments_style`          | string | `#!py3 'default'`     | Set the Pygments' style to use.  This really only has an effect when used with `noclasses`.
 `noclasses`               | bool   | `#!py3 False`         | This will cause the styles to directly be written to the tag's style attribute instead of requiring a stylesheet.
 `use_pygments`            | bool   | `#!py3 True`          | Controls whether Pygments (if available) is used to style the code, or if the code will just be escaped and prepped for a JavaScript syntax highlighter.
 `linenums`                | bool   | `#!py3 None`          | Enable line numbers globally for *block* code.  This will be ignored for *inline* code. If set to `#!py3 False` line numbers will be disabled globally and can not be turned on, not even per code block.
@@ -120,15 +120,16 @@ Option                    | Type   | Default               | Description
 `legacy_no_wrap_code`     | bool   | `#!py3 False`         | A temporary option provided during the transition period to the new output format. Under Pygments 2.4+, code blocks are wrapped in `#!html <pre><code>` as recommend by HTML5. Enabling this allows the old way of just using `<pre>`.
 `language_prefix`         | string | `#!py3 'language-'`   | Controls the prefix applied to the language class when Pygments is not used. By default, uses the HTML5 `language-`.
 `code_attr_on_pre`        | bool   | `#!py3 False`         | By default, the language class and all attributes added via the [`attr_list`][attr-list] extension are attached to the `#!html <code>` element. This forces them to be attached to the `#!html <pre>` element.
-`auto_filename`           | bool   | `#!py3 False`         | For all code blocks, use the Pygments' `filename` option to specify a special header with the name of the lexer being used. The lexer is name is pulled directly from Pygments and title cased appropriately.
-`auto_filename_map`       | dict   | `#!py3 {}`            | A dictionary used to override certain titles returned by `auto_filename`. Simply specify the title to override as the key and the desired title as the value.
-`linespans`               | string | `#!py3 ''`            | Controls the Pygments of the same name. If set to a nonempty string, e.g. foo, the formatter will wrap each output line in a span tag with an id of `foo-<code_block_number>-<line_number>`.
-`anchorlinenos`           | bool   | `#!py3 False`         | Enables the Pygments of the same name. If set to True, will wrap line numbers in `#!html <a>` tags. Used in combination with `linenos` and `lineanchors`. If `lineanchors` is not defined, `__codelineno` will be assumed as the ID prefix.
-`lineanchors`             | bool   | `#!py3 False`         | Controls the Pygments of the same name. If set to a nonempty string, e.g. foo, the formatter will wrap each output line in an anchor tag with an id (and name) of `foo-<code_block_number>-<line_number>`.
+`auto_title`              | bool   | `#!py3 False`         | When using Pygments, for all code blocks generate a title header with the name of the lexer being used. The lexer name is pulled directly from Pygments and title cased appropriately.
+`auto_title_map`          | dict   | `#!py3 {}`            | A dictionary used to override certain titles returned by `auto_title`. Simply specify the title to override as the key and the desired title as the value.
+`line_spans`              | string | `#!py3 ''`            | Controls the Pygments option of a similar name. If set to a nonempty string, e.g. `foo`, the formatter will wrap each output line in a `#!html <span>` tag with an id of `foo-<code_block_number>-<line_number>`.
+`anchor_linenums`         | bool   | `#!py3 False`         | Enables the Pygments option of a similar name. If set to `#!py True`, will wrap line numbers in `#!html <a>` tags. Used in combination with `linenums` and `line_anchors`. If `line_anchors` is not configured, `__codelineno` will be assumed as the ID prefix.
+`line_anchors`            | bool   | `#!py3 False`         | Controls the Pygments option of a similar name. If set to a nonempty string, e.g. `foo`, the formatter will insert an anchor tag with an id (and name) of `foo-<code_block_number>-<line_number>`.
 
 
 !!! new "New 6.2"
-    `legacy_no_wrap_code` was added in `6.3`, but is only provided to help transition to the format when using Pygments 2.4+. This option will be removed in the future.
+    `legacy_no_wrap_code` was added in `6.3`, but is only provided to help transition to the format when using Pygments
+    2.4+. This option will be removed in the future.
 
 !!! new "New 7.1"
     `linenums_class` was added in `7.1`.

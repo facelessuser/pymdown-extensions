@@ -373,8 +373,9 @@ ending line. You can do multiple ranges and even mix them with non ranges.
 
 ## Code Block Headers
 
-When Pygments is enabled, a header title can be applied with the `filename` option. This controls the Pygments option of
-the same name. The feature allows a user to display a filename or any arbitrary text in a header on code blocks.
+When Pygments is enabled, a header with a title can be applied with the `title` option. This essentially controls the
+Pygments `filename` option under the hood. It made more sense to use the term `title` as people can really set any
+arbitrary title, not just filenames.
 
 Pygments will simply output the HTML below. The user is responsible for provided CSS to style the header.
 
@@ -388,7 +389,7 @@ Pygments will simply output the HTML below. The user is responsible for provided
 !!! example "Filename"
 
     === "Output"
-        ```{.py3 filename="My Cool Header"}
+        ```{.py3 title="My Cool Header"}
         import foo.bar
         import boo.baz
         import foo.bar.baz
@@ -396,16 +397,16 @@ Pygments will simply output the HTML below. The user is responsible for provided
 
     === "Markdown"
         ````
-        ```{.py3 filename="My Cool Header"}
+        ```{.py3 title="My Cool Header"}
         import foo.bar
         import boo.baz
         import foo.bar.baz
         ```
         ````
 
-If the `auto_filename` option is enabled in the [Highlight extension](./highlight.md), the filename will be auto
-populated with the name of the lexer used to highlight the code (unless `filename` is manually specified). In the
-example below, no `filename` is specified, but the the filename is extracted from the Python lexer.
+If the `auto_title` option is enabled in the [Highlight extension](./highlight.md), the title will be auto populated
+with the name of the lexer used to highlight the code (unless `title` is manually specified). In the example below,
+no `title` is specified, but the the title is extracted from the Python lexer.
 
 !!! example "Auto Filename"
 
@@ -418,7 +419,7 @@ example below, no `filename` is specified, but the the filename is extracted fro
 
         extension_configs:
           pymdownx.highlight:
-            auto_filename: true
+            auto_title: true
         ---
         ```python
         import foo.bar
@@ -436,7 +437,7 @@ example below, no `filename` is specified, but the the filename is extracted fro
         ```
         ````
 
-There may be some cases where a Lexer returns a result that is undesired. For example, when a user specifies `pycon`
+There may be some cases where a Lexer returns a result that is undesired. For example, when a user specifies the `pycon`
 lexer, the title that is returned is quite verbose.
 
 !!! example "Auto Filename"
@@ -450,7 +451,7 @@ lexer, the title that is returned is quite verbose.
 
         extension_configs:
           pymdownx.highlight:
-            auto_filename: true
+            auto_title: true
         ---
         ```pycon
         >>> 3 + 3
@@ -467,13 +468,14 @@ lexer, the title that is returned is quite verbose.
         ````
 
 In a case like above, it may be desired to simply use the title `Python`. We can configure the [Highlight extension](./highlight.md)
-to override any auto returned title of "Python Console Session" with simply "Python".
+to override any auto returned title. Simply create mapping via the `auto_title_map` specifying the title you wish to
+override as the key, and the desired title as the value.
 
 ```py3
 extension_configs = {
     "pymdownx.highlight": {
-        "auto_filename": True,
-        "auto_filename_map": {
+        "auto_title": True,
+        "auto_title_map": {
             "Python Console Session": "Python"
         }
     }
@@ -490,8 +492,8 @@ extensions:
 
 extension_configs:
   pymdownx.highlight:
-    auto_filename: true
-    auto_filename_map: {"Python Console Session": "Python"}
+    auto_title: true
+    auto_title_map: {"Python Console Session": "Python"}
 ---
 ```pycon
 >>> 3 + 3
@@ -501,15 +503,14 @@ extension_configs:
 
 ## Pygments Line Wrappers
 
-Pygments offers a couple of options that will wrap line numbers, lines, or simply insert spans or anchors into the code
-content.
+Pygments offers a couple of options that will wrap lines, line numbers even create anchor links for line numbers.
+SuperFences, when using Pygments, exposes these options under similar names.
 
-Here we will wrap the whole line in a span. Pygments will assign an ID to it with a "prefix". We can enable the wrapping
-by setting the global config option `linespans` and specify the "prefix". Then every line will be wrapped in a span with
-the ID `prefix-x-y` where `x` is a unique number for the code block and `y` is the line number. After that, it is up to
-the user to do as they to target the ID with either JavaScript and/or CSS.
-
-HTML formatted for easy reading:
+In this example, we will wrap each line of code in a span. Pygments will create an ID for each span using the prefix
+that we provide. We simply set the global config option `line_spans` and specify the desired "prefix" (`_codeline`), and
+then every line will be wrapped in a span with the ID `prefix-x-y` where `prefix` is the user specified prefix, `x` is a 
+unique number for the code block, and `y` is the line number. After that, it is up to the user to do as they with to
+target the ID with either JavaScript and/or CSS.
 
 === "Config"
 
@@ -517,7 +518,7 @@ HTML formatted for easy reading:
     extension_configs = {
         "pymdownx.highlight": {
             'linenums_style': 'inline',
-            'linespans': '__codeline'
+            'line_spans': '__codeline'
         }
     }
     ```
@@ -543,10 +544,10 @@ HTML formatted for easy reading:
     ```
 
 We can also wrap line numbers with with a link and anchor them so you can click line numbers and be taken to said line
-number. To do this, `anchorlinenos` must be enabled and then a prefix should be provided via `lineanchors`, just like
-`linespans`, `lineanchors` will produce an ID in the form `prefix-x-y` where `x` is a unique number for the code block
-and `y` is the line number. If you wish to not have the line anchors clickable, and just have the anchors inserted,
-you can omit enabling `anchorlinenos`.
+number. To do this, `anchor_linenums` must be enabled and then a prefix should be provided via `line_anchors`, just like
+`line_spans`, `line_anchors` will produce an ID in the form `prefix-x-y` where `x` is a unique number for the code block
+and `y` is the line number. If you wish to not have the line numbers clickable, and just have the anchors inserted,
+you can omit enabling `anchor_linenums`.
 
 === "Config"
 
@@ -554,9 +555,9 @@ you can omit enabling `anchorlinenos`.
     extension_configs = {
         "pymdownx.highlight": {
             'linenums_style': 'inline',
-            'linespans': '__codeline',
-            'lineanchors': '__codelineno',
-            'anchorlinenos': True
+            'line_spans': '__codeline',
+            'line_anchors': '__codelineno',
+            'anchor_linenums': True
         }
     }
     ```
@@ -832,15 +833,4 @@ Option                         | Type         | Default       | Description
 `css_class`                    | string       | `#!py3 ''`    | Class name is applied to the wrapper element of the code. If configured, this setting will override the `css_class` option of Highlight. If nothing is configured here or in Highlight, the class `highlight` will be used.
 `disable_indented_code_blocks` | bool         | `#!py3 False` | Disables Python Markdown's indented code block parsing.  This is nice if you only ever use fenced blocks.
 `custom_fences`                | [dictionary] | `#!py3 []`    | Custom fences.
-`highlight_code`               | bool         | `#!py3 True`  | Enable or disable code highlighting.
 `preserve_tabs`                | bool         | `#!py3 False` | Experimental feature that preserves tabs in fenced code blocks.
-`legacy_tab_classes`           | bool         | `#!py3 False` | Use legacy style classes for the deprecated tabbed code feature via `tab="name"`. This option will be dropped when the code tab interface is fully dropped for the general purpose [tabbed](./tabbed.md) extension.
-
-!!! warning "Deprecated in 7.0"
-    While `legacy_tab_classes` is a new option, it is also tied to the deprecated code tab feature of SuperFences. It is
-    only provided as an option to help with the transition of the code tab feature being deprecated in favor of the
-    [Tabbed](./tabbed.md) extension. When the code tabs are removed from SuperFences, so will
-    `legacy_tab_classes`.
-
-    `highlight_code` is also disabled and now does nothing. If a non-highlighted variant of fences is preferred, it is
-    recommended to use [custom fences](#custom-fences). This option will be removed in a future version.

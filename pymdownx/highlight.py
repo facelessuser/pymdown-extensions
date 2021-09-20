@@ -101,25 +101,25 @@ DEFAULT_CONFIG = {
         False,
         "Attach attribute list values on pre element instead of code element - Default: False"
     ],
-    'auto_filename': [
+    'auto_title': [
         False,
-        'Inject the code block language name as the "filename" title - Defaults: False'
+        'Inject the lexer name as the title for block code - Defaults: False'
     ],
-    'auto_filename_map': [
+    'auto_title_map': [
         {},
-        'User defined mappings for a given language name to filename title - Defaults: {}'
+        'User defined mapping of overrides for "auto_title" - Defaults: {}'
     ],
-    'linespans': [
+    'line_spans': [
         '',
         'If set to a nonempty string, e.g. foo, the formatter will wrap each output line '
         'in a span tag with an id of foo-<code_block_number>-<line_number>. . - Defaults: ""'
     ],
-    'anchorlinenos': [
+    'anchor_linenums': [
         False,
-        'If set to True, will wrap line numbers in <a> tags. Used in combination with linenos and lineanchors.'
+        'If set to True, will wrap line numbers in <a> tags. Used in combination with linenums and line_anchors.'
         ' - Defaults: False'
     ],
-    'lineanchors': [
+    'line_anchors': [
         '',
         'If set to a nonempty string, e.g. foo, the formatter will wrap each output line in an anchor tag with'
         ' an id (and name) of foo-<code_block_number>-<line_number>. - Defaults: ""'
@@ -227,8 +227,8 @@ class Highlight(object):
         self, guess_lang=False, pygments_style='default', use_pygments=True,
         noclasses=False, extend_pygments_lang=None, linenums=None, linenums_special=-1,
         linenums_style='table', linenums_class='linenums', wrapcode=True, language_prefix='language-',
-        code_attr_on_pre=False, auto_filename=False, auto_filename_map=None, linespans='',
-        anchorlinenos=False, lineanchors=''
+        code_attr_on_pre=False, auto_title=False, auto_title_map=None, line_spans='',
+        anchor_linenums=False, line_anchors=''
     ):
         """Initialize."""
 
@@ -243,17 +243,17 @@ class Highlight(object):
         self.wrapcode = wrapcode
         self.language_prefix = language_prefix
         self.code_attr_on_pre = code_attr_on_pre
-        self.auto_filename = auto_filename
-        self.linespans = linespans
-        self.lineanchors = lineanchors
-        self.anchorlinenos = anchorlinenos
+        self.auto_title = auto_title
+        self.line_spans = line_spans
+        self.line_anchors = line_anchors
+        self.anchor_linenums = anchor_linenums
 
-        if self.anchorlinenos and not self.lineanchors:
-            self.lineanchors = '__codelineno'
+        if self.anchor_linenums and not self.line_anchors:
+            self.line_anchors = '__codelineno'
 
-        if auto_filename_map is None:
-            auto_filename_map = {}
-        self.auto_filename_map = auto_filename_map
+        if auto_title_map is None:
+            auto_title_map = {}
+        self.auto_title_map = auto_title_map
 
         if extend_pygments_lang is None:  # pragma: no cover
             extend_pygments_lang = []
@@ -307,7 +307,7 @@ class Highlight(object):
     def highlight(
         self, src, language, css_class='highlight', hl_lines=None,
         linestart=-1, linestep=-1, linespecial=-1, inline=False, classes=None, id_value='', attrs=None,
-        filename=None, code_block_count=0
+        title=None, code_block_count=0
     ):
         """Highlight code."""
 
@@ -353,9 +353,9 @@ class Highlight(object):
             if hl_lines is None or inline:
                 hl_lines = []
 
-            if filename is None and self.auto_filename:
+            if title is None and self.auto_title:
                 name = " ".join([w.title() if w.islower() else w for w in lexer.name.split()])
-                filename = self.auto_filename_map.get(name, name)
+                title = self.auto_title_map.get(name, name)
 
             # Setup formatter
             html_formatter = InlineHtmlFormatter if inline else BlockHtmlFormatter
@@ -369,12 +369,12 @@ class Highlight(object):
                 noclasses=self.noclasses,
                 hl_lines=hl_lines,
                 wrapcode=self.wrapcode,
-                filename=filename if not inline else "",
-                linespans="{}-{:d}".format(self.linespans, code_block_count) if self.linespans and not inline else '',
+                filename=title if not inline else "",
+                linespans="{}-{:d}".format(self.line_spans, code_block_count) if self.line_spans and not inline else '',
                 lineanchors=(
-                    "{}-{:d}".format(self.lineanchors, code_block_count) if self.lineanchors and not inline else ""
+                    "{}-{:d}".format(self.line_anchors, code_block_count) if self.line_anchors and not inline else ""
                 ),
-                anchorlinenos=self.anchorlinenos if not inline else False
+                anchorlinenos=self.anchor_linenums if not inline else False
             )
 
             # Convert
@@ -472,8 +472,8 @@ class HighlightTreeprocessor(Treeprocessor):
                     wrapcode=not self.config['legacy_no_wrap_code'],
                     language_prefix=self.config['language_prefix'],
                     code_attr_on_pre=self.config['code_attr_on_pre'],
-                    auto_filename=self.config['auto_filename'],
-                    auto_filename_map=self.config['auto_filename_map']
+                    auto_title=self.config['auto_title'],
+                    auto_title_map=self.config['auto_title_map']
                 )
                 placeholder = self.md.htmlStash.store(
                     code.highlight(
