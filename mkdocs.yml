@@ -92,7 +92,7 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
         - name: math
           class: arithmatex
-          format: !!python/name:pymdownx.arithmatex.fence_generic_format
+          format: !!python/object/apply:pymdownx.arithmatex.fence_format ['generic', 'pre']
         - name: md-render
           class: md-render
           format: !!python/name:tools.pymdownx_md_render.md_sub_render
@@ -111,7 +111,7 @@ markdown_extensions:
       custom_inline:
         - name: math
           class: arithmatex
-          format: !!python/name:pymdownx.arithmatex.inline_generic_format
+          format: !!python/object/apply:pymdownx.arithmatex.inline_format ['generic']
   - pymdownx.magiclink:
       repo_url_shortener: true
       repo_url_shorthand: true
@@ -134,6 +134,7 @@ markdown_extensions:
   - pymdownx.progressbar:
   - pymdownx.arithmatex:
       generic: true
+      block_tag: 'pre'
   - pymdownx.mark:
   - pymdownx.striphtml:
   - pymdownx.snippets:
@@ -157,9 +158,9 @@ extra:
       link: https://discord.gg/TWs8Tgr
 extra_css:
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css
-  - assets/pymdownx-extras/extra-d2528b5f58.css
+  - assets/pymdownx-extras/extra-30cad04f9c.css
 extra_javascript:
-  - assets/pymdownx-extras/site-config.js
+  - site-config.js
   - https://unpkg.com/mermaid@8.8.4/dist/mermaid.min.js
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6

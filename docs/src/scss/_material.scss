@@ -152,7 +152,9 @@ html {
 .md-search__scrollwrap,
 .md-typeset pre > code,
 .md-typeset div.mermaid,
-.md-typeset mermaid-div {
+.md-typeset mermaid-div,
+.md-typeset pre.arithmatex,
+.md-typeset div.arithmatex {
   // Override native scrollbar styles
   &::-webkit-scrollbar {
     width: px2rem(4px);

@@ -2,9 +2,11 @@
 
 ## 8.3
 
+- **NEW**: Arithmatex: Add options to override HTML element container type of inline and block math.
+- **NEW**: Arithmatex: Add new formatters intended to replace old math fenced block formatters.
 - **FIX**: BetterEm: Fix some complex cases related to "smart" logic. (#1413)
-- **FIX**: Fix issue that occurs when showing only nth line numbers and using `pymdownx-inline`. Lines not showing a
-  line number would not render with the proper leading space.
+- **FIX**: Highlight: Fix issue that occurs when showing only nth line numbers and using `pymdownx-inline`. Lines not
+  showing a line number would not render with the proper leading space.
 
 ## 8.2
 

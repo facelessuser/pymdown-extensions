@@ -46,6 +46,7 @@ from markdown import Extension
 from markdown.inlinepatterns import InlineProcessor
 from markdown.blockprocessors import BlockProcessor
 from markdown import util as md_util
+from functools import partial
 import xml.etree.ElementTree as etree
 from . import util
 import re
@@ -107,6 +108,15 @@ def _fence_mathjax_format(math, preview=False):
     return text
 
 
+def inline_format(which='generic', tag='span', preview=True):
+    """Specify which type of formatter you want and the wrapping tag."""
+
+    if which == 'generic':
+        return partial(inline_generic_format, tag=tag)
+    elif which == 'mathjax':
+        return partial(inline_mathjax_format, preview=preview)
+
+
 # Formatters usable with InlineHilite
 def inline_mathjax_preview_format(math, language='math', class_name='arithmatex', md=None):
     """Inline math formatter with preview."""
@@ -120,11 +130,11 @@ def inline_mathjax_format(math, language='math', class_name='arithmatex', md=Non
     return _inline_mathjax_format(math, False)
 
 
-def inline_generic_format(math, language='math', class_name='arithmatex', md=None, wrap='\\(%s\\)'):
+def inline_generic_format(math, language='math', class_name='arithmatex', md=None, wrap='\\({}\\)', tag='span'):
     """Inline generic formatter."""
 
-    el = etree.Element('span', {'class': class_name})
-    el.text = md_util.AtomicString(wrap % math)
+    el = etree.Element(tag, {'class': class_name})
+    el.text = md_util.AtomicString(wrap.format(math))
     return el
 
 
@@ -141,8 +151,17 @@ def fence_mathjax_format(math, language='math', class_name='arithmatex', options
     return _fence_mathjax_format(math, False)
 
 
+def fence_format(which='generic', tag='div', preview=True):
+    """Specify which type of formatter you want and the wrapping tag."""
+
+    if which == 'generic':
+        return partial(fence_generic_format, tag=tag)
+    elif which == 'mathjax':
+        return partial(_fence_mathjax_format, preview=preview)
+
+
 def fence_generic_format(
-    math, language='math', class_name='arithmatex', options=None, md=None, wrap='\\[\n%s\n\\]', **kwargs
+    math, language='math', class_name='arithmatex', options=None, md=None, wrap='\\[\n{}\n\\]', tag='div', **kwargs
 ):
     """Generic block formatter."""
 
@@ -156,13 +175,13 @@ def fence_generic_format(
     classes = ' class="{}"'.format(' '.join(classes))
     attrs = ' ' + ' '.join('{k}="{v}"'.format(k=k, v=v) for k, v in attrs.items()) if attrs else ''
 
-    return '<div%s%s%s>%s</div>' % (id_value, classes, attrs, (wrap % math))
+    return '<{}{}{}{}>{}</{}>'.format(tag, id_value, classes, attrs, wrap.format(math), tag)
 
 
 class InlineArithmatexPattern(InlineProcessor):
     """Arithmatex inline pattern handler."""
 
-    ESCAPED_BSLASH = '%s%s%s' % (md_util.STX, ord('\\'), md_util.ETX)
+    ESCAPED_BSLASH = '{}{}{}'.format(md_util.STX, ord('\\'), md_util.ETX)
 
     def __init__(self, pattern, config):
         """Initialize."""
@@ -170,7 +189,10 @@ class InlineArithmatexPattern(InlineProcessor):
         # Generic setup
         self.generic = config.get('generic', False)
         wrap = config.get('tex_inline_wrap', ["\\(", "\\)"])
-        self.wrap = wrap[0] + '%s' + wrap[1]
+        self.wrap = (
+            wrap[0].replace('{', '}}').replace('}', '}}') + '{}' + wrap[1].replace('{', '}}').replace('}', '}}')
+        )
+        self.generic_inline_tag = config.get('inline_tag', 'span')
 
         # Default setup
         self.preview = config.get('preview', True)
@@ -192,7 +214,7 @@ class InlineArithmatexPattern(InlineProcessor):
             math = m.group(6)
 
         if self.generic:
-            return inline_generic_format(math, wrap=self.wrap), m.start(0), m.end(0)
+            return inline_generic_format(math, wrap=self.wrap, tag=self.generic_inline_tag), m.start(0), m.end(0)
         else:
             return _inline_mathjax_format(math, self.preview), m.start(0), m.end(0)
 
@@ -206,7 +228,10 @@ class BlockArithmatexProcessor(BlockProcessor):
         # Generic setup
         self.generic = config.get('generic', False)
         wrap = config.get('tex_block_wrap', ['\\[', '\\]'])
-        self.wrap = wrap[0] + '%s' + wrap[1]
+        self.wrap = (
+            wrap[0].replace('{', '}}').replace('}', '}}') + '{}' + wrap[1].replace('{', '}}').replace('}', '}}')
+        )
+        self.generic_block_tag = config.get('block_tag', 'div')
 
         # Default setup
         self.preview = config.get('preview', False)
@@ -236,8 +261,8 @@ class BlockArithmatexProcessor(BlockProcessor):
     def generic_output(self, parent, math):
         """Generic output."""
 
-        el = etree.SubElement(parent, 'div', {'class': 'arithmatex'})
-        el.text = md_util.AtomicString(self.wrap % math)
+        el = etree.SubElement(parent, self.generic_block_tag, {'class': 'arithmatex'})
+        el.text = md_util.AtomicString(self.wrap.format(math))
 
     def run(self, parent, blocks):
         """Find and handle block content."""
@@ -288,7 +313,9 @@ class ArithmatexExtension(Extension):
             'preview': [
                 True,
                 "Insert a preview for scripts. - Default: False"
-            ]
+            ],
+            'block_tag': ['div', "Generic parent element - Default 'div'"],
+            'inline_tag': ['span', "Generic parent element - Default 'span'"]
         }
 
         super(ArithmatexExtension, self).__init__(*args, **kwargs)

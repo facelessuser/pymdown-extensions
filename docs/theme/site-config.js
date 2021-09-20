@@ -220,7 +220,11 @@ window.MathJax = {
     inlineMath: [["\\(", "\\)"]],
     displayMath: [["\\[", "\\]"]],
     processEscapes: true,
-    processEnvironments: true
+    processEnvironments: true,
+    tagSide: "right",
+    tagIndent: ".8em",
+    multlineWidth: "85%",
+    tags: "ams"
   },
   options: {
     ignoreHtmlClass: ".*",
