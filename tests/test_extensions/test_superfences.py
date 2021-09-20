@@ -4,7 +4,6 @@ import unittest
 import markdown
 import pymdownx.arithmatex as arithmatex
 import pymdownx.superfences as superfences
-from pymdownx.util import PymdownxDeprecationWarning
 import warnings
 
 
@@ -404,7 +403,7 @@ class TestWaringings(unittest.TestCase):
             ).convert('```\ntest\n```\n')
 
             self.assertTrue(len(w) == 1)
-            self.assertTrue(issubclass(w[-1].category, PymdownxDeprecationWarning))
+            self.assertTrue(issubclass(w[-1].category, DeprecationWarning))
 
     def test_legacy_validator_code(self):
         """Test legacy validator."""
@@ -429,7 +428,7 @@ class TestWaringings(unittest.TestCase):
             ).convert('```\ntest\n```\n')
 
             self.assertTrue(len(w) == 1)
-            self.assertTrue(issubclass(w[-1].category, PymdownxDeprecationWarning))
+            self.assertTrue(issubclass(w[-1].category, DeprecationWarning))
 
 
 class TestSuperFencesBad(util.MdCase):
@@ -666,7 +665,7 @@ class TestSuperFencesCustomArithmatex(util.MdCase):
                 {
                     'name': 'math',
                     'class': 'arithmatex',
-                    'format': arithmatex.fence_mathjax_format
+                    'format': arithmatex.arithmatex_fenced_format(mode="mathjax")
                 }
             ]
         }
@@ -682,12 +681,54 @@ class TestSuperFencesCustomArithmatex(util.MdCase):
             ```
             ''',
             r'''
+            <div class="arithmatex">
             <script type="math/tex; mode=display">
             E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
             </script>
+            </div>
             ''',
             True
         )
+
+
+class TestSuperFencesCustomLegacyArithmatex(util.MdCase):
+    """Test custom Arithmatex format."""
+
+    extension = ['pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.superfences': {
+            'custom_fences': [
+                {
+                    'name': 'math',
+                    'class': 'arithmatex',
+                    'format': arithmatex.fence_mathjax_format
+                }
+            ]
+        }
+    }
+
+    def test_legacy_arithmatex(self):
+        """Test Arithmatex formatter without preview."""
+
+        with warnings.catch_warnings(record=True) as w:
+            self.check_markdown(
+                r'''
+                ```math
+                E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+                ```
+                ''',
+                r'''
+                <div class="arithmatex">
+                <script type="math/tex; mode=display">
+                E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+                </script>
+                </div>
+                ''',
+                True
+            )
+
+            self.assertTrue(len(w) == 1)
+            self.assertTrue(issubclass(w[-1].category, DeprecationWarning))
 
 
 class TestSuperFencesCustomArithmatexPreview(util.MdCase):
@@ -700,7 +741,7 @@ class TestSuperFencesCustomArithmatexPreview(util.MdCase):
                 {
                     'name': 'math',
                     'class': 'arithmatex',
-                    'format': arithmatex.fence_mathjax_preview_format
+                    'format': arithmatex.arithmatex_fenced_format(mode='mathjax', preview=True)
                 }
             ]
         }
@@ -716,7 +757,7 @@ class TestSuperFencesCustomArithmatexPreview(util.MdCase):
             ```
             ''',
             r'''
-            <div>
+            <div class="arithmatex">
             <div class="MathJax_Preview">
             E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
             </div>
@@ -729,6 +770,49 @@ class TestSuperFencesCustomArithmatexPreview(util.MdCase):
         )
 
 
+class TestSuperFencesCustomLegacyArithmatexPreview(util.MdCase):
+    """Test custom Arithmatex preview format."""
+
+    extension = ['pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.superfences': {
+            'custom_fences': [
+                {
+                    'name': 'math',
+                    'class': 'arithmatex',
+                    'format': arithmatex.fence_mathjax_preview_format
+                }
+            ]
+        }
+    }
+
+    def test_legacy_arithmatex_preview(self):
+        """Test Arithmatex formatter with preview."""
+
+        with warnings.catch_warnings(record=True) as w:
+            self.check_markdown(
+                r'''
+                ```math
+                E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+                ```
+                ''',
+                r'''
+                <div class="arithmatex">
+                <div class="MathJax_Preview">
+                E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+                </div>
+                <script type="math/tex; mode=display">
+                E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+                </script>
+                </div>
+                ''',
+                True
+            )
+
+            self.assertTrue(len(w) == 1)
+            self.assertTrue(issubclass(w[-1].category, DeprecationWarning))
+
+
 class TestSuperFencesCustomArithmatexGeneric(util.MdCase):
     """Test custom Arithmatex generic format."""
 
@@ -739,7 +823,7 @@ class TestSuperFencesCustomArithmatexGeneric(util.MdCase):
                 {
                     'name': 'math',
                     'class': 'arithmatex',
-                    'format': arithmatex.fence_generic_format
+                    'format': arithmatex.arithmatex_fenced_format(mode="generic")
                 }
             ]
         }
@@ -763,6 +847,44 @@ class TestSuperFencesCustomArithmatexGeneric(util.MdCase):
         )
 
 
+class TestSuperFencesCustomLegacyArithmatexGeneric(util.MdCase):
+    """Test custom Arithmatex generic format."""
+
+    extension = ['pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.superfences': {
+            'custom_fences': [
+                {
+                    'name': 'math',
+                    'class': 'arithmatex',
+                    'format': arithmatex.fence_generic_format
+                }
+            ]
+        }
+    }
+
+    def test_legacy_arithmatex_generic(self):
+        """Test Arithmatex generic formatter."""
+
+        with warnings.catch_warnings(record=True) as w:
+            self.check_markdown(
+                r'''
+                ```math
+                E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+                ```
+                ''',
+                r'''
+                <div class="arithmatex">\[
+                E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+                \]</div>
+                ''',
+                True
+            )
+
+            self.assertTrue(len(w) == 1)
+            self.assertTrue(issubclass(w[-1].category, DeprecationWarning))
+
+
 class TestSuperFencesCustomDefault(util.MdCase):
     """Test overriding the default format."""
 
@@ -778,7 +900,7 @@ class TestSuperFencesCustomDefault(util.MdCase):
                 {
                     'name': 'math',
                     'class': 'arithmatex',
-                    'format': arithmatex.fence_generic_format
+                    'format': arithmatex.arithmatex_fenced_format(mode="generic")
                 }
             ]
         }

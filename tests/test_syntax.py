@@ -7,9 +7,8 @@ import pytest
 import copy
 from . import util
 import warnings
-from pymdownx.util import PymdownxDeprecationWarning
 
-warnings.simplefilter('ignore', PymdownxDeprecationWarning)
+warnings.simplefilter('ignore', DeprecationWarning)
 
 CURRENT_DIR = os.path.abspath(os.path.dirname(__file__))
 

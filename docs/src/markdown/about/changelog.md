@@ -2,9 +2,16 @@
 
 ## 8.3
 
+- **NEW**: Arithmatex: Wrap MathJax "script" format (non-preview) with a container element just like all other
+  Arithmatex output formats.
+- **NEW**: Arithmatex: MathJax (non-generic) form's container element now has the `arithmatex` class added just like
+  everywhere else.
+- **NEW**: Arithmatex: Add options to override HTML element container type of inline and block math.
+- **NEW**: Arithmatex: Add new formatter functions intended to replace old math fenced/inline block formatters. New
+  formatter functions are configurable. All others are marked as deprecated and will be removed at some future date.
 - **FIX**: BetterEm: Fix some complex cases related to "smart" logic. (#1413)
-- **FIX**: Fix issue that occurs when showing only nth line numbers and using `pymdownx-inline`. Lines not showing a
-  line number would not render with the proper leading space.
+- **FIX**: Highlight: Fix issue that occurs when showing only nth line numbers and using `pymdownx-inline`. Lines not
+  showing a line number would not render with the proper leading space.
 
 ## 8.2
 

@@ -1,6 +1,7 @@
 """Test cases for Highlight."""
 from .. import util
 import pymdownx.arithmatex as arithmatex
+import warnings
 
 
 def _format(src, language, class_name, md):
@@ -278,7 +279,7 @@ class TestInlineHiliteCustom1(util.MdCase):
                 {
                     'name': 'math',
                     'class': 'arithmatex',
-                    'format': arithmatex.inline_mathjax_format
+                    'format': arithmatex.arithmatex_inline_format(mode='mathjax')
                 }
             ]
         }
@@ -290,15 +291,78 @@ class TestInlineHiliteCustom1(util.MdCase):
         self.check_markdown(
             r'`#!math 3 + 3`',
             r'''
-            <p>
-            <script type="math/tex">3 + 3</script>
-            </p>
+            <p><span class="arithmatex"><script type="math/tex">3 + 3</script></span></p>
             ''',
             True
         )
 
 
+class TestLegacyInlineHiliteCustom1(util.MdCase):
+    """Test custom InlineHilite cases."""
+
+    extension = [
+        'pymdownx.highlight',
+        'pymdownx.inlinehilite',
+    ]
+    extension_configs = {
+        'pymdownx.inlinehilite': {
+            'css_class': 'inlinehilite',
+            'custom_inline': [
+                {
+                    'name': 'math',
+                    'class': 'arithmatex',
+                    'format': arithmatex.inline_mathjax_format
+                }
+            ]
+        }
+    }
+
+    def test_legacy_arithmatex(self):
+        """Test Arithmatex."""
+
+        with warnings.catch_warnings(record=True) as w:
+            self.check_markdown(
+                r'`#!math 3 + 3`',
+                r'''
+                <p><span class="arithmatex"><script type="math/tex">3 + 3</script></span></p>
+                ''',
+                True
+            )
+            self.assertTrue(len(w) == 1)
+            self.assertTrue(issubclass(w[-1].category, DeprecationWarning))
+
+
 class TestInlineHiliteCustom2(util.MdCase):
+    """Test custom InlineHilite cases."""
+
+    extension = [
+        'pymdownx.highlight',
+        'pymdownx.inlinehilite',
+    ]
+    extension_configs = {
+        'pymdownx.inlinehilite': {
+            'css_class': 'inlinehilite',
+            'custom_inline': [
+                {
+                    'name': 'math',
+                    'class': 'arithmatex',
+                    'format': arithmatex.arithmatex_inline_format(mode="mathjax", preview=True)
+                }
+            ]
+        }
+    }
+
+    def test_preview_arithmatex(self):
+        """Test preview Arithmatex."""
+
+        self.check_markdown(
+            r'`#!math 3 + 3`',
+            r'<p><span class="arithmatex"><span class="MathJax_Preview">3 + 3</span>'
+            r'<script type="math/tex">3 + 3</script></span></p>'
+        )
+
+
+class TestLegacyInlineHiliteCustom2(util.MdCase):
     """Test custom InlineHilite cases."""
 
     extension = [
@@ -318,16 +382,49 @@ class TestInlineHiliteCustom2(util.MdCase):
         }
     }
 
-    def test_preview_arithmatex(self):
+    def test_legacy_preview_arithmatex(self):
         """Test preview Arithmatex."""
 
-        self.check_markdown(
-            r'`#!math 3 + 3`',
-            r'<p><span><span class="MathJax_Preview">3 + 3</span><script type="math/tex">3 + 3</script></span></p>'
-        )
+        with warnings.catch_warnings(record=True) as w:
+            self.check_markdown(
+                r'`#!math 3 + 3`',
+                r'<p><span class="arithmatex"><span class="MathJax_Preview">3 + 3</span>'
+                r'<script type="math/tex">3 + 3</script></span></p>'
+            )
+            self.assertTrue(len(w) == 1)
+            self.assertTrue(issubclass(w[-1].category, DeprecationWarning))
 
 
 class TestInlineHiliteCustom3(util.MdCase):
+    """Test custom InlineHilite cases."""
+
+    extension = [
+        'pymdownx.highlight',
+        'pymdownx.inlinehilite',
+    ]
+    extension_configs = {
+        'pymdownx.inlinehilite': {
+            'css_class': 'inlinehilite',
+            'custom_inline': [
+                {
+                    'name': 'math',
+                    'class': 'arithmatex',
+                    'format': arithmatex.arithmatex_inline_format(mode="generic")
+                }
+            ]
+        }
+    }
+
+    def test_arithmatex_generic(self):
+        """Test generic Arithmatex."""
+
+        self.check_markdown(
+            r'`#!math 3 + 3`',
+            r'<p><span class="arithmatex">\(3 + 3\)</span></p>'
+        )
+
+
+class TestLegacyInlineHiliteCustom3(util.MdCase):
     """Test custom InlineHilite cases."""
 
     extension = [
@@ -347,13 +444,16 @@ class TestInlineHiliteCustom3(util.MdCase):
         }
     }
 
-    def test_arithmatex_generic(self):
+    def test_legacy_arithmatex_generic(self):
         """Test generic Arithmatex."""
 
-        self.check_markdown(
-            r'`#!math 3 + 3`',
-            r'<p><span class="arithmatex">\(3 + 3\)</span></p>'
-        )
+        with warnings.catch_warnings(record=True) as w:
+            self.check_markdown(
+                r'`#!math 3 + 3`',
+                r'<p><span class="arithmatex">\(3 + 3\)</span></p>'
+            )
+            self.assertTrue(len(w) == 1)
+            self.assertTrue(issubclass(w[-1].category, DeprecationWarning))
 
 
 class TestInlineHiliteCustom4(util.MdCase):

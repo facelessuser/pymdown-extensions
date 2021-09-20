@@ -18,8 +18,8 @@ class TestArithmatexBlockEscapes(util.MdCase):
             $$3+2\$$
             ''',
             r'''
-            <p>$<span><span class="MathJax_Preview">3+2\$</span><script type="math/tex">3+2\$</script></span></p>
-            ''',
+            <p>$<span class="arithmatex"><span class="MathJax_Preview">3+2\$</span><script type="math/tex">3+2\$</script></span></p>
+            ''',  # noqa: E501
             True
         )
 
@@ -44,7 +44,7 @@ class TestArithmatexBlockEscapes(util.MdCase):
             $$3+2\\$$
             ''',
             r'''
-            <div>
+            <div class="arithmatex">
             <div class="MathJax_Preview">3+2\\</div>
             <script type="math/tex; mode=display">3+2\\</script>
             </div>
@@ -73,7 +73,7 @@ class TestArithmatexBlockEscapes(util.MdCase):
             \begin{align}3+2\\\end{align}
             ''',
             r'''
-            <div>
+            <div class="arithmatex">
             <div class="MathJax_Preview">\begin{align}3+2\\\end{align}</div>
             <script type="math/tex; mode=display">\begin{align}3+2\\\end{align}</script>
             </div>
@@ -102,7 +102,7 @@ class TestArithmatexBlockEscapes(util.MdCase):
             \[3+2\\\]
             ''',
             r'''
-            <div>
+            <div class="arithmatex">
             <div class="MathJax_Preview">3+2\\</div>
             <script type="math/tex; mode=display">3+2\\</script>
             </div>

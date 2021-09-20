@@ -117,5 +117,5 @@ jobs:
         sudo apt-get install aspell aspell-en
     - name: Build documents
       run: |
-        npm run-script build
+        npm run build
         python -m tox

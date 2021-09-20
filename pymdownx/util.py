@@ -14,6 +14,8 @@ import re
 import html
 from urllib.request import pathname2url, url2pathname
 from urllib.parse import urlparse
+from functools import wraps
+import warnings
 
 RE_WIN_DRIVE_LETTER = re.compile(r"^[A-Za-z]$")
 RE_WIN_DRIVE_PATH = re.compile(r"^[A-Za-z]:(?:\\.*)?$")
@@ -289,5 +291,35 @@ class PatternSequenceProcessor(InlineProcessor):
         return el, start, end
 
 
-class PymdownxDeprecationWarning(UserWarning):  # pragma: no cover
-    """Deprecation warning for Pymdownx that is not hidden."""
+def deprecated(message, stacklevel=2):  # pragma: no cover
+    """
+    Raise a `DeprecationWarning` when wrapped function/method is called.
+
+    Usage:
+
+        @deprecated("This method will be removed in version X; use Y instead.")
+        def some_method()"
+            pass
+    """
+
+    def _wrapper(func):
+        @wraps(func)
+        def _deprecated_func(*args, **kwargs):
+            warnings.warn(
+                f"'{func.__name__}' is deprecated. {message}",
+                category=DeprecationWarning,
+                stacklevel=stacklevel
+            )
+            return func(*args, **kwargs)
+        return _deprecated_func
+    return _wrapper
+
+
+def warn_deprecated(message, stacklevel=2):  # pragma: no cover
+    """Warn deprecated."""
+
+    warnings.warn(
+        message,
+        category=DeprecationWarning,
+        stacklevel=stacklevel
+    )

@@ -33,8 +33,7 @@ from markdown.preprocessors import Preprocessor
 from markdown.blockprocessors import CodeBlockProcessor
 from markdown.extensions.attr_list import get_attrs
 from markdown import util as md_util
-from .util import PymdownxDeprecationWarning
-import warnings
+from .util import warn_deprecated
 import functools
 import re
 from inspect import signature
@@ -284,10 +283,9 @@ class SuperFencesCodeExtension(Extension):
                 sig = signature(validator)
                 if len(sig.parameters) == 2:
                     legacy = True
-                    warnings.warn(
+                    warn_deprecated(
                         "Old format of custom validators is deprectated, please migrate to the new format"
-                        ": validator(language, inputs, options, attrs, md)",
-                        PymdownxDeprecationWarning
+                        ": validator(language, inputs, options, attrs, md)"
                     )
                 self.extend_super_fences(
                     name,
@@ -373,9 +371,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         if not self.checked_hl_settings:
             self.checked_hl_settings = True
             if not self.config['highlight_code']:
-                warnings.warn(
+                warn_deprecated(
                     "Disabling of 'highlight_code' is deprecated and no longer does anything.",
-                    PymdownxDeprecationWarning
                 )
 
             config = None

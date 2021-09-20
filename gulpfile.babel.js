@@ -53,9 +53,16 @@ const args = yargs(hideBin(process.argv))
 const config = {
   files: {
     scss: "./docs/src/scss/**/*.scss",
-    css: ["./docs/theme/assets/pymdownx-extras/*.css", "./docs/theme/assets/pymdownx-extras/*.css.map"],
+    css: [
+      "./docs/theme/assets/pymdownx-extras/*.css",
+      "./docs/theme/assets/pymdownx-extras/*.css.map"
+    ],
     jsSrc: "./docs/src/js/**/*.js",
-    js: ["./docs/theme/assets/pymdownx-extras/*.js", "./docs/theme/assets/pymdownx-extras/*.js.map"],
+    js: [
+      "./docs/theme/assets/pymdownx-extras/extra-*.js",
+      "./docs/theme/assets/pymdownx-extras/material-extra-*.js",
+      "./docs/theme/assets/pymdownx-extras/*.js.map"
+    ],
     gulp: "gulpfile.babel.js",
     mkdocsSrc: "./docs/src/mkdocs.yml"
   },
@@ -223,7 +230,7 @@ gulp.task("js:build:rollup", () => {
 
   if (config.revision) {
     rollupjs(
-      [`${config.folders.src}/js/extra-uml.js`],
+      [`${config.folders.src}/js/extra-loader.js`],
       {
         dest: "docs/src/markdown/_snippets/.code",
         minify: false,
@@ -235,7 +242,7 @@ gulp.task("js:build:rollup", () => {
   }
 
   return rollupjs(
-    [`${config.folders.src}/js/material-extra-theme.js`, `${config.folders.src}/js/extra-uml.js`],
+    [`${config.folders.src}/js/material-extra-theme.js`, `${config.folders.src}/js/extra-loader.js`],
     {
       dest: `${config.folders.theme}`,
       minify: config.compress.enabled,

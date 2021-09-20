@@ -46,6 +46,7 @@ from markdown import Extension
 from markdown.inlinepatterns import InlineProcessor
 from markdown.blockprocessors import BlockProcessor
 from markdown import util as md_util
+from functools import partial
 import xml.etree.ElementTree as etree
 from . import util
 import re
@@ -69,28 +70,115 @@ def _escape(txt):
     return txt
 
 
-def _inline_mathjax_format(math, preview=False):
+# Formatters usable with InlineHilite
+@util.deprecated(
+    "The inline MathJax Preview formatter has been deprecated in favor of the configurable 'arithmatex_fenced_format'. "
+    "Please see relevant documentation for more information on how to switch before this function is "
+    "removed in the future."
+)
+def inline_mathjax_preview_format(math, language='math', class_name='arithmatex', md=None):
+    """Inline math formatter with preview."""
+
+    return _inline_mathjax_format(math, preview=True)
+
+
+@util.deprecated(
+    "The inline MathJax formatter has been deprecated in favor of the configurable 'arithmatex_fenced_format'. "
+    "Please see relevant documentation for more information on how to switch before this function is "
+    "removed in the future."
+)
+def inline_mathjax_format(math, language='math', class_name='arithmatex', md=None):
     """Inline math formatter."""
 
+    return _inline_mathjax_format(math, preview=False)
+
+
+@util.deprecated(
+    "The inline generic math formatter has been deprecated in favor of the configurable 'arithmatex_inline_format'. "
+    "Please see relevant documentation for more information on how to switch before this function is "
+    "removed in the future."
+)
+def inline_generic_format(math, language='math', class_name='arithmatex', md=None, **kwargs):
+    """Inline generic formatter."""
+
+    return _inline_generic_format(math, language, class_name, md, **kwargs)
+
+
+def _inline_mathjax_format(math, language='math', class_name='arithmatex', md=None, tag='span', preview=False):
+    """Inline math formatter."""
+
+    el = etree.Element(tag, {'class': 'arithmatex'})
     if preview:
-        el = etree.Element('span')
         pre = etree.SubElement(el, 'span', {'class': 'MathJax_Preview'})
         pre.text = md_util.AtomicString(math)
-        script = etree.SubElement(el, 'script', {'type': 'math/tex'})
-        script.text = md_util.AtomicString(math)
-    else:
-        el = etree.Element('script', {'type': 'math/tex'})
-        el.text = md_util.AtomicString(math)
+    script = etree.SubElement(el, 'script', {'type': 'math/tex'})
+    script.text = md_util.AtomicString(math)
     return el
 
 
-def _fence_mathjax_format(math, preview=False):
+def _inline_generic_format(math, language='math', class_name='arithmatex', md=None, wrap='\\({}\\)', tag='span'):
+    """Inline generic formatter."""
+
+    el = etree.Element(tag, {'class': class_name})
+    el.text = md_util.AtomicString(wrap.format(math))
+    return el
+
+
+def arithmatex_inline_format(**kwargs):
+    """Specify which type of formatter you want and the wrapping tag."""
+
+    mode = kwargs.get('mode', 'generic')
+    tag = kwargs.get('tag', 'span')
+    preview = kwargs.get('preview', False)
+
+    if mode == 'generic':
+        return partial(_inline_generic_format, tag=tag)
+    elif mode == 'mathjax':
+        return partial(_inline_mathjax_format, preview=preview)
+
+
+# Formatters usable with SuperFences
+@util.deprecated(
+    "The fenced MathJax preview formatter has been deprecated in favor of the configurable 'arithmatex_fenced_format'. "
+    "Please see relevant documentation for more information on how to switch before this function is "
+    "removed in the future."
+)
+def fence_mathjax_preview_format(math, language='math', class_name='arithmatex', options=None, md=None, **kwargs):
+    """Block MathJax formatter with preview."""
+
+    return _fence_mathjax_format(math, preview=True)
+
+
+@util.deprecated(
+    "The fenced MathJax preview formatter has been deprecated in favor of the configurable 'arithmatex_fenced_format'. "
+    "Please see relevant documentation for more information on how to switch before this function is "
+    "removed in the future."
+)
+def fence_mathjax_format(math, language='math', class_name='arithmatex', options=None, md=None, **kwargs):
+    """Block MathJax formatter."""
+
+    return _fence_mathjax_format(math, preview=False)
+
+
+@util.deprecated(
+    "The generic math formatter has been deprecated in favor of the configurable 'arithmatex_fenced_format'. "
+    "Please see relevant documentation for more information on how to switch before this function is "
+    "removed in the future."
+)
+def fence_generic_format(math, language='math', class_name='arithmatex', options=None, md=None, **kwargs):
+    """Generic block formatter."""
+
+    return _fence_generic_format(math, language, class_name, options, md, **kwargs)
+
+
+def _fence_mathjax_format(
+    math, language='math', class_name='arithmatex', options=None, md=None, preview=False, tag="div", **kwargs
+):
     """Block math formatter."""
 
-    text = ''
+    text = '<{} class="arithmatex">\n'.format(tag)
     if preview:
         text += (
-            '<div>\n' +
             '<div class="MathJax_Preview">\n' +
             _escape(math) +
             '\n</div>\n'
@@ -101,48 +189,13 @@ def _fence_mathjax_format(math, preview=False):
         math +
         '\n</script>\n'
     )
-    if preview:
-        text += '</div>'
+    text += '</div>'
 
     return text
 
 
-# Formatters usable with InlineHilite
-def inline_mathjax_preview_format(math, language='math', class_name='arithmatex', md=None):
-    """Inline math formatter with preview."""
-
-    return _inline_mathjax_format(math, True)
-
-
-def inline_mathjax_format(math, language='math', class_name='arithmatex', md=None):
-    """Inline math formatter."""
-
-    return _inline_mathjax_format(math, False)
-
-
-def inline_generic_format(math, language='math', class_name='arithmatex', md=None, wrap='\\(%s\\)'):
-    """Inline generic formatter."""
-
-    el = etree.Element('span', {'class': class_name})
-    el.text = md_util.AtomicString(wrap % math)
-    return el
-
-
-# Formatters usable with SuperFences
-def fence_mathjax_preview_format(math, language='math', class_name='arithmatex', options=None, md=None, **kwargs):
-    """Block MathJax formatter with preview."""
-
-    return _fence_mathjax_format(math, True)
-
-
-def fence_mathjax_format(math, language='math', class_name='arithmatex', options=None, md=None, **kwargs):
-    """Block MathJax formatter."""
-
-    return _fence_mathjax_format(math, False)
-
-
-def fence_generic_format(
-    math, language='math', class_name='arithmatex', options=None, md=None, wrap='\\[\n%s\n\\]', **kwargs
+def _fence_generic_format(
+    math, language='math', class_name='arithmatex', options=None, md=None, wrap='\\[\n{}\n\\]', tag='div', **kwargs
 ):
     """Generic block formatter."""
 
@@ -156,13 +209,26 @@ def fence_generic_format(
     classes = ' class="{}"'.format(' '.join(classes))
     attrs = ' ' + ' '.join('{k}="{v}"'.format(k=k, v=v) for k, v in attrs.items()) if attrs else ''
 
-    return '<div%s%s%s>%s</div>' % (id_value, classes, attrs, (wrap % math))
+    return '<{}{}{}{}>{}</{}>'.format(tag, id_value, classes, attrs, wrap.format(math), tag)
+
+
+def arithmatex_fenced_format(**kwargs):
+    """Specify which type of formatter you want and the wrapping tag."""
+
+    mode = kwargs.get('mode', 'generic')
+    tag = kwargs.get('tag', 'div')
+    preview = kwargs.get('preview', False)
+
+    if mode == 'generic':
+        return partial(_fence_generic_format, tag=tag)
+    elif mode == 'mathjax':
+        return partial(_fence_mathjax_format, tag=tag, preview=preview)
 
 
 class InlineArithmatexPattern(InlineProcessor):
     """Arithmatex inline pattern handler."""
 
-    ESCAPED_BSLASH = '%s%s%s' % (md_util.STX, ord('\\'), md_util.ETX)
+    ESCAPED_BSLASH = '{}{}{}'.format(md_util.STX, ord('\\'), md_util.ETX)
 
     def __init__(self, pattern, config):
         """Initialize."""
@@ -170,7 +236,10 @@ class InlineArithmatexPattern(InlineProcessor):
         # Generic setup
         self.generic = config.get('generic', False)
         wrap = config.get('tex_inline_wrap', ["\\(", "\\)"])
-        self.wrap = wrap[0] + '%s' + wrap[1]
+        self.wrap = (
+            wrap[0].replace('{', '}}').replace('}', '}}') + '{}' + wrap[1].replace('{', '}}').replace('}', '}}')
+        )
+        self.inline_tag = config.get('inline_tag', 'span')
 
         # Default setup
         self.preview = config.get('preview', True)
@@ -192,9 +261,9 @@ class InlineArithmatexPattern(InlineProcessor):
             math = m.group(6)
 
         if self.generic:
-            return inline_generic_format(math, wrap=self.wrap), m.start(0), m.end(0)
+            return _inline_generic_format(math, wrap=self.wrap, tag=self.inline_tag), m.start(0), m.end(0)
         else:
-            return _inline_mathjax_format(math, self.preview), m.start(0), m.end(0)
+            return _inline_mathjax_format(math, tag=self.inline_tag, preview=self.preview), m.start(0), m.end(0)
 
 
 class BlockArithmatexProcessor(BlockProcessor):
@@ -206,7 +275,10 @@ class BlockArithmatexProcessor(BlockProcessor):
         # Generic setup
         self.generic = config.get('generic', False)
         wrap = config.get('tex_block_wrap', ['\\[', '\\]'])
-        self.wrap = wrap[0] + '%s' + wrap[1]
+        self.wrap = (
+            wrap[0].replace('{', '}}').replace('}', '}}') + '{}' + wrap[1].replace('{', '}}').replace('}', '}}')
+        )
+        self.block_tag = config.get('block_tag', 'div')
 
         # Default setup
         self.preview = config.get('preview', False)
@@ -225,9 +297,9 @@ class BlockArithmatexProcessor(BlockProcessor):
     def mathjax_output(self, parent, math):
         """Default MathJax output."""
 
+        grandparent = parent
+        parent = etree.SubElement(grandparent, self.block_tag, {'class': 'arithmatex'})
         if self.preview:
-            grandparent = parent
-            parent = etree.SubElement(grandparent, 'div')
             preview = etree.SubElement(parent, 'div', {'class': 'MathJax_Preview'})
             preview.text = md_util.AtomicString(math)
         el = etree.SubElement(parent, 'script', {'type': 'math/tex; mode=display'})
@@ -236,8 +308,8 @@ class BlockArithmatexProcessor(BlockProcessor):
     def generic_output(self, parent, math):
         """Generic output."""
 
-        el = etree.SubElement(parent, 'div', {'class': 'arithmatex'})
-        el.text = md_util.AtomicString(self.wrap % math)
+        el = etree.SubElement(parent, self.block_tag, {'class': 'arithmatex'})
+        el.text = md_util.AtomicString(self.wrap.format(math))
 
     def run(self, parent, blocks):
         """Find and handle block content."""
@@ -288,7 +360,9 @@ class ArithmatexExtension(Extension):
             'preview': [
                 True,
                 "Insert a preview for scripts. - Default: False"
-            ]
+            ],
+            'block_tag': ['div', "Specify wrapper tag - Default 'div'"],
+            'inline_tag': ['span', "Specify wrapper tag - Default 'span'"]
         }
 
         super(ArithmatexExtension, self).__init__(*args, **kwargs)

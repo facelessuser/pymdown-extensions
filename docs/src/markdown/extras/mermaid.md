@@ -7,7 +7,7 @@
     This is provided to help users get Mermaid running, but we do not officially offer technical support for Mermaid.
     Any issues encounter will require the user to debug it themselves.
 
-    Thee may or may not be issues using an older or newer version of Mermaid than what we have documented here. We may
+    There may or may not be issues using an older or newer version of Mermaid than what we have documented here. We may
     not be always be up to date with the latest and greatest Mermaid version.
 
     We would be happy to accept pull requests that offer to improve things here or to correct misinformation.
@@ -16,11 +16,12 @@ In [SuperFences](../extensions/superfences.md) we cover [custom fences](../exten
 and provide an example for using [Mermaid diagrams](../extensions/superfences.md#uml-diagram-example). What we showed in
 the example is the bare minimum required to get Mermaid working. While our example was mainly meant to instruct users on
 how to use custom fences, it was not our intent to give an in depth explanation on how to get Mermaid setup and working
-in the best way possible. It especially does not go into quirks of Mermaid and how to get around common issues.
+in the best way possible. To be honest, Mermaid is a little buggy and required some workarounds to alleviate some if its
+quirks.
 
-In general, we leave setting up custom fences for the user to explore, but since we've gone down this path already, and
-find Mermaid so useful, we thought we'd share some some additional information in case there is a strong desire from any
-of our users to implement a robust Mermaid solution.
+In general, we leave setting up custom fences for the user to explore, but we do get asked occasionally how to get
+Mermaid working, and what we are doing, so we thought we'd share some some additional information in case there is a
+strong desire from any of our users to implement a robust Mermaid solution.
 
 ## Setup
 
@@ -196,11 +197,11 @@ seems to be what Mermaid does in their own [documents][mermaid].
 We do some configuration via the initialization API command to tweak the diagrams a little. This includes theming and
 disabling of problematic features.
 
-We only include the Mermaid library and the configuration options in pages that are actively rendering Mermaid diagrams.
-This is to cut down on loading libraries in pages that aren't utilizing them. We do this by using
-[Snippets](../extensions/snippets.md). We simply attach the necessary [snippet][mermaid-config] at the bottom of the
-page. Our custom loader will only execute if the Mermaid library is loaded, so simply including the library will
-trigger it.
+We include the Mermaid library normally, but use a custom loader as we wrap our diagrams in a non-standard way, but more
+importantly, to work around some issues. The loader actually handles other stuff too, so it is not just Mermaid
+specific.
+
+First, we setup our configuration which can be found [here][mermaid-config].
 
 !!! note "Configuration Notes"
 
@@ -226,12 +227,14 @@ While using Mermaid, we've found a couple of issues which we were able to solve 
 wrap them in a shadow DOM, and insert them into the current document.
 
 In order to use the loader, it should be attached to a `DOMContentLoaded` event to execute only after the document is
-loaded. We create our own [`onReady`][onready-event] function that checks if the Mermaid library is loaded, and only if
-it is, we execute our loader.
+loaded. We bind our logic to this event in our [loader][onready-event] function that checks if the Mermaid library is
+loaded, and only if it is, we execute the payload.
 
 We also create an `observer` event that watches for when the attribute that controls the color scheme on our site
 changes. When a color change occurs, we run our loader again and regenerate our diagrams. This is possible because we
 hide away the original content in our shadow DOM along with the generated diagram.
+
+The issues we are working around withing Mermaid are found below:
 
 !!! bug "Issues"
 
@@ -273,17 +276,22 @@ that we cannot load the Mermaid library from the specified CDN.
     JavaScript syntax, but then package it in older JavaScript syntax which is more widely supported. You can always
     check out the original that this is generated from by looking [here][onready-event] and [here][mermaid-loader].
 
+    Again, it is doing more than just Mermaid stuff, but maybe it will be found helpful.
+
     ```{.js .md-max-height}
-    --8<-- ".code/extra-uml.js"
+    --8<-- ".code/extra-loader.js"
     ```
 
 ## Putting it All Together
 
-Your document should include the following:
+As mentioned before, this is our own custom setup, it is likely that a user would want to pair this down to the
+essentials, but as also mentioned, we are not providing an official solution, only explaining what we do.
 
-```html
-<script src="https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js"></script>
-<script>
+So, with what we have, we specify our configuration that is used with our MkDocs project, specifically use the Material
+theme. We have some logic to abstract light and dark styles, so in this example, we have a structure that specifies two
+different Mermaid configs as our loader expects it.
+
+```js
 // Optional config
 // If your document is not specifying `data-md-color-scheme` for color schemes,
 // you just need to specify `default`.
@@ -325,20 +333,16 @@ window.mermaidConfig = {
     }
   }
 }
-</script>
-<script>
-// The loader from "Custom Loader" should go here.
-</script>
 ```
 
-If you are using MkDocs, you would probably reference the `extra.js` from your `docs` folder. You may also reference
-your config from your `docs` folder as well, or maybe embed it in your document page directly.
+If you are using MkDocs, you would probably reference the `extra-loader.js` from your `docs` folder. You may also
+reference your config from your `docs` folder as well.
 
 ```yaml
 extra_javascript:
-  - https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js
   - optionalConfig.js
-  - extra.js
+  - https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js
+  - extra-loader.js
 ```
 
 Then in your documents, do something like this:
@@ -364,5 +368,3 @@ graph TD
 ```
 
 --8<-- "links.txt"
-
---8<-- "uml.txt"
