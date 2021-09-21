@@ -87,10 +87,11 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
 
 ## Injecting Classes, IDs, and Attributes
 
-You can use the brace format to specify classes and IDs (IDs are only injectable in non-Pygments code blocks).
-The first provided class is always used as the language class. IDs (`#id`) and arbitrary attributes in the form
-`key="value"` can be inserted as well, but only when Pygments isn't being used as Pygments does not support arbitrary
-attributes or IDs.
+You can use the brace format to specify classes and IDs. The first provided class is always used as the language class.
+IDs (`#id`) can also be inserted as well. Arbitrary attributes in the form `key="value"` can be inserted as well if
+the [`attr_list`][attr-list] extension is enabled, but when using Pygments, only `key="value"` attributes that start
+with the `data-` prefix will be recognized, all others will be treated as options for Pygments and will be rejected if
+not valid.
 
 !!! example "Injecting Classes"
 
@@ -123,9 +124,15 @@ the `#!html code` block.
         ```
         ````
 
+When using Pygments, all extra classes and attributes will be attached to the Pygments' wrapper `#!html <div>`.
+
 When using a built in [custom formatter](#custom-fences), all classes and IDs are injected on to the first element
 `#!html <div>` or `#!html <pre>`. This preserves previous behavior, but you can write your own and inject them in the
 way that suites your needs.
+
+!!! new "New 9.0"
+    Added support for `#id` in Pygments brace headers. Also added support for arbitrary `data-` attributes if the
+    [`attr_list`][attr-list] extension is enabled.
 
 ## Preserve Tabs
 
@@ -261,7 +268,8 @@ So to set showing only every other line number, we could do the following. Line 
         ````
 
 To set every other line as special, you must set the third `linenums` option (specify line start and step before it).
-Special must be a value of n > 0.
+Special must be a value of n > 0. Additionally, you can set this globally with `linenums_special` in the
+[Highlight extension](./highlight.md).
 
 !!! example "Special Line Example"
 
@@ -367,6 +375,239 @@ ending line. You can do multiple ranges and even mix them with non ranges.
                self.baz = None
         ```
         ````
+
+## Code Block Title Headers
+
+!!! new "New 9.0"
+    Title headers are new in version `9.0`.
+
+When Pygments is enabled, a header with a title can be applied with the `title` option. This essentially controls the
+Pygments' `filename` option under the hood. It made more sense to use the term `title` as people can really set any
+arbitrary title, not just filenames.
+
+Pygments will simply output the HTML below. The user is responsible for provided CSS to style the header. Pygments uses
+the class name of `filename` as that is the feature being used under the hood.
+
+```html
+<div class="highlight">
+<span class="filename">Some Title</span>
+<pre><code></code></pre>
+</div>
+```
+
+If using line numbers and the `linenums_style` set to `table` (the default), the title will be inserted in `#!html <th>`
+element at the start of the table set to span both the line number column and the line column.
+
+```html
+<table class="highlighttable">
+<tr>
+  <th colspan="2" class="filename"><div class="highlight"><span class="filename">My title</span></div></th>
+</tr>
+<tr>
+  <td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td>
+  <td class="code"><div class="highlight"><pre><code></code></pre></div></td>
+</tr>
+</table>
+```
+
+!!! example "Title"
+
+    === "Output"
+        ```{.py3 title="My Cool Header"}
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
+
+    === "Markdown"
+        ````
+        ```{.py3 title="My Cool Header"}
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
+        ````
+
+If the `auto_title` option is enabled in the [Highlight extension](./highlight.md), the title will be auto populated
+with the name of the lexer used to highlight the code (unless `title` is manually specified). In the example below,
+no `title` is specified, but the the title is extracted from the Python lexer.
+
+!!! example "Auto Filename"
+
+    === "Output"
+        ````md-render
+        ---
+        extensions:
+        - pymdownx.highlight
+        - pymdownx.superfences
+
+        extension_configs:
+          pymdownx.highlight:
+            auto_title: true
+        ---
+        ```python
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
+        ````
+
+    === "Markdown"
+        ````
+        ```python
+        import foo.bar
+        import boo.baz
+        import foo.bar.baz
+        ```
+        ````
+
+There may be some cases where a Lexer returns a result that is undesired. For example, when a user specifies the `pycon`
+lexer, the title that is returned is quite verbose.
+
+!!! example "Auto Filename"
+
+    === "Output"
+        ````md-render
+        ---
+        extensions:
+        - pymdownx.highlight
+        - pymdownx.superfences
+
+        extension_configs:
+          pymdownx.highlight:
+            auto_title: true
+        ---
+        ```pycon
+        >>> 3 + 3
+        6
+        ```
+        ````
+
+    === "Markdown"
+        ````
+        ```pycon
+        >>> 3 + 3
+        6
+        ```
+        ````
+
+In a case like above, it may be desired to simply use the title `Python`. We can configure the [Highlight extension](./highlight.md)
+to override any auto returned title. Simply create mapping via the `auto_title_map` specifying the title you wish to
+override as the key, and the desired title as the value.
+
+```py3
+extension_configs = {
+    "pymdownx.highlight": {
+        "auto_title": True,
+        "auto_title_map": {
+            "Python Console Session": "Python"
+        }
+    }
+}
+```
+
+Now whenever we use `pycon`, we get "Python" instead of "Python Console Session".
+
+````md-render
+---
+extensions:
+- pymdownx.highlight
+- pymdownx.superfences
+
+extension_configs:
+  pymdownx.highlight:
+    auto_title: true
+    auto_title_map: {"Python Console Session": "Python"}
+---
+```pycon
+>>> 3 + 3
+6
+```
+````
+
+## Pygments Line Anchors and Spans
+
+!!! new "New 9.0"
+    The various line wrapping options are new to version `9.0`.
+
+Pygments offers a couple of options that will wrap lines, line numbers even create anchor links for line numbers.
+SuperFences, when using Pygments, exposes these options under similar names.
+
+In this example, we will wrap each line of code in a span. Pygments will create an ID for each span using the prefix
+that we provide. We simply set the global config option `line_spans` and specify the desired "prefix" (`_codeline`), and
+then every line will be wrapped in a span with the ID `prefix-x-y` where `prefix` is the user specified prefix, `x` is a
+unique number for the code block, and `y` is the line number. After that, it is up to the user to do as they with to
+target the ID with either JavaScript and/or CSS.
+
+=== "Config"
+
+    ```py3
+    extension_configs = {
+        "pymdownx.highlight": {
+            'linenums_style': 'inline',
+            'line_spans': '__codeline'
+        }
+    }
+    ```
+
+=== "Markdown"
+    ````
+    ```{.python linenums="1 1" }
+    import foo
+    ```
+    ````
+
+=== "HTML"
+    ```html
+    <div class="highlight">
+    <pre>
+    <span></span>
+    <code>
+    <span id="__codeline-0-1"><span class="linenos">1</span><span class="kn">import</span> <span class="nn">foo</span>
+    </span>
+    </code>
+    </pre>
+    </div>
+    ```
+
+We can also wrap line numbers with with a link and inject anchors so you can click line numbers and be taken to said
+line. To do this, `anchor_linenums` must be enabled and then a prefix should be provided via `line_anchors`, just like
+`line_spans`, `line_anchors` will produce an ID in the form `prefix-x-y` where `x` is a unique number for the code block
+and `y` is the line number. If you wish to not have the line numbers clickable, and just have the anchors inserted,
+you can omit enabling `anchor_linenums`.
+
+=== "Config"
+
+    ```py3
+    extension_configs = {
+        "pymdownx.highlight": {
+            'linenums_style': 'inline',
+            'line_spans': '__codeline',
+            'line_anchors': '__codelineno',
+            'anchor_linenums': True
+        }
+    }
+    ```
+
+=== "Markdown"
+    ````
+    ```{.python linenums="1 1" }
+    import foo
+    ```
+    ````
+
+=== "HTML"
+    ```html
+    <div class="highlight">
+    <pre>
+    <span></span>
+    <code>
+    <span id="__codeline-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><a href="#__codelineno-0-1"><span class="linenos">1</span></a><span class="kn">import</span> <span class="nn">foo</span>
+    </span>
+    </code>
+    </pre>
+    </div>
+    ```
 
 ## Custom Fences
 
@@ -474,22 +715,22 @@ conditionally control logic within the formatter. If no validator is defined, th
 inputs to `attrs`.
 
 SuperFences will only pass `attrs` to a formatter if an attribute style header is used for a fenced block
-(` ``` {.lang attr="value"}`) and the `attr_list` extension is enabled. Attribute are not supported in the form
-(` ```lang attr=value`) and will cause the parsing of the fenced block to abort.
+(` ``` {.lang attr="value"}`) and the [`attr_list`][attr-list] extension is enabled. Attribute are not supported in the
+form (` ```lang attr=value`) and will cause the parsing of the fenced block to abort.
 
 Custom options can be used as keys with quoted values (`key="value"`), or as keys with no value (`key`). If a key is
 given with no value, the value will be the key value. SuperFences will parse the options in the fence and then pass them
 to the validator. If the validator returns true, the options will be accepted and later passed to the formatter. `attrs`
-will only be passed to the formatter if the `attr_list` extension is enabled. `attrs` will also be ignored during
-Pygments highlighting.
+will only be passed to the formatter if the [`attr_list`][attr-list] extension is enabled. `attrs` will also be ignored
+during Pygments highlighting.
 
 Assuming a validator fails, the next `validator`/`formatter` defined will be tried.
 
 For a contrived example: if we wanted to define a custom fence named `test` that accepts an option `opt` that can only
 be assigned a value of `A`, we could define the validator below. Notice that if we get an input that matches `opt`, but
 doesn't validate with the appropriate value, we abort handling the fenced block for this `validator`/`formatter` by
-returning `False`. All other inputs are assigned as `attrs` which will be passed to the formatter if the `attr_list`
-extension is enabled.
+returning `False`. All other inputs are assigned as `attrs` which will be passed to the formatter if the
+[`attr_list`][attr-list] extension is enabled.
 
 ```py3
 def custom_validator(language, inputs, options, attrs, md):
@@ -537,10 +778,11 @@ test
         - `options`: a dictionary to which all valid options should be assigned to.
         - `attrs`: a dictionary to which all valid attributes should be assigned to.
         - `md`: the `Markdown` object.
-    - If the `attr_list` extension is enabled and the brace style header is used, any key/value pairs that were
-      assigned as attributes by the `validator` will be passed to the `formatter`'s `attrs` parameter.
+    - If the [`attr_list`][attr-list] extension is enabled and the brace style header is used, any key/value pairs that
+      were assigned as attributes by the `validator` will be passed to the `formatter`'s `attrs` parameter.
     - Options in the form of `key=` (which have no value) will are no longer be allowed. A `key` with no value will
-      assume the `value` to be the `key` name. This brings consistency as options are now parsed with `attr_list`.
+      assume the `value` to be the `key` name. This brings consistency as options are now parsed with
+      [`attr_list`][attr-list].
     - If a `validator` fails, the next `validator`/`formatter` pair will be tired.
 
 ### UML Diagram Example
@@ -619,15 +861,4 @@ Option                         | Type         | Default       | Description
 `css_class`                    | string       | `#!py3 ''`    | Class name is applied to the wrapper element of the code. If configured, this setting will override the `css_class` option of Highlight. If nothing is configured here or in Highlight, the class `highlight` will be used.
 `disable_indented_code_blocks` | bool         | `#!py3 False` | Disables Python Markdown's indented code block parsing.  This is nice if you only ever use fenced blocks.
 `custom_fences`                | [dictionary] | `#!py3 []`    | Custom fences.
-`highlight_code`               | bool         | `#!py3 True`  | Enable or disable code highlighting.
 `preserve_tabs`                | bool         | `#!py3 False` | Experimental feature that preserves tabs in fenced code blocks.
-`legacy_tab_classes`           | bool         | `#!py3 False` | Use legacy style classes for the deprecated tabbed code feature via `tab="name"`. This option will be dropped when the code tab interface is fully dropped for the general purpose [tabbed](./tabbed.md) extension.
-
-!!! warning "Deprecated in 7.0"
-    While `legacy_tab_classes` is a new option, it is also tied to the deprecated code tab feature of SuperFences. It is
-    only provided as an option to help with the transition of the code tab feature being deprecated in favor of the
-    [Tabbed](./tabbed.md) extension. When the code tabs are removed from SuperFences, so will
-    `legacy_tab_classes`.
-
-    `highlight_code` is also disabled and now does nothing. If a non-highlighted variant of fences is preferred, it is
-    recommended to use [custom fences](#custom-fences). This option will be removed in a future version.

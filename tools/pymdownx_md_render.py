@@ -58,14 +58,13 @@ def get_frontmatter(text):
 def md_sub_render(src="", language="", class_name=None, options=None, md="", **kwargs):
     """Formatter wrapper."""
     try:
-        html = '<div class="{}">{}</div>'
         fm, text = get_frontmatter(src)
         md = markdown.markdown(
             text,
             extensions=fm.get('extensions', []),
             extension_configs=fm.get('extension_configs', {})
         )
-        return html.format(class_name, md)
+        return md
     except Exception:
         import traceback
         print(traceback.format_exc())

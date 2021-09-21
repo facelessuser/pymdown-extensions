@@ -111,4 +111,42 @@
       }
     }
   }
+
+  // Filename span
+  .highlight span.filename {
+
+    // Adjust margins and and general container look of code block
+    + pre {
+      margin-top: 0;
+
+      code {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+    }
+
+    // Style the filename banner
+    position: relative;
+    display: block;
+    margin-top: 1em;
+    padding: px2em(8px) px2em(16px, 13.6px) px2em(8px) px2em(40px, 13.6px);
+    font-weight: 700;
+    font-size: px2rem(13.6px);
+    background-color: var(--md-code-special-bg-color);
+    border-top-left-radius: px2rem(2px);
+    border-top-right-radius: px2rem(2px);
+
+    // Add code icon
+    &::before {
+      position: absolute;
+      left: px2em(12px, 13.6px);
+      width: px2em(20px, 13.6px);
+      height: px2em(20px, 13.6px);
+      background-color: var(--md-default-fg-color);
+      mask-image: svg-load("@mdi/svg/svg/console.svg");
+      mask-repeat: no-repeat;
+      mask-size: contain;
+      content: "";
+    }
+  }
 }

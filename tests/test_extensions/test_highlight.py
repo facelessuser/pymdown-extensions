@@ -2,6 +2,92 @@
 from .. import util
 
 
+class TestHighlightGuess(util.MdCase):
+    """Test that highlighting works with guessing."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'guess_lang': True
+        }
+    }
+
+    def test_guess(self):
+        """Test guessing."""
+
+        self.check_markdown(
+            r'''
+            ```
+            import test
+            test.test()
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
+            </code></pre></div>
+            ''',
+            True
+        )
+
+
+class TestHighlightAutoTitle(util.MdCase):
+    """Test title cases."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'auto_title': True
+        }
+    }
+
+    def test_auto_tile(self):
+        """Test auto title."""
+
+        self.check_markdown(
+            r'''
+            ```pycon
+            >>> import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><span class="filename">Python Console Session</span><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestHighlightAutoTitleMap(util.MdCase):
+    """Test title cases."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'auto_title': True,
+            "auto_title_map": {
+                "Python Console Session": "Python"
+            }
+        }
+    }
+
+    def test_auto_tile_map(self):
+        """Test auto title."""
+
+        self.check_markdown(
+            r'''
+            ```pycon
+            >>> import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+
 class TestHighlightInline(util.MdCase):
     """Test highlight inline."""
 

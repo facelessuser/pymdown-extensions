@@ -1,7 +1,5 @@
 """Test cases for SuperFences."""
 from .. import util
-import unittest
-import markdown
 import pymdownx.arithmatex as arithmatex
 import pymdownx.superfences as superfences
 import warnings
@@ -48,18 +46,373 @@ def custom_validator(language, inputs, options, attrs, md):
     return okay
 
 
-def custom_validator_legacy(language, options):
-    """Custom validator."""
+class TestHighlightTitle(util.MdCase):
+    """Test title cases."""
 
-    okay = True
-    for k in options.keys():
-        if k != 'opt':
-            okay = False
-            break
-    if okay:
-        if options['opt'] != "A":
-            okay = False
-    return okay
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+
+    def test_title(self):
+        """Test auto title."""
+
+        self.check_markdown(
+            r'''
+            ```pycon title="My title"
+            >>> import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><span class="filename">My title</span><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_title_table(self):
+        """Test auto title."""
+
+        self.check_markdown(
+            r'''
+            ```pycon title="My title" linenums="1"
+            >>> import test
+            ```
+            ''',
+            r'''
+            <table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">My title</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            </td></tr></table>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestHighlightAutoTitleOverride(util.MdCase):
+    """Test title cases."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'auto_title': True,
+            "auto_title_map": {
+                "Python Console Session": "Python"
+            }
+        }
+    }
+
+    def test_auto_tile(self):
+        """Test auto title."""
+
+        self.check_markdown(
+            r'''
+            ```{.python title="My Title"}
+            import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><span class="filename">My Title</span><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_auto_tile_map(self):
+        """Test auto title."""
+
+        self.check_markdown(
+            r'''
+            ```{.pycon title="My Title"}
+            >>> import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><span class="filename">My Title</span><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestHighlightLineWrapsInline(util.MdCase):
+    """Test highlight line wraps."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'line_spans': '__my_span',
+            'linenums_style': 'inline'
+        }
+    }
+
+    def test_linespans(self):
+        """Test wrapping a line in line spans."""
+
+        self.check_markdown(
+            r'''
+            ```python linenums="2"
+            import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><pre><span></span><code><span id="__my_span-0-2"><span class="linenos">2</span><span class="kn">import</span> <span class="nn">test</span>
+            </span></code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestHighlightLineWrapsPymdownxInline(util.MdCase):
+    """Test highlight line wraps."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'line_spans': '__my_span',
+            'linenums_style': 'pymdownx-inline'
+        }
+    }
+
+    def test_linespans(self):
+        """Test wrapping a line in line spans."""
+
+        self.check_markdown(
+            r'''
+            ```python linenums="2"
+            import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><pre><span></span><code><span id="__my_span-0-2"><span class="linenos" data-linenos="2 "></span><span class="kn">import</span> <span class="nn">test</span>
+            </span></code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestHighlightLineWrapsPymdownsTable(util.MdCase):
+    """Test highlight line wraps."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'line_spans': '__my_span',
+            'linenums_style': 'table'
+        }
+    }
+
+    def test_linespans(self):
+        """Test wrapping a line in line spans."""
+
+        self.check_markdown(
+            r'''
+            ```python linenums="2"
+            import test
+            ```
+            ''',
+            r'''
+            <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span id="__my_span-0-2"><span class="kn">import</span> <span class="nn">test</span>
+            </span></code></pre></div>
+            </td></tr></table>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestHighlightLineAnchorsInline(util.MdCase):
+    """Test highlight line wraps."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'line_anchors': '__my_span',
+            'linenums_style': 'inline'
+        }
+    }
+
+    def test_linespans(self):
+        """Test wrapping a line in line spans."""
+
+        self.check_markdown(
+            r'''
+            ```python linenums="2"
+            import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><pre><span></span><code><a id="__my_span-0-2" name="__my_span-0-2"></a><span class="linenos">2</span><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestHighlightLineAnchorsPymdownxInline(util.MdCase):
+    """Test highlight line wraps."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'line_anchors': '__my_span',
+            'linenums_style': 'pymdownx-inline'
+        }
+    }
+
+    def test_linespans(self):
+        """Test wrapping a line in line spans."""
+
+        self.check_markdown(
+            r'''
+            ```python linenums="2"
+            import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><pre><span></span><code><a id="__my_span-0-2" name="__my_span-0-2"></a><span class="linenos" data-linenos="2 "></span><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestHighlightLineAnchorsPymdownsTable(util.MdCase):
+    """Test highlight line wraps."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'line_anchors': '__my_span',
+            'linenums_style': 'table'
+        }
+    }
+
+    def test_linespans(self):
+        """Test wrapping a line in line spans."""
+
+        self.check_markdown(
+            r'''
+            ```python linenums="2"
+            import test
+            ```
+            ''',
+            r'''
+            <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__my_span-0-2" name="__my_span-0-2"></a><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            </td></tr></table>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestHighlightAnchorLinenumInline(util.MdCase):
+    """Test highlight line wraps."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'anchor_linenums': True,
+            'linenums_style': 'inline'
+        }
+    }
+
+    def test_linespans(self):
+        """Test wrapping a line in line spans."""
+
+        self.check_markdown(
+            r'''
+            ```python linenums="2"
+            import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><pre><span></span><code><a id="__codelineno-0-2" name="__codelineno-0-2"></a><a href="#__codelineno-0-2"><span class="linenos">2</span></a><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestHighlightAnchorLinenumsPymdownxInline(util.MdCase):
+    """Test highlight line wraps."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'anchor_linenums': True,
+            'linenums_style': 'pymdownx-inline'
+        }
+    }
+
+    def test_linespans(self):
+        """Test wrapping a line in line spans."""
+
+        self.check_markdown(
+            r'''
+            ```python linenums="2"
+            import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><pre><span></span><code><a id="__codelineno-0-2" name="__codelineno-0-2"></a><a href="#__codelineno-0-2"><span class="linenos" data-linenos="2 "></span></a><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestHighlightAnchorLinenumsPymdownsTable(util.MdCase):
+    """Test highlight line wraps."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'anchor_linenums': True,
+            'linenums_style': 'table'
+        }
+    }
+
+    def test_linespans(self):
+        """Test wrapping a line in line spans."""
+
+        self.check_markdown(
+            r'''
+            ```python linenums="2"
+            import test
+            ```
+            ''',
+            r'''
+            <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-2">2</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            </td></tr></table>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestHighlightAnchorLinenumNameInline(util.MdCase):
+    """Test highlight line wraps."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'anchor_linenums': True,
+            'line_anchors': '__my_span',
+            'linenums_style': 'inline'
+        }
+    }
+
+    def test_linespans(self):
+        """Test wrapping a line in line spans."""
+
+        self.check_markdown(
+            r'''
+            ```python linenums="2"
+            import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><pre><span></span><code><a id="__my_span-0-2" name="__my_span-0-2"></a><a href="#__my_span-0-2"><span class="linenos">2</span></a><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
 
 
 class TestHighlightLines(util.MdCase):
@@ -197,9 +550,9 @@ class TestSuperFencesClassesIds(util.MdCase):
             ```
             ''',
             r'''
-            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <div id="id" class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
             </code></pre></div>
-            ''',
+            ''',  # noqa: E501
             True
         )
 
@@ -213,9 +566,9 @@ class TestSuperFencesClassesIds(util.MdCase):
             ```
             ''',
             r'''
-            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <div id="id" class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
             </code></pre></div>
-            ''',
+            ''',  # noqa: E501
             True
         )
 
@@ -252,14 +605,14 @@ class TestSuperFencesClassesIdsAttrList(util.MdCase):
             ```
             ''',
             r'''
-            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <div id="id" class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
             </code></pre></div>
-            ''',
+            ''',  # noqa: E501
             True
         )
 
-    def test_attr(self):
-        """Test extra attributes."""
+    def test_bad_attr(self):
+        """Test bad attribute."""
 
         self.check_markdown(
             r'''
@@ -268,9 +621,25 @@ class TestSuperFencesClassesIdsAttrList(util.MdCase):
             ```
             ''',
             r'''
-            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <div id="id" class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
             </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_data_attr(self):
+        """Test data attributes."""
+
+        self.check_markdown(
+            r'''
+            ```{.python #id data-attr="test"}
+            import test
+            ```
             ''',
+            r'''
+            <div id="id" class="highlight" data-attr="test"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
             True
         )
 
@@ -388,49 +757,6 @@ class TestSuperFencesClassesIdsAttrListNoPygmentsOnPre(util.MdCase):
         )
 
 
-class TestWaringings(unittest.TestCase):
-    """Test warnings."""
-
-    def test_highlight_code(self):
-        """Test highlight code warning."""
-
-        with warnings.catch_warnings(record=True) as w:
-            warnings.simplefilter("always")
-
-            markdown.Markdown(
-                extensions=['pymdownx.superfences'],
-                extension_configs={'pymdownx.superfences': {'highlight_code': False}}
-            ).convert('```\ntest\n```\n')
-
-            self.assertTrue(len(w) == 1)
-            self.assertTrue(issubclass(w[-1].category, DeprecationWarning))
-
-    def test_legacy_validator_code(self):
-        """Test legacy validator."""
-
-        with warnings.catch_warnings(record=True) as w:
-            warnings.simplefilter("always")
-
-            markdown.Markdown(
-                extensions=['pymdownx.superfences'],
-                extension_configs={
-                    'pymdownx.superfences': {
-                        'custom_fences': [
-                            {
-                                'name': 'test',
-                                'class': 'test',
-                                'format': custom_format,
-                                'validator': custom_validator_legacy
-                            }
-                        ]
-                    }
-                }
-            ).convert('```\ntest\n```\n')
-
-            self.assertTrue(len(w) == 1)
-            self.assertTrue(issubclass(w[-1].category, DeprecationWarning))
-
-
 class TestSuperFencesBad(util.MdCase):
     """Test bad options."""
 
@@ -471,71 +797,6 @@ class TestSuperFencesBad(util.MdCase):
             import foo.bar
             import boo.baz
             import foo.bar.baz</code></p>
-            ''',
-            True
-        )
-
-
-class TestSuperFencesCustomLegacy(util.MdCase):
-    """Test custom legacy validator."""
-
-    extension = ['pymdownx.superfences']
-    extension_configs = {
-        'pymdownx.superfences': {
-            'custom_fences': [
-                {
-                    'name': 'test',
-                    'class': 'test',
-                    'format': custom_format,
-                    'validator': custom_validator_legacy
-                }
-            ]
-        }
-    }
-
-    def test_bad_options(self):
-        """Test bad options."""
-
-        self.check_markdown(
-            r'''
-            ```test bad="bad"
-            test
-            ```
-            ''',
-            r'''
-            <p><code>test bad="bad"
-            test</code></p>
-            ''',
-            True
-        )
-
-    def test_bad_option_value(self):
-        """Test bad options."""
-
-        self.check_markdown(
-            r'''
-            ```test opt="B"
-            test
-            ```
-            ''',
-            r'''
-            <p><code>test opt="B"
-            test</code></p>
-            ''',
-            True
-        )
-
-    def test_custom_options(self):
-        """Test options."""
-
-        self.check_markdown(
-            r'''
-            ```test opt="A"
-            test
-            ```
-            ''',
-            r'''
-            <div lang="test" class_name="class-test", option="A">test</div>
             ''',
             True
         )

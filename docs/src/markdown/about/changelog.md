@@ -1,6 +1,6 @@
 # Changelog
 
-## 8.3
+## 9.0
 
 - **NEW**: Arithmatex: Wrap MathJax "script" format (non-preview) with a container element just like all other
   Arithmatex output formats.
@@ -9,6 +9,19 @@
 - **NEW**: Arithmatex: Add options to override HTML element container type of inline and block math.
 - **NEW**: Arithmatex: Add new formatter functions intended to replace old math fenced/inline block formatters. New
   formatter functions are configurable. All others are marked as deprecated and will be removed at some future date.
+- **NEW**: Highlight: Add support for the Pygments option `linespans`.
+- **NEW**: Highlight: Add support for Pygments option `lineanchors`.
+- **NEW**: Highlight: Add support for Pygments option `anchorlinenos`.
+- **NEW**: Highlight: Remove `legacy_no_wrap_code` option.
+- **NEW**: Add support for generating title headers pulled from the Pygments lexer for code blocks. Feature can be
+  enabled via the new `auto_title` option. If a specific name is not preferred, these names can be overridden via
+  a user defined mapping called `auto_title_map`.
+- **NEW**: SuperFences: Allow setting a title, or overriding an auto title via the new `title` option in a fenced code
+  header.
+- **NEW**: SuperFences: Allow adding ID and arbitrary `data-` attributes on Pygments code blocks. The latter requires
+  the `attr_list` extension to be enabled.
+- **NEW**: SuperFences: Removed old deprecated option `highlight_code` which no longer did anything.
+- **NEW**: SuperFences: Remove legacy code meant to help with transitioning to new custom fence function format.
 - **FIX**: BetterEm: Fix some complex cases related to "smart" logic. (#1413)
 - **FIX**: Highlight: Fix issue that occurs when showing only nth line numbers and using `pymdownx-inline`. Lines not
   showing a line number would not render with the proper leading space.
