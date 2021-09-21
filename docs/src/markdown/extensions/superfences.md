@@ -382,7 +382,7 @@ ending line. You can do multiple ranges and even mix them with non ranges.
     Title headers are new in version `9.0`.
 
 When Pygments is enabled, a header with a title can be applied with the `title` option. This essentially controls the
-Pygments `filename` option under the hood. It made more sense to use the term `title` as people can really set any
+Pygments' `filename` option under the hood. It made more sense to use the term `title` as people can really set any
 arbitrary title, not just filenames.
 
 Pygments will simply output the HTML below. The user is responsible for provided CSS to style the header. Pygments uses
@@ -525,7 +525,7 @@ extension_configs:
 ```
 ````
 
-## Pygments Line Wrappers
+## Pygments Line Anchors and Spans
 
 !!! new "New 9.0"
     The various line wrapping options are new to version `9.0`.
