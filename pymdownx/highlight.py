@@ -356,6 +356,8 @@ class Highlight(object):
             if title is None and self.auto_title:
                 name = " ".join([w.title() if w.islower() else w for w in lexer.name.split()])
                 title = self.auto_title_map.get(name, name)
+            if title:
+                title = title.strip()
 
             # Setup formatter
             html_formatter = InlineHtmlFormatter if inline else BlockHtmlFormatter

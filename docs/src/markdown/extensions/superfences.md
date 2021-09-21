@@ -379,13 +379,14 @@ ending line. You can do multiple ranges and even mix them with non ranges.
 ## Code Block Title Headers
 
 !!! new "New 9.0"
-    Title headers are new in version 9.0.
+    Title headers are new in version `9.0`.
 
 When Pygments is enabled, a header with a title can be applied with the `title` option. This essentially controls the
 Pygments `filename` option under the hood. It made more sense to use the term `title` as people can really set any
 arbitrary title, not just filenames.
 
-Pygments will simply output the HTML below. The user is responsible for provided CSS to style the header.
+Pygments will simply output the HTML below. The user is responsible for provided CSS to style the header. Pygments uses
+the class name of `filename` as that is the feature being used under the hood.
 
 ```html
 <div class="highlight">
@@ -394,7 +395,22 @@ Pygments will simply output the HTML below. The user is responsible for provided
 </div>
 ```
 
-!!! example "Filename"
+If using line numbers and the `linenums_style` set to `table` (the default), the title will be inserted in `#!html <th>`
+element at the start of the table set to span both the line number column and the line column.
+
+```html
+<table class="highlighttable">
+<tr>
+  <th colspan="2" class="filename"><div class="highlight"><span class="filename">My title</span></div></th>
+</tr>
+<tr>
+  <td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td>
+  <td class="code"><div class="highlight"><pre><code></code></pre></div></td>
+</tr>
+</table>
+```
+
+!!! example "Title"
 
     === "Output"
         ```{.py3 title="My Cool Header"}
@@ -512,14 +528,14 @@ extension_configs:
 ## Pygments Line Wrappers
 
 !!! new "New 9.0"
-    The various line wrapping options are new to version 9.0.
+    The various line wrapping options are new to version `9.0`.
 
 Pygments offers a couple of options that will wrap lines, line numbers even create anchor links for line numbers.
 SuperFences, when using Pygments, exposes these options under similar names.
 
 In this example, we will wrap each line of code in a span. Pygments will create an ID for each span using the prefix
 that we provide. We simply set the global config option `line_spans` and specify the desired "prefix" (`_codeline`), and
-then every line will be wrapped in a span with the ID `prefix-x-y` where `prefix` is the user specified prefix, `x` is a 
+then every line will be wrapped in a span with the ID `prefix-x-y` where `prefix` is the user specified prefix, `x` is a
 unique number for the code block, and `y` is the line number. After that, it is up to the user to do as they with to
 target the ID with either JavaScript and/or CSS.
 
@@ -554,8 +570,8 @@ target the ID with either JavaScript and/or CSS.
     </div>
     ```
 
-We can also wrap line numbers with with a link and anchor them so you can click line numbers and be taken to said line
-number. To do this, `anchor_linenums` must be enabled and then a prefix should be provided via `line_anchors`, just like
+We can also wrap line numbers with with a link and inject anchors so you can click line numbers and be taken to said
+line. To do this, `anchor_linenums` must be enabled and then a prefix should be provided via `line_anchors`, just like
 `line_spans`, `line_anchors` will produce an ID in the form `prefix-x-y` where `x` is a unique number for the code block
 and `y` is the line number. If you wish to not have the line numbers clickable, and just have the anchors inserted,
 you can omit enabling `anchor_linenums`.

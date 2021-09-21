@@ -138,3 +138,6 @@ Option                    | Type   | Default               | Description
     `linenums` now accepts `#!py3 None` as the default for allow line numbers to be enabled per code block.
     `#!py3 False` now disables line numbers globally preventing line numbers even if specified per code block. `True`
     still enables globally.
+
+!!! new "New 9.0"
+    `auto_tile`, `auto_title_map`, `line_spans`, `anchor_linenums`, and `line_anchors` were all added in `9.0`.
