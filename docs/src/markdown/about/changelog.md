@@ -12,6 +12,7 @@
 - **NEW**: Highlight: Add support for the Pygments option `linespans`.
 - **NEW**: Highlight: Add support for Pygments option `lineanchors`.
 - **NEW**: Highlight: Add support for Pygments option `anchorlinenos`.
+- **NEW**: Highlight: Remove `legacy_no_wrap_code` option.
 - **NEW**: Add support for generating title headers pulled from the Pygments lexer for code blocks. Feature can be
   enabled via the new `auto_title` option. If a specific name is not preferred, these names can be overridden via
   a user defined mapping called `auto_title_map`.

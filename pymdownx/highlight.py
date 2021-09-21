@@ -89,10 +89,6 @@ DEFAULT_CONFIG = {
         [],
         'Extend pygments language with special language entry - Default: []'
     ],
-    'legacy_no_wrap_code': [
-        False,
-        'Do not wrap block code under pre elements with code elements - Default: False'
-    ],
     'language_prefix': [
         'language-',
         'Controls the language prefix for non-Pygments code blocks. - Defaults: "language-"'
@@ -226,7 +222,7 @@ class Highlight(object):
     def __init__(
         self, guess_lang=False, pygments_style='default', use_pygments=True,
         noclasses=False, extend_pygments_lang=None, linenums=None, linenums_special=-1,
-        linenums_style='table', linenums_class='linenums', wrapcode=True, language_prefix='language-',
+        linenums_style='table', linenums_class='linenums', language_prefix='language-',
         code_attr_on_pre=False, auto_title=False, auto_title_map=None, line_spans='',
         anchor_linenums=False, line_anchors=''
     ):
@@ -240,7 +236,6 @@ class Highlight(object):
         self.linenums_style = linenums_style
         self.linenums_special = linenums_special
         self.linenums_class = linenums_class
-        self.wrapcode = wrapcode
         self.language_prefix = language_prefix
         self.code_attr_on_pre = code_attr_on_pre
         self.auto_title = auto_title
@@ -370,7 +365,7 @@ class Highlight(object):
                 style=self.pygments_style,
                 noclasses=self.noclasses,
                 hl_lines=hl_lines,
-                wrapcode=self.wrapcode,
+                wrapcode=True,
                 filename=title if not inline else "",
                 linespans="{}-{:d}".format(self.line_spans, code_block_count) if self.line_spans and not inline else '',
                 lineanchors=(
@@ -471,7 +466,6 @@ class HighlightTreeprocessor(Treeprocessor):
                     linenums_special=self.config['linenums_special'],
                     linenums_class=self.config['linenums_class'],
                     extend_pygments_lang=self.config['extend_pygments_lang'],
-                    wrapcode=not self.config['legacy_no_wrap_code'],
                     language_prefix=self.config['language_prefix'],
                     code_attr_on_pre=self.config['code_attr_on_pre'],
                     auto_title=self.config['auto_title'],

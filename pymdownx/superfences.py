@@ -380,7 +380,6 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             self.linenums_style = config.get('linenums_style', 'table')
             self.linenums_class = config.get('linenums_class', 'linenums')
             self.linenums_special = config.get('linenums_special', -1)
-            self.wrapcode = not config.get('legacy_no_wrap_code', False)
             self.language_prefix = config.get('language_prefix', 'language-')
             self.code_attr_on_pre = config.get('code_attr_on_pre', False)
             self.auto_title = config.get('auto_title', False)
@@ -773,7 +772,6 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             linenums_special=self.linenums_special,
             linenums_class=self.linenums_class,
             extend_pygments_lang=self.extend_pygments_lang,
-            wrapcode=self.wrapcode,
             language_prefix=self.language_prefix,
             code_attr_on_pre=self.code_attr_on_pre,
             auto_title=self.auto_title,
