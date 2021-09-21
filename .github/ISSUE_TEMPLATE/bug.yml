@@ -1,0 +1,36 @@
+name: Bug Report
+description: Report a bug
+labels:
+  - 'T: bug'
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear and concise description of the problem
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal Reproduction
+      description: Provide steps to reproduce the problem
+      placeholder: |-
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: true
+  - type: textarea
+    id: versions
+    attributes:
+      label: Version(s) & System Info
+      description: >-
+        Please provide problematic package version, Python version, operating
+        system, etc.
+      value: |-
+        - Operating System: ...
+        - Python Version: ...
+        - Package Version: ...
+    validations:
+      required: true
