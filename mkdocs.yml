@@ -159,14 +159,14 @@ extra:
       link: https://discord.gg/TWs8Tgr
 extra_css:
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css
-  - assets/pymdownx-extras/extra-a8566258f5.css
+  - assets/pymdownx-extras/extra-fb3ace2db7.css
 extra_javascript:
   - site-config.js
   - https://unpkg.com/mermaid@8.8.4/dist/mermaid.min.js
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-  - assets/pymdownx-extras/extra-loader-0c3703d8.js
+  - assets/pymdownx-extras/extra-loader-2c794727.js
 
 plugins:
   - search

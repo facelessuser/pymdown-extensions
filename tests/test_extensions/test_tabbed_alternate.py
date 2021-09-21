@@ -489,6 +489,6 @@ class TestLegacyTab(util.MdCase):
             <ul>
             <li>Parent 2</li>
             </ul>
-            ''', # noqa: E501
+            ''',  # noqa: E501
             True
         )
