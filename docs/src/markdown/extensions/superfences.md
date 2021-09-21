@@ -87,10 +87,11 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
 
 ## Injecting Classes, IDs, and Attributes
 
-You can use the brace format to specify classes and IDs.
-The first provided class is always used as the language class. IDs (`#id`) and arbitrary attributes in the form
-`key="value"` can be inserted as well, but when using Pygments, only `key="value"` attributes when that start with the
-`data-` prefix will be recognized, all others will be treated as options for Pygments and will be rejected if not valid.
+You can use the brace format to specify classes and IDs. The first provided class is always used as the language class.
+IDs (`#id`) can also be inserted as well. Arbitrary attributes in the form `key="value"` can be inserted as well if
+the [`attr_list`][attr-list] extension is enabled, but when using Pygments, only `key="value"` attributes that start
+with the `data-` prefix will be recognized, all others will be treated as options for Pygments and will be rejected if
+not valid.
 
 !!! example "Injecting Classes"
 
@@ -128,6 +129,10 @@ When using Pygments, all extra classes and attributes will be attached to the Py
 When using a built in [custom formatter](#custom-fences), all classes and IDs are injected on to the first element
 `#!html <div>` or `#!html <pre>`. This preserves previous behavior, but you can write your own and inject them in the
 way that suites your needs.
+
+!!! new "New 9.0"
+    Added support for `#id` in Pygments brace headers. Also added support for arbitrary `data-` attributes if the
+    [`attr_list`][attr-list] extension is enabled.
 
 ## Preserve Tabs
 
@@ -371,7 +376,10 @@ ending line. You can do multiple ranges and even mix them with non ranges.
         ```
         ````
 
-## Code Block Headers
+## Code Block Title Headers
+
+!!! new "New 9.0"
+    Title headers are new in version 9.0.
 
 When Pygments is enabled, a header with a title can be applied with the `title` option. This essentially controls the
 Pygments `filename` option under the hood. It made more sense to use the term `title` as people can really set any
@@ -502,6 +510,9 @@ extension_configs:
 ````
 
 ## Pygments Line Wrappers
+
+!!! new "New 9.0"
+    The various line wrapping options are new to version 9.0.
 
 Pygments offers a couple of options that will wrap lines, line numbers even create anchor links for line numbers.
 SuperFences, when using Pygments, exposes these options under similar names.
@@ -688,22 +699,22 @@ conditionally control logic within the formatter. If no validator is defined, th
 inputs to `attrs`.
 
 SuperFences will only pass `attrs` to a formatter if an attribute style header is used for a fenced block
-(` ``` {.lang attr="value"}`) and the `attr_list` extension is enabled. Attribute are not supported in the form
-(` ```lang attr=value`) and will cause the parsing of the fenced block to abort.
+(` ``` {.lang attr="value"}`) and the [`attr_list`][attr-list] extension is enabled. Attribute are not supported in the
+form (` ```lang attr=value`) and will cause the parsing of the fenced block to abort.
 
 Custom options can be used as keys with quoted values (`key="value"`), or as keys with no value (`key`). If a key is
 given with no value, the value will be the key value. SuperFences will parse the options in the fence and then pass them
 to the validator. If the validator returns true, the options will be accepted and later passed to the formatter. `attrs`
-will only be passed to the formatter if the `attr_list` extension is enabled. `attrs` will also be ignored during
-Pygments highlighting.
+will only be passed to the formatter if the [`attr_list`][attr-list] extension is enabled. `attrs` will also be ignored
+during Pygments highlighting.
 
 Assuming a validator fails, the next `validator`/`formatter` defined will be tried.
 
 For a contrived example: if we wanted to define a custom fence named `test` that accepts an option `opt` that can only
 be assigned a value of `A`, we could define the validator below. Notice that if we get an input that matches `opt`, but
 doesn't validate with the appropriate value, we abort handling the fenced block for this `validator`/`formatter` by
-returning `False`. All other inputs are assigned as `attrs` which will be passed to the formatter if the `attr_list`
-extension is enabled.
+returning `False`. All other inputs are assigned as `attrs` which will be passed to the formatter if the
+[`attr_list`][attr-list] extension is enabled.
 
 ```py3
 def custom_validator(language, inputs, options, attrs, md):
@@ -751,10 +762,11 @@ test
         - `options`: a dictionary to which all valid options should be assigned to.
         - `attrs`: a dictionary to which all valid attributes should be assigned to.
         - `md`: the `Markdown` object.
-    - If the `attr_list` extension is enabled and the brace style header is used, any key/value pairs that were
-      assigned as attributes by the `validator` will be passed to the `formatter`'s `attrs` parameter.
+    - If the [`attr_list`][attr-list] extension is enabled and the brace style header is used, any key/value pairs that
+      were assigned as attributes by the `validator` will be passed to the `formatter`'s `attrs` parameter.
     - Options in the form of `key=` (which have no value) will are no longer be allowed. A `key` with no value will
-      assume the `value` to be the `key` name. This brings consistency as options are now parsed with `attr_list`.
+      assume the `value` to be the `key` name. This brings consistency as options are now parsed with
+      [`attr_list`][attr-list].
     - If a `validator` fails, the next `validator`/`formatter` pair will be tired.
 
 ### UML Diagram Example

@@ -1,7 +1,5 @@
 """Test cases for SuperFences."""
 from .. import util
-import unittest
-import markdown
 import pymdownx.arithmatex as arithmatex
 import pymdownx.superfences as superfences
 import warnings
@@ -45,20 +43,6 @@ def custom_validator(language, inputs, options, attrs, md):
         else:
             options['opt'] = inputs['opt']
 
-    return okay
-
-
-def custom_validator_legacy(language, options):
-    """Custom validator."""
-
-    okay = True
-    for k in options.keys():
-        if k != 'opt':
-            okay = False
-            break
-    if okay:
-        if options['opt'] != "A":
-            okay = False
     return okay
 
 
@@ -404,49 +388,6 @@ class TestSuperFencesClassesIdsAttrListNoPygmentsOnPre(util.MdCase):
         )
 
 
-class TestWaringings(unittest.TestCase):
-    """Test warnings."""
-
-    def test_highlight_code(self):
-        """Test highlight code warning."""
-
-        with warnings.catch_warnings(record=True) as w:
-            warnings.simplefilter("always")
-
-            markdown.Markdown(
-                extensions=['pymdownx.superfences'],
-                extension_configs={'pymdownx.superfences': {'highlight_code': False}}
-            ).convert('```\ntest\n```\n')
-
-            self.assertTrue(len(w) == 1)
-            self.assertTrue(issubclass(w[-1].category, DeprecationWarning))
-
-    def test_legacy_validator_code(self):
-        """Test legacy validator."""
-
-        with warnings.catch_warnings(record=True) as w:
-            warnings.simplefilter("always")
-
-            markdown.Markdown(
-                extensions=['pymdownx.superfences'],
-                extension_configs={
-                    'pymdownx.superfences': {
-                        'custom_fences': [
-                            {
-                                'name': 'test',
-                                'class': 'test',
-                                'format': custom_format,
-                                'validator': custom_validator_legacy
-                            }
-                        ]
-                    }
-                }
-            ).convert('```\ntest\n```\n')
-
-            self.assertTrue(len(w) == 1)
-            self.assertTrue(issubclass(w[-1].category, DeprecationWarning))
-
-
 class TestSuperFencesBad(util.MdCase):
     """Test bad options."""
 
@@ -487,71 +428,6 @@ class TestSuperFencesBad(util.MdCase):
             import foo.bar
             import boo.baz
             import foo.bar.baz</code></p>
-            ''',
-            True
-        )
-
-
-class TestSuperFencesCustomLegacy(util.MdCase):
-    """Test custom legacy validator."""
-
-    extension = ['pymdownx.superfences']
-    extension_configs = {
-        'pymdownx.superfences': {
-            'custom_fences': [
-                {
-                    'name': 'test',
-                    'class': 'test',
-                    'format': custom_format,
-                    'validator': custom_validator_legacy
-                }
-            ]
-        }
-    }
-
-    def test_bad_options(self):
-        """Test bad options."""
-
-        self.check_markdown(
-            r'''
-            ```test bad="bad"
-            test
-            ```
-            ''',
-            r'''
-            <p><code>test bad="bad"
-            test</code></p>
-            ''',
-            True
-        )
-
-    def test_bad_option_value(self):
-        """Test bad options."""
-
-        self.check_markdown(
-            r'''
-            ```test opt="B"
-            test
-            ```
-            ''',
-            r'''
-            <p><code>test opt="B"
-            test</code></p>
-            ''',
-            True
-        )
-
-    def test_custom_options(self):
-        """Test options."""
-
-        self.check_markdown(
-            r'''
-            ```test opt="A"
-            test
-            ```
-            ''',
-            r'''
-            <div lang="test" class_name="class-test", option="A">test</div>
             ''',
             True
         )

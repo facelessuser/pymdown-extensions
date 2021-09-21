@@ -33,10 +33,8 @@ from markdown.preprocessors import Preprocessor
 from markdown.blockprocessors import CodeBlockProcessor
 from markdown.extensions.attr_list import get_attrs
 from markdown import util as md_util
-from .util import warn_deprecated
 import functools
 import re
-from inspect import signature
 
 SOH = '\u0001'  # start
 EOT = '\u0004'  # end
@@ -193,17 +191,11 @@ def default_validator(language, inputs, options, attrs, md):
     return True
 
 
-def _validator(language, inputs, options, attrs, md, validator=None, _legacy=False):
+def _validator(language, inputs, options, attrs, md, validator=None):
     """Validator wrapper."""
 
     md.preprocessors['fenced_code_block'].get_hl_settings()
-    if _legacy:
-        value = validator(language, inputs)
-        for k, v in inputs.items():
-            options[k] = v
-        return value
-    else:
-        return validator(language, inputs, options, attrs, md)
+    return validator(language, inputs, options, attrs, md)
 
 
 def _formatter(src='', language='', options=None, md=None, class_name="", _fmt=None, **kwargs):
@@ -278,19 +270,11 @@ class SuperFencesCodeExtension(Extension):
             class_name = custom.get('class')
             fence_format = custom.get('format', fence_code_format)
             validator = custom.get('validator', default_validator)
-            legacy = False
             if name is not None and class_name is not None:
-                sig = signature(validator)
-                if len(sig.parameters) == 2:
-                    legacy = True
-                    warn_deprecated(
-                        "Old format of custom validators is deprectated, please migrate to the new format"
-                        ": validator(language, inputs, options, attrs, md)"
-                    )
                 self.extend_super_fences(
                     name,
                     functools.partial(_formatter, class_name=class_name, _fmt=fence_format),
-                    functools.partial(_validator, validator=validator, _legacy=legacy)
+                    functools.partial(_validator, validator=validator)
                 )
 
         self.md = md

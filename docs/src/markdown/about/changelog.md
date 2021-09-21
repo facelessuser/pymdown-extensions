@@ -19,7 +19,8 @@
   header.
 - **NEW**: SuperFences: Allow adding ID and arbitrary `data-` attributes on Pygments code blocks. The latter requires
   the `attr_list` extension to be enabled.
-- **NEW**: SuperFences: removed old deprecated option `highlight_code` which no longer did anything.
+- **NEW**: SuperFences: Removed old deprecated option `highlight_code` which no longer did anything.
+- **NEW**: SuperFences: Remove legacy code meant to help with transitioning to new custom fence function format.
 - **FIX**: BetterEm: Fix some complex cases related to "smart" logic. (#1413)
 - **FIX**: Highlight: Fix issue that occurs when showing only nth line numbers and using `pymdownx-inline`. Lines not
   showing a line number would not render with the proper leading space.
