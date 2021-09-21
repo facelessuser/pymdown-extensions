@@ -165,3 +165,52 @@ from explicitly using a conflicting ID. Auto-generated slugs shouldn't conflict 
             display: block;
         }
         ```
+
+## Alternate Style
+
+!!! new "New 9.0"
+
+!!! warning "Experimental Feature"
+
+The original idea behind the Tabbed extension was to provide a tabbed interface in Markdown that could be driven purely
+by CSS. If JavaScript was disabled or unavailable, tab functionality would remain.
+
+@squidfunk (Martin Donath), the author and maintainer of the [MkDocs Material theme][mkdocs-material], who originally
+collaborated on the first Tabbed style, approached us again with a newer style.
+
+The aim was to solve one big problem, namely that on narrower screen sizes (like mobile), tabs are broken onto separate
+lines, like here for example. And this is indeed a real issue that is presented with the current style. The bonuses of
+the current style is that it needs absolutely no JavaScript and is driven by CSS alone. It supports as many tabs as you
+can throw at it but the downside is that when all the tabs do not fit on a single line, they'll wrap which is not
+aesthetically pleasing in all themes or interfaces.
+
+So, a new style was proposed and we once again worked to hammer out the details, and in the end, we think we have
+something that is better in many ways. The new style works with only CSS and does not actually need any JavaScript to be
+functional, but it is ideally enhanced with a little JavaScript. The reason why is that when too many tabs are on a
+single line, you can overflow them with CSS and make the tab container scrollable. This can provide a much more
+aesthetically pleasing interface. There are two caveats though:
+
+1. When tabs overflow, if you want a visual indicator that there are more tabs, it requires a little JavaScript.
+2. The number of tabs is limited by how many tabs you define in the CSS.
+
+As for the first point, this seems an acceptable restraint. When JavaScript is available, you will get a nice visual
+indicator, but if JavaScript is ever not available, or disabled, tab functionality will still work, just without the
+indicators.
+
+As for the second point, this also seems acceptable as most pages will usually have some upper limit of tabs that are
+ever used. Pages can become quite cluttered when using too many tabs, and it seems reasonable that most would limit them
+to some practical number.
+
+Below is an testable example. Simply copy it into an HTML file and try it out in a browser.
+
+??? example "Example HTML with CSS and JS"
+    ```html
+    ```
+
+## Options
+
+Option            | Type | Default       | Description
+----------------- | ---- | ------------- | -----------
+`alternate_style` | bool | `#!py3 False` | Use the experimental, alternative style.
+
+--8<-- "refs.txt"

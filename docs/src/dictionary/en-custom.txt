@@ -212,6 +212,7 @@ repo
 requesters
 revisioned
 sanitizer
+scrollable
 scrollbar
 scrollbars
 selectable
