@@ -90,7 +90,7 @@
         display: inline-block;
         padding-right: px2rem(6.4px);
         color: var(--md-default-fg-color--light);
-        background: linear-gradient(to right, var(--md-default-bg-color) 75%, transparent);
+        background: linear-gradient(to right, var(--md-default-bg-color) 75%, var(--md-default-bg-color--trans));
         content: "\25C0";
       }
 
@@ -101,7 +101,7 @@
         display: inline-block;
         padding-left: px2rem(6.4px);
         color: var(--md-default-fg-color--light);
-        background: linear-gradient(to right, transparent, var(--md-default-bg-color) 25%);
+        background: linear-gradient(to right, var(--md-default-bg-color--trans), var(--md-default-bg-color) 25%);
         content: "\25B6";
       }
 

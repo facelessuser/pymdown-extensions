@@ -107,45 +107,77 @@ In general, tabbed controls are wrapped in a `#!html <div>` with the class `tabb
 specific tab set will use the name `__tabbed_<tab_set_number>`. Particularly, a user should be mindful of the ID to keep
 from explicitly using a conflicting ID. Auto-generated slugs shouldn't conflict though.
 
-??? settings "Tabbed Code Setup"
+
+!!! settings "Tabbed Code Setup"
+    This is a very basic setup. Tabs can be styled in different ways, but this shows how to get it functionally working.
+    Here we show what it visually looks like, what the generated HTML looks like, and what the CSS looks like.
+
+    === "Preview"
+        ![Tabbed Style](../images/tabbed-default.png)
+
     === "HTML"
-        ```HTML
-        <div class="tabbed-set">
-        <input name="__tabbed_1" type="radio" id="__tabbed_1_1" checked="checked">
-        <label for="__tabbed_1_1">Tab 0</label>
-        <div class="tabbed-content">...</div>
-        ...
-        <input name="__tabbed_1" type="radio" id="__tabbed_1_X" checked="checked">
-        <label for="__tabbed_1_X">Tab X</label>
-        <div class="tabbed-content">...</div>
-        ...
+        ```html
+        <div class="tabbed-set" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab with a really long title 1</label><div class="tabbed-content">
+        <p>Lorem ipsum ullamco ea aute do sint cupidatat elit nostrud exercitation dolore culpa aliquip nisi commodo nisi qui
+        magna non laborum proident id voluptate in cupidatat duis.</p>
+        </div>
+        <input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Tab with a really long title 2</label><div class="tabbed-content">
+        <p>Lorem ipsum ullamco ea aute do sint cupidatat elit nostrud exercitation dolore culpa aliquip nisi commodo nisi qui
+        magna non laborum proident id voluptate in cupidatat duis.</p>
+        </div>
+        <input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">Tab with a really long title 3</label><div class="tabbed-content">
+        <p>Lorem ipsum ullamco ea aute do sint cupidatat elit nostrud exercitation dolore culpa aliquip nisi commodo nisi qui
+        magna non laborum proident id voluptate in cupidatat duis.</p>
+        </div>
         </div>
         ```
 
     === "CSS"
-        ```CSS
-        .tabbed-set {
-          display: flex;
-          position: relative;
-          flex-wrap: wrap;
+        ```{.css .md-max-height}
+        /* General environment setup */
+        html {
+          background-color: black;
+          height: 100%;
         }
-
-        .tabbed-set .highlight {
-          background: #ddd;
-        }
-
-        .tabbed-set .tabbed-content {
-          display: none;
-          order: 99;
+        body {
+          font-size: 120%;
           width: 100%;
+          padding: 1em 2em;
+          margin: 0 auto;
+          background-color: white;
+          height: 100%;
+        }
+
+        /* Tab style starts here */
+        .tabbed-set {
+          position: relative;
+          display: flex;
+          flex-wrap: wrap;
+          margin: 1em 0;
+          border-radius: 0.1rem;
+        }
+
+        .tabbed-set > input {
+          display: none;
         }
 
         .tabbed-set label {
           width: auto;
-          margin: 0 0.5em;
-          padding: 0.25em;
-          font-size: 120%;
+          padding: 0.9375em 1.25em 0.78125em;
+          font-weight: 700;
+          font-size: 0.84em;
+          white-space: nowrap;
+          border-bottom: 0.15rem solid transparent;
+          border-top-left-radius: 0.1rem;
+          border-top-right-radius: 0.1rem;
           cursor: pointer;
+          transition: background-color 250ms, color 250ms;
+        }
+
+        .tabbed-set .tabbed-content {
+          width: 100%;
+          display: none;
+          box-shadow: 0 -.05rem #ddd;
         }
 
         .tabbed-set input {
@@ -153,18 +185,61 @@ from explicitly using a conflicting ID. Auto-generated slugs shouldn't conflict 
           opacity: 0;
         }
 
-        .tabbed-set input:nth-child(n+1) {
-          color: #333333;
+        .tabbed-set input:checked:nth-child(n+1) + label {
+          color: red;
+          border-color: red;
         }
 
-        .tabbed-set input:nth-child(n+1):checked + label {
-            color: #FF5252;
-        }
-
-        .tabbed-set input:nth-child(n+1):checked + label + .tabbed-content {
+        @media screen {
+          .tabbed-set input:nth-child(n+1):checked + label + .tabbed-content {
+            order: 99;
             display: block;
+          }
+        }
+
+        @media print {
+          .tabbed-content {
+            display: contents;
+          }
         }
         ```
+
+## Linked Tabs
+
+Some sites will link tabs across tab containers. The easiest way to explain this is by example. Click a tab below and
+see how they seem linked:
+
+=== "Python"
+
+=== "JavaScript"
+
+===! "Python"
+
+=== "JavaScript"
+
+People ask about how to get this functionality from time to time, and the answer is JavaScript. It is the only real way
+to get such functionality. While this can be achieved with varying degrees of intelligence -- save preferences across
+pages for example -- we've provided a very basic example of how to accomplish this below.
+
+The function, when called, will setup click events for every tab. When clicked, it will look for tabs of the same name
+on the page and ensure they also get selected. It works for the default style and the new [alternate style](#alternate-style).
+
+```js
+const tabSync = () => {
+  const tabs = document.querySelectorAll(".tabbed-set > input")
+  for (const tab of tabs) {
+    tab.addEventListener("click", () => {
+      const labelContent = document.querySelector(`label[for=${tab.id}]`).innerHTML
+      const labels = document.querySelectorAll('.tabbed-set > label, .tabbed-alternate > .tabbed-labels > label')
+      for (const label of labels) {
+        if (label.innerHTML === labelContent) {
+          document.querySelector(`input[id=${label.getAttribute('for')}]`).checked = true
+        }
+      }
+    })
+  }
+}
+```
 
 ## Alternate Style
 
@@ -184,6 +259,8 @@ the current style is that it needs absolutely no JavaScript and is driven by CSS
 can throw at it but the downside is that when all the tabs do not fit on a single line, they'll wrap which is not
 aesthetically pleasing in all themes or interfaces.
 
+![Tabbed Style Narrow](../images/tabbed-default-narrow.png)
+
 So, a new style was proposed and we once again worked to hammer out the details, and in the end, we think we have
 something that is better in many ways. The new style works with only CSS and does not actually need any JavaScript to be
 functional, but it is ideally enhanced with a little JavaScript. The reason why is that when too many tabs are on a
@@ -201,11 +278,166 @@ As for the second point, this also seems acceptable as most pages will usually h
 ever used. Pages can become quite cluttered when using too many tabs, and it seems reasonable that most would limit them
 to some practical number.
 
-Below is an testable example. Simply copy it into an HTML file and try it out in a browser.
+!!! settings "Alternate Tabbed Code Setup"
+    The example below styles the tabs, adds indicators when the there are overflowed tabs, and scrolls tabs into view
+    smoothly.
 
-??? example "Example HTML with CSS and JS"
-    ```html
-    ```
+    === "Preview"
+        ![Tabbed Style Alternate](../images/tabbed-alternate.png)
+
+    === "HTML"
+        ```html
+        <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab with a really long title 1</label><label for="__tabbed_1_2">Tab with a really long title 2</label><label for="__tabbed_1_3">Tab with a really long title 3</label></div>
+        <div class="tabbed-content">
+        <div class="tabbed-block">
+        <p>Lorem ipsum ullamco ea aute do sint cupidatat elit nostrud exercitation dolore culpa aliquip nisi commodo nisi qui
+        magna non laborum proident id voluptate in cupidatat duis.</p>
+        </div>
+        <div class="tabbed-block">
+        <p>Lorem ipsum ullamco ea aute do sint cupidatat elit nostrud exercitation dolore culpa aliquip nisi commodo nisi qui
+        magna non laborum proident id voluptate in cupidatat duis.</p>
+        </div>
+        <div class="tabbed-block">
+        <p>Lorem ipsum ullamco ea aute do sint cupidatat elit nostrud exercitation dolore culpa aliquip nisi commodo nisi qui
+        magna non laborum proident id voluptate in cupidatat duis.</p>
+        </div>
+        </div>
+        </div>
+        ```
+
+    === "CSS"
+        ```{.css .md-max-height}
+        /* General environment setup */
+        html {
+          background-color: black;
+          height: 100%;
+        }
+        body {
+          font-size: 120%;
+          width: 20em;
+          padding: 1em 2em;
+          margin: 0 auto;
+          background-color: white;
+          height: 100%;
+        }
+
+        /* Tab style starts here */
+        .tabbed-alternate {
+          position: relative;
+          display: flex;
+          flex-wrap: wrap;
+          flex-direction: column;
+          margin: 1em 0;
+          border-radius: 0.1rem;
+        }
+
+        .tabbed-alternate > input {
+          display: none;
+        }
+
+        .tabbed-labels {
+          display: flex;
+          width: 100%;
+          overflow: auto;
+          box-shadow: 0 -0.1rem #ddd inset;
+          scrollbar-width: none;
+        }
+        .tabbed-labels::-webkit-scrollbar {
+          display: none;
+        }
+        .tabbed-labels > label {
+          width: auto;
+          padding: 0.9375em 1.25em 0.78125em;
+          font-weight: 700;
+          font-size: 0.84em;
+          white-space: nowrap;
+          border-bottom: 0.1rem solid transparent;
+          scroll-snap-align: start;
+          border-top-left-radius: 0.1rem;
+          border-top-right-radius: 0.1rem;
+          cursor: pointer;
+          transition: background-color 250ms, color 250ms;
+        }
+        .tabbed-labels > label:hover {
+          color: red;
+        }
+
+        .tabbed-labels.tabbed-scroll-left::before {
+          display: inline-block;
+          font-size: 0.9em;
+          position: absolute;
+          top: 0.75em;
+          left: 0;
+          display: inline-block;
+          padding-right: 0.64em;
+          color: gray;
+          background: linear-gradient(to right, rgb(255, 255, 255) 75%, rgba(255, 255, 255, 0));
+          content: "\25C0";
+        }
+
+        .tabbed-labels.tabbed-scroll-right::after {
+          display: inline-block;
+          font-size: 0.9em;
+          position: absolute;
+          top: 0.75em;
+          right: 0;
+          display: inline-block;
+          padding-left: 0.64em;
+          color: gray;
+          background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255) 25%);
+          content: "\25B6";
+        }
+
+        .tabbed-alternate .tabbed-content {
+          width: 100%;
+        }
+        .tabbed-alternate input:nth-child(1):checked ~ .tabbed-content > :nth-child(1),
+        .tabbed-alternate input:nth-child(2):checked ~ .tabbed-content > :nth-child(2),
+        .tabbed-alternate input:nth-child(3):checked ~ .tabbed-content > :nth-child(3) {
+          display: block;
+        }
+        .tabbed-alternate .tabbed-block {
+          display: none;
+        }
+        @media screen {
+          .tabbed-alternate input:nth-child(1):checked ~ .tabbed-labels > :nth-child(1), 
+          .tabbed-alternate input:nth-child(2):checked ~ .tabbed-labels > :nth-child(2), 
+          .tabbed-alternate input:nth-child(3):checked ~ .tabbed-labels > :nth-child(3) {
+            color: red;
+            border-color: red;
+          }
+        }
+        @media print {
+          .tabbed-labels {
+            display: contents;
+          }
+          .tabbed-labels > label:nth-child(1) {
+            order: 1;
+          }
+          .tabbed-labels > label:nth-child(2) {
+            order: 2;
+          }
+          .tabbed-labels > label:nth-child(3) {
+            order: 3;
+          }
+         
+          .tabbed-alternate .tabbed-content {
+            display: contents;
+          }
+          .tabbed-alternate .tabbed-block {
+            display: block;
+          }
+          .tabbed-alternate .tabbed-block:nth-child(1) {
+            order: 1;
+          }
+          .tabbed-alternate .tabbed-block:nth-child(2) {
+            order: 2;
+          }
+          .tabbed-alternate .tabbed-block:nth-child(3) {
+            order: 3;
+          }
+        }
+        ```
 
 ## Options
 
