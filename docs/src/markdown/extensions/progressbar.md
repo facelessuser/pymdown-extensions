@@ -92,74 +92,94 @@ Classes                  | Description
 `progress-label`         | This is attached to the `p` element that will contain the desired label.
 `progress-<integer>plus` | This is an optional class that indicates the percentage of the progress bar by increments defined by `progress_increment`.
 
-??? settings "CSS Setup"
+!!! settings "CSS Setup"
 
-    You are able to style your progress bars as fancy or plain as you want.
+    You are able to style your progress bars as fancy or plain as you want. Below is just a basic example. Depending
+    on existing styles in your page, it may or may not require tweaking.
 
-    ```{.css .md-max-height}
-    .progress-label {
-      position: absolute;
-      text-align: center;
-      font-weight: 700;
-      width: 100%;
-      margin: 0;
-      line-height: 1.2rem;
-      white-space: nowrap;
-      overflow: hidden;
-    }
+    === "Preview"
+        ![Progress bar](../images/progress.png)
 
-    .progress-bar {
-      height: 1.2rem;
-      float: left;
-      background-color: #2979ff;
-    }
+    === "HTML"
 
-    .progress {
-      display: block;
-      width: 100%;
-      margin: 0.5rem 0;
-      height: 1.2rem;
-      background-color: #eeeeee;
-      position: relative;
-    }
+        ```html
+        <h1>Goals</h1>
+        <hr />
+        <p>
+        <div class="progress progress-20plus">
+        <div class="progress-bar" style="width:25.00%">
+        <p class="progress-label">25%</p>
+        </div>
+        </div>
+        </p>
+        ```
 
-    .progress.thin {
-      margin-top: 0.9rem;
-      height: 0.4rem;
-    }
+    === "CSS"
 
-    .progress.thin .progress-label {
-      margin-top: -0.4rem;
-    }
+        ```{.css .md-max-height}
+        .progress-label {
+          position: absolute;
+          text-align: center;
+          font-weight: 700;
+          width: 100%;
+          margin: 0;
+          line-height: 1.2rem;
+          white-space: nowrap;
+          overflow: hidden;
+        }
 
-    .progress.thin .progress-bar {
-      height: 0.4rem;
-    }
+        .progress-bar {
+          height: 1.2rem;
+          float: left;
+          background-color: #2979ff;
+        }
 
-    .progress-100plus .progress-bar {
-      background-color: #00e676;
-    }
+        .progress {
+          display: block;
+          width: 100%;
+          margin: 0.5rem 0;
+          height: 1.2rem;
+          background-color: #eeeeee;
+          position: relative;
+        }
 
-    .progress-80plus .progress-bar {
-      background-color: #fbc02d;
-    }
+        .progress.thin {
+          margin-top: 0.9rem;
+          height: 0.4rem;
+        }
 
-    .progress-60plus .progress-bar {
-      background-color: #ff9100;
-    }
+        .progress.thin .progress-label {
+          margin-top: -0.4rem;
+        }
 
-    .progress-40plus .progress-bar {
-      background-color: #ff5252;
-    }
+        .progress.thin .progress-bar {
+          height: 0.4rem;
+        }
 
-    .progress-20plus .progress-bar {
-      background-color: #ff1744;
-    }
+        .progress-100plus .progress-bar {
+          background-color: #00e676;
+        }
 
-    .progress-0plus .progress-bar {
-      background-color: #f50057;
-    }
-    ```
+        .progress-80plus .progress-bar {
+          background-color: #fbc02d;
+        }
+
+        .progress-60plus .progress-bar {
+          background-color: #ff9100;
+        }
+
+        .progress-40plus .progress-bar {
+          background-color: #ff5252;
+        }
+
+        .progress-20plus .progress-bar {
+          background-color: #ff1744;
+        }
+
+        .progress-0plus .progress-bar {
+          background-color: #f50057;
+        }
+        ```
 
 ## Options
 
