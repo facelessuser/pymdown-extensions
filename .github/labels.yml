@@ -76,7 +76,7 @@ rules:
     patterns: ['**/?(test_)superfences*.py|tests/**/superfences/**|**/_bypassnorm.py']
 
   - labels: ['C: tabbed']
-  - patterns: ['**/?(test_)tabbed*.py|tests/**/tasklist/**']
+  - patterns: ['**/?(test_)tabbed*.py|tests/**/tabbed/**']
 
   - labels: ['C: tasklist']
     patterns: ['**/?(test_)tasklist*.py|tests/**/tasklist/**']

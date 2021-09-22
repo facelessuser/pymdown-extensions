@@ -10,7 +10,7 @@ class TestUslugify(util.MdCase):
     extension = ['markdown.extensions.toc']
     extension_configs = {
         'markdown.extensions.toc': {
-            "slugify": slugs.slugify(case="lower")
+            "slugify": slugs.uslugify
         }
     }
 
@@ -29,7 +29,7 @@ class TestUslugifyEncoded(util.MdCase):
     extension = ['markdown.extensions.toc']
     extension_configs = {
         'markdown.extensions.toc': {
-            "slugify": slugs.slugify(case="lower", percent_encode=True)
+            "slugify": slugs.uslugify_encoded
         }
     }
 
@@ -49,7 +49,7 @@ class TestUslugifyCased(util.MdCase):
     extension = ['markdown.extensions.toc']
     extension_configs = {
         'markdown.extensions.toc': {
-            "slugify": slugs.slugify()
+            "slugify": slugs.uslugify_cased
         }
     }
 
@@ -68,7 +68,7 @@ class TestUslugifyCasedEncoded(util.MdCase):
     extension = ['markdown.extensions.toc']
     extension_configs = {
         'markdown.extensions.toc': {
-            "slugify": slugs.slugify(percent_encode=True)
+            "slugify": slugs.uslugify_cased_encoded
         }
     }
 
@@ -88,7 +88,7 @@ class TestGFM(util.MdCase):
     extension = ['markdown.extensions.toc']
     extension_configs = {
         'markdown.extensions.toc': {
-            "slugify": slugs.slugify(case="lower-ascii")
+            "slugify": slugs.gfm
         }
     }
 
@@ -107,7 +107,7 @@ class TestGFMEncoded(util.MdCase):
     extension = ['markdown.extensions.toc']
     extension_configs = {
         'markdown.extensions.toc': {
-            "slugify": slugs.slugify(case="lower-ascii", percent_encode=True)
+            "slugify": slugs.gfm_encoded
         }
     }
 
@@ -118,42 +118,4 @@ class TestGFMEncoded(util.MdCase):
             r'# Testing GFM unicode-slugs_headers ±♠Ωℑ with encoding',
             r'<h1 id="testing-gfm-unicode-slugs_headers-%CE%A9%E2%84%91-with-encoding">'
             r'Testing GFM unicode-slugs_headers ±♠Ωℑ with encoding</h1>'
-        )
-
-
-class TestNormalize(util.MdCase):
-    """Test different normalization methods."""
-
-    extension = ['markdown.extensions.toc']
-    extension_configs = {
-        'markdown.extensions.toc': {
-            "slugify": slugs.slugify(normalize='NFD')
-        }
-    }
-
-    def test_slug(self):
-        """Test the slug output."""
-
-        self.check_markdown(
-            r'# Théâtre',
-            r'<h1 id="Theatre">Théâtre</h1>'
-        )
-
-
-class TestFold(util.MdCase):
-    """Test different normalization methods."""
-
-    extension = ['markdown.extensions.toc']
-    extension_configs = {
-        'markdown.extensions.toc': {
-            "slugify": slugs.slugify(case='fold')
-        }
-    }
-
-    def test_slug(self):
-        """Test the slug output."""
-
-        self.check_markdown(
-            r'# ß',
-            r'<h1 id="ss">ß</h1>'
         )
