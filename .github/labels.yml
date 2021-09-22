@@ -39,9 +39,6 @@ rules:
   - labels: ['C: extra']
     patterns: ['**/?(test_)extra!(rawhtml)*.py|tests/**/extra!(rawhtml)/**|!docs/theme/**|!docs/src/@(js|scss)/**']
 
-  - labels: ['C: extrarawhtml']
-    patterns: ['**/?(test_)extrarawhtml*.py|tests/**/extrarawhtml/**']
-
   - labels: ['C: highlight']
     patterns: ['**/?(test_)highlight*.py|tests/**/highlight/**']
 
@@ -78,6 +75,9 @@ rules:
   - labels: ['C: superfences']
     patterns: ['**/?(test_)superfences*.py|tests/**/superfences/**|**/_bypassnorm.py']
 
+  - labels: ['C: tabbed']
+  - patterns: ['**/?(test_)tabbed*.py|tests/**/tasklist/**']
+
   - labels: ['C: tasklist']
     patterns: ['**/?(test_)tasklist*.py|tests/**/tasklist/**']
 
@@ -91,42 +91,34 @@ ignores:
 
 labels:
 - name: 'C: arithmatex'
-  renamed: arithmatex
   color: subcategory
   description: Related to the arithmatex extension.
 
 - name: 'C: b64'
-  renamed: b64
   color: subcategory
   description: Related to the b64 extension.
 
 - name: 'C: betterem'
-  renamed: betterem
   color: subcategory
   description: Related to the betterem extension.
 
 - name: 'C: caret'
-  renamed: caret
   color: subcategory
   description: Related to the caret extension.
 
 - name: 'C: critic'
-  renamed: critic
   color: subcategory
   description: Related to the critic extension.
 
 - name: 'C: details'
-  renamed: details
   color: subcategory
   description: Related to the details extension.
 
 - name: 'C: emoji'
-  renamed: emoji
   color: subcategory
   description: Related to the emoji extension.
 
 - name: 'C: escapeall'
-  renamed: escapeall
   color: subcategory
   description: Related to the escapeall extension.
 
@@ -135,77 +127,62 @@ labels:
   color: subcategory
   description: Related to the extra extension.
 
-- name: 'C: extrarawhtml'
-  renamed: extrarawhtml
-  color: subcategory
-  description: Related to the extrarawhtml extension.
-
 - name: 'C: highlight'
-  renamed: highlight
   color: subcategory
   description: Related to the highlight extension.
 
 - name: 'C: inlinehilite'
-  renamed: inlinehilite
   color: subcategory
   description: Related to the inlinehilite extension.
 
 - name: 'C: keys'
-  renamed: keys
   color: subcategory
   description: Related to the keys extension.
 
 - name: 'C: magiclink'
-  renamed: magiclink
   color: subcategory
   description: Related to the magiclink extension.
 
 - name: 'C: mark'
-  renamed: mark
   color: subcategory
   description: Related to the mark extension.
 
 - name: 'C: pathconverter'
-  renamed: pathconverter
   color: subcategory
   description: Related to the paythconverter extension.
 
 - name: 'C: progressbar'
-  renamed: progressbar
   color: subcategory
   description: Related to the progressbar extension.
 
 - name: 'C: slugs'
-  renamed: slugs
   color: subcategory
   description: Related to the slugs extension.
 
 - name: 'C: smartsymbols'
-  renamed: smartsymbols
   color: subcategory
   description: Related to the smartsymbols extension.
 
 - name: 'C: snippets'
-  renamed: snippets
   color: subcategory
   description: Related to the snippets extension.
 
 - name: 'C: striphtml'
-  renamed: striphtml
   color: subcategory
   description: Related to the striphtml extension.
 
 - name: 'C: superfences'
-  renamed: superfences
   color: subcategory
   description: Related to the superfences extension.
 
+- name: 'C: tabbed'
+  color: subcategory
+  description: Related to the tabbed extension.
+
 - name: 'C: tasklist'
-  renamed: tasklist
   color: subcategory
   description: Related to the tasklist extension.
 
 - name: 'C: tilde'
-  renamed: tilde
   color: subcategory
   description: Related to the tilde extension.
