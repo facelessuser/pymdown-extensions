@@ -99,8 +99,8 @@ of a new tab set with `!`.
 ## Styling with CSS
 
 In order to use tabbed blocks, some additional CSS is needed. You can check out the configuration below which will
-show the CSS and the HTML it targets. Keep in mind the CSS is just the minimum to get you started. You can tweak it and
-modify it to get it how you like it.
+show the CSS and the HTML it targets. Keep in mind that the CSS provided below is just the minimum needed to get you
+started. You can tweak it and modify it to get it how you like it.
 
 In general, tabbed controls are wrapped in a `#!html <div>` with the class `tabbed-set`. They contain an
 `#!html <input>` with an ID of `__tabbed_<tab_set_number>_<tab_number>`. All the `#!html <input>` elements from a
@@ -254,18 +254,19 @@ by CSS. If JavaScript was disabled or unavailable, tab functionality would remai
 collaborated on the first Tabbed style, approached us again with a newer style.
 
 The aim was to solve one big problem, namely that on narrower screen sizes (like mobile), tabs are broken onto separate
-lines, like here for example. And this is indeed a real issue that is presented with the current style. The bonuses of
-the current style is that it needs absolutely no JavaScript and is driven by CSS alone. It supports as many tabs as you
-can throw at it but the downside is that when all the tabs do not fit on a single line, they'll wrap which is not
-aesthetically pleasing in all themes or interfaces.
+lines, like here for example.
 
 ![Tabbed Style Narrow](../images/tabbed-default-narrow.png)
 
-So, a new style was proposed and we once again worked to hammer out the details, and in the end, we think we have
+And this is indeed a real issue with the current style. The bonuses of the current style is that it needs absolutely no
+JavaScript and is driven by CSS alone. It supports as many tabs as you can throw at it but the downside is that when all
+the tabs do not fit on a single line, they'll wrap which is not aesthetically pleasing in all themes or interfaces.
+
+So, a new style was proposed, and we once again worked to hammer out the details, and in the end, we think we have
 something that is better in many ways. The new style works with only CSS and does not actually need any JavaScript to be
 functional, but it is ideally enhanced with a little JavaScript. The reason why is that when too many tabs are on a
 single line, you can overflow them with CSS and make the tab container scrollable. This can provide a much more
-aesthetically pleasing interface. There are two caveats though:
+aesthetically pleasing interface, but there are two caveats though:
 
 1. When tabs overflow, if you want a visual indicator that there are more tabs, it requires a little JavaScript.
 2. The number of tabs is limited by how many tabs you define in the CSS.
@@ -420,7 +421,7 @@ to some practical number.
           .tabbed-labels > label:nth-child(3) {
             order: 3;
           }
-         
+
           .tabbed-alternate .tabbed-content {
             display: contents;
           }
