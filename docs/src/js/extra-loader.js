@@ -1,5 +1,6 @@
 import uml from "./uml"
 import arithmatex from "./arithmatex"
+import tabbed from "./tabbed"
 
 (() => {
   let umlPromise = Promise.resolve()
@@ -22,6 +23,8 @@ import arithmatex from "./arithmatex"
 
   const main = () => {
     observer.observe(document.querySelector("body"), {attributeFilter: ["data-md-color-scheme"]})
+
+    tabbed()
 
     if (typeof mermaid !== "undefined") {
       umlPromise = umlPromise.then(() => {

@@ -4,6 +4,7 @@
   // Custom code colors
   --md-code-link-bg-color: hsla(0, 0%, 96%, 1);
   --md-code-link-accent-bg-color: var(--md-code-link-bg-color);
+  --md-default-bg-color--trans: rgb(100%, 100%, 100%, 0);
 
   --md-code-special-bg-color: #{darken(hsl(0, 0%, 96%), 5%)};
   --md-code-alternate-bg-color: var(--md-code-bg-color);
@@ -38,6 +39,7 @@
     --md-code-link-bg-color: hsla(232, 15%, 15%, 1);
     --md-code-link-accent-bg-color: var(--md-code-link-bg-color);
     --md-code-special-bg-color: #{lighten(hsl(232, 15%, 15%), 5%)};
+    --md-default-bg-color--trans: hsla(232,15%,15%, 0);
 
     // Keys colors
     --md-typeset-kbd-color: var(--md-default-fg-color--lightest);
@@ -57,6 +59,7 @@
     --md-default-bg-color--light:        #{transparentize($drac-default-bg, 0.3)};
     --md-default-bg-color--lighter:      #{transparentize($drac-default-bg, 0.7)};
     --md-default-bg-color--lightest:     #{transparentize($drac-default-bg, 0.88)};
+    --md-default-bg-color--trans:        #{transparentize($drac-default-bg, 1)};
 
     // Code colors
     --md-code-fg-color: #{$drac-fg};

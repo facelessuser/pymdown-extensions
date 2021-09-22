@@ -35,13 +35,14 @@ class TabbedProcessor(BlockProcessor):
     )
     COMPRESS_SPACES = re.compile(r' {2,}')
 
-    def __init__(self, *args):
+    def __init__(self, *args, alternate_style=False):
         """Initialize."""
 
         super().__init__(*args)
         self.tab_group_count = 0
         self.current_sibling = None
         self.content_indention = 0
+        self.alternate_style = alternate_style
 
     def detab_by_length(self, text, length):
         """Remove a tab from the front of each line of the given text."""
@@ -67,6 +68,7 @@ class TabbedProcessor(BlockProcessor):
 
         old_block = block
         non_tabs = ''
+        tabbed_set = 'tabbed-set' if not self.alternate_style else 'tabbed-set tabbed-alternate'
 
         # We already acquired the block via test
         if self.current_sibling is not None:
@@ -78,12 +80,17 @@ class TabbedProcessor(BlockProcessor):
 
         sibling = self.lastChild(parent)
 
-        if sibling is None or sibling.tag.lower() != 'div' or sibling.attrib.get('class', '') != 'tabbed-set':
+        if sibling is None or sibling.tag.lower() != 'div' or sibling.attrib.get('class', '') != tabbed_set:
             sibling = None
         else:
             # If the last child is a list and the content is indented sufficient
             # to be under it, then the content's is sibling is in the list.
-            last_child = self.lastChild(sibling)
+            if self.alternate_style:
+                last_child = self.lastChild(self.lastChild(sibling))
+                tabbed_content = 'tabbed-block'
+            else:
+                last_child = self.lastChild(sibling)
+                tabbed_content = 'tabbed-content'
             child_class = last_child.attrib.get('class', '') if last_child else ''
             indent = 0
             while last_child:
@@ -93,13 +100,13 @@ class TabbedProcessor(BlockProcessor):
                         last_child.tag in ('ul', 'ol', 'dl') or
                         (
                             last_child.tag == 'div' and
-                            child_class in ('tabbed-content',)
+                            child_class == tabbed_content
                         )
                     )
                 ):
 
                     # Handle nested tabbed content
-                    if last_child.tag == 'div' and child_class == 'tabbed-content':
+                    if last_child.tag == 'div' and child_class == tabbed_content:
                         temp_child = self.lastChild(last_child)
                         if temp_child.tag not in ('ul', 'ol', 'dl'):
                             break
@@ -144,6 +151,7 @@ class TabbedProcessor(BlockProcessor):
 
         block = blocks.pop(0)
         m = self.START.search(block)
+        tabbed_set = 'tabbed-set' if not self.alternate_style else 'tabbed-set tabbed-alternate'
 
         if m:
             # removes the first line
@@ -161,19 +169,42 @@ class TabbedProcessor(BlockProcessor):
 
             if (
                 sibling and sibling.tag.lower() == 'div' and
-                sibling.attrib.get('class', '') == 'tabbed-set' and
+                sibling.attrib.get('class', '') == tabbed_set and
                 special != '!'
             ):
                 first = False
                 sfences = sibling
+                if self.alternate_style:
+                    index = [index for index, last_input in enumerate(sfences.findall('input'), 1)][-1]
+                    labels = None
+                    content = None
+                    for d in sfences.findall('div'):
+                        if d.attrib['class'] == 'tabbed-labels':
+                            labels = d
+                        elif d.attrib['class'] == 'tabbed-content':
+                            content = d
+                        if labels is not None and content is not None:
+                            break
             else:
                 first = True
                 self.tab_group_count += 1
                 sfences = etree.SubElement(
                     parent,
                     'div',
-                    {'class': 'tabbed-set', 'data-tabs': '%d:0' % self.tab_group_count}
+                    {'class': tabbed_set, 'data-tabs': '%d:0' % self.tab_group_count}
                 )
+                if self.alternate_style:
+                    index = 0
+                    labels = etree.SubElement(
+                        sfences,
+                        'div',
+                        {'class': 'tabbed-labels'}
+                    )
+                    content = etree.SubElement(
+                        sfences,
+                        'div',
+                        {'class': 'tabbed-content'}
+                    )
 
             data = sfences.attrib['data-tabs'].split(':')
             tab_set = int(data[0])
@@ -188,27 +219,49 @@ class TabbedProcessor(BlockProcessor):
             if first:
                 attributes['checked'] = 'checked'
 
-            etree.SubElement(
-                sfences,
-                'input',
-                attributes
-            )
-            lab = etree.SubElement(
-                sfences,
-                "label",
-                {
-                    "for": "__tabbed_%d_%d" % (tab_set, tab_count)
-                }
-            )
-            lab.text = title
+            if self.alternate_style:
+                input_el = etree.Element(
+                    'input',
+                    attributes
+                )
+                sfences.insert(index, input_el)
+                lab = etree.SubElement(
+                    labels,
+                    "label",
+                    {
+                        "for": "__tabbed_%d_%d" % (tab_set, tab_count)
+                    }
+                )
+                lab.text = title
 
-            div = etree.SubElement(
-                sfences,
-                "div",
-                {
-                    "class": "tabbed-content"
-                }
-            )
+                div = etree.SubElement(
+                    content,
+                    "div",
+                    {'class': 'tabbed-block'}
+                )
+            else:
+                etree.SubElement(
+                    sfences,
+                    'input',
+                    attributes
+                )
+                lab = etree.SubElement(
+                    sfences,
+                    "label",
+                    {
+                        "for": "__tabbed_%d_%d" % (tab_set, tab_count)
+                    }
+                )
+                lab.text = title
+
+                div = etree.SubElement(
+                    sfences,
+                    "div",
+                    {
+                        "class": "tabbed-content"
+                    }
+                )
+
             sfences.attrib['data-tabs'] = '%d:%d' % (tab_set, tab_count)
         else:
             if sibling.tag in ('li', 'dd') and sibling.text:
@@ -218,9 +271,12 @@ class TabbedProcessor(BlockProcessor):
                 p = etree.SubElement(sibling, 'p')
                 p.text = text
                 div = sibling
-            elif sibling.tag == 'div' and sibling.attrib.get('class', '') == 'tabbed-set':
+            elif sibling.tag == 'div' and sibling.attrib.get('class', '') == tabbed_set:
                 # Get `tabbed-content` under `tabbed-set`
-                div = self.lastChild(sibling)
+                if self.alternate_style:
+                    div = self.lastChild(self.lastChild(sibling))
+                else:
+                    div = self.lastChild(sibling)
             else:
                 # Pass anything else as the parent
                 div = sibling
@@ -235,11 +291,21 @@ class TabbedProcessor(BlockProcessor):
 class TabbedExtension(Extension):
     """Add Tabbed extension."""
 
+    def __init__(self, *args, **kwargs):
+        """Initialize."""
+
+        self.config = {
+            'alternate_style': [False, "Use alternate style - Default: False"]
+        }
+
+        super(TabbedExtension, self).__init__(*args, **kwargs)
+
     def extendMarkdown(self, md):
         """Add Tabbed to Markdown instance."""
         md.registerExtension(self)
 
-        self.tab_processor = TabbedProcessor(md.parser)
+        config = self.getConfigs()
+        self.tab_processor = TabbedProcessor(md.parser, alternate_style=config['alternate_style'])
         md.parser.blockprocessors.register(self.tab_processor, "tabbed", 105)
 
     def reset(self):
