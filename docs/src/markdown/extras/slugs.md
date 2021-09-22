@@ -4,46 +4,46 @@
 
 ## Alternate Slugify
 
-Python Markdown's default slugify strips out all Unicode chars. To better handle Unicode, a couple of optional slugify
-options have been provided. These are very simple slugify options. There are many slugify options out there, some of
-which are very sophisticated. Some may prefer using one of those, but if you just want something simple, these might
-fill that requirement.
+Python Markdown's default slugify used to strip out all Unicode chars. While this is not necessarily true anymore,
+PyMdown Extensions offers a configurable slugify to help those with picker preferences. These are very simple slugify
+options. There are many slugify options out there, some of which are very sophisticated. Some may prefer using one of
+those, but if you just want something simple, this might fill that requirement.
 
-### `uslugify`
+## Using Slugify
 
-In order to handle Unicode characters in slugs better, a slugify has been included at `pymdownx.slugs.uslugify`. This
-assumes you are encoding your HTML as UTF-8.  UTF-8 Unicode should be okay in your slugs in modern browsers. `uslugify`
-and normalizes the Unicode with the [`NFC`][unicode-norm] form, and then strips out non-word Unicode characters (`-` is
-allowed to pass through as well). Spaces are replaced with the provided separator.  Lastly, the entire string is
-lowercased. You can override Toc's default slugify by feeding in this function via the `slugify` parameter.
+`slugify` is a simple Unicode slugify option. It takes various parameters to control how casing is performed in slugs,
+what kind of Unicode normalization is preferred, and whether percent encoding of Unicode is preferred.
 
-### `uslugify_encoded`
+The available key word options are found below:
 
-If you aren't encoding your HTML as UTF-8, or prefer the safer percent encoded Unicode slugs, you can use
-`pymdownx.slugs.uslugify_encoded`. This is just like [`uslugify`](#uslugify) except that it percent encodes Unicode
-characters. You can override Toc's default slugify by feeding in this function via the `slugify` parameter.
+Parameter        | Default        | Description
+---------------- | -------------- | -----------
+`case`           | `#!py3 'none'` | Control case normalization of characters. See case options below.
+`percent_encode` | `#!py3 False`  | Percent encode all Unicode characters after case normalization.
+`normalize`      | `#!py3 'NFC'`  | Unicode normalization method. For instance, `NFD` will strip diacritics, but `NFC` does not.
 
-### `uslugify_cased`
+Case options are described below:
 
-If you prefer to keep the casing of your Unicode slugs, this might be the slug for you. This is just like
-[`uslugify`](#uslugify) except that it preserves the case of the original text. You can override Toc's default slugify
-by feeding in this function via the `slugify` parameter.
+Option        | Description
+------------- | -----------
+`none`        | Performs no case normalization preserving whatever case is provided.
+`lower`       | Performs simple lower casing on the slug which will operate on Unicode and ASCII alike.
+`lower-ascii` | Performs simple lower casing on only ASCII upper case characters.
+`fold`        | Applies Python's case folding function on the slug.
 
-### `uslugify_cased_encoded`
+Configuration is straight forward. Simply import the slug module and configure how you desire the Toc's extension to
+utilize the slugs.
 
-If you aren't encoding your HTML as UTF-8, or prefer the safer percent encoded Unicode slugs *and* you prefer to keep
-the casing of your Unicode slugs, you can use `pymdownx.slugs.uslugify_cased_encoded`. This is just like
-[`uslugify`](#uslugify) except that it percent encodes Unicode characters *and* it preserves the case of the original
-text. You can override Toc's default slugify by feeding in this function via the `slugify` parameter.
+```py
+extension = ['markdown.extensions.toc']
+extension_configs = {
+    'markdown.extensions.toc': {
+        "slugify": slugs.slugify(case="lower", percent_encode=True)
+    }
+}
+```
 
-### `gfm`
-
-If you are looking for a GitHub like slug, this may be for you. This is just like [`uslugify`](#uslugify) except that
-ASCII chars are lowercased while Unicode chars are not.
-
-### `gfm_encoded`
-
-If you are looking for a GitHub like slug, this may be for you. This is just like [`uslugify`](#uslugify) except that it
-percent encodes Unicode characters and ASCII chars are lowercased while Unicode chars are not.
+If you are using something like [MkDocs][mkdocs], check out our [FAQ](../faq.md#function-references-in-yaml) which gives
+guidance on how to specify configurable functions in the YAML configuration.
 
 --8<-- "refs.txt"

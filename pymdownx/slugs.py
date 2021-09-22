@@ -23,33 +23,32 @@ DEALINGS IN THE SOFTWARE.
 """
 import re
 import unicodedata
+import functools
 from urllib.parse import quote
+from . import util
 
 RE_TAGS = re.compile(r'</?[^>]*>', re.UNICODE)
 RE_INVALID_SLUG_CHAR = re.compile(r'[^\w\- ]', re.UNICODE)
 RE_SEP = re.compile(r' ', re.UNICODE)
 RE_ASCII_LETTERS = re.compile(r'[A-Z]', re.UNICODE)
 
-NO_CASED = 0
-UNICODE_CASED = 1
-CASED = 2
 
-
-def uslugify(text, sep, cased=NO_CASED, percent_encode=False):
+def _uslugify(text, sep, case="none", percent_encode=False, normalize='NFC'):
     """Unicode slugify (`utf-8`)."""
 
     # Normalize, Strip html tags, strip leading and trailing whitespace, and lower
-    slug = RE_TAGS.sub('', unicodedata.normalize('NFC', text)).strip()
+    slug = RE_TAGS.sub('', unicodedata.normalize(normalize, text)).strip()
 
-    if cased == NO_CASED:
+    if case == 'lower':
         slug = slug.lower()
-    elif cased == UNICODE_CASED:
-
+    elif case == 'lower-ascii':
         def lower(m):
             """Lowercase character."""
             return m.group(0).lower()
 
         slug = RE_ASCII_LETTERS.sub(lower, slug)
+    elif case == 'fold':
+        slug = slug.casefold()
 
     # Remove non word characters, non spaces, and non dashes, and convert spaces to dashes.
     slug = RE_SEP.sub(sep, RE_INVALID_SLUG_CHAR.sub('', slug))
@@ -57,31 +56,70 @@ def uslugify(text, sep, cased=NO_CASED, percent_encode=False):
     return quote(slug.encode('utf-8')) if percent_encode else slug
 
 
+def slugify(**kwargs):
+    """Configurable slugify."""
+
+    case = kwargs.get('case', 'none')
+    percent = kwargs.get('percent_encode', False)
+    normalize = kwargs.get('normalize', 'NFC')
+    return functools.partial(_uslugify, case=case, percent_encode=percent, normalize=normalize)
+
+
+@util.deprecated(
+    "'uslugify' is deprecated in favor of the configurable 'slugify' function. "
+    "See documentation for more info."
+)
+def uslugify(text, sep):
+    """Unicode slugify."""
+
+    return slugify(case='lower')(text, sep)
+
+
+@util.deprecated(
+    "'uslugify_encoded' is deprecated in favor of the configurable 'slugify' function. "
+    "See documentation for more info."
+)
 def uslugify_encoded(text, sep):
     """Unicode slugify (percent encoded)."""
 
-    return uslugify(text, sep, percent_encode=True)
+    return slugify(case='lower', percent_encode=True)(text, sep)
 
 
+@util.deprecated(
+    "'uslugify_cased' is deprecated in favor of the configurable 'slugify' function. "
+    "See documentation for more info."
+)
 def uslugify_cased(text, sep):
     """Unicode slugify cased (keep case) (`utf-8`)."""
 
-    return uslugify(text, sep, cased=CASED)
+    return slugify()(text, sep)
 
 
+@util.deprecated(
+    "'uslugify_cased_encode' is deprecated in favor of the configurable 'slugify' function. "
+    "See documentation for more info."
+)
 def uslugify_cased_encoded(text, sep):
     """Unicode slugify cased (keep case) (percent encoded)."""
 
-    return uslugify(text, sep, cased=CASED, percent_encode=True)
+    return slugify(percent_encode=True)(text, sep)
 
 
+@util.deprecated(
+    "'gfm' is deprecated in favor of the configurable 'slugify' function. "
+    "See documentation for more info."
+)
 def gfm(text, sep):
     """Unicode slugify cased (cased Unicode only) (`utf-8`)."""
 
-    return uslugify(text, sep, cased=UNICODE_CASED)
+    return slugify(case="lower-ascii")(text, sep)
 
 
+@util.deprecated(
+    "'gfm_encoded' is deprecated in favor of the configurable 'slugify' function. "
+    "See documentation for more info."
+)
 def gfm_encoded(text, sep):
     """Unicode slugify cased (cased Unicode only) (percent encoded)."""
 
-    return uslugify(text, sep, cased=UNICODE_CASED, percent_encode=True)
+    return slugify(case='lower-ascii', percent_encode=True)(text, sep)

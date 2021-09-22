@@ -11,17 +11,20 @@ specifying function references may not be intuitive.
 Keep in mind that the following examples specifically reference YAML configurations that are implemented via
 [PyYAML][pyyaml] and are configured to allow Python objects.
 
-When specifying a function reference in PyYAML, you must prepend the function with `#!yaml !!python/name:`. For
-instance, to specify Python Markdown's Toc extension to use one of PyMdown Extensions' slugs in MkDocs:
+When specifying a function reference in PyYAML, you must prepend the function with `#!yaml !!python/name:`. If you are
+trying to configure a function with parameters -- like we require with `slugs.slugify` or `arithmatex`'s custom fences
+for SuperFences -- then you must use `#!yaml !!python/object/apply:`. For instance, to specify Python Markdown's Toc
+extension to use one of PyMdown Extensions' slugs in MkDocs, we will use the format so we can specify key word
+arguments.
 
 ```yaml
 markdown_extensions:
   - markdown.extensions.toc:
-      slugify: !!python/name:pymdownx.slugs.uslugify
+      slugify: !!python/object/apply:pymdownx.slugs.slugify {case: lower}
       permalink: "\ue157"
 ```
 
-To specify a particular emoji generator in the Emoji extension:
+To specify a particular emoji generator in the Emoji extension, which just requires a simple function reference:
 
 ```yaml
 markdown_extensions:

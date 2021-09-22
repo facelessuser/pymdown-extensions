@@ -24,6 +24,10 @@
 - **NEW**: SuperFences: Remove legacy code meant to help with transitioning to new custom fence function format.
 - **NEW**: Tabbed: New alternate style that allows for a scrollable tabs if they overflow. Feature is experimental, see
   docs for more information.
+- **NEW**: Slugs: Add new configurable `slugify` function that aims to replace all other slugify methods. Deprecate
+  `uslugify`, `uslugify_encoded`, `uslugify_case`, `uslugify_case_encoded`, `gfm`, and `gfm_encoded`. `slugify` takes
+  parameters returning a function that performs the desired slug handling. `slugify` adds new options `case="fold"` for
+  case folding and `normalize='<normalize format here>'` (uses `NFC` by default).
 - **FIX**: BetterEm: Fix some complex cases related to "smart" logic. (#1413)
 - **FIX**: Highlight: Fix issue that occurs when showing only nth line numbers and using `pymdownx-inline`. Lines not
   showing a line number would not render with the proper leading space.
