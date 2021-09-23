@@ -242,11 +242,11 @@ class MagiclinkMediaTreeprocessor(Treeprocessor):
     MEDIA_DOWNLOAD = "Try downloading a copy of the video."
     MEDIA_DESCRIPTION = "Description: {}"
 
-    def __init__(self, md, in_img, in_anchor):
+    def __init__(self, md, video_defaults, audio_defaults):
         """Initialize."""
 
-        self.in_img = in_img
-        self.in_anchor = in_anchor
+        self.video_defaults = video_defaults
+        self.audio_defaults = audio_defaults
 
         super().__init__(md)
 
@@ -273,43 +273,42 @@ class MagiclinkMediaTreeprocessor(Treeprocessor):
             # Reject any other types
             mime = m.group(1).lower()
 
-            # We don't know what case the attributes are in
-            # so take care to find them. Sort out source attributes
-            # and audio/video attributes.
-            stop = False
-            src_attrib = {'src': src}
-            del attrib['src']
-            alt = ''
-            for k in list(attrib.keys()):
-                key = k.lower()
+            # We don't know what case the attributes are in, so normalize them.
+            keys = set([k.lower() for k in attrib.keys()])
 
+            # Identify whether we are working with audio or video and save MIME type
+            mtype = ''
+            if 'type' in keys:
+                v = attrib['type']
+                t = v.lower().split('/')[0]
+                if t in ('audio', 'video'):
+                    mtype = v
+                    keys.remove('type')
+            else:
+                mtype = self.MIMEMAP.get(mime, '')
+                attrib['type'] = mtype
+
+            # Doesn't look like audio/video
+            if not mtype:
+                continue
+
+            # Setup attributess for `<source>` element
+            vtype = mtype[:5].lower()
+            attrib = {**copy.deepcopy(self.video_defaults if vtype == 'video' else self.audio_defaults), **attrib}
+            src_attrib = {'src': src, 'type': mtype}
+            del attrib['src']
+            del attrib['type']
+
+            # Find any other `<source>` specific attributes and check if there is an `alt`
+            alt = ''
+            for k in keys:
+                key = k.lower()
                 if key == 'alt':
                     alt = attrib[k]
                     del attrib[k]
-                elif key == 'type':
-                    v = attrib[k]
-                    t = v.lower().split('/')[0]
-                    if t in ('audio', 'video'):
-                        src_attrib[key] = v
-                        del attrib[k]
-                    else:
-                        stop = True
-                        break
-
                 elif key in ('srcset', 'sizes', 'media'):
                     src_attrib[key] = attrib[k]
                     del attrib[key]
-
-            # We must have found an incompatible type
-            if stop:
-                break
-
-            # No type found, set it from our mapping
-            if 'type' not in src_attrib:
-                src_attrib['type'] = self.MIMEMAP[mime]
-
-            # Setup media controls
-            attrib['controls'] = ''
 
             # Build the source element and apply the right type
             source = etree.Element('source', src_attrib)
@@ -336,7 +335,8 @@ class MagiclinkMediaTreeprocessor(Treeprocessor):
             # Attach the media source as the primary source, or construct a new group.
             if sibling is not None:
                 sibling.insert(0, source)
-                sibling.attrib = attrib
+                sibling.attrib.clear()
+                sibling.attrib.update(attrib)
                 last = list(sibling)[-1]
                 last.attrib['href'] = src
                 last.tail = md_util.AtomicString(self.MEDIA_DESCRIPTION.format(alt) if alt else '')
@@ -1054,6 +1054,14 @@ class MagiclinkExtension(Extension):
             'repo': [
                 '',
                 'The base repo to use - Default: ""'
+            ],
+            "video_defaults": [
+                {'controls': '', 'preload': 'metadata'},
+                "Video default attributes - Default: {}"
+            ],
+            "audio_defaults": [
+                {'controls': '', 'preload': 'metadata'},
+                "Video default attributes - Default: {}"
             ]
         }
         super(MagiclinkExtension, self).__init__(*args, **kwargs)
@@ -1131,10 +1139,10 @@ class MagiclinkExtension(Extension):
         shortener.config = config
         md.treeprocessors.register(shortener, "magic-repo-shortener", 9.9)
 
-    def setup_media(self, md, in_img, in_anchor):
+    def setup_media(self, md, video_defaults, audio_defaults):
         """Setup media transformations."""
 
-        media = MagiclinkMediaTreeprocessor(md, in_img, in_anchor)
+        media = MagiclinkMediaTreeprocessor(md, video_defaults, audio_defaults)
         md.treeprocessors.register(media, 'magic-video', 7.9)
 
     def get_base_urls(self, config):
@@ -1198,7 +1206,11 @@ class MagiclinkExtension(Extension):
             base_url, base_user_url = self.get_base_urls(config)
             self.setup_shortener(md, base_url, base_user_url, config, self.repo_shortner, self.social_shortener)
 
-        self.setup_media(md, True, True)
+        self.setup_media(
+            md,
+            config['video_defaults'],
+            config['audio_defaults']
+        )
 
 
 def makeExtension(*args, **kwargs):
