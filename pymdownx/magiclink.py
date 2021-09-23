@@ -30,7 +30,6 @@ import xml.etree.ElementTree as etree
 from . import util
 import re
 from markdown.inlinepatterns import LinkInlineProcessor, InlineProcessor
-import copy
 
 MAGIC_LINK = 1
 MAGIC_AUTO_LINK = 2
@@ -216,144 +215,6 @@ PROVIDER_INFO = {
         "hash_size": 7
     }
 }
-
-
-class MagiclinkMediaTreeprocessor(Treeprocessor):
-    """
-    Find video links and parse them up.
-
-    We'll use the image link syntax to identify our links of interest.
-    """
-
-    # Current recognized file extensions
-    MIMES = re.compile(r'(?i).*?\.(mp3|ogg|wav|flac|mp4|webm)$')
-
-    # Default MIME types, but can be overridden
-    MIMEMAP = {
-        'mp4': 'video/mp4',
-        'webm': 'video/webm',
-        'mp3': 'audio/mpeg',
-        'ogg': 'audio/ogg',
-        'wav': 'audio/wav',
-        'flac': 'audio/flac'
-    }
-
-    MEDIA_FAIL = "Sorry, your browser doesn't support embedded videos."
-    MEDIA_DOWNLOAD = "Try downloading a copy of the video."
-    MEDIA_DESCRIPTION = "Description: {}"
-
-    def __init__(self, md, video_defaults, audio_defaults):
-        """Initialize."""
-
-        self.video_defaults = video_defaults
-        self.audio_defaults = audio_defaults
-
-        super().__init__(md)
-
-    def run(self, root):
-        """Shorten popular git repository links."""
-
-        # Grab the elements of interest and form a parent mapping
-        links = [e for e in root.iter() if e.tag.lower() in ('img',)]
-        parent_map = {c: p for p in root.iter() for c in p}
-
-        # Evaluate links
-        for link in reversed(links):
-
-            # Save the attributes as we will reuse them
-            attrib = copy.copy(link.attrib)
-
-            # See if source matches the audio or video mime type
-            src = attrib.get('src', '')
-            m = self.MIMES.match(src)
-            if m is None:
-                continue
-
-            # Use whatever audio/video type specified or construct our own
-            # Reject any other types
-            mime = m.group(1).lower()
-
-            # We don't know what case the attributes are in, so normalize them.
-            keys = set([k.lower() for k in attrib.keys()])
-
-            # Identify whether we are working with audio or video and save MIME type
-            mtype = ''
-            if 'type' in keys:
-                v = attrib['type']
-                t = v.lower().split('/')[0]
-                if t in ('audio', 'video'):
-                    mtype = v
-                    keys.remove('type')
-            else:
-                mtype = self.MIMEMAP.get(mime, '')
-                attrib['type'] = mtype
-
-            # Doesn't look like audio/video
-            if not mtype:
-                continue
-
-            # Setup attributess for `<source>` element
-            vtype = mtype[:5].lower()
-            attrib = {**copy.deepcopy(self.video_defaults if vtype == 'video' else self.audio_defaults), **attrib}
-            src_attrib = {'src': src, 'type': mtype}
-            del attrib['src']
-            del attrib['type']
-
-            # Find any other `<source>` specific attributes and check if there is an `alt`
-            alt = ''
-            for k in keys:
-                key = k.lower()
-                if key == 'alt':
-                    alt = attrib[k]
-                    del attrib[k]
-                elif key in ('srcset', 'sizes', 'media'):
-                    src_attrib[key] = attrib[k]
-                    del attrib[key]
-
-            # Build the source element and apply the right type
-            source = etree.Element('source', src_attrib)
-
-            # Find the parent and check if the next sibling is already a media group
-            # that we can attach to. If so, the current link will become the primary
-            # source, and the existing will become the fallback.
-            parent = parent_map[link]
-            one_more = False
-            sibling = None
-            index = -1
-            mtype = src_attrib['type'][:5].lower()
-            for i, c in enumerate(parent, 0):
-                if one_more:
-                    # If there is another sibling, see if it is already a video container
-                    if c.tag.lower() == mtype and 'fallback' in c.attrib:
-                        sibling = c
-                    break
-                if c is link:
-                    # Found where we live, now let's find our sibling
-                    index = i
-                    one_more = True
-
-            # Attach the media source as the primary source, or construct a new group.
-            if sibling is not None:
-                sibling.insert(0, source)
-                sibling.attrib.clear()
-                sibling.attrib.update(attrib)
-                last = list(sibling)[-1]
-                last.attrib['href'] = src
-                last.tail = md_util.AtomicString(self.MEDIA_DESCRIPTION.format(alt) if alt else '')
-            else:
-                media = etree.Element(mtype, attrib)
-                media.append(source)
-                source.tail = md_util.AtomicString(self.MEDIA_FAIL)
-                download = etree.SubElement(media, 'a', {"href": src, "download": ""})
-                download.text = md_util.AtomicString(self.MEDIA_DOWNLOAD)
-                if alt:
-                    download.tail = md_util.AtomicString(self.MEDIA_DESCRIPTION.format(alt))
-                parent.insert(index, media)
-
-            # Remove the old link
-            parent.remove(link)
-
-        return root
 
 
 class _MagiclinkShorthandPattern(InlineProcessor):
@@ -1054,14 +915,6 @@ class MagiclinkExtension(Extension):
             'repo': [
                 '',
                 'The base repo to use - Default: ""'
-            ],
-            "video_defaults": [
-                {'controls': '', 'preload': 'metadata'},
-                "Video default attributes - Default: {}"
-            ],
-            "audio_defaults": [
-                {'controls': '', 'preload': 'metadata'},
-                "Video default attributes - Default: {}"
             ]
         }
         super(MagiclinkExtension, self).__init__(*args, **kwargs)
@@ -1139,12 +992,6 @@ class MagiclinkExtension(Extension):
         shortener.config = config
         md.treeprocessors.register(shortener, "magic-repo-shortener", 9.9)
 
-    def setup_media(self, md, video_defaults, audio_defaults):
-        """Setup media transformations."""
-
-        media = MagiclinkMediaTreeprocessor(md, video_defaults, audio_defaults)
-        md.treeprocessors.register(media, 'magic-video', 7.9)
-
     def get_base_urls(self, config):
         """Get base URLs."""
 
@@ -1205,12 +1052,6 @@ class MagiclinkExtension(Extension):
         if self.repo_shortner or self.social_shortener:
             base_url, base_user_url = self.get_base_urls(config)
             self.setup_shortener(md, base_url, base_user_url, config, self.repo_shortner, self.social_shortener)
-
-        self.setup_media(
-            md,
-            config['video_defaults'],
-            config['audio_defaults']
-        )
 
 
 def makeExtension(*args, **kwargs):
