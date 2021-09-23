@@ -238,6 +238,10 @@ class MagiclinkMediaTreeprocessor(Treeprocessor):
         'flac': 'audio/flac'
     }
 
+    MEDIA_FAIL = "Sorry, your browser doesn't support embedded videos."
+    MEDIA_DOWNLOAD = "Try downloading a copy of the video."
+    MEDIA_DESCRIPTION = "Description: {}"
+
     def __init__(self, md, in_img, in_anchor):
         """Initialize."""
 
@@ -275,10 +279,14 @@ class MagiclinkMediaTreeprocessor(Treeprocessor):
             stop = False
             src_attrib = {'src': src}
             del attrib['src']
+            alt = ''
             for k in list(attrib.keys()):
                 key = k.lower()
 
-                if key == 'type':
+                if key == 'alt':
+                    alt = attrib[k]
+                    del attrib[k]
+                elif key == 'type':
                     v = attrib[k]
                     t = v.lower().split('/')[0]
                     if t in ('audio', 'video'):
@@ -317,7 +325,7 @@ class MagiclinkMediaTreeprocessor(Treeprocessor):
             for i, c in enumerate(parent, 0):
                 if one_more:
                     # If there is another sibling, see if it is already a video container
-                    if c.tag.lower() == mtype:
+                    if c.tag.lower() == mtype and 'fallback' in c.attrib:
                         sibling = c
                     break
                 if c is link:
@@ -329,9 +337,17 @@ class MagiclinkMediaTreeprocessor(Treeprocessor):
             if sibling is not None:
                 sibling.insert(0, source)
                 sibling.attrib = attrib
+                last = list(sibling)[-1]
+                last.attrib['href'] = src
+                last.tail = md_util.AtomicString(self.MEDIA_DESCRIPTION.format(alt) if alt else '')
             else:
                 media = etree.Element(mtype, attrib)
                 media.append(source)
+                source.tail = md_util.AtomicString(self.MEDIA_FAIL)
+                download = etree.SubElement(media, 'a', {"href": src, "download": ""})
+                download.text = md_util.AtomicString(self.MEDIA_DOWNLOAD)
+                if alt:
+                    download.tail = md_util.AtomicString(self.MEDIA_DESCRIPTION.format(alt))
                 parent.insert(index, media)
 
             # Remove the old link
