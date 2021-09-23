@@ -30,6 +30,7 @@ import xml.etree.ElementTree as etree
 from . import util
 import re
 from markdown.inlinepatterns import LinkInlineProcessor, InlineProcessor
+import copy
 
 MAGIC_LINK = 1
 MAGIC_AUTO_LINK = 2
@@ -215,6 +216,128 @@ PROVIDER_INFO = {
         "hash_size": 7
     }
 }
+
+
+class MagiclinkMediaTreeprocessor(Treeprocessor):
+    """
+    Find video links and parse them up.
+
+    We'll use the image link syntax to identify our links of interest.
+    """
+
+    # Current recognized file extensions
+    MIMES = re.compile(r'(?i).*?\.(mp3|ogg|wav|flac|mp4|webm)$')
+
+    # Default MIME types, but can be overridden
+    MIMEMAP = {
+        'mp4': 'video/mp4',
+        'webm': 'video/webm',
+        'mp3': 'audio/mpeg',
+        'ogg': 'audio/ogg',
+        'wav': 'audio/wav',
+        'flac': 'audio/flac'
+    }
+
+    def __init__(self, md, in_img, in_anchor):
+        """Initialize."""
+
+        self.in_img = in_img
+        self.in_anchor = in_anchor
+
+        super().__init__(md)
+
+    def run(self, root):
+        """Shorten popular git repository links."""
+
+        # Grab the elements of interest and form a parent mapping
+        links = [e for e in root.iter() if e.tag.lower() in ('img',)]
+        parent_map = {c: p for p in root.iter() for c in p}
+
+        # Evaluate links
+        for link in reversed(links):
+
+            # Save the attributes as we will reuse them
+            attrib = copy.copy(link.attrib)
+
+            # See if source matches the audio or video mime type
+            src = attrib.get('src', '')
+            m = self.MIMES.match(src)
+            if m is None:
+                continue
+
+            # Use whatever audio/video type specified or construct our own
+            # Reject any other types
+            mime = m.group(1).lower()
+
+            # We don't know what case the attributes are in
+            # so take care to find them. Sort out source attributes
+            # and audio/video attributes.
+            stop = False
+            src_attrib = {'src': src}
+            del attrib['src']
+            for k in list(attrib.keys()):
+                key = k.lower()
+
+                if key == 'type':
+                    v = attrib[k]
+                    t = v.lower().split('/')[0]
+                    if t in ('audio', 'video'):
+                        src_attrib[key] = v
+                        del attrib[k]
+                    else:
+                        stop = True
+                        break
+
+                elif key in ('srcset', 'sizes', 'media'):
+                    src_attrib[key] = attrib[k]
+                    del attrib[key]
+
+            # We must have found an incompatible type
+            if stop:
+                break
+
+            # No type found, set it from our mapping
+            if 'type' not in src_attrib:
+                src_attrib['type'] = self.MIMEMAP[mime]
+
+            # Setup media controls
+            attrib['controls'] = ''
+
+            # Build the source element and apply the right type
+            source = etree.Element('source', src_attrib)
+
+            # Find the parent and check if the next sibling is already a media group
+            # that we can attach to. If so, the current link will become the primary
+            # source, and the existing will become the fallback.
+            parent = parent_map[link]
+            one_more = False
+            sibling = None
+            index = -1
+            mtype = src_attrib['type'][:5].lower()
+            for i, c in enumerate(parent, 0):
+                if one_more:
+                    # If there is another sibling, see if it is already a video container
+                    if c.tag.lower() == mtype:
+                        sibling = c
+                    break
+                if c is link:
+                    # Found where we live, now let's find our sibling
+                    index = i
+                    one_more = True
+
+            # Attach the media source as the primary source, or construct a new group.
+            if sibling is not None:
+                sibling.insert(0, source)
+                sibling.attrib = attrib
+            else:
+                media = etree.Element(mtype, attrib)
+                media.append(source)
+                parent.insert(index, media)
+
+            # Remove the old link
+            parent.remove(link)
+
+        return root
 
 
 class _MagiclinkShorthandPattern(InlineProcessor):
@@ -992,6 +1115,12 @@ class MagiclinkExtension(Extension):
         shortener.config = config
         md.treeprocessors.register(shortener, "magic-repo-shortener", 9.9)
 
+    def setup_media(self, md, in_img, in_anchor):
+        """Setup media transformations."""
+
+        media = MagiclinkMediaTreeprocessor(md, in_img, in_anchor)
+        md.treeprocessors.register(media, 'magic-video', 7.9)
+
     def get_base_urls(self, config):
         """Get base URLs."""
 
@@ -1052,6 +1181,8 @@ class MagiclinkExtension(Extension):
         if self.repo_shortner or self.social_shortener:
             base_url, base_user_url = self.get_base_urls(config)
             self.setup_shortener(md, base_url, base_user_url, config, self.repo_shortner, self.social_shortener)
+
+        self.setup_media(md, True, True)
 
 
 def makeExtension(*args, **kwargs):
