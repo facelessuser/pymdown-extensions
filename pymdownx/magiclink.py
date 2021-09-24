@@ -515,6 +515,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         """Get the provider and hash size."""
 
         # Set provider specific variables
+        provider = ''
         if match.group('github'):
             provider = 'github'
         elif match.group('bitbucket'):
@@ -526,6 +527,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
     def get_social_provider(self, match):
         """Get social provider."""
 
+        provider = ''
         if match.group('twitter'):
             provider = 'twitter'
         return provider
@@ -533,6 +535,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
     def get_type(self, provider, match):
         """Get the link type."""
 
+        value = link_type = None
         try:
             # Gather info about link type
             if match.group(provider + '_diff1') is not None:
