@@ -63,15 +63,16 @@ nav:
     - Contributing &amp; Support: about/contributing.md
     - Development: about/development.md
     - Changelog: about/changelog.md
-    - Release Notes:
+    - Migration Notes:
         - '6.0': about/releases/6.0.md
         - '7.0': about/releases/7.0.md
         - '8.0': about/releases/8.0.md
+        - '9.0': about/releases/9.0.md
     - License: about/license.md
 
 markdown_extensions:
   - markdown.extensions.toc:
-      slugify: !!python/object/apply:pymdownx.slugs.slugify {case: lower}
+      slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
       permalink: ""
   - markdown.extensions.admonition:
   - markdown.extensions.smarty:
@@ -92,7 +93,7 @@ markdown_extensions:
           format: !!python/name:pymdownx.superfences.fence_code_format
         - name: math
           class: arithmatex
-          format: !!python/object/apply:pymdownx.arithmatex.arithmatex_fenced_format {mode: generic, tag: pre}
+          format: !!python/object/apply:pymdownx.arithmatex.arithmatex_fenced_format {kwds: {mode: generic, tag: pre}}
         - name: md-render
           class: md-render
           format: !!python/name:tools.pymdownx_md_render.md_sub_render
@@ -111,7 +112,7 @@ markdown_extensions:
       custom_inline:
         - name: math
           class: arithmatex
-          format: !!python/object/apply:pymdownx.arithmatex.arithmatex_inline_format {mode: generic}
+          format: !!python/object/apply:pymdownx.arithmatex.arithmatex_inline_format {kwds: {mode: generic}}
   - pymdownx.magiclink:
       repo_url_shortener: true
       repo_url_shorthand: true

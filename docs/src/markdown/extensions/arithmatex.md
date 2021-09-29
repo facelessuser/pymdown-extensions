@@ -315,6 +315,10 @@ extension_config = {
 }
 ```
 
+!!! tip "YAML Configuration Format"
+    If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please
+    see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify function references in YAML.
+
 !!! example "Inline Math"
 
     === "Output"
