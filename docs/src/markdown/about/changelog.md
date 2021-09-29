@@ -2,6 +2,8 @@
 
 ## 9.0
 
+Please see [Migration Notes](./releases/9.0.md#9.0) for details on upgrading to 9.0.
+
 - **NEW**: Arithmatex: Wrap MathJax "script" format (non-preview) with a container element just like all other
   Arithmatex output formats.
 - **NEW**: Arithmatex: MathJax (non-generic) form's container element now has the `arithmatex` class added just like
@@ -72,7 +74,7 @@
 
 ## 8.0
 
-Please see [Release Notes](./releases/8.0.md#8.0) for details on upgrading to 8.0.
+Please see [Migration Notes](./releases/8.0.md#8.0) for details on upgrading to 8.0.
 
 - **NEW**: Added SaneHeaders extension.
 - **NEW**: SuperFences \& InlineHilite: gracefully handle failing custom formatters and/or validators. Users should add
@@ -88,7 +90,7 @@ Please see [Release Notes](./releases/8.0.md#8.0) for details on upgrading to 8.
   attributes. JavaScript highlighter options should be defined in the brace header form with `attr_list` enabled in
   order to generate appropriate, compatible HTML with the chosen JavaScript highlighter.
 - **NEW**: SuperFences: backwards incompatible changes where made to custom fence API. See
-  [Release Notes](./releases/8.0.md#8.0) for instructions on how to migrate to the new API. Some temporary support for
+  [Migration Notes](./releases/8.0.md#8.0) for instructions on how to migrate to the new API. Some temporary support for
   most of the old format is in place, but is deprecated.
 - **NEW**: SuperFences: has removed legacy code tab feature. Associated `legacy_tab_classes` option has been removed.
   Please use the Tabbed extension to create general purpose tabs for code blocks or other content.
@@ -119,7 +121,7 @@ Please see [Release Notes](./releases/8.0.md#8.0) for details on upgrading to 8.
 
 ## 7.0
 
-Please see [Release Notes](./releases/7.0.md#7.0) for details on upgrading to 7.0.
+Please see [Migration Notes](./releases/7.0.md#7.0) for details on upgrading to 7.0.
 
 - **NEW**: MagicLink will now shorten user name and repository links when link shortening is enabled.
 - **NEW**: Added MagicLink options `social_url_shortener` and `shortener_user_exclude` were added.
@@ -204,7 +206,7 @@ Please see [Release Notes](./releases/7.0.md#7.0) for details on upgrading to 7.
 
 ## 6.0
 
-Please see [Release Notes](./releases/6.0.md#6.0) for details on upgrading to 6.0.0.
+Please see [Migration Notes](./releases/6.0.md#6.0) for details on upgrading to 6.0.0.
 
 - **NEW**: Allow custom inline highlight code blocks. (!380)
 - **NEW**: SuperFences now has one custom format convention which now also accepts the markdown class object to allow
