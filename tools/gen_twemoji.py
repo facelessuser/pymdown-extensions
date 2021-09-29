@@ -10,17 +10,13 @@ ADDITIONAL_ALIASES = {}
 
 # Special emoji
 SPECIAL_EMOJI = {
-    # An unofficial emoji supported by very few
-    ":pirate_flag:": {
-        "category": "flags",
-        "name": "pirate flag",
-        "unicode": "1f3f4-200d-2620-fe0f"
-    },
+    # # An unofficial emoji supported by very few
     ":shibuya:": {
         "category": "travel",
         "name": "Shibuya 109",
         "unicode": "e50a"
     },
+
     # Skier skin tones (not supported by Unicode spec)
     ":skier_tone1:": {
         "category": "activity",
@@ -47,6 +43,7 @@ SPECIAL_EMOJI = {
         "name": "skier: dark skin tone",
         "unicode": "26f7-1f3ff"
     },
+
     # Woman levitate (not supported in Unicode spec)
     ":woman_levitate:": {
         "category": "people",
@@ -99,50 +96,81 @@ SPECIAL_EMOJI = {
             "woman_in_business_suit_levitating_dark_skin_tone"
         ]
     },
-    # Woman in tuxedo
-    ":woman_in_tuxedo:": {
+
+    # Man in Santa hat and variants
+    # Twitter has Santa Claus and man in Santa hat backwards
+    ":man_in_santa_hat:": {
         "category": "people",
-        "name": "woman in tuxedo",
-        "unicode": "1f935-200d-2640-fe0f"
-    },
-    ":woman_in_tuxedo_tone1:": {
-        "category": "people",
-        "name": "woman in tuxedo: light skin tone",
-        "unicode": "1f935-1f3fb-200d-2640-fe0f"
-    },
-    ":woman_in_tuxedo_tone2:": {
-        "category": "people",
-        "name": "woman in tuxedo: medium-light skin tone",
-        "unicode": "1f935-1f3fc-200d-2640-fe0f"
-    },
-    ":woman_in_tuxedo_tone3:": {
-        "category": "people",
-        "name": "woman in tuxedo: medium skin tone",
-        "unicode": "1f935-1f3fd-200d-2640-fe0f"
-    },
-    ":woman_in_tuxedo_tone4:": {
-        "category": "people",
-        "name": "woman in tuxedo: medium-dark skin tone",
-        "unicode": "1f935-1f3fe-200d-2640-fe0f"
-    },
-    ":woman_in_tuxedo_tone5:": {
-        "category": "people",
-        "name": "woman in tuxedo: dark skin tone",
-        "unicode": "1f935-1f3ff-200d-2640-fe0f"
+        "name": "man in santa hat",
+        "unicode": "1f468-200d-1f384"
     },
 
-    # Transgender sign
-    ":transgender_sign:": {
-        "category": "symbols",
-        "name": "transgender sign",
-        "unicode": "26a7"
+    ":man_in_santa_hat_tone1:": {
+        "category": "people",
+        "name": "man in santa hat: light skin tone",
+        "unicode": "1f468-1f3fb-200d-1f384"
     },
 
-    # Transgender flag
-    ":transgender_flag:": {
-        "category": "flags",
-        "name": "transgender flag",
-        "unicode": "1f3f3-fe0f-200d-26a7-fe0f"
+    ":man_in_santa_hat_tone2:": {
+        "category": "people",
+        "name": "man in santa hat: medium-light skin tone",
+        "unicode": "1f468-1f3fc-200d-1f384"
+    },
+
+    ":man_in_santa_hat_tone3:": {
+        "category": "people",
+        "name": "man in santa hat: medium skin tone",
+        "unicode": "1f468-1f3fd-200d-1f384"
+    },
+
+    ":man_in_santa_hat_tone4:": {
+        "category": "people",
+        "name": "man in santa hat: medium-dark skin tone",
+        "unicode": "1f468-1f3fe-200d-1f384"
+    },
+
+    ":man_in_santa_hat_tone5:": {
+        "category": "people",
+        "name": "man in santa hat: dark skin tone",
+        "unicode": "1f469-1f3ff-200d-1f384"
+    },
+
+    # Woman in Santa hat and variants
+    # Twitter has Mrs. Claus and woman in Santa hat backwards
+    ":woman_in_santa_hat:": {
+        "category": "people",
+        "name": "woman in santa hat",
+        "unicode": "1f469-200d-1f384"
+    },
+
+    ":woman_in_santa_hat_tone1:": {
+        "category": "people",
+        "name": "woman in santa hat: light skin tone",
+        "unicode": "1f469-1f3fb-200d-1f384"
+    },
+
+    ":woman_in_santa_hat_tone2:": {
+        "category": "people",
+        "name": "woman in santa hat: medium-light skin tone",
+        "unicode": "1f468-1f3ff-200d-1f384"
+    },
+
+    ":woman_in_santa_hat_tone3:": {
+        "category": "people",
+        "name": "woman in santa hat: medium skin tone",
+        "unicode": "1f469-1f3fe-200d-1f384"
+    },
+
+    ":woman_in_santa_hat_tone4:": {
+        "category": "people",
+        "name": "woman in santa hat: medium-dark skin tone",
+        "unicode": "1f469-1f3fd-200d-1f384"
+    },
+
+    ":woman_in_santa_hat_tone5:": {
+        "category": "people",
+        "name": "woman in santa hat: dark skin tone",
+        "unicode": "1f469-1f3fc-200d-1f384"
     }
 }
 
@@ -156,16 +184,6 @@ IGNORE_EMOJI = [
     "1f574-1f3fd-200d-2642-fe0f",
     "1f574-1f3fe-200d-2642-fe0f",
     "1f574-1f3ff-200d-2642-fe0f",
-
-    # Alternative man in tuxedo
-    # Per spec, "tuxedo" is already a man,
-    # no need to explicitly have a man variant.
-    "1f935-200d-2642-fe0f",
-    "1f935-1f3fb-200d-2642-fe0f",
-    "1f935-1f3fc-200d-2642-fe0f",
-    "1f935-1f3fd-200d-2642-fe0f",
-    "1f935-1f3fe-200d-2642-fe0f",
-    "1f935-1f3ff-200d-2642-fe0f"
 ]
 
 

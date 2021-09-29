@@ -9,6 +9,9 @@
 - **NEW**: Arithmatex: Add options to override HTML element container type of inline and block math.
 - **NEW**: Arithmatex: Add new formatter functions intended to replace old math fenced/inline block formatters. New
   formatter functions are configurable. All others are marked as deprecated and will be removed at some future date.
+- **NEW**: Emoji upgraded Twitter emoji database to support latest emoji. It is a known issue that Twitter has
+  `:man_in_santa_hat:` and `:mx_claus:` backwards -- same for `:mrs_claus:` and `:woman_in_santa_hat:`. That is on
+  Twitter's side, not ours.
 - **NEW**: Highlight: Add support for the Pygments option `linespans`.
 - **NEW**: Highlight: Add support for Pygments option `lineanchors`.
 - **NEW**: Highlight: Add support for Pygments option `anchorlinenos`.
