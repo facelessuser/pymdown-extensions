@@ -11,7 +11,7 @@ Please see [Migration Notes](./releases/9.0.md#9.0) for details on upgrading to 
 - **NEW**: Arithmatex: Add options to override HTML element container type of inline and block math.
 - **NEW**: Arithmatex: Add new formatter functions intended to replace old math fenced/inline block formatters. New
   formatter functions are configurable. All others are marked as deprecated and will be removed at some future date.
-- **NEW**: Emoji upgraded Twitter emoji database to support latest emoji. It is a known issue that Twitter has
+- **NEW**: Emoji: Upgraded Twitter emoji database to support latest emoji. It is a known issue that Twitter has
   `:man_in_santa_hat:` and `:mx_claus:` backwards -- same for `:mrs_claus:` and `:woman_in_santa_hat:`. That is on
   Twitter's side, not ours.
 - **NEW**: Highlight: Add support for the Pygments option `linespans`.
@@ -34,6 +34,8 @@ Please see [Migration Notes](./releases/9.0.md#9.0) for details on upgrading to 
   parameters returning a function that performs the desired slug handling. `slugify` adds new options `case="fold"` for
   case folding and `normalize='<normalize format here>'` (uses `NFC` by default).
 - **FIX**: BetterEm: Fix some complex cases related to "smart" logic. (#1413)
+- **FIX**: EscapeAll: Fix issue where an escaped HTML entity may end up with incorrect slug and incorrect table of
+  content entry.
 - **FIX**: Highlight: Fix issue that occurs when showing only nth line numbers and using `pymdownx-inline`. Lines not
   showing a line number would not render with the proper leading space.
 
