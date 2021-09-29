@@ -20,7 +20,7 @@ arguments.
 ```yaml
 markdown_extensions:
   - markdown.extensions.toc:
-      slugify: !!python/object/apply:pymdownx.slugs.slugify {case: lower}
+      slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
       permalink: "\ue157"
 ```
 
