@@ -41,24 +41,26 @@ UNESCAPE_PATTERN = re.compile(r'%s(\d+)%s' % (md_util.STX, md_util.ETX))
 class EscapeAllPattern(InlineProcessor):
     """Return an escaped character."""
 
-    def __init__(self, pattern, nbsp):
+    def __init__(self, pattern, nbsp, md):
         """Initialize."""
 
         self.nbsp = nbsp
-        InlineProcessor.__init__(self, pattern)
+        InlineProcessor.__init__(self, pattern, md)
 
     def handleMatch(self, m, data):
         """Convert the char to an escaped character."""
 
         char = m.group(1)
-        if char == '<':
-            escape = md_util.AMP_SUBSTITUTE + 'lt;'
-        elif char == '>':
-            escape = md_util.AMP_SUBSTITUTE + 'gt;'
-        elif char == '&':
-            escape = md_util.AMP_SUBSTITUTE + 'amp;'
+        if char in ('<', '>', '&'):
+            if char == '<':
+                char = '&lt;'
+            elif char == '>':
+                char = '&gt;'
+            elif char == '&':
+                char = '&amp;'
+            escape = self.md.htmlStash.store(char)
         elif self.nbsp and char == ' ':
-            escape = md_util.AMP_SUBSTITUTE + 'nbsp;'
+            escape = self.md.htmlStash.store('&nbsp;')
         elif char in (STX, ETX):
             escape = char
         else:
@@ -104,7 +106,7 @@ class EscapeAllExtension(Extension):
         config = self.getConfigs()
         hardbreak = config['hardbreak']
         md.inlinePatterns.register(
-            EscapeAllPattern(ESCAPE_NO_NL_RE if hardbreak else ESCAPE_RE, config['nbsp']),
+            EscapeAllPattern(ESCAPE_NO_NL_RE if hardbreak else ESCAPE_RE, config['nbsp'], md),
             "escape",
             180
         )
