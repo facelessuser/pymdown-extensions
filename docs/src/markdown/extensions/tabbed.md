@@ -369,7 +369,6 @@ to some practical number.
           position: absolute;
           top: 0.75em;
           left: 0;
-          display: inline-block;
           padding-right: 0.64em;
           color: gray;
           background: linear-gradient(to right, rgb(255, 255, 255) 75%, rgba(255, 255, 255, 0));
@@ -382,7 +381,6 @@ to some practical number.
           position: absolute;
           top: 0.75em;
           right: 0;
-          display: inline-block;
           padding-left: 0.64em;
           color: gray;
           background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255) 25%);
