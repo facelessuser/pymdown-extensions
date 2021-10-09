@@ -397,110 +397,166 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
     }
   };
 
-  var tabbed = function tabbed() {
-    var tabOverflow = function tabOverflow() {
-      var checkScroll = function checkScroll(e) {
-        var target = e.target.closest('.tabbed-labels');
-        target.classList.remove('tabbed-scroll-left', 'tabbed-scroll-right');
+  var checkScroll = function checkScroll(e) {
+    var target = e.target;
 
-        if (e.type === "mouseover") {
-          var scrollWidth = target.scrollWidth - target.clientWidth;
-          var hscroll = target.scrollLeft;
+    if (!e.target.matches('.tabbed-labels')) {
+      return;
+    }
 
-          if (!hscroll) {
-            target.scrollLeft = 1;
-            hscroll = target.scrollLeft;
-            target.scrollLeft = 0;
+    target.classList.remove('tabbed-scroll-left', 'tabbed-scroll-right');
 
-            if (hscroll) {
-              target.classList.add('tabbed-scroll-right');
-            }
-          } else if (hscroll !== scrollWidth) {
-            target.classList.add('tabbed-scroll-left', 'tabbed-scroll-right');
-          } else if (hscroll) {
-            target.classList.add('tabbed-scroll-left');
-          }
-        }
+    if (e.type === "resize" || e.type === "scroll") {
+      var scrollWidth = target.scrollWidth - target.clientWidth;
+
+      if (scrollWidth === 0) {
+        return;
+      }
+
+      if (!target.scrollLeft) {
+        target.classList.add('tabbed-scroll-right');
+      } else if (target.scrollLeft < scrollWidth) {
+        target.classList.add('tabbed-scroll-left', 'tabbed-scroll-right');
+      } else {
+        target.classList.add('tabbed-scroll-left');
+      }
+    }
+  }; // Change the tab to either the previous or next input - depending on which indicator was clicked.
+  // Make sure the current, selected input is scrolled into view.
+
+
+  var tabChange = function tabChange(e) {
+    var target = e.target;
+    var selected = target.closest('.tabbed-set').querySelector('input:checked');
+    var updated = null;
+
+    if (target.classList.contains('tabbed-scroll-right') && e.offsetX >= e.target.offsetWidth - 15) {
+      var sib = selected.nextSibling;
+      updated = selected;
+
+      if (sib && sib.tagName === 'INPUT') {
+        selected.removeAttribute('checked');
+        sib.checked = true;
+        updated = sib;
+      }
+    } else if (target.classList.contains('tabbed-scroll-left') && e.offsetX <= 15) {
+      var _sib = selected.previousSibling;
+      updated = selected;
+
+      if (_sib && _sib.tagName === 'INPUT') {
+        selected.removeAttribute('checked');
+        _sib.checked = true;
+        updated = _sib;
+      }
+    }
+
+    if (updated) {
+      var label = document.querySelector("label[for=".concat(updated.id, "]"));
+      label.scrollIntoView({
+        block: "nearest",
+        inline: "nearest",
+        behavior: "smooth"
+      });
+    }
+  };
+
+  var onResize = new ResizeObserver(function (entries) {
+    entries.forEach(function (entry) {
+      checkScroll({
+        target: entry.target,
+        type: 'resize'
+      });
+    });
+  }); // Identify whether a tab bar can be scrolled left or right and apply indicator classes
+
+  var tabOverflow = function tabOverflow() {
+    var labels = document.querySelectorAll('.tabbed-alternate > .tabbed-labels');
+    onResize.disconnect();
+    labels.forEach(function (el) {
+      checkScroll({
+        target: el,
+        type: 'resize'
+      });
+      onResize.observe(el);
+      el.addEventListener('resize', checkScroll);
+      el.addEventListener('scroll', checkScroll);
+      el.addEventListener('click', tabChange);
+    });
+  }; // Smooth scroll tab into view when changed
+
+
+  var tabScroll = function tabScroll() {
+    var tabs = document.querySelectorAll(".tabbed-alternate > input");
+
+    var _iterator = _createForOfIteratorHelper(tabs),
+        _step;
+
+    try {
+      var _loop = function _loop() {
+        var tab = _step.value;
+        tab.addEventListener("change", function () {
+          var label = document.querySelector("label[for=".concat(tab.id, "]"));
+          label.scrollIntoView({
+            block: "nearest",
+            inline: "nearest",
+            behavior: "smooth"
+          });
+        });
       };
 
-      var labels = document.querySelectorAll('.tabbed-alternate > .tabbed-labels');
-      labels.forEach(function (el) {
-        el.addEventListener('mouseover', checkScroll);
-        el.addEventListener('mouseout', checkScroll);
-      });
-    };
-
-    var tabScroll = function tabScroll() {
-      var tabs = document.querySelectorAll(".tabbed-alternate > input");
-
-      var _iterator = _createForOfIteratorHelper(tabs),
-          _step;
-
-      try {
-        var _loop = function _loop() {
-          var tab = _step.value;
-          tab.addEventListener("change", function () {
-            var label = document.querySelector("label[for=".concat(tab.id, "]"));
-            label.scrollIntoView({
-              block: "nearest",
-              inline: "nearest",
-              behavior: "smooth"
-            });
-          });
-        };
-
-        for (_iterator.s(); !(_step = _iterator.n()).done;) {
-          _loop();
-        }
-      } catch (err) {
-        _iterator.e(err);
-      } finally {
-        _iterator.f();
+      for (_iterator.s(); !(_step = _iterator.n()).done;) {
+        _loop();
       }
-    };
+    } catch (err) {
+      _iterator.e(err);
+    } finally {
+      _iterator.f();
+    }
+  };
 
-    var tabSync = function tabSync() {
-      var tabs = document.querySelectorAll(".tabbed-set > input");
+  var tabSync = function tabSync() {
+    var tabs = document.querySelectorAll(".tabbed-set > input");
 
-      var _iterator2 = _createForOfIteratorHelper(tabs),
-          _step2;
+    var _iterator2 = _createForOfIteratorHelper(tabs),
+        _step2;
 
-      try {
-        var _loop2 = function _loop2() {
-          var tab = _step2.value;
-          tab.addEventListener("click", function () {
-            var labelContent = document.querySelector("label[for=".concat(tab.id, "]")).innerHTML;
-            var labels = document.querySelectorAll('.tabbed-set > label, .tabbed-alternate > .tabbed-labels > label');
+    try {
+      var _loop2 = function _loop2() {
+        var tab = _step2.value;
+        tab.addEventListener("click", function () {
+          var labelContent = document.querySelector("label[for=".concat(tab.id, "]")).innerHTML;
+          var labels = document.querySelectorAll('.tabbed-set > label, .tabbed-alternate > .tabbed-labels > label');
 
-            var _iterator3 = _createForOfIteratorHelper(labels),
-                _step3;
+          var _iterator3 = _createForOfIteratorHelper(labels),
+              _step3;
 
-            try {
-              for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
-                var label = _step3.value;
+          try {
+            for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
+              var label = _step3.value;
 
-                if (label.innerHTML === labelContent) {
-                  document.querySelector("input[id=".concat(label.getAttribute('for'), "]")).checked = true;
-                }
+              if (label.innerHTML === labelContent) {
+                document.querySelector("input[id=".concat(label.getAttribute('for'), "]")).checked = true;
               }
-            } catch (err) {
-              _iterator3.e(err);
-            } finally {
-              _iterator3.f();
             }
-          });
-        };
+          } catch (err) {
+            _iterator3.e(err);
+          } finally {
+            _iterator3.f();
+          }
+        });
+      };
 
-        for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
-          _loop2();
-        }
-      } catch (err) {
-        _iterator2.e(err);
-      } finally {
-        _iterator2.f();
+      for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+        _loop2();
       }
-    };
+    } catch (err) {
+      _iterator2.e(err);
+    } finally {
+      _iterator2.f();
+    }
+  };
 
+  var tabbed = function tabbed() {
     tabOverflow();
     tabScroll();
     tabSync();

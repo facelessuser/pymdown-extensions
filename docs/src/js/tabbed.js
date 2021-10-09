@@ -1,58 +1,101 @@
-export default () => {
-  const tabOverflow = () => {
-    const checkScroll = e => {
-      const target = e.target.closest('.tabbed-labels')
-      target.classList.remove('tabbed-scroll-left', 'tabbed-scroll-right')
-      if (e.type === "mouseover") {
-        const scrollWidth = target.scrollWidth - target.clientWidth
-        let hscroll = target.scrollLeft
-        if (!hscroll) {
-          target.scrollLeft = 1
-          hscroll = target.scrollLeft
-          target.scrollLeft = 0
-          if (hscroll) {
-            target.classList.add('tabbed-scroll-right')
-          }
-        } else if (hscroll !== scrollWidth){
-          target.classList.add('tabbed-scroll-left', 'tabbed-scroll-right')
-        } else if (hscroll) {
-          target.classList.add('tabbed-scroll-left')
-        }
-      }
-    }
+const checkScroll = e => {
+  const target = e.target
+  if (!e.target.matches('.tabbed-labels')) {
+    return
+  }
 
-    const labels = document.querySelectorAll('.tabbed-alternate > .tabbed-labels')
-    labels.forEach(el => {
-      el.addEventListener('mouseover', checkScroll)
-      el.addEventListener('mouseout', checkScroll)
+  target.classList.remove('tabbed-scroll-left', 'tabbed-scroll-right')
+  if (e.type === "resize" || e.type === "scroll") {
+    const scrollWidth = target.scrollWidth - target.clientWidth
+    if (scrollWidth === 0) {
+      return
+    }
+    if (!target.scrollLeft) {
+      target.classList.add('tabbed-scroll-right')
+    } else if (target.scrollLeft < scrollWidth){
+      target.classList.add('tabbed-scroll-left', 'tabbed-scroll-right')
+    } else {
+      target.classList.add('tabbed-scroll-left')
+    }
+  }
+}
+
+// Change the tab to either the previous or next input - depending on which indicator was clicked.
+// Make sure the current, selected input is scrolled into view.
+const tabChange = e => {
+  const target = e.target
+  const selected = target.closest('.tabbed-set').querySelector('input:checked')
+  let updated = null
+
+  if (target.classList.contains('tabbed-scroll-right') && e.offsetX >= e.target.offsetWidth - 15) {
+    const sib = selected.nextSibling
+    updated = selected
+    if (sib && sib.tagName === 'INPUT') {
+      selected.removeAttribute('checked')
+      sib.checked = true
+      updated = sib
+    }
+  } else if (target.classList.contains('tabbed-scroll-left') && e.offsetX <= 15) {
+    const sib = selected.previousSibling
+    updated = selected
+    if (sib && sib.tagName === 'INPUT') {
+      selected.removeAttribute('checked')
+      sib.checked = true
+      updated = sib
+    }
+  }
+  if (updated) {
+    const label = document.querySelector(`label[for=${updated.id}]`)
+    label.scrollIntoView({block: "nearest", inline: "nearest", behavior: "smooth"})
+  }
+}
+
+const onResize = new ResizeObserver(entries => {
+  entries.forEach(entry => {
+    checkScroll({target: entry.target, type: 'resize'})
+  })
+})
+
+// Identify whether a tab bar can be scrolled left or right and apply indicator classes
+const tabOverflow = () => {
+  const labels = document.querySelectorAll('.tabbed-alternate > .tabbed-labels')
+  onResize.disconnect()
+  labels.forEach(el => {
+    checkScroll({target: el, type: 'resize'})
+    onResize.observe(el)
+    el.addEventListener('resize', checkScroll)
+    el.addEventListener('scroll', checkScroll)
+    el.addEventListener('click', tabChange)
+  })
+}
+
+// Smooth scroll tab into view when changed
+const tabScroll = () => {
+  const tabs = document.querySelectorAll(".tabbed-alternate > input")
+  for (const tab of tabs) {
+    tab.addEventListener("change", () => {
+      const label = document.querySelector(`label[for=${tab.id}]`)
+      label.scrollIntoView({block: "nearest", inline: "nearest", behavior: "smooth"})
     })
   }
+}
 
-  const tabScroll = () => {
-    const tabs = document.querySelectorAll(".tabbed-alternate > input")
-    for (const tab of tabs) {
-      tab.addEventListener("change", () => {
-        const label = document.querySelector(`label[for=${tab.id}]`)
-        label.scrollIntoView({block: "nearest", inline: "nearest", behavior: "smooth"})
-      })
-    }
-  }
-
-  const tabSync = () => {
-    const tabs = document.querySelectorAll(".tabbed-set > input")
-    for (const tab of tabs) {
-      tab.addEventListener("click", () => {
-        const labelContent = document.querySelector(`label[for=${tab.id}]`).innerHTML
-        const labels = document.querySelectorAll('.tabbed-set > label, .tabbed-alternate > .tabbed-labels > label')
-        for (const label of labels) {
-          if (label.innerHTML === labelContent) {
-            document.querySelector(`input[id=${label.getAttribute('for')}]`).checked = true
-          }
+const tabSync = () => {
+  const tabs = document.querySelectorAll(".tabbed-set > input")
+  for (const tab of tabs) {
+    tab.addEventListener("click", () => {
+      const labelContent = document.querySelector(`label[for=${tab.id}]`).innerHTML
+      const labels = document.querySelectorAll('.tabbed-set > label, .tabbed-alternate > .tabbed-labels > label')
+      for (const label of labels) {
+        if (label.innerHTML === labelContent) {
+          document.querySelector(`input[id=${label.getAttribute('for')}]`).checked = true
         }
-      })
-    }
+      }
+    })
   }
+}
 
+export default () => {
   tabOverflow()
   tabScroll()
   tabSync()

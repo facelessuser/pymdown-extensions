@@ -85,23 +85,25 @@
 
       &.tabbed-scroll-left::before {
         position: absolute;
-        top: 0.5em;
+        top: px2rem(10px);
         left: 0;
         display: inline-block;
         padding-right: px2rem(6.4px);
         color: var(--md-default-fg-color--light);
         background: linear-gradient(to right, var(--md-default-bg-color) 75%, var(--md-default-bg-color--trans));
+        cursor: pointer;
         content: "\25C0";
       }
 
       &.tabbed-scroll-right::after {
         position: absolute;
-        top: 0.5em;
+        top: px2rem(10px);
         right: 0;
         display: inline-block;
         padding-left: px2rem(6.4px);
         color: var(--md-default-fg-color--light);
         background: linear-gradient(to right, var(--md-default-bg-color--trans), var(--md-default-bg-color) 25%);
+        cursor: pointer;
         content: "\25B6";
       }
 

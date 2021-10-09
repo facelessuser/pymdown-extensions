@@ -280,8 +280,8 @@ ever used. Pages can become quite cluttered when using too many tabs, and it see
 to some practical number.
 
 !!! settings "Alternate Tabbed Code Setup"
-    The example below styles the tabs, adds indicators when the there are overflowed tabs, and scrolls tabs into view
-    smoothly.
+    The example below styles the tabs, adds indicators that work as buttons to navigate to the next tab when the there
+    are overflowed tabs, and scrolls tabs into view smoothly.
 
     === "Preview"
         ![Tabbed Style Alternate](../images/tabbed-alternate.png)
@@ -373,6 +373,7 @@ to some practical number.
           color: gray;
           background: linear-gradient(to right, rgb(255, 255, 255) 75%, rgba(255, 255, 255, 0));
           content: "\25C0";
+          cursor: pointer;
         }
 
         .tabbed-labels.tabbed-scroll-right::after {
@@ -385,6 +386,7 @@ to some practical number.
           color: gray;
           background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255) 25%);
           content: "\25B6";
+          cursor: pointer;
         }
 
         .tabbed-alternate .tabbed-content {
@@ -399,8 +401,8 @@ to some practical number.
           display: none;
         }
         @media screen {
-          .tabbed-alternate input:nth-child(1):checked ~ .tabbed-labels > :nth-child(1), 
-          .tabbed-alternate input:nth-child(2):checked ~ .tabbed-labels > :nth-child(2), 
+          .tabbed-alternate input:nth-child(1):checked ~ .tabbed-labels > :nth-child(1),
+          .tabbed-alternate input:nth-child(2):checked ~ .tabbed-labels > :nth-child(2),
           .tabbed-alternate input:nth-child(3):checked ~ .tabbed-labels > :nth-child(3) {
             color: red;
             border-color: red;
@@ -439,34 +441,74 @@ to some practical number.
         ```
 
     === "JS"
-        ```js
-        // Identify whether a tab bar can be scrolled left or right and apply indicator classes 
+        ```{.js .md-max-height}
+        // Identify whether a tab bar can be scrolled left or right and apply indicator classes
         const tabOverflow = () => {
           const checkScroll = e => {
-            const target = e.target.closest('.tabbed-labels')
+            const target = e.target
+            if (!e.target.matches('.tabbed-labels')) {
+              return
+            }
+
             target.classList.remove('tabbed-scroll-left', 'tabbed-scroll-right')
-            if (e.type === "mouseover") {
+            if (e.type === "resize" || e.type === "scroll") {
               const scrollWidth = target.scrollWidth - target.clientWidth
-              let hscroll = target.scrollLeft
-              if (!hscroll) {
-                target.scrollLeft = 1
-                hscroll = target.scrollLeft
-                target.scrollLeft = 0
-                if (hscroll) {
-                  target.classList.add('tabbed-scroll-right')
-                }
-              } else if (hscroll !== scrollWidth){
+              if (scrollWidth === 0) {
+                return
+              }
+              if (!target.scrollLeft) {
+                target.classList.add('tabbed-scroll-right')
+              } else if (target.scrollLeft < scrollWidth){
                 target.classList.add('tabbed-scroll-left', 'tabbed-scroll-right')
-              } else if (hscroll) {
+              } else {
                 target.classList.add('tabbed-scroll-left')
               }
             }
           }
 
+          // Change the tab to either the previous or next input - depending on which indicator was clicked.
+          // Make sure the current, selected input is scrolled into view.
+          const tabChange = e => {
+            const target = e.target
+            const selected = target.closest('.tabbed-set').querySelector('input:checked')
+            let updated = null
+
+            if (target.classList.contains('tabbed-scroll-right') && e.offsetX >= e.target.offsetWidth - 15) {
+              const sib = selected.nextSibling
+              updated = selected
+              if (sib && sib.tagName === 'INPUT') {
+                selected.removeAttribute('checked')
+                sib.checked = true
+                updated = sib
+              }
+            } else if (target.classList.contains('tabbed-scroll-left') && e.offsetX <= 15) {
+              const sib = selected.previousSibling
+              updated = selected
+              if (sib && sib.tagName === 'INPUT') {
+                selected.removeAttribute('checked')
+                sib.checked = true
+                updated = sib
+              }
+            }
+            if (updated) {
+              const label = document.querySelector(`label[for=${updated.id}]`)
+              label.scrollIntoView({block: "nearest", inline: "nearest", behavior: "smooth"})
+            }
+          }
+
+          const onResize = new ResizeObserver(entries => {
+            entries.forEach(entry => {
+              checkScroll({target: entry.target, type: 'resize'})
+            })
+          })
+
           const labels = document.querySelectorAll('.tabbed-alternate > .tabbed-labels')
           labels.forEach(el => {
-            el.addEventListener('mouseover', checkScroll)
-            el.addEventListener('mouseout', checkScroll)
+            checkScroll({target: el, type: 'resize'})
+            onResize.observe(el)
+            el.addEventListener('resize', checkScroll)
+            el.addEventListener('scroll', checkScroll)
+            el.addEventListener('click', tabChange)
           })
         }
 
