@@ -228,19 +228,6 @@ gulp.task("js:build:rollup", () => {
   gulp.src(`${config.folders.src}/manifest-js.json`, {allowEmpty: true})
     .pipe(vinylPaths(del))
 
-  if (config.revision) {
-    rollupjs(
-      [`${config.folders.src}/js/extra-loader.js`],
-      {
-        dest: "docs/src/markdown/_snippets/.code",
-        minify: false,
-        revision: false,
-        sourcemap: false,
-        merge: false
-      }
-    )
-  }
-
   return rollupjs(
     [`${config.folders.src}/js/material-extra-theme.js`, `${config.folders.src}/js/extra-loader.js`],
     {

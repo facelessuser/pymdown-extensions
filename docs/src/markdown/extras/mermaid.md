@@ -23,16 +23,7 @@ In general, we leave setting up custom fences for the user to explore, but we do
 Mermaid working, and what we are doing, so we thought we'd share some some additional information in case there is a
 strong desire from any of our users to implement a robust Mermaid solution.
 
-## Setup
-
-Our setup is found below. We use a custom loader and configuration to get what we feel is the best implementation for
-our own personal use. We will explain some of our reasoning later, but below are reference links to the relevant code.
-
-!!! settings "Setup"
-    - [Events][onready-event].
-    - [UML Loader][mermaid-loader].
-    - [Mermaid configuration settings][mermaid-config].
-    - [MkDocs configuration][mkdocs-config].
+If you'd like to see exactly what we do, you can checkout our source code, but in this example, we will show the basics.
 
 ## Practical Diagrams
 
@@ -197,11 +188,30 @@ seems to be what Mermaid does in their own [documents][mermaid].
 We do some configuration via the initialization API command to tweak the diagrams a little. This includes theming and
 disabling of problematic features.
 
-We include the Mermaid library normally, but use a custom loader as we wrap our diagrams in a non-standard way, but more
-importantly, to work around some issues. The loader actually handles other stuff too, so it is not just Mermaid
-specific.
+We include the Mermaid library normally, but use a custom loader as we wrap our diagrams in a non-standard way. In
+addition, our custom loader allows us to workaround some problematic issues that arise when using Mermaid's default
+loader.
 
-First, we setup our configuration which can be found [here][mermaid-config].
+For illustrative purposes, we've provided a basic, bare minimum configuration below that we use.
+
+```js
+window.mermaidConfig = {
+  startOnLoad: false,
+  theme: "default",
+  flowchart: {
+    htmlLabels: false
+  },
+  er: {
+    useMaxWidth: false
+  },
+  sequence: {
+    useMaxWidth: false,
+    noteFontWeight: "14px",
+    actorFontSize: "14px",
+    messageFontSize: "16px"
+  }
+}
+```
 
 !!! note "Configuration Notes"
 
@@ -211,28 +221,23 @@ First, we setup our configuration which can be found [here][mermaid-config].
     2. If the option is available in a diagram, we disable `useMaxWidth` as we prefer that our diagrams do not scale
        within their parent element, we rather them overflow with a scrollbar. You can leave these enabled if you like.
        Since we render our diagrams under a custom element with a shadow DOM, to get scrollbars, we simply enable
-       `#!css overflow: auto` on the custom `diagram-div` element (under the host DOM, not the shadow DOM). You can
-       check out our stylesheet that does this [here][mermaid-style].
+       `#!css overflow: auto` on the custom `diagram-div` element (under the host DOM, not the shadow DOM).
 
     3. We disable `startOnLoad` as we provide our own loader (for reasons we will get into later).
 
     4. We do a quite a bit of custom theme overrides. Most of this is done through the Mermaid configuration options:
        `theme`, `themeVariables`, and `themeCSS`. Most users would simply use one of the default themes via the `theme`
-       option.
+       option, so that is what we've shown above.
 
 ## Custom Loader
 
-While using Mermaid, we've found a couple of issues which we were able to solve by using our own
-[custom loader][mermaid-loader]. The loader contains all the logic needed to find the Mermaid diagrams, convert them,
-wrap them in a shadow DOM, and insert them into the current document.
+While using Mermaid, we've found a couple of issues which we were able to solve by using our own custom loader. The
+loader contains all the logic needed to find the Mermaid diagrams, convert them, wrap them in a shadow DOM, and insert
+them into the current document.
 
 In order to use the loader, it should be attached to a `DOMContentLoaded` event to execute only after the document is
-loaded. We bind our logic to this event in our [loader][onready-event] function that checks if the Mermaid library is
-loaded, and only if it is, we execute the payload.
-
-We also create an `observer` event that watches for when the attribute that controls the color scheme on our site
-changes. When a color change occurs, we run our loader again and regenerate our diagrams. This is possible because we
-hide away the original content in our shadow DOM along with the generated diagram.
+loaded. We bind our logic to this event in our loader function that checks if the Mermaid library is loaded, and only if
+it is, we execute the payload.
 
 The issues we are working around withing Mermaid are found below:
 
@@ -247,9 +252,6 @@ The issues we are working around withing Mermaid are found below:
     3. Mermaid does not always use unique IDs. This can cause some elements of a diagram to disappear if one diagram
        happens to have the same ID and it is hidden in a details element or a tabbed interface.
 
-    4. We'd like to be able to have different configs for different color schemes (light mode, dark mode, etc.) and we'd
-       like to be able to dynamically reload all the diagrams on theme change.
-
 We solve these issues doing a couple things in our own custom loader.
 
 !!! success "Solutions"
@@ -261,94 +263,214 @@ We solve these issues doing a couple things in our own custom loader.
     2. We wrap each diagram in a shadow DOM element. This prevents ID leakage from one diagram to another or to the
        host.
 
-    3. We accept our own config structure that allows us to specify different configs based on the scheme being used.
-       We currently adopt what MkDocs Material uses and look for the `data-md-color-scheme` on the `body` tag. Depending
-       on the scheme that is set there, we pick the config under that name. If none are found we try the `default`
-       config, and if that is not found, we provide a sane default. We use a `MutationObserver` to watch for changes
-       to that attribute and render the diagrams again with a new config.
-
 Apart from the issues we were trying to solve, we also use a custom loader for personal aesthetics as we like to render
 our diagrams in `#!html <pre><code>` tags. This allows us to render the diagrams as normal code blocks in the rare case
 that we cannot load the Mermaid library from the specified CDN.
 
-??? settings "Latest Generated Loader"
-    This is generated by [Babel](https://babeljs.io/) during our build process. Babel is used so we can write in modern
-    JavaScript syntax, but then package it in older JavaScript syntax which is more widely supported. You can always
-    check out the original that this is generated from by looking [here][onready-event] and [here][mermaid-loader].
-
-    Again, it is doing more than just Mermaid stuff, but maybe it will be found helpful.
-
-    ```{.js .md-max-height}
-    --8<-- ".code/extra-loader.js"
-    ```
-
 ## Putting it All Together
 
-As mentioned before, this is our own custom setup, it is likely that a user would want to pair this down to the
-essentials, but as also mentioned, we are not providing an official solution, only explaining what we do.
+So, putting it all together, we have the HTML generated by SuperFences. In the HTML, we include the Mermaid library
+and provide the configuration. We also have the custom loader that is runs when the document is loaded.
 
-So, with what we have, we specify our configuration that is used with our MkDocs project, specifically use the Material
-theme. We have some logic to abstract light and dark styles, so in this example, we have a structure that specifies two
-different Mermaid configs as our loader expects it.
+=== "Preview"
+    ![Mermaid example](../images/mermaid-diagram.png)
 
-```js
-// Optional config
-// If your document is not specifying `data-md-color-scheme` for color schemes,
-// you just need to specify `default`.
-window.mermaidConfig = {
-  default: {
-    startOnLoad: false,
-    theme: "default",
-    flowchart: {
-      htmlLabels: false
-    },
-    er: {
-      useMaxWidth: false
-    },
-    sequence: {
-      useMaxWidth: false
-      // Mermaid handles Firefox a little different.
-      // For some reason, it doesn't attach font sizes to the labels in Firefox.
-      // If we specify the documented defaults, font sizes are written to the labels in Firefox.
-      noteFontWeight: "14px",
-      actorFontSize: "14px",
-      messageFontSize: "16px"
+=== "HTML"
+    ```html
+    <!-- Pre/code generated by SuperFences -->
+    <pre class="mermaid"><code>graph TB
+        c1--&gt;a2
+        subgraph one
+        a1--&gt;a2
+        end
+        subgraph two
+        b1--&gt;b2
+        end
+        subgraph three
+        c1--&gt;c2
+        end</code></pre>
+
+    <!-- Include Mermaid script and user config -->
+    <script src="https://unpkg.com/mermaid@8.8.4/dist/mermaid.min.js"></script>
+    <script>
+    window.mermaidConfig = {
+      startOnLoad: false,
+      theme: "default",
+      flowchart: {
+        htmlLabels: false
+      },
+      er: {
+        useMaxWidth: false
+      },
+      sequence: {
+        useMaxWidth: false,
+        noteFontWeight: "14px",
+        actorFontSize: "14px",
+        messageFontSize: "16px"
+      }
     }
-  },
+    </script>
+    ```
 
-  slate: {
-    startOnLoad: false,
-    theme: "dark",
-    flowchart: {
-      htmlLabels: false
-    },
-    er: {
-      useMaxWidth: false
-    },
-    sequence: {
-      useMaxWidth: false,
-      noteFontWeight: "14px",
-      actorFontSize: "14px",
-      messageFontSize: "16px"
+=== "JS"
+    ```{.js .md-max-height}
+    const uml = className => {
+
+      // Custom element to encapsulate Mermaid content.
+      class MermaidDiv extends HTMLElement {
+
+        /**
+        * Creates a special Mermaid div shadow DOM.
+        * Works around issues of shared IDs.
+        * @return {void}
+        */
+        constructor() {
+          super()
+
+          // Create the Shadow DOM and attach style
+          const shadow = this.attachShadow({mode: "open"})
+          const style = document.createElement("style")
+          style.textContent = `
+          :host {
+            display: block;
+            line-height: initial;
+            font-size: 16px;
+          }
+          div.diagram {
+            margin: 0;
+            overflow: visible;
+          }`
+          shadow.appendChild(style)
+        }
+      }
+
+      if (typeof customElements.get("diagram-div") === "undefined") {
+        customElements.define("diagram-div", MermaidDiv)
+      }
+
+      const getFromCode = parent => {
+        // Handles <pre><code> text extraction.
+        let text = ""
+        for (let j = 0; j < parent.childNodes.length; j++) {
+          const subEl = parent.childNodes[j]
+          if (subEl.tagName.toLowerCase() === "code") {
+            for (let k = 0; k < subEl.childNodes.length; k++) {
+              const child = subEl.childNodes[k]
+              const whitespace = /^\s*$/
+              if (child.nodeName === "#text" && !(whitespace.test(child.nodeValue))) {
+                text = child.nodeValue
+                break
+              }
+            }
+          }
+        }
+        return text
+      }
+
+      // Provide a default config in case one is not specified
+      const defaultConfig = {
+        startOnLoad: false,
+        theme: "default",
+        flowchart: {
+          htmlLabels: false
+        },
+        er: {
+          useMaxWidth: false
+        },
+        sequence: {
+          useMaxWidth: false,
+          noteFontWeight: "14px",
+          actorFontSize: "14px",
+          messageFontSize: "16px"
+        }
+      }
+
+      // Load up the config
+      mermaid.mermaidAPI.globalReset()
+      const config = (typeof mermaidConfig === "undefined") ? defaultConfig : mermaidConfig
+      mermaid.initialize(config)
+
+      // Find all of our Mermaid sources and render them.
+      const blocks = document.querySelectorAll(`pre.${className}, diagram-div`)
+      const surrogate = document.querySelector("html")
+      for (let i = 0; i < blocks.length; i++) {
+        const block = blocks[i]
+        const parentEl = (block.tagName.toLowerCase() === "diagram-div") ?
+          block.shadowRoot.querySelector(`pre.${className}`) :
+          block
+
+        // Create a temporary element with the typeset and size we desire.
+        // Insert it at the end of our parent to render the SVG.
+        const temp = document.createElement("div")
+        temp.style.visibility = "hidden"
+        temp.style.display = "display"
+        temp.style.padding = "0"
+        temp.style.margin = "0"
+        temp.style.lineHeight = "initial"
+        temp.style.fontSize = "16px"
+        surrogate.appendChild(temp)
+
+        try {
+          mermaid.mermaidAPI.render(
+            `_diagram_${i}`,
+            getFromCode(parentEl),
+            content => {
+              const el = document.createElement("div")
+              el.className = className
+              el.innerHTML = content
+
+              // Insert the render where we want it and remove the original text source.
+              // Mermaid will clean up the temporary element.
+              const shadow = document.createElement("diagram-div")
+              shadow.shadowRoot.appendChild(el)
+              block.parentNode.insertBefore(shadow, block)
+              parentEl.style.display = "none"
+              shadow.shadowRoot.appendChild(parentEl)
+              if (parentEl !== block) {
+                block.parentNode.removeChild(block)
+              }
+            },
+            temp
+          )
+        } catch (err) {} // eslint-disable-line no-empty
+
+        if (surrogate.contains(temp)) {
+          surrogate.removeChild(temp)
+        }
+      }
     }
-  }
-}
-```
 
-If you are using MkDocs, you would probably reference the `extra-loader.js` from your `docs` folder. You may also
-reference your config from your `docs` folder as well.
+    // This should be run on document load
+    document.addEventListener("DOMContentLoaded", () => {uml("mermaid")})
+    ```
+
+!!! tip "Live Example"
+    For a live, working example, check out the CodePen [here](https://codepen.io/facelessuser/pen/oNeNydQ).
+
+## Using in MkDocs
+
+If you are using MkDocs, you would probably include your config, mermaid library, and then your loader:
 
 ```yaml
+markdown_extensions:
+  - pymdownx.superfences:
+      preserve_tabs: true
+      custom_fences:
+        # Mermaid diagrams
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
 extra_javascript:
   - optionalConfig.js
-  - https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js
+  - https://unpkg.com/mermaid@8.8.4/dist/mermaid.min.js
   - extra-loader.js
 ```
 
 Then in your documents, do something like this:
 
 ````
-```diagram
+```mermaid
 graph TD
     A[Hard] -->|Text| B(Round)
     B --> C{Decision}
@@ -357,7 +479,7 @@ graph TD
 ```
 ````
 
-To get something like this:
+To get something like this directly embedded in your documents:
 
 ```diagram
 graph TD
