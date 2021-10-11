@@ -2,6 +2,7 @@ import uml from "./uml"
 import arithmatex from "./arithmatex"
 import tabbed from "./tabbed"
 
+// Main function
 (() => {
   let umlPromise = Promise.resolve()
   let mathPromise = Promise.resolve()

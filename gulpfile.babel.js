@@ -59,8 +59,7 @@ const config = {
     ],
     jsSrc: "./docs/src/js/**/*.js",
     js: [
-      "./docs/theme/assets/pymdownx-extras/extra-*.js",
-      "./docs/theme/assets/pymdownx-extras/material-extra-*.js",
+      "./docs/theme/assets/pymdownx-extras/*.js",
       "./docs/theme/assets/pymdownx-extras/*.js.map"
     ],
     gulp: "gulpfile.babel.js",
@@ -104,30 +103,30 @@ const rollupjs = (sources, options) => {
     pluginModules.push(outputManifest.default({fileName: "manifest-js.json", isMerge: options.merge}))
   }
 
+  let p = Promise.resolve()
   for (let i = 0; i < sources.length; i++) {
     const src = sources[i]
 
-    rollup({
-      input: src,
-      plugins: pluginModules
-    }).then(bundle => {
-      bundle.write({
-        dir: options.dest,
-        format: "iife",
-        entryFileNames: (options.revision) ? "[name]-[hash].js" : "[name].js",
-        chunkFileNames: (options.revision) ? "[name]-[hash].js" : "[name].js",
-        sourcemap: options.sourcemap,
-        plugins: [
-          getBabelOutputPlugin({allowAllFormats: true, presets: ["@babel/preset-env"]})
-        ]
+    p = p.then(() => {
+      return rollup({
+        input: src,
+        plugins: pluginModules
+      }).then(bundle => {
+        bundle.write({
+          dir: options.dest,
+          format: "iife",
+          entryFileNames: (options.revision) ? "[name]-[hash].js" : "[name].js",
+          chunkFileNames: (options.revision) ? "[name]-[hash].js" : "[name].js",
+          sourcemap: options.sourcemap,
+          plugins: [
+            getBabelOutputPlugin({allowAllFormats: true, presets: ["@babel/preset-env"]})
+          ]
+        })
       })
     })
   }
 
-  // Just return something so gulp knows we finished.
-  // We could return one of the `r`ollup` instances, since they are compatible,
-  // but we don't do anything whith them anyways.
-  return gulp.src(sources)
+  return p
 }
 
 // ------------------------------
@@ -225,11 +224,15 @@ gulp.task("scss:clean", () => {
 })
 
 gulp.task("js:build:rollup", () => {
-  gulp.src(`${config.folders.src}/manifest-js.json`, {allowEmpty: true})
+  gulp.src(`${config.folders.theme}/manifest-js.json`, {allowEmpty: true})
     .pipe(vinylPaths(del))
 
   return rollupjs(
-    [`${config.folders.src}/js/material-extra-theme.js`, `${config.folders.src}/js/extra-loader.js`],
+    [
+      `${config.folders.src}/js/material-extra-theme.js`,
+      `${config.folders.src}/js/material-extra-3rdparty.js`,
+      `${config.folders.src}/js/extra-loader.js`
+    ],
     {
       dest: `${config.folders.theme}`,
       minify: config.compress.enabled,

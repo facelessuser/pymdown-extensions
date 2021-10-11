@@ -49,6 +49,19 @@ matrix:
   pipeline:
   - pyspelling.filters.javascript:
       jsdocs: true
+  - pyspelling.filters.context:
+      context_visible_first: true
+      escapes: '\\[\\`]'
+      delimiters:
+      # Ignore multiline content between fences (fences can have 3 or more back ticks)
+      # ```
+      # content
+      # ```
+      - open: '(?s)^(?P<open> *`{3,})$'
+        close: '^(?P=open)$'
+      # Ignore text between inline back ticks
+      - open: '(?P<open>`+)'
+        close: '(?P=open)'
   - pyspelling.filters.url:
   default_encoding: utf-8
   sources:
