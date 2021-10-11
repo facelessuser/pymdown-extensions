@@ -23,6 +23,8 @@ theme:
     - navigation.tabs
     - navigation.top
     - navigation.instant
+  pymdownx:
+    sponsor: "https://github.com/sponsors/facelessuser"
 
 nav:
   - Home:
