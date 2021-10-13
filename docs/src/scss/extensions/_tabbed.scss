@@ -75,16 +75,20 @@
     .tabbed-labels {
       display: flex;
       width: 100%;
-      margin: 0 !important;
-      padding-left: 0 !important;
+      margin: 0 !important; // Material override
+      padding-left: 0 !important; // Material override
       overflow: auto;
       box-shadow: 0 px2rem(-1px) var(--md-default-fg-color--lightest) inset;
       scrollbar-width: none;
-      scroll-snap-type: none;
-      scroll-padding-left: 0 !important;
+      scroll-snap-type: none; // Material override
+      scroll-padding-left: 0 !important; // Material override
 
       &::-webkit-scrollbar {
         display: none;
+      }
+
+      &::after {
+        padding: 0; // Material override
       }
 
       &.tabbed-scroll-left::before {
@@ -106,7 +110,6 @@
         right: 0;
         z-index: 2;
         display: inline-block;
-        padding-right: 0;
         padding-left: px2rem(6.4px);
         color: var(--md-default-fg-color--light);
         background: linear-gradient(to right, var(--md-default-bg-color--trans), var(--md-default-bg-color) 25%);
