@@ -81,6 +81,7 @@
       box-shadow: 0 px2rem(-1px) var(--md-default-fg-color--lightest) inset;
       scrollbar-width: none;
       scroll-snap-type: none;
+      scroll-padding-left: 0 !important;
 
       &::-webkit-scrollbar {
         display: none;

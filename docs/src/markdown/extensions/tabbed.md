@@ -450,9 +450,9 @@ to some practical number.
               return
             }
 
+            const scrollWidth = target.scrollWidth - target.clientWidth
             target.classList.remove('tabbed-scroll-left', 'tabbed-scroll-right')
             if (e.type === "resize" || e.type === "scroll") {
-              const scrollWidth = target.scrollWidth - target.clientWidth
               if (scrollWidth === 0) {
                 return
               }
