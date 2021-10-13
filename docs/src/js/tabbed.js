@@ -1,4 +1,6 @@
 const checkScroll = e => {
+  // Use a margin as we just don't always align exactly on the right.
+  const margin = 3
   const target = e.target
   if (!e.target.matches('.tabbed-labels')) {
     return
@@ -12,7 +14,7 @@ const checkScroll = e => {
     }
     if (!target.scrollLeft) {
       target.classList.add('tabbed-scroll-right')
-    } else if (target.scrollLeft < scrollWidth){
+    } else if (target.scrollLeft < scrollWidth - margin){
       target.classList.add('tabbed-scroll-left', 'tabbed-scroll-right')
     } else {
       target.classList.add('tabbed-scroll-left')
