@@ -11,6 +11,7 @@ import gulp from "gulp"
 import gulpSass from "gulp-sass"
 import sassCompiler from "sass"
 import postcss from "gulp-postcss"
+import scss from "postcss-scss"
 import autoprefixer from "autoprefixer"
 import cleanCSS from "gulp-clean-css"
 import childProcess from "child_process"
@@ -149,13 +150,13 @@ gulp.task("scss:build:sass", () => {
             name: "preset-default",
             params: {
               overrides: {
-                removeDimensions: true,
                 removeViewBox: {
                   active: false
                 }
               }
             }
-          }
+          },
+          'removeDimensions'
         ],
         encode: false
       }
@@ -208,6 +209,7 @@ gulp.task("scss:lint", () => {
   return gulp.src(config.files.scss)
     .pipe(
       stylelint({
+        customSyntax: scss,
         reporters: [
           {formatter: "string", console: true}
         ]

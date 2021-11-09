@@ -164,7 +164,7 @@ extra_css:
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css
   - assets/pymdownx-extras/extra.css
 extra_javascript:
-  - https://unpkg.com/mermaid@8.8.4/dist/mermaid.min.js
+  - https://unpkg.com/mermaid@8.13.3/dist/mermaid.min.js
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js

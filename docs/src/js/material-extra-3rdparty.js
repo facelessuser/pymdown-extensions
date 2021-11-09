@@ -27,20 +27,25 @@ if (!('mermaidConfig' in window)) {
       startOnLoad: false,
       theme: "base",
       themeCSS: "\
-        {\
+        * {\
           --drac-page-bg: hsl(233, 15%, 23%);\
           --drac-white-fg: hsl(60, 30%, 96%);\
           --drac-purple-fg: hsl(265, 89%, 78%);\
           --drac-purple-bg: hsl(265, 25%, 39%);\
           --drac-yellow-fg: hsl(65, 92%, 76%);\
+          --drac-blue-fg: hsl(225, 27%, 51%);\
         }\
         \
         /* General */\
-        {\
+        [id^='_diagram'] {\
           background-color: var(--drac-page-bg);\
         }\
         \
         /* Entity Relationship */\
+        rect.relationshipLabelBox {\
+          opacity: 0.75 !important;\
+          fill: var(--drac-purple-bg) !important;\
+        }\
         defs marker#ZERO_OR_MORE_END circle {\
           fill: var(--drac-page-bg) !important;\
           stroke: var(--drac-purple-fg) !important;\
@@ -79,16 +84,18 @@ if (!('mermaidConfig' in window)) {
         .label text {\
           fill: var(--drac-purple-fg);\
         }\
-        \
         .edgeLabel text {\
           fill: var(--drac-purple-fg) !important;\
         }\
         .edgeLabel rect {\
-          opacity: 0.5 !important;\
+          opacity: 0.75 !important;\
           fill: var(--drac-purple-bg) !important;\
         }\
         \
         /* Sequence */\
+        line[id^='actor'] {\
+          stroke: var(--drac-blue-fg);\
+        }\
         .noteText {\
           fill: var(--drac-yellow-fg);\
         }\
