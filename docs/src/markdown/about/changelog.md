@@ -1,5 +1,10 @@
 # Changelog
 
+## 9.1
+
+- **FIX**: When `attr_list` is enabled, attributes were not properly added to Pygments code blocks in the `table`
+  format. (#1505)
+
 ## 9.0
 
 Please see [Migration Notes](./releases/9.0.md#9.0) for details on upgrading to 9.0.

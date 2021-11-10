@@ -643,6 +643,23 @@ class TestSuperFencesClassesIdsAttrList(util.MdCase):
             True
         )
 
+    def test_data_attr_linenums(self):
+        """Test data attributes with line numbers enabled."""
+
+        self.check_markdown(
+            r'''
+            ```{.python #id data-attr="test" linenums="1"}
+            import test
+            ```
+            ''',
+            r'''
+            <table id="id" class="highlighttable" data-attr="test"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            </td></tr></table>
+            ''',  # noqa: E501
+            True
+        )
+
 
 class TestSuperFencesClassesIdsAttrListNoPygments(util.MdCase):
     """Test fence ids and classes with attribute lists and with no Pygments."""
