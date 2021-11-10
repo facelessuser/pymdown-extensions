@@ -11,7 +11,7 @@ people, there is usually at least one useful extension for everybody.
 All extensions are found under the module namespace of `pymdownx`.  Assuming we wanted to specify the use of the
 MagicLink extension, we would include it in Python Markdown like so:
 
-```{.pycon3 #id data-attr="what" stupid="whatever"}
+```pycon3
 >>> import markdown
 >>> text = "A link https://google.com"
 >>> html = markdown.markdown(text, extensions=['pymdownx.magiclink'])
