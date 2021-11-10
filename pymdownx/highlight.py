@@ -309,7 +309,10 @@ class Highlight(object):
         if attrs is None:
             attrs = {}
         class_names = classes[:] if classes else []
-        linenums_enabled = (self.linenums or (self.linenums is not False and linestart >= 0)) and not inline > 0
+        linenums_enabled = (
+            (self.linenums and linestart != 0) or
+            (self.linenums is not False and linestart > 0)
+        ) and not inline > 0
 
         # Convert with Pygments.
         if pygments and self.use_pygments:

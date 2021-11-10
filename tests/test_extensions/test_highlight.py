@@ -453,3 +453,52 @@ class TestDisabledLinenumsNoPygments(util.MdCase):
             ''',  # noqa: E501
             True
         )
+
+
+class TestGlobalLinenums(util.MdCase):
+    """Test global line number cases."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'linenums': True
+        }
+    }
+
+    def test_global_line_numbers(self):
+        """Test that global line numbers works."""
+
+        self.check_markdown(
+            r'''
+            ```python
+            import test
+            test.test()
+            ```
+            ''',
+            r'''
+            <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+            <span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
+            </code></pre></div>
+            </td></tr></table>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_global_disabling_of_line_numbers(self):
+        """Test that global line numbers can be disabled."""
+
+        self.check_markdown(
+            r'''
+            ```{.python linenums="0"}
+            import test
+            test.test()
+            ```
+            ''',
+            r'''
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
