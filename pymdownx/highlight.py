@@ -39,7 +39,7 @@ except ImportError:  # pragma: no cover
     pygments = False
     p_ver = (0, 0)
 
-RE_PYG_CODE = re.compile(r'^<div(\s*class=".*?")?\s*>')
+RE_PYG_CODE = re.compile(r'^<(div|table)(\s*class=".*?")?\s*>')
 CODE_WRAP = '<pre{}><code{}{}{}>{}</code></pre>'
 CODE_WRAP_ON_PRE = '<pre{}{}{}><code>{}</code></pre>'
 CLASS_ATTR = ' class="{}"'
@@ -383,8 +383,9 @@ class Highlight(object):
                 m = RE_PYG_CODE.match(code)
                 if m is not None:
                     end = m.end(0)
-                    classes = ' ' + m.group(1).lstrip() if m.group(1) else ''
-                    code = '<div{}{}{}>{}'.format(id_str, classes, attr_str, code[end:])
+                    start = m.start(0)
+                    classes = ' ' + m.group(2).lstrip() if m.group(2) else ''
+                    code = '{}<{}{}{}{}>{}'.format(code[:start], m.group(1), id_str, classes, attr_str, code[end:])
 
         elif inline:
             # Format inline code for a JavaScript Syntax Highlighter by specifying language.
