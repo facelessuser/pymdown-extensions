@@ -473,7 +473,7 @@ to some practical number.
               }
             }
           }
-          
+
           // Change the tab to either the previous or next input - depending on which indicator was clicked.
           // Make sure the current, selected input is scrolled into view.
           const tabChange = e => {
