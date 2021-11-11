@@ -4,8 +4,8 @@
 
 - **NEW**: Highlight: If `linenums` is enabled globally via the `highlight` extension, and a code block specifies a line
   number of zero (e.g. SuperFences), disable line numbers for that code block.
-- **FIX**: When `attr_list` is enabled, attributes were not properly added to Pygments code blocks in the `table`
-  format. (#1505)
+- **FIX**: Highlight: When `attr_list` is enabled, attributes were not properly added to Pygments code blocks in the
+  `table` format. (#1505)
 
 ## 9.0
 
