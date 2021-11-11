@@ -33,22 +33,17 @@ const tabChange = e => {
     const sib = selected.nextSibling
     updated = selected
     if (sib && sib.tagName === 'INPUT') {
-      selected.removeAttribute('checked')
-      sib.checked = true
       updated = sib
     }
   } else if (target.classList.contains('tabbed-scroll-left') && e.offsetX <= 15) {
     const sib = selected.previousSibling
     updated = selected
     if (sib && sib.tagName === 'INPUT') {
-      selected.removeAttribute('checked')
-      sib.checked = true
       updated = sib
     }
   }
   if (updated) {
-    const label = document.querySelector(`label[for=${updated.id}]`)
-    label.scrollIntoView({block: "nearest", inline: "nearest", behavior: "smooth"})
+    updated.click()
   }
 }
 
@@ -86,13 +81,19 @@ const tabSync = () => {
   const tabs = document.querySelectorAll(".tabbed-set > input")
   for (const tab of tabs) {
     tab.addEventListener("click", () => {
-      const labelContent = document.querySelector(`label[for=${tab.id}]`).innerHTML
+      const current = document.querySelector(`label[for=${tab.id}]`)
+      const pos = current.getBoundingClientRect().top
+      const labelContent = current.innerHTML
       const labels = document.querySelectorAll('.tabbed-set > label, .tabbed-alternate > .tabbed-labels > label')
       for (const label of labels) {
         if (label.innerHTML === labelContent) {
           document.querySelector(`input[id=${label.getAttribute('for')}]`).checked = true
         }
       }
+
+      // Preserve scroll position
+      const delta = (current.getBoundingClientRect().top) - pos
+      window.scrollBy(0, delta)
     })
   }
 }
