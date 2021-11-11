@@ -229,13 +229,19 @@ const tabSync = () => {
   const tabs = document.querySelectorAll(".tabbed-set > input")
   for (const tab of tabs) {
     tab.addEventListener("click", () => {
-      const labelContent = document.querySelector(`label[for=${tab.id}]`).innerHTML
+      const current = document.querySelector(`label[for=${tab.id}]`)
+      const pos = current.getBoundingClientRect().top
+      const labelContent = current.innerHTML
       const labels = document.querySelectorAll('.tabbed-set > label, .tabbed-alternate > .tabbed-labels > label')
       for (const label of labels) {
         if (label.innerHTML === labelContent) {
           document.querySelector(`input[id=${label.getAttribute('for')}]`).checked = true
         }
       }
+
+      // Preserve scroll position
+      const delta = (current.getBoundingClientRect().top) - pos
+      window.scrollBy(0, delta)
     })
   }
 }
@@ -442,9 +448,11 @@ to some practical number.
 
     === "JS"
         ```{.js .md-max-height}
-        // Identify whether a tab bar can be scrolled left or right and apply indicator classes
+        // Identify whether a tab bar can be scrolled left or right and apply indicator classes 
         const tabOverflow = () => {
           const checkScroll = e => {
+            // Use a margin as we just don't always align exactly on the right.
+            const margin = 3
             const target = e.target
             if (!e.target.matches('.tabbed-labels')) {
               return
@@ -458,14 +466,14 @@ to some practical number.
               }
               if (!target.scrollLeft) {
                 target.classList.add('tabbed-scroll-right')
-              } else if (target.scrollLeft < scrollWidth){
+              } else if (target.scrollLeft < scrollWidth - margin){
                 target.classList.add('tabbed-scroll-left', 'tabbed-scroll-right')
               } else {
                 target.classList.add('tabbed-scroll-left')
               }
             }
           }
-
+          
           // Change the tab to either the previous or next input - depending on which indicator was clicked.
           // Make sure the current, selected input is scrolled into view.
           const tabChange = e => {
@@ -477,22 +485,17 @@ to some practical number.
               const sib = selected.nextSibling
               updated = selected
               if (sib && sib.tagName === 'INPUT') {
-                selected.removeAttribute('checked')
-                sib.checked = true
                 updated = sib
               }
             } else if (target.classList.contains('tabbed-scroll-left') && e.offsetX <= 15) {
               const sib = selected.previousSibling
               updated = selected
               if (sib && sib.tagName === 'INPUT') {
-                selected.removeAttribute('checked')
-                sib.checked = true
                 updated = sib
               }
             }
             if (updated) {
-              const label = document.querySelector(`label[for=${updated.id}]`)
-              label.scrollIntoView({block: "nearest", inline: "nearest", behavior: "smooth"})
+              updated.click()
             }
           }
 
