@@ -106,10 +106,21 @@ file1.md
 file2.md
 --8&lt;--</code></pre>
 
+## Auto-Append Snippets
+
+Snippets is designed as a general way to target a file and inject it into a given Markdown file, but some times,
+especially when building documentation via a library like [MkDocs][mkdocs], it may make sense to provide a way to append
+a given file to *every* Markdown document without having to manually include them via Snippet syntax in each page. This
+is especially useful for including a page of reference links or abbreviations on every page.
+
+Snippets provides an `auto_append` option that allows a user to specify a list of files that will be automatically
+appended to every to Markdown content. Each entry in the list searched for relative to the `base_path` entries.
+
 ## Options
 
-Option         | Type   | Default         | Description
--------------- | ------ | --------------- |------------
-`base_path`    | string | `#!py3 ['.']`   | A list of strings indicating base paths to be used resolve snippet locations. For legacy purposes, a single string will also be accepted as well. Base paths will be resolved in the order they are specified. When resolving a file name, the first match wins. If a file name is specified, the base name will be matched.
-`encoding`     | string | `#!py3 'utf-8'` | Encoding to use when reading in the snippets.
-`check_paths`  | bool   | `#!py3 false`   | Make the build fail if a snippet can't be found.
+Option         | Type        | Default         | Description
+-------------- | ----------- | --------------- |------------
+`base_path`    | \[string\]  | `#!py3 ['.']`   | A list of strings indicating base paths to be used resolve snippet locations. For legacy purposes, a single string will also be accepted as well. Base paths will be resolved in the order they are specified. When resolving a file name, the first match wins. If a file name is specified, the base name will be matched.
+`encoding`     | string      | `#!py3 'utf-8'` | Encoding to use when reading in the snippets.
+`check_paths`  | bool        | `#!py3 False`   | Make the build fail if a snippet can't be found.
+`auto_append`  | \[string]\] | `#!py3 []`      | A list of snippets (relative to the `base_path`) to auto append to the Markdown content.
