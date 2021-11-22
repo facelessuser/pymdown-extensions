@@ -14,7 +14,9 @@ class TestDetails(util.MdCase):
         expected = r'''
             <p>foo
             <strong>foo</strong></p>
-            <details class="note"><summary>Details</summary></details>
+            <details class="note">
+            <summary>Details</summary>
+            </details>
             '''
 
         self.check_markdown(
@@ -31,8 +33,12 @@ class TestDetails(util.MdCase):
         """Test nested."""
 
         expected = r'''
-            <details><summary>details</summary><p>content</p>
-            <details open="open"><summary>open nested details</summary><p>content</p>
+            <details>
+            <summary>details</summary>
+            <p>content</p>
+            <details open="open">
+            <summary>open nested details</summary>
+            <p>content</p>
             <p>more content</p>
             </details>
             </details>
@@ -56,7 +62,9 @@ class TestDetails(util.MdCase):
         """Test class."""
 
         expected = r'''
-            <details class="optional-class"><summary>details with class</summary><p>content</p>
+            <details class="optional-class">
+            <summary>details with class</summary>
+            <p>content</p>
             </details>
             '''
 
@@ -73,7 +81,9 @@ class TestDetails(util.MdCase):
         """Test multiple classes."""
 
         expected = r'''
-            <details class="multiple optional-class"><summary>details with multiple class</summary><p>content</p>
+            <details class="multiple optional-class">
+            <summary>details with multiple class</summary>
+            <p>content</p>
             </details>
             '''
 
@@ -90,7 +100,9 @@ class TestDetails(util.MdCase):
         """Test only class."""
 
         expected = r'''
-            <details class="only-class"><summary>Only-class</summary><p>content</p>
+            <details class="only-class">
+            <summary>Only-class</summary>
+            <p>content</p>
             </details>
             '''
 
@@ -107,7 +119,9 @@ class TestDetails(util.MdCase):
         """Test only multiple classes."""
 
         expected = r'''
-            <details class="multiple classes"><summary>Multiple</summary><p>content</p>
+            <details class="multiple classes">
+            <summary>Multiple</summary>
+            <p>content</p>
             </details>
             '''
 
@@ -124,7 +138,9 @@ class TestDetails(util.MdCase):
         """Test content after details."""
 
         expected = r'''
-            <details><summary>details end test</summary><p>content</p>
+            <details>
+            <summary>details end test</summary>
+            <p>content</p>
             </details>
             <p>other content</p>
             '''
@@ -143,7 +159,9 @@ class TestDetails(util.MdCase):
         """Test relaxed spacing."""
 
         expected = r'''
-            <details class="relaxed spacing"><summary>Title</summary><p>content</p>
+            <details class="relaxed spacing">
+            <summary>Title</summary>
+            <p>content</p>
             </details>
             '''
 
@@ -160,7 +178,9 @@ class TestDetails(util.MdCase):
         """Test relaxed spacing and no title."""
 
         expected = r'''
-            <details class="relaxed spacing no title"><summary>Relaxed</summary><p>content</p>
+            <details class="relaxed spacing no title">
+            <summary>Relaxed</summary>
+            <p>content</p>
             </details>
             '''
 
@@ -191,7 +211,9 @@ class TestDetails(util.MdCase):
             <ul>
             <li>
             <p>List</p>
-            <details class="note"><summary>Details</summary><ul>
+            <details class="note">
+            <summary>Details</summary>
+            <ul>
             <li>
             <p>Paragraph</p>
             <p>Paragraph</p>
@@ -225,7 +247,9 @@ class TestDetails(util.MdCase):
             <ul>
             <li>
             <p>List</p>
-            <details class="note"><summary>Details</summary><ul>
+            <details class="note">
+            <summary>Details</summary>
+            <ul>
             <li>
             <p>Paragraph</p>
             <p>Paragraph</p>
@@ -263,10 +287,14 @@ class TestDetails(util.MdCase):
             <ul>
             <li>
             <p>List</p>
-            <details class="note"><summary>Details</summary><ul>
+            <details class="note">
+            <summary>Details</summary>
+            <ul>
             <li>
             <p>Paragraph</p>
-            <details class="note"><summary>Details</summary><ol>
+            <details class="note">
+            <summary>Details</summary>
+            <ol>
             <li>
             <p>Paragraph</p>
             <p>Paragraph</p>
@@ -306,7 +334,9 @@ class TestDetails(util.MdCase):
             <ul>
             <li>
             <p>List</p>
-            <details class="note"><summary>Details</summary><dl>
+            <details class="note">
+            <summary>Details</summary>
+            <dl>
             <dt>Term</dt>
             <dd>
             <p>Definition</p>
@@ -337,7 +367,9 @@ class TestDetails(util.MdCase):
                     - Child 2
             ''',
             '''
-            <details open="open"><summary>With details block with loose lists</summary><ul>
+            <details open="open">
+            <summary>With details block with loose lists</summary>
+            <ul>
             <li>
             <p>Parent 1</p>
             <ul>
@@ -364,7 +396,9 @@ class TestDetails(util.MdCase):
             - Parent 2
             ''',
             '''
-            <details open="open"><summary>With details block with loose lists</summary><ul>
+            <details open="open">
+            <summary>With details block with loose lists</summary>
+            <ul>
             <li>
             <p>Parent 1</p>
             <ul>

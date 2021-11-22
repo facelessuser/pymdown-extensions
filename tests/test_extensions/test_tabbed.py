@@ -376,7 +376,11 @@ class TestLegacyTab(util.MdCase):
             ''',
             '''
             <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Output</label><div class="tabbed-content">
-            <details class="note" open="open"><summary>Open styled details</summary><details class="danger"><summary>Nested details!</summary><p>And more content again.</p>
+            <details class="note" open="open">
+            <summary>Open styled details</summary>
+            <details class="danger">
+            <summary>Nested details!</summary>
+            <p>And more content again.</p>
             </details>
             </details>
             </div>
