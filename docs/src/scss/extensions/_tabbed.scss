@@ -73,6 +73,7 @@
     border-radius: px2rem(2px);
 
     .tabbed-labels {
+      position: initial !important;
       display: flex;
       width: 100%;
       margin: 0 !important; // Material override
@@ -97,10 +98,14 @@
         left: 0;
         z-index: 2;
         display: inline-block;
+        width: auto;
+        height: fit-content;
         padding-right: px2rem(6.4px);
         color: var(--md-default-fg-color--light);
         background: linear-gradient(to right, var(--md-default-bg-color) 75%, var(--md-default-bg-color--trans));
+        transform: none;
         cursor: pointer;
+        transition: unset;
         content: "\25C0";
       }
 
@@ -110,6 +115,7 @@
         right: 0;
         z-index: 2;
         display: inline-block;
+        padding-right: 0 !important;
         padding-left: px2rem(6.4px);
         color: var(--md-default-fg-color--light);
         background: linear-gradient(to right, var(--md-default-bg-color--trans), var(--md-default-bg-color) 25%);
