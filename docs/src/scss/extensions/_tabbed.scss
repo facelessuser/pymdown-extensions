@@ -65,6 +65,8 @@
 
   // Styling for alternate by Martin Donath https://github.com/squidfunk
   .tabbed-alternate {
+    --md-indicator-width: 0 !important;
+
     position: relative;
     display: flex;
     flex-direction: column;
