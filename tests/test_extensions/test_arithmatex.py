@@ -2,6 +2,45 @@
 from .. import util
 
 
+class TestArithmatexLimit(util.MdCase):
+    """Test limiting Arithmatex inline and block inputs."""
+
+    extension = [
+        'pymdownx.arithmatex'
+    ]
+    extension_configs = {'pymdownx.arithmatex': {'inline_syntax': ['round'], 'block_syntax': ['square']}}
+
+    def test_round_only(self):
+        """Test round only."""
+
+        self.check_markdown(
+            "\\(1 + 2 + 3\\)",
+            """<p><span class="arithmatex"><span class="MathJax_Preview">1 + 2 + 3</span><script type="math/tex">1 + 2 + 3</script></span></p>"""  # noqa: E501
+        )
+
+    def test_square_only(self):
+        """Test square only."""
+
+        self.check_markdown(
+            r"""
+            \[
+            1 + 2 + 3
+            \]
+            """,
+            r"""
+            <div class="arithmatex">
+            <div class="MathJax_Preview">
+            1 + 2 + 3
+            </div>
+            <script type="math/tex; mode=display">
+            1 + 2 + 3
+            </script>
+            </div>
+            """,
+            True
+        )
+
+
 class TestArithmatexBlockEscapes(util.MdCase):
     """Test escaping cases for Arithmatex blocks."""
 

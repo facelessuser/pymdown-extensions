@@ -2,8 +2,8 @@
 
 ## 9.2
 
-- **FIX**: Arithmatex: fix issue where if you limit the inline syntax to a single input type, escape logic could throw
-  an error.
+- **FIX**: Arithmatex: fix issue where if you limit the inline or block syntax to specific input types access to certain
+  matched groups could cause an error.
 
 ## 9.1
 
