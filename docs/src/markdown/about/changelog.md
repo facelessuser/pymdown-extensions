@@ -1,5 +1,10 @@
 # Changelog
 
+## 9.2
+
+- **FIX**: Arithmatex: fix issue where if you limit the inline or block syntax to specific input types access to certain
+  matched groups could cause an error.
+
 ## 9.1
 
 - **NEW**: Highlight: If `linenums` is enabled globally via the `highlight` extension, and a code block specifies a line

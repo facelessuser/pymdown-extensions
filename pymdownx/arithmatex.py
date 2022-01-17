@@ -249,16 +249,17 @@ class InlineArithmatexPattern(InlineProcessor):
         """Handle notations and switch them to something that will be more detectable in HTML."""
 
         # Handle escapes
-        escapes = m.group(1)
-        if not escapes:
-            escapes = m.group(4)
+        groups = m.groups()
+        escapes = groups[0]
+        if not escapes and len(groups) > 3:
+            escapes = groups[3]
         if escapes:
             return escapes.replace('\\\\', self.ESCAPED_BSLASH), m.start(0), m.end(0)
 
         # Handle Tex
-        math = m.group(3)
-        if not math:
-            math = m.group(6)
+        math = groups[2]
+        if not math and len(groups) > 3:
+            math = groups[5]
 
         if self.generic:
             return _inline_generic_format(math, wrap=self.wrap, tag=self.inline_tag), m.start(0), m.end(0)
@@ -316,11 +317,12 @@ class BlockArithmatexProcessor(BlockProcessor):
 
         blocks.pop(0)
 
-        math = self.match.group('math')
+        groups = self.match.groupdict()
+        math = groups.get('math', '')
         if not math:
-            math = self.match.group('math2')
+            math = groups.get('math2', '')
         if not math:
-            math = self.match.group('math3')
+            math = groups.get('math3', '')
 
         if self.generic:
             self.generic_output(parent, math)
