@@ -250,7 +250,7 @@ class InlineArithmatexPattern(InlineProcessor):
 
         # Handle escapes
         escapes = m.group(1)
-        if not escapes:
+        if not escapes and len(m.groups()) > 3:
             escapes = m.group(4)
         if escapes:
             return escapes.replace('\\\\', self.ESCAPED_BSLASH), m.start(0), m.end(0)

@@ -1,5 +1,10 @@
 # Changelog
 
+## 9.2
+
+- **FIX**: Arithmatex: fix issue where if you limit the inline syntax to a single input type, escape logic could throw
+  an error.
+
 ## 9.1
 
 - **NEW**: Highlight: If `linenums` is enabled globally via the `highlight` extension, and a code block specifies a line
