@@ -30,29 +30,21 @@
               .highlighttable {
 
                 &:only-child {
+
                   span.filename {
                     margin-top: 0;
-                    margin-right: px2rem(-12px);
-                    margin-left: px2rem(-12px);
                   }
 
-                  code {
-                    margin-right: px2rem(-12px);
-                    margin-left: px2rem(-12px);
-                    padding-right: px2rem(12px);
-                    padding-left: px2rem(12px);
-
-                    .hll {
-                      margin: 0 px2rem(-12px);
-                      padding: 0 px2rem(12px);
-                    }
-                  }
+                  margin-right: px2rem(-24px);
+                  margin-left: px2rem(-24px);
+                  padding-right: px2rem(12px);
+                  padding-left: px2rem(12px);
                 }
               }
 
               mermaid-div {
-                margin-right: px2rem(-12px);
-                margin-left: px2rem(-12px);
+                margin-right: px2rem(-24px);
+                margin-left: px2rem(-24px);
                 padding-right: px2rem(12px);
                 padding-left: px2rem(12px);
               }
@@ -173,33 +165,20 @@
 
           &:only-child {
 
-            > pre {
-              margin-top: 0;
-            }
-
             span.filename {
               margin-top: 0;
-              margin-right: px2rem(-12px);
-              margin-left: px2rem(-12px);
             }
 
-            code {
-              margin-right: px2rem(-12px);
-              margin-left: px2rem(-12px);
-              padding-right: px2rem(12px);
-              padding-left: px2rem(12px);
-
-              .hll {
-                margin: 0 px2rem(-12px);
-                padding: 0 px2rem(12px);
-              }
-            }
+            margin-right: px2rem(-24px);
+            margin-left: px2rem(-24px);
+            padding-right: px2rem(12px);
+            padding-left: px2rem(12px);
           }
         }
 
         mermaid-div:only-child {
-          margin-right: px2rem(-12px);
-          margin-left: px2rem(-12px);
+          margin-right: px2rem(-24px);
+          margin-left: px2rem(-24px);
           padding-right: px2rem(12px);
           padding-left: px2rem(12px);
         }
