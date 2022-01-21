@@ -31,14 +31,13 @@ def custom_validater_exploder(language, inputs, options, attrs, md):
 
 def custom_validator(language, inputs, options, attrs, md):
     """Custom validator."""
-
     okay = True
     for k in inputs.keys():
         if k != 'opt':
             okay = False
             break
-    if okay:
-        if inputs['opt'] != "A":
+    else:
+        if inputs['opt'] != 'A':
             okay = False
         else:
             options['opt'] = inputs['opt']
