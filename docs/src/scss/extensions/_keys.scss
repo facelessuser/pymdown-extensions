@@ -1,0 +1,28 @@
+.md-typeset {
+
+  // Keyboard key
+  .keys {
+
+    // Define keyboard keys with left icon
+    @each $name, $code in (
+      // Extra Keys
+      "power":         "\23FB",
+      "fingerprint":   "\261D",
+    ) {
+      .key-#{$name}::before {
+        padding-right: px2em(6.4px);
+        content: $code;
+      }
+    }
+
+    // Define keyboard keys with right icon
+    @each $name, $code in (
+        // Extra Keys
+    ) {
+      .key-#{$name}::after {
+        padding-left: px2em(6.4px);
+        content: $code;
+      }
+    }
+  }
+}

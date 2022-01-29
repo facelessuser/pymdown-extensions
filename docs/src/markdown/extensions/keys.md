@@ -324,6 +324,7 @@ Name                | Display               | Aliases
 `browser-stop`      | ++browser-stop++      |
 `copy`              | ++copy++              |
 `context-menu`      | ++context-menu++      | `apps`, `menu`
+`fingerprint`       | ++fingerprint++       | `fingerprint`
 `mail`              | ++mail++              | `launch-mail`
 `media`             | ++media++             | `launch-media`
 `media-next-track`  | ++media-next-track++  | `next-track`
@@ -332,6 +333,7 @@ Name                | Display               | Aliases
 `media-play-pause`  | ++media-play-pause++  | `play-pause`
 `media-prev-track`  | ++media-prev-track++  | `prev-track`
 `media-stop`        | ++media-stop++        | `stop`
+`power`             | ++power++             |
 `print`             | ++print++             |
 `reset`             | ++reset++             |
 `select`            | ++select++            |

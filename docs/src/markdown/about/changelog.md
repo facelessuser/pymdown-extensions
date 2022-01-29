@@ -2,9 +2,10 @@
 
 ## 9.2
 
-- **NEW**: Custom fence validators and formatters can now be forced to raise an exception by raising a
+- **NEW**: SuperFences: Custom fence validators and formatters can now be forced to raise an exception by raising a
   `SuperFencesException`.
-- **FIX**: Fix case where custom fence in a blockquote was not gracefully handled.
+- **NEW**: Keys: Add `power` and `fingerprint` keys.
+- **FIX**: SuperFences: Fix case where custom fence in a blockquote was not gracefully handled.
 - **FIX**: Arithmatex: fix issue where if you limit the inline or block syntax to specific input types, access to
   certain matched groups could cause an error.
 
