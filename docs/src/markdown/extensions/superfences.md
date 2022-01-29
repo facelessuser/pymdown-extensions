@@ -785,6 +785,47 @@ test
       [`attr_list`][attr-list].
     - If a `validator` fails, the next `validator`/`formatter` pair will be tired.
 
+### Exception Handling
+
+In general, if an exception occurs in either a validator or a formatter, SuperFences will gracefully ignore the
+validator or formatter. In the case of validators, this usually means it will try the next validator in the line. In the
+case of a formatter, the fenced content will just be abandoned as we are already past the point of "validating" and will
+not go back to validate the use of a different formatter.
+
+Some users may want such failures to not silently go by. SuperFences exposes a special exception called
+`SuperFencesException` which, if raised, will not gracefully be handled. If `SuperFencesException` is raised, this will
+likely bubble all the way up and cause Markdown parsing to halt. `SuperFencesException` can be used to to raise other
+exceptions if desired.
+
+Here we have a contrived example. When no options are provided in this validator, we will try and access a non-existent
+key in the validator which will throw a `KeyError`. In this case, we capture the `KeyError` and raise it with
+`SuperFencesException`. This will display the `SuperFencesException` **and** the original `KeyError` when the failure
+occurs:
+
+```py
+def custom_validator_except(language, inputs, options, attrs, md):
+    """Custom validator."""
+
+    okay = True
+    try:
+        for k in inputs.keys():
+            if k != 'opt':
+                okay = False
+                break
+        if okay:
+            if inputs['opt'] != "A":
+                okay = False
+            else:
+                options['opt'] = inputs['opt']
+    except KeyError as e:
+        raise SuperFencesException from e
+
+    return okay
+```
+
+!!! new "New 9.2"
+    `SuperFencesException` added in 9.2
+
 ### UML Diagram Example
 
 !!! warning "Support"
