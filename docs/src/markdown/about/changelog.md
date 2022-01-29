@@ -2,8 +2,11 @@
 
 ## 9.2
 
-- **FIX**: Arithmatex: fix issue where if you limit the inline or block syntax to specific input types access to certain
-  matched groups could cause an error.
+- **NEW**: Custom fence validators and formatters can now be forced to raise an exception by raising a
+  `SuperFencesException`.
+- **FIX**: Fix case where custom fence in a blockquote was not gracefully handled.
+- **FIX**: Arithmatex: fix issue where if you limit the inline or block syntax to specific input types, access to
+  certain matched groups could cause an error.
 
 ## 9.1
 

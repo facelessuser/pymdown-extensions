@@ -2,6 +2,7 @@
 from .. import util
 import pymdownx.arithmatex as arithmatex
 import pymdownx.superfences as superfences
+from pymdownx.superfences import SuperFencesException
 import warnings
 
 
@@ -23,7 +24,13 @@ def custom_exploder(source, language, class_name, options, md, **kwargs):
     raise Exception('Boom!')
 
 
-def custom_validater_exploder(language, inputs, options, attrs, md):
+def custom_exploder_fail(source, language, class_name, options, md, **kwargs):
+    """Broken format."""
+
+    raise SuperFencesException('Boom!')
+
+
+def custom_validator_exploder(language, inputs, options, attrs, md):
     """Broken validator."""
 
     raise Exception('Boom!')
@@ -42,6 +49,26 @@ def custom_validator(language, inputs, options, attrs, md):
             okay = False
         else:
             options['opt'] = inputs['opt']
+
+    return okay
+
+
+def custom_validator_except(language, inputs, options, attrs, md):
+    """Custom validator."""
+
+    okay = True
+    try:
+        for k in inputs.keys():
+            if k != 'opt':
+                okay = False
+                break
+        if okay:
+            if inputs['opt'] != "A":
+                okay = False
+            else:
+                options['opt'] = inputs['opt']
+    except KeyError as e:
+        raise SuperFencesException from e
 
     return okay
 
@@ -836,6 +863,26 @@ class TestSuperFencesCustom(util.MdCase):
         }
     }
 
+    def test_failure(self):
+        """
+        Test failure of custom fence.
+
+        Fence failed, gracefully continue with any other fences that can capture this.
+        """
+
+        self.check_markdown(
+            r'''
+            ```test
+            test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><pre><span></span><code>test
+            </code></pre></div>
+            ''',
+            True
+        )
+
     def test_bad_options(self):
         """Test bad option."""
 
@@ -898,6 +945,70 @@ class TestSuperFencesCustom(util.MdCase):
             ''',
             True
         )
+
+
+class TestSuperFencesCustomException(util.MdCase):
+    """Test custom validator and format."""
+
+    extension = ['pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.superfences': {
+            'custom_fences': [
+                {
+                    'name': 'test',
+                    'class': 'test',
+                    'format': custom_format,
+                    'validator': custom_validator_except
+                }
+            ]
+        }
+    }
+
+    def test_custom_fail_exception(self):
+        """Test custom fences forced exception."""
+
+        with self.assertRaises(SuperFencesException):
+            self.check_markdown(
+                r'''
+                ```test
+                test
+                ```
+                ''',
+                '',
+                True
+            )
+
+
+class TestSuperFencesCustomExceptionAttrList(util.MdCase):
+    """Test custom validator and format with attribute lists."""
+
+    extension = ['pymdownx.superfences', 'attr_list']
+    extension_configs = {
+        'pymdownx.superfences': {
+            'custom_fences': [
+                {
+                    'name': 'test',
+                    'class': 'test',
+                    'format': custom_format,
+                    'validator': custom_validator_except
+                }
+            ]
+        }
+    }
+
+    def test_custom_fail_exception(self):
+        """Test custom fences forced exception with attribute lists."""
+
+        with self.assertRaises(SuperFencesException):
+            self.check_markdown(
+                r'''
+                ```{.test}
+                test
+                ```
+                ''',
+                '',
+                True
+            )
 
 
 class TestSuperFencesCustomDefaultValidator(util.MdCase):
@@ -1239,6 +1350,69 @@ class TestSuperFencesCustomBroken(util.MdCase):
             True
         )
 
+    def test_broken_blockquote(self):
+        """Test broken fence in a blockquote."""
+
+        self.check_markdown(
+            '''
+            > ```test
+            > doesn't matter
+            > ```
+            ''',
+            '''
+            <blockquote>
+            <p><code>test
+            doesn't matter</code></p>
+            </blockquote>
+            ''',
+            True
+        )
+
+
+class TestSuperFencesCustomBrokenFail(util.MdCase):
+    """Test custom formatter that is broken and causes a failure."""
+
+    extension = ['pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.superfences': {
+            'custom_fences': [
+                {
+                    'name': 'test',
+                    'class': 'test',
+                    'format': custom_exploder_fail,
+                }
+            ]
+        }
+    }
+
+    def test_custom_fail_exception(self):
+        """Test custom fences forced exception."""
+
+        with self.assertRaises(SuperFencesException):
+            self.check_markdown(
+                r'''
+                ```test
+                test
+                ```
+                ''',
+                '',
+                True
+            )
+
+    def test_custom_fail_exception_blockquote(self):
+        """Test custom fences forced exception in a block quote."""
+
+        with self.assertRaises(SuperFencesException):
+            self.check_markdown(
+                r'''
+                > ```test
+                > test
+                > ```
+                ''',
+                '',
+                True
+            )
+
 
 class TestSuperFencesCustomValidatorBroken(util.MdCase):
     """Test custom legacy validator that is broken."""
@@ -1251,7 +1425,7 @@ class TestSuperFencesCustomValidatorBroken(util.MdCase):
                     'name': 'test',
                     'class': 'test',
                     'format': custom_format,
-                    'validator': custom_validater_exploder
+                    'validator': custom_validator_exploder
                 }
             ]
         }

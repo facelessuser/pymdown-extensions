@@ -44,7 +44,7 @@ PREFIX_CHARS = ('>', ' ', '\t')
 RE_NESTED_FENCE_START = re.compile(
     r'''(?x)
     (?P<fence>~{3,}|`{3,})[ \t]*                                                    # Fence opening
-    (?:(\{(?P<attrs>[^\}\n]*)\})?|                                                # Optional attributes or
+    (?:(\{(?P<attrs>[^\}\n]*)\})?|                                                  # Optional attributes or
         (?:\.?(?P<lang>[\w#.+-]*))?[ \t]*                                           # Language
         (?P<options>
             (?:
@@ -74,6 +74,10 @@ FENCED_BLOCK_RE = re.compile(
         md_util.HTML_PLACEHOLDER[-1]
     )
 )
+
+
+class SuperFencesException(Exception):
+    """Special exception to ensure one is raised when a fence fails."""
 
 
 def _escape(txt):
@@ -420,6 +424,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             # End of fence
             try:
                 self.process_nested_block(ws, content, start, end)
+            except SuperFencesException:
+                raise
             except Exception:
                 self.clear()
         else:
@@ -447,7 +453,12 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 self.clear()
             elif self.fence_end.match(content) is not None:
                 # End of fence
-                self.process_nested_block(ws, content, start, end)
+                try:
+                    self.process_nested_block(ws, content, start, end)
+                except SuperFencesException:
+                    raise
+                except Exception:
+                    self.clear()
             else:
                 # Content line
                 self.empty_lines = 0
@@ -594,6 +605,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 validator = entry.get("validator", functools.partial(_validator, validator=default_validator))
                 try:
                     okay = validator(self.lang, values, options, attrs, self.md)
+                except SuperFencesException:
+                    raise
                 except Exception:
                     pass
                 if attrs:
@@ -633,6 +646,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 validator = entry.get("validator", functools.partial(_validator, validator=default_validator))
                 try:
                     okay = validator(self.lang, values, options, attrs, self.md)
+                except SuperFencesException:
+                    raise
                 except Exception:
                     pass
                 if okay:
