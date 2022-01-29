@@ -201,6 +201,8 @@ keymap = {
     "volume-mute": "Mute",
     "volume-up": "Volume Up",
     "zoom": "Zoom",
+    "power": "Power",
+    "fingerprint": "Fingerprint",
 
     # Mouse
     "left-button": "Left Button",
