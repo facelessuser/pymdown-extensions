@@ -109,7 +109,7 @@ def repl_absolute(m, base_path):
             link = '%s"%s%s"' % (
                 m.group('name'),
                 start,
-                urlunparse((scheme, netloc, path, params, query, fragment))
+                urlunparse(("file", netloc, path, params, query, fragment))
             )
     except Exception:  # pragma: no cover
         # Parsing crashed and burned; no need to continue.
