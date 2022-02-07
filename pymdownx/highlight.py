@@ -120,6 +120,10 @@ DEFAULT_CONFIG = {
         'If set to a nonempty string, e.g. foo, the formatter will wrap each output line in an anchor tag with'
         ' an id (and name) of foo-<code_block_number>-<line_number>. - Defaults: ""'
     ],
+    'pygments_lang_class': [
+        False,
+        'If set to True, the language name used will be included as a class attached to the element. - Defaults: False'
+    ],
     '_enabled': [
         True,
         'Used internally to communicate if extension has been explicitly enabled - Default: False'
@@ -224,7 +228,7 @@ class Highlight(object):
         noclasses=False, extend_pygments_lang=None, linenums=None, linenums_special=-1,
         linenums_style='table', linenums_class='linenums', language_prefix='language-',
         code_attr_on_pre=False, auto_title=False, auto_title_map=None, line_spans='',
-        anchor_linenums=False, line_anchors=''
+        anchor_linenums=False, line_anchors='', pygments_lang_class=False
     ):
         """Initialize."""
 
@@ -242,6 +246,7 @@ class Highlight(object):
         self.line_spans = line_spans
         self.line_anchors = line_anchors
         self.anchor_linenums = anchor_linenums
+        self.pygments_lang_class = pygments_lang_class
 
         if self.anchor_linenums and not self.line_anchors:
             self.line_anchors = '__codelineno'
@@ -270,6 +275,8 @@ class Highlight(object):
     def get_lexer(self, src, language):
         """Get the Pygments lexer."""
 
+        name = language
+
         if language:
             language, lexer_options = self.get_extended_language(language)
         else:
@@ -285,11 +292,13 @@ class Highlight(object):
             if self.guess_lang:
                 try:
                     lexer = guess_lexer(src)
+                    name = lexer.aliases[0]
                 except Exception:  # pragma: no cover
                     pass
         if lexer is None:
             lexer = get_lexer_by_name('text')
-        return lexer
+            name = lexer.aliases[0]
+        return lexer, name
 
     def escape(self, txt):
         """Basic HTML escaping."""
@@ -317,7 +326,9 @@ class Highlight(object):
         # Convert with Pygments.
         if pygments and self.use_pygments:
             # Setup language lexer.
-            lexer = self.get_lexer(src, language)
+            lexer, lang_name = self.get_lexer(src, language)
+            if self.pygments_lang_class:
+                class_names.insert(0, self.language_prefix + lang_name)
             linenums = self.linenums_style if linenums_enabled else False
 
             if class_names:
@@ -473,7 +484,8 @@ class HighlightTreeprocessor(Treeprocessor):
                     language_prefix=self.config['language_prefix'],
                     code_attr_on_pre=self.config['code_attr_on_pre'],
                     auto_title=self.config['auto_title'],
-                    auto_title_map=self.config['auto_title_map']
+                    auto_title_map=self.config['auto_title_map'],
+                    pygments_lang_class=self.config['pygments_lang_class']
                 )
                 placeholder = self.md.htmlStash.store(
                     code.highlight(

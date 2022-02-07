@@ -502,3 +502,43 @@ class TestGlobalLinenums(util.MdCase):
             ''',  # noqa: E501
             True
         )
+
+
+class TestPygmentsLangClass(util.MdCase):
+    """Test no Pygments with custom line number class."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.inlinehilite', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'pygments_lang_class': True
+        }
+    }
+
+    def test_superfences(self):
+        """Test language classes with SuperFences."""
+
+        self.check_markdown(
+            r'''
+            ```python
+            import test
+            ```
+            ''',
+            r'''
+            <div class="language-python highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_inlinehilite(self):
+        """Test language classes with InlineHilite."""
+
+        self.check_markdown(
+            '''
+            `#!python import test`
+            ''',
+            '''
+            <p><code class="language-python highlight"><span class="kn">import</span> <span class="nn">test</span></code></p>
+            ''',  # noqa: E501
+            True
+        )
