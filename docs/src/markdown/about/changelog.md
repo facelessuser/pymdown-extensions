@@ -2,6 +2,7 @@
 
 ## 9.2
 
+- **NEW**: Drop Python 3.6 support and formally add Python 3.10 support.
 - **NEW**: Highlight: Add `pygments_lang_option` to enable attaching language classes to Pygments code blocks.
 - **NEW**: SuperFences: Custom fence validators and formatters can now be forced to raise an exception by raising a
   `SuperFencesException`.
