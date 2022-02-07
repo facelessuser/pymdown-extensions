@@ -127,6 +127,7 @@ class InlineHilitePattern(InlineProcessor):
             self.use_pygments = config['use_pygments']
             self.noclasses = config['noclasses']
             self.language_prefix = config['language_prefix']
+            self.pygments_lang_class = config['pygments_lang_class']
 
     def highlight_code(self, src='', language='', classname=None, md=None):
         """Syntax highlight the inline code block."""
@@ -140,7 +141,8 @@ class InlineHilitePattern(InlineProcessor):
                 use_pygments=self.use_pygments,
                 noclasses=self.noclasses,
                 extend_pygments_lang=self.extend_pygments_lang,
-                language_prefix=self.language_prefix
+                language_prefix=self.language_prefix,
+                pygments_lang_class=self.pygments_lang_class
             ).highlight(src, language, self.css_class, inline=True)
             el.text = self.md.htmlStash.store(el.text)
         else:

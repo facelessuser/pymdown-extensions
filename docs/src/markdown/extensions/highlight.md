@@ -34,8 +34,8 @@ is turned off, code tags will be rendered in the HTML5 format for JavaScript hig
 `highlight` is the default class name, and will be applied to code blocks, whether Pygments is disabled or not. This
 class name can be changed with the `css_class` option.
 
-By default, the prefix `language-` is applied to language classes when Pygments is disabled. This prefix can be changed
-via the `language_prefix` option.
+By default, the prefix `language-` is applied to language classes when Pygments is disabled or when Pygments code blocks
+enable language classes via `pygments_lang_class`. This prefix can be changed via the `language_prefix` option.
 
 The language class, and any attributes added via the [`attr_list`][attr-list] extension, are added to the
 `#!html <code>` element. The `code_attr_on_pre` option will force them to be attached to the `#!html <pre>` element.
@@ -79,6 +79,9 @@ wish to apply.
         ]
         ```
 
+!!! new "New 9.2"
+    `pygments_lang_class` added in 9.2.
+
 ## Line Number Styles
 
 Pygments has two available styles when outputting source code with line numbers enabled: `table` and `inline`. `table`
@@ -101,9 +104,8 @@ Line number styles are set with the option `linenums_style` as described in [Opt
 ## Options
 
 All options below control the Pygments' output. The two exceptions are `use_pygments` which disables Pygments,
-`css_class` which sets the name of the class assigned to the generated code blocks, and `language_prefix`, and
-`code_attr_on_pre` which only apply when Pygments is disabled. Many of these options are demonstrated in the
-[SuperFences](./superfences.md) documentation.
+`css_class` which sets the name of the class assigned to the generated code blocks, and `code_attr_on_pre` which only
+apply when Pygments is disabled. Many of these options are demonstrated in the [SuperFences](./superfences.md) documentation.
 
 Option                    | Type   | Default               | Description
 ------------------------- | ------ | ----------------------| -----------
@@ -117,13 +119,14 @@ Option                    | Type   | Default               | Description
 `linenums_style`          | string | `#!py3 'table'`       | Controls the output style when `linenums` are enabled. Supported styles are Pygments default `table` and `inline`, but also supported is the pymdown-extensions `pymdownx-inline` which provides a special inline mode, see [Line Number Styles](#line-number-styles) for more info.
 `linenums_class`          | string | `#!py3 'linenums'`    | Controls the name of the line number class when Pygments is not used.
 `extend_pygments_lang`    | list   | `#!py3 []`            | A list of extended languages to add.  See [Extended Pygments Lexer Options](#extended-pygments-lexer-options) for more info.
-`language_prefix`         | string | `#!py3 'language-'`   | Controls the prefix applied to the language class when Pygments is not used. By default, uses the HTML5 `language-`.
+`language_prefix`         | string | `#!py3 'language-'`   | Controls the prefix applied to the language class when Pygments is not used. By default, uses the HTML5 prefix of `language-`.
 `code_attr_on_pre`        | bool   | `#!py3 False`         | By default, the language class and all attributes added via the [`attr_list`][attr-list] extension are attached to the `#!html <code>` element. This forces them to be attached to the `#!html <pre>` element.
 `auto_title`              | bool   | `#!py3 False`         | When using Pygments, for all code blocks generate a title header with the name of the lexer being used. The lexer name is pulled directly from Pygments and title cased appropriately.
 `auto_title_map`          | dict   | `#!py3 {}`            | A dictionary used to override certain titles returned by `auto_title`. Simply specify the title to override as the key and the desired title as the value.
 `line_spans`              | string | `#!py3 ''`            | Controls the Pygments option of a similar name. If set to a nonempty string, e.g. `foo`, the formatter will wrap each output line in a `#!html <span>` tag with an id of `foo-<code_block_number>-<line_number>`.
 `anchor_linenums`         | bool   | `#!py3 False`         | Enables the Pygments option of a similar name. If set to `#!py True`, will wrap line numbers in `#!html <a>` tags. Used in combination with `linenums` and `line_anchors`. If `line_anchors` is not configured, `__codelineno` will be assumed as the ID prefix.
 `line_anchors`            | bool   | `#!py3 False`         | Controls the Pygments option of a similar name. If set to a nonempty string, e.g. `foo`, the formatter will insert an anchor tag with an id (and name) of `foo-<code_block_number>-<line_number>`.
+`pygments_lang_class`     | bool   | `#!py3 False`         | If set to True, the language name used will be included as a class attached to the element with the associated `language_prefix`.
 
 !!! new "New 7.1"
     `linenums_class` was added in `7.1`.
