@@ -4,7 +4,7 @@ repo_url: https://github.com/facelessuser/pymdown-extensions
 edit_uri: tree/master/docs/src/markdown
 site_description: A Collection of Useful Extensions for Python Markdown
 copyright: |
-  Copyright &copy; 2014 - 2021 <a href="https://github.com/facelessuser"  target="_blank" rel="noopener">Isaac Muse</a>
+  Copyright &copy; 2014 - 2022 <a href="https://github.com/facelessuser"  target="_blank" rel="noopener">Isaac Muse</a>
 
 docs_dir: docs/src/markdown
 theme:
@@ -142,7 +142,7 @@ markdown_extensions:
   - pymdownx.striphtml:
   - pymdownx.snippets:
       base_path:
-      - docs/src/markdown/_snippets
+      - docs/src/markdown/.snippets
       - LICENSE.md
       auto_append:
       - refs.txt
