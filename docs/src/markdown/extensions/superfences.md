@@ -852,8 +852,8 @@ extension_configs = {
     "pymdownx.superfences": {
         "custom_fences": [
             {
-                'name': 'diagram',
-                'class': 'diagram',
+                'name': 'mermaid',
+                'class': 'mermaid',
                 'format': pymdownx.superfences.fence_div_format
             }
         ]
