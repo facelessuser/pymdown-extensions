@@ -181,7 +181,7 @@ class TestAbsolute(util.MdCase):
 
         self.check_markdown(
             r'![picture](./test_extensions/_assets/bg.png)',
-            r'<p><img alt="picture" src="/Some/fake/path/test_extensions/_assets/bg.png" /></p>'
+            r'<p><img alt="picture" src="file:///Some/fake/path/test_extensions/_assets/bg.png" /></p>'
         )
 
     def test_file_win_file_path_root(self):
@@ -291,12 +291,12 @@ class TestWindowsAbs(util.MdCase):
         if util.is_win():
             self.check_markdown(
                 r'![picture](./extensions/_assets/bg.png)',
-                r'<p><img alt="picture" src="/C:/Some/fake/path/extensions/_assets/bg.png" /></p>'
+                r'<p><img alt="picture" src="file:///C:/Some/fake/path/extensions/_assets/bg.png" /></p>'
             )
         else:
             self.check_markdown(
                 r'![picture](./extensions/_assets/bg.png)',
-                r'<p><img alt="picture" src="/C%3A/Some/fake/path/extensions/_assets/bg.png" /></p>'
+                r'<p><img alt="picture" src="file:///C%3A/Some/fake/path/extensions/_assets/bg.png" /></p>'
             )
 
 
