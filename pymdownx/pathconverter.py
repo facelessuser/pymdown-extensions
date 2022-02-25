@@ -105,10 +105,8 @@ def repl_absolute(m, base_path):
             path = util.url2path(path)
             path = os.path.normpath(os.path.join(base_path, path))
             path = util.path2url(path)
-            start = '/' if not path.startswith('/') else ''
-            link = '%s"%s%s"' % (
+            link = '%s"%s"' % (
                 m.group('name'),
-                start,
                 urlunparse(("file", netloc, path, params, query, fragment))
             )
     except Exception:  # pragma: no cover
