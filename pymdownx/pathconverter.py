@@ -104,13 +104,13 @@ def repl_absolute(m, base_path, file_scheme):
         if (not is_absolute and not is_url):
             path = util.url2path(path)
             path = os.path.normpath(os.path.join(base_path, path))
+            path = util.path2url(path)
             if file_scheme:
                 link = '%s"%s"' % (
                     m.group('name'),
                     urlunparse(("file", netloc, path, params, query, fragment))
                 )
             else:
-                path = util.path2url(path)
                 start = '/' if not path.startswith('/') else ''
                 link = '%s"%s%s"' % (
                     m.group('name'),

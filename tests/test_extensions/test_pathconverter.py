@@ -335,10 +335,16 @@ class TestWindowsAbsFileScheme(util.MdCase):
 
     def test_windows_root_conversion(self):
         """Test Windows c:/ Conversion."""
-        self.check_markdown(
-            r'![picture](./extensions/_assets/bg.png)',
-            r'<p><img alt="picture" src="file:///C:/Some/fake/path/extensions/_assets/bg.png" /></p>'
-        )
+        if util.is_win():
+            self.check_markdown(
+                r'![picture](./extensions/_assets/bg.png)',
+                r'<p><img alt="picture" src="file:///C:/Some/fake/path/extensions/_assets/bg.png" /></p>'
+            )
+        else:
+            self.check_markdown(
+                r'![picture](./extensions/_assets/bg.png)',
+                r'<p><img alt="picture" src="file:///C%3A/Some/fake/path/extensions/_assets/bg.png" /></p>'
+            )
 
 
 class TestWindowsRel(util.MdCase):
