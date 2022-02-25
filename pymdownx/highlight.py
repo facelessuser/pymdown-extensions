@@ -262,7 +262,7 @@ class Highlight(object):
             if isinstance(language, (dict, OrderedDict)):
                 name = language.get('name')
                 if name is not None and name not in self.extend_pygments_lang:
-                    self.extend_pygments_lang[name] = [
+                    self.extend_pygments_lang[name.lower()] = [
                         language.get('lang'),
                         language.get('options', {})
                     ]
@@ -270,7 +270,7 @@ class Highlight(object):
     def get_extended_language(self, language):
         """Get extended language."""
 
-        return self.extend_pygments_lang.get(language, (language, {}))
+        return self.extend_pygments_lang.get(language.lower(), (language, {}))
 
     def get_lexer(self, src, language):
         """Get the Pygments lexer."""
