@@ -274,6 +274,27 @@ class TestAbsolute(util.MdCase):
         )
 
 
+class TestAbsoluteFileScheme(TestAbsolute):
+    """Test absolute paths with file:// scheme."""
+
+    extension = ["pymdownx.pathconverter"]
+    extension_configs = {
+        "pymdownx.pathconverter": {
+            "base_path": "/Some/fake/path",
+            "absolute": True,
+            "file_scheme": True,
+        }
+    }
+
+    def test_relative_path(self):
+        """Test relative path."""
+
+        self.check_markdown(
+            r'![picture](./test_extensions/_assets/bg.png)',
+            r'<p><img alt="picture" src="file:///Some/fake/path/test_extensions/_assets/bg.png" /></p>'
+        )
+
+
 class TestWindowsAbs(util.MdCase):
     """Test windows specific cases for absolute."""
 
@@ -298,6 +319,26 @@ class TestWindowsAbs(util.MdCase):
                 r'![picture](./extensions/_assets/bg.png)',
                 r'<p><img alt="picture" src="file:///C%3A/Some/fake/path/extensions/_assets/bg.png" /></p>'
             )
+
+
+class TestWindowsAbsFileScheme(util.MdCase):
+    """Test windows specific cases for absolute with file:// scheme."""
+
+    extension = ["pymdownx.pathconverter"]
+    extension_configs = {
+        "pymdownx.pathconverter": {
+            "base_path": "C:/Some/fake/path",
+            "absolute": True,
+            "file_scheme": True,
+        }
+    }
+
+    def test_windows_root_conversion(self):
+        """Test Windows c:/ Conversion."""
+        self.check_markdown(
+            r'![picture](./extensions/_assets/bg.png)',
+            r'<p><img alt="picture" src="file:///C:/Some/fake/path/extensions/_assets/bg.png" /></p>'
+        )
 
 
 class TestWindowsRel(util.MdCase):
