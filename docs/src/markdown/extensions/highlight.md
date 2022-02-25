@@ -74,7 +74,7 @@ wish to apply.
 
     === "Config"
         ```py
-        extended_pygments_lang = [
+        extend_pygments_lang = [
             {"name": "php-inline", "lang": "php", "options": {"startinline": True}}
         ]
         ```
