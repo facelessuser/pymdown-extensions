@@ -92,6 +92,10 @@ if (!('mermaidConfig' in window)) {
           fill: var(--drac-purple-bg) !important;\
         }\
         \
+        .grey rect.label-container { \
+          fill: var(--drac-purple-bg) !important;\
+          stroke: var(--drac-purple-fg) !important;\
+        } \
         /* Sequence */\
         line[id^='actor'] {\
           stroke: var(--drac-blue-fg);\

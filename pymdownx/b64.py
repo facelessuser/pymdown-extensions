@@ -35,7 +35,8 @@ RE_SLASH_WIN_DRIVE = re.compile(r"^/[A-Za-z]{1}:/.*")
 file_types = {
     (".png",): "image/png",
     (".jpg", ".jpeg"): "image/jpeg",
-    (".gif",): "image/gif"
+    (".gif",): "image/gif",
+    (".svg",): "image/svg+xml",
 }
 
 RE_TAG_HTML = re.compile(
