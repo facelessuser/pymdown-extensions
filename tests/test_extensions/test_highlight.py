@@ -542,3 +542,61 @@ class TestPygmentsLangClass(util.MdCase):
             ''',  # noqa: E501
             True
         )
+
+
+class TestExtendedLang(util.MdCase):
+    """Test extended language cases."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences', 'pymdownx.inlinehilite']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'extend_pygments_lang': [
+                {'name': 'php-inline', 'lang': 'php', 'options': {'startinline': True}}
+            ]
+        }
+    }
+
+    def test_extended_lang_inlinehilite(self):
+        """Test extended language in InlineHilite."""
+
+        self.check_markdown(
+            '''
+            `#!php-inline $a = array("foo" => 0, "bar" => 1);`
+            ''',
+            '''
+            <p><code class="highlight"><span class="nv">$a</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">);</span></code></p>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_extended_lang_superfences(self):
+        """Test extended language in SuperFences."""
+
+        self.check_markdown(
+            '''
+            ```php-inline
+            $a = array("foo" => 0, "bar" => 1);
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code><span class="nv">$a</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">);</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_extended_lang_case(self):
+        """Test extended language in SuperFences."""
+
+        self.check_markdown(
+            '''
+            ```PHP-Inline
+            $a = array("foo" => 0, "bar" => 1);
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code><span class="nv">$a</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">);</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
