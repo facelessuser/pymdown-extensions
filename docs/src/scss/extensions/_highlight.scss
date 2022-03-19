@@ -33,13 +33,6 @@
   }
 }
 
-[data-md-color-scheme="dracula"] {
-  .admonition-title code,
-  table:not([class]) th code {
-    background-color: var(--md-code-alternate-bg-color);
-  }
-}
-
 .md-typeset {
 
   /* Allow code to look like code everywhere despite Material's current preference */

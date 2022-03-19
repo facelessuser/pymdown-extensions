@@ -55,7 +55,7 @@
     --md-default-fg-color--lighter:      #{transparentize($drac-fg, 0.84)};
     --md-default-fg-color--lightest:     #{transparentize($drac-fg, 0.93)};
 
-    --md-default-bg-color:               #{$drac-default-bg};
+    --md-default-bg-color:               var(--md-default-bg-color--darkest);
     --md-default-bg-color--light:        #{transparentize($drac-default-bg, 0.3)};
     --md-default-bg-color--lighter:      #{transparentize($drac-default-bg, 0.7)};
     --md-default-bg-color--lightest:     #{transparentize($drac-default-bg, 0.88)};
