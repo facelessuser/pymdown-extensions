@@ -3,6 +3,7 @@
 ## 9.3
 
 - **NEW**: B64: Allow SVG to be encoded and inlined.
+- **NEW**: PathConverter: Add option to use `file://` prefix on absolute paths.
 - **FIX**: Highlight: Ensure that `extend_pygments_lang` is not case sensitive regarding language names.
 
 ## 9.2
