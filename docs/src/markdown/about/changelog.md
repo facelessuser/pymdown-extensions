@@ -1,5 +1,10 @@
 # Changelog
 
+## 9.3
+
+- **NEW**: B64: Allow SVG to be encoded and inlined.
+- **FIX**: Highlight: Ensure that `extend_pygments_lang` is not case sensitive regarding language names.
+
 ## 9.2
 
 - **NEW**: Drop Python 3.6 support and formally add Python 3.10 support.
