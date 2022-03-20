@@ -1,7 +1,50 @@
 [build-system]
 requires = [
-    "setuptools>=42",
-    "wheel"
+    "hatchling>=0.21.0",
+]
+build-backend = "hatchling.build"
+
+[project]
+name = "pymdown-extensions"
+description = "Extension pack for Python Markdown."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.7"
+authors = [
+    { name = "Isaac Muse", email = "Isaac.Muse@gmail.com" },
+]
+keywords = [
+    "extensions",
+    "markdown",
+]
+dynamic = [
+    "classifiers",
+    "dependencies",
+    "version",
 ]
 
-build-backend = "setuptools.build_meta"
+[project.urls]
+Homepage = "https://github.com/facelessuser/pymdown-extensions"
+
+[tool.hatch.version]
+source = "code"
+path = "pymdownx/__meta__.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/docs/src/markdown",
+    "/docs/theme",
+    "/requirements/*.txt",
+    "/pymdownx",
+    "/tests",
+    "/.coveragerc",
+    "/.dictionary",
+    "/mkdocs.yml",
+    "/run_tests.py",
+    "/tox.ini",
+]
+
+[tool.hatch.build.targets.wheel]
+include = [
+    "/pymdownx",
+]

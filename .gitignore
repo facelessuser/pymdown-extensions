@@ -58,13 +58,13 @@ target/
 
 tools/emoji.md
 
-site/*
+site/
 
-tools/tags/*
+tools/tags/
 
 tmp*
 
-node_modules/*
+node_modules/
 
 manifest*.json
 *.dic
