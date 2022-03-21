@@ -64,6 +64,7 @@
     // Code colors
     --md-code-fg-color: #{$drac-fg};
     --md-code-bg-color: #{$drac-bg};
+    --md-code-inline-bg-color: #{lighten($drac-bg, 5%)};
     --md-code-hl-operator-color: #{$drac-pink};
     --md-code-hl-punctuation-color: #{$drac-fg};
     --md-code-hl-string-color: #{$drac-yellow};
