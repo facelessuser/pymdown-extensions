@@ -32,6 +32,14 @@ html {
     }
   }
 
+  .md-top {
+    background-color: var(--md-default-bg-color--dark);
+
+    &:hover {
+      background-color: var(--md-primary-fg-color);
+    }
+  }
+
   // Tabs
   .md-tabs {
     color: var(--md-text-color);
