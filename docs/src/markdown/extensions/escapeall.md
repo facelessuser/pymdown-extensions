@@ -57,5 +57,3 @@ Option      | Type | Default         | Description
 ----------- | ---- | --------------- | ----------
 `hardbreak` | bool | `#!py3 False`   | Escaped newlines will be hard breaks: `#!html <br>`.
 `nbsp`      | bool | `#!py3 False`   | Escaped spaces will be non-breaking spaces: `#!html &nbsp;`.
-
---8<-- "links.txt"

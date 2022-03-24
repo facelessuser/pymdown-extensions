@@ -520,5 +520,3 @@ Option                      | Type       | Default              | Description
         }
     }
     ```
-
---8<-- "refs.txt"
