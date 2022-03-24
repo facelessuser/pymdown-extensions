@@ -94,7 +94,7 @@ const config = {
   mkdocsCmd: args.mkdocs
 }
 
-const rollupjs = (sources, options) => {
+const rollupjs = async(sources, options) => {
 
   const pluginModules = [rollupBabel({babelHelpers: "bundled"})]
   if (options.minify) {
@@ -108,12 +108,12 @@ const rollupjs = (sources, options) => {
   for (let i = 0; i < sources.length; i++) {
     const src = sources[i]
 
-    p = p.then(() => {
-      return rollup({
+    p = p.then(async() => {
+      return await rollup({
         input: src,
         plugins: pluginModules
-      }).then(bundle => {
-        bundle.write({
+      }).then(async bundle => {
+        await bundle.write({
           dir: options.dest,
           format: "iife",
           entryFileNames: (options.revision) ? "[name]-[hash].js" : "[name].js",
@@ -127,7 +127,7 @@ const rollupjs = (sources, options) => {
     })
   }
 
-  return p
+  return await p
 }
 
 // ------------------------------
@@ -225,11 +225,11 @@ gulp.task("scss:clean", () => {
     .pipe(vinylPaths(del))
 })
 
-gulp.task("js:build:rollup", () => {
+gulp.task("js:build:rollup", async() => {
   gulp.src(`${config.folders.theme}/manifest-js.json`, {allowEmpty: true})
     .pipe(vinylPaths(del))
 
-  return rollupjs(
+  return await rollupjs(
     [
       `${config.folders.src}/js/material-extra-theme.js`,
       `${config.folders.src}/js/material-extra-3rdparty.js`,
