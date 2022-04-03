@@ -1,7 +1,66 @@
 [build-system]
 requires = [
-    "setuptools>=42",
-    "wheel"
+    "hatchling>=0.21.1",
+]
+build-backend = "hatchling.build"
+
+[project]
+name = "pymdown-extensions"
+description = "Extension pack for Python Markdown."
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.7"
+authors = [
+    { name = "Isaac Muse", email = "Isaac.Muse@gmail.com" },
+]
+keywords = [
+    "extensions",
+    "markdown",
+]
+dynamic = [
+    "classifiers",
+    "dependencies",
+    "version",
 ]
 
-build-backend = "setuptools.build_meta"
+[project.urls]
+Homepage = "https://github.com/facelessuser/pymdown-extensions"
+
+[tool.hatch.version]
+source = "code"
+path = "pymdownx/__meta__.py"
+
+[tool.hatch.build.targets.sdist]
+include = [
+    "/docs/src/markdown/**/*.md",
+    "/docs/src/markdown/**/*.gif",
+    "/docs/src/markdown/**/*.png",
+    "/docs/src/markdown/dictionary/*.txt",
+    "/docs/theme/**/*.css",
+    "/docs/theme/**/*.js",
+    "/docs/theme/**/*.html",
+    "/docs/theme/**/*.css.map",
+    "/docs/theme/**/*.js.map",
+    "/requirements/*.txt",
+    "/pymdownx/**/*.py",
+    "/tests/**/*.txt",
+    "/tests/**/*.py",
+    "/tests/**/*.html",
+    "/tests/**/*.yml",
+    "/tests/**/*.css",
+    "/tests/**/*.png",
+    "/tools/__init__.py",
+    "/tools/pymdownx_md_render.py",
+    "/.pyspelling.yml",
+    "/.coveragerc",
+    "/mkdocs.yml",
+    "/run_tests.py",
+    "/tox.ini",
+]
+
+[tool.hatch.build.targets.wheel]
+include = [
+    "/pymdownx",
+]
+
+[tool.hatch.metadata.hooks.custom]

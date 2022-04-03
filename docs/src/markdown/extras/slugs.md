@@ -45,5 +45,3 @@ extension_configs = {
 
 If you are using something like [MkDocs][mkdocs], check out our [FAQ](../faq.md#function-references-in-yaml) which gives
 guidance on how to specify configurable functions in the YAML configuration.
-
---8<-- "refs.txt"

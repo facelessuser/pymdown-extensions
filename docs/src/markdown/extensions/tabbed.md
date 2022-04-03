@@ -536,5 +536,3 @@ to some practical number.
 Option            | Type | Default       | Description
 ----------------- | ---- | ------------- | -----------
 `alternate_style` | bool | `#!py3 False` | Use the experimental, alternative style.
-
---8<-- "refs.txt"

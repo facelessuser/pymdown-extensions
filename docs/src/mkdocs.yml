@@ -145,7 +145,7 @@ markdown_extensions:
       - docs/src/markdown/.snippets
       - LICENSE.md
       auto_append:
-      - refs.txt
+      - refs.md
       check_paths: true
   - pymdownx.keys:
       separator: "\uff0b"

@@ -36,5 +36,3 @@ With SaneHeaders, only the first is a header:
 
 ##Not a Header
 ```
-
---8<-- "links.txt"

@@ -55,5 +55,3 @@ Option         | Type | Default     | Description
 `smart_delete` | bool | `#!py3 True` | Use smart logic with delete characters.
 `delete`       | bool | `#!py3 True` | Enable delete feature.
 `subscript`    | bool | `#!py3 True` | Enable subscript feature.
-
---8<-- "links.txt"
