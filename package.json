@@ -25,7 +25,7 @@
     "@babel/preset-env": "^7.16.11",
     "@babel/register": "^7.17.7",
     "@fortawesome/fontawesome-free": "^6.1.0",
-    "@mdi/svg": "^6.5.95",
+    "@mdi/svg": "^6.6.96",
     "@primer/octicons": "^17.0.0",
     "@rollup/plugin-babel": "^5.3.1",
     "autoprefixer": "^10.4.4",
