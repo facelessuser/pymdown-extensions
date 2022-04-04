@@ -1,0 +1,17 @@
+# The first section
+
+Don't include this
+
+# My favourite section
+
+Include this
+
+---8<--- "b.txt"
+
+---8<---
+d.txt
+---8<---
+
+# That other section
+
+Don't include this either

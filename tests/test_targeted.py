@@ -174,6 +174,19 @@ class TestSnippets(unittest.TestCase):
 
         self.assertEqual(expected, rendered)
 
+    def test_sections(self):
+        """Test including a section snippet"""
+        expected = "<p>Include this</p>\n<p>Snippet</p>\n<p>Snippet</p>"
+        rendered = markdown.Markdown(
+            extensions=['pymdownx.snippets'],
+            extension_configs={'pymdownx.snippets': {
+                'check_paths': True,
+                'base_path': 'tests/extensions/_snippets'
+            }}
+        ).convert('--8<--- "e.txt|# My favourite section"')
+
+        self.assertEqual(expected, rendered)
+
 
 def run():
     """Run pytest."""
