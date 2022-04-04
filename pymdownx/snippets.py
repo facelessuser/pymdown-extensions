@@ -27,6 +27,7 @@ from markdown.preprocessors import Preprocessor
 import re
 import codecs
 import os
+from typing import List
 
 
 class SnippetPreprocessor(Preprocessor):
@@ -120,6 +121,10 @@ class SnippetPreprocessor(Preprocessor):
                 # Get spaces and snippet path.  Remove quotes if inline.
                 space = m.group('space').expandtabs(self.tab_length)
                 path = m.group('snippet')[1:-1].strip() if inline else m.group('snippet').strip()
+                if "|" in path:
+                    path, section = path.split("|")
+                else:
+                    section = ""
 
                 if not inline:
                     # Block path handling
@@ -142,9 +147,14 @@ class SnippetPreprocessor(Preprocessor):
                         self.seen.add(file_name)
                     try:
                         with codecs.open(snippet, 'r', encoding=self.encoding) as f:
-                            new_lines.extend(
-                                [space + l2 for l2 in self.parse_snippets([l.rstrip('\r\n') for l in f], snippet)]
-                            )
+                            content = f.readlines()
+
+                        if section:
+                            content = self.extract_section(content, section)
+
+                        new_lines.extend(
+                            [space + l2 for l2 in self.parse_snippets([l.rstrip('\r\n') for l in content], snippet)]
+                        )
                     except Exception:  # pragma: no cover
                         pass
                     if file_name:
@@ -153,6 +163,40 @@ class SnippetPreprocessor(Preprocessor):
                     raise IOError("Snippet at path %s could not be found" % path)
 
         return new_lines
+    
+    def extract_section(self, lines: List[str], section: str) -> List[str]:
+        """Return a subset of lines for the given section
+        
+        If section is not found, all lines are returned.
+        """
+        start = 0
+        end = -1
+
+        # Find the target section - Note `section` is the full heading text
+        section_pattern = re.compile(r"^\s*" + section + r"\s*$")
+        for idx, line in enumerate(lines):
+            if section_pattern.match(line):
+                start = idx + 1
+                break
+        if not start:
+            return lines
+
+        # We found the target section - End at the next section of any kind
+        for idx, line in enumerate(lines[start+1:]):
+            if line.startswith("#"):
+                end = start + idx
+                break
+
+        section_lines = lines[start:end]
+
+        # Strip newlines
+        while section_lines[0] == "\n":
+            section_lines.pop(0)
+        while section_lines[-1] == "\n":
+            section_lines.pop()
+
+        return section_lines
+
 
     def run(self, lines):
         """Process snippets."""
