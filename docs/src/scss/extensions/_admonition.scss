@@ -54,6 +54,7 @@ $new-admonitions: (
   > .admonition-title {
     background-color: var(--md-admonition-bg-color--note);
     border-color: var(--md-admonition-icon-color--note);
+    border-left: px2rem(4px) solid;
     &::before {
       background-color: var(--md-admonition-icon-color--note);
     }
