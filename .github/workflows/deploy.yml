@@ -37,23 +37,19 @@ jobs:
         git push gh-token gh-pages
 
   pypi:
-    strategy:
-      matrix:
-        distribution: [bdist_wheel, sdist]
-
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v1
+      - uses: actions/setup-python@v2
         with:
           python-version: 3.9
       - name: Package
         run: |
-          pip install --upgrade setuptools wheel
-          python setup.py ${{ matrix.distribution }}
+          pip install --upgrade build
+          python -m build -s -w
       - name: Publish
-        uses: pypa/gh-action-pypi-publish@v1.4.1
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
