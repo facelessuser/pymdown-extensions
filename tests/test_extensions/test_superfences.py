@@ -104,9 +104,8 @@ class TestHighlightTitle(util.MdCase):
             ```
             ''',
             r'''
-            <table class="highlighttable"><tr><th colspan="2" class="filename"><div class="highlight"><span class="filename">My title</span></div></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">test</span>
-            </code></pre></div>
-            </td></tr></table>
+            <div class="highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">My title</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div></td></tr></table></div>
             ''',  # noqa: E501
             True
         )
@@ -235,9 +234,8 @@ class TestHighlightLineWrapsPymdownsTable(util.MdCase):
             ```
             ''',
             r'''
-            <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span id="__my_span-0-2"><span class="kn">import</span> <span class="nn">test</span>
-            </span></code></pre></div>
-            </td></tr></table>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__my_span-0-2"><span class="kn">import</span> <span class="nn">test</span>
+            </span></code></pre></div></td></tr></table></div>
             ''',  # noqa: E501
             True
         )
@@ -320,9 +318,8 @@ class TestHighlightLineAnchorsPymdownsTable(util.MdCase):
             ```
             ''',
             r'''
-            <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__my_span-0-2" name="__my_span-0-2"></a><span class="kn">import</span> <span class="nn">test</span>
-            </code></pre></div>
-            </td></tr></table>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__my_span-0-2" name="__my_span-0-2"></a><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div></td></tr></table></div>
             ''',  # noqa: E501
             True
         )
@@ -405,9 +402,8 @@ class TestHighlightAnchorLinenumsPymdownsTable(util.MdCase):
             ```
             ''',
             r'''
-            <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-2">2</a></span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="kn">import</span> <span class="nn">test</span>
-            </code></pre></div>
-            </td></tr></table>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div></td></tr></table></div>
             ''',  # noqa: E501
             True
         )
@@ -680,9 +676,8 @@ class TestSuperFencesClassesIdsAttrList(util.MdCase):
             ```
             ''',
             r'''
-            <table id="id" class="highlighttable" data-attr="test"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
-            </code></pre></div>
-            </td></tr></table>
+            <div id="id" class="highlight" data-attr="test"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div></td></tr></table></div>
             ''',  # noqa: E501
             True
         )

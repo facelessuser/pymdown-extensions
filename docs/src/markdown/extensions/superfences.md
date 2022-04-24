@@ -97,7 +97,7 @@ not valid.
 
     === "HTML"
         ```html
-        <table class="extra-class highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="extra-class highlight"><pre><span></span><code><span cv></td><td class="code"><div class="extra-class highlight"><pre><span></span><code><span class="kn">import</span> <spanlass="kn">import</span> <span class="nn">hello_world</span>\n</code></pre></div>\n</td></tr></table>
+        <div class="extra-class highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div><pre><span></span><code><span cv></td><td class="code"><div><pre><span></span><code><span class="kn">import</span> <spanlass="kn">import</span> <span class="nn">hello_world</span>\n</code></pre></div>\n</td></tr></table></div>
         ```
 
     === "Markdown"
@@ -399,15 +399,17 @@ If using line numbers and the `linenums_style` set to `table` (the default), the
 element at the start of the table set to span both the line number column and the line column.
 
 ```html
+<div class="highlight">
 <table class="highlighttable">
 <tr>
-  <th colspan="2" class="filename"><div class="highlight"><span class="filename">My title</span></div></th>
+  <th colspan="2" class="filename"><span class="filename">My title</span></th>
 </tr>
 <tr>
   <td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td>
   <td class="code"><div class="highlight"><pre><code></code></pre></div></td>
 </tr>
 </table>
+</div>
 ```
 
 !!! example "Title"

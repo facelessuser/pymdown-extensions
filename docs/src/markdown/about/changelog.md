@@ -1,5 +1,10 @@
 # Changelog
 
+## 9.4
+
+- **NEW**: Highlight: Changes in order to support Pygments 2.12+. If using Pygments and a version less than 2.12 is
+  installed, Highlight will raise an exception.
+
 ## 9.3
 
 - **NEW**: B64: Allow SVG to be encoded and inlined.

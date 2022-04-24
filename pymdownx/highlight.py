@@ -39,7 +39,7 @@ except ImportError:  # pragma: no cover
     pygments = False
     p_ver = (0, 0)
 
-RE_PYG_CODE = re.compile(r'^<(div|table)(\s*class=".*?")?\s*>')
+RE_PYG_CODE = re.compile(r'^<(div)(\s*class="(.*?)")?\s*>')
 CODE_WRAP = '<pre{}><code{}{}{}>{}</code></pre>'
 CODE_WRAP_ON_PRE = '<pre{}{}{}><code>{}</code></pre>'
 CLASS_ATTR = ' class="{}"'
@@ -134,7 +134,12 @@ if pygments:
     class InlineHtmlFormatter(HtmlFormatter):
         """Format the code blocks."""
 
-        def wrap(self, source, outfile):
+        def _wrap_div(self, inner):
+            """Do not wrap with `div`."""
+
+            yield from inner
+
+        def wrap(self, source):
             """Overload wrap."""
 
             return self._wrap_code(source)
@@ -171,10 +176,7 @@ if pygments:
             # wrap the gutter number in the future with a highlight class.
             # The decision to do this has still not be made.
 
-            if p_ver >= (2, 7):
-                lnum = m.group(4) if not m.group(4).rstrip() else m.group(4)
-            else:  # pragma: no cover
-                lnum = m.group(4)
+            lnum = m.group(4) if not m.group(4).rstrip() else m.group(4)
 
             return (
                 m.group(1) +
@@ -200,12 +202,12 @@ if pygments:
                     line = self.RE_SPAN_NUMS.sub(self._format_custom_line, line)
                 yield t, line
 
-        def wrap(self, source, outfile):
+        def wrap(self, source):
             """Wrap the source code."""
 
             if self.linenos == 2 and self.pymdownx_inline:
                 source = self._wrap_customlinenums(source)
-            return HtmlFormatter.wrap(self, source, outfile)
+            return HtmlFormatter.wrap(self, source)
 
         def _wrap_tablelinenos(self, inner):
             """
@@ -325,6 +327,10 @@ class Highlight(object):
 
         # Convert with Pygments.
         if pygments and self.use_pygments:
+
+            if p_ver < (2, 12):  # pragma: no cover
+                raise RuntimeError('Pymdownx Highlight requires at least Pygments 2.12+ if enabling Pygments')
+
             # Setup language lexer.
             lexer, lang_name = self.get_lexer(src, language)
             if self.pygments_lang_class:
@@ -332,11 +338,10 @@ class Highlight(object):
             linenums = self.linenums_style if linenums_enabled else False
 
             if class_names:
-                css_class = ' {}'.format('' if not css_class else css_class)
-                css_class = ' '.join(class_names) + css_class
-                stripped = css_class.strip()
-
-                if not isinstance(linenums, str) or linenums != 'table':
+                if inline:
+                    css_class = ' {}'.format('' if not css_class else css_class)
+                    css_class = ' '.join(class_names) + css_class
+                    stripped = css_class.strip()
                     css_class = stripped
 
             id_str = ID_ATTR.format(id_value) if id_value else ''
@@ -398,7 +403,14 @@ class Highlight(object):
                 if m is not None:
                     end = m.end(0)
                     start = m.start(0)
-                    classes = ' ' + m.group(2).lstrip() if m.group(2) else ''
+                    if class_names:
+                        if m.group(2):
+                            classes = ' class="{} {}"'.format(' '.join(class_names), m.group(3).strip())
+                        else:
+                            classes = ' class="{}"'.format(' '.join(class_names))
+                    else:
+                        classes = ' ' + m.group(2).lstrip() if m.group(2) else ''
+
                     code = '{}<{}{}{}{}>{}'.format(code[:start], m.group(1), id_str, classes, attr_str, code[end:])
 
         elif inline:
