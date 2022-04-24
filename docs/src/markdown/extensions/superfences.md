@@ -178,7 +178,8 @@ installed, or disabled, code blocks will be created using HTML5 style tags for a
 `#!html <pre class="highlight"><code class="language-mylanguage"></code></pre>`. If you disable `highlight_code`,
 specified languages will be ignored, and the content will be wrapped in a simple `pre` and `code` tags with no classes.
 
-Highlighting can be further controlled via the [`pymdownx.highlight`](./highlight.md) extension.
+Highlighting can be further controlled via the [`pymdownx.highlight`](./highlight.md) extension. You must include
+`pymdownx.highlight` in the extensions list in order to be able to configure it.
 
 When using fenced code blocks, you can specify a specific syntax language to highlight with by specifying the language
 name directly after the opening tokens (either ` ``` ` or `~~~`). Whether using Pygments or some other JavaScript

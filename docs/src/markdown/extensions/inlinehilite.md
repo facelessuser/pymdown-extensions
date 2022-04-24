@@ -46,7 +46,8 @@ or disabled, code blocks will be output for JavaScript syntax highlighters as:
 <code class="highlight language-mylanguage"></code>
 ```
 
-Highlighting can be further controlled via the [`pymdownx.highlight`](./highlight.md) extension.
+Highlighting can be further controlled via the [`pymdownx.highlight`](./highlight.md) extension. You must include
+`pymdownx.highlight` in the extensions list in order to be able to configure it.
 
 ## Using JavaScript Highlighters
 
