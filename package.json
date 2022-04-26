@@ -28,7 +28,7 @@
     "@mdi/svg": "^6.6.96",
     "@primer/octicons": "^17.0.0",
     "@rollup/plugin-babel": "^5.3.1",
-    "autoprefixer": "^10.4.4",
+    "autoprefixer": "^10.4.5",
     "babel-core": "^7.0.0-bridge.0",
     "clean-css": "^5.3.0",
     "css-mqpacker": "^7.0.0",
