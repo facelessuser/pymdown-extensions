@@ -146,7 +146,7 @@
       display: none;
     }
 
-    @for $index from 1 through 10 {
+    @for $index from 1 through 20 {
       input:nth-child(#{$index}):checked ~ .tabbed-content > :nth-child(#{$index}) {
         display: block;
       }
@@ -188,7 +188,7 @@
 }
 
 @media screen {
-  @for $index from 1 through 10 {
+  @for $index from 1 through 20 {
     .tabbed-alternate input:nth-child(#{$index}):checked ~ .tabbed-labels > :nth-child(#{$index}) {
       color: var(--md-accent-fg-color);
       border-color: var(--md-accent-fg-color);
@@ -201,7 +201,7 @@
     display: contents;
   }
 
-  @for $index from 1 through 10 {
+  @for $index from 1 through 20 {
     .tabbed-labels > label:nth-child(#{$index}) {
       order: #{$index};
     }
@@ -216,7 +216,7 @@
     }
   }
 
-  @for $index from 1 through 10 {
+  @for $index from 1 through 20 {
     .tabbed-alternate .tabbed-block:nth-child(#{$index}) {
       order: #{$index};
     }
