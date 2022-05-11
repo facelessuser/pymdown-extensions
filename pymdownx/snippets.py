@@ -142,11 +142,14 @@ class SnippetPreprocessor(Preprocessor):
                         self.seen.add(file_name)
                     try:
                         with codecs.open(snippet, 'r', encoding=self.encoding) as f:
-                            new_lines.extend(
-                                [space + l2 for l2 in self.parse_snippets([l.rstrip('\r\n') for l in f], snippet)]
-                            )
-                    except Exception:  # pragma: no cover
-                        pass
+                            s_lines = [l for l in f]
+                    except Exception:
+                        # Try not to fail Markdown parsing if reading the file fails.
+                        s_lines = []
+
+                    new_lines.extend(
+                        [space + l2 for l2 in self.parse_snippets([l.rstrip('\r\n') for l in s_lines], snippet)]
+                    )
                     if file_name:
                         self.seen.remove(file_name)
                 elif self.check_paths:
