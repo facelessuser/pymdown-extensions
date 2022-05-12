@@ -1,6 +1,7 @@
 """Test cases for Highlight."""
 from .. import util
 import pymdownx.arithmatex as arithmatex
+from pymdownx.inlinehilite import InlineHiliteException
 import warnings
 
 
@@ -20,6 +21,12 @@ def _format_exploder(src, language, class_name, md):
     """Inline math formatter."""
 
     raise Exception('Boom!')
+
+
+def _format_exploder_fail(src, language, class_name, md):
+    """Inline math formatter."""
+
+    raise InlineHiliteException('Boom!')
 
 
 class TestInlineHilite(util.MdCase):
@@ -545,3 +552,32 @@ class TestInlineHiliteCustomBrokenFormatter(util.MdCase):
             r'`#!test boom`',
             r'<p>`#!test boom`</p>'  # noqa: E501
         )
+
+
+class TestInlineHiliteCustomBrokenFormatterFail(util.MdCase):
+    """Test custom broken InlineHilite cases fails."""
+
+    extension = [
+        'pymdownx.highlight',
+        'pymdownx.inlinehilite',
+    ]
+    extension_configs = {
+        'pymdownx.inlinehilite': {
+            'custom_inline': [
+                {
+                    'name': 'test',
+                    'class': 'test',
+                    'format': _format_exploder_fail
+                }
+            ]
+        }
+    }
+
+    def test_broken(self):
+        """Test custom broken formatter."""
+
+        with self.assertRaises(InlineHiliteException):
+            self.check_markdown(
+                r'`#!test boom`',
+                r''  # noqa: E501
+            )
