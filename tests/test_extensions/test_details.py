@@ -20,7 +20,7 @@ class TestDetails(util.MdCase):
             '''
 
         self.check_markdown(
-            r'''
+            R'''
             foo
             **foo**
             ??? note "Details"
