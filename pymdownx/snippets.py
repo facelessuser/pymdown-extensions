@@ -143,8 +143,11 @@ class SnippetPreprocessor(Preprocessor):
                     try:
                         with codecs.open(snippet, 'r', encoding=self.encoding) as f:
                             s_lines = [l for l in f]
-                    except Exception:
+                    except Exception:  # pragma: no cover
                         # Try not to fail Markdown parsing if reading the file fails.
+                        # This could be a file permission issue, or any number of things,
+                        # we are only interested in alerting the user about whether the file
+                        # exists, and only if they've enabled that feature.
                         s_lines = []
 
                     new_lines.extend(
