@@ -142,11 +142,17 @@ class SnippetPreprocessor(Preprocessor):
                         self.seen.add(file_name)
                     try:
                         with codecs.open(snippet, 'r', encoding=self.encoding) as f:
-                            new_lines.extend(
-                                [space + l2 for l2 in self.parse_snippets([l.rstrip('\r\n') for l in f], snippet)]
-                            )
+                            s_lines = [l for l in f]
                     except Exception:  # pragma: no cover
-                        pass
+                        # Try not to fail Markdown parsing if reading the file fails.
+                        # This could be a file permission issue, or any number of things,
+                        # we are only interested in alerting the user about whether the file
+                        # exists, and only if they've enabled that feature.
+                        s_lines = []
+
+                    new_lines.extend(
+                        [space + l2 for l2 in self.parse_snippets([l.rstrip('\r\n') for l in s_lines], snippet)]
+                    )
                     if file_name:
                         self.seen.remove(file_name)
                 elif self.check_paths:
