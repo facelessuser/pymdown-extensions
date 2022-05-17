@@ -542,6 +542,45 @@ class TestPygmentsLangClass(util.MdCase):
         )
 
 
+class TestBlockLangClass(util.MdCase):
+    """Test no Pygments with custom line number class."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.inlinehilite', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'block_lang_class': True
+        }
+    }
+
+    def test_superfences(self):
+        """Test language classes with SuperFences."""
+
+        self.check_markdown(
+            r'''
+            ```mermaid
+            graph TD;
+            ```
+            ''',
+            r'''
+            <div class="language-mermaid highlight"><pre><span></span><code>graph TD;
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_inlinehilite(self):
+        """Test language classes with InlineHilite."""
+
+        self.check_markdown(
+            '''
+            `#!python import test`
+            ''',
+            '''
+            <p><code class="language-python highlight"><span class="kn">import</span> <span class="nn">test</span></code></p>
+            ''',  # noqa: E501
+            True
+        )
+
 class TestExtendedLang(util.MdCase):
     """Test extended language cases."""
 

@@ -79,9 +79,6 @@ wish to apply.
         ]
         ```
 
-!!! new "New 9.2"
-    `pygments_lang_class` added in 9.2.
-
 ## Line Number Styles
 
 Pygments has two available styles when outputting source code with line numbers enabled: `table` and `inline`. `table`
@@ -110,7 +107,7 @@ apply when Pygments is disabled. Many of these options are demonstrated in the [
 Option                    | Type   | Default               | Description
 ------------------------- | ------ | ----------------------| -----------
 `css_class`               | string | `#!py3 'highlight`    | Default class to apply to the wrapper element on code blocks. Other extensions can override this.
-`guess_lang`              | bool   | `#!py3 False`         | Guess what syntax language should be used if no language is specified. 
+`guess_lang`              | bool   | `#!py3 False`         | Guess what syntax language should be used if no language is specified.
 `pygments_style`          | string | `#!py3 'default'`     | Set the Pygments' style to use.  This really only has an effect when used with `noclasses`.
 `noclasses`               | bool   | `#!py3 False`         | This will cause the styles to directly be written to the tag's style attribute instead of requiring a stylesheet.
 `use_pygments`            | bool   | `#!py3 True`          | Controls whether Pygments (if available) is used to style the code, or if the code will just be escaped and prepped for a JavaScript syntax highlighter.
@@ -127,6 +124,7 @@ Option                    | Type   | Default               | Description
 `anchor_linenums`         | bool   | `#!py3 False`         | Enables the Pygments option of a similar name. If set to `#!py True`, will wrap line numbers in `#!html <a>` tags. Used in combination with `linenums` and `line_anchors`. If `line_anchors` is not configured, `__codelineno` will be assumed as the ID prefix.
 `line_anchors`            | bool   | `#!py3 False`         | Controls the Pygments option of a similar name. If set to a nonempty string, e.g. `foo`, the formatter will insert an anchor tag with an id (and name) of `foo-<code_block_number>-<line_number>`.
 `pygments_lang_class`     | bool   | `#!py3 False`         | If set to True, the language name used will be included as a class attached to the element with the associated `language_prefix`.
+`block_lang_class`        | bool   | `#!py3 False`         | If set to True, the block language name will be included as a class attached to the element with the associated `language_prefix`.
 
 !!! new "New 7.1"
     `linenums_class` was added in `7.1`.
@@ -138,3 +136,9 @@ Option                    | Type   | Default               | Description
 
 !!! new "New 9.0"
     `auto_tile`, `auto_title_map`, `line_spans`, `anchor_linenums`, and `line_anchors` were all added in `9.0`.
+
+!!! new "New 9.2"
+    `pygments_lang_class` added in 9.2.
+
+!!! new "New 9.5"
+    `block_lang_class` added in 9.5.

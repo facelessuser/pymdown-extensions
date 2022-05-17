@@ -124,6 +124,10 @@ DEFAULT_CONFIG = {
         False,
         'If set to True, the language name used will be included as a class attached to the element. - Defaults: False'
     ],
+    'block_lang_class': [
+        False,
+        'If set to True, the block language name used will be included as a class attached to the element. - Defaults: False'
+    ],
     '_enabled': [
         True,
         'Used internally to communicate if extension has been explicitly enabled - Default: False'
@@ -230,7 +234,7 @@ class Highlight(object):
         noclasses=False, extend_pygments_lang=None, linenums=None, linenums_special=-1,
         linenums_style='table', linenums_class='linenums', language_prefix='language-',
         code_attr_on_pre=False, auto_title=False, auto_title_map=None, line_spans='',
-        anchor_linenums=False, line_anchors='', pygments_lang_class=False
+        anchor_linenums=False, line_anchors='', pygments_lang_class=False, block_lang_class=False,
     ):
         """Initialize."""
 
@@ -249,6 +253,7 @@ class Highlight(object):
         self.line_anchors = line_anchors
         self.anchor_linenums = anchor_linenums
         self.pygments_lang_class = pygments_lang_class
+        self.block_lang_class = block_lang_class
 
         if self.anchor_linenums and not self.line_anchors:
             self.line_anchors = '__codelineno'
@@ -335,6 +340,8 @@ class Highlight(object):
             lexer, lang_name = self.get_lexer(src, language)
             if self.pygments_lang_class:
                 class_names.insert(0, self.language_prefix + lang_name)
+            if self.block_lang_class:
+                class_names.insert(0, self.language_prefix + language)
             linenums = self.linenums_style if linenums_enabled else False
 
             if class_names:
@@ -497,7 +504,8 @@ class HighlightTreeprocessor(Treeprocessor):
                     code_attr_on_pre=self.config['code_attr_on_pre'],
                     auto_title=self.config['auto_title'],
                     auto_title_map=self.config['auto_title_map'],
-                    pygments_lang_class=self.config['pygments_lang_class']
+                    pygments_lang_class=self.config['pygments_lang_class'],
+                    block_lang_class=self.config['block_lang_class']
                 )
                 placeholder = self.md.htmlStash.store(
                     code.highlight(
