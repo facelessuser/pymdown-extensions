@@ -77,8 +77,8 @@ class SnippetPreprocessor(Preprocessor):
         self.tab_length = md.tab_length
         super(SnippetPreprocessor, self).__init__()
 
-    def get_snippet(self, path):
-        """Get snippet."""
+    def get_snippet_path(self, path):
+        """Get snippet path."""
 
         snippet = None
         for base in self.base_path:
@@ -109,26 +109,24 @@ class SnippetPreprocessor(Preprocessor):
         timeout = None if self.url_timeout == 0 else self.url_timeout
         with request.urlopen(url, timeout=timeout) as response:
 
-            if util.PY39:
-                if response.status >= 400:
-                    raise SnippetMissingError('Cannot download snippet {}'.format(url))
-            else:
-                if response.code >= 400:
-                    raise SnippetMissingError('Cannot download snippet {}'.format(url))
+            # Fail if status is not OK
+            status = response.status if util.PY39 else response.code
+            if status != 200:
+                raise SnippetMissingError('Cannot download snippet {}'.format(url))
 
             # We provide some basic protection against absurdly large files.
             # 32MB is chosen as an arbitrary upper limit. This can be raised if desired.
             length = response.headers.get("content-length")
             if length is None:
                 raise ValueError("Missing content-length header")
+            content_length = int(length)
+
+            if self.url_max_size != 0 and content_length >= self.url_max_size:
+                raise ValueError("refusing to read payloads larger than or equal to {}".format(self.url_max_size))
 
             # Nothing to return
-            length = int(length)
-            if length == 0:
+            if content_length == 0:
                 return ['']
-
-            elif self.url_max_size != 0 and length >= self.url_max_size:
-                raise ValueError("refusing to read payloads larger than or equal to {}".format(self.url_max_size))
 
             # Process lines
             return [l.decode(self.encoding) for l in response.readlines()]
@@ -140,6 +138,7 @@ class SnippetPreprocessor(Preprocessor):
         inline = False
         block = False
         for line in lines:
+            # Check for snippets on line
             inline = False
             m = self.RE_ALL_SNIPPETS.match(line)
             if m:
@@ -147,13 +146,16 @@ class SnippetPreprocessor(Preprocessor):
                     # Don't use inline notation directly under a block.
                     # It's okay if inline is used again in sub file though.
                     continue
+
                 elif m.group('inline_marker'):
                     # Inline
                     inline = True
+
                 else:
                     # Block
                     block = not block
                     continue
+
             elif not block:
                 # Not in snippet, and we didn't find an inline,
                 # so just a normal line
@@ -176,26 +178,36 @@ class SnippetPreprocessor(Preprocessor):
                         # Empty path line, insert a blank line
                         new_lines.append('')
                         continue
+
+                # Ignore commented out lines
                 if path.startswith('; '):
-                    # path stats with '#', consider it commented out.
-                    # We just removing the line.
                     continue
 
-                url = self.url_download and (is_url or path.lower().startswith(('https://', 'http://')))
-                snippet = self.get_snippet(path) if not url else path
+                # Ignore path links if we are in external, downloaded content
+                is_link = path.lower().startswith(('https://', 'http://'))
+                if is_url and not is_link:
+                    continue
+
+                # If this is a link, and we are allowing URLs, set `url` to true.
+                # Make sure we don't process `path` as a local file reference.
+                url = self.url_download and is_link
+                snippet = self.get_snippet_path(path) if not url else path
 
                 if snippet:
+                    # This is in the stack and we don't want an infinite loop!
                     if snippet in self.seen:
-                        # This is in the stack and we don't want an infinite loop!
                         continue
+
+                    # Track this file.
                     if file_name:
-                        # Track this file.
                         self.seen.add(file_name)
 
                     if not url:
+                        # Read file content
                         with codecs.open(snippet, 'r', encoding=self.encoding) as f:
                             s_lines = [l for l in f]
                     else:
+                        # Read URL content
                         try:
                             s_lines = self.download(snippet)
                         except SnippetMissingError:
@@ -203,6 +215,7 @@ class SnippetPreprocessor(Preprocessor):
                                 raise
                             s_lines = []
 
+                    # Process lines looking for more snippets
                     new_lines.extend(
                         [
                             space + l2 for l2 in self.parse_snippets(
@@ -213,8 +226,10 @@ class SnippetPreprocessor(Preprocessor):
                         ]
                     )
 
+                    # Pop the current file name out of the cache
                     if file_name:
                         self.seen.remove(file_name)
+
                 elif self.check_paths:
                     raise SnippetMissingError("Snippet at path %s could not be found" % path)
 
