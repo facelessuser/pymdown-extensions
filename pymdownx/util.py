@@ -29,6 +29,8 @@ elif sys.platform == "darwin":  # pragma: no cover
 else:
     _PLATFORM = "linux"
 
+PY39 = (3, 9) <= sys.version_info
+
 
 def is_win():  # pragma: no cover
     """Is Windows."""

@@ -1,6 +1,7 @@
 """Test cases for Snippets."""
 from .. import util
 import os
+from pymdownx.snippets import SnippetMissingError
 
 BASE = os.path.abspath(os.path.dirname(__file__))
 
@@ -204,7 +205,7 @@ class TestSnippetsMissing(util.MdCase):
     def test_top_level(self):
         """Test top level."""
 
-        with self.assertRaises(OSError):
+        with self.assertRaises(SnippetMissingError):
             self.check_markdown(
                 R'''
                 --8<-- "not-here.txt"
@@ -217,7 +218,7 @@ class TestSnippetsMissing(util.MdCase):
     def test_nested(self):
         """Test nested."""
 
-        with self.assertRaises(OSError):
+        with self.assertRaises(SnippetMissingError):
             self.check_markdown(
                 R'''
                 --8<-- "missing.txt"

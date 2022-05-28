@@ -65,6 +65,7 @@ MagicLink's
 Mar
 MathJax
 Mathjax
+MiB
 MkDocs
 MultiMarkdown
 NONINFRINGEMENT
@@ -171,6 +172,7 @@ lowercased
 lowercases
 macOS
 md
+mebibyte
 metadata
 mkdocs
 mrab
