@@ -305,6 +305,73 @@ class TestURLSnippets(util.MdCase):
         )
 
     @patch('urllib.request.urlopen')
+    def test_url_nested(self, mock_urlopen):
+        """Test nested URLs."""
+
+        cm = MagicMock()
+        cm.status = 200
+        cm.code = 200
+        cm.readlines.side_effect = [[b'content', b'', b'--8<-- "https://test.com/myfile2.md"'], [b'other']]
+        cm.headers = {'content-length': '8'}
+        cm.__enter__.return_value = cm
+        mock_urlopen.return_value = cm
+
+        self.check_markdown(
+            R'''
+            --8<-- "https://test.com/myfile.md"
+            ''',
+            '''
+            <p>content</p>
+            <p>other</p>
+            ''',
+            True
+        )
+
+    @patch('urllib.request.urlopen')
+    def test_url_nested_duplicatqe(self, mock_urlopen):
+        """Test nested duplicate file."""
+
+        cm = MagicMock()
+        cm.status = 200
+        cm.code = 200
+        cm.readlines.side_effect = [[b'content', b'', b'--8<-- "https://test.com/myfile.md"'], [b'other']]
+        cm.headers = {'content-length': '8'}
+        cm.__enter__.return_value = cm
+        mock_urlopen.return_value = cm
+
+        self.check_markdown(
+            R'''
+            --8<-- "https://test.com/myfile.md"
+            ''',
+            '''
+            <p>content</p>
+            ''',
+            True
+        )
+
+    @patch('urllib.request.urlopen')
+    def test_url_nested_file(self, mock_urlopen):
+        """Test nested file in URL."""
+
+        cm = MagicMock()
+        cm.status = 200
+        cm.code = 200
+        cm.readlines.return_value = [b'content', b'', b'--8<-- "b.txt"']
+        cm.headers = {'content-length': '8'}
+        cm.__enter__.return_value = cm
+        mock_urlopen.return_value = cm
+
+        self.check_markdown(
+            R'''
+            --8<-- "https://test.com/myfile.md"
+            ''',
+            '''
+            <p>content</p>
+            ''',
+            True
+        )
+
+    @patch('urllib.request.urlopen')
     def test_missing(self, mock_urlopen):
         """Test missing URL."""
 

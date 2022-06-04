@@ -33,7 +33,7 @@ from . import util
 
 MI = 1024 * 1024  # mebibyte (MiB)
 DEFAULT_URL_SIZE = MI * 32
-DEFAULT_URL_TIMEOUT = 10  # in seconds
+DEFAULT_URL_TIMEOUT = 10.0  # in seconds
 
 
 class SnippetMissingError(Exception):
@@ -134,6 +134,10 @@ class SnippetPreprocessor(Preprocessor):
     def parse_snippets(self, lines, file_name=None, is_url=False):
         """Parse snippets snippet."""
 
+        if file_name:
+            # Track this file.
+            self.seen.add(file_name)
+
         new_lines = []
         inline = False
         block = False
@@ -194,13 +198,10 @@ class SnippetPreprocessor(Preprocessor):
                 snippet = self.get_snippet_path(path) if not url else path
 
                 if snippet:
+
                     # This is in the stack and we don't want an infinite loop!
                     if snippet in self.seen:
                         continue
-
-                    # Track this file.
-                    if file_name:
-                        self.seen.add(file_name)
 
                     if not url:
                         # Read file content
@@ -226,12 +227,12 @@ class SnippetPreprocessor(Preprocessor):
                         ]
                     )
 
-                    # Pop the current file name out of the cache
-                    if file_name:
-                        self.seen.remove(file_name)
-
                 elif self.check_paths:
                     raise SnippetMissingError("Snippet at path %s could not be found" % path)
+
+        # Pop the current file name out of the cache
+        if file_name:
+            self.seen.remove(file_name)
 
         return new_lines
 
@@ -255,13 +256,13 @@ class SnippetExtension(Extension):
             'base_path': [["."], "Base path for snippet paths - Default: [\".\"]"],
             'encoding': ["utf-8", "Encoding of snippets - Default: \"utf-8\""],
             'check_paths': [False, "Make the build fail if a snippet can't be found - Default: \"False\""],
-            'url_download': [False, "Download external URLs as snippets - Default: \"False\""],
-            'url_max_size': [DEFAULT_URL_SIZE, "External URL max size (0 means no limit)- Default: 32 MiB"],
-            'url_timeout': [DEFAULT_URL_TIMEOUT, 'Defualt URL timeout (0 means no timeout) - Default: 10 sec'],
             "auto_append": [
                 [],
                 "A list of snippets (relative to the 'base_path') to auto append to the Markdown content - Default: []"
-            ]
+            ],
+            'url_download': [False, "Download external URLs as snippets - Default: \"False\""],
+            'url_max_size': [DEFAULT_URL_SIZE, "External URL max size (0 means no limit)- Default: 32 MiB"],
+            'url_timeout': [DEFAULT_URL_TIMEOUT, 'Defualt URL timeout (0 means no timeout) - Default: 10 sec']
         }
 
         super(SnippetExtension, self).__init__(*args, **kwargs)
