@@ -10,145 +10,13 @@
 /* Style code blocks to fill full tab,
    but otherwise, pad content. */
 .md-typeset {
-
-  :not(.tabbed-alternate) {
-    &.tabbed-set > .tabbed-content {
-      padding: 0 px2rem(12px);
-      overflow: hidden;
-    }
-
-    &.tabbed-set {
-      > input {
-        &:checked + label {
-          & + .tabbed-content {
-
-            > {
-              pre,
-              .codehilite,
-              .codehilitetable,
-              .highlight,
-              .highlighttable {
-
-                &:only-child {
-
-                  span.filename {
-                    margin-top: 0;
-                  }
-
-                  margin-right: px2rem(-24px);
-                  margin-left: px2rem(-24px);
-                  padding-right: px2rem(12px);
-                  padding-left: px2rem(12px);
-                }
-              }
-
-              mermaid-div {
-                margin-right: px2rem(-24px);
-                margin-left: px2rem(-24px);
-                padding-right: px2rem(12px);
-                padding-left: px2rem(12px);
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-
-  // Styling for alternate by Martin Donath https://github.com/squidfunk
   .tabbed-alternate {
-    --md-indicator-width: 0 !important;
+    &.tabbed-set .tabbed-control {
+      width: px2rem(40px);
 
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    margin: px2em(16px) 0;
-    border-radius: px2rem(2px);
-
-    .tabbed-labels {
-      position: initial !important;
-      display: flex;
-      width: 100%;
-      margin: 0 !important; // Material override
-      padding-left: 0 !important; // Material override
-      overflow: auto;
-      box-shadow: 0 px2rem(-1px) var(--md-default-fg-color--lightest) inset;
-      scrollbar-width: none;
-      scroll-snap-type: none; // Material override
-      scroll-padding-left: 0 !important; // Material override
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
-
-      &::after {
-        padding: 0; // Material override
-      }
-
-      &.tabbed-scroll-left::before {
-        position: absolute;
-        top: px2rem(10px);
-        left: 0;
-        z-index: 2;
-        display: inline-block;
-        width: auto;
-        height: fit-content;
-        padding-right: px2rem(6.4px);
-        color: var(--md-default-fg-color--light);
-        background: linear-gradient(to right, var(--md-default-bg-color) 75%, var(--md-default-bg-color--trans));
-        transform: none;
-        cursor: pointer;
-        transition: unset;
-        content: "\25C0";
-      }
-
-      &.tabbed-scroll-right::after {
-        position: absolute;
-        top: px2rem(10px);
-        right: 0;
-        z-index: 2;
-        display: inline-block;
-        padding-right: 0 !important;
-        padding-left: px2rem(6.4px);
-        color: var(--md-default-fg-color--light);
-        background: linear-gradient(to right, var(--md-default-bg-color--trans), var(--md-default-bg-color) 25%);
-        cursor: pointer;
-        content: "\25B6";
-      }
-
-      > label {
-        width: auto;
-        padding: px2em(12px, 12.8px) 1.25em px2em(10px, 12.8px);
-        color: var(--md-default-fg-color--light);
-        font-weight: 700;
-        font-size: px2rem(12.8px);
-        white-space: nowrap;
-        border-bottom: px2rem(2px) solid transparent;
-        scroll-snap-align: start;
-        border-top-left-radius: px2rem(2px);
-        border-top-right-radius: px2rem(2px);
-        cursor: pointer;
-        transition: background-color 250ms, color 250ms;
-
-        &:hover {
-          color: var(--md-accent-fg-color);
-        }
-      }
-    }
-
-    .tabbed-content {
-      display: block;
-      width: 100%;
-    }
-
-    .tabbed-block {
-      display: none;
-    }
-
-    @for $index from 1 through 20 {
-      input:nth-child(#{$index}):checked ~ .tabbed-content > :nth-child(#{$index}) {
-        display: block;
+      &[hidden] {
+        width: px2rem(24px);
+        opacity: 0;
       }
     }
 
@@ -187,38 +55,33 @@
   }
 }
 
-@media screen {
-  @for $index from 1 through 20 {
-    .tabbed-alternate input:nth-child(#{$index}):checked ~ .tabbed-labels > :nth-child(#{$index}) {
-      color: var(--md-accent-fg-color);
-      border-color: var(--md-accent-fg-color);
-    }
-  }
-}
-
-@media print {
-  .tabbed-labels {
-    display: contents;
+/* Ignore mobile overflow styling that extends the tab bar */
+@include break-to-device(mobile) {
+  [dir=ltr] .md-content__inner > .tabbed-set .tabbed-labels {
+    padding-left: 0;
   }
 
-  @for $index from 1 through 20 {
-    .tabbed-labels > label:nth-child(#{$index}) {
-      order: #{$index};
-    }
-  }
+  .md-content__inner > .tabbed-set .tabbed-labels {
+    max-width: 100%;
+    margin: 0;
+    padding-inline-start: 0;
+    scroll-padding-inline-start: 0;
 
-  .tabbed-alternate {
-    .tabbed-content {
-      display: contents;
+    &::after {
+      padding-inline-end: 0;
+      content: none;
     }
-    .tabbed-block {
-      display: block;
-    }
-  }
 
-  @for $index from 1 through 20 {
-    .tabbed-alternate .tabbed-block:nth-child(#{$index}) {
-      order: #{$index};
+    // Tabbed control previous
+    ~ .tabbed-control--prev {
+      margin-inline-start: 0;
+      padding-inline-start: 0;
+    }
+
+    // Tabbed control next
+    ~ .tabbed-control--next {
+      margin-inline-end: 0;
+      padding-inline-end: 0;
     }
   }
 }

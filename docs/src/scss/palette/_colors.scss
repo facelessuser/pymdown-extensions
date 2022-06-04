@@ -61,6 +61,13 @@
     --md-default-bg-color--lightest:     #{transparentize($drac-default-bg, 0.88)};
     --md-default-bg-color--trans:        #{transparentize($drac-default-bg, 1)};
 
+    // General text
+    --md-text-color: var(--md-default-fg-color);
+    --md-typeset-color: var(--md-default-fg-color);
+
+    // Admonition colors
+    --md-admonition-fg-color: var(--md-default-fg-color);
+
     // Code colors
     --md-code-fg-color: #{$drac-fg};
     --md-code-bg-color: #{$drac-bg};
@@ -107,7 +114,7 @@
 
     // Keys colors
     --md-typeset-kbd-color: var(--md-default-fg-color--lightest);
-    --md-typeset-kbd-border-color: var(--md-default-bg-color--darkest);
+    --md-typeset-kbd-border-color: var(--md-default-bg-color--ultra-dark);
     --md-typeset-kbd-accent-color: var(--md-default-fg-color--lighter);
   }
 
