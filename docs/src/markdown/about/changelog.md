@@ -8,6 +8,7 @@
 - **NEW**: Snippets: Snippets will only swallow missing file errors (unless `check_paths` is enabled), all other errors
   will be propagated up.
 - **NEW**: Snippets: When a file or URL is missing, raise `SnippetMissingError` instead of `IOError`.
+- **FIX**: Snippets: Small issues related to recursive inclusion of snippets.
 
 ## 9.4
 
