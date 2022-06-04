@@ -24,9 +24,20 @@ DEALINGS IN THE SOFTWARE.
 """
 from markdown import Extension
 from markdown.preprocessors import Preprocessor
+import functools
+import urllib.request as request
 import re
 import codecs
 import os
+from . import util
+
+MI = 1024 * 1024  # mebibyte (MiB)
+DEFAULT_URL_SIZE = MI * 32
+DEFAULT_URL_TIMEOUT = 10.0  # in seconds
+
+
+class SnippetMissingError(Exception):
+    """Snippet missing exception."""
 
 
 class SnippetPreprocessor(Preprocessor):
@@ -60,11 +71,14 @@ class SnippetPreprocessor(Preprocessor):
         self.encoding = config.get('encoding')
         self.check_paths = config.get('check_paths')
         self.auto_append = config.get('auto_append')
+        self.url_download = config['url_download']
+        self.url_max_size = config['url_max_size']
+        self.url_timeout = config['url_timeout']
         self.tab_length = md.tab_length
         super(SnippetPreprocessor, self).__init__()
 
-    def get_snippet(self, path):
-        """Get snippet."""
+    def get_snippet_path(self, path):
+        """Get snippet path."""
 
         snippet = None
         for base in self.base_path:
@@ -84,13 +98,51 @@ class SnippetPreprocessor(Preprocessor):
                             break
         return snippet
 
-    def parse_snippets(self, lines, file_name=None):
+    @functools.lru_cache()
+    def download(self, url):
+        """
+        Actually download the snippet pointed to by the passed URL.
+
+        The most recently used files are kept in a cache until the next reset.
+        """
+
+        timeout = None if self.url_timeout == 0 else self.url_timeout
+        with request.urlopen(url, timeout=timeout) as response:
+
+            # Fail if status is not OK
+            status = response.status if util.PY39 else response.code
+            if status != 200:
+                raise SnippetMissingError('Cannot download snippet {}'.format(url))
+
+            # We provide some basic protection against absurdly large files.
+            # 32MB is chosen as an arbitrary upper limit. This can be raised if desired.
+            length = response.headers.get("content-length")
+            if length is None:
+                raise ValueError("Missing content-length header")
+            content_length = int(length)
+
+            if self.url_max_size != 0 and content_length >= self.url_max_size:
+                raise ValueError("refusing to read payloads larger than or equal to {}".format(self.url_max_size))
+
+            # Nothing to return
+            if content_length == 0:
+                return ['']
+
+            # Process lines
+            return [l.decode(self.encoding) for l in response.readlines()]
+
+    def parse_snippets(self, lines, file_name=None, is_url=False):
         """Parse snippets snippet."""
+
+        if file_name:
+            # Track this file.
+            self.seen.add(file_name)
 
         new_lines = []
         inline = False
         block = False
         for line in lines:
+            # Check for snippets on line
             inline = False
             m = self.RE_ALL_SNIPPETS.match(line)
             if m:
@@ -98,13 +150,16 @@ class SnippetPreprocessor(Preprocessor):
                     # Don't use inline notation directly under a block.
                     # It's okay if inline is used again in sub file though.
                     continue
+
                 elif m.group('inline_marker'):
                     # Inline
                     inline = True
+
                 else:
                     # Block
                     block = not block
                     continue
+
             elif not block:
                 # Not in snippet, and we didn't find an inline,
                 # so just a normal line
@@ -127,36 +182,57 @@ class SnippetPreprocessor(Preprocessor):
                         # Empty path line, insert a blank line
                         new_lines.append('')
                         continue
+
+                # Ignore commented out lines
                 if path.startswith('; '):
-                    # path stats with '#', consider it commented out.
-                    # We just removing the line.
                     continue
 
-                snippet = self.get_snippet(path)
+                # Ignore path links if we are in external, downloaded content
+                is_link = path.lower().startswith(('https://', 'http://'))
+                if is_url and not is_link:
+                    continue
+
+                # If this is a link, and we are allowing URLs, set `url` to true.
+                # Make sure we don't process `path` as a local file reference.
+                url = self.url_download and is_link
+                snippet = self.get_snippet_path(path) if not url else path
+
                 if snippet:
+
+                    # This is in the stack and we don't want an infinite loop!
                     if snippet in self.seen:
-                        # This is in the stack and we don't want an infinite loop!
                         continue
-                    if file_name:
-                        # Track this file.
-                        self.seen.add(file_name)
-                    try:
+
+                    if not url:
+                        # Read file content
                         with codecs.open(snippet, 'r', encoding=self.encoding) as f:
                             s_lines = [l for l in f]
-                    except Exception:  # pragma: no cover
-                        # Try not to fail Markdown parsing if reading the file fails.
-                        # This could be a file permission issue, or any number of things,
-                        # we are only interested in alerting the user about whether the file
-                        # exists, and only if they've enabled that feature.
-                        s_lines = []
+                    else:
+                        # Read URL content
+                        try:
+                            s_lines = self.download(snippet)
+                        except SnippetMissingError:
+                            if self.check_paths:
+                                raise
+                            s_lines = []
 
+                    # Process lines looking for more snippets
                     new_lines.extend(
-                        [space + l2 for l2 in self.parse_snippets([l.rstrip('\r\n') for l in s_lines], snippet)]
+                        [
+                            space + l2 for l2 in self.parse_snippets(
+                                [l.rstrip('\r\n') for l in s_lines],
+                                snippet,
+                                is_url=url
+                            )
+                        ]
                     )
-                    if file_name:
-                        self.seen.remove(file_name)
+
                 elif self.check_paths:
-                    raise IOError("Snippet at path %s could not be found" % path)
+                    raise SnippetMissingError("Snippet at path %s could not be found" % path)
+
+        # Pop the current file name out of the cache
+        if file_name:
+            self.seen.remove(file_name)
 
         return new_lines
 
@@ -179,11 +255,14 @@ class SnippetExtension(Extension):
         self.config = {
             'base_path': [["."], "Base path for snippet paths - Default: [\".\"]"],
             'encoding': ["utf-8", "Encoding of snippets - Default: \"utf-8\""],
-            'check_paths': [False, "Make the build fail if a snippet can't be found - Default: \"false\""],
+            'check_paths': [False, "Make the build fail if a snippet can't be found - Default: \"False\""],
             "auto_append": [
                 [],
                 "A list of snippets (relative to the 'base_path') to auto append to the Markdown content - Default: []"
-            ]
+            ],
+            'url_download': [False, "Download external URLs as snippets - Default: \"False\""],
+            'url_max_size': [DEFAULT_URL_SIZE, "External URL max size (0 means no limit)- Default: 32 MiB"],
+            'url_timeout': [DEFAULT_URL_TIMEOUT, 'Defualt URL timeout (0 means no timeout) - Default: 10 sec']
         }
 
         super(SnippetExtension, self).__init__(*args, **kwargs)
@@ -196,6 +275,11 @@ class SnippetExtension(Extension):
         config = self.getConfigs()
         snippet = SnippetPreprocessor(config, md)
         md.preprocessors.register(snippet, "snippet", 32)
+
+    def reset(self):
+        """Reset."""
+
+        self.md.preprocessors['snippet'].download.cache_clear()
 
 
 def makeExtension(*args, **kwargs):
