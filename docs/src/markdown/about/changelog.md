@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.7
+
+- **NEW**: Tabbed: Add new syntax to allow forcing a specific tab to be select by default.
+
 ## 9.6
 
 - **NEW**: Highlight: Allow greater granularity of specifying where language guessing takes place via `guess_lang`

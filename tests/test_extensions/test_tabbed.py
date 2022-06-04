@@ -65,7 +65,7 @@ class TestLegacyTab(util.MdCase):
         """Test tabbed."""
 
         self.check_markdown(
-            r'''
+            R'''
             === "**Tab**"
                 Some *content*
 
@@ -198,6 +198,64 @@ class TestLegacyTab(util.MdCase):
             </div>
             </div>
             <p>Content</p>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_tabbed_select(self):
+        """Test selecting a tab."""
+
+        self.check_markdown(
+            r'''
+            === "Tab 1"
+                content
+
+            ===+ "Tab 2"
+                content
+
+            === "Tab 3"
+                content
+            ''',
+            r'''
+            <div class="tabbed-set" data-tabs="1:3"><input id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab 1</label><div class="tabbed-content">
+            <p>content</p>
+            </div>
+            <input checked="checked" id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Tab 2</label><div class="tabbed-content">
+            <p>content</p>
+            </div>
+            <input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">Tab 3</label><div class="tabbed-content">
+            <p>content</p>
+            </div>
+            </div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_tabbed_select_mulitiple(self):
+        """Test selecting multiple tabs."""
+
+        self.check_markdown(
+            r'''
+            === "Tab 1"
+                content
+
+            ===+ "Tab 2"
+                content
+
+            ===+ "Tab 3"
+                content
+            ''',
+            r'''
+            <div class="tabbed-set" data-tabs="1:3"><input id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab 1</label><div class="tabbed-content">
+            <p>content</p>
+            </div>
+            <input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Tab 2</label><div class="tabbed-content">
+            <p>content</p>
+            </div>
+            <input checked="checked" id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">Tab 3</label><div class="tabbed-content">
+            <p>content</p>
+            </div>
+            </div>
             ''',  # noqa: E501
             True
         )
