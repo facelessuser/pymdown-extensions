@@ -53,6 +53,9 @@ If either of these is set to zero, the limits will be ignored.
     One thing to note though, if a snippet is included via a URL, all nested snippets within it must also be URLs. URL
     snippets are not allowed to reference local snippet files.
 
+!!! new "New 9.5"
+    URL snippet support was introduced in 9.5.
+
 ## Snippets Notation
 
 There are two modes of inserting snippets: single line and block. Single line mode accepts a single file name, and block
