@@ -52,7 +52,7 @@ DEFAULT_CONFIG = {
         'Default: True'
     ],
     'guess_lang': [
-        False,
+        0,
         "Automatic language detection - Default: False"
     ],
     'css_class': [
@@ -484,7 +484,7 @@ class HighlightTreeprocessor(Treeprocessor):
 
                 self.ext.pygments_code_block += 1
                 code = Highlight(
-                    guess_lang=self.config['guess_lang'],
+                    guess_lang=(self.config['guess_lang'] == True) or (self.config['guess_lang'] == 'block'),
                     pygments_style=self.config['pygments_style'],
                     use_pygments=self.config['use_pygments'],
                     noclasses=self.config['noclasses'],

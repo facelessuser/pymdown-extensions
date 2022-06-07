@@ -228,6 +228,32 @@ class TestInlineHiliteGuess(util.MdCase):
         )
 
 
+class TestInlineHiliteGuessInline(util.MdCase):
+    """Test inline highlight with guessing set to be inline only."""
+
+    extension = [
+        'pymdownx.highlight',
+        'pymdownx.inlinehilite',
+    ]
+    extension_configs = {
+        'pymdownx.highlight': {
+            'guess_lang': 'inline'
+        },
+        'pymdownx.inlinehilite': {
+            'css_class': 'inlinehilite',
+            'style_plain_text': True
+        }
+    }
+
+    def test_guessing_inline(self):
+        """Ensure guessing can be enabled for inline only."""
+
+        self.check_markdown(
+            r'`import module`.',
+            r'<p><code class="inlinehilite"><span class="kn">import</span> <span class="nn">module</span></code>.</p>'
+        )
+
+
 class TestInlineHiliteCodeHilite(util.MdCase):
     """Test inline highlight with CodeHilite."""
 

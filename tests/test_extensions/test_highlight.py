@@ -31,6 +31,35 @@ class TestHighlightGuess(util.MdCase):
         )
 
 
+class TestHighlightGuessBlock(util.MdCase):
+    """Test that highlighting works with guessing for block."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'guess_lang': "block"
+        }
+    }
+
+    def test_guess(self):
+        """Test guessing for block."""
+
+        self.check_markdown(
+            r'''
+            ```
+            import test
+            test.test()
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
+            </code></pre></div>
+            ''',
+            True
+        )
+
+
 class TestHighlightAutoTitle(util.MdCase):
     """Test title cases."""
 

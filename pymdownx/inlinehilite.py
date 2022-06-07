@@ -126,7 +126,7 @@ class InlineHilitePattern(InlineProcessor):
             self.css_class = css_class if css_class else config['css_class']
 
             self.extend_pygments_lang = config.get('extend_pygments_lang', None)
-            self.guess_lang = config['guess_lang']
+            self.guess_lang = (config['guess_lang'] == True) or (config['guess_lang'] == 'inline')
             self.pygments_style = config['pygments_style']
             self.use_pygments = config['use_pygments']
             self.noclasses = config['noclasses']
