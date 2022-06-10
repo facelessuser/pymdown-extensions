@@ -291,7 +291,7 @@ class Highlight(object):
             lexer = None
 
         if lexer is None:
-            if self.guess_lang or (self.guess_lang == 'inline' if inline else self.guess_lang == 'block'):
+            if (self.guess_lang is True) or (self.guess_lang == 'inline' if inline else self.guess_lang == 'block'):
                 try:
                     lexer = guess_lexer(src)
                     name = lexer.aliases[0]
