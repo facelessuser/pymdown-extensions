@@ -41,7 +41,7 @@ class TestHighlightGuessBlock(util.MdCase):
         }
     }
 
-    def test_guess(self):
+    def test_guess_block(self):
         """Test guessing for block."""
 
         self.check_markdown(
@@ -55,6 +55,18 @@ class TestHighlightGuessBlock(util.MdCase):
             <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
             <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div>
+            ''',
+            True
+        )
+
+    def test_no_guess_inline(self):
+        """Test inline code is not language guessed"""
+        self.check_markdown(
+            r'''
+            `int i = std::numeric_limits<int>::min();`
+            ''',
+            '''
+            <p><code>int i = std::numeric_limits&lt;int&gt;::min();</code></p>
             ''',
             True
         )

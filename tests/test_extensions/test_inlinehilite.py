@@ -234,6 +234,7 @@ class TestInlineHiliteGuessInline(util.MdCase):
     extension = [
         'pymdownx.highlight',
         'pymdownx.inlinehilite',
+        'pymdownx.superfences'
     ]
     extension_configs = {
         'pymdownx.highlight': {
@@ -251,6 +252,34 @@ class TestInlineHiliteGuessInline(util.MdCase):
         self.check_markdown(
             r'`import module`.',
             r'<p><code class="inlinehilite"><span class="kn">import</span> <span class="nn">module</span></code>.</p>'
+        )
+
+    def test_no_guessing_block(self):
+        """Ensure block is not guessed when set as inline only."""
+
+        self.check_markdown(
+            r'''
+            ```
+            <!DOCTYPE html>
+            <html>
+            <body>
+            <h1>My great test</h1>
+            <p>Thou shalt be re-educated through labour should this test ever fails.</p>
+            </body>
+            </html>
+            ```
+            ''',
+            r'''
+            <div class="highlight"><pre><span></span><code>&lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+            &lt;body&gt;
+            &lt;h1&gt;My great test&lt;/h1&gt;
+            &lt;p&gt;Thou shalt be re-educated through labour should this test ever fails.&lt;/p&gt;
+            &lt;/body&gt;
+            &lt;/html&gt;
+            </code></pre></div>
+            ''',
+            True
         )
 
 
