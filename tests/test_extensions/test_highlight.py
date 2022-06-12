@@ -60,7 +60,7 @@ class TestHighlightGuessBlock(util.MdCase):
         )
 
     def test_no_guess_inline(self):
-        """Test inline code is not language guessed"""
+        """Test inline code is not language guessed."""
         self.check_markdown(
             r'''
             `int i = std::numeric_limits<int>::min();`
