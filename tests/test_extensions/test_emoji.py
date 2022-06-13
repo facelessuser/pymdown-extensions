@@ -3,6 +3,7 @@ from .. import util
 import pymdownx.emoji as emoji
 import warnings
 import markdown
+import pytest
 
 
 def _old_style_index():
@@ -23,6 +24,7 @@ def _new_style_index(options, md):
     return index
 
 
+@pytest.mark.filterwarnings("ignore::DeprecationWarning")
 class TestEmojiOldIndex(util.MdCase):
     """Test old style index."""
 

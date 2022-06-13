@@ -2,6 +2,9 @@
 """Test slugs."""
 from .. import util
 from pymdownx import slugs
+import pytest
+
+pytestmark = pytest.mark.filterwarnings('ignore::DeprecationWarning')
 
 
 class TestUslugify(util.MdCase):
