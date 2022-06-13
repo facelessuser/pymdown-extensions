@@ -52,7 +52,7 @@ DEFAULT_CONFIG = {
         'Default: True'
     ],
     'guess_lang': [
-        False,
+        0,
         "Automatic language detection - Default: False"
     ],
     'css_class': [
@@ -274,7 +274,7 @@ class Highlight(object):
 
         return self.extend_pygments_lang.get(language.lower(), (language, {}))
 
-    def get_lexer(self, src, language):
+    def get_lexer(self, src, language, inline):
         """Get the Pygments lexer."""
 
         name = language
@@ -291,7 +291,7 @@ class Highlight(object):
             lexer = None
 
         if lexer is None:
-            if self.guess_lang:
+            if (self.guess_lang is True) or (self.guess_lang == 'inline' if inline else self.guess_lang == 'block'):
                 try:
                     lexer = guess_lexer(src)
                     name = lexer.aliases[0]
@@ -332,7 +332,7 @@ class Highlight(object):
                 raise RuntimeError('Pymdownx Highlight requires at least Pygments 2.12+ if enabling Pygments')
 
             # Setup language lexer.
-            lexer, lang_name = self.get_lexer(src, language)
+            lexer, lang_name = self.get_lexer(src, language, inline)
             if self.pygments_lang_class:
                 class_names.insert(0, self.language_prefix + lang_name)
             linenums = self.linenums_style if linenums_enabled else False
