@@ -22,6 +22,7 @@ All changes Copyright 2008-2014 The Python Markdown Project
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 """
 import re
+from typing import Type
 from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
 import xml.etree.ElementTree as etree
@@ -483,7 +484,8 @@ class HighlightTreeprocessor(Treeprocessor):
             if len(block) == 1 and block[0].tag == 'code':
 
                 self.ext.pygments_code_block += 1
-                code = Highlight(
+                highlight_class : Type[Highlight] = self.ext.get_pymdownx_highlighter()
+                code = highlight_class(
                     guess_lang=self.config['guess_lang'],
                     pygments_style=self.config['pygments_style'],
                     use_pygments=self.config['use_pygments'],
