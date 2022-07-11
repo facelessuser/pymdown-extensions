@@ -267,7 +267,8 @@ if (!('mermaidConfig' in window)) {
       startOnLoad: false,
       theme: "default",
       flowchart: {
-        htmlLabels: false
+        htmlLabels: false,
+        useMaxWidth: false
       },
       er: {
         useMaxWidth: false
@@ -277,6 +278,18 @@ if (!('mermaidConfig' in window)) {
         noteFontWeight: "14px",
         actorFontSize: "14px",
         messageFontSize: "16px"
+      },
+      journey: {
+        useMaxWidth: false
+      },
+      pie: {
+        useMaxWidth: false
+      },
+      gantt: {
+        useMaxWidth: false
+      },
+      gitGraph: {
+        useMaxWidth: false
       }
     },
 
@@ -284,7 +297,8 @@ if (!('mermaidConfig' in window)) {
       startOnLoad: false,
       theme: "dark",
       flowchart: {
-        htmlLabels: false
+        htmlLabels: false,
+        useMaxWidth: false
       },
       er: {
         useMaxWidth: false
@@ -294,6 +308,18 @@ if (!('mermaidConfig' in window)) {
         noteFontWeight: "14px",
         actorFontSize: "14px",
         messageFontSize: "16px"
+      },
+      journey: {
+        useMaxWidth: false
+      },
+      pie: {
+        useMaxWidth: false
+      },
+      gantt: {
+        useMaxWidth: false
+      },
+      gitGraph: {
+        useMaxWidth: false
       }
     }
   }
