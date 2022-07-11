@@ -99,7 +99,7 @@ export default className => {
 
   // Find all of our Mermaid sources and render them.
   const blocks = document.querySelectorAll(`pre.${className}, diagram-div`)
-  const surrogate = document.querySelector("html")
+  const surrogate = document.querySelector("html body")
   for (let i = 0; i < blocks.length; i++) {
     const block = blocks[i]
     const parentEl = (block.tagName.toLowerCase() === "diagram-div") ?
