@@ -33,9 +33,6 @@ class Details(Directive):
         # Create Detail element
         el = etree.SubElement(parent, 'details')
 
-        # Get the type
-        t = self.options.get('type', '').lower()
-
         # Is it open?
         args = {}
         if self.options.get('open', 'false').lower() == 'true':
@@ -47,8 +44,6 @@ class Details(Directive):
 
         # Compile and add classes
         classes = [c for c in self.options.get('class', '').split(' ') if c]
-        if t:
-            classes.insert(0, t)
         if classes:
             el.set('class', ' '.join(classes))
 

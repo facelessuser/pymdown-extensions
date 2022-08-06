@@ -21,6 +21,12 @@ class Admonition(Directive):
 
     NAME = 'admonition'
 
+    @classmethod
+    def on_validate(cls, args):
+        """Validate arguments."""
+
+        return bool(args)
+
     def on_create(self, parent):
         """Create the element."""
 
@@ -28,21 +34,16 @@ class Admonition(Directive):
         el = etree.SubElement(parent, 'div')
 
         # Create the title
-        t = self.options.get('type', '').lower()
-        title = self.args[0] if self.args and self.args[0] else t.title()
-        if not title:
-            title = 'Attention'
+        title = self.args[0]
         ad_title = etree.SubElement(el, 'p', {'class': 'admonition-title'})
         ad_title.text = title
 
         # Set classes
         classes = []
         for c in self.options.get('class', '').split(' '):
-            c = c.strip()
             if c:
                 classes.append(c)
-        if t != 'admonition':
-            classes.insert(0, t)
+
         classes.insert(0, 'admonition')
         el.set('class', ' '.join(classes))
         return el
@@ -53,104 +54,67 @@ class Note(Admonition):
 
     NAME = 'note'
 
+    @classmethod
+    def on_validate(cls, args):
+        """Validate arguments."""
+
+        return True
+
     def config(self, args, **options):
         """Parse configuration."""
 
+        if 'class' in options:
+            options['class'] = '{} {}'.format(self.NAME, options['class'].strip())
+        else:
+            options['class'] = self.NAME
         super().config(args, **options)
-        self.options['type'] = 'note'
+        if not self.args:
+            self.args.append(self.NAME.title())
 
 
-class Attention(Admonition):
+class Attention(Note):
     """Attention."""
 
     NAME = 'attention'
 
-    def config(self, args, **options):
-        """Parse configuration."""
 
-        super().config(args, **options)
-        self.options['type'] = 'attention'
-
-
-class Caution(Admonition):
+class Caution(Note):
     """Caution."""
 
     NAME = 'caution'
 
-    def config(self, args, **options):
-        """Parse configuration."""
 
-        super().config(args, **options)
-        self.options['type'] = 'caution'
-
-
-class Danger(Admonition):
+class Danger(Note):
     """Danger."""
 
     NAME = 'danger'
 
-    def config(self, args, **options):
-        """Parse configuration."""
 
-        super().config(args, **options)
-        self.options['type'] = 'danger'
-
-
-class Error(Admonition):
+class Error(Note):
     """Error."""
 
     NAME = 'error'
 
-    def config(self, args, **options):
-        """Parse configuration."""
 
-        super().config(args, **options)
-        self.options['type'] = 'error'
-
-
-class Tip(Admonition):
+class Tip(Note):
     """Tip."""
 
     NAME = 'tip'
 
-    def config(self, args, **options):
-        """Parse configuration."""
 
-        super().config(args, **options)
-        self.options['type'] = 'tip'
-
-
-class Hint(Admonition):
+class Hint(Note):
     """Hint."""
 
     NAME = 'hint'
 
-    def config(self, args, **options):
-        """Parse configuration."""
 
-        super().config(args, **options)
-        self.options['type'] = 'hint'
-
-
-class Important(Admonition):
+class Important(Note):
     """Important."""
 
     NAME = 'danger'
 
-    def config(self, args, **options):
-        """Parse configuration."""
 
-        super().config(args, **options)
-        self.options['type'] = 'danger'
-
-
-class Warn(Admonition):
+class Warn(Note):
     """Warning."""
 
     NAME = 'warning'
-
-    def config(self, args, **options):
-        """Parse configuration."""
-
-        super().config(args, **options)
-        self.options['type'] = 'warning'
