@@ -147,6 +147,7 @@ facelessuser
 formatter
 formatter's
 formatters
+frontmatter
 gantt
 gemoji
 gfm
@@ -156,6 +157,7 @@ highlighter's
 hostnames
 html
 indepth
+indexable
 injectable
 inline
 inlined

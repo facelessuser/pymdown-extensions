@@ -73,12 +73,12 @@ class Directive:
 
     def __init__(self, length, tracker, md):
         """
-        Intitialize.
+        Initialize.
 
         - `store` allows us to store content until all content is found.
         - `length` specifies the length (number of colons) that the header used
         - `tracker` is a persistent storage for the life of the current Markdown page.
-          It is a dictionary where we can keep references until the parent etension is reset.
+          It is a dictionary where we can keep references until the parent extension is reset.
         - `md` is the Markdown object just in case access is needed to something we
           didn't think about.
 
@@ -141,7 +141,7 @@ class Figure(Directive):
         return bool(args)
 
     def on_add(self, el):
-        """Return the figcaption."""
+        """Return the `figcaption`."""
 
         return list(el)[-1]
 
@@ -312,7 +312,7 @@ class Tab(Directive):
     NAME = 'tab'
 
     def __init__(self, length, tracker, md):
-        """Intitialize."""
+        """Initialize."""
 
         super().__init__(length, tracker, md)
         if 'tab_group_count' not in tracker:
@@ -325,7 +325,7 @@ class Tab(Directive):
         return bool(args)
 
     def last_child(self, parent):
-        """Return the last child of an etree element."""
+        """Return the last child of an `etree` element."""
 
         if len(parent):
             return parent[-1]
@@ -507,7 +507,7 @@ class DirectiveProcessor(BlockProcessor):
         super().__init__(parser)
 
         self.md = md
-        # The directives classes indexible by name
+        # The directives classes indexable by name
         self.directives = {d.NAME: d for d in directives}
         # Persistent storage across a document for directives
         self.trackers = {}
@@ -561,7 +561,7 @@ class DirectiveProcessor(BlockProcessor):
                     m = match
                     break
 
-            # Seperate everything from before the "end" and after
+            # Separate everything from before the "end" and after
             if m:
                 temp = block[:m.start(1)]
                 if temp:
@@ -615,7 +615,7 @@ class DirectiveProcessor(BlockProcessor):
             bad.extend(blocks[:])
 
         # Attempt to parse the config.
-        # If successfull, augment the blocks and return the config.
+        # If successful, augment the blocks and return the config.
         if good:
             frontmatter = get_frontmatter('\n'.join(good))
             if frontmatter is not None:
@@ -738,14 +738,14 @@ class DirectiveProcessor(BlockProcessor):
 
 
 class HRProcessor1(HRProcessor):
-    """ Process Horizontal Rules. """
+    """Process Horizontal Rules."""
 
     RE = r'^[ ]{0,3}(?=(?P<atomicgroup>(-+[ ]{1,2}){3,}|(_+[ ]{1,2}){3,}|(\*+[ ]{1,2}){3,}))(?P=atomicgroup)[ ]*$'
     SEARCH_RE = re.compile(RE, re.MULTILINE)
 
 
 class HRProcessor2(HRProcessor):
-    """ Process Horizontal Rules. """
+    """Process Horizontal Rules."""
 
     RE = r'^[ ]{0,3}(?=(?P<atomicgroup>(-+){3,}|(_+){3,}|(\*+){3,}))(?P=atomicgroup)[ ]*$'
     SEARCH_RE = re.compile(RE, re.MULTILINE)
