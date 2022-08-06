@@ -1,11 +1,11 @@
 """Directives."""
 from markdown import Extension
-from markdown.blockprocessors import BlockProcessor
+from markdown.blockprocessors import BlockProcessor, HRProcessor
 from collections import namedtuple
 import xml.etree.ElementTree as etree
 import re
 
-YAML = re.compile(r'^((-{2})\n(.*?)(?<=\n)\2(?:\n|$))', re.DOTALL)
+YAML = re.compile(r'^((-{3})\n(.*?)(?<=\n)\2(?:\n|$))', re.DOTALL)
 
 RE_REMOVE_DIV = re.compile(r'^\s*<div[^>]+>(.*?)</div>\s*$', re.DOTALL)
 
@@ -19,10 +19,10 @@ RE_END = re.compile(
     r'(?m)^[ ]{0,3}(:{3,})[ ]*(?:\n|$)'
 )
 
-RE_FRONTMATTER_START = re.compile(r'(?m)\s*^[ ]{0,3}(-{2})[ ]*(?:\n|$)')
+RE_FRONTMATTER_START = re.compile(r'(?m)\s*^[ ]{0,3}(-{3})[ ]*(?:\n|$)')
 
 RE_FRONTMATTER_END = re.compile(
-    r'(?m)^[ ]{0,3}(-{2})[ ]*(?:\n|$)'
+    r'(?m)^[ ]{0,3}(-{3})[ ]*(?:\n|$)'
 )
 
 RE_NAME = re.compile(
@@ -737,6 +737,20 @@ class DirectiveProcessor(BlockProcessor):
                     break
 
 
+class HRProcessor1(HRProcessor):
+    """ Process Horizontal Rules. """
+
+    RE = r'^[ ]{0,3}(?=(?P<atomicgroup>(-+[ ]{1,2}){3,}|(_+[ ]{1,2}){3,}|(\*+[ ]{1,2}){3,}))(?P=atomicgroup)[ ]*$'
+    SEARCH_RE = re.compile(RE, re.MULTILINE)
+
+
+class HRProcessor2(HRProcessor):
+    """ Process Horizontal Rules. """
+
+    RE = r'^[ ]{0,3}(?=(?P<atomicgroup>(-+){3,}|(_+){3,}|(\*+){3,}))(?P=atomicgroup)[ ]*$'
+    SEARCH_RE = re.compile(RE, re.MULTILINE)
+
+
 class DirectiveExtension(Extension):
     """Add generic Blocks extension."""
 
@@ -777,6 +791,9 @@ class DirectiveExtension(Extension):
         self.extension = DirectiveProcessor(md.parser, md, directives)
         # We want to be right after list indentations are processed
         md.parser.blockprocessors.register(self.extension, "directives", 89)
+        # Monkey patch Markdown so we can use `---` for configuration
+        md.parser.blockprocessors.register(HRProcessor1(md.parser), 'hr', 50)
+        md.parser.blockprocessors.register(HRProcessor2(md.parser), 'hr2', 29.9999)
 
     def reset(self):
         """Reset."""
