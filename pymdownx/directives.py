@@ -129,6 +129,43 @@ class Directive:
         return parent
 
 
+class Figure(Directive):
+    """Figure capture directive."""
+
+    NAME = 'figure'
+
+    @classmethod
+    def on_validate(cls, args):
+        """Validate arguments."""
+
+        return bool(args)
+
+    def on_add(self, el):
+        """Return the figcaption."""
+
+        return list(el)[-1]
+
+    def on_create(self, parent):
+        """Create the element."""
+
+        height = self.options.get('height', '').replace('"', '&quote;')
+        width = self.options.get('width', '').replace('"', '&quote;')
+        alt = self.options.get('alt', '').replace('"', '&quote;')
+
+        attributes = {"src": self.args[0].replace('"', '&quote;')}
+        if height:
+            attributes['height'] = height
+        if width:
+            attributes['width'] = width
+        if alt:
+            attributes['alt'] = alt
+        fig = etree.SubElement(parent, 'figure')
+        etree.SubElement(fig, 'img', attributes)
+        etree.SubElement(fig, 'figcaption')
+
+        return fig
+
+
 class Admonition(Directive):
     """Admonition."""
 
@@ -288,7 +325,7 @@ class Tab(Directive):
         return bool(args)
 
     def last_child(self, parent):
-        """ Return the last child of an etree element. """
+        """Return the last child of an etree element."""
 
         if len(parent):
             return parent[-1]
@@ -703,16 +740,43 @@ class DirectiveProcessor(BlockProcessor):
 class DirectiveExtension(Extension):
     """Add generic Blocks extension."""
 
+    def __init__(self, *args, **kwargs):
+        """Initialize."""
+
+        self.config = {
+            'directives': [[], "Directives to load, if not defined, the default ones will be loaded."]
+        }
+
+        super().__init__(*args, **kwargs)
+
     def extendMarkdown(self, md):
         """Add Blocks to Markdown instance."""
         md.registerExtension(self)
 
-        self.extension = DirectiveProcessor(
-            md.parser, md,
-            [Admonition, Details, HTML, Note, Attention, Caution, Danger, Error, Tip, Hint, Important, Warn, Tab]
-        )
+        config = self.getConfigs()
+        directives = config['directives']
 
-        md.parser.blockprocessors.register(self.extension, "directives", 85)
+        if not directives:
+            directives = [
+                Admonition,
+                Details,
+                HTML,
+                Note,
+                Attention,
+                Caution,
+                Danger,
+                Error,
+                Tip,
+                Hint,
+                Important,
+                Warn,
+                Tab,
+                Figure
+            ]
+
+        self.extension = DirectiveProcessor(md.parser, md, directives)
+        # We want to be right after list indentations are processed
+        md.parser.blockprocessors.register(self.extension, "directives", 89)
 
     def reset(self):
         """Reset."""
