@@ -154,6 +154,7 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.saneheaders:
+  - pymdownx.directives:
 
 extra:
   social:
