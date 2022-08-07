@@ -1,6 +1,6 @@
 """Details."""
 import xml.etree.ElementTree as etree
-from .directive import Directive
+from .directive import Directive, to_classes, to_html_attribute, to_string, to_flag
 
 
 class Details(Directive):
@@ -21,24 +21,24 @@ class Details(Directive):
 
     NAME = 'details'
 
-    @classmethod
-    def on_validate(cls, args):
-        """Validate arguments."""
-
-        return bool(args)
+    ARGUMENTS = {'required': 1, 'parsers': [to_string]}
+    OPTIONS = {
+        'open': [[], to_flag],
+        'class': [[], to_classes],
+        'id': ['', to_html_attribute]
+    }
 
     def on_create(self, parent):
         """Create the element."""
 
         # Is it open?
         attributes = {}
-        if self.options.get('open', 'false').lower() == 'true':
+        if self.options['open']:
             attributes['open'] = 'open'
 
-        # Compile and add classes
-        classes = [c for c in self.options.get('class', '').split(' ') if c]
-        if classes:
-            attributes['class'] = ' '.join(classes)
+        # Set classes
+        if self.options['class']:
+            attributes['class'] = ' '.join(self.options['class'])
 
         # Create Detail element
         el = etree.SubElement(parent, 'details', attributes)
