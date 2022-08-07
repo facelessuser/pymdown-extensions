@@ -212,38 +212,52 @@ class Directive(metaclass=ABCMeta):
                         try:
                             v = parser(v)
                         except Exception:
-                            continue
+                            # Invalid parameter value
+                            return False
                 else:
-                    continue
+                    # Unrecognized parameter name
+                    return False
 
             # Spec explicitly handles parameter
             else:
-                default, parser = spec[k]
+                parser = spec[k][1]
                 if parser is not None:
                     try:
                         v = parser(v)
                     except Exception:
-                        v = default
+                        # Invalid parameter value
+                        return False
             parsed[k] = v
 
         # Add parsed options to options
         self.options = parsed
+
+        return self.on_parse()
+
+    def on_parse(self):
+        """
+        Handle parsing event.
+
+        Return true if everything is okay.
+        """
+
         return True
 
     @abstractmethod
     def on_create(self, parent):
-        """On create event."""
+        """Create the needed element and return it."""
 
         return parent
 
     def on_end(self, el):
-        """Perform action on end."""
+        """Perform any action on end."""
 
     def on_add(self, parent):
         """
         Adjust where the content is added.
 
         Is there a sub-element where this content should go?
+        This runs before processing every new block.
         """
 
         return parent

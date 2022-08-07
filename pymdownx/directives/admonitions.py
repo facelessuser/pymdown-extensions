@@ -49,18 +49,16 @@ class Note(Admonition):
     """Note."""
 
     NAME = 'note'
-    ARGUMENTS = {'optional': 1, 'parse': ['', to_string]}
+    ARGUMENTS = {'optional': 1, 'parsers': [to_string]}
 
-    def parse_config(self, args, **options):
-        """Parse configuration."""
+    def on_parse(self):
+        """Handle on parse event."""
 
-        if 'class' in options:
-            options['class'] = '{} {}'.format(self.NAME, options['class'].strip())
-        else:
-            options['class'] = self.NAME
-        super().parse_config(args, **options)
+        if self.NAME not in self.options['class']:
+            self.options['class'].insert(0, self.NAME)
         if not self.args:
             self.args.append(self.NAME.title())
+        return True
 
 
 class Attention(Note):
