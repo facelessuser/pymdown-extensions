@@ -35,10 +35,20 @@ class Figure(Directive):
         'id': ['', to_html_attribute]
     }
 
+    def on_init(self):
+        """On initialize."""
+
+        self.content = 0
+
     def on_add(self, el):
         """Return the `figcaption`."""
 
-        return list(el)[-1]
+        self.content += 1
+
+        if self.content == 1:
+            return etree.SubElement(el, 'figcaption')
+
+        return el
 
     def on_create(self, parent):
         """Create the element."""
@@ -63,6 +73,5 @@ class Figure(Directive):
 
         fig = etree.SubElement(parent, 'figure', attributes2)
         etree.SubElement(fig, 'img', attributes)
-        etree.SubElement(fig, 'figcaption')
 
         return fig

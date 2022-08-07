@@ -332,30 +332,32 @@ class DirectiveProcessor(BlockProcessor):
         """Parse the blocks."""
 
         # Get the target element and parse
-        target = entry.directive.on_add(entry.el)
-        tag = target.tag
-        is_block = tag in self.block_tags
-        atomic = directive.is_atomic()
-        is_atomic = tag in self.raw_tags if atomic is None else atomic
 
-        # We should revert fenced code in spans or atomic tags.
-        # Make sure atomic tags have content wrapped as `AtomicString`.
-        if is_atomic or not is_block:
-            text = target.text
-            if text:
-                text += '\n\n'.join(revert_fenced_code(self.md, blocks))
+        for b in blocks:
+            target = entry.directive.on_add(entry.el)
+            tag = target.tag
+            is_block = tag in self.block_tags
+            atomic = directive.is_atomic()
+            is_atomic = tag in self.raw_tags if atomic is None else atomic
+
+            # We should revert fenced code in spans or atomic tags.
+            # Make sure atomic tags have content wrapped as `AtomicString`.
+            if is_atomic or not is_block:
+                text = target.text
+                if text:
+                    text += '\n\n'.join(revert_fenced_code(self.md, [b]))
+                else:
+                    text = '\n\n'.join(revert_fenced_code(self.md, [b]))
+                target.text = mutil.AtomicString(text) if is_atomic else text
+
+            # Block tags should have content go through the normal block processor
             else:
-                text = '\n\n'.join(revert_fenced_code(self.md, blocks))
-            target.text = mutil.AtomicString(text) if is_atomic else text
-
-        # Block tags should have content go through the normal block processor
-        else:
-            self.parser.state.set('directives')
-            working = self.working
-            self.working = entry
-            self.parser.parseBlocks(target, blocks)
-            self.parser.state.reset()
-            self.working = working
+                self.parser.state.set('directives')
+                working = self.working
+                self.working = entry
+                self.parser.parseChunk(target, b)
+                self.parser.state.reset()
+                self.working = working
 
     def run(self, parent, blocks):
         """Convert to details/summary block."""
