@@ -1,1 +1,2 @@
 Markdown>=3.2
+pyyaml

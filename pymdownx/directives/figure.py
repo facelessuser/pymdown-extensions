@@ -1,6 +1,6 @@
 """Figures."""
 import xml.etree.ElementTree as etree
-from .directive import Directive
+from .directive import Directive, to_html_attribute, to_classes, to_string
 
 
 class Figure(Directive):
@@ -25,11 +25,15 @@ class Figure(Directive):
 
     NAME = 'figure'
 
-    @classmethod
-    def on_validate(cls, args):
-        """Validate arguments."""
-
-        return bool(args)
+    ARGUMENTS = {'required': 1, 'parsers': [to_string]}
+    OPTIONS = {
+        'height': ['', to_html_attribute],
+        'width': ['', to_html_attribute],
+        'alt': ['', to_html_attribute],
+        'title': ['', to_html_attribute],
+        'class': [[], to_classes],
+        'id': ['', to_html_attribute]
+    }
 
     def on_add(self, el):
         """Return the `figcaption`."""
@@ -39,22 +43,17 @@ class Figure(Directive):
     def on_create(self, parent):
         """Create the element."""
 
-        height = self.options.get('height', '').replace('"', '&quote;')
-        width = self.options.get('width', '').replace('"', '&quote;')
-        alt = self.options.get('alt', '').replace('"', '&quote;')
-        title = self.options.get('title', '').replace('"', '&quote;')
-        tag_id = self.options.get('id', '').replace('"', '&quote;')
-        classes = [c for c in self.options.get('class', '').split(' ') if c]
-
         attributes = {"src": self.args[0].replace('"', '&quote;')}
-        if height:
-            attributes['height'] = height
-        if width:
-            attributes['width'] = width
-        if alt:
-            attributes['alt'] = alt
-        if title:
-            attributes['title'] = title
+        if self.options['height']:
+            attributes['height'] = self.options['height']
+        if self.options['width']:
+            attributes['width'] = self.options['width']
+        if self.options['alt']:
+            attributes['alt'] = self.options['alt']
+        if self.options['title']:
+            attributes['title'] = self.options['title']
+        classes = self.options['class']
+        tag_id = self.options['id']
 
         attributes2 = {}
         if tag_id:

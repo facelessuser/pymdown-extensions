@@ -1,6 +1,6 @@
 """Admonitions."""
 import xml.etree.ElementTree as etree
-from .directive import Directive
+from .directive import Directive, to_string, to_classes, to_html_attribute
 
 
 class Admonition(Directive):
@@ -20,12 +20,11 @@ class Admonition(Directive):
     """
 
     NAME = 'admonition'
-
-    @classmethod
-    def on_validate(cls, args):
-        """Validate arguments."""
-
-        return bool(args)
+    ARGUMENTS = {'required': 1, 'parsers': [to_string]}
+    OPTIONS = {
+        'class': [[], to_classes],
+        'id': ['', to_html_attribute]
+    }
 
     def on_create(self, parent):
         """Create the element."""
@@ -39,12 +38,9 @@ class Admonition(Directive):
         ad_title.text = title
 
         # Set classes
-        classes = []
-        for c in self.options.get('class', '').split(' '):
-            if c:
-                classes.append(c)
-
+        classes = self.options['class']
         classes.insert(0, 'admonition')
+
         el.set('class', ' '.join(classes))
         return el
 
@@ -53,21 +49,16 @@ class Note(Admonition):
     """Note."""
 
     NAME = 'note'
+    ARGUMENTS = {'optional': 1, 'parse': ['', to_string]}
 
-    @classmethod
-    def on_validate(cls, args):
-        """Validate arguments."""
-
-        return True
-
-    def config(self, args, **options):
+    def parse_config(self, args, **options):
         """Parse configuration."""
 
         if 'class' in options:
             options['class'] = '{} {}'.format(self.NAME, options['class'].strip())
         else:
             options['class'] = self.NAME
-        super().config(args, **options)
+        super().parse_config(args, **options)
         if not self.args:
             self.args.append(self.NAME.title())
 

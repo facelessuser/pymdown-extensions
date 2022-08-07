@@ -1,6 +1,6 @@
 """Tabs."""
 import xml.etree.ElementTree as etree
-from .directive import Directive
+from .directive import Directive, to_flag, to_classes, to_html_attribute, to_string
 
 
 class Tabs(Directive):
@@ -21,6 +21,13 @@ class Tabs(Directive):
     """
 
     NAME = 'tab'
+
+    ARGUMENTS = {'required': 1, 'parsers': [to_string]}
+    OPTIONS = {
+        'new': [False, to_flag],
+        'class': [[], to_classes],
+        'id': ['', to_html_attribute]
+    }
 
     def __init__(self, length, tracker, md):
         """Initialize."""
@@ -56,12 +63,12 @@ class Tabs(Directive):
     def on_create(self, parent):
         """Create the element."""
 
-        new_group = self.options.get('new', 'false').lower() == 'true'
+        new_group = self.options['new']
         title = self.args[0] if self.args and self.args[0] else ''
         sibling = self.last_child(parent)
         tabbed_set = 'tabbed-set tabbed-alternate'
-        classes = [c for c in self.options.get('classes', '').split(' ') if c]
-        tag_id = self.options.get('id', '')
+        classes = self.options['class']
+        tag_id = self.options['id']
 
         if (
             sibling and sibling.tag.lower() == 'div' and

@@ -1,6 +1,6 @@
 """HTML."""
 import xml.etree.ElementTree as etree
-from .directive import Directive
+from .directive import Directive, to_ternary, to_html_attribute, to_tag
 import re
 
 RE_NAME = re.compile(
@@ -34,6 +34,12 @@ class HTML(Directive):
     NAME = 'html'
     TAG = re.compile('^[a-z][a-z0-9-]*$', re.I)
 
+    ARGUMENTS = {'required': 1, 'parsers': [to_tag]}
+    OPTIONS = {
+        'markdown': [None, to_ternary],
+        '': ['', to_html_attribute]
+    }
+
     def __init__(self, length, tracker, md):
         """Initialize."""
 
@@ -43,26 +49,8 @@ class HTML(Directive):
     def is_atomic(self):
         """Check if this is atomic."""
 
-        return self.atomic if self.markdown is None else not self.markdown
-
-    @classmethod
-    def on_validate(cls, args):
-        """Validate arguments."""
-
-        # Reject HTML names that are not valid
-        return cls.TAG.match(args.strip()) is not None
-
-    def config(self, args, **options):
-        """Parse configuration."""
-
-        super().config(args, **options)
-        markdown = options.get('markdown', '').lower()
-        if markdown == 'true':
-            self.markdown = True
-        elif markdown == 'false':
-            self.markdown = False
-        else:
-            self.markdown = None
+        markdown = self.options['markdown']
+        return self.atomic if markdown is None else not markdown
 
     def on_create(self, parent):
         """Create the element."""
@@ -70,13 +58,13 @@ class HTML(Directive):
         attributes = {}
 
         for k, v in self.options.items():
-            if k.lower() == 'markdown':
+            if k == 'markdown':
                 continue
+
             # Sanitize attribute names
             name = RE_NAME.sub('_', k)
             # Quote values
-            value = v.replace('"', '&quote;')
-            attributes[name] = value
+            attributes[name] = v
 
         # Create element
         return etree.SubElement(parent, self.args[0].lower(), attributes)
