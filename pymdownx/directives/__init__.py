@@ -26,7 +26,7 @@ RE_START = re.compile(
 )
 
 RE_END = re.compile(
-    r'(?m)^[ ]{0,3}(:{3,})[ ]*(?:\n|$)'
+    r'(?m)(?:^|\n)[ ]{0,3}(:{3,})[ ]*(?:\n|$)'
 )
 
 # Frontmatter patterns
@@ -220,13 +220,13 @@ class DirectiveProcessor(BlockProcessor):
 
             # Separate everything from before the "end" and after
             if m:
-                temp = block[:m.start(1)]
+                temp = block[:m.start(0)]
                 if temp:
                     good.append(temp)
                 end = True
 
                 # Since we found our end, everything after is unwanted
-                temp = block[m.end(1):]
+                temp = block[m.end(0):]
                 if temp:
                     bad.append(temp)
                 bad.extend(blocks[e + 1:])
@@ -250,7 +250,6 @@ class DirectiveProcessor(BlockProcessor):
 
         # Empty block, nothing to do
         if not block:
-            blocks.insert(0, block)
             return {}
 
         # See if we find a start to the config
@@ -263,10 +262,10 @@ class DirectiveProcessor(BlockProcessor):
         begin = start.end(0)
         m = RE_FRONTMATTER_END.search(block, begin)
         if m:
-            good.append(block[start.start(0):m.end(1)])
+            good.append(block[start.start(0):m.end(0)])
 
             # Since we found our end, everything after is unwanted
-            temp = block[m.end(1):]
+            temp = block[m.end(0):]
             if temp:
                 bad.append(temp)
             bad.extend(blocks[:])

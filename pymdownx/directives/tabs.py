@@ -70,7 +70,6 @@ class Tabs(Directive):
         ):
             first = False
             tab_group = sibling
-            sibling.set('__directive__', '')
 
             index = [index for index, _ in enumerate(tab_group.findall('input'), 1)][-1]
             labels = None
