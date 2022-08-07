@@ -29,18 +29,14 @@ class Tabs(Directive):
         'id': ['', to_html_attribute]
     }
 
-    def __init__(self, length, tracker, md):
-        """Initialize."""
+    def on_init(self):
+        """Handle initialization."""
 
-        super().__init__(length, tracker, md)
-        if 'tab_group_count' not in tracker:
-            tracker['tab_group_count'] = 0
+        # Track tab group count across the entire page.
+        if 'tab_group_count' not in self.tracker:
+            self.tracker['tab_group_count'] = 0
 
-    @classmethod
-    def on_validate(cls, args):
-        """Validate arguments."""
-
-        return bool(args)
+        self.tab_content = None
 
     def last_child(self, parent):
         """Return the last child of an `etree` element."""
@@ -53,12 +49,16 @@ class Tabs(Directive):
     def on_add(self, parent):
         """Adjust where the content is added."""
 
-        for d in parent.findall('div'):
-            c = d.attrib['class']
-            if c == 'tabbed-content' or c.startswith('tabbed-content '):
-                return list(d)[-1]
+        if self.tab_content is None:
+            for d in parent.findall('div'):
+                c = d.attrib['class']
+                if c == 'tabbed-content' or c.startswith('tabbed-content '):
+                    self.tab_content = list(d)[-1]
+                    return self.tab_content
 
-        return parent
+            return parent
+        else:
+            return self.tab_content
 
     def on_create(self, parent):
         """Create the element."""

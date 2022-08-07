@@ -143,6 +143,10 @@ class Directive(metaclass=ABCMeta):
         self.md = md
         self.args = []
         self.options = {}
+        self.on_init()
+
+    def on_init(self):
+        """On initialize."""
 
     def is_atomic(self):
         """Check if this is atomic."""
