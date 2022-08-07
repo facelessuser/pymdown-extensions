@@ -30,28 +30,32 @@ RE_END = re.compile(
 )
 
 # Frontmatter patterns
-RE_FRONTMATTER_START = re.compile(r'(?m)\s*^[ ]{0,3}(-{3})[ ]*(?:\n|$)')
+RE_FRONTMATTER_START = re.compile(r'(?m)^[ ]{0,3}(-{3})[ ]*(?:\n|$)')
 
 RE_FRONTMATTER_END = re.compile(
     r'(?m)^[ ]{0,3}(-{3})[ ]*(?:\n|$)'
 )
 
+HTML_ATTR_NAME = (
+    r"[A-Z_a-z\u00c0-\u00d6\u00d8-\u00f6\u00f8-\u02ff"
+    r"\u0370-\u037d\u037f-\u1fff\u200c-\u200d"
+    r"\u2070-\u218f\u2c00-\u2fef\u3001-\ud7ff"
+    r"\uf900-\ufdcf\ufdf0-\ufffd"
+    r"][A-Z_a-z\u00c0-\u00d6\u00d8-\u00f6\u00f8-\u02ff"
+    r"\u0370-\u037d\u037f-\u1fff\u200c-\u200d"
+    r"\u2070-\u218f\u2c00-\u2fef\u3001-\ud7ff"
+    r"\uf900-\ufdcf\ufdf0-\ufffd"
+    r"\:\-\.0-9\u00b7\u0300-\u036f\u203f-\u2040]*"
+)
+
 RE_KEY_VALUE = re.compile(
     # Key should at least support any HTML tag name
-    r"""(?x)
-    ^[ ]{0,3}
-    (?P<key>
-        [A-Z_a-z\u00c0-\u00d6\u00d8-\u00f6\u00f8-\u02ff
-        \u0370-\u037d\u037f-\u1fff\u200c-\u200d
-        \u2070-\u218f\u2c00-\u2fef\u3001-\ud7ff
-        \uf900-\ufdcf\ufdf0-\ufffd
-        ][A-Z_a-z\u00c0-\u00d6\u00d8-\u00f6\u00f8-\u02ff
-        \u0370-\u037d\u037f-\u1fff\u200c-\u200d
-        \u2070-\u218f\u2c00-\u2fef\u3001-\ud7ff
-        \uf900-\ufdcf\ufdf0-\ufffd
-        \:\-\.0-9\u00b7\u0300-\u036f\u203f-\u2040]*
-    ):\s+(?P<value>.*)
-    """
+    r"^[ ]{{0,3}}(?P<key>{}):\s+(?P<value>.*)".format(HTML_ATTR_NAME)
+)
+
+RE_KEY_VALUE_SHORT = re.compile(
+    # Key should at least support any HTML tag name
+    r"(?m)^[ ]{{0,3}}:(?!:{{2}})((?P<key>{}):\s+(?P<value>.*)(?:\n|$))".format(HTML_ATTR_NAME)
 )
 
 RE_MORE_VALUE = re.compile(
@@ -154,12 +158,10 @@ class DirectiveProcessor(BlockProcessor):
             ['address', 'dd', 'dt', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'legend', 'li', 'p', 'summary', 'td', 'th']
         )
         # Block-level tags which never get their content parsed.
-        self.raw_block_tags = set(['canvas', 'math', 'option', 'pre', 'script', 'style', 'textarea'])
-        self.raw_span_tags = set(['code'])
+        self.raw_tags = set(['canvas', 'math', 'option', 'pre', 'script', 'style', 'textarea'])
         # Block-level tags in which the content gets parsed as blocks
-        self.block_tags = set(self.block_level_tags) - (self.span_tags | self.raw_block_tags | self.empty_tags)
+        self.block_tags = set(self.block_level_tags) - (self.span_tags | self.raw_tags | self.empty_tags)
         self.span_and_blocks_tags = self.block_tags | self.span_tags
-        self.raw_tags = self.raw_block_tags | self.raw_span_tags
 
         super().__init__(parser)
 
@@ -252,23 +254,35 @@ class DirectiveProcessor(BlockProcessor):
         if not block:
             return {}
 
-        # See if we find a start to the config
+        # More formal YAML-ish config
         start = RE_FRONTMATTER_START.match(block.strip('\n'))
-        if start is None:
-            blocks.insert(0, block)
-            return {}
+        if start is not None:
+            # Look for the end of the config
+            begin = start.end(0)
+            m = RE_FRONTMATTER_END.search(block, begin)
+            if m:
+                good.append(block[start.start(0):m.end(0)])
 
-        # Look for the end of the config
-        begin = start.end(0)
-        m = RE_FRONTMATTER_END.search(block, begin)
-        if m:
-            good.append(block[start.start(0):m.end(0)])
+                # Since we found our end, everything after is unwanted
+                temp = block[m.end(0):]
+                if temp:
+                    bad.append(temp)
+                bad.extend(blocks[:])
 
-            # Since we found our end, everything after is unwanted
-            temp = block[m.end(0):]
-            if temp:
-                bad.append(temp)
-            bad.extend(blocks[:])
+        # Shorthand config
+        else:
+            start = 0
+            m = RE_KEY_VALUE_SHORT.match(block, start)
+            while m:
+                good.append(m.group(1).strip())
+                start = m.end(0)
+                m = RE_KEY_VALUE_SHORT.match(block, start)
+
+            if good:
+                bad.append(block[start:])
+                bad.extend(blocks[:])
+                good.insert(0, '---')
+                good.append('---')
 
         # Attempt to parse the config.
         # If successful, augment the blocks and return the config.
