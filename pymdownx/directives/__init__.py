@@ -2,7 +2,6 @@
 from markdown import Extension
 from markdown.blockprocessors import BlockProcessor, HRProcessor
 from markdown import util as mutil
-from collections import namedtuple
 import xml.etree.ElementTree as etree
 import re
 from .admonitions import Admonition, Note, Attention, Caution, Danger, Error, Tip, Hint, Important, Warn
@@ -10,6 +9,7 @@ from .tabs import Tabs
 from .details import Details
 from .figure import Figure
 from .html import HTML
+import yaml
 
 # Fenced block placeholder for SuperFences
 FENCED_BLOCK_RE = re.compile(
@@ -30,40 +30,49 @@ RE_END = re.compile(
 )
 
 # Frontmatter patterns
-RE_FRONTMATTER_START = re.compile(r'(?m)^[ ]{0,3}(-{3})[ ]*(?:\n|$)')
+RE_YAML_START = re.compile(r'(?m)^[ ]{0,3}(-{3})[ ]*(?:\n|$)')
 
-RE_FRONTMATTER_END = re.compile(
+RE_YAML_END = re.compile(
     r'(?m)^[ ]{0,3}(-{3})[ ]*(?:\n|$)'
 )
 
-HTML_ATTR_NAME = (
-    r"[A-Z_a-z\u00c0-\u00d6\u00d8-\u00f6\u00f8-\u02ff"
-    r"\u0370-\u037d\u037f-\u1fff\u200c-\u200d"
-    r"\u2070-\u218f\u2c00-\u2fef\u3001-\ud7ff"
-    r"\uf900-\ufdcf\ufdf0-\ufffd"
-    r"][A-Z_a-z\u00c0-\u00d6\u00d8-\u00f6\u00f8-\u02ff"
-    r"\u0370-\u037d\u037f-\u1fff\u200c-\u200d"
-    r"\u2070-\u218f\u2c00-\u2fef\u3001-\ud7ff"
-    r"\uf900-\ufdcf\ufdf0-\ufffd"
-    r"\:\-\.0-9\u00b7\u0300-\u036f\u203f-\u2040]*"
-)
+RE_YAML_LINE = re.compile(r'^[ ]{0,3}:(?!:{2,})')
 
-RE_KEY_VALUE = re.compile(
-    # Key should at least support any HTML tag name
-    r"^[ ]{{0,3}}(?P<key>{}):\s+(?P<value>.*)".format(HTML_ATTR_NAME)
-)
 
-RE_KEY_VALUE_SHORT = re.compile(
-    # Key should at least support any HTML tag name
-    r"(?m)^[ ]{{0,3}}:(?!:{{2}})((?P<key>{}):\s+(?P<value>.*)(?:\n|$))".format(HTML_ATTR_NAME)
-)
+class DirectiveEntry:
+    """Track directive entries."""
 
-RE_MORE_VALUE = re.compile(
-    r'^[ ]{4,}(?P<value>.*)'
-)
+    def __init__(self, directive, el, parent):
+        """Directive entry."""
 
-# Track directive entries
-DBlock = namedtuple("DBlock", "directive el parent")
+        self.directive = directive
+        self.el = el
+        self.parent = parent
+        self.hungry = False
+
+
+def yaml_load(stream, loader=yaml.SafeLoader):
+    """
+    Custom YAML loader.
+
+    Load all strings as Unicode.
+    http://stackoverflow.com/a/2967461/3609487
+    """
+
+    def construct_yaml_str(self, node):
+        """Override the default string handling function to always return Unicode objects."""
+
+        return self.construct_scalar(node)
+
+    class Loader(loader):
+        """Custom Loader."""
+
+    Loader.add_constructor(
+        'tag:yaml.org,2002:str',
+        construct_yaml_str
+    )
+
+    return yaml.load(stream, Loader)
 
 
 def get_frontmatter(string):
@@ -73,25 +82,14 @@ def get_frontmatter(string):
     YAML-ish key value pairs.
     """
 
-    frontmatter = {}
-    last_key = ''
+    frontmatter = None
 
-    for line in string.strip().split('\n')[1:-1]:
-        pair = RE_KEY_VALUE.match(line)
-        if pair:
-            key = pair.group('key')
-            last_key = key
-            value = pair.group('value').strip()
-            frontmatter[key] = value
-            continue
-
-        if last_key:
-            more = RE_MORE_VALUE.match(line)
-            if more:
-                frontmatter[last_key] += ' ' + more.group('value').strip()
-                continue
-
-        return None
+    try:
+        frontmatter = yaml_load(string)
+        if not isinstance(frontmatter, dict):
+            frontmatter = None
+    except Exception:
+        pass
 
     return frontmatter
 
@@ -172,13 +170,12 @@ class DirectiveProcessor(BlockProcessor):
         self.trackers = {}
         # Currently queued up directives
         self.stack = []
-        # Idle directives that are hungry for more blocks.
-        self.hungry = []
         # When set, the assigned directive is actively parsing blocks.
         self.working = None
         # Cached the found parent when testing
         # so we can quickly retrieve it when running
         self.cached_parent = None
+        self.cached_directive = None
 
     def test(self, parent, block):
         """Test to see if we should process the block."""
@@ -189,17 +186,32 @@ class DirectiveProcessor(BlockProcessor):
 
         # Is this the start of a new directive?
         m = RE_START.search(block)
-        d = self.directives.get(m.group(2).strip()) if m else None
-        if d and d.on_validate(m.group(3).strip()):
-            return True
+        if m:
+            # Create a directive object
+            name = m.group(2).lower()
+            if name in self.directives:
+                directive = self.directives[name](len(m.group(1)), self.trackers[name], self.md)
+                # Remove first line
+                block = block[m.end():]
 
+                # Get frontmatter and argument(s)
+                the_rest = []
+                options = self.split_header(block, the_rest)
+                arguments = m.group(3)
+
+                # Update the config for the directive
+                status = directive.parse_config(arguments, **options)
+
+                if status:
+                    self.cached_directive = (directive, the_rest[0] if the_rest else '')
+
+                return status
         return False
 
     def _reset(self):
         """Reset."""
 
         self.stack.clear()
-        self.hungry.clear()
         self.working = None
         self.trackers = {d: {} for d in self.directives.keys()}
 
@@ -255,13 +267,13 @@ class DirectiveProcessor(BlockProcessor):
             return {}
 
         # More formal YAML-ish config
-        start = RE_FRONTMATTER_START.match(block.strip('\n'))
+        start = RE_YAML_START.match(block.strip('\n'))
         if start is not None:
             # Look for the end of the config
             begin = start.end(0)
-            m = RE_FRONTMATTER_END.search(block, begin)
+            m = RE_YAML_END.search(block, begin)
             if m:
-                good.append(block[start.start(0):m.end(0)])
+                good.append(block[start.end(0):m.start(0)])
 
                 # Since we found our end, everything after is unwanted
                 temp = block[m.end(0):]
@@ -269,20 +281,20 @@ class DirectiveProcessor(BlockProcessor):
                     bad.append(temp)
                 bad.extend(blocks[:])
 
-        # Shorthand config
+        # Shorthand form
         else:
-            start = 0
-            m = RE_KEY_VALUE_SHORT.match(block, start)
-            while m:
-                good.append(m.group(1).strip())
-                start = m.end(0)
-                m = RE_KEY_VALUE_SHORT.match(block, start)
-
-            if good:
-                bad.append(block[start:])
-                bad.extend(blocks[:])
-                good.insert(0, '---')
-                good.append('---')
+            lines = block.split('\n')
+            for e, line in enumerate(lines):
+                m = RE_YAML_LINE.match(line)
+                if m:
+                    good.append(line[m.end(0):])
+                elif not good:
+                    break
+                else:
+                    temp = '\n'.join(lines[e:])
+                    if temp:
+                        bad.append(temp)
+                    bad.extend(blocks[:])
 
         # Attempt to parse the config.
         # If successful, augment the blocks and return the config.
@@ -308,8 +320,8 @@ class DirectiveProcessor(BlockProcessor):
 
         temp = parent
         while temp:
-            for hungry in self.hungry:
-                if hungry.parent is temp:
+            for entry in self.stack:
+                if entry.hungry and entry.parent is temp:
                     self.cached_parent = temp
                     return temp
             if temp is not None:
@@ -353,10 +365,17 @@ class DirectiveProcessor(BlockProcessor):
         if temp is not None:
             parent = temp
 
-        # Is this the start of a directive?
-        m = RE_START.search(blocks[0])
+        # Did we find a new directive?
+        if self.cached_directive:
+            # Get cached directive and reset the cache
+            directive, block = self.cached_directive
+            self.cached_directive = None
 
-        if m:
+            # Discard first block as we've already processed what we need from it
+            blocks.pop(0)
+            if block:
+                blocks.insert(0, block)
+
             # Ensure a "tight" parent list item is converted to "loose".
             if parent and parent.tag in ('li', 'dd'):
                 text = parent.text
@@ -365,26 +384,11 @@ class DirectiveProcessor(BlockProcessor):
                     p = etree.SubElement(parent, 'p')
                     p.text = text
 
-            # Create a directive object
-            name = m.group(2).lower()
-            directive = self.directives[name](len(m.group(1)), self.trackers[name], self.md)
-
-            # Remove first line
-            block = blocks.pop(0)
-            block = block[m.end():]
-
-            # Get frontmatter and argument(s)
-            options = self.split_header(block, blocks)
-            arguments = m.group(3).strip()
-
-            # Update the config for the directive
-            directive.config(arguments, **options)
-
             # Create the block element
             el = directive.on_create(parent)
 
             # Push a directive block entry on the stack.
-            self.stack.append(DBlock(directive, el, parent))
+            self.stack.append(DirectiveEntry(directive, el, parent))
 
             # Split out blocks we care about
             ours, end = self.split_end(blocks, directive.length)
@@ -398,28 +402,24 @@ class DirectiveProcessor(BlockProcessor):
             if end:
                 del self.stack[index]
             else:
-                self.hungry.append(self.stack[index])
+                self.stack[index].hungry = True
 
         else:
-            for r in range(len(self.hungry)):
-                hungry = self.hungry[r]
-                if parent is hungry.parent:
-                    # Get the current directive
-                    directive, el, _ = hungry
-
+            for r in range(len(self.stack)):
+                entry = self.stack[r]
+                if entry.hungry and parent is entry.parent:
                     # Find and remove end from the blocks
-                    ours, end = self.split_end(blocks, directive.length)
+                    ours, end = self.split_end(blocks, entry.directive.length)
 
                     # Get the target element and parse
-                    self.parse_blocks(directive, ours, hungry)
+                    entry.hungry = False
+                    self.parse_blocks(entry.directive, ours, entry)
 
                     # Clean up if we completed the directive
                     if end:
-                        for r in range(len(self.stack)):
-                            if self.stack[r].el is el:
-                                del self.stack[r]
-                                del self.hungry[r]
-                                break
+                        del self.stack[r]
+                    else:
+                        entry.hungry = True
 
                     break
 
