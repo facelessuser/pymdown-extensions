@@ -29,7 +29,7 @@ aware of when using these extensions.
 
 :::{admonition} Arithmatex
 ---
-type: summary
+class: abstract
 ---
 
 [Arithmatex](extensions/arithmatex.md) is an extension that preserves LaTeX math equations ($\frac{\sqrt x}{y^3}$)
@@ -74,7 +74,7 @@ type: abstract
 
 :::{details} Click Me!
 ---
-type: note
+class: note
 ---
 
 Thanks!

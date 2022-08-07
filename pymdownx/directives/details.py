@@ -30,21 +30,21 @@ class Details(Directive):
     def on_create(self, parent):
         """Create the element."""
 
-        # Create Detail element
-        el = etree.SubElement(parent, 'details')
-
         # Is it open?
-        args = {}
+        attributes = {}
         if self.options.get('open', 'false').lower() == 'true':
-            args['open'] = 'open'
-
-        # Create the summary
-        summary = etree.SubElement(el, 'summary')
-        summary.text = self.args[0]
+            attributes['open'] = 'open'
 
         # Compile and add classes
         classes = [c for c in self.options.get('class', '').split(' ') if c]
         if classes:
-            el.set('class', ' '.join(classes))
+            attributes['class'] = ' '.join(classes)
+
+        # Create Detail element
+        el = etree.SubElement(parent, 'details', attributes)
+
+        # Create the summary
+        summary = etree.SubElement(el, 'summary')
+        summary.text = self.args[0]
 
         return el
