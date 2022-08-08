@@ -407,6 +407,8 @@ class DirectiveProcessor(BlockProcessor):
             # Clean up directive if we are at the end
             # or add it to the hungry list.
             if end:
+                # TODO: Do we need this event?
+                directive.on_end(el)
                 del self.stack[index]
             else:
                 self.stack[index].hungry = True
@@ -420,10 +422,12 @@ class DirectiveProcessor(BlockProcessor):
 
                     # Get the target element and parse
                     entry.hungry = False
-                    self.parse_blocks(entry.directive, ours, entry)
+                    self.parse_blocks(entry.directive, ours, entry, end)
 
                     # Clean up if we completed the directive
                     if end:
+                        # TODO: Do we need this event?
+                        entry.directive.on_end(entry.el)
                         del self.stack[r]
                     else:
                         entry.hungry = True
