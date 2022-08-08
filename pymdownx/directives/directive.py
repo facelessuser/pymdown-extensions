@@ -57,7 +57,7 @@ def to_string(value):
     """Convert to a string value."""
 
     if isinstance(value, str):
-        return value
+        return value.strip()
 
     if isinstance(value, (int, float, bool)):
         return str(value)
