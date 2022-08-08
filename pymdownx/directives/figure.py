@@ -32,7 +32,12 @@ class Figure(Directive):
         'alt': ['', to_html_attribute],
         'title': ['', to_html_attribute],
         'class': [[], to_classes],
-        'id': ['', to_html_attribute]
+        'id': ['', to_html_attribute],
+        'figheight': ['', to_html_attribute],
+        'figwidth': ['', to_html_attribute],
+        'figclass': [[], to_classes],
+        'target': ['', to_html_attribute],
+        'align': ['', to_html_attribute]
     }
 
     def on_init(self):
@@ -40,15 +45,28 @@ class Figure(Directive):
 
         self.content = 0
 
+    def last_child(self, parent):
+        """Return the last child of an `etree` element."""
+
+        if len(parent):
+            return parent[-1]
+        else:
+            return None
+
     def on_add(self, el):
         """Return the `figcaption`."""
 
         self.content += 1
 
+        # Caption
         if self.content == 1:
-            return etree.SubElement(el, 'figcaption')
+            caption = etree.SubElement(el, 'figcaption')
+            return etree.SubElement(caption, 'span', {'class': 'caption-text'})
 
-        return el
+        # Legend
+        elif self.content == 2:
+            return etree.SubElement(self.last_child(el), 'div', {'class': 'legend'})
+        return self.last_child(self.last_child(el))
 
     def on_create(self, parent):
         """Create the element."""
@@ -62,14 +80,23 @@ class Figure(Directive):
             attributes['alt'] = self.options['alt']
         if self.options['title']:
             attributes['title'] = self.options['title']
+        if self.options['target']:
+            attributes['target'] = self.options['target']
+        if self.options['align']:
+            attributes['align'] = self.options['align']
+
         classes = self.options['class']
-        tag_id = self.options['id']
+        if classes:
+            attributes['class'] = ' '.join(classes)
 
         attributes2 = {}
-        if tag_id:
-            attributes2['id'] = tag_id
-        if classes:
-            attributes2['class'] = ' '.join(classes)
+        if self.options['id']:
+            attributes2['id'] = self.options['id']
+        if self.options['figwidth']:
+            attributes2['figwidth'] = self.options['figwidth']
+        figclasses = self.options['figclass']
+        if figclasses:
+            attributes2['class'] = ' '.join(figclasses)
 
         fig = etree.SubElement(parent, 'figure', attributes2)
         etree.SubElement(fig, 'img', attributes)
