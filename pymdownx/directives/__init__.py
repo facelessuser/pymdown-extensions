@@ -335,6 +335,11 @@ class DirectiveProcessor(BlockProcessor):
 
         for b in blocks:
             target = entry.directive.on_add(entry.el)
+
+            # The directive does not or no longer accepts more content
+            if target is None:
+                break
+
             tag = target.tag
             is_block = tag in self.block_tags
             atomic = directive.is_atomic()
