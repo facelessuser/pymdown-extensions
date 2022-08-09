@@ -6,6 +6,19 @@ import functools
 RE_TAG = re.compile('^[a-z][a-z0-9-]*$', re.I)
 
 
+def _ranged_number(value, minimum, maximum, number_type):
+    """Check the range of the given number type."""
+
+    value = number_type(value)
+    if minimum is not None and value < minimum:
+        raise ValueError('{} is not greater than {}'.format(value, minimum))
+
+    if maximum is not None and value > maximum:
+        raise ValueError('{} is not greater than {}'.format(value, minimum))
+
+    return value
+
+
 def type_number(value):
     """Ensure type number or fail."""
 
@@ -22,6 +35,18 @@ def type_integer(value):
         raise ValueError("Could not convert type {} to an integer".format(type(value)))
 
     return value
+
+
+def type_ranged_number(minimum=None, maximum=None):
+    """Ensure typed number is within range."""
+
+    functools.partial(_ranged_number, minimum=minimum, maximum=maximum, number_type=type_number)
+
+
+def type_ranged_integer(minimum=None, maximum=None):
+    """Ensured type integer is within range."""
+
+    functools.partial(_ranged_number, minimum=minimum, maximum=maximum, number_type=type_integer)
 
 
 def type_tag(value):
@@ -62,13 +87,19 @@ def type_string(value):
     raise ValueError("Could not convert type {} to a flag".format(type(value)))
 
 
+def type_string_insensitive(value):
+    """Ensure type string and normalize case."""
+
+    return type_string(value).lower()
+
+
 def type_html_attribute(value):
     """Ensure type HTML attribute or fail."""
 
     return type_string(value).replace('"', '&quote;')
 
 
-def _delimiter(string, split, parser=None):
+def _delimiter(string, split, string_type):
     """Split the string by the delimiter and then parse with the parser."""
 
     l = []
@@ -76,23 +107,37 @@ def _delimiter(string, split, parser=None):
         s = s.strip()
         if not s:
             continue
-        if parser is not None:
-            try:
-                s = parser(s)
-                l.append(s)
-            except Exception:
-                pass
+        try:
+            s = string_type(s)
+            l.append(s)
+        except Exception:
+            pass
     return l
 
 
-def delimiter(split, parser=None):
+def _string_in(value, accepted, string_type):
+    """Ensure type string is within the accepted values."""
+
+    value = string_type(value)
+    if value not in accepted:
+        raise ValueError('{} not found in {}'.format(value, str(accepted)))
+    return value
+
+
+def type_string_in(accepted, string_type=type_string):
+    """Ensure type string is within the accepted list."""
+
+    return functools.partial(_string_in, accepted=accepted, string_type=string_type)
+
+
+def type_string_delimiter(split, string_type=type_string):
     """String delimiter function."""
 
-    return functools.partial(_delimiter, split=split, parser=parser)
+    return functools.partial(_delimiter, split=split, string_type=string_type)
 
 
 # Ensure class(es) or fail
-to_classes = delimiter(' ', type_html_attribute)
+type_classes = type_string_delimiter(' ', type_html_attribute)
 
 
 class Directive(metaclass=ABCMeta):
