@@ -47,15 +47,6 @@ def type_ternary(value):
     if value is True or value is False or value is None:
         return value
 
-    if isinstance(value, str):
-        value = value.lower()
-        if value == 'true':
-            return True
-        if value == 'false':
-            return False
-        if value in ('null', 'none'):
-            return None
-
     raise ValueError("Could not convert type {} to a ternary value".format(type(value)))
 
 
