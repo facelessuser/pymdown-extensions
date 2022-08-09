@@ -422,7 +422,7 @@ class DirectiveProcessor(BlockProcessor):
 
                     # Get the target element and parse
                     entry.hungry = False
-                    self.parse_blocks(entry.directive, ours, entry, end)
+                    self.parse_blocks(entry.directive, ours, entry)
 
                     # Clean up if we completed the directive
                     if end:
