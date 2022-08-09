@@ -1,6 +1,6 @@
 """HTML."""
 import xml.etree.ElementTree as etree
-from .directive import Directive, to_ternary, to_html_attribute, to_tag
+from .directive import Directive, type_ternary, type_html_attribute, type_tag
 import re
 
 RE_NAME = re.compile(
@@ -34,10 +34,10 @@ class HTML(Directive):
     NAME = 'html'
     TAG = re.compile('^[a-z][a-z0-9-]*$', re.I)
 
-    ARGUMENTS = {'required': 1, 'parsers': [to_tag]}
+    ARGUMENTS = {'required': 1, 'parsers': [type_tag]}
     OPTIONS = {
-        'markdown': [None, to_ternary],
-        '': ['', to_html_attribute]
+        'markdown': [None, type_ternary],
+        '': ['', type_html_attribute]
     }
 
     def __init__(self, length, tracker, md):

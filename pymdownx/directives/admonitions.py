@@ -1,6 +1,6 @@
 """Admonitions."""
 import xml.etree.ElementTree as etree
-from .directive import Directive, to_string, to_classes, to_html_attribute
+from .directive import Directive, type_string, to_classes, type_html_attribute
 
 
 class Admonition(Directive):
@@ -20,10 +20,10 @@ class Admonition(Directive):
     """
 
     NAME = 'admonition'
-    ARGUMENTS = {'required': 1, 'parsers': [to_string]}
+    ARGUMENTS = {'required': 1, 'parsers': [type_string]}
     OPTIONS = {
         'class': [[], to_classes],
-        'id': ['', to_html_attribute]
+        'id': ['', type_html_attribute]
     }
 
     def on_create(self, parent):
@@ -49,7 +49,7 @@ class Note(Admonition):
     """Note."""
 
     NAME = 'note'
-    ARGUMENTS = {'optional': 1, 'parsers': [to_string]}
+    ARGUMENTS = {'optional': 1, 'parsers': [type_string]}
 
     def on_parse(self):
         """Handle on parse event."""

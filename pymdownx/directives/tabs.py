@@ -1,6 +1,6 @@
 """Tabs."""
 import xml.etree.ElementTree as etree
-from .directive import Directive, to_flag, to_classes, to_html_attribute, to_string
+from .directive import Directive, type_boolean, to_classes, type_html_attribute, type_string
 
 
 class Tabs(Directive):
@@ -22,11 +22,11 @@ class Tabs(Directive):
 
     NAME = 'tab'
 
-    ARGUMENTS = {'required': 1, 'parsers': [to_string]}
+    ARGUMENTS = {'required': 1, 'parsers': [type_string]}
     OPTIONS = {
-        'new': [False, to_flag],
+        'new': [False, type_boolean],
         'class': [[], to_classes],
-        'id': ['', to_html_attribute]
+        'id': ['', type_html_attribute]
     }
 
     def on_init(self):

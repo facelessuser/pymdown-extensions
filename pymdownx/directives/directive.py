@@ -3,24 +3,38 @@ from abc import ABCMeta, abstractmethod
 import re
 import functools
 
-RE_LENGTH_PERCENT = re.compile(
-    r"(?:[+\-]?(?:[0-9]*\.)?[0-9]+(?:e[-+]?[0-9]*)?)\s*(ex|p(?:x|c|t)|v(?:w|h|min|vmax)|r?em|(?:c|v)h|(?:c|m)m|in|%)"
-)
-
 RE_TAG = re.compile('^[a-z][a-z0-9-]*$', re.I)
 
 
-def to_tag(value):
-    """To tag."""
+def type_number(value):
+    """Ensure type number or fail."""
 
-    value = to_string(value).strip()
+    if not isinstance(float, int):
+        raise ValueError("Could not convert type {} to a number".format(type(value)))
+
+    return value
+
+
+def type_integer(value):
+    """Ensure type integer or fail."""
+
+    if not isinstance(int):
+        raise ValueError("Could not convert type {} to an integer".format(type(value)))
+
+    return value
+
+
+def type_tag(value):
+    """Ensure type tag or fail."""
+
+    value = type_string(value).strip()
     if RE_TAG.match(value) is None:
         raise ValueError('{} is not a valid tag'.format(value))
     return value
 
 
-def to_flag(value):
-    """Convert to flag."""
+def type_boolean(value):
+    """Ensure type boolean or fail."""
 
     if value is True or value is None:
         return value
@@ -32,11 +46,11 @@ def to_flag(value):
         if value == 'false':
             return False
 
-    raise ValueError("Could not convert type {} to a flag".format(type))
+    raise ValueError("Could not convert type {} to a boolean".format(type(value)))
 
 
-def to_ternary(value):
-    """Convert to a ternary value."""
+def type_ternary(value):
+    """Ensure type ternary or fail."""
 
     if value is True or value is False or value is None:
         return value
@@ -50,11 +64,11 @@ def to_ternary(value):
         if value in ('null', 'none'):
             return None
 
-    raise ValueError("Could not convert type {} to a flag".format(type))
+    raise ValueError("Could not convert type {} to a ternary value".format(type(value)))
 
 
-def to_string(value):
-    """Convert to a string value."""
+def type_string(value):
+    """Ensure type string or fail."""
 
     if isinstance(value, str):
         return value.strip()
@@ -62,28 +76,13 @@ def to_string(value):
     if isinstance(value, (int, float, bool)):
         return str(value)
 
-    raise ValueError("Could not convert type {} to a flag".format(type))
+    raise ValueError("Could not convert type {} to a flag".format(type(value)))
 
 
-def to_html_attribute(value):
-    """Convert to HTML attribute."""
+def type_html_attribute(value):
+    """Ensure type HTML attribute or fail."""
 
-    return to_string(value).strip().replace('"', '&quote;')
-
-
-def to_length_percentages(value):
-    """Convert to a string value."""
-
-    if isinstance(value, (int, float)):
-        return str(value)
-
-    if isinstance(value, str):
-        return value
-
-    if isinstance(value, (int, float, bool)):
-        return str(value)
-
-    raise ValueError("Could not convert type {} to a flag".format(type))
+    return type_string(value).strip().replace('"', '&quote;')
 
 
 def _delimiter(string, split, parser=None):
@@ -109,7 +108,8 @@ def delimiter(split, parser=None):
     return functools.partial(_delimiter, split=split, parser=parser)
 
 
-to_classes = delimiter(' ', to_html_attribute)
+# Ensure class(es) or fail
+to_classes = delimiter(' ', type_html_attribute)
 
 
 class Directive(metaclass=ABCMeta):
