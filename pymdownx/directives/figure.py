@@ -1,6 +1,6 @@
 """Figures."""
 import xml.etree.ElementTree as etree
-from .directive import Directive, to_html_attribute, to_classes, to_string
+from .directive import Directive, type_html_attribute, to_classes, type_string
 
 
 class Figure(Directive):
@@ -25,19 +25,19 @@ class Figure(Directive):
 
     NAME = 'figure'
 
-    ARGUMENTS = {'required': 1, 'parsers': [to_string]}
+    ARGUMENTS = {'required': 1, 'parsers': [type_string]}
     OPTIONS = {
-        'height': ['', to_html_attribute],
-        'width': ['', to_html_attribute],
-        'alt': ['', to_html_attribute],
-        'title': ['', to_html_attribute],
+        'height': ['', type_html_attribute],
+        'width': ['', type_html_attribute],
+        'alt': ['', type_html_attribute],
+        'title': ['', type_html_attribute],
         'class': [[], to_classes],
-        'id': ['', to_html_attribute],
-        'figheight': ['', to_html_attribute],
-        'figwidth': ['', to_html_attribute],
+        'id': ['', type_html_attribute],
+        'figheight': ['', type_html_attribute],
+        'figwidth': ['', type_html_attribute],
         'figclass': [[], to_classes],
-        'target': ['', to_html_attribute],
-        'align': ['', to_html_attribute]
+        'target': ['', type_html_attribute],
+        'align': ['', type_html_attribute]
     }
 
     def on_init(self):

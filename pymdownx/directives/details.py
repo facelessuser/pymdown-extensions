@@ -1,6 +1,6 @@
 """Details."""
 import xml.etree.ElementTree as etree
-from .directive import Directive, to_classes, to_html_attribute, to_string, to_flag
+from .directive import Directive, to_classes, type_html_attribute, type_string, type_boolean
 
 
 class Details(Directive):
@@ -21,11 +21,11 @@ class Details(Directive):
 
     NAME = 'details'
 
-    ARGUMENTS = {'required': 1, 'parsers': [to_string]}
+    ARGUMENTS = {'required': 1, 'parsers': [type_string]}
     OPTIONS = {
-        'open': [[], to_flag],
+        'open': [[], type_boolean],
         'class': [[], to_classes],
-        'id': ['', to_html_attribute]
+        'id': ['', type_html_attribute]
     }
 
     def on_create(self, parent):
