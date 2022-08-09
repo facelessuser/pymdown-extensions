@@ -36,17 +36,9 @@ def type_tag(value):
 def type_boolean(value):
     """Ensure type boolean or fail."""
 
-    if value is True or value is None:
-        return value
-
-    if isinstance(value, str):
-        value = value.lower()
-        if value == 'true':
-            return True
-        if value == 'false':
-            return False
-
-    raise ValueError("Could not convert type {} to a boolean".format(type(value)))
+    if not isinstance(value, bool):
+        raise ValueError("Could not convert type {} to a boolean".format(type(value)))
+    return value
 
 
 def type_ternary(value):
