@@ -71,7 +71,7 @@ def type_string(value):
     """Ensure type string or fail."""
 
     if isinstance(value, str):
-        return value.strip()
+        return value
 
     if isinstance(value, (int, float, bool)):
         return str(value)
@@ -82,7 +82,7 @@ def type_string(value):
 def type_html_attribute(value):
     """Ensure type HTML attribute or fail."""
 
-    return type_string(value).strip().replace('"', '&quote;')
+    return type_string(value).replace('"', '&quote;')
 
 
 def _delimiter(string, split, parser=None):
