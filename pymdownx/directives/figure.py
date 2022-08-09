@@ -1,6 +1,6 @@
 """Figures."""
 import xml.etree.ElementTree as etree
-from .directive import Directive, type_html_attribute, to_classes, type_string
+from .directive import Directive, type_html_attribute, type_classes, type_string
 
 
 class Figure(Directive):
@@ -31,11 +31,11 @@ class Figure(Directive):
         'width': ['', type_html_attribute],
         'alt': ['', type_html_attribute],
         'title': ['', type_html_attribute],
-        'class': [[], to_classes],
+        'class': [[], type_classes],
         'id': ['', type_html_attribute],
         'figheight': ['', type_html_attribute],
         'figwidth': ['', type_html_attribute],
-        'figclass': [[], to_classes],
+        'figclass': [[], type_classes],
         'target': ['', type_html_attribute],
         'align': ['', type_html_attribute]
     }

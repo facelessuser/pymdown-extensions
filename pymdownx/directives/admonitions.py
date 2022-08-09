@@ -1,6 +1,6 @@
 """Admonitions."""
 import xml.etree.ElementTree as etree
-from .directive import Directive, type_string, to_classes, type_html_attribute
+from .directive import Directive, type_string, type_classes, type_html_attribute
 
 
 class Admonition(Directive):
@@ -22,7 +22,7 @@ class Admonition(Directive):
     NAME = 'admonition'
     ARGUMENTS = {'required': 1, 'parsers': [type_string]}
     OPTIONS = {
-        'class': [[], to_classes],
+        'class': [[], type_classes],
         'id': ['', type_html_attribute]
     }
 
