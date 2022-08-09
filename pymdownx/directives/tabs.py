@@ -1,6 +1,6 @@
 """Tabs."""
 import xml.etree.ElementTree as etree
-from .directive import Directive, type_boolean, to_classes, type_html_attribute, type_string
+from .directive import Directive, type_boolean, type_classes, type_html_attribute, type_string
 
 
 class Tabs(Directive):
@@ -25,7 +25,7 @@ class Tabs(Directive):
     ARGUMENTS = {'required': 1, 'parsers': [type_string]}
     OPTIONS = {
         'new': [False, type_boolean],
-        'class': [[], to_classes],
+        'class': [[], type_classes],
         'id': ['', type_html_attribute]
     }
 
