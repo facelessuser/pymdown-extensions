@@ -22,7 +22,7 @@ FENCED_BLOCK_RE = re.compile(
 
 # Directive start/end
 RE_START = re.compile(
-    r'(?:^|\n)[ ]{0,3}(:{3,})[ ]*\{[ ]*(\w+)[ ]*\}(.*?)(?:\n|$)'
+    r'(?:^|\n)[ ]{0,3}(:{3,})[ ]*\{[ ]*(\w+)[ ]*\}[ ]*(.*?)[ ]*(?:\n|$)'
 )
 
 RE_END = re.compile(
@@ -51,30 +51,6 @@ class DirectiveEntry:
         self.hungry = False
 
 
-def yaml_load(stream, loader=yaml.SafeLoader):
-    """
-    Custom YAML loader.
-
-    Load all strings as Unicode.
-    http://stackoverflow.com/a/2967461/3609487
-    """
-
-    def construct_yaml_str(self, node):
-        """Override the default string handling function to always return Unicode objects."""
-
-        return self.construct_scalar(node)
-
-    class Loader(loader):
-        """Custom Loader."""
-
-    Loader.add_constructor(
-        'tag:yaml.org,2002:str',
-        construct_yaml_str
-    )
-
-    return yaml.load(stream, Loader)
-
-
 def get_frontmatter(string):
     """
     Get frontmatter from string.
@@ -85,7 +61,7 @@ def get_frontmatter(string):
     frontmatter = None
 
     try:
-        frontmatter = yaml_load(string)
+        frontmatter = yaml.safe_load(string)
         if not isinstance(frontmatter, dict):
             frontmatter = None
     except Exception:
