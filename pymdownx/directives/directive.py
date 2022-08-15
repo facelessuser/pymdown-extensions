@@ -198,7 +198,7 @@ class Directive(metaclass=ABCMeta):
             return False
 
         # Split arguments if we can have more than 1
-        arguments = delimiter(delim)(args) if total > 1 else [args]
+        arguments = type_string_delimiter(delim)(args) if total > 1 else [args]
         length = len(arguments)
 
         # If total number of arguments exceed what is allowed, quit
