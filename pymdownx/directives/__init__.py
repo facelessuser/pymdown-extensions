@@ -22,7 +22,7 @@ FENCED_BLOCK_RE = re.compile(
 
 # Directive start/end
 RE_START = re.compile(
-    r'(?:^|\n)[ ]{0,3}(:{3,})[ ]*\{[ ]*(\w+)[ ]*\}[ ]*(.*?)[ ]*(?:\n|$)'
+    r'(?:^|\n)[ ]{0,3}(:{3,})[ ]*(\w+)[ ]*(?:\|[ ]*(.*?)[ ]*)?(?:\n|$)'
 )
 
 RE_END = re.compile(
@@ -172,12 +172,17 @@ class DirectiveProcessor(BlockProcessor):
 
                 # Get frontmatter and argument(s)
                 the_rest = []
-                options = self.split_header(block, the_rest)
+                options = self.split_header(block, the_rest, directive.length)
                 arguments = m.group(3)
 
-                # Update the config for the directive
-                status = directive.parse_config(arguments, **options)
+                # Options must be valid
+                status = options is not None
 
+                # Update the config for the directive
+                if status:
+                    status = directive.parse_config(arguments, **options)
+
+                # Cache the found directive and any remaining content
                 if status:
                     self.cached_directive = (directive, the_rest[0] if the_rest else '')
 
@@ -232,57 +237,44 @@ class DirectiveProcessor(BlockProcessor):
         # Send back the new list of blocks to parse and note whether we found our end
         return good, end
 
-    def split_header(self, block, blocks):
+    def split_header(self, block, blocks, length):
         """Split, YAML-ish header out."""
 
-        good = []
-        bad = []
+        # Search for end in first block
+        m = None
+        for match in RE_END.finditer(block):
+            if len(match.group(1)) >= length:
+                m = match
+                break
 
-        # Empty block, nothing to do
-        if not block:
-            return {}
+        # Move block ending to be parsed later
+        if m:
+            block = block[:m.start(0)]
+            end = block[m.start(0):]
+            blocks.insert(0, end)
 
-        # More formal YAML-ish config
+        # More formal YAML config
         start = RE_YAML_START.match(block.strip('\n'))
         if start is not None:
             # Look for the end of the config
             begin = start.end(0)
             m = RE_YAML_END.search(block, begin)
             if m:
-                good.append(block[start.end(0):m.start(0)])
+                # There shouldn't be anything after the config
+                leftover = block[m.end(0):].strip()
+                if leftover:
+                    return None
 
-                # Since we found our end, everything after is unwanted
-                temp = block[m.end(0):]
-                if temp:
-                    bad.append(temp)
-                bad.extend(blocks[:])
+                block = block[start.end(0):m.start(0)]
 
-        # Shorthand form
-        else:
-            lines = block.split('\n')
-            for e, line in enumerate(lines):
-                m = RE_YAML_LINE.match(line)
-                if m:
-                    good.append(line[m.end(0):])
-                elif not good:
-                    break
-                else:
-                    temp = '\n'.join(lines[e:])
-                    if temp:
-                        bad.append(temp)
-                    bad.extend(blocks[:])
+            # No YAML end
+            else:
+                return None
 
         # Attempt to parse the config.
         # If successful, augment the blocks and return the config.
-        if good:
-            frontmatter = get_frontmatter('\n'.join(good))
-            if frontmatter is not None:
-                blocks.clear()
-                blocks.extend(bad)
-                return frontmatter
-
-        # No config
-        blocks.insert(0, block)
+        if block.strip():
+            return get_frontmatter(block)
         return {}
 
     def get_parent(self, parent):
