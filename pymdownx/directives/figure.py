@@ -1,6 +1,6 @@
 """Figures."""
 import xml.etree.ElementTree as etree
-from .directive import Directive, type_html_attribute, type_classes, type_string
+from .directive import Directive, type_html_attribute, type_classes
 
 
 class Figure(Directive):
@@ -25,7 +25,7 @@ class Figure(Directive):
 
     NAME = 'figure'
 
-    ARGUMENTS = {'required': 1, 'parsers': [type_string]}
+    ARGUMENTS = {'required': 1}
     OPTIONS = {
         'height': ['', type_html_attribute],
         'width': ['', type_html_attribute],
