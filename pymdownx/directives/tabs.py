@@ -1,6 +1,6 @@
 """Tabs."""
 import xml.etree.ElementTree as etree
-from .directive import Directive, type_boolean, type_classes, type_html_attribute
+from .directive import Directive, type_boolean
 
 
 class Tabs(Directive):
@@ -24,9 +24,7 @@ class Tabs(Directive):
 
     ARGUMENTS = {'required': 1}
     OPTIONS = {
-        'new': [False, type_boolean],
-        'class': [[], type_classes],
-        'id': ['', type_html_attribute]
+        'new': [False, type_boolean]
     }
 
     def on_init(self):
@@ -67,8 +65,6 @@ class Tabs(Directive):
         title = self.args[0] if self.args and self.args[0] else ''
         sibling = self.last_child(parent)
         tabbed_set = 'tabbed-set tabbed-alternate'
-        classes = self.options['class']
-        tag_id = self.options['id']
 
         if (
             sibling and sibling.tag.lower() == 'div' and
@@ -136,10 +132,7 @@ class Tabs(Directive):
         )
         lab.text = title
 
-        classes.insert(0, 'tabbed-block')
-        attrib = {'class': ' '.join(classes)}
-        if tag_id:
-            attrib['id'] = tag_id
+        attrib = {'class': 'tabbed-block'}
         etree.SubElement(
             content,
             "div",

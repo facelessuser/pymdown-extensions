@@ -20,7 +20,7 @@ MagicLink extension, we would include it in Python Markdown like so:
 
 Check out documentation on each extension to learn more about how to configure and use each one.
 
-::: danger | Reminder
+::: danger :: Reminder
 
 Please read the [Usage Notes](usage_notes.md) for information on extension compatibility and general notes to be
 aware of when using these extensions.
@@ -28,154 +28,154 @@ aware of when using these extensions.
 
 ## Extensions
 
-::: admonition | Arithmatex
-class: summary
+::: admonition :: Arithmatex
+type: summary
 
 [Arithmatex](extensions/arithmatex.md) is an extension that preserves LaTeX math equations ($\frac{\sqrt x}{y^3}$)
 during the Markdown conversion process so that they can be used with [MathJax][mathjax].
 :::
 
-::: admonition | B64
-class: summary
+::: admonition :: B64
+type: summary
 
 [B64](extensions/b64.md) converts all local images in a document to base64 encoding and embeds them in the document.
 :::
 
-::: admonition | BetterEm
-class: summary
+::: admonition :: BetterEm
+type: summary
 
 [BetterEm](extensions/betterem.md) is a different approach to **emphasis** than Python Markdown's default.  It works
 similar but handles certain corner cases differently.
 :::
 
-::: admonition | Caret
-class: summary
+::: admonition :: Caret
+type: summary
 
 [Caret](extensions/caret.md) is an extension that is syntactically built around the `^` character. It adds support
 for inserting super^scripts^ and adds an easy way to place ^^text^^ in an `#!html <ins>` tag.
 :::
 
-::: admonition | Critic
-class: summary
+::: admonition :: Critic
+type: summary
 
 [Critic](extensions/critic.md) adds handling and support of [Critic Markup][critic-markup].
 :::
 
-:::: admonition | Details
-class: summary
+:::: admonition :: Details
+type: summary
 
 [Details](extensions/details.md) creates collapsible elements with `#!html <details><summary>` tags.
 
-::: details | Click Me!
-class: note
+::: details :: Click Me!
+type: note
 
 Thanks!
 :::
 ::::
 
-::: admonition | Emoji
-class: summary
+::: admonition :: Emoji
+type: summary
 
 [Emoji](extensions/emoji.md) makes adding emoji via Markdown easy :smile:.
 :::
 
-::: admonition | EscapeAll
-class: summary
+::: admonition :: EscapeAll
+type: summary
 
 [EscapeAll](extensions/escapeall.md) allows the escaping of any character, some with additional effects.  Check it
 out to learn more.
 :::
 
-::: admonition | Extra
-class: summary
+::: admonition :: Extra
+type: summary
 
 [Extra](extensions/extra.md) is just like Python Markdown's Extra package except it uses PyMdown Extensions to
 substitute similar extensions.
 :::
 
-::: admonition | Highlight
-class: summary
+::: admonition :: Highlight
+type: summary
 
 [Highlight](extensions/highlight.md) allows you to configure the syntax highlighting of
 [SuperFences](extensions/superfences.md) and [InlineHilite](extensions/inlinehilite.md).  Also passes standard
 Markdown indented code blocks through the syntax highlighter.
 :::
 
-::: admonition | InlineHilite
-class: summary
+::: admonition :: InlineHilite
+type: summary
 
 [InlineHilite](extensions/inlinehilite.md) highlights inline code: `#!py3 from module import function as func`.
 :::
 
-::: admonition | Keys
-class: summary
+::: admonition :: Keys
+type: summary
 
 [Keys](extensions/keys.md) makes inserting key inputs into documents as easy as pressing ++ctrl+alt+delete++.
 :::
 
-::: admonition | MagicLink
-class: summary
+::: admonition :: MagicLink
+type: summary
 
 [MagicLink](extensions/magiclink.md) linkafies URL and email links without having to wrap them in Markdown syntax.
 Also, shortens repository issue, pull request, and commit links automatically for popular code hosting providers.
 You can even use special shorthand syntax to link to issues, diffs, and even mention people
 :::
 
-::: admonition | Mark
-class: summary
+::: admonition :: Mark
+type: summary
 
 [Mark](extensions/mark.md) allows you to ==mark== words easily.
 :::
 
-::: admonition | PathConverter
-class: summary
+::: admonition :: PathConverter
+type: summary
 
 [PathConverter](extensions/pathconverter.md) converts paths to absolute or relative to a given base path.
 :::
 
-::: admonition | ProgressBar
-class: summary
+::: admonition :: ProgressBar
+type: summary
 
 [ProgressBar](extensions/progressbar.md) creates progress bars quick and easy.
 
 [== 80%]{: .candystripe .candystripe-animate}
 :::
 
-::: admonition | SaneHeaders
-class: summary
+::: admonition :: SaneHeaders
+type: summary
 
 [SaneHeaders](extensions/saneheaders.md) modifies hash headers to only be evaluated if the starting hash symbols are
 followed by at least one space. This is useful if you use other extensions that also use the hash symbol (like our
 own MagicLink extension).
 :::
 
-::: admonition | SmartSymbols
-class: summary
+::: admonition :: SmartSymbols
+type: summary
 
 [SmartSymbols](extensions/smartsymbols.md) inserts commonly used Unicode characters via simple ASCII
 representations: `=/=` ---> =/=.
 :::
 
-::: admonition | Snippets
-class: summary
+::: admonition :: Snippets
+type: summary
 
 [Snippets](extensions/snippets.md) include other Markdown or HTML snippets into the current Markdown file being
 parsed.
 :::
 
-::: admonition | StripHTML
-class: summary
+::: admonition :: StripHTML
+type: summary
 
 [StripHTML](extensions/striphtml.md) can strip out HTML comments and specific tag attributes.
 :::
 
-:::: admonition | SuperFences
-class: summary
+:::: admonition :: SuperFences
+type: summary
 
 [SuperFences](extensions/superfences.md) is like Python Markdown's fences, but better. Nest fences under lists,
 admonitions, and other syntaxes. You can even create special custom fences for content like UML.
 
-::: tab | Output
+::: tab :: Output
 
 ```diagram
 graph TB
@@ -192,7 +192,7 @@ graph TB
 ```
 :::
 
-::: tab | Markdown
+::: tab :: Markdown
 
 ````
 ```diagram
@@ -212,24 +212,24 @@ graph TB
 :::
 ::::
 
-:::: admonition | Tabbed
-class: summary
+:::: admonition :: Tabbed
+type: summary
 
 [Tabbed](extensions/tabbed.md) allows for tabbed Markdown content:
 
-::: tab | Tab 1
+::: tab :: Tab 1
 
 Markdown **content**.
 :::
 
-::: tab | Tab 2
+::: tab :: Tab 2
 
 More Markdown **content**.
 :::
 ::::
 
-::: admonition | Tasklist
-class: summary
+::: admonition :: Tasklist
+type: summary
 
 [Tasklist](extensions/tasklist.md) allows inserting lists with check boxes.
 
@@ -238,8 +238,8 @@ class: summary
 - [ ] milk
 :::
 
-::: admonition | Tilde
-class: summary
+::: admonition :: Tilde
+type: summary
 
 [Tilde](extensions/tilde.md) is syntactically built around the `~` character. It adds support for inserting
 sub~scripts~ and adds an easy way to place ~~text~~ in a `#!html <del>` tag.
