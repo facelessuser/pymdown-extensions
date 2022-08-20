@@ -171,8 +171,9 @@ def type_attribute_dict(value):
 
 
 def type_class(value):
+    """Ensure type class is valid and adjust HTML escaping as required."""
 
-    value = type_html_attribute_name(value)
+    value = type_html_attribute_value(value)
     if ' ' in value:
         raise ValueError('A single class should be provided')
     return value
