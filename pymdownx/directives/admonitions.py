@@ -1,6 +1,6 @@
 """Admonitions."""
 import xml.etree.ElementTree as etree
-from .directive import Directive, type_string, type_classes, type_html_attribute
+from .directive import Directive, type_string, type_class
 
 
 class Admonition(Directive):
@@ -22,8 +22,7 @@ class Admonition(Directive):
     NAME = 'admonition'
     ARGUMENTS = {'required': 1, 'parsers': [type_string]}
     OPTIONS = {
-        'class': [[], type_classes],
-        'id': ['', type_html_attribute]
+        'type': ['', type_class],
     }
 
     def on_create(self, parent):
@@ -38,8 +37,9 @@ class Admonition(Directive):
         ad_title.text = title
 
         # Set classes
-        classes = self.options['class']
-        classes.insert(0, 'admonition')
+        classes = ['admonition']
+        if self.options['type']:
+            classes.append(self.options['type'])
 
         el.set('class', ' '.join(classes))
         return el
@@ -50,12 +50,12 @@ class Note(Admonition):
 
     NAME = 'note'
     ARGUMENTS = {'optional': 1, 'parsers': [type_string]}
+    OPTIONS = {}
 
     def on_parse(self):
         """Handle on parse event."""
 
-        if self.NAME not in self.options['class']:
-            self.options['class'].insert(0, self.NAME)
+        self.options['type'] = self.NAME
         if not self.args:
             self.args.append(self.NAME.title())
         return True

@@ -1,6 +1,6 @@
 """Figures."""
 import xml.etree.ElementTree as etree
-from .directive import Directive, type_html_attribute, type_classes
+from .directive import Directive, type_boolean
 
 
 class Figure(Directive):
@@ -25,80 +25,46 @@ class Figure(Directive):
 
     NAME = 'figure'
 
-    ARGUMENTS = {'required': 1}
-    OPTIONS = {
-        'height': ['', type_html_attribute],
-        'width': ['', type_html_attribute],
-        'alt': ['', type_html_attribute],
-        'title': ['', type_html_attribute],
-        'class': [[], type_classes],
-        'id': ['', type_html_attribute],
-        'figheight': ['', type_html_attribute],
-        'figwidth': ['', type_html_attribute],
-        'figclass': [[], type_classes],
-        'target': ['', type_html_attribute],
-        'align': ['', type_html_attribute]
-    }
+    ARGUMENTS = {'optional': 1}
+    OPTIONS = {'caption-top': [False, type_boolean]}
 
-    def on_init(self):
-        """On initialize."""
-
-        self.content = 0
-
-    def last_child(self, parent):
+    def on_end(self, el):
         """Return the last child of an `etree` element."""
 
-        if len(parent):
-            return parent[-1]
-        else:
-            return None
+        caption = etree.Element('figcaption')
 
-    def on_add(self, el):
-        """Return the `figcaption`."""
+        # Parse the caption
+        if self.args[0]:
+            self.md.parser.parseChunk(caption, self.args[0])
 
-        self.content += 1
+        # Anything after the first block will be considered a caption
+        text = el.text
+        count = 0 if not text or not text.strip() else 1
+        for child in list(el):
+            count += 1
 
-        # Caption
-        if self.content == 1:
-            caption = etree.SubElement(el, 'figcaption')
-            return etree.SubElement(caption, 'span', {'class': 'caption-text'})
+            # Do we have content at tail?
+            # If so, count as a block
+            if count == 1:
+                tail = child.tail
+                if not tail or not tail.strip():
+                    continue
 
-        # Legend
-        elif self.content == 2:
-            return etree.SubElement(self.last_child(el), 'div', {'class': 'legend'})
-        return self.last_child(self.last_child(el))
+            if count == 1:
+                print('here?')
+                caption.text = child.tail
+                child.tail = None
+            else:
+                el.remove(child)
+                caption.append(child)
+
+        if caption.text or len(caption):
+            if self.options['caption-top']:
+                el.insert(0, caption)
+            else:
+                el.append(caption)
 
     def on_create(self, parent):
         """Create the element."""
 
-        attributes = {"src": self.args[0].replace('"', '&quote;')}
-        if self.options['height']:
-            attributes['height'] = self.options['height']
-        if self.options['width']:
-            attributes['width'] = self.options['width']
-        if self.options['alt']:
-            attributes['alt'] = self.options['alt']
-        if self.options['title']:
-            attributes['title'] = self.options['title']
-        if self.options['target']:
-            attributes['target'] = self.options['target']
-        if self.options['align']:
-            attributes['align'] = self.options['align']
-
-        classes = self.options['class']
-        if classes:
-            attributes['class'] = ' '.join(classes)
-
-        attributes2 = {}
-        if self.options['id']:
-            attributes2['id'] = self.options['id']
-        if self.options['figwidth']:
-            attributes2['figwidth'] = self.options['figwidth']
-        figclasses = self.options['figclass']
-        if figclasses:
-            attributes2['class'] = ' '.join(figclasses)
-
-        fig = etree.SubElement(parent, 'figure', attributes2)
-        etree.SubElement(fig, 'img', attributes)
-
-        return fig
+        return etree.SubElement(parent, 'figure')

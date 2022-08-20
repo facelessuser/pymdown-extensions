@@ -2,8 +2,17 @@
 from abc import ABCMeta, abstractmethod
 import re
 import functools
+import copy
 
 RE_TAG = re.compile('^[a-z][a-z0-9-]*$', re.I)
+
+RE_NAME = re.compile(
+    r'[^A-Z_a-z\u00c0-\u00d6\u00d8-\u00f6\u00f8-\u02ff'
+    r'\u0370-\u037d\u037f-\u1fff\u200c-\u200d'
+    r'\u2070-\u218f\u2c00-\u2fef\u3001-\ud7ff'
+    r'\uf900-\ufdcf\ufdf0-\ufffd'
+    r'\:\-\.0-9\u00b7\u0300-\u036f\u203f-\u2040]+'
+)
 
 
 def _ranged_number(value, minimum, maximum, number_type):
@@ -84,7 +93,7 @@ def type_string(value):
     if isinstance(value, (int, float, bool)):
         return str(value)
 
-    raise ValueError("Could not convert type {} to a flag".format(type(value)))
+    raise ValueError("Could not convert type {} to a string".format(type(value)))
 
 
 def type_string_insensitive(value):
@@ -93,10 +102,16 @@ def type_string_insensitive(value):
     return type_string(value).lower()
 
 
-def type_html_attribute(value):
-    """Ensure type HTML attribute or fail."""
+def type_html_attribute_value(value):
+    """Ensure type HTML attribute value or fail."""
 
     return type_string(value).replace('"', '&quote;')
+
+
+def type_html_attribute_name(value):
+    """Ensure type HTML attribute name or fail."""
+
+    return RE_NAME.sub('_', type_string(value))
 
 
 def _delimiter(string, split, string_type):
@@ -136,8 +151,35 @@ def type_string_delimiter(split, string_type=type_string):
     return functools.partial(_delimiter, split=split, string_type=string_type)
 
 
+def type_attribute_dict(value):
+    """Attribute dictionary."""
+
+    if not isinstance(value, dict):
+        raise ValueError('Attributes should be contained within a dictionary')
+
+    attributes = {}
+    for k, v in value.items():
+        k = type_html_attribute_name(k)
+        if k.lower() == 'class':
+            k = 'class'
+            v = type_classes(v)
+        else:
+            v = type_html_attribute_value(v)
+        attributes[k] = v
+
+    return attributes
+
+
+def type_class(value):
+
+    value = type_html_attribute_name(value)
+    if ' ' in value:
+        raise ValueError('A single class should be provided')
+    return value
+
+
 # Ensure class(es) or fail
-type_classes = type_string_delimiter(' ', type_html_attribute)
+type_classes = type_string_delimiter(' ', type_html_attribute_value)
 
 
 class Directive(metaclass=ABCMeta):
@@ -165,7 +207,14 @@ class Directive(metaclass=ABCMeta):
 
         """
 
-        self.atomic = self.ATOMIC
+        # Setup up the argument and options spec
+        # Note that `attributes` is handled special and we always override it
+        self.arg_spec = copy.deepcopy(self.ARGUMENTS)
+        self.option_spec = copy.deepcopy(self.OPTIONS)
+        if 'attributes' in self.option_spec:
+            raise ValueError("'attributes' is a reserved option name and cannot be overriden")
+        self.option_spec['attributes'] = [{}, type_attribute_dict]
+
         self.length = length
         self.tracker = tracker
         self.md = md
@@ -176,15 +225,15 @@ class Directive(metaclass=ABCMeta):
     def on_init(self):
         """On initialize."""
 
-    def is_atomic(self):
+    def on_markdown(self):
         """Check if this is atomic."""
 
-        return self.atomic
+        return "auto"
 
     def parse_config(self, args, **options):
         """Parse configuration."""
 
-        spec = self.ARGUMENTS
+        spec = self.arg_spec
         required = spec.get('required', 0)
         optional = spec.get('optional', 0)
         delim = spec.get('delimiter', ' ')
@@ -221,7 +270,7 @@ class Directive(metaclass=ABCMeta):
         self.args = arguments
 
         # Fill in defaults options
-        spec = self.OPTIONS
+        spec = self.option_spec
         parsed = {}
         for k, v in spec.items():
             if not k:
@@ -275,7 +324,21 @@ class Directive(metaclass=ABCMeta):
     def on_create(self, parent):
         """Create the needed element and return it."""
 
-        return parent
+    def create(self, parent):
+        """Create the element."""
+
+        el = self.on_create(parent)
+
+        # Handle general HTML attributes
+        attrib = el.attrib
+        for k, v in self.options['attributes'].items():
+            if k == 'class':
+                if k in attrib:
+                    v = type_classes(attrib['class']) + v
+                attrib['class'] = ' '.join(v)
+            else:
+                attrib[k] = v
+        return el
 
     def on_end(self, el):
         """Perform any action on end."""

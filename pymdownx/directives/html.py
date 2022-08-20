@@ -1,6 +1,6 @@
 """HTML."""
 import xml.etree.ElementTree as etree
-from .directive import Directive, type_ternary, type_html_attribute, type_tag
+from .directive import Directive, type_string_in, type_tag
 import re
 
 RE_NAME = re.compile(
@@ -36,8 +36,7 @@ class HTML(Directive):
 
     ARGUMENTS = {'required': 1, 'parsers': [type_tag]}
     OPTIONS = {
-        'markdown': [None, type_ternary],
-        '': ['', type_html_attribute]
+        'markdown': ['auto', type_string_in(['auto', 'span', 'block', 'raw'])]
     }
 
     def __init__(self, length, tracker, md):
@@ -46,25 +45,13 @@ class HTML(Directive):
         self.markdown = None
         super().__init__(length, tracker, md)
 
-    def is_atomic(self):
+    def on_markdown(self):
         """Check if this is atomic."""
 
-        markdown = self.options['markdown']
-        return self.atomic if markdown is None else not markdown
+        return self.options['markdown']
 
     def on_create(self, parent):
         """Create the element."""
 
-        attributes = {}
-
-        for k, v in self.options.items():
-            if k == 'markdown':
-                continue
-
-            # Sanitize attribute names
-            name = RE_NAME.sub('_', k)
-            # Quote values
-            attributes[name] = v
-
         # Create element
-        return etree.SubElement(parent, self.args[0].lower(), attributes)
+        return etree.SubElement(parent, self.args[0].lower())
