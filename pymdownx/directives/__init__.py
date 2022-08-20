@@ -22,7 +22,7 @@ FENCED_BLOCK_RE = re.compile(
 
 # Directive start/end
 RE_START = re.compile(
-    r'(?:^|\n)[ ]{0,3}(:{3,})[ ]*(\w+)[ ]*(?:\|[ ]*(.*?)[ ]*)?(?:\n|$)'
+    r'(?:^|\n)[ ]{0,3}(:{3,})[ ]*(\w+)[ ]*(?::{2}[ ]*(.*?)[ ]*)?(?:\n|$)'
 )
 
 RE_END = re.compile(
@@ -309,18 +309,18 @@ class DirectiveProcessor(BlockProcessor):
                 break
 
             tag = target.tag
-            is_block = tag in self.block_tags
-            atomic = directive.is_atomic()
-            is_atomic = tag in self.raw_tags if atomic is None else atomic
+            mode = directive.on_markdown()
+            is_block = mode == 'block' or (mode == 'auto' and tag in self.block_tags)
+            is_atomic = mode == 'raw' or tag in self.raw_tags
 
             # We should revert fenced code in spans or atomic tags.
             # Make sure atomic tags have content wrapped as `AtomicString`.
             if is_atomic or not is_block:
                 text = target.text
                 if text:
-                    text += '\n\n'.join(revert_fenced_code(self.md, [b]))
+                    text += '\n\n' + b
                 else:
-                    text = '\n\n'.join(revert_fenced_code(self.md, [b]))
+                    text = b
                 target.text = mutil.AtomicString(text) if is_atomic else text
 
             # Block tags should have content go through the normal block processor
@@ -360,7 +360,7 @@ class DirectiveProcessor(BlockProcessor):
                     p.text = text
 
             # Create the block element
-            el = directive.on_create(parent)
+            el = directive.create(parent)
 
             # Push a directive block entry on the stack.
             self.stack.append(DirectiveEntry(directive, el, parent))
