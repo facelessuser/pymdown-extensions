@@ -317,6 +317,7 @@ class DirectiveProcessor(BlockProcessor):
             # Make sure atomic tags have content wrapped as `AtomicString`.
             if is_atomic or not is_block:
                 text = target.text
+                b = '\n\n'.join(revert_fenced_code(self.md, [b]))
                 if text:
                     text += '\n\n' + b
                 else:
