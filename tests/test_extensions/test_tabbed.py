@@ -1,4 +1,4 @@
-"""Test cases for SuperFences."""
+"""Test cases for Tabbed."""
 from .. import util
 from pymdownx.slugs import slugify
 

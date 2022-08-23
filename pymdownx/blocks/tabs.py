@@ -54,7 +54,9 @@ class Tabs(Block):
                     self.tab_content = list(d)[-1]
                     return self.tab_content
 
-            return parent
+            # This shouldn't happen, but if it does, just return the parent.
+            # This can only happen if something else comes in and destroys are structure.
+            return parent  # pragma: no cover
         else:
             return self.tab_content
 
