@@ -1,9 +1,9 @@
 """Tabs."""
 import xml.etree.ElementTree as etree
-from .directive import Directive, type_boolean
+from .block import Block, type_boolean
 
 
-class Tabs(Directive):
+class Tabs(Block):
     """
     Tabbed container.
 

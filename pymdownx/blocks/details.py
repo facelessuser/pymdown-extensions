@@ -1,9 +1,9 @@
 """Details."""
 import xml.etree.ElementTree as etree
-from .directive import Directive, type_class, type_boolean
+from .block import Block, type_class, type_boolean
 
 
-class Details(Directive):
+class Details(Block):
     """
     Details.
 

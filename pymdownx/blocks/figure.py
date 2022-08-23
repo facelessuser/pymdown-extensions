@@ -1,11 +1,11 @@
 """Figures."""
 import xml.etree.ElementTree as etree
-from .directive import Directive, type_boolean
+from .block import Block, type_boolean
 
 
-class Figure(Directive):
+class Figure(Block):
     """
-    Figure capture directive.
+    Figure capture Block.
 
     Arguments (1):
     - Image path
