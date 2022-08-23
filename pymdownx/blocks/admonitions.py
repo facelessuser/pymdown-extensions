@@ -1,6 +1,6 @@
 """Admonitions."""
 import xml.etree.ElementTree as etree
-from .block import Block, type_string, type_class
+from .block import Block, type_class
 
 
 class Admonition(Block):
@@ -20,7 +20,7 @@ class Admonition(Block):
     """
 
     NAME = 'admonition'
-    ARGUMENTS = {'required': 1, 'parsers': [type_string]}
+    ARGUMENTS = {'optional': 1}
     OPTIONS = {
         'type': ['', type_class],
     }
@@ -28,20 +28,28 @@ class Admonition(Block):
     def on_create(self, parent):
         """Create the element."""
 
-        # Create the admonition
-        el = etree.SubElement(parent, 'div')
-
-        # Create the title
-        title = self.args[0]
-        ad_title = etree.SubElement(el, 'p', {'class': 'admonition-title'})
-        ad_title.text = title
-
         # Set classes
         classes = ['admonition']
-        if self.options['type']:
-            classes.append(self.options['type'])
+        atype = self.options['type']
+        if atype and atype != 'admonition':
+            classes.append(atype)
 
-        el.set('class', ' '.join(classes))
+        # Create the admonition
+        el = etree.SubElement(parent, 'div', {'class': ' '.join(classes)})
+
+        # Create the title
+        if not self.args:
+            if not atype:
+                title = None
+            else:
+                title = atype.capitalize()
+        else:
+            title = self.args[0]
+
+        if title is not None:
+            ad_title = etree.SubElement(el, 'p', {'class': 'admonition-title'})
+            ad_title.text = title
+
         return el
 
 
@@ -49,15 +57,12 @@ class Note(Admonition):
     """Note."""
 
     NAME = 'note'
-    ARGUMENTS = {'optional': 1, 'parsers': [type_string]}
     OPTIONS = {}
 
     def on_parse(self):
         """Handle on parse event."""
 
         self.options['type'] = self.NAME
-        if not self.args:
-            self.args.append(self.NAME.title())
         return True
 
 

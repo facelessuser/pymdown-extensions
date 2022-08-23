@@ -31,7 +31,7 @@ def _ranged_number(value, minimum, maximum, number_type):
 def type_number(value):
     """Ensure type number or fail."""
 
-    if not isinstance(float, int):
+    if not isinstance(value, (float, int)):
         raise ValueError("Could not convert type {} to a number".format(type(value)))
 
     return value
@@ -40,8 +40,10 @@ def type_number(value):
 def type_integer(value):
     """Ensure type integer or fail."""
 
-    if not isinstance(int):
-        raise ValueError("Could not convert type {} to an integer".format(type(value)))
+    if not isinstance(value, int):
+        if not isinstance(value, float) or not value.is_integer():
+            raise ValueError("Could not convert type {} to an integer".format(type(value)))
+        value = int(value)
 
     return value
 
@@ -49,13 +51,13 @@ def type_integer(value):
 def type_ranged_number(minimum=None, maximum=None):
     """Ensure typed number is within range."""
 
-    functools.partial(_ranged_number, minimum=minimum, maximum=maximum, number_type=type_number)
+    return functools.partial(_ranged_number, minimum=minimum, maximum=maximum, number_type=type_number)
 
 
 def type_ranged_integer(minimum=None, maximum=None):
     """Ensured type integer is within range."""
 
-    functools.partial(_ranged_number, minimum=minimum, maximum=maximum, number_type=type_integer)
+    return functools.partial(_ranged_number, minimum=minimum, maximum=maximum, number_type=type_integer)
 
 
 def type_tag(value):
@@ -89,9 +91,6 @@ def type_string(value):
 
     if isinstance(value, str):
         return value
-
-    if isinstance(value, (int, float, bool)):
-        return str(value)
 
     raise ValueError("Could not convert type {} to a string".format(type(value)))
 
@@ -248,7 +247,14 @@ class Block(metaclass=ABCMeta):
             return False
 
         # Split arguments if we can have more than 1
-        arguments = type_string_delimiter(delim)(args) if total > 1 else [args]
+        if args is not None:
+            if total > 1:
+                arguments = type_string_delimiter(delim)(args)
+            else:
+                arguments = [args]
+        else:
+            arguments = []
+
         length = len(arguments)
 
         # If total number of arguments exceed what is allowed, quit
