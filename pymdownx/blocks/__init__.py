@@ -1,4 +1,4 @@
-"""Directives."""
+"""Generic blocks extension."""
 from markdown import Extension
 from markdown.blockprocessors import BlockProcessor, HRProcessor
 from markdown import util as mutil
@@ -20,13 +20,13 @@ FENCED_BLOCK_RE = re.compile(
     )
 )
 
-# Directive start/end
+# Block start/end
 RE_START = re.compile(
-    r'(?:^|\n)[ ]{0,3}(:{3,})[ ]*(\w+)[ ]*(?::{2}[ ]*(.*?)[ ]*)?(?:\n|$)'
+    r'(?:^|\n)[ ]{0,3}(/{3,})[ ]*(\w+)[ ]*(?:\|[ ]*(.*?)[ ]*)?(?:\n|$)'
 )
 
 RE_END = re.compile(
-    r'(?m)(?:^|\n)[ ]{0,3}(:{3,})[ ]*(?:\n|$)'
+    r'(?m)(?:^|\n)[ ]{0,3}(/{3,})[ ]*(?:\n|$)'
 )
 
 # Frontmatter patterns
@@ -36,16 +36,14 @@ RE_YAML_END = re.compile(
     r'(?m)^[ ]{0,3}(-{3})[ ]*(?:\n|$)'
 )
 
-RE_YAML_LINE = re.compile(r'^[ ]{0,3}:(?!:{2,})')
 
+class BlockEntry:
+    """Track Block entries."""
 
-class DirectiveEntry:
-    """Track directive entries."""
+    def __init__(self, block, el, parent):
+        """Block entry."""
 
-    def __init__(self, directive, el, parent):
-        """Directive entry."""
-
-        self.directive = directive
+        self.block = block
         self.el = el
         self.parent = parent
         self.hungry = False
@@ -119,10 +117,10 @@ def revert_fenced_code(md, blocks):
     return new_blocks
 
 
-class DirectiveProcessor(BlockProcessor):
+class BlocksProcessor(BlockProcessor):
     """Generic block processor."""
 
-    def __init__(self, parser, md, directives):
+    def __init__(self, parser, md, blocks):
         """Initialization."""
 
         self.empty_tags = set(['hr'])
@@ -140,18 +138,18 @@ class DirectiveProcessor(BlockProcessor):
         super().__init__(parser)
 
         self.md = md
-        # The directives classes indexable by name
-        self.directives = {d.NAME: d for d in directives}
-        # Persistent storage across a document for directives
+        # The Block classes indexable by name
+        self.blocks = {b.NAME: b for b in blocks}
+        # Persistent storage across a document for blocks
         self.trackers = {}
-        # Currently queued up directives
+        # Currently queued up blocks
         self.stack = []
-        # When set, the assigned directive is actively parsing blocks.
+        # When set, the assigned block is actively parsing blocks.
         self.working = None
         # Cached the found parent when testing
         # so we can quickly retrieve it when running
         self.cached_parent = None
-        self.cached_directive = None
+        self.cached_block = None
 
     def test(self, parent, block):
         """Test to see if we should process the block."""
@@ -160,31 +158,31 @@ class DirectiveProcessor(BlockProcessor):
         if self.get_parent(parent) is not None:
             return True
 
-        # Is this the start of a new directive?
+        # Is this the start of a new block?
         m = RE_START.search(block)
         if m:
-            # Create a directive object
+            # Create a block object
             name = m.group(2).lower()
-            if name in self.directives:
-                directive = self.directives[name](len(m.group(1)), self.trackers[name], self.md)
+            if name in self.blocks:
+                generic_block = self.blocks[name](len(m.group(1)), self.trackers[name], self.md)
                 # Remove first line
                 block = block[m.end():]
 
                 # Get frontmatter and argument(s)
                 the_rest = []
-                options = self.split_header(block, the_rest, directive.length)
+                options = self.split_header(block, the_rest, generic_block.length)
                 arguments = m.group(3)
 
                 # Options must be valid
                 status = options is not None
 
-                # Update the config for the directive
+                # Update the config for the Block
                 if status:
-                    status = directive.parse_config(arguments, **options)
+                    status = generic_block.parse_config(arguments, **options)
 
-                # Cache the found directive and any remaining content
+                # Cache the found Block and any remaining content
                 if status:
-                    self.cached_directive = (directive, the_rest[0] if the_rest else '')
+                    self.cached_block = (generic_block, the_rest[0] if the_rest else '')
 
                 return status
         return False
@@ -194,7 +192,7 @@ class DirectiveProcessor(BlockProcessor):
 
         self.stack.clear()
         self.working = None
-        self.trackers = {d: {} for d in self.directives.keys()}
+        self.trackers = {d: {} for d in self.blocks.keys()}
 
     def split_end(self, blocks, length):
         """Search for end and split the blocks while removing the end."""
@@ -203,10 +201,10 @@ class DirectiveProcessor(BlockProcessor):
         bad = []
         end = False
 
-        # Split on our end notation for the current directive
+        # Split on our end notation for the current Block
         for e, block in enumerate(blocks):
 
-            # Find the end of the directive
+            # Find the end of the Block
             m = None
             for match in RE_END.finditer(block):
                 if len(match.group(1)) >= length:
@@ -296,20 +294,20 @@ class DirectiveProcessor(BlockProcessor):
                 temp = self.lastChild(temp)
         return None
 
-    def parse_blocks(self, directive, blocks, entry):
+    def parse_blocks(self, blocks, entry):
         """Parse the blocks."""
 
         # Get the target element and parse
 
         for b in blocks:
-            target = entry.directive.on_add(entry.el)
+            target = entry.block.on_add(entry.el)
 
-            # The directive does not or no longer accepts more content
+            # The Block does not or no longer accepts more content
             if target is None:
                 break
 
             tag = target.tag
-            mode = directive.on_markdown()
+            mode = entry.block.on_markdown()
             is_block = mode == 'block' or (mode == 'auto' and tag in self.block_tags)
             is_atomic = mode == 'raw' or tag in self.raw_tags
 
@@ -326,7 +324,7 @@ class DirectiveProcessor(BlockProcessor):
 
             # Block tags should have content go through the normal block processor
             else:
-                self.parser.state.set('directives')
+                self.parser.state.set('blocks')
                 working = self.working
                 self.working = entry
                 self.parser.parseChunk(target, b)
@@ -336,16 +334,16 @@ class DirectiveProcessor(BlockProcessor):
     def run(self, parent, blocks):
         """Convert to details/summary block."""
 
-        # Get the appropriate parent for this directive
+        # Get the appropriate parent for this Block
         temp = self.get_parent(parent)
         if temp is not None:
             parent = temp
 
-        # Did we find a new directive?
-        if self.cached_directive:
-            # Get cached directive and reset the cache
-            directive, block = self.cached_directive
-            self.cached_directive = None
+        # Did we find a new Block?
+        if self.cached_block:
+            # Get cached Block and reset the cache
+            generic_block, block = self.cached_block
+            self.cached_block = None
 
             # Discard first block as we've already processed what we need from it
             blocks.pop(0)
@@ -361,23 +359,23 @@ class DirectiveProcessor(BlockProcessor):
                     p.text = text
 
             # Create the block element
-            el = directive.create(parent)
+            el = generic_block.create(parent)
 
-            # Push a directive block entry on the stack.
-            self.stack.append(DirectiveEntry(directive, el, parent))
+            # Push a Block entry on the stack.
+            self.stack.append(BlockEntry(generic_block, el, parent))
 
             # Split out blocks we care about
-            ours, end = self.split_end(blocks, directive.length)
+            ours, end = self.split_end(blocks, generic_block.length)
 
-            # Parse the blocks under the directive
+            # Parse the text blocks under the Block
             index = len(self.stack) - 1
-            self.parse_blocks(directive, ours, self.stack[-1])
+            self.parse_blocks(ours, self.stack[-1])
 
-            # Clean up directive if we are at the end
+            # Remove Block from the stack if we are at the end
             # or add it to the hungry list.
             if end:
-                # TODO: Do we need this event?
-                directive.on_end(el)
+                # Run the "on end" event
+                generic_block.on_end(el)
                 del self.stack[index]
             else:
                 self.stack[index].hungry = True
@@ -387,16 +385,16 @@ class DirectiveProcessor(BlockProcessor):
                 entry = self.stack[r]
                 if entry.hungry and parent is entry.parent:
                     # Find and remove end from the blocks
-                    ours, end = self.split_end(blocks, entry.directive.length)
+                    ours, end = self.split_end(blocks, entry.block.length)
 
                     # Get the target element and parse
                     entry.hungry = False
-                    self.parse_blocks(entry.directive, ours, entry)
+                    self.parse_blocks(ours, entry)
 
-                    # Clean up if we completed the directive
+                    # Clean up if we completed the Block
                     if end:
-                        # TODO: Do we need this event?
-                        entry.directive.on_end(entry.el)
+                        # Run "on end" event
+                        entry.block.on_end(entry.el)
                         del self.stack[r]
                     else:
                         entry.hungry = True
@@ -418,27 +416,28 @@ class HRProcessor2(HRProcessor):
     SEARCH_RE = re.compile(RE, re.MULTILINE)
 
 
-class DirectiveExtension(Extension):
+class BlocksExtension(Extension):
     """Add generic Blocks extension."""
 
     def __init__(self, *args, **kwargs):
         """Initialize."""
 
         self.config = {
-            'directives': [[], "Directives to load, if not defined, the default ones will be loaded."]
+            'blocks': [[], "Blocks extensions to load, if not defined, the default ones will be loaded."]
         }
 
         super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Add Blocks to Markdown instance."""
+
         md.registerExtension(self)
 
         config = self.getConfigs()
-        directives = config['directives']
+        blocks = config['blocks']
 
-        if not directives:
-            directives = [
+        if not blocks:
+            blocks = [
                 Admonition,
                 Details,
                 HTML,
@@ -455,9 +454,9 @@ class DirectiveExtension(Extension):
                 Figure
             ]
 
-        self.extension = DirectiveProcessor(md.parser, md, directives)
+        self.extension = BlocksProcessor(md.parser, md, blocks)
         # We want to be right after list indentations are processed
-        md.parser.blockprocessors.register(self.extension, "directives", 89)
+        md.parser.blockprocessors.register(self.extension, "blocks", 89)
         # Monkey patch Markdown so we can use `---` for configuration
         md.parser.blockprocessors.register(HRProcessor1(md.parser), 'hr', 50)
         md.parser.blockprocessors.register(HRProcessor2(md.parser), 'hr2', 29.9999)
@@ -471,4 +470,4 @@ class DirectiveExtension(Extension):
 def makeExtension(*args, **kwargs):
     """Return extension."""
 
-    return DirectiveExtension(*args, **kwargs)
+    return BlocksExtension(*args, **kwargs)

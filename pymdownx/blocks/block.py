@@ -1,4 +1,4 @@
-"""Directive class."""
+"""Block class."""
 from abc import ABCMeta, abstractmethod
 import re
 import functools
@@ -183,8 +183,8 @@ def type_class(value):
 type_classes = type_string_delimiter(' ', type_html_attribute_value)
 
 
-class Directive(metaclass=ABCMeta):
-    """Directive."""
+class Block(metaclass=ABCMeta):
+    """Block."""
 
     # Set to something if argument should be split.
     # Arguments will be split and white space stripped.

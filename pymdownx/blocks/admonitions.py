@@ -1,9 +1,9 @@
 """Admonitions."""
 import xml.etree.ElementTree as etree
-from .directive import Directive, type_string, type_class
+from .block import Block, type_string, type_class
 
 
-class Admonition(Directive):
+class Admonition(Block):
     """
     Admonitions.
 
