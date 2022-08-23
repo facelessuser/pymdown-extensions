@@ -280,21 +280,11 @@ class Block(metaclass=ABCMeta):
 
         # Parse provided options
         for k, v in options.items():
+
             # Parameter not in spec
             if k not in spec:
-
-                # Spec can handle anonymous parameters
-                if '' in spec:
-                    parser = spec['']
-                    if parser is None:
-                        try:
-                            v = parser(v)
-                        except Exception:
-                            # Invalid parameter value
-                            return False
-                else:
-                    # Unrecognized parameter name
-                    return False
+                # Unrecognized parameter name
+                return False
 
             # Spec explicitly handles parameter
             else:
