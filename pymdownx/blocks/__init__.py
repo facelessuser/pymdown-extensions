@@ -161,6 +161,9 @@ class BlocksProcessor(BlockProcessor):
         # Is this the start of a new block?
         m = RE_START.search(block)
         if m:
+
+            pre_text = block[:m.start()] if m.start() > 0 else None
+
             # Create a block object
             name = m.group(2).lower()
             if name in self.blocks:
@@ -183,6 +186,9 @@ class BlocksProcessor(BlockProcessor):
                 # Cache the found Block and any remaining content
                 if status:
                     self.cached_block = (generic_block, the_rest[0] if the_rest else '')
+                    # Any text before the block should get handled
+                    if pre_text is not None:
+                        self.parser.parseBlocks(parent, [pre_text])
 
                 return status
         return False
