@@ -12,7 +12,7 @@ class Details(Block):
 
     Options:
     - class: space delimited list of classes
-    - id: An ID
+    - type: A type class to use.
 
     Content:
 
@@ -21,9 +21,9 @@ class Details(Block):
 
     NAME = 'details'
 
-    ARGUMENTS = {'required': 1}
+    ARGUMENTS = {'optional': 1}
     OPTIONS = {
-        'open': [[], type_boolean],
+        'open': [False, type_boolean],
         'type': ['', type_class]
     }
 
@@ -36,14 +36,25 @@ class Details(Block):
             attributes['open'] = 'open'
 
         # Set classes
-        if self.options['type']:
-            attributes['class'] = self.options['type']
+        dtype = self.options['type']
+        if dtype:
+            attributes['class'] = dtype
 
         # Create Detail element
         el = etree.SubElement(parent, 'details', attributes)
 
         # Create the summary
-        summary = etree.SubElement(el, 'summary')
-        summary.text = self.args[0]
+        if not self.args:
+            if not dtype:
+                summary = None
+            else:
+                summary = dtype.capitalize()
+        else:
+            summary = self.args[0]
+
+        # Create the summary
+        if summary is not None:
+            s = etree.SubElement(el, 'summary')
+            s.text = summary
 
         return el
