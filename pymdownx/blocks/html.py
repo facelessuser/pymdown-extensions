@@ -1,6 +1,6 @@
 """HTML."""
 import xml.etree.ElementTree as etree
-from .directive import Directive, type_string_in, type_tag
+from .block import Block, type_string_in, type_tag
 import re
 
 RE_NAME = re.compile(
@@ -12,7 +12,7 @@ RE_NAME = re.compile(
 )
 
 
-class HTML(Directive):
+class HTML(Block):
     """
     HTML.
 
