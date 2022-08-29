@@ -187,9 +187,7 @@ class Block(metaclass=ABCMeta):
 
     # Set to something if argument should be split.
     # Arguments will be split and white space stripped.
-    ARG_DELIM = ''
     NAME = ''
-    ATOMIC = None
 
     ARGUMENTS = {}
     OPTIONS = {}
@@ -226,7 +224,7 @@ class Block(metaclass=ABCMeta):
         """On initialize."""
 
     def on_markdown(self):
-        """Check if this is atomic."""
+        """Check how element should be treated by the Markdown parser."""
 
         return "auto"
 
@@ -342,7 +340,7 @@ class Block(metaclass=ABCMeta):
 
     def on_add(self, parent):
         """
-        Adjust where the content is added.
+        Adjust where the content is added and return the desired element.
 
         Is there a sub-element where this content should go?
         This runs before processing every new block.

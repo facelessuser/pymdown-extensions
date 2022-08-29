@@ -22,7 +22,6 @@ class HTML(Block):
     HTML element content.
     """
 
-    ARG_DELIM = ' '
     NAME = 'html'
     TAG = re.compile('^[a-z][a-z0-9-]*$', re.I)
 
