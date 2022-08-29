@@ -3,31 +3,23 @@ import xml.etree.ElementTree as etree
 from .block import Block, type_string_in, type_tag
 import re
 
-RE_NAME = re.compile(
-    r'[^A-Z_a-z\u00c0-\u00d6\u00d8-\u00f6\u00f8-\u02ff'
-    r'\u0370-\u037d\u037f-\u1fff\u200c-\u200d'
-    r'\u2070-\u218f\u2c00-\u2fef\u3001-\ud7ff'
-    r'\uf900-\ufdcf\ufdf0-\ufffd'
-    r'\:\-\.0-9\u00b7\u0300-\u036f\u203f-\u2040]+'
-)
-
 
 class HTML(Block):
     """
     HTML.
 
-    Arguments (2):
+    Arguments (1 required):
     - HTML tag name
 
     Options:
-    - Any attribute name as key and attribute value as the value
-
-    Special:
-    - `markdown` attribute will determine if the element is treated as atomic (False),
-      forced Markdown (True), or automatically based on tag type (unset or any other value).
+    - `markdown` (string): specify how content inside the element should be treated:
+      - `auto`: will automatically determine how an element's content should be handled.
+      - `span`: treat content as an inline element's content.
+      - `block`: treat content as a block element's content.
+      - `raw`: treat the content as raw content (atomic).
 
     Content:
-    HTML tag body
+    HTML element content.
     """
 
     ARG_DELIM = ' '

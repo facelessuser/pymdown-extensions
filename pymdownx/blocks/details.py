@@ -7,16 +7,16 @@ class Details(Block):
     """
     Details.
 
-    Arguments (1):
-    - summary
+    Arguments (1 optional):
+    - A summary.
 
     Options:
-    - class: space delimited list of classes
-    - type: A type class to use.
+    - `open` (boolean): force the details block to be in an open state opposed to collapsed.
+    - `type` (string): Attach a single special class for styling purposes. If more are needed,
+      use the built-in `attributes` options to apply as many classes as desired.
 
     Content:
-
-    Content to hide with the details.
+    Detail body.
     """
 
     NAME = 'details'
