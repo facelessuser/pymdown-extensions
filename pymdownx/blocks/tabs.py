@@ -7,17 +7,15 @@ class Tabs(Block):
     """
     Tabbed container.
 
-    Arguments (1):
-    - Title
+    Arguments (1 required):
+    - A tab title.
 
     Options:
-    - `new`: force a new tab group by setting to `true` or `false`
-    - `class`: classes to apply to the tab block
-    - `id`: id to apply to the tab block.
+    - `new` (boolean): since consecutive tabs are automatically grouped, `new` can force a tab
+      to start a new tab container.
 
     Content:
-
-    Tab content
+    Detail body.
     """
 
     NAME = 'tab'
