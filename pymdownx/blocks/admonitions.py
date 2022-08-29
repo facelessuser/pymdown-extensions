@@ -5,18 +5,17 @@ from .block import Block, type_class
 
 class Admonition(Block):
     """
-    Admonitions.
+    Admonition.
 
-    Arguments (1):
-    - Title
+    Arguments (1 optional):
+    - A title.
 
     Options:
-    - class: space delimited list of classes
-    - id: An ID
+    - `type` (string): Attach a single special class for styling purposes. If more are needed,
+      use the built-in `attributes` options to apply as many classes as desired.
 
     Content:
-
-    Content within the admonitions.
+    Detail body.
     """
 
     NAME = 'admonition'

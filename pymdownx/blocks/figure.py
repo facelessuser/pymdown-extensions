@@ -7,20 +7,7 @@ class Figure(Block):
     """
     Figure capture Block.
 
-    Arguments (1):
-    - Image path
-
-    Options:
-    - `height`: image height
-    - `width`: image width
-    - `alt`: alternate text for image
-    - `title`: title for image
-    - `class`: classes for figure (space separated)
-    - `id`: Id for figure
-
-    Content:
-
-    Figure caption
+    Work in progress.
     """
 
     NAME = 'figure'
