@@ -253,9 +253,9 @@ class BlocksProcessor(BlockProcessor):
 
         # Move block ending to be parsed later
         if m:
-            block = block[:m.start(0)]
             end = block[m.start(0):]
             blocks.insert(0, end)
+            block = block[:m.start(0)]
 
         # More formal YAML config
         start = RE_YAML_START.match(block.strip('\n'))
@@ -309,7 +309,7 @@ class BlocksProcessor(BlockProcessor):
             target = entry.block.on_add(entry.el)
 
             # The Block does not or no longer accepts more content
-            if target is None:
+            if target is None:  # pragma: no cover
                 break
 
             tag = target.tag
@@ -357,7 +357,7 @@ class BlocksProcessor(BlockProcessor):
                 blocks.insert(0, block)
 
             # Ensure a "tight" parent list item is converted to "loose".
-            if parent and parent.tag in ('li', 'dd'):
+            if parent and parent.tag in ('li', 'dd'):  # pragma: no cover
                 text = parent.text
                 if parent.text:
                     parent.text = ''
