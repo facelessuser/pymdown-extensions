@@ -104,7 +104,7 @@ def type_string_insensitive(value):
 def type_html_attribute_value(value):
     """Ensure type HTML attribute value or fail."""
 
-    return type_string(value).replace('"', '&quote;')
+    return type_string(value).replace('"', '&quot;')
 
 
 def type_html_attribute_name(value):
@@ -117,15 +117,15 @@ def _delimiter(string, split, string_type):
     """Split the string by the delimiter and then parse with the parser."""
 
     l = []
+    # Ensure input is a string
+    string = type_string(string)
     for s in string.split(split):
         s = s.strip()
         if not s:
             continue
-        try:
-            s = string_type(s)
-            l.append(s)
-        except Exception:
-            pass
+        # Ensure each part conforms to the desired string type
+        s = string_type(s)
+        l.append(s)
     return l
 
 
@@ -264,7 +264,7 @@ class Block(metaclass=ABCMeta):
         # A `None` for a parser means accept as is.
         total_parsers = len(parsers)
         for e, a in enumerate(arguments):
-            parser = parsers[e] if e <= total_parsers else parsers[-1]
+            parser = parsers[e] if e < total_parsers else parsers[-1]
             if parser is not None:
                 try:
                     a = parser(a)
@@ -278,8 +278,6 @@ class Block(metaclass=ABCMeta):
         spec = self.option_spec
         parsed = {}
         for k, v in spec.items():
-            if not k:
-                continue
             parsed[k] = v[0]
 
         # Parse provided options

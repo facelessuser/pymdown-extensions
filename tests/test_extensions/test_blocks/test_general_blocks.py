@@ -2,6 +2,8 @@
 from ... import util
 import unittest
 from pymdownx.blocks import block
+import xml.etree.ElementTree as etree
+import markdown
 
 
 class TestTypeFunctions(unittest.TestCase):
@@ -43,8 +45,21 @@ class TestTypeFunctions(unittest.TestCase):
     def test_type_ranged_integer(self):
         """Test `type_ranged_integer`."""
 
+        self.assertEqual(4, block.type_ranged_integer(3, 8)(4))
+        self.assertEqual(4, block.type_ranged_integer(3, 8)(4.0))
+        with self.assertRaises(ValueError):
+            block.type_ranged_integer(3, 8)(4.3)
+        with self.assertRaises(ValueError):
+            block.type_ranged_integer(3, 8)(2)
+        with self.assertRaises(ValueError):
+            block.type_ranged_integer(3, 8)(9)
+
     def test_type_tag(self):
         """Test `type_tag`."""
+
+        self.assertEqual('div', block.type_tag('div'))
+        with self.assertRaises(ValueError):
+            block.type_tag('3bad')
 
     def test_type_boolean(self):
         """Test `type_boolean`."""
@@ -80,23 +95,450 @@ class TestTypeFunctions(unittest.TestCase):
     def test_type_html_attribute_value(self):
         """Test `type_html_attribute_value`."""
 
+        self.assertEqual('some-value', block.type_html_attribute_value('some-value'))
+        self.assertEqual('&quot;some-value&quot;', block.type_html_attribute_value('"some-value"'))
+        with self.assertRaises(ValueError):
+            block.type_html_attribute_value(3)
+
     def test_type_html_attribute_name(self):
         """Test `type_html_attribute_name`."""
+
+        self.assertEqual('attribute', block.type_html_attribute_name('attribute'))
+        self.assertEqual('attr_ibute', block.type_html_attribute_name('attr@ibute'))
 
     def test_type_string_in(self):
         """Test `type_string_in`."""
 
+        self.assertEqual('this', block.type_string_in(['this', 'that'])('this'))
+        with self.assertRaises(ValueError):
+            block.type_string_in(['this', 'that'])('bad')
+
     def test_type_string_delimiter(self):
         """Test `type_string_delimiter`."""
+
+        self.assertEqual(['this', 'that'], block.type_string_delimiter(';')('this; that'))
+        self.assertEqual(['this', 'that'], block.type_string_delimiter(' ')('this  that'))
 
     def test_type_attribute_dict(self):
         """Test `type_attribute_dict`."""
 
+        self.assertEqual(
+            {'test': "test", "class": ["one", "two", "three"]},
+            block.type_attribute_dict({'test': "test", "class": "one two three"})
+        )
+
+        with self.assertRaises(ValueError):
+            block.type_attribute_dict(3)
+
     def test_type_class(self):
         """Test `type_class`."""
 
+        self.assertEqual('this', block.type_class('this'))
+        with self.assertRaises(ValueError):
+            block.type_class('this that')
+
     def test_type_classes(self):
         """Test `type_classes`."""
+
+        self.assertEqual(['this', 'that'], block.type_classes('this that'))
+
+
+class TestGeneral(unittest.TestCase):
+    """Test general cases."""
+
+    def test_attribute_override(self):
+        """Test that attributes cannot be overridden."""
+
+        class AttrOverride(block.Block):
+            NAME = 'override'
+
+            OPTIONS = {
+                'attributes': [False, block.type_boolean],
+            }
+
+            def on_create(self, parent):
+                """Create."""
+
+                return etree.SubElement(parent, 'div')
+
+        with self.assertRaises(ValueError):
+            markdown.markdown(
+                '/// override\n///',
+                extensions=['pymdownx.blocks'],
+                extension_configs={'pymdownx.blocks': {'blocks': [AttrOverride]}}
+            )
+
+
+class TestBlockUndefinedOption(util.MdCase):
+    """Test Blocks with undefined options."""
+
+    class UndefinedBlock(block.Block):
+        """Undefined option block."""
+
+        NAME = 'undefined'
+
+        def on_create(self, parent):
+            """Create."""
+
+            return etree.SubElement(parent, 'div')
+
+    extension = ['pymdownx.blocks']
+    extension_configs = {'pymdownx.blocks': {'blocks': [UndefinedBlock]}}
+
+    def test_undefined_option(self):
+        """An undefined option will cause the block parsing to fail."""
+
+        self.check_markdown(
+            R'''
+            /// undefined
+            option: whatever
+
+            content
+            ///
+            ''',
+            '''
+            <p>/// undefined
+            option: whatever</p>
+            <p>content
+            ///</p>
+            ''',
+            True
+        )
+
+
+class TestMiscCases(util.MdCase):
+    """Test some miscellaneous cases."""
+
+    class MiscBlock(block.Block):
+        """A miscellaneous block."""
+
+        NAME = 'misc'
+        OPTIONS = {'test': ['whatever', block.type_string]}
+
+        def on_create(self, parent):
+            """Create."""
+
+            return etree.SubElement(parent, 'div', {'test': self.options['test']})
+
+    class MiscInline(block.Block):
+        """A miscellaneous block."""
+
+        NAME = 'miscinline'
+
+        def on_create(self, parent):
+            """Create."""
+
+            return etree.SubElement(parent, 'span')
+
+    extension = ['pymdownx.blocks', 'pymdownx.superfences']
+    extension_configs = {'pymdownx.blocks': {'blocks': [MiscBlock, MiscInline]}}
+
+    def test_general_config(self):
+        """Test that content block should have a blank line between config."""
+
+        self.check_markdown(
+            R'''
+            /// misc
+            ---
+            test: misc
+            ---
+
+            content
+            ///
+            ''',
+            '''
+            <div test="misc">
+            <p>content</p>
+            </div>
+            ''',
+            True
+        )
+
+    def test_no_content(self):
+        """Test config and no content."""
+
+        self.check_markdown(
+            R'''
+            /// misc
+            ---
+            test: misc
+            ---
+            ///
+            ''',
+            '''
+            <div test="misc"></div>
+            ''',
+            True
+        )
+
+    def test_unfenced_config_and_no_content(self):
+        """Test no fenced config and no content."""
+
+        self.check_markdown(
+            R'''
+            /// misc
+            test: misc
+            ///
+            ''',
+            '''
+            <div test="misc"></div>
+            ''',
+            True
+        )
+
+    def test_content_after_only_config_block(self):
+        """Test content after only config block."""
+
+        self.check_markdown(
+            R'''
+            /// misc
+            test: misc
+            ///
+            more
+            ''',
+            '''
+            <div test="misc"></div>
+            <p>more</p>
+            ''',
+            True
+        )
+
+    def test_superfence_block(self):
+        """Test blocks with fenced code content."""
+
+        self.check_markdown(
+            R'''
+            /// misc
+
+            ```python
+            import foo
+            ```
+            ///
+            ''',
+            '''
+            <div test="whatever">
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">foo</span>
+            </code></pre></div>
+            </div>
+            ''',
+            True
+        )
+
+    def test_superfence_inline(self):
+        """Test blocks with fenced code content."""
+
+        self.check_markdown(
+            R'''
+            /// miscinline
+
+            ```python
+            import foo
+            ```
+
+            Other content
+            ///
+            ''',
+            '''
+            <span><code>python
+            import foo</code>
+
+            Other content</span>
+            ''',
+            True
+        )
+
+
+class TestBadArgOptionParsers(util.MdCase):
+    """Test when a block's options do not fulfill the parser's expectations."""
+
+    class FailBlock(block.Block):
+        """Test failure to satisfy parser."""
+
+        NAME = 'fail'
+        ARGUMENTS = {'required': 1, 'parsers': [block.type_tag]}
+        OPTIONS = {'test': ['tag', block.type_tag]}
+
+        def on_create(self, parent):
+            """Create."""
+
+            return etree.SubElement(parent, 'div')
+
+    extension = ['pymdownx.blocks']
+    extension_configs = {'pymdownx.blocks': {'blocks': [FailBlock]}}
+
+    def test_fail_args(self):
+        """Test failure of arguments."""
+
+        self.check_markdown(
+            R'''
+            /// fail | 3tag
+            ///
+            ''',
+            '''
+            <p>/// fail | 3tag
+            ///</p>
+            ''',
+            True
+        )
+
+    def test_fail_opts(self):
+        """Test failure of options."""
+
+        self.check_markdown(
+            R'''
+            /// fail | tag
+            test: 3tag
+
+            content
+            ///
+            ''',
+            '''
+            <p>/// fail | tag
+            test: 3tag</p>
+            <p>content
+            ///</p>
+            ''',
+            True
+        )
+
+    def test_bad_config(self):
+        """Test when content is used in place of config."""
+
+        self.check_markdown(
+            R'''
+            /// fail | tag
+            content
+            ///
+            ''',
+            '''
+            <p>/// fail | tag
+            content
+            ///</p>
+            ''',
+            True
+        )
+
+    def test_bad_yaml(self):
+        """Test config is bad YAML."""
+
+        self.check_markdown(
+            R'''
+            /// fail | tag
+            :
+            ///
+            ''',
+            '''
+            <p>/// fail | tag
+            :
+            ///</p>
+            ''',
+            True
+        )
+
+    def test_missing_config_end(self):
+        """Test when config has YAML start but no end."""
+
+        self.check_markdown(
+            R'''
+            /// fail | tag
+            ---
+            test: tag
+
+            content
+            ///
+            ''',
+            '''
+            <h2>/// fail | tag</h2>
+            <p>test: tag</p>
+            <p>content
+            ///</p>
+            ''',
+            True
+        )
+
+    def test_no_space_between_config(self):
+        """Test that content block should have a blank line between config."""
+
+        self.check_markdown(
+            R'''
+            /// fail | tag
+            ---
+            test: tag
+            ---
+            content
+            ///
+            ''',
+            '''
+            <h2>/// fail | tag</h2>
+            <h2>test: tag</h2>
+            <p>content
+            ///</p>
+            ''',
+            True
+        )
+
+
+class TestBlockSplit(util.MdCase):
+    """Test Blocks that split arguments."""
+
+    class SplitBlock(block.Block):
+        """Split block."""
+
+        NAME = 'split'
+
+        ARGUMENTS = {'required': 2}
+
+        def on_create(self, parent):
+            """Create."""
+
+            return etree.SubElement(parent, 'div', {self.args[0]: '0', self.args[1]: '1'})
+
+    extension = ['pymdownx.blocks']
+    extension_configs = {'pymdownx.blocks': {'blocks': [SplitBlock]}}
+
+    def test_split(self):
+        """Test that attributes cannot be overridden."""
+
+        self.check_markdown(
+            R'''
+            /// split | this that
+            ///
+            ''',
+            '''
+            <div that="1" this="0"></div>
+            ''',
+            True
+        )
+
+    def test_split_less(self):
+        """Test failure when arguments are too few."""
+
+        self.check_markdown(
+            R'''
+            /// split | this
+            ///
+            ''',
+            '''
+            <p>/// split | this
+            ///</p>
+            ''',
+            True
+        )
+
+    def test_split_greater(self):
+        """Test failure when arguments are too many."""
+
+        self.check_markdown(
+            R'''
+            /// split | this that another
+            ///
+            ''',
+            '''
+            <p>/// split | this that another
+            ///</p>
+            ''',
+            True
+        )
 
 
 class TestBlocksTab(util.MdCase):
@@ -323,7 +765,7 @@ class TestBlocksTab(util.MdCase):
                         Paragraph
                     ///
                 ///
-        ''',
+            ''',
             '''
             <ul>
             <li>
