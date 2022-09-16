@@ -23,6 +23,8 @@ DEALINGS IN THE SOFTWARE.
 """
 from markdown import Extension
 from markdown.blockprocessors import BlockProcessor
+from markdown.treeprocessors import Treeprocessor
+from markdown.extensions import toc
 import xml.etree.ElementTree as etree
 import re
 
@@ -35,14 +37,15 @@ class TabbedProcessor(BlockProcessor):
     )
     COMPRESS_SPACES = re.compile(r' {2,}')
 
-    def __init__(self, *args, alternate_style=False):
+    def __init__(self, parser, config):
         """Initialize."""
 
-        super().__init__(*args)
+        super().__init__(parser)
         self.tab_group_count = 0
         self.current_sibling = None
         self.content_indention = 0
-        self.alternate_style = alternate_style
+        self.alternate_style = config['alternate_style']
+        self.slugify = callable(config['slugify'])
 
     def detab_by_length(self, text, length):
         """Remove a tab from the front of each line of the given text."""
@@ -166,6 +169,9 @@ class TabbedProcessor(BlockProcessor):
         if m:
             special = m.group(1) if m.group(1) else ''
             title = m.group(2) if m.group(2) else m.group(3)
+            index = 0
+            labels = None
+            content = None
 
             if (
                 sibling and sibling.tag.lower() == 'div' and
@@ -176,8 +182,6 @@ class TabbedProcessor(BlockProcessor):
                 sfences = sibling
                 if self.alternate_style:
                     index = [index for index, last_input in enumerate(sfences.findall('input'), 1)][-1]
-                    labels = None
-                    content = None
                     for d in sfences.findall('div'):
                         if d.attrib['class'] == 'tabbed-labels':
                             labels = d
@@ -194,7 +198,6 @@ class TabbedProcessor(BlockProcessor):
                     {'class': tabbed_set, 'data-tabs': '%d:0' % self.tab_group_count}
                 )
                 if self.alternate_style:
-                    index = 0
                     labels = etree.SubElement(
                         sfences,
                         'div',
@@ -212,12 +215,16 @@ class TabbedProcessor(BlockProcessor):
 
             attributes = {
                 "name": "__tabbed_%d" % tab_set,
-                "type": "radio",
-                "id": "__tabbed_%d_%d" % (tab_set, tab_count)
+                "type": "radio"
             }
+
+            if not self.slugify:
+                attributes['id'] = "__tabbed_%d_%d" % (tab_set, tab_count)
 
             if first:
                 attributes['checked'] = 'checked'
+
+            attributes2 = {"for": "__tabbed_%d_%d" % (tab_set, tab_count)} if not self.slugify else {}
 
             if self.alternate_style:
                 input_el = etree.Element(
@@ -228,9 +235,7 @@ class TabbedProcessor(BlockProcessor):
                 lab = etree.SubElement(
                     labels,
                     "label",
-                    {
-                        "for": "__tabbed_%d_%d" % (tab_set, tab_count)
-                    }
+                    attributes2
                 )
                 lab.text = title
 
@@ -248,9 +253,7 @@ class TabbedProcessor(BlockProcessor):
                 lab = etree.SubElement(
                     sfences,
                     "label",
-                    {
-                        "for": "__tabbed_%d_%d" % (tab_set, tab_count)
-                    }
+                    attributes2
                 )
                 lab.text = title
 
@@ -288,6 +291,56 @@ class TabbedProcessor(BlockProcessor):
             blocks.insert(0, non_tabs)
 
 
+class TabbedTreeprocessor(Treeprocessor):
+    """Tab tree processor."""
+
+    def __init__(self, md, config):
+        """Initialize."""
+
+        super().__init__(md)
+
+        self.slugify = config["slugify"]
+        self.alternate = config["alternate_style"]
+        self.sep = config["separator"]
+
+    def run(self, doc):
+        """Update tab IDs."""
+
+        # Get a list of id attributes
+        used_ids = set()
+        for el in doc.iter():
+            if "id" in el.attrib:
+                used_ids.add(el.attrib["id"])
+
+        for el in doc.iter():
+            if isinstance(el.tag, str) and el.tag.lower() == 'div':
+                classes = el.attrib.get('class', '').split()
+                if 'tabbed-set' in classes and (not self.alternate or 'tabbed-alternate' in classes):
+                    inputs = []
+                    labels = []
+                    if self.alternate:
+                        for i in list(el):
+                            if i.tag == 'input':
+                                inputs.append(i)
+                            if i.tag == 'div' and i.attrib.get('class', '') == 'tabbed-labels':
+                                labels = [j for j in list(i) if j.tag == 'label']
+                    else:
+                        for i in list(el):
+                            if i.tag == 'input':
+                                inputs.append(i)
+                            if i.tag == 'label':
+                                labels.append(i)
+
+                    # Generate slugged IDs
+                    for inpt, label in zip(inputs, labels):
+                        # Do not override pre-existing ids
+                        text = toc.get_name(label)
+                        innertext = toc.unescape(toc.stashedHTML2text(text, self.md))
+                        slug = toc.unique(self.slugify(innertext, self.sep), used_ids)
+                        inpt.attrib["id"] = slug
+                        label.attrib["for"] = slug
+
+
 class TabbedExtension(Extension):
     """Add Tabbed extension."""
 
@@ -295,7 +348,9 @@ class TabbedExtension(Extension):
         """Initialize."""
 
         self.config = {
-            'alternate_style': [False, "Use alternate style - Default: False"]
+            'alternate_style': [False, "Use alternate style - Default: False"],
+            'slugify': [0, "Slugify function used to create tab specific IDs - Default: None"],
+            'separator': ['-', "Slug separator - Default: '-'"]
         }
 
         super(TabbedExtension, self).__init__(*args, **kwargs)
@@ -305,8 +360,11 @@ class TabbedExtension(Extension):
         md.registerExtension(self)
 
         config = self.getConfigs()
-        self.tab_processor = TabbedProcessor(md.parser, alternate_style=config['alternate_style'])
+        self.tab_processor = TabbedProcessor(md.parser, config)
         md.parser.blockprocessors.register(self.tab_processor, "tabbed", 105)
+        if config['slugify']:
+            slugs = TabbedTreeprocessor(md, config)
+            md.treeprocessors.register(slugs, 'tab_slugs', 4)
 
     def reset(self):
         """Reset."""
