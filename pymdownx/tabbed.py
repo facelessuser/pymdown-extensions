@@ -333,7 +333,6 @@ class TabbedTreeprocessor(Treeprocessor):
 
                     # Generate slugged IDs
                     for inpt, label in zip(inputs, labels):
-                        # Do not override pre-existing ids
                         text = toc.get_name(label)
                         innertext = toc.unescape(toc.stashedHTML2text(text, self.md))
                         slug = toc.unique(self.slugify(innertext, self.sep), used_ids)
