@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.6
+
+- **NEW**: Add options for generating tab IDs from tab titles.
+
 ## 9.5
 
 - **NEW**: InlineHilite: Custom inline code block formatters can now be forced to raise an exception by raising a

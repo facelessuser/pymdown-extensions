@@ -1,5 +1,6 @@
 """Test cases for SuperFences."""
 from .. import util
+from pymdownx.slugs import slugify
 
 
 class TestLegacyTab(util.MdCase):
@@ -445,6 +446,76 @@ class TestLegacyTab(util.MdCase):
             <ul>
             <li>Parent 2</li>
             </ul>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestLegacyTabSlugs(util.MdCase):
+    """Test legacy tab slug cases."""
+
+    extension = ['pymdownx.tabbed', 'toc']
+    extension_configs = {'pymdownx.tabbed': {'slugify': slugify(case='lower')}}
+
+    MD = """
+    ### Here is some text
+
+    === "Here is some text"
+        content
+
+    === "Here is some text"
+        content
+    """
+
+    def test_tab_slugs(self):
+        """Test tab slugs."""
+
+        self.check_markdown(
+            self.MD,
+            '''
+            <h3 id="here-is-some-text">Here is some text</h3>
+            <div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="here-is-some-text_1" name="__tabbed_1" type="radio" /><label for="here-is-some-text_1">Here is some text</label><div class="tabbed-content">
+            <p>content</p>
+            </div>
+            <input id="here-is-some-text_2" name="__tabbed_1" type="radio" /><label for="here-is-some-text_2">Here is some text</label><div class="tabbed-content">
+            <p>content</p>
+            </div>
+            </div>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestLegacyTabSlugsSep(util.MdCase):
+    """Test legacy tab slug separator cases."""
+
+    extension = ['pymdownx.tabbed', 'toc']
+    extension_configs = {'pymdownx.tabbed': {'slugify': slugify(case='lower'), 'separator': '_'}}
+
+    MD = """
+    ### Here is some text
+
+    === "Here is some text"
+        content
+
+    === "Here is some text"
+        content
+    """
+
+    def test_slug_with_separator(self):
+        """Test tab slugs with separator."""
+
+        self.check_markdown(
+            self.MD,
+            '''
+            <h3 id="here-is-some-text">Here is some text</h3>
+            <div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="here_is_some_text" name="__tabbed_1" type="radio" /><label for="here_is_some_text">Here is some text</label><div class="tabbed-content">
+            <p>content</p>
+            </div>
+            <input id="here_is_some_text_1" name="__tabbed_1" type="radio" /><label for="here_is_some_text_1">Here is some text</label><div class="tabbed-content">
+            <p>content</p>
+            </div>
+            </div>
             ''',  # noqa: E501
             True
         )
