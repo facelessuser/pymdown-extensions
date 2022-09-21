@@ -38,6 +38,7 @@
     "unit-allowed-list": ["px", "em", "deg", "ms", "%", "mm", "vh", "dppx", "s"],
     "value-keyword-case": "lower",
     "value-no-vendor-prefix": true,
-    "function-no-unknown": null
+    "function-no-unknown": null,
+    "annotation-no-unknown": [true, {"ignoreAnnotations": ["default"]}]
   }
 }
