@@ -18,7 +18,7 @@
     "yarn": "YARN NO LONGER USED - use npm instead."
   },
   "devDependencies": {
-    "@babel/cli": "^7.18.9",
+    "@babel/cli": "^7.18.10",
     "@babel/core": "^7.18.9",
     "@babel/eslint-parser": "^7.18.9",
     "@babel/plugin-external-helpers": "^7.18.6",
