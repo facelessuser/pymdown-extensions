@@ -96,6 +96,21 @@ of a new tab set with `!`.
             ```
         ```
 
+## Tab IDs
+
+By default, tabs generate IDs for each tab using the following template `__tabbed_<tab_set_number>_<tab_number>`. If it
+is desired to implement jumping to a specific tab with more intuitive IDs, it may be preferable to generate IDs from
+slugs. To do so, two [options](#options) are provided: `slugify` and `separator`.
+
+!!! tip
+    Jumping to tabs via IDs may require additional JavaScript to select the targeted tabs.
+
+If `slugify` is given a slug function (you can use any that [ship with Pymdownx Extensions](../extras/slugs.md)), the
+Tabbed extension will generate IDs from the tab titles just like headers. `separator` allows for the specifying of the
+word separator (`-` is the default).
+
+!!! new "New 9.0"
+
 ## Styling with CSS
 
 In order to use tabbed blocks, some additional CSS is needed. You can check out the configuration below which will
@@ -533,6 +548,8 @@ to some practical number.
 
 ## Options
 
-Option            | Type | Default       | Description
------------------ | ---- | ------------- | -----------
-`alternate_style` | bool | `#!py3 False` | Use the experimental, alternative style.
+Option            | Type     | Default       | Description
+----------------- | -------- | ------------- | -----------
+`alternate_style` | bool     | `#!py3 False` | Use the experimental, alternative style.
+`slugify`         | function | `#!py3 None`  | A function to generate slugs from tab titles.
+`separator`       | string   | `#!py3 '-'`   | Default word separator when generating slugs.
