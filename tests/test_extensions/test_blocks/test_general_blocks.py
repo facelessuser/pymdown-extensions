@@ -348,6 +348,126 @@ class TestMiscCases(util.MdCase):
         )
 
 
+class TestMiscYAMLFenceCases(util.MdCase):
+    """Test some miscellaneous cases."""
+
+    class MiscBlock(block.Block):
+        """A miscellaneous block."""
+
+        NAME = 'misc'
+        OPTIONS = {'test': ['whatever', block.type_string]}
+
+        def on_create(self, parent):
+            """Create."""
+
+            return etree.SubElement(parent, 'div', {'test': self.options['test']})
+
+    extension = ['pymdownx.blocks', 'pymdownx.superfences']
+    extension_configs = {'pymdownx.blocks': {'blocks': [MiscBlock], 'require_yaml_fences': True}}
+
+    def test_no_config(self):
+        """Test no YAML config and no new line."""
+
+        self.check_markdown(
+            R'''
+            /// misc
+            content
+            ///
+            ''',
+            '''
+            <div test="whatever">
+            <p>content</p>
+            </div>
+            ''',
+            True
+        )
+
+    def test_config_no_new_line(self):
+        """Test YAML config and no new line."""
+
+        self.check_markdown(
+            R'''
+            /// misc
+            ---
+            test: tag
+            ---
+            content
+            ///
+            ''',
+            '''
+            <div test="tag">
+            <p>content</p>
+            </div>
+            ''',
+            True
+        )
+
+    def test_config_no_fence(self):
+        """Test YAML config and no fence."""
+
+        self.check_markdown(
+            R'''
+            /// misc
+            test: tag
+
+            content
+            ///
+            ''',
+            '''
+            <div test="whatever">
+            <p>test: tag</p>
+            <p>content</p>
+            </div>
+            ''',
+            True
+        )
+
+    def test_incomplete_config_fence(self):
+        """Test incomplete YAML config."""
+
+        self.check_markdown(
+            R'''
+            /// misc
+            ---
+            test: tag
+
+            content
+            ///
+            ''',
+            '''
+            <h2>/// misc</h2>
+            <p>test: tag</p>
+            <p>content
+            ///</p>
+            ''',
+            True
+        )
+
+    def test_config_with_new_line_before(self):
+        """Test YAML config and with new line before it."""
+
+        self.check_markdown(
+            R'''
+            /// misc
+
+            ---
+            test: tag
+            ---
+
+            content
+            ///
+            ''',
+            '''
+            <div test="whatever">
+            <hr />
+            <h2>test: tag</h2>
+            <p>content</p>
+            </div>
+            ''',
+            True
+        )
+
+
 class TestBadArgOptionParsers(util.MdCase):
     """Test when a block's options do not fulfill the parser's expectations."""
 
