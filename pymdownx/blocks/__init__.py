@@ -7,7 +7,6 @@ import re
 from .admonitions import Admonition, Note, Attention, Caution, Danger, Error, Tip, Hint, Important, Warn
 from .tabs import Tabs
 from .details import Details
-from .figure import Figure
 from .html import HTML
 import yaml
 
@@ -120,8 +119,27 @@ def revert_fenced_code(md, blocks):
 class BlocksProcessor(BlockProcessor):
     """Generic block processor."""
 
-    def __init__(self, parser, md, blocks):
+    def __init__(self, parser, md, config):
         """Initialization."""
+
+        blocks = config['blocks']
+
+        if not blocks:
+            blocks = [
+                Admonition,
+                Details,
+                HTML,
+                Note,
+                Attention,
+                Caution,
+                Danger,
+                Error,
+                Tip,
+                Hint,
+                Important,
+                Warn,
+                Tabs
+            ]
 
         self.empty_tags = set(['hr'])
         self.block_level_tags = set(md.block_level_elements.copy())
@@ -150,6 +168,7 @@ class BlocksProcessor(BlockProcessor):
         # so we can quickly retrieve it when running
         self.cached_parent = None
         self.cached_block = None
+        self.require_yaml_fences = config['require_yaml_fences']
 
     def test(self, parent, block):
         """Test to see if we should process the block."""
@@ -265,15 +284,21 @@ class BlocksProcessor(BlockProcessor):
             m = RE_YAML_END.search(block, begin)
             if m:
                 # There shouldn't be anything after the config
-                leftover = block[m.end(0):].strip()
-                if leftover:
-                    return None
+                leftover = block[m.end(0):]
+                if leftover.strip():
+                    if not self.require_yaml_fences:
+                        return None
+                    else:
+                        blocks.insert(0, leftover)
 
                 block = block[start.end(0):m.start(0)]
 
             # No YAML end
             else:
                 return None
+        elif self.require_yaml_fences:
+            blocks.insert(0, block)
+            return {}
 
         # Attempt to parse the config.
         # If successful, augment the blocks and return the config.
@@ -429,7 +454,8 @@ class BlocksExtension(Extension):
         """Initialize."""
 
         self.config = {
-            'blocks': [[], "Blocks extensions to load, if not defined, the default ones will be loaded."]
+            'blocks': [[], "Blocks extensions to load, if not defined, the default ones will be loaded."],
+            'require_yaml_fences': [False, "Require YAML fences in generic blocks."]
         }
 
         super().__init__(*args, **kwargs)
@@ -440,27 +466,7 @@ class BlocksExtension(Extension):
         md.registerExtension(self)
 
         config = self.getConfigs()
-        blocks = config['blocks']
-
-        if not blocks:
-            blocks = [
-                Admonition,
-                Details,
-                HTML,
-                Note,
-                Attention,
-                Caution,
-                Danger,
-                Error,
-                Tip,
-                Hint,
-                Important,
-                Warn,
-                Tabs,
-                Figure
-            ]
-
-        self.extension = BlocksProcessor(md.parser, md, blocks)
+        self.extension = BlocksProcessor(md.parser, md, config)
         # We want to be right after list indentations are processed
         md.parser.blockprocessors.register(self.extension, "blocks", 89)
         # Monkey patch Markdown so we can use `---` for configuration
