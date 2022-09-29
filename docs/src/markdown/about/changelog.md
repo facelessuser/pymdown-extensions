@@ -3,6 +3,7 @@
 ## 9.6
 
 - **NEW**: Add options for generating tab IDs from tab titles.
+- **NEW**: Add support for specifying specific lines for Snippets.
 
 ## 9.5
 
