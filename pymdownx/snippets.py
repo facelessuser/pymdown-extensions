@@ -61,7 +61,7 @@ class SnippetPreprocessor(Preprocessor):
         '''
     )
 
-    RE_SNIPPET_FILE = re.compile(r'(.+?)(:[0-9]*)?(:[0-9]*)?$')
+    RE_SNIPPET_FILE = re.compile(r'(.*?)(:[0-9]*)?(:[0-9]*)?$')
 
     def __init__(self, config, md):
         """Initialize."""
@@ -193,13 +193,13 @@ class SnippetPreprocessor(Preprocessor):
                 end = None
                 start = None
                 m = self.RE_SNIPPET_FILE.match(path)
+                path = m.group(1).strip()
                 # Looks like we have an empty file and only lines specified
-                if not m:
+                if not path:
                     if self.check_paths:
                         raise SnippetMissingError("Snippet at path '{}' could not be found".format(path))
                     else:
                         continue
-                path = m.group(1)
                 ending = m.group(3)
                 if ending and len(ending) > 1:
                     end = int(ending[1:])
