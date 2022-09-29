@@ -100,6 +100,16 @@ include.md
 ; skip.md
 --8&lt;--</code></pre>
 
+## Snippet Lines
+
+When specifying a snippet, you can specify which lines of the Snippet file that you wish to include. To specify line
+numbers, simply append the start and/or end to the end of the file name with each number separated with `:`.
+
+- To specify extraction of content to start at a specific line number, simply use `file.md:3`.
+- To extract all content up to a specific line, use `file.md::3`. This will extract lines 1 - 3.
+- To extract all content starting at a specific line up to another line, use `file.md:4:6`. This will extract lines
+  4 - 6.
+
 ## Formatting Snippets
 
 When inserting your snippet, it is important to remember that some snippets may need whitespace around them.
