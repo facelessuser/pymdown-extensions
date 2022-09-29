@@ -46,6 +46,7 @@ class SnippetPreprocessor(Preprocessor):
     RE_ALL_SNIPPETS = re.compile(
         r'''(?x)
         ^(?P<space>[ \t]*)
+        (?P<escape>;*)
         (?P<all>
             (?P<inline_marker>-{2,}8<-{2,}[ \t]+)
             (?P<snippet>(?:"(?:\\"|[^"\n\r])+?"|'(?:\\'|[^'\n\r])+?'))(?![ \t]) |
@@ -148,6 +149,11 @@ class SnippetPreprocessor(Preprocessor):
             inline = False
             m = self.RE_ALL_SNIPPETS.match(line)
             if m:
+                if m.group('escape'):
+                    # The snippet has been escaped, replace first `;` and continue.
+                    new_lines.append(line.replace(';', '', 1))
+                    continue
+
                 if block and m.group('inline_marker'):
                     # Don't use inline notation directly under a block.
                     # It's okay if inline is used again in sub file though.
@@ -186,7 +192,7 @@ class SnippetPreprocessor(Preprocessor):
                         continue
 
                 # Ignore commented out lines
-                if path.startswith('; '):
+                if path.startswith(';'):
                     continue
 
                 # Get line numbers (if specified)

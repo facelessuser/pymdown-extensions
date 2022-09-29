@@ -11,11 +11,9 @@ needs to be updated, it can be updated in one location instead of updating them 
 
 Snippets is run as a preprocessor, so if a snippet is found in a fenced code block etc., it will still get processed.
 
-If when a snippet declaration is processed, and the specified file cannot be found, then the markup will be removed.
-If you need to show a snippet example in fenced code, please escape it as listed in
-[Snippets Notation](#snippets-notation).
+If a snippet declaration is processed, and the specified file cannot be found, then the markup will be removed.
 
-Snippets can handle recursive file inclusion.  And if Snippets encounters the same file in the current stack, it will
+Snippets can handle recursive file inclusion. And if Snippets encounters the same file in the current stack, it will
 avoid re-processing it in order to avoid an infinite loop (or crash on hitting max recursion depth).
 
 This is meant for simple file inclusion, it has no intention to implement features from complex template systems. If you
@@ -29,6 +27,126 @@ The Snippets extension can be included in Python Markdown by using the following
 import markdown
 md = markdown.Markdown(extensions=['pymdownx.snippets'])
 ```
+
+## Snippets Notation
+
+There are two modes of inserting snippets: single line and block. Single line mode accepts a single file name, and block
+accepts multiple files. Snippets does not require a specific extension, and as long as a valid file name is specified,
+it will attempt to process it.
+
+Snippets paths are relative to base location, by default the current working directory. You can specify a new base
+location by setting the `base_path`. You can even allow downloading snippets from external locations. To learn more,
+check out ["Specifying Snippet Locations"](#specifying-snippet-locations) and ["URL Snippets"](#url-snippets).
+
+### Single Line Format
+
+Single line format is done by placing the following markup for the single line notation:
+
+```
+;--8<-- "filename.ext"
+```
+
+As you can see, the notation is ASCII scissors cutting a line followed by the file name.  In the case of the single line
+variant, the file name follows directly after the scissors and is quoted.  In the case of the block format, the file
+names follow on separate lines and an additional scissor is added afterwards to signal the end of the block.
+
+The dashes can be as few as 2 (`--8<--`) or longer if desired (`---8<---------`); whatever your preference is.  The
+important thing is that the notation must reside on a line(s) by itself, and the path, must be quoted in the case of the
+single line notation.  If the file name is indented, the content will be indented to that level as well.
+
+You can temporarily disable the snippet by placing a `;` before the file name:
+
+```
+;--8<-- "; skip.md"
+```
+
+### Block Format
+
+The second approach is known as the block format. Block format allows you to insert multiple files.
+
+```
+;--8<--
+filename.md
+filename.log
+;--8<--
+```
+The block format differs from the single format by requiring the the content to be fenced between two `--8<--`. The
+start and end `--8<--` must be on a line by themselves.
+
+When using the block format empty lines are also preserved within the block. Consider the example below.
+
+```
+;--8<--
+fileA.md
+
+fileB.md
+;--8<--
+```
+
+This would yield:
+
+```
+Content of file A.
+
+Content of file B.
+```
+
+If you have a file you want to temporarily ignore, you can comment it out by placing a `;` at the start of the line.
+
+```
+;--8<--
+include.md
+; skip.md
+;--8<--
+```
+
+### Snippet Lines
+
+!!! new "New 9.6"
+
+When specifying a snippet, you can specify which lines of the Snippet file that you wish to include. To specify line
+numbers, simply append the start and/or end to the end of the file name with each number separated with `:`.
+
+- To specify extraction of content to start at a specific line number, simply use `file.md:3`.
+- To extract all content up to a specific line, use `file.md::3`. This will extract lines 1 - 3.
+- To extract all content starting at a specific line up to another line, use `file.md:4:6`. This will extract lines
+  4 - 6.
+
+```
+;--8<-- "file.md:4:6"
+
+;--8<--
+include.md::3
+;--8<--
+```
+
+### Escaping Snippets Notation
+
+!!! new "New 9.6"
+
+If it is necessary to demonstrate the snippet syntax, an escaping method is required. If you need to escape snippets,
+just place a `;` right before `--8<--`. This will work for both single line and block format. An escaped snippet
+notation will be passed through the Markdown parser with the first `;` removed.
+
+=== "Markdown"
+
+    ````
+    ```
+    ;;--8<-- "escaped.md"
+    ;;;--8<-- "escaped.md"
+    ```
+    ````
+
+=== "Result"
+
+    ```
+    ;--8<-- "escaped.md"
+    ;;--8<-- "escaped.md"
+    ```
+
+!!! warning "Legacy Escaping"
+    The legacy escape method required placing a space at the end of the line with `--8<--`, while this should still
+    work, this behavior will be removed at sometime in the future and is discouraged.
 
 ## Specifying Snippet Locations
 
@@ -55,79 +173,6 @@ If either of these is set to zero, the limits will be ignored.
 
 !!! new "New 9.5"
     URL snippet support was introduced in 9.5.
-
-## Snippets Notation
-
-There are two modes of inserting snippets: single line and block. Single line mode accepts a single file name, and block
-accepts multiple files. Snippets does not require a specific extension, and as long as a valid file name is specified,
-it will attempt to process it.
-
-Single line format is done by placing the following markup for the single line notation:
-
-<pre><code>--8&lt;-- "filename.ext"</code></pre>
-
-Or you can insert multiple files with block notation:
-
-<pre><code>--8&lt;--
-filename.md
-filename.log
---8&lt;--</code></pre>
-
-As you can see, the notation is ASCII scissors cutting a line followed by the file name.  In the case of the single line
-variant, the file name follows directly after the scissors and is quoted.  In the case of the block format, the file
-names follow on separate lines and an additional scissor is added afterwards to signal the end of the block.
-
-The dashes can be as few as 2 (`--8<--`) or longer if desired (`---8<---------`); whatever your preference is.  The
-important thing is that the notation must reside on a line(s) by itself, and the path must be quoted in the case of the
-single line notation.  If the file name is indented, the content will be indented to that level as well.  To reduce
-confusion in block format, it is advised to ensure the entire block is indented to the same level.  If you need to
-escape the syntax, just make sure a minimum of a space is after the quoted file name for single line format, or a space
-after the start or end block markers in block format.
-
-<pre><code>--8&lt;-- "escaped notation"&lt;space&gt;
-
---8&lt;--&lt;space&gt;
-escaped notation
---8&lt;--&lt;space&gt;</code></pre>
-
-If you have a file you want to temporarily ignore, you can comment it out by prepending the path with `; ` (notice the
-semicolon is followed by a space).  This works for both single line and block format:
-
-<pre><code>--8&lt;-- "; skip.md"
-
---8&lt;--
-include.md
-; skip.md
---8&lt;--</code></pre>
-
-## Snippet Lines
-
-When specifying a snippet, you can specify which lines of the Snippet file that you wish to include. To specify line
-numbers, simply append the start and/or end to the end of the file name with each number separated with `:`.
-
-- To specify extraction of content to start at a specific line number, simply use `file.md:3`.
-- To extract all content up to a specific line, use `file.md::3`. This will extract lines 1 - 3.
-- To extract all content starting at a specific line up to another line, use `file.md:4:6`. This will extract lines
-  4 - 6.
-
-## Formatting Snippets
-
-When inserting your snippet, it is important to remember that some snippets may need whitespace around them.
-
-<pre><code>This is the file that is including the snippet.
-We want blank lines before and after the insertion:
-
---8&lt;-- "insert.md"
-
-So we put blank lines around the insertion.</code></pre>
-
-In block format, it is important to note that empty lines are preserved for formatting:
-
-<pre><code>--8&lt;--
-file1.md
-
-file2.md
---8&lt;--</code></pre>
 
 ## Auto-Append Snippets
 

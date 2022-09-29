@@ -28,7 +28,7 @@ class TestSnippets(util.MdCase):
             ---8<--- "loop.txt"
             ---8<--- "a.txt"
             ---8<--- "b.txt"
-            ---8<--- "b.txt" 
+            ;---8<--- "b.txt"
 
             - Testing indentation
 
@@ -37,7 +37,7 @@ class TestSnippets(util.MdCase):
             R'''
             <p>Snippet
             Snippet
-            ---8&lt;--- "b.txt" </p>
+            ---8&lt;--- "b.txt"</p>
             <ul>
             <li>
             <p>Testing indentation</p>
@@ -60,9 +60,9 @@ class TestSnippets(util.MdCase):
             d.txt
             ---8<---
 
-            ---8<--- 
+            ;---8<---
             d.txt
-            ---8<--- 
+            ;---8<---
 
             - Testing indentation
 
@@ -82,9 +82,9 @@ class TestSnippets(util.MdCase):
             R'''
             <p>Snippet</p>
             <p>Snippet</p>
-            <p>---8&lt;--- 
+            <p>---8&lt;---
             d.txt
-            ---8&lt;--- </p>
+            ---8&lt;---</p>
             <ul>
             <li>
             <p>Testing indentation</p>
