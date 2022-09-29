@@ -1,0 +1,9 @@
+This is a multi-line
+snippet.
+
+Content resides on various lines.
+If we use line specifiers,
+we can select any number of lines we want.
+
+This is the end of the file.
+There is no more.

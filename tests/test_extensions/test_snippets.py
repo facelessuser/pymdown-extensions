@@ -119,6 +119,110 @@ class TestSnippets(util.MdCase):
             True
         )
 
+    def test_start_line_inline(self):
+        """Test starting line with inline syntax."""
+
+        self.check_markdown(
+            R'''
+            ---8<--- "lines.txt:4"
+            ''',
+            '''
+            <p>Content resides on various lines.
+            If we use line specifiers,
+            we can select any number of lines we want.</p>
+            <p>This is the end of the file.
+            There is no more.</p>
+            ''',
+            True
+        )
+
+    def test_end_line_inline(self):
+        """Test ending line with inline syntax."""
+
+        self.check_markdown(
+            R'''
+            ---8<--- "lines.txt::6"
+            ''',
+            '''
+            <p>This is a multi-line
+            snippet.</p>
+            <p>Content resides on various lines.
+            If we use line specifiers,
+            we can select any number of lines we want.</p>
+            ''',
+            True
+        )
+
+    def test_start_end_line_inline(self):
+        """Test starting and ending line with inline syntax."""
+
+        self.check_markdown(
+            R'''
+            ---8<--- "lines.txt:4:6"
+            ''',
+            '''
+            <p>Content resides on various lines.
+            If we use line specifiers,
+            we can select any number of lines we want.</p>
+            ''',
+            True
+        )
+
+    def test_start_line_block(self):
+        """Test starting line with block syntax."""
+
+        self.check_markdown(
+            R'''
+            --8<--
+            lines.txt:4
+            --8<--
+            ''',
+            '''
+            <p>Content resides on various lines.
+            If we use line specifiers,
+            we can select any number of lines we want.</p>
+            <p>This is the end of the file.
+            There is no more.</p>
+            ''',
+            True
+        )
+
+    def test_end_line_block(self):
+        """Test ending line with block syntax."""
+
+        self.check_markdown(
+            R'''
+            --8<--
+            lines.txt::6
+            --8<--
+            ''',
+            '''
+            <p>This is a multi-line
+            snippet.</p>
+            <p>Content resides on various lines.
+            If we use line specifiers,
+            we can select any number of lines we want.</p>
+            ''',
+            True
+        )
+
+    def test_start_end_line_block(self):
+        """Test starting and ending line with block syntax."""
+
+        self.check_markdown(
+            R'''
+            --8<--
+            lines.txt:4:6
+            --8<--
+            ''',
+            '''
+            <p>Content resides on various lines.
+            If we use line specifiers,
+            we can select any number of lines we want.</p>
+            ''',
+            True
+        )
+
 
 class TestSnippetsFile(util.MdCase):
     """Test snippet file case."""
@@ -229,6 +333,19 @@ class TestSnippetsMissing(util.MdCase):
                 True
             )
 
+    def test_missing_lines(self):
+        """Test missing file with line numbers."""
+
+        with self.assertRaises(SnippetMissingError):
+            self.check_markdown(
+                R'''
+                --8<-- ":3:4"
+                ''',
+                '''
+                ''',
+                True
+            )
+
 
 class TestSnippetsGracefulMissing(util.MdCase):
     """Test snippet file case."""
@@ -261,6 +378,18 @@ class TestSnippetsGracefulMissing(util.MdCase):
         self.check_markdown(
             R'''
             --8<-- "missing.txt"
+            ''',
+            '''
+            ''',
+            True
+        )
+
+    def test_missing_lines(self):
+        """Test missing file with lines."""
+
+        self.check_markdown(
+            R'''
+            --8<-- ":3:4"
             ''',
             '''
             ''',
@@ -367,6 +496,37 @@ class TestURLSnippets(util.MdCase):
             ''',
             '''
             <p>content</p>
+            ''',
+            True
+        )
+
+    @patch('urllib.request.urlopen')
+    def test_url_lines(self, mock_urlopen):
+        """Test nested file in URL."""
+
+        content = []
+        length = 0
+        with open('tests/test_extensions/_snippets/lines.txt', 'rb') as f:
+            for l in f:
+                length += len(l)
+                content.append(l)
+
+        cm = MagicMock()
+        cm.status = 200
+        cm.code = 200
+        cm.readlines.return_value = content
+        cm.headers = {'content-length': '183'}
+        cm.__enter__.return_value = cm
+        mock_urlopen.return_value = cm
+
+        self.check_markdown(
+            R'''
+            --8<-- "https://test.com/myfile.md:4:6"
+            ''',
+            '''
+            <p>Content resides on various lines.
+            If we use line specifiers,
+            we can select any number of lines we want.</p>
             ''',
             True
         )

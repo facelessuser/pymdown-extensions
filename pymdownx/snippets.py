@@ -61,6 +61,8 @@ class SnippetPreprocessor(Preprocessor):
         '''
     )
 
+    RE_SNIPPET_FILE = re.compile(r'(.*?)(:[0-9]*)?(:[0-9]*)?$')
+
     def __init__(self, config, md):
         """Initialize."""
 
@@ -112,7 +114,7 @@ class SnippetPreprocessor(Preprocessor):
             # Fail if status is not OK
             status = response.status if util.PY39 else response.code
             if status != 200:
-                raise SnippetMissingError('Cannot download snippet {}'.format(url))
+                raise SnippetMissingError("Cannot download snippet '{}'".format(url))
 
             # We provide some basic protection against absurdly large files.
             # 32MB is chosen as an arbitrary upper limit. This can be raised if desired.
@@ -187,6 +189,24 @@ class SnippetPreprocessor(Preprocessor):
                 if path.startswith('; '):
                     continue
 
+                # Get line numbers (if specified)
+                end = None
+                start = None
+                m = self.RE_SNIPPET_FILE.match(path)
+                path = m.group(1).strip()
+                # Looks like we have an empty file and only lines specified
+                if not path:
+                    if self.check_paths:
+                        raise SnippetMissingError("Snippet at path '{}' could not be found".format(path))
+                    else:
+                        continue
+                ending = m.group(3)
+                if ending and len(ending) > 1:
+                    end = int(ending[1:])
+                starting = m.group(2)
+                if starting and len(starting) > 1:
+                    start = max(1, int(starting[1:]) - 1)
+
                 # Ignore path links if we are in external, downloaded content
                 is_link = path.lower().startswith(('https://', 'http://'))
                 if is_url and not is_link:
@@ -207,10 +227,16 @@ class SnippetPreprocessor(Preprocessor):
                         # Read file content
                         with codecs.open(snippet, 'r', encoding=self.encoding) as f:
                             s_lines = [l for l in f]
+                            if start is not None or end is not None:
+                                s = slice(start, end)
+                                s_lines = s_lines[s]
                     else:
                         # Read URL content
                         try:
                             s_lines = self.download(snippet)
+                            if start is not None or end is not None:
+                                s = slice(start, end)
+                                s_lines = s_lines[s]
                         except SnippetMissingError:
                             if self.check_paths:
                                 raise
@@ -228,7 +254,7 @@ class SnippetPreprocessor(Preprocessor):
                     )
 
                 elif self.check_paths:
-                    raise SnippetMissingError("Snippet at path %s could not be found" % path)
+                    raise SnippetMissingError("Snippet at path '{}' could not be found".format(path))
 
         # Pop the current file name out of the cache
         if file_name:
