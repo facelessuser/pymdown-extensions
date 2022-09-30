@@ -2,6 +2,8 @@
 
 ## 9.6
 
+- **NEW**: Highlight: Allow greater granularity of specifying where language guessing takes place via `guess_lang`
+  option (e.g. `block` vs `inline`).
 - **NEW**: Tabbed: Add options for generating tab IDs from tab titles.
 - **NEW**: Snippets: Add support for specifying specific lines for Snippets.
 - **NEW**: Snippets: Commenting out files in block format no longer requires a space directly after `;`.
