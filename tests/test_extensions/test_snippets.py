@@ -11,7 +11,7 @@ class TestSnippets(util.MdCase):
     """Test snippet cases."""
 
     extension = [
-        'pymdownx.snippets',
+        'pymdownx.snippets', 'pymdownx.superfences'
     ]
 
     extension_configs = {
@@ -219,6 +219,68 @@ class TestSnippets(util.MdCase):
             <p>Content resides on various lines.
             If we use line specifiers,
             we can select any number of lines we want.</p>
+            ''',
+            True
+        )
+
+    def test_section_inline(self):
+        """Test section partial in inline snippet."""
+
+        self.check_markdown(
+            R'''
+            ```
+            --8<-- "section.txt:cssSection"
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code>div {
+                color: red;
+            }
+            </code></pre></div>
+            ''',
+            True
+        )
+
+    def test_section_block(self):
+        """Test section partial in inline snippet."""
+
+        self.check_markdown(
+            R'''
+            --8<--
+            section.txt:htmlSection
+            --8<--
+            ''',
+            '''
+            <div><p>content</p></div>
+            ''',
+            True
+        )
+
+    def test_section_end_first(self):
+        """Test section when the end is specified first."""
+
+        self.check_markdown(
+            R'''
+            --8<--
+            section.txt:cssSection2
+            --8<--
+            ''',
+            '''
+            ''',
+            True
+        )
+
+    def test_section_no_end(self):
+        """Test section when the end is not specified."""
+
+        self.check_markdown(
+            R'''
+            --8<--
+            section.txt:htmlSection2
+            --8<--
+            ''',
+            '''
+            <div><p>content</p></div>
             ''',
             True
         )
@@ -502,7 +564,7 @@ class TestURLSnippets(util.MdCase):
 
     @patch('urllib.request.urlopen')
     def test_url_lines(self, mock_urlopen):
-        """Test nested file in URL."""
+        """Test specifying specific lines in a URL."""
 
         content = []
         length = 0
@@ -515,7 +577,7 @@ class TestURLSnippets(util.MdCase):
         cm.status = 200
         cm.code = 200
         cm.readlines.return_value = content
-        cm.headers = {'content-length': '183'}
+        cm.headers = {'content-length': length}
         cm.__enter__.return_value = cm
         mock_urlopen.return_value = cm
 
@@ -612,6 +674,35 @@ class TestURLSnippets(util.MdCase):
             --8<-- "https://test.com/myfile.md"
             ''',
             '',
+            True
+        )
+
+    @patch('urllib.request.urlopen')
+    def test_url_sections(self, mock_urlopen):
+        """Test specifying a section in a URL."""
+
+        content = []
+        length = 0
+        with open('tests/test_extensions/_snippets/section.txt', 'rb') as f:
+            for l in f:
+                length += len(l)
+                content.append(l)
+
+        cm = MagicMock()
+        cm.status = 200
+        cm.code = 200
+        cm.readlines.return_value = content
+        cm.headers = {'content-length': length}
+        cm.__enter__.return_value = cm
+        mock_urlopen.return_value = cm
+
+        self.check_markdown(
+            R'''
+            --8<-- "https://test.com/myfile.md:htmlSection"
+            ''',
+            '''
+            <div><p>content</p></div>
+            ''',
             True
         )
 
