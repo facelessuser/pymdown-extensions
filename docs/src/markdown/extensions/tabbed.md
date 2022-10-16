@@ -98,6 +98,8 @@ of a new tab set with `!`.
 
 ## Tab Select
 
+!!! new "New 9.7"
+
 If you'd like to force a tab to be selected, simply use `===+`, otherwise, the first tab will be selected by default.
 
 !!! example "Tab Select"
@@ -134,10 +136,9 @@ If you'd like to force a tab to be selected, simply use `===+`, otherwise, the f
             Another Tab
         ```
 
-!!! new "New 9.5"
-    Tab select syntax with `+` was introduced in 9.5.
-
 ## Tab IDs
+
+!!! new "New 9.0"
 
 By default, tabs generate IDs for each tab using the following template `__tabbed_<tab_set_number>_<tab_number>`. If it
 is desired to implement jumping to a specific tab with more intuitive IDs, it may be preferable to generate IDs from
@@ -149,8 +150,6 @@ slugs. To do so, two [options](#options) are provided: `slugify` and `separator`
 If `slugify` is given a slug function (you can use any that [ship with Pymdownx Extensions](../extras/slugs.md)), the
 Tabbed extension will generate IDs from the tab titles just like headers. `separator` allows for the specifying of the
 word separator (`-` is the default).
-
-!!! new "New 9.0"
 
 ## Styling with CSS
 

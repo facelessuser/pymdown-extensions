@@ -169,7 +169,7 @@ extra_javascript:
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-  - assets/pymdownx-extras/extra-loader-6cff4ffc.js
+  - assets/pymdownx-extras/extra-loader-d39d49fc.js
 
 plugins:
   - search
