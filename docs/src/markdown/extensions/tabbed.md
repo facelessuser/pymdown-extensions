@@ -96,6 +96,47 @@ of a new tab set with `!`.
             ```
         ```
 
+## Tab Select
+
+If you'd like to force a tab to be selected, simply use `===+`, otherwise, the first tab will be selected by default.
+
+!!! example "Tab Select"
+
+    === "Output"
+        === "Not Me"
+            Markdown **content**.
+
+            Multiple paragraphs.
+
+        ===+ "Select Me"
+            More Markdown **content**.
+
+            - list item a
+            - list item b
+
+        === "Not Me Either"
+            Another Tab
+
+    === "Markdown"
+        ```
+        === "Not Me"
+            Markdown **content**.
+
+            Multiple paragraphs.
+
+        ===+ "Select Me"
+            More Markdown **content**.
+
+            - list item a
+            - list item b
+
+        === "Not Me Either"
+            Another Tab
+        ```
+
+!!! new "New 9.5"
+    Tab select syntax with `+` was introduced in 9.5.
+
 ## Tab IDs
 
 By default, tabs generate IDs for each tab using the following template `__tabbed_<tab_set_number>_<tab_number>`. If it
@@ -261,6 +302,13 @@ const tabSync = () => {
   }
 }
 ```
+
+!!! tip "Special Considerations"
+    If you are combining this feature with something like ["tab select"](#tab-select), you may have to not link tabs on
+    initial page load to ensure the default is not overridden. The example above does not initiate tab linking on
+    initial page load, only registration of the event. Some may attempt to implement tab linkage such that selected tabs
+    are remembered across pages, special consideration would be required in such situations and is beyond the scope of
+    this simple example.
 
 ## Alternate Style
 

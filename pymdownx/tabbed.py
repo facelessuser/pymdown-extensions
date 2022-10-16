@@ -33,7 +33,7 @@ class TabbedProcessor(BlockProcessor):
     """Tabbed block processor."""
 
     START = re.compile(
-        r'(?:^|\n)={3}(!)? +"(.*?)" *(?:\n|$)'
+        r'(?:^|\n)={3}(\+|\+!|!\+|!)? +"(.*?)" *(?:\n|$)'
     )
     COMPRESS_SPACES = re.compile(r' {2,}')
 
@@ -176,7 +176,7 @@ class TabbedProcessor(BlockProcessor):
             if (
                 sibling and sibling.tag.lower() == 'div' and
                 sibling.attrib.get('class', '') == tabbed_set and
-                special != '!'
+                '!' not in special
             ):
                 first = False
                 sfences = sibling
@@ -221,8 +221,13 @@ class TabbedProcessor(BlockProcessor):
             if not self.slugify:
                 attributes['id'] = "__tabbed_%d_%d" % (tab_set, tab_count)
 
-            if first:
+            if first or '+' in special:
                 attributes['checked'] = 'checked'
+                # Remove any previously assigned "checked states" to siblings
+                for i in sfences.findall('input'):
+                    if i.attrib.get('name', '') == '__tabbed_{}'.format(tab_set):
+                        if 'checked' in i.attrib:
+                            del i.attrib['checked']
 
             attributes2 = {"for": "__tabbed_%d_%d" % (tab_set, tab_count)} if not self.slugify else {}
 

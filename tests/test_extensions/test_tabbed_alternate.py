@@ -226,6 +226,70 @@ class TestLegacyTab(util.MdCase):
             True
         )
 
+    def test_tabbed_select(self):
+        """Test selecting a tab."""
+
+        self.check_markdown(
+            r'''
+            === "Tab 1"
+                content
+
+            ===+ "Tab 2"
+                content
+
+            === "Tab 3"
+                content
+            ''',
+            r'''
+            <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input checked="checked" id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab 1</label><label for="__tabbed_1_2">Tab 2</label><label for="__tabbed_1_3">Tab 3</label></div>
+            <div class="tabbed-content">
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            </div>
+            </div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_tabbed_select_mulitiple(self):
+        """Test selecting multiple tabs."""
+
+        self.check_markdown(
+            r'''
+            === "Tab 1"
+                content
+
+            ===+ "Tab 2"
+                content
+
+            ===+ "Tab 3"
+                content
+            ''',
+            r'''
+            <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input checked="checked" id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab 1</label><label for="__tabbed_1_2">Tab 2</label><label for="__tabbed_1_3">Tab 3</label></div>
+            <div class="tabbed-content">
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            </div>
+            </div>
+            ''',  # noqa: E501
+            True
+        )
+
     def test_with_lists(self):
         """Test with lists."""
 
