@@ -3,6 +3,7 @@
 [![Build][github-ci-image]][github-ci-link]
 [![Coverage Status][codecov-image]][codecov-link]
 [![PyPI Version][pypi-image]][pypi-link]
+[![PyPI Downloads][pypi-down]][pypi-link]
 [![PyPI - Python Version][python-image]][pypi-link]
 ![License][license-image-mit]
 
@@ -27,6 +28,7 @@ License is MIT except for a few exceptions.  See [LICENSE](https://github.com/fa
 [pypi-image]: https://img.shields.io/pypi/v/pymdown-extensions.svg?logo=pypi&logoColor=aaaaaa&labelColor=333333
 [pypi-link]: https://pypi.python.org/pypi/pymdown-extensions
 [python-image]: https://img.shields.io/pypi/pyversions/pymdown-extensions?logo=python&logoColor=aaaaaa&labelColor=333333
+[pypi-down]: https://img.shields.io/pypi/dm/pymdown-extensions.svg?logo=pypi&logoColor=aaaaaa&labelColor=333333
 [license-image-mit]: https://img.shields.io/badge/license-MIT-blue.svg?labelColor=333333
 [donate-image]: https://img.shields.io/badge/Donate-PayPal-3fabd1?logo=paypal
 [donate-link]: https://www.paypal.me/facelessuser
