@@ -3,6 +3,7 @@
 ## 9.7
 
 - **NEW**: Tabbed: Add new syntax to allow forcing a specific tab to be select by default.
+- **NEW**: Snippets: Add new option to pass arbitrary HTTP headers.
 
 ## 9.6
 
