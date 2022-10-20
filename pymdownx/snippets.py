@@ -25,7 +25,7 @@ DEALINGS IN THE SOFTWARE.
 from markdown import Extension
 from markdown.preprocessors import Preprocessor
 import functools
-import urllib.request as request
+import urllib
 import re
 import codecs
 import os
@@ -34,6 +34,7 @@ from . import util
 MI = 1024 * 1024  # mebibyte (MiB)
 DEFAULT_URL_SIZE = MI * 32
 DEFAULT_URL_TIMEOUT = 10.0  # in seconds
+DEFAULT_URL_REQUEST_HEADERS = {}
 
 
 class SnippetMissingError(Exception):
@@ -77,6 +78,7 @@ class SnippetPreprocessor(Preprocessor):
         self.url_download = config['url_download']
         self.url_max_size = config['url_max_size']
         self.url_timeout = config['url_timeout']
+        self.url_request_headers = config['url_request_headers']
         self.tab_length = md.tab_length
         super(SnippetPreprocessor, self).__init__()
 
@@ -109,8 +111,9 @@ class SnippetPreprocessor(Preprocessor):
         The most recently used files are kept in a cache until the next reset.
         """
 
+        http_request = urllib.request.Request(url, headers=self.url_request_headers)
         timeout = None if self.url_timeout == 0 else self.url_timeout
-        with request.urlopen(url, timeout=timeout) as response:
+        with urllib.request.urlopen(http_request, timeout=timeout) as response:
 
             # Fail if status is not OK
             status = response.status if util.PY39 else response.code
@@ -294,7 +297,8 @@ class SnippetExtension(Extension):
             ],
             'url_download': [False, "Download external URLs as snippets - Default: \"False\""],
             'url_max_size': [DEFAULT_URL_SIZE, "External URL max size (0 means no limit)- Default: 32 MiB"],
-            'url_timeout': [DEFAULT_URL_TIMEOUT, 'Defualt URL timeout (0 means no timeout) - Default: 10 sec']
+            'url_timeout': [DEFAULT_URL_TIMEOUT, 'Defualt URL timeout (0 means no timeout) - Default: 10 sec'],
+            'url_request_headers': [DEFAULT_URL_REQUEST_HEADERS, "Extra request Headers - Default: {}"]
         }
 
         super(SnippetExtension, self).__init__(*args, **kwargs)

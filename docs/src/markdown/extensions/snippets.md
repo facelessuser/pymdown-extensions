@@ -167,6 +167,8 @@ URLs, if `url_download` is enabled, can also be used as snippets. Instead of usi
 its place. By default, a max size for content is specified with `url_max_size` and a default timeout via `url_timeout`.
 If either of these is set to zero, the limits will be ignored.
 
+To pass arbitrary HTTP headers in every HTTP request use `url_request_headers`.
+
 !!! warning "Nested Snippets"
     One thing to note though, if a snippet is included via a URL, all nested snippets within it must also be URLs. URL
     snippets are not allowed to reference local snippet files.
@@ -186,12 +188,13 @@ appended to every to Markdown content. Each entry in the list searched for relat
 
 ## Options
 
-Option         | Type        | Default          | Description
--------------- | ----------- | ---------------- |------------
-`base_path`    | \[string\]  | `#!py3 ['.']`    | A list of strings indicating base paths to be used resolve snippet locations. For legacy purposes, a single string will also be accepted as well. Base paths will be resolved in the order they are specified. When resolving a file name, the first match wins. If a file name is specified, the base name will be matched.
-`encoding`     | string      | `#!py3 'utf-8'`  | Encoding to use when reading in the snippets.
-`check_paths`  | bool        | `#!py3 False`    | Make the build fail if a snippet can't be found.
-`auto_append`  | \[string]\] | `#!py3 []`       | A list of snippets (relative to the `base_path`) to auto append to the Markdown content.
-`url_download` | bool        | `#!py3 False`    | Allows URLs to be specified as file snippets. URLs will be downloaded and inserted accordingly.
-`url_max_size` | int         | `#!py3 33554432` | Sets an arbitrary max content size. If content length is reported to be larger, and exception will be thrown. Default is ~32 MiB.
-`url_timeout`  | float       | `#!py3 10.0`     | Passes an arbitrary timeout in seconds to URL requestor. By default this is set to 10 seconds.
+Option                 | Type            | Default          | Description
+---------------------- | --------------- | ---------------- |------------
+`base_path`            | \[string\]      | `#!py3 ['.']`    | A list of strings indicating base paths to be used resolve snippet locations. For legacy purposes, a single string will also be accepted as well. Base paths will be resolved in the order they are specified. When resolving a file name, the first match wins. If a file name is specified, the base name will be matched.
+`encoding`             | string          | `#!py3 'utf-8'`  | Encoding to use when reading in the snippets.
+`check_paths`          | bool            | `#!py3 False`    | Make the build fail if a snippet can't be found.
+`auto_append`          | \[string]\]     | `#!py3 []`       | A list of snippets (relative to the `base_path`) to auto append to the Markdown content.
+`url_download`         | bool            | `#!py3 False`    | Allows URLs to be specified as file snippets. URLs will be downloaded and inserted accordingly.
+`url_max_size`         | int             | `#!py3 33554432` | Sets an arbitrary max content size. If content length is reported to be larger, and exception will be thrown. Default is ~32 MiB.
+`url_timeout`          | float           | `#!py3 10.0`     | Passes an arbitrary timeout in seconds to URL requestor. By default this is set to 10 seconds.
+`url_request_headers`  | {string:string} | `#!py3 {}`       | Passes arbitrary headers to URL requestor. By default this is set to empty map.
