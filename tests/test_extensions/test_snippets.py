@@ -432,6 +432,7 @@ class TestURLSnippets(util.MdCase):
             ''',
             True
         )
+        assert mock_urlopen.call_args.args[0]._full_url == 'https://test.com/myfile.md'
 
     @patch('urllib.request.urlopen')
     def test_url_nested(self, mock_urlopen):
@@ -690,3 +691,42 @@ class TestURLSnippetsMissing(util.MdCase):
                 '',
                 True
             )
+
+class TestURLSnippetsWithHeaders(util.MdCase):
+    """Test snippet URL wiht headers cases."""
+
+    extension = [
+        'pymdownx.snippets',
+    ]
+
+    extension_configs = {
+        'pymdownx.snippets': {
+            'base_path': [os.path.join(BASE, '_snippets')],
+            'url_download': True,
+            'url_request_headers': {'X-Foo': 'Foo', 'User-Agent': 'Mozilla/5.0'}
+        }
+    }
+
+    @patch('urllib.request.urlopen')
+    def test_request_with_headers(self, mock_urlopen):
+        """Test http request with headers."""
+
+        cm = MagicMock()
+        cm.status = 200
+        cm.code = 200
+        cm.readlines.return_value = [b'contents']
+        cm.headers = {'content-length': '8'}
+        cm.__enter__.return_value = cm
+        mock_urlopen.return_value = cm
+
+        self.check_markdown(
+            R'''
+            --8<-- "https://test.com/myfile.md"
+            ''',
+            '''
+            <p>contents</p>
+            ''',
+            True
+        )
+        assert mock_urlopen.call_args.args[0]._full_url == 'https://test.com/myfile.md'
+        assert mock_urlopen.call_args.args[0].headers == {'User-agent': 'Mozilla/5.0', 'X-foo': 'Foo'}
