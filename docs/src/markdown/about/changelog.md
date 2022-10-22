@@ -4,6 +4,7 @@
 
 - **NEW**: Tabbed: Add new syntax to allow forcing a specific tab to be select by default.
 - **NEW**: Snippets: Add new option to pass arbitrary HTTP headers.
+- **NEW**: Snippets: Allow specifying sections in a snippet and including just the specified section.
 
 ## 9.6
 
