@@ -120,6 +120,44 @@ include.md::3
 ;--8<--
 ```
 
+### Snippet Sections
+
+!!! new "New 9.7"
+
+Specifying snippet lines may not always be as the source could change moving, adding, and/or removing lines. A way
+around this is to partition a snippet into named sections and then targeting a specific section to be included instead
+of specific line numbers.
+
+Snippet sections can be specified by surrounding a block of text with `--8<-- [start:name]` and `--8<-- [end:name]`.
+Then a file can simply specify the snippet using the name instead of line numbers.
+
+```
+;--8<-- "include.md:name"
+
+;--8<--
+include.md:name
+;--8<--
+```
+
+Unlike other snippet syntax, the section start and end syntax do not have to be on a line by themselves. This allows
+you to embed them in comments depending on the file type. When a section is included, the line with the start and end
+are always omitted.
+
+If we wanted to include a function from a Python source, we could specify the snippet as follows:
+
+```python
+# --8<-- [start:func]
+def my_function(var):
+    pass
+# --8<-- [end:func]
+```
+
+And then just include it in our document:
+
+```
+;--8<-- "example.py:func"
+```
+
 ### Escaping Snippets Notation
 
 !!! new "New 9.6"
