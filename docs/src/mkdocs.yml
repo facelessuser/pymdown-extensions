@@ -175,6 +175,5 @@ plugins:
   - search
   - git-revision-date-localized:
       fallback_to_build_date: true
-  - mkdocs_pymdownx_material_extras
   - minify:
       minify_html: true

@@ -163,7 +163,7 @@ extra:
       link: https://discord.gg/TWs8Tgr
 extra_css:
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css
-  - assets/pymdownx-extras/extra-13d1e30d3e.css
+  - assets/pymdownx-extras/extra-3626cb8369.css
 extra_javascript:
   - https://unpkg.com/mermaid@9.1.7/dist/mermaid.min.js
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js
@@ -175,6 +175,5 @@ plugins:
   - search
   - git-revision-date-localized:
       fallback_to_build_date: true
-  - mkdocs_pymdownx_material_extras
   - minify:
       minify_html: true

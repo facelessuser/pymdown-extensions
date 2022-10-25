@@ -1,3 +1,8 @@
+.md-typeset .admonition {
+  border-width: 0;
+  border-left-width: 4px;
+}
+
 $new-admonitions: (
   settings config: $drac-pink $clr-purple-a700 "@mdi/svg/svg/cog.svg",
   new: $drac-yellow $clr-yellow-a700 "@mdi/svg/svg/alert-decagram.svg"
@@ -53,8 +58,6 @@ $new-admonitions: (
   border-color: var(--md-admonition-icon-color--note);
   > .admonition-title {
     background-color: var(--md-admonition-bg-color--note);
-    border-color: var(--md-admonition-icon-color--note);
-    border-left: px2rem(4px) solid;
     &::before {
       background-color: var(--md-admonition-icon-color--note);
     }
