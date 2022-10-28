@@ -141,6 +141,11 @@ class BlocksProcessor(BlockProcessor):
                 Tabs
             ]
 
+        self.config = {b.NAME: self.set_configs(b.CONFIG, config['block_configs'].get(b.NAME, {})) for b in blocks}
+
+        for b in blocks:
+            b.on_register(md, self.config.get(b.NAME, {}))
+
         self.empty_tags = set(['hr'])
         self.block_level_tags = set(md.block_level_elements.copy())
         # Block-level tags in which the content only gets span level parsing
@@ -170,6 +175,17 @@ class BlocksProcessor(BlockProcessor):
         self.cached_block = None
         self.require_yaml_fences = config['require_yaml_fences']
 
+    def set_configs(self, default, config):
+        """Set config for a block extension."""
+
+        d = {}
+        for key in default.keys():
+            if key in config:
+                d[key] = config[key]
+            else:
+                d[key] = default[key]
+        return d
+
     def test(self, parent, block):
         """Test to see if we should process the block."""
 
@@ -186,7 +202,7 @@ class BlocksProcessor(BlockProcessor):
             # Create a block object
             name = m.group(2).lower()
             if name in self.blocks:
-                generic_block = self.blocks[name](len(m.group(1)), self.trackers[name], self.md)
+                generic_block = self.blocks[name](len(m.group(1)), self.trackers[name], self.md, self.config[name])
                 # Remove first line
                 block = block[m.end():]
 
@@ -455,6 +471,7 @@ class BlocksExtension(Extension):
 
         self.config = {
             'blocks': [[], "Blocks extensions to load, if not defined, the default ones will be loaded."],
+            'block_configs': [{}, "Global configuration for a given block."],
             'require_yaml_fences': [False, "Require YAML fences in generic blocks."]
         }
 
