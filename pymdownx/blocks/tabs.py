@@ -22,7 +22,8 @@ class Tabs(Block):
 
     ARGUMENTS = {'required': 1}
     OPTIONS = {
-        'new': [False, type_boolean]
+        'new': [False, type_boolean],
+        'select': [False, type_boolean]
     }
 
     def on_init(self):
@@ -62,6 +63,7 @@ class Tabs(Block):
         """Create the element."""
 
         new_group = self.options['new']
+        select = self.options['select']
         title = self.args[0] if self.args and self.args[0] else ''
         sibling = self.last_child(parent)
         tabbed_set = 'tabbed-set tabbed-alternate'
@@ -115,8 +117,13 @@ class Tabs(Block):
             "id": "__tabbed_%d_%d" % (tab_set, tab_count)
         }
 
-        if first:
+        if first or select:
             attributes['checked'] = 'checked'
+            # Remove any previously assigned "checked states" to siblings
+            for i in tab_group.findall('input'):
+                if i.attrib.get('name', '') == '__tabbed_{}'.format(tab_set):
+                    if 'checked' in i.attrib:
+                        del i.attrib['checked']
 
         input_el = etree.Element(
             'input',
