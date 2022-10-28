@@ -30,11 +30,11 @@ class HTML(Block):
         'markdown': ['auto', type_string_in(['auto', 'span', 'block', 'raw'])]
     }
 
-    def __init__(self, length, tracker, md):
+    def __init__(self, length, tracker, md, config):
         """Initialize."""
 
         self.markdown = None
-        super().__init__(length, tracker, md)
+        super().__init__(length, tracker, md, config)
 
     def on_markdown(self):
         """Check if this is atomic."""

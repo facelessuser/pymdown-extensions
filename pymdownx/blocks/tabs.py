@@ -1,6 +1,49 @@
 """Tabs."""
 import xml.etree.ElementTree as etree
+from markdown.extensions import toc
+from markdown.treeprocessors import Treeprocessor
 from .block import Block, type_boolean
+
+
+class TabbedTreeprocessor(Treeprocessor):
+    """Tab tree processor."""
+
+    def __init__(self, md, config):
+        """Initialize."""
+
+        super().__init__(md)
+
+        self.slugify = config["slugify"]
+        self.sep = config["separator"]
+
+    def run(self, doc):
+        """Update tab IDs."""
+
+        # Get a list of id attributes
+        used_ids = set()
+        for el in doc.iter():
+            if "id" in el.attrib:
+                used_ids.add(el.attrib["id"])
+
+        for el in doc.iter():
+            if isinstance(el.tag, str) and el.tag.lower() == 'div':
+                classes = el.attrib.get('class', '').split()
+                if 'tabbed-set' in classes and 'tabbed-alternate' in classes:
+                    inputs = []
+                    labels = []
+                    for i in list(el):
+                        if i.tag == 'input':
+                            inputs.append(i)
+                        if i.tag == 'div' and i.attrib.get('class', '') == 'tabbed-labels':
+                            labels = [j for j in list(i) if j.tag == 'label']
+
+                    # Generate slugged IDs
+                    for inpt, label in zip(inputs, labels):
+                        text = toc.get_name(label)
+                        innertext = toc.unescape(toc.stashedHTML2text(text, self.md))
+                        slug = toc.unique(self.slugify(innertext, self.sep), used_ids)
+                        inpt.attrib["id"] = slug
+                        label.attrib["for"] = slug
 
 
 class Tabs(Block):
@@ -26,14 +69,31 @@ class Tabs(Block):
         'select': [False, type_boolean]
     }
 
+    CONFIG = {
+        'slugify': None,
+        'separator': '-'
+    }
+
     def on_init(self):
         """Handle initialization."""
+
+        self.slugify = self.config['slugify'] is not None
 
         # Track tab group count across the entire page.
         if 'tab_group_count' not in self.tracker:
             self.tracker['tab_group_count'] = 0
 
         self.tab_content = None
+
+    @classmethod
+    def on_register(cls, md, config):
+        """Handle registration event."""
+
+        print('---config---')
+        print(config)
+        if config['slugify'] is not None:
+            slugs = TabbedTreeprocessor(md, config)
+            md.treeprocessors.register(slugs, 'tab_slugs', 4)
 
     def last_child(self, parent):
         """Return the last child of an `etree` element."""
@@ -67,6 +127,9 @@ class Tabs(Block):
         title = self.args[0] if self.args and self.args[0] else ''
         sibling = self.last_child(parent)
         tabbed_set = 'tabbed-set tabbed-alternate'
+        index = 0
+        labels = None
+        content = None
 
         if (
             sibling and sibling.tag.lower() == 'div' and
@@ -77,8 +140,6 @@ class Tabs(Block):
             tab_group = sibling
 
             index = [index for index, _ in enumerate(tab_group.findall('input'), 1)][-1]
-            labels = None
-            content = None
             for d in tab_group.findall('div'):
                 if d.attrib['class'] == 'tabbed-labels':
                     labels = d
@@ -95,7 +156,6 @@ class Tabs(Block):
                 {'class': tabbed_set, 'data-tabs': '%d:0' % self.tracker['tab_group_count']}
             )
 
-            index = 0
             labels = etree.SubElement(
                 tab_group,
                 'div',
@@ -113,9 +173,13 @@ class Tabs(Block):
 
         attributes = {
             "name": "__tabbed_%d" % tab_set,
-            "type": "radio",
-            "id": "__tabbed_%d_%d" % (tab_set, tab_count)
+            "type": "radio"
         }
+
+        if not self.slugify:
+            attributes['id'] = "__tabbed_%d_%d" % (tab_set, tab_count)
+
+        attributes2 = {"for": "__tabbed_%d_%d" % (tab_set, tab_count)} if not self.slugify else {}
 
         if first or select:
             attributes['checked'] = 'checked'
@@ -133,9 +197,7 @@ class Tabs(Block):
         lab = etree.SubElement(
             labels,
             "label",
-            {
-                "for": "__tabbed_%d_%d" % (tab_set, tab_count)
-            }
+            attributes2
         )
         lab.text = title
 

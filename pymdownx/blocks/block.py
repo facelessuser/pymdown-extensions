@@ -189,10 +189,14 @@ class Block(metaclass=ABCMeta):
     # Arguments will be split and white space stripped.
     NAME = ''
 
+    # Instance arguments and options
     ARGUMENTS = {}
     OPTIONS = {}
 
-    def __init__(self, length, tracker, md):
+    # Extension config
+    CONFIG = {}
+
+    def __init__(self, length, tracker, md, config):
         """
         Initialize.
 
@@ -218,6 +222,7 @@ class Block(metaclass=ABCMeta):
         self.md = md
         self.args = []
         self.options = {}
+        self.config = config
         self.on_init()
 
     def on_init(self):
@@ -312,6 +317,10 @@ class Block(metaclass=ABCMeta):
         """
 
         return True
+
+    @classmethod
+    def on_register(cls, md, config):
+        """Handle registration events."""
 
     @abstractmethod
     def on_create(self, parent):
