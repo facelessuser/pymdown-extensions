@@ -1,5 +1,102 @@
 """Test cases for Blocks (tab)."""
 from ... import util
+from pymdownx.slugs import slugify
+
+
+class TestTabSlugs(util.MdCase):
+    """Test legacy tab slug cases."""
+
+    extension = ['pymdownx.blocks', 'toc']
+    extension_configs = {
+        'pymdownx.blocks': {
+            'block_configs': {
+                'tab': {'slugify': slugify(case='lower')}
+            }
+        }
+    }
+
+    MD = r"""
+    ### Here is some text
+
+    /// tab | Here is some text
+
+    content
+    ///
+
+    /// tab | Here is some text
+
+    content
+    ///
+    """
+
+    def test_tab_slugs(self):
+        """Test tab slugs."""
+
+        self.check_markdown(
+            self.MD,
+            '''
+            <h3 id="here-is-some-text">Here is some text</h3>
+            <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="here-is-some-text_1" name="__tabbed_1" type="radio" /><input id="here-is-some-text_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="here-is-some-text_1">Here is some text</label><label for="here-is-some-text_2">Here is some text</label></div>
+            <div class="tabbed-content">
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            </div>
+            </div>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestTabSlugsSep(util.MdCase):
+    """Test legacy tab slug separator cases."""
+
+    extension = ['pymdownx.blocks', 'toc']
+    extension_configs = {
+        'pymdownx.blocks': {
+            'block_configs': {
+                'tab': {'slugify': slugify(case='lower'), 'separator': '_'}
+            }
+        }
+    }
+
+    MD = r"""
+    ### Here is some text
+
+    /// tab | Here is some text
+
+    content
+    ///
+
+    /// tab | Here is some text
+
+    content
+    ///
+    """
+
+    def test_slug_with_separator(self):
+        """Test tab slugs with separator."""
+
+        self.check_markdown(
+            self.MD,
+            '''
+            <h3 id="here-is-some-text">Here is some text</h3>
+            <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="here_is_some_text" name="__tabbed_1" type="radio" /><input id="here_is_some_text_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="here_is_some_text">Here is some text</label><label for="here_is_some_text_1">Here is some text</label></div>
+            <div class="tabbed-content">
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            </div>
+            </div>
+            ''',  # noqa: E501
+            True
+        )
 
 
 class TestBlocksTab(util.MdCase):
