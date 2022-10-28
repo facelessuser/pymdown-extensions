@@ -6,7 +6,85 @@ class TestBlocksTab(util.MdCase):
     """Test Blocks tab cases."""
 
     extension = ['pymdownx.blocks', 'pymdownx.superfences', 'markdown.extensions.def_list', 'pymdownx.details']
-    extension_configs = {'pymdownx.tabbed': {'alternate_style': True}}
+
+    def test_tabbed_select(self):
+        """Test selecting a tab."""
+
+        self.check_markdown(
+            r'''
+            /// tab | Tab 1
+
+            content
+            ///
+
+            /// tab | Tab 2
+            select: true
+
+            content
+            ///
+
+            /// tab | Tab 3
+
+            content
+            ///
+            ''',
+            r'''
+            <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input checked="checked" id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab 1</label><label for="__tabbed_1_2">Tab 2</label><label for="__tabbed_1_3">Tab 3</label></div>
+            <div class="tabbed-content">
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            </div>
+            </div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_tabbed_select_mulitiple(self):
+        """Test selecting multiple tabs."""
+
+        self.check_markdown(
+            r'''
+            /// tab | Tab 1
+
+            content
+            ///
+
+            /// tab | Tab 2
+            select: true
+
+            content
+            ///
+
+            /// tab | Tab 3
+            select: true
+
+            content
+            ///
+            ''',
+            r'''
+            <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input checked="checked" id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab 1</label><label for="__tabbed_1_2">Tab 2</label><label for="__tabbed_1_3">Tab 3</label></div>
+            <div class="tabbed-content">
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            </div>
+            </div>
+            ''',  # noqa: E501
+            True
+        )
 
     def test_required_title(self):
         """Test that tab is not processed if title is omitted."""
