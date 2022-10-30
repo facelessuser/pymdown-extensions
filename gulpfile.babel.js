@@ -18,7 +18,7 @@ import childProcess from "child_process"
 import gulpif from "gulp-if"
 import concat from "gulp-concat"
 import mqpacker from "css-mqpacker"
-import {terser} from "rollup-plugin-terser"
+import terser from '@rollup/plugin-terser'
 import {rollup} from "rollup"
 import {babel as rollupBabel, getBabelOutputPlugin} from "@rollup/plugin-babel"
 import stylelint from "gulp-stylelint"
