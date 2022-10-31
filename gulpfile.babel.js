@@ -97,11 +97,12 @@ const config = {
 const rollupjs = async(sources, options) => {
 
   const pluginModules = [rollupBabel({babelHelpers: "bundled"})]
-  if (options.minify) {
-    pluginModules.push(terser())
-  }
   if (options.revision) {
     pluginModules.push(outputManifest.default({fileName: "manifest-js.json", isMerge: options.merge}))
+  }
+  const outputPlugins = [getBabelOutputPlugin({allowAllFormats: true, presets: ["@babel/preset-env"]})]
+  if (options.minify) {
+    outputPlugins.push(terser())
   }
 
   let p = Promise.resolve()
@@ -116,12 +117,15 @@ const rollupjs = async(sources, options) => {
         await bundle.write({
           dir: options.dest,
           format: "iife",
+          sourcemapPathTransform: (relativeSourcePath, sourcemapPath) => {  // eslint-disable-line no-unused-vars
+            // Something changed and now we must force the mapping to be relative to the file.
+            return path.basename(relativeSourcePath)
+          },
+          sourcemapFile: src,
           entryFileNames: (options.revision) ? "[name]-[hash].js" : "[name].js",
           chunkFileNames: (options.revision) ? "[name]-[hash].js" : "[name].js",
           sourcemap: options.sourcemap,
-          plugins: [
-            getBabelOutputPlugin({allowAllFormats: true, presets: ["@babel/preset-env"]})
-          ]
+          plugins: outputPlugins
         })
       })
     })
