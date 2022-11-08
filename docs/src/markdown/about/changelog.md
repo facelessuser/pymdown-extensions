@@ -1,7 +1,8 @@
 # Changelog
 
-## 9.7.1
+## 9.8
 
+- **NEW**: Formally declare support for Python 3.11.
 - **FIX**: BetterEm: Fix case where `**` nested between `*` would be handled in an unexpected way.
 
 ## 9.7

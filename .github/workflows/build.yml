@@ -17,7 +17,7 @@ jobs:
       max-parallel: 4
       matrix:
         platform: [ubuntu-latest, windows-latest]
-        python-version: [3.7, 3.8, 3.9, '3.10']
+        python-version: [3.7, 3.8, 3.9, '3.10', '3.11']
         include:
           - python-version: 3.7
             tox-env: py37
@@ -27,6 +27,8 @@ jobs:
             tox-env: py39
           - python-version: '3.10'
             tox-env: py310
+          - python-version: '3.11'
+            tox-env: py311
         # exclude:
         #   - platform: windows-latest
         #     python-version: 3.10
@@ -37,10 +39,10 @@ jobs:
     runs-on: ${{ matrix.platform }}
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
       if: "!endsWith(matrix.python-version, '-dev')"
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
     - name: Set up development Python ${{ matrix.python-version }}
@@ -50,7 +52,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip setuptools tox coverage codecov
+        python -m pip install --upgrade pip build tox coverage codecov
     - name: Test
       run: |
         python -m tox
@@ -67,7 +69,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.9]
+        python-version: ['3.11']
 
     env:
       TOXENV: lint
@@ -75,14 +77,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip setuptools tox
+        python -m pip install --upgrade pip build tox
     - name: Lint
       run: |
         python -m tox
@@ -91,7 +93,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: [3.9]
+        python-version: ['3.11']
 
     env:
       TOXENV: documents
@@ -99,9 +101,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v4
       with:
         python-version: ${{ matrix.python-version }}
     - name: Setup Node
@@ -110,7 +112,7 @@ jobs:
         node-version: '16'
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip setuptools tox
+        python -m pip install --upgrade pip build tox
         npm install --legacy-peer-deps
     - name: Install Aspell
       run: |
