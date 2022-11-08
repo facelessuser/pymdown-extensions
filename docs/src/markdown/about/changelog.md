@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.7.1
+
+- **FIX**: BetterEm: Fix case where `**` nested between `*` would be handled in an unexpected way.
+
 ## 9.7
 
 - **NEW**: Tabbed: Add new syntax to allow forcing a specific tab to be select by default.

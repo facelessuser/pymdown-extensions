@@ -60,6 +60,19 @@ BetterEm allows for a more natural nested token feel.
         ***I'm bold and italic!** I am just italic.*
         ```
 
+BetterEm will try to prioritize the more sane option when nesting bold (`**`) between italic (`*`).
+
+!!! example "Prioritize Best Example"
+
+    === "Output"
+        *I'm italic. **I'm bold and italic.** I'm also just italic.*
+
+    === "Markdown"
+
+        ```
+        *I'm italic. **I'm bold and italic.** I'm also just italic.*
+        ```
+
 BetterEm will ensure smart mode doesn't terminate in scenarios where there are a large amount of consecutive tokens
 inside.
 
@@ -68,12 +81,8 @@ inside.
     === "Output"
         ___A lot of underscores____________is okay___
 
-        ___A lot of underscores____________is okay___
-
     === "Markdown"
         ```
-        ___A lot of underscores____________is okay___
-
         ___A lot of underscores____________is okay___
         ```
 
@@ -113,7 +122,7 @@ BetterEm will allow non-smart emphasis to contain "floating" like tokens.
 
          *All will not* be italic*
 
-         *All will not ** be italic*
+         *All will ** be italic*
 
          **All will * be bold**
 
