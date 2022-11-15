@@ -27,11 +27,15 @@ DEALINGS IN THE SOFTWARE.
 """
 import re
 from markdown import Extension
+from markdown.inlinepatterns import SimpleTextInlineProcessor
 from . import util
 
 SMART_CONTENT = r'(.+?\^*?)'
 CONTENT = r'(\^|[^\s]+?)'
 CONTENT2 = r'((?:[^\^]|(?<!\^{2})\^)+?)'
+
+# Avoid starting a pattern with caret tokens that are surrounded by white space.
+NOT_CARET = r'((^|(?<=\s))(\^+)(?=\s|$))'
 
 # `^^^ins,sup^^^`
 INS_SUP = r'(\^{3})(?!\s)(\^{1,2}|[^\^\s]+?)(?<!\s)\1'
@@ -45,6 +49,9 @@ INS_SUP3 = r'(\^{2})(?![\s\^])%s\^(?![\s\^])%s(?<!\s)\^{3}' % (CONTENT2, CONTENT
 INS = r'(\^{2})(?!\s)%s(?<!\s)\1' % CONTENT2
 # `^sup^`
 SUP = r'(\^)(?!\s)%s(?<!\s)\1' % CONTENT
+
+# Prioritize ^value^ when ^^value^^ is nested within
+SUP2 = r'(?<!\^)(\^)(?![\^\s])([^\s]+?)(?<![\^\s])(\^)(?!\^)'
 
 # Smart rules for when "smart caret" is enabled
 # SMART: `^^^ins,sup^^^`
@@ -72,6 +79,7 @@ class CaretProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(INS_SUP2, re.DOTALL | re.UNICODE), 'double', 'ins,sup'),
         util.PatSeqItem(re.compile(INS_SUP3, re.DOTALL | re.UNICODE), 'double2', 'ins,sup'),
         util.PatSeqItem(re.compile(INS, re.DOTALL | re.UNICODE), 'single', 'ins'),
+        util.PatSeqItem(re.compile(SUP2, re.DOTALL | re.UNICODE), 'single', 'sup', True),
         util.PatSeqItem(re.compile(SUP, re.DOTALL | re.UNICODE), 'single', 'sup')
     ]
 
@@ -84,6 +92,7 @@ class CaretSmartProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(SMART_SUP_INS, re.DOTALL | re.UNICODE), 'double', 'sup,ins'),
         util.PatSeqItem(re.compile(SMART_INS_SUP2, re.DOTALL | re.UNICODE), 'double', 'ins,sup'),
         util.PatSeqItem(re.compile(SMART_INS, re.DOTALL | re.UNICODE), 'single', 'ins'),
+        util.PatSeqItem(re.compile(SUP2, re.DOTALL | re.UNICODE), 'single', 'sup', True),
         util.PatSeqItem(re.compile(SUP, re.DOTALL | re.UNICODE), 'single', 'sup')
     ]
 
@@ -144,6 +153,7 @@ class InsertSupExtension(Extension):
         util.escape_chars(md, escape_chars)
 
         caret = None
+        md.inlinePatterns.register(SimpleTextInlineProcessor(NOT_CARET), 'not_tilde', 70)
         if insert and superscript:
             caret = CaretSmartProcessor(r'\^') if smart else CaretProcessor(r'\^')
         elif insert:
