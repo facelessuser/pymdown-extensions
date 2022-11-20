@@ -21,7 +21,7 @@ md = markdown.Markdown(extensions=['pymdownx.betterem'])
     Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this
     extension!
 
-## Differences
+## Rules
 
 !!! Note "Note"
     For all examples on this page, underscores are __smart__ and asterisks are not.
@@ -38,9 +38,9 @@ BetterEm requires that non-whitespace characters follow the opening token(s) and
     === "Markdown"
 
         ```
-        * Won't highlight *
+        This * won't emphasize *
 
-        *Will highlight*
+        This *will emphasize*
         ```
 
 BetterEm allows for a more natural nested token feel.

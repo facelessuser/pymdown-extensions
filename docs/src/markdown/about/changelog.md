@@ -1,5 +1,18 @@
 # Changelog
 
+## 9.9
+
+- **ENHANCE**: BetterEm: Further improvements to strong/emphasis handling:
+    - Ensure that one or more consecutive `*` or `_` surrounded by whitespace are not considered as a token.
+- **ENHANCE**: Caret: Apply recent BetterEm improvements to Caret:
+    - Fix case where `^^` nested between `^` would be handled in an unexpected way.
+    - Ensure that one or more consecutive `^` surrounded by whitespace are not considered as a token.
+- **ENHANCE**: Tilde: Apply recent BetterEm improvements to Tilde:
+    - Fix case where `~~` nested between `~` would be handled in an unexpected way.
+    - Ensure that one or more consecutive `~` surrounded by whitespace are not considered a token.
+- **ENHANCE**: Mark: Apply recent BetterEm improvements to Mark:
+    - Ensure that one or more consecutive `=` surrounded by whitespace are not considered a token.
+
 ## 9.8
 
 - **NEW**: Formally declare support for Python 3.11.

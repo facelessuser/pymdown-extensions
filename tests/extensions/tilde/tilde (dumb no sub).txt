@@ -8,4 +8,4 @@ Test: ~~All will ~ be deleted~~
 
 Test: ~~All will~~~ not be deleted~~
 
-Test: ~~All will ~~~ not be deleted~~
+Test: ~~All will ~~~ be deleted~~

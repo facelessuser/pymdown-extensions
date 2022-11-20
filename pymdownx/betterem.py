@@ -24,6 +24,7 @@ DEALINGS IN THE SOFTWARE.
 """
 import re
 from markdown import Extension
+from markdown.inlinepatterns import SimpleTextInlineProcessor
 from . import util
 
 SMART_UNDER_CONTENT = r'(.+?_*?)'
@@ -32,6 +33,9 @@ UNDER_CONTENT = r'(_|(?:(?<=\s)_|[^_])+?)'
 UNDER_CONTENT2 = r'((?:[^_]|(?<!_{2})_)+?)'
 STAR_CONTENT = r'(\*|(?:(?<=\s)\*|[^\*])+?)'
 STAR_CONTENT2 = r'((?:[^\*]|(?<!\*{2})\*)+?)'
+
+# Avoid starting a pattern with asterisk or underscore tokens that are surrounded by white space.
+NOT_STRONG = r'((^|(?<=\s))(\*+|_+)(?=\s|$))'
 
 # ***strong,em***
 STAR_STRONG_EM = r'(\*{3})(?!\s)(\*{1,2}|[^\*]+?)(?<!\s)\1'
@@ -199,6 +203,7 @@ class BetterEmExtension(Extension):
         md.inlinePatterns.deregister('strong2', False)
         md.inlinePatterns.deregister('emphasis2', False)
 
+        md.inlinePatterns.register(SimpleTextInlineProcessor(NOT_STRONG), 'not_strong', 70)
         asterisk = SmartAsteriskProcessor(r'\*') if enable_star else AsteriskProcessor(r'\*')
         md.inlinePatterns.register(asterisk, "strong_em", 50)
         underscore = SmartUnderscoreProcessor('_') if enable_under else UnderscoreProcessor('_')
