@@ -168,6 +168,18 @@ class TestGeneral(unittest.TestCase):
                 extension_configs={'pymdownx.blocks': {'blocks': [AttrOverride]}}
             )
 
+    def test_duplicate_blocks(self):
+        """Test duplicate blocks."""
+
+        with self.assertRaises(ValueError):
+            markdown.markdown(
+                '/// override\n///',
+                extensions=['pymdownx.blocks'],
+                extension_configs={
+                    'pymdownx.blocks': {'block_configs': {'admonition': {'types': ['danger', 'danger']}}}
+                }
+            )
+
 
 class TestBlockUndefinedOption(util.MdCase):
     """Test Blocks with undefined options."""

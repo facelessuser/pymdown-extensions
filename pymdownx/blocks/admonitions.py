@@ -1,6 +1,10 @@
 """Admonitions."""
 import xml.etree.ElementTree as etree
 from .block import Block, type_class
+import re
+
+RE_SEP = re.compile(r'[_-]+')
+RE_VALID_NAME = re.compile(r'[\w-]+')
 
 
 class Admonition(Block):
@@ -23,6 +27,25 @@ class Admonition(Block):
     OPTIONS = {
         'type': ['', type_class],
     }
+    CONFIG = {
+        "types": ['note', 'attention', 'caution', 'danger', 'error', 'tip', 'hint', 'warning']
+    }
+
+    @classmethod
+    def on_register(cls, blocks_extension, md, config):
+        """Handle registration event."""
+
+        # Generate an admonition subclass based on the given name.
+        for b in config.get('types', []):
+            subclass = RE_SEP.sub('', b.title())
+            blocks_extension.register(type(subclass, (Admonition,), {'OPTIONS': {}, 'NAME': b, 'CONFIG': {}}), {})
+
+    def on_parse(self):
+        """Handle on parse event."""
+
+        if self.NAME != 'admonition':
+            self.options['type'] = self.NAME
+        return True
 
     def on_create(self, parent):
         """Create the element."""
@@ -50,64 +73,3 @@ class Admonition(Block):
             ad_title.text = title
 
         return el
-
-
-class Note(Admonition):
-    """Note."""
-
-    NAME = 'note'
-    OPTIONS = {}
-
-    def on_parse(self):
-        """Handle on parse event."""
-
-        self.options['type'] = self.NAME
-        return True
-
-
-class Attention(Note):
-    """Attention."""
-
-    NAME = 'attention'
-
-
-class Caution(Note):
-    """Caution."""
-
-    NAME = 'caution'
-
-
-class Danger(Note):
-    """Danger."""
-
-    NAME = 'danger'
-
-
-class Error(Note):
-    """Error."""
-
-    NAME = 'error'
-
-
-class Tip(Note):
-    """Tip."""
-
-    NAME = 'tip'
-
-
-class Hint(Note):
-    """Hint."""
-
-    NAME = 'hint'
-
-
-class Important(Note):
-    """Important."""
-
-    NAME = 'danger'
-
-
-class Warn(Note):
-    """Warning."""
-
-    NAME = 'warning'
