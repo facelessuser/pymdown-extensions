@@ -1,19 +1,16 @@
-"""Test cases for Blocks (tab)."""
+"""Test cases for Blocks (legacy tab)."""
 from ... import util
 from pymdownx.slugs import slugify
 
 
-class TestTabSlugs(util.MdCase):
-    """Test tab slug cases."""
+class TestLegacyTabSlugs(util.MdCase):
+    """Test legacy tab slug cases."""
 
     extension = ['pymdownx.blocks', 'toc']
     extension_configs = {
         'pymdownx.blocks': {
             'block_configs': {
-                'tab': {
-                    'slugify': slugify(case='lower'),
-                    'alternate_style': True
-                }
+                'tab': {'slugify': slugify(case='lower')}
             }
         }
     }
@@ -54,18 +51,14 @@ class TestTabSlugs(util.MdCase):
         )
 
 
-class TestTabSlugsSep(util.MdCase):
-    """Test tab slug separator cases."""
+class TestLegacyTabSlugsSep(util.MdCase):
+    """Test legacy tab slug separator cases."""
 
     extension = ['pymdownx.blocks', 'toc']
     extension_configs = {
         'pymdownx.blocks': {
             'block_configs': {
-                'tab': {
-                    'slugify': slugify(case='lower'),
-                    'separator': '_',
-                    'alternate_style': True
-                }
+                'tab': {'slugify': slugify(case='lower'), 'separator': '_'}
             }
         }
     }
@@ -106,19 +99,10 @@ class TestTabSlugsSep(util.MdCase):
         )
 
 
-class TestBlocksTab(util.MdCase):
-    """Test Blocks tab cases."""
+class TestBlocksLegacyTab(util.MdCase):
+    """Test Blocks legacy tab cases."""
 
     extension = ['pymdownx.blocks', 'pymdownx.superfences', 'markdown.extensions.def_list', 'pymdownx.details']
-    extension_configs = {
-        'pymdownx.blocks': {
-            'block_configs': {
-                'tab': {
-                    'alternate_style': True
-                }
-            }
-        }
-    }
 
     def test_tabbed_select(self):
         """Test selecting a tab."""
