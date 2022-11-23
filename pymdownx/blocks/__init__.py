@@ -4,7 +4,7 @@ from markdown.blockprocessors import BlockProcessor, HRProcessor
 from markdown import util as mutil
 import xml.etree.ElementTree as etree
 import re
-from .admonitions import Admonition, Note, Attention, Caution, Danger, Error, Tip, Hint, Important, Warn
+from .admonitions import Admonition
 from .tabs import Tabs
 from .details import Details
 from .html import HTML
@@ -21,7 +21,7 @@ FENCED_BLOCK_RE = re.compile(
 
 # Block start/end
 RE_START = re.compile(
-    r'(?:^|\n)[ ]{0,3}(/{3,})[ ]*(\w+)[ ]*(?:\|[ ]*(.*?)[ ]*)?(?:\n|$)'
+    r'(?:^|\n)[ ]{0,3}(/{3,})[ ]*([\w-]+)[ ]*(?:\|[ ]*(.*?)[ ]*)?(?:\n|$)'
 )
 
 RE_END = re.compile(
@@ -122,6 +122,8 @@ class BlocksProcessor(BlockProcessor):
     def __init__(self, parser, md, config):
         """Initialization."""
 
+        self.md = md
+
         blocks = config['blocks']
 
         if not blocks:
@@ -129,22 +131,14 @@ class BlocksProcessor(BlockProcessor):
                 Admonition,
                 Details,
                 HTML,
-                Note,
-                Attention,
-                Caution,
-                Danger,
-                Error,
-                Tip,
-                Hint,
-                Important,
-                Warn,
                 Tabs
             ]
 
-        self.config = {b.NAME: self.set_configs(b.CONFIG, config['block_configs'].get(b.NAME, {})) for b in blocks}
-
+        # The Block classes indexable by name
+        self.blocks = {}
+        self.config = {}
         for b in blocks:
-            b.on_register(md, self.config.get(b.NAME, {}))
+            self.register(b, config['block_configs'].get(b.NAME, {}))
 
         self.empty_tags = set(['hr'])
         self.block_level_tags = set(md.block_level_elements.copy())
@@ -160,9 +154,6 @@ class BlocksProcessor(BlockProcessor):
 
         super().__init__(parser)
 
-        self.md = md
-        # The Block classes indexable by name
-        self.blocks = {b.NAME: b for b in blocks}
         # Persistent storage across a document for blocks
         self.trackers = {}
         # Currently queued up blocks
@@ -174,6 +165,16 @@ class BlocksProcessor(BlockProcessor):
         self.cached_parent = None
         self.cached_block = None
         self.require_yaml_fences = config['require_yaml_fences']
+
+    def register(self, b, config):
+        """Register a block."""
+
+        print(b.NAME, self.blocks)
+        if b.NAME in self.blocks:
+            raise ValueError('The block name {} is already registered!'.format(b.NAME))
+        self.blocks[b.NAME] = b
+        self.config[b.NAME] = self.set_configs(b.CONFIG, config)
+        b.on_register(self, self.md, self.config.get(b.NAME, {}))
 
     def set_configs(self, default, config):
         """Set config for a block extension."""

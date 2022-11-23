@@ -86,11 +86,9 @@ class Tabs(Block):
         self.tab_content = None
 
     @classmethod
-    def on_register(cls, md, config):
+    def on_register(cls, blocks_extension, md, config):
         """Handle registration event."""
 
-        print('---config---')
-        print(config)
         if config['slugify'] is not None:
             slugs = TabbedTreeprocessor(md, config)
             md.treeprocessors.register(slugs, 'tab_slugs', 4)
