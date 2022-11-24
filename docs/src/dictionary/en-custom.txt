@@ -210,6 +210,7 @@ pypi
 pytest
 raphael
 rc
+reStructuredText
 rebranded
 regex
 reindent
