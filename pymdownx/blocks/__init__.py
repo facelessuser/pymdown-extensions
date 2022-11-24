@@ -28,6 +28,14 @@ RE_END = re.compile(
     r'(?m)(?:^|\n)[ ]{0,3}(/{3,})[ ]*(?:\n|$)'
 )
 
+RE_COLON_START = re.compile(
+    r'(?:^|\n)[ ]{0,3}(:{3,})[ ]*([\w-]+)[ ]*(?:\|[ ]*(.*?)[ ]*)?(?:\n|$)'
+)
+
+RE_COLON_END = re.compile(
+    r'(?m)(?:^|\n)[ ]{0,3}(:{3,})[ ]*(?:\n|$)'
+)
+
 # Frontmatter patterns
 RE_YAML_START = re.compile(r'(?m)^[ ]{0,3}(-{3})[ ]*(?:\n|$)')
 
@@ -142,6 +150,8 @@ class BlocksProcessor(BlockProcessor):
 
         self.empty_tags = set(['hr'])
         self.block_level_tags = set(md.block_level_elements.copy())
+        self.block_level_tags.add('html')
+
         # Block-level tags in which the content only gets span level parsing
         self.span_tags = set(
             ['address', 'dd', 'dt', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'legend', 'li', 'p', 'summary', 'td', 'th']
@@ -164,12 +174,15 @@ class BlocksProcessor(BlockProcessor):
         # so we can quickly retrieve it when running
         self.cached_parent = None
         self.cached_block = None
+
+        # Used during the alpha/beta stage
         self.require_yaml_fences = config['require_yaml_fences']
+        self.start = RE_START if not config['colon_syntax'] else RE_COLON_START
+        self.end = RE_END if not config['colon_syntax'] else RE_COLON_END
 
     def register(self, b, config):
         """Register a block."""
 
-        print(b.NAME, self.blocks)
         if b.NAME in self.blocks:
             raise ValueError('The block name {} is already registered!'.format(b.NAME))
         self.blocks[b.NAME] = b
@@ -195,7 +208,7 @@ class BlocksProcessor(BlockProcessor):
             return True
 
         # Is this the start of a new block?
-        m = RE_START.search(block)
+        m = self.start.search(block)
         if m:
 
             pre_text = block[:m.start()] if m.start() > 0 else None
@@ -248,7 +261,7 @@ class BlocksProcessor(BlockProcessor):
 
             # Find the end of the Block
             m = None
-            for match in RE_END.finditer(block):
+            for match in self.end.finditer(block):
                 if len(match.group(1)) >= length:
                     m = match
                     break
@@ -282,7 +295,7 @@ class BlocksProcessor(BlockProcessor):
 
         # Search for end in first block
         m = None
-        for match in RE_END.finditer(block):
+        for match in self.end.finditer(block):
             if len(match.group(1)) >= length:
                 m = match
                 break
@@ -473,7 +486,8 @@ class BlocksExtension(Extension):
         self.config = {
             'blocks': [[], "Blocks extensions to load, if not defined, the default ones will be loaded."],
             'block_configs': [{}, "Global configuration for a given block."],
-            'require_yaml_fences': [False, "Require YAML fences in generic blocks."]
+            'require_yaml_fences': [False, "Require YAML fences in generic blocks."],
+            'colon_syntax': [False, "Use colon syntax."]
         }
 
         super().__init__(*args, **kwargs)

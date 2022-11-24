@@ -35,7 +35,7 @@ class Admonition(Block):
     def on_register(cls, blocks_extension, md, config):
         """Handle registration event."""
 
-        # Generate an admonition subclass based on the given name.
+        # Generate an admonition subclass based on the given names.
         for b in config.get('types', []):
             subclass = RE_SEP.sub('', b.title())
             blocks_extension.register(type(subclass, (Admonition,), {'OPTIONS': {}, 'NAME': b, 'CONFIG': {}}), {})
