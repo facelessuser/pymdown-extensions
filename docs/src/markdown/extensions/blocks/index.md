@@ -43,7 +43,7 @@ md = markdown.Markdown(extensions=['pymdownx.blocks'])
 While any and all feedback is welcome, there are two undecided options that require feedback to help us finalize the
 syntax for generic blocks. During the alpha/beta stage, we provide global options so users can try out the different
 options and provide their own feedback. Feedback will be taken into consideration as we move towards an official release
-candidate. It will be impossible to make all users happy, but we we'd like to give users an opportunity to help shape
+candidate. It will be impossible to make all users happy, but we'd like to give users an opportunity to help shape
 the direction.
 
 1. Currently, there is no hard decision as to whether we should use `:::` or `///` for the fence syntax. During the
