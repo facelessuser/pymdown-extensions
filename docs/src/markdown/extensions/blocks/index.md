@@ -28,7 +28,7 @@ Each meta-plugin can do whatever it wants with the content inside the container 
 to create as many different block style plugins as desired. As the blocks are fenced, indentation is not required to
 determine the start and end of the blocks.
 
-Blocks also allows for per block options given the extension authors an easy way to extend functionality and users an
+Blocks also allows for per block options giving the extension authors an easy way to extend functionality and users an
 easy, predictable way to specify such options.
 
 To use Blocks, simply include the extension as shown below.
