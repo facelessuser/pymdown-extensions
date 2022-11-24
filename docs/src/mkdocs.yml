@@ -39,6 +39,7 @@ nav:
     - Arithmatex: extensions/arithmatex.md
     - B64: extensions/b64.md
     - BetterEm: extensions/betterem.md
+    - Blocks: extensions/blocks/index.md
     - Caret: extensions/caret.md
     - Critic: extensions/critic.md
     - Details: extensions/details.md
@@ -157,7 +158,6 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.saneheaders:
-  - pymdownx.blocks:
 
 extra:
   social:

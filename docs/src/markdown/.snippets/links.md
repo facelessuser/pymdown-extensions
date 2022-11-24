@@ -47,6 +47,7 @@
 [twemoji-index]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/twemoji_db.py
 [unicode-norm]: http://unicode.org/reports/tr15/#Norm_Forms
 [_b64]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/b64.py "Source"
+[_blocks]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/blocks/__init__.py "Source"
 [_arithmatex]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/arithmatex.py "Source"
 [_betterem]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/betterem.py "Source"
 [_caret]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/caret.py "Source"

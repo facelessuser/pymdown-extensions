@@ -20,227 +20,144 @@ MagicLink extension, we would include it in Python Markdown like so:
 
 Check out documentation on each extension to learn more about how to configure and use each one.
 
-/// danger | Reminder
-
-Please read the [Usage Notes](usage_notes.md) for information on extension compatibility and general notes to be
-aware of when using these extensions.
-///
+!!! danger "Reminder"
+    Please read the [Usage Notes](usage_notes.md) for information on extension compatibility and general notes to be
+    aware of when using these extensions.
 
 ## Extensions
 
-/// admonition | Arithmatex
-type: abstract
+!!! abstract "Arithmatex"
+    [Arithmatex](extensions/arithmatex.md) is an extension that preserves LaTeX math equations ($\frac{\sqrt x}{y^3}$)
+    during the Markdown conversion process so that they can be used with [MathJax][mathjax].
 
-[Arithmatex](extensions/arithmatex.md) is an extension that preserves LaTeX math equations ($\frac{\sqrt x}{y^3}$)
-during the Markdown conversion process so that they can be used with [MathJax][mathjax].
-///
+!!! abstract "B64"
+    [B64](extensions/b64.md) converts all local images in a document to base64 encoding and embeds them in the document.
 
-/// admonition | B64
-type: abstract
+!!! abstract "BetterEm"
+    [BetterEm](extensions/betterem.md) is a different approach to **emphasis** than Python Markdown's default.  It works
+    similar but handles certain corner cases differently.
 
-[B64](extensions/b64.md) converts all local images in a document to base64 encoding and embeds them in the document.
-///
+!!! abstract "Caret"
+    [Caret](extensions/caret.md) is an extension that is syntactically built around the `^` character. It adds support
+    for inserting super^scripts^ and adds an easy way to place ^^text^^ in an `#!html <ins>` tag.
 
-/// admonition | BetterEm
-type: abstract
+!!! abstract "Critic"
+    [Critic](extensions/critic.md) adds handling and support of [Critic Markup][critic-markup].
 
-[BetterEm](extensions/betterem.md) is a different approach to **emphasis** than Python Markdown's default.  It works
-similar but handles certain corner cases differently.
-///
+!!! abstract "Details"
+    [Details](extensions/details.md) creates collapsible elements with `#!html <details><summary>` tags.
 
-/// admonition | Caret
-type: abstract
+    ??? note "Click Me!"
+        Thanks!
 
-[Caret](extensions/caret.md) is an extension that is syntactically built around the `^` character. It adds support
-for inserting super^scripts^ and adds an easy way to place ^^text^^ in an `#!html <ins>` tag.
-///
+!!! abstract "Emoji"
+    [Emoji](extensions/emoji.md) makes adding emoji via Markdown easy :smile:.
 
-/// admonition | Critic
-type: abstract
+!!! abstract "EscapeAll"
+    [EscapeAll](extensions/escapeall.md) allows the escaping of any character, some with additional effects.  Check it
+    out to learn more.
 
-[Critic](extensions/critic.md) adds handling and support of [Critic Markup][critic-markup].
-///
+!!! abstract "Extra"
+    [Extra](extensions/extra.md) is just like Python Markdown's Extra package except it uses PyMdown Extensions to
+    substitute similar extensions.
 
-//// admonition | Details
-type: abstract
+!!! abstract "Highlight"
+    [Highlight](extensions/highlight.md) allows you to configure the syntax highlighting of
+    [SuperFences](extensions/superfences.md) and [InlineHilite](extensions/inlinehilite.md).  Also passes standard
+    Markdown indented code blocks through the syntax highlighter.
 
-[Details](extensions/details.md) creates collapsible elements with `#!html <details><summary>` tags.
+!!! abstract "InlineHilite"
+    [InlineHilite](extensions/inlinehilite.md) highlights inline code: `#!py3 from module import function as func`.
 
-/// details | Click Me!
-type: note
+!!! abstract "Keys"
+    [Keys](extensions/keys.md) makes inserting key inputs into documents as easy as pressing ++ctrl+alt+delete++.
 
-Thanks!
-///
-////
+!!! abstract "MagicLink"
+    [MagicLink](extensions/magiclink.md) linkafies URL and email links without having to wrap them in Markdown syntax.
+    Also, shortens repository issue, pull request, and commit links automatically for popular code hosting providers.
+    You can even use special shorthand syntax to link to issues, diffs, and even mention people
 
-/// admonition | Emoji
-type: abstract
+!!! abstract "Mark"
+    [Mark](extensions/mark.md) allows you to ==mark== words easily.
 
-[Emoji](extensions/emoji.md) makes adding emoji via Markdown easy :smile:.
-///
+!!! abstract "PathConverter"
+    [PathConverter](extensions/pathconverter.md) converts paths to absolute or relative to a given base path.
 
-/// admonition | EscapeAll
-type: abstract
+!!! abstract "ProgressBar"
+    [ProgressBar](extensions/progressbar.md) creates progress bars quick and easy.
 
-[EscapeAll](extensions/escapeall.md) allows the escaping of any character, some with additional effects.  Check it
-out to learn more.
-///
+    [== 80%]{: .candystripe .candystripe-animate}
 
-/// admonition | Extra
-type: abstract
+!!! abstract "SaneHeaders"
+    [SaneHeaders](extensions/saneheaders.md) modifies hash headers to only be evaluated if the starting hash symbols are
+    followed by at least one space. This is useful if you use other extensions that also use the hash symbol (like our
+    own MagicLink extension).
 
-[Extra](extensions/extra.md) is just like Python Markdown's Extra package except it uses PyMdown Extensions to
-substitute similar extensions.
-///
+!!! abstract "SmartSymbols"
+    [SmartSymbols](extensions/smartsymbols.md) inserts commonly used Unicode characters via simple ASCII
+    representations: `=/=` --> =/=.
 
-/// admonition | Highlight
-type: abstract
+!!! abstract "Snippets"
+    [Snippets](extensions/snippets.md) include other Markdown or HTML snippets into the current Markdown file being
+    parsed.
 
-[Highlight](extensions/highlight.md) allows you to configure the syntax highlighting of
-[SuperFences](extensions/superfences.md) and [InlineHilite](extensions/inlinehilite.md).  Also passes standard
-Markdown indented code blocks through the syntax highlighter.
-///
+!!! abstract "StripHTML"
+    [StripHTML](extensions/striphtml.md) can strip out HTML comments and specific tag attributes.
 
-/// admonition | InlineHilite
-type: abstract
+!!! abstract "SuperFences"
+    [SuperFences](extensions/superfences.md) is like Python Markdown's fences, but better. Nest fences under lists,
+    admonitions, and other syntaxes. You can even create special custom fences for content like UML.
 
-[InlineHilite](extensions/inlinehilite.md) highlights inline code: `#!py3 from module import function as func`.
-///
+    === "Output"
 
-/// admonition | Keys
-type: abstract
+        ```diagram
+        graph TB
+            c1-->a2
+            subgraph one
+            a1-->a2
+            end
+            subgraph two
+            b1-->b2
+            end
+            subgraph three
+            c1-->c2
+            end
+        ```
 
-[Keys](extensions/keys.md) makes inserting key inputs into documents as easy as pressing ++ctrl+alt+delete++.
-///
+    === "Markdown"
 
-/// admonition | MagicLink
-type: abstract
+        ````
+        ```diagram
+        graph TB
+            c1-->a2
+            subgraph one
+            a1-->a2
+            end
+            subgraph two
+            b1-->b2
+            end
+            subgraph three
+            c1-->c2
+            end
+        ```
+        ````
 
-[MagicLink](extensions/magiclink.md) linkafies URL and email links without having to wrap them in Markdown syntax.
-Also, shortens repository issue, pull request, and commit links automatically for popular code hosting providers.
-You can even use special shorthand syntax to link to issues, diffs, and even mention people
-///
+!!! abstract "Tabbed"
+    [Tabbed](extensions/tabbed.md) allows for tabbed Markdown content:
 
-/// admonition | Mark
-type: abstract
+    === "Tab 1"
+        Markdown **content**.
 
-[Mark](extensions/mark.md) allows you to ==mark== words easily.
-///
+    === "Tab 2"
+        More Markdown **content**.
 
-/// admonition | PathConverter
-type: abstract
+!!! abstract "Tasklist"
+    [Tasklist](extensions/tasklist.md) allows inserting lists with check boxes.
 
-[PathConverter](extensions/pathconverter.md) converts paths to absolute or relative to a given base path.
-///
+    - [x] eggs
+    - [x] bread
+    - [ ] milk
 
-/// admonition | ProgressBar
-type: abstract
-
-[ProgressBar](extensions/progressbar.md) creates progress bars quick and easy.
-
-[== 80%]{: .candystripe .candystripe-animate}
-///
-
-/// admonition | SaneHeaders
-type: abstract
-
-[SaneHeaders](extensions/saneheaders.md) modifies hash headers to only be evaluated if the starting hash symbols are
-followed by at least one space. This is useful if you use other extensions that also use the hash symbol (like our
-own MagicLink extension).
-///
-
-/// admonition | SmartSymbols
-type: abstract
-
-[SmartSymbols](extensions/smartsymbols.md) inserts commonly used Unicode characters via simple ASCII
-representations: `=/=` ---> =/=.
-///
-
-/// admonition | Snippets
-type: abstract
-
-[Snippets](extensions/snippets.md) include other Markdown or HTML snippets into the current Markdown file being
-parsed.
-///
-
-/// admonition | StripHTML
-type: abstract
-
-[StripHTML](extensions/striphtml.md) can strip out HTML comments and specific tag attributes.
-///
-
-//// admonition | SuperFences
-type: abstract
-
-[SuperFences](extensions/superfences.md) is like Python Markdown's fences, but better. Nest fences under lists,
-admonitions, and other syntaxes. You can even create special custom fences for content like UML.
-
-/// tab | Output
-
-```diagram
-graph TB
-    c1-->a2
-    subgraph one
-    a1-->a2
-    end
-    subgraph two
-    b1-->b2
-    end
-    subgraph three
-    c1-->c2
-    end
-```
-///
-
-/// tab | Markdown
-
-````
-```diagram
-graph TB
-    c1-->a2
-    subgraph one
-    a1-->a2
-    end
-    subgraph two
-    b1-->b2
-    end
-    subgraph three
-    c1-->c2
-    end
-```
-````
-///
-////
-
-//// admonition | Tabbed
-type: abstract
-
-[Tabbed](extensions/tabbed.md) allows for tabbed Markdown content:
-
-/// tab | Tab 1
-
-Markdown **content**.
-///
-
-/// tab | Tab 2
-
-More Markdown **content**.
-///
-////
-
-/// admonition | Tasklist
-type: abstract
-
-[Tasklist](extensions/tasklist.md) allows inserting lists with check boxes.
-
-- [x] eggs
-- [x] bread
-- [ ] milk
-///
-
-/// admonition | Tilde
-type: abstract
-
-[Tilde](extensions/tilde.md) is syntactically built around the `~` character. It adds support for inserting
-sub~scripts~ and adds an easy way to place ~~text~~ in a `#!html <del>` tag.
-///
+!!! abstract "Tilde"
+    [Tilde](extensions/tilde.md) is syntactically built around the `~` character. It adds support for inserting
+    sub~scripts~ and adds an easy way to place ~~text~~ in a `#!html <del>` tag.
