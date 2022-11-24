@@ -128,7 +128,7 @@ md = markdown.Markdown(
 
 ## Syntax
 
-Syntax for Blocks requires the desired content to be included between fences. Fences are denoted by by using three or
+Syntax for Blocks requires the desired content to be included between fences. Fences are denoted by using three or
 more forward slashes. The opening fence must specify the name of the block to invoke it.
 
 ```
