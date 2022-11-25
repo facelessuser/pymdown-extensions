@@ -54,7 +54,7 @@ class TabbedTreeprocessor(Treeprocessor):
                         label.attrib["for"] = slug
 
 
-class Tabs(Block):
+class Tab(Block):
     """
     Tabbed container.
 

@@ -4,8 +4,8 @@ from markdown.blockprocessors import BlockProcessor, HRProcessor
 from markdown import util as mutil
 import xml.etree.ElementTree as etree
 import re
-from .admonitions import Admonition
-from .tabs import Tabs
+from .admonition import Admonition
+from .tab import Tab
 from .details import Details
 from .html import HTML
 import yaml
@@ -139,7 +139,7 @@ class BlocksProcessor(BlockProcessor):
                 Admonition,
                 Details,
                 HTML,
-                Tabs
+                Tab
             ]
 
         # The Block classes indexable by name

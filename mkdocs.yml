@@ -40,10 +40,10 @@ nav:
     - BetterEm: extensions/betterem.md
     - Blocks:
       - extensions/blocks/index.md
-      - Admonition: extensions/blocks/admonitions.md
-      - Detail: extensions/blocks/details.md
+      - Admonition: extensions/blocks/admonition.md
+      - Details: extensions/blocks/details.md
       - HTML: extensions/blocks/html.md
-      - Tab: extensions/blocks/tabs.md
+      - Tab: extensions/blocks/tab.md
     - Caret: extensions/caret.md
     - Critic: extensions/critic.md
     - Details: extensions/details.md

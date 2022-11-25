@@ -37,7 +37,7 @@ cannot conflict with other registered Block plugin names you are using.
 
 ```py3
 import markdown
-from pymdownx.blocks.admonitions import Admonition
+from pymdownx.blocks.admonition import Admonition
 
 md = markdown.Markdown(
     extensions=['pymdownx.blocks'],
