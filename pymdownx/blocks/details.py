@@ -1,6 +1,10 @@
 """Details."""
 import xml.etree.ElementTree as etree
 from .block import Block, type_class, type_boolean
+import re
+
+RE_SEP = re.compile(r'[_-]+')
+RE_VALID_NAME = re.compile(r'[\w-]+')
 
 
 class Details(Block):
@@ -26,6 +30,21 @@ class Details(Block):
         'open': [False, type_boolean],
         'type': ['', type_class]
     }
+
+    CONFIG = {
+        "types": []
+    }
+
+    @classmethod
+    def on_register(cls, blocks_extension, md, config):
+        """Handle registration event."""
+
+        # Generate an admonition subclass based on the given names.
+        for b in config.get('types', []):
+            subclass = RE_SEP.sub('', b.title())
+            blocks_extension.register(
+                type(subclass, (Details,), {'OPTIONS': {'open', [False, type_boolean]}, 'NAME': b, 'CONFIG': {}}), {}
+            )
 
     def on_create(self, parent):
         """Create the element."""
