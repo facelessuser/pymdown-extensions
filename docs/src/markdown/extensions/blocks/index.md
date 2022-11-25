@@ -94,12 +94,12 @@ the direction.
 
 Blocks provides a number of "meta-plugins" out of the box.
 
-Plugin       |  Description
------------- | -----------
-`admonition` | The admonition block allows for the creation of admonitions.
-`details`    | The details block allows for the creation of collapsible details/summary constructs.
-`tabs`       | Aims to replace the [Tabbed](../tabbed.md) extension and allows for the creation of tab containers.
-`html`       | HTML is a block that allows for the arbitrary creation of HTML elements of various types.
+Plugin                          |  Description
+------------------------------- | -----------
+[`admonition`](./admonition.md) | The admonition block allows for the creation of admonitions.
+[`details`](./details.md)       | The details block allows for the creation of collapsible details/summary constructs.
+[`tab`](./tab.md)               | Aims to replace the [Tabbed](../tabbed.md) extension and allows for the creation of tab containers.
+[`html`](./html.md)             | HTML is a block that allows for the arbitrary creation of HTML elements of various types.
 
 
 ## Configuring Meta-Plugins
@@ -109,7 +109,7 @@ and `block_configs` options.
 
 ```py3
 import markdown
-from pymdownx.blocks.admonitions import Admonition
+from pymdownx.blocks.admonition import Admonition
 
 md = markdown.Markdown(
     extensions=['pymdownx.blocks'],
