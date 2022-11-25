@@ -13,7 +13,8 @@ class TabbedTreeprocessor(Treeprocessor):
 
         super().__init__(md)
 
-        self.slugify = config["slugify"]
+        self.alternate = config['alternate_style']
+        self.slugify = config['slugify']
         self.sep = config["separator"]
 
     def run(self, doc):
@@ -28,14 +29,21 @@ class TabbedTreeprocessor(Treeprocessor):
         for el in doc.iter():
             if isinstance(el.tag, str) and el.tag.lower() == 'div':
                 classes = el.attrib.get('class', '').split()
-                if 'tabbed-set' in classes and 'tabbed-alternate' in classes:
+                if 'tabbed-set' in classes and (not self.alternate or 'tabbed-alternate' in classes):
                     inputs = []
                     labels = []
-                    for i in list(el):
-                        if i.tag == 'input':
-                            inputs.append(i)
-                        if i.tag == 'div' and i.attrib.get('class', '') == 'tabbed-labels':
-                            labels = [j for j in list(i) if j.tag == 'label']
+                    if self.alternate:
+                        for i in list(el):
+                            if i.tag == 'input':
+                                inputs.append(i)
+                            if i.tag == 'div' and i.attrib.get('class', '') == 'tabbed-labels':
+                                labels = [j for j in list(i) if j.tag == 'label']
+                    else:
+                        for i in list(el):
+                            if i.tag == 'input':
+                                inputs.append(i)
+                            if i.tag == 'label':
+                                labels.append(i)
 
                     # Generate slugged IDs
                     for inpt, label in zip(inputs, labels):
@@ -71,13 +79,15 @@ class Tabs(Block):
 
     CONFIG = {
         'slugify': None,
-        'separator': '-'
+        'separator': '-',
+        'alternate_style': False
     }
 
     def on_init(self):
         """Handle initialization."""
 
-        self.slugify = self.config['slugify'] is not None
+        self.alternate_style = self.config['alternate_style']
+        self.slugify = callable(self.config['slugify'])
 
         # Track tab group count across the entire page.
         if 'tab_group_count' not in self.tracker:
@@ -89,7 +99,7 @@ class Tabs(Block):
     def on_register(cls, blocks_extension, md, config):
         """Handle registration event."""
 
-        if config['slugify'] is not None:
+        if callable(config['slugify']):
             slugs = TabbedTreeprocessor(md, config)
             md.treeprocessors.register(slugs, 'tab_slugs', 4)
 
@@ -105,11 +115,12 @@ class Tabs(Block):
         """Adjust where the content is added."""
 
         if self.tab_content is None:
-            for d in parent.findall('div'):
-                c = d.attrib['class']
-                if c == 'tabbed-content' or c.startswith('tabbed-content '):
-                    self.tab_content = list(d)[-1]
-                    return self.tab_content
+            if self.alternate_style:
+                for d in parent.findall('div'):
+                    c = d.attrib['class']
+                    if c == 'tabbed-content' or c.startswith('tabbed-content '):
+                        self.tab_content = list(d)[-1]
+                        return self.tab_content
 
             # This shouldn't happen, but if it does, just return the parent.
             # This can only happen if something else comes in and destroys are structure.
@@ -124,7 +135,7 @@ class Tabs(Block):
         select = self.options['select']
         title = self.args[0] if self.args and self.args[0] else ''
         sibling = self.last_child(parent)
-        tabbed_set = 'tabbed-set tabbed-alternate'
+        tabbed_set = 'tabbed-set' if not self.alternate_style else 'tabbed-set tabbed-alternate'
         index = 0
         labels = None
         content = None
@@ -137,14 +148,15 @@ class Tabs(Block):
             first = False
             tab_group = sibling
 
-            index = [index for index, _ in enumerate(tab_group.findall('input'), 1)][-1]
-            for d in tab_group.findall('div'):
-                if d.attrib['class'] == 'tabbed-labels':
-                    labels = d
-                elif d.attrib['class'] == 'tabbed-content':
-                    content = d
-                if labels is not None and content is not None:
-                    break
+            if self.alternate_style:
+                index = [index for index, _ in enumerate(tab_group.findall('input'), 1)][-1]
+                for d in tab_group.findall('div'):
+                    if d.attrib['class'] == 'tabbed-labels':
+                        labels = d
+                    elif d.attrib['class'] == 'tabbed-content':
+                        content = d
+                    if labels is not None and content is not None:
+                        break
         else:
             first = True
             self.tracker['tab_group_count'] += 1
@@ -154,16 +166,17 @@ class Tabs(Block):
                 {'class': tabbed_set, 'data-tabs': '%d:0' % self.tracker['tab_group_count']}
             )
 
-            labels = etree.SubElement(
-                tab_group,
-                'div',
-                {'class': 'tabbed-labels'}
-            )
-            content = etree.SubElement(
-                tab_group,
-                'div',
-                {'class': 'tabbed-content'}
-            )
+            if self.alternate_style:
+                labels = etree.SubElement(
+                    tab_group,
+                    'div',
+                    {'class': 'tabbed-labels'}
+                )
+                content = etree.SubElement(
+                    tab_group,
+                    'div',
+                    {'class': 'tabbed-content'}
+                )
 
         data = tab_group.attrib['data-tabs'].split(':')
         tab_set = int(data[0])
@@ -187,24 +200,45 @@ class Tabs(Block):
                     if 'checked' in i.attrib:
                         del i.attrib['checked']
 
-        input_el = etree.Element(
-            'input',
-            attributes
-        )
-        tab_group.insert(index, input_el)
-        lab = etree.SubElement(
-            labels,
-            "label",
-            attributes2
-        )
-        lab.text = title
+        if self.alternate_style:
+            input_el = etree.Element(
+                'input',
+                attributes
+            )
+            tab_group.insert(index, input_el)
+            lab = etree.SubElement(
+                labels,
+                "label",
+                attributes2
+            )
+            lab.text = title
 
-        attrib = {'class': 'tabbed-block'}
-        etree.SubElement(
-            content,
-            "div",
-            attrib
-        )
+            attrib = {'class': 'tabbed-block'}
+            etree.SubElement(
+                content,
+                "div",
+                attrib
+            )
+        else:
+            etree.SubElement(
+                tab_group,
+                'input',
+                attributes
+            )
+            lab = etree.SubElement(
+                tab_group,
+                "label",
+                attributes2
+            )
+            lab.text = title
+
+            etree.SubElement(
+                tab_group,
+                "div",
+                {
+                    "class": "tabbed-content"
+                }
+            )
 
         tab_group.attrib['data-tabs'] = '%d:%d' % (tab_set, tab_count)
 

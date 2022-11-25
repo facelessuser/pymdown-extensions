@@ -707,7 +707,15 @@ class TestBlocksTab(util.MdCase):
     """Test Blocks tab cases."""
 
     extension = ['pymdownx.blocks', 'pymdownx.superfences', 'markdown.extensions.def_list', 'pymdownx.details']
-    extension_configs = {'pymdownx.tabbed': {'alternate_style': True}}
+    extension_configs = {
+        'pymdownx.blocks': {
+            'block_configs': {
+                'tab': {
+                    'alternate_style': True
+                }
+            }
+        }
+    }
 
     def test_with_preceding_text(self):
         """Test content directly before tabs."""
