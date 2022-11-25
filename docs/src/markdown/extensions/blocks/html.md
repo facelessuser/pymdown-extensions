@@ -1,3 +1,5 @@
+[:octicons-file-code-24:][_html_block]{: .source-link }
+
 # HTML
 
 ## Overview
