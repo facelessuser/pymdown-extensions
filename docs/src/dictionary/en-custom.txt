@@ -236,6 +236,7 @@ squidfunk
 stylelint
 stylesheet
 stylesheets
+subclasses
 sublicense
 superfences
 syntaxes
