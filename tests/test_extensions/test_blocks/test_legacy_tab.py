@@ -36,15 +36,10 @@ class TestLegacyTabSlugs(util.MdCase):
             self.MD,
             '''
             <h3 id="here-is-some-text">Here is some text</h3>
-            <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="here-is-some-text_1" name="__tabbed_1" type="radio" /><input id="here-is-some-text_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="here-is-some-text_1">Here is some text</label><label for="here-is-some-text_2">Here is some text</label></div>
-            <div class="tabbed-content">
-            <div class="tabbed-block">
+            <div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="here-is-some-text_1" name="__tabbed_1" type="radio" /><label for="here-is-some-text_1">Here is some text</label><div class="tabbed-content"></div>
             <p>content</p>
-            </div>
-            <div class="tabbed-block">
+            <input id="here-is-some-text_2" name="__tabbed_1" type="radio" /><label for="here-is-some-text_2">Here is some text</label><div class="tabbed-content"></div>
             <p>content</p>
-            </div>
-            </div>
             </div>
             ''',  # noqa: E501
             True
@@ -84,15 +79,10 @@ class TestLegacyTabSlugsSep(util.MdCase):
             self.MD,
             '''
             <h3 id="here-is-some-text">Here is some text</h3>
-            <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="here_is_some_text" name="__tabbed_1" type="radio" /><input id="here_is_some_text_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="here_is_some_text">Here is some text</label><label for="here_is_some_text_1">Here is some text</label></div>
-            <div class="tabbed-content">
-            <div class="tabbed-block">
+            <div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="here_is_some_text" name="__tabbed_1" type="radio" /><label for="here_is_some_text">Here is some text</label><div class="tabbed-content"></div>
             <p>content</p>
-            </div>
-            <div class="tabbed-block">
+            <input id="here_is_some_text_1" name="__tabbed_1" type="radio" /><label for="here_is_some_text_1">Here is some text</label><div class="tabbed-content"></div>
             <p>content</p>
-            </div>
-            </div>
             </div>
             ''',  # noqa: E501
             True
@@ -126,24 +116,18 @@ class TestBlocksLegacyTab(util.MdCase):
             ///
             ''',
             r'''
-            <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input checked="checked" id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab 1</label><label for="__tabbed_1_2">Tab 2</label><label for="__tabbed_1_3">Tab 3</label></div>
-            <div class="tabbed-content">
-            <div class="tabbed-block">
+            <div class="tabbed-set" data-tabs="1:3"><input id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab 1</label><div class="tabbed-content"></div>
             <p>content</p>
-            </div>
-            <div class="tabbed-block">
+            <input checked="checked" id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Tab 2</label><div class="tabbed-content"></div>
             <p>content</p>
-            </div>
-            <div class="tabbed-block">
+            <input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">Tab 3</label><div class="tabbed-content"></div>
             <p>content</p>
-            </div>
-            </div>
             </div>
             ''',  # noqa: E501
             True
         )
 
-    def test_tabbed_select_mulitiple(self):
+    def test_tabbed_select_multiple(self):
         """Test selecting multiple tabs."""
 
         self.check_markdown(
@@ -166,18 +150,12 @@ class TestBlocksLegacyTab(util.MdCase):
             ///
             ''',
             r'''
-            <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input checked="checked" id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab 1</label><label for="__tabbed_1_2">Tab 2</label><label for="__tabbed_1_3">Tab 3</label></div>
-            <div class="tabbed-content">
-            <div class="tabbed-block">
+            <div class="tabbed-set" data-tabs="1:3"><input id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab 1</label><div class="tabbed-content"></div>
             <p>content</p>
-            </div>
-            <div class="tabbed-block">
+            <input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Tab 2</label><div class="tabbed-content"></div>
             <p>content</p>
-            </div>
-            <div class="tabbed-block">
+            <input checked="checked" id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">Tab 3</label><div class="tabbed-content"></div>
             <p>content</p>
-            </div>
-            </div>
             </div>
             ''',  # noqa: E501
             True
@@ -223,18 +201,13 @@ class TestBlocksLegacyTab(util.MdCase):
             ///
             ''',
             r'''
-            <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab</label><label for="__tabbed_1_2">Another Tab</label></div>
-            <div class="tabbed-content">
-            <div class="tabbed-block">
+            <div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab</label><div class="tabbed-content"></div>
             <p>Some <em>content</em></p>
             <p>And more <code>content</code>.</p>
-            </div>
-            <div class="tabbed-block">
+            <input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Another Tab</label><div class="tabbed-content"></div>
             <p>Some more content.</p>
             <div class="highlight"><pre><span></span><code>code
             </code></pre></div>
-            </div>
-            </div>
             </div>
             ''',  # noqa: E501
             True
@@ -262,18 +235,13 @@ class TestBlocksLegacyTab(util.MdCase):
             ///
             ''',
             r'''
-            <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1"><strong>Tab</strong></label><label for="__tabbed_1_2"><em>Another Tab</em></label></div>
-            <div class="tabbed-content">
-            <div class="tabbed-block">
+            <div class="tabbed-set" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1"><strong>Tab</strong></label><div class="tabbed-content"></div>
             <p>Some <em>content</em></p>
             <p>And more <code>content</code>.</p>
-            </div>
-            <div class="tabbed-block">
+            <input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2"><em>Another Tab</em></label><div class="tabbed-content"></div>
             <p>Some more content.</p>
             <div class="highlight"><pre><span></span><code>code
             </code></pre></div>
-            </div>
-            </div>
             </div>
             ''',  # noqa: E501
             True
@@ -302,22 +270,14 @@ class TestBlocksLegacyTab(util.MdCase):
             ///
             ''',
             r'''
-            <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab</label></div>
-            <div class="tabbed-content">
-            <div class="tabbed-block">
+            <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab</label><div class="tabbed-content"></div>
             <p>Some <em>content</em></p>
             <p>And more <code>content</code>.</p>
             </div>
-            </div>
-            </div>
-            <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Another Tab</label></div>
-            <div class="tabbed-content">
-            <div class="tabbed-block">
+            <div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><label for="__tabbed_2_1">Another Tab</label><div class="tabbed-content"></div>
             <p>Some more content.</p>
             <div class="highlight"><pre><span></span><code>code
             </code></pre></div>
-            </div>
-            </div>
             </div>
             ''',  # noqa: E501
             True
