@@ -23,6 +23,8 @@ theme:
     - navigation.tabs
     - navigation.top
     - navigation.instant
+    - navigation.indexes
+    - toc.follow
     - content.tabs.link
     - search.share
     - search.highlight
@@ -39,7 +41,12 @@ nav:
     - Arithmatex: extensions/arithmatex.md
     - B64: extensions/b64.md
     - BetterEm: extensions/betterem.md
-    - Blocks: extensions/blocks/index.md
+    - Blocks:
+      - extensions/blocks/index.md
+      - Admonition: extensions/blocks/admonitions.md
+      - Detail: extensions/blocks/details.md
+      - HTML: extensions/blocks/html.md
+      - Tab: extensions/blocks/tabs.md
     - Caret: extensions/caret.md
     - Critic: extensions/critic.md
     - Details: extensions/details.md

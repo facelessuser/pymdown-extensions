@@ -1,4 +1,5 @@
 [abbreviations]: https://python-markdown.github.io/extensions/abbreviations/
+[admonition]: https://python-markdown.github.io/extensions/admonition/
 [aspell]: http://aspell.net/
 [attr-list]: https://python-markdown.github.io/extensions/attr_list/
 [bleach]: https://pypi.python.org/pypi/bleach
@@ -46,6 +47,7 @@
 [twemoji]: https://github.com/twitter/twemoji
 [twemoji-index]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/twemoji_db.py
 [unicode-norm]: http://unicode.org/reports/tr15/#Norm_Forms
+[_admontion_block]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/blocks/admonitions.py
 [_b64]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/b64.py "Source"
 [_blocks]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/blocks/__init__.py "Source"
 [_arithmatex]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/arithmatex.py "Source"
