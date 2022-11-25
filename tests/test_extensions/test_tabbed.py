@@ -231,7 +231,7 @@ class TestLegacyTab(util.MdCase):
             True
         )
 
-    def test_tabbed_select_mulitiple(self):
+    def test_tabbed_select_multiple(self):
         """Test selecting multiple tabs."""
 
         self.check_markdown(
