@@ -1,4 +1,4 @@
-[_admontion_block]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/blocks/admonition.py
+[_admonition_block]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/blocks/admonition.py
 [_arithmatex]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/arithmatex.py "Source"
 [_b64]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/b64.py "Source"
 [_betterem]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/betterem.py "Source"
