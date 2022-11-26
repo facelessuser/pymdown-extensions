@@ -10,18 +10,9 @@ except they use the new generic block syntax.
 ## Usage
 
 A tab can be defined using the generic bock syntax and the name `tab`. Tabs should also specify the tab title in the
-header.
+header. Consecutive tabs will automatically be grouped.
 
-```
-/// tab | Tab title
-
-Tab content
-///
-```
-
-Consecutive tabs will automatically be grouped:
-
-```
+``` title="Example: Tabs"
 /// tab | Tab 1 title
 
 Tab1 content
@@ -33,10 +24,35 @@ Tab 2 content
 ///
 ```
 
+<div class="result" markdown>
+
+```md-render
+---
+extensions:
+- pymdownx.blocks
+extension_configs:
+  pymdownx.blocks:
+    block_configs:
+      tab:
+        alternate_style: true
+---
+/// tab | Tab 1 title
+
+Tab1 content
+///
+
+/// tab | Tab 2 title
+
+Tab 2 content
+///
+```
+
+</div>
+
 If you want to have two tab containers right after each other, you specify a hard break that will force the specified
 tab to start a brand new tab container.
 
-```
+``` title="Example: New Tab Group"
 /// tab | Tab 1 title
 
 Tab 1 content
@@ -55,6 +71,39 @@ new: True
 Will be part of a separate, new tab group.
 ///
 ```
+
+<div class="result" markdown>
+
+```md-render
+---
+extensions:
+- pymdownx.blocks
+extension_configs:
+  pymdownx.blocks:
+    block_configs:
+      tab:
+        alternate_style: true
+---
+/// tab | Tab 1 title
+
+Tab 1 content
+///
+
+/// tab | Tab 2 title
+
+Tab 2 content
+///
+
+/// tab | Tab A Title
+---
+new: True
+---
+
+Will be part of a separate, new tab group.
+///
+```
+
+</div>
 
 If desired, you can specify a tab to be selected by default with the `select` option.
 
