@@ -82,6 +82,10 @@
     /* Needed for tab preserving mode */
     tab-size: 8;
 
+    + .result {
+      border-width: px2rem(2px);
+    }
+
     /* `pymdownx-inline` mode */
     [data-linenos] {
 
@@ -125,7 +129,7 @@
     padding: px2em(8px) px2em(16px, 13.6px) px2em(8px) px2em(40px, 13.6px);
     font-weight: 700;
     font-size: px2rem(13.6px);
-    background-color: var(--md-default-bg-color--ultra-dark);
+    background-color: var(--md-code-title-bg-color);
     border-top-left-radius: px2rem(2px);
     border-top-right-radius: px2rem(2px);
 
