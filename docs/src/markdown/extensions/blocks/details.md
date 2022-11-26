@@ -11,7 +11,7 @@ them in the future. The output is identical `pymdownx.details`, but they use the
 Admonitions can be specified using the generic block syntax and the name `details`. A summary can be specified in
 the header. Additionally, you can apply a specific type if like with admonitions if desired.
 
-```
+``` title="Example: Details"
 /// details | Some summary
 ---
 type: note
@@ -21,9 +21,27 @@ Some content
 ///
 ```
 
+<div class="result" markdown>
+
+```md-render
+---
+extensions:
+- pymdownx.blocks
+---
+/// details | Some summary
+---
+type: note
+---
+
+Some content
+///
+```
+
+</div>
+
 If you wish to specify a details as open (or not collapsed), simply use the option `open`.
 
-```
+``` title="Example: Details Open"
 /// details | Some summary
 ---
 open: True
@@ -32,6 +50,24 @@ open: True
 Some content
 ///
 ```
+
+<div class="result" markdown>
+
+```md-render
+---
+extensions:
+- pymdownx.blocks
+---
+/// details | Some summary
+---
+open: True
+---
+
+Some content
+///
+```
+
+</div>
 
 Like admonitions, you can specify and register special shortcuts for certain details types, but unlike admonitions,
 details does not register any default types by default.
