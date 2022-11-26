@@ -43,8 +43,15 @@ class Details(Block):
         for b in config.get('types', []):
             subclass = RE_SEP.sub('', b.title())
             blocks_extension.register(
-                type(subclass, (Details,), {'OPTIONS': {'open', [False, type_boolean]}, 'NAME': b, 'CONFIG': {}}), {}
+                type(subclass, (Details,), {'OPTIONS': {'open': [False, type_boolean]}, 'NAME': b, 'CONFIG': {}}), {}
             )
+
+    def on_parse(self):
+        """Handle on parse event."""
+
+        if self.NAME != 'details':
+            self.options['type'] = self.NAME
+        return True
 
     def on_create(self, parent):
         """Create the element."""

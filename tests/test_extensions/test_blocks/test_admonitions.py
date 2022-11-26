@@ -6,6 +6,15 @@ class TestBlocksAdmonitions(util.MdCase):
     """Test Blocks admonitions cases."""
 
     extension = ['pymdownx.blocks']
+    extension_configs = {
+        'pymdownx.blocks': {
+            'block_configs': {
+                'admonition': {
+                    'types': ['note', 'custom']
+                }
+            }
+        }
+    }
 
     def test_optional_title(self):
         """Test that tab is not processed if title is omitted."""
@@ -97,6 +106,25 @@ class TestBlocksAdmonitions(util.MdCase):
             ''',
             r'''
             <div class="admonition note">
+            <p class="admonition-title">A Title</p>
+            <p>Some <em>content</em></p>
+            </div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_custom(self):
+        """Test custom type (one not shipped by default)."""
+
+        self.check_markdown(
+            R'''
+            /// custom | A Title
+
+            Some *content*
+            ///
+            ''',
+            r'''
+            <div class="admonition custom">
             <p class="admonition-title">A Title</p>
             <p>Some <em>content</em></p>
             </div>
