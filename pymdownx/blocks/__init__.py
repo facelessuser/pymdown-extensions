@@ -370,7 +370,7 @@ class BlocksProcessor(BlockProcessor):
             tag = target.tag
             mode = entry.block.on_markdown()
             is_block = mode == 'block' or (mode == 'auto' and tag in self.block_tags)
-            is_atomic = mode == 'raw' or tag in self.raw_tags
+            is_atomic = mode == 'raw' or (mode == 'auto' and tag in self.raw_tags)
 
             # We should revert fenced code in spans or atomic tags.
             # Make sure atomic tags have content wrapped as `AtomicString`.
