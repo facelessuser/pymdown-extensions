@@ -6,6 +6,15 @@ class TestBlocksDetails(util.MdCase):
     """Test Blocks details cases."""
 
     extension = ['pymdownx.blocks']
+    extension_configs = {
+        'pymdownx.blocks': {
+            'block_configs': {
+                'details': {
+                    'types': ['custom']
+                }
+            }
+        }
+    }
 
     def test_optional_title(self):
         """Test that tab is not processed if title is omitted."""
@@ -79,6 +88,25 @@ class TestBlocksDetails(util.MdCase):
             ''',
             r'''
             <details open="open">
+            <summary>A Title</summary>
+            <p>Some <em>content</em></p>
+            </details>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_custom(self):
+        """Test custom type (one not shipped by default)."""
+
+        self.check_markdown(
+            R'''
+            /// custom | A Title
+
+            Some *content*
+            ///
+            ''',
+            r'''
+            <details class="custom">
             <summary>A Title</summary>
             <p>Some <em>content</em></p>
             </details>
