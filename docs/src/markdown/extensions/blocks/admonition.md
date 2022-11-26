@@ -1,3 +1,5 @@
+[:octicons-file-code-24:][_admonition_block]{: .source-link }
+
 # Admonition
 
 ## Overview
@@ -10,7 +12,7 @@ identical, but they use the new generic block syntax.
 Admonitions can be specified using the generic block syntax and the name `admonition`. A title can be specified in
 the header.
 
-```
+``` title="Example: Admonition"
 /// admonition | Some title
 ---
 type: note
@@ -20,17 +22,50 @@ Some content
 ///
 ```
 
+<div class="result" markdown>
+
+```md-render
+---
+extensions:
+- pymdownx.blocks
+---
+/// admonition | Some title
+---
+type: note
+---
+
+Some content
+///
+```
+
+</div>
+
+
 Out of the box, Admonitions registers a number of shortcuts for common admonition types: note, attention, caution,
 danger, error, tip, hint, warning.
 
 These require you to use their special. When using these, `type` does not need to be set and is not accepted.
 
-```
+``` title="Example: Note"
 /// note | Some title
 
 Some content
 ///
 ```
+
+<div class="result" markdown>
+
+```md-render
+---
+extensions:
+- pymdownx.blocks
+---
+/// note | Some title
+
+Some content
+///
+```
+</div>
 
 These default types can actually be overridden or extended by using the global `types` option. Keep in mind that names
 cannot conflict with other registered Block plugin names you are using.
