@@ -1,10 +1,31 @@
 [:octicons-file-code-24:][_details_block]{: .source-link }
 # Details
 
+!!! warning "Alpha Release"
+    Blocks is currently only available in the Pymdown Extensions alpha release. It is a work in progress and API and
+    syntax are subject to change.
+
 ## Overview
 
 Details blocks are an alternative to using [`pymdownx.details`](../details.md) and, in fact, aim to potentially replace
 them in the future. The output is identical `pymdownx.details`, but they use the new generic block syntax.
+
+By default, the meta-plugin is registered when `pymdownx.blocks` is registered, but if you were customizing which
+meta-plugins get loaded, you can do so by doing the following:
+
+```py3
+import markdown
+from pymdownx.blocks.details import Details
+md = markdown.Markdown(
+    extensions=['pymdownx.blocks']
+    extension_configs={
+        'pymdownx.blocks': {
+            'blocks': [Details]
+            # Use block_configs to set block specific global settings
+        }
+    }
+)
+```
 
 ## Usage
 
