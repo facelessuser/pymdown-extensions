@@ -2,10 +2,31 @@
 
 # Tab
 
+!!! warning "Alpha Release"
+    Blocks is currently only available in the Pymdown Extensions alpha release. It is a work in progress and API and
+    syntax are subject to change.
+
 ## Overview
 
-Tab blocks are aimed at replacing the [Tabbed extension](../tabbed.md). They function identical to Tabbed in every way
-except they use the new generic block syntax.
+Tab blocks are aimed at replacing the [Tabbed extension](../tabbed.md). They function identical to Tabbed in every way,
+even using the same classes, except they use the new generic block syntax.
+
+By default, the meta-plugin is registered when `pymdownx.blocks` is registered, but if you were customizing which
+meta-plugins get loaded, you can do so by doing the following:
+
+```py3
+import markdown
+from pymdownx.blocks.tab import Tab
+md = markdown.Markdown(
+    extensions=['pymdownx.blocks']
+    extension_configs={
+        'pymdownx.blocks': {
+            'blocks': [Tab]
+            # Use block_configs to set block specific global settings
+        }
+    }
+)
+```
 
 ## Usage
 
