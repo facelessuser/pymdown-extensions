@@ -124,7 +124,7 @@ include.md::3
 
 !!! new "New 9.7"
 
-Specifying snippet lines may not always be as the source could change moving, adding, and/or removing lines. A way
+Specifying snippet lines may not always be ideal. The source could change by moving, adding, and/or removing lines. A way
 around this is to partition a snippet into named sections and then targeting a specific section to be included instead
 of specific line numbers.
 
