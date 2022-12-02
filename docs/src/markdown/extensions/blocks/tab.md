@@ -38,7 +38,7 @@ header. Consecutive tabs will automatically be grouped.
 ``` title="Example: Tabs"
 /// tab | Tab 1 title
 
-Tab1 content
+Tab 1 content
 ///
 
 /// tab | Tab 2 title
@@ -58,10 +58,11 @@ extension_configs:
     block_configs:
       tab:
         alternate_style: true
+        slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
 ---
 /// tab | Tab 1 title
 
-Tab1 content
+Tab 1 content
 ///
 
 /// tab | Tab 2 title
@@ -76,17 +77,17 @@ If you want to have two tab containers right after each other, you specify a har
 tab to start a brand new tab container.
 
 ``` title="Example: New Tab Group"
-/// tab | Tab 1 title
+/// tab | Tab A title
 
-Tab 1 content
+Tab A content
 ///
 
-/// tab | Tab 2 title
+/// tab | Tab B title
 
-Tab 2 content
+Tab B content
 ///
 
-/// tab | Tab A Title
+/// tab | Tab C Title
 ---
 new: True
 ---
@@ -106,18 +107,19 @@ extension_configs:
     block_configs:
       tab:
         alternate_style: true
+        slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
 ---
-/// tab | Tab 1 title
+/// tab | Tab A title
 
-Tab 1 content
+Tab A content
 ///
 
-/// tab | Tab 2 title
+/// tab | Tab B title
 
-Tab 2 content
+Tab B content
 ///
 
-/// tab | Tab A Title
+/// tab | Tab C Title
 ---
 new: True
 ---
