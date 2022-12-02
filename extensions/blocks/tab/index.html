@@ -11,15 +11,6 @@
 <span class=p>)</span>
 </code></pre></div> <h2 id=usage>Usage<a class=headerlink href=#usage title="Permanent link"></a></h2> <p>A tab can be defined using the generic bock syntax and the name <code>tab</code>. Tabs should also specify the tab title in the header. Consecutive tabs will automatically be grouped.</p> <div class=highlight><span class=filename>Example: Tabs</span><pre><span></span><code>/// tab | Tab 1 title
 
-Tab1 content
-///
-
-/// tab | Tab 2 title
-
-Tab 2 content
-///
-</code></pre></div> <div class=result> <div class="tabbed-set tabbed-alternate" data-tabs=1:2><input checked=checked id=__tabbed_1_1 name=__tabbed_1 type=radio><input id=__tabbed_1_2 name=__tabbed_1 type=radio><div class=tabbed-labels><label for=__tabbed_1_1>Tab 1 title</label><label for=__tabbed_1_2>Tab 2 title</label></div> <div class=tabbed-content> <div class=tabbed-block> <p>Tab1 content</p> </div> <div class=tabbed-block> <p>Tab 2 content</p> </div> </div> </div> </div> <p>If you want to have two tab containers right after each other, you specify a hard break that will force the specified tab to start a brand new tab container.</p> <div class=highlight><span class=filename>Example: New Tab Group</span><pre><span></span><code>/// tab | Tab 1 title
-
 Tab 1 content
 ///
 
@@ -27,15 +18,24 @@ Tab 1 content
 
 Tab 2 content
 ///
+</code></pre></div> <div class=result> <div class="tabbed-set tabbed-alternate" data-tabs=1:2><input checked=checked id=tab-1-title name=__tabbed_1 type=radio><input id=tab-2-title name=__tabbed_1 type=radio><div class=tabbed-labels><label for=tab-1-title>Tab 1 title</label><label for=tab-2-title>Tab 2 title</label></div> <div class=tabbed-content> <div class=tabbed-block> <p>Tab 1 content</p> </div> <div class=tabbed-block> <p>Tab 2 content</p> </div> </div> </div> </div> <p>If you want to have two tab containers right after each other, you specify a hard break that will force the specified tab to start a brand new tab container.</p> <div class=highlight><span class=filename>Example: New Tab Group</span><pre><span></span><code>/// tab | Tab A title
 
-/// tab | Tab A Title
+Tab A content
+///
+
+/// tab | Tab B title
+
+Tab B content
+///
+
+/// tab | Tab C Title
 ---
 new: True
 ---
 
 Will be part of a separate, new tab group.
 ///
-</code></pre></div> <div class=result> <div class="tabbed-set tabbed-alternate" data-tabs=1:2><input checked=checked id=__tabbed_1_1 name=__tabbed_1 type=radio><input id=__tabbed_1_2 name=__tabbed_1 type=radio><div class=tabbed-labels><label for=__tabbed_1_1>Tab 1 title</label><label for=__tabbed_1_2>Tab 2 title</label></div> <div class=tabbed-content> <div class=tabbed-block> <p>Tab 1 content</p> </div> <div class=tabbed-block> <p>Tab 2 content</p> </div> </div> </div> <div class="tabbed-set tabbed-alternate" data-tabs=2:1><input checked=checked id=__tabbed_2_1 name=__tabbed_2 type=radio><div class=tabbed-labels><label for=__tabbed_2_1>Tab A Title</label></div> <div class=tabbed-content> <div class=tabbed-block> <p>Will be part of a separate, new tab group.</p> </div> </div> </div> </div> <p>If desired, you can specify a tab to be selected by default with the <code>select</code> option.</p> <div class=highlight><pre><span></span><code>/// tab | Tab 1 title
+</code></pre></div> <div class=result> <div class="tabbed-set tabbed-alternate" data-tabs=1:2><input checked=checked id=tab-a-title name=__tabbed_1 type=radio><input id=tab-b-title name=__tabbed_1 type=radio><div class=tabbed-labels><label for=tab-a-title>Tab A title</label><label for=tab-b-title>Tab B title</label></div> <div class=tabbed-content> <div class=tabbed-block> <p>Tab A content</p> </div> <div class=tabbed-block> <p>Tab B content</p> </div> </div> </div> <div class="tabbed-set tabbed-alternate" data-tabs=2:1><input checked=checked id=tab-c-title name=__tabbed_2 type=radio><div class=tabbed-labels><label for=tab-c-title>Tab C Title</label></div> <div class=tabbed-content> <div class=tabbed-block> <p>Will be part of a separate, new tab group.</p> </div> </div> </div> </div> <p>If desired, you can specify a tab to be selected by default with the <code>select</code> option.</p> <div class=highlight><pre><span></span><code>/// tab | Tab 1 title
 
 Tab 1 content
 ///
