@@ -121,10 +121,13 @@ export default className => {
       mermaid.mermaidAPI.render(
         `_diagram_${i}`,
         getFromCode(parentEl),
-        content => {
+        (content, fn) => {
           const el = document.createElement("div")
           el.className = className
           el.innerHTML = content
+          if (fn) {
+            fn(el)
+          }
 
           // Insert the render where we want it and remove the original text source.
           // Mermaid will clean up the temporary element.
