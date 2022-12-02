@@ -49,27 +49,13 @@ Tab 2 content
 
 <div class="result" markdown>
 
-```md-render
----
-extensions:
-- pymdownx.blocks
-extension_configs:
-  pymdownx.blocks:
-    block_configs:
-      tab:
-        alternate_style: true
-        slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
----
-/// tab | Tab 1 title
+<!-- Rendering with old style as we have not switched over to general blocks globally in the documentation -->
 
-Tab 1 content
-///
+=== "Tab 1 title"
+    Tab 1 content
 
-/// tab | Tab 2 title
-
-Tab 2 content
-///
-```
+=== "Tab 2 title"
+    Tab 2 content 
 
 </div>
 
@@ -98,35 +84,16 @@ Will be part of a separate, new tab group.
 
 <div class="result" markdown>
 
-```md-render
----
-extensions:
-- pymdownx.blocks
-extension_configs:
-  pymdownx.blocks:
-    block_configs:
-      tab:
-        alternate_style: true
-        slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
----
-/// tab | Tab A title
+<!-- Rendering with old style as we have not switched over to general blocks globally in the documentation -->
 
-Tab A content
-///
+=== "Tab A title"
+    Tab A content
 
-/// tab | Tab B title
+=== "Tab B title"
+    Tab B content
 
-Tab B content
-///
-
-/// tab | Tab C Title
----
-new: True
----
-
-Will be part of a separate, new tab group.
-///
-```
+===! "Tab C title"
+    Will be part of a separate, new tab group.
 
 </div>
 
