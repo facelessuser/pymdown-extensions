@@ -6,6 +6,8 @@
     Blocks is currently only available in the Pymdown Extensions alpha release. It is a work in progress and API and
     syntax are subject to change.
 
+    Please provide feedback here: https://github.com/facelessuser/pymdown-extensions/discussions/1868.
+
 ## Overview
 
 Admonition blocks are an alternative to using Python Markdown's [built-in extension][admonition]. The output is
