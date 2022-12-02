@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.10a1
+
+- **NEW**: Experimental general purpose blocks.
+
 ## 9.9
 
 - **ENHANCE**: BetterEm: Further improvements to strong/emphasis handling:
