@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.10a1
+
+- **NEW**: Experimental general purpose blocks.
+
 ## 9.9.3
 
 - **FIX**: Highlight: Remove extraneous new lines from end of indented code blocks when using
