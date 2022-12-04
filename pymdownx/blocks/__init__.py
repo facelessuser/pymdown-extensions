@@ -9,6 +9,7 @@ from .tab import Tab
 from .details import Details
 from .html import HTML
 import yaml
+import textwrap
 
 # Fenced block placeholder for SuperFences
 FENCED_BLOCK_RE = re.compile(
@@ -35,6 +36,10 @@ RE_COLON_START = re.compile(
 RE_COLON_END = re.compile(
     r'(?m)(?:^|\n)[ ]{0,3}(:{3,})[ ]*(?:\n|$)'
 )
+
+RE_YAML_LINE = re.compile(r'(?m)^(?:[ ]{0,3}/(?!//).*?(?:\n|$))+')
+
+RE_COLON_YAML_LINE = re.compile(r'(?m)^(?:[ ]{0,3}/(?!//).*?(?:\n|$))+')
 
 # Frontmatter patterns
 RE_YAML_START = re.compile(r'(?m)^[ ]{0,3}(-{3})[ ]*(?:\n|$)')
@@ -179,6 +184,7 @@ class BlocksProcessor(BlockProcessor):
         self.require_yaml_fences = config['require_yaml_fences']
         self.start = RE_START if not config['colon_syntax'] else RE_COLON_START
         self.end = RE_END if not config['colon_syntax'] else RE_COLON_END
+        self.yaml_line = RE_YAML_LINE if not config['colon_syntax'] else RE_COLON_YAML_LINE
 
     def register(self, b, config):
         """Register a block."""
@@ -306,33 +312,15 @@ class BlocksProcessor(BlockProcessor):
             blocks.insert(0, end)
             block = block[:m.start(0)]
 
-        # More formal YAML config
-        start = RE_YAML_START.match(block.strip('\n'))
-        if start is not None:
-            # Look for the end of the config
-            begin = start.end(0)
-            m = RE_YAML_END.search(block, begin)
-            if m:
-                # There shouldn't be anything after the config
-                leftover = block[m.end(0):]
-                if leftover.strip():
-                    if not self.require_yaml_fences:
-                        return None
-                    else:
-                        blocks.insert(0, leftover)
-
-                block = block[start.end(0):m.start(0)]
-
-            # No YAML end
-            else:
-                return None
+        m = self.yaml_line.match(block)
+        if m is not None:
+            config = textwrap.dedent('\n'.join([l.lstrip(' ')[1:] for l in m.group(0).split('\n')]))
+            blocks.insert(0, block[m.end():])
+            if config.strip():
+                return get_frontmatter(config)
         elif self.require_yaml_fences:
             blocks.insert(0, block)
-            return {}
-
-        # Attempt to parse the config.
-        # If successful, augment the blocks and return the config.
-        if block.strip():
+        elif block.strip():
             return get_frontmatter(block)
         return {}
 

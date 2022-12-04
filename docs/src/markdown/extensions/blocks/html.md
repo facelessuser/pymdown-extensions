@@ -36,10 +36,8 @@ with all generic blocks, additional attributes can be applied via the `attribute
 
 ``` title="Example: HTML"
 /// html | div
----
-attributes:
-  style: 'border: 1px solid red;'
----
+/ attributes:
+/   style: 'border: 1px solid red;'
 
 some *markdown* content
 ///
@@ -53,10 +51,8 @@ extensions:
 - pymdownx.blocks
 ---
 /// html | div
----
-attributes:
-  style: 'border: 1px solid red;'
----
+/ attributes:
+/   style: 'border: 1px solid red;'
 
 some *markdown* content
 ///
@@ -75,14 +71,11 @@ default.
 
 ``` title="Example: Pre as Block"
 /// html | pre
-
 some *markdown* content
 ///
 
 /// html | pre
----
-markdown: block
----
+/ markdown: block
 
 some *markdown* content
 ///
@@ -96,14 +89,11 @@ extensions:
 - pymdownx.blocks
 ---
 /// html | pre
-
 some *markdown* content
 ///
 
 /// html | pre
----
-markdown: block
----
+/ markdown: block
 
 some *markdown* content
 ///

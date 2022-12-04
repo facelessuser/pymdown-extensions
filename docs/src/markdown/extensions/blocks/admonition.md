@@ -37,9 +37,7 @@ the header.
 
 ``` title="Example: Admonition"
 /// admonition | Some title
----
-type: note
----
+/ type: note
 
 Some content
 ///
@@ -53,9 +51,7 @@ extensions:
 - pymdownx.blocks
 ---
 /// admonition | Some title
----
-type: note
----
+/ type: note
 
 Some content
 ///
@@ -71,7 +67,6 @@ These require you to use their special. When using these, `type` does not need t
 
 ``` title="Example: Note"
 /// note | Some title
-
 Some content
 ///
 ```
@@ -84,7 +79,6 @@ extensions:
 - pymdownx.blocks
 ---
 /// note | Some title
-
 Some content
 ///
 ```
@@ -116,7 +110,6 @@ And then you can use your defined types:
 
 ```
 /// some-custom-type | Some title
-
 Some content
 ///
 ```
@@ -125,10 +118,8 @@ As with all block plugins, you can always add new classes IDs or other attribute
 
 ```
 /// note | Some title
----
-attributes:
-  class: class-a class-b
----
+/ attributes:
+/   class: class-a class-b
 
 Some content
 ///

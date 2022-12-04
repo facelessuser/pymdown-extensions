@@ -1,5 +1,10 @@
 # Changelog
 
+## 9.10a2
+
+- **NEW**: General blocks no longer use YAML fences for per block options, but instead use a special token to denote the
+  line is part of the config.
+
 ## 9.10a1
 
 - **NEW**: Experimental general purpose blocks.

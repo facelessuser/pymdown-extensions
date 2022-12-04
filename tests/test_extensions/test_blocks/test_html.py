@@ -92,7 +92,7 @@ class TestBlocksHTML(util.MdCase):
         self.check_markdown(
             R'''
             /// html | div
-            markdown: raw
+            / markdown: raw
 
             Some *content*
 
@@ -113,7 +113,7 @@ class TestBlocksHTML(util.MdCase):
         self.check_markdown(
             R'''
             /// html | div
-            markdown: span
+            / markdown: span
 
             Will be parsed as inline *content*
 
@@ -134,7 +134,7 @@ class TestBlocksHTML(util.MdCase):
         self.check_markdown(
             R'''
             /// html | span
-            markdown: block
+            / markdown: block
 
             Some *content*
 
@@ -153,9 +153,9 @@ class TestBlocksHTML(util.MdCase):
         self.check_markdown(
             R'''
             /// html | div
-            attributes:
-              class: some classes
-              id: an-id
+            / attributes:
+            /   class: some classes
+            /   id: an-id
 
             Some *content*
 
