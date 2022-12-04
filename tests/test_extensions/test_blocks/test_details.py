@@ -40,9 +40,9 @@ class TestBlocksDetails(util.MdCase):
         self.check_markdown(
             R'''
             /// details
-            type: note
-            attributes:
-              class: other
+            / type: note
+            / attributes:
+            /   class: other
 
             Some *content*
             ///
@@ -81,7 +81,7 @@ class TestBlocksDetails(util.MdCase):
         self.check_markdown(
             R'''
             /// details | A Title
-            open: true
+            / open: true
 
             Some *content*
             ///

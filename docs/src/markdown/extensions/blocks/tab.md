@@ -37,12 +37,10 @@ header. Consecutive tabs will automatically be grouped.
 
 ``` title="Example: Tabs"
 /// tab | Tab 1 title
-
 Tab 1 content
 ///
 
 /// tab | Tab 2 title
-
 Tab 2 content
 ///
 ```
@@ -55,7 +53,7 @@ Tab 2 content
     Tab 1 content
 
 === "Tab 2 title"
-    Tab 2 content 
+    Tab 2 content
 
 </div>
 
@@ -64,19 +62,15 @@ tab to start a brand new tab container.
 
 ``` title="Example: New Tab Group"
 /// tab | Tab A title
-
 Tab A content
 ///
 
 /// tab | Tab B title
-
 Tab B content
 ///
 
 /// tab | Tab C Title
----
-new: True
----
+/ new: True
 
 Will be part of a separate, new tab group.
 ///
@@ -101,14 +95,11 @@ If desired, you can specify a tab to be selected by default with the `select` op
 
 ```
 /// tab | Tab 1 title
-
 Tab 1 content
 ///
 
 /// tab | Tab 2 title
----
-select: True
----
+/ select: True
 
 Tab 2 should be selected by default.
 ///
@@ -118,10 +109,8 @@ As with all block plugins, you can always add new classes IDs or other attribute
 
 ```
 /// tab | Some title
----
-attributes:
-  class: class-a class-b
----
+/ attributes:
+/   class: class-a class-b
 
 Some content
 ///

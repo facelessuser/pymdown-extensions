@@ -36,9 +36,7 @@ the header. Additionally, you can apply a specific type if like with admonitions
 
 ``` title="Example: Details"
 /// details | Some summary
----
-type: note
----
+/ type: note
 
 Some content
 ///
@@ -52,9 +50,7 @@ extensions:
 - pymdownx.blocks
 ---
 /// details | Some summary
----
-type: note
----
+/ type: note
 
 Some content
 ///
@@ -66,9 +62,7 @@ If you wish to specify a details as open (or not collapsed), simply use the opti
 
 ``` title="Example: Details Open"
 /// details | Some summary
----
-open: True
----
+/ open: True
 
 Some content
 ///
@@ -82,9 +76,7 @@ extensions:
 - pymdownx.blocks
 ---
 /// details | Some summary
----
-open: True
----
+/ open: True
 
 Some content
 ///
@@ -118,7 +110,6 @@ And then you can use your defined types:
 
 ```
 /// some-custom-type | Some summary
-
 Some content
 ///
 ```
@@ -127,10 +118,8 @@ As with all block plugins, you can always add new classes IDs or other attribute
 
 ```
 /// details | Some title
----
-attributes:
-  class: class-a class-b
----
+/ attributes:
+/   class: class-a class-b
 
 Some content
 ///

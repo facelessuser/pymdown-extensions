@@ -42,7 +42,7 @@ md = markdown.Markdown(extensions=['pymdownx.blocks'])
 
 ## Feedback Requested
 
-While any and all feedback is welcome, there are two undecided options that require feedback to help us finalize the
+While any and all feedback is welcome, there is one undecided option that require feedback to help us finalize the
 syntax for generic blocks. During the alpha/beta stage, we provide global options so users can try out the different
 options and provide their own feedback. Feedback will be taken into consideration as we move towards an official release
 candidate. It will be impossible to make all users happy, but we'd like to give users an opportunity to help shape
@@ -52,45 +52,6 @@ the direction.
    alpha/beta stage, we provide a global option called `colon_syntax` to switch from using `///` to `:::`. This will
    only be offered during the alpha/beta stage and is provided to allow users to try out give their opinion as to what
    direction Blocks should take in order to finalize the syntax.
-
-2. Blocks has not yet decided as to whether the YAML config in headers should require YAML fences (`---`) or not. By
-   default, YAML fences are optional, but during the alpha/beta period, we are allowing users to enforce YAML fences via
-   the global option `require_yaml_fences`.
-
-    The pro to making YAML fences optional is that a user does not have to specify `---` to denote where a YAML config
-    starts and ends. Requiring YAML fences may feel tedious to some authors, but the con is that content must be
-    separated from the YAML config using a blank line. As a matter of fact, since it can be difficult to determine if
-    there is a YAML config when no fence is used, content always requires a new line to separate the header from the
-    content:
-
-    ```
-    /// name
-    yaml-option: true
-
-    Content must be separated from header by a new line
-    ///
-
-    /// name
-
-    Even without YAML options, content must be separated from the header by a new line.
-    ///
-    ```
-
-    If YAML fences are required, then YAML configs in the header can always be easily identified eliminating the
-    hard requirement for new lines between the header and the content.
-
-    ```
-    /// name
-    ---
-    yaml-option: true
-    ---
-    Content does not require a new line before it, but can optionally use one if desired.
-    ///
-
-    /// name
-    Content does not need a new line when no YAML options are used.
-    ///
-    ```
 
 ## Included Meta-Plugins
 
@@ -135,7 +96,6 @@ more forward slashes. The opening fence must specify the name of the block to in
 
 ```
 /// name-of-block
-
 content
 ///
 ```
@@ -145,7 +105,6 @@ arguments can be optional or sometimes enforced as a requirement. This is up to 
 
 ```
 /// note | Did you know?
-
 You can create a note with Blocks!
 ///
 ```
@@ -157,31 +116,22 @@ further Markdown processing. We could do this by specifying the special `markdow
 
 ```
 /// html | div
----
-markdown: raw
----
+/ markdown: raw
 
 Here is some content
 I'd like to preserve.
 ///
 ```
 
-It should be noted that the YAML config must be part of the header having no new lines within it. Python Markdown
-must be able to capture the start of the block and the config all at once.
-
-!!! warning "Content and Header Separation"
-    By default, Blocks currently requires that content be separated from the opening header by one new line, regardless
-    of whether a YAML config is provided or not. This is because YAML fences are currently optional, and it is difficult
-    to 100% be sure as to whether a block has a YAML config or not without this requirement.
+It should be noted that the YAML config requires that every line be prepended with `/`. The first line not containing
+this will be considered content.
 
 Lastly, it should be noted that all block meta-plugins support the `attributes` option and allow for specifying
 attributes that will be attached to the parent element.
 
 ```
 /// note | Some title
----
-attributes: {class: 'some-class some-other-class'}
----
+/ attributes: {class: 'some-class some-other-class'}
 
 Content
 ///
@@ -197,5 +147,4 @@ Option                | Type       |  Default                           | Descri
 --------------------- | ---------- | ---------------------------------- | -----------
 `blocks`              | \[Block\]  | [See here](#included-meta-plugins) | A list of block meta-plugins to register.
 `block_configs`       | dictionary | `#!py3 {}`                         | A dictionary used to specify global options for registered meta-plugins.
-`require_yaml_fences` | bool       | `#!py3 False`                      | Specify whether YAML fences for per block options should be required. Only available during alpha/beta stage.
 `colon_syntax`        | bool       | `#!py3 False`                      | Use the colon syntax for block fences (`:::`) instead of the default (`///`). Only available during alpha/beta stage.

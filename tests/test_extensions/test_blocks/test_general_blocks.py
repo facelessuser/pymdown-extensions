@@ -251,10 +251,7 @@ class TestMiscCases(util.MdCase):
         self.check_markdown(
             R'''
             /// misc
-            ---
-            test: misc
-            ---
-
+            / test: misc
             content
             ///
             ''',
@@ -272,9 +269,7 @@ class TestMiscCases(util.MdCase):
         self.check_markdown(
             R'''
             /// misc
-            ---
-            test: misc
-            ---
+            / test: misc
             ///
             ''',
             '''
@@ -430,9 +425,7 @@ class TestMiscYAMLFenceCases(util.MdCase):
         self.check_markdown(
             R'''
             /// misc
-            ---
-            test: tag
-            ---
+            / test: tag
             content
             ///
             ''',
@@ -464,27 +457,6 @@ class TestMiscYAMLFenceCases(util.MdCase):
             True
         )
 
-    def test_incomplete_config_fence(self):
-        """Test incomplete YAML config."""
-
-        self.check_markdown(
-            R'''
-            /// misc
-            ---
-            test: tag
-
-            content
-            ///
-            ''',
-            '''
-            <h2>/// misc</h2>
-            <p>test: tag</p>
-            <p>content
-            ///</p>
-            ''',
-            True
-        )
-
     def test_config_with_new_line_before(self):
         """Test YAML config and with new line before it."""
 
@@ -492,17 +464,14 @@ class TestMiscYAMLFenceCases(util.MdCase):
             R'''
             /// misc
 
-            ---
-            test: tag
-            ---
+            / test: tag
 
             content
             ///
             ''',
             '''
             <div test="whatever">
-            <hr />
-            <h2>test: tag</h2>
+            <p>/ test: tag</p>
             <p>content</p>
             </div>
             ''',
@@ -597,43 +566,20 @@ class TestBadArgOptionParsers(util.MdCase):
             True
         )
 
-    def test_missing_config_end(self):
-        """Test when config has YAML start but no end."""
-
-        self.check_markdown(
-            R'''
-            /// fail | tag
-            ---
-            test: tag
-
-            content
-            ///
-            ''',
-            '''
-            <h2>/// fail | tag</h2>
-            <p>test: tag</p>
-            <p>content
-            ///</p>
-            ''',
-            True
-        )
-
     def test_no_space_between_config(self):
         """Test that content block should have a blank line between config."""
 
         self.check_markdown(
             R'''
             /// fail | tag
-            ---
             test: tag
-            ---
             content
             ///
             ''',
             '''
-            <h2>/// fail | tag</h2>
-            <h2>test: tag</h2>
-            <p>content
+            <p>/// fail | tag
+            test: tag
+            content
             ///</p>
             ''',
             True

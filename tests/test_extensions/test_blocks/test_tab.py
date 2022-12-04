@@ -131,7 +131,7 @@ class TestBlocksTab(util.MdCase):
             ///
 
             /// tab | Tab 2
-            select: true
+            / select: true
 
             content
             ///
@@ -170,13 +170,13 @@ class TestBlocksTab(util.MdCase):
             ///
 
             /// tab | Tab 2
-            select: true
+            / select: true
 
             content
             ///
 
             /// tab | Tab 3
-            select: true
+            / select: true
 
             content
             ///
@@ -308,7 +308,7 @@ class TestBlocksTab(util.MdCase):
             ///
 
             /// tab | Another Tab
-            new: true
+            / new: true
 
             Some more content.
 
