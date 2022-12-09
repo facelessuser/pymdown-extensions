@@ -58,17 +58,17 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
     ````
 
 7. If using a fenced block as the first line of a list, you will have to leave the first line blank, but remember that
-  the list marker must be followed by a space. To avoid the trailing whitespace that might be removed by your IDE,
-  just add an extra unicode space (`&#32;`).
+  the list marker must be immediately followed by at least one space. To avoid accidentally deleting the space and to
+  make your intentions clear, you might want to also add an explicit unicode space (`&#32;`) as shown here:
 
     ````
-    -<space>&#32;
+    - &#32;
         ```
         a fenced block
         ```
 
     Definition
-    :<space>&#32;
+    : &#32;
         ```
         a fenced block
         ```
