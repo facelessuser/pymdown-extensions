@@ -567,6 +567,104 @@ class TestBadArgOptionParsers(util.MdCase):
         )
 
 
+class TestIndentationConfig(util.MdCase):
+    """Test indent YAML."""
+
+    extension = ['pymdownx.blocks']
+    extension_configs = {'pymdownx.blocks': {'yaml_indent': True}}
+
+    def test_yaml_indent(self):
+        """Test YAML indentation case."""
+
+        self.check_markdown(
+            R'''
+            //// admonition | Some title
+                type: note
+
+            /// note | another title
+            content
+            ///
+
+            Some content
+            ////
+            ''',
+            '''
+            <div class="admonition note">
+            <p class="admonition-title">Some title</p>
+            <div class="admonition note">
+            <p class="admonition-title">another title</p>
+            <p>content</p>
+            </div>
+            <p>Some content</p>
+            </div>
+            ''',
+            True
+        )
+
+    def test_yaml_indent_empty_line(self):
+        """Test YAML indentation case with empty new line."""
+
+        self.check_markdown(
+            R'''
+            //// admonition | Some title
+                type: note
+
+                type: warning
+
+            /// note | another title
+            content
+            ///
+
+            Some content
+            ////
+            ''',
+            '''
+            <div class="admonition note">
+            <p class="admonition-title">Some title</p>
+            <pre><code>type: warning
+            </code></pre>
+            <div class="admonition note">
+            <p class="admonition-title">another title</p>
+            <p>content</p>
+            </div>
+            <p>Some content</p>
+            </div>
+            ''',
+            True
+        )
+
+    def test_yaml_indent_non_config(self):
+        """Test YAML indentation with no config."""
+
+        self.check_markdown(
+            R'''
+            //// admonition | Some title
+
+                type: note
+
+            /// note | another title
+            content
+            ///
+
+            Some content
+            ////
+            ''',
+            '''
+            <div class="admonition">
+            <p class="admonition-title">Some title</p>
+            <pre><code>type: note
+            </code></pre>
+            <div class="admonition note">
+            <p class="admonition-title">another title</p>
+            <p>content</p>
+            </div>
+            <p>Some content</p>
+            </div>
+            ''',
+            True
+        )
+
+
 class TestBlockSplit(util.MdCase):
     """Test Blocks that split arguments."""
 

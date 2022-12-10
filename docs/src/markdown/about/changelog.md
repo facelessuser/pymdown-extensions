@@ -4,6 +4,10 @@
 
 - **NEW**: General blocks no longer use YAML fences for per block options, but instead use a special token to denote the
   line is part of the config.
+- **NEW**: Add temporary alpha/beta option `yaml_indent` to control whether per-block YAML configs use indentation or a
+  leading special character: `/` for `///` syntax and `:` for `:::` syntax (`colon_syntax` must be true to use `:::`
+  syntax).
+- **FIX**: Fix some block nesting issues.
 
 ## 9.10a1
 

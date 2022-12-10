@@ -15,7 +15,7 @@ directives, generic blocks are not meant to behave or mirror directives as a 1:1
 
 The idea behind blocks is to solve a few issues that have existed within Python Markdown block extensions.
 
-1. Markdown as numerous special syntaxes to define various elements, but as people try to add numerous plugins to
+1. Markdown has numerous special syntaxes to define various elements, but as people try to add numerous plugins to
    perform specialized translations, it can become difficult to continuously come up with new, sensible syntax that does
    not conflict with some other plugin that is desired by users.
 
@@ -42,7 +42,7 @@ md = markdown.Markdown(extensions=['pymdownx.blocks'])
 
 ## Feedback Requested
 
-While any and all feedback is welcome, there is one undecided option that require feedback to help us finalize the
+While any and all feedback is welcome, there are two undecided options that require feedback to help us finalize the
 syntax for generic blocks. During the alpha/beta stage, we provide global options so users can try out the different
 options and provide their own feedback. Feedback will be taken into consideration as we move towards an official release
 candidate. It will be impossible to make all users happy, but we'd like to give users an opportunity to help shape
@@ -52,6 +52,10 @@ the direction.
    alpha/beta stage, we provide a global option called `colon_syntax` to switch from using `///` to `:::`. This will
    only be offered during the alpha/beta stage and is provided to allow users to try out give their opinion as to what
    direction Blocks should take in order to finalize the syntax.
+
+2. We are currently experimenting with how to define per-block YAML configuration. Currently we allow an extend header
+   that requires each line of the YAML config to prepend a `/` (or `:` if `colon_syntax` is set) or four spaces if
+   `yaml_indent` is set.
 
 ## Included Meta-Plugins
 
@@ -126,6 +130,18 @@ I'd like to preserve.
 It should be noted that the YAML config requires that every line be prepended with `/`. The first line not containing
 this will be considered content.
 
+During the alpha/beta period, if `yaml_indent` is enabled, `/` is not used to denote a YAML config, and instead an
+indentation of at least four spaces is required. The first empty line will terminate the config.
+
+```
+/// html | div
+    markdown: raw
+
+Here is some content
+I'd like to preserve.
+///
+```
+
 Lastly, it should be noted that all block meta-plugins support the `attributes` option and allow for specifying
 attributes that will be attached to the parent element.
 
@@ -135,6 +151,23 @@ attributes that will be attached to the parent element.
 
 Content
 ///
+```
+
+## Nesting
+
+Generic blocks can be nested as long as the block fence differs in number of leading tokens. This is similar to how
+fenced code blocks work. The minimum requirement is that at least three tokens are used.
+
+```
+//// admonition | Some title
+/ type: note
+
+/// details | Summary
+content
+///
+
+Content
+////
 ```
 
 ## Blocks Plugin API
