@@ -48,6 +48,8 @@ RE_YAML_END = re.compile(
     r'(?m)^[ ]{0,3}(-{3})[ ]*(?:\n|$)'
 )
 
+RE_INDENT_YAML_LINE = re.compile(r'(?m)^(?:[ ]{4,}(?!\s).*?(?:\n|$))+')
+
 
 class BlockEntry:
     """Track Block entries."""
@@ -183,7 +185,14 @@ class BlocksProcessor(BlockProcessor):
         # Used during the alpha/beta stage
         self.start = RE_START if not config['colon_syntax'] else RE_COLON_START
         self.end = RE_END if not config['colon_syntax'] else RE_COLON_END
-        self.yaml_line = RE_YAML_LINE if not config['colon_syntax'] else RE_COLON_YAML_LINE
+        self.yaml_indent = config['yaml_indent']
+        if config['yaml_indent']:
+            yaml_line = RE_INDENT_YAML_LINE
+        elif config['colon_syntax']:
+            yaml_line = RE_COLON_YAML_LINE
+        else:
+            yaml_line = RE_YAML_LINE
+        self.yaml_line = yaml_line
 
     def register(self, b, config):
         """Register a block."""
@@ -313,7 +322,10 @@ class BlocksProcessor(BlockProcessor):
 
         m = self.yaml_line.match(block)
         if m is not None:
-            config = textwrap.dedent('\n'.join([l.lstrip(' ')[1:] for l in m.group(0).split('\n')]))
+            if self.yaml_indent:
+                config = textwrap.dedent(m.group(0))
+            else:
+                config = textwrap.dedent('\n'.join([l.lstrip(' ')[1:] for l in m.group(0).split('\n')]))
             blocks.insert(0, block[m.end():])
             if config.strip():
                 return get_frontmatter(config), '\n'.join(blocks)
@@ -458,7 +470,8 @@ class BlocksExtension(Extension):
         self.config = {
             'blocks': [[], "Blocks extensions to load, if not defined, the default ones will be loaded."],
             'block_configs': [{}, "Global configuration for a given block."],
-            'colon_syntax': [False, "Use colon syntax."]
+            'colon_syntax': [False, "Use colon syntax."],
+            'yaml_indent': [False, "YAML indented, per-block config."]
         }
 
         super().__init__(*args, **kwargs)
