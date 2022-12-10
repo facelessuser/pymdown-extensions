@@ -181,7 +181,6 @@ class BlocksProcessor(BlockProcessor):
         self.cached_block = None
 
         # Used during the alpha/beta stage
-        self.require_yaml_fences = config['require_yaml_fences']
         self.start = RE_START if not config['colon_syntax'] else RE_COLON_START
         self.end = RE_END if not config['colon_syntax'] else RE_COLON_END
         self.yaml_line = RE_YAML_LINE if not config['colon_syntax'] else RE_COLON_YAML_LINE
@@ -227,8 +226,7 @@ class BlocksProcessor(BlockProcessor):
                 block = block[m.end():]
 
                 # Get frontmatter and argument(s)
-                the_rest = []
-                options = self.split_header(block, the_rest, generic_block.length)
+                options, the_rest = self.split_header(block, generic_block.length)
                 arguments = m.group(3)
 
                 # Options must be valid
@@ -240,7 +238,7 @@ class BlocksProcessor(BlockProcessor):
 
                 # Cache the found Block and any remaining content
                 if status:
-                    self.cached_block = (generic_block, the_rest[0] if the_rest else '')
+                    self.cached_block = (generic_block, the_rest)
                     # Any text before the block should get handled
                     if pre_text is not None:
                         self.parser.parseBlocks(parent, [pre_text])
@@ -268,7 +266,7 @@ class BlocksProcessor(BlockProcessor):
             # Find the end of the Block
             m = None
             for match in self.end.finditer(block):
-                if len(match.group(1)) >= length:
+                if len(match.group(1)) == length:
                     m = match
                     break
 
@@ -276,7 +274,7 @@ class BlocksProcessor(BlockProcessor):
             if m:
                 temp = block[:m.start(0)]
                 if temp:
-                    good.append(temp)
+                    good.append(temp[:-1] if temp.endswith('\n') else temp)
                 end = True
 
                 # Since we found our end, everything after is unwanted
@@ -296,13 +294,14 @@ class BlocksProcessor(BlockProcessor):
         # Send back the new list of blocks to parse and note whether we found our end
         return good, end
 
-    def split_header(self, block, blocks, length):
+    def split_header(self, block, length):
         """Split, YAML-ish header out."""
 
         # Search for end in first block
         m = None
+        blocks = []
         for match in self.end.finditer(block):
-            if len(match.group(1)) >= length:
+            if len(match.group(1)) == length:
                 m = match
                 break
 
@@ -317,12 +316,11 @@ class BlocksProcessor(BlockProcessor):
             config = textwrap.dedent('\n'.join([l.lstrip(' ')[1:] for l in m.group(0).split('\n')]))
             blocks.insert(0, block[m.end():])
             if config.strip():
-                return get_frontmatter(config)
-        elif self.require_yaml_fences:
-            blocks.insert(0, block)
-        elif block.strip():
-            return get_frontmatter(block)
-        return {}
+                return get_frontmatter(config), '\n'.join(blocks)
+
+        blocks.insert(0, block)
+
+        return {}, '\n'.join(blocks)
 
     def get_parent(self, parent):
         """Get parent."""
@@ -474,7 +472,6 @@ class BlocksExtension(Extension):
         self.config = {
             'blocks': [[], "Blocks extensions to load, if not defined, the default ones will be loaded."],
             'block_configs': [{}, "Global configuration for a given block."],
-            'require_yaml_fences': [False, "Require YAML fences in generic blocks."],
             'colon_syntax': [False, "Use colon syntax."]
         }
 

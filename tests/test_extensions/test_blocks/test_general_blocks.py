@@ -203,14 +203,14 @@ class TestBlockUndefinedOption(util.MdCase):
         self.check_markdown(
             R'''
             /// undefined
-            option: whatever
+            / option: whatever
 
             content
             ///
             ''',
             '''
             <p>/// undefined
-            option: whatever</p>
+            / option: whatever</p>
             <p>content
             ///</p>
             ''',
@@ -284,7 +284,7 @@ class TestMiscCases(util.MdCase):
         self.check_markdown(
             R'''
             /// misc
-            test: misc
+            / test: misc
             ///
             ''',
             '''
@@ -299,7 +299,7 @@ class TestMiscCases(util.MdCase):
         self.check_markdown(
             R'''
             /// misc
-            test: misc
+            / test: misc
             ///
             more
             ''',
@@ -400,7 +400,7 @@ class TestMiscYAMLFenceCases(util.MdCase):
             return etree.SubElement(parent, 'div', {'test': self.options['test']})
 
     extension = ['pymdownx.blocks', 'pymdownx.superfences']
-    extension_configs = {'pymdownx.blocks': {'blocks': [MiscBlock], 'require_yaml_fences': True}}
+    extension_configs = {'pymdownx.blocks': {'blocks': [MiscBlock]}}
 
     def test_no_config(self):
         """Test no YAML config and no new line."""
@@ -518,14 +518,14 @@ class TestBadArgOptionParsers(util.MdCase):
         self.check_markdown(
             R'''
             /// fail | tag
-            test: 3tag
+            / test: 3tag
 
             content
             ///
             ''',
             '''
             <p>/// fail | tag
-            test: 3tag</p>
+            / test: 3tag</p>
             <p>content
             ///</p>
             ''',
@@ -538,12 +538,12 @@ class TestBadArgOptionParsers(util.MdCase):
         self.check_markdown(
             R'''
             /// fail | tag
-            content
+            / content
             ///
             ''',
             '''
             <p>/// fail | tag
-            content
+            / content
             ///</p>
             ''',
             True
@@ -555,31 +555,12 @@ class TestBadArgOptionParsers(util.MdCase):
         self.check_markdown(
             R'''
             /// fail | tag
-            :
+            / :
             ///
             ''',
             '''
             <p>/// fail | tag
-            :
-            ///</p>
-            ''',
-            True
-        )
-
-    def test_no_space_between_config(self):
-        """Test that content block should have a blank line between config."""
-
-        self.check_markdown(
-            R'''
-            /// fail | tag
-            test: tag
-            content
-            ///
-            ''',
-            '''
-            <p>/// fail | tag
-            test: tag
-            content
+            / :
             ///</p>
             ''',
             True
