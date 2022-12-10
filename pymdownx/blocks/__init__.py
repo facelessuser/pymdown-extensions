@@ -1,6 +1,6 @@
 """Generic blocks extension."""
 from markdown import Extension
-from markdown.blockprocessors import BlockProcessor, HRProcessor
+from markdown.blockprocessors import BlockProcessor
 from markdown import util as mutil
 import xml.etree.ElementTree as etree
 import re
