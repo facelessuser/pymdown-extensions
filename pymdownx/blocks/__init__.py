@@ -449,20 +449,6 @@ class BlocksProcessor(BlockProcessor):
                     break
 
 
-class HRProcessor1(HRProcessor):
-    """Process Horizontal Rules."""
-
-    RE = r'^[ ]{0,3}(?=(?P<atomicgroup>(-+[ ]{1,2}){3,}|(_+[ ]{1,2}){3,}|(\*+[ ]{1,2}){3,}))(?P=atomicgroup)[ ]*$'
-    SEARCH_RE = re.compile(RE, re.MULTILINE)
-
-
-class HRProcessor2(HRProcessor):
-    """Process Horizontal Rules."""
-
-    RE = r'^[ ]{0,3}(?=(?P<atomicgroup>(-+){3,}|(_+){3,}|(\*+){3,}))(?P=atomicgroup)[ ]*$'
-    SEARCH_RE = re.compile(RE, re.MULTILINE)
-
-
 class BlocksExtension(Extension):
     """Add generic Blocks extension."""
 
@@ -486,9 +472,6 @@ class BlocksExtension(Extension):
         self.extension = BlocksProcessor(md.parser, md, config)
         # We want to be right after list indentations are processed
         md.parser.blockprocessors.register(self.extension, "blocks", 89)
-        # Monkey patch Markdown so we can use `---` for configuration
-        md.parser.blockprocessors.register(HRProcessor1(md.parser), 'hr', 50)
-        md.parser.blockprocessors.register(HRProcessor2(md.parser), 'hr2', 29.9999)
 
     def reset(self):
         """Reset."""
