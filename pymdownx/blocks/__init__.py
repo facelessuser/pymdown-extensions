@@ -2,6 +2,7 @@
 from markdown import Extension
 from markdown.blockprocessors import BlockProcessor
 from markdown import util as mutil
+from .. import util
 import xml.etree.ElementTree as etree
 import re
 from .admonition import Admonition
@@ -480,6 +481,7 @@ class BlocksExtension(Extension):
         """Add Blocks to Markdown instance."""
 
         md.registerExtension(self)
+        util.escape_chars(md, ['/'])
 
         config = self.getConfigs()
         self.extension = BlocksProcessor(md.parser, md, config)
