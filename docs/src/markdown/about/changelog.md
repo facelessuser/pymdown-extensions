@@ -7,6 +7,7 @@
 - **NEW**: Add temporary alpha/beta option `yaml_indent` to control whether per-block YAML configs use indentation or a
   leading special character: `/` for `///` syntax and `:` for `:::` syntax (`colon_syntax` must be true to use `:::`
   syntax).
+- **NEW**: Ensure that `/` character can be escaped when registering the `blocks` extension.
 - **FIX**: Fix some block nesting issues.
 
 ## 9.10a1
