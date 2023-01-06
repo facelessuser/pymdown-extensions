@@ -60,7 +60,7 @@
     "stylelint": "^14.16.0",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^29.0.0",
-    "stylelint-order": "^5.0.0",
+    "stylelint-order": "^6.0.0",
     "stylelint-scss": "^4.3.0",
     "terser": "^5.16.1",
     "vinyl-paths": "^5.0.0",
