@@ -1,111 +1,91 @@
 <h1>Neseted Fences:</h1>
-<div class="highlight"><pre><span></span><code>```
+<pre class="highlight"><code>```
 This will still be parsed
 as a normal indented code block.
 ```
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>This will still be parsed
-as a fenced code block.
-</code></pre></div>
+</code></pre>
+<pre class="highlight"><code>This will still be parsed
+as a fenced code block.</code></pre>
 <ul>
 <li>
-<div class="highlight"><pre><span></span><code>This will work.
-</code></pre></div>
+<pre class="highlight"><code>This will work.</code></pre>
 </li>
 <li>
 <p>This is a list that contains multiple code blocks.</p>
 <ul>
 <li>
 <p>Here is an indented block</p>
-<div class="highlight"><pre><span></span><code>```
+<pre class="highlight"><code>```
 This will still be parsed
 as a normal indented code block.
 ```
-</code></pre></div>
+</code></pre>
 </li>
 <li>
 <p>Here is a fenced code block:</p>
-<div class="highlight"><pre><span></span><code>This will still be parsed
-as a fenced code block.
-</code></pre></div>
+<pre class="highlight"><code>This will still be parsed
+as a fenced code block.</code></pre>
 <blockquote>
-<div class="highlight"><pre><span></span><code>Blockquotes?
+<pre class="highlight"><code>Blockquotes?
 
-Not a problem!
-</code></pre></div>
+Not a problem!</code></pre>
 </blockquote>
 </li>
 </ul>
 </li>
 <li>
 <p>Fenced block with lesser child fence.</p>
-<div class="highlight"><pre><span></span><code>    ```
+<pre class="highlight"><code>    ```
     Fenced block containing fenced syntax.
-    ```
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>```
+    ```</code></pre>
+<pre class="highlight"><code>```
 Fenced block containing fenced syntax.
-```
-</code></pre></div>
+```</code></pre>
 </li>
 <li>
 <p>Fenced block with greater child fence:</p>
-<div class="highlight"><pre><span></span><code>    ````
+<pre class="highlight"><code>    ````
     Fenced block containing fenced syntax.
-    ````
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>````
+    ````</code></pre>
+<pre class="highlight"><code>````
 Fenced block containing fenced syntax.
-````
-</code></pre></div>
+````</code></pre>
 </li>
 <li>
 <p>Fenced block with indented child fence:</p>
-<div class="highlight"><pre><span></span><code>    ```
+<pre class="highlight"><code>    ```
     Fenced block containing fenced syntax.
-    ```
-</code></pre></div>
+    ```</code></pre>
 </li>
 <li>
 <p>Tabs</p>
-<div class="highlight"><pre><span></span><code>Test    with tabs.
+<pre class="highlight"><code>Test    with tabs.
 Test    with tabs.
-Test        tabs.
-</code></pre></div>
-<div class="highlight"><pre><span></span><code>============================================================
+Test        tabs.</code></pre>
+<pre class="highlight"><code>============================================================
 T   Tp  Sp  D   Dp  S   D7  T
 ------------------------------------------------------------
 A   F#m Bm  E   C#m D   E7  A
 A#  Gm  Cm  F   Dm  D#  F7  A#
-B♭  Gm  Cm  F   Dm  E♭m F7  B♭
-</code></pre></div>
+B♭  Gm  Cm  F   Dm  E♭m F7  B♭</code></pre>
 </li>
 <li>
 <p>Here is a highlighted code block with line numbers:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="sd">&quot;&quot;&quot;Some file.&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">foo.bar</span>
-<span class="kn">import</span> <span class="nn">boo.baz</span>
-<span class="kn">import</span> <span class="nn">foo.bar.baz</span>
-</code></pre></div></td></tr></table></div>
+<pre class="highlight"><code class="language-python">"""Some file."""
+import foo.bar
+import boo.baz
+import foo.bar.baz</code></pre>
 </li>
 <li>
 <p>Here is a highlighted code block with line numbers and line highlighting:</p>
-<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="sd">&quot;&quot;&quot;Some file.&quot;&quot;&quot;</span>
-<span class="hll"><span class="kn">import</span> <span class="nn">foo.bar</span>
-</span><span class="hll"><span class="kn">import</span> <span class="nn">boo.baz</span>
-</span><span class="kn">import</span> <span class="nn">foo.bar.baz</span>
-</code></pre></div></td></tr></table></div>
+<pre class="highlight"><code class="language-python">"""Some file."""
+import foo.bar
+import boo.baz
+import foo.bar.baz</code></pre>
 </li>
 <li>
 <p>Highlight extended language:</p>
-<div class="highlight"><pre><span></span><code><span class="nv">$a</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">);</span>
-</code></pre></div>
+<pre class="highlight"><code class="language-php-inline">$a = array("foo" =&gt; 0, "bar" =&gt; 1);</code></pre>
 </li>
 </ul>
 <h1>UML Flow Charts</h1>
@@ -127,11 +107,7 @@ B--&gt;C: Dashed line
 C-&gt;&gt;D: Open arrow
 D--&gt;&gt;A: Dashed open arrow</code></pre>
 <h1>Attribute List</h1>
-<div id="id" class="another-class highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-<span class="normal">2</span>
-<span class="normal">3</span>
-<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="sd">&quot;&quot;&quot;Some file.&quot;&quot;&quot;</span>
-<span class="hll"><span class="kn">import</span> <span class="nn">foo.bar</span>
-</span><span class="hll"><span class="kn">import</span> <span class="nn">boo.baz</span>
-</span><span class="kn">import</span> <span class="nn">foo.bar.baz</span>
-</code></pre></div></td></tr></table></div>
+<pre class="highlight"><code id="id" class="language-python another-class">"""Some file."""
+import foo.bar
+import boo.baz
+import foo.bar.baz</code></pre>
