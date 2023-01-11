@@ -65,6 +65,7 @@ MagicLink's
 Mar
 MathJax
 Mathjax
+MaxCDN
 MiB
 MkDocs
 MultiMarkdown
