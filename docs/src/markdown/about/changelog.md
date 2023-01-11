@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.9.1
+
+- **FIX**: Use a different CDN for Twemoji icons as MaxCDN is no longer available.
+
 ## 9.9
 
 - **ENHANCE**: BetterEm: Further improvements to strong/emphasis handling:
