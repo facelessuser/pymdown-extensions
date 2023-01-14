@@ -10,17 +10,17 @@ $new-admonitions: (
 
   $old-admonitions: (
     note:                       $drac-dark-yellow,
-    abstract summary tldr:      $drac-cyan,
-    info todo:                  $drac-light-blue,
-    tip hint important:         $drac-teal,
-    success check done:         $drac-green,
-    question help faq:          $drac-light-green,
-    warning caution attention:  $drac-orange,
-    failure fail missing:       $drac-dark-red,
-    danger error:               $drac-red,
+    abstract:                   $drac-cyan,
+    info:                       $drac-light-blue,
+    tip:                        $drac-teal,
+    success:                    $drac-green,
+    question:                   $drac-light-green,
+    warning:                    $drac-orange,
+    failure:                    $drac-dark-red,
+    danger:                     $drac-red,
     bug:                        $drac-dark-pink,
     example:                    $drac-purple,
-    quote cite:                 $drac-grey
+    quote:                      $drac-grey
   ) !default;
 
 /* Style new admonitions with dark or light colors */
@@ -61,6 +61,9 @@ $new-admonitions: (
     &::before {
       background-color: var(--md-admonition-icon-color--note);
     }
+    &::after {
+      color: var(--md-admonition-icon-color--note);
+    }
   }
 
   box-shadow:
@@ -87,6 +90,9 @@ $new-admonitions: (
         // Icon
         &::before {
           background-color: var(--md-admonition-icon-color--#{$name});
+        }
+        &::after {
+          color: var(--md-admonition-icon-color--#{$name});
         }
       }
     }
@@ -121,6 +127,9 @@ $new-admonitions: (
         background-size: px2rem(20px);
         mask-image: var(--md-admonition-icon--#{$name});
         content: "\a0";
+      }
+      &::after {
+        color: var(--md-admonition-icon-color--#{$name});
       }
     }
   }

@@ -168,7 +168,7 @@ seems to be what Mermaid does in their own [documents][mermaid].
               Sit down: 5: Me
         ```
 
-!!! fail "Impractical"
+!!! failure "Impractical"
 
     === "Gantt"
 
