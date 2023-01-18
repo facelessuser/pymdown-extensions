@@ -115,7 +115,7 @@ html {
     background-color: var(--md-accent-bg-color--light);
 
     &:hover {
-      background-color: var(--md-default-bg-color);
+      background-color: var(--md-default-bg-color--light);
     }
 
     ~ .md-search__icon {
@@ -124,6 +124,14 @@ html {
     &::placeholder {
       color: var(--md-default-fg-color--light);
     }
+  }
+
+  [data-md-toggle=search]:checked~.md-header .md-search__input {
+    background-color: transparent;
+  }
+
+  .md-search__suggest {
+    color: var(--md-default-autocomplete-fg-color);
   }
 
   .md-search__overlay, .md-overlay {

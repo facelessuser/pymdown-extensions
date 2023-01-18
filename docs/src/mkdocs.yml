@@ -24,6 +24,9 @@ theme:
     - navigation.top
     - navigation.instant
     - content.tabs.link
+    - search.share
+    - search.highlight
+    - search.suggest
   pymdownx:
     sponsor: "https://github.com/sponsors/facelessuser"
 
@@ -172,7 +175,7 @@ extra_javascript:
   - assets/pymdownx-extras/extra-loader.js
 
 plugins:
-  - search
+  - search:
   - git-revision-date-localized:
       fallback_to_build_date: true
   - minify:

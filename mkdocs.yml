@@ -24,6 +24,9 @@ theme:
     - navigation.top
     - navigation.instant
     - content.tabs.link
+    - search.share
+    - search.highlight
+    - search.suggest
   pymdownx:
     sponsor: "https://github.com/sponsors/facelessuser"
 
@@ -163,7 +166,7 @@ extra:
       link: https://discord.gg/TWs8Tgr
 extra_css:
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css
-  - assets/pymdownx-extras/extra-7cf5de6eed.css
+  - assets/pymdownx-extras/extra-3ea1e896af.css
 extra_javascript:
   - https://unpkg.com/mermaid@9.1.7/dist/mermaid.min.js
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js
@@ -172,7 +175,7 @@ extra_javascript:
   - assets/pymdownx-extras/extra-loader-52693605.js
 
 plugins:
-  - search
+  - search:
   - git-revision-date-localized:
       fallback_to_build_date: true
   - minify:
