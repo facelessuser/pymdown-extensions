@@ -1,5 +1,10 @@
 # Changelog
 
+## 9.9.2
+
+- **FIX**: Snippets syntax can break in XML comments as XML comments do not allow `--`. Relax Snippets syntax such that
+  `-8<-` (single `-`) are allowed.
+
 ## 9.9.1
 
 - **FIX**: Use a different CDN for Twemoji icons as MaxCDN is no longer available.

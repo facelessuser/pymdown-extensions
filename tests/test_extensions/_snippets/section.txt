@@ -4,9 +4,9 @@ div {
 }
 /* --8<-- [end: cssSection] */
 
-<!-- --8<-- [start: htmlSection] -->
+<!-- -8<- [start: htmlSection] -->
 <div><p>content</p></div>
-<!-- --8<-- [end: htmlSection] -->
+<!-- -8<- [end: htmlSection] -->
 
 /* --8<-- [end: cssSection2] */
 /* --8<-- [start: cssSection2] */

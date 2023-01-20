@@ -49,9 +49,9 @@ class SnippetPreprocessor(Preprocessor):
         ^(?P<space>[ \t]*)
         (?P<escape>;*)
         (?P<all>
-            (?P<inline_marker>-{2,}8<-{2,}[ \t]+)
+            (?P<inline_marker>-{1,}8<-{1,}[ \t]+)
             (?P<snippet>(?:"(?:\\"|[^"\n\r])+?"|'(?:\\'|[^'\n\r])+?'))(?![ \t]) |
-            (?P<block_marker>-{2,}8<-{2,})(?![ \t])
+            (?P<block_marker>-{1,}8<-{1,})(?![ \t])
         )\r?$
         '''
     )
@@ -66,7 +66,7 @@ class SnippetPreprocessor(Preprocessor):
     RE_SNIPPET_SECTION = re.compile(
         r'''(?xi)
         ^.*?
-        (?P<inline_marker>-{2,}8<-{2,}[ \t]+)
+        (?P<inline_marker>-{1,}8<-{1,}[ \t]+)
         \[[ \t]*(?P<type>start|end)[ \t]*:[ \t]*(?P<name>[a-z][0-9a-z]*)[ \t]*\]
         .*?$
         '''
@@ -324,7 +324,7 @@ class SnippetPreprocessor(Preprocessor):
 
         self.seen = set()
         if self.auto_append:
-            lines.extend("\n\n--8<--\n{}\n--8<--\n".format('\n\n'.join(self.auto_append)).split('\n'))
+            lines.extend("\n\n-8<-\n{}\n-8<-\n".format('\n\n'.join(self.auto_append)).split('\n'))
 
         return self.parse_snippets(lines)
 
