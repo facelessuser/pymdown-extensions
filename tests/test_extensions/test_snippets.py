@@ -241,14 +241,47 @@ class TestSnippets(util.MdCase):
             True
         )
 
+    def test_section_inline_min(self):
+        """Test section partial in inline snippet using minimum tokens."""
+
+        self.check_markdown(
+            R'''
+            ```
+            -8<- "section.txt:cssSection"
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code>div {
+                color: red;
+            }
+            </code></pre></div>
+            ''',
+            True
+        )
+
     def test_section_block(self):
-        """Test section partial in inline snippet."""
+        """Test section partial in block snippet."""
 
         self.check_markdown(
             R'''
             --8<--
             section.txt:htmlSection
             --8<--
+            ''',
+            '''
+            <div><p>content</p></div>
+            ''',
+            True
+        )
+
+    def test_section_block_min(self):
+        """Test section partial in block snippet using minimum tokens."""
+
+        self.check_markdown(
+            R'''
+            -8<-
+            section.txt:htmlSection
+            -8<-
             ''',
             '''
             <div><p>content</p></div>

@@ -50,7 +50,7 @@ As you can see, the notation is ASCII scissors cutting a line followed by the fi
 variant, the file name follows directly after the scissors and is quoted.  In the case of the block format, the file
 names follow on separate lines and an additional scissor is added afterwards to signal the end of the block.
 
-The dashes can be as few as 2 (`--8<--`) or longer if desired (`---8<---------`); whatever your preference is.  The
+The dashes can be as few as 1 (`-8<-`) or longer if desired (`---8<---------`); whatever your preference is.  The
 important thing is that the notation must reside on a line(s) by itself, and the path, must be quoted in the case of the
 single line notation.  If the file name is indented, the content will be indented to that level as well.
 
@@ -163,7 +163,7 @@ And then just include it in our document:
 !!! new "New 9.6"
 
 If it is necessary to demonstrate the snippet syntax, an escaping method is required. If you need to escape snippets,
-just place a `;` right before `--8<--`. This will work for both single line and block format. An escaped snippet
+just place a `;` right before `-8<-`. This will work for both single line and block format. An escaped snippet
 notation will be passed through the Markdown parser with the first `;` removed.
 
 === "Markdown"
@@ -183,7 +183,7 @@ notation will be passed through the Markdown parser with the first `;` removed.
     ```
 
 !!! warning "Legacy Escaping"
-    The legacy escape method required placing a space at the end of the line with `--8<--`, while this should still
+    The legacy escape method required placing a space at the end of the line with `-8<-`, while this should still
     work, this behavior will be removed at sometime in the future and is discouraged.
 
 ## Specifying Snippet Locations
