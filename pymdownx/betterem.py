@@ -24,6 +24,7 @@ DEALINGS IN THE SOFTWARE.
 """
 import re
 from markdown import Extension
+from markdown.inlinepatterns import SimpleTextInlineProcessor
 from . import util
 
 SMART_UNDER_CONTENT = r'(.+?_*?)'
@@ -32,6 +33,9 @@ UNDER_CONTENT = r'(_|(?:(?<=\s)_|[^_])+?)'
 UNDER_CONTENT2 = r'((?:[^_]|(?<!_{2})_)+?)'
 STAR_CONTENT = r'(\*|(?:(?<=\s)\*|[^\*])+?)'
 STAR_CONTENT2 = r'((?:[^\*]|(?<!\*{2})\*)+?)'
+
+# Avoid starting a pattern with asterisk or underscore tokens that are surrounded by white space.
+NOT_STRONG = r'((^|(?<=\s))(\*+|_+)(?=\s|$))'
 
 # ***strong,em***
 STAR_STRONG_EM = r'(\*{3})(?!\s)(\*{1,2}|[^\*]+?)(?<!\s)\1'
@@ -53,6 +57,12 @@ UNDER_STRONG_EM3 = r'(_{2})(?![\s_])%s_(?![\s_])%s(?<!\s)_{3}' % (UNDER_CONTENT,
 STAR_STRONG = r'(\*{2})(?!\s)%s(?<!\s)\1' % STAR_CONTENT2
 # __strong__
 UNDER_STRONG = r'(_{2})(?!\s)%s(?<!\s)\1' % UNDER_CONTENT2
+
+# Prioritize *value* when **value** is nested within
+STAR_EM2 = r'(?<!\*)(\*)(?![\*\s])(.+?)(?<![\*\s])(\*)(?!\*)'
+# Prioritize _value_ when __value__ is nested within
+UNDER_EM2 = r'(?<!_)(_)(?![_\s])(.+?)(?<![_\s])(_)(?!_)'
+
 # *emphasis*
 STAR_EM = r'(\*)(?!\s)%s(?<!\s)\1' % STAR_CONTENT
 # _emphasis_
@@ -71,6 +81,8 @@ SMART_UNDER_EM_STRONG = \
 SMART_UNDER_STRONG = r'(?<!\w)(_{2})(?![\s_])%s(?<!\s)\1(?!\w)' % SMART_UNDER_CONTENT
 # SMART _em_
 SMART_UNDER_EM = r'(?<!\w)(_)(?![\s_])%s(?<!\s)\1(?!\w)' % SMART_UNDER_CONTENT
+# Prioritize _value_ when __value__ is nested within
+SMART_UNDER_EM2 = r'(?<![\w_])(_)(?![_\s])(.+?)(?<![_\s])(_)(?![_\w])'
 
 # Smart rules for when "smart asterisk" is enabled
 # SMART: ***strong,em***
@@ -89,6 +101,8 @@ SMART_STAR_EM_STRONG = \
 SMART_STAR_STRONG = r'(?:(?<=_)|(?<![\w\*]))(\*{2})(?![\s\*])%s(?<!\s)\1(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT
 # SMART *em*
 SMART_STAR_EM = r'(?:(?<=_)|(?<![\w\*]))(\*)(?![\s\*])%s(?<!\s)\1(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT
+# Prioritize *value* when **value** is nested within
+SMART_STAR_EM2 = r'(?<![\w\*])(\*)(?![\*\s])(.+?)(?<![\*\s])(\*)(?![\*\w])'
 
 
 class AsteriskProcessor(util.PatternSequenceProcessor):
@@ -100,6 +114,7 @@ class AsteriskProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(STAR_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
         util.PatSeqItem(re.compile(STAR_STRONG_EM3, re.DOTALL | re.UNICODE), 'double2', 'strong,em'),
         util.PatSeqItem(re.compile(STAR_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
+        util.PatSeqItem(re.compile(STAR_EM2, re.DOTALL | re.UNICODE), 'single', 'em', True),
         util.PatSeqItem(re.compile(STAR_EM, re.DOTALL | re.UNICODE), 'single', 'em')
     ]
 
@@ -112,6 +127,7 @@ class SmartAsteriskProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(SMART_STAR_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
         util.PatSeqItem(re.compile(SMART_STAR_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
         util.PatSeqItem(re.compile(SMART_STAR_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
+        util.PatSeqItem(re.compile(SMART_STAR_EM2, re.DOTALL | re.UNICODE), 'single', 'em', True),
         util.PatSeqItem(re.compile(SMART_STAR_EM, re.DOTALL | re.UNICODE), 'single', 'em')
     ]
 
@@ -125,6 +141,7 @@ class UnderscoreProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(UNDER_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
         util.PatSeqItem(re.compile(UNDER_STRONG_EM3, re.DOTALL | re.UNICODE), 'double2', 'strong,em'),
         util.PatSeqItem(re.compile(UNDER_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
+        util.PatSeqItem(re.compile(UNDER_EM2, re.DOTALL | re.UNICODE), 'single', 'em', True),
         util.PatSeqItem(re.compile(UNDER_EM, re.DOTALL | re.UNICODE), 'single', 'em')
     ]
 
@@ -137,6 +154,7 @@ class SmartUnderscoreProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(SMART_UNDER_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
         util.PatSeqItem(re.compile(SMART_UNDER_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
         util.PatSeqItem(re.compile(SMART_UNDER_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
+        util.PatSeqItem(re.compile(SMART_UNDER_EM2, re.DOTALL | re.UNICODE), 'single', 'em', True),
         util.PatSeqItem(re.compile(SMART_UNDER_EM, re.DOTALL | re.UNICODE), 'single', 'em')
     ]
 
@@ -170,10 +188,9 @@ class BetterEmExtension(Extension):
 
         config = self.getConfigs()
         enabled = config["smart_enable"]
-        if enabled:
-            enable_all = enabled == "all"
-            enable_under = enabled == "underscore" or enable_all
-            enable_star = enabled == "asterisk" or enable_all
+        enable_all = enabled == "all"
+        enable_under = enabled == "underscore" or enable_all
+        enable_star = enabled == "asterisk" or enable_all
 
         # If we don't have to move an existing extension, use the same priority,
         # but if we do have to, move it closely to the relative needed position.
@@ -186,6 +203,7 @@ class BetterEmExtension(Extension):
         md.inlinePatterns.deregister('strong2', False)
         md.inlinePatterns.deregister('emphasis2', False)
 
+        md.inlinePatterns.register(SimpleTextInlineProcessor(NOT_STRONG), 'not_strong', 70)
         asterisk = SmartAsteriskProcessor(r'\*') if enable_star else AsteriskProcessor(r'\*')
         md.inlinePatterns.register(asterisk, "strong_em", 50)
         underscore = SmartUnderscoreProcessor('_') if enable_under else UnderscoreProcessor('_')

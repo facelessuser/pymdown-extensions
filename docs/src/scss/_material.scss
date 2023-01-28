@@ -32,6 +32,14 @@ html {
     }
   }
 
+  .md-top {
+    background-color: var(--md-default-bg-color--dark);
+
+    &:hover {
+      background-color: var(--md-primary-fg-color);
+    }
+  }
+
   // Tabs
   .md-tabs {
     color: var(--md-text-color);
@@ -107,7 +115,7 @@ html {
     background-color: var(--md-accent-bg-color--light);
 
     &:hover {
-      background-color: var(--md-default-bg-color);
+      background-color: var(--md-default-bg-color--light);
     }
 
     ~ .md-search__icon {
@@ -116,6 +124,14 @@ html {
     &::placeholder {
       color: var(--md-default-fg-color--light);
     }
+  }
+
+  [data-md-toggle=search]:checked~.md-header .md-search__input {
+    background-color: transparent;
+  }
+
+  .md-search__suggest {
+    color: var(--md-default-autocomplete-fg-color);
   }
 
   .md-search__overlay, .md-overlay {
@@ -152,7 +168,9 @@ html {
 .md-search__scrollwrap,
 .md-typeset pre > code,
 .md-typeset div.mermaid,
+.md-typeset div.diagram,
 .md-typeset mermaid-div,
+.md-typeset diagram-div,
 .md-typeset pre.arithmatex,
 .md-typeset div.arithmatex {
   // Override native scrollbar styles

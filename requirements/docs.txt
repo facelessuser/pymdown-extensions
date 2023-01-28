@@ -1,4 +1,4 @@
-mkdocs-material >= 5.0.2
+mkdocs-material>=8.5.7
 git+https://github.com/facelessuser/pymdown-lexers.git
 mkdocs-git-revision-date-localized-plugin
 mkdocs-minify-plugin

@@ -5,6 +5,8 @@
   --md-code-link-bg-color: hsla(0, 0%, 96%, 1);
   --md-code-link-accent-bg-color: var(--md-code-link-bg-color);
   --md-default-bg-color--trans: rgb(100%, 100%, 100%, 0);
+  --md-code-title-bg-color: var(--md-code-bg-color);
+  --md-code-inline-bg-color: var(--md-code-bg-color);
 
   --md-code-special-bg-color: #{darken(hsl(0, 0%, 96%), 5%)};
   --md-code-alternate-bg-color: var(--md-code-bg-color);
@@ -54,16 +56,32 @@
     --md-default-fg-color--light:        #{transparentize($drac-fg, 0.46)};
     --md-default-fg-color--lighter:      #{transparentize($drac-fg, 0.84)};
     --md-default-fg-color--lightest:     #{transparentize($drac-fg, 0.93)};
+    --md-default-autocomplete-fg-color:  #{transparentize($drac-fg, 0.60)};
 
-    --md-default-bg-color:               #{$drac-default-bg};
+    --md-default-bg-color:               var(--md-default-bg-color--darkest);
     --md-default-bg-color--light:        #{transparentize($drac-default-bg, 0.3)};
     --md-default-bg-color--lighter:      #{transparentize($drac-default-bg, 0.7)};
     --md-default-bg-color--lightest:     #{transparentize($drac-default-bg, 0.88)};
     --md-default-bg-color--trans:        #{transparentize($drac-default-bg, 1)};
 
+    // Dark specific colors
+    --md-default-bg-color--dark:         #{darken($drac-default-bg, 3%)};
+    --md-default-bg-color--darker:       #{darken($drac-default-bg, 6%)};
+    --md-default-bg-color--darkest:      #{darken($drac-default-bg, 9%)};
+    --md-default-bg-color--ultra-dark:   #{darken($drac-default-bg, 15%)};
+
+    // General text
+    --md-text-color: var(--md-default-fg-color);
+    --md-typeset-color: var(--md-default-fg-color);
+
+    // Admonition colors
+    --md-admonition-fg-color: var(--md-default-fg-color);
+
     // Code colors
     --md-code-fg-color: #{$drac-fg};
     --md-code-bg-color: #{$drac-bg};
+    --md-code-title-bg-color: var(--md-default-bg-color--ultra-dark);
+    --md-code-inline-bg-color: #{lighten($drac-bg, 5%)};
     --md-code-hl-operator-color: #{$drac-pink};
     --md-code-hl-punctuation-color: #{$drac-fg};
     --md-code-hl-string-color: #{$drac-yellow};
@@ -106,15 +124,9 @@
 
     // Keys colors
     --md-typeset-kbd-color: var(--md-default-fg-color--lightest);
-    --md-typeset-kbd-border-color: var(--md-default-bg-color--darkest);
+    --md-typeset-kbd-border-color: var(--md-default-bg-color--ultra-dark);
     --md-typeset-kbd-accent-color: var(--md-default-fg-color--lighter);
   }
-
-  // Dark specific colors
-  --md-default-bg-color--dark:         #{darken($drac-default-bg, 3%)};
-  --md-default-bg-color--darker:       #{darken($drac-default-bg, 6%)};
-  --md-default-bg-color--darkest:      #{darken($drac-default-bg, 9%)};
-  --md-default-bg-color--ultra-dark:   #{darken($drac-default-bg, 15%)};
 }
 
 // ----------------------------------------------------------------------------

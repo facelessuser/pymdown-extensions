@@ -49,5 +49,3 @@ Option                   | Type     | Default      | Description
 `strip_comments`         | bool     | `#!py3 True` | Strip HTML comments during post process.
 `strip_js_on_attributes` | bool     | `#!py3 True` | Strip JavaScript script attributes with the pattern on* during post process.
 `strip_attributes`       | [string] | `#!py3 []`   | A list of tag attribute names to strip.
-
---8<-- "links.txt"

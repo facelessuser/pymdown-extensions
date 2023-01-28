@@ -34,6 +34,10 @@ BACKTICK_CODE_RE = r'''(?x)
 '''
 
 
+class InlineHiliteException(Exception):
+    """InlineHilite exception."""
+
+
 def _escape(txt):
     """Basic html escaping."""
 
@@ -175,6 +179,8 @@ class InlineHilitePattern(InlineProcessor):
             self.get_settings()
             try:
                 return self.handle_code(lang, src), m.start(0), m.end(0)
+            except InlineHiliteException:
+                raise
             except Exception:
                 return m.group(0), None, None
 

@@ -1,5 +1,6 @@
 """Test cases for SuperFences."""
 from .. import util
+from pymdownx.slugs import slugify
 
 
 class TestLegacyTab(util.MdCase):
@@ -221,6 +222,70 @@ class TestLegacyTab(util.MdCase):
             </div>
             </div>
             <p>Content</p>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_tabbed_select(self):
+        """Test selecting a tab."""
+
+        self.check_markdown(
+            r'''
+            === "Tab 1"
+                content
+
+            ===+ "Tab 2"
+                content
+
+            === "Tab 3"
+                content
+            ''',
+            r'''
+            <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input checked="checked" id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab 1</label><label for="__tabbed_1_2">Tab 2</label><label for="__tabbed_1_3">Tab 3</label></div>
+            <div class="tabbed-content">
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            </div>
+            </div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_tabbed_select_mulitiple(self):
+        """Test selecting multiple tabs."""
+
+        self.check_markdown(
+            r'''
+            === "Tab 1"
+                content
+
+            ===+ "Tab 2"
+                content
+
+            ===+ "Tab 3"
+                content
+            ''',
+            r'''
+            <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input checked="checked" id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab 1</label><label for="__tabbed_1_2">Tab 2</label><label for="__tabbed_1_3">Tab 3</label></div>
+            <div class="tabbed-content">
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            </div>
+            </div>
             ''',  # noqa: E501
             True
         )
@@ -493,6 +558,84 @@ class TestLegacyTab(util.MdCase):
             <ul>
             <li>Parent 2</li>
             </ul>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestLegacyTabSlugs(util.MdCase):
+    """Test legacy tab slug cases."""
+
+    extension = ['pymdownx.tabbed', 'toc']
+    extension_configs = {'pymdownx.tabbed': {'slugify': slugify(case='lower'), 'alternate_style': True}}
+
+    MD = """
+    ### Here is some text
+
+    === "Here is some text"
+        content
+
+    === "Here is some text"
+        content
+    """
+
+    def test_tab_slugs(self):
+        """Test tab slugs."""
+
+        self.check_markdown(
+            self.MD,
+            '''
+            <h3 id="here-is-some-text">Here is some text</h3>
+            <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="here-is-some-text_1" name="__tabbed_1" type="radio" /><input id="here-is-some-text_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="here-is-some-text_1">Here is some text</label><label for="here-is-some-text_2">Here is some text</label></div>
+            <div class="tabbed-content">
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            </div>
+            </div>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestLegacyTabSlugsSep(util.MdCase):
+    """Test legacy tab slug separator cases."""
+
+    extension = ['pymdownx.tabbed', 'toc']
+    extension_configs = {
+        'pymdownx.tabbed': {'slugify': slugify(case='lower'), 'separator': '_', 'alternate_style': True}
+    }
+
+    MD = """
+    ### Here is some text
+
+    === "Here is some text"
+        content
+
+    === "Here is some text"
+        content
+    """
+
+    def test_slug_with_separator(self):
+        """Test tab slugs with separator."""
+
+        self.check_markdown(
+            self.MD,
+            '''
+            <h3 id="here-is-some-text">Here is some text</h3>
+            <div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="here_is_some_text" name="__tabbed_1" type="radio" /><input id="here_is_some_text_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="here_is_some_text">Here is some text</label><label for="here_is_some_text_1">Here is some text</label></div>
+            <div class="tabbed-content">
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            </div>
+            </div>
             ''',  # noqa: E501
             True
         )

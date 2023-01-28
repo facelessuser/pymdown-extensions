@@ -81,7 +81,7 @@ if (!('mermaidConfig' in window)) {
         \
         /* Flowchart */\
         .labelText,\
-        .label text {\
+        :not(.branchLabel) > .label text {\
           fill: var(--drac-purple-fg);\
         }\
         .edgeLabel text {\
@@ -92,6 +92,10 @@ if (!('mermaidConfig' in window)) {
           fill: var(--drac-purple-bg) !important;\
         }\
         \
+        .grey rect.label-container { \
+          fill: var(--drac-purple-bg) !important;\
+          stroke: var(--drac-purple-fg) !important;\
+        } \
         /* Sequence */\
         line[id^='actor'] {\
           stroke: var(--drac-blue-fg);\
@@ -135,6 +139,13 @@ if (!('mermaidConfig' in window)) {
         /* Pie */\
         text.slice {\
           fill: var(--drac-white-fg) !important;\
+        }\
+        /* Git Graph */\
+        .commit-bullets .commit-reverse,\
+        .commit-bullets .commit-merge, \
+        .commit-bullets .commit-highlight-inner {\
+          fill: var(--drac-page-bg) !important;\
+          stroke: var(--drac-page-bg) !important;\
         }\
         ",
       themeVariables: {
@@ -190,10 +201,41 @@ if (!('mermaidConfig' in window)) {
         fillType5: "#604b7d",
         fillType6: "#802c2c",
         fillType7: "#797d45",
-        fillType8: "#7c7c79"
+        fillType8: "#7c7c79",
+
+        git0: "#ff5555",
+        git1: "#ffb86c",
+        git2: "#f1fa8c",
+        git3: "#50fa7b",
+        git4: "#8be9fd",
+        git5: "#809fff",
+        git6: "#ff79c6",
+        git7: "#bd93f9",
+
+        gitInv0: "#ff5555",
+        gitInv1: "#ffb86c",
+        gitInv2: "#f1fa8c",
+        gitInv3: "#50fa7b",
+        gitInv4: "#8be9fd",
+        gitInv5: "#809fff",
+        gitInv6: "#ff79c6",
+        gitInv7: "#bd93f9",
+
+        gitBranchLabel0: "#323443",
+        gitBranchLabel1: "#323443",
+        gitBranchLabel2: "#323443",
+        gitBranchLabel3: "#323443",
+        gitBranchLabel4: "#323443",
+        gitBranchLabel5: "#323443",
+        gitBranchLabel6: "#323443",
+        gitBranchLabel7: "#323443",
+
+        commitLabelColor: '#52fa7c',
+        commitLabelBackground: '#297d3e'
       },
       flowchart: {
-        htmlLabels: false
+        htmlLabels: false,
+        useMaxWidth: false
       },
       er: {
         useMaxWidth: false
@@ -206,6 +248,18 @@ if (!('mermaidConfig' in window)) {
         noteFontWeight: "14px",
         actorFontSize: "14px",
         messageFontSize: "16px"
+      },
+      journey: {
+        useMaxWidth: false
+      },
+      pie: {
+        useMaxWidth: false
+      },
+      gantt: {
+        useMaxWidth: false
+      },
+      gitGraph: {
+        useMaxWidth: false
       }
     },
 
@@ -213,7 +267,8 @@ if (!('mermaidConfig' in window)) {
       startOnLoad: false,
       theme: "default",
       flowchart: {
-        htmlLabels: false
+        htmlLabels: false,
+        useMaxWidth: false
       },
       er: {
         useMaxWidth: false
@@ -223,6 +278,18 @@ if (!('mermaidConfig' in window)) {
         noteFontWeight: "14px",
         actorFontSize: "14px",
         messageFontSize: "16px"
+      },
+      journey: {
+        useMaxWidth: false
+      },
+      pie: {
+        useMaxWidth: false
+      },
+      gantt: {
+        useMaxWidth: false
+      },
+      gitGraph: {
+        useMaxWidth: false
       }
     },
 
@@ -230,7 +297,8 @@ if (!('mermaidConfig' in window)) {
       startOnLoad: false,
       theme: "dark",
       flowchart: {
-        htmlLabels: false
+        htmlLabels: false,
+        useMaxWidth: false
       },
       er: {
         useMaxWidth: false
@@ -240,6 +308,18 @@ if (!('mermaidConfig' in window)) {
         noteFontWeight: "14px",
         actorFontSize: "14px",
         messageFontSize: "16px"
+      },
+      journey: {
+        useMaxWidth: false
+      },
+      pie: {
+        useMaxWidth: false
+      },
+      gantt: {
+        useMaxWidth: false
+      },
+      gitGraph: {
+        useMaxWidth: false
       }
     }
   }

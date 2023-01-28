@@ -33,13 +33,6 @@
   }
 }
 
-[data-md-color-scheme="dracula"] {
-  .admonition-title code,
-  table:not([class]) th code {
-    background-color: var(--md-code-alternate-bg-color);
-  }
-}
-
 .md-typeset {
 
   /* Allow code to look like code everywhere despite Material's current preference */
@@ -47,7 +40,7 @@
       margin: 0;
       padding: 0 px2em( 4px, 13.6px);
       color: var(--md-code-fg-color);
-      background-color: var(--md-code-bg-color);
+      background-color: var(--md-code-inline-bg-color);
       border-radius: px2rem(2px);
       box-shadow: none;
   }
@@ -88,6 +81,10 @@
 
     /* Needed for tab preserving mode */
     tab-size: 8;
+
+    + .result {
+      border-width: px2rem(2px);
+    }
 
     /* `pymdownx-inline` mode */
     [data-linenos] {
@@ -132,7 +129,7 @@
     padding: px2em(8px) px2em(16px, 13.6px) px2em(8px) px2em(40px, 13.6px);
     font-weight: 700;
     font-size: px2rem(13.6px);
-    background-color: var(--md-code-special-bg-color);
+    background-color: var(--md-code-title-bg-color);
     border-top-left-radius: px2rem(2px);
     border-top-right-radius: px2rem(2px);
 

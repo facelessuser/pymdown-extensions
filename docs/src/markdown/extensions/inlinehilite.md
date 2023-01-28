@@ -46,7 +46,8 @@ or disabled, code blocks will be output for JavaScript syntax highlighters as:
 <code class="highlight language-mylanguage"></code>
 ```
 
-Highlighting can be further controlled via the [`pymdownx.highlight`](./highlight.md) extension.
+Highlighting can be further controlled via the [`pymdownx.highlight`](./highlight.md) extension. You must include
+`pymdownx.highlight` in the extensions list in order to be able to configure it.
 
 ## Using JavaScript Highlighters
 
@@ -112,6 +113,38 @@ When returning an ElementTree object, remember to wrap string content as `markdo
 being processed further, you can also stash raw HTML string content assigned to elements like InlineHilite does by
 default above. InlineHilite will not try and guess what you intend, you must manage your content in the ElementTree
 objects or the Markdown parser may apply other conversion to your HTML content.
+
+### Exception Handling
+
+In general, if an exception occurs in the formatter, InlineHilite will gracefully ignore the formatter. If this occurs,
+the code content will just be abandoned.
+
+Some users may want such failures to not silently go by. InlineHilite exposes a special exception called
+`InlineHiliteException` which, if raised, will not gracefully be handled. If `InlineHiliteException` is raised, this
+will bubble all the way up and cause Markdown parsing to halt.
+
+```py
+def format_fail(src, language, class_name, md):
+    """Inline formatter"""
+
+    raise InlineHiliteException('Fail!')
+```
+
+`InlineHiliteException` can be used to to raise other exceptions if desired.
+
+
+```py
+def format_fail(src, language, class_name, md):
+    """Inline formatter"""
+
+    try:
+        raise ValueError('Nooo!')
+    except ValueError as e:
+        raise InlineHiliteException from e
+```
+
+!!! new "New 9.5"
+    `InlineHiliteException` added in 9.5
 
 ## Options
 

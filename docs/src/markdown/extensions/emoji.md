@@ -44,7 +44,7 @@ Emoji chooses to focus on three specific emoji sets:
     toolkit repo @JoyPixels/emoji-toolkit.
 
 === "Twemoji"
-    [Twemoji][twemoji] (<img align="absmiddle" alt=":smile:" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/72x72/1f604.png" title=":smile:" /> <img align="absmiddle" alt=":heart:" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/72x72/2764.png" title=":heart:" /> <img align="absmiddle" alt=":thumbsup:" class="twemoji" src="https://twemoji.maxcdn.com/v/latest/72x72/1f44d.png" title=":thumbsup:" />):
+    [Twemoji][twemoji] (<img align="absmiddle" alt=":smile:" class="twemoji" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f604.png" title=":smile:" /> <img align="absmiddle" alt=":heart:" class="twemoji" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/2764.png" title=":heart:" /> <img align="absmiddle" alt=":thumbsup:" class="twemoji" src="hhttps://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f44d.png" title=":thumbsup:" />):
     Twemoji is Twitter's open source emoji set which also covers a great many emoji with skin tones and gender modifiers.
     The hosted CDN provides 72x72 PNG emoji or SVG emoji.
 
@@ -520,5 +520,3 @@ Option                      | Type       | Default              | Description
         }
     }
     ```
-
---8<-- "refs.txt"

@@ -94,7 +94,7 @@ def repl_relative(m, base_path, relative_path):
     return link
 
 
-def repl_absolute(m, base_path):
+def repl_absolute(m, base_path, file_scheme):
     """Replace path with absolute path."""
 
     link = m.group(0)
@@ -105,12 +105,18 @@ def repl_absolute(m, base_path):
             path = util.url2path(path)
             path = os.path.normpath(os.path.join(base_path, path))
             path = util.path2url(path)
-            start = '/' if not path.startswith('/') else ''
-            link = '%s"%s%s"' % (
-                m.group('name'),
-                start,
-                urlunparse((scheme, netloc, path, params, query, fragment))
-            )
+            if file_scheme:
+                link = '%s"%s"' % (
+                    m.group('name'),
+                    urlunparse(("file", netloc, path, params, query, fragment))
+                )
+            else:
+                start = '/' if not path.startswith('/') else ''
+                link = '%s"%s%s"' % (
+                    m.group('name'),
+                    start,
+                    urlunparse((scheme, netloc, path, params, query, fragment))
+                )
     except Exception:  # pragma: no cover
         # Parsing crashed and burned; no need to continue.
         pass
@@ -118,7 +124,7 @@ def repl_absolute(m, base_path):
     return link
 
 
-def repl(m, base_path, rel_path=None):
+def repl(m, base_path, rel_path=None, file_scheme=None):
     """Replace."""
 
     if m.group('avoid'):
@@ -126,7 +132,7 @@ def repl(m, base_path, rel_path=None):
     else:
         tag = m.group('open')
         if rel_path is None:
-            tag += RE_TAG_LINK_ATTR.sub(lambda m2: repl_absolute(m2, base_path), m.group('attr'))
+            tag += RE_TAG_LINK_ATTR.sub(lambda m2: repl_absolute(m2, base_path, file_scheme), m.group('attr'))
         else:
             tag += RE_TAG_LINK_ATTR.sub(lambda m2: repl_relative(m2, base_path, rel_path), m.group('attr'))
         tag += m.group('close')
@@ -142,11 +148,12 @@ class PathConverterPostprocessor(Postprocessor):
         basepath = self.config['base_path']
         relativepath = self.config['relative_path']
         absolute = bool(self.config['absolute'])
+        filescheme = bool(self.config['file_scheme'])
         tags = re.compile(RE_TAG_HTML % '|'.join(self.config['tags'].split()))
         if not absolute and basepath and relativepath:
-            text = tags.sub(lambda m: repl(m, basepath, relativepath), text)
+            text = tags.sub(lambda m: repl(m, basepath, rel_path=relativepath), text)
         elif absolute and basepath:
-            text = tags.sub(lambda m: repl(m, basepath), text)
+            text = tags.sub(lambda m: repl(m, basepath, file_scheme=filescheme), text)
         return text
 
 
@@ -160,7 +167,8 @@ class PathConverterExtension(Extension):
             'base_path': ["", "Base path used to find files - Default: \"\""],
             'relative_path': ["", "Path that files will be relative to (not needed if using absolute) - Default: \"\""],
             'absolute': [False, "Paths are absolute by default; disable for relative - Default: False"],
-            'tags': ["img script a link", "tags to convert src and/or href in - Default: 'img scripts a link'"]
+            'tags': ["img script a link", "tags to convert src and/or href in - Default: 'img scripts a link'"],
+            'file_scheme': [False, "Use file:// scheme for absolute paths - Default: False"],
         }
 
         super(PathConverterExtension, self).__init__(*args, **kwargs)

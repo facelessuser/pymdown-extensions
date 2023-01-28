@@ -65,6 +65,8 @@ MagicLink's
 Mar
 MathJax
 Mathjax
+MaxCDN
+MiB
 MkDocs
 MultiMarkdown
 NONINFRINGEMENT
@@ -156,6 +158,7 @@ html
 indepth
 injectable
 inline
+inlined
 inlines
 ish
 isn't
@@ -170,6 +173,7 @@ lowercased
 lowercases
 macOS
 md
+mebibyte
 metadata
 mkdocs
 mrab
@@ -212,6 +216,7 @@ reloader
 renderer
 repo
 requesters
+requestor
 revisioned
 sanitizer
 scrollable

@@ -25,10 +25,15 @@ DEALINGS IN THE SOFTWARE.
 """
 import re
 from markdown import Extension
+from markdown.inlinepatterns import SimpleTextInlineProcessor
 from . import util
 
 SMART_CONTENT = r'((?:(?<=\s)=+?(?=\s)|.)+?=*?)'
 CONTENT = r'((?:[^=]|(?<!={2})=)+?)'
+
+# Avoid starting a pattern with caret tokens that are surrounded by white space.
+NOT_MARK = r'((^|(?<=\s))(=+)(?=\s|$))'
+
 # ==mark==
 MARK = r'(={2})(?!\s)%s(?<!\s)\1' % CONTENT
 # ==mark==
@@ -75,6 +80,7 @@ class MarkExtension(Extension):
         escape_chars.append('=')
         util.escape_chars(md, escape_chars)
 
+        md.inlinePatterns.register(SimpleTextInlineProcessor(NOT_MARK), 'not_tilde', 70)
         mark = MarkSmartProcessor(r'=') if smart else MarkProcessor(r'=')
         md.inlinePatterns.register(mark, "mark", 65)
 

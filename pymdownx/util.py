@@ -29,6 +29,8 @@ elif sys.platform == "darwin":  # pragma: no cover
 else:
     _PLATFORM = "linux"
 
+PY39 = (3, 9) <= sys.version_info
+
 
 def is_win():  # pragma: no cover
     """Is Windows."""
@@ -157,8 +159,13 @@ def parse_url(url):
     return (scheme, netloc, path, params, query, fragment, is_url, is_absolute)
 
 
-class PatSeqItem(namedtuple('PatSeqItem', ['pattern', 'builder', 'tags'])):
+class PatSeqItem(namedtuple('PatSeqItem', ['pattern', 'builder', 'tags', 'full_recursion'])):
     """Pattern sequence item item."""
+
+    def __new__(cls, pattern, builder, tags, full_recursion=False):
+        """Create object."""
+
+        return super(PatSeqItem, cls).__new__(cls, pattern, builder, tags, full_recursion)
 
 
 class PatternSequenceProcessor(InlineProcessor):
@@ -166,41 +173,41 @@ class PatternSequenceProcessor(InlineProcessor):
 
     PATTERNS = []
 
-    def build_single(self, m, tag, idx):
+    def build_single(self, m, tag, full_recursion, idx):
         """Return single tag."""
         el1 = etree.Element(tag)
         text = m.group(2)
-        self.parse_sub_patterns(text, el1, None, idx)
+        self.parse_sub_patterns(text, el1, None, full_recursion, idx)
         return el1
 
-    def build_double(self, m, tags, idx):
+    def build_double(self, m, tags, full_recursion, idx):
         """Return double tag."""
 
         tag1, tag2 = tags.split(",")
         el1 = etree.Element(tag1)
         el2 = etree.Element(tag2)
         text = m.group(2)
-        self.parse_sub_patterns(text, el2, None, idx)
+        self.parse_sub_patterns(text, el2, None, full_recursion, idx)
         el1.append(el2)
         if len(m.groups()) == 3:
             text = m.group(3)
-            self.parse_sub_patterns(text, el1, el2, idx)
+            self.parse_sub_patterns(text, el1, el2, full_recursion, idx)
         return el1
 
-    def build_double2(self, m, tags, idx):
+    def build_double2(self, m, tags, full_recursion, idx):
         """Return double tags (variant 2): `<strong>text <em>text</em></strong>`."""
 
         tag1, tag2 = tags.split(",")
         el1 = etree.Element(tag1)
         el2 = etree.Element(tag2)
         text = m.group(2)
-        self.parse_sub_patterns(text, el1, None, idx)
+        self.parse_sub_patterns(text, el1, None, full_recursion, idx)
         text = m.group(3)
         el1.append(el2)
-        self.parse_sub_patterns(text, el2, None, idx)
+        self.parse_sub_patterns(text, el2, None, full_recursion, idx)
         return el1
 
-    def parse_sub_patterns(self, data, parent, last, idx):
+    def parse_sub_patterns(self, data, parent, last, full_recursion, idx):
         """
         Parses sub patterns.
 
@@ -229,7 +236,7 @@ class PatternSequenceProcessor(InlineProcessor):
                 # See if the we can match an emphasis/strong pattern
                 for index, item in enumerate(self.PATTERNS):
                     # Only evaluate patterns that are after what was used on the parent
-                    if index <= idx:
+                    if not full_recursion and index <= idx:
                         continue
                     m = item.pattern.match(data, pos)
                     if m:
@@ -243,7 +250,7 @@ class PatternSequenceProcessor(InlineProcessor):
                                 last.tail = text
                             else:
                                 parent.text = text
-                        el = self.build_element(m, item.builder, item.tags, index)
+                        el = self.build_element(m, item.builder, item.tags, item.full_recursion, index)
                         parent.append(el)
                         last = el
                         # Move our position past the matched hunk
@@ -264,15 +271,15 @@ class PatternSequenceProcessor(InlineProcessor):
             else:
                 parent.text = text
 
-    def build_element(self, m, builder, tags, index):
+    def build_element(self, m, builder, tags, full_recursion, index):
         """Element builder."""
 
         if builder == 'double2':
-            return self.build_double2(m, tags, index)
+            return self.build_double2(m, tags, full_recursion, index)
         elif builder == 'double':
-            return self.build_double(m, tags, index)
+            return self.build_double(m, tags, full_recursion, index)
         else:
-            return self.build_single(m, tags, index)
+            return self.build_single(m, tags, full_recursion, index)
 
     def handleMatch(self, m, data):
         """Parse patterns."""
@@ -286,7 +293,7 @@ class PatternSequenceProcessor(InlineProcessor):
             if m1:
                 start = m1.start(0)
                 end = m1.end(0)
-                el = self.build_element(m1, item.builder, item.tags, index)
+                el = self.build_element(m1, item.builder, item.tags, item.full_recursion, index)
                 break
         return el, start, end
 

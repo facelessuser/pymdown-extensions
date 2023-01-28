@@ -31,6 +31,47 @@ class TestHighlightGuess(util.MdCase):
         )
 
 
+class TestHighlightGuessBlock(util.MdCase):
+    """Test that highlighting works with guessing for block."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'guess_lang': "block"
+        }
+    }
+
+    def test_guess_block(self):
+        """Test guessing for block."""
+
+        self.check_markdown(
+            r'''
+            ```
+            import test
+            test.test()
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
+            </code></pre></div>
+            ''',
+            True
+        )
+
+    def test_no_guess_inline(self):
+        """Test inline code is not language guessed."""
+        self.check_markdown(
+            r'''
+            `int i = std::numeric_limits<int>::min();`
+            ''',
+            '''
+            <p><code>int i = std::numeric_limits&lt;int&gt;::min();</code></p>
+            ''',
+            True
+        )
+
+
 class TestHighlightAutoTitle(util.MdCase):
     """Test title cases."""
 
@@ -174,11 +215,10 @@ class TestNoClass(util.MdCase):
             ```
             ''',
             r'''
-            <table class="more table"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-            <span class="normal">2</span></pre></div></td><td class="code"><div class="more "><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <div class="more"><table class="table"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+            <span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
             <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
-            </code></pre></div>
-            </td></tr></table>
+            </code></pre></div></td></tr></table></div>
             ''',  # noqa: E501
             True
         )
@@ -476,11 +516,10 @@ class TestGlobalLinenums(util.MdCase):
             ```
             ''',
             r'''
-            <table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-            <span class="normal">2</span></pre></div></td><td class="code"><div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+            <span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
             <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
-            </code></pre></div>
-            </td></tr></table>
+            </code></pre></div></td></tr></table></div>
             ''',  # noqa: E501
             True
         )
@@ -539,6 +578,64 @@ class TestPygmentsLangClass(util.MdCase):
             ''',
             '''
             <p><code class="language-python highlight"><span class="kn">import</span> <span class="nn">test</span></code></p>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestExtendedLang(util.MdCase):
+    """Test extended language cases."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences', 'pymdownx.inlinehilite']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'extend_pygments_lang': [
+                {'name': 'php-inline', 'lang': 'php', 'options': {'startinline': True}}
+            ]
+        }
+    }
+
+    def test_extended_lang_inlinehilite(self):
+        """Test extended language in InlineHilite."""
+
+        self.check_markdown(
+            '''
+            `#!php-inline $a = array("foo" => 0, "bar" => 1);`
+            ''',
+            '''
+            <p><code class="highlight"><span class="nv">$a</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">);</span></code></p>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_extended_lang_superfences(self):
+        """Test extended language in SuperFences."""
+
+        self.check_markdown(
+            '''
+            ```php-inline
+            $a = array("foo" => 0, "bar" => 1);
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code><span class="nv">$a</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">);</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_extended_lang_case(self):
+        """Test extended language in SuperFences."""
+
+        self.check_markdown(
+            '''
+            ```PHP-Inline
+            $a = array("foo" => 0, "bar" => 1);
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code><span class="nv">$a</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s2">&quot;foo&quot;</span> <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;bar&quot;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">);</span>
+            </code></pre></div>
             ''',  # noqa: E501
             True
         )

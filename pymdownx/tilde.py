@@ -26,11 +26,15 @@ DEALINGS IN THE SOFTWARE.
 """
 import re
 from markdown import Extension
+from markdown.inlinepatterns import SimpleTextInlineProcessor
 from . import util
 
 SMART_CONTENT = r'(.+?~*?)'
 CONTENT = r'(~|[^\s]+?)'
 CONTENT2 = r'((?:[^~]|(?<!~{2})~)+?)'
+
+# Avoid starting a pattern with tilde tokens that are surrounded by white space.
+NOT_TILDE = r'((^|(?<=\s))(~+)(?=\s|$))'
 
 # `~~~del,sub~~~`
 DEL_SUB = r'(~{3})(?!\s)(~{1,2}|[^~\s]+?)(?<!\s)\1'
@@ -44,6 +48,9 @@ DEL_SUB3 = r'(~{2})(?![\s~])%s~(?![\s~])%s(?<!\s)~{3}' % (CONTENT2, CONTENT)
 DEL = r'(~{2})(?!\s)%s(?<!\s)\1' % CONTENT2
 # `~sub~`
 SUB = r'(~)(?!\s)%s(?<!\s)\1' % CONTENT
+
+# Prioritize ~value~ when ~~value~~ is nested within
+SUB2 = r'(?<!~)(~)(?![~\s])([^\s]+?)(?<![~\s])(~)(?!~)'
 
 # Smart rules for when "smart tilde" is enabled
 # SMART: `~~~del,sub~~~`
@@ -71,6 +78,7 @@ class TildeProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(DEL_SUB2, re.DOTALL | re.UNICODE), 'double', 'del,sub'),
         util.PatSeqItem(re.compile(DEL_SUB3, re.DOTALL | re.UNICODE), 'double2', 'del,sub'),
         util.PatSeqItem(re.compile(DEL, re.DOTALL | re.UNICODE), 'single', 'del'),
+        util.PatSeqItem(re.compile(SUB2, re.DOTALL | re.UNICODE), 'single', 'sub', True),
         util.PatSeqItem(re.compile(SUB, re.DOTALL | re.UNICODE), 'single', 'sub')
     ]
 
@@ -83,6 +91,7 @@ class TildeSmartProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(SMART_SUB_DEL, re.DOTALL | re.UNICODE), 'double', 'sub,del'),
         util.PatSeqItem(re.compile(SMART_DEL_SUB2, re.DOTALL | re.UNICODE), 'double', 'del,sub'),
         util.PatSeqItem(re.compile(SMART_DEL, re.DOTALL | re.UNICODE), 'single', 'del'),
+        util.PatSeqItem(re.compile(SUB2, re.DOTALL | re.UNICODE), 'single', 'sub', True),
         util.PatSeqItem(re.compile(SUB, re.DOTALL | re.UNICODE), 'single', 'sub')
     ]
 
@@ -143,6 +152,7 @@ class DeleteSubExtension(Extension):
         util.escape_chars(md, escape_chars)
 
         tilde = None
+        md.inlinePatterns.register(SimpleTextInlineProcessor(NOT_TILDE), 'not_tilde', 70)
         if delete and subscript:
             tilde = TildeSmartProcessor(r'~') if smart else TildeProcessor(r'~')
         elif delete:

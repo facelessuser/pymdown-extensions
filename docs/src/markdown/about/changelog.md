@@ -1,5 +1,68 @@
 # Changelog
 
+## 9.9.2
+
+- **FIX**: Snippets syntax can break in XML comments as XML comments do not allow `--`. Relax Snippets syntax such that
+  `-8<-` (single `-`) are allowed.
+
+## 9.9.1
+
+- **FIX**: Use a different CDN for Twemoji icons as MaxCDN is no longer available.
+
+## 9.9
+
+- **ENHANCE**: BetterEm: Further improvements to strong/emphasis handling:
+    - Ensure that one or more consecutive `*` or `_` surrounded by whitespace are not considered as a token.
+- **ENHANCE**: Caret: Apply recent BetterEm improvements to Caret:
+    - Fix case where `^^` nested between `^` would be handled in an unexpected way.
+    - Ensure that one or more consecutive `^` surrounded by whitespace are not considered as a token.
+- **ENHANCE**: Tilde: Apply recent BetterEm improvements to Tilde:
+    - Fix case where `~~` nested between `~` would be handled in an unexpected way.
+    - Ensure that one or more consecutive `~` surrounded by whitespace are not considered a token.
+- **ENHANCE**: Mark: Apply recent BetterEm improvements to Mark:
+    - Ensure that one or more consecutive `=` surrounded by whitespace are not considered a token.
+
+## 9.8
+
+- **NEW**: Formally declare support for Python 3.11.
+- **FIX**: BetterEm: Fix case where `**` nested between `*` would be handled in an unexpected way.
+
+## 9.7
+
+- **NEW**: Tabbed: Add new syntax to allow forcing a specific tab to be select by default.
+- **NEW**: Snippets: Add new option to pass arbitrary HTTP headers.
+- **NEW**: Snippets: Allow specifying sections in a snippet and including just the specified section.
+
+## 9.6
+
+- **NEW**: Highlight: Allow greater granularity of specifying where language guessing takes place via `guess_lang`
+  option (e.g. `block` vs `inline`).
+- **NEW**: Tabbed: Add options for generating tab IDs from tab titles.
+- **NEW**: Snippets: Add support for specifying specific lines for Snippets.
+- **NEW**: Snippets: Commenting out files in block format no longer requires a space directly after `;`.
+- **NEW**: Snippets: A new sane way to escape snippets is now available.
+
+## 9.5
+
+- **NEW**: InlineHilite: Custom inline code block formatters can now be forced to raise an exception by raising a
+  `InlineHiliteException`.
+- **NEW**: Snippets: Add new options to handle importing snippets from URL.
+- **NEW**: Snippets: Snippets will only swallow missing file errors (unless `check_paths` is enabled), all other errors
+  will be propagated up.
+- **NEW**: Snippets: When a file or URL is missing, raise `SnippetMissingError` instead of `IOError`.
+- **FIX**: Snippets: Small issues related to recursive inclusion of snippets.
+
+## 9.4
+
+- **NEW**: Highlight: Changes in order to support Pygments 2.12+. If using Pygments and a version less than 2.12 is
+  installed, Highlight will raise an exception.
+
+## 9.3
+
+- **NEW**: B64: Allow SVG to be encoded and inlined.
+- **NEW**: PathConverter: Add option to use `file://` prefix on absolute paths.
+- **FIX**: Highlight: Ensure that `extend_pygments_lang` is not case sensitive regarding language names.
+
 ## 9.2
 
 - **NEW**: Drop Python 3.6 support and formally add Python 3.10 support.

@@ -1,6 +1,7 @@
 """Test cases for Highlight."""
 from .. import util
 import pymdownx.arithmatex as arithmatex
+from pymdownx.inlinehilite import InlineHiliteException
 import warnings
 
 
@@ -20,6 +21,12 @@ def _format_exploder(src, language, class_name, md):
     """Inline math formatter."""
 
     raise Exception('Boom!')
+
+
+def _format_exploder_fail(src, language, class_name, md):
+    """Inline math formatter."""
+
+    raise InlineHiliteException('Boom!')
 
 
 class TestInlineHilite(util.MdCase):
@@ -218,6 +225,61 @@ class TestInlineHiliteGuess(util.MdCase):
         self.check_markdown(
             r'`import module`.',
             r'<p><code class="inlinehilite"><span class="kn">import</span> <span class="nn">module</span></code>.</p>'
+        )
+
+
+class TestInlineHiliteGuessInline(util.MdCase):
+    """Test inline highlight with guessing set to be inline only."""
+
+    extension = [
+        'pymdownx.highlight',
+        'pymdownx.inlinehilite',
+        'pymdownx.superfences'
+    ]
+    extension_configs = {
+        'pymdownx.highlight': {
+            'guess_lang': 'inline'
+        },
+        'pymdownx.inlinehilite': {
+            'css_class': 'inlinehilite',
+            'style_plain_text': True
+        }
+    }
+
+    def test_guessing_inline(self):
+        """Ensure guessing can be enabled for inline only."""
+
+        self.check_markdown(
+            r'`import module`.',
+            r'<p><code class="inlinehilite"><span class="kn">import</span> <span class="nn">module</span></code>.</p>'
+        )
+
+    def test_no_guessing_block(self):
+        """Ensure block is not guessed when set as inline only."""
+
+        self.check_markdown(
+            r'''
+            ```
+            <!DOCTYPE html>
+            <html>
+            <body>
+            <h1>My great test</h1>
+            <p>Thou shalt be re-educated through labour should this test ever fails.</p>
+            </body>
+            </html>
+            ```
+            ''',
+            r'''
+            <div class="highlight"><pre><span></span><code>&lt;!DOCTYPE html&gt;
+            &lt;html&gt;
+            &lt;body&gt;
+            &lt;h1&gt;My great test&lt;/h1&gt;
+            &lt;p&gt;Thou shalt be re-educated through labour should this test ever fails.&lt;/p&gt;
+            &lt;/body&gt;
+            &lt;/html&gt;
+            </code></pre></div>
+            ''',
+            True
         )
 
 
@@ -545,3 +607,32 @@ class TestInlineHiliteCustomBrokenFormatter(util.MdCase):
             r'`#!test boom`',
             r'<p>`#!test boom`</p>'  # noqa: E501
         )
+
+
+class TestInlineHiliteCustomBrokenFormatterFail(util.MdCase):
+    """Test custom broken InlineHilite cases fails."""
+
+    extension = [
+        'pymdownx.highlight',
+        'pymdownx.inlinehilite',
+    ]
+    extension_configs = {
+        'pymdownx.inlinehilite': {
+            'custom_inline': [
+                {
+                    'name': 'test',
+                    'class': 'test',
+                    'format': _format_exploder_fail
+                }
+            ]
+        }
+    }
+
+    def test_broken(self):
+        """Test custom broken formatter."""
+
+        with self.assertRaises(InlineHiliteException):
+            self.check_markdown(
+                r'`#!test boom`',
+                r''  # noqa: E501
+            )

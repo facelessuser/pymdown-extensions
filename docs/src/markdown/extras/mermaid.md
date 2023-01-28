@@ -107,30 +107,68 @@ seems to be what Mermaid does in their own [documents][mermaid].
             }
         ```
 
-!!! fail "Impractical"
-
-    === "Git"
-        Git diagrams are experimental and often don't render to a reasonable size. They overflow, but won't trigger
-        scrollbars. They are the only diagram that often renders too large for the element they are assigned to.
+    === "Git Graph"
 
         ```diagram
-        gitGraph:
-        options
-        {
-            "nodeSpacing": 150,
-            "nodeRadius": 10
-        }
-        end
-        commit
-        branch newbranch
-        checkout newbranch
-        commit
-        commit
-        checkout master
-        commit
-        commit
-        merge newbranch
+        gitGraph
+            commit
+            branch hotfix
+            checkout hotfix
+            commit
+            branch develop
+            checkout develop
+            commit id:"ash" tag:"abc"
+            branch featureB
+            checkout featureB
+            commit type:HIGHLIGHT
+            checkout main
+            checkout hotfix
+            commit type:NORMAL
+            checkout develop
+            commit type:REVERSE
+            checkout featureB
+            commit
+            checkout main
+            merge hotfix
+            checkout featureB
+            commit
+            checkout develop
+            branch featureA
+            commit
+            checkout develop
+            merge hotfix
+            checkout featureA
+            commit
+            checkout featureB
+            commit
+            checkout develop
+            merge featureA
+            branch release
+            checkout release
+            commit
+            checkout main
+            commit
+            checkout release
+            merge main
+            checkout develop
+            merge release
         ```
+
+    === "Journey"
+
+        ```diagram
+        journey
+            title My working day
+            section Go to work
+              Make tea: 5: Me
+              Go upstairs: 3: Me
+              Do work: 1: Me, Cat
+            section Go home
+              Go downstairs: 5: Me
+              Sit down: 5: Me
+        ```
+
+!!! failure "Impractical"
 
     === "Gantt"
 
@@ -149,23 +187,6 @@ seems to be what Mermaid does in their own [documents][mermaid].
             Active task               :active,  des2, 2014-01-09, 3d
             Future task               :         des3, after des2, 5d
             Future task2               :         des4, after des3, 5d
-        ```
-
-    === "Journey"
-
-        Journey diagrams suffer from the same issues as Gantt charts. They just do not scale well and are often hard to
-        read.
-
-        ```diagram
-        journey
-            title My working day
-            section Go to work
-              Make tea: 5: Me
-              Go upstairs: 3: Me
-              Do work: 1: Me, Cat
-            section Go home
-              Go downstairs: 5: Me
-              Sit down: 5: Me
         ```
 
     === "Pie"
@@ -199,7 +220,8 @@ window.mermaidConfig = {
   startOnLoad: false,
   theme: "default",
   flowchart: {
-    htmlLabels: false
+    htmlLabels: false,
+    useMaxWidth: false
   },
   er: {
     useMaxWidth: false
@@ -209,6 +231,12 @@ window.mermaidConfig = {
     noteFontWeight: "14px",
     actorFontSize: "14px",
     messageFontSize: "16px"
+  },
+  journey: {
+    useMaxWidth: false
+  },
+  gitGraph: {
+    useMaxWidth: false
   }
 }
 ```
@@ -291,7 +319,7 @@ and provide the configuration. We also have the custom loader that is runs when 
         end</code></pre>
 
     <!-- Include Mermaid script and user config -->
-    <script src="https://unpkg.com/mermaid@8.8.4/dist/mermaid.min.js"></script>
+    <script src="https://unpkg.com/mermaid@9.1.7/dist/mermaid.min.js"></script>
     <script>
     window.mermaidConfig = {
       startOnLoad: false,
@@ -463,7 +491,7 @@ markdown_extensions:
 
 extra_javascript:
   - optionalConfig.js
-  - https://unpkg.com/mermaid@8.8.4/dist/mermaid.min.js
+  - https://unpkg.com/mermaid@9.1.7/dist/mermaid.min.js
   - extra-loader.js
 ```
 
@@ -488,5 +516,3 @@ graph TD
     C -->|One| D[Result 1]
     C -->|Two| E[Result 2]
 ```
-
---8<-- "links.txt"

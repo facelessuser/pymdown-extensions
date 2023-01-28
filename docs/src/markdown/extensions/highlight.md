@@ -74,7 +74,7 @@ wish to apply.
 
     === "Config"
         ```py
-        extended_pygments_lang = [
+        extend_pygments_lang = [
             {"name": "php-inline", "lang": "php", "options": {"startinline": True}}
         ]
         ```
@@ -103,14 +103,14 @@ Line number styles are set with the option `linenums_style` as described in [Opt
 
 ## Options
 
-All options below control the Pygments' output. The two exceptions are `use_pygments` which disables Pygments,
+All options below control the Pygments' output. The three exceptions are `use_pygments` which disables Pygments,
 `css_class` which sets the name of the class assigned to the generated code blocks, and `code_attr_on_pre` which only
 apply when Pygments is disabled. Many of these options are demonstrated in the [SuperFences](./superfences.md) documentation.
 
 Option                    | Type   | Default               | Description
 ------------------------- | ------ | ----------------------| -----------
-`css_class`               | string | `#!py3 'highlight`    | Default class to apply to the wrapper element on code blocks. Other extensions can override this.
-`guess_lang`              | bool   | `#!py3 False`         | Guess what syntax language should be used if no language is specified. 
+`css_class`               | string | `#!py3 'highlight'`   | Default class to apply to the wrapper element on code blocks. Other extensions can override this.
+`guess_lang`              | bool   | `#!py3 False`         | Guess what syntax language should be used if no language is specified. `#!py3 True` for always, `#!py3 False` for never, `#!py3 'block'` for block code only, and `#!py3 'inline'` for inline code only.
 `pygments_style`          | string | `#!py3 'default'`     | Set the Pygments' style to use.  This really only has an effect when used with `noclasses`.
 `noclasses`               | bool   | `#!py3 False`         | This will cause the styles to directly be written to the tag's style attribute instead of requiring a stylesheet.
 `use_pygments`            | bool   | `#!py3 True`          | Controls whether Pygments (if available) is used to style the code, or if the code will just be escaped and prepped for a JavaScript syntax highlighter.
@@ -137,4 +137,4 @@ Option                    | Type   | Default               | Description
     still enables globally.
 
 !!! new "New 9.0"
-    `auto_tile`, `auto_title_map`, `line_spans`, `anchor_linenums`, and `line_anchors` were all added in `9.0`.
+    `auto_title`, `auto_title_map`, `line_spans`, `anchor_linenums`, and `line_anchors` were all added in `9.0`.

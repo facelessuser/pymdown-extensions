@@ -23,6 +23,10 @@ theme:
     - navigation.tabs
     - navigation.top
     - navigation.instant
+    - content.tabs.link
+    - search.share
+    - search.highlight
+    - search.suggest
   pymdownx:
     sponsor: "https://github.com/sponsors/facelessuser"
 
@@ -145,7 +149,7 @@ markdown_extensions:
       - docs/src/markdown/.snippets
       - LICENSE.md
       auto_append:
-      - refs.txt
+      - refs.md
       check_paths: true
   - pymdownx.keys:
       separator: "\uff0b"
@@ -162,16 +166,17 @@ extra:
       link: https://discord.gg/TWs8Tgr
 extra_css:
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css
-  - assets/pymdownx-extras/extra-2d3bedca0e.css
+  - assets/pymdownx-extras/extra-3531de4046.css
 extra_javascript:
-  - https://unpkg.com/mermaid@8.13.3/dist/mermaid.min.js
+  - https://unpkg.com/mermaid@9.1.7/dist/mermaid.min.js
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-  - assets/pymdownx-extras/extra-loader-9e2c67b9.js
+  - assets/pymdownx-extras/extra-loader-52693605.js
 
 plugins:
-  - search
-  - git-revision-date-localized
+  - search:
+  - git-revision-date-localized:
+      fallback_to_build_date: true
   - minify:
       minify_html: true

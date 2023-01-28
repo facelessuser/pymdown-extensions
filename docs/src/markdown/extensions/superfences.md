@@ -58,16 +58,17 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
     ````
 
 7. If using a fenced block as the first line of a list, you will have to leave the first line blank, but remember that
-  the list marker must be followed by a space.
+  the list marker must be immediately followed by at least one space. To avoid accidentally deleting the space and to
+  make your intentions clear, you might want to also add an explicit unicode space (`&#32;`) as shown here:
 
     ````
-    -<space>
+    - &#32;
         ```
         a fenced block
         ```
 
     Definition
-    :<space>
+    : &#32;
         ```
         a fenced block
         ```
@@ -97,7 +98,7 @@ not valid.
 
     === "HTML"
         ```html
-        <table class="extra-class highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div class="extra-class highlight"><pre><span></span><code><span cv></td><td class="code"><div class="extra-class highlight"><pre><span></span><code><span class="kn">import</span> <spanlass="kn">import</span> <span class="nn">hello_world</span>\n</code></pre></div>\n</td></tr></table>
+        <div class="extra-class highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div><pre><span></span><code><span cv></td><td class="code"><div><pre><span></span><code><span class="kn">import</span> <spanlass="kn">import</span> <span class="nn">hello_world</span>\n</code></pre></div>\n</td></tr></table></div>
         ```
 
     === "Markdown"
@@ -178,7 +179,8 @@ installed, or disabled, code blocks will be created using HTML5 style tags for a
 `#!html <pre class="highlight"><code class="language-mylanguage"></code></pre>`. If you disable `highlight_code`,
 specified languages will be ignored, and the content will be wrapped in a simple `pre` and `code` tags with no classes.
 
-Highlighting can be further controlled via the [`pymdownx.highlight`](./highlight.md) extension.
+Highlighting can be further controlled via the [`pymdownx.highlight`](./highlight.md) extension. You must include
+`pymdownx.highlight` in the extensions list in order to be able to configure it.
 
 When using fenced code blocks, you can specify a specific syntax language to highlight with by specifying the language
 name directly after the opening tokens (either ` ``` ` or `~~~`). Whether using Pygments or some other JavaScript
@@ -399,15 +401,17 @@ If using line numbers and the `linenums_style` set to `table` (the default), the
 element at the start of the table set to span both the line number column and the line column.
 
 ```html
+<div class="highlight">
 <table class="highlighttable">
 <tr>
-  <th colspan="2" class="filename"><div class="highlight"><span class="filename">My title</span></div></th>
+  <th colspan="2" class="filename"><span class="filename">My title</span></th>
 </tr>
 <tr>
   <td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td>
   <td class="code"><div class="highlight"><pre><code></code></pre></div></td>
 </tr>
 </table>
+</div>
 ```
 
 !!! example "Title"
@@ -852,8 +856,8 @@ extension_configs = {
     "pymdownx.superfences": {
         "custom_fences": [
             {
-                'name': 'diagram',
-                'class': 'diagram',
+                'name': 'mermaid',
+                'class': 'mermaid',
                 'format': pymdownx.superfences.fence_div_format
             }
         ]

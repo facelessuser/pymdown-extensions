@@ -18,7 +18,7 @@ import childProcess from "child_process"
 import gulpif from "gulp-if"
 import concat from "gulp-concat"
 import mqpacker from "css-mqpacker"
-import {terser} from "rollup-plugin-terser"
+import terser from '@rollup/plugin-terser'
 import {rollup} from "rollup"
 import {babel as rollupBabel, getBabelOutputPlugin} from "@rollup/plugin-babel"
 import stylelint from "gulp-stylelint"
@@ -26,7 +26,7 @@ import eslint from "gulp-eslint"
 import rev from "gulp-rev"
 import revReplace from "gulp-rev-replace"
 import vinylPaths from "vinyl-paths"
-import del from "del"
+import {deleteAsync} from "del"
 import touch from "gulp-touch-fd"
 import path from "path"
 import inlineSvg from "postcss-inline-svg"
@@ -94,40 +94,44 @@ const config = {
   mkdocsCmd: args.mkdocs
 }
 
-const rollupjs = (sources, options) => {
+const rollupjs = async(sources, options) => {
 
   const pluginModules = [rollupBabel({babelHelpers: "bundled"})]
-  if (options.minify) {
-    pluginModules.push(terser())
-  }
   if (options.revision) {
     pluginModules.push(outputManifest.default({fileName: "manifest-js.json", isMerge: options.merge}))
+  }
+  const outputPlugins = [getBabelOutputPlugin({allowAllFormats: true, presets: ["@babel/preset-env"]})]
+  if (options.minify) {
+    outputPlugins.push(terser())
   }
 
   let p = Promise.resolve()
   for (let i = 0; i < sources.length; i++) {
     const src = sources[i]
 
-    p = p.then(() => {
-      return rollup({
+    p = p.then(async() => {
+      return await rollup({
         input: src,
         plugins: pluginModules
-      }).then(bundle => {
-        bundle.write({
+      }).then(async bundle => {
+        await bundle.write({
           dir: options.dest,
           format: "iife",
+          sourcemapPathTransform: (relativeSourcePath, sourcemapPath) => {  // eslint-disable-line no-unused-vars
+            // Something changed and now we must force the mapping to be relative to the file.
+            return path.basename(relativeSourcePath)
+          },
+          sourcemapFile: src,
           entryFileNames: (options.revision) ? "[name]-[hash].js" : "[name].js",
           chunkFileNames: (options.revision) ? "[name]-[hash].js" : "[name].js",
           sourcemap: options.sourcemap,
-          plugins: [
-            getBabelOutputPlugin({allowAllFormats: true, presets: ["@babel/preset-env"]})
-          ]
+          plugins: outputPlugins
         })
       })
     })
   }
 
-  return p
+  return await p
 }
 
 // ------------------------------
@@ -166,7 +170,7 @@ gulp.task("scss:build:sass", () => {
   ].filter(t => t)
 
   gulp.src(`${config.folders.theme}/manifest-css.json`, {allowEmpty: true})
-    .pipe(vinylPaths(del))
+    .pipe(vinylPaths(deleteAsync))
 
   return gulp.src("./docs/src/scss/extra*.scss")
     .pipe(sourcemaps.init())
@@ -222,14 +226,14 @@ gulp.task("scss:watch", () => {
 
 gulp.task("scss:clean", () => {
   return gulp.src(config.files.css, {allowEmpty: true})
-    .pipe(vinylPaths(del))
+    .pipe(vinylPaths(deleteAsync))
 })
 
-gulp.task("js:build:rollup", () => {
+gulp.task("js:build:rollup", async() => {
   gulp.src(`${config.folders.theme}/manifest-js.json`, {allowEmpty: true})
-    .pipe(vinylPaths(del))
+    .pipe(vinylPaths(deleteAsync))
 
-  return rollupjs(
+  return await rollupjs(
     [
       `${config.folders.src}/js/material-extra-theme.js`,
       `${config.folders.src}/js/material-extra-3rdparty.js`,
@@ -281,7 +285,7 @@ gulp.task("js:watch", () => {
 
 gulp.task("js:clean", () => {
   return gulp.src(config.files.js, {allowEmpty: true})
-    .pipe(vinylPaths(del))
+    .pipe(vinylPaths(deleteAsync))
 })
 
 // ------------------------------
@@ -313,7 +317,7 @@ gulp.task("mkdocs:build", () => {
 
 gulp.task("mkdocs:clean", () => {
   return gulp.src(config.folders.mkdocs, {allowEmpty: true})
-    .pipe(vinylPaths(del))
+    .pipe(vinylPaths(deleteAsync))
 })
 
 // ------------------------------

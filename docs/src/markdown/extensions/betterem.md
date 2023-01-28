@@ -21,7 +21,7 @@ md = markdown.Markdown(extensions=['pymdownx.betterem'])
     Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this
     extension!
 
-## Differences
+## Rules
 
 !!! Note "Note"
     For all examples on this page, underscores are __smart__ and asterisks are not.
@@ -38,9 +38,9 @@ BetterEm requires that non-whitespace characters follow the opening token(s) and
     === "Markdown"
 
         ```
-        * Won't highlight *
+        This * won't emphasize *
 
-        *Will highlight*
+        This *will emphasize*
         ```
 
 BetterEm allows for a more natural nested token feel.
@@ -60,6 +60,19 @@ BetterEm allows for a more natural nested token feel.
         ***I'm bold and italic!** I am just italic.*
         ```
 
+BetterEm will try to prioritize the more sane option when nesting bold (`**`) between italic (`*`).
+
+!!! example "Prioritize Best Example"
+
+    === "Output"
+        *I'm italic. **I'm bold and italic.** I'm also just italic.*
+
+    === "Markdown"
+
+        ```
+        *I'm italic. **I'm bold and italic.** I'm also just italic.*
+        ```
+
 BetterEm will ensure smart mode doesn't terminate in scenarios where there are a large amount of consecutive tokens
 inside.
 
@@ -68,12 +81,8 @@ inside.
     === "Output"
         ___A lot of underscores____________is okay___
 
-        ___A lot of underscores____________is okay___
-
     === "Markdown"
         ```
-        ___A lot of underscores____________is okay___
-
         ___A lot of underscores____________is okay___
         ```
 
@@ -113,7 +122,7 @@ BetterEm will allow non-smart emphasis to contain "floating" like tokens.
 
          *All will not* be italic*
 
-         *All will not ** be italic*
+         *All will ** be italic*
 
          **All will * be bold**
 

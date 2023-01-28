@@ -96,6 +96,61 @@ of a new tab set with `!`.
             ```
         ```
 
+## Tab Select
+
+!!! new "New 9.7"
+
+If you'd like to force a tab to be selected, simply use `===+`, otherwise, the first tab will be selected by default.
+
+!!! example "Tab Select"
+
+    === "Output"
+        === "Not Me"
+            Markdown **content**.
+
+            Multiple paragraphs.
+
+        ===+ "Select Me"
+            More Markdown **content**.
+
+            - list item a
+            - list item b
+
+        === "Not Me Either"
+            Another Tab
+
+    === "Markdown"
+        ```
+        === "Not Me"
+            Markdown **content**.
+
+            Multiple paragraphs.
+
+        ===+ "Select Me"
+            More Markdown **content**.
+
+            - list item a
+            - list item b
+
+        === "Not Me Either"
+            Another Tab
+        ```
+
+## Tab IDs
+
+!!! new "New 9.0"
+
+By default, tabs generate IDs for each tab using the following template `__tabbed_<tab_set_number>_<tab_number>`. If it
+is desired to implement jumping to a specific tab with more intuitive IDs, it may be preferable to generate IDs from
+slugs. To do so, two [options](#options) are provided: `slugify` and `separator`.
+
+!!! tip
+    Jumping to tabs via IDs may require additional JavaScript to select the targeted tabs.
+
+If `slugify` is given a slug function (you can use any that [ship with Pymdownx Extensions](../extras/slugs.md)), the
+Tabbed extension will generate IDs from the tab titles just like headers. `separator` allows for the specifying of the
+word separator (`-` is the default).
+
 ## Styling with CSS
 
 In order to use tabbed blocks, some additional CSS is needed. You can check out the configuration below which will
@@ -246,6 +301,13 @@ const tabSync = () => {
   }
 }
 ```
+
+!!! tip "Special Considerations"
+    If you are combining this feature with something like ["tab select"](#tab-select), you may have to not link tabs on
+    initial page load to ensure the default is not overridden. The example above does not initiate tab linking on
+    initial page load, only registration of the event. Some may attempt to implement tab linkage such that selected tabs
+    are remembered across pages, special consideration would be required in such situations and is beyond the scope of
+    this simple example.
 
 ## Alternate Style
 
@@ -533,8 +595,8 @@ to some practical number.
 
 ## Options
 
-Option            | Type | Default       | Description
------------------ | ---- | ------------- | -----------
-`alternate_style` | bool | `#!py3 False` | Use the experimental, alternative style.
-
---8<-- "refs.txt"
+Option            | Type     | Default       | Description
+----------------- | -------- | ------------- | -----------
+`alternate_style` | bool     | `#!py3 False` | Use the experimental, alternative style.
+`slugify`         | function | `#!py3 None`  | A function to generate slugs from tab titles.
+`separator`       | string   | `#!py3 '-'`   | Default word separator when generating slugs.
