@@ -501,7 +501,7 @@ class HighlightTreeprocessor(Treeprocessor):
                 )
                 placeholder = self.md.htmlStash.store(
                     code.highlight(
-                        self.code_unescape(block[0].text),
+                        self.code_unescape(block[0].text).rstrip('\n'),
                         '',
                         self.config['css_class'],
                         code_block_count=self.ext.pygments_code_block
