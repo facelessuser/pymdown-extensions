@@ -111,20 +111,20 @@ class Tab(Block):
         else:
             return None
 
-    def on_add(self, parent):
+    def on_add(self, block):
         """Adjust where the content is added."""
 
         if self.tab_content is None:
             if self.alternate_style:
-                for d in parent.findall('div'):
+                for d in block.findall('div'):
                     c = d.attrib['class']
                     if c == 'tabbed-content' or c.startswith('tabbed-content '):
                         self.tab_content = list(d)[-1]
                         return self.tab_content
 
-            # This shouldn't happen, but if it does, just return the parent.
+            # This shouldn't happen, but if it does, just return the block wrapper element.
             # This can only happen if something else comes in and destroys are structure.
-            return parent  # pragma: no cover
+            return block  # pragma: no cover
         else:
             return self.tab_content
 

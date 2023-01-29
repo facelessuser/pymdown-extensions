@@ -342,10 +342,10 @@ class Block(metaclass=ABCMeta):
                 attrib[k] = v
         return el
 
-    def on_end(self, el):
+    def on_end(self, block):
         """Perform any action on end."""
 
-    def on_add(self, parent):
+    def on_add(self, block):
         """
         Adjust where the content is added and return the desired element.
 
@@ -353,4 +353,4 @@ class Block(metaclass=ABCMeta):
         This runs before processing every new block.
         """
 
-        return parent
+        return block

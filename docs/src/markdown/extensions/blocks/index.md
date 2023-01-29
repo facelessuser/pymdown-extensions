@@ -172,6 +172,251 @@ Content
 
 ## Blocks Plugin API
 
+### Block Structure
+
+Different blocks are created via `Block` plugins. The basic structure of a block is shown below:
+
+```
+/// name | argument(s)
+    options: per block options
+
+Markdown content.
+///
+```
+
+In addition, there are global options that are supplied through the block config.
+
+### Creating a Plugin
+
+To create a new Blocks plugin, you must drive a new class from the `Block` class.
+
+```py
+from pymdownx.blocks.block import Block
+
+class MyBlock(Block):
+    ...
+```
+
+You will need to set up related class attributes. At a minimum, `NAME` must be specified with a unique name, and you
+must define the `on_create` method which should return the element under which all the content will live.
+
+Once created, we can include the `pymdownx.blocks` extension and specify our plugin with any others that we want to
+have enabled. Below, we only specify our new block.
+
+```py
+import markdown
+import xml.etree.ElementTree as etree
+from pymdownx.blocks.block import Block
+
+class MyBlock(Block):
+    # Name used for the block
+    NAME = 'my-block'
+
+    def on_create(self, parent):
+        """Create the needed element and return it."""
+
+        return etree.SubElement(parent, 'div')
+
+MD = """
+/// my-block
+content
+///
+"""
+
+print(markdown.markdown(
+    MD,
+    extensions=['pymdownx.blocks'],
+    extension_configs={
+        'pymdownx.blocks': {
+            'blocks': [MyBlock],
+            'yaml_indent': True
+        }
+    }
+))
+```
+
+```html
+<div>
+<p>content</p>
+</div>
+```
+
+### Arguments
+
+Arguments are used to declare common block specific input for a particular block type. These are often, but not
+exclusively, used for things like titles. They are specified on the same line as the initial block deceleration.
+
+Blocks are not required to use arguments and are not included by default and must be declared in the class. Arguments
+can be `optional`, `required`, or a combination of both.
+
+The arguments are always parsed as a single string, but if a user declares that multiple arguments are accepted, the
+result will be broken by a specified delimiter, the default being a space.
+
+Arguments are assigned to the `args` class attribute and can be accessed anywhere after initialization:
+
+```python
+class MyBlock(Block):
+    # Name used for the block
+    NAME = 'my-block'
+    ARGUMENTS = {'required': 1, 'optional': 1, 'delimiter': ','}
+
+    def on_create(self, parent):
+        """Create the needed element and return it."""
+
+        attributes = {} if len(self.args) == 1 else {'special': 'special'}
+        return etree.SubElement(parent, self.args[0], attributes)
+```
+
+If needed, you can parse the arguments and validate that they meet certain criteria or alternatively parse it as a
+specific type. This can be done by specifying special argument parsers via `parsers`.
+
+`parsers` takes a list of functions. Each function should accept a string argument and then return the argument
+formatted in any way that is needed. If the string does not validate as the given type, it should raise an error.
+
+Parsers align with the arguments by position, so a parser in the n^th^ position in the list will align with the n^th^
+argument. If there are more arguments than parsers, then the last parser will be used for any additional arguments.
+
+In the following example `type_tag` is a function that ensures the string is a valid HTML tag name, while `type_boolean`
+ensures the input is either `true` or `false` and returns a boolean if it is.
+
+```py
+class MyBlock(Block):
+    # Name used for the block
+    NAME = 'my-block'
+    ARGUMENTS = {'required': 1, 'optional': 1, 'delimiter': ',', 'parsers': [type_tag, type_boolean]}
+
+    def on_create(self, parent):
+        """Create the needed element and return it."""
+
+        attributes = {} if len(self.args) == 1 and self.args[1] else {'special': 'special'}
+        return etree.SubElement(parent, self.args[0], attributes)
+```
+
+### Options
+
+Options is how a block specifies any per block features via an indented YAML block immediately after the block
+declaration. The YAML indented block is considered a part of the header and is great for options that don't make sense
+as part of the first line declaration. Here a user can specify any accepted option key words and provide parser function
+to validate and/or coerce the input to a suitable format. As options are YAML, parser functions can choose to accept any
+type that YAML can return. Once parsed, all options are assigned to the class attribute `options` and will be available
+after initialization.
+
+```py
+class MyBlock(Block):
+    # Name used for the block
+    NAME = 'my-block'
+    OPTIONS = {
+        'tag_name': ['default', type_tag]
+    }
+
+    def on_create(self, parent):
+        """Create the needed element and return it."""
+
+        attributes = {} if len(self.args) == 1 and self.args[1] else {'special': 'special'}
+        return etree.SubElement(parent, self.args[0], attributes)
+```
+
+### `on_register` Event
+
+```py
+@classmethod
+def on_register(
+    cls,
+    blocks_processor: BlocksProcessor,
+    md: Markdown,
+    config: dict[str, Any]
+) -> None:
+    ...
+```
+
+When a Block plugin is registered, `on_register` is executed.
+
+Parameter          | Description
+------------------ | -----------
+`blocks_processor` | The parent block processor of the meta plugin.
+`md`               | The Markdown object.
+`config`           | Global config for the meta plugin.
+
+This is useful if you need to register support extensions (Treeprocessor, Postprocessor, etc.) through the `md` object
+if required.
+
+### `on_init` Event
+
+```py
+def on_init(self) -> None:
+    ...
+```
+
+The `on_init` event is run ever time a new block is discovered. If the specified block name in Markdown matches the name
+of a registered block, that block class will be instantiated, triggering `on_init` to execute.
+
+This event is run right after the class does its main initialization, so `args`, `options`, `config`, and even a
+reference to the `Markdown` object as `md` are accessible via `self`.
+
+The can be a good way to perform setup based on on global or local options.
+
+### `on_parse` Event
+
+```py
+def on_parse(self) -> bool:
+    ...
+```
+
+Executed right after parsing occurs. Arguments and options are accessible via `self.args` and `self.options`. This gives
+the plugin a chance to perform additional validation or adjustments if required. If there are issues `#!py3 False`
+should be returned and will cause the block to fail.
+
+### `on_create` Event
+
+```py
+    def on_create(self, parent: Element) -> None:
+        ...
+```
+
+Called when a block is initially found and initialized. The `on_create` method should create the container for the block
+under the parent element.
+
+### `on_add` Event
+
+```py
+def on_add(self, block: Element) -> Element:
+    ...
+```
+
+When any calls occur to process new content, `on_add` is called. This gives the block a chance to return the element
+where the content is desired.
+
+Some initial containers may be more complex and have nested elements already created. `on_add` helps ensure that the
+content goes where it is actually desired in the container.
+
+### `on_markdown` Event
+
+```py
+def on_markdown(self) -> str:
+    """Check how element should be treated by the Markdown parser."""
+    ...
+```
+
+The `on_markdown` event is used to declare how the content of the block should be handled by markdown.
+
+Option   | Description
+-------- | -----------
+`block`  | Parse content as if contained within a block.
+`inline` | Parse content as if contained within an inline element.
+`raw`    | Preserve content as is.
+`auto`   | Depending on whether the wrapping parent is a block element, inline element, or something like a code element, Blocks will choose the best approach for the content. Decision is made based on the element returned by [`on_add`](#on_add-event).
+
+### `on_end` Event
+
+```py
+def on_end(self, block: Element) -> None:
+    ...
+```
+
+When a block is parsed to completion, the `on_end` event is executed. This allows a plugin to perform any post
+processing on the elements. You could save the data as raw text and then parse it special at the end or you could walk
+the HTML elements and move content around, add attributes, or whatever else is needed.
+
 !!! warning "Under Construction"
 
 ## Options

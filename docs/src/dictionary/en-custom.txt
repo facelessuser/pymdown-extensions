@@ -78,9 +78,11 @@ PHP
 PNG
 PNGs
 Pandoc
+Parsers
 PathConverter
 PathConverter's
 PlainHTML
+Postprocessor
 ProgressBar
 PyMdown
 PyPI
@@ -104,6 +106,7 @@ TODO
 Tasklist
 Toc
 Tox
+Treeprocessor
 Twemoji
 Twemoji's
 Twitter's
@@ -187,6 +190,7 @@ nl
 octocat
 online
 parser's
+parsers
 plugin
 plugins
 plusminus
