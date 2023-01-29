@@ -335,6 +335,28 @@ class TestNoPygments(util.MdCase):
             True
         )
 
+    def test_no_pygments_extraneous_new_lines(self):
+        """Test that extraneous new lines are not included."""
+
+        self.check_markdown(
+            r'''
+            Test
+
+                import test
+                test.test()
+
+
+            Test
+            ''',
+            r'''
+            <p>Test</p>
+            <pre class="highlight"><code>import test
+            test.test()</code></pre>
+            <p>Test</p>
+            ''',
+            True
+        )
+
 
 class TestNoPygmentsCustomLineClass(util.MdCase):
     """Test no Pygments with custom line number class."""
@@ -363,8 +385,7 @@ class TestNoPygmentsCustomLineClass(util.MdCase):
             r'''
             <p>Text</p>
             <pre class="highlight"><code>import test
-            test.test()
-            </code></pre>
+            test.test()</code></pre>
             <p>Text</p>
             ''',
             True

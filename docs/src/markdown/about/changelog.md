@@ -1,5 +1,10 @@
 # Changelog
 
+## 9.9.3
+
+- **FIX**: Highlight: Remove extraneous new lines from end of indented code blocks when using
+  `#!py use_pygments = False`.
+
 ## 9.9.2
 
 - **FIX**: Snippets syntax can break in XML comments as XML comments do not allow `--`. Relax Snippets syntax such that
