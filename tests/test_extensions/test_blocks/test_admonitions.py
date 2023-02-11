@@ -22,7 +22,6 @@ class TestBlocksAdmonitions(util.MdCase):
         self.check_markdown(
             R'''
             /// admonition
-
             Some *content*
             ///
             ''',
@@ -40,9 +39,9 @@ class TestBlocksAdmonitions(util.MdCase):
         self.check_markdown(
             R'''
             /// admonition
-            / type: note
-            / attributes:
-            /   class: other
+                type: note
+                attributes:
+                  class: other
 
             Some *content*
             ///
@@ -62,7 +61,6 @@ class TestBlocksAdmonitions(util.MdCase):
         self.check_markdown(
             R'''
             /// admonition | A Title
-
             Some *content*
             ///
             ''',
@@ -81,7 +79,6 @@ class TestBlocksAdmonitions(util.MdCase):
         self.check_markdown(
             R'''
             /// note
-
             Some *content*
             ///
             ''',
@@ -100,7 +97,6 @@ class TestBlocksAdmonitions(util.MdCase):
         self.check_markdown(
             R'''
             /// note | A Title
-
             Some *content*
             ///
             ''',
@@ -119,7 +115,6 @@ class TestBlocksAdmonitions(util.MdCase):
         self.check_markdown(
             R'''
             /// custom | A Title
-
             Some *content*
             ///
             ''',

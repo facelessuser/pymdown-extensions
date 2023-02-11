@@ -42,7 +42,7 @@ md = markdown.Markdown(extensions=['pymdownx.blocks'])
 
 ## Feedback Requested
 
-While any and all feedback is welcome, there are two undecided options that require feedback to help us finalize the
+While any and all feedback is welcome, there is one undecided options that require feedback to help us finalize the
 syntax for generic blocks. During the alpha/beta stage, we provide global options so users can try out the different
 options and provide their own feedback. Feedback will be taken into consideration as we move towards an official release
 candidate. It will be impossible to make all users happy, but we'd like to give users an opportunity to help shape
@@ -52,10 +52,6 @@ the direction.
    alpha/beta stage, we provide a global option called `colon_syntax` to switch from using `///` to `:::`. This will
    only be offered during the alpha/beta stage and is provided to allow users to try out give their opinion as to what
    direction Blocks should take in order to finalize the syntax.
-
-2. We are currently experimenting with how to define per-block YAML configuration. Currently we allow an extend header
-   that requires each line of the YAML config to prepend a `/` (or `:` if `colon_syntax` is set) or four spaces if
-   `yaml_indent` is set.
 
 ## Included Meta-Plugins
 
@@ -113,45 +109,31 @@ You can create a note with Blocks!
 ///
 ```
 
-Lastly, a given Blocks plugin may allow for arbitrary options that are per block specific. For instance, if we were
-using the HTML plugin, we may want to create a `#!html <div>` element but preserve the content as raw text, avoiding
-further Markdown processing. We could do this by specifying the special `markdown` option and giving it the value of
-`raw`. This is done using a YAML config as part of the header.
+Lastly, a given Blocks plugin may allow for additional options that don't make sense in the first line declaration.
+This may be because they are rarely used, more complicated, or just make the first line signature more confusing. These
+options are per block specific use a YAML syntax. They must be part of the header, which means no new line between the
+block declaration and the options or between individual options. The options also must be indented at least four spaces.
+
+For instance, if we were using the HTML plugin, we may want to create a `#!html <div>` element but also add some class
+attributes. We can do this by specifying the `attributes` option.
 
 ```
 /// html | div
-/ markdown: raw
+    attributes: {class: some-class}
 
 Here is some content
 I'd like to preserve.
 ///
 ```
 
-It should be noted that the YAML config requires that every line be prepended with `/`. The first line not containing
-this will be considered content.
+!!! note "Attributes"
+    It should be noted that all block meta-plugins support the `attributes` option and allow for specifying attributes
+    that will be attached to the parent element.
 
-During the alpha/beta period, if `yaml_indent` is enabled, `/` is not used to denote a YAML config, and instead an
-indentation of at least four spaces is required. The first empty line will terminate the config.
-
-```
-/// html | div
-    markdown: raw
-
-Here is some content
-I'd like to preserve.
-///
-```
-
-Lastly, it should be noted that all block meta-plugins support the `attributes` option and allow for specifying
-attributes that will be attached to the parent element.
-
-```
-/// note | Some title
-/ attributes: {class: 'some-class some-other-class'}
-
-Content
-///
-```
+While there is no hard rule stating that the first content content block must have a new line after the header, it
+should be noted that some special content blocks may require an empty line before them. Simple paragraphs should not
+require an empty new line, but the same cannot be said about other blocks. If in doubt, use an empty line before the
+first content block.
 
 ## Nesting
 
@@ -160,7 +142,7 @@ fenced code blocks work. The minimum requirement is that at least three tokens a
 
 ```
 //// admonition | Some title
-/ type: note
+    type: note
 
 /// details | Summary
 content

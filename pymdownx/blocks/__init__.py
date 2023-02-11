@@ -186,14 +186,7 @@ class BlocksProcessor(BlockProcessor):
         # Used during the alpha/beta stage
         self.start = RE_START if not config['colon_syntax'] else RE_COLON_START
         self.end = RE_END if not config['colon_syntax'] else RE_COLON_END
-        self.yaml_indent = config['yaml_indent']
-        if config['yaml_indent']:
-            yaml_line = RE_INDENT_YAML_LINE
-        elif config['colon_syntax']:
-            yaml_line = RE_COLON_YAML_LINE
-        else:
-            yaml_line = RE_YAML_LINE
-        self.yaml_line = yaml_line
+        self.yaml_line = RE_INDENT_YAML_LINE
 
     def register(self, b, config):
         """Register a block."""
@@ -232,6 +225,7 @@ class BlocksProcessor(BlockProcessor):
             name = m.group(2).lower()
             if name in self.blocks:
                 generic_block = self.blocks[name](len(m.group(1)), self.trackers[name], self.md, self.config[name])
+
                 # Remove first line
                 block = block[m.end():]
 
@@ -249,6 +243,7 @@ class BlocksProcessor(BlockProcessor):
                 # Cache the found Block and any remaining content
                 if status:
                     self.cached_block = (generic_block, the_rest)
+
                     # Any text before the block should get handled
                     if pre_text is not None:
                         self.parser.parseBlocks(parent, [pre_text])
@@ -323,10 +318,7 @@ class BlocksProcessor(BlockProcessor):
 
         m = self.yaml_line.match(block)
         if m is not None:
-            if self.yaml_indent:
-                config = textwrap.dedent(m.group(0))
-            else:
-                config = textwrap.dedent('\n'.join([l.lstrip(' ')[1:] for l in m.group(0).split('\n')]))
+            config = textwrap.dedent(m.group(0))
             blocks.insert(0, block[m.end():])
             if config.strip():
                 return get_frontmatter(config), '\n'.join(blocks)
@@ -471,8 +463,7 @@ class BlocksExtension(Extension):
         self.config = {
             'blocks': [[], "Blocks extensions to load, if not defined, the default ones will be loaded."],
             'block_configs': [{}, "Global configuration for a given block."],
-            'colon_syntax': [False, "Use colon syntax."],
-            'yaml_indent': [False, "YAML indented, per-block config."]
+            'colon_syntax': [False, "Use colon syntax."]
         }
 
         super().__init__(*args, **kwargs)

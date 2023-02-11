@@ -120,13 +120,11 @@ class Tab(Block):
                     c = d.attrib['class']
                     if c == 'tabbed-content' or c.startswith('tabbed-content '):
                         self.tab_content = list(d)[-1]
-                        return self.tab_content
+                        break
+            else:
+                self.tab_content = list(block)[-1]
 
-            # This shouldn't happen, but if it does, just return the block wrapper element.
-            # This can only happen if something else comes in and destroys are structure.
-            return block  # pragma: no cover
-        else:
-            return self.tab_content
+        return self.tab_content
 
     def on_create(self, parent):
         """Create the element."""

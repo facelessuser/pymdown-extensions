@@ -203,14 +203,14 @@ class TestBlockUndefinedOption(util.MdCase):
         self.check_markdown(
             R'''
             /// undefined
-            / option: whatever
+                option: whatever
 
             content
             ///
             ''',
             '''
             <p>/// undefined
-            / option: whatever</p>
+                option: whatever</p>
             <p>content
             ///</p>
             ''',
@@ -251,7 +251,7 @@ class TestMiscCases(util.MdCase):
         self.check_markdown(
             R'''
             /// misc
-            / test: misc
+                test: misc
             content
             ///
             ''',
@@ -269,7 +269,7 @@ class TestMiscCases(util.MdCase):
         self.check_markdown(
             R'''
             /// misc
-            / test: misc
+                test: misc
             ///
             ''',
             '''
@@ -284,7 +284,7 @@ class TestMiscCases(util.MdCase):
         self.check_markdown(
             R'''
             /// misc
-            / test: misc
+                test: misc
             ///
             ''',
             '''
@@ -299,7 +299,7 @@ class TestMiscCases(util.MdCase):
         self.check_markdown(
             R'''
             /// misc
-            / test: misc
+                test: misc
             ///
             more
             ''',
@@ -316,7 +316,6 @@ class TestMiscCases(util.MdCase):
         self.check_markdown(
             R'''
             /// misc
-
             ```python
             import foo
             ```
@@ -337,7 +336,6 @@ class TestMiscCases(util.MdCase):
         self.check_markdown(
             R'''
             /// miscinline
-
             ```python
             import foo
             ```
@@ -367,7 +365,6 @@ class TestAlternateSyntax(util.MdCase):
         self.check_markdown(
             R'''
             :::: html | div
-
             ::: html | div
 
             content
@@ -425,7 +422,7 @@ class TestMiscYAMLFenceCases(util.MdCase):
         self.check_markdown(
             R'''
             /// misc
-            / test: tag
+                test: tag
             content
             ///
             ''',
@@ -464,14 +461,15 @@ class TestMiscYAMLFenceCases(util.MdCase):
             R'''
             /// misc
 
-            / test: tag
+                test: tag
 
             content
             ///
             ''',
             '''
             <div test="whatever">
-            <p>/ test: tag</p>
+            <pre><code>test: tag
+            </code></pre>
             <p>content</p>
             </div>
             ''',
@@ -518,14 +516,14 @@ class TestBadArgOptionParsers(util.MdCase):
         self.check_markdown(
             R'''
             /// fail | tag
-            / test: 3tag
+                test: 3tag
 
             content
             ///
             ''',
             '''
             <p>/// fail | tag
-            / test: 3tag</p>
+                test: 3tag</p>
             <p>content
             ///</p>
             ''',
@@ -538,12 +536,12 @@ class TestBadArgOptionParsers(util.MdCase):
         self.check_markdown(
             R'''
             /// fail | tag
-            / content
+                content
             ///
             ''',
             '''
             <p>/// fail | tag
-            / content
+                content
             ///</p>
             ''',
             True
@@ -555,111 +553,13 @@ class TestBadArgOptionParsers(util.MdCase):
         self.check_markdown(
             R'''
             /// fail | tag
-            / :
+                :
             ///
             ''',
             '''
             <p>/// fail | tag
-            / :
+                :
             ///</p>
-            ''',
-            True
-        )
-
-
-class TestIndentationConfig(util.MdCase):
-    """Test indent YAML."""
-
-    extension = ['pymdownx.blocks']
-    extension_configs = {'pymdownx.blocks': {'yaml_indent': True}}
-
-    def test_yaml_indent(self):
-        """Test YAML indentation case."""
-
-        self.check_markdown(
-            R'''
-            //// admonition | Some title
-                type: note
-
-            /// note | another title
-            content
-            ///
-
-            Some content
-            ////
-            ''',
-            '''
-            <div class="admonition note">
-            <p class="admonition-title">Some title</p>
-            <div class="admonition note">
-            <p class="admonition-title">another title</p>
-            <p>content</p>
-            </div>
-            <p>Some content</p>
-            </div>
-            ''',
-            True
-        )
-
-    def test_yaml_indent_empty_line(self):
-        """Test YAML indentation case with empty new line."""
-
-        self.check_markdown(
-            R'''
-            //// admonition | Some title
-                type: note
-
-                type: warning
-
-            /// note | another title
-            content
-            ///
-
-            Some content
-            ////
-            ''',
-            '''
-            <div class="admonition note">
-            <p class="admonition-title">Some title</p>
-            <pre><code>type: warning
-            </code></pre>
-            <div class="admonition note">
-            <p class="admonition-title">another title</p>
-            <p>content</p>
-            </div>
-            <p>Some content</p>
-            </div>
-            ''',
-            True
-        )
-
-    def test_yaml_indent_non_config(self):
-        """Test YAML indentation with no config."""
-
-        self.check_markdown(
-            R'''
-            //// admonition | Some title
-
-                type: note
-
-            /// note | another title
-            content
-            ///
-
-            Some content
-            ////
-            ''',
-            '''
-            <div class="admonition">
-            <p class="admonition-title">Some title</p>
-            <pre><code>type: note
-            </code></pre>
-            <div class="admonition note">
-            <p class="admonition-title">another title</p>
-            <p>content</p>
-            </div>
-            <p>Some content</p>
-            </div>
             ''',
             True
         )
@@ -772,18 +672,15 @@ class TestBlocksTab(util.MdCase):
         self.check_markdown(
             R'''
             //// tab | Tab
-
             Some *content*
 
             /// tab | Tab A
-
             - item 1
 
             - item 2
             ///
 
             /// tab | Tab B
-
             - item A
 
             - item B
@@ -840,7 +737,6 @@ class TestBlocksTab(util.MdCase):
         self.check_markdown(
             r'''
             /// tab | Tab
-
             Some *content*
 
             And more `content`.
@@ -869,7 +765,6 @@ class TestBlocksTab(util.MdCase):
             - List
 
                 /// tab | Tab
-
                 - Paragraph
 
                     Paragraph
@@ -906,7 +801,6 @@ class TestBlocksTab(util.MdCase):
             - List
 
                 /// tab | Tab
-
                 - Paragraph
 
                     Paragraph
@@ -950,11 +844,9 @@ class TestBlocksTab(util.MdCase):
             - List
 
                 /// tab | Tab
-
                 - Paragraph
 
                     /// tab | Tab
-
                     1. Paragraph
 
                         Paragraph
@@ -1002,7 +894,6 @@ class TestBlocksTab(util.MdCase):
             - List
 
                 /// tab | Tab
-
                 Term
 
                 :   Definition
@@ -1080,7 +971,6 @@ class TestBlocksTab(util.MdCase):
         self.check_markdown(
             '''
             /// tab | Tab with loose lists
-
             - Parent 1
 
                 - Child 1
@@ -1113,7 +1003,6 @@ class TestBlocksTab(util.MdCase):
         self.check_markdown(
             '''
             /// tab | Tab with loose lists
-
             - Parent 1
 
                 - Child 1

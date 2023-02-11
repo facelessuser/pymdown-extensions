@@ -7,19 +7,18 @@ class TestBlocksHTML(util.MdCase):
 
     extension = ['pymdownx.blocks']
 
-    def test_required_title(self):
-        """Test that tab is not processed if title is omitted."""
+    def test_required_tag(self):
+        """Test that tab is not processed if tag is omitted."""
 
         self.check_markdown(
             R'''
             /// html
-
             Some *content*
             ///
             ''',
             r'''
-            <p>/// html</p>
-            <p>Some <em>content</em>
+            <p>/// html
+            Some <em>content</em>
             ///</p>
             ''',  # noqa: E501
             True
@@ -31,7 +30,6 @@ class TestBlocksHTML(util.MdCase):
         self.check_markdown(
             R'''
             /// html | div
-
             Some *content*
 
             And more `content`.
@@ -52,7 +50,6 @@ class TestBlocksHTML(util.MdCase):
         self.check_markdown(
             R'''
             /// html | span
-
             Will be parsed as inline *content*
 
             And more `content`.
@@ -72,7 +69,6 @@ class TestBlocksHTML(util.MdCase):
         self.check_markdown(
             R'''
             /// html | pre
-
             Some *content*
 
             And more `content`.
@@ -92,7 +88,7 @@ class TestBlocksHTML(util.MdCase):
         self.check_markdown(
             R'''
             /// html | div
-            / markdown: raw
+                markdown: raw
 
             Some *content*
 
@@ -113,7 +109,7 @@ class TestBlocksHTML(util.MdCase):
         self.check_markdown(
             R'''
             /// html | div
-            / markdown: span
+                markdown: span
 
             Will be parsed as inline *content*
 
@@ -134,7 +130,7 @@ class TestBlocksHTML(util.MdCase):
         self.check_markdown(
             R'''
             /// html | span
-            / markdown: block
+                markdown: block
 
             Some *content*
 
@@ -153,9 +149,7 @@ class TestBlocksHTML(util.MdCase):
         self.check_markdown(
             R'''
             /// html | div
-            / attributes:
-            /   class: some classes
-            /   id: an-id
+                attributes: {class: some classes, id: an-id}
 
             Some *content*
 

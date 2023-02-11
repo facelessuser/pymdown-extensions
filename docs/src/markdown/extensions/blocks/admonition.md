@@ -37,7 +37,7 @@ the header.
 
 ``` title="Example: Admonition"
 /// admonition | Some title
-/ type: note
+    type: note
 
 Some content
 ///
@@ -51,7 +51,7 @@ extensions:
 - pymdownx.blocks
 ---
 /// admonition | Some title
-/ type: note
+    type: note
 
 Some content
 ///
@@ -118,8 +118,8 @@ As with all block plugins, you can always add new classes IDs or other attribute
 
 ```
 /// note | Some title
-/ attributes:
-/   class: class-a class-b
+    attributes:
+      class: class-a class-b
 
 Some content
 ///

@@ -70,7 +70,7 @@ Tab B content
 ///
 
 /// tab | Tab C Title
-/ new: True
+    new: True
 
 Will be part of a separate, new tab group.
 ///
@@ -99,7 +99,7 @@ Tab 1 content
 ///
 
 /// tab | Tab 2 title
-/ select: True
+    select: True
 
 Tab 2 should be selected by default.
 ///
@@ -109,8 +109,8 @@ As with all block plugins, you can always add new classes IDs or other attribute
 
 ```
 /// tab | Some title
-/ attributes:
-/   class: class-a class-b
+    attributes:
+      class: class-a class-b
 
 Some content
 ///

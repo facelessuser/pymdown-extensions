@@ -22,12 +22,10 @@ class TestTabSlugs(util.MdCase):
     ### Here is some text
 
     /// tab | Here is some text
-
     content
     ///
 
     /// tab | Here is some text
-
     content
     ///
     """
@@ -74,12 +72,10 @@ class TestTabSlugsSep(util.MdCase):
     ### Here is some text
 
     /// tab | Here is some text
-
     content
     ///
 
     /// tab | Here is some text
-
     content
     ///
     """
@@ -126,18 +122,16 @@ class TestBlocksTab(util.MdCase):
         self.check_markdown(
             r'''
             /// tab | Tab 1
-
             content
             ///
 
             /// tab | Tab 2
-            / select: true
+                select: true
 
             content
             ///
 
             /// tab | Tab 3
-
             content
             ///
             ''',
@@ -165,18 +159,17 @@ class TestBlocksTab(util.MdCase):
         self.check_markdown(
             r'''
             /// tab | Tab 1
-
             content
             ///
 
             /// tab | Tab 2
-            / select: true
+                select: true
 
             content
             ///
 
             /// tab | Tab 3
-            / select: true
+                select: true
 
             content
             ///
@@ -223,14 +216,12 @@ class TestBlocksTab(util.MdCase):
         self.check_markdown(
             R'''
             /// tab | Tab
-
             Some *content*
 
             And more `content`.
             ///
 
             /// tab | Another Tab
-
             Some more content.
 
             ```
@@ -262,14 +253,12 @@ class TestBlocksTab(util.MdCase):
         self.check_markdown(
             R'''
             /// tab | **Tab**
-
             Some *content*
 
             And more `content`.
             ///
 
             /// tab | _Another Tab_
-
             Some more content.
 
             ```
@@ -301,14 +290,13 @@ class TestBlocksTab(util.MdCase):
         self.check_markdown(
             R'''
             /// tab | Tab
-
             Some *content*
 
             And more `content`.
             ///
 
             /// tab | Another Tab
-            / new: true
+                new: true
 
             Some more content.
 
