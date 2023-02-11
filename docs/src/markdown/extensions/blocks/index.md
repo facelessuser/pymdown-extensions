@@ -210,8 +210,7 @@ print(markdown.markdown(
     extensions=['pymdownx.blocks'],
     extension_configs={
         'pymdownx.blocks': {
-            'blocks': [MyBlock],
-            'yaml_indent': True
+            'blocks': [MyBlock]
         }
     }
 ))
