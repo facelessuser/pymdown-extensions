@@ -60,6 +60,7 @@ Blocks provides a number of "meta-plugins" out of the box.
 Plugin                          |  Description
 ------------------------------- | -----------
 [`admonition`](./admonition.md) | The admonition block allows for the creation of admonitions.
+[`define`](./definition.md)     | Allows for the creation of definition lists.
 [`details`](./details.md)       | The details block allows for the creation of collapsible details/summary constructs.
 [`tab`](./tab.md)               | Aims to replace the [Tabbed](../tabbed.md) extension and allows for the creation of tab containers.
 [`html`](./html.md)             | HTML is a block that allows for the arbitrary creation of HTML elements of various types.

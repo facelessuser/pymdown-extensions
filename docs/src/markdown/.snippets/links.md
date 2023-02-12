@@ -1,17 +1,18 @@
-[_admonition_block]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/blocks/admonition.py
+[_admonition_block]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/blocks/admonition.py "Source"
 [_arithmatex]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/arithmatex.py "Source"
 [_b64]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/b64.py "Source"
 [_betterem]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/betterem.py "Source"
 [_blocks]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/blocks/__init__.py "Source"
 [_caret]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/caret.py "Source"
 [_critic]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/critic.py "Source"
+[_definition_block]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/blocks/definition.py "Source"
 [_details]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/details.py "Source"
-[_details_block]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/blocks/details.py
+[_details_block]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/blocks/details.py "Source"
 [_emoji]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/emoji.py "Source"
 [_escapeall]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/escapeall.py "Source"
 [_extra]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/extra.py "Source"
 [_highlight]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/highlight.py "Source"
-[_html_block]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/blocks/html.py
+[_html_block]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/blocks/html.py "Source"
 [_inlinehilite]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/inlinehilite.py "Source"
 [_keys]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/keys.py "Source"
 [_magiclink]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/magiclink.py "Source"
@@ -24,7 +25,7 @@
 [_snippets]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/snippets.py "Source"
 [_striphtml]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/striphtml.py "Source"
 [_superfences]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/superfences.py "Source"
-[_tab_block]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/blocks/tab.py
+[_tab_block]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/blocks/tab.py "Source"
 [_tabbed]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/tabbed.py "Source"
 [_tasklist]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/tasklist.py "Source"
 [_tilde]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/tilde.py "Source"

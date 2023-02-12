@@ -9,6 +9,7 @@ from .admonition import Admonition
 from .tab import Tab
 from .details import Details
 from .html import HTML
+from .definition import Definition
 import yaml
 import textwrap
 
@@ -147,7 +148,8 @@ class BlocksProcessor(BlockProcessor):
                 Admonition,
                 Details,
                 HTML,
-                Tab
+                Tab,
+                Definition
             ]
 
         # The Block classes indexable by name

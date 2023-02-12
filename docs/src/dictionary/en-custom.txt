@@ -62,6 +62,7 @@ Limberg
 MERCHANTABILITY
 MagicLink
 MagicLink's
+Malus
 Mar
 MathJax
 Mathjax
@@ -82,6 +83,7 @@ Parsers
 PathConverter
 PathConverter's
 PlainHTML
+Pomaceous
 Postprocessor
 ProgressBar
 PyMdown
@@ -92,6 +94,7 @@ PyYaml's
 Pygments
 Pymdownx
 Reindent
+Rosaceae
 SCSS
 SVG
 SVGs
