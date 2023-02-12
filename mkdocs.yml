@@ -174,7 +174,7 @@ extra:
       link: https://discord.gg/TWs8Tgr
 extra_css:
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css
-  - assets/pymdownx-extras/extra-3531de4046.css
+  - assets/pymdownx-extras/extra-3336dc2a95.css
 extra_javascript:
   - https://unpkg.com/mermaid@9.1.7/dist/mermaid.min.js
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js

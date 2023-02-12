@@ -60,7 +60,7 @@ def type_ranged_integer(minimum=None, maximum=None):
     return functools.partial(_ranged_number, minimum=minimum, maximum=maximum, number_type=type_integer)
 
 
-def type_tag(value):
+def type_html_tag(value):
     """Ensure type tag or fail."""
 
     value = type_string(value).strip()
@@ -150,7 +150,7 @@ def type_string_delimiter(split, string_type=type_string):
     return functools.partial(_delimiter, split=split, string_type=string_type)
 
 
-def type_attribute_dict(value):
+def type_html_attribute_dict(value):
     """Attribute dictionary."""
 
     if not isinstance(value, dict):
@@ -161,7 +161,7 @@ def type_attribute_dict(value):
         k = type_html_attribute_name(k)
         if k.lower() == 'class':
             k = 'class'
-            v = type_classes(v)
+            v = type_html_classes(v)
         else:
             v = type_html_attribute_value(v)
         attributes[k] = v
@@ -169,7 +169,7 @@ def type_attribute_dict(value):
     return attributes
 
 
-def type_class(value):
+def type_html_class(value):
     """Ensure type class is valid and adjust HTML escaping as required."""
 
     value = type_html_attribute_value(value)
@@ -179,7 +179,7 @@ def type_class(value):
 
 
 # Ensure class(es) or fail
-type_classes = type_string_delimiter(' ', type_html_attribute_value)
+type_html_classes = type_string_delimiter(' ', type_html_attribute_value)
 
 
 class Block(metaclass=ABCMeta):
@@ -215,7 +215,7 @@ class Block(metaclass=ABCMeta):
         self.option_spec = copy.deepcopy(self.OPTIONS)
         if 'attributes' in self.option_spec:
             raise ValueError("'attributes' is a reserved option name and cannot be overriden")
-        self.option_spec['attributes'] = [{}, type_attribute_dict]
+        self.option_spec['attributes'] = [{}, type_html_attribute_dict]
 
         self.length = length
         self.tracker = tracker
@@ -336,7 +336,7 @@ class Block(metaclass=ABCMeta):
         for k, v in self.options['attributes'].items():
             if k == 'class':
                 if k in attrib:
-                    v = type_classes(attrib['class']) + v
+                    v = type_html_classes(attrib['class']) + v
                 attrib['class'] = ' '.join(v)
             else:
                 attrib[k] = v

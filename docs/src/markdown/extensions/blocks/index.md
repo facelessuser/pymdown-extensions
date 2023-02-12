@@ -67,8 +67,8 @@ Plugin                          |  Description
 
 ## Configuring Meta-Plugins
 
-By default, all meta-plugins are included, but you can add or specify different ones and configure them via the `blocks`
-and `block_configs` options.
+By default, all meta-plugins are included, but you can specify the plugins you desire to use and configure them via the
+`blocks` and `block_configs` options.
 
 ```py3
 import markdown
@@ -100,6 +100,12 @@ content
 ///
 ```
 
+!!! tip "Content and New Lines"
+    While there is no hard rule stating that the first content block must have a new line after the header, it should be
+    noted that some special content blocks may require an empty line before them, this may simply be due to how they are
+    implemented. Simple paragraphs should not require an empty new line before them, but we cannot make a blanket
+    statement about all blocks. If in doubt, use an empty line before the first content block.
+
 Some blocks may implement a special argument in the header for things such as, but not limited to, titles. These
 arguments can be optional or sometimes enforced as a requirement. This is up to the given Blocks plugin to decide.
 
@@ -130,11 +136,6 @@ I'd like to preserve.
     It should be noted that all block meta-plugins support the `attributes` option and allow for specifying attributes
     that will be attached to the parent element.
 
-While there is no hard rule stating that the first content content block must have a new line after the header, it
-should be noted that some special content blocks may require an empty line before them. Simple paragraphs should not
-require an empty new line, but the same cannot be said about other blocks. If in doubt, use an empty line before the
-first content block.
-
 ## Nesting
 
 Generic blocks can be nested as long as the block fence differs in number of leading tokens. This is similar to how
@@ -152,11 +153,20 @@ Content
 ////
 ```
 
+## Options
+
+Option                | Type       |  Default                           | Description
+--------------------- | ---------- | ---------------------------------- | -----------
+`blocks`              | \[Block\]  | [See here](#included-meta-plugins) | A list of block meta-plugins to register.
+`block_configs`       | dictionary | `#!py3 {}`                         | A dictionary used to specify global options for registered meta-plugins.
+`colon_syntax`        | bool       | `#!py3 False`                      | Use the colon syntax for block fences (`:::`) instead of the default (`///`). Only available during alpha/beta stage.
+
+
 ## Blocks Plugin API
 
 ### Block Structure
 
-Different blocks are created via `Block` plugins. The basic structure of a block is shown below:
+The various different block types are created via `Block` plugins. The basic structure of a block is shown below:
 
 ```
 /// name | argument(s)
@@ -166,11 +176,13 @@ Markdown content.
 ///
 ```
 
-In addition, there are global options that are supplied through the block config.
+In addition, there are sometimes global options for a specific block type are supplied through the `block_configs`
+plugin option. Such options would control features for the specific block type they are defined for and would affect all
+the blocks of that type globally.
 
 ### Creating a Plugin
 
-To create a new Blocks plugin, you must drive a new class from the `Block` class.
+To create a new Blocks plugin, you must derive a new class from the `Block` class.
 
 ```py
 from pymdownx.blocks.block import Block
@@ -180,7 +192,7 @@ class MyBlock(Block):
 ```
 
 You will need to set up related class attributes. At a minimum, `NAME` must be specified with a unique name, and you
-must define the `on_create` method which should return the element under which all the content will live.
+must define the `on_create` method which should return the element under which all the content in that block will live.
 
 Once created, we can include the `pymdownx.blocks` extension and specify our plugin with any others that we want to
 have enabled. Below, we only specify our new block.
@@ -216,11 +228,15 @@ print(markdown.markdown(
 ))
 ```
 
+<div class="result" markdown>
+
 ```html
 <div>
 <p>content</p>
 </div>
 ```
+
+</div>
 
 ### Arguments
 
@@ -233,54 +249,37 @@ can be `optional`, `required`, or a combination of both.
 The arguments are always parsed as a single string, but if a user declares that multiple arguments are accepted, the
 result will be broken by a specified delimiter, the default being a space.
 
-Arguments are assigned to the `args` class attribute and can be accessed anywhere after initialization:
+Arguments will be positionally assigned as a list to the instance attribute `self.args` and can be accessed anywhere
+after initialization.
 
 ```python
 class MyBlock(Block):
     # Name used for the block
     NAME = 'my-block'
     ARGUMENTS = {'required': 1, 'optional': 1, 'delimiter': ','}
-
-    def on_create(self, parent):
-        """Create the needed element and return it."""
-
-        attributes = {} if len(self.args) == 1 else {'special': 'special'}
-        return etree.SubElement(parent, self.args[0], attributes)
 ```
 
-If needed, you can parse the arguments and validate that they meet certain criteria or alternatively parse it as a
-specific type. This can be done by specifying special argument parsers via `parsers`.
-
-`parsers` takes a list of functions. Each function should accept a string argument and then return the argument
-formatted in any way that is needed. If the string does not validate as the given type, it should raise an error.
-
-Parsers align with the arguments by position, so a parser in the n^th^ position in the list will align with the n^th^
-argument. If there are more arguments than parsers, then the last parser will be used for any additional arguments.
-
-In the following example `type_tag` is a function that ensures the string is a valid HTML tag name, while `type_boolean`
-ensures the input is either `true` or `false` and returns a boolean if it is.
-
-```py
-class MyBlock(Block):
-    # Name used for the block
-    NAME = 'my-block'
-    ARGUMENTS = {'required': 1, 'optional': 1, 'delimiter': ',', 'parsers': [type_tag, type_boolean]}
-
-    def on_create(self, parent):
-        """Create the needed element and return it."""
-
-        attributes = {} if len(self.args) == 1 and self.args[1] else {'special': 'special'}
-        return etree.SubElement(parent, self.args[0], attributes)
-```
+!!! tip "Validating Arguments"
+    If you'd like to validate arguments, you can utilize the [`on_parse` event](#on_parse-event). It is also acceptable
+    manually parse arguments in the `on_parse` event as well. This may be useful if the arguments cannot be parsed with
+    a simple delimiter.
 
 ### Options
 
 Options is how a block specifies any per block features via an indented YAML block immediately after the block
 declaration. The YAML indented block is considered a part of the header and is great for options that don't make sense
-as part of the first line declaration. Here a user can specify any accepted option key words and provide parser function
-to validate and/or coerce the input to a suitable format. As options are YAML, parser functions can choose to accept any
-type that YAML can return. Once parsed, all options are assigned to the class attribute `options` and will be available
-after initialization.
+as part of the first line declaration.
+
+An option consists of a keyword to specify the option name, and then a list containing the default value and a validator
+callback. The callback function should take the input and validate the type and/or coerce the value to an appropriate
+value. If the input, for whatever reason, is deemed invalid, the callback function should raise an error.
+
+After processing, all options will be available as a dictionary via the instance attribute `self.options`. Options
+will be accessible via the keyword and will return the resolved value.
+
+!!! tip "Built-in validators"
+    A number of Built-in validators are provided. Check out [Built-in Validators](#built-in-validators) to learn more,
+    or feel free to write your own.
 
 ```py
 class MyBlock(Block):
@@ -289,12 +288,6 @@ class MyBlock(Block):
     OPTIONS = {
         'tag_name': ['default', type_tag]
     }
-
-    def on_create(self, parent):
-        """Create the needed element and return it."""
-
-        attributes = {} if len(self.args) == 1 and self.args[1] else {'special': 'special'}
-        return etree.SubElement(parent, self.args[0], attributes)
 ```
 
 ### `on_register` Event
@@ -398,12 +391,209 @@ When a block is parsed to completion, the `on_end` event is executed. This allow
 processing on the elements. You could save the data as raw text and then parse it special at the end or you could walk
 the HTML elements and move content around, add attributes, or whatever else is needed.
 
-!!! warning "Under Construction"
+### Built-in Validators
 
-## Options
+A number of validators are provided via for the purpose of validating [YAML option inputs](#options). If what you need
+is not present, feel free to write your own.
 
-Option                | Type       |  Default                           | Description
---------------------- | ---------- | ---------------------------------- | -----------
-`blocks`              | \[Block\]  | [See here](#included-meta-plugins) | A list of block meta-plugins to register.
-`block_configs`       | dictionary | `#!py3 {}`                         | A dictionary used to specify global options for registered meta-plugins.
-`colon_syntax`        | bool       | `#!py3 False`                      | Use the colon syntax for block fences (`:::`) instead of the default (`///`). Only available during alpha/beta stage.
+
+#### `type_number`
+
+Takes a YAML input value and verifies that it is a `float` or `int`.
+
+Returns the valid number (`float` or `int`) or raises a `ValueError`.
+
+```py
+class Block:
+    OPTIONS = {'keyword': [0.0, type_number]}
+```
+
+#### `type_integer`
+
+Takes a YAML input value and verifies that it is an `int`.
+
+Returns the valid `int` or raises a `ValueError`.
+
+```py
+class Block:
+    OPTIONS = {'keyword': [0, type_integer]}
+```
+
+#### `type_ranged_number`
+
+Takes a `minimum` and/or `maximum` and returns a type function that accepts an input and validates that it is a number
+(`float` or `int`) that is within the specified range. If `#!py None` is provided for either `minimum` or `maximum`,
+they will be unbounded.
+
+Returns the valid number (`float` or `int`) or raises a `ValueError`.
+
+```py
+class Block:
+    OPTIONS = {'keyword': [0.0, type_ranged_number(0.0, 100.0)]}
+```
+
+#### `type_ranged_integer`
+
+Takes a `minimum` and/or `maximum` and returns a type function that accepts an input and validates that it is an `int`
+that is within the specified range. If `#!py None` is provided for either `minimum` or `maximum`, they will be
+unbounded.
+
+Returns the valid `int` or raises a `ValueError`.
+
+```py
+class Block:
+    OPTIONS = {'keyword': [0, type_ranged_integer(0, 100)]}
+```
+
+#### `type_html_tag`
+
+Takes a YAML input and validates that it is a `str` and that the string is a valid HTML tag.
+
+Returns the valid `str` or raises a `ValueError`.
+
+```py
+class Block:
+    OPTIONS = {'keyword': ['div', type_html_tag]}
+```
+
+#### `type_boolean`
+
+Takes a YAML input and validates that it is a boolean value.
+
+Returns the valid boolean or raises a `ValueError`.
+
+```py
+class Block:
+    OPTIONS = {'keyword': [False, type_boolean]}
+```
+
+#### `type_ternary`
+
+Takes a YAML input and validates that it is a `bool` value or `#!py None`.
+
+Returns the valid `bool` or `#!py3 None` or raises a `ValueError`.
+
+```py
+class Block:
+    OPTIONS = {'keyword': [None, type_ternary]}
+```
+
+#### `type_string`
+
+Takes a YAML input and validates that it is a `str` value.
+
+Returns the valid `str` or raises a `ValueError`.
+
+```py
+class Block:
+    OPTIONS = {'keyword': ['default', type_string]}
+```
+
+#### `type_insensitive_string`
+
+Takes a YAML input and validates that it is a `str` value and normalizes it by lower casing it.
+
+Returns the valid, lowercase `str` or raises a `ValueError`.
+
+```py
+class Block:
+    OPTIONS = {'keyword': ['default', type_insensitive_string]}
+```
+
+#### `type_string`
+
+Takes a YAML input and validates that it is a `str` value.
+
+Returns the valid `str` or raises a `ValueError`.
+
+```py
+class Block:
+    OPTIONS = {'keyword': ['default', type_string]}
+```
+
+#### `type_string_in`
+
+Takes a list of acceptable string inputs and a string type callback and returns a type function that takes an input,
+runs it through the string type callback, and then validates that the `str` value is found in the acceptable string
+list.
+
+Returns the valid `str` or raises a `ValueError`.
+
+```py
+class Block:
+    OPTIONS = {'keyword': ['this', type_string_in(['this', 'that'], type_insensitive_string)]}
+```
+
+#### `type_string_delimiter`
+
+Takes a delimiter and string type callback and returns a function that takes an input, verifies that it is a `str`,
+splits it by the delimiter, and ensures that each part validates with the given string type callback.
+
+Returns a list of valid `str` values or raises a `ValueError`.
+
+```py
+class Block:
+    OPTIONS = {'keyword': ['default', type_string_delimiter(',' type_insensitive_string)]}
+```
+
+#### `type_html_attribute_name`
+
+Takes a YAML input value and verifies that it is a `str` and formats the name to be a valid HTML attribute.
+
+Returns a `str` that is a valid HTML attribute name or raises `ValueError`.
+
+```py
+class Block:
+    OPTIONS = {'keyword': ['default', type_html_attribute_name]}
+```
+
+#### `type_html_attribute_value`
+
+Takes a YAML input value and verifies that it is a `str` and formats the value to be a suitable, HTML attribute value by
+escaping any quotes with `&quot;`.
+
+Returns a `str` that is a valid HTML attribute value or raises `ValueError`.
+
+```py
+class Block:
+    OPTIONS = {'keyword': ['default', type_html_attribute_value]}
+```
+
+#### `type_html_attribute_dict`
+
+Takes a YAML input value and verifies that it is a `dict[str, str]` and formats the keywords to be valid HTML attribute
+names and formats the values to valid HTML attribute values.
+
+Returns a `dict[str, str]` that contains valid HTML attribute names and values or raises `ValueError`.
+
+!!! note
+    The provided dictionary input will be safely copied such that the default will not be modified.
+
+```py
+class Block:
+    OPTIONS = {'keyword': [{}, type_html_attribute_dict]}
+```
+
+#### `type_html_class`
+
+Essentially an alias for `type_html_attribute_value` that is intended to be used to validate `str` values as HTML
+classes.
+
+Returns a `str` that is a valid CSS class or raises `ValueError`.
+
+```py
+class Block:
+    OPTIONS = {'keyword': ['default', type_html_class]}
+```
+
+#### `type_html_classes`
+
+Takes a YAML input value and verifies that it is a `str` and treats it as a space delimited input. The input will
+be split by spaces and each part will be run through `type_html_class`.
+
+Returns a list of `str` that are valid CSS classes or raises `ValueError`.
+
+```py
+class Block:
+    OPTIONS = {'keyword': ['default', type_html_classes]}
+```

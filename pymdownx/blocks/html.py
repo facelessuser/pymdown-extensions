@@ -1,6 +1,6 @@
 """HTML."""
 import xml.etree.ElementTree as etree
-from .block import Block, type_string_in, type_tag
+from .block import Block, type_string_in, type_html_tag
 import re
 
 
@@ -25,7 +25,7 @@ class HTML(Block):
     NAME = 'html'
     TAG = re.compile('^[a-z][a-z0-9-]*$', re.I)
 
-    ARGUMENTS = {'required': 1, 'parsers': [type_tag]}
+    ARGUMENTS = {'required': 1}
     OPTIONS = {
         'markdown': ['auto', type_string_in(['auto', 'span', 'block', 'raw'])]
     }
@@ -35,6 +35,16 @@ class HTML(Block):
 
         self.markdown = None
         super().__init__(length, tracker, md, config)
+
+    def on_parse(self):
+        """Handle argument parsing."""
+
+        try:
+            type_html_tag(self.args[0])
+        except ValueError:
+            return False
+
+        return True
 
     def on_markdown(self):
         """Check if this is atomic."""

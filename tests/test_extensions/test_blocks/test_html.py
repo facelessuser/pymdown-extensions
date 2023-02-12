@@ -7,6 +7,23 @@ class TestBlocksHTML(util.MdCase):
 
     extension = ['pymdownx.blocks']
 
+    def test_bad_tag(self):
+        """Test bad HTML tag."""
+
+        self.check_markdown(
+            R'''
+            /// html | 3tag
+            Some *content*
+            ///
+            ''',
+            R'''
+            <p>/// html | 3tag
+            Some <em>content</em>
+            ///</p>
+            ''',  # noqa: E501
+            True
+        )
+
     def test_required_tag(self):
         """Test that tab is not processed if tag is omitted."""
 

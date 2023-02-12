@@ -1,6 +1,6 @@
 """Admonitions."""
 import xml.etree.ElementTree as etree
-from .block import Block, type_class
+from .block import Block, type_html_class
 import re
 
 RE_SEP = re.compile(r'[_-]+')
@@ -25,7 +25,7 @@ class Admonition(Block):
     NAME = 'admonition'
     ARGUMENTS = {'optional': 1}
     OPTIONS = {
-        'type': ['', type_class],
+        'type': ['', type_html_class],
     }
     CONFIG = {
         "types": ['note', 'attention', 'caution', 'danger', 'error', 'tip', 'hint', 'warning']

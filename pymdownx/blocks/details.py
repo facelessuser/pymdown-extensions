@@ -1,6 +1,6 @@
 """Details."""
 import xml.etree.ElementTree as etree
-from .block import Block, type_class, type_boolean
+from .block import Block, type_html_class, type_boolean
 import re
 
 RE_SEP = re.compile(r'[_-]+')
@@ -28,7 +28,7 @@ class Details(Block):
     ARGUMENTS = {'optional': 1}
     OPTIONS = {
         'open': [False, type_boolean],
-        'type': ['', type_class]
+        'type': ['', type_html_class]
     }
 
     CONFIG = {

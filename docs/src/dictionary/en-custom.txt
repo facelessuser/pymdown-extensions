@@ -197,6 +197,7 @@ plusminus
 polyfill
 polyfilled
 polyfills
+positionally
 pre
 prepend
 prepended

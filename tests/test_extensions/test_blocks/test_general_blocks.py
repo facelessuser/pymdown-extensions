@@ -54,12 +54,12 @@ class TestTypeFunctions(unittest.TestCase):
         with self.assertRaises(ValueError):
             block.type_ranged_integer(3, 8)(9)
 
-    def test_type_tag(self):
-        """Test `type_tag`."""
+    def test_type_html_tag(self):
+        """Test `type_html_tag`."""
 
-        self.assertEqual('div', block.type_tag('div'))
+        self.assertEqual('div', block.type_html_tag('div'))
         with self.assertRaises(ValueError):
-            block.type_tag('3bad')
+            block.type_html_tag('3bad')
 
     def test_type_boolean(self):
         """Test `type_boolean`."""
@@ -119,28 +119,28 @@ class TestTypeFunctions(unittest.TestCase):
         self.assertEqual(['this', 'that'], block.type_string_delimiter(';')('this; that'))
         self.assertEqual(['this', 'that'], block.type_string_delimiter(' ')('this  that'))
 
-    def test_type_attribute_dict(self):
-        """Test `type_attribute_dict`."""
+    def test_type_html_attribute_dict(self):
+        """Test `type_html_attribute_dict`."""
 
         self.assertEqual(
             {'test': "test", "class": ["one", "two", "three"]},
-            block.type_attribute_dict({'test': "test", "class": "one two three"})
+            block.type_html_attribute_dict({'test': "test", "class": "one two three"})
         )
 
         with self.assertRaises(ValueError):
-            block.type_attribute_dict(3)
+            block.type_html_attribute_dict(3)
 
-    def test_type_class(self):
-        """Test `type_class`."""
+    def test_type_html_class(self):
+        """Test `type_html_class`."""
 
-        self.assertEqual('this', block.type_class('this'))
+        self.assertEqual('this', block.type_html_class('this'))
         with self.assertRaises(ValueError):
-            block.type_class('this that')
+            block.type_html_class('this that')
 
-    def test_type_classes(self):
-        """Test `type_classes`."""
+    def test_type_html_classes(self):
+        """Test `type_html_classes`."""
 
-        self.assertEqual(['this', 'that'], block.type_classes('this that'))
+        self.assertEqual(['this', 'that'], block.type_html_classes('this that'))
 
 
 class TestGeneral(unittest.TestCase):
@@ -484,8 +484,8 @@ class TestBadArgOptionParsers(util.MdCase):
         """Test failure to satisfy parser."""
 
         NAME = 'fail'
-        ARGUMENTS = {'required': 1, 'parsers': [block.type_tag]}
-        OPTIONS = {'test': ['tag', block.type_tag]}
+        ARGUMENTS = {'required': 1, 'parsers': [block.type_html_tag]}
+        OPTIONS = {'test': ['tag', block.type_html_tag]}
 
         def on_create(self, parent):
             """Create."""
