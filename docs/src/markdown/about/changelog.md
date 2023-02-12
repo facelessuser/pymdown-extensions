@@ -1,5 +1,14 @@
 # Changelog
 
+## 9.10a3
+
+- **NEW**: General blocks now use an indented option block right after the header. `yaml_indent` option has been
+  removed.
+- **NEW**: Added new "Definition" block that allows the creation of definition lists.
+- **NEW**: Simplified argument configuration.
+- **NEW**: Some internal cleanup.
+- **NEW**: Documented current API.
+
 ## 9.10a2
 
 - **NEW**: General blocks no longer use YAML fences for per block options, but instead use a special token to denote the
