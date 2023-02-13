@@ -322,11 +322,13 @@ def on_init(self) -> None:
     ...
 ```
 
-The `on_init` event is run ever time a new block is discovered. If the specified block name in Markdown matches the name
-of a registered block, that block class will be instantiated, triggering `on_init` to execute.
+The `on_init` event is run every time a new block class is instantiated. This is usually where a specific block type
+would handle global options and initialize class variables that are needed. If the specified block name in Markdown
+matches the name of a registered block, that block class will be instantiated, triggering the `on_init` event to
+execute.
 
-This event is run right after the class does its main initialization, so `args`, `options`, `config`, and even a
-reference to the `Markdown` object as `md` are accessible via `self`.
+Only the global `config` is available at this time via `self.config`. The `Markdown` object is also available via
+`self.md`.
 
 The can be a good way to perform setup based on on global or local options.
 
@@ -337,9 +339,11 @@ def on_parse(self) -> bool:
     ...
 ```
 
-Executed right after parsing occurs. Arguments and options are accessible via `self.args` and `self.options`. This gives
-the plugin a chance to perform additional validation or adjustments if required. If there are issues `#!py3 False`
-should be returned and will cause the block to fail.
+Executed right after per block argument and option parsing occurs. Arguments and options are accessible via `self.args`
+and `self.options`. This gives the plugin a chance to perform additional validation or adjustments of the arguments and
+options. This also gives the opportunity to initialize class variables based on the per block arguments and options.
+
+If validation fails, `#!py3 False` should be returned and the block will not be parsed as a generic block.
 
 ### `on_create` Event
 
@@ -372,14 +376,15 @@ def on_markdown(self) -> str:
     ...
 ```
 
-The `on_markdown` event is used to declare how the content of the block should be handled by markdown.
+The `on_markdown` event is used to declare how the content of the block should be handled by the Markdown parser. A
+string with one of the following values _must_ be returned. 
 
-Option   | Description
--------- | -----------
-`block`  | Parse content as if contained within a block.
-`inline` | Parse content as if contained within an inline element.
-`raw`    | Preserve content as is.
-`auto`   | Depending on whether the wrapping parent is a block element, inline element, or something like a code element, Blocks will choose the best approach for the content. Decision is made based on the element returned by [`on_add`](#on_add-event).
+Result\ Value | Description
+------------- | -----------
+`block`       | Parsed block content will be handled by the Markdown parser as content under a block element.
+`inline`      | Parsed block content will be handled by the Markdown parser as content under an inline element.
+`raw`         | Parsed block content will be preserved as is. No additional Markdown parsing will be applied.
+`auto`        | Depending on whether the wrapping parent is a block element, inline element, or something like a code element, Blocks will choose the best approach for the content. Decision is made based on the element returned by the [`on_add` event](#on_add-event).
 
 ### `on_end` Event
 
