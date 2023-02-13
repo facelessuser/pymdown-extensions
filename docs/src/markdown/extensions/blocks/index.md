@@ -446,17 +446,6 @@ class Block:
     OPTIONS = {'keyword': [0, type_ranged_integer(0, 100)]}
 ```
 
-#### `type_html_tag`
-
-Takes a YAML input and validates that it is a `str` and that the string is a valid HTML tag.
-
-Returns the valid `str` or raises a `ValueError`.
-
-```py
-class Block:
-    OPTIONS = {'keyword': ['div', type_html_tag]}
-```
-
 #### `type_boolean`
 
 Takes a YAML input and validates that it is a boolean value.
@@ -501,17 +490,6 @@ class Block:
     OPTIONS = {'keyword': ['default', type_insensitive_string]}
 ```
 
-#### `type_string`
-
-Takes a YAML input and validates that it is a `str` value.
-
-Returns the valid `str` or raises a `ValueError`.
-
-```py
-class Block:
-    OPTIONS = {'keyword': ['default', type_string]}
-```
-
 #### `type_string_in`
 
 Takes a list of acceptable string inputs and a string type callback and returns a type function that takes an input,
@@ -535,6 +513,17 @@ Returns a list of valid `str` values or raises a `ValueError`.
 ```py
 class Block:
     OPTIONS = {'keyword': ['default', type_string_delimiter(',' type_insensitive_string)]}
+```
+
+#### `type_html_tag`
+
+Takes a YAML input and validates that it is a `str` and that the string is a valid HTML tag.
+
+Returns the valid `str` or raises a `ValueError`.
+
+```py
+class Block:
+    OPTIONS = {'keyword': ['div', type_html_tag]}
 ```
 
 #### `type_html_attribute_name`
