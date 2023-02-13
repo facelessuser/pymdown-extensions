@@ -325,7 +325,7 @@ def on_init(self) -> None:
 The `on_init` event is run every time a new block class is instantiated. This is usually where a specific block type
 would handle global options and initialize class variables that are needed. If the specified block name in Markdown
 matches the name of a registered block, that block class will be instantiated, triggering the `on_init` event to
-execute.
+execute. Each block in a document that is encountered generates its own, new instance.
 
 Only the global `config` is available at this time via `self.config`. The `Markdown` object is also available via
 `self.md`.
