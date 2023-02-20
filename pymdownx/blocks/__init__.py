@@ -5,13 +5,9 @@ from markdown import util as mutil
 from .. import util
 import xml.etree.ElementTree as etree
 import re
-from .admonition import Admonition
-from .tab import Tab
-from .details import Details
-from .html import HTML
-from .definition import Definition
 import yaml
 import textwrap
+import importlib
 
 # Fenced block placeholder for SuperFences
 FENCED_BLOCK_RE = re.compile(
@@ -144,19 +140,13 @@ class BlocksProcessor(BlockProcessor):
         blocks = config['blocks']
 
         if not blocks:
-            blocks = [
-                Admonition,
-                Details,
-                HTML,
-                Tab,
-                Definition
-            ]
+            blocks = []
 
         # The Block classes indexable by name
         self.blocks = {}
         self.config = {}
         for b in blocks:
-            self.register(b, config['block_configs'].get(b.NAME, {}))
+            self.register(b, config['block_configs'])
 
         self.empty_tags = set(['hr'])
         self.block_level_tags = set(md.block_level_elements.copy())
@@ -190,13 +180,25 @@ class BlocksProcessor(BlockProcessor):
         self.end = RE_END if not config['colon_syntax'] else RE_COLON_END
         self.yaml_line = RE_INDENT_YAML_LINE
 
+    def _import(self, plugin):
+        """Import the plugin."""
+
+        module_name, class_name = plugin.split(':', 1)
+        module = importlib.import_module(module_name)
+        return getattr(module, class_name)
+
     def register(self, b, config):
         """Register a block."""
+
+        if isinstance(b, str):
+            b = self._import(b)
+
+        c = config.get(b.NAME, {})
 
         if b.NAME in self.blocks:
             raise ValueError('The block name {} is already registered!'.format(b.NAME))
         self.blocks[b.NAME] = b
-        self.config[b.NAME] = self.set_configs(b.CONFIG, config)
+        self.config[b.NAME] = self.set_configs(b.CONFIG, c)
         b.on_register(self, self.md, self.config.get(b.NAME, {}))
 
     def set_configs(self, default, config):
