@@ -1,4 +1,4 @@
-"""Collapsable code."""
+"""Collapsible code."""
 import xml.etree.ElementTree as etree
 from markdown import util as mutil
 import re

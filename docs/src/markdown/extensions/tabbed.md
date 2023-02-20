@@ -4,8 +4,9 @@
 
 ## Overview
 
-!!! new "New 7.0"
-    Tabbed has been newly added in 7.0.
+/// new | New 7.0
+Tabbed has been newly added in 7.0.
+///
 
 Tabbed provides a syntax to easily add tabbed Markdown content. The Tabbed extension can be included in Python Markdown
 by using the following:
@@ -19,133 +20,122 @@ md = markdown.Markdown(extensions=['pymdownx.tabbed'])
 
 Tabs start with `===` to signify a tab followed by a quoted title. Consecutive tabs are grouped into a tab set.
 
-!!! example "Example Tabs"
+```text title="Example Tabs"
+=== "Tab 1"
+    Markdown **content**.
 
-    === "Output"
-        === "Tab 1"
-            Markdown **content**.
+    Multiple paragraphs.
 
-            Multiple paragraphs.
+=== "Tab 2"
+    More Markdown **content**.
 
-        === "Tab 2"
-            More Markdown **content**.
+    - list item a
+    - list item b
+```
 
-            - list item a
-            - list item b
+/// html | div
+    attributes: {class: result}
 
-    === "Markdown"
-        ```
-        === "Tab 1"
-            Markdown **content**.
+=== "Tab 1"
+    Markdown **content**.
 
-            Multiple paragraphs.
+    Multiple paragraphs.
 
-        === "Tab 2"
-            More Markdown **content**.
+=== "Tab 2"
+    More Markdown **content**.
 
-            - list item a
-            - list item b
-        ```
+    - list item a
+    - list item b
+///
 
 In the rare case that you want to follow two separate tab sets right after each other, you can explicitly mark the start
 of a new tab set with `!`.
 
+````text title="Example Tab Breaks"
+=== "Tab 1"
+    Markdown **content**.
 
-!!! example "Example Tab Breaks"
+    Multiple paragraphs.
 
-    === "Output"
-        === "Tab 1"
-            Markdown **content**.
+=== "Tab 2"
+    More Markdown **content**.
 
-            Multiple paragraphs.
+    - list item a
+    - list item b
 
-        === "Tab 2"
-            More Markdown **content**.
+===! "Tab A"
+    Different tab set.
 
-            - list item a
-            - list item b
+=== "Tab B"
+    ```
+    More content.
+    ```
+````
 
-        ===! "Tab A"
-            Different tab set.
+/// html | div
+    attributes: {class: result}
 
-        === "Tab B"
-            ```
-            More content.
-            ```
+=== "Tab 1"
+    Markdown **content**.
 
-    === "Markdown"
+    Multiple paragraphs.
 
-        ```
-        === "Tab 1"
-            Markdown **content**.
+=== "Tab 2"
+    More Markdown **content**.
 
-            Multiple paragraphs.
+    - list item a
+    - list item b
 
-        === "Tab 2"
-            More Markdown **content**.
+===! "Tab A"
+    Different tab set.
 
-            - list item a
-            - list item b
-
-        ===! "Tab A"
-            Different tab set.
-
-        === "Tab B"
-            ```
-            More content.
-            ```
-        ```
+=== "Tab B"
+    ```
+    More content.
+    ```
+///
 
 ## Tab Select
 
-!!! new "New 9.7"
+/// new | New 9.7
+///
 
 If you'd like to force a tab to be selected, simply use `===+`, otherwise, the first tab will be selected by default.
 
-!!! example "Tab Select"
+```text
+=== "Not Me"
+    Markdown **content**.
 
-    === "Output"
-        === "Not Me"
-            Markdown **content**.
+    Multiple paragraphs.
 
-            Multiple paragraphs.
+===+ "Select Me"
+    More Markdown **content**.
 
-        ===+ "Select Me"
-            More Markdown **content**.
+    - list item a
+    - list item b
 
-            - list item a
-            - list item b
+=== "Not Me Either"
+    Another Tab
+```
 
-        === "Not Me Either"
-            Another Tab
-
-    === "Markdown"
-        ```
-        === "Not Me"
-            Markdown **content**.
-
-            Multiple paragraphs.
-
-        ===+ "Select Me"
-            More Markdown **content**.
-
-            - list item a
-            - list item b
-
-        === "Not Me Either"
-            Another Tab
-        ```
+/// note
+If you are using JavaScript to track selected tabs across pages, or some other tab related feature that adjusts selected
+tabs, it may interfere with the default selected tab. This is not an indication that there is a bug, but an indication
+of incompatible features.
+///
 
 ## Tab IDs
 
-!!! new "New 9.0"
+/// new | New 9.0
+///
 
 By default, tabs generate IDs for each tab using the following template `__tabbed_<tab_set_number>_<tab_number>`. If it
 is desired to implement jumping to a specific tab with more intuitive IDs, it may be preferable to generate IDs from
 slugs. To do so, two [options](#options) are provided: `slugify` and `separator`.
 
-!!! tip
-    Jumping to tabs via IDs may require additional JavaScript to select the targeted tabs.
+/// tip
+Jumping to tabs via IDs may require additional JavaScript to select the targeted tabs.
+///
 
 If `slugify` is given a slug function (you can use any that [ship with Pymdownx Extensions](../extras/slugs.md)), the
 Tabbed extension will generate IDs from the tab titles just like headers. `separator` allows for the specifying of the
@@ -163,101 +153,104 @@ specific tab set will use the name `__tabbed_<tab_set_number>`. Particularly, a 
 from explicitly using a conflicting ID. Auto-generated slugs shouldn't conflict though.
 
 
-!!! settings "Tabbed Code Setup"
-    This is a very basic setup. Tabs can be styled in different ways, but this shows how to get it functionally working.
-    Here we show what it visually looks like, what the generated HTML looks like, and what the CSS looks like.
+/// settings | Tabbed Code Setup
+This is a very basic setup. Tabs can be styled in different ways, but this shows how to get it functionally working.
+Here we show what it visually looks like, what the generated HTML looks like, and what the CSS looks like.
 
-    === "Preview"
-        ![Tabbed Style](../images/tabbed-default.png)
+=== "Preview"
+    ![Tabbed Style](../images/tabbed-default.png)
 
-    === "HTML"
-        ```html
-        <div class="tabbed-set" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab with a really long title 1</label><div class="tabbed-content">
-        <p>Lorem ipsum ullamco ea aute do sint cupidatat elit nostrud exercitation dolore culpa aliquip nisi commodo nisi qui
-        magna non laborum proident id voluptate in cupidatat duis.</p>
-        </div>
-        <input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Tab with a really long title 2</label><div class="tabbed-content">
-        <p>Lorem ipsum ullamco ea aute do sint cupidatat elit nostrud exercitation dolore culpa aliquip nisi commodo nisi qui
-        magna non laborum proident id voluptate in cupidatat duis.</p>
-        </div>
-        <input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">Tab with a really long title 3</label><div class="tabbed-content">
-        <p>Lorem ipsum ullamco ea aute do sint cupidatat elit nostrud exercitation dolore culpa aliquip nisi commodo nisi qui
-        magna non laborum proident id voluptate in cupidatat duis.</p>
-        </div>
-        </div>
-        ```
+=== "HTML"
+    ```html
+    <div class="tabbed-set" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab with a really long title 1</label><div class="tabbed-content">
+    <p>Lorem ipsum ullamco ea aute do sint cupidatat elit nostrud exercitation dolore culpa aliquip nisi commodo nisi qui
+    magna non laborum proident id voluptate in cupidatat duis.</p>
+    </div>
+    <input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><label for="__tabbed_1_2">Tab with a really long title 2</label><div class="tabbed-content">
+    <p>Lorem ipsum ullamco ea aute do sint cupidatat elit nostrud exercitation dolore culpa aliquip nisi commodo nisi qui
+    magna non laborum proident id voluptate in cupidatat duis.</p>
+    </div>
+    <input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><label for="__tabbed_1_3">Tab with a really long title 3</label><div class="tabbed-content">
+    <p>Lorem ipsum ullamco ea aute do sint cupidatat elit nostrud exercitation dolore culpa aliquip nisi commodo nisi qui
+    magna non laborum proident id voluptate in cupidatat duis.</p>
+    </div>
+    </div>
+    ```
 
-    === "CSS"
-        ```{.css .md-max-height}
-        /* General environment setup */
-        html {
-          background-color: black;
-          height: 100%;
-        }
-        body {
-          font-size: 120%;
-          width: 100%;
-          padding: 1em 2em;
-          margin: 0 auto;
-          background-color: white;
-          height: 100%;
-        }
+=== "CSS"
+    //// collapse-code
+    ```css
+    /* General environment setup */
+    html {
+      background-color: black;
+      height: 100%;
+    }
+    body {
+      font-size: 120%;
+      width: 100%;
+      padding: 1em 2em;
+      margin: 0 auto;
+      background-color: white;
+      height: 100%;
+    }
 
-        /* Tab style starts here */
-        .tabbed-set {
-          position: relative;
-          display: flex;
-          flex-wrap: wrap;
-          margin: 1em 0;
-          border-radius: 0.1rem;
-        }
+    /* Tab style starts here */
+    .tabbed-set {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      margin: 1em 0;
+      border-radius: 0.1rem;
+    }
 
-        .tabbed-set > input {
-          display: none;
-        }
+    .tabbed-set > input {
+      display: none;
+    }
 
-        .tabbed-set label {
-          width: auto;
-          padding: 0.9375em 1.25em 0.78125em;
-          font-weight: 700;
-          font-size: 0.84em;
-          white-space: nowrap;
-          border-bottom: 0.15rem solid transparent;
-          border-top-left-radius: 0.1rem;
-          border-top-right-radius: 0.1rem;
-          cursor: pointer;
-          transition: background-color 250ms, color 250ms;
-        }
+    .tabbed-set label {
+      width: auto;
+      padding: 0.9375em 1.25em 0.78125em;
+      font-weight: 700;
+      font-size: 0.84em;
+      white-space: nowrap;
+      border-bottom: 0.15rem solid transparent;
+      border-top-left-radius: 0.1rem;
+      border-top-right-radius: 0.1rem;
+      cursor: pointer;
+      transition: background-color 250ms, color 250ms;
+    }
 
-        .tabbed-set .tabbed-content {
-          width: 100%;
-          display: none;
-          box-shadow: 0 -.05rem #ddd;
-        }
+    .tabbed-set .tabbed-content {
+      width: 100%;
+      display: none;
+      box-shadow: 0 -.05rem #ddd;
+    }
 
-        .tabbed-set input {
-          position: absolute;
-          opacity: 0;
-        }
+    .tabbed-set input {
+      position: absolute;
+      opacity: 0;
+    }
 
-        .tabbed-set input:checked:nth-child(n+1) + label {
-          color: red;
-          border-color: red;
-        }
+    .tabbed-set input:checked:nth-child(n+1) + label {
+      color: red;
+      border-color: red;
+    }
 
-        @media screen {
-          .tabbed-set input:nth-child(n+1):checked + label + .tabbed-content {
-            order: 99;
-            display: block;
-          }
-        }
+    @media screen {
+      .tabbed-set input:nth-child(n+1):checked + label + .tabbed-content {
+        order: 99;
+        display: block;
+      }
+    }
 
-        @media print {
-          .tabbed-content {
-            display: contents;
-          }
-        }
-        ```
+    @media print {
+      .tabbed-content {
+        display: contents;
+      }
+    }
+    ```
+    ////
+///
 
 ## Linked Tabs
 
@@ -302,18 +295,21 @@ const tabSync = () => {
 }
 ```
 
-!!! tip "Special Considerations"
-    If you are combining this feature with something like ["tab select"](#tab-select), you may have to not link tabs on
-    initial page load to ensure the default is not overridden. The example above does not initiate tab linking on
-    initial page load, only registration of the event. Some may attempt to implement tab linkage such that selected tabs
-    are remembered across pages, special consideration would be required in such situations and is beyond the scope of
-    this simple example.
+/// tip | Special Considerations
+If you are combining this feature with something like ["tab select"](#tab-select), you may have to not link tabs on
+initial page load to ensure the default is not overridden. The example above does not initiate tab linking on
+initial page load, only registration of the event. Some may attempt to implement tab linkage such that selected tabs
+are remembered across pages, special consideration would be required in such situations and is beyond the scope of
+this simple example.
+///
 
 ## Alternate Style
 
-!!! new "New 9.0"
+/// new | New 9.0
+///
 
-!!! warning "Experimental Feature"
+/// warning | Experimental Feature
+///
 
 The original idea behind the Tabbed extension was to provide a tabbed interface in Markdown that could be driven purely
 by CSS. If JavaScript was disabled or unavailable, tab functionality would remain.
@@ -347,251 +343,256 @@ As for the second point, this also seems acceptable as most pages will usually h
 ever used. Pages can become quite cluttered when using too many tabs, and it seems reasonable that most would limit them
 to some practical number.
 
-!!! settings "Alternate Tabbed Code Setup"
-    The example below styles the tabs, adds indicators that work as buttons to navigate to the next tab when the there
-    are overflowed tabs, and scrolls tabs into view smoothly.
+/// settings | Alternate Tabbed Code Setup
+The example below styles the tabs, adds indicators that work as buttons to navigate to the next tab when the there
+are overflowed tabs, and scrolls tabs into view smoothly.
 
-    === "Preview"
-        ![Tabbed Style Alternate](../images/tabbed-alternate.png)
+=== "Preview"
+    ![Tabbed Style Alternate](../images/tabbed-alternate.png)
 
-    === "HTML"
-        ```html
-        <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab with a really long title 1</label><label for="__tabbed_1_2">Tab with a really long title 2</label><label for="__tabbed_1_3">Tab with a really long title 3</label></div>
-        <div class="tabbed-content">
-        <div class="tabbed-block">
-        <p>Lorem ipsum ullamco ea aute do sint cupidatat elit nostrud exercitation dolore culpa aliquip nisi commodo nisi qui
-        magna non laborum proident id voluptate in cupidatat duis.</p>
-        </div>
-        <div class="tabbed-block">
-        <p>Lorem ipsum ullamco ea aute do sint cupidatat elit nostrud exercitation dolore culpa aliquip nisi commodo nisi qui
-        magna non laborum proident id voluptate in cupidatat duis.</p>
-        </div>
-        <div class="tabbed-block">
-        <p>Lorem ipsum ullamco ea aute do sint cupidatat elit nostrud exercitation dolore culpa aliquip nisi commodo nisi qui
-        magna non laborum proident id voluptate in cupidatat duis.</p>
-        </div>
-        </div>
-        </div>
-        ```
+=== "HTML"
+    ```html
+    <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab with a really long title 1</label><label for="__tabbed_1_2">Tab with a really long title 2</label><label for="__tabbed_1_3">Tab with a really long title 3</label></div>
+    <div class="tabbed-content">
+    <div class="tabbed-block">
+    <p>Lorem ipsum ullamco ea aute do sint cupidatat elit nostrud exercitation dolore culpa aliquip nisi commodo nisi qui
+    magna non laborum proident id voluptate in cupidatat duis.</p>
+    </div>
+    <div class="tabbed-block">
+    <p>Lorem ipsum ullamco ea aute do sint cupidatat elit nostrud exercitation dolore culpa aliquip nisi commodo nisi qui
+    magna non laborum proident id voluptate in cupidatat duis.</p>
+    </div>
+    <div class="tabbed-block">
+    <p>Lorem ipsum ullamco ea aute do sint cupidatat elit nostrud exercitation dolore culpa aliquip nisi commodo nisi qui
+    magna non laborum proident id voluptate in cupidatat duis.</p>
+    </div>
+    </div>
+    </div>
+    ```
 
-    === "CSS"
-        ```{.css .md-max-height}
-        /* General environment setup */
-        html {
-          background-color: black;
-          height: 100%;
-        }
-        body {
-          font-size: 120%;
-          width: 20em;
-          padding: 1em 2em;
-          margin: 0 auto;
-          background-color: white;
-          height: 100%;
+=== "CSS"
+    //// collapse-code
+    ```css
+    /* General environment setup */
+    html {
+      background-color: black;
+      height: 100%;
+    }
+    body {
+      font-size: 120%;
+      width: 20em;
+      padding: 1em 2em;
+      margin: 0 auto;
+      background-color: white;
+      height: 100%;
+    }
+
+    /* Tab style starts here */
+    .tabbed-alternate {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      margin: 1em 0;
+      border-radius: 0.1rem;
+    }
+
+    .tabbed-alternate > input {
+      display: none;
+    }
+
+    .tabbed-labels {
+      display: flex;
+      width: 100%;
+      overflow: auto;
+      box-shadow: 0 -0.1rem #ddd inset;
+      scrollbar-width: none;
+    }
+    .tabbed-labels::-webkit-scrollbar {
+      display: none;
+    }
+    .tabbed-labels > label {
+      width: auto;
+      padding: 0.9375em 1.25em 0.78125em;
+      font-weight: 700;
+      font-size: 0.84em;
+      white-space: nowrap;
+      border-bottom: 0.1rem solid transparent;
+      scroll-snap-align: start;
+      border-top-left-radius: 0.1rem;
+      border-top-right-radius: 0.1rem;
+      cursor: pointer;
+      transition: background-color 250ms, color 250ms;
+    }
+    .tabbed-labels > label:hover {
+      color: red;
+    }
+
+    .tabbed-labels.tabbed-scroll-left::before {
+      display: inline-block;
+      font-size: 0.9em;
+      position: absolute;
+      top: 0.75em;
+      left: 0;
+      padding-right: 0.64em;
+      color: gray;
+      background: linear-gradient(to right, rgb(255, 255, 255) 75%, rgba(255, 255, 255, 0));
+      content: "\25C0";
+      cursor: pointer;
+    }
+
+    .tabbed-labels.tabbed-scroll-right::after {
+      display: inline-block;
+      font-size: 0.9em;
+      position: absolute;
+      top: 0.75em;
+      right: 0;
+      padding-left: 0.64em;
+      color: gray;
+      background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255) 25%);
+      content: "\25B6";
+      cursor: pointer;
+    }
+
+    .tabbed-alternate .tabbed-content {
+      width: 100%;
+    }
+    .tabbed-alternate input:nth-child(1):checked ~ .tabbed-content > :nth-child(1),
+    .tabbed-alternate input:nth-child(2):checked ~ .tabbed-content > :nth-child(2),
+    .tabbed-alternate input:nth-child(3):checked ~ .tabbed-content > :nth-child(3) {
+      display: block;
+    }
+    .tabbed-alternate .tabbed-block {
+      display: none;
+    }
+    @media screen {
+      .tabbed-alternate input:nth-child(1):checked ~ .tabbed-labels > :nth-child(1),
+      .tabbed-alternate input:nth-child(2):checked ~ .tabbed-labels > :nth-child(2),
+      .tabbed-alternate input:nth-child(3):checked ~ .tabbed-labels > :nth-child(3) {
+        color: red;
+        border-color: red;
+      }
+    }
+    @media print {
+      .tabbed-labels {
+        display: contents;
+      }
+      .tabbed-labels > label:nth-child(1) {
+        order: 1;
+      }
+      .tabbed-labels > label:nth-child(2) {
+        order: 2;
+      }
+      .tabbed-labels > label:nth-child(3) {
+        order: 3;
+      }
+
+      .tabbed-alternate .tabbed-content {
+        display: contents;
+      }
+      .tabbed-alternate .tabbed-block {
+        display: block;
+      }
+      .tabbed-alternate .tabbed-block:nth-child(1) {
+        order: 1;
+      }
+      .tabbed-alternate .tabbed-block:nth-child(2) {
+        order: 2;
+      }
+      .tabbed-alternate .tabbed-block:nth-child(3) {
+        order: 3;
+      }
+    }
+    ```
+    ////
+
+=== "JS"
+    //// collapse-code
+    ```js
+    // Identify whether a tab bar can be scrolled left or right and apply indicator classes 
+    const tabOverflow = () => {
+      const checkScroll = e => {
+        // Use a margin as we just don't always align exactly on the right.
+        const margin = 3
+        const target = e.target
+        if (!e.target.matches('.tabbed-labels')) {
+          return
         }
 
-        /* Tab style starts here */
-        .tabbed-alternate {
-          position: relative;
-          display: flex;
-          flex-wrap: wrap;
-          flex-direction: column;
-          margin: 1em 0;
-          border-radius: 0.1rem;
-        }
-
-        .tabbed-alternate > input {
-          display: none;
-        }
-
-        .tabbed-labels {
-          display: flex;
-          width: 100%;
-          overflow: auto;
-          box-shadow: 0 -0.1rem #ddd inset;
-          scrollbar-width: none;
-        }
-        .tabbed-labels::-webkit-scrollbar {
-          display: none;
-        }
-        .tabbed-labels > label {
-          width: auto;
-          padding: 0.9375em 1.25em 0.78125em;
-          font-weight: 700;
-          font-size: 0.84em;
-          white-space: nowrap;
-          border-bottom: 0.1rem solid transparent;
-          scroll-snap-align: start;
-          border-top-left-radius: 0.1rem;
-          border-top-right-radius: 0.1rem;
-          cursor: pointer;
-          transition: background-color 250ms, color 250ms;
-        }
-        .tabbed-labels > label:hover {
-          color: red;
-        }
-
-        .tabbed-labels.tabbed-scroll-left::before {
-          display: inline-block;
-          font-size: 0.9em;
-          position: absolute;
-          top: 0.75em;
-          left: 0;
-          padding-right: 0.64em;
-          color: gray;
-          background: linear-gradient(to right, rgb(255, 255, 255) 75%, rgba(255, 255, 255, 0));
-          content: "\25C0";
-          cursor: pointer;
-        }
-
-        .tabbed-labels.tabbed-scroll-right::after {
-          display: inline-block;
-          font-size: 0.9em;
-          position: absolute;
-          top: 0.75em;
-          right: 0;
-          padding-left: 0.64em;
-          color: gray;
-          background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(255, 255, 255) 25%);
-          content: "\25B6";
-          cursor: pointer;
-        }
-
-        .tabbed-alternate .tabbed-content {
-          width: 100%;
-        }
-        .tabbed-alternate input:nth-child(1):checked ~ .tabbed-content > :nth-child(1),
-        .tabbed-alternate input:nth-child(2):checked ~ .tabbed-content > :nth-child(2),
-        .tabbed-alternate input:nth-child(3):checked ~ .tabbed-content > :nth-child(3) {
-          display: block;
-        }
-        .tabbed-alternate .tabbed-block {
-          display: none;
-        }
-        @media screen {
-          .tabbed-alternate input:nth-child(1):checked ~ .tabbed-labels > :nth-child(1),
-          .tabbed-alternate input:nth-child(2):checked ~ .tabbed-labels > :nth-child(2),
-          .tabbed-alternate input:nth-child(3):checked ~ .tabbed-labels > :nth-child(3) {
-            color: red;
-            border-color: red;
+        const scrollWidth = target.scrollWidth - target.clientWidth
+        target.classList.remove('tabbed-scroll-left', 'tabbed-scroll-right')
+        if (e.type === "resize" || e.type === "scroll") {
+          if (scrollWidth === 0) {
+            return
+          }
+          if (!target.scrollLeft) {
+            target.classList.add('tabbed-scroll-right')
+          } else if (target.scrollLeft < scrollWidth - margin){
+            target.classList.add('tabbed-scroll-left', 'tabbed-scroll-right')
+          } else {
+            target.classList.add('tabbed-scroll-left')
           }
         }
-        @media print {
-          .tabbed-labels {
-            display: contents;
-          }
-          .tabbed-labels > label:nth-child(1) {
-            order: 1;
-          }
-          .tabbed-labels > label:nth-child(2) {
-            order: 2;
-          }
-          .tabbed-labels > label:nth-child(3) {
-            order: 3;
-          }
+      }
 
-          .tabbed-alternate .tabbed-content {
-            display: contents;
+      // Change the tab to either the previous or next input - depending on which indicator was clicked.
+      // Make sure the current, selected input is scrolled into view.
+      const tabChange = e => {
+        const target = e.target
+        const selected = target.closest('.tabbed-set').querySelector('input:checked')
+        let updated = null
+
+        if (target.classList.contains('tabbed-scroll-right') && e.offsetX >= e.target.offsetWidth - 15) {
+          const sib = selected.nextSibling
+          updated = selected
+          if (sib && sib.tagName === 'INPUT') {
+            updated = sib
           }
-          .tabbed-alternate .tabbed-block {
-            display: block;
-          }
-          .tabbed-alternate .tabbed-block:nth-child(1) {
-            order: 1;
-          }
-          .tabbed-alternate .tabbed-block:nth-child(2) {
-            order: 2;
-          }
-          .tabbed-alternate .tabbed-block:nth-child(3) {
-            order: 3;
+        } else if (target.classList.contains('tabbed-scroll-left') && e.offsetX <= 15) {
+          const sib = selected.previousSibling
+          updated = selected
+          if (sib && sib.tagName === 'INPUT') {
+            updated = sib
           }
         }
-        ```
-
-    === "JS"
-        ```{.js .md-max-height}
-        // Identify whether a tab bar can be scrolled left or right and apply indicator classes 
-        const tabOverflow = () => {
-          const checkScroll = e => {
-            // Use a margin as we just don't always align exactly on the right.
-            const margin = 3
-            const target = e.target
-            if (!e.target.matches('.tabbed-labels')) {
-              return
-            }
-
-            const scrollWidth = target.scrollWidth - target.clientWidth
-            target.classList.remove('tabbed-scroll-left', 'tabbed-scroll-right')
-            if (e.type === "resize" || e.type === "scroll") {
-              if (scrollWidth === 0) {
-                return
-              }
-              if (!target.scrollLeft) {
-                target.classList.add('tabbed-scroll-right')
-              } else if (target.scrollLeft < scrollWidth - margin){
-                target.classList.add('tabbed-scroll-left', 'tabbed-scroll-right')
-              } else {
-                target.classList.add('tabbed-scroll-left')
-              }
-            }
-          }
-
-          // Change the tab to either the previous or next input - depending on which indicator was clicked.
-          // Make sure the current, selected input is scrolled into view.
-          const tabChange = e => {
-            const target = e.target
-            const selected = target.closest('.tabbed-set').querySelector('input:checked')
-            let updated = null
-
-            if (target.classList.contains('tabbed-scroll-right') && e.offsetX >= e.target.offsetWidth - 15) {
-              const sib = selected.nextSibling
-              updated = selected
-              if (sib && sib.tagName === 'INPUT') {
-                updated = sib
-              }
-            } else if (target.classList.contains('tabbed-scroll-left') && e.offsetX <= 15) {
-              const sib = selected.previousSibling
-              updated = selected
-              if (sib && sib.tagName === 'INPUT') {
-                updated = sib
-              }
-            }
-            if (updated) {
-              updated.click()
-            }
-          }
-
-          const onResize = new ResizeObserver(entries => {
-            entries.forEach(entry => {
-              checkScroll({target: entry.target, type: 'resize'})
-            })
-          })
-
-          const labels = document.querySelectorAll('.tabbed-alternate > .tabbed-labels')
-          labels.forEach(el => {
-            checkScroll({target: el, type: 'resize'})
-            onResize.observe(el)
-            el.addEventListener('resize', checkScroll)
-            el.addEventListener('scroll', checkScroll)
-            el.addEventListener('click', tabChange)
-          })
+        if (updated) {
+          updated.click()
         }
+      }
 
-        // Smooth scroll tab into view when changed
-        const tabScroll = () => {
-          const tabs = document.querySelectorAll(".tabbed-alternate > input")
-          for (const tab of tabs) {
-            tab.addEventListener("change", () => {
-              const label = document.querySelector(`label[for=${tab.id}]`)
-              label.scrollIntoView({block: "nearest", inline: "nearest", behavior: "smooth"})
-            })
-          }
-        }
+      const onResize = new ResizeObserver(entries => {
+        entries.forEach(entry => {
+          checkScroll({target: entry.target, type: 'resize'})
+        })
+      })
 
-        // Should run after document loaded, but for illustration purposes:
-        tabOverflow()
-        tabScroll()
-        ```
+      const labels = document.querySelectorAll('.tabbed-alternate > .tabbed-labels')
+      labels.forEach(el => {
+        checkScroll({target: el, type: 'resize'})
+        onResize.observe(el)
+        el.addEventListener('resize', checkScroll)
+        el.addEventListener('scroll', checkScroll)
+        el.addEventListener('click', tabChange)
+      })
+    }
+
+    // Smooth scroll tab into view when changed
+    const tabScroll = () => {
+      const tabs = document.querySelectorAll(".tabbed-alternate > input")
+      for (const tab of tabs) {
+        tab.addEventListener("change", () => {
+          const label = document.querySelector(`label[for=${tab.id}]`)
+          label.scrollIntoView({block: "nearest", inline: "nearest", behavior: "smooth"})
+        })
+      }
+    }
+
+    // Should run after document loaded, but for illustration purposes:
+    tabOverflow()
+    tabScroll()
+    ```
+    ////
+///
 
 ## Options
 

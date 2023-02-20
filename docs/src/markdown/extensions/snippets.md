@@ -102,7 +102,8 @@ include.md
 
 ### Snippet Lines
 
-!!! new "New 9.6"
+/// new | New 9.6
+///
 
 When specifying a snippet, you can specify which lines of the Snippet file that you wish to include. To specify line
 numbers, simply append the start and/or end to the end of the file name with each number separated with `:`.
@@ -122,7 +123,8 @@ include.md::3
 
 ### Snippet Sections
 
-!!! new "New 9.7"
+/// new | New 9.7
+///
 
 Specifying snippet lines may not always be ideal. The source could change by moving, adding, and/or removing lines. A way
 around this is to partition a snippet into named sections and then targeting a specific section to be included instead
@@ -160,31 +162,33 @@ And then just include it in our document:
 
 ### Escaping Snippets Notation
 
-!!! new "New 9.6"
+/// new | New 9.6
+///
 
 If it is necessary to demonstrate the snippet syntax, an escaping method is required. If you need to escape snippets,
 just place a `;` right before `-8<-`. This will work for both single line and block format. An escaped snippet
 notation will be passed through the Markdown parser with the first `;` removed.
 
-=== "Markdown"
 
-    ````
-    ```
-    ;;--8<-- "escaped.md"
-    ;;;--8<-- "escaped.md"
-    ```
-    ````
+````text title="Escape Example"
+```
+;;--8<-- "escaped.md"
+;;;--8<-- "escaped.md"
+```
+````
 
-=== "Result"
+/// html | div
+    attributes: {class: result}
+```
+;--8<-- "escaped.md"
+;;--8<-- "escaped.md"
+```
+///
 
-    ```
-    ;--8<-- "escaped.md"
-    ;;--8<-- "escaped.md"
-    ```
-
-!!! warning "Legacy Escaping"
-    The legacy escape method required placing a space at the end of the line with `-8<-`, while this should still
-    work, this behavior will be removed at sometime in the future and is discouraged.
+/// warning | Legacy Escaping
+The legacy escape method required placing a space at the end of the line with `-8<-`, while this should still
+work, this behavior will be removed at sometime in the future and is discouraged.
+///
 
 ## Specifying Snippet Locations
 
@@ -207,12 +211,14 @@ If either of these is set to zero, the limits will be ignored.
 
 To pass arbitrary HTTP headers in every HTTP request use `url_request_headers`.
 
-!!! warning "Nested Snippets"
-    One thing to note though, if a snippet is included via a URL, all nested snippets within it must also be URLs. URL
-    snippets are not allowed to reference local snippet files.
+/// warning | Nested Snippets
+One thing to note though, if a snippet is included via a URL, all nested snippets within it must also be URLs. URL
+snippets are not allowed to reference local snippet files.
+///
 
-!!! new "New 9.5"
-    URL snippet support was introduced in 9.5.
+/// new | New 9.5
+URL snippet support was introduced in 9.5.
+///
 
 ## Auto-Append Snippets
 

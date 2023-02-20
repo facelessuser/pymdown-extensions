@@ -10,19 +10,18 @@ equal signs. It can optionally be configured to use smart logic. Syntax behavior
 
 To Mark some text, simply surround the text with double `=`.
 
-!!! example "Mark Example"
+```text title="Mark Example"
+==mark me==
 
-    === "Output"
-        ==mark me==
+==smart==mark==
+```
 
-        ==smart==mark==
+/// html | div
+    attributes: {class: result}
+==mark me==
 
-    === "Markdown"
-        ```
-        ==mark me==
-
-        ==smart==mark==
-        ```
+==smart==mark==
+///
 
 The Mark extension can be included in Python Markdown by using the following:
 
