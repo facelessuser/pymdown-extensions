@@ -28,7 +28,7 @@ traditional ways such as: *I have $2.00 and Bob has $10.00*.  The previous state
 `#!tex $` character.  But when needed, the `#!tex $` character can be escaped using `#!tex \$`. `smart_dollar` can be
 disabled and will capture any `#!tex $...$` whose dollar symbols are not escaped (`#!tex \$`).
 
-```tex title="Inline Examples"
+```tex title="Inline"
 $p(x|y) = \frac{p(y|x)p(x)}{p(y)}$, \(p(x|y) = \frac{p(y|x)p(x)}{p(y)}\).
 ```
 
@@ -56,7 +56,7 @@ For block forms, the block must start with the appropriate opening for the block
 `#!tex \]`, and `#!tex \end{}`. A block also must contain no empty lines and should be both preceded and followed by an
 empty line.
 
-```tex title="Block Examples"
+```tex title="Block"
 $$
 E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
 $$

@@ -27,7 +27,7 @@ respectively.  You can also denote a substitution with `#!critic-markup {~~subst
 You can also highlight specific text with `#!critic-markup {==highlight me==}`. Or even comment, which is generally done
 by highlighting text and following it with a comment: `#!critic-markup {==highlight me==}{>>Add a comment<<}`.
 
-```critic-markup title="Critic Markup Accept Example"
+```critic-markup title="Critic Markup Accept"
 Here is some {--*incorrect*--} Markdown.  I am adding this{++ here++}.  Here is some more {--text
  that I am removing--}text.  And here is even more {++text that I 
  am ++}adding.{~~
@@ -109,7 +109,7 @@ General block handling.
 
 When previewing, you can style them to stand out (see [CSS](#css) for more information):
 
-```critic-markup title="Critic Markup Preview Example"
+```critic-markup title="Critic Markup Preview"
 Here is some {--*incorrect*--} Markdown.  I am adding this{++ here++}.  Here is some more {--text
  that I am removing--}text.  And here is even more {++text that I 
  am ++}adding.{~~

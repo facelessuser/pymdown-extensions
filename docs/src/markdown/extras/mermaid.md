@@ -487,8 +487,9 @@ document.addEventListener("DOMContentLoaded", () => {uml("mermaid")})
 ```
 ///
 
-!!! tip "Live Example"
-    For a live, working example, check out the CodePen [here](https://codepen.io/facelessuser/pen/oNeNydQ).
+/// tip | Live Example
+For a live, working example, check out the CodePen [here](https://codepen.io/facelessuser/pen/oNeNydQ).
+///
 
 ## Using in MkDocs
 

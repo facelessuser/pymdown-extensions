@@ -9,7 +9,7 @@ alone.  EscapeAll makes `\` escape everything making such questions moot.  Now i
 can be escaped, you can expect that `\` will escape the character following it.  So if you need a literal `\`, just
 escape it: `\\`.  Keep in mind this will not escape things in code blocks of any kind.
 
-```text title="Escape Example"
+```text title="Escaping"
 \W\e\ \c\a\n\ \e\s\c\a\p\e
 \e\v\e\r\y\t\h\i\n\g\!\ \
 \❤\😄

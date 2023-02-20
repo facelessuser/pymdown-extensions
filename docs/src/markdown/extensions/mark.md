@@ -10,7 +10,7 @@ equal signs. It can optionally be configured to use smart logic. Syntax behavior
 
 To Mark some text, simply surround the text with double `=`.
 
-```text title="Mark Example"
+```text title="Marking"
 ==mark me==
 
 ==smart==mark==

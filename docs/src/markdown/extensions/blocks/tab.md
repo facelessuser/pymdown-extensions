@@ -36,7 +36,7 @@ md = markdown.Markdown(
 A tab can be defined using the generic bock syntax and the name `tab`. Tabs should also specify the tab title in the
 header. Consecutive tabs will automatically be grouped.
 
-```text title="Example: Tabs"
+```text title="Tabs"
 /// tab | Tab 1 title
 Tab 1 content
 ///
@@ -61,7 +61,7 @@ Tab 2 content
 If you want to have two tab containers right after each other, you specify a hard break that will force the specified
 tab to start a brand new tab container.
 
-```text title="Example: New Tab Group"
+```text title="New Tab Group"
 /// tab | Tab A title
 Tab A content
 ///

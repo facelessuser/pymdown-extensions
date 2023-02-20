@@ -29,41 +29,42 @@ with spaces) and the summary contained in quotes. Content is placed below the he
     Here's some content.
 ```
 
-!!! example "Example Details"
+```text title="Details"
+???+ note "Open styled details"
 
-    === "Output"
-        ???+ note "Open styled details"
+    ??? danger "Nested details!"
+        And more content again.
+```
 
-            ??? danger "Nested details!"
-                And more content again.
+/// html | div
+    attributes: {class: result}
 
-    === "Markdown"
-        ```
-        ???+ note "Open styled details"
+???+ note "Open styled details"
 
-            ??? danger "Nested details!"
-                And more content again.
-        ```
+    ??? danger "Nested details!"
+        And more content again.
+///
+        
 
 It is also possible to provide only a class.  If this is done, the title will be derived from the *first* class.
 
-!!! example "Example Class from Title"
+```text title="Class from Title"
+??? success
+   Content.
 
-    === "Output"
-        ??? success
-            Content.
+??? warning classes
+   Content.
+```
 
-        ??? warning classes
-            Content.
+/// html | div
+    attributes: {class: result}
 
-    === "Markdown"
-        ```
-        ??? success
-           Content.
+??? success
+    Content.
 
-        ??? warning classes
-           Content.
-        ```
+??? warning classes
+    Content.
+///
 
 Details will be output in the format below. The content will always be encapsulated in tags of some kind.
 

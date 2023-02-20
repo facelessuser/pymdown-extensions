@@ -13,7 +13,7 @@ opening `[` can be followed by one or more `=` characters. After the `=` char(s)
 a fraction or percentage and can optionally be followed by a title surrounded in either double quotes or single
 quotes.
 
-```text title="Progress Bar Example"
+```text title="Progress Bars"
 [=0% "0%"]
 [=5% "5%"]
 [=25% "25%"]
@@ -37,7 +37,7 @@ quotes.
 Though progress bars are rendered as block items, it accepts `attr_list`'s inline format.
 `markdown.extensions.attr_list` must be enabled for the following to work.
 
-```text title="Progress Bar with Attributes"
+```text title="Progress Bars with Attributes"
 [=85% "85%"]{: .candystripe}
 [=100% "100%"]{: .candystripe .candystripe-animate}
 

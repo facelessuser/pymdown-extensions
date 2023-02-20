@@ -36,7 +36,7 @@ md = markdown.Markdown(
 Admonitions can be specified using the generic block syntax and the name `admonition`. A title can be specified in
 the header.
 
-``` title="Example: Admonition"
+```text title="Admonition"
 /// admonition | Some title
     type: note
 
@@ -59,7 +59,7 @@ danger, error, tip, hint, warning.
 
 These require you to use their special. When using these, `type` does not need to be set and is not accepted.
 
-``` title="Example: Note"
+```text title="Note"
 /// note | Some title
 Some content
 ///

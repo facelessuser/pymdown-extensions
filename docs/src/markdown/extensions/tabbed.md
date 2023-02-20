@@ -20,7 +20,7 @@ md = markdown.Markdown(extensions=['pymdownx.tabbed'])
 
 Tabs start with `===` to signify a tab followed by a quoted title. Consecutive tabs are grouped into a tab set.
 
-```text title="Example Tabs"
+```text title="Tabs"
 === "Tab 1"
     Markdown **content**.
 
@@ -51,7 +51,7 @@ Tabs start with `===` to signify a tab followed by a quoted title. Consecutive t
 In the rare case that you want to follow two separate tab sets right after each other, you can explicitly mark the start
 of a new tab set with `!`.
 
-````text title="Example Tab Breaks"
+````text title="Tab Breaks"
 === "Tab 1"
     Markdown **content**.
 

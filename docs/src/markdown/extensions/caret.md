@@ -20,7 +20,7 @@ md = markdown.Markdown(extensions=['pymdownx.caret'])
 To wrap content in an **insert** tag, simply surround the text with double `^`. You can also enable `smart_insert` in
 the [options](#options). Smart behavior of **insert** models that of [BetterEm](betterem.md#differences).
 
-```text title="Insert Example"
+```text title="Insert"
 ^^Insert me^^
 ```
 
@@ -34,7 +34,7 @@ the [options](#options). Smart behavior of **insert** models that of [BetterEm](
 To denote a superscript, you can surround the desired content in single `^`.  It uses Pandoc style logic, so if your
 superscript needs to have spaces, you must escape the spaces.
 
-```text title="Superscript Example"
+```text title="Superscript"
 H^2^0
 
 text^a\ superscript^

@@ -35,7 +35,7 @@ md = markdown.Markdown(
 Generally, HTML blocks can be defined simply by specifying the `html` generic block type followed by the tag name. As
 with all generic blocks, additional attributes can be applied via the `attributes` option.
 
-```text title="Example: HTML"
+```text title="HTML"
 /// html | div
     attributes:
       style: 'border: 1px solid red;'
@@ -63,7 +63,7 @@ cases, the `markdown` option can be used to specify how Markdown content is hand
 In the following example we force `pre` to handle content as Markdown block content instead of the usual raw content
 default.
 
-```text title="Example: Pre as Block"
+```text title="Pre as Block"
 /// html | pre
 some *markdown* content
 ///

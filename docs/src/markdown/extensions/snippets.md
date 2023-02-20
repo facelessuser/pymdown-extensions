@@ -170,7 +170,7 @@ just place a `;` right before `-8<-`. This will work for both single line and bl
 notation will be passed through the Markdown parser with the first `;` removed.
 
 
-````text title="Escape Example"
+````text title="Escaped Snippets"
 ```
 ;;--8<-- "escaped.md"
 ;;;--8<-- "escaped.md"

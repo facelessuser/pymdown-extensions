@@ -7,7 +7,7 @@
 Keys is an extension to make entering and styling keyboard key presses easier. Syntactically, Keys is built around the
 `+` symbol.  A key or combination of key presses is surrounded by `++` with each key press separated with a single `+`.
 
-```text title="Keys Example"
+```text title="Keys"
 ++ctrl+alt+delete++
 ```
 
@@ -71,7 +71,7 @@ If you would like to generate a key which isn't in the key index, you can extend
 way to quickly enter a one time, arbitrary  key, you can just insert it directly, instead of specifying the key's name,
 by quoting the content displayed instead of a key name. You can also enter HTML entities if desired.
 
-```text title="Quoted Example"
+```text title="Quoted Keys"
 ++ctrl+alt+"My Special Key"++
 
 ++cmd+alt+"&Uuml;"++

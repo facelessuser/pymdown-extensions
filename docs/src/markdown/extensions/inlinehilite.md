@@ -11,7 +11,7 @@ inline code regardless of which form is used. Use of one form or the other is pu
 feature is discussed further, we will call these specifiers (` #! ` and ` ::: `) mock shebangs, mainly due to the first
 options similar syntax to a real shebang.
 
-```text title="Inline Highlighted Code Example"
+```text title="Inline Highlighted Code"
 Here is some code: `#!py3 import pymdownx; pymdownx.__version__`.
 
 The mock shebang will be treated like text here: ` #!js var test = 0; `.
@@ -64,7 +64,7 @@ independently for inline code in the [options](#options).
 
 Like [SuperFences](./superfences.md), InlineHilite now provides a support for custom inline blocks.
 
-```text title="Inline Math Example"
+```text title="Inline Math"
 `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
 ```
 

@@ -35,7 +35,7 @@ md = markdown.Markdown(
 Definitions can be specified using the generic block syntax and the name `define`. Simply create paragraphs for terms
 and use a list to provide one or more definitions.
 
-```text title="Example: Definition"
+```text title="Definition"
 /// define
 Apple
 
@@ -58,7 +58,7 @@ Apple
 
 Multiple terms and definitions can be define in the same block. The terms will all be under the same definition list.
 
-``` title="Example: Multiple Definitions"
+```text title="Multiple Definitions"
 /// define
 Apple
 

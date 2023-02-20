@@ -70,12 +70,19 @@ class CollapseCode(Block):
         """Convert non list items to details."""
 
         el = etree.SubElement(block, 'div', {'class': 'code-footer'})
+        attrs = {'for': '__collapse{}'.format(self.count), 'class': 'expand'}
+        if self.expand_title:
+            attrs['title'] = self.expand_title
         expand = etree.SubElement(
             el,
             'label',
             {'for': '__collapse{}'.format(self.count), 'class': 'expand', 'title': self.expand_title}
         )
         expand.text = self.expand
+
+        attrs = {'for': '__collapse{}'.format(self.count), 'class': 'collapse'}
+        if self.collapse_title:
+            attrs['title'] = self.collapse_title
         collapse = etree.SubElement(
             el,
             'label',

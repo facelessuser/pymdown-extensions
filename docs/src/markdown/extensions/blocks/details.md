@@ -35,7 +35,7 @@ md = markdown.Markdown(
 Admonitions can be specified using the generic block syntax and the name `details`. A summary can be specified in
 the header. Additionally, you can apply a specific type if like with admonitions if desired.
 
-```text title="Example: Details"
+```text title="Details"
 /// details | Some summary
     type: note
 
@@ -54,7 +54,7 @@ Some content
 
 If you wish to specify a details as open (or not collapsed), simply use the option `open`.
 
-```text title="Example: Details Open"
+```text title="Details Open"
 /// details | Some summary
     open: True
 

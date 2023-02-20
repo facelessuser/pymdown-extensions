@@ -11,7 +11,7 @@ a square bracket pair containing either a space (an unchecked item) or a `x` (a 
 All task lists in this documentation are generated with [`custom_checkbox`](#options) enabled.
 ///
 
-```text title="Task List Example"
+```text title="TaskList"
 Task List
 
 - [X] item 1

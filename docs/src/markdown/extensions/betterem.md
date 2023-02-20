@@ -30,7 +30,7 @@ For all examples on this page, underscores are __smart__ and asterisks are not.
 
 BetterEm requires that non-whitespace characters follow the opening token(s) and precede the closing token(s).
 
-```text title="Whitespace Example"
+```text title="Whitespace"
 This * won't emphasize *
 
 This *will emphasize*
@@ -45,7 +45,7 @@ This *will emphasize*
 
 BetterEm allows for a more natural nested token feel.
 
-```text title="Nested Token Example"
+```text title="Nested Token"
 ***I'm italic and bold* I am just bold.**
 
 ***I'm bold and italic!** I am just italic.*
@@ -60,7 +60,7 @@ BetterEm allows for a more natural nested token feel.
 
 BetterEm will try to prioritize the more sane option when nesting bold (`**`) between italic (`*`).
 
-```text title="Prioritize Best Example"
+```text title="Prioritize Best"
 *I'm italic. **I'm bold and italic.** I'm also just italic.*
 ```
 
@@ -73,7 +73,7 @@ BetterEm will try to prioritize the more sane option when nesting bold (`**`) be
 BetterEm will ensure smart mode doesn't terminate in scenarios where there are a large amount of consecutive tokens
 inside.
 
-```text title="Consecutive Token Example"
+```text title="Consecutive Token"
 ___A lot of underscores____________is okay___
 ```
 
@@ -85,7 +85,7 @@ ___A lot of underscores____________is okay___
 BetterEm will also ensure that smart mode breaks proper when an inner like token signifies an end.
 
 
-```text title="Smart Break Example"
+```text title="Smart Break"
 __This will all be bold __because of the placement of the center underscores.__
 
 __This will all be bold __ because of the placement of the center underscores.__
@@ -108,7 +108,7 @@ __This will all be bold_ because the token count is less than that of the surrou
 
 BetterEm will allow non-smart emphasis to contain "floating" like tokens.
 
-```text title="Floating Token Example"
+```text title="Floating Token"
 *All will * be italic*
 
 *All will *be italic*
