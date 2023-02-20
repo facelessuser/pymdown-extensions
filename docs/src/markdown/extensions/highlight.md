@@ -59,28 +59,32 @@ existing name.
 are adding, `lang` which is the language the new name maps to, and `options` which is a dictionary of the options you
 wish to apply.
 
-!!! example "Highlight Example"
+/// example | Highlight Example
+To create the above mentioned `php-inline`, this example illustrates the configuration, and Markdown syntax you
+would use.
 
-    To create the above mentioned `php-inline`, this example illustrates the configuration, and Markdown syntax you
-    would use.
+//// tab | Output
+`#!php-inline $a = array("foo" => 0, "bar" => 1);`
+////
 
-    === "Output"
-        `#!php-inline $a = array("foo" => 0, "bar" => 1);`
+//// tab | Markdown
+````
+`#!php-inline $a = array("foo" => 0, "bar" => 1);`
+````
+////
 
-    === "Markdown"
-        ````
-        `#!php-inline $a = array("foo" => 0, "bar" => 1);`
-        ````
+//// tab | Config
+```py
+extend_pygments_lang = [
+    {"name": "php-inline", "lang": "php", "options": {"startinline": True}}
+]
+```
+////
+///
 
-    === "Config"
-        ```py
-        extend_pygments_lang = [
-            {"name": "php-inline", "lang": "php", "options": {"startinline": True}}
-        ]
-        ```
-
-!!! new "New 9.2"
-    `pygments_lang_class` added in 9.2.
+/// new | New 9.2
+`pygments_lang_class` added in 9.2.
+///
 
 ## Line Number Styles
 
@@ -128,13 +132,16 @@ Option                    | Type   | Default               | Description
 `line_anchors`            | bool   | `#!py3 False`         | Controls the Pygments option of a similar name. If set to a nonempty string, e.g. `foo`, the formatter will insert an anchor tag with an id (and name) of `foo-<code_block_number>-<line_number>`.
 `pygments_lang_class`     | bool   | `#!py3 False`         | If set to True, the language name used will be included as a class attached to the element with the associated `language_prefix`.
 
-!!! new "New 7.1"
-    `linenums_class` was added in `7.1`.
+/// new | New 7.1
+`linenums_class` was added in `7.1`.
+///
 
-!!! new "New 7.2"
-    `linenums` now accepts `#!py3 None` as the default for allow line numbers to be enabled per code block.
-    `#!py3 False` now disables line numbers globally preventing line numbers even if specified per code block. `True`
-    still enables globally.
+/// new | New 7.2
+`linenums` now accepts `#!py3 None` as the default for allow line numbers to be enabled per code block.
+`#!py3 False` now disables line numbers globally preventing line numbers even if specified per code block. `True`
+still enables globally.
+///
 
-!!! new "New 9.0"
-    `auto_title`, `auto_title_map`, `line_spans`, `anchor_linenums`, and `line_anchors` were all added in `9.0`.
+/// new | New 9.0
+`auto_title`, `auto_title_map`, `line_spans`, `anchor_linenums`, and `line_anchors` were all added in `9.0`.
+///

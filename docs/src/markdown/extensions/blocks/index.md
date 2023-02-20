@@ -2,11 +2,12 @@
 
 # Blocks
 
-!!! warning "Alpha Release"
-    Blocks is currently only available in the Pymdown Extensions alpha release. It is a work in progress and API and
-    syntax are subject to change.
+/// warning | Alpha Release
+Blocks is currently only available in the Pymdown Extensions alpha release. It is a work in progress and API and
+syntax are subject to change.
 
-    Please provide feedback here: https://github.com/facelessuser/pymdown-extensions/discussions/1940.
+Please provide feedback here: https://github.com/facelessuser/pymdown-extensions/discussions/1940.
+///
 
 ## Overview
 
@@ -101,11 +102,12 @@ content
 ///
 ```
 
-!!! tip "Content and New Lines"
-    While there is no hard rule stating that the first content block must have a new line after the header, it should be
-    noted that some special content blocks may require an empty line before them, this may simply be due to how they are
-    implemented. Simple paragraphs should not require an empty new line before them, but we cannot make a blanket
-    statement about all blocks. If in doubt, use an empty line before the first content block.
+/// tip | Content and New Lines
+While there is no hard rule stating that the first content block must have a new line after the header, it should be
+noted that some special content blocks may require an empty line before them, this may simply be due to how they are
+implemented. Simple paragraphs should not require an empty new line before them, but we cannot make a blanket
+statement about all blocks. If in doubt, use an empty line before the first content block.
+///
 
 Some blocks may implement a special argument in the header for things such as, but not limited to, titles. These
 arguments can be optional or sometimes enforced as a requirement. This is up to the given Blocks plugin to decide.
@@ -260,10 +262,11 @@ class MyBlock(Block):
     ARGUMENTS = {'required': 1, 'optional': 1, 'delimiter': ','}
 ```
 
-!!! tip "Validating Arguments"
-    If you'd like to validate arguments, you can utilize the [`on_parse` event](#on_parse-event). It is also acceptable
-    manually parse arguments in the `on_parse` event as well. This may be useful if the arguments cannot be parsed with
-    a simple delimiter.
+/// tip | Validating Arguments
+If you'd like to validate arguments, you can utilize the [`on_parse` event](#on_parse-event). It is also acceptable
+manually parse arguments in the `on_parse` event as well. This may be useful if the arguments cannot be parsed with
+a simple delimiter.
+///
 
 ### Options
 
@@ -278,9 +281,10 @@ value. If the input, for whatever reason, is deemed invalid, the callback functi
 After processing, all options will be available as a dictionary via the instance attribute `self.options`. Options
 will be accessible via the keyword and will return the resolved value.
 
-!!! tip "Built-in validators"
-    A number of Built-in validators are provided. Check out [Built-in Validators](#built-in-validators) to learn more,
-    or feel free to write your own.
+/// tip | Built-in validators
+A number of Built-in validators are provided. Check out [Built-in Validators](#built-in-validators) to learn more,
+or feel free to write your own.
+///
 
 ```py
 class MyBlock(Block):
@@ -290,6 +294,33 @@ class MyBlock(Block):
         'tag_name': ['default', type_tag]
     }
 ```
+
+### Global Config
+
+It may be desirable to have global options. These kind of options affect all blocks and are not configured per block.
+
+Configs are created using the `CONFIG` attribute and should contain a dictionary with default values. It is up to the
+plugin creator to validate options as no mechanism is provided at this time to validate global configs. It is recommend
+that global options be processed in the [`on_init` event](#on_init-event).
+
+```py
+class MyBlock(Block):
+    # Name used for the block
+    NAME = 'my-block'
+    CONFIG = {
+        'enable_feature': False
+    }
+```
+
+### Tracking Data Across Blocks
+
+There are times when it can be useful to store data across multiple blocks. Each block instance has access to a tracker
+that is specific to a specific block type and persists across all blocks. It is only cleared when `reset` is called
+on the block manager and will reset trackers of all registered blocks.
+
+The tracker is accessed by a given `Block` plugin via the `self.tracker` attribute. The attribute contains a dictionary
+where various keys and values can be stored. This can be used to count blocks on a page or anything else you can think
+of.
 
 ### `on_register` Event
 
@@ -561,8 +592,9 @@ names and formats the values to valid HTML attribute values.
 
 Returns a `dict[str, str]` that contains valid HTML attribute names and values or raises `ValueError`.
 
-!!! note
-    The provided dictionary input will be safely copied such that the default will not be modified.
+/// note
+The provided dictionary input will be safely copied such that the default will not be modified.
+///
 
 ```py
 class Block:

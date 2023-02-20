@@ -146,4 +146,111 @@
       content: "";
     }
   }
+
+  .collapse-code {
+    position: relative;
+    margin-top: 1em;
+    margin-bottom: 1em;
+
+    pre {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    input{
+      display: none;
+
+      ~ .code-footer {
+        width: 100%;
+        margin: 0;
+        padding: px2em(4px) px2em(8px) px2em(4px) px2em(0px);
+
+        label {
+          position: relative;
+          margin: 0.05em;
+          padding: 0.15em 0.8em;
+          color: var(--md-primary-bg-color);
+          font-size: 90%;
+          background-color: var(--md-primary-fg-color);
+          mask-repeat: no-repeat;
+          mask-size: contain;
+          border-radius: px2rem(2px);
+          cursor: pointer;
+          content: "";
+
+          &:hover {
+            background-color: var(--md-accent-fg-color);
+          }
+
+          &::before {
+            position: absolute;
+            top: 0.15em;
+            left: 0.1em;
+            display: block;
+            box-sizing: border-box;
+            width: 1.25em;
+            height: 1.25em;
+            background-color: var(--md-primary-bg-color);
+            background-size: 1.25em;
+            content: "";
+          }
+
+          &.expand {
+            display: none;
+
+            &::before {
+              mask-image: svg-load("@mdi/svg/svg/arrow-expand.svg");
+            }
+          }
+          &.collapse::before {
+            mask-image: svg-load("@mdi/svg/svg/arrow-collapse.svg");
+          }
+        }
+      }
+
+      &:checked {
+        ~ .code-footer label.expand {
+          display: inline;
+        }
+
+        ~ .code-footer label.collapse {
+          display: none;
+        }
+
+        + div.highlight code {
+          max-height: px2em(150px);
+          overflow: hidden;
+        }
+
+        ~ .code-footer {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          padding: px2em(32px) px2em(8px) px2em(8px) px2rem(16px);
+          background-image: linear-gradient(to bottom,
+              transparent,
+              var(--md-default-bg-color) 80%
+          100%);
+        }
+      }
+    }
+  }
+
+  @include break-to-device(mobile) {
+
+    > {
+      diagram-div {
+        margin-right: px2rem(-16px);
+        margin-left: px2rem(-16px);
+      }
+      .collapse-code {
+        margin-right: px2rem(-16px);
+        margin-left: px2rem(-16px);
+
+        label.collapse {
+          left: px2rem(16px);
+        }
+      }
+    }
+  }
 }

@@ -22,7 +22,6 @@
 
     &.tabbed-set > .tabbed-content > .tabbed-block {
       padding: 0 px2rem(12px);
-      overflow: hidden;
 
       > {
         pre,
@@ -44,7 +43,20 @@
           }
         }
 
-        mermaid-div:only-child {
+        .collapse-code:only-child {
+          margin-top: 0;
+
+          margin-right: px2rem(-24px);
+          margin-left: px2rem(-24px);
+          padding-right: px2rem(12px);
+          padding-left: px2rem(12px);
+
+          > .code-footer {
+            left: px2rem(12px)
+          }
+        }
+
+        diagram-div:only-child {
           margin-right: px2rem(-24px);
           margin-left: px2rem(-24px);
           padding-right: px2rem(12px);

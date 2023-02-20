@@ -2,11 +2,12 @@
 
 # HTML
 
-!!! warning "Alpha Release"
-    Blocks is currently only available in the Pymdown Extensions alpha release. It is a work in progress and API and
-    syntax are subject to change.
+/// warning | Alpha Release
+Blocks is currently only available in the Pymdown Extensions alpha release. It is a work in progress and API and
+syntax are subject to change.
 
-    Please provide feedback here: https://github.com/facelessuser/pymdown-extensions/discussions/1940.
+Please provide feedback here: https://github.com/facelessuser/pymdown-extensions/discussions/1940.
+///
 
 ## Overview
 
@@ -34,7 +35,7 @@ md = markdown.Markdown(
 Generally, HTML blocks can be defined simply by specifying the `html` generic block type followed by the tag name. As
 with all generic blocks, additional attributes can be applied via the `attributes` option.
 
-``` title="Example: HTML"
+```text title="Example: HTML"
 /// html | div
     attributes:
       style: 'border: 1px solid red;'
@@ -43,22 +44,15 @@ some *markdown* content
 ///
 ```
 
-<div class="result" markdown>
-
-```md-render
----
-extensions:
-- pymdownx.blocks
----
 /// html | div
+    attributes: {class: result}
+//// html | div
     attributes:
       style: 'border: 1px solid red;'
 
 some *markdown* content
+////
 ///
-```
-
-</div>
 
 By default HTML blocks will automatically have the content rendering determined from tag name, so `div` blocks will be
 treated as block elements, `span` will be treated as inline elements, and things like `pre` will treat the content as
@@ -69,7 +63,7 @@ cases, the `markdown` option can be used to specify how Markdown content is hand
 In the following example we force `pre` to handle content as Markdown block content instead of the usual raw content
 default.
 
-``` title="Example: Pre as Block"
+```text title="Example: Pre as Block"
 /// html | pre
 some *markdown* content
 ///
@@ -81,25 +75,18 @@ some *markdown* content
 ///
 ```
 
-<div class="result" markdown>
-
-```md-render
----
-extensions:
-- pymdownx.blocks
----
-/// html | pre
+/// html | div
+    attributes: {class: result}
+//// html | pre
 some *markdown* content
-///
+////
 
-/// html | pre
+//// html | pre
     markdown: block
 
 some *markdown* content
+////
 ///
-```
-
-</div>
 
 ## Per Block Options
 

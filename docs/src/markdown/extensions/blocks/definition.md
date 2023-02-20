@@ -2,11 +2,12 @@
 
 # Definition
 
-!!! warning "Alpha Release"
-    Blocks is currently only available in the Pymdown Extensions alpha release. It is a work in progress and API and
-    syntax are subject to change.
+/// warning | Alpha Release
+Blocks is currently only available in the Pymdown Extensions alpha release. It is a work in progress and API and
+syntax are subject to change.
 
-    Please provide feedback here: https://github.com/facelessuser/pymdown-extensions/discussions/1940.
+Please provide feedback here: https://github.com/facelessuser/pymdown-extensions/discussions/1940.
+///
 
 ## Overview
 
@@ -34,7 +35,7 @@ md = markdown.Markdown(
 Definitions can be specified using the generic block syntax and the name `define`. Simply create paragraphs for terms
 and use a list to provide one or more definitions.
 
-``` title="Example: Definition"
+```text title="Example: Definition"
 /// define
 Apple
 
@@ -44,23 +45,16 @@ Apple
 ///
 ```
 
-<div class="result" markdown>
-
-```md-render
----
-extensions:
-- pymdownx.blocks
----
-/// define
+/// html | div
+    attributes: {class: result}
+//// define
 Apple
 
 - Pomaceous fruit of plants of the genus Malus in
   the family Rosaceae.
 
+////
 ///
-```
-
-</div>
 
 Multiple terms and definitions can be define in the same block. The terms will all be under the same definition list.
 
@@ -78,14 +72,9 @@ Orange
 ///
 ```
 
-<div class="result" markdown>
-
-```md-render
----
-extensions:
-- pymdownx.blocks
----
-/// define
+/// html | div
+    attributes: {class: result}
+//// define
 Apple
 
 - Pomaceous fruit of plants of the genus Malus in
@@ -95,10 +84,8 @@ Orange
 
 - The fruit of an evergreen tree of the genus Citrus.
 
+////
 ///
-```
-
-</div>
 
 Also, multiple terms can be associated with the same definition.
 
@@ -117,14 +104,9 @@ Term 3
 ///
 ```
 
-<div class="result" markdown>
-
-```md-render
----
-extensions:
-- pymdownx.blocks
----
-/// define
+/// html | div
+    attributes: {class: result}
+//// define
 Term 1
 
 Term 2
@@ -134,10 +116,8 @@ Term 2
 Term 3
 
 - Definition b
+////
 ///
-```
-
-</div>
 
 ## Global Options
 

@@ -2,11 +2,12 @@
 
 # Admonition
 
-!!! warning "Alpha Release"
-    Blocks is currently only available in the Pymdown Extensions alpha release. It is a work in progress and API and
-    syntax are subject to change.
+/// warning | Alpha Release
+Blocks is currently only available in the Pymdown Extensions alpha release. It is a work in progress and API and
+syntax are subject to change.
 
-    Please provide feedback here: https://github.com/facelessuser/pymdown-extensions/discussions/1940.
+Please provide feedback here: https://github.com/facelessuser/pymdown-extensions/discussions/1940.
+///
 
 ## Overview
 
@@ -43,21 +44,14 @@ Some content
 ///
 ```
 
-<div class="result" markdown>
-
-```md-render
----
-extensions:
-- pymdownx.blocks
----
-/// admonition | Some title
+/// html | div
+    attributes: {class: result}
+//// admonition | Some title
     type: note
 
 Some content
+////
 ///
-```
-
-</div>
 
 
 Out of the box, Admonitions registers a number of shortcuts for common admonition types: note, attention, caution,
@@ -71,18 +65,12 @@ Some content
 ///
 ```
 
-<div class="result" markdown>
-
-```md-render
----
-extensions:
-- pymdownx.blocks
----
-/// note | Some title
+/// html | div
+    attributes: {class: result}
+//// note | Some title
 Some content
+////
 ///
-```
-</div>
 
 These default types can actually be overridden or extended by using the global `types` option. Keep in mind that names
 cannot conflict with other registered Block plugin names you are using.

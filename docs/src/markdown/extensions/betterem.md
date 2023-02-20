@@ -17,139 +17,133 @@ import markdown
 md = markdown.Markdown(extensions=['pymdownx.betterem'])
 ```
 
-!!! danger "Reminder"
-    Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this
-    extension!
+/// danger | Reminder
+Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this
+extension!
+///
 
 ## Rules
 
-!!! Note "Note"
-    For all examples on this page, underscores are __smart__ and asterisks are not.
+/// note | Note
+For all examples on this page, underscores are __smart__ and asterisks are not.
+///
 
 BetterEm requires that non-whitespace characters follow the opening token(s) and precede the closing token(s).
 
-!!! example "Whitespace Example"
+```text title="Whitespace Example"
+This * won't emphasize *
 
-    === "Output"
-        This * won't emphasize *
+This *will emphasize*
+```
 
-        This *will emphasize*
+/// html | div
+    attributes: {class: result}
+This * won't emphasize *
 
-    === "Markdown"
-
-        ```
-        This * won't emphasize *
-
-        This *will emphasize*
-        ```
+This *will emphasize*
+///
 
 BetterEm allows for a more natural nested token feel.
 
-!!! example "Nested Token Example"
+```text title="Nested Token Example"
+***I'm italic and bold* I am just bold.**
 
-    === "Output"
-        ***I'm italic and bold* I am just bold.**
+***I'm bold and italic!** I am just italic.*
+```
 
-        ***I'm bold and italic!** I am just italic.*
+/// html | div
+    attributes: {class: result}
+***I'm italic and bold* I am just bold.**
 
-    === "Markdown"
-
-        ```
-        ***I'm italic and bold* I am just bold.**
-
-        ***I'm bold and italic!** I am just italic.*
-        ```
+***I'm bold and italic!** I am just italic.*
+///
 
 BetterEm will try to prioritize the more sane option when nesting bold (`**`) between italic (`*`).
 
-!!! example "Prioritize Best Example"
+```text title="Prioritize Best Example"
+*I'm italic. **I'm bold and italic.** I'm also just italic.*
+```
 
-    === "Output"
-        *I'm italic. **I'm bold and italic.** I'm also just italic.*
+/// html | div
+    attributes: {class: result}
+*I'm italic. **I'm bold and italic.** I'm also just italic.*
+///
 
-    === "Markdown"
-
-        ```
-        *I'm italic. **I'm bold and italic.** I'm also just italic.*
-        ```
 
 BetterEm will ensure smart mode doesn't terminate in scenarios where there are a large amount of consecutive tokens
 inside.
 
-!!! example "Consecutive Token Example"
+```text title="Consecutive Token Example"
+___A lot of underscores____________is okay___
+```
 
-    === "Output"
-        ___A lot of underscores____________is okay___
-
-    === "Markdown"
-        ```
-        ___A lot of underscores____________is okay___
-        ```
+/// html | div
+    attributes: {class: result}
+___A lot of underscores____________is okay___
+///
 
 BetterEm will also ensure that smart mode breaks proper when an inner like token signifies an end.
 
-!!! example "Smart Break Example"
 
-    === "Output"
-        __This will all be bold __because of the placement of the center underscores.__
+```text title="Smart Break Example"
+__This will all be bold __because of the placement of the center underscores.__
 
-        __This will all be bold __ because of the placement of the center asterisks.__
+__This will all be bold __ because of the placement of the center underscores.__
 
-        __This will NOT all be bold__ because of the placement of the center underscores.__
+__This will NOT all be bold__ because of the placement of the center underscores.__
 
-        __This will all be bold_ because the token count is less than that of the surrounding.__
+__This will all be bold_ because of the token is less than that of the surrounding.__
+```
 
-    === "Markdown"
-        ```
-        __This will all be bold __because of the placement of the center underscores.__
+/// html | div
+    attributes: {class: result}
+__This will all be bold __because of the placement of the center underscores.__
 
-        __This will all be bold __ because of the placement of the center underscores.__
+__This will all be bold __ because of the placement of the center asterisks.__
 
-        __This will NOT all be bold__ because of the placement of the center underscores.__
+__This will NOT all be bold__ because of the placement of the center underscores.__
 
-        __This will all be bold_ because of the token is less than that of the surrounding.__
-        ```
-
+__This will all be bold_ because the token count is less than that of the surrounding.__
+///
 
 BetterEm will allow non-smart emphasis to contain "floating" like tokens.
 
-!!! example "Floating Token Example"
+```text title="Floating Token Example"
+*All will * be italic*
 
-    === "Output"
-         *All will * be italic*
+*All will *be italic*
 
-         *All will *be italic*
+*All will not* be italic*
 
-         *All will not* be italic*
+*All will not ** be italic*
 
-         *All will ** be italic*
+**All will * be bold**
 
-         **All will * be bold**
+**All will *be bold**
 
-         **All will *be bold**
+**All will not*** be bold**
 
-         **All will not*** be bold**
+**All will not *** be bold**
+```
 
-         **All will not ***be bold**
+/// html | div
+    attributes: {class: result}
+*All will * be italic*
 
-    === "Markdown"
-        ```
-        *All will * be italic*
+*All will *be italic*
 
-        *All will *be italic*
+*All will not* be italic*
 
-        *All will not* be italic*
+*All will ** be italic*
 
-        *All will not ** be italic*
+**All will * be bold**
 
-        **All will * be bold**
+**All will *be bold**
 
-        **All will *be bold**
+**All will not*** be bold**
 
-        **All will not*** be bold**
-
-        **All will not *** be bold**
-        ```
+**All will not ***be bold**
+///
 
 ## Options
 

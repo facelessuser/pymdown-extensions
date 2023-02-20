@@ -1,11 +1,12 @@
 [:octicons-file-code-24:][_details_block]{: .source-link }
 # Details
 
-!!! warning "Alpha Release"
-    Blocks is currently only available in the Pymdown Extensions alpha release. It is a work in progress and API and
-    syntax are subject to change.
+/// warning | Alpha Release
+Blocks is currently only available in the Pymdown Extensions alpha release. It is a work in progress and API and
+syntax are subject to change.
 
-    Please provide feedback here: https://github.com/facelessuser/pymdown-extensions/discussions/1940.
+Please provide feedback here: https://github.com/facelessuser/pymdown-extensions/discussions/1940.
+///
 
 ## Overview
 
@@ -34,7 +35,7 @@ md = markdown.Markdown(
 Admonitions can be specified using the generic block syntax and the name `details`. A summary can be specified in
 the header. Additionally, you can apply a specific type if like with admonitions if desired.
 
-``` title="Example: Details"
+```text title="Example: Details"
 /// details | Some summary
     type: note
 
@@ -42,25 +43,18 @@ Some content
 ///
 ```
 
-<div class="result" markdown>
-
-```md-render
----
-extensions:
-- pymdownx.blocks
----
-/// details | Some summary
+/// html | div
+    attributes: {class: result}
+//// details | Some summary
     type: note
 
 Some content
+////
 ///
-```
-
-</div>
 
 If you wish to specify a details as open (or not collapsed), simply use the option `open`.
 
-``` title="Example: Details Open"
+```text title="Example: Details Open"
 /// details | Some summary
     open: True
 
@@ -68,21 +62,14 @@ Some content
 ///
 ```
 
-<div class="result" markdown>
-
-```md-render
----
-extensions:
-- pymdownx.blocks
----
-/// details | Some summary
+/// html | div
+    attributes: {class: result}
+//// details | Some summary
     open: True
 
 Some content
+////
 ///
-```
-
-</div>
 
 Like admonitions, you can specify and register special shortcuts for certain details types, but unlike admonitions,
 details does not register any default types by default.

@@ -2,11 +2,12 @@
 
 # Tab
 
-!!! warning "Alpha Release"
-    Blocks is currently only available in the Pymdown Extensions alpha release. It is a work in progress and API and
-    syntax are subject to change.
+/// warning | Alpha Release
+Blocks is currently only available in the Pymdown Extensions alpha release. It is a work in progress and API and
+syntax are subject to change.
 
-    Please provide feedback here: https://github.com/facelessuser/pymdown-extensions/discussions/1940.
+Please provide feedback here: https://github.com/facelessuser/pymdown-extensions/discussions/1940.
+///
 
 ## Overview
 
@@ -35,7 +36,7 @@ md = markdown.Markdown(
 A tab can be defined using the generic bock syntax and the name `tab`. Tabs should also specify the tab title in the
 header. Consecutive tabs will automatically be grouped.
 
-``` title="Example: Tabs"
+```text title="Example: Tabs"
 /// tab | Tab 1 title
 Tab 1 content
 ///
@@ -45,22 +46,22 @@ Tab 2 content
 ///
 ```
 
-<div class="result" markdown>
+/// html | div
+    attributes: {class: result}
 
-<!-- Rendering with old style as we have not switched over to general blocks globally in the documentation -->
+//// tab | Tab 1 title
+Tab 1 content
+////
 
-=== "Tab 1 title"
-    Tab 1 content
-
-=== "Tab 2 title"
-    Tab 2 content
-
-</div>
+//// tab | Tab 2 title
+Tab 2 content
+////
+///
 
 If you want to have two tab containers right after each other, you specify a hard break that will force the specified
 tab to start a brand new tab container.
 
-``` title="Example: New Tab Group"
+```text title="Example: New Tab Group"
 /// tab | Tab A title
 Tab A content
 ///
@@ -70,26 +71,28 @@ Tab B content
 ///
 
 /// tab | Tab C Title
-    new: True
+    new: true
 
 Will be part of a separate, new tab group.
 ///
 ```
 
-<div class="result" markdown>
+/// html | div
+    attributes: {class: result}
 
-<!-- Rendering with old style as we have not switched over to general blocks globally in the documentation -->
+//// tab | Tab A title
+Tab A content
+////
 
-=== "Tab A title"
-    Tab A content
+//// tab | Tab B title
+Tab B content
+////
 
-=== "Tab B title"
-    Tab B content
-
-===! "Tab C title"
-    Will be part of a separate, new tab group.
-
-</div>
+//// tab | Tab C title
+    new: true
+Will be part of a separate, new tab group.
+////
+///
 
 If desired, you can specify a tab to be selected by default with the `select` option.
 

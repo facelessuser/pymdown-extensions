@@ -19,9 +19,10 @@ the same ones.
 This extension is a convenience extension, and it currently provides no other additional features.  But remember **don't
 use `pymdownx.extra` while also using `markdown.extensions.extra`**!
 
-!!! danger "Reminder"
-    Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this
-    extension!
+/// danger | Reminder
+Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this
+extension!
+///
 
 Extensions:
 

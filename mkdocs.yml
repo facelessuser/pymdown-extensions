@@ -29,6 +29,8 @@ theme:
     - search.share
     - search.highlight
     - search.suggest
+    - content.code.copy
+    - content.code.annotations
   pymdownx:
     sponsor: "https://github.com/sponsors/facelessuser"
 
@@ -166,6 +168,36 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.saneheaders:
+  - pymdownx.blocks:
+      blocks:
+      - pymdownx.blocks.admonition:Admonition
+      - pymdownx.blocks.details:Details
+      - pymdownx.blocks.html:HTML
+      - pymdownx.blocks.definition:Definition
+      - pymdownx.blocks.tab:Tab
+      - tools.collapse_code:CollapseCode
+      block_configs:
+        tab:
+          alternate_style: True
+        admonition:
+          types:
+          - new
+          - settings
+          - note
+          - abstract
+          - info
+          - tip
+          - success
+          - question
+          - warning
+          - failure
+          - danger
+          - bug
+          - example
+          - quote
+        collapse-code:
+          expand_text: ''
+          collapse_text: ''
 
 extra:
   social:
@@ -175,7 +207,7 @@ extra:
       link: https://discord.gg/TWs8Tgr
 extra_css:
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css
-  - assets/pymdownx-extras/extra-3336dc2a95.css
+  - assets/pymdownx-extras/extra-2ad004b9cf.css
 extra_javascript:
   - https://unpkg.com/mermaid@9.1.7/dist/mermaid.min.js
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js
