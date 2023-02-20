@@ -6,7 +6,11 @@ class TestDetails(util.MdCase):
     """Test Details."""
 
     extension = ['pymdownx.details', 'markdown.extensions.def_list']
-    extension_configs = {}
+    extension_configs = {
+        'pymdownx.blocks': {
+            'blocks': ['pymdownx.blocks.details:Details']
+        }
+    }
 
     def test_with_preceding_text(self):
         """Test content right before details."""

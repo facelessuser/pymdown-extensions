@@ -9,6 +9,7 @@ class TestLegacyTabSlugs(util.MdCase):
     extension = ['pymdownx.blocks', 'toc']
     extension_configs = {
         'pymdownx.blocks': {
+            'blocks': ['pymdownx.blocks.tab:Tab'],
             'block_configs': {
                 'tab': {'slugify': slugify(case='lower')}
             }
@@ -52,6 +53,7 @@ class TestLegacyTabSlugsSep(util.MdCase):
     extension = ['pymdownx.blocks', 'toc']
     extension_configs = {
         'pymdownx.blocks': {
+            'blocks': ['pymdownx.blocks.tab:Tab'],
             'block_configs': {
                 'tab': {'slugify': slugify(case='lower'), 'separator': '_'}
             }
@@ -93,6 +95,11 @@ class TestBlocksLegacyTab(util.MdCase):
     """Test Blocks legacy tab cases."""
 
     extension = ['pymdownx.blocks', 'pymdownx.superfences', 'markdown.extensions.def_list', 'pymdownx.details']
+    extension_configs = {
+        'pymdownx.blocks': {
+            'blocks': ['pymdownx.blocks.tab:Tab']
+        }
+    }
 
     def test_tabbed_select(self):
         """Test selecting a tab."""

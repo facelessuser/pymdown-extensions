@@ -8,6 +8,7 @@ class TestBlocksDetails(util.MdCase):
     extension = ['pymdownx.blocks']
     extension_configs = {
         'pymdownx.blocks': {
+            'blocks': ['pymdownx.blocks.details:Details'],
             'block_configs': {
                 'details': {
                     'types': ['custom']

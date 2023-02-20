@@ -176,7 +176,10 @@ class TestGeneral(unittest.TestCase):
                 '/// override\n///',
                 extensions=['pymdownx.blocks'],
                 extension_configs={
-                    'pymdownx.blocks': {'block_configs': {'admonition': {'types': ['danger', 'danger']}}}
+                    'pymdownx.blocks': {
+                        'blocks': ['pymdownx.blocks.admonition:Admonition'],
+                        'block_configs': {'admonition': {'types': ['danger', 'danger']}}
+                    }
                 }
             )
 
@@ -357,7 +360,12 @@ class TestAlternateSyntax(util.MdCase):
     """Test the alpha/beta alternate syntax."""
 
     extension = ['pymdownx.blocks']
-    extension_configs = {'pymdownx.blocks': {'colon_syntax': True}}
+    extension_configs = {
+        'pymdownx.blocks': {
+            'blocks': ['pymdownx.blocks.html:HTML'],
+            'colon_syntax': True
+        }
+    }
 
     def test_colon_syntax(self):
         """Test the colon syntax."""
@@ -634,6 +642,7 @@ class TestBlocksTab(util.MdCase):
     extension = ['pymdownx.blocks', 'pymdownx.superfences', 'markdown.extensions.def_list', 'pymdownx.details']
     extension_configs = {
         'pymdownx.blocks': {
+            'blocks': ['pymdownx.blocks.tab:Tab'],
             'block_configs': {
                 'tab': {
                     'alternate_style': True

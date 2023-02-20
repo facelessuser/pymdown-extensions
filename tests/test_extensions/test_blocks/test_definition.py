@@ -6,7 +6,11 @@ class TestBlocksDefinition(util.MdCase):
     """Test Blocks admonitions cases."""
 
     extension = ['pymdownx.blocks']
-    extension_configs = {}
+    extension_configs = {
+        'pymdownx.blocks': {
+            'blocks': ['pymdownx.blocks.definition:Definition', 'pymdownx.blocks.html:HTML']
+        }
+    }
 
     def test_def(self):
         """Test definition."""

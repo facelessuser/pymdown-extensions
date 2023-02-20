@@ -9,6 +9,7 @@ class TestTabSlugs(util.MdCase):
     extension = ['pymdownx.blocks', 'toc']
     extension_configs = {
         'pymdownx.blocks': {
+            'blocks': ['pymdownx.blocks.tab:Tab'],
             'block_configs': {
                 'tab': {
                     'slugify': slugify(case='lower'),
@@ -58,6 +59,7 @@ class TestTabSlugsSep(util.MdCase):
     extension = ['pymdownx.blocks', 'toc']
     extension_configs = {
         'pymdownx.blocks': {
+            'blocks': ['pymdownx.blocks.tab:Tab'],
             'block_configs': {
                 'tab': {
                     'slugify': slugify(case='lower'),
@@ -108,6 +110,7 @@ class TestBlocksTab(util.MdCase):
     extension = ['pymdownx.blocks', 'pymdownx.superfences', 'markdown.extensions.def_list', 'pymdownx.details']
     extension_configs = {
         'pymdownx.blocks': {
+            'blocks': ['pymdownx.blocks.tab:Tab'],
             'block_configs': {
                 'tab': {
                     'alternate_style': True
