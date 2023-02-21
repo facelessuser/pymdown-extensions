@@ -18,9 +18,7 @@ from pymdownx.blocks.definition import Definition
 md = markdown.Markdown(
     extensions=['pymdownx.blocks']
     extension_configs={
-        'pymdownx.blocks': {
-            'blocks': [Definition]
-        }
+        'pymdownx.blocks': {Definition: None}
     }
 )
 ```

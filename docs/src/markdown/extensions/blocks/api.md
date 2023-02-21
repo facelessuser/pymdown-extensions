@@ -12,9 +12,9 @@ Markdown content.
 ///
 ```
 
-In addition, there are sometimes global options for a specific block type are supplied through the `block_configs`
-plugin option. Such options would control features for the specific block type they are defined for and would affect all
-the blocks of that type globally.
+In addition, there are sometimes global options for a specific block type are supplied at registration time. Such
+options would control features for the specific block type they are defined for and would affect all the blocks of that
+type globally.
 
 ## Creating a Plugin
 
@@ -58,7 +58,7 @@ print(markdown.markdown(
     extensions=['pymdownx.blocks'],
     extension_configs={
         'pymdownx.blocks': {
-            'blocks': [MyBlock]
+            'blocks': {MyBlock: None}
         }
     }
 ))

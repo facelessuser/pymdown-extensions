@@ -133,7 +133,7 @@ class TestGeneral(unittest.TestCase):
             markdown.markdown(
                 '/// override\n///',
                 extensions=['pymdownx.blocks'],
-                extension_configs={'pymdownx.blocks': {'blocks': [AttrOverride]}}
+                extension_configs={'pymdownx.blocks': {'blocks': {AttrOverride: None}}}
             )
 
     def test_duplicate_blocks(self):
@@ -145,8 +145,7 @@ class TestGeneral(unittest.TestCase):
                 extensions=['pymdownx.blocks'],
                 extension_configs={
                     'pymdownx.blocks': {
-                        'blocks': ['pymdownx.blocks.admonition:Admonition'],
-                        'block_configs': {'admonition': {'types': ['danger', 'danger']}}
+                        'blocks': {'pymdownx.blocks.admonition:Admonition': {'types': ['danger', 'danger']}}
                     }
                 }
             )
@@ -166,7 +165,7 @@ class TestBlockUndefinedOption(util.MdCase):
             return etree.SubElement(parent, 'div')
 
     extension = ['pymdownx.blocks']
-    extension_configs = {'pymdownx.blocks': {'blocks': [UndefinedBlock]}}
+    extension_configs = {'pymdownx.blocks': {'blocks': {UndefinedBlock: None}}}
 
     def test_undefined_option(self):
         """An undefined option will cause the block parsing to fail."""
@@ -214,7 +213,7 @@ class TestMiscCases(util.MdCase):
             return etree.SubElement(parent, 'span')
 
     extension = ['pymdownx.blocks', 'pymdownx.superfences']
-    extension_configs = {'pymdownx.blocks': {'blocks': [MiscBlock, MiscInline]}}
+    extension_configs = {'pymdownx.blocks': {'blocks': {MiscBlock: None, MiscInline: None}}}
 
     def test_general_config(self):
         """Test that content block should have a blank line between config."""
@@ -339,7 +338,7 @@ class TestMiscYAMLFenceCases(util.MdCase):
             return etree.SubElement(parent, 'div', {'test': self.options['test']})
 
     extension = ['pymdownx.blocks', 'pymdownx.superfences']
-    extension_configs = {'pymdownx.blocks': {'blocks': [MiscBlock]}}
+    extension_configs = {'pymdownx.blocks': {'blocks': {MiscBlock: None}}}
 
     def test_no_config(self):
         """Test no YAML config and no new line."""
@@ -435,7 +434,7 @@ class TestBadArgOptionParsers(util.MdCase):
             return etree.SubElement(parent, 'div')
 
     extension = ['pymdownx.blocks']
-    extension_configs = {'pymdownx.blocks': {'blocks': [FailBlock]}}
+    extension_configs = {'pymdownx.blocks': {'blocks': {FailBlock: None}}}
 
     def test_fail_args(self):
         """Test failure of arguments."""
@@ -523,7 +522,7 @@ class TestBlockSplit(util.MdCase):
             return etree.SubElement(parent, 'div', {self.args[0]: '0', self.args[1]: '1'})
 
     extension = ['pymdownx.blocks']
-    extension_configs = {'pymdownx.blocks': {'blocks': [SplitBlock]}}
+    extension_configs = {'pymdownx.blocks': {'blocks': {SplitBlock: None}}}
 
     def test_split(self):
         """Test that attributes cannot be overridden."""
@@ -576,7 +575,7 @@ class TestAttributes(util.MdCase):
     extension = ['pymdownx.blocks']
     extension_configs = {
         'pymdownx.blocks': {
-            'blocks': ['pymdownx.blocks.admonition:Admonition']
+            'blocks': {'pymdownx.blocks.admonition:Admonition': None}
         }
     }
 
@@ -663,12 +662,7 @@ class TestBlocksTab(util.MdCase):
     extension = ['pymdownx.blocks', 'pymdownx.superfences', 'markdown.extensions.def_list', 'pymdownx.details']
     extension_configs = {
         'pymdownx.blocks': {
-            'blocks': ['pymdownx.blocks.tab:Tab'],
-            'block_configs': {
-                'tab': {
-                    'alternate_style': True
-                }
-            }
+            'blocks': {'pymdownx.blocks.tab:Tab': {'alternate_style': True}}
         }
     }
 

@@ -8,12 +8,7 @@ class TestBlocksAdmonitions(util.MdCase):
     extension = ['pymdownx.blocks']
     extension_configs = {
         'pymdownx.blocks': {
-            'blocks': ['pymdownx.blocks.admonition:Admonition'],
-            'block_configs': {
-                'admonition': {
-                    'types': ['note', 'custom']
-                }
-            }
+            'blocks': {'pymdownx.blocks.admonition:Admonition': {'types': ['note', 'custom']}}
         }
     }
 

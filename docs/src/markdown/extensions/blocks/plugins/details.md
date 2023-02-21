@@ -18,8 +18,8 @@ md = markdown.Markdown(
     extensions=['pymdownx.blocks']
     extension_configs={
         'pymdownx.blocks': {
-            'blocks': [Details]
-            # Use block_configs to set block specific global settings
+            # Use {Details: {'option1': 'value', ...}} to set block specific global settings
+            'pymdownx.blocks': {Details: None}
         }
     }
 )

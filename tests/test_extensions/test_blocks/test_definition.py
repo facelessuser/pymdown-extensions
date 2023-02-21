@@ -8,7 +8,7 @@ class TestBlocksDefinition(util.MdCase):
     extension = ['pymdownx.blocks']
     extension_configs = {
         'pymdownx.blocks': {
-            'blocks': ['pymdownx.blocks.definition:Definition', 'pymdownx.blocks.html:HTML']
+            'blocks': {'pymdownx.blocks.definition:Definition': None, 'pymdownx.blocks.html:HTML': None}
         }
     }
 

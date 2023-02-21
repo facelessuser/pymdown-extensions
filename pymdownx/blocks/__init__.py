@@ -125,16 +125,17 @@ class BlocksProcessor(BlockProcessor):
 
         self.md = md
 
+
         blocks = config['blocks']
 
         if not blocks:  # pragma: no cover
-            blocks = []
+            blocks = {}
 
         # The Block classes indexable by name
         self.blocks = {}
         self.config = {}
-        for b in blocks:
-            self.register(b, config['block_configs'])
+        for blk, cfg in blocks.items():
+            self.register(blk, cfg if cfg is not None else {})
 
         self.empty_tags = set(['hr'])
         self.block_level_tags = set(md.block_level_elements.copy())
@@ -181,12 +182,10 @@ class BlocksProcessor(BlockProcessor):
         if isinstance(b, str):
             b = self._import(b)
 
-        c = config.get(b.NAME, {})
-
         if b.NAME in self.blocks:
             raise ValueError('The block name {} is already registered!'.format(b.NAME))
         self.blocks[b.NAME] = b
-        self.config[b.NAME] = self.set_configs(b.CONFIG, c)
+        self.config[b.NAME] = self.set_configs(b.CONFIG, config)
         b.on_register(self, self.md, self.config.get(b.NAME, {}))
 
     def set_configs(self, default, config):
@@ -453,8 +452,7 @@ class BlocksExtension(Extension):
         """Initialize."""
 
         self.config = {
-            'blocks': [[], "Blocks extensions to load, if not defined, the default ones will be loaded."],
-            'block_configs': [{}, "Global configuration for a given block."]
+            'blocks': [{}, "Blocks extensions to load, if not defined, the default ones will be loaded."],
         }
 
         super().__init__(*args, **kwargs)

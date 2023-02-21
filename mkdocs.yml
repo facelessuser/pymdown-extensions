@@ -171,16 +171,7 @@ markdown_extensions:
   - pymdownx.saneheaders:
   - pymdownx.blocks:
       blocks:
-      - pymdownx.blocks.admonition:Admonition
-      - pymdownx.blocks.details:Details
-      - pymdownx.blocks.html:HTML
-      - pymdownx.blocks.definition:Definition
-      - pymdownx.blocks.tab:Tab
-      - tools.collapse_code:CollapseCode
-      block_configs:
-        tab:
-          alternate_style: True
-        admonition:
+        pymdownx.blocks.admonition:Admonition:
           types:
           - new
           - settings
@@ -196,7 +187,12 @@ markdown_extensions:
           - bug
           - example
           - quote
-        collapse-code:
+        pymdownx.blocks.details:Details:
+        pymdownx.blocks.html:HTML:
+        pymdownx.blocks.definition:Definition:
+        pymdownx.blocks.tab:Tab:
+          alternate_style: True
+        tools.collapse_code:CollapseCode:
           expand_text: ''
           collapse_text: ''
 

@@ -18,10 +18,8 @@ from pymdownx.blocks.tab import Tab
 md = markdown.Markdown(
     extensions=['pymdownx.blocks']
     extension_configs={
-        'pymdownx.blocks': {
-            'blocks': [Tab]
-            # Use block_configs to set block specific global settings
-        }
+        # Use {Tab: {'option1': 'value', ...}} to set block specific global settings
+        'pymdownx.blocks': {Tab: None}
     }
 )
 ```

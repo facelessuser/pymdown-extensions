@@ -52,8 +52,8 @@ Plugin                                  |  Description
 
 ## Configuring Meta-Plugins
 
-By default, all meta-plugins are included, but you can specify the plugins you desire to use and configure them via the
-`blocks` and `block_configs` options.
+By default, no meta-plugins are included, but you can specify the plugins you desire to use and configure them via the
+`blocks` option.
 
 ```py
 import markdown
@@ -63,11 +63,8 @@ md = markdown.Markdown(
     extensions=['pymdownx.blocks'],
     extension_configs={
         'pymdownx.blocks': {
-            'blocks': [Admonition],
-            'block_configs': {
-                "admonition": {
-                    'types': ['note', 'warning', 'some-custom-type']
-                }
+            'blocks': {
+                Admonition: {'types': ['note', 'warning', 'some-custom-type']}
             }
         }
     }
@@ -89,11 +86,8 @@ md = markdown.Markdown(
     extensions=['pymdownx.blocks'],
     extension_configs={
         'pymdownx.blocks': {
-            'blocks': ['pymdownx.blocks.admonition:Admonition'],
-            'block_configs': {
-                "admonition": {
-                    'types': ['note', 'warning', 'some-custom-type']
-                }
+            'blocks': {
+                'pymdownx.blocks.admonition:Admonition': {'types': ['note', 'warning', 'some-custom-type']}
             }
         }
     }

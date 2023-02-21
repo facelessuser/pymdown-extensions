@@ -9,10 +9,7 @@ class TestLegacyTabSlugs(util.MdCase):
     extension = ['pymdownx.blocks', 'toc']
     extension_configs = {
         'pymdownx.blocks': {
-            'blocks': ['pymdownx.blocks.tab:Tab'],
-            'block_configs': {
-                'tab': {'slugify': slugify(case='lower')}
-            }
+            'blocks': {'pymdownx.blocks.tab:Tab': {'slugify': slugify(case='lower')}},
         }
     }
 
@@ -53,10 +50,7 @@ class TestLegacyTabSlugsSep(util.MdCase):
     extension = ['pymdownx.blocks', 'toc']
     extension_configs = {
         'pymdownx.blocks': {
-            'blocks': ['pymdownx.blocks.tab:Tab'],
-            'block_configs': {
-                'tab': {'slugify': slugify(case='lower'), 'separator': '_'}
-            }
+            'blocks': {'pymdownx.blocks.tab:Tab': {'slugify': slugify(case='lower'), 'separator': '_'}}
         }
     }
 
@@ -97,7 +91,7 @@ class TestBlocksLegacyTab(util.MdCase):
     extension = ['pymdownx.blocks', 'pymdownx.superfences', 'markdown.extensions.def_list', 'pymdownx.details']
     extension_configs = {
         'pymdownx.blocks': {
-            'blocks': ['pymdownx.blocks.tab:Tab']
+            'blocks': {'pymdownx.blocks.tab:Tab': None}
         }
     }
 

@@ -18,8 +18,7 @@ md = markdown.Markdown(
     extensions=['pymdownx.blocks']
     extension_configs={
         'pymdownx.blocks': {
-            'blocks': [HTML]
-            # Use block_configs to set block specific global settings
+            'pymdownx.blocks': {HTML: None}
         }
     }
 )
