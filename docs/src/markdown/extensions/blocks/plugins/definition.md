@@ -45,8 +45,7 @@ Apple
 ///
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 //// define
 Apple
 
@@ -72,8 +71,7 @@ Orange
 ///
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 //// define
 Apple
 
@@ -104,8 +102,7 @@ Term 3
 ///
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 //// define
 Term 1
 
@@ -119,6 +116,18 @@ Term 3
 ////
 ///
 
+As with all block plugins, you can always add new classes IDs or other attributes via the `attributes` option.
+
+```
+/// define
+    $: .class-a.class-b
+
+Term 1
+
+- Definition a
+///
+```
+
 ## Global Options
 
 Definitions provide no global options.
@@ -127,4 +136,4 @@ Definitions provide no global options.
 
 Options      | Type       | Descriptions
 ------------ | ---------- | ------------
-`attributes` | dictionary | A dictionary containing keys (attributes) and values (attribute values).
+`$`          | string     | A string that defines attributes for the outer, wrapper element.

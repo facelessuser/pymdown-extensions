@@ -32,8 +32,7 @@ disabled and will capture any `#!tex $...$` whose dollar symbols are not escaped
 $p(x|y) = \frac{p(y|x)p(x)}{p(y)}$, \(p(x|y) = \frac{p(y|x)p(x)}{p(y)}\).
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 $p(x|y) = \frac{p(y|x)p(x)}{p(y)}$, \(p(x|y) = \frac{p(y|x)p(x)}{p(y)}\).
 ///
 
@@ -69,8 +68,7 @@ $$
 \end{align}
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 $$
 E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
 $$
@@ -333,8 +331,7 @@ see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify funct
 `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
 ///
 
@@ -366,8 +363,7 @@ extension_config = {
 ```
 ````
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```math
 \begin{align}
     p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\

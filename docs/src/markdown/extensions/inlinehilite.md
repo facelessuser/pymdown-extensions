@@ -17,8 +17,7 @@ Here is some code: `#!py3 import pymdownx; pymdownx.__version__`.
 The mock shebang will be treated like text here: ` #!js var test = 0; `.
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 Here is some code: `#!py3 import pymdownx; pymdownx.__version__`
 
 The mock shebang will be treated like text here: ` #!js var test = 0; `.
@@ -68,8 +67,7 @@ Like [SuperFences](./superfences.md), InlineHilite now provides a support for cu
 `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
 ///
 

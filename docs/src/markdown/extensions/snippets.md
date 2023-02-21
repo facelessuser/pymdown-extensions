@@ -177,8 +177,7 @@ notation will be passed through the Markdown parser with the first `;` removed.
 ```
 ````
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```
 ;--8<-- "escaped.md"
 ;;--8<-- "escaped.md"

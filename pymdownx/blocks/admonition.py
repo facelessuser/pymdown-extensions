@@ -1,6 +1,6 @@
 """Admonitions."""
 import xml.etree.ElementTree as etree
-from .block import Block, type_html_class
+from .block import Block
 import re
 
 RE_SEP = re.compile(r'[_-]+')
@@ -24,9 +24,6 @@ class Admonition(Block):
 
     NAME = 'admonition'
     ARGUMENTS = {'optional': 1}
-    OPTIONS = {
-        'type': ['', type_html_class],
-    }
     CONFIG = {
         "types": ['note', 'attention', 'caution', 'danger', 'error', 'tip', 'hint', 'warning']
     }
@@ -43,8 +40,15 @@ class Admonition(Block):
     def on_parse(self):
         """Handle on parse event."""
 
+        self.type = ''
+        self.declared_type = ''
         if self.NAME != 'admonition':
-            self.options['type'] = self.NAME
+            self.type = self.NAME
+            self.declared_type = self.type
+        else:
+            classes = self.options.get('$', {}).get('class', '').split(' ')
+            if classes and classes[0]:
+                self.declared_type = classes[0]
         return True
 
     def on_create(self, parent):
@@ -52,19 +56,18 @@ class Admonition(Block):
 
         # Set classes
         classes = ['admonition']
-        atype = self.options['type']
-        if atype and atype != 'admonition':
-            classes.append(atype)
+        if self.type and self.type != 'admonition':
+            classes.append(self.type)
 
         # Create the admonition
         el = etree.SubElement(parent, 'div', {'class': ' '.join(classes)})
 
         # Create the title
         if not self.args:
-            if not atype:
+            if not self.declared_type:
                 title = None
             else:
-                title = atype.capitalize()
+                title = self.declared_type.capitalize()
         else:
             title = self.args[0]
 

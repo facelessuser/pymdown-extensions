@@ -24,8 +24,7 @@ the [options](#options). Smart behavior of **insert** models that of [BetterEm](
 ^^Insert me^^
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ^^Insert me^^
 ///
 
@@ -40,8 +39,7 @@ H^2^0
 text^a\ superscript^
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 H^2^0
 
 text^a\ superscript^

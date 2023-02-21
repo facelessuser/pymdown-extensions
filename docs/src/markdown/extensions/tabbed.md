@@ -33,8 +33,7 @@ Tabs start with `===` to signify a tab followed by a quoted title. Consecutive t
     - list item b
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 
 === "Tab 1"
     Markdown **content**.
@@ -72,8 +71,7 @@ of a new tab set with `!`.
     ```
 ````
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 
 === "Tab 1"
     Markdown **content**.

@@ -1,7 +1,6 @@
 """HTML."""
 import xml.etree.ElementTree as etree
-from .block import Block, type_string_in, type_html_tag
-import re
+from .block import Block, type_string_in, parse_selectors
 
 
 class HTML(Block):
@@ -23,8 +22,6 @@ class HTML(Block):
     """
 
     NAME = 'html'
-    TAG = re.compile('^[a-z][a-z0-9-]*$', re.I)
-
     ARGUMENTS = {'required': 1}
     OPTIONS = {
         'markdown': ['auto', type_string_in(['auto', 'span', 'block', 'raw'])]
@@ -40,7 +37,7 @@ class HTML(Block):
         """Handle argument parsing."""
 
         try:
-            type_html_tag(self.args[0])
+            self.tag, self.attr = parse_selectors(self.args[0])
         except ValueError:
             return False
 
@@ -55,4 +52,4 @@ class HTML(Block):
         """Create the element."""
 
         # Create element
-        return etree.SubElement(parent, self.args[0].lower())
+        return etree.SubElement(parent, self.tag.lower(), self.attr)

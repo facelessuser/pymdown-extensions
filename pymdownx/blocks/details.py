@@ -1,6 +1,6 @@
 """Details."""
 import xml.etree.ElementTree as etree
-from .block import Block, type_html_class, type_boolean
+from .block import Block, type_boolean
 import re
 
 RE_SEP = re.compile(r'[_-]+')
@@ -27,8 +27,7 @@ class Details(Block):
 
     ARGUMENTS = {'optional': 1}
     OPTIONS = {
-        'open': [False, type_boolean],
-        'type': ['', type_html_class]
+        'open': [False, type_boolean]
     }
 
     CONFIG = {
@@ -49,8 +48,15 @@ class Details(Block):
     def on_parse(self):
         """Handle on parse event."""
 
+        self.type = ''
+        self.declared_type = ''
         if self.NAME != 'details':
-            self.options['type'] = self.NAME
+            self.type = self.NAME
+            self.declared_type = self.type
+        else:
+            classes = self.options.get('$', {}).get('class', '').split(' ')
+            if classes and classes[0]:
+                self.declared_type = classes[0]
         return True
 
     def on_create(self, parent):
@@ -62,19 +68,18 @@ class Details(Block):
             attributes['open'] = 'open'
 
         # Set classes
-        dtype = self.options['type']
-        if dtype:
-            attributes['class'] = dtype
+        if self.type:
+            attributes['class'] = self.type
 
         # Create Detail element
         el = etree.SubElement(parent, 'details', attributes)
 
         # Create the summary
         if not self.args:
-            if not dtype:
+            if not self.declared_type:
                 summary = None
             else:
-                summary = dtype.capitalize()
+                summary = self.declared_type.capitalize()
         else:
             summary = self.args[0]
 

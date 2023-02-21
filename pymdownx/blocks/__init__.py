@@ -139,7 +139,7 @@ class BlocksProcessor(BlockProcessor):
 
         blocks = config['blocks']
 
-        if not blocks:
+        if not blocks:  # pragma: no cover
             blocks = []
 
         # The Block classes indexable by name

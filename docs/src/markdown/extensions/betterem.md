@@ -36,8 +36,7 @@ This * won't emphasize *
 This *will emphasize*
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 This * won't emphasize *
 
 This *will emphasize*
@@ -51,8 +50,7 @@ BetterEm allows for a more natural nested token feel.
 ***I'm bold and italic!** I am just italic.*
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ***I'm italic and bold* I am just bold.**
 
 ***I'm bold and italic!** I am just italic.*
@@ -64,8 +62,7 @@ BetterEm will try to prioritize the more sane option when nesting bold (`**`) be
 *I'm italic. **I'm bold and italic.** I'm also just italic.*
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 *I'm italic. **I'm bold and italic.** I'm also just italic.*
 ///
 
@@ -77,8 +74,7 @@ inside.
 ___A lot of underscores____________is okay___
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ___A lot of underscores____________is okay___
 ///
 
@@ -95,8 +91,7 @@ __This will NOT all be bold__ because of the placement of the center underscores
 __This will all be bold_ because of the token is less than that of the surrounding.__
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 __This will all be bold __because of the placement of the center underscores.__
 
 __This will all be bold __ because of the placement of the center asterisks.__
@@ -126,8 +121,7 @@ BetterEm will allow non-smart emphasis to contain "floating" like tokens.
 **All will not *** be bold**
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 *All will * be italic*
 
 *All will *be italic*

@@ -101,8 +101,7 @@ import hello_world
 ```
 ````
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```html
 <div class="extra-class highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div><pre><span></span><code><span cv></td><td class="code"><div><pre><span></span><code><span class="kn">import</span> <spanlass="kn">import</span> <span class="nn">hello_world</span>\n</code></pre></div>\n</td></tr></table></div>
 ```
@@ -117,8 +116,7 @@ import hello_world
 ```
 ````
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```html
 <pre id="id" class="highlight"><code class="extra-class language-python linenums">import hello_world</code></pre>
 ```
@@ -152,8 +150,7 @@ B♭  Gm  Cm  F   Dm  E♭m F7  B♭
 ```
 ````
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```
 ============================================================
 T	Tp	Sp	D	Dp	S	D7	T
@@ -192,8 +189,7 @@ import foo.bar
 ```
 ````
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```python
 import foo.bar
 ```
@@ -215,8 +211,7 @@ import foo.bar
 ```
 ````
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```{.python linenums="1"}
 import foo.bar
 ```
@@ -231,8 +226,7 @@ import foo.bar
 ```
 ````
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```{.python linenums="2"}
 import foo.bar
 ```
@@ -255,8 +249,7 @@ import foo.bar.baz
 ```
 ````
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ``` {.python linenums="1 2"}
 """Some file."""
 import foo.bar
@@ -278,8 +271,7 @@ import foo.bar.baz
 ```
 ````
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ``` {linenums="1 1 2"}
 """Some file."""
 import foo.bar
@@ -307,8 +299,7 @@ import foo.bar.baz
 ```
 ````
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```{.python hl_lines="1 3"}
 """Some file."""
 import foo.bar
@@ -329,8 +320,7 @@ import foo.bar.baz
 ```
 ````
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```{.py3 hl_lines="1 3" linenums="2"}
 """Some file."""
 import foo.bar
@@ -356,8 +346,7 @@ class Foo:
 ```
 ````
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```{.py3 hl_lines="1-2 5 7-8"}
 import foo
 import boo.baz
@@ -416,8 +405,7 @@ import foo.bar.baz
 ```
 ````
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```{.py3 title="My Cool Header"}
 import foo.bar
 import boo.baz
@@ -437,8 +425,7 @@ import foo.bar.baz
 ```
 ````
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ````md-render
 ---
 extensions:
@@ -467,8 +454,7 @@ lexer, the title that is returned is quite verbose.
 ```
 ````
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ````md-render
 ---
 extensions:
@@ -624,8 +610,7 @@ graph TD
 ```
 ````
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```diagram
 graph TD
     A[Hard] -->|Text| B(Round)

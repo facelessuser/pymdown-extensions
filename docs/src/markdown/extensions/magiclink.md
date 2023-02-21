@@ -44,8 +44,7 @@ part of links. If you have a link that cannot be detected, you can always use th
 - Or even an email address: fake.email@email.com.
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```md-render
 ---
 extensions:
@@ -130,8 +129,7 @@ default, use the format `@{provider}:{user}`
 @twitter:twitter
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```md-render
 ---
 extensions:
@@ -167,8 +165,7 @@ style it with CSS to make it stand out more like has been done in this document.
 @gitlab:pycqa/flake8
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```md-render
 ---
 extensions:
@@ -226,8 +223,7 @@ Python-Markdown/markdown!598
 gitlab:pycqa/flake8!213
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```md-render
 ---
 extensions:
@@ -289,8 +285,7 @@ Python-Markdown/markdown@de5c696f94e8dde242c29d4be50b7bbf3c17fedb
 gitlab:pycqa/flake8@8acf55e0f85233c51c291816d73d828cc62d30d1
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```md-render
 ---
 extensions:
@@ -338,8 +333,7 @@ Python-Markdown/markdown@007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8
 gitlab:pycqa/flake8@1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```md-render
 ---
 extensions:
@@ -380,8 +374,7 @@ If we specify long form URLs from external providers, they will be shortened app
 - https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```md-render
 ---
 extensions:
@@ -416,8 +409,7 @@ differently in light of that context.
 - https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```md-render
 ---
 extensions:

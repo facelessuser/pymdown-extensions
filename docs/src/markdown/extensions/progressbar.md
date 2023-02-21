@@ -23,8 +23,7 @@ quotes.
 [=100% "100%"]
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 [=0% "0%"]
 [=5% "5%"]
 [=25% "25%"]
@@ -50,8 +49,7 @@ Though progress bars are rendered as block items, it accepts `attr_list`'s inlin
 [=100%]{: .thin}
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 [=85% "85%"]{: .candystripe}
 [=100% "100%"]{: .candystripe .candystripe-animate}
 
@@ -63,7 +61,6 @@ Though progress bars are rendered as block items, it accepts `attr_list`'s inlin
 [=85%]{: .thin}
 [=100%]{: .thin}
 ///
-        
 
 The ProgressBar extension can be included in Python Markdown by using the following:
 

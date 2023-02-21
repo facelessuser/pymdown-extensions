@@ -45,11 +45,12 @@ nav:
     - BetterEm: extensions/betterem.md
     - Blocks:
       - extensions/blocks/index.md
-      - Admonition: extensions/blocks/admonition.md
-      - Definition: extensions/blocks/definition.md
-      - Details: extensions/blocks/details.md
-      - HTML: extensions/blocks/html.md
-      - Tab: extensions/blocks/tab.md
+      - Blocks Plugin API: extensions/blocks/api.md
+      - Admonition: extensions/blocks/plugins/admonition.md
+      - Definition: extensions/blocks/plugins/definition.md
+      - Details: extensions/blocks/plugins/details.md
+      - HTML: extensions/blocks/plugins/html.md
+      - Tab: extensions/blocks/plugins/tab.md
     - Caret: extensions/caret.md
     - Critic: extensions/critic.md
     - Details: extensions/details.md

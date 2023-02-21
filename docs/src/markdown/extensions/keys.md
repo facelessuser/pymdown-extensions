@@ -11,8 +11,7 @@ Keys is an extension to make entering and styling keyboard key presses easier. S
 ++ctrl+alt+delete++
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ++ctrl+alt+delete++.
 ///
 
@@ -77,8 +76,7 @@ by quoting the content displayed instead of a key name. You can also enter HTML 
 ++cmd+alt+"&Uuml;"++
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ++ctrl+alt+"My Special Key"++
 
 ++cmd+alt+"&Uuml;"++

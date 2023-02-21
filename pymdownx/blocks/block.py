@@ -4,15 +4,114 @@ import re
 import functools
 import copy
 
-RE_TAG = re.compile('^[a-z][a-z0-9-]*$', re.I)
+# Sub-patterns parts
+# Whitespace
+WS = r'(?:[ \t])'
+# CSS escapes
+CSS_ESCAPES = r'(?:\\(?:[a-f0-9]{{1,6}}{ws}?|[^\r\n\f]|$))'.format(ws=WS)
+# CSS Identifier
+IDENTIFIER = r'''
+(?:(?:-?(?:[^\x00-\x2f\x30-\x40\x5B-\x5E\x60\x7B-\x9f])+|--)
+(?:[^\x00-\x2c\x2e\x2f\x3A-\x40\x5B-\x5E\x60\x7B-\x9f])*)
+'''
+# Value: quoted string or identifier
+VALUE = r'''
+(?:"(?:\\(?:.)|[^\\"\r\n\f]+)*?"|'(?:\\(?:.)|[^\\'\r\n\f]+)*?'|{ident}+)
+'''.format(ident=IDENTIFIER)
+# Attribute value comparison.
+ATTR = r'''
+(?:{ws}*(?P<cmp>=){ws}*(?P<value>{value}))?
+'''.format(ws=WS, value=VALUE)
+# Selector patterns
+# IDs (`#id`)
+PAT_ID = r'\#{ident}'.format(ident=IDENTIFIER)
+# Classes (`.class`)
+PAT_CLASS = r'\.{ident}'.format(ident=IDENTIFIER)
+# Attributes (`[attr]`, `[attr=value]`, etc.)
+PAT_ATTR = r'''
+\[(?:{ws}*(?P<attr_name>{ident}){attr})+{ws}*\]
+'''.format(ws=WS, ident=IDENTIFIER, attr=ATTR)
 
-RE_NAME = re.compile(
-    r'[^A-Z_a-z\u00c0-\u00d6\u00d8-\u00f6\u00f8-\u02ff'
-    r'\u0370-\u037d\u037f-\u1fff\u200c-\u200d'
-    r'\u2070-\u218f\u2c00-\u2fef\u3001-\ud7ff'
-    r'\uf900-\ufdcf\ufdf0-\ufffd'
-    r'\:\-\.0-9\u00b7\u0300-\u036f\u203f-\u2040]+'
-)
+RE_IDENT = re.compile(IDENTIFIER, flags=re.I | re.X)
+RE_ID = re.compile(PAT_ID, flags=re.I | re.X)
+RE_CLASS = re.compile(PAT_CLASS, flags=re.I | re.X)
+RE_ATTRS = re.compile(PAT_ATTR, flags=re.I | re.X)
+RE_ATTR = re.compile(r'(?P<attr_name>{ident}){attr}'.format(ident=IDENTIFIER, attr=ATTR), flags=re.I | re.X)
+
+ATTRIBUTES = {'id': RE_ID, 'class': RE_CLASS, 'attr': RE_ATTRS}
+
+
+def parse_selectors(selector, get_tag=True):
+    """Parse the selector."""
+
+    eol = len(selector)
+    tag = None
+    attrs = {}
+    end = 0
+    m = None
+
+    if get_tag:
+        m = RE_IDENT.match(selector)
+        if m is None:
+            raise ValueError('No defined tag')
+        tag = m.group(0)
+        end = m.end()
+
+    while end < eol:
+        for atype, pat in ATTRIBUTES.items():
+            m = pat.match(selector, end)
+            if m is not None:
+                if atype == 'id':
+                    attrs[atype] = m.group(0)[1:]
+                    end = m.end()
+                elif atype == 'class':
+                    if atype not in attrs:
+                        attrs[atype] = [m.group(0)[1:]]
+                    else:
+                        attrs[atype].append(m.group(0)[1:])
+                    end = m.end()
+                else:
+                    results = m.group(0)
+                    m2 = RE_ATTR.search(results)
+                    while m2 is not None:
+                        pos = m2.end()
+                        name = m2.group('attr_name').lower()
+                        value = m2.group('value')
+                        if value is None:
+                            value = name if name != 'class' else ''
+                        elif value.startswith(('"', "'")):
+                            value = value[1:-1]
+
+                        if name == 'class':
+                            value = [v for v in value.split(' ') if v]
+                            if value:
+                                if name in attrs:
+                                    attrs[name].extend(value)
+                                else:
+                                    attrs[name] = value
+                        else:
+                            value = value
+                            attrs[name] = value
+                        m2 = RE_ATTR.search(results, pos)
+                    end = m.end()
+                break
+
+        if m is None:
+            raise ValueError('Invalid selector')
+
+    if 'class' in attrs:
+        attrs['class'] = ' '.join(attrs['class'])
+
+    return tag, attrs
+
+
+def type_html_attributes(value):
+    """Ensure a string of HTML attributes."""
+
+    value = type_string(value)
+    _, attrs = parse_selectors(value, get_tag=False)
+
+    return attrs
 
 
 def _ranged_number(value, minimum, maximum, number_type):
@@ -60,15 +159,6 @@ def type_ranged_integer(minimum=None, maximum=None):
     return functools.partial(_ranged_number, minimum=minimum, maximum=maximum, number_type=type_integer)
 
 
-def type_html_tag(value):
-    """Ensure type tag or fail."""
-
-    value = type_string(value).strip()
-    if RE_TAG.match(value) is None:
-        raise ValueError('{} is not a valid tag'.format(value))
-    return value
-
-
 def type_boolean(value):
     """Ensure type boolean or fail."""
 
@@ -101,16 +191,14 @@ def type_string_insensitive(value):
     return type_string(value).lower()
 
 
-def type_html_attribute_value(value):
-    """Ensure type HTML attribute value or fail."""
-
-    return type_string(value).replace('"', '&quot;')
-
-
-def type_html_attribute_name(value):
+def type_html_identifier(value):
     """Ensure type HTML attribute name or fail."""
 
-    return RE_NAME.sub('_', type_string(value))
+    value = type_string(value)
+    m = RE_IDENT.fullmatch(value)
+    if m is None:
+        raise ValueError('A valid attribute name must be provided')
+    return m.group(0)
 
 
 def _delimiter(string, split, string_type):
@@ -150,36 +238,8 @@ def type_string_delimiter(split, string_type=type_string):
     return functools.partial(_delimiter, split=split, string_type=string_type)
 
 
-def type_html_attribute_dict(value):
-    """Attribute dictionary."""
-
-    if not isinstance(value, dict):
-        raise ValueError('Attributes should be contained within a dictionary')
-
-    attributes = {}
-    for k, v in value.items():
-        k = type_html_attribute_name(k)
-        if k.lower() == 'class':
-            k = 'class'
-            v = type_html_classes(v)
-        else:
-            v = type_html_attribute_value(v)
-        attributes[k] = v
-
-    return attributes
-
-
-def type_html_class(value):
-    """Ensure type class is valid and adjust HTML escaping as required."""
-
-    value = type_html_attribute_value(value)
-    if ' ' in value:
-        raise ValueError('A single class should be provided')
-    return value
-
-
 # Ensure class(es) or fail
-type_html_classes = type_string_delimiter(' ', type_html_attribute_value)
+type_html_classes = type_string_delimiter(' ', type_html_identifier)
 
 
 class Block(metaclass=ABCMeta):
@@ -213,9 +273,9 @@ class Block(metaclass=ABCMeta):
         # Note that `attributes` is handled special and we always override it
         self.arg_spec = copy.deepcopy(self.ARGUMENTS)
         self.option_spec = copy.deepcopy(self.OPTIONS)
-        if 'attributes' in self.option_spec:
-            raise ValueError("'attributes' is a reserved option name and cannot be overriden")
-        self.option_spec['attributes'] = [{}, type_html_attribute_dict]
+        if '$' in self.option_spec:
+            raise ValueError("'$' is a reserved option name and cannot be overriden")
+        self.option_spec['$'] = [{}, type_html_attributes]
 
         self.length = length
         self.tracker = tracker
@@ -333,11 +393,13 @@ class Block(metaclass=ABCMeta):
 
         # Handle general HTML attributes
         attrib = el.attrib
-        for k, v in self.options['attributes'].items():
+        for k, v in self.options['$'].items():
             if k == 'class':
                 if k in attrib:
-                    v = type_html_classes(attrib['class']) + v
-                attrib['class'] = ' '.join(v)
+                    v = type_html_classes(attrib['class']) + type_html_classes(v)
+                    attrib['class'] = ' '.join(v)
+                else:
+                    attrib['class'] = v
             else:
                 attrib[k] = v
         return el

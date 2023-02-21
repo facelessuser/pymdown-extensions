@@ -11,8 +11,8 @@ Please provide feedback here: https://github.com/facelessuser/pymdown-extensions
 
 ## Overview
 
-Tab blocks are aimed at replacing the [Tabbed extension](../tabbed.md). They function identical to Tabbed in every way,
-even using the same classes, except they use the new generic block syntax.
+Tab blocks are aimed at replacing the [Tabbed extension](../../tabbed.md). They function identical to Tabbed in every
+way, even using the same classes, except they use the new generic block syntax.
 
 By default, the meta-plugin is registered when `pymdownx.blocks` is registered, but if you were customizing which
 meta-plugins get loaded, you can do so by doing the following:
@@ -46,8 +46,7 @@ Tab 2 content
 ///
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 
 //// tab | Tab 1 title
 Tab 1 content
@@ -77,8 +76,7 @@ Will be part of a separate, new tab group.
 ///
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 
 //// tab | Tab A title
 Tab A content
@@ -112,8 +110,7 @@ As with all block plugins, you can always add new classes IDs or other attribute
 
 ```
 /// tab | Some title
-    attributes:
-      class: class-a class-b
+    $: .class-a.class-b
 
 Some content
 ///
@@ -133,4 +130,4 @@ Options      | Type       | Descriptions
 ------------ | ---------- | ------------
 `new`        | bool       | Force the current tab to start a new tab container.
 `select`     | bool       | Force the given tab to be selected in the parent tab container.
-`attributes` | dictionary | A dictionary containing keys (attributes) and values (attribute values).
+`$`          | string     | A string that defines attributes for the outer, wrapper element.

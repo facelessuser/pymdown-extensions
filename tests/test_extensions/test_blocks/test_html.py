@@ -170,16 +170,14 @@ class TestBlocksHTML(util.MdCase):
 
         self.check_markdown(
             R'''
-            /// html | div
-                attributes: {class: some classes, id: an-id}
-
+            /// html | div.some.classes#an-id[name1 name2=value name3="string value"]
             Some *content*
 
             And more `content`.
             ///
             ''',
             r'''
-            <div class="some classes" id="an-id">
+            <div class="some classes" id="an-id" name1="name1" name2="value" name3="string value">
             <p>Some <em>content</em></p>
             <p>And more <code>content</code>.</p>
             </div>

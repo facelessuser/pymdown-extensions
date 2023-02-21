@@ -15,8 +15,7 @@ escape it: `\\`.  Keep in mind this will not escape things in code blocks of any
 \❤\😄
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 \W\e\ \c\a\n\ \e\s\c\a\p\e
 \e\v\e\r\y\t\h\i\n\g\!\ \
 \❤\😄

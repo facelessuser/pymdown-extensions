@@ -54,12 +54,12 @@ class TestTypeFunctions(unittest.TestCase):
         with self.assertRaises(ValueError):
             block.type_ranged_integer(3, 8)(9)
 
-    def test_type_html_tag(self):
+    def test_type_html_identifier(self):
         """Test `type_html_tag`."""
 
-        self.assertEqual('div', block.type_html_tag('div'))
+        self.assertEqual('div', block.type_html_identifier('div'))
         with self.assertRaises(ValueError):
-            block.type_html_tag('3bad')
+            block.type_html_identifier('3bad')
 
     def test_type_boolean(self):
         """Test `type_boolean`."""
@@ -92,20 +92,6 @@ class TestTypeFunctions(unittest.TestCase):
         with self.assertRaises(ValueError):
             block.type_string_insensitive(3)
 
-    def test_type_html_attribute_value(self):
-        """Test `type_html_attribute_value`."""
-
-        self.assertEqual('some-value', block.type_html_attribute_value('some-value'))
-        self.assertEqual('&quot;some-value&quot;', block.type_html_attribute_value('"some-value"'))
-        with self.assertRaises(ValueError):
-            block.type_html_attribute_value(3)
-
-    def test_type_html_attribute_name(self):
-        """Test `type_html_attribute_name`."""
-
-        self.assertEqual('attribute', block.type_html_attribute_name('attribute'))
-        self.assertEqual('attr_ibute', block.type_html_attribute_name('attr@ibute'))
-
     def test_type_string_in(self):
         """Test `type_string_in`."""
 
@@ -118,24 +104,6 @@ class TestTypeFunctions(unittest.TestCase):
 
         self.assertEqual(['this', 'that'], block.type_string_delimiter(';')('this; that'))
         self.assertEqual(['this', 'that'], block.type_string_delimiter(' ')('this  that'))
-
-    def test_type_html_attribute_dict(self):
-        """Test `type_html_attribute_dict`."""
-
-        self.assertEqual(
-            {'test': "test", "class": ["one", "two", "three"]},
-            block.type_html_attribute_dict({'test': "test", "class": "one two three"})
-        )
-
-        with self.assertRaises(ValueError):
-            block.type_html_attribute_dict(3)
-
-    def test_type_html_class(self):
-        """Test `type_html_class`."""
-
-        self.assertEqual('this', block.type_html_class('this'))
-        with self.assertRaises(ValueError):
-            block.type_html_class('this that')
 
     def test_type_html_classes(self):
         """Test `type_html_classes`."""
@@ -153,7 +121,7 @@ class TestGeneral(unittest.TestCase):
             NAME = 'override'
 
             OPTIONS = {
-                'attributes': [False, block.type_boolean],
+                '$': [False, block.type_boolean],
             }
 
             def on_create(self, parent):
@@ -492,8 +460,8 @@ class TestBadArgOptionParsers(util.MdCase):
         """Test failure to satisfy parser."""
 
         NAME = 'fail'
-        ARGUMENTS = {'required': 1, 'parsers': [block.type_html_tag]}
-        OPTIONS = {'test': ['tag', block.type_html_tag]}
+        ARGUMENTS = {'required': 1, 'parsers': [block.type_html_identifier]}
+        OPTIONS = {'test': ['tag', block.type_html_identifier]}
 
         def on_create(self, parent):
             """Create."""
@@ -631,6 +599,93 @@ class TestBlockSplit(util.MdCase):
             '''
             <p>/// split | this that another
             ///</p>
+            ''',
+            True
+        )
+
+
+class TestAttributes(util.MdCase):
+    """Test Blocks tab cases."""
+
+    extension = ['pymdownx.blocks']
+    extension_configs = {
+        'pymdownx.blocks': {
+            'blocks': ['pymdownx.blocks.admonition:Admonition']
+        }
+    }
+
+    def test_attributes(self):
+        """Test attributes."""
+
+        self.check_markdown(
+            R'''
+            /// admonition | Title
+                $: .some.classes#an-id[name1 name2=value name3="string value"]
+            content
+            ///
+            ''',
+            '''
+            <div class="admonition some classes" id="an-id" name1="name1" name2="value" name3="string value">
+            <p class="admonition-title">Title</p>
+            <p>content</p>
+            </div>
+            ''',
+            True
+        )
+
+    def test_bad_attributes(self):
+        """Test no attributes."""
+
+        self.check_markdown(
+            R'''
+            /// admonition | Title
+                $: '+'
+            content
+            ///
+            ''',
+            '''
+            <p>/// admonition | Title
+                $: '+'
+            content
+            ///</p>
+            ''',
+            True
+        )
+
+    def test_multi_class(self):
+        """Test multiple classes."""
+
+        self.check_markdown(
+            R'''
+            /// admonition | Title
+                $: .a.b[class="c"]
+            content
+            ///
+            ''',
+            '''
+            <div class="admonition a b c">
+            <p class="admonition-title">Title</p>
+            <p>content</p>
+            </div>
+            ''',
+            True
+        )
+
+    def test_multi_class2(self):
+        """Test multiple classes."""
+
+        self.check_markdown(
+            R'''
+            /// admonition | Title
+                $: '[class="a b"].c'
+            content
+            ///
+            ''',
+            '''
+            <div class="admonition a b c">
+            <p class="admonition-title">Title</p>
+            <p>content</p>
+            </div>
             ''',
             True
         )

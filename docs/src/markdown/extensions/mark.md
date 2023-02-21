@@ -16,8 +16,7 @@ To Mark some text, simply surround the text with double `=`.
 ==smart==mark==
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ==mark me==
 
 ==smart==mark==

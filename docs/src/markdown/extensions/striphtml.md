@@ -15,8 +15,7 @@ end of the process, it helps to include this one last when loading up your exten
 Here is a <strong onclick="myFunction();">test</strong>.
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```html
 <p>Here is a <strong>test</strong>.</p>
 ```

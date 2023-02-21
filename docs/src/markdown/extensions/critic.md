@@ -62,8 +62,7 @@ General block handling.
 ++}
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```md-render
 ---
 extensions:
@@ -144,8 +143,7 @@ General block handling.
 ++}
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ```md-render
 ---
 extensions:

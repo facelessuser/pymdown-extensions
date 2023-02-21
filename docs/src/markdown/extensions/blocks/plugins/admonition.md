@@ -38,26 +38,40 @@ the header.
 
 ```text title="Admonition"
 /// admonition | Some title
-    type: note
+Some content
+///
+```
+
+/// html | div.result
+//// admonition | Some title
+Some content
+////
+///
+
+If desired, you can attach a class to an admonition using the the attribute option `$`.
+
+```text title="Admonition"
+/// admonition | Some title
+    $: .warning
 
 Some content
 ///
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 //// admonition | Some title
-    type: note
+    $: .warning
 
 Some content
 ////
 ///
 
 
-Out of the box, Admonitions registers a number of shortcuts for common admonition types: note, attention, caution,
+As a shortcut, Admonitions registers a number of admonition blocks that attach common classes: note, attention, caution,
 danger, error, tip, hint, warning.
 
-These require you to use their special. When using these, `type` does not need to be set and is not accepted.
+These require you to use their special name. When using these, you do not need to attach class `note`, `attention`, etc.
+as they are already done for you.
 
 ```text title="Note"
 /// note | Some title
@@ -65,8 +79,7 @@ Some content
 ///
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 //// note | Some title
 Some content
 ////
@@ -102,12 +115,11 @@ Some content
 ///
 ```
 
-As with all block plugins, you can always add new classes IDs or other attributes via the `attributes` option.
+As with all block plugins, you can always add new classes IDs or other attributes via `$`.
 
 ```
 /// note | Some title
-    attributes:
-      class: class-a class-b
+    $: .class-a.class-b
 
 Some content
 ///
@@ -123,5 +135,4 @@ Options | Type       | Descriptions
 
 Options      | Type       | Descriptions
 ------------ | ---------- | ------------
-`type`       | string     | String containing a class name to attach as a type.
-`attributes` | dictionary | A dictionary containing keys (attributes) and values (attribute values).
+`$`          | string     | A string that defines attributes for the outer, wrapper element.

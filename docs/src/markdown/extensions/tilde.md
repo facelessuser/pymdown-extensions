@@ -23,8 +23,7 @@ To wrap content in a **delete** tag, simply surround the text with double `~`. Y
 ~~Delete me~~
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 ~~Delete me~~
 ///
 
@@ -39,8 +38,7 @@ CH~3~CH~2~OH
 text~a\ subscript~
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 CH~3~CH~2~OH
 
 text~a\ subscript~

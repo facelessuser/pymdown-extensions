@@ -36,20 +36,13 @@ Generally, HTML blocks can be defined simply by specifying the `html` generic bl
 with all generic blocks, additional attributes can be applied via the `attributes` option.
 
 ```text title="HTML"
-/// html | div
-    attributes:
-      style: 'border: 1px solid red;'
-
+/// html | div[style='border: 1px solid red;']
 some *markdown* content
 ///
 ```
 
-/// html | div
-    attributes: {class: result}
-//// html | div
-    attributes:
-      style: 'border: 1px solid red;'
-
+/// html | div.result
+//// html | div[style='border: 1px solid red;']
 some *markdown* content
 ////
 ///
@@ -75,8 +68,7 @@ some *markdown* content
 ///
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 //// html | pre
 some *markdown* content
 ////
@@ -93,4 +85,4 @@ some *markdown* content
 Options      | Type       | Descriptions
 ------------ | ---------- | ------------
 `markdown`   | string     | String value to control how Markdown content is processed. Valid options are: `auto`, `block`, `span`, and `raw`.
-`attributes` | dictionary | A dictionary containing keys (attributes) and values (attribute values).
+`$`          | string     | A string that defines attributes for the outer, wrapper element.

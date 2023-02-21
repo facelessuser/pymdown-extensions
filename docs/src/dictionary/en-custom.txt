@@ -23,6 +23,7 @@ DOM
 Dicts
 Donath
 ElementTree
+Emmet
 Emoji
 EmojiOne
 EmojiOne's

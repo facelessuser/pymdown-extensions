@@ -36,15 +36,13 @@ with spaces) and the summary contained in quotes. Content is placed below the he
         And more content again.
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 
 ???+ note "Open styled details"
 
     ??? danger "Nested details!"
         And more content again.
 ///
-        
 
 It is also possible to provide only a class.  If this is done, the title will be derived from the *first* class.
 
@@ -56,8 +54,7 @@ It is also possible to provide only a class.  If this is done, the title will be
    Content.
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 
 ??? success
     Content.

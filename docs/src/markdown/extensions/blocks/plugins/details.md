@@ -10,7 +10,7 @@ Please provide feedback here: https://github.com/facelessuser/pymdown-extensions
 
 ## Overview
 
-Details blocks are an alternative to using [`pymdownx.details`](../details.md) and, in fact, aim to potentially replace
+Details blocks are an alternative to using [`pymdownx.details`](../../details.md) and, in fact, aim to potentially replace
 them in the future. The output is identical `pymdownx.details`, but they use the new generic block syntax.
 
 By default, the meta-plugin is registered when `pymdownx.blocks` is registered, but if you were customizing which
@@ -33,20 +33,19 @@ md = markdown.Markdown(
 ## Usage
 
 Admonitions can be specified using the generic block syntax and the name `details`. A summary can be specified in
-the header. Additionally, you can apply a specific type if like with admonitions if desired.
+the header. Additionally, you can apply a specific class like with admonitions if desired.
 
 ```text title="Details"
 /// details | Some summary
-    type: note
+    $: .warning
 
 Some content
 ///
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 //// details | Some summary
-    type: note
+    $: .warning
 
 Some content
 ////
@@ -62,8 +61,7 @@ Some content
 ///
 ```
 
-/// html | div
-    attributes: {class: result}
+/// html | div.result
 //// details | Some summary
     open: True
 
@@ -101,12 +99,11 @@ Some content
 ///
 ```
 
-As with all block plugins, you can always add new classes IDs or other attributes via the `attributes` option.
+As with all block plugins, you can always add new classes IDs or other attributes via `$`.
 
 ```
 /// details | Some title
-    attributes:
-      class: class-a class-b
+    $: .class-a.class-b
 
 Some content
 ///
@@ -122,6 +119,5 @@ Options | Type       | Descriptions
 
 Options      | Type       | Descriptions
 ------------ | ---------- | ------------
-`type`       | string     | String containing a class name to attach as a type.
 `open`       | bool       | A boolean that determines if the details block is open or closed.
-`attributes` | dictionary | A dictionary containing keys (attributes) and values (attribute values).
+`$`          | string     | A string that defines attributes for the outer, wrapper element.
