@@ -407,3 +407,15 @@ Returns a list of `str` that are valid CSS classes or raises `ValueError`.
 class Block:
     OPTIONS = {'keyword': ['default', type_html_classes]}
 ```
+
+### `type_html_attribute_dict`
+
+Takes a YAML input value and verifies that it is a `dict`. Keys will be verified to be HTML identifiers and the values
+to be strings.
+
+Returns a `dict[str, str]` or raises `ValueError`.
+
+```py
+class Block:
+    OPTIONS = {'attributes': [{}, type_html_attribute_dict]}
+```

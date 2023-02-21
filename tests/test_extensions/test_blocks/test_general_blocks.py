@@ -121,7 +121,7 @@ class TestGeneral(unittest.TestCase):
             NAME = 'override'
 
             OPTIONS = {
-                '$': [False, block.type_boolean],
+                'attrs': [False, block.type_boolean],
             }
 
             def on_create(self, parent):
@@ -585,12 +585,13 @@ class TestAttributes(util.MdCase):
         self.check_markdown(
             R'''
             /// admonition | Title
-                $: .some.classes#an-id[name1 name2=value name3="string value"]
+                attrs: {class: some classes, id: an-id, name: some value}
+
             content
             ///
             ''',
             '''
-            <div class="admonition some classes" id="an-id" name1="name1" name2="value" name3="string value">
+            <div class="admonition some classes" id="an-id" name="some value">
             <p class="admonition-title">Title</p>
             <p>content</p>
             </div>
@@ -604,53 +605,15 @@ class TestAttributes(util.MdCase):
         self.check_markdown(
             R'''
             /// admonition | Title
-                $: '+'
+                attrs: {'+': 'value'}
             content
             ///
             ''',
             '''
             <p>/// admonition | Title
-                $: '+'
+                attrs: {'+': 'value'}
             content
             ///</p>
-            ''',
-            True
-        )
-
-    def test_multi_class(self):
-        """Test multiple classes."""
-
-        self.check_markdown(
-            R'''
-            /// admonition | Title
-                $: .a.b[class="c"]
-            content
-            ///
-            ''',
-            '''
-            <div class="admonition a b c">
-            <p class="admonition-title">Title</p>
-            <p>content</p>
-            </div>
-            ''',
-            True
-        )
-
-    def test_multi_class2(self):
-        """Test multiple classes."""
-
-        self.check_markdown(
-            R'''
-            /// admonition | Title
-                $: '[class="a b"].c'
-            content
-            ///
-            ''',
-            '''
-            <div class="admonition a b c">
-            <p class="admonition-title">Title</p>
-            <p>content</p>
-            </div>
             ''',
             True
         )

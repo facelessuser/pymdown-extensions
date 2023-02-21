@@ -126,13 +126,13 @@ This may be because they are rarely used, more complicated, or just make the fir
 options are per block specific use a YAML syntax. They must be part of the header, which means no new line between the
 block declaration and the options or between individual options. The options also must be indented at least four spaces.
 
-For instance, all plugins have inherit an option `$` which allows you to set HTML attributes to the outer element of a
+For instance, all plugins inherit an option `attrs` which allows you to set HTML attributes to the outer element of a
 generic block. You can use [Emmet style syntax](https://docs.emmet.io/abbreviations/syntax/) to set an id, classes, or
 other arbitrary attributes.
 
 ```
 /// html | div
-    $: #id.some-class[title="A title" data-columns=3]
+    attrs: {class: class-name: id: id-name}
 
 Some content.
 ///

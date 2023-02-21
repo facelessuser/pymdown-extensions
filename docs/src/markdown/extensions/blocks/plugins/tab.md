@@ -103,7 +103,7 @@ As with all block plugins, you can always add new classes IDs or other attribute
 
 ```
 /// tab | Some title
-    $: .class-a.class-b
+    attrs: {class: class-name: id: id-name}
 
 Some content
 ///

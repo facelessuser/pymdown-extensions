@@ -36,7 +36,7 @@ class TestBlocksAdmonitions(util.MdCase):
             R'''
             /// admonition
                 type: note
-                $: .other
+                attrs: {class: other}
 
             Some *content*
             ///

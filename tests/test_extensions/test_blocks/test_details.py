@@ -36,7 +36,7 @@ class TestBlocksDetails(util.MdCase):
             R'''
             /// details
                 type: note
-                $: .other
+                attrs: {class: other}
 
             Some *content*
             ///

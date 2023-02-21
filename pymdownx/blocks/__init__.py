@@ -125,7 +125,6 @@ class BlocksProcessor(BlockProcessor):
 
         self.md = md
 
-
         blocks = config['blocks']
 
         if not blocks:  # pragma: no cover
