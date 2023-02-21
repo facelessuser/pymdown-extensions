@@ -40,7 +40,8 @@ class TestBlocksAdmonitions(util.MdCase):
         self.check_markdown(
             R'''
             /// admonition
-                $: .note.other
+                type: note
+                $: .other
 
             Some *content*
             ///

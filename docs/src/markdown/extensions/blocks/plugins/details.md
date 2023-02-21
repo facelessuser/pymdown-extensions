@@ -1,12 +1,7 @@
 [:octicons-file-code-24:][_details_block]{: .source-link }
 # Details
 
-/// warning | Alpha Release
-Blocks is currently only available in the Pymdown Extensions alpha release. It is a work in progress and API and
-syntax are subject to change.
-
-Please provide feedback here: https://github.com/facelessuser/pymdown-extensions/discussions/1940.
-///
+--8<-- "blocksbeta.md"
 
 ## Overview
 
@@ -37,7 +32,23 @@ the header. Additionally, you can apply a specific class like with admonitions i
 
 ```text title="Details"
 /// details | Some summary
-    $: .warning
+Some content
+///
+```
+
+/// html | div.result
+//// details | Some summary
+Some content
+////
+///
+
+Like with [Admonitions](./admonition.md), you can specify a special class to define the type via the `type` option. If
+`type` is set, a class with that name will be added, and if there is no summary, the type will be used as the summary:
+`note` -> `Note`.
+
+```text title="Details"
+/// details | Some summary
+    type: warning
 
 Some content
 ///
@@ -45,7 +56,7 @@ Some content
 
 /// html | div.result
 //// details | Some summary
-    $: .warning
+    type: warning
 
 Some content
 ////
@@ -120,4 +131,5 @@ Options | Type       | Descriptions
 Options      | Type       | Descriptions
 ------------ | ---------- | ------------
 `open`       | bool       | A boolean that determines if the details block is open or closed.
+`type`       | string     | A class name to apply as the admonition type.
 `$`          | string     | A string that defines attributes for the outer, wrapper element.

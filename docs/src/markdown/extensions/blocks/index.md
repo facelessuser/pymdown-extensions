@@ -2,12 +2,7 @@
 
 # Blocks
 
-/// warning | Alpha Release
-Blocks is currently only available in the Pymdown Extensions alpha release. It is a work in progress and API and
-syntax are subject to change.
-
-Please provide feedback here: https://github.com/facelessuser/pymdown-extensions/discussions/1940.
-///
+--8<-- "blocksbeta.md"
 
 ## Overview
 
@@ -40,19 +35,6 @@ To use Blocks, simply include the extension as shown below.
 import markdown
 md = markdown.Markdown(extensions=['pymdownx.blocks'])
 ```
-
-## Feedback Requested
-
-While any and all feedback is welcome, there is one undecided options that require feedback to help us finalize the
-syntax for generic blocks. During the alpha/beta stage, we provide global options so users can try out the different
-options and provide their own feedback. Feedback will be taken into consideration as we move towards an official release
-candidate. It will be impossible to make all users happy, but we'd like to give users an opportunity to help shape
-the direction.
-
-1. Currently, there is no hard decision as to whether we should use `:::` or `///` for the fence syntax. During the
-   alpha/beta stage, we provide a global option called `colon_syntax` to switch from using `///` to `:::`. This will
-   only be offered during the alpha/beta stage and is provided to allow users to try out give their opinion as to what
-   direction Blocks should take in order to finalize the syntax.
 
 ## Included Meta-Plugins
 
@@ -169,7 +151,7 @@ fenced code blocks work. The minimum requirement is that at least three tokens a
 
 ```
 //// admonition | Some title
-    $: .note
+    type: note
 
 /// details | Summary
 content
@@ -183,6 +165,5 @@ Content
 
 Option                | Type       |  Default                           | Description
 --------------------- | ---------- | ---------------------------------- | -----------
-`blocks`              | \[Block\]  | `#!py []`                           | A list of block meta-plugins to register.
-`block_configs`       | dictionary | `#!py {}`                         | A dictionary used to specify global options for registered meta-plugins.
-`colon_syntax`        | bool       | `#!py False`                      | Use the colon syntax for block fences (`:::`) instead of the default (`///`). Only available during alpha/beta stage.
+`blocks`              | \[Block\]  | `#!py []`                          | A list of block meta-plugins to register.
+`block_configs`       | dictionary | `#!py {}`                          | A dictionary used to specify global options for registered meta-plugins.

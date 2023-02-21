@@ -2,12 +2,7 @@
 
 # Admonition
 
-/// warning | Alpha Release
-Blocks is currently only available in the Pymdown Extensions alpha release. It is a work in progress and API and
-syntax are subject to change.
-
-Please provide feedback here: https://github.com/facelessuser/pymdown-extensions/discussions/1940.
-///
+--8<-- "blocksbeta.md"
 
 ## Overview
 
@@ -48,11 +43,12 @@ Some content
 ////
 ///
 
-If desired, you can attach a class to an admonition using the the attribute option `$`.
+If desired, you can attach a class to an admonition using the the option `type`. If type is set, a class with that name
+will be added, and if there is no title, the class name will be used as the title: `note` -> `Note`.
 
 ```text title="Admonition"
 /// admonition | Some title
-    $: .warning
+    type: warning
 
 Some content
 ///
@@ -60,7 +56,7 @@ Some content
 
 /// html | div.result
 //// admonition | Some title
-    $: .warning
+    type: warning
 
 Some content
 ////
@@ -135,4 +131,5 @@ Options | Type       | Descriptions
 
 Options      | Type       | Descriptions
 ------------ | ---------- | ------------
+`type`       | string     | A class name to apply as the admonition type.
 `$`          | string     | A string that defines attributes for the outer, wrapper element.
