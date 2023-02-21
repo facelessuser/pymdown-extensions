@@ -324,40 +324,6 @@ class TestMiscCases(util.MdCase):
         )
 
 
-class TestAlternateSyntax(util.MdCase):
-    """Test the alpha/beta alternate syntax."""
-
-    extension = ['pymdownx.blocks']
-    extension_configs = {
-        'pymdownx.blocks': {
-            'blocks': ['pymdownx.blocks.html:HTML'],
-            'colon_syntax': True
-        }
-    }
-
-    def test_colon_syntax(self):
-        """Test the colon syntax."""
-
-        self.check_markdown(
-            R'''
-            :::: html | div
-            ::: html | div
-
-            content
-            :::
-            ::::
-            ''',
-            '''
-            <div>
-            <div>
-            <p>content</p>
-            </div>
-            </div>
-            ''',
-            True
-        )
-
-
 class TestMiscYAMLFenceCases(util.MdCase):
     """Test some miscellaneous cases."""
 

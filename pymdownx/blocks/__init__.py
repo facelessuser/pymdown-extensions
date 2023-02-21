@@ -27,18 +27,6 @@ RE_END = re.compile(
     r'(?m)(?:^|\n)[ ]{0,3}(/{3,})[ ]*(?:\n|$)'
 )
 
-RE_COLON_START = re.compile(
-    r'(?:^|\n)[ ]{0,3}(:{3,})[ ]*([\w-]+)[ ]*(?:\|[ ]*(.*?)[ ]*)?(?:\n|$)'
-)
-
-RE_COLON_END = re.compile(
-    r'(?m)(?:^|\n)[ ]{0,3}(:{3,})[ ]*(?:\n|$)'
-)
-
-RE_YAML_LINE = re.compile(r'(?m)^(?:[ ]{0,3}/(?!//).*?(?:\n|$))+')
-
-RE_COLON_YAML_LINE = re.compile(r'(?m)^(?:[ ]{0,3}/(?!//).*?(?:\n|$))+')
-
 # Frontmatter patterns
 RE_YAML_START = re.compile(r'(?m)^[ ]{0,3}(-{3})[ ]*(?:\n|$)')
 
@@ -176,8 +164,8 @@ class BlocksProcessor(BlockProcessor):
         self.cached_block = None
 
         # Used during the alpha/beta stage
-        self.start = RE_START if not config['colon_syntax'] else RE_COLON_START
-        self.end = RE_END if not config['colon_syntax'] else RE_COLON_END
+        self.start = RE_START
+        self.end = RE_END
         self.yaml_line = RE_INDENT_YAML_LINE
 
     def _import(self, plugin):
@@ -466,8 +454,7 @@ class BlocksExtension(Extension):
 
         self.config = {
             'blocks': [[], "Blocks extensions to load, if not defined, the default ones will be loaded."],
-            'block_configs': [{}, "Global configuration for a given block."],
-            'colon_syntax': [False, "Use colon syntax."]
+            'block_configs': [{}, "Global configuration for a given block."]
         }
 
         super().__init__(*args, **kwargs)
