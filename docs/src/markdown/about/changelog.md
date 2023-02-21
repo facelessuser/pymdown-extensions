@@ -1,4 +1,12 @@
 # Changelog
+## 9.10b1
+
+- **NEW**: HTML General block now accepts Emmet style attribute: `/// html | div.class#id[name=value]`.
+- **NEW**: Block attribute specifier is renamed from `attributes` to `$` and takes Emmet style attributes:
+  `$: .class#id[name=value]`.
+- **NEW**: Details and Admonition no longer take the `type` option. To set a special class, specify classes via `$`.
+- **NEW**: Remove `colon_syntax` option and cement that we are using `///` format moving forward.
+- **NEW**: Revise available validators for Block options. Remove unnecessary validators and replace some with new ones.
 
 ## 9.10a3
 
