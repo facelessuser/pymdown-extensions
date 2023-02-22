@@ -30,6 +30,7 @@ import re
 import codecs
 import os
 from . import util
+import textwrap
 
 MI = 1024 * 1024  # mebibyte (MiB)
 DEFAULT_URL_SIZE = MI * 32
@@ -67,12 +68,12 @@ class SnippetPreprocessor(Preprocessor):
         r'''(?xi)
         ^.*?
         (?P<inline_marker>-{1,}8<-{1,}[ \t]+)
-        \[[ \t]*(?P<type>start|end)[ \t]*:[ \t]*(?P<name>[a-z][0-9a-z]*)[ \t]*\]
+        \[[ \t]*(?P<type>start|end)[ \t]*:[ \t]*(?P<name>[a-z][-_0-9a-z]*)[ \t]*\]
         .*?$
         '''
     )
 
-    RE_SNIPPET_FILE = re.compile(r'(?i)(.*?)(?:(:[0-9]*)?(:[0-9]*)?|(:[a-z][0-9a-z]*)?)$')
+    RE_SNIPPET_FILE = re.compile(r'(?i)(.*?)(?:(:[0-9]*)?(:[0-9]*)?|(:[a-z][-_0-9a-z]*)?)$')
 
     def __init__(self, config, md):
         """Initialize."""
@@ -88,6 +89,7 @@ class SnippetPreprocessor(Preprocessor):
         self.url_max_size = config['url_max_size']
         self.url_timeout = config['url_timeout']
         self.url_request_headers = config['url_request_headers']
+        self.dedent_subsections = config['dedent_subsections']
         self.tab_length = md.tab_length
         super(SnippetPreprocessor, self).__init__()
 
@@ -96,6 +98,7 @@ class SnippetPreprocessor(Preprocessor):
 
         new_lines = []
         start = False
+        found = False
         for l in lines:
 
             # Found a snippet section marker with our specified name
@@ -105,6 +108,7 @@ class SnippetPreprocessor(Preprocessor):
                 # We found the start
                 if not start and m.group('type') == 'start':
                     start = True
+                    found = True
                     continue
 
                 # We found the end
@@ -114,13 +118,21 @@ class SnippetPreprocessor(Preprocessor):
 
                 # We found an end, but no start
                 else:
-                    return []
+                    break
 
             # We are currently in a section, so append the line
             if start:
                 new_lines.append(l)
 
-        return new_lines
+        if not found and self.check_paths:
+            raise SnippetMissingError("Snippet section '{}' could not be located".format(section))
+
+        return self.dedent(new_lines) if self.dedent_subsections else new_lines
+
+    def dedent(self, lines):
+        """De-indent lines."""
+
+        return textwrap.dedent('\n'.join(lines)).split('\n')
 
     def get_snippet_path(self, path):
         """Get snippet path."""
@@ -282,7 +294,7 @@ class SnippetPreprocessor(Preprocessor):
                             s_lines = [l.rstrip('\r\n') for l in f]
                             if start is not None or end is not None:
                                 s = slice(start, end)
-                                s_lines = s_lines[s]
+                                s_lines = self.dedent(s_lines[s]) if self.dedent_subsections else s_lines[s]
                             elif section:
                                 s_lines = self.extract_section(section, s_lines)
                     else:
@@ -291,7 +303,7 @@ class SnippetPreprocessor(Preprocessor):
                             s_lines = self.download(snippet)
                             if start is not None or end is not None:
                                 s = slice(start, end)
-                                s_lines = s_lines[s]
+                                s_lines = self.dedent(s_lines[s]) if self.dedent_subsections else s_lines[s]
                             elif section:
                                 s_lines = self.extract_section(section, s_lines)
                         except SnippetMissingError:
@@ -346,7 +358,8 @@ class SnippetExtension(Extension):
             'url_download': [False, "Download external URLs as snippets - Default: \"False\""],
             'url_max_size': [DEFAULT_URL_SIZE, "External URL max size (0 means no limit)- Default: 32 MiB"],
             'url_timeout': [DEFAULT_URL_TIMEOUT, 'Defualt URL timeout (0 means no timeout) - Default: 10 sec'],
-            'url_request_headers': [DEFAULT_URL_REQUEST_HEADERS, "Extra request Headers - Default: {}"]
+            'url_request_headers': [DEFAULT_URL_REQUEST_HEADERS, "Extra request Headers - Default: {}"],
+            'dedent_subsections': [False, "Dedent subsection extractions e.g. 'sections' and/or 'lines'."]
         }
 
         super(SnippetExtension, self).__init__(*args, **kwargs)

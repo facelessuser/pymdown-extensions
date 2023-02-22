@@ -20,6 +20,8 @@ CommonMark
 CriticMarkup
 Ctrl
 DOM
+De
+Dedent
 Dicts
 Donath
 ElementTree
@@ -138,6 +140,8 @@ config
 configs
 coveragepy
 customizable
+de
+dedenting
 deprecations
 dev
 deviantart

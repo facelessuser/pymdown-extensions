@@ -7,6 +7,79 @@ from unittest.mock import patch, MagicMock
 BASE = os.path.abspath(os.path.dirname(__file__))
 
 
+class TestSnippetDedent(util.MdCase):
+    """Test snippet cases."""
+
+    extension = [
+        'pymdownx.snippets', 'pymdownx.superfences'
+    ]
+
+    extension_configs = {
+        'pymdownx.snippets': {
+            'base_path': [os.path.join(BASE, '_snippets')],
+            'dedent_subsections': True
+        }
+    }
+
+    def test_dedent_section(self):
+        """Test dedenting sections."""
+
+        self.check_markdown(
+            R'''
+            ```text
+            ---8<--- "indented.txt:py-section"
+            ```
+            ''',  # noqa: W291
+            R'''
+            <div class="highlight"><pre><span></span><code>def some_method(self, param):
+                &quot;&quot;&quot;Docstring.&quot;&quot;&quot;
+
+                return param
+            </code></pre></div>
+            ''',
+            True
+        )
+
+    def test_dedent_lines(self):
+        """Test dedenting lines."""
+
+        self.check_markdown(
+            R'''
+            ```text
+            ---8<--- "indented.txt:5:8"
+            ```
+            ''',  # noqa: W291
+            R'''
+            <div class="highlight"><pre><span></span><code>def some_method(self, param):
+                &quot;&quot;&quot;Docstring.&quot;&quot;&quot;
+
+                return param
+            </code></pre></div>
+            ''',
+            True
+        )
+
+    def test_dedent_indented(self):
+        """Test dedenting sections that has indented insertion."""
+
+        self.check_markdown(
+            R'''
+            Paragraph
+
+                ---8<--- "indented.txt:py-section"
+            ''',  # noqa: W291
+            R'''
+            <p>Paragraph</p>
+            <pre><code>def some_method(self, param):
+                """Docstring."""
+
+                return param
+            </code></pre>
+            ''',
+            True
+        )
+
+
 class TestSnippets(util.MdCase):
     """Test snippet cases."""
 
@@ -229,7 +302,7 @@ class TestSnippets(util.MdCase):
         self.check_markdown(
             R'''
             ```
-            --8<-- "section.txt:cssSection"
+            --8<-- "section.txt:css-section"
             ```
             ''',
             '''
@@ -247,7 +320,7 @@ class TestSnippets(util.MdCase):
         self.check_markdown(
             R'''
             ```
-            -8<- "section.txt:cssSection"
+            -8<- "section.txt:css-section"
             ```
             ''',
             '''
@@ -265,7 +338,7 @@ class TestSnippets(util.MdCase):
         self.check_markdown(
             R'''
             --8<--
-            section.txt:htmlSection
+            section.txt:html-section
             --8<--
             ''',
             '''
@@ -280,7 +353,7 @@ class TestSnippets(util.MdCase):
         self.check_markdown(
             R'''
             -8<-
-            section.txt:htmlSection
+            section.txt:html-section
             -8<-
             ''',
             '''
@@ -295,7 +368,7 @@ class TestSnippets(util.MdCase):
         self.check_markdown(
             R'''
             --8<--
-            section.txt:cssSection2
+            section.txt:css-section2
             --8<--
             ''',
             '''
@@ -309,7 +382,7 @@ class TestSnippets(util.MdCase):
         self.check_markdown(
             R'''
             --8<--
-            section.txt:htmlSection2
+            section.txt:html-section2
             --8<--
             ''',
             '''
@@ -428,13 +501,26 @@ class TestSnippetsMissing(util.MdCase):
                 True
             )
 
-    def test_missing_lines(self):
+    def test_missing_file_lines(self):
         """Test missing file with line numbers."""
 
         with self.assertRaises(SnippetMissingError):
             self.check_markdown(
                 R'''
                 --8<-- ":3:4"
+                ''',
+                '''
+                ''',
+                True
+            )
+
+    def test_missing_section(self):
+        """Test missing section."""
+
+        with self.assertRaises(SnippetMissingError):
+            self.check_markdown(
+                R'''
+                --8<-- "section.txt:missing-section"
                 ''',
                 '''
                 ''',
@@ -731,10 +817,61 @@ class TestURLSnippets(util.MdCase):
 
         self.check_markdown(
             R'''
-            --8<-- "https://test.com/myfile.md:htmlSection"
+            --8<-- "https://test.com/myfile.md:html-section"
             ''',
             '''
             <div><p>content</p></div>
+            ''',
+            True
+        )
+
+
+class TestURLDedentSnippets(util.MdCase):
+    """Test snippet URL cases."""
+
+    extension = [
+        'pymdownx.snippets', 'pymdownx.superfences'
+    ]
+
+    extension_configs = {
+        'pymdownx.snippets': {
+            'base_path': [os.path.join(BASE, '_snippets')],
+            'url_download': True,
+            'dedent_subsections': True
+        }
+    }
+
+    @patch('urllib.request.urlopen')
+    def test_url_sections(self, mock_urlopen):
+        """Test specifying a section in a URL."""
+
+        content = []
+        length = 0
+        with open('tests/test_extensions/_snippets/indented.txt', 'rb') as f:
+            for l in f:
+                length += len(l)
+                content.append(l)
+
+        cm = MagicMock()
+        cm.status = 200
+        cm.code = 200
+        cm.readlines.return_value = content
+        cm.headers = {'content-length': length}
+        cm.__enter__.return_value = cm
+        mock_urlopen.return_value = cm
+
+        self.check_markdown(
+            R'''
+            ```
+            --8<-- "https://test.com/myfile.md:py-section"
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code>def some_method(self, param):
+                &quot;&quot;&quot;Docstring.&quot;&quot;&quot;
+
+                return param
+            </code></pre></div>
             ''',
             True
         )
