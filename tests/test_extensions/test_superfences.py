@@ -352,6 +352,22 @@ class TestHighlightAnchorLinenumInline(util.MdCase):
             True
         )
 
+    def test_linespans_id(self):
+        """Test wrapping a line in line spans with an ID."""
+
+        self.check_markdown(
+            r'''
+            ```{.python #id linenums="2"}
+            import test
+            ```
+            ''',
+            r'''
+            <div id="id" class="highlight"><pre><span></span><code><a id="__codelineno-id-2" name="__codelineno-id-2"></a><a href="#__codelineno-id-2"><span class="linenos">2</span></a><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
 
 class TestHighlightAnchorLinenumsPymdownxInline(util.MdCase):
     """Test highlight line wraps."""
@@ -375,6 +391,22 @@ class TestHighlightAnchorLinenumsPymdownxInline(util.MdCase):
             ''',
             r'''
             <div class="highlight"><pre><span></span><code><a id="__codelineno-0-2" name="__codelineno-0-2"></a><a href="#__codelineno-0-2"><span class="linenos" data-linenos="2 "></span></a><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_linespans_id(self):
+        """Test wrapping a line in line spans."""
+
+        self.check_markdown(
+            r'''
+            ```{.python #id linenums="2"}
+            import test
+            ```
+            ''',
+            r'''
+            <div id="id" class="highlight"><pre><span></span><code><a id="__codelineno-id-2" name="__codelineno-id-2"></a><a href="#__codelineno-id-2"><span class="linenos" data-linenos="2 "></span></a><span class="kn">import</span> <span class="nn">test</span>
             </code></pre></div>
             ''',  # noqa: E501
             True

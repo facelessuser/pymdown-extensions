@@ -346,6 +346,8 @@ class Highlight(object):
 
             id_str = ID_ATTR.format(id_value) if id_value else ''
 
+            lineno_id = id_value if id_value else str(code_block_count)
+
             if not attrs:
                 attr_str = ''
             else:
@@ -386,9 +388,9 @@ class Highlight(object):
                 hl_lines=hl_lines,
                 wrapcode=True,
                 filename=title if not inline else "",
-                linespans="{}-{:d}".format(self.line_spans, code_block_count) if self.line_spans and not inline else '',
+                linespans="{}-{}".format(self.line_spans, lineno_id) if self.line_spans and not inline else '',
                 lineanchors=(
-                    "{}-{:d}".format(self.line_anchors, code_block_count) if self.line_anchors and not inline else ""
+                    "{}-{}".format(self.line_anchors, lineno_id) if self.line_anchors and not inline else ""
                 ),
                 anchorlinenos=self.anchor_linenums if not inline else False
             )
