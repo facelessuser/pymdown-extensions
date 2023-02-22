@@ -1,0 +1,9 @@
+class SomeClass:
+    """Docstring."""
+
+    # --8<-- [start: py-section]
+    def some_method(self, param):
+        """Docstring."""
+
+        return param
+    # --8<-- [end: py-section]

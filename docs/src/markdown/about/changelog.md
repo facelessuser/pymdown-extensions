@@ -2,11 +2,16 @@
 
 ## 9.10
 
-- **NEW**: Blocks: Add new general purpose block extensions meant to be an alternative to: Admonitions, Details, Definition
-  Lists, and Tabbed. Also adds new HTML plugin for quick wrapping of content with arbitrary HTML elements. General
-  Purpose blocks are more of a new frame work to create block plugins using special fences.
+- **NEW**: Blocks: Add new experimental general purpose blocks that provide a framework for creating fenced block
+  containers for specialized parsing. A number of extensions utilizing general purpose blocks are included and are meant
+  to be an alternative to (and maybe one day replace): Admonitions, Details, Definition   Lists, and Tabbed. Also adds a
+  new HTML plugin for quick wrapping of content with arbitrary HTML elements.
 - **NEW**: Highlight: When enabling line spans and/or line anchors, if a code block has an ID associated with it, line
   ids will be generated using that code ID instead of the code block count.
+- **NEW**: Snippets: Expand section syntax to allow section names with `-` and `_`.
+- **NEW**: Snippets: When `check_paths` is enabled, and a specified section is not found, raise an error.
+- **NEW**: Snippets: Add new experimental feature `dedent_sections` that will de-indent (remove any common leading
+  whitespace from every line in text) from that block of text.
 
 ## 9.10b1
 
