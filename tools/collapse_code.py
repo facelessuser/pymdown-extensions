@@ -2,7 +2,8 @@
 import xml.etree.ElementTree as etree
 from markdown import util as mutil
 import re
-from pymdownx.blocks.block import Block  # noqa: E402
+from pymdownx.blocks.block import Block
+from pymdownx.blocks import BlocksExtension
 
 # Fenced block placeholder for SuperFences
 FENCED_BLOCK_RE = re.compile(
@@ -18,12 +19,6 @@ class CollapseCode(Block):
     """Collapse code."""
 
     NAME = 'collapse-code'
-    CONFIG = {
-        'expand_text': 'Expand',
-        'collapse_text': 'Collapse',
-        'expand_title': 'expand',
-        'collapse_title': 'collapse'
-    }
 
     def on_init(self):
         """Handle initialization."""
@@ -89,3 +84,30 @@ class CollapseCode(Block):
             {'for': '__collapse{}'.format(self.count), 'class': 'collapse', 'title': self.collapse_title}
         )
         collapse.text = self.collapse
+
+
+class CollapseCodeExtension(BlocksExtension):
+    """Admonition Blocks Extension."""
+
+    def __init__(self, *args, **kwargs):
+        """Initialize."""
+
+        self.config = {
+            'expand_text': ['Expand', "Set the text for the expand button."],
+            'collapse_text': ['Collapse', "Set the text for the collapse button."],
+            'expand_title': ['expand', "Set the text for the expand title."],
+            'collapse_title': ['collapse', "Set the text for the collapse title."]
+        }
+
+        super().__init__(*args, **kwargs)
+
+    def extendMarkdownBlocks(self, md, blocks):
+        """Extend Markdown blocks."""
+
+        blocks.register(CollapseCode, self.getConfigs())
+
+
+def makeExtension(*args, **kwargs):
+    """Return extension."""
+
+    return CollapseCodeExtension(*args, **kwargs)

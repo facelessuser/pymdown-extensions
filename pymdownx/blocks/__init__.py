@@ -7,7 +7,6 @@ import xml.etree.ElementTree as etree
 import re
 import yaml
 import textwrap
-import importlib
 
 # Fenced block placeholder for SuperFences
 FENCED_BLOCK_RE = re.compile(
@@ -120,22 +119,14 @@ def revert_fenced_code(md, blocks):
 class BlocksProcessor(BlockProcessor):
     """Generic block processor."""
 
-    def __init__(self, parser, md, config):
+    def __init__(self, parser, md):
         """Initialization."""
 
         self.md = md
 
-        blocks = config['blocks']
-
-        if not blocks:  # pragma: no cover
-            blocks = {}
-
         # The Block classes indexable by name
         self.blocks = {}
         self.config = {}
-        for blk, cfg in blocks.items():
-            self.register(blk, cfg if cfg is not None else {})
-
         self.empty_tags = set(['hr'])
         self.block_level_tags = set(md.block_level_elements.copy())
         self.block_level_tags.add('html')
@@ -168,35 +159,13 @@ class BlocksProcessor(BlockProcessor):
         self.end = RE_END
         self.yaml_line = RE_INDENT_YAML_LINE
 
-    def _import(self, plugin):
-        """Import the plugin."""
-
-        module_name, class_name = plugin.split(':', 1)
-        module = importlib.import_module(module_name)
-        return getattr(module, class_name)
-
     def register(self, b, config):
         """Register a block."""
-
-        if isinstance(b, str):
-            b = self._import(b)
 
         if b.NAME in self.blocks:
             raise ValueError('The block name {} is already registered!'.format(b.NAME))
         self.blocks[b.NAME] = b
-        self.config[b.NAME] = self.set_configs(b.CONFIG, config)
-        b.on_register(self, self.md, self.config.get(b.NAME, {}))
-
-    def set_configs(self, default, config):
-        """Set config for a block extension."""
-
-        d = {}
-        for key in default.keys():
-            if key in config:
-                d[key] = config[key]
-            else:
-                d[key] = default[key]
-        return d
+        self.config[b.NAME] = config
 
     def test(self, parent, block):
         """Test to see if we should process the block."""
@@ -444,26 +413,15 @@ class BlocksProcessor(BlockProcessor):
                     break
 
 
-class BlocksExtension(Extension):
+class BlocksMgrExtension(Extension):
     """Add generic Blocks extension."""
-
-    def __init__(self, *args, **kwargs):
-        """Initialize."""
-
-        self.config = {
-            'blocks': [{}, "Blocks extensions to load, if not defined, the default ones will be loaded."],
-        }
-
-        super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Add Blocks to Markdown instance."""
 
         md.registerExtension(self)
         util.escape_chars(md, ['/'])
-
-        config = self.getConfigs()
-        self.extension = BlocksProcessor(md.parser, md, config)
+        self.extension = BlocksProcessor(md.parser, md)
         # We want to be right after list indentations are processed
         md.parser.blockprocessors.register(self.extension, "blocks", 89)
 
@@ -473,7 +431,25 @@ class BlocksExtension(Extension):
         self.extension._reset()
 
 
-def makeExtension(*args, **kwargs):
-    """Return extension."""
+class BlocksExtension(Extension):
+    """Blocks Extension."""
 
-    return BlocksExtension(*args, **kwargs)
+    def register_block_mgr(self, md):
+        """Add Blocks to Markdown instance."""
+
+        if 'blocks' not in md.parser.blockprocessors:
+            ext = BlocksMgrExtension()
+            ext.extendMarkdown(md)
+            mgr = ext.extension
+        else:
+            mgr = md.parser.blockprocessors['blocks']
+        return mgr
+
+    def extendMarkdown(self, md):
+        """Extend markdown."""
+
+        mgr = self.register_block_mgr(md)
+        self.extendMarkdownBlocks(md, mgr)
+
+    def extendMarkdownBlocks(self, md, blocks):
+        """Extend Markdown blocks."""

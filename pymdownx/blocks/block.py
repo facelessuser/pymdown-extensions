@@ -296,10 +296,6 @@ class Block(metaclass=ABCMeta):
 
         return True
 
-    @classmethod
-    def on_register(cls, block_processor, md, config):
-        """Handle registration events."""
-
     @abstractmethod
     def on_create(self, parent):
         """Create the needed element and return it."""

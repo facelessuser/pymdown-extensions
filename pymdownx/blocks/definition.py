@@ -1,6 +1,7 @@
 """Definition."""
 import xml.etree.ElementTree as etree
 from .block import Block
+from ..blocks import BlocksExtension
 
 
 class Definition(Block):
@@ -47,3 +48,18 @@ class Definition(Block):
 
         for el in remove:
             block.remove(el)
+
+
+class DefinitionExtension(BlocksExtension):
+    """Definition Blocks Extension."""
+
+    def extendMarkdownBlocks(self, md, blocks):
+        """Extend Markdown blocks."""
+
+        blocks.register(Definition, self.getConfigs())
+
+
+def makeExtension(*args, **kwargs):
+    """Return extension."""
+
+    return DefinitionExtension(*args, **kwargs)

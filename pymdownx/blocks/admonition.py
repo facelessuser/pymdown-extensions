@@ -1,6 +1,7 @@
 """Admonitions."""
 import xml.etree.ElementTree as etree
 from .block import Block, type_html_identifier
+from .. blocks import BlocksExtension
 import re
 
 RE_SEP = re.compile(r'[_-]+')
@@ -27,18 +28,6 @@ class Admonition(Block):
     OPTIONS = {
         'type': ['', type_html_identifier],
     }
-    CONFIG = {
-        "types": ['note', 'attention', 'caution', 'danger', 'error', 'tip', 'hint', 'warning']
-    }
-
-    @classmethod
-    def on_register(cls, blocks_extension, md, config):
-        """Handle registration event."""
-
-        # Generate an admonition subclass based on the given names.
-        for b in config.get('types', []):
-            subclass = RE_SEP.sub('', b.title())
-            blocks_extension.register(type(subclass, (Admonition,), {'OPTIONS': {}, 'NAME': b, 'CONFIG': {}}), {})
 
     def on_parse(self):
         """Handle on parse event."""
@@ -73,3 +62,35 @@ class Admonition(Block):
             ad_title.text = title
 
         return el
+
+
+class AdmonitionExtension(BlocksExtension):
+    """Admonition Blocks Extension."""
+
+    def __init__(self, *args, **kwargs):
+        """Initialize."""
+
+        self.config = {
+            "types": [
+                ['note', 'attention', 'caution', 'danger', 'error', 'tip', 'hint', 'warning'],
+                "Generate Admonition block extensions for the given types."
+            ]
+        }
+
+        super().__init__(*args, **kwargs)
+
+    def extendMarkdownBlocks(self, md, blocks):
+        """Extend Markdown blocks."""
+
+        blocks.register(Admonition, self.getConfigs())
+
+        # Generate an admonition subclass based on the given names.
+        for b in self.getConfig('types', []):
+            subclass = RE_SEP.sub('', b.title())
+            blocks.register(type(subclass, (Admonition,), {'OPTIONS': {}, 'NAME': b, 'CONFIG': {}}), {})
+
+
+def makeExtension(*args, **kwargs):
+    """Return extension."""
+
+    return AdmonitionExtension(*args, **kwargs)

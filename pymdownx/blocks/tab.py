@@ -3,6 +3,7 @@ import xml.etree.ElementTree as etree
 from markdown.extensions import toc
 from markdown.treeprocessors import Treeprocessor
 from .block import Block, type_boolean
+from ..blocks import BlocksExtension
 
 
 class TabbedTreeprocessor(Treeprocessor):
@@ -241,3 +242,32 @@ class Tab(Block):
         tab_group.attrib['data-tabs'] = '%d:%d' % (tab_set, tab_count)
 
         return tab_group
+
+
+class TabExtension(BlocksExtension):
+    """Admonition Blocks Extension."""
+
+    def __init__(self, *args, **kwargs):
+        """Initialize."""
+
+        self.config = {
+            'alternate_style': [False, "Use alternate style - Default: False"],
+            'slugify': [0, "Slugify function used to create tab specific IDs - Default: None"],
+            'separator': ['-', "Slug separator - Default: '-'"]
+        }
+
+        super().__init__(*args, **kwargs)
+
+    def extendMarkdownBlocks(self, md, blocks):
+        """Extend Markdown blocks."""
+
+        blocks.register(Tab, self.getConfigs())
+        if callable(self.getConfig('slugify')):
+            slugs = TabbedTreeprocessor(md, self.getConfigs())
+            md.treeprocessors.register(slugs, 'tab_slugs', 4)
+
+
+def makeExtension(*args, **kwargs):
+    """Return extension."""
+
+    return TabExtension(*args, **kwargs)

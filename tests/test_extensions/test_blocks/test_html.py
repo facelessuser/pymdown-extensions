@@ -5,12 +5,7 @@ from ... import util
 class TestBlocksHTML(util.MdCase):
     """Test Blocks HTML cases."""
 
-    extension = ['pymdownx.blocks']
-    extension_configs = {
-        'pymdownx.blocks': {
-            'blocks': {'pymdownx.blocks.html:HTML': None}
-        }
-    }
+    extension = ['pymdownx.blocks.html']
 
     def test_bad_tag(self):
         """Test bad HTML tag."""

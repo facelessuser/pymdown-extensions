@@ -169,32 +169,30 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.saneheaders:
-  - pymdownx.blocks:
-      blocks:
-        pymdownx.blocks.admonition:Admonition:
-          types:
-          - new
-          - settings
-          - note
-          - abstract
-          - info
-          - tip
-          - success
-          - question
-          - warning
-          - failure
-          - danger
-          - bug
-          - example
-          - quote
-        pymdownx.blocks.details:Details:
-        pymdownx.blocks.html:HTML:
-        pymdownx.blocks.definition:Definition:
-        pymdownx.blocks.tab:Tab:
-          alternate_style: True
-        tools.collapse_code:CollapseCode:
-          expand_text: ''
-          collapse_text: ''
+  - pymdownx.blocks.admonition:
+      types:
+      - new
+      - settings
+      - note
+      - abstract
+      - info
+      - tip
+      - success
+      - question
+      - warning
+      - failure
+      - danger
+      - bug
+      - example
+      - quote
+  - pymdownx.blocks.details:
+  - pymdownx.blocks.html:
+  - pymdownx.blocks.definition:
+  - pymdownx.blocks.tab:
+      alternate_style: True
+  - tools.collapse_code:
+      expand_text: ''
+      collapse_text: ''
 
 extra:
   social:

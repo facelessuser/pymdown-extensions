@@ -1,6 +1,7 @@
 """HTML."""
 import xml.etree.ElementTree as etree
 from .block import Block, type_string_in
+from ..blocks import BlocksExtension
 import re
 
 # Sub-patterns parts
@@ -153,3 +154,18 @@ class HTML(Block):
 
         # Create element
         return etree.SubElement(parent, self.tag.lower(), self.attr)
+
+
+class HTMLExtension(BlocksExtension):
+    """HTML Blocks Extension."""
+
+    def extendMarkdownBlocks(self, md, blocks):
+        """Extend Markdown blocks."""
+
+        blocks.register(HTML, self.getConfigs())
+
+
+def makeExtension(*args, **kwargs):
+    """Return extension."""
+
+    return HTMLExtension(*args, **kwargs)

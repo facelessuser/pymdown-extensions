@@ -5,11 +5,9 @@ from ... import util
 class TestBlocksAdmonitions(util.MdCase):
     """Test Blocks admonitions cases."""
 
-    extension = ['pymdownx.blocks']
+    extension = ['pymdownx.blocks.admonition']
     extension_configs = {
-        'pymdownx.blocks': {
-            'blocks': {'pymdownx.blocks.admonition:Admonition': {'types': ['note', 'custom']}}
-        }
+        'pymdownx.blocks.admonition': {'types': ['note', 'custom']}
     }
 
     def test_optional_title(self):

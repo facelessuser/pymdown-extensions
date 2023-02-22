@@ -1,6 +1,7 @@
 """Details."""
 import xml.etree.ElementTree as etree
 from .block import Block, type_boolean, type_html_identifier
+from ..blocks import BlocksExtension
 import re
 
 RE_SEP = re.compile(r'[_-]+')
@@ -34,17 +35,6 @@ class Details(Block):
     CONFIG = {
         "types": []
     }
-
-    @classmethod
-    def on_register(cls, blocks_extension, md, config):
-        """Handle registration event."""
-
-        # Generate an admonition subclass based on the given names.
-        for b in config.get('types', []):
-            subclass = RE_SEP.sub('', b.title())
-            blocks_extension.register(
-                type(subclass, (Details,), {'OPTIONS': {'open': [False, type_boolean]}, 'NAME': b, 'CONFIG': {}}), {}
-            )
 
     def on_parse(self):
         """Handle on parse event."""
@@ -84,3 +74,37 @@ class Details(Block):
             s.text = summary
 
         return el
+
+
+class DetailsExtension(BlocksExtension):
+    """Admonition Blocks Extension."""
+
+    def __init__(self, *args, **kwargs):
+        """Initialize."""
+
+        self.config = {
+            "types": [
+                [],
+                "Generate Admonition block extensions for the given types."
+            ]
+        }
+
+        super().__init__(*args, **kwargs)
+
+    def extendMarkdownBlocks(self, md, blocks):
+        """Extend Markdown blocks."""
+
+        blocks.register(Details, self.getConfigs())
+
+        # Generate an details subclass based on the given names.
+        for b in self.getConfig('types', []):
+            subclass = RE_SEP.sub('', b.title())
+            blocks.register(
+                type(subclass, (Details,), {'OPTIONS': {'open': [False, type_boolean]}, 'NAME': b, 'CONFIG': {}}), {}
+            )
+
+
+def makeExtension(*args, **kwargs):
+    """Return extension."""
+
+    return DetailsExtension(*args, **kwargs)
