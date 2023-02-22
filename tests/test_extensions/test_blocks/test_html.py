@@ -179,3 +179,54 @@ class TestBlocksHTML(util.MdCase):
             ''',  # noqa: E501
             True
         )
+
+    def test_bad_attributes(self):
+        """Test no attributes."""
+
+        self.check_markdown(
+            R'''
+            /// html | div.+
+            content
+            ///
+            ''',
+            '''
+            <p>/// html | div.+
+            content
+            ///</p>
+            ''',
+            True
+        )
+
+    def test_multi_class(self):
+        """Test multiple classes."""
+
+        self.check_markdown(
+            R'''
+            /// html | div.a.b[class=c]
+            content
+            ///
+            ''',
+            '''
+            <div class="a b c">
+            <p>content</p>
+            </div>
+            ''',
+            True
+        )
+
+    def test_multi_class2(self):
+        """Test multiple classes."""
+
+        self.check_markdown(
+            R'''
+            /// html | div[class="a b"].c
+            content
+            ///
+            ''',
+            '''
+            <div class="a b c">
+            <p>content</p>
+            </div>
+            ''',
+            True
+        )

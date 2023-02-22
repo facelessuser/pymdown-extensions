@@ -123,7 +123,7 @@ class HTML(Block):
     """
 
     NAME = 'html'
-    ARGUMENTS = {'required': 1}
+    ARGUMENT = True
     OPTIONS = {
         'markdown': ['auto', type_string_in(['auto', 'span', 'block', 'raw'])]
     }
@@ -138,7 +138,7 @@ class HTML(Block):
         """Handle argument parsing."""
 
         try:
-            self.tag, self.attr = parse_selectors(self.args[0])
+            self.tag, self.attr = parse_selectors(self.argument)
         except ValueError:
             return False
 

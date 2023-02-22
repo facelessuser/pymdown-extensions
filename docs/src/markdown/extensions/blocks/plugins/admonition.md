@@ -14,16 +14,7 @@ meta-plugins get loaded, you can do so by doing the following:
 
 ```py3
 import markdown
-from pymdownx.blocks.admonition import Admonition
-md = markdown.Markdown(
-    extensions=['pymdownx.blocks']
-    extension_configs={
-        'pymdownx.blocks': {
-            # Use {Admonition: {'option1': 'value', ...}} to set block specific global settings
-            'pymdownx.blocks': {Admonition: None}
-        }
-    }
-)
+md = markdown.Markdown(extensions=['pymdownx.blocks.admonition'])
 ```
 
 ## Usage

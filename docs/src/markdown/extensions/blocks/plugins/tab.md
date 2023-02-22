@@ -14,14 +14,7 @@ meta-plugins get loaded, you can do so by doing the following:
 
 ```py3
 import markdown
-from pymdownx.blocks.tab import Tab
-md = markdown.Markdown(
-    extensions=['pymdownx.blocks']
-    extension_configs={
-        # Use {Tab: {'option1': 'value', ...}} to set block specific global settings
-        'pymdownx.blocks': {Tab: None}
-    }
-)
+md = markdown.Markdown(extensions=['pymdownx.blocks.tab'])
 ```
 
 ## Usage

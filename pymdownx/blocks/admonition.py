@@ -24,7 +24,7 @@ class Admonition(Block):
     """
 
     NAME = 'admonition'
-    ARGUMENTS = {'optional': 1}
+    ARGUMENT = None
     OPTIONS = {
         'type': ['', type_html_identifier],
     }
@@ -49,13 +49,13 @@ class Admonition(Block):
         el = etree.SubElement(parent, 'div', {'class': ' '.join(classes)})
 
         # Create the title
-        if not self.args:
+        if not self.argument:
             if not atype:
                 title = None
             else:
                 title = atype.capitalize()
         else:
-            title = self.args[0]
+            title = self.argument
 
         if title is not None:
             ad_title = etree.SubElement(el, 'p', {'class': 'admonition-title'})

@@ -13,16 +13,7 @@ meta-plugins get loaded, you can do so by doing the following:
 
 ```py3
 import markdown
-from pymdownx.blocks.details import Details
-md = markdown.Markdown(
-    extensions=['pymdownx.blocks']
-    extension_configs={
-        'pymdownx.blocks': {
-            # Use {Details: {'option1': 'value', ...}} to set block specific global settings
-            'pymdownx.blocks': {Details: None}
-        }
-    }
-)
+md = markdown.Markdown(extensions=['pymdownx.blocks.details'])
 ```
 
 ## Usage

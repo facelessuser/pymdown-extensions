@@ -6,7 +6,7 @@ The various different block types are created via the `Block` class. The `Block`
 and handling of the various block parts. The basic structure of a block is shown below:
 
 ```
-/// name | argument(s)
+/// name | argument
     options: per block options
 
 Markdown content.
@@ -78,8 +78,8 @@ print(markdown.markdown(MD, extensions=[MyBlockExtension()]))
 
 ## The Block Object
 
-The block object allows us to define the name of a block, what arguments and options it accepts, and how we generally
-handle the content.
+The block object allows us to define the name of a block, whether an argument and/or options are allowed, and how we
+generally handle the content.
 
 ## Global Options
 
@@ -115,32 +115,24 @@ The tracker is accessed by a given `Block` extension via the `self.tracker` attr
 dictionary where various keys and values can be stored. This can be used to count blocks on a page or anything else you
 can think of.
 
-## Arguments
+## Argument
 
-Arguments are used to declare common block specific input for a particular block type. These are often, but not
-exclusively, used for things like titles. They are specified on the same line as the initial block deceleration.
+The argument is used to declare a common block specific input for a particular block type. This is often, but not
+exclusively, used for things like titles. It is specified on the same line as the initial block deceleration.
 
-Blocks are not required to use arguments and are not included by default and must be declared in the class. Arguments
-can be `optional`, `required`, or a combination of both.
+Blocks are not required to use an argument and it is not required by default and must be declared as either optional or
+required in order for the block to accept an argument. An argument is declared by setting `ARGUMENT` to `#!py True` if
+it is required, `#!py None` if it is optionally allowed, or `#!py False` if it is not allowed.
 
-The arguments are always parsed as a single string, but if a user declares that multiple arguments are accepted, the
-result will be broken by a specified delimiter, the default being a space.
-
-Arguments will be positionally assigned as a list to the instance attribute `self.args` and can be accessed anywhere
-after initialization.
+The argument is always parsed as a single string, if it is desired to validate the format of the argument or even to
+process it as multiple arguments, this can be done in the [`on_parse` event](#on_parse-event).
 
 ```python
 class MyBlock(Block):
     # Name used for the block
     NAME = 'my-block'
-    ARGUMENTS = {'required': 1, 'optional': 1, 'delimiter': ','}
+    ARGUMENT = True
 ```
-
-/// tip | Validating Arguments
-If you'd like to validate arguments, you can utilize the [`on_parse` event](#on_parse-event). It is also acceptable
-manually parse arguments in the `on_parse` event as well. This may be useful if the arguments cannot be parsed with
-a simple delimiter.
-///
 
 ## Options
 
@@ -193,9 +185,10 @@ def on_parse(self) -> bool:
     ...
 ```
 
-Executed right after per block argument and option parsing occurs. Arguments and options are accessible via `self.args`
-and `self.options`. This gives the extension a chance to perform additional validation or adjustments of the arguments
-and options. This also gives the opportunity to initialize class variables based on the per block arguments and options.
+Executed right after the per block argument and option parsing occurs. The argument and options are accessible via
+`self.argument` and `self.options`. This gives the extension a chance to perform additional validation or adjustments of
+the argument and options. This also gives the opportunity to initialize class variables based on the per block argument
+and options.
 
 If validation fails, `#!py3 False` should be returned and the block will not be parsed as a generic block.
 

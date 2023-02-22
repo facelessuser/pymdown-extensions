@@ -5,6 +5,8 @@
 - **NEW**: Block attribute specifier is renamed from `attributes` to `attrs`.
 - **NEW**: Remove `colon_syntax` option and cement that we are using `///` format moving forward.
 - **NEW**: Revise available validators for Block options. Remove unnecessary validators and replace some with new ones.
+- **NEW**: Simplify argument API.
+- **NEW**: Block extensions can now be registered directly as normal Python Markdown extensions.
 
 ## 9.10a3
 

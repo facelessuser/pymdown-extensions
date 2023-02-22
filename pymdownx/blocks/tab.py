@@ -72,7 +72,7 @@ class Tab(Block):
 
     NAME = 'tab'
 
-    ARGUMENTS = {'required': 1}
+    ARGUMENT = True
     OPTIONS = {
         'new': [False, type_boolean],
         'select': [False, type_boolean]
@@ -95,14 +95,6 @@ class Tab(Block):
             self.tracker['tab_group_count'] = 0
 
         self.tab_content = None
-
-    @classmethod
-    def on_register(cls, blocks_extension, md, config):
-        """Handle registration event."""
-
-        if callable(config['slugify']):
-            slugs = TabbedTreeprocessor(md, config)
-            md.treeprocessors.register(slugs, 'tab_slugs', 4)
 
     def last_child(self, parent):
         """Return the last child of an `etree` element."""
@@ -132,7 +124,7 @@ class Tab(Block):
 
         new_group = self.options['new']
         select = self.options['select']
-        title = self.args[0] if self.args and self.args[0] else ''
+        title = self.argument
         sibling = self.last_child(parent)
         tabbed_set = 'tabbed-set' if not self.alternate_style else 'tabbed-set tabbed-alternate'
         index = 0

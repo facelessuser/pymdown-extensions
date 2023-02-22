@@ -174,7 +174,7 @@ class Block(metaclass=ABCMeta):
     NAME = ''
 
     # Instance arguments and options
-    ARGUMENTS = {}
+    ARGUMENT = False
     OPTIONS = {}
 
     # Extension config
@@ -195,16 +195,16 @@ class Block(metaclass=ABCMeta):
 
         # Setup up the argument and options spec
         # Note that `attributes` is handled special and we always override it
-        self.arg_spec = copy.deepcopy(self.ARGUMENTS)
+        self.arg_spec = self.ARGUMENT
         self.option_spec = copy.deepcopy(self.OPTIONS)
-        if 'attrs' in self.option_spec:
+        if 'attrs' in self.option_spec:  # pragma: no cover
             raise ValueError("'attrs' is a reserved option name and cannot be overriden")
         self.option_spec['attrs'] = [{}, type_html_attribute_dict]
 
         self.length = length
         self.tracker = tracker
         self.md = md
-        self.args = []
+        self.arguments = []
         self.options = {}
         self.config = config
         self.on_init()
@@ -217,51 +217,14 @@ class Block(metaclass=ABCMeta):
 
         return "auto"
 
-    def parse_config(self, args, **options):
+    def parse_config(self, arg, **options):
         """Parse configuration."""
 
-        spec = self.arg_spec
-        required = spec.get('required', 0)
-        optional = spec.get('optional', 0)
-        delim = spec.get('delimiter', ' ')
-        parsers = spec.get('parsers', [None])
-        total = required + optional
-
-        # If we have arguments but allow none,
-        # or have no arguments but require at least 1,
-        # then quit
-        if (args and total == 0) or (not args and required >= 1):
+        # Check argument
+        if (self.arg_spec is not None and ((arg and not self.arg_spec) or (not arg and self.arg_spec))):
             return False
 
-        # Split arguments if we can have more than 1
-        if args is not None:
-            if total > 1:
-                arguments = type_string_delimiter(delim)(args)
-            else:
-                arguments = [args]
-        else:
-            arguments = []
-
-        length = len(arguments)
-
-        # If total number of arguments exceed what is allowed, quit
-        if length > total or length < required:
-            return False
-
-        # Parse each argument with the appropriate parser, if we run out,
-        # it is assumed that the last is meant to represent the rest.
-        # A `None` for a parser means accept as is.
-        total_parsers = len(parsers)
-        for e, a in enumerate(arguments):
-            parser = parsers[e] if e < total_parsers else parsers[-1]
-            if parser is not None:
-                try:
-                    a = parser(a)
-                except Exception:
-                    return False
-                arguments[e] = a
-
-        self.args = arguments
+        self.argument = arg
 
         # Fill in defaults options
         spec = self.option_spec

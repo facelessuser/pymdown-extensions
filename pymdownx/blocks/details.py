@@ -26,7 +26,7 @@ class Details(Block):
 
     NAME = 'details'
 
-    ARGUMENTS = {'optional': 1}
+    ARGUMENT = None
     OPTIONS = {
         'open': [False, type_boolean],
         'type': ['', type_html_identifier]
@@ -60,13 +60,13 @@ class Details(Block):
         el = etree.SubElement(parent, 'details', attributes)
 
         # Create the summary
-        if not self.args:
+        if not self.argument:
             if not dtype:
                 summary = None
             else:
                 summary = dtype.capitalize()
         else:
-            summary = self.args[0]
+            summary = self.argument
 
         # Create the summary
         if summary is not None:

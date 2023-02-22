@@ -65,8 +65,8 @@ implemented. Simple paragraphs should not require an empty new line before them,
 statement about all blocks. If in doubt, use an empty line before the first content block.
 ///
 
-Some blocks may implement a special argument in the header for things such as, but not limited to, titles. These
-arguments can be optional or sometimes enforced as a requirement. This is up to the given Blocks extension to decide.
+Some blocks may implement a special argument in the header for things such as, but not limited to, titles. This
+argument can be optional or sometimes enforced as a requirement. This is up to the given Blocks extension to decide.
 
 ```
 /// note | Did you know?
