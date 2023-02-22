@@ -1,4 +1,13 @@
 # Changelog
+
+## 9.10
+
+- **NEW**: Blocks: Add new general purpose block extensions meant to be an alternative to: Admonitions, Details, Definition
+  Lists, and Tabbed. Also adds new HTML plugin for quick wrapping of content with arbitrary HTML elements. General
+  Purpose blocks are more of a new frame work to create block plugins using special fences.
+- **NEW**: Highlight: When enabling line spans and/or line anchors, if a code block has an ID associated with it, line
+  ids will be generated using that code ID instead of the code block count.
+
 ## 9.10b1
 
 - **NEW**: HTML General block now accepts Emmet style attribute: `/// html | div.class#id[name=value]`.
