@@ -71,7 +71,12 @@ class CollapseCode(Block):
         expand = etree.SubElement(
             el,
             'label',
-            {'for': '__collapse{}'.format(self.count), 'class': 'expand', 'title': self.expand_title}
+            {
+                'for': '__collapse{}'.format(self.count),
+                'class': 'expand',
+                'tabindex': '0',
+                'title': self.expand_title
+            }
         )
         expand.text = self.expand
 
@@ -81,7 +86,12 @@ class CollapseCode(Block):
         collapse = etree.SubElement(
             el,
             'label',
-            {'for': '__collapse{}'.format(self.count), 'class': 'collapse', 'title': self.collapse_title}
+            {
+                'for': '__collapse{}'.format(self.count),
+                'class': 'collapse',
+                'tabindex': '0',
+                'title': self.collapse_title
+            }
         )
         collapse.text = self.collapse
 

@@ -80,15 +80,10 @@ import markdown
 from pymdownx.blocks.admonition import Admonition
 
 md = markdown.Markdown(
-    extensions=['pymdownx.blocks'],
+    extensions=['pymdownx.blocks.admonition'],
     extension_configs={
-        'pymdownx.blocks': {
-            'blocks': [Admonition],
-            'block_configs': {
-                "admonition": {
-                    'types': ['note', 'warning', 'some-custom-type']
-                }
-            }
+        'pymdownx.blocks.admonition": {
+            'types': ['note', 'warning', 'some-custom-type']
         }
     }
 )
@@ -123,4 +118,4 @@ Options | Type       | Descriptions
 Options      | Type       | Descriptions
 ------------ | ---------- | ------------
 `type`       | string     | A class name to apply as the admonition type.
-`$`          | string     | A string that defines attributes for the outer, wrapper element.
+`attrs`      | string     | A string that defines attributes for the outer, wrapper element.

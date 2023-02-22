@@ -72,4 +72,4 @@ some *markdown* content
 Options      | Type       | Descriptions
 ------------ | ---------- | ------------
 `markdown`   | string     | String value to control how Markdown content is processed. Valid options are: `auto`, `block`, `span`, and `raw`.
-`$`          | string     | A string that defines attributes for the outer, wrapper element.
+`attrs`      | string     | A string that defines attributes for the outer, wrapper element.

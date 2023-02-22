@@ -123,4 +123,4 @@ Definitions provide no global options.
 
 Options      | Type       | Descriptions
 ------------ | ---------- | ------------
-`$`          | string     | A string that defines attributes for the outer, wrapper element.
+`attrs`      | string     | A string that defines attributes for the outer, wrapper element.

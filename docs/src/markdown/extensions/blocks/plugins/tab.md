@@ -116,4 +116,4 @@ Options      | Type       | Descriptions
 ------------ | ---------- | ------------
 `new`        | bool       | Force the current tab to start a new tab container.
 `select`     | bool       | Force the given tab to be selected in the parent tab container.
-`$`          | string     | A string that defines attributes for the outer, wrapper element.
+`attrs`          | string     | A string that defines attributes for the outer, wrapper element.

@@ -79,15 +79,10 @@ import markdown
 from pymdownx.blocks.details import Details
 
 md = markdown.Markdown(
-    extensions=['pymdownx.blocks'],
+    extensions=['pymdownx.blocks.details'],
     extension_configs={
-        'pymdownx.blocks': {
-            'blocks': [Details],
-            'block_configs': {
-                "details": {
-                    'types': ['details-note', 'details-warning', 'some-custom-type']
-                }
-            }
+        'pymdownx.blocks.details": {
+            'types': ['details-note', 'details-warning', 'some-custom-type']
         }
     }
 )
@@ -123,4 +118,4 @@ Options      | Type       | Descriptions
 ------------ | ---------- | ------------
 `open`       | bool       | A boolean that determines if the details block is open or closed.
 `type`       | string     | A class name to apply as the admonition type.
-`$`          | string     | A string that defines attributes for the outer, wrapper element.
+`attrs`      | string     | A string that defines attributes for the outer, wrapper element.
