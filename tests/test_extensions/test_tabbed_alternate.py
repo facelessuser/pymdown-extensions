@@ -1,10 +1,10 @@
-"""Test cases for SuperFences."""
+"""Test cases for Tabbed (alternative style)."""
 from .. import util
 from pymdownx.slugs import slugify
 
 
-class TestLegacyTab(util.MdCase):
-    """Test legacy tab cases."""
+class TestTab(util.MdCase):
+    """Test tab cases."""
 
     extension = ['pymdownx.tabbed', 'pymdownx.superfences', 'markdown.extensions.def_list', 'pymdownx.details']
     extension_configs = {'pymdownx.tabbed': {'alternate_style': True}}
@@ -258,7 +258,7 @@ class TestLegacyTab(util.MdCase):
             True
         )
 
-    def test_tabbed_select_mulitiple(self):
+    def test_tabbed_select_multiple(self):
         """Test selecting multiple tabs."""
 
         self.check_markdown(

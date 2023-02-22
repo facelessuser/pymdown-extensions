@@ -19,34 +19,30 @@ md = markdown.Markdown(extensions=['pymdownx.tilde'])
 To wrap content in a **delete** tag, simply surround the text with double `~`. You can also enable `smart_delete` in the
 [options](#options). Smart behavior of **delete** models that of [BetterEm](betterem.md#differences).
 
-!!! example "Delete Example"
+```text title="Delete"
+~~Delete me~~
+```
 
-    === "Output"
-        ~~Delete me~~
-
-    === "Markdown"
-        ```
-        ~~Delete me~~
-        ```
+/// html | div.result
+~~Delete me~~
+///
 
 ## Subscript
 
 To denote a subscript, you can surround the desired content in single `~`.  It uses Pandoc style logic, so if your
 subscript needs to have spaces, you must escape the spaces.
 
-!!! example "Subscript Example"
+```text title="Subscript"
+CH~3~CH~2~OH
 
-    === "Output"
-        CH~3~CH~2~OH
+text~a\ subscript~
+```
 
-        text~a\ subscript~
+/// html | div.result
+CH~3~CH~2~OH
 
-    === "Markdown"
-        ```
-        CH~3~CH~2~OH
-
-        text~a\ subscript~
-        ```
+text~a\ subscript~
+///
 
 ## Options
 

@@ -23,10 +23,14 @@ theme:
     - navigation.tabs
     - navigation.top
     - navigation.instant
+    - navigation.indexes
+    - toc.follow
     - content.tabs.link
     - search.share
     - search.highlight
     - search.suggest
+    - content.code.copy
+    - content.code.annotations
   pymdownx:
     sponsor: "https://github.com/sponsors/facelessuser"
 
@@ -39,6 +43,14 @@ nav:
     - Arithmatex: extensions/arithmatex.md
     - B64: extensions/b64.md
     - BetterEm: extensions/betterem.md
+    - Blocks:
+      - extensions/blocks/index.md
+      - Blocks Extension API: extensions/blocks/api.md
+      - Admonition: extensions/blocks/plugins/admonition.md
+      - Definition: extensions/blocks/plugins/definition.md
+      - Details: extensions/blocks/plugins/details.md
+      - HTML: extensions/blocks/plugins/html.md
+      - Tab: extensions/blocks/plugins/tab.md
     - Caret: extensions/caret.md
     - Critic: extensions/critic.md
     - Details: extensions/details.md
@@ -157,6 +169,30 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.saneheaders:
+  - pymdownx.blocks.admonition:
+      types:
+      - new
+      - settings
+      - note
+      - abstract
+      - info
+      - tip
+      - success
+      - question
+      - warning
+      - failure
+      - danger
+      - bug
+      - example
+      - quote
+  - pymdownx.blocks.details:
+  - pymdownx.blocks.html:
+  - pymdownx.blocks.definition:
+  - pymdownx.blocks.tab:
+      alternate_style: True
+  - tools.collapse_code:
+      expand_text: ''
+      collapse_text: ''
 
 extra:
   social:

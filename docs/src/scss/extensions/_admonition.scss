@@ -66,9 +66,7 @@ $new-admonitions: (
     }
   }
 
-  box-shadow:
-    0 px2rem(4px) px2rem(10px) hsla(0, 0%, 0%, 0.3),
-    0 0           px2rem(1px)  hsla(0, 0%, 0%, 0.2);
+  box-shadow: var(--md-shadow-z2);
 }
 
 /* Style existing admonitions with dark mode colors */

@@ -23,6 +23,7 @@ DOM
 Dicts
 Donath
 ElementTree
+Emmet
 Emoji
 EmojiOne
 EmojiOne's
@@ -62,6 +63,7 @@ Limberg
 MERCHANTABILITY
 MagicLink
 MagicLink's
+Malus
 Mar
 MathJax
 Mathjax
@@ -78,9 +80,12 @@ PHP
 PNG
 PNGs
 Pandoc
+Parsers
 PathConverter
 PathConverter's
 PlainHTML
+Pomaceous
+Postprocessor
 ProgressBar
 PyMdown
 PyPI
@@ -90,6 +95,7 @@ PyYaml's
 Pygments
 Pymdownx
 Reindent
+Rosaceae
 SCSS
 SVG
 SVGs
@@ -104,6 +110,7 @@ TODO
 Tasklist
 Toc
 Tox
+Treeprocessor
 Twemoji
 Twemoji's
 Twitter's
@@ -147,6 +154,7 @@ facelessuser
 formatter
 formatter's
 formatters
+frontmatter
 gantt
 gemoji
 gfm
@@ -156,6 +164,7 @@ highlighter's
 hostnames
 html
 indepth
+indexable
 injectable
 inline
 inlined
@@ -184,12 +193,15 @@ ned
 nl
 octocat
 online
+parser's
+parsers
 plugin
 plugins
 plusminus
 polyfill
 polyfilled
 polyfills
+positionally
 pre
 prepend
 prepended
@@ -208,6 +220,7 @@ pypi
 pytest
 raphael
 rc
+reStructuredText
 rebranded
 regex
 reindent
@@ -232,6 +245,7 @@ squidfunk
 stylelint
 stylesheet
 stylesheets
+subclasses
 sublicense
 superfences
 syntaxes

@@ -11,19 +11,18 @@ inline code regardless of which form is used. Use of one form or the other is pu
 feature is discussed further, we will call these specifiers (` #! ` and ` ::: `) mock shebangs, mainly due to the first
 options similar syntax to a real shebang.
 
-!!! example "Inline Highlighted Code Example"
+```text title="Inline Highlighted Code"
+Here is some code: `#!py3 import pymdownx; pymdownx.__version__`.
 
-    === "Output"
-        Here is some code: `#!py3 import pymdownx; pymdownx.__version__`
+The mock shebang will be treated like text here: ` #!js var test = 0; `.
+```
 
-        The mock shebang will be treated like text here: ` #!js var test = 0; `.
+/// html | div.result
+Here is some code: `#!py3 import pymdownx; pymdownx.__version__`
 
-    === "Markdown"
-        ```
-        Here is some code: `#!py3 import pymdownx; pymdownx.__version__`.
+The mock shebang will be treated like text here: ` #!js var test = 0; `.
+///
 
-        The mock shebang will be treated like text here: ` #!js var test = 0; `.
-        ```
 
 When using the colon mock shebang, 3 or more colons can be used.  Mock shebangs must come **immediately** after the
 opening backtick(s) and must be followed by at least one space.  If you need to escape a mock shebang, at the start of a
@@ -64,17 +63,18 @@ independently for inline code in the [options](#options).
 
 Like [SuperFences](./superfences.md), InlineHilite now provides a support for custom inline blocks.
 
-!!! example "Inline Math"
-    For more indepth information on how to reproduce the example above, check out [Arithmatex Documentation
-    ](./arithmatex.md#alternative-math-blocks).
+```text title="Inline Math"
+`#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+```
 
-    === "Output"
-        `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+/// html | div.result
+`#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+///
 
-    === "Markdown"
-        ```
-        `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
-        ```
+/// tip
+For more indepth information on how to reproduce the example above, check out [Arithmatex Documentation
+](./arithmatex.md#alternative-math-blocks).
+///
 
 Custom inline code blocks are created via the `custom_inline` option.  `custom_inline` takes an array of dictionaries
 where each dictionary defines a custom inline code block. The dictionaries requires the following keys:
@@ -85,11 +85,12 @@ Keys        | Description
 `class`     | The class name assigned to the HTML element when converting from Markdown to HTML.
 `format`    | A function that formats the HTML output. The function should return either an ElementTree object or a string as HTML.
 
-!!! new "New in 7.0"
-    Starting in 7.0, you can override the base inline logic (the syntax highlighter) by specifying the custom inline
-    with a name of `*`. This means that if an inline does not match any other custom inline, the default, fallback
-    inline would be handled by your custom `*` inline. This can be useful for tailoring a inline for a specific,
-    favorite JavaScript highlighter.
+/// new | New in 7.0
+Starting in 7.0, you can override the base inline logic (the syntax highlighter) by specifying the custom inline
+with a name of `*`. This means that if an inline does not match any other custom inline, the default, fallback
+inline would be handled by your custom `*` inline. This can be useful for tailoring a inline for a specific,
+favorite JavaScript highlighter.
+///
 
 ### Formatters
 
@@ -143,8 +144,9 @@ def format_fail(src, language, class_name, md):
         raise InlineHiliteException from e
 ```
 
-!!! new "New 9.5"
-    `InlineHiliteException` added in 9.5
+/// new | New 9.5
+`InlineHiliteException` added in 9.5
+///
 
 ## Options
 

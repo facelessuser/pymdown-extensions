@@ -14,9 +14,10 @@ SuperFences provides a number of features:
 4. Experimental feature that preserves tabs within a code block instead of converting them to spaces which is Python
   Markdown's default behavior.
 
-!!! danger "Reminder"
-    Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this
-    extension!
+/// danger | Reminder
+Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this
+extension!
+///
 
 The SuperFences extension can be included in Python Markdown by using the following:
 
@@ -94,36 +95,32 @@ the [`attr_list`][attr-list] extension is enabled, but when using Pygments, only
 with the `data-` prefix will be recognized, all others will be treated as options for Pygments and will be rejected if
 not valid.
 
-!!! example "Injecting Classes"
+````text title="Injecting Classes"
+```{.python .extra-class linenums="1"}
+import hello_world
+```
+````
 
-    === "HTML"
-        ```html
-        <div class="extra-class highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div><pre><span></span><code><span cv></td><td class="code"><div><pre><span></span><code><span class="kn">import</span> <spanlass="kn">import</span> <span class="nn">hello_world</span>\n</code></pre></div>\n</td></tr></table></div>
-        ```
-
-    === "Markdown"
-        ````
-        ```{.python .extra-class linenums="1"}
-        import hello_world
-        ```
-        ````
+/// html | div.result
+```html
+<div class="extra-class highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div><pre><span></span><code><span cv></td><td class="code"><div><pre><span></span><code><span class="kn">import</span> <spanlass="kn">import</span> <span class="nn">hello_world</span>\n</code></pre></div>\n</td></tr></table></div>
+```
+///
 
 When generating additional classes on a JavaScript style code block (non-Pygments code blocks), classes are injected in
 the `#!html code` block.
 
-!!! example "Non-Pygments Injecting Classes"
+````text title="Non-Pygments Injecting Classes"
+```{.python .extra-class #id linenums="1"}
+import hello_world
+```
+````
 
-    === "HTML"
-        ```html
-        <pre id="id" class="highlight"><code class="extra-class language-python linenums">import hello_world</code></pre>
-        ```
-
-    === "Markdown"
-        ````
-        ```{.python .extra-class #id linenums="1"}
-        import hello_world
-        ```
-        ````
+/// html | div.result
+```html
+<pre id="id" class="highlight"><code class="extra-class language-python linenums">import hello_world</code></pre>
+```
+///
 
 When using Pygments, all extra classes and attributes will be attached to the Pygments' wrapper `#!html <div>`.
 
@@ -131,9 +128,10 @@ When using a built in [custom formatter](#custom-fences), all classes and IDs ar
 `#!html <div>` or `#!html <pre>`. This preserves previous behavior, but you can write your own and inject them in the
 way that suites your needs.
 
-!!! new "New 9.0"
-    Added support for `#id` in Pygments brace headers. Also added support for arbitrary `data-` attributes if the
-    [`attr_list`][attr-list] extension is enabled.
+/// new | New 9.0
+Added support for `#id` in Pygments brace headers. Also added support for arbitrary `data-` attributes if the
+[`attr_list`][attr-list] extension is enabled.
+///
 
 ## Preserve Tabs
 
@@ -141,29 +139,27 @@ Python Markdown has an approach where it normalizes whitespace. This means `\r\n
 converted to spaces. In 99% of Markdown, this is never really an issue, but with code blocks it can be. Tabs can
 sometimes be very useful for aligning certain kinds of data, especially when dealing with characters of varying width.
 
-!!! example "Tabs in Content"
+````text title="Tabs in Content"
+```
+============================================================
+T   Tp  Sp  D   Dp  S   D7  T
+------------------------------------------------------------
+A   F#m Bm  E   C#m D   E7  A
+A#  Gm  Cm  F   Dm  D#  F7  A#
+B♭  Gm  Cm  F   Dm  E♭m F7  B♭
+```
+````
 
-    === "Output"
-        ```
-        ============================================================
-        T	Tp	Sp	D	Dp	S	D7	T
-        ------------------------------------------------------------
-        A	F#m	Bm	E	C#m	D	E7	A
-        A#	Gm	Cm	F	Dm	D#	F7	A#
-        B♭	Gm	Cm	F	Dm	E♭m	F7	B♭
-        ```
-
-    === "Markdown"
-        ````
-        ```
-        ============================================================
-        T	Tp	Sp	D	Dp	S	D7	T
-        ------------------------------------------------------------
-        A	F#m	Bm	E	C#m	D	E7	A
-        A#	Gm	Cm	F	Dm	D#	F7	A#
-        B♭	Gm	Cm	F	Dm	E♭m	F7	B♭
-        ```
-        ````
+/// html | div.result
+```
+============================================================
+T	Tp	Sp	D	Dp	S	D7	T
+------------------------------------------------------------
+A	F#m	Bm	E	C#m	D	E7	A
+A#	Gm	Cm	F	Dm	D#	F7	A#
+B♭	Gm	Cm	F	Dm	E♭m	F7	B♭
+```
+///
 
 If you have a scenario where preserving tabs is a requirement, you can use SuperFences `preserve_tabs` option to prevent
 converting tabs to spaces inside fenced code blocks. This *only* applies to fenced code blocks. Indented code blocks and
@@ -187,19 +183,17 @@ name directly after the opening tokens (either ` ``` ` or `~~~`). Whether using 
 highlighter, the syntax is the same, but please consult your highlighter's documentation for recognized language syntax
 specifiers.
 
-!!! example "Highlight Example"
+````text title="Highlighting"
+```python
+import foo.bar
+```
+````
 
-    === "Output"
-        ```py3
-        import foo.bar
-        ```
-
-    === "Markdown"
-        ````
-        ```py3
-        import foo.bar
-        ```
-        ````
+/// html | div.result
+```python
+import foo.bar
+```
+///
 
 ## Showing Line Numbers
 
@@ -211,35 +205,32 @@ present). Simply specify the starting line line number with option `linenums="1"
 sign and the value must be quoted.  Valid line numbers are n > 0.  If `linenums` is enabled globally, this will just
 control the starting line shown in the block.
 
-!!! example "Line Number Example"
+````text title="Line Numbers"
+```{.python linenums="1"}
+import foo.bar
+```
+````
 
-    === "Output"
-        ``` {linenums="1"}
-        import foo.bar
-        ```
+/// html | div.result
+```{.python linenums="1"}
+import foo.bar
+```
+///
 
-    === "Markdown"
-        ````
-        ``` {linenums="1"}
-        import foo.bar
-        ```
-        ````
 
 And, if we wanted to start with a different starting line number, we would just specify something other than `1`.
 
-!!! example "Custom Line Number Start Example"
+````text title="Custom Line Number Start"
+```{.python linenums="2"}
+import foo.bar
+```
+````
 
-    === "Output"
-        ``` {linenums="2"}
-        import foo.bar
-        ```
-
-    === "Markdown"
-        ````
-        ``` {linenums="2"}
-        import foo.bar
-        ```
-        ````
+/// html | div.result
+```{.python linenums="2"}
+import foo.bar
+```
+///
 
 Pygments also has a few additional options in regards to line numbers. One is "line step" which, if set to a number n >
 1, will print only every n^th^ line number. The other option is a setting that can mark line numbers as "special" with a
@@ -249,49 +240,45 @@ class `special`.
 So to set showing only every other line number, we could do the following. Line options are separated by a space, and
 "line step" is always the second option, so you must specify line start before line step.
 
-!!! example "Nth Line Example"
+````text title="N<sup>th</sup> Line"
+``` {.python linenums="1 2"}
+"""Some file."""
+import foo.bar
+import boo.baz
+import foo.bar.baz
+```
+````
 
-    === "Output"
-        ``` {linenums="1 2"}
-        """Some file."""
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-
-    === "Markdown"
-        ````
-        ``` {linenums="1 2"}
-        """Some file."""
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-        ````
+/// html | div.result
+``` {.python linenums="1 2"}
+"""Some file."""
+import foo.bar
+import boo.baz
+import foo.bar.baz
+```
+///
 
 To set every other line as special, you must set the third `linenums` option (specify line start and step before it).
 Special must be a value of n > 0. Additionally, you can set this globally with `linenums_special` in the
 [Highlight extension](./highlight.md).
 
-!!! example "Special Line Example"
+````text title="Special Lines"
+``` {linenums="1 1 2"}
+"""Some file."""
+import foo.bar
+import boo.baz
+import foo.bar.baz
+```
+````
 
-    === "Output"
-        ``` {linenums="1 1 2"}
-        """Some file."""
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-
-    === "Markdown"
-        ````
-        ``` {linenums="1 1 2"}
-        """Some file."""
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-        ````
+/// html | div.result
+``` {linenums="1 1 2"}
+"""Some file."""
+import foo.bar
+import boo.baz
+import foo.bar.baz
+```
+///
 
 For JavaScript libraries, a class of `linenums` is written to the block.  This may or may not be leveraged by your
 chosen highlighter.  It is uncertain at this time whether line number support for JavaScript highlighters will be
@@ -303,85 +290,81 @@ Via Pygments, certain lines can be specified for highlighting.  This is done by 
 after the opening tokens (and language if present).  The setting is named `hl_lines` and the value should be the
 targeted line numbers separated by spaces.
 
-!!! example "Highlight Lines Example"
+````text title="Highlight Lines"
+```{.python hl_lines="1 3"}
+"""Some file."""
+import foo.bar
+import boo.baz
+import foo.bar.baz
+```
+````
 
-    === "Output"
-        ```{.py3 hl_lines="1 3"}
-        """Some file."""
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
+/// html | div.result
+```{.python hl_lines="1 3"}
+"""Some file."""
+import foo.bar
+import boo.baz
+import foo.bar.baz
+```
+///
 
-    === "Markdown"
-        ````
-        ```{.py3 hl_lines="1 3"}
-        """Some file."""
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-        ````
 
 Line numbers are always referenced starting at 1 ignoring what the line number is labeled as when showing line numbers.
 
-!!! example "Highlight Lines with Line Numbers Example"
+````text title="Highlight Lines with Line Numbers"
+```{.py3 hl_lines="1 3" linenums="2"}
+"""Some file."""
+import foo.bar
+import boo.baz
+import foo.bar.baz
+```
+````
 
-    === "Output"
-        ```{.py3 hl_lines="1 3" linenums="2"}
-        """Some file."""
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-
-    === "Markdown"
-        ````
-        ```{.py3 hl_lines="1 3" linenums="2"}
-        """Some file."""
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-        ````
+/// html | div.result
+```{.py3 hl_lines="1 3" linenums="2"}
+"""Some file."""
+import foo.bar
+import boo.baz
+import foo.bar.baz
+```
+///
 
 If you'd like to do a range of lines, you can use the notation `x-y` where `x` is the starting line and `y` is the
 ending line. You can do multiple ranges and even mix them with non ranges.
 
-!!! example "Highlight Ranges"
+````text title="Highlight Ranges"
+```{.py3 hl_lines="1-2 5 7-8"}
+import foo
+import boo.baz
+import foo.bar.baz
 
-    === "Output"
-        ```{.py3 hl_lines="1-2 5 7-8"}
-        import foo
-        import boo.baz
-        import foo.bar.baz
+class Foo:
+   def __init__(self):
+       self.foo = None
+       self.bar = None
+       self.baz = None
+```
+````
 
-        class Foo:
-           def __init__(self):
-               self.foo = None
-               self.bar = None
-               self.baz = None
-        ```
+/// html | div.result
+```{.py3 hl_lines="1-2 5 7-8"}
+import foo
+import boo.baz
+import foo.bar.baz
 
-    === "Markdown"
-        ````
-        ```{.py3 hl_lines="1-2 5 7-8"}
-        import foo
-        import boo.baz
-        import foo.bar.baz
-
-        class Foo:
-           def __init__(self):
-               self.foo = None
-               self.bar = None
-               self.baz = None
-        ```
-        ````
+class Foo:
+   def __init__(self):
+       self.foo = None
+       self.bar = None
+       self.baz = None
+```
+///
 
 ## Code Block Title Headers
 
-!!! new "New 9.0"
-    Title headers are new in version `9.0`.
+/// new | New 9.0
+Title headers are new in version `9.0`.
+///
 
 When Pygments is enabled, a header with a title can be applied with the `title` option. This essentially controls the
 Pygments' `filename` option under the hood. It made more sense to use the term `title` as people can really set any
@@ -414,86 +397,80 @@ element at the start of the table set to span both the line number column and th
 </div>
 ```
 
-!!! example "Title"
+````text title="Adding Titles"
+```{.py3 title="My Cool Header"}
+import foo.bar
+import boo.baz
+import foo.bar.baz
+```
+````
 
-    === "Output"
-        ```{.py3 title="My Cool Header"}
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-
-    === "Markdown"
-        ````
-        ```{.py3 title="My Cool Header"}
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-        ````
+/// html | div.result
+```{.py3 title="My Cool Header"}
+import foo.bar
+import boo.baz
+import foo.bar.baz
+```
+///
 
 If the `auto_title` option is enabled in the [Highlight extension](./highlight.md), the title will be auto populated
 with the name of the lexer used to highlight the code (unless `title` is manually specified). In the example below,
 no `title` is specified, but the the title is extracted from the Python lexer.
 
-!!! example "Auto Filename"
+````text title="Automatic Titles"
+```python
+import foo.bar
+import boo.baz
+import foo.bar.baz
+```
+````
 
-    === "Output"
-        ````md-render
-        ---
-        extensions:
-        - pymdownx.highlight
-        - pymdownx.superfences
+/// html | div.result
+````md-render
+---
+extensions:
+- pymdownx.highlight
+- pymdownx.superfences
 
-        extension_configs:
-          pymdownx.highlight:
-            auto_title: true
-        ---
-        ```python
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-        ````
-
-    === "Markdown"
-        ````
-        ```python
-        import foo.bar
-        import boo.baz
-        import foo.bar.baz
-        ```
-        ````
+extension_configs:
+  pymdownx.highlight:
+    auto_title: true
+---
+```python
+import foo.bar
+import boo.baz
+import foo.bar.baz
+```
+````
+///
 
 There may be some cases where a Lexer returns a result that is undesired. For example, when a user specifies the `pycon`
 lexer, the title that is returned is quite verbose.
 
-!!! example "Auto Filename"
+````text title="Undesired Automatic Title"
+```pycon
+>>> 3 + 3
+6
+```
+````
 
-    === "Output"
-        ````md-render
-        ---
-        extensions:
-        - pymdownx.highlight
-        - pymdownx.superfences
+/// html | div.result
+````md-render
+---
+extensions:
+- pymdownx.highlight
+- pymdownx.superfences
 
-        extension_configs:
-          pymdownx.highlight:
-            auto_title: true
-        ---
-        ```pycon
-        >>> 3 + 3
-        6
-        ```
-        ````
-
-    === "Markdown"
-        ````
-        ```pycon
-        >>> 3 + 3
-        6
-        ```
-        ````
+extension_configs:
+  pymdownx.highlight:
+    auto_title: true
+---
+```pycon
+>>> 3 + 3
+6
+```
+````
+///
 
 In a case like above, it may be desired to simply use the title `Python`. We can configure the [Highlight extension](./highlight.md)
 to override any auto returned title. Simply create mapping via the `auto_title_map` specifying the title you wish to
@@ -543,36 +520,39 @@ then every line will be wrapped in a span with the ID `prefix-x-y` where `prefix
 unique number for the code block, and `y` is the line number. After that, it is up to the user to do as they with to
 target the ID with either JavaScript and/or CSS.
 
-=== "Config"
+/// tab | Config
 
-    ```py3
-    extension_configs = {
-        "pymdownx.highlight": {
-            'linenums_style': 'inline',
-            'line_spans': '__codeline'
-        }
+```py3
+extension_configs = {
+    "pymdownx.highlight": {
+        'linenums_style': 'inline',
+        'line_spans': '__codeline'
     }
-    ```
+}
+```
+///
 
-=== "Markdown"
-    ````
-    ```{.python linenums="1 1" }
-    import foo
-    ```
-    ````
+/// tab | Markdown
+````
+```{.python linenums="1 1" }
+import foo
+```
+````
+///
 
-=== "HTML"
-    ```html
-    <div class="highlight">
-    <pre>
-    <span></span>
-    <code>
-    <span id="__codeline-0-1"><span class="linenos">1</span><span class="kn">import</span> <span class="nn">foo</span>
-    </span>
-    </code>
-    </pre>
-    </div>
-    ```
+/// tab | HTML
+```html
+<div class="highlight">
+<pre>
+<span></span>
+<code>
+<span id="__codeline-0-1"><span class="linenos">1</span><span class="kn">import</span> <span class="nn">foo</span>
+</span>
+</code>
+</pre>
+</div>
+```
+///
 
 We can also wrap line numbers with with a link and inject anchors so you can click line numbers and be taken to said
 line. To do this, `anchor_linenums` must be enabled and then a prefix should be provided via `line_anchors`, just like
@@ -580,65 +560,65 @@ line. To do this, `anchor_linenums` must be enabled and then a prefix should be 
 and `y` is the line number. If you wish to not have the line numbers clickable, and just have the anchors inserted,
 you can omit enabling `anchor_linenums`.
 
-=== "Config"
-
-    ```py3
-    extension_configs = {
-        "pymdownx.highlight": {
-            'linenums_style': 'inline',
-            'line_spans': '__codeline',
-            'line_anchors': '__codelineno',
-            'anchor_linenums': True
-        }
+/// tab | Config
+```py3
+extension_configs = {
+    "pymdownx.highlight": {
+        'linenums_style': 'inline',
+        'line_spans': '__codeline',
+        'line_anchors': '__codelineno',
+        'anchor_linenums': True
     }
-    ```
+}
+```
+///
 
-=== "Markdown"
-    ````
-    ```{.python linenums="1 1" }
-    import foo
-    ```
-    ````
+/// tab | Markdown
+````
+```{.python linenums="1 1" }
+import foo
+```
+````
+///
 
-=== "HTML"
-    ```html
-    <div class="highlight">
-    <pre>
-    <span></span>
-    <code>
-    <span id="__codeline-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><a href="#__codelineno-0-1"><span class="linenos">1</span></a><span class="kn">import</span> <span class="nn">foo</span>
-    </span>
-    </code>
-    </pre>
-    </div>
-    ```
+/// tab | HTML
+```html
+<div class="highlight">
+<pre>
+<span></span>
+<code>
+<span id="__codeline-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><a href="#__codelineno-0-1"><span class="linenos">1</span></a><span class="kn">import</span> <span class="nn">foo</span>
+</span>
+</code>
+</pre>
+</div>
+```
+///
 
 ## Custom Fences
 
 SuperFences allows defining custom fences for special purposes. For instance, we could create special fences for
 diagrams that we could later run Mermaid on.
 
-!!! example "Flow Chart Example"
+````text title="Flow Chart"
+```diagram
+graph TD
+    A[Hard] -->|Text| B(Round)
+    B --> C{Decision}
+    C -->|One| D[Result 1]
+    C -->|Two| E[Result 2]
+```
+````
 
-    === "Output"
-        ```diagram
-        graph TD
-            A[Hard] -->|Text| B(Round)
-            B --> C{Decision}
-            C -->|One| D[Result 1]
-            C -->|Two| E[Result 2]
-        ```
-
-    === "Markdown"
-        ````
-        ```diagram
-        graph TD
-            A[Hard] -->|Text| B(Round)
-            B --> C{Decision}
-            C -->|One| D[Result 1]
-            C -->|Two| E[Result 2]
-        ```
-        ````
+/// html | div.result
+```diagram
+graph TD
+    A[Hard] -->|Text| B(Round)
+    B --> C{Decision}
+    C -->|One| D[Result 1]
+    C -->|Two| E[Result 2]
+```
+///
 
 This would allow us access to all the diagrams Mermaid offers. Some Mermaid diagrams are less practical to use as they
 don't scale well, but many work great.
@@ -658,15 +638,17 @@ Keys        | Description
 `format`    | A function that formats the HTML output. The function should return a string as HTML.
 `validator` | An optional parameter that is used to provide a function to validate custom fence parameters.
 
-!!! warning "Logging"
-    When a custom fence fails, the error will be swallowed up and the error will be handled gracefully. If logging is
-    desired, custom logging should be added into the custom function. SuperFences will not provide any.
+/// warning | Logging
+When a custom fence fails, the error will be swallowed up and the error will be handled gracefully. If logging is
+desired, custom logging should be added into the custom function. SuperFences will not provide any.
+///
 
-!!! new "New in 7.0"
-    Starting in 7.0, you can override the base fence logic (the syntax highlighter) by specifying the custom fence
-    with a name of `*`. This means that if a fence does not match any other custom fences, the default, fallback fence
-    would be handled by your custom `*` fence. This can be useful for tailoring a fence output with custom parameters
-    for a specific, favorite JavaScript highlighter.
+/// new | New in 7.0
+Starting in 7.0, you can override the base fence logic (the syntax highlighter) by specifying the custom fence
+with a name of `*`. This means that if a fence does not match any other custom fences, the default, fallback fence
+would be handled by your custom `*` fence. This can be useful for tailoring a fence output with custom parameters
+for a specific, favorite JavaScript highlighter.
+///
 
 ### Formatters
 
@@ -696,19 +678,22 @@ def custom_formatter(source, language, css_class, options, md, **kwargs):
 
 All formatters should return a string as HTML.
 
-!!! tip "YAML Configuration Format"
-    If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please
-    see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify function references in YAML.
+/// tip | YAML Configuration Format
+If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please
+see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify function references in YAML.
+///
 
-!!! new "New 7.0"
-    The addition of the parameters `classes` and `id_value` is new in 7.0. If injecting additional classes or ids via
-    [brace headers](#injecting-classes-and-ids), only then will `classes` and `id_value` be passed in to preserve
-    backwards compatibility with old custom formatters. Users, moving forward, should at the very least update their
-    formatters with `**kwargs` to future proof their custom formatters in case additional parameters are added in the
-    future.
+/// new | New 7.0
+The addition of the parameters `classes` and `id_value` is new in 7.0. If injecting additional classes or ids via
+[brace headers](#injecting-classes-and-ids), only then will `classes` and `id_value` be passed in to preserve
+backwards compatibility with old custom formatters. Users, moving forward, should at the very least update their
+formatters with `**kwargs` to future proof their custom formatters in case additional parameters are added in the
+future.
+///
 
-!!! new "Changes 8.0"
-    Formatters now take the keyword parameter `attrs`.
+/// new | Changes 8.0
+Formatters now take the keyword parameter `attrs`.
+///
 
 ### Validators
 
@@ -772,22 +757,24 @@ test
 ```
 ````
 
-!!! tip "YAML Configuration Format"
-    If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please
-    see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify function references in YAML.
+/// tip | YAML Configuration Format
+If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please
+see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify function references in YAML.
+///
 
-!!! new "Changes 8.0"
-    - `validator` now accepts the following variables:
-        - `inputs`: with all the parsed options/attributes (validator should not modify this structure).
-        - `options`: a dictionary to which all valid options should be assigned to.
-        - `attrs`: a dictionary to which all valid attributes should be assigned to.
-        - `md`: the `Markdown` object.
-    - If the [`attr_list`][attr-list] extension is enabled and the brace style header is used, any key/value pairs that
-      were assigned as attributes by the `validator` will be passed to the `formatter`'s `attrs` parameter.
-    - Options in the form of `key=` (which have no value) will are no longer be allowed. A `key` with no value will
-      assume the `value` to be the `key` name. This brings consistency as options are now parsed with
-      [`attr_list`][attr-list].
-    - If a `validator` fails, the next `validator`/`formatter` pair will be tired.
+/// new | Changes 8.0
+- `validator` now accepts the following variables:
+    - `inputs`: with all the parsed options/attributes (validator should not modify this structure).
+    - `options`: a dictionary to which all valid options should be assigned to.
+    - `attrs`: a dictionary to which all valid attributes should be assigned to.
+    - `md`: the `Markdown` object.
+- If the [`attr_list`][attr-list] extension is enabled and the brace style header is used, any key/value pairs that
+  were assigned as attributes by the `validator` will be passed to the `formatter`'s `attrs` parameter.
+- Options in the form of `key=` (which have no value) will are no longer be allowed. A `key` with no value will
+  assume the `value` to be the `key` name. This brings consistency as options are now parsed with
+  [`attr_list`][attr-list].
+- If a `validator` fails, the next `validator`/`formatter` pair will be tired.
+///
 
 ### Exception Handling
 
@@ -827,22 +814,23 @@ def custom_validator_except(language, inputs, options, attrs, md):
     return okay
 ```
 
-!!! new "New 9.2"
-    `SuperFencesException` added in 9.2
+/// new | New 9.2
+`SuperFencesException` added in 9.2
+///
 
 ### UML Diagram Example
 
-!!! warning "Support"
+/// warning | Support
+This example is mainly used to illustrate how custom fences work. While Mermaid is used in the example, it is the
+bare minimum needed to get diagrams working.
 
-    This example is mainly used to illustrate how custom fences work. While Mermaid is used in the example, it is the
-    bare minimum needed to get diagrams working.
+Please reference [Mermaid's][mermaid] documents for more information on configuring features. PyMdown Extensions
+does not offer direct support for issues you may have in using [Mermaid][mermaid], feel free to use their issue
+tracker to report problems with their library.
 
-    Please reference [Mermaid's][mermaid] documents for more information on configuring features. PyMdown Extensions
-    does not offer direct support for issues you may have in using [Mermaid][mermaid], feel free to use their issue
-    tracker to report problems with their library.
-
-    We do provide some [advanced notes on Mermaid](../extras/mermaid.md) if you are interested in learning how we use
-    and configure it in our own documentation.
+We do provide some [advanced notes on Mermaid](../extras/mermaid.md) if you are interested in learning how we use
+and configure it in our own documentation.
+///
 
 This example illustrates how you can use the `custom_fences` option to do UML diagrams with [Mermaid][mermaid]. The
 settings below show us creating a new custom fence called `mermaid`. The special fence is set under the `custom_fences`

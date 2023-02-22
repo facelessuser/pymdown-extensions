@@ -1,4 +1,35 @@
 # Changelog
+## 9.10b1
+
+- **NEW**: HTML General block now accepts Emmet style attribute: `/// html | div.class#id[name=value]`.
+- **NEW**: Block attribute specifier is renamed from `attributes` to `attrs`.
+- **NEW**: Remove `colon_syntax` option and cement that we are using `///` format moving forward.
+- **NEW**: Revise available validators for Block options. Remove unnecessary validators and replace some with new ones.
+- **NEW**: Simplify argument API.
+- **NEW**: Block extensions can now be registered directly as normal Python Markdown extensions.
+
+## 9.10a3
+
+- **NEW**: General blocks now use an indented option block right after the header. `yaml_indent` option has been
+  removed.
+- **NEW**: Added new "Definition" block that allows the creation of definition lists.
+- **NEW**: Simplified argument configuration.
+- **NEW**: Some internal cleanup.
+- **NEW**: Documented current API.
+
+## 9.10a2
+
+- **NEW**: General blocks no longer use YAML fences for per block options, but instead use a special token to denote the
+  line is part of the config.
+- **NEW**: Add temporary alpha/beta option `yaml_indent` to control whether per-block YAML configs use indentation or a
+  leading special character: `/` for `///` syntax and `:` for `:::` syntax (`colon_syntax` must be true to use `:::`
+  syntax).
+- **NEW**: Ensure that `/` character can be escaped when registering the `blocks` extension.
+- **FIX**: Fix some block nesting issues.
+
+## 9.10a1
+
+- **NEW**: Experimental general purpose blocks.
 
 ## 9.9.3
 

@@ -179,10 +179,10 @@ class TabbedProcessor(BlockProcessor):
                 '!' not in special
             ):
                 first = False
-                sfences = sibling
+                tab_group = sibling
                 if self.alternate_style:
-                    index = [index for index, last_input in enumerate(sfences.findall('input'), 1)][-1]
-                    for d in sfences.findall('div'):
+                    index = [index for index, last_input in enumerate(tab_group.findall('input'), 1)][-1]
+                    for d in tab_group.findall('div'):
                         if d.attrib['class'] == 'tabbed-labels':
                             labels = d
                         elif d.attrib['class'] == 'tabbed-content':
@@ -192,24 +192,24 @@ class TabbedProcessor(BlockProcessor):
             else:
                 first = True
                 self.tab_group_count += 1
-                sfences = etree.SubElement(
+                tab_group = etree.SubElement(
                     parent,
                     'div',
                     {'class': tabbed_set, 'data-tabs': '%d:0' % self.tab_group_count}
                 )
                 if self.alternate_style:
                     labels = etree.SubElement(
-                        sfences,
+                        tab_group,
                         'div',
                         {'class': 'tabbed-labels'}
                     )
                     content = etree.SubElement(
-                        sfences,
+                        tab_group,
                         'div',
                         {'class': 'tabbed-content'}
                     )
 
-            data = sfences.attrib['data-tabs'].split(':')
+            data = tab_group.attrib['data-tabs'].split(':')
             tab_set = int(data[0])
             tab_count = int(data[1]) + 1
 
@@ -224,7 +224,7 @@ class TabbedProcessor(BlockProcessor):
             if first or '+' in special:
                 attributes['checked'] = 'checked'
                 # Remove any previously assigned "checked states" to siblings
-                for i in sfences.findall('input'):
+                for i in tab_group.findall('input'):
                     if i.attrib.get('name', '') == '__tabbed_{}'.format(tab_set):
                         if 'checked' in i.attrib:
                             del i.attrib['checked']
@@ -236,7 +236,7 @@ class TabbedProcessor(BlockProcessor):
                     'input',
                     attributes
                 )
-                sfences.insert(index, input_el)
+                tab_group.insert(index, input_el)
                 lab = etree.SubElement(
                     labels,
                     "label",
@@ -251,26 +251,26 @@ class TabbedProcessor(BlockProcessor):
                 )
             else:
                 etree.SubElement(
-                    sfences,
+                    tab_group,
                     'input',
                     attributes
                 )
                 lab = etree.SubElement(
-                    sfences,
+                    tab_group,
                     "label",
                     attributes2
                 )
                 lab.text = title
 
                 div = etree.SubElement(
-                    sfences,
+                    tab_group,
                     "div",
                     {
                         "class": "tabbed-content"
                     }
                 )
 
-            sfences.attrib['data-tabs'] = '%d:%d' % (tab_set, tab_count)
+            tab_group.attrib['data-tabs'] = '%d:%d' % (tab_set, tab_count)
         else:
             if sibling.tag in ('li', 'dd') and sibling.text:
                 # Sibling is a list item, but we need to wrap it's content should be wrapped in <p>

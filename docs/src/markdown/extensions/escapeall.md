@@ -9,19 +9,17 @@ alone.  EscapeAll makes `\` escape everything making such questions moot.  Now i
 can be escaped, you can expect that `\` will escape the character following it.  So if you need a literal `\`, just
 escape it: `\\`.  Keep in mind this will not escape things in code blocks of any kind.
 
-!!! example "Escape Example"
+```text title="Escaping"
+\W\e\ \c\a\n\ \e\s\c\a\p\e
+\e\v\e\r\y\t\h\i\n\g\!\ \
+\❤\😄
+```
 
-    === "Output"
-        \W\e\ \c\a\n\ \e\s\c\a\p\e
-        \e\v\e\r\y\t\h\i\n\g\!\ \
-        \❤\😄
-
-    === "Markdown"
-        ```
-        \W\e\ \c\a\n\ \e\s\c\a\p\e
-        \e\v\e\r\y\t\h\i\n\g\!\ \
-        \❤\😄
-        ```
+/// html | div.result
+\W\e\ \c\a\n\ \e\s\c\a\p\e
+\e\v\e\r\y\t\h\i\n\g\!\ \
+\❤\😄
+///
 
 There are two special escapes among all of these escapes though: escaping "space" characters and escaping "newline"
 characters. If `nbsp` is enabled, an escaped space will be converted into a non-breaking space: `#!html &nbsp;`. If
@@ -30,19 +28,19 @@ is that you can visually see the hard break opposed to Markdown's default method
 
 So in short, EscapeAll escapes all inline characters.
 
-!!! question "Q & A"
+/// question | Q & A
+**So all ASCII characters?**
 
-    **So all ASCII characters?**
+_It escapes everything._
 
-    _It escapes everything._
+**What about Unicode?**
 
-    **What about Unicode?**
+_It escapes everything!_
 
-    _It escapes everything!_
+**What about...**
 
-    **What about...**
-
-    _EVERYTHING! IT ESCAPES EVERYTHING!_
+_EVERYTHING! IT ESCAPES EVERYTHING!_
+///
 
 The EscapeAll extension can be included in Python Markdown by using the following:
 

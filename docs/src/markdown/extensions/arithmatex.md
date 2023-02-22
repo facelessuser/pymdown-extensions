@@ -28,70 +28,69 @@ traditional ways such as: *I have $2.00 and Bob has $10.00*.  The previous state
 `#!tex $` character.  But when needed, the `#!tex $` character can be escaped using `#!tex \$`. `smart_dollar` can be
 disabled and will capture any `#!tex $...$` whose dollar symbols are not escaped (`#!tex \$`).
 
-!!! example "Inline Examples"
+```tex title="Inline"
+$p(x|y) = \frac{p(y|x)p(x)}{p(y)}$, \(p(x|y) = \frac{p(y|x)p(x)}{p(y)}\).
+```
 
-    === "Output"
-        $p(x|y) = \frac{p(y|x)p(x)}{p(y)}$, \(p(x|y) = \frac{p(y|x)p(x)}{p(y)}\).
+/// html | div.result
+$p(x|y) = \frac{p(y|x)p(x)}{p(y)}$, \(p(x|y) = \frac{p(y|x)p(x)}{p(y)}\).
+///
 
-    === "Markdown"
-        ```tex
-        $p(x|y) = \frac{p(y|x)p(x)}{p(y)}$, \(p(x|y) = \frac{p(y|x)p(x)}{p(y)}\).
-        ```
 
-!!! tip "Inline Configuration"
-    When using MathJax, for best results, it is advised to not use [`generic`](#options) mode, and configure MathJax
-    without the `text2jax` extension since MathJax automatically detects Arithmatex's default output.
+/// tip | Inline Configuration
+When using MathJax, for best results, it is advised to not use [`generic`](#options) mode, and configure MathJax
+without the `text2jax` extension since MathJax automatically detects Arithmatex's default output.
 
-    If using generic mode (for libraries like KaTeX), Arithmatex will convert dollars to the form `#!tex \(...\)` in the
-    HTML output. This is because `#!tex $...$` is extremely problematic to scan for, which is why MathJax and KaTeX
-    disable `#!tex $...$` by default in their plain text scanners, and why Arithmatex enables `smart_dollar` by default
-    when scanning for `#!tex $...$`.
+If using generic mode (for libraries like KaTeX), Arithmatex will convert dollars to the form `#!tex \(...\)` in the
+HTML output. This is because `#!tex $...$` is extremely problematic to scan for, which is why MathJax and KaTeX
+disable `#!tex $...$` by default in their plain text scanners, and why Arithmatex enables `smart_dollar` by default
+when scanning for `#!tex $...$`.
 
-    It is advised that if you are outputting in in `generic` mode that you do not configure your JavaScript library to
-    look for `#!tex $...$` and instead look for `#!tex \(...\)`, and let Arithmatex's handle `#!tex $...$`.
+It is advised that if you are outputting in in `generic` mode that you do not configure your JavaScript library to
+look for `#!tex $...$` and instead look for `#!tex \(...\)`, and let Arithmatex's handle `#!tex $...$`.
+///
 
 For block forms, the block must start with the appropriate opening for the block type: `#!tex $$`, `#!tex \[`, and
 `#!tex \begin{}` for the respective search pattern. The block must also end with the proper respective end: `#!tex $$`,
 `#!tex \]`, and `#!tex \end{}`. A block also must contain no empty lines and should be both preceded and followed by an
 empty line.
 
-!!! example "Block Examples"
+```tex title="Block"
+$$
+E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+$$
 
-    === "Output"
-        $$
-        E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
-        $$
+\[3 < 4\]
 
-        \[3 < 4\]
+\begin{align}
+    p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
+    p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
+\end{align}
+```
 
-        \begin{align}
-            p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
-            p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
-        \end{align}
+/// html | div.result
+$$
+E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
+$$
 
-    === "Markdown"
-        ```tex
-        $$
-        E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
-        $$
+\[3 < 4\]
 
-        \[3 < 4\]
-
-        \begin{align}
-            p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
-            p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
-        \end{align}
-        ```
+\begin{align}
+    p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
+    p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
+\end{align}
+///
 
 ## MathJax Output Format
 
-!!! note "Form Dropped in MathJax 3"
-    The title is a bit misleading. Yes, MathJax 3 dropped supporting the format as a default recognized form, but you
-    can still use the form with MathJax 3, you just have to add a little more configuration.
+/// note | Format Dropped in MathJax 3
+The title is a bit misleading. Yes, MathJax 3 dropped supporting the format as a default recognized form, but you
+can still use the form with MathJax 3, you just have to add a little more configuration.
 
-    This used to be a supported format for MathJax 2. It appears this form was dropped in MathJax 3. While it is the
-    current default for Arithmatex, it may be relegated to a secondary option in the future. If this output is preferred 
-    method, setting `generic` to `#!py False` will prevent any surprises in the future if/when the default changes.
+This used to be a supported format for MathJax 2. It appears this form was dropped in MathJax 3. While it is the
+current default for Arithmatex, it may be relegated to a secondary option in the future. If this output is preferred
+method, setting `generic` to `#!py False` will prevent any surprises in the future if/when the default changes.
+///
 
 The math equations will be wrapped in a special MathJax script tag and embedded into the HTML. This format does not
 require the `tex2jax.js` extension when setting up MathJax. The tag will be in the form of
@@ -122,16 +121,18 @@ replaced, only wrapped: `#!html <div class="arithmatex">\[\begin{}...\end{}\]</d
 Arithmatex requires you to provide the MathJax library and provide and configure it to your liking.  The recommended way
 of including MathJax is to use the CDN. Latest version at time of writing this is found below.
 
-=== "MathJax 3"
-    ```html
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-    ```
+/// tab | MathJax 3
+```html
+<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+```
+///
 
-=== "Legacy: MathJax 2"
-    ```html
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"></script>
-    ```
+/// tab | Legacy: MathJax 2
+```html
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"></script>
+```
+///
 
 Generally, it is best to add your own configuration to get exactly what you want. Here we show some simple examples of
 configurations done in JavaScript. We've provided two basic configurations below: one that is configured for
@@ -143,74 +144,78 @@ extensions/plugins and configuring those extensions/plugins.
 As noted below, the non-generic methodology is more complicated in MathJax 3 as they abandoned the approach via wrapping
 math in script tags, but the solution is easily configurable as a simple copy/paste configuration.
 
-=== "Generic - MathJax 3"
-    ```js
-    window.MathJax = {
-      tex: {
-        inlineMath: [ ["\\(","\\)"] ],
-        displayMath: [ ["\\[","\\]"] ],
-        processEscapes: true,
-        processEnvironments: true
-      },
-      options: {
-        ignoreHtmlClass: ".*",
-        processHtmlClass: "arithmatex"
-      }
-    };
-    ```
+/// tab | Generic - MathJax 3
+```js
+window.MathJax = {
+  tex: {
+    inlineMath: [ ["\\(","\\)"] ],
+    displayMath: [ ["\\[","\\]"] ],
+    processEscapes: true,
+    processEnvironments: true
+  },
+  options: {
+    ignoreHtmlClass: ".*",
+    processHtmlClass: "arithmatex"
+  }
+};
+```
+///
 
-=== "Script - MathJax 3"
-    ```js
-    window.MathJax = {
-      options: {
-        ignoreHtmlClass: 'tex2jax_ignore',
-        processHtmlClass: 'tex2jax_process',
-        renderActions: {
-          find: [10, function (doc) {
-            for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
-              const display = !!node.type.match(/; *mode=display/);
-              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
-              const text = document.createTextNode('');
-              const sibling = node.previousElementSibling;
-              node.parentNode.replaceChild(text, node);
-              math.start = {node: text, delim: '', n: 0};
-              math.end = {node: text, delim: '', n: 0};
-              doc.math.push(math);
-              if (sibling && sibling.matches('.MathJax_Preview')) {
-                sibling.parentNode.removeChild(sibling);
-              }
-            }
-          }, '']
+/// tab | Script - MathJax 3
+```js
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process',
+    renderActions: {
+      find: [10, function (doc) {
+        for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+          const display = !!node.type.match(/; *mode=display/);
+          const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+          const text = document.createTextNode('');
+          const sibling = node.previousElementSibling;
+          node.parentNode.replaceChild(text, node);
+          math.start = {node: text, delim: '', n: 0};
+          math.end = {node: text, delim: '', n: 0};
+          doc.math.push(math);
+          if (sibling && sibling.matches('.MathJax_Preview')) {
+            sibling.parentNode.removeChild(sibling);
+          }
         }
-      }
-    };
-    ```
+      }, '']
+    }
+  }
+};
+```
+///
 
-=== "Legacy: Generic - MathJax 2"
-    ```js
-    MathJax.Hub.Config({
-      config: ["MMLorHTML.js"],
-      extensions: ["tex2jax.js"],
-      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
-      tex2jax: {
-        inlineMath: [ ["\\(","\\)"] ],
-        displayMath: [ ["\\[","\\]"] ],
-        processEscapes: true,
-        processEnvironments: true,
-        ignoreClass: ".*|",
-        processClass: "arithmatex"
-      },
-    });
-    ```
+/// tab | Legacy: Generic - MathJax 2
+```js
+MathJax.Hub.Config({
+  config: ["MMLorHTML.js"],
+  extensions: ["tex2jax.js"],
+  jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+  tex2jax: {
+    inlineMath: [ ["\\(","\\)"] ],
+    displayMath: [ ["\\[","\\]"] ],
+    processEscapes: true,
+    processEnvironments: true,
+    ignoreClass: ".*|",
+    processClass: "arithmatex"
+  },
+});
+```
+///
 
-=== "Legacy: Script - MathJax 2"
-    ```js
-    MathJax.Hub.Config({
-      config: ["MMLorHTML.js"],
-      jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
-      extensions: ["MathMenu.js", "MathZoom.js"]
-    });
-    ```
+/// tab | Legacy: Script - MathJax 2
+```js
+MathJax.Hub.Config({
+  config: ["MMLorHTML.js"],
+  jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
+  extensions: ["MathMenu.js", "MathZoom.js"]
+});
+```
+///
 
 Notice that in our generic configuration, we set up `tex2jax` to only load `arithmatex` classes by excluding all
 elements and adding an exception for the `arithmatex` class. We also don't bother adding `#!tex $...$` and
@@ -281,16 +286,18 @@ var katexMath = (function () {
 
 ## Alternative Math Blocks
 
-!!! new "New 9.0"
-    Added new formats `arithmatex_inline_format` and `arithmatex_fenced_format`. Both are configurable and effectively
-    replace all other previously available formats.
+/// new | New 9.0
+Added new formats `arithmatex_inline_format` and `arithmatex_fenced_format`. Both are configurable and effectively
+replace all other previously available formats.
+///
 
-!!! warning "Deprecated 9.0"
-    The old formatters `inline_mathjax_format`, `inline_mathjax_preview_format`, and `inline_generic_format` have all
-    been deprecated and will be removed at some future time.
+/// warning | Deprecated 9.0
+The old formatters `inline_mathjax_format`, `inline_mathjax_preview_format`, and `inline_generic_format` have all
+been deprecated and will be removed at some future time.
 
-    It is advised to use the new `arithmatex_inline_format` which is configurable and will give the same results as the
-    above three.
+It is advised to use the new `arithmatex_inline_format` which is configurable and will give the same results as the
+above three.
+///
 
 [InlineHilite](./inlinehilite.md) and [SuperFences](./superfences.md) both have a feature where you can specify your own
 custom inline and fence blocks respectively. Arithmatex provides a number of compatible formats that can be used in
@@ -315,20 +322,18 @@ extension_config = {
 }
 ```
 
-!!! tip "YAML Configuration Format"
-    If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please
-    see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify function references in YAML.
+/// tip | YAML Configuration Format
+If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please
+see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify function references in YAML.
+///
 
-!!! example "Inline Math"
+```text title="Inline Math"
+`#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+```
 
-    === "Output"
-        `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
-
-    === "Markdown"
-        ```
-        `#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
-        ```
-
+/// html | div.result
+`#!math p(x|y) = \frac{p(y|x)p(x)}{p(y)}`
+///
 
 In SuperFences, by providing the following configuration (no need to include `pymdownx.arithmatex` as an extension), you
 can create math fences:
@@ -349,25 +354,23 @@ extension_config = {
 }
 ```
 
-!!! example "Math Fences"
+````text title="Math Fences"
+```math
+\begin{align}
+    p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
+    p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
+\end{align}
+```
+````
 
-    === "Output"
-        ```math
-        \begin{align}
-            p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
-            p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
-        \end{align}
-        ```
-
-    === "Markdown"
-        ````
-        ```math
-        \begin{align}
-            p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
-            p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
-        \end{align}
-        ```
-        ````
+/// html | div.result
+```math
+\begin{align}
+    p(v_i=1|\mathbf{h}) & = \sigma\left(\sum_j w_{ij}h_j + b_i\right) \\
+    p(h_j=1|\mathbf{v}) & = \sigma\left(\sum_i w_{ij}v_i + c_j\right)
+\end{align}
+```
+///
 
 Provided formats are found below:
 
