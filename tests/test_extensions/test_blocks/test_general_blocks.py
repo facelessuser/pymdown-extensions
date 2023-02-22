@@ -9,6 +9,13 @@ from pymdownx.blocks import block
 class TestTypeFunctions(unittest.TestCase):
     """Validate various type functions."""
 
+    def test_type_any(self):
+        """Test `type_any`."""
+
+        self.assertEqual(3, block.type_any(3))
+        self.assertEqual({}, block.type_any({}))
+        self.assertEqual('string', block.type_any('string'))
+
     def test_type_number(self):
         """Test `type_number`."""
 

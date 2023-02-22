@@ -45,7 +45,7 @@ nav:
     - BetterEm: extensions/betterem.md
     - Blocks:
       - extensions/blocks/index.md
-      - Blocks Plugin API: extensions/blocks/api.md
+      - Blocks Extension API: extensions/blocks/api.md
       - Admonition: extensions/blocks/plugins/admonition.md
       - Definition: extensions/blocks/plugins/definition.md
       - Details: extensions/blocks/plugins/details.md

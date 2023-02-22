@@ -258,10 +258,10 @@ class TabExtension(BlocksExtension):
 
         super().__init__(*args, **kwargs)
 
-    def extendMarkdownBlocks(self, md, blocks):
+    def extendMarkdownBlocks(self, md, block_mgr):
         """Extend Markdown blocks."""
 
-        blocks.register(Tab, self.getConfigs())
+        block_mgr.register(Tab, self.getConfigs())
         if callable(self.getConfig('slugify')):
             slugs = TabbedTreeprocessor(md, self.getConfigs())
             md.treeprocessors.register(slugs, 'tab_slugs', 4)

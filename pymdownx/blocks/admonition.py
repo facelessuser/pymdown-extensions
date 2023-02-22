@@ -79,15 +79,15 @@ class AdmonitionExtension(BlocksExtension):
 
         super().__init__(*args, **kwargs)
 
-    def extendMarkdownBlocks(self, md, blocks):
+    def extendMarkdownBlocks(self, md, block_mgr):
         """Extend Markdown blocks."""
 
-        blocks.register(Admonition, self.getConfigs())
+        block_mgr.register(Admonition, self.getConfigs())
 
         # Generate an admonition subclass based on the given names.
         for b in self.getConfig('types', []):
             subclass = RE_SEP.sub('', b.title())
-            blocks.register(type(subclass, (Admonition,), {'OPTIONS': {}, 'NAME': b, 'CONFIG': {}}), {})
+            block_mgr.register(type(subclass, (Admonition,), {'OPTIONS': {}, 'NAME': b, 'CONFIG': {}}), {})
 
 
 def makeExtension(*args, **kwargs):

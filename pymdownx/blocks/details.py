@@ -91,15 +91,15 @@ class DetailsExtension(BlocksExtension):
 
         super().__init__(*args, **kwargs)
 
-    def extendMarkdownBlocks(self, md, blocks):
+    def extendMarkdownBlocks(self, md, block_mgr):
         """Extend Markdown blocks."""
 
-        blocks.register(Details, self.getConfigs())
+        block_mgr.register(Details, self.getConfigs())
 
         # Generate an details subclass based on the given names.
         for b in self.getConfig('types', []):
             subclass = RE_SEP.sub('', b.title())
-            blocks.register(
+            block_mgr.register(
                 type(subclass, (Details,), {'OPTIONS': {'open': [False, type_boolean]}, 'NAME': b, 'CONFIG': {}}), {}
             )
 

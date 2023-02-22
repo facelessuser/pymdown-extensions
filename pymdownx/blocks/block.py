@@ -13,6 +13,12 @@ RE_IDENT = re.compile(
 )
 
 
+def type_any(value):
+    """Accepts any type."""
+
+    return value
+
+
 def _ranged_number(value, minimum, maximum, number_type):
     """Check the range of the given number type."""
 

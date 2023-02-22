@@ -159,10 +159,10 @@ class HTML(Block):
 class HTMLExtension(BlocksExtension):
     """HTML Blocks Extension."""
 
-    def extendMarkdownBlocks(self, md, blocks):
+    def extendMarkdownBlocks(self, md, block_mgr):
         """Extend Markdown blocks."""
 
-        blocks.register(HTML, self.getConfigs())
+        block_mgr.register(HTML, self.getConfigs())
 
 
 def makeExtension(*args, **kwargs):

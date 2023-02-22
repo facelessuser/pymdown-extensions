@@ -451,5 +451,5 @@ class BlocksExtension(Extension):
         mgr = self.register_block_mgr(md)
         self.extendMarkdownBlocks(md, mgr)
 
-    def extendMarkdownBlocks(self, md, blocks):
+    def extendMarkdownBlocks(self, md, block_mgr):
         """Extend Markdown blocks."""

@@ -1,8 +1,9 @@
-# Blocks Plugin API
+# Blocks Extension API
 
 ## Block Structure
 
-The various different block types are created via `Block` plugins. The basic structure of a block is shown below:
+The various different block types are created via the `Block` class. The `Block` class can define all the various parts
+and handling of the various block parts. The basic structure of a block is shown below:
 
 ```
 /// name | argument(s)
@@ -12,40 +13,51 @@ Markdown content.
 ///
 ```
 
-In addition, there are sometimes global options for a specific block type are supplied at registration time. Such
-options would control features for the specific block type they are defined for and would affect all the blocks of that
-type globally.
+## Block Extension Anatomy
 
-## Creating a Plugin
+Normally with Python Markdown, you'd create a processor derived from the various processor types available in the
+library. You'd then derive an extension from `markdown.Extension` that would register the the processor. Block
+extensions are very similar.
 
-To create a new Blocks plugin, you must derive a new class from the `Block` class.
+A Block extension is comprised of two parts: the `Block` object and the `BlocksExtension`. It should be noted that we do
+not use `markdown.Extension`, but `BlocksExtension` which is derived from it. This is done so we can abstract away the
+management of all the various registered `Block` extensions. It is important to note though that when using the
+`BlocksExtension` that we do not override the `extendMarkdown` method, but instead override `extendMarkdownBlocks`. In
+all other respects, `BlocksExtension` is just like `markdown.Extension` and you can register traditional processors via
+the `md` object or register `Block` objects via the `block_mgr` object.
+
+Below we have the very bare minimum required to create an extension.
 
 ```py
+from pymdownx.blocks import BlocksExtension
 from pymdownx.blocks.block import Block
-
-class MyBlock(Block):
-    ...
-```
-
-You will need to set up related class attributes. At a minimum, `NAME` must be specified with a unique name, and you
-must define the `on_create` method which should return the element under which all the content in that block will live.
-
-Once created, we can include the `pymdownx.blocks` extension and specify our plugin with any others that we want to
-have enabled. Below, we only specify our new block.
-
-```py
-import markdown
 import xml.etree.ElementTree as etree
-from pymdownx.blocks.block import Block
 
 class MyBlock(Block):
-    # Name used for the block
     NAME = 'my-block'
 
     def on_create(self, parent):
-        """Create the needed element and return it."""
 
         return etree.SubElement(parent, 'div')
+
+
+class MyBlockExtension(BlocksExtension):
+
+    def extendMarkdownBlocks(self, md, block_mgr):
+
+        block_mgr.register(MyBlock, self.getConfigs())
+
+
+def makeExtension(*args, **kwargs):
+    """Return extension."""
+
+    return MyBlockExtension(*args, **kwargs)
+```
+
+Then we can register and run it:
+
+```py
+import markdown
 
 MD = """
 /// my-block
@@ -53,26 +65,55 @@ content
 ///
 """
 
-print(markdown.markdown(
-    MD,
-    extensions=['pymdownx.blocks'],
-    extension_configs={
-        'pymdownx.blocks': {
-            'blocks': {MyBlock: None}
-        }
-    }
-))
+print(markdown.markdown(MD, extensions=[MyBlockExtension()]))
 ```
 
-<div class="result" markdown>
-
+/// html | div.result
 ```html
 <div>
 <p>content</p>
 </div>
 ```
+///
 
-</div>
+## The Block Object
+
+The block object allows us to define the name of a block, what arguments and options it accepts, and how we generally
+handle the content.
+
+## Global Options
+
+Global options are often set in the `BlocksExtension` object like traditional extensions. They are meant to globally
+control the behavior of a specific block type:
+
+```python
+class AdmonitionExtension(BlocksExtension):
+    """Admonition Blocks Extension."""
+
+    def __init__(self, *args, **kwargs):
+        """Initialize."""
+
+        self.config = {
+            "types": [
+                ['note', 'attention', 'caution', 'danger', 'error', 'tip', 'hint', 'warning'],
+                "Generate Admonition block extensions for the given types."
+            ]
+        }
+
+        super().__init__(*args, **kwargs)
+```
+
+These options are available in the instantiated `Block` object via the `self.config` attribute.
+
+## Tracking Data Across Blocks
+
+There are times when it can be useful to store data across multiple blocks. Each block instance has access to a tracker
+that is specific to a specific block type and persists across all blocks. It is only cleared when `reset` is called on
+the `Markdown` object.
+
+The tracker is accessed by a given `Block` extension via the `self.tracker` attribute. The attribute contains a
+dictionary where various keys and values can be stored. This can be used to count blocks on a page or anything else you
+can think of.
 
 ## Arguments
 
@@ -128,57 +169,6 @@ class MyBlock(Block):
     }
 ```
 
-## Global Config
-
-It may be desirable to have global options. These kind of options affect all blocks and are not configured per block.
-
-Configs are created using the `CONFIG` attribute and should contain a dictionary with default values. It is up to the
-plugin creator to validate options as no mechanism is provided at this time to validate global configs. It is recommend
-that global options be processed in the [`on_init` event](#on_init-event).
-
-```py
-class MyBlock(Block):
-    # Name used for the block
-    NAME = 'my-block'
-    CONFIG = {
-        'enable_feature': False
-    }
-```
-
-## Tracking Data Across Blocks
-
-There are times when it can be useful to store data across multiple blocks. Each block instance has access to a tracker
-that is specific to a specific block type and persists across all blocks. It is only cleared when `reset` is called
-on the block manager and will reset trackers of all registered blocks.
-
-The tracker is accessed by a given `Block` plugin via the `self.tracker` attribute. The attribute contains a dictionary
-where various keys and values can be stored. This can be used to count blocks on a page or anything else you can think
-of.
-
-## `on_register` Event
-
-```py
-@classmethod
-def on_register(
-    cls,
-    blocks_processor: BlocksProcessor,
-    md: Markdown,
-    config: dict[str, Any]
-) -> None:
-    ...
-```
-
-When a Block plugin is registered, `on_register` is executed.
-
-Parameter          | Description
------------------- | -----------
-`blocks_processor` | The parent block processor of the meta plugin.
-`md`               | The Markdown object.
-`config`           | Global config for the meta plugin.
-
-This is useful if you need to register support extensions (Treeprocessor, Postprocessor, etc.) through the `md` object
-if required.
-
 ## `on_init` Event
 
 ```py
@@ -204,8 +194,8 @@ def on_parse(self) -> bool:
 ```
 
 Executed right after per block argument and option parsing occurs. Arguments and options are accessible via `self.args`
-and `self.options`. This gives the plugin a chance to perform additional validation or adjustments of the arguments and
-options. This also gives the opportunity to initialize class variables based on the per block arguments and options.
+and `self.options`. This gives the extension a chance to perform additional validation or adjustments of the arguments
+and options. This also gives the opportunity to initialize class variables based on the per block arguments and options.
 
 If validation fails, `#!py3 False` should be returned and the block will not be parsed as a generic block.
 
@@ -257,15 +247,25 @@ def on_end(self, block: Element) -> None:
     ...
 ```
 
-When a block is parsed to completion, the `on_end` event is executed. This allows a plugin to perform any post
+When a block is parsed to completion, the `on_end` event is executed. This allows an extension to perform any post
 processing on the elements. You could save the data as raw text and then parse it special at the end or you could walk
 the HTML elements and move content around, add attributes, or whatever else is needed.
 
 ## Built-in Validators
 
 A number of validators are provided via for the purpose of validating [YAML option inputs](#options). If what you need
-is not present, feel free to write your own.
+is not present, feel free to write your own. All validators are imported from `pymdownx.blocks.block`.
 
+### `type_any`
+
+This a YAML input and simply passes it through. If you do not want to validate the input because it does not need to be
+checked, or if you just want to do it manually in the [`on_parse` event](#on_parse-event), then this is what you'd
+want to use.
+
+```py
+class Block:
+    OPTIONS = {'name': [{}, type_any]}
+```
 
 ### `type_number`
 

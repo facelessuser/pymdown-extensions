@@ -53,10 +53,10 @@ class Definition(Block):
 class DefinitionExtension(BlocksExtension):
     """Definition Blocks Extension."""
 
-    def extendMarkdownBlocks(self, md, blocks):
+    def extendMarkdownBlocks(self, md, block_mgr):
         """Extend Markdown blocks."""
 
-        blocks.register(Definition, self.getConfigs())
+        block_mgr.register(Definition, self.getConfigs())
 
 
 def makeExtension(*args, **kwargs):

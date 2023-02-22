@@ -11,9 +11,9 @@ directives, generic blocks are not meant to behave or mirror directives as a 1:1
 
 The idea behind blocks is to solve a few issues that have existed within Python Markdown block extensions.
 
-1. Markdown has numerous special syntaxes to define various elements, but as people try to add numerous plugins to
+1. Markdown has numerous special syntaxes to define various elements, but as people try to add numerous extensions to
    perform specialized translations, it can become difficult to continuously come up with new, sensible syntax that does
-   not conflict with some other plugin that is desired by users.
+   not conflict with some other extension that is desired by users.
 
 2. Traditionally, Python Markdown has implemented any block processors that behave more as containers for multiple child
    blocks using an indentation format (think Admonitions as an example). While this works, this can be tiring to some
@@ -21,78 +21,31 @@ The idea behind blocks is to solve a few issues that have existed within Python 
    editors will syntax highlight such nested constructs as indented code blocks which can make reading the source
    difficult.
 
-Blocks is a plugin that essentially allows for the creation of its own meta-plugins that function as fenced containers.
-Each meta-plugin can do whatever it wants with the content inside the container and allow for a single generic format
-to create as many different block style plugins as desired. As the blocks are fenced, indentation is not required to
-determine the start and end of the blocks.
+Blocks is an extension type that essentially allows for the creation of its own extension type that function as fenced
+containers. Each extension can do whatever it wants with the content inside the container and allow for a single generic
+format to create as many different block style extensions as desired. As the blocks are fenced, indentation is not
+required to determine the start and end of the blocks.
 
 Blocks also allows for per block options giving the extension authors an easy way to extend functionality and users an
 easy, predictable way to specify such options.
 
-To use Blocks, simply include the extension as shown below.
+Blocks itself isn't used directly, but there are a variety of extensions created with it. All of which can be registered
+in the traditional way.
 
 ```py3
 import markdown
-md = markdown.Markdown(extensions=['pymdownx.blocks'])
+md = markdown.Markdown(extensions=['pymdownx.blocks.<extension>'])
 ```
 
-## Included Meta-Plugins
+Pymdown Extensions provides the following extensions.
 
-Blocks provides a number of "meta-plugins" out of the box. Not are registered by default. You must select and register
-the ones you wish to use.
-
-Plugin                                  |  Description
+Extension                               |  Description
 --------------------------------------- | -----------
 [`admonition`](./plugins/admonition.md) | The admonition block allows for the creation of admonitions.
 [`define`](./plugins/definition.md)     | Allows for the creation of definition lists.
 [`details`](./plugins/details.md)       | The details block allows for the creation of collapsible details/summary constructs.
 [`tab`](./plugins/tab.md)               | Aims to replace the [Tabbed](../tabbed.md) extension and allows for the creation of tab containers.
 [`html`](./plugins/html.md)             | HTML is a block that allows for the arbitrary creation of HTML elements of various types.
-
-
-## Configuring Meta-Plugins
-
-By default, no meta-plugins are included, but you can specify the plugins you desire to use and configure them via the
-`blocks` option.
-
-```py
-import markdown
-from pymdownx.blocks.admonition import Admonition
-
-md = markdown.Markdown(
-    extensions=['pymdownx.blocks'],
-    extension_configs={
-        'pymdownx.blocks': {
-            'blocks': {
-                Admonition: {'types': ['note', 'warning', 'some-custom-type']}
-            }
-        }
-    }
-)
-```
-
-You can also use simple strings and the plugin will be located and registered accordingly. The syntax is:
-
-```
-path.to.module:PluginClass
-```
-
-A full example would be:
-
-```py
-import markdown
-
-md = markdown.Markdown(
-    extensions=['pymdownx.blocks'],
-    extension_configs={
-        'pymdownx.blocks': {
-            'blocks': {
-                'pymdownx.blocks.admonition:Admonition': {'types': ['note', 'warning', 'some-custom-type']}
-            }
-        }
-    }
-)
-```
 
 ## Syntax
 
@@ -113,7 +66,7 @@ statement about all blocks. If in doubt, use an empty line before the first cont
 ///
 
 Some blocks may implement a special argument in the header for things such as, but not limited to, titles. These
-arguments can be optional or sometimes enforced as a requirement. This is up to the given Blocks plugin to decide.
+arguments can be optional or sometimes enforced as a requirement. This is up to the given Blocks extension to decide.
 
 ```
 /// note | Did you know?
@@ -121,12 +74,12 @@ You can create a note with Blocks!
 ///
 ```
 
-Lastly, a given Block plugin may allow for additional options that don't make sense in the first line declaration.
+Lastly, a given Block extension may allow for additional options that don't make sense in the first line declaration.
 This may be because they are rarely used, more complicated, or just make the first line signature more confusing. These
 options are per block specific use a YAML syntax. They must be part of the header, which means no new line between the
 block declaration and the options or between individual options. The options also must be indented at least four spaces.
 
-For instance, all plugins inherit an option `attrs` which allows you to set HTML attributes to the outer element of a
+For instance, all extensions inherit an option `attrs` which allows you to set HTML attributes to the outer element of a
 generic block. You can use [Emmet style syntax](https://docs.emmet.io/abbreviations/syntax/) to set an id, classes, or
 other arbitrary attributes.
 
@@ -154,10 +107,3 @@ content
 Content
 ////
 ```
-
-## Options
-
-Option                | Type       |  Default                           | Description
---------------------- | ---------- | ---------------------------------- | -----------
-`blocks`              | \[Block\]  | `#!py []`                          | A list of block meta-plugins to register.
-`block_configs`       | dictionary | `#!py {}`                          | A dictionary used to specify global options for registered meta-plugins.
