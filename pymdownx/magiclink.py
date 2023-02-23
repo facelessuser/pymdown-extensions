@@ -130,25 +130,25 @@ RE_REPO_LINK = re.compile(
                 (?:issues/(?P<github_issue>\d+)/?|
                     pull/(?P<github_pull>\d+)/?|
                     discussions/(?P<github_discuss>\d+)/?|
-                    commit/(?P<github_commit>[\da-f]{{40}})/?|
-                    compare/(?P<github_diff1>[\da-f]{{40}})\.{{3}}
-                        (?P<github_diff2>[\da-f]{{40}})))|
+                    commit/(?P<github_commit>[\da-f]{{7,40}})/?|
+                    compare/(?P<github_diff1>[\da-f]{{7,40}})\.{{3}}
+                        (?P<github_diff2>[\da-f]{{7,40}})))|
 
         (?P<bitbucket>(?P<bitbucket_base>https://(?:w{{3}}\.)?bitbucket\.org/
             (?P<bitbucket_user_repo>(?P<bitbucket_user>{})/[^/]+))/
                 (?:issues/(?P<bitbucket_issue>\d+)(?:/[^/]+)?/?|
                     pull-requests/(?P<bitbucket_pull>\d+)(?:/[^/]+(?:/diff)?)?/?|
-                    commits/commit/(?P<bitbucket_commit>[\da-f]{{40}})/?|
-                    branches/commits/(?P<bitbucket_diff1>[\da-f]{{40}})
-                        (?:\.{{2}}|%0d)(?P<bitbucket_diff2>[\da-f]{{40}})\#diff))|
+                    commits/commit/(?P<bitbucket_commit>[\da-f]{{7,40}})/?|
+                    branches/commits/(?P<bitbucket_diff1>[\da-f]{{7,40}})
+                        (?:\.{{2}}|%0d)(?P<bitbucket_diff2>[\da-f]{{7,40}})\#diff))|
 
         (?P<gitlab>(?P<gitlab_base>https://(?:w{{3}}\.)?gitlab\.com/
-            (?P<gitlab_user_repo>(?P<gitlab_user>{})/[^/]+))/
+            (?P<gitlab_user_repo>(?P<gitlab_user>{})/[^/]+))/(?:-/)?
                 (?:issues/(?P<gitlab_issue>\d+)/?|
                     merge_requests/(?P<gitlab_pull>\d+)/?|
-                    commit/(?P<gitlab_commit>[\da-f]{{40}})/?|
-                    compare/(?P<gitlab_diff1>[\da-f]{{40}})\.{{3}}
-                        (?P<gitlab_diff2>[\da-f]{{40}})))
+                    commit/(?P<gitlab_commit>[\da-f]{{8,40}})/?|
+                    compare/(?P<gitlab_diff1>[\da-f]{{8,40}})\.{{3}}
+                        (?P<gitlab_diff2>[\da-f]{{8,40}})))
     )/?$
     '''.format(RE_GITHUB_USER, RE_BITBUCKET_USER, RE_GITLAB_USER)
 )
@@ -187,10 +187,10 @@ PROVIDER_INFO = {
         "provider": "GitLab",
         "url": "https://gitlab.com",
         "user_pattern": RE_GITLAB_USER,
-        "issue": "https://gitlab.com/{}/{}/issues/{}",
-        "pull": "https://gitlab.com/{}/{}/merge_requests/{}",
-        "commit": "https://gitlab.com/{}/{}/commit/{}",
-        "compare": "https://gitlab.com/{}/{}/compare/{}...{}",
+        "issue": "https://gitlab.com/{}/{}/-/issues/{}",
+        "pull": "https://gitlab.com/{}/{}/-/merge_requests/{}",
+        "commit": "https://gitlab.com/{}/{}/-/commit/{}",
+        "compare": "https://gitlab.com/{}/{}/-/compare/{}...{}",
         "hash_size": 8
     },
     "bitbucket": {

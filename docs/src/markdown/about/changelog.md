@@ -12,6 +12,8 @@
 - **NEW**: Snippets: When `check_paths` is enabled, and a specified section is not found, raise an error.
 - **NEW**: Snippets: Add new experimental feature `dedent_sections` that will de-indent (remove any common leading
   whitespace from every line in text) from that block of text.
+- **NEW**: MagicLink: Update GitLab links to match recent changes and to be more correct.
+- **NEW**: MagicLink: Relax required hash length when performing link shortening.
 
 ## 9.10b1
 

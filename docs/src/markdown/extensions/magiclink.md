@@ -162,7 +162,7 @@ style it with CSS to make it stand out more like has been done in this document.
 ```text title="Repository Mentions"
 @facelessuser/pymdown-extensions
 
-@gitlab:pycqa/flake8
+@gitlab:pycqa/flake8-engine
 ```
 
 /// html | div.result
@@ -184,7 +184,7 @@ extension_configs:
 ---
 @facelessuser/pymdown-extensions{.magiclink-ignore}
 
-@gitlab:pycqa/flake8{.magiclink-ignore}
+@gitlab:pycqa/flake8-engine{.magiclink-ignore}
 ```
 ///
 
@@ -212,7 +212,7 @@ backrefs#1
 
 Python-Markdown/markdown#1
 
-gitlab:pycqa/flake8#385
+gitlab:pycqa/flake8-engine#21
 
 !13
 
@@ -220,7 +220,7 @@ backrefs!4
 
 Python-Markdown/markdown!598
 
-gitlab:pycqa/flake8!213
+gitlab:pycqa/infrastructure!1
 ```
 
 /// html | div.result
@@ -246,7 +246,7 @@ backrefs#1{.magiclink-ignore}
 
 Python-Markdown/markdown#1{.magiclink-ignore}
 
-gitlab:pycqa/flake8#385{.magiclink-ignore}
+gitlab:pycqa/flake8-engine#21{.magiclink-ignore}
 
 !13{.magiclink-ignore}
 
@@ -254,7 +254,7 @@ backrefs!4{.magiclink-ignore}
 
 Python-Markdown/markdown!598{.magiclink-ignore}
 
-gitlab:pycqa/flake8!213{.magiclink-ignore}
+gitlab:pycqa/infrastructure!1{.magiclink-ignore}
 ```
 ///
 
@@ -282,7 +282,7 @@ backrefs@cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61
 
 Python-Markdown/markdown@de5c696f94e8dde242c29d4be50b7bbf3c17fedb
 
-gitlab:pycqa/flake8@8acf55e0f85233c51c291816d73d828cc62d30d1
+gitlab:pycqa/flake8-engine@ee18ac981e3dbaf3365a817663834c7b547f83cb
 ```
 
 /// html | div.result
@@ -308,7 +308,7 @@ backrefs@cb4ecc5e7d8f7cdff0bb4482174f2ff0dcc35c61{.magiclink-ignore}
 
 Python-Markdown/markdown@de5c696f94e8dde242c29d4be50b7bbf3c17fedb{.magiclink-ignore}
 
-gitlab:pycqa/flake8@8acf55e0f85233c51c291816d73d828cc62d30d1{.magiclink-ignore}
+gitlab:pycqa/flake8-engine@ee18ac981e3dbaf3365a817663834c7b547f83cb{.magiclink-ignore}
 ```
 ///
 
@@ -330,7 +330,7 @@ backrefs@88c6238a1c2cf71a96eb9abb4b0213f79d6ca81f...cb4ecc5e7d8f7cdff0bb4482174f
 
 Python-Markdown/markdown@007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8dde242c29d4be50b7bbf3c17fedb
 
-gitlab:pycqa/flake8@1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e
+gitlab:pycqa/flake8-engine@0b063a10249558ede919bcd7f67c6aa563ba74ab...ee18ac981e3dbaf3365a817663834c7b547f83cb
 ```
 
 /// html | div.result
@@ -356,7 +356,7 @@ backrefs@88c6238a1c2cf71a96eb9abb4b0213f79d6ca81f...cb4ecc5e7d8f7cdff0bb4482174f
 
 Python-Markdown/markdown@007bd2aa4c184b28f710d041a0abe78bffc0ec2e...de5c696f94e8dde242c29d4be50b7bbf3c17fedb{.magiclink-ignore}
 
-gitlab:pycqa/flake8@1ecf97005a024391fb07ad8941f4d25c4e0aae6e...9bea7576ac33a8e4f72f87ffa81dfa10256fca6e{.magiclink-ignore}
+gitlab:pycqa/flake8-engine@0b063a10249558ede919bcd7f67c6aa563ba74ab...ee18ac981e3dbaf3365a817663834c7b547f83cb{.magiclink-ignore}
 ```
 ///
 
@@ -370,7 +370,7 @@ If we specify long form URLs from external providers, they will be shortened app
 ```text title="External Provider"
 - https://github.com/facelessuser
 - https://github.com/facelessuser/pymdown-extensions
-- https://gitlab.com/pycqa/flake8/issues/385
+- https://gitlab.com/pycqa/flake8-engine/-/issues/21
 - https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
 ```
 
@@ -391,9 +391,9 @@ extension_configs:
     user: facelessuser
     repo: pymdown-extensions
 ---
-- https://github.com/facelessuser
+- <https://github.com/facelessuser>{.magiclink-ignore}
 - <https://github.com/facelessuser/pymdown-extensions>{.magiclink-ignore}
-- <https://gitlab.com/pycqa/flake8/issues/385>{.magiclink-ignore}
+- <https://gitlab.com/pycqa/flake8-engine/-/issues/21>{.magiclink-ignore}
 - <https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase>{.magiclink-ignore}
 ```
 ///
