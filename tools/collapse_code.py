@@ -39,7 +39,7 @@ class CollapseCode(Block):
         if not isinstance(self.expand_title, str):
             raise ValueError("'expand_title' must be a string")
 
-        self.collapse_title = self.config['collapse_text']
+        self.collapse_title = self.config['collapse_title']
         if not isinstance(self.collapse_title, str):
             raise ValueError("'collapse_title' must be a string")
 
@@ -65,34 +65,16 @@ class CollapseCode(Block):
         """Convert non list items to details."""
 
         el = etree.SubElement(block, 'div', {'class': 'code-footer'})
-        attrs = {'for': '__collapse{}'.format(self.count), 'class': 'expand'}
+        attrs = {'for': '__collapse{}'.format(self.count), 'class': 'expand', 'tabindex': '0'}
         if self.expand_title:
             attrs['title'] = self.expand_title
-        expand = etree.SubElement(
-            el,
-            'label',
-            {
-                'for': '__collapse{}'.format(self.count),
-                'class': 'expand',
-                'tabindex': '0',
-                'title': self.expand_title
-            }
-        )
+        expand = etree.SubElement(el, 'label', attrs)
         expand.text = self.expand
 
-        attrs = {'for': '__collapse{}'.format(self.count), 'class': 'collapse'}
+        attrs = {'for': '__collapse{}'.format(self.count), 'class': 'collapse', 'tabindex': '0'}
         if self.collapse_title:
             attrs['title'] = self.collapse_title
-        collapse = etree.SubElement(
-            el,
-            'label',
-            {
-                'for': '__collapse{}'.format(self.count),
-                'class': 'collapse',
-                'tabindex': '0',
-                'title': self.collapse_title
-            }
-        )
+        collapse = etree.SubElement(el, 'label', attrs)
         collapse.text = self.collapse
 
 
