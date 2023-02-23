@@ -161,6 +161,16 @@ class MyBlock(Block):
     }
 ```
 
+/// warning
+`attrs` is a reserved option that is automatically applied to all `Block` extensions. This should not be overridden.
+`attrs` takes a dictionary of `str` keys  and `str` values describing the attributes to apply to the outer element of
+the block as returned by the [`on_create`](#on_create-event).
+
+The `attrs` input input is sent through [`type_html_attribute_dict`](#type_html_attribute_dict) and is accessible to
+developers via `self.options['attrs']`. The result is a dictionary of key/value pairs where the key is a `#!py3 str` and
+the value is a `#!py3 str` (or `#!py3 list[str]` in the special case of `class`).
+///
+
 ## `on_init` Event
 
 ```py
@@ -195,12 +205,13 @@ If validation fails, `#!py3 False` should be returned and the block will not be 
 ## `on_create` Event
 
 ```py
-    def on_create(self, parent: Element) -> None:
+    def on_create(self, parent: Element) -> Element:
         ...
 ```
 
 Called when a block is initially found and initialized. The `on_create` method should create the container for the block
-under the parent element.
+under the parent element. Other child elements can be created on the root of the container, but outer element of the
+created container should be returned.
 
 ## `on_add` Event
 
@@ -212,8 +223,8 @@ def on_add(self, block: Element) -> Element:
 When any calls occur to process new content, `on_add` is called. This gives the block a chance to return the element
 where the content is desired.
 
-Some initial containers may be more complex and have nested elements already created. `on_add` helps ensure that the
-content goes where it is actually desired in the container.
+This can be useful if the outer element is not the element where the content should go. Keep in mind that content can
+also be rearranged if needed in the [`on_end` event](#on_end-event).
 
 ## `on_markdown` Event
 
@@ -251,6 +262,11 @@ is not present, feel free to write your own. All validators are imported from `p
 
 ### `type_any`
 
+```py
+def type_any(value: Any) -> Any:
+    ...
+```
+
 This a YAML input and simply passes it through. If you do not want to validate the input because it does not need to be
 checked, or if you just want to do it manually in the [`on_parse` event](#on_parse-event), then this is what you'd
 want to use.
@@ -261,6 +277,11 @@ class Block:
 ```
 
 ### `type_number`
+
+```py
+def type_number(value: Any) -> int | float:
+    ...
+```
 
 Takes a YAML input value and verifies that it is a `float` or `int`.
 
@@ -273,6 +294,11 @@ class Block:
 
 ### `type_integer`
 
+```py
+def type_integer(value: Any) -> int:
+    ...
+```
+
 Takes a YAML input value and verifies that it is an `int`.
 
 Returns the valid `int` or raises a `ValueError`.
@@ -283,6 +309,10 @@ class Block:
 ```
 
 ### `type_ranged_number`
+
+```py
+def type_ranged_number(minimum: int | float = None, maximum: int | float = None) -> Callable[[Any], int | float]:
+```
 
 Takes a `minimum` and/or `maximum` and returns a type function that accepts an input and validates that it is a number
 (`float` or `int`) that is within the specified range. If `#!py None` is provided for either `minimum` or `maximum`,
@@ -297,6 +327,11 @@ class Block:
 
 ### `type_ranged_integer`
 
+```py
+def type_ranged_integer(minimum: int = None, maximum: int = None) -> Callable[[Any], int]:
+    ...
+```
+
 Takes a `minimum` and/or `maximum` and returns a type function that accepts an input and validates that it is an `int`
 that is within the specified range. If `#!py None` is provided for either `minimum` or `maximum`, they will be
 unbounded.
@@ -310,6 +345,11 @@ class Block:
 
 ### `type_boolean`
 
+```py
+def type_boolean(value: Any) -> bool:
+    ...
+```
+
 Takes a YAML input and validates that it is a boolean value.
 
 Returns the valid boolean or raises a `ValueError`.
@@ -320,6 +360,11 @@ class Block:
 ```
 
 ### `type_ternary`
+
+```py
+def type_ternary(value: Any) -> bool | None:
+    ...
+```
 
 Takes a YAML input and validates that it is a `bool` value or `#!py None`.
 
@@ -332,6 +377,11 @@ class Block:
 
 ### `type_string`
 
+```py
+def type_string(value: Any) -> str:
+    ...
+```
+
 Takes a YAML input and validates that it is a `str` value.
 
 Returns the valid `str` or raises a `ValueError`.
@@ -342,6 +392,11 @@ class Block:
 ```
 
 ### `type_insensitive_string`
+
+```py
+def type_insensitive_string(value: Any) -> str:
+    ...
+```
 
 Takes a YAML input and validates that it is a `str` value and normalizes it by lower casing it.
 
@@ -354,9 +409,14 @@ class Block:
 
 ### `type_string_in`
 
-Takes a list of acceptable string inputs and a string type callback and returns a type function that takes an input,
-runs it through the string type callback, and then validates that the `str` value is found in the acceptable string
-list.
+```py
+def type_string_in(value: list[str], insensitive: bool = True) -> Callable[[Any], str]:
+    ...
+```
+
+Takes a list of acceptable string inputs and a boolean indicating whether comparison should be case insensitive. Returns
+a type function that takes an input and then validates that it is a `str` and that the `str` value is found in the
+acceptable string list.
 
 Returns the valid `str` or raises a `ValueError`.
 
@@ -366,6 +426,11 @@ class Block:
 ```
 
 ### `type_string_delimiter`
+
+```py
+def type_string_delimiter(value: str, string_type: Callable[[Any], str] = type_string) -> str:
+    ...
+```
 
 Takes a delimiter and string type callback and returns a function that takes an input, verifies that it is a `str`,
 splits it by the delimiter, and ensures that each part validates with the given string type callback.
@@ -379,6 +444,11 @@ class Block:
 
 ### `type_html_identifier`
 
+```py
+def type_html_identifier(value: Any) -> str:
+    ...
+```
+
 Tests that a string is an "identifier" as described in CSS. This would normally match tag names, IDs, classes, and
 attribute names. This is useful if you'd like to validate such HTML constructs.
 
@@ -390,6 +460,11 @@ class Block:
 ```
 
 ### `type_html_classes`
+
+```py
+def type_html_classes(value: Any) -> list[str]:
+    ...
+```
 
 Takes a YAML input value and verifies that it is a `str` and treats it as a space delimited input. The input will
 be split by spaces and each part will be run through `type_html_identifier`.
@@ -403,10 +478,24 @@ class Block:
 
 ### `type_html_attribute_dict`
 
+```py
+def type_html_classes(value: Any) -> dict[str, Any]:
+    ...
+```
+
+/// note
+The returned dictionary will have all values set to string except classes which will be a list of strings. The `class`
+attribute is processed with `type_html_classes`.
+
+The `id` attribute is also run through `type_html_identifier` to ensure a good ID that can be targeted with traditional
+CSS selectors: `#!py3 #id`.
+///
+
 Takes a YAML input value and verifies that it is a `dict`. Keys will be verified to be HTML identifiers and the values
 to be strings.
 
-Returns a `dict[str, str]` or raises `ValueError`.
+Returns a `dict[str, Any]` where the values will either be `str` or `list[str]` as previously noted or raises
+`ValueError`.
 
 ```py
 class Block:

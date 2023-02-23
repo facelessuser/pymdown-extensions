@@ -131,10 +131,14 @@ def _string_in(value, accepted, string_type):
     return value
 
 
-def type_string_in(accepted, string_type=type_string):
+def type_string_in(accepted, insensitive=True):
     """Ensure type string is within the accepted list."""
 
-    return functools.partial(_string_in, accepted=accepted, string_type=string_type)
+    return functools.partial(
+        _string_in,
+        accepted=accepted,
+        string_type=type_string_insensitive if insensitive else type_string
+    )
 
 
 def type_string_delimiter(split, string_type=type_string):
@@ -155,6 +159,9 @@ def type_html_attribute_dict(value):
         if k.lower() == 'class':
             k = 'class'
             v = type_html_classes(v)
+        elif k.lower() == 'id':
+            k = 'id'
+            v = type_html_identifier(v)
         else:
             v = type_string(v)
         attributes[k] = v
@@ -279,7 +286,8 @@ class Block(metaclass=ABCMeta):
         for k, v in self.options['attrs'].items():
             if k == 'class':
                 if k in attrib:
-                    v = type_html_classes(attrib['class']) + v
+                    # Don't validate what the developer as already attached
+                    v = type_string_delimiter(' ')(attrib['class']) + v
                 attrib['class'] = ' '.join(v)
             else:
                 attrib[k] = v

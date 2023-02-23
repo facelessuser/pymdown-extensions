@@ -102,6 +102,10 @@ class TestTypeFunctions(unittest.TestCase):
         """Test `type_string_in`."""
 
         self.assertEqual('this', block.type_string_in(['this', 'that'])('this'))
+        self.assertEqual('this', block.type_string_in(['this', 'that'])('This'))
+        self.assertEqual('this', block.type_string_in(['this', 'that'], insensitive=False)('this'))
+        with self.assertRaises(ValueError):
+            block.type_string_in(['this', 'that'], insensitive=False)('This')
         with self.assertRaises(ValueError):
             block.type_string_in(['this', 'that'])('bad')
 

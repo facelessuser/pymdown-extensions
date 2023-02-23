@@ -80,8 +80,7 @@ options are per block specific use a YAML syntax. They must be part of the heade
 block declaration and the options or between individual options. The options also must be indented at least four spaces.
 
 For instance, all extensions inherit an option `attrs` which allows you to set HTML attributes to the outer element of a
-generic block. You can use [Emmet style syntax](https://docs.emmet.io/abbreviations/syntax/) to set an id, classes, or
-other arbitrary attributes.
+generic block.
 
 ```
 /// html | div
