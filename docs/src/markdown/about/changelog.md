@@ -1,6 +1,6 @@
 # Changelog
 
-## 9.10
+## 9.10b2
 
 - **NEW**: Blocks: Add new experimental general purpose blocks that provide a framework for creating fenced block
   containers for specialized parsing. A number of extensions utilizing general purpose blocks are included and are meant
