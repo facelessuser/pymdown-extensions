@@ -5,7 +5,7 @@ from ... import util
 class TestBlocksHTML(util.MdCase):
     """Test Blocks HTML cases."""
 
-    extension = ['pymdownx.blocks.html']
+    extension = ['pymdownx.blocks.html', 'md_in_html']
 
     def test_bad_tag(self):
         """Test bad HTML tag."""
@@ -126,7 +126,7 @@ class TestBlocksHTML(util.MdCase):
         self.check_markdown(
             R'''
             /// html | div
-                markdown: span
+                markdown: inline
 
             Will be parsed as inline *content*
 
@@ -227,6 +227,60 @@ class TestBlocksHTML(util.MdCase):
             <div class="a b c">
             <p>content</p>
             </div>
+            ''',
+            True
+        )
+
+    def test_inline_and_non_empty_parent(self):
+        """Test inline format that utilizes."""
+
+        self.check_markdown(
+            R'''
+            /// html | div
+                markdown: inline
+
+            <div markdown=span>
+            **content**
+            </div>
+
+            **content**
+            ///
+            ''',
+            '''
+            <div><div markdown="span">
+            <strong>content</strong>
+            </div>
+
+
+
+            <strong>content</strong></div>
+            ''',
+            True
+        )
+
+    def test_raw_and_non_empty_parent(self):
+        """Test inline format that utilizes."""
+
+        self.check_markdown(
+            R'''
+            /// html | div
+                markdown: raw
+
+            <div markdown=1>
+            **content**
+            </div>
+
+            this is <span>raw</span> **content**
+            ///
+            ''',
+            '''
+            <div>&lt;div markdown="block"&gt;
+            **content**
+            &lt;/div&gt;
+
+
+
+            this is &lt;span&gt;raw&lt;/span&gt; **content**</div>
             ''',
             True
         )

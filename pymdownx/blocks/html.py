@@ -125,7 +125,7 @@ class HTML(Block):
     NAME = 'html'
     ARGUMENT = True
     OPTIONS = {
-        'markdown': ['auto', type_string_in(['auto', 'span', 'block', 'raw'])]
+        'markdown': ['auto', type_string_in(['auto', 'inline', 'block', 'raw'])]
     }
 
     def __init__(self, length, tracker, md, config):
