@@ -77,8 +77,8 @@ def reindent(text, pos, level):
     return indented
 
 
-def unescape_markdown(md, blocks):
-    """Look for SuperFences code placeholders and other HTML staxh placeholders and revert them back to plain text."""
+def unescape_markdown(md, blocks, is_raw):
+    """Look for SuperFences code placeholders and other HTML stash placeholders and revert them back to plain text."""
 
     superfences = None
     try:
@@ -108,7 +108,7 @@ def unescape_markdown(md, blocks):
                         superfences.stash.remove(key)
 
                 # Extract other HTML stashed content
-                if original is None:
+                if original is None and is_raw:
                     index = int(key.split(':')[1])
                     if index < len(md.htmlStash.rawHtmlBlocks):
                         original = md.htmlStash.rawHtmlBlocks[index]
@@ -339,7 +339,7 @@ class BlocksProcessor(BlockProcessor):
             if is_atomic or not is_block:
                 child = list(target)[-1] if len(target) else None
                 text = target.text if child is None else child.tail
-                b = '\n\n'.join(unescape_markdown(self.md, [b]))
+                b = '\n\n'.join(unescape_markdown(self.md, [b], is_atomic))
 
                 if text:
                     text += '\n\n' + b
@@ -348,7 +348,10 @@ class BlocksProcessor(BlockProcessor):
 
                 if child is None:
                     target.text = mutil.AtomicString(text) if is_atomic else text
-                else:
+                else:  # pragma: no cover
+                    # TODO: We would need to build a special plugin to test this,
+                    # as none of the default ones do this, but we have verified this
+                    # locally. Once we've written a test, we can remove this.
                     child.tail = mutil.AtomicString(text) if is_atomic else text
 
             # Block tags should have content go through the normal block processor

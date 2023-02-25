@@ -239,7 +239,7 @@ class TestBlocksHTML(util.MdCase):
             /// html | div
                 markdown: inline
 
-            <div markdown=span>
+            <div markdown="block">
             **content**
             </div>
 
@@ -247,8 +247,8 @@ class TestBlocksHTML(util.MdCase):
             ///
             ''',
             '''
-            <div><div markdown="span">
-            <strong>content</strong>
+            <div><div markdown="block">
+            **content**
             </div>
 
 
