@@ -77,8 +77,8 @@ def reindent(text, pos, level):
     return indented
 
 
-def revert_fenced_code(md, blocks):
-    """Look for SuperFences code placeholders and revert them back to plain text."""
+def unescape_markdown(md, blocks, is_raw):
+    """Look for SuperFences code placeholders and other HTML stash placeholders and revert them back to plain text."""
 
     superfences = None
     try:
@@ -89,10 +89,6 @@ def revert_fenced_code(md, blocks):
     except Exception:
         pass
 
-    # We could not find the SuperFences extension, so nothing to do
-    if superfences is None:
-        return blocks
-
     new_blocks = []
     for block in blocks:
         new_lines = []
@@ -100,13 +96,27 @@ def revert_fenced_code(md, blocks):
             m = FENCED_BLOCK_RE.match(line)
             if m:
                 key = m.group(2)
+
+                # Extract SuperFences content
                 indent_level = len(m.group(1))
                 original = None
-                original, pos = superfences.stash.get(key, (None, None))
-                if original is not None:
-                    code = reindent(original, pos, indent_level)
-                    new_lines.extend(code)
-                    superfences.stash.remove(key)
+                if superfences is not None:
+                    original, pos = superfences.stash.get(key, (None, None))
+                    if original is not None:
+                        code = reindent(original, pos, indent_level)
+                        new_lines.extend(code)
+                        superfences.stash.remove(key)
+
+                # Extract other HTML stashed content
+                if original is None and is_raw:
+                    index = int(key.split(':')[1])
+                    if index < len(md.htmlStash.rawHtmlBlocks):
+                        original = md.htmlStash.rawHtmlBlocks[index]
+                        if isinstance(original, etree.Element):
+                            original = etree.tostring(original, encoding='unicode', method='html')
+                        new_lines.append(original)
+
+                # Couldn't find anything to extract
                 if original is None:  # pragma: no cover
                     new_lines.append(line)
             else:
@@ -319,19 +329,30 @@ class BlocksProcessor(BlockProcessor):
 
             tag = target.tag
             mode = entry.block.on_markdown()
+            if mode not in ('block', 'inline', 'raw'):
+                mode = 'auto'
             is_block = mode == 'block' or (mode == 'auto' and tag in self.block_tags)
             is_atomic = mode == 'raw' or (mode == 'auto' and tag in self.raw_tags)
 
             # We should revert fenced code in spans or atomic tags.
             # Make sure atomic tags have content wrapped as `AtomicString`.
             if is_atomic or not is_block:
-                text = target.text
-                b = '\n\n'.join(revert_fenced_code(self.md, [b]))
+                child = list(target)[-1] if len(target) else None
+                text = target.text if child is None else child.tail
+                b = '\n\n'.join(unescape_markdown(self.md, [b], is_atomic))
+
                 if text:
                     text += '\n\n' + b
                 else:
                     text = b
-                target.text = mutil.AtomicString(text) if is_atomic else text
+
+                if child is None:
+                    target.text = mutil.AtomicString(text) if is_atomic else text
+                else:  # pragma: no cover
+                    # TODO: We would need to build a special plugin to test this,
+                    # as none of the default ones do this, but we have verified this
+                    # locally. Once we've written a test, we can remove this.
+                    child.tail = mutil.AtomicString(text) if is_atomic else text
 
             # Block tags should have content go through the normal block processor
             else:

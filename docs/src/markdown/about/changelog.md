@@ -1,5 +1,11 @@
 # Changelog
 
+## 9.10b3
+
+- **NEW**: Blocks: Ensure inline mode is handled properly.
+- **NEW**: Blocks: When using raw mode, ensure HTML stashed content is extracted.
+- **NEW**: HTML: The Blocks HTML extension should use `inline` specifier instead of `span`.
+
 ## 9.10b2
 
 - **NEW**: Blocks: Add new experimental general purpose blocks that provide a framework for creating fenced block
