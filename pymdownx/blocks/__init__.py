@@ -1,6 +1,7 @@
 """Generic blocks extension."""
 from markdown import Extension
 from markdown.blockprocessors import BlockProcessor
+from markdown.treeprocessors import Treeprocessor
 from markdown import util as mutil
 from .. import util
 import xml.etree.ElementTree as etree
@@ -126,6 +127,24 @@ def unescape_markdown(md, blocks, is_raw):
     return new_blocks
 
 
+class BlocksTreeprocessor(Treeprocessor):
+    """Blocks tree processor."""
+
+    def __init__(self, md, blocks):
+        """Initialize."""
+
+        super().__init__(md)
+
+        self.blocks = blocks
+
+    def run(self, doc):
+        """Update tab IDs."""
+
+        while self.blocks.inline_stack:
+            entry = self.blocks.inline_stack.pop(0)
+            entry.block.on_inline_end(entry.el)
+
+
 class BlocksProcessor(BlockProcessor):
     """Generic block processor."""
 
@@ -157,6 +176,8 @@ class BlocksProcessor(BlockProcessor):
         self.trackers = {}
         # Currently queued up blocks
         self.stack = []
+        # Blocks that should be processed after inline.
+        self.inline_stack = []
         # When set, the assigned block is actively parsing blocks.
         self.working = None
         # Cached the found parent when testing
@@ -224,6 +245,7 @@ class BlocksProcessor(BlockProcessor):
         """Reset."""
 
         self.stack.clear()
+        self.inline_stack.clear()
         self.working = None
         self.trackers = {d: {} for d in self.blocks.keys()}
 
@@ -408,6 +430,7 @@ class BlocksProcessor(BlockProcessor):
             if end:
                 # Run the "on end" event
                 generic_block.on_end(el)
+                self.inline_stack.append(self.stack[index])
                 del self.stack[index]
             else:
                 self.stack[index].hungry = True
@@ -427,6 +450,7 @@ class BlocksProcessor(BlockProcessor):
                     if end:
                         # Run "on end" event
                         entry.block.on_end(entry.el)
+                        self.inline_stack.append(entry)
                         del self.stack[r]
                     else:
                         entry.hungry = True
@@ -444,7 +468,10 @@ class BlocksMgrExtension(Extension):
         util.escape_chars(md, ['/'])
         self.extension = BlocksProcessor(md.parser, md)
         # We want to be right after list indentations are processed
-        md.parser.blockprocessors.register(self.extension, "blocks", 89)
+        md.parser.blockprocessors.register(self.extension, "blocks", 89.99)
+
+        tree = BlocksTreeprocessor(md, self.extension)
+        md.treeprocessors.register(tree, 'blocks_on_inline_end', 19.99)
 
     def reset(self):
         """Reset."""

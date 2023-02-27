@@ -191,8 +191,7 @@ class Block(metaclass=ABCMeta):
         """
         Initialize.
 
-        - `store` allows us to store content until all content is found.
-        - `length` specifies the length (number of colons) that the header used
+        - `length` specifies the length (number of slashes) that the header used
         - `tracker` is a persistent storage for the life of the current Markdown page.
           It is a dictionary where we can keep references until the parent extension is reset.
         - `md` is the Markdown object just in case access is needed to something we
@@ -305,3 +304,6 @@ class Block(metaclass=ABCMeta):
         """
 
         return block
+
+    def on_inline_end(self, block):
+        """Perform action on the block after inline parsing."""
