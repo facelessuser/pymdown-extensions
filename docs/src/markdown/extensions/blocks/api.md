@@ -115,6 +115,11 @@ The tracker is accessed by a given `Block` extension via the `self.tracker` attr
 dictionary where various keys and values can be stored. This can be used to count blocks on a page or anything else you
 can think of.
 
+## Accessing the Markdown Object
+
+Some plugins occasionally need access to the current Markdown object. If this is needed, it can be accessed via the
+class attribute `self.md`.
+
 ## Argument
 
 The argument is used to declare a common block specific input for a particular block type. This is often, but not
@@ -254,6 +259,17 @@ def on_end(self, block: Element) -> None:
 When a block is parsed to completion, the `on_end` event is executed. This allows an extension to perform any post
 processing on the elements. You could save the data as raw text and then parse it special at the end or you could walk
 the HTML elements and move content around, add attributes, or whatever else is needed.
+
+## `on_inline_end` Event
+
+```py
+def on_inline_end(self, block: Element) -> None:
+    ...
+```
+
+When a block is parsed to completion and all inline parsing has been applied, the `on_inline_end` event is executed. It
+is the very last event for a block. This allows an extension to perform any post processing on an element _after_ inline
+processing.
 
 ## Built-in Validators
 

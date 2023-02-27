@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.10b4
+
+- **NEW**: Blocks: Add `on_inline_end` event.
+
 ## 9.10b3
 
 - **NEW**: Blocks: Ensure inline mode is handled properly.
