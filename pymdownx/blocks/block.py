@@ -13,10 +13,35 @@ RE_IDENT = re.compile(
 )
 
 
+def _type_multi(value, types=None):
+    """Multi types."""
+
+    for t in types:
+        try:
+            return t(value)
+        except ValueError:
+            pass
+
+    raise ValueError("Type '{}' did not match any of the provided types".format(type(value)))
+
+
+def type_multi(*args):
+    """Validate a type with multiple type functions."""
+
+    return functools.partial(_type_multi, types=args)
+
+
 def type_any(value):
     """Accepts any type."""
 
     return value
+
+
+def type_none(value):
+    """Ensure type None or fail."""
+
+    if value is not None:
+        raise ValueError('{} is not None'.format(type(value)))
 
 
 def _ranged_number(value, minimum, maximum, number_type):
@@ -72,13 +97,7 @@ def type_boolean(value):
     return value
 
 
-def type_ternary(value):
-    """Ensure type ternary or fail."""
-
-    if value is True or value is False or value is None:
-        return value
-
-    raise ValueError("Could not convert type {} to a ternary value".format(type(value)))
+type_ternary = type_multi(type_none, type_boolean)
 
 
 def type_string(value):

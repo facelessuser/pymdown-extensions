@@ -283,13 +283,28 @@ def type_any(value: Any) -> Any:
     ...
 ```
 
-This a YAML input and simply passes it through. If you do not want to validate the input because it does not need to be
-checked, or if you just want to do it manually in the [`on_parse` event](#on_parse-event), then this is what you'd
+This takes a YAML input and simply passes it through. If you do not want to validate the input because it does not need
+to be checked, or if you just want to do it manually in the [`on_parse` event](#on_parse-event), then this is what you'd
 want to use.
 
 ```py
 class Block:
     OPTIONS = {'name': [{}, type_any]}
+```
+
+### `type_none`
+
+```py
+def type_none(value: Any) -> None:
+    ...
+```
+
+This takes a YAML input and ensures it is `None` (or `null`) in YAML. This is most useful paired with other types to
+indicate the option is "unset". See [`type_multi`](#type_multi) to learn how to combine multiple existing types.
+
+```py
+class Block:
+    OPTIONS = {'name': [none, type_multi(type_none, type_string)]}
 ```
 
 ### `type_number`
@@ -517,3 +532,13 @@ Returns a `dict[str, Any]` where the values will either be `str` or `list[str]` 
 class Block:
     OPTIONS = {'attributes': [{}, type_html_attribute_dict]}
 ```
+
+## `type_multi`
+
+```py
+def type_multi(*args: Any) -> Callable[[Any], Any]:
+    ...
+```
+
+Takes a multiple type functions and returns a single type function that takes a YAML input and validates it with all the
+provided type functions. If the input fails all the validation functions, a `ValueError` is raised.

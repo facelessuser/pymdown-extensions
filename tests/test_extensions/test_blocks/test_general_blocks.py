@@ -120,6 +120,21 @@ class TestTypeFunctions(unittest.TestCase):
 
         self.assertEqual(['this', 'that'], block.type_html_classes('this that'))
 
+    def test_type_multi(self):
+        """Test `type_multi`."""
+
+        t = block.type_multi(block.type_ternary, block.type_string_in(['this', 'that']))
+        self.assertEqual(True, t(True))
+        self.assertEqual(False, t(False))
+        self.assertEqual(None, t(None))
+        self.assertEqual('this', t('this'))
+        with self.assertRaises(ValueError):
+            t(3)
+        with self.assertRaises(ValueError):
+            t('other')
+        with self.assertRaises(ValueError):
+            block.type_multi()(True)
+
 
 class TestRegister(unittest.TestCase):
     """Test registration cases."""
