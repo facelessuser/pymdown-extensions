@@ -271,6 +271,25 @@ class TestBlockUndefinedOption(util.MdCase):
             True
         )
 
+    def test_commented_frontmatter(self):
+        """Test commented frontmatter."""
+
+        self.check_markdown(
+            R'''
+            /// html | div
+                # attrs: {class: test}
+
+            content
+            ///
+            ''',
+            '''
+            <div>
+            <p>content</p>
+            </div>
+            ''',
+            True
+        )
+
 
 class TestCodeHandling(util.MdCase):
     """Test some code related cases."""

@@ -60,6 +60,8 @@ def get_frontmatter(string):
 
     try:
         frontmatter = yaml.safe_load(string)
+        if frontmatter is None:
+            frontmatter = {}
         if not isinstance(frontmatter, dict):
             frontmatter = None
     except Exception:
