@@ -230,7 +230,7 @@ class BlocksProcessor(BlockProcessor):
 
                 # Update the config for the Block
                 if status:
-                    status = generic_block.parse_config(arguments, **options)
+                    status = generic_block._validate(parent, arguments, **options)
 
                 # Cache the found Block and any remaining content
                 if status:
@@ -415,7 +415,7 @@ class BlocksProcessor(BlockProcessor):
                     p.text = text
 
             # Create the block element
-            el = generic_block.create(parent)
+            el = generic_block._create(parent)
 
             # Push a Block entry on the stack.
             self.stack.append(BlockEntry(generic_block, el, parent))

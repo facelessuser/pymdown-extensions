@@ -130,7 +130,7 @@ required in order for the block to accept an argument. An argument is declared b
 it is required, `#!py None` if it is optionally allowed, or `#!py False` if it is not allowed.
 
 The argument is always parsed as a single string, if it is desired to validate the format of the argument or even to
-process it as multiple arguments, this can be done in the [`on_parse` event](#on_parse-event).
+process it as multiple arguments, this can be done in the [`on_validate` event](#on_validate-event).
 
 ```python
 class MyBlock(Block):
@@ -193,17 +193,19 @@ Only the global `config` is available at this time via `self.config`. The `Markd
 
 The can be a good way to perform setup based on on global or local options.
 
-## `on_parse` Event
+## `on_validate` Event
 
 ```py
-def on_parse(self) -> bool:
+def on_validate(self, parent: Element) -> bool:
     ...
 ```
 
 Executed right after the per block argument and option parsing occurs. The argument and options are accessible via
-`self.argument` and `self.options`. This gives the extension a chance to perform additional validation or adjustments of
-the argument and options. This also gives the opportunity to initialize class variables based on the per block argument
-and options.
+`self.argument` and `self.options`. `parent` is the current parent element.
+
+`on_validate` is a hook meant to allow the developer to invalidate a block if the options, argument, or even the parent
+element do not meet some arbitrary criteria. This hook can also be used to make adjustments variables and even do some
+initialization of class variables based on the results of specific options, arguments, or even the parent element.
 
 If validation fails, `#!py3 False` should be returned and the block will not be parsed as a generic block.
 
@@ -284,8 +286,8 @@ def type_any(value: Any) -> Any:
 ```
 
 This takes a YAML input and simply passes it through. If you do not want to validate the input because it does not need
-to be checked, or if you just want to do it manually in the [`on_parse` event](#on_parse-event), then this is what you'd
-want to use.
+to be checked, or if you just want to do it manually in the [`on_validate` event](#on_validate-event), then this is what
+you'd want to use.
 
 ```py
 class Block:

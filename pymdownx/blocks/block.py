@@ -242,7 +242,7 @@ class Block(metaclass=ABCMeta):
 
         return "auto"
 
-    def parse_config(self, arg, **options):
+    def _validate(self, parent, arg, **options):
         """Parse configuration."""
 
         # Check argument
@@ -279,13 +279,17 @@ class Block(metaclass=ABCMeta):
         # Add parsed options to options
         self.options = parsed
 
-        return self.on_parse()
+        return self.on_validate(parent)
 
-    def on_parse(self):
+    def on_validate(self, parent):
         """
-        Handle parsing event.
+        Handle validation event.
 
-        Return true if everything is okay.
+        Run after config parsing completes and allows for the opportunity
+        to invalidate the block if argument, options, or even the parent
+        element do not meet certain criteria.
+
+        Return `False` to invalidate the block.
         """
 
         return True
@@ -294,7 +298,7 @@ class Block(metaclass=ABCMeta):
     def on_create(self, parent):
         """Create the needed element and return it."""
 
-    def create(self, parent):
+    def _create(self, parent):
         """Create the element."""
 
         el = self.on_create(parent)

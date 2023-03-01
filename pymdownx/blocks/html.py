@@ -134,7 +134,7 @@ class HTML(Block):
         self.markdown = None
         super().__init__(length, tracker, md, config)
 
-    def on_parse(self):
+    def on_validate(self, parent):
         """Handle argument parsing."""
 
         try:

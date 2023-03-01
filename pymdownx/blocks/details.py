@@ -36,8 +36,8 @@ class Details(Block):
         "types": []
     }
 
-    def on_parse(self):
-        """Handle on parse event."""
+    def on_validate(self, parent):
+        """Handle on validate event."""
 
         if self.NAME != 'details':
             self.options['type'] = self.NAME

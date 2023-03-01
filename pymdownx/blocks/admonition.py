@@ -29,8 +29,8 @@ class Admonition(Block):
         'type': ['', type_html_identifier],
     }
 
-    def on_parse(self):
-        """Handle on parse event."""
+    def on_validate(self, parent):
+        """Handle on validate event."""
 
         if self.NAME != 'admonition':
             self.options['type'] = self.NAME
