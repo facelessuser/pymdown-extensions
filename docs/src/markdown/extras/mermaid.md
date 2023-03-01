@@ -332,7 +332,7 @@ and provide the configuration. We also have the custom loader that is runs when 
     end</code></pre>
 
 <!-- Include Mermaid script and user config -->
-<script src="https://unpkg.com/mermaid@9.1.7/dist/mermaid.min.js"></script>
+<script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
 <script>
 window.mermaidConfig = {
   startOnLoad: false,
@@ -507,7 +507,7 @@ markdown_extensions:
 
 extra_javascript:
   - optionalConfig.js
-  - https://unpkg.com/mermaid@9.1.7/dist/mermaid.min.js
+  - https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js
   - extra-loader.js
 ```
 

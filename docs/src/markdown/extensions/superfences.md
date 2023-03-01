@@ -867,7 +867,7 @@ will automatically find the `#!html <div>` elements with the `mermaid` class and
 [Mermaid][mermaid] via its CDN.
 
 ```html
-<script src="https://unpkg.com/mermaid@8.6.4/dist/mermaid.min.js"></script>
+<script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
 ```
 
 ## Limitations
