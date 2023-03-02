@@ -1,5 +1,15 @@
 # Changelog
 
+## 9.10b5
+
+- **NEW**: Blocks: Add `type_multi` and `type_none` validators.
+- **NEW**: Blocks: Rename on_parse to `on_validate` and pass in parent element as context for validation.
+- **NEW**: Blocks: When a block uses `raw` mode, allow content to be indented to avoid conflicts with HTML parser. `raw`
+  blocks _should_ be indented and are now documented as such. The results will be dedented up to Python Markdown's tab
+  length, so intentional indentation is still possible. `raw` blocks with no indentation will still work, but may have
+  conflicts with other extensions.
+- **FIX**: Blocks: Commenting out all YAML options will not cause a block to invalidate.
+
 ## 9.10b4
 
 - **NEW**: Blocks: Add `on_inline_end` event.

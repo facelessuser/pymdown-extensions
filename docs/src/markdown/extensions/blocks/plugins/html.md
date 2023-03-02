@@ -19,8 +19,28 @@ md = markdown.Markdown(extensions=['pymdownx.blocks.html'])
 
 ## Usage
 
-Generally, HTML blocks can be defined simply by specifying the `html` generic block type followed by the tag name. As
-with all generic blocks, additional attributes can be applied via the `attributes` option.
+Generally, HTML blocks can be defined simply by specifying the `html` generic block type followed by the tag name.
+
+```text title="HTML"
+/// html | div
+some *markdown* content
+///
+```
+
+/// html | div.result
+//// html | div
+some *markdown* content
+////
+///
+
+Classes and IDs and arbitrary attributes can be specified by using selector-like notation:
+
+- `#!css div.my-class` will add a class of name `my-class` to a tag of name `div`.
+- `#!css div#some-id` will add an ID of name `some-id` to a tag of name `div`.
+- `#!css div[attr]` will add an attribute of name `attr` to a tag of name `div`. You can also add values
+  (`#!css div[attr=value]`),
+  quoted values (`#!css div[attr="quoted value"]`), and even multiple values (`#!css div[attr1=value attr2="quoted value"]`).
+- Attributes can also be chained: `#!css div#some-id.class[attr=value]`.
 
 ```text title="HTML"
 /// html | div[style='border: 1px solid red;']
@@ -39,17 +59,6 @@ treated as block elements, `span` will be treated as inline elements, and things
 raw text that should not be processed by Markdown further. With that said, there may be cases where an HTML element
 isn't properly recognized yet, or the user simply wants to control how the element processes its content, in these
 cases, the `markdown` option can be used to specify how Markdown content is handled.
-
-/// tip | Raw Mode
-When using _raw_ tags or forcing _raw_ mode with `markdown: raw`, it is advised to indent the code. This is because
-Python Markdown will look for and process raw HTML in non indented blocks. The only avoid this is to use indented
-blocks. Content will automatically be dedented by the expected tab length.
-
-Recognized raw block tags: `canvas`, `math`, `option`, `pre`, `script`, `style`, and `textarea`.
-
-Also, make sure to have a new line before indented content so it is not recognized as an attempt to specify YAML
-options.
-///
 
 In the following example we force `pre` to handle content as Markdown block content instead of the usual raw content
 default.
@@ -79,6 +88,17 @@ some *markdown* content
 
 some *markdown* content
 ////
+///
+
+/// tip | Raw Mode
+When using _raw_ tags or forcing _raw_ mode with `markdown: raw`, it is advised to indent the code. This is because
+Python Markdown will look for and process raw HTML in non indented blocks. The only avoid this is to use indented
+blocks. Content will automatically be dedented by the expected tab length.
+
+Recognized raw block tags: `canvas`, `math`, `option`, `pre`, `script`, `style`, and `textarea`.
+
+Also, make sure to have a new line before indented content so it is not recognized as an attempt to specify YAML
+options.
 ///
 
 ## Per Block Options
