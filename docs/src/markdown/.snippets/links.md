@@ -32,6 +32,7 @@
 [abbreviations]: https://python-markdown.github.io/extensions/abbreviations/
 [admonition]: https://python-markdown.github.io/extensions/admonition/
 [aspell]: http://aspell.net/
+[atomic]: https://python-markdown.github.io/extensions/api/#working_with_et
 [attr-list]: https://python-markdown.github.io/extensions/attr_list/
 [bleach]: https://pypi.python.org/pypi/bleach
 [codehilite]: https://python-markdown.github.io/extensions/code_hilite/

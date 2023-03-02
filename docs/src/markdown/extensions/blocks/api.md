@@ -251,6 +251,18 @@ Result\ Value | Description
 `raw`         | Parsed block content will be preserved as is. No additional Markdown parsing will be applied.
 `auto`        | Depending on whether the wrapping parent is a block element, inline element, or something like a code element, Blocks will choose the best approach for the content. Decision is made based on the element returned by the [`on_add` event](#on_add-event).
 
+Only during the [`on_end` event](#on_end-event) will all the content be fully accumulated and processed by relevant
+block processors, and only during the [`on_inline_end` event](#on_inline_end-event) will both block and inline
+processing be completed.
+
+When using `raw` mode, all text will be gathered as blocks are processed and will be fully available during the
+[`on_end` event](#on_end-event). Content in a `raw` block should be indented to avoid the HTML parser and will be
+dedented (no more than the current Markdown tab length) in the final result. Content will stored as a Python Markdown
+[`AtomicString`][atomic].
+
+It should be noted that `raw` mode cannot prevent transformations that are applied during Python Markdown's preprocessor
+steps. Blocks will attempt to revert any placeholders within the content that are currently found in the HTML stash.
+
 ## `on_end` Event
 
 ```py

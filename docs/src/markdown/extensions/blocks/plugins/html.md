@@ -40,12 +40,25 @@ raw text that should not be processed by Markdown further. With that said, there
 isn't properly recognized yet, or the user simply wants to control how the element processes its content, in these
 cases, the `markdown` option can be used to specify how Markdown content is handled.
 
+/// tip | Raw Mode
+When using _raw_ tags or forcing _raw_ mode with `markdown: raw`, it is advised to indent the code. This is because
+Python Markdown will look for and process raw HTML in non indented blocks. The only avoid this is to use indented
+blocks. Content will automatically be dedented by the expected tab length.
+
+Recognized raw block tags: `canvas`, `math`, `option`, `pre`, `script`, `style`, and `textarea`.
+
+Also, make sure to have a new line before indented content so it is not recognized as an attempt to specify YAML
+options.
+///
+
 In the following example we force `pre` to handle content as Markdown block content instead of the usual raw content
 default.
 
+
 ```text title="Pre as Block"
 /// html | pre
-some *markdown* content
+
+    some *markdown* content
 ///
 
 /// html | pre
@@ -57,7 +70,8 @@ some *markdown* content
 
 /// html | div.result
 //// html | pre
-some *markdown* content
+
+    some *markdown* content
 ////
 
 //// html | pre

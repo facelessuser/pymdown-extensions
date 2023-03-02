@@ -266,19 +266,17 @@ class TestBlocksHTML(util.MdCase):
             /// html | div
                 markdown: raw
 
-            <div markdown=1>
-            **content**
-            </div>
+                <div>
+                **content**
+                </div>
 
-            this is <span>raw</span> **content**
+                this is <span>raw</span> **content**
             ///
             ''',
             '''
-            <div>&lt;div markdown="block"&gt;
+            <div>&lt;div&gt;
             **content**
             &lt;/div&gt;
-
-
 
             this is &lt;span&gt;raw&lt;/span&gt; **content**</div>
             ''',

@@ -74,6 +74,12 @@ You can create a note with Blocks!
 ///
 ```
 
+//// html | div.result
+/// note | Did you know?
+You can create a note with Blocks!
+///
+////
+
 Lastly, a given Block extension may allow for additional options that don't make sense in the first line declaration.
 This may be because they are rarely used, more complicated, or just make the first line signature more confusing. These
 options are per block specific use a YAML syntax. They must be part of the header, which means no new line between the
@@ -84,11 +90,48 @@ generic block.
 
 ```
 /// html | div
-    attrs: {class: class-name: id: id-name}
+    attrs: {style: 'font-size: xx-large'}
 
 Some content.
 ///
 ```
+
+//// html | div.result
+/// html | div
+    attrs: {style: 'font-size: xx-large'}
+
+Some content.
+///
+////
+
+Some blocks may take raw content (and should note this in their documentation) which will avoid further Markdown
+processing on the content.  Due to the way Python Markdown works, these content blocks must be indented to avoid having
+the HTML processor from altering content. Raw content blocks will remove the indentation up to the Markdown tab length
+(4 spaces by default). If they are not indented, they will still be processed, but they may be affected by Python
+Markdown's HTML processor.
+
+```
+/// html | pre
+
+    Pre blocks are _raw_.
+    Additional Markdown parsing is *avoided*.
+    Content should be indented.
+///
+```
+
+//// html | div.result
+/// html | pre
+
+    Pre blocks are _raw_.
+    Additional Markdown parsing is *avoided*.
+    Content should be indented.
+///
+////
+
+/// tip | Indented Content
+Indented content should always be separated from the block header by one empty line so that it is not confused as a YAML
+option block.
+///
 
 ## Nesting
 
@@ -96,13 +139,22 @@ Generic blocks can be nested as long as the block fence differs in number of lea
 fenced code blocks work. The minimum requirement is that at least three tokens are used.
 
 ```
-//// admonition | Some title
-    type: note
-
+//// note | Some title
 /// details | Summary
+    type: warning
+content
+///
+Content
+////
+```
+
+///// html | div.result
+//// note | Some title
+/// details | Summary
+    type: warning
 content
 ///
 
 Content
 ////
-```
+/////

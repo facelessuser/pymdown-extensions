@@ -3,6 +3,7 @@ from abc import ABCMeta, abstractmethod
 import functools
 import copy
 import re
+from markdown import util as mutil
 
 RE_IDENT = re.compile(
     r'''
@@ -11,6 +12,10 @@ RE_IDENT = re.compile(
     ''',
     re.I | re.X
 )
+
+RE_INDENT = re.compile(r'(?m)^([ ]*)[^ \n]')
+
+RE_DEDENT = re.compile(r'(?m)^([ ]*)($)?')
 
 
 def _type_multi(value, types=None):
@@ -206,7 +211,7 @@ class Block(metaclass=ABCMeta):
     # Extension config
     CONFIG = {}
 
-    def __init__(self, length, tracker, md, config):
+    def __init__(self, length, tracker, block_mgr, config):
         """
         Initialize.
 
@@ -226,13 +231,37 @@ class Block(metaclass=ABCMeta):
             raise ValueError("'attrs' is a reserved option name and cannot be overriden")
         self.option_spec['attrs'] = [{}, type_html_attribute_dict]
 
+        self._block_mgr = block_mgr
         self.length = length
         self.tracker = tracker
-        self.md = md
+        self.md = block_mgr.md
         self.arguments = []
         self.options = {}
         self.config = config
         self.on_init()
+
+    def is_raw(self, tag, mode):
+        """Is raw element."""
+
+        return self._block_mgr.is_raw(tag, mode)
+
+    def is_block(self, tag, mode):  # pragma: no cover
+        """Is block element."""
+
+        return self._block_mgr.is_block(tag, mode)
+
+    def dedent(self, text, length=None):
+        """Dedent raw text."""
+
+        if length is None:
+            length = self.md.tab_length
+
+        min_length = float('inf')
+        for x in RE_INDENT.findall(text):
+            min_length = min(len(x), min_length)
+        min_length = min(min_length, length)
+
+        return RE_DEDENT.sub(lambda m, l=min_length: '' if m.group(2) is not None else m.group(1)[l:], text)
 
     def on_init(self):
         """On initialize."""
@@ -314,6 +343,16 @@ class Block(metaclass=ABCMeta):
             else:
                 attrib[k] = v
         return el
+
+    def _end(self, block):
+        """Reached end of the block, dedent raw blocks and call `on_end` hook."""
+
+        mode = self.on_markdown()
+        add = self.on_add(block)
+        if self.is_raw(add, mode):
+            add.text = mutil.AtomicString(self.dedent(add.text))
+
+        self.on_end(block)
 
     def on_end(self, block):
         """Perform any action on end."""

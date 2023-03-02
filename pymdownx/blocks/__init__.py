@@ -216,7 +216,7 @@ class BlocksProcessor(BlockProcessor):
             # Create a block object
             name = m.group(2).lower()
             if name in self.blocks:
-                generic_block = self.blocks[name](len(m.group(1)), self.trackers[name], self.md, self.config[name])
+                generic_block = self.blocks[name](len(m.group(1)), self.trackers[name], self, self.config[name])
 
                 # Remove first line
                 block = block[m.end():]
@@ -339,6 +339,16 @@ class BlocksProcessor(BlockProcessor):
                 temp = self.lastChild(temp)
         return None
 
+    def is_raw(self, tag, mode):
+        """Is tag raw."""
+
+        return mode == 'raw' or (mode == 'auto' and tag.tag in self.raw_tags)
+
+    def is_block(self, tag, mode):
+        """Is tag block."""
+
+        return mode == 'block' or (mode == 'auto' and tag.tag in self.block_tags)
+
     def parse_blocks(self, blocks, entry):
         """Parse the blocks."""
 
@@ -351,12 +361,11 @@ class BlocksProcessor(BlockProcessor):
             if target is None:  # pragma: no cover
                 break
 
-            tag = target.tag
             mode = entry.block.on_markdown()
             if mode not in ('block', 'inline', 'raw'):
                 mode = 'auto'
-            is_block = mode == 'block' or (mode == 'auto' and tag in self.block_tags)
-            is_atomic = mode == 'raw' or (mode == 'auto' and tag in self.raw_tags)
+            is_block = self.is_block(target, mode)
+            is_atomic = self.is_raw(target, mode)
 
             # We should revert fenced code in spans or atomic tags.
             # Make sure atomic tags have content wrapped as `AtomicString`.
@@ -431,7 +440,7 @@ class BlocksProcessor(BlockProcessor):
             # or add it to the hungry list.
             if end:
                 # Run the "on end" event
-                generic_block.on_end(el)
+                generic_block._end(el)
                 self.inline_stack.append(self.stack[index])
                 del self.stack[index]
             else:
@@ -451,7 +460,7 @@ class BlocksProcessor(BlockProcessor):
                     # Clean up if we completed the Block
                     if end:
                         # Run "on end" event
-                        entry.block.on_end(entry.el)
+                        entry.block._end(entry.el)
                         self.inline_stack.append(entry)
                         del self.stack[r]
                     else:

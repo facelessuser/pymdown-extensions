@@ -141,6 +141,7 @@ configs
 coveragepy
 customizable
 de
+dedented
 dedenting
 deprecations
 dev

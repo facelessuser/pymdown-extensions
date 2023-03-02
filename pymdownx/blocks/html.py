@@ -114,7 +114,7 @@ class HTML(Block):
     Options:
     - `markdown` (string): specify how content inside the element should be treated:
       - `auto`: will automatically determine how an element's content should be handled.
-      - `span`: treat content as an inline element's content.
+      - `inline`: treat content as an inline element's content.
       - `block`: treat content as a block element's content.
       - `raw`: treat the content as raw content (atomic).
 
