@@ -80,6 +80,7 @@ nav:
   - About:
     - Contributing &amp; Support: about/contributing.md
     - Development: about/development.md
+    - Security Vulnerabilities: about/security.md
     - Changelog: about/changelog.md
     - Migration Notes:
         - '6.0': about/releases/6.0.md
@@ -160,6 +161,7 @@ markdown_extensions:
       base_path:
       - docs/src/markdown/.snippets
       - LICENSE.md
+      - SECURITY.md
       auto_append:
       - refs.md
       check_paths: true

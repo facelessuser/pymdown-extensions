@@ -2,7 +2,7 @@
 
 ## PyMdown Extensions
 
-The MIT License (MIT) (Except where stated below)
+The MIT License (MIT)
 
 Copyright (c) 2014 - 2023 Isaac Muse
 

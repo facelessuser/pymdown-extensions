@@ -17,7 +17,7 @@ Extension documentation is found here: https://facelessuser.github.io/pymdown-ex
 
 # License
 
-License is MIT except for a few exceptions.  See [LICENSE](https://github.com/facelessuser/pymdown-extensions/blob/master/LICENSE.md) for more info.
+License is MIT.  See [LICENSE](https://github.com/facelessuser/pymdown-extensions/blob/master/LICENSE.md) for more info.
 
 [github-ci-image]: https://github.com/facelessuser/pymdown-extensions/workflows/build/badge.svg?branch=master&event=push
 [github-ci-link]: https://github.com/facelessuser/pymdown-extensions/actions?query=workflow%3Abuild+branch%3Amaster
