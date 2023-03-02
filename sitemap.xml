@@ -41,6 +41,11 @@
          <changefreq>daily</changefreq>
     </url>
     <url>
+         <loc>https://facelessuser.github.io/pymdown-extensions/about/security/</loc>
+         <lastmod>2023-03-02</lastmod>
+         <changefreq>daily</changefreq>
+    </url>
+    <url>
          <loc>https://facelessuser.github.io/pymdown-extensions/about/releases/6.0/</loc>
          <lastmod>2023-03-02</lastmod>
          <changefreq>daily</changefreq>
