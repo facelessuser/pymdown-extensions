@@ -20,7 +20,7 @@ Example
 ```
 
 Occasionally, we may provide an alpha, beta, or release candidate introducing experimental features or fixes that are
-not ready for a wide audience. This usually follows the the apporach of: `major.minor.patch(a | b | rc)(prerelease_number)`.
+not ready for a wide audience. This usually follows the the approach of: `major.minor.patch(a | b | rc)(prerelease_number)`.
 
 Example:
 
@@ -29,7 +29,7 @@ Example:
 8.0.3rc2
 ```
 
-Even more rare, we may fix a non functional change, maybe documentation builiding was broken in the release, or bad
+Even more rare, we may fix a non functional change, maybe documentation building was broken in the release, or bad
 metadata for PyPI. In these cases, we may release a postfix: `major.minor.patch.post(postfix_number)`.
 
 ```

@@ -11,6 +11,7 @@ Bitbucket
 CDN
 CDNs
 CSS
+CVE
 Changelog
 Cloudflare
 CodeHilite
@@ -207,6 +208,7 @@ polyfill
 polyfilled
 polyfills
 positionally
+postfix
 pre
 prepend
 prepended
