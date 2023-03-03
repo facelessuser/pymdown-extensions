@@ -240,15 +240,23 @@ class Block(metaclass=ABCMeta):
         self.config = config
         self.on_init()
 
-    def is_raw(self, tag, mode):
+    def is_raw(self, tag):
         """Is raw element."""
 
-        return self._block_mgr.is_raw(tag, mode)
+        return self._block_mgr.is_raw(tag)
 
-    def is_block(self, tag, mode):  # pragma: no cover
+    def is_block(self, tag):  # pragma: no cover
         """Is block element."""
 
-        return self._block_mgr.is_block(tag, mode)
+        return self._block_mgr.is_block(tag)
+
+    def html_escape(self, text):
+        """Basic html escaping."""
+
+        text = text.replace('&', '&amp;')
+        text = text.replace('<', '&lt;')
+        text = text.replace('>', '&gt;')
+        return text
 
     def dedent(self, text, length=None):
         """Dedent raw text."""
@@ -349,7 +357,7 @@ class Block(metaclass=ABCMeta):
 
         mode = self.on_markdown()
         add = self.on_add(block)
-        if self.is_raw(add, mode):
+        if mode == 'raw' or (mode == 'auto' and self.is_raw(add)):
             add.text = mutil.AtomicString(self.dedent(add.text))
 
         self.on_end(block)

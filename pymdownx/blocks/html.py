@@ -125,7 +125,7 @@ class HTML(Block):
     NAME = 'html'
     ARGUMENT = True
     OPTIONS = {
-        'markdown': ['auto', type_string_in(['auto', 'inline', 'block', 'raw'])]
+        'markdown': ['auto', type_string_in(['auto', 'inline', 'block', 'raw', 'html'])]
     }
 
     def __init__(self, length, tracker, md, config):
@@ -147,13 +147,30 @@ class HTML(Block):
     def on_markdown(self):
         """Check if this is atomic."""
 
-        return self.options['markdown']
+        mode = self.options['markdown']
+        if mode == 'html':
+            mode = 'raw'
+        return mode
 
     def on_create(self, parent):
         """Create the element."""
 
         # Create element
         return etree.SubElement(parent, self.tag.lower(), self.attr)
+
+    def is_html(self, tag):
+        """Does tag require no processing and no HTML escaping."""
+
+        return tag.tag in ('script', 'style')
+
+    def on_end(self, block):
+        """On end event."""
+
+        mode = self.options['markdown']
+        if (mode == 'auto' and self.is_html(block)) or mode == 'html':
+            block.text = self.md.htmlStash.store(block.text)
+        elif (mode == 'auto' and self.is_raw(block)) or mode == 'raw':
+            block.text = self.md.htmlStash.store(self.html_escape(block.text))
 
 
 class HTMLExtension(BlocksExtension):

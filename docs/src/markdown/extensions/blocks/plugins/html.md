@@ -56,13 +56,34 @@ some *markdown* content
 
 By default HTML blocks will automatically have the content rendering determined from tag name, so `div` blocks will be
 treated as block elements, `span` will be treated as inline elements, and things like `pre` will treat the content as
-raw text that should not be processed by Markdown further. With that said, there may be cases where an HTML element
-isn't properly recognized yet, or the user simply wants to control how the element processes its content, in these
-cases, the `markdown` option can be used to specify how Markdown content is handled.
+raw text that needs HTML escaping, and things like `script` will be treated as raw content does not need HTML escaping.
+With that said, there may be cases where an HTML element isn't properly recognized yet, or the user simply wants to
+control how the element processes its content, in these cases, the `markdown` option can be used to specify how Markdown
+content is handled.
+
+Markdown\ Modes | Description
+--------------- | -----------
+`block`         | Parsed block content will be handled by the Markdown parser as content under a block element.
+`inline`        | Parsed block content will be handled by the Markdown parser as content under an inline element.
+`raw`           | Parsed block content will be preserved. No additional Markdown parsing will be applied. Content will be HTML escaped to preserve the content as is.
+`auto`          | Depending on whether the wrapping parent is a block element, inline element, or something like a code element, Blocks will choose the best approach for the content. Decision is made based on the element returned by the [`on_add` event](#on_add-event).
+`html`          | Like `raw`, content will be preserved, but the content will _not_ be HTML escaped and will be passed through as unmodified HTML. Any required sanitizing should be provided by the user post Markdown processing.
+
+/// tip | Raw and HTML Mode
+When using _raw_ tags or forcing _raw_ mode with `markdown: raw` (HTML escaped) or `markdown: html` (no HTML escaping),
+code must be indented. This is because Python Markdown will look for and process raw HTML in non indented blocks. The
+only avoid this is to use indented code blocks. If content is not indented, the content may be missing at the end.
+
+Recognized raw block tags: `canvas`, `math`, `option`, `pre`, and `textarea`.
+
+Recognized raw HTML tags: `script` and `style`.
+
+Also, make sure to have a new line before indented content so it is not recognized as an attempt to specify YAML
+options.
+///
 
 In the following example we force `pre` to handle content as Markdown block content instead of the usual raw content
 default.
-
 
 ```text title="Pre as Block"
 /// html | pre
@@ -90,20 +111,9 @@ some *markdown* content
 ////
 ///
 
-/// tip | Raw Mode
-When using _raw_ tags or forcing _raw_ mode with `markdown: raw`, it is advised to indent the code. This is because
-Python Markdown will look for and process raw HTML in non indented blocks. The only avoid this is to use indented
-blocks. Content will automatically be dedented by the expected tab length.
-
-Recognized raw block tags: `canvas`, `math`, `option`, `pre`, `script`, `style`, and `textarea`.
-
-Also, make sure to have a new line before indented content so it is not recognized as an attempt to specify YAML
-options.
-///
-
 ## Per Block Options
 
 Options      | Type       | Descriptions
 ------------ | ---------- | ------------
-`markdown`   | string     | String value to control how Markdown content is processed. Valid options are: `auto`, `block`, `inline`, and `raw`.
+`markdown`   | string     | String value to control how Markdown content is processed. Valid options are: `auto`, `block`, `inline`, `html`, and `raw`.
 `attrs`      | string     | A string that defines attributes for the outer, wrapper element.

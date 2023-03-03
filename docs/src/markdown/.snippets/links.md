@@ -43,6 +43,7 @@
 [emojione-index]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/emoji1_db.py
 [emojione-sprites-svg]: https://github.com/Ranks/emojione/blob/v2.2.7/assets/sprites/emojione.sprites.svg
 [emojione]: https://github.com/Ranks/emojione
+[etree]: https://docs.python.org/3/library/xml.etree.elementtree.html
 [flake8-docstrings]: https://pypi.python.org/pypi/flake8-docstrings
 [flake8]: https://pypi.python.org/pypi/flake8
 [footnotes]: https://python-markdown.github.io/extensions/footnotes/
@@ -73,6 +74,7 @@
 [python-markdown]: https://github.com/Python-Markdown/markdown
 [pyyaml]: https://github.com/yaml/pyyaml
 [requests]: https://pypi.python.org/pypi/requests/
+[stash]: https://python-markdown.github.io/extensions/api/#working_with_raw_html
 [tables]: https://python-markdown.github.io/extensions/tables/
 [toc]: https://python-markdown.github.io/extensions/toc/
 [tox]: https://pypi.python.org/pypi/tox

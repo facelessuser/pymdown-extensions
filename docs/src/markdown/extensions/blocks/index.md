@@ -105,10 +105,10 @@ Some content.
 ////
 
 Some blocks may take raw content (and should note this in their documentation) which will avoid further Markdown
-processing on the content.  Due to the way Python Markdown works, these content blocks must be indented to avoid having
-the HTML processor from altering content. Raw content blocks will remove the indentation up to the Markdown tab length
-(4 spaces by default). If they are not indented, they will still be processed, but they may be affected by Python
-Markdown's HTML processor.
+processing on the content.  This is done by requiring the content to be an indented code block. Due to the way Python
+Markdown works, these content blocks must be indented to avoid having the HTML processor from altering content. Raw
+blocks cannot shield content from all preprocessor transformations, but by requiring the content to be indented code
+blocks, the content will survive any alterations that a traditional code block would survive.
 
 ```
 /// html | pre

@@ -176,6 +176,37 @@ developers via `self.options['attrs']`. The result is a dictionary of key/value 
 the value is a `#!py3 str` (or `#!py3 list[str]` in the special case of `class`).
 ///
 
+## `is_raw`
+
+```py
+def is_raw(self, tag: Element) -> bool:
+    ...
+```
+
+This method, given a tag will determine if the block should be considered a "raw" tag based on the Blocks extension's
+internal logic.
+
+## `is_block`
+
+```py
+def is_block(self, tag: Element) -> bool:
+    ...
+```
+
+This method, given a tag will determine if the block should be considered a "block" tag based on the Blocks extension's
+internal logic.
+
+
+## `html_escape`
+
+```py
+def html_escape(self, text: str) -> str:
+    ...
+```
+
+Takes a string intended for an HTML tag's content and returns it after applying HTML escaping on it. Escapes `&`, `<`,
+and `>`.
+
 ## `on_init` Event
 
 ```py
@@ -242,7 +273,8 @@ def on_markdown(self) -> str:
 ```
 
 The `on_markdown` event is used to declare how the content of the block should be handled by the Markdown parser. A
-string with one of the following values _must_ be returned. 
+string with one of the following values _must_ be returned. All content is stored under the [etree][etree] element
+returned via the [`on_add` event](#on_add-event), regardless of what mode is returned.
 
 Result\ Value | Description
 ------------- | -----------
@@ -255,10 +287,15 @@ Only during the [`on_end` event](#on_end-event) will all the content be fully ac
 block processors, and only during the [`on_inline_end` event](#on_inline_end-event) will both block and inline
 processing be completed.
 
-When using `raw` mode, all text will be gathered as blocks are processed and will be fully available during the
-[`on_end` event](#on_end-event). Content in a `raw` block should be indented to avoid the HTML parser and will be
-dedented (no more than the current Markdown tab length) in the final result. Content will stored as a Python Markdown
-[`AtomicString`][atomic].
+When using `raw` mode, all text will be accumulated and fully available during the [`on_end` event](#on_end-event).
+Content is accessible under the element returned by the [`on_add` event](#on_add-event) and can be accessed via
+`element.text`. Text content is stored as a Python Markdown [`AtomicString`][atomic]. If desired, the content can be
+stored in the [HTML stash][stash] during the [`on_add` event](#on_add-event)to ensure it makes it through any and all
+Treeprocessors after inline handling. Additionally, when storing in the stash, the developer can HTML escape the content
+to have the text present as literal or store without HTML escaping to present as an altered HTML content.
+
+A `raw` block expects the content to be an indented code block as this is necessary to avoid some Python Markdown's
+internal HTML parser. Content will not have the extra indentation in the final output.
 
 It should be noted that `raw` mode cannot prevent transformations that are applied during Python Markdown's preprocessor
 steps. Blocks will attempt to revert any placeholders within the content that are currently found in the HTML stash.

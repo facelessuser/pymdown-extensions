@@ -114,6 +114,7 @@ Tasklist
 Toc
 Tox
 Treeprocessor
+Treeprocessors
 Twemoji
 Twemoji's
 Twitter's
@@ -156,6 +157,7 @@ emoji
 emojione
 escaper
 eslint
+etree
 facelessuser
 formatter
 formatter's

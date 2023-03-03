@@ -167,7 +167,7 @@ class BlocksProcessor(BlockProcessor):
             ['address', 'dd', 'dt', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'legend', 'li', 'p', 'summary', 'td', 'th']
         )
         # Block-level tags which never get their content parsed.
-        self.raw_tags = set(['canvas', 'math', 'option', 'pre', 'script', 'style', 'textarea'])
+        self.raw_tags = set(['canvas', 'math', 'option', 'pre', 'script', 'style', 'textarea', 'code'])
         # Block-level tags in which the content gets parsed as blocks
         self.block_tags = set(self.block_level_tags) - (self.span_tags | self.raw_tags | self.empty_tags)
         self.span_and_blocks_tags = self.block_tags | self.span_tags
@@ -339,15 +339,15 @@ class BlocksProcessor(BlockProcessor):
                 temp = self.lastChild(temp)
         return None
 
-    def is_raw(self, tag, mode):
+    def is_raw(self, tag):
         """Is tag raw."""
 
-        return mode == 'raw' or (mode == 'auto' and tag.tag in self.raw_tags)
+        return tag.tag in self.raw_tags
 
-    def is_block(self, tag, mode):
+    def is_block(self, tag):
         """Is tag block."""
 
-        return mode == 'block' or (mode == 'auto' and tag.tag in self.block_tags)
+        return tag.tag in self.block_tags
 
     def parse_blocks(self, blocks, entry):
         """Parse the blocks."""
@@ -364,8 +364,8 @@ class BlocksProcessor(BlockProcessor):
             mode = entry.block.on_markdown()
             if mode not in ('block', 'inline', 'raw'):
                 mode = 'auto'
-            is_block = self.is_block(target, mode)
-            is_atomic = self.is_raw(target, mode)
+            is_block = mode == 'block' or (mode == 'auto' and self.is_block(target))
+            is_atomic = mode == 'raw' or (mode == 'auto' and self.is_raw(target))
 
             # We should revert fenced code in spans or atomic tags.
             # Make sure atomic tags have content wrapped as `AtomicString`.
