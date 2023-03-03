@@ -1,10 +1,10 @@
 # Security Vulnerabilities
 
-Our policy for security related issues is to fix related issues within our power on the most recent minor release.
+Our policy for security related issues is to fix related issues within our power on the most recent major release.
 
 ## Versioning
 
-Generally, we try to follow semantic versioning: `major.minor.patch`.
+Versioning follows [PEP440](https://peps.python.org/pep-0440/): `major.minior.patch`.
 
 Versions | Description
 -------- | -----------
@@ -16,25 +16,8 @@ Example
 
 ```
 8.0
-8.0.3
-```
-
-Occasionally, we may provide an alpha, beta, or release candidate introducing experimental features or fixes that are
-not ready for a wide audience. This usually follows the the approach of: `major.minor.patch(a | b | rc)(prerelease_number)`.
-
-Example:
-
-```
-8.0b1
-8.0.3rc2
-```
-
-Even more rare, we may fix a non functional change, maybe documentation building was broken in the release, or bad
-metadata for PyPI. In these cases, we may release a postfix: `major.minor.patch.post(postfix_number)`.
-
-```
-8.0.post1
-8.0.3.post2
+8.1
+8.1.3
 ```
 
 ## Create Security Vulnerability Report
@@ -49,8 +32,9 @@ We will strive to acknowledge the report in about two business days.
 
 Reports will be kept private until the issue is properly understood.
 
-If the report is accepted, we will request a CVE from GitHub and work with the reporter to find a resolution. Work will
-be done privately, and the final commit will not mention the security issue.
+If the report is accepted we will notify Tidelift (who we've partnered with), request a CVE from GitHub, and work with
+the reporter to find a resolution. Work will be done privately, and the final commit will not mention the security
+issue.
 
 The fix, announcement, and release will be negotiated with the reporter.
 
