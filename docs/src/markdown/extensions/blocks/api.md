@@ -273,32 +273,32 @@ def on_markdown(self) -> str:
 ```
 
 The `on_markdown` event is used to declare how the content of the block should be handled by the Markdown parser. A
-string with one of the following values _must_ be returned. All content is stored under the [etree][etree] element
-returned via the [`on_add` event](#on_add-event), regardless of what mode is returned.
-
-Result\ Value | Description
-------------- | -----------
-`block`       | Parsed block content will be handled by the Markdown parser as content under a block element.
-`inline`      | Parsed block content will be handled by the Markdown parser as content under an inline element.
-`raw`         | Parsed block content will be preserved as is. No additional Markdown parsing will be applied.
-`auto`        | Depending on whether the wrapping parent is a block element, inline element, or something like a code element, Blocks will choose the best approach for the content. Decision is made based on the element returned by the [`on_add` event](#on_add-event).
+string with one of the following values _must_ be returned. All content is treated as HTML content and is stored under
+the [etree][etree] element returned via the [`on_add` event](#on_add-event).
 
 Only during the [`on_end` event](#on_end-event) will all the content be fully accumulated and processed by relevant
 block processors, and only during the [`on_inline_end` event](#on_inline_end-event) will both block and inline
 processing be completed.
 
-When using `raw` mode, all text will be accumulated and fully available during the [`on_end` event](#on_end-event).
-Content is accessible under the element returned by the [`on_add` event](#on_add-event) and can be accessed via
-`element.text`. Text content is stored as a Python Markdown [`AtomicString`][atomic]. If desired, the content can be
-stored in the [HTML stash][stash] during the [`on_add` event](#on_add-event)to ensure it makes it through any and all
-Treeprocessors after inline handling. Additionally, when storing in the stash, the developer can HTML escape the content
-to have the text present as literal or store without HTML escaping to present as an altered HTML content.
+Result\ Value | Description
+------------- | -----------
+`block`       | Parsed block content will be handled by the Markdown parser as content under a block element.
+`inline`      | Parsed block content will be handled by the Markdown parser as content under an inline element.
+`raw`         | Parsed block content will be preserved as is. No additional Markdown parsing will be applied. Content is expected to be indented and should be documented as such.
+`auto`        | Depending on whether the wrapping parent is a block element, inline element, or something like a code element, Blocks will choose the best approach for the content. Decision is made based on the element returned by the [`on_add` event](#on_add-event).
 
-A `raw` block expects the content to be an indented code block as this is necessary to avoid some Python Markdown's
-internal HTML parser. Content will not have the extra indentation in the final output.
+When using `raw` mode, all text will be accumulated under the specified element as an [`AtomicString`][atomic]. If
+nothing is done with the content during the [`on_end` event](#on_end-event), all the content will be HTML escaped by the
+Python Markdown parser. If desired, the content can be placed into the Python Markdown [HTML stash][stash] which will
+protect it from any other rouge Treeprocessors. Keep in mind, if the content is stashed HTML escaping will not be
+applied automatically, so HTML escape if it is required.
 
-It should be noted that `raw` mode cannot prevent transformations that are applied during Python Markdown's preprocessor
-steps. Blocks will attempt to revert any placeholders within the content that are currently found in the HTML stash.
+/// warning | Indent Raw Content
+Because Python Markdown implements HTML processing as a preprocessor, content for a `raw` block must be indented 4
+spaces to avoid the HTML processing step. The content will not be indented when it reaches the [`on_end` event](#on_end-event).
+Failure to indent will still allow the code to be processed, but it may not process as expected. An extension that uses
+`raw` should make clear that this is a requirement to avoid unexpected results.
+///
 
 ## `on_end` Event
 

@@ -1,30 +1,10 @@
 # Changelog
 
-## 9.10b5
-
-- **NEW**: Blocks: Add `type_multi` and `type_none` validators.
-- **NEW**: Blocks: Rename on_parse to `on_validate` and pass in parent element as context for validation.
-- **NEW**: Blocks: When a block uses `raw` mode, allow content to be indented to avoid conflicts with HTML parser. `raw`
-  blocks _should_ be indented and are now documented as such. The results will be dedented up to Python Markdown's tab
-  length, so intentional indentation is still possible. `raw` blocks with no indentation will still work, but may have
-  conflicts with other extensions.
-- **FIX**: Blocks: Commenting out all YAML options will not cause a block to invalidate.
-
-## 9.10b4
-
-- **NEW**: Blocks: Add `on_inline_end` event.
-
-## 9.10b3
-
-- **NEW**: Blocks: Ensure inline mode is handled properly.
-- **NEW**: Blocks: When using raw mode, ensure HTML stashed content is extracted.
-- **NEW**: HTML: The Blocks HTML extension should use `inline` specifier instead of `span`.
-
-## 9.10b2
+## 9.10
 
 - **NEW**: Blocks: Add new experimental general purpose blocks that provide a framework for creating fenced block
   containers for specialized parsing. A number of extensions utilizing general purpose blocks are included and are meant
-  to be an alternative to (and maybe one day replace): Admonitions, Details, Definition   Lists, and Tabbed. Also adds a
+  to be an alternative to (and maybe one day replace): Admonitions, Details, Definition Lists, and Tabbed. Also adds a
   new HTML plugin for quick wrapping of content with arbitrary HTML elements.
 - **NEW**: Highlight: When enabling line spans and/or line anchors, if a code block has an ID associated with it, line
   ids will be generated using that code ID instead of the code block count.
@@ -34,38 +14,6 @@
   whitespace from every line in text) from that block of text.
 - **NEW**: MagicLink: Update GitLab links to match recent changes and to be more correct.
 - **NEW**: MagicLink: Relax required hash length when performing link shortening.
-
-## 9.10b1
-
-- **NEW**: HTML General block now accepts Emmet style attribute: `/// html | div.class#id[name=value]`.
-- **NEW**: Block attribute specifier is renamed from `attributes` to `attrs`.
-- **NEW**: Remove `colon_syntax` option and cement that we are using `///` format moving forward.
-- **NEW**: Revise available validators for Block options. Remove unnecessary validators and replace some with new ones.
-- **NEW**: Simplify argument API.
-- **NEW**: Block extensions can now be registered directly as normal Python Markdown extensions.
-
-## 9.10a3
-
-- **NEW**: General blocks now use an indented option block right after the header. `yaml_indent` option has been
-  removed.
-- **NEW**: Added new "Definition" block that allows the creation of definition lists.
-- **NEW**: Simplified argument configuration.
-- **NEW**: Some internal cleanup.
-- **NEW**: Documented current API.
-
-## 9.10a2
-
-- **NEW**: General blocks no longer use YAML fences for per block options, but instead use a special token to denote the
-  line is part of the config.
-- **NEW**: Add temporary alpha/beta option `yaml_indent` to control whether per-block YAML configs use indentation or a
-  leading special character: `/` for `///` syntax and `:` for `:::` syntax (`colon_syntax` must be true to use `:::`
-  syntax).
-- **NEW**: Ensure that `/` character can be escaped when registering the `blocks` extension.
-- **FIX**: Fix some block nesting issues.
-
-## 9.10a1
-
-- **NEW**: Experimental general purpose blocks.
 
 ## 9.9.3
 
