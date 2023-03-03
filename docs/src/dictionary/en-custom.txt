@@ -111,6 +111,7 @@ Stylesheets
 SuperFences
 TODO
 Tasklist
+Tidelift
 Toc
 Tox
 Treeprocessor
