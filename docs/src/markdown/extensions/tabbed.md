@@ -2,6 +2,10 @@
 
 # Tabbed
 
+/// tip | 9.10 New Approach to Tabs
+9.10 has added a new approach to creating tabs. Checkout the new [Tab extension here](./blocks/plugins/tab.md)!
+///
+
 ## Overview
 
 /// new | New 7.0

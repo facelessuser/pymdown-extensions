@@ -102,6 +102,29 @@ Some content
 ///
 ```
 
+## Tab IDs
+
+By default, tabs generate IDs for each tab using the following template `__tabbed_<tab_set_number>_<tab_number>`. If it
+is desired to implement jumping to a specific tab with more intuitive IDs, it may be preferable to generate IDs from
+slugs. To do so, two [options](#global-options) are provided: `slugify` and `separator`.
+
+/// tip
+Jumping to tabs via IDs may require additional JavaScript to select the targeted tabs.
+///
+
+If `slugify` is given a slug function (you can use any that [ship with Pymdownx Extensions](../../../extras/slugs.md)),
+the Tabbed extension will generate IDs from the tab titles just like headers. `separator` allows for the specifying of
+the word separator (`-` is the default).
+
+## Additional Topics
+
+As Tab shares the same output and functionality as the [Tabbed extension](../../tabbed.md), you can check out the
+documentation there to learn the following:
+
+- [How to style the tabs?](../../tabbed.md#styling-with-css)
+- [How to link tab selection on an entire page?](../../tabbed.md#linked-tabs)
+- [What is the alternate style and how do I style them?](../../tabbed.md#alternate-style)
+
 ## Global Options
 
 Options           | Type     | Descriptions

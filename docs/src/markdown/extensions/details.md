@@ -2,6 +2,10 @@
 
 # Details
 
+/// tip | 9.10 New Approach to Details
+9.10 has added a new approach to creating details. Checkout the new [Details extension here](./blocks/plugins/details.md)!
+///
+
 ## Overview
 
 Details is an extension that creates collapsible elements that hide their content. It uses the HTML5
