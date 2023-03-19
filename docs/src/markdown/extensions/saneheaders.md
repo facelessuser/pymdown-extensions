@@ -8,7 +8,7 @@ SaneHeaders is an extension that alters the default hashed headers extension to 
 hashes (`#`) in order to be recognized as headers. This allows for other extension syntaxes to use `#` in their syntaxes
 as long as no spaces follow the `#` at the beginning of a line. For instance,
 [MagicLink's issue syntax](./magiclink.md#issues-and-pull-requests) issue syntax uses hashes followed by numbers
-(`#998`) to represent issue links. There may extensions that use names after hashes to provide tags (`#tag`). With
+(`#998`) to represent issue links. There may be extensions that use names after hashes to provide tags (`#tag`). With
 SaneHeaders, these syntaxes can coexist. Those familiar with CommonMark may recognize this behavior.
 
 ```py3
