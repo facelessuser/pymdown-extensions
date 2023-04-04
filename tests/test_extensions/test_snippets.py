@@ -332,6 +332,68 @@ class TestSnippets(util.MdCase):
             True
         )
 
+    def test_section_inline_ignore_other_section(self):
+        """Test nested sections."""
+
+        self.check_markdown(
+            R'''
+            ```
+            -8<- "section_nested.txt:css-section"
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code>div {
+                color: red;
+                background-color: white;
+                padding: 16px
+            }
+            </code></pre></div>
+            ''',
+            True
+        )
+
+    def test_section_inline_escaped_other_section(self):
+        """Test nested escaped sections."""
+
+        self.check_markdown(
+            R'''
+            ```
+            -8<- "section_nested.txt:css-section3"
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code>div {
+                color: red;
+                /* --8&lt;-- [start: css-section4] */
+                background-color: white;
+                padding: 16px
+                /* --8&lt;-- [end: css-section4] */
+            }
+            </code></pre></div>
+            ''',
+            True
+        )
+
+    def test_section_ignore_double_start_section(self):
+        """Test nested sections."""
+
+        self.check_markdown(
+            R'''
+            ```
+            -8<- "section_nested.txt:css-section5"
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code>div {
+                color: red;
+                background-color: white;
+                padding: 16px
+            }
+            </code></pre></div>
+            ''',
+            True
+        )
+
     def test_section_block(self):
         """Test section partial in block snippet."""
 

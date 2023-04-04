@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.11
+
+- **NEW**: Snippets: Ignore nested snippet section syntax when including a section.
+
 ## 9.10
 
 - **NEW**: Blocks: Add new experimental general purpose blocks that provide a framework for creating fenced block
