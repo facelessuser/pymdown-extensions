@@ -1,0 +1,7 @@
+--8<-- [start:outer]
+<div><p>Foo</p></div>
+--8<-- [start:inner]
+<div><p>Bar</p></div>
+--8<-- [end:inner]
+<div><p>Quux</p></div>
+--8<-- [end:outer]

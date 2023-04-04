@@ -89,7 +89,8 @@ class TestSnippets(util.MdCase):
 
     extension_configs = {
         'pymdownx.snippets': {
-            'base_path': [os.path.join(BASE, '_snippets')]
+            'base_path': [os.path.join(BASE, '_snippets')],
+            'omit_scissor_lines': True
         }
     }
 
@@ -387,6 +388,23 @@ class TestSnippets(util.MdCase):
             ''',
             '''
             <div><p>content</p></div>
+            ''',
+            True
+        )
+
+    def test_omit_scissor_lines(self):
+        """Test nested scissor lines get omitted."""
+
+        self.check_markdown(
+            R'''
+            --8<--
+            nested.txt:outer
+            --8<--
+            ''',
+            '''
+            <div><p>Foo</p></div>
+            <div><p>Bar</p></div>
+            <div><p>Quux</p></div>
             ''',
             True
         )

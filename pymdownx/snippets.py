@@ -90,6 +90,7 @@ class SnippetPreprocessor(Preprocessor):
         self.url_timeout = config['url_timeout']
         self.url_request_headers = config['url_request_headers']
         self.dedent_subsections = config['dedent_subsections']
+        self.omit_scissor_lines = config['omit_scissor_lines']
         self.tab_length = md.tab_length
         super(SnippetPreprocessor, self).__init__()
 
@@ -312,15 +313,12 @@ class SnippetPreprocessor(Preprocessor):
                             s_lines = []
 
                     # Process lines looking for more snippets
-                    new_lines.extend(
-                        [
-                            space + l2 for l2 in self.parse_snippets(
-                                s_lines,
-                                snippet,
-                                is_url=url
-                            )
-                        ]
-                    )
+                    parsed_lines = self.parse_snippets(s_lines, snippet, is_url=url)
+
+                    if self.omit_scissor_lines:
+                        parsed_lines = [line for line in parsed_lines if not self.RE_SNIPPET_SECTION.match(line)]
+
+                    new_lines.extend([space + l2 for l2 in parsed_lines])
 
                 elif self.check_paths:
                     raise SnippetMissingError("Snippet at path '{}' could not be found".format(path))
@@ -359,7 +357,8 @@ class SnippetExtension(Extension):
             'url_max_size': [DEFAULT_URL_SIZE, "External URL max size (0 means no limit)- Default: 32 MiB"],
             'url_timeout': [DEFAULT_URL_TIMEOUT, 'Defualt URL timeout (0 means no timeout) - Default: 10 sec'],
             'url_request_headers': [DEFAULT_URL_REQUEST_HEADERS, "Extra request Headers - Default: {}"],
-            'dedent_subsections': [False, "Dedent subsection extractions e.g. 'sections' and/or 'lines'."]
+            'dedent_subsections': [False, "Dedent subsection extractions e.g. 'sections' and/or 'lines'."],
+            'omit_scissor_lines': [False, "Omit lines with the scissor symbol from extractions - Default: \"False\""]
         }
 
         super(SnippetExtension, self).__init__(*args, **kwargs)

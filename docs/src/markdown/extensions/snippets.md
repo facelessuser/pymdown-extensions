@@ -237,6 +237,42 @@ whitespace removed from every line in text.
 
 Depending on how the feature is received, it may be made the default in the future.
 
+## Omit Scissor Lines
+
+/// warning | Experimental
+///
+
+By default, when a snippet is included, lines containing the scissor notation are included.
+If you wish to omit the scissor lines, you can do so by setting `omit_scissor_lines` to `True`.
+
+For example, if a file contains the following:
+
+```
+--8<-- [start:foo]
+foo
+--8<-- [start:bar]
+bar
+--8<-- [end:bar]
+--8<-- [end:foo]
+```
+
+And you include `foo` using e.g. `--8<-- "example.txt:foo"` somewhere, with `omit_scissor_lines` set to `False` you
+would see the following:
+
+```
+foo
+--8<-- [start:bar]
+bar
+--8<-- [end:bar]
+```
+
+But with `omit_scissor_lines` set to `True` you would see the following:
+
+```
+foo
+bar
+```
+
 ## Auto-Append Snippets
 
 Snippets is designed as a general way to target a file and inject it into a given Markdown file, but some times,
@@ -260,3 +296,4 @@ Option                 | Type            | Default          | Description
 `url_timeout`          | float           | `#!py3 10.0`     | Passes an arbitrary timeout in seconds to URL requestor. By default this is set to 10 seconds.
 `url_request_headers`  | {string:string} | `#!py3 {}`       | Passes arbitrary headers to URL requestor. By default this is set to empty map.
 `dedent_subsections`   | bool            | `#!py3 False`    | Remove any common leading whitespace from every line in text of a subsection that is inserted via "sections" or by "lines".
+`omit_scissor_lines`   | bool            | `#!py3 False`    | Omits any lines containing the scissor notation.
