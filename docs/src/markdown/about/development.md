@@ -28,9 +28,9 @@ utilizes the Flake8 linter (with some additional plugins) to ensure code conform
 When in doubt follow the formatting hints of existing code when adding or modifying files. existing files.  Listed below
 are the modules used:
 
-- @gitlab:pycqa/flake8
-- @gitlab:pycqa/flake8-docstrings
-- @gitlab:pycqa/pep8-naming
+- @PyCQA/flake8
+- @PyCQA/flake8-docstrings
+- @PyCQA/pep8-naming
 - @ebeweber/flake8-mutable
 - @gforcada/flake8-builtins
 
