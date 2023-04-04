@@ -1,0 +1,29 @@
+/* --8<-- [start: css-section] */
+div {
+    color: red;
+    /* --8<-- [start: css-section2] */
+    background-color: white;
+    padding: 16px
+    /* --8<-- [end: css-section2] */
+}
+/* --8<-- [end: css-section] */
+
+
+/* --8<-- [start: css-section3] */
+div {
+    color: red;
+    /* ;--8<-- [start: css-section4] */
+    background-color: white;
+    padding: 16px
+    /* ;--8<-- [end: css-section4] */
+}
+/* --8<-- [end: css-section3] */
+
+/* --8<-- [start: css-section5] */
+div {
+    color: red;
+    /* --8<-- [start: css-section5] */
+    background-color: white;
+    padding: 16px
+}
+/* --8<-- [end: css-section5] */

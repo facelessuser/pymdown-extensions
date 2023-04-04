@@ -66,10 +66,11 @@ class SnippetPreprocessor(Preprocessor):
 
     RE_SNIPPET_SECTION = re.compile(
         r'''(?xi)
-        ^.*?
+        ^(?P<pre>.*?)
+        (?P<escape>;*)
         (?P<inline_marker>-{1,}8<-{1,}[ \t]+)
-        \[[ \t]*(?P<type>start|end)[ \t]*:[ \t]*(?P<name>[a-z][-_0-9a-z]*)[ \t]*\]
-        .*?$
+        (?P<section>\[[ \t]*(?P<type>start|end)[ \t]*:[ \t]*(?P<name>[a-z][-_0-9a-z]*)[ \t]*\])
+        (?P<post>.*?)$
         '''
     )
 
@@ -103,12 +104,25 @@ class SnippetPreprocessor(Preprocessor):
 
             # Found a snippet section marker with our specified name
             m = self.RE_SNIPPET_SECTION.match(l)
-            if m is not None and m.group('name') == section:
+
+            # Handle escaped line
+            if m and start and m.group('escape'):
+                l = (
+                    m.group('pre') + m.group('escape').replace(';', '', 1) + m.group('inline_marker') +
+                    m.group('section') + m.group('post')
+                )
+
+            # Found a section we are looking for.
+            elif m is not None and m.group('name') == section:
 
                 # We found the start
                 if not start and m.group('type') == 'start':
                     start = True
                     found = True
+                    continue
+
+                # Ignore duplicate start
+                elif start and m.group('type') == 'start':
                     continue
 
                 # We found the end
@@ -119,6 +133,10 @@ class SnippetPreprocessor(Preprocessor):
                 # We found an end, but no start
                 else:
                     break
+
+            # Found a section we don't care about, so ignore it.
+            elif m and start:
+                continue
 
             # We are currently in a section, so append the line
             if start:
