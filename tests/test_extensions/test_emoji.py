@@ -40,7 +40,7 @@ class TestEmojiOldIndex(util.MdCase):
 
         self.check_markdown(
             ':smile:',
-            '<p><img alt="\U0001f604" class="twemoji" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f604.png" title=":smile:" /></p>'  # noqa: E501
+            '<p><img alt="\U0001f604" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f604.png" title=":smile:" /></p>'  # noqa: E501
         )
 
     def test_warning(self):
@@ -76,5 +76,5 @@ class TestEmojiNewIndex(util.MdCase):
 
         self.check_markdown(
             ':grin:',
-            '<p><img alt="\U0001f604" class="twemoji" src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/72x72/1f604.png" title=":grin:" /></p>'  # noqa: E501
+            '<p><img alt="\U0001f604" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f604.png" title=":grin:" /></p>'  # noqa: E501
         )

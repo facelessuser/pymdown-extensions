@@ -3,7 +3,6 @@ import os
 import requests
 import json
 import argparse
-import sys
 import shutil
 import zipfile
 import gen_emoji1
@@ -18,14 +17,7 @@ GITHUB_API = 'https://api.github.com'
 GEMOJI = 'github/gemoji'
 EMOJIONE = 'joypixels/emojione'
 JOYPIXELS = 'joypixels/emoji-toolkit'
-TWEMOJI = 'twitter/twemoji'
-
-PY3 = sys.version_info >= (3, 0) and sys.version_info[0:2] < (4, 0)
-
-if PY3:
-    get_input = input
-else:
-    get_input = raw_input  # noqa
+TWEMOJI = 'jdecked/twemoji'
 
 
 def url_join(*args):
@@ -110,7 +102,7 @@ def select_tag(repo, no_download):
     user_input = None
     while user_input is None:
         try:
-            user_input = int(get_input('Select Tag > '))
+            user_input = int(input('Select Tag > '))
         except Exception:
             user_input = None
         if user_input is not None and (user_input < 0 or user_input >= num_tags):
