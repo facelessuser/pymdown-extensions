@@ -2,8 +2,7 @@
 
 ## 9.11
 
-- **NEW**: Emoji: Update to just new CDN.
-- **NEW**: Emoji: Update to use Twemoji 14.1.2.
+- **NEW**: Emoji: Update to new CDN and use Twemoji 14.1.2.
 - **NEW**: Snippets: Ignore nested snippet section syntax when including a section.
 
 ## 9.10
