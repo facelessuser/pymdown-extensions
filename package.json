@@ -64,6 +64,6 @@
     "stylelint-scss": "^4.6.0",
     "terser": "^5.16.8",
     "vinyl-paths": "^5.0.0",
-    "yargs": "^17.7.1"
+    "yargs": "^17.7.2"
   }
 }
