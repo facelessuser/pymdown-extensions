@@ -1,5 +1,11 @@
 # Changelog
 
+## 10.0
+
+- **Break**: Snippets: snippets will restrict snippets to ensure they are under the `base_path` preventing snippets
+  relative to the `base_path` but not explicitly under it. `restrict_base_path` can be set to `False` for legacy
+  behavior.
+
 ## 9.11
 
 - **NEW**: Emoji: Update to new CDN and use Twemoji 14.1.2.

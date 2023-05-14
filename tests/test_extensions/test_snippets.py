@@ -481,6 +481,63 @@ class TestSnippetsFile(util.MdCase):
         )
 
 
+class TestSnippetsNested(util.MdCase):
+    """Test nested restriction."""
+
+    extension = [
+        'pymdownx.snippets',
+    ]
+
+    extension_configs = {
+        'pymdownx.snippets': {
+            'base_path': os.path.join(BASE, '_snippets', 'nested'),
+            'check_paths': True
+        }
+    }
+
+    def test_restricted(self):
+        """Test file restriction."""
+
+        with self.assertRaises(SnippetMissingError):
+            self.check_markdown(
+                R'''
+                --8<-- "../b.txt"
+                ''',
+                '''
+                <p>Snippet</p>
+                ''',
+                True
+            )
+
+
+class TestSnippetsNestedUnrestricted(util.MdCase):
+    """Test nested no bounds."""
+
+    extension = [
+        'pymdownx.snippets',
+    ]
+
+    extension_configs = {
+        'pymdownx.snippets': {
+            'base_path': os.path.join(BASE, '_snippets', 'nested'),
+            'restrict_base_path': False
+        }
+    }
+
+    def test_restricted(self):
+        """Test file restriction."""
+
+        self.check_markdown(
+            R'''
+            --8<-- "../b.txt"
+            ''',
+            '''
+            <p>Snippet</p>
+            ''',
+            True
+        )
+
+
 class TestSnippetsAutoAppend(util.MdCase):
     """Test snippet file case."""
 

@@ -82,7 +82,8 @@ class SnippetPreprocessor(Preprocessor):
         base = config.get('base_path')
         if isinstance(base, str):
             base = [base]
-        self.base_path = base
+        self.base_path = [os.path.abspath(b) for b in base]
+        self.restrict_base_path = config['restrict_base_path']
         self.encoding = config.get('encoding')
         self.check_paths = config.get('check_paths')
         self.auto_append = config.get('auto_append')
@@ -159,18 +160,22 @@ class SnippetPreprocessor(Preprocessor):
         for base in self.base_path:
             if os.path.exists(base):
                 if os.path.isdir(base):
-                    filename = os.path.join(base, path)
+                    if self.restrict_base_path:
+                        filename = os.path.abspath(os.path.join(base, path))
+                        # If the absolute path is no longer under the specified base path, reject the file
+                        if not os.path.samefile(base, os.path.dirname(filename)):
+                            continue
+                    else:
+                        filename = os.path.join(base, path)
                     if os.path.exists(filename):
                         snippet = filename
                         break
                 else:
-                    basename = os.path.basename(base)
                     dirname = os.path.dirname(base)
-                    if basename.lower() == path.lower():
-                        filename = os.path.join(dirname, path)
-                        if os.path.exists(filename):
-                            snippet = filename
-                            break
+                    filename = os.path.join(dirname, path)
+                    if os.path.exists(filename) and os.path.samefile(filename, base):
+                        snippet = filename
+                        break
         return snippet
 
     @functools.lru_cache()
@@ -367,6 +372,10 @@ class SnippetExtension(Extension):
 
         self.config = {
             'base_path': [["."], "Base path for snippet paths - Default: [\".\"]"],
+            'restrict_base_path': [
+                True,
+                "Restrict snippet paths such that they are under the base paths - Default: True"
+            ],
             'encoding': ["utf-8", "Encoding of snippets - Default: \"utf-8\""],
             'check_paths': [False, "Make the build fail if a snippet can't be found - Default: \"False\""],
             "auto_append": [

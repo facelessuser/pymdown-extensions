@@ -4,6 +4,11 @@
 
 ## Overview
 
+/// warning | Not Meant for User Facing Sites
+Snippets is meant to make including snippets in documentation easier, but it should not be used for user facing sites
+that take and parse user content dynamically.
+///
+
 Snippets is an extension to insert markdown or HTML snippets into another markdown file.  Snippets is great for
 situations where you have content you need to insert into multiple documents.  For instance, this document keeps all its
 hyperlinks in a separate file and then includes those hyperlinks at the bottom of a document via Snippets. If a link
@@ -260,3 +265,4 @@ Option                 | Type            | Default          | Description
 `url_timeout`          | float           | `#!py3 10.0`     | Passes an arbitrary timeout in seconds to URL requestor. By default this is set to 10 seconds.
 `url_request_headers`  | {string:string} | `#!py3 {}`       | Passes arbitrary headers to URL requestor. By default this is set to empty map.
 `dedent_subsections`   | bool            | `#!py3 False`    | Remove any common leading whitespace from every line in text of a subsection that is inserted via "sections" or by "lines".
+`restrict_base_path`   | bool            | `#!py True`      | Ensure that the specified snippets are children of the specified base path(s). This prevents a path relative to the base path, but not explicitly a child of the base path.
