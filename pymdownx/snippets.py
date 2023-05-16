@@ -163,7 +163,7 @@ class SnippetPreprocessor(Preprocessor):
                     if self.restrict_base_path:
                         filename = os.path.abspath(os.path.join(base, path))
                         # If the absolute path is no longer under the specified base path, reject the file
-                        if not os.path.samefile(base, os.path.dirname(filename)):
+                        if not filename.startswith(base):
                             continue
                     else:
                         filename = os.path.join(base, path)

@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.0.1
+
+- **FIX**: Regression related to snippets nested deeply under specified base path.
+
 ## 10.0
 
 - **Break**: Snippets: snippets will restrict snippets to ensure they are under the `base_path` preventing snippets
