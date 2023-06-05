@@ -82,8 +82,8 @@ extension_configs = {
                 "height": "20px",
                 "width": "20px"
             },
-            "image_path": "https://assets-cdn.github.com/images/icons/emoji/unicode/",
-            "non_standard_image_path": "https://assets-cdn.github.com/images/icons/emoji/"
+            "image_path": "https://github.githubassets.com/images/icons/emoji/unicode/",
+            "non_standard_image_path": "https://github.githubassets.com/images/icons/emoji/"
         }
     }
 }
