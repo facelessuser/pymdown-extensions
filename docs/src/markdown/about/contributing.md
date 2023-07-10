@@ -10,23 +10,23 @@ any tier you feel comfortable with. No amount is too little. We also accept one 
 
 ## Bug Reports :material-bug:
 
-1. Please **read the documentation** and **search the issue tracker** to try and find the answer to your question
-  **before** posting an issue.
+1.  Please **read the documentation** and **search the issue tracker** to try and find the answer to your question
+    **before** posting an issue.
 
-2. When creating an issue on the repository, please provide as much info as possible:
+2.  When creating an issue on the repository, please provide as much info as possible:
 
-    - Version being used.
-    - Operating system.
-    - Version of Python.
-    - Errors in console.
-    - Detailed description of the problem.
-    - Examples for reproducing the error.  You can post pictures, but if specific text or code is required to reproduce
-      the issue, please provide the text in a plain text format for easy copy/paste.
+    -   Version being used.
+    -   Operating system.
+    -   Version of Python.
+    -   Errors in console.
+    -   Detailed description of the problem.
+    -   Examples for reproducing the error.  You can post pictures, but if specific text or code is required to
+        reproduce the issue, please provide the text in a plain text format for easy copy/paste.
 
     The more info provided, the greater the chance someone will take the time to answer, implement, or fix the issue.
 
-3. Be prepared to answer questions and provide additional information if required.  Issues in which the creator refuses
-  to respond to follow up questions will be marked as stale and closed.
+3.  Be prepared to answer questions and provide additional information if required.  Issues in which the creator refuses
+    to respond to follow up questions will be marked as stale and closed.
 
 ## Reviewing Code :material-glasses:
 

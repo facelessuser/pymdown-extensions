@@ -43,9 +43,10 @@ and `repo` in MagicLink's options below. This gives relative context for shortha
 properly be generated.  In the example below, we will use `facelessuser` and `pymdown-extensions` as the user and
 repository respectively. See [MagicLink](./extensions/magiclink.md) for more details.
 
-!!! tip
-    If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please
-    see the related [FAQ question](#function-references-in-yaml) to see how to specify function references in YAML.
+/// tip
+If you are attempting to configure these options in a YAML based configuration (like in [MkDocs][mkdocs]), please
+see the related [FAQ question](#function-references-in-yaml) to see how to specify function references in YAML.
+///
 
 ```py3
 from pymdownx import emoji

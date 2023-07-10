@@ -61,8 +61,8 @@ extension_configs:
     user: facelessuser
     repo: pymdown-extensions
 ---
-- Just paste links directly in the document like this: https://google.com.
-- Or even an email address: fake.email@email.com{.magiclink-ignore}.
+-   Just paste links directly in the document like this: https://google.com.
+-   Or even an email address: fake.email@email.com{.magiclink-ignore}.
 ```
 ///
 
@@ -115,8 +115,9 @@ If you are using this extension more generally, it may make more sense to set a 
 mentions. You will still be able to reference repository links with shorthand if it enabled, albeit in a longer format.
 
 /// warning
-    Links are not verified, so make sure you are specifying valid issues, repositories, and users as they will be
-    auto-linked even if they are not valid.
+Links are not verified, so make sure you are specifying valid issues, repositories, and users as they will be
+auto-linked even if they are not valid.
+///
 
 ### Mentions
 
@@ -368,10 +369,10 @@ as the [repository shortcut links](#shorthand-links) feature.
 If we specify long form URLs from external providers, they will be shortened appropriately.
 
 ```text title="External Provider"
-- https://github.com/facelessuser
-- https://github.com/facelessuser/pymdown-extensions
-- https://gitlab.com/pycqa/flake8-engine/-/issues/21
-- https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
+-   https://github.com/facelessuser
+-   https://github.com/facelessuser/pymdown-extensions
+-   https://gitlab.com/pycqa/flake8-engine/-/issues/21
+-   https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase
 ```
 
 /// html | div.result
@@ -391,10 +392,10 @@ extension_configs:
     user: facelessuser
     repo: pymdown-extensions
 ---
-- <https://github.com/facelessuser>{.magiclink-ignore}
-- <https://github.com/facelessuser/pymdown-extensions>{.magiclink-ignore}
-- <https://gitlab.com/pycqa/flake8-engine/-/issues/21>{.magiclink-ignore}
-- <https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase>{.magiclink-ignore}
+-   <https://github.com/facelessuser>{.magiclink-ignore}
+-   <https://github.com/facelessuser/pymdown-extensions>{.magiclink-ignore}
+-   <https://gitlab.com/pycqa/flake8-engine/-/issues/21>{.magiclink-ignore}
+-   <https://bitbucket.org/mrabarnett/mrab-regex/issues/260/extremely-slow-matching-using-ignorecase>{.magiclink-ignore}
 ```
 ///
 
@@ -402,11 +403,11 @@ When specifying links that reference the configured `provider`, `user`, and `rep
 differently in light of that context.
 
 ```text title="Internal Provider"
-- https://github.com/facelessuser/pymdown-extensions/issues/1
-- https://github.com/facelessuser/pymdown-extensions/pull/13
-- https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a
-- https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
-- https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
+-   https://github.com/facelessuser/pymdown-extensions/issues/1
+-   https://github.com/facelessuser/pymdown-extensions/pull/13
+-   https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a
+-   https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
+-   https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc
 ```
 
 /// html | div.result
@@ -426,11 +427,11 @@ extension_configs:
     user: facelessuser
     repo: pymdown-extensions
 ---
-- <https://github.com/facelessuser/pymdown-extensions/issues/1>{.magiclink-ignore}
-- <https://github.com/facelessuser/pymdown-extensions/pull/13>{.magiclink-ignore}
-- <https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a>{.magiclink-ignore}
-- <https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac>{.magiclink-ignore}
-- <https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc>{.magiclink-ignore}
+-   <https://github.com/facelessuser/pymdown-extensions/issues/1>{.magiclink-ignore}
+-   <https://github.com/facelessuser/pymdown-extensions/pull/13>{.magiclink-ignore}
+-   <https://github.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a>{.magiclink-ignore}
+-   <https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac>{.magiclink-ignore}
+-   <https://github.com/facelessuser/Rummage/commit/181c06d1f11fa29961b334e90606ed1f1ec7a7cc>{.magiclink-ignore}
 ```
 ///
 

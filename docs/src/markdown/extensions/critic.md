@@ -196,9 +196,9 @@ here:
 
 > I view CriticMarkup as two things:
 
-> 1. A syntax for documenting editing notes and changes, and for collaborating amongst coauthors.
+> 1.  A syntax for documenting editing notes and changes, and for collaborating amongst coauthors.
 
-> 2. A means to display those notes/changes in the HTML output.
+> 2.  A means to display those notes/changes in the HTML output.
 
 > I believe that \#1 is a really great idea, and well implemented. \#2 is not so well implemented, largely due to the
   "orthogonal" nature of CriticMarkup and the underlying Markdown syntax.

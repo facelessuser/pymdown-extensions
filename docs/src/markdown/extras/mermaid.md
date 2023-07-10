@@ -254,19 +254,19 @@ window.mermaidConfig = {
 ```
 
 /// note  | Configuration Notes
-1. We disable `htmlLabels` in flowcharts as we've had issues with it in the past. It may or may not be okay to
-   enable. Your mileage may vary.
+1.  We disable `htmlLabels` in flowcharts as we've had issues with it in the past. It may or may not be okay to
+    enable. Your mileage may vary.
 
-2. If the option is available in a diagram, we disable `useMaxWidth` as we prefer that our diagrams do not scale
-   within their parent element, we rather them overflow with a scrollbar. You can leave these enabled if you like.
-   Since we render our diagrams under a custom element with a shadow DOM, to get scrollbars, we simply enable
-   `#!css overflow: auto` on the custom `diagram-div` element (under the host DOM, not the shadow DOM).
+2.  If the option is available in a diagram, we disable `useMaxWidth` as we prefer that our diagrams do not scale
+    within their parent element, we rather them overflow with a scrollbar. You can leave these enabled if you like.
+    Since we render our diagrams under a custom element with a shadow DOM, to get scrollbars, we simply enable
+    `#!css overflow: auto` on the custom `diagram-div` element (under the host DOM, not the shadow DOM).
 
-3. We disable `startOnLoad` as we provide our own loader (for reasons we will get into later).
+3.  We disable `startOnLoad` as we provide our own loader (for reasons we will get into later).
 
-4. We do a quite a bit of custom theme overrides. Most of this is done through the Mermaid configuration options:
-   `theme`, `themeVariables`, and `themeCSS`. Most users would simply use one of the default themes via the `theme`
-   option, so that is what we've shown above.
+4.  We do a quite a bit of custom theme overrides. Most of this is done through the Mermaid configuration options:
+    `theme`, `themeVariables`, and `themeCSS`. Most users would simply use one of the default themes via the `theme`
+    option, so that is what we've shown above.
 ///
 
 ## Custom Loader
@@ -282,25 +282,25 @@ it is, we execute the payload.
 The issues we are working around withing Mermaid are found below:
 
 /// bug | Issues
-1. Diagrams that are found in tabbed interfaces or details, where the element may be hidden on page load, don't
-   always render at a visible size if using Mermaid's default loader.
+1.  Diagrams that are found in tabbed interfaces or details, where the element may be hidden on page load, don't
+    always render at a visible size if using Mermaid's default loader.
 
-2. Mermaid uses IDs in their SVG diagrams, and these can sometimes cause conflicts if you happen to have IDs on your
-   page that match one that they use.
+2.  Mermaid uses IDs in their SVG diagrams, and these can sometimes cause conflicts if you happen to have IDs on your
+    page that match one that they use.
 
-3. Mermaid does not always use unique IDs. This can cause some elements of a diagram to disappear if one diagram
-   happens to have the same ID and it is hidden in a details element or a tabbed interface.
+3.  Mermaid does not always use unique IDs. This can cause some elements of a diagram to disappear if one diagram
+    happens to have the same ID and it is hidden in a details element or a tabbed interface.
 ///
 
 We solve these issues doing a couple things in our own custom loader.
 
 /// success | Solutions
-1. Using the `#!html <body>` element as a parent, we attach a surrogate element to it and render the diagram there.
-   Once rendered, we then insert the diagram back to where the original custom fence was. This ensures it renders
-   under a visible parent, and renders at a normal size.
+1.  Using the `#!html <body>` element as a parent, we attach a surrogate element to it and render the diagram there.
+    Once rendered, we then insert the diagram back to where the original custom fence was. This ensures it renders
+    under a visible parent, and renders at a normal size.
 
-2. We wrap each diagram in a shadow DOM element. This prevents ID leakage from one diagram to another or to the
-   host.
+2.  We wrap each diagram in a shadow DOM element. This prevents ID leakage from one diagram to another or to the
+    host.
 ///
 
 Apart from the issues we were trying to solve, we also use a custom loader for personal aesthetics as we like to render

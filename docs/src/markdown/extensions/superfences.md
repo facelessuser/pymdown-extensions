@@ -6,13 +6,13 @@
 
 SuperFences provides a number of features:
 
-1. Allowing the [nesting of fences](#nested-fence-format) under blockquotes, lists, or other block elements (see
-  [Limitations](#limitations) for more info).
-2. Ability to specify [custom fences](#custom-fences) to provide features like flowcharts, sequence diagrams, or other
-  custom blocks.
-3. Allow disabling of indented code blocks in favor of only using the fenced variant (off by default).
-4. Experimental feature that preserves tabs within a code block instead of converting them to spaces which is Python
-  Markdown's default behavior.
+1.  Allowing the [nesting of fences](#nested-fence-format) under blockquotes, lists, or other block elements (see
+    [Limitations](#limitations) for more info).
+2.  Ability to specify [custom fences](#custom-fences) to provide features like flowcharts, sequence diagrams, or other
+    custom blocks.
+3.  Allow disabling of indented code blocks in favor of only using the fenced variant (off by default).
+4.  Experimental feature that preserves tabs within a code block instead of converting them to spaces which is Python
+    Markdown's default behavior.
 
 /// danger | Reminder
 Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this
@@ -28,18 +28,18 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
 
 ## Nested Fence Format
 
-1. Start and end fence boundaries are specified with either 3 or more backticks or tildes.
+1.  Start and end fence boundaries are specified with either 3 or more backticks or tildes.
 
-2. Start and end fence boundaries must both use matching symbols (backticks or tildes) and must be of the same number of
-  symbols.  If start is 3 backticks, the fence will end with 3 backticks.
+2.  Start and end fence boundaries must both use matching symbols (backticks or tildes) and must be of the same number
+    of symbols.  If start is 3 backticks, the fence will end with 3 backticks.
 
-3. Start and end fence boundaries must be aligned to the same indentation level.
+3.  Start and end fence boundaries must be aligned to the same indentation level.
 
-4. Content between fences must be indented at least the same amount as the start and end boundaries.  Empty lines are
-  exempted.
+4.  Content between fences must be indented at least the same amount as the start and end boundaries.  Empty lines are
+    exempted.
 
-5. If you are using a fenced block inside a blockquote, at the very least, the first line of the fenced block needs to
-  have the appropriate number of `>` characters signifying the quote depth.
+5.  If you are using a fenced block inside a blockquote, at the very least, the first line of the fenced block needs to
+    have the appropriate number of `>` characters signifying the quote depth.
 
     ````
     > ```
@@ -47,8 +47,8 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
       ```
     ````
 
-6. Too many blank lines will cause a blockquote to terminate, so remember to use `>` markers accordingly if not marking
-  every line.
+6.  Too many blank lines will cause a blockquote to terminate, so remember to use `>` markers accordingly if not marking
+    every line.
 
     ````
     > ```
@@ -58,9 +58,9 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
       ```
     ````
 
-7. If using a fenced block as the first line of a list, you will have to leave the first line blank, but remember that
-  the list marker must be immediately followed by at least one space. To avoid accidentally deleting the space and to
-  make your intentions clear, you might want to also add an explicit unicode space (`&#32;`) as shown here:
+7.  If using a fenced block as the first line of a list, you will have to leave the first line blank, but remember that
+    the list marker must be immediately followed by at least one space. To avoid accidentally deleting the space and to
+    make your intentions clear, you might want to also add an explicit unicode space (`&#32;`) as shown here:
 
     ````
     - &#32;
@@ -75,7 +75,7 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
         ```
     ````
 
-8. Fenced blocks should be separated from other blocks by an empty line.
+8.  Fenced blocks should be separated from other blocks by an empty line.
 
     ````
     Paragraph.
@@ -508,8 +508,9 @@ extension_configs:
 
 ## Pygments Line Anchors and Spans
 
-!!! new "New 9.0"
-    The various line wrapping options are new to version `9.0`.
+/// new | New 9.0
+The various line wrapping options are new to version `9.0`.
+///
 
 Pygments offers a couple of options that will wrap lines, line numbers even create anchor links for line numbers.
 SuperFences, when using Pygments, exposes these options under similar names.
@@ -763,17 +764,17 @@ see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify funct
 ///
 
 /// new | Changes 8.0
-- `validator` now accepts the following variables:
-    - `inputs`: with all the parsed options/attributes (validator should not modify this structure).
-    - `options`: a dictionary to which all valid options should be assigned to.
-    - `attrs`: a dictionary to which all valid attributes should be assigned to.
-    - `md`: the `Markdown` object.
-- If the [`attr_list`][attr-list] extension is enabled and the brace style header is used, any key/value pairs that
-  were assigned as attributes by the `validator` will be passed to the `formatter`'s `attrs` parameter.
-- Options in the form of `key=` (which have no value) will are no longer be allowed. A `key` with no value will
-  assume the `value` to be the `key` name. This brings consistency as options are now parsed with
-  [`attr_list`][attr-list].
-- If a `validator` fails, the next `validator`/`formatter` pair will be tired.
+-   `validator` now accepts the following variables:
+    -   `inputs`: with all the parsed options/attributes (validator should not modify this structure).
+    -   `options`: a dictionary to which all valid options should be assigned to.
+    -   `attrs`: a dictionary to which all valid attributes should be assigned to.
+    -   `md`: the `Markdown` object.
+-   If the [`attr_list`][attr-list] extension is enabled and the brace style header is used, any key/value pairs that
+    were assigned as attributes by the `validator` will be passed to the `formatter`'s `attrs` parameter.
+-   Options in the form of `key=` (which have no value) will are no longer be allowed. A `key` with no value will
+    assume the `value` to be the `key` name. This brings consistency as options are now parsed with
+    [`attr_list`][attr-list].
+-   If a `validator` fails, the next `validator`/`formatter` pair will be tired.
 ///
 
 ### Exception Handling

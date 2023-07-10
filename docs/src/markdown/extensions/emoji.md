@@ -68,16 +68,16 @@ are covered under their respective licensing.  When using their images or CSS, p
 ensure proper usage and attributions.
 
 //// tab | EmojiOne
-- https://github.com/joypixels/emoji-toolkit#joypixels-version-2
-- http://creativecommons.org/licenses/by/4.0/
+-   https://github.com/joypixels/emoji-toolkit#joypixels-version-2
+-   http://creativecommons.org/licenses/by/4.0/
 ////
 
 //// tab | Twemoji
-- https://github.com/jdecked/twemoji/blob/main/LICENSE-GRAPHICS
+-   https://github.com/jdecked/twemoji/blob/main/LICENSE-GRAPHICS
 ////
 
 //// tab | Gemoji
-- https://github.com/github/gemoji/blob/master/LICENSE
+-   https://github.com/github/gemoji/blob/master/LICENSE
 ////
 ///
 

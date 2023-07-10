@@ -28,11 +28,11 @@ utilizes the Flake8 linter (with some additional plugins) to ensure code conform
 When in doubt follow the formatting hints of existing code when adding or modifying files. existing files.  Listed below
 are the modules used:
 
-- @PyCQA/flake8
-- @PyCQA/flake8-docstrings
-- @PyCQA/pep8-naming
-- @ebeweber/flake8-mutable
-- @gforcada/flake8-builtins
+-   @PyCQA/flake8
+-   @PyCQA/flake8-docstrings
+-   @PyCQA/pep8-naming
+-   @ebeweber/flake8-mutable
+-   @gforcada/flake8-builtins
 
 Flake8 can be run directly via the command line from the root of the project.
 
@@ -45,11 +45,11 @@ flake8
 Documents are in Markdown (with some additional syntax) and converted to HTML via Python Markdown and this
 extension bundle. If you would like to build and preview the documentation, you must have these packages installed:
 
-- @Python-Markdown/markdown: the Markdown parser.
-- @mkdocs/mkdocs: the document site generator.
-- @squidfunk/mkdocs-material: a material theme for MkDocs.
-- @timvink/mkdocs-git-revision-date-localized-plugin: inserts date a page was last updated.
-- @facelessuser/pymdown-extensions: this Python Markdown extension bundle.
+-   @Python-Markdown/markdown: the Markdown parser.
+-   @mkdocs/mkdocs: the document site generator.
+-   @squidfunk/mkdocs-material: a material theme for MkDocs.
+-   @timvink/mkdocs-git-revision-date-localized-plugin: inserts date a page was last updated.
+-   @facelessuser/pymdown-extensions: this Python Markdown extension bundle.
 
 These can be installed via:
 
@@ -271,15 +271,15 @@ The Emoji extension has emoji indexes generated from the source of Gemoji, Emoji
 for auto-generating these indexes.  In the case of Twemoji, it will also reference EmojiOne's short name index, so you
 may need to do both EmojiOne and Twemoji if the support is not satisfactory.
 
-1. Ensure you have Requests (@requests/requests) installed: `pip install requests`.
-2. Fork the repository and checkout to your machine.
-3. Navigate to the root of the project.
-4. Call the generator script: `python tools/gen_emoji.py --gemoji`, `python tools/gen_emoji.py --emojione`, or
-  `python tools/gen_emoji.py --twemoji`. If you already have the latest tag locally, you can specify `--no-download`. It
-  will prompt you to select a tag to download and/or use.  Please pull the latest **official** tag.  Please don't pull
-  experimental tags.  This should update the indexes.
-5. Then you want to update the tests.
-6. Force the tests to update via `python run_tests.py --update`.  Make sure only the emoji tests get updated.
+1.  Ensure you have Requests (@requests/requests) installed: `pip install requests`.
+2.  Fork the repository and checkout to your machine.
+3.  Navigate to the root of the project.
+4.  Call the generator script: `python tools/gen_emoji.py --gemoji`, `python tools/gen_emoji.py --emojione`, or
+    `python tools/gen_emoji.py --twemoji`. If you already have the latest tag locally, you can specify `--no-download`.
+    It will prompt you to select a tag to download and/or use.  Please pull the latest **official** tag.  Please don't
+    pull experimental tags.  This should update the indexes.
+5.  Then you want to update the tests.
+6.  Force the tests to update via `python run_tests.py --update`.  Make sure only the emoji tests get updated.
 
 Nothing is fool proof.  If they make a breaking change to the files that the script parses, or the location of the files
 change, the auto-update tool may need to be updated itself (hopefully this would be a rare occurrence).  If such a

@@ -101,10 +101,10 @@ def custom_formatter(source, language, css_class, md):
 
 In general, formatters take four parameters:
 
-1. The source found between the backticks.
-2. The specified language.
-3. The class name originally defined via the `class` option in the `custom_inline` entry.
-4. The Markdown class object.
+1.  The source found between the backticks.
+2.  The specified language.
+3.  The class name originally defined via the `class` option in the `custom_inline` entry.
+4.  The Markdown class object.
 
 It Should return a either an ElementTree element or a string as HTML. When returning a string, InlineHilite will treat
 the string as ready for HTML, so escape what needs to be escaped as it is expected to be fully ready HTML and will be

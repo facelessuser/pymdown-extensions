@@ -22,19 +22,20 @@ import markdown
 md = markdown.Markdown(extensions=['pymdownx.keys'])
 ```
 
-!!! tip "Special Characters Before/After Key"
-    You might have noticed that in this page many keys show special Unicode symbols before (and sometimes after) a key's
-    text. The Keys extension only provides ASCII labels out of the box. Any special Unicode characters that are seen in
-    this document are provided by using additional CSS.
+/// tip | Special Characters Before/After Key
+You might have noticed that in this page many keys show special Unicode symbols before (and sometimes after) a key's
+text. The Keys extension only provides ASCII labels out of the box. Any special Unicode characters that are seen in
+this document are provided by using additional CSS.
 
-    If desired, you can provide your own symbols by doing one of the following:
+If desired, you can provide your own symbols by doing one of the following:
 
-    1. You can use CSS styling.  The elements are created with classes that are derived from the main key code name (not
-      the aliases) so that you can target them to provide special styling. Check out [Formatting](#formatting) for more
-      info.
+1.  You can use CSS styling.  The elements are created with classes that are derived from the main key code name (not
+    the aliases) so that you can target them to provide special styling. Check out [Formatting](#formatting) for more
+    info.
 
-    2. You can also override the label that is output for the key by provided your own text via the `key_map`
-      parameter. This would require no additional CSS. More info is provided [here](#extendingmodifying-key-map-index).
+2.  You can also override the label that is output for the key by provided your own text via the `key_map`
+    parameter. This would require no additional CSS. More info is provided [here](#extendingmodifying-key-map-index).
+///
 
 ## Formatting
 

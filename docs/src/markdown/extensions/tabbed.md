@@ -352,8 +352,8 @@ functional, but it is ideally enhanced with a little JavaScript. The reason why 
 single line, you can overflow them with CSS and make the tab container scrollable. This can provide a much more
 aesthetically pleasing interface, but there are two caveats though:
 
-1. When tabs overflow, if you want a visual indicator that there are more tabs, it requires a little JavaScript.
-2. The number of tabs is limited by how many tabs you define in the CSS.
+1.  When tabs overflow, if you want a visual indicator that there are more tabs, it requires a little JavaScript.
+2.  The number of tabs is limited by how many tabs you define in the CSS.
 
 As for the first point, this seems an acceptable restraint. When JavaScript is available, you will get a nice visual
 indicator, but if JavaScript is ever not available, or disabled, tab functionality will still work, just without the

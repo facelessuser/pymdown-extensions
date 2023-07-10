@@ -14,31 +14,31 @@ All task lists in this documentation are generated with [`custom_checkbox`](#opt
 ```text title="Tasklist"
 Task List
 
-- [X] item 1
-    * [X] item A
-    * [ ] item B
+-   [X] item 1
+    *   [X] item A
+    *   [ ] item B
         more text
-        + [x] item a
-        + [ ] item b
-        + [x] item c
-    * [X] item C
-- [ ] item 2
-- [ ] item 3
+        +   [x] item a
+        +   [ ] item b
+        +   [x] item c
+    *   [X] item C
+-   [ ] item 2
+-   [ ] item 3
 ```
 
 /// html | div.result
 Task List
 
-- [X] item 1
-    * [X] item A
-    * [ ] item B
+-   [X] item 1
+    *   [X] item A
+    *   [ ] item B
         more text
-        + [x] item a
-        + [ ] item b
-        + [x] item c
-    * [X] item C
-- [ ] item 2
-- [ ] item 3
+        +   [x] item a
+        +   [ ] item b
+        +   [x] item c
+    *   [X] item C
+-   [ ] item 2
+-   [ ] item 3
 ///
 
 The Tasklist extension can be included in Python Markdown by using the following:
