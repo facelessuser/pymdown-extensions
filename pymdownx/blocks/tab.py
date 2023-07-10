@@ -5,6 +5,8 @@ from markdown.treeprocessors import Treeprocessor
 from .block import Block, type_boolean
 from ..blocks import BlocksExtension
 
+HEADERS = {'h1', 'h2', 'h3', 'h4', 'h5', 'h6'}
+
 
 class TabbedTreeprocessor(Treeprocessor):
     """Tab tree processor."""
@@ -16,15 +18,48 @@ class TabbedTreeprocessor(Treeprocessor):
 
         self.alternate = config['alternate_style']
         self.slugify = config['slugify']
+        self.combine_header_slug = config['combine_header_slug']
         self.sep = config["separator"]
+
+    def get_parent_header_slug(self, root, header_map, parent_map, el):
+        """Attempt retrieval of parent header slug."""
+
+        parent = el
+        last_parent = parent
+        while parent is not root:
+            last_parent = parent
+            parent = parent_map[parent]
+            if parent in header_map:
+                headers = header_map[parent]
+                header = None
+                for i in list(parent):
+                    if i is el and header is None:
+                        break
+                    if i is last_parent:
+                        return header.attrib.get("id", '')
+                    if i in headers:
+                        header = i
+        return ''
 
     def run(self, doc):
         """Update tab IDs."""
 
         # Get a list of id attributes
         used_ids = set()
+        parent_map = {}
+        header_map = {}
+
+        if self.combine_header_slug:
+            parent_map = dict((c, p) for p in doc.iter() for c in p)
+
         for el in doc.iter():
             if "id" in el.attrib:
+                if self.combine_header_slug and el.tag in HEADERS:
+                    parent = parent_map[el]
+                    if parent in header_map:
+                        header_map[parent].append(el)
+                    else:
+                        header_map[parent] = [el]
                 used_ids.add(el.attrib["id"])
 
         for el in doc.iter():
@@ -50,7 +85,14 @@ class TabbedTreeprocessor(Treeprocessor):
                     for inpt, label in zip(inputs, labels):
                         text = toc.get_name(label)
                         innertext = toc.unescape(toc.stashedHTML2text(text, self.md))
-                        slug = toc.unique(self.slugify(innertext, self.sep), used_ids)
+                        if self.combine_header_slug:
+                            parent_slug = self.get_parent_header_slug(doc, header_map, parent_map, el)
+                        else:
+                            parent_slug = ''
+                        slug = self.slugify(innertext, self.sep)
+                        if parent_slug:
+                            slug = parent_slug + self.sep + slug
+                        slug = toc.unique(slug, used_ids)
                         inpt.attrib["id"] = slug
                         label.attrib["for"] = slug
 
@@ -245,6 +287,7 @@ class TabExtension(BlocksExtension):
         self.config = {
             'alternate_style': [False, "Use alternate style - Default: False"],
             'slugify': [0, "Slugify function used to create tab specific IDs - Default: None"],
+            'combine_header_slug': [False, "Combine the tab slug with the slug of the parent header - Default: False"],
             'separator': ['-', "Slug separator - Default: '-'"]
         }
 
