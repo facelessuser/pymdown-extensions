@@ -143,6 +143,24 @@ If `slugify` is given a slug function (you can use any that [ship with Pymdownx 
 Tabbed extension will generate IDs from the tab titles just like headers. `separator` allows for the specifying of the
 word separator (`-` is the default).
 
+If you'd like the slugs to be prefixed with the slug of the parent header, you can enable the `combine_header_slug`
+option. If you had the following example, normally the header slug would be `header` and the content tab would have the
+slug `tab`.
+
+```
+# header
+
+=== "tab"
+    content
+```
+
+With `combine_header_slug` enabled, the header slug would still be `header`, but now the content tab slug would be
+`header-tab`.
+
+/// new | New 10.1
+`combine_header_slug` is new in 10.1
+///
+
 ## Styling with CSS
 
 In order to use tabbed blocks, some additional CSS is needed. You can check out the configuration below which will
@@ -598,8 +616,9 @@ are overflowed tabs, and scrolls tabs into view smoothly.
 
 ## Options
 
-Option            | Type     | Default       | Description
------------------ | -------- | ------------- | -----------
-`alternate_style` | bool     | `#!py3 False` | Use the experimental, alternative style.
-`slugify`         | function | `#!py3 None`  | A function to generate slugs from tab titles.
-`separator`       | string   | `#!py3 '-'`   | Default word separator when generating slugs.
+Option                | Type     | Default       | Description
+--------------------- | -------- | ------------- | -----------
+`alternate_style`     | bool     | `#!py3 False` | Use the experimental, alternative style.
+`slugify`             | function | `#!py3 None`  | A function to generate slugs from tab titles.
+`separator`           | string   | `#!py3 '-'`   | Default word separator when generating slugs.
+`combine_header_slug` | bool     | Combine the parent header slug with the tab content slug.

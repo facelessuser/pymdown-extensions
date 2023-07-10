@@ -91,6 +91,114 @@ class TestTabSlugsSep(util.MdCase):
         )
 
 
+class TestTabSlugsCombineHeader(util.MdCase):
+    """Combine header slug with content tab."""
+
+    extension = ['pymdownx.blocks.tab', 'toc', 'pymdownx.blocks.details']
+    extension_configs = {
+        'pymdownx.blocks.tab': {
+            'slugify': slugify(case='lower'),
+            'combine_header_slug': True,
+            'alternate_style': True
+        }
+    }
+
+    def test_combine_header_slug(self):
+        """Test that slugs are a combination of the header slug and the tab title."""
+
+        md = R"""
+        ### Here is some text
+
+        /// tab | First Tab
+        content
+        ///
+
+
+        ### Another header
+
+        /// details | title
+        //// tab | Second Tab
+        content
+        ////
+        ///
+        """
+
+        self.check_markdown(
+            md,
+            '''
+            <h3 id="here-is-some-text">Here is some text</h3>
+            <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="here-is-some-text-first-tab" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="here-is-some-text-first-tab">First Tab</label></div>
+            <div class="tabbed-content">
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            </div>
+            </div>
+            <h3 id="another-header">Another header</h3>
+            <details>
+            <summary>title</summary>
+            <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="another-header-second-tab" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="another-header-second-tab">Second Tab</label></div>
+            <div class="tabbed-content">
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            </div>
+            </div>
+            </details>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_no_header(self):
+        """Test when there is no header."""
+
+        md = R"""
+        /// tab | A Tab
+        content
+        ///
+        """
+
+        self.check_markdown(
+            md,
+            '''
+            <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="a-tab" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="a-tab">A Tab</label></div>
+            <div class="tabbed-content">
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            </div>
+            </div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_header_after(self):
+        """Test when header comes after."""
+
+        md = R"""
+        /// tab | A Tab
+        content
+        ///
+
+        # Header
+        """
+
+        self.check_markdown(
+            md,
+            '''
+            <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="a-tab" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="a-tab">A Tab</label></div>
+            <div class="tabbed-content">
+            <div class="tabbed-block">
+            <p>content</p>
+            </div>
+            </div>
+            </div>
+            <h1 id="header">Header</h1>
+            ''',  # noqa: E501
+            True
+        )
+
+
 class TestBlocksTab(util.MdCase):
     """Test Blocks tab cases."""
 
