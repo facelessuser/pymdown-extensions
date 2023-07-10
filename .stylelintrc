@@ -19,6 +19,7 @@
     "font-family-name-quotes": "always-where-recommended",
     "font-weight-notation": "numeric",
     "function-url-quotes": "always",
+    "media-query-no-invalid": null,
     "no-descending-specificity": null,
     "no-unknown-animations": true,
     "property-no-vendor-prefix": true,
