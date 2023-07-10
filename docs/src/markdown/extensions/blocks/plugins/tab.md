@@ -116,6 +116,25 @@ If `slugify` is given a slug function (you can use any that [ship with Pymdownx 
 the Tabbed extension will generate IDs from the tab titles just like headers. `separator` allows for the specifying of
 the word separator (`-` is the default).
 
+If you'd like the slugs to be prefixed with the slug of the parent header, you can enable the `combine_header_slug`
+option. If you had the following example, normally the header slug would be `header` and the content tab would have the
+slug `tab`.
+
+```
+# header
+
+/// tab | tab
+content
+///
+```
+
+With `combine_header_slug` enabled, the header slug would still be `header`, but now the content tab slug would be
+`header-tab`.
+
+/// new | New 10.1
+`combine_header_slug` is new in 10.1
+///
+
 ## Additional Topics
 
 As Tab shares the same output and functionality as the [Tabbed extension](../../tabbed.md), you can check out the
@@ -127,11 +146,12 @@ documentation there to learn the following:
 
 ## Global Options
 
-Options           | Type     | Descriptions
------------------ | -------- | ------------
-`alternate_style` | bool     | Use the experimental, alternative style.
-`slugify`         | function | A function to generate slugs from tab titles.
-`separator`       | string   | Default word separator when generating slugs.
+Options               | Type     | Descriptions
+--------------------- | -------- | ------------
+`alternate_style`     | bool     | Use the experimental, alternative style.
+`slugify`             | function | A function to generate slugs from tab titles.
+`separator`           | string   | Default word separator when generating slugs.
+`combine_header_slug` | bool     | Combine the parent header slug with the tab content slug.
 
 ## Per Block Options
 

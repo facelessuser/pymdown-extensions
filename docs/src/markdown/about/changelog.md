@@ -1,5 +1,11 @@
 # Changelog
 
+## 10.1
+
+-   **NEW**: Add new `combine_header_slug` option in legacy Tabbed extension and new Block Tab extension that will
+    prefix a content tab's slug with the parent header's slug. This allows for content tab slugs that are scoped to the
+    header they are under.
+
 ## 10.0.1
 
 - **FIX**: Regression related to snippets nested deeply under specified base path.
