@@ -18,11 +18,11 @@
     "yarn": "YARN NO LONGER USED - use npm instead."
   },
   "devDependencies": {
-    "@babel/cli": "^7.22.6",
-    "@babel/core": "^7.22.8",
-    "@babel/eslint-parser": "^7.22.7",
+    "@babel/cli": "^7.22.9",
+    "@babel/core": "^7.22.9",
+    "@babel/eslint-parser": "^7.22.9",
     "@babel/plugin-external-helpers": "^7.22.5",
-    "@babel/preset-env": "^7.22.7",
+    "@babel/preset-env": "^7.22.9",
     "@babel/register": "^7.22.5",
     "@fortawesome/fontawesome-free": "^6.4.0",
     "@mdi/svg": "^7.2.96",
@@ -62,7 +62,7 @@
     "stylelint-config-standard": "^34.0.0",
     "stylelint-order": "^6.0.3",
     "stylelint-scss": "^5.0.1",
-    "terser": "^5.18.2",
+    "terser": "^5.19.0",
     "vinyl-paths": "^5.0.0",
     "yargs": "^17.7.2"
   }
