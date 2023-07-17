@@ -324,13 +324,13 @@ class BlocksProcessor(BlockProcessor):
         """Get parent."""
 
         # Returned the cached parent from our last attempt
-        if self.cached_parent:
+        if self.cached_parent is not None:
             parent = self.cached_parent
             self.cached_parent = None
             return parent
 
         temp = parent
-        while temp:
+        while temp is not None:
             for entry in self.stack:
                 if entry.hungry and entry.parent is temp:
                     self.cached_parent = temp
@@ -416,7 +416,7 @@ class BlocksProcessor(BlockProcessor):
                 blocks.insert(0, block)
 
             # Ensure a "tight" parent list item is converted to "loose".
-            if parent and parent.tag in ('li', 'dd'):  # pragma: no cover
+            if parent is not None and parent.tag in ('li', 'dd'):  # pragma: no cover
                 text = parent.text
                 if parent.text:
                     parent.text = ''

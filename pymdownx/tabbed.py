@@ -96,12 +96,12 @@ class TabbedProcessor(BlockProcessor):
             else:
                 last_child = self.lastChild(sibling)
                 tabbed_content = 'tabbed-content'
-            child_class = last_child.attrib.get('class', '') if last_child else ''
+            child_class = last_child.attrib.get('class', '') if last_child is not None else ''
             indent = 0
-            while last_child:
+            while last_child is not None:
                 if (
-                    sibling and block.startswith(' ' * self.tab_length * 2) and
-                    last_child and (
+                    sibling is not None and block.startswith(' ' * self.tab_length * 2) and
+                    last_child is not None and (
                         last_child.tag in ('ul', 'ol', 'dl') or
                         (
                             last_child.tag == 'div' and
@@ -116,13 +116,13 @@ class TabbedProcessor(BlockProcessor):
                         if temp_child.tag not in ('ul', 'ol', 'dl'):
                             break
                         last_child = temp_child
-                        child_class = last_child.attrib.get('class', '') if last_child else ''
+                        child_class = last_child.attrib.get('class', '') if last_child is not None else ''
 
                     # The expectation is that we'll find an `<li>`.
                     # We should get it's last child as well.
                     sibling = self.lastChild(last_child)
-                    last_child = self.lastChild(sibling) if sibling else None
-                    child_class = last_child.attrib.get('class', '') if last_child else ''
+                    last_child = self.lastChild(sibling) if sibling is not None else None
+                    child_class = last_child.attrib.get('class', '') if last_child is not None else ''
 
                     # Context has been lost at this point, so we must adjust the
                     # text's indentation level so it will be evaluated correctly
@@ -176,7 +176,7 @@ class TabbedProcessor(BlockProcessor):
             content = None
 
             if (
-                sibling and sibling.tag.lower() == 'div' and
+                sibling is not None and sibling.tag.lower() == 'div' and
                 sibling.attrib.get('class', '') == tabbed_set and
                 '!' not in special
             ):
