@@ -174,7 +174,7 @@ class Tab(Block):
         content = None
 
         if (
-            sibling and sibling.tag.lower() == 'div' and
+            sibling is not None and sibling.tag.lower() == 'div' and
             sibling.attrib.get('class', '') == tabbed_set and
             not new_group
         ):
