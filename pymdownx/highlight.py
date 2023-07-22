@@ -39,6 +39,7 @@ except ImportError:  # pragma: no cover
     pygments = False
     p_ver = (0, 0)
 
+LEXER_CLASS_CACHE = {}
 RE_PYG_CODE = re.compile(r'^<(div)(\s*class="(.*?)")?\s*>')
 CODE_WRAP = '<pre{}><code{}{}{}>{}</code></pre>'
 CODE_WRAP_ON_PRE = '<pre{}{}{}><code>{}</code></pre>'
@@ -281,6 +282,9 @@ class Highlight(object):
 
         if language:
             language, lexer_options = self.get_extended_language(language)
+            cached_lexer_class = LEXER_CLASS_CACHE.get(language)
+            if cached_lexer_class:
+                return cached_lexer_class(**lexer_options), name
         else:
             lexer_options = {}
 
@@ -297,9 +301,15 @@ class Highlight(object):
                     name = lexer.aliases[0]
                 except Exception:  # pragma: no cover
                     pass
+        else:
+            LEXER_CLASS_CACHE[language] = lexer.__class__
+        
         if lexer is None:
             lexer = get_lexer_by_name('text')
             name = lexer.aliases[0]
+            if language:
+                LEXER_CLASS_CACHE[language] = lexer.__class__
+
         return lexer, name
 
     def escape(self, txt):
