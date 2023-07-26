@@ -23,7 +23,7 @@ class TestBlocksDetails(util.MdCase):
             <details>
             <p>Some <em>content</em></p>
             </details>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -44,7 +44,7 @@ class TestBlocksDetails(util.MdCase):
             <summary>Note</summary>
             <p>Some <em>content</em></p>
             </details>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -62,7 +62,7 @@ class TestBlocksDetails(util.MdCase):
             <summary>A Title</summary>
             <p>Some <em>content</em></p>
             </details>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -82,7 +82,7 @@ class TestBlocksDetails(util.MdCase):
             <summary>A Title</summary>
             <p>Some <em>content</em></p>
             </details>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -100,6 +100,6 @@ class TestBlocksDetails(util.MdCase):
             <summary>A Title</summary>
             <p>Some <em>content</em></p>
             </details>
-            ''',  # noqa: E501
+            ''',
             True
         )

@@ -605,7 +605,7 @@ class TestInlineHiliteCustomBrokenFormatter(util.MdCase):
 
         self.check_markdown(
             r'`#!test boom`',
-            r'<p>`#!test boom`</p>'  # noqa: E501
+            r'<p>`#!test boom`</p>'
         )
 
 
@@ -634,5 +634,5 @@ class TestInlineHiliteCustomBrokenFormatterFail(util.MdCase):
         with self.assertRaises(InlineHiliteException):
             self.check_markdown(
                 r'`#!test boom`',
-                r''  # noqa: E501
+                r''
             )

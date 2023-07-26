@@ -68,15 +68,15 @@ def check_markdown(testfile, extension, extension_config, wrapper, update=False)
     except Exception:
         expected = ''
 
-    diff = [
-        l for l in difflib.unified_diff(
+    diff = list(
+        difflib.unified_diff(
             expected.splitlines(True),
             results.splitlines(True),
             expected_html,
             os.path.join(os.path.dirname(testfile), 'results.html'),
             n=3
         )
-    ]
+    )
     if diff:
         if update:
             print('Updated: %s' % expected_html)
@@ -112,7 +112,7 @@ def gather_test_params():
                 for k, v in cfg.get(key, util.OrderedDict()).items():
                     if k == 'css':
                         for css in v:
-                            test_cfg[k].append(css)
+                            test_cfg[k].append(css)  # noqa: PERF402
                         continue
                     for k1, v1 in v.items():
                         if v1 is not None:

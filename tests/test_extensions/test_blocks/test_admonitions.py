@@ -23,7 +23,7 @@ class TestBlocksAdmonitions(util.MdCase):
             <div class="admonition">
             <p>Some <em>content</em></p>
             </div>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -44,7 +44,7 @@ class TestBlocksAdmonitions(util.MdCase):
             <p class="admonition-title">Note</p>
             <p>Some <em>content</em></p>
             </div>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -62,7 +62,7 @@ class TestBlocksAdmonitions(util.MdCase):
             <p class="admonition-title">A Title</p>
             <p>Some <em>content</em></p>
             </div>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -80,7 +80,7 @@ class TestBlocksAdmonitions(util.MdCase):
             <p class="admonition-title">Note</p>
             <p>Some <em>content</em></p>
             </div>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -98,7 +98,7 @@ class TestBlocksAdmonitions(util.MdCase):
             <p class="admonition-title">A Title</p>
             <p>Some <em>content</em></p>
             </div>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -116,6 +116,6 @@ class TestBlocksAdmonitions(util.MdCase):
             <p class="admonition-title">A Title</p>
             <p>Some <em>content</em></p>
             </div>
-            ''',  # noqa: E501
+            ''',
             True
         )

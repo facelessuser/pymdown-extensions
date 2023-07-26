@@ -58,7 +58,8 @@ class DetailsProcessor(BlockProcessor):
         return '\n'.join(newtext), '\n'.join(lines[len(newtext):])
 
     def parse_content(self, parent, block):
-        """Get sibling details.
+        """
+        Get sibling details.
 
         Retrieve the appropriate sibling element. This can get tricky when
         dealing with lists.

@@ -69,7 +69,7 @@ def path2url(url):
 def get_code_points(s):
     """Get the Unicode code points."""
 
-    return [c for c in s]
+    return list(s)
 
 
 def get_ord(c):

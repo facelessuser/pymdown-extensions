@@ -71,7 +71,7 @@ class TasklistTreeprocessor(Treeprocessor):
 
         found = False
         if len(li):
-            first = list(li)[0]
+            first = next(iter(li))
             if first.tag == "p" and first.text is not None:
                 m = RE_CHECKBOX.match(first.text)
                 if m is not None:
@@ -86,7 +86,7 @@ class TasklistTreeprocessor(Treeprocessor):
 
         self.custom_checkbox = bool(self.config["custom_checkbox"])
         self.clickable_checkbox = bool(self.config["clickable_checkbox"])
-        parent_map = dict((c, p) for p in root.iter() for c in p)
+        parent_map = {c: p for p in root.iter() for c in p}
         task_items = []
         lilinks = root.iter('li')
         for li in lilinks:

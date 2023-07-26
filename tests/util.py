@@ -77,15 +77,15 @@ class MdCase(unittest.TestCase):
 
         results = self.md.convert(text)
 
-        diff = [
-            l for l in difflib.unified_diff(
+        diff = list(
+            difflib.unified_diff(
                 expected.splitlines(True),
                 results.splitlines(True),
                 'Expected',
                 'Actual',
                 n=3
             )
-        ]
+        )
 
         print(''.join(diff))
         self.assertTrue(not diff)

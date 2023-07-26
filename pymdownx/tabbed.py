@@ -64,7 +64,8 @@ class TabbedProcessor(BlockProcessor):
         return '\n'.join(newtext), '\n'.join(lines[len(newtext):])
 
     def parse_content(self, parent, block):
-        """Get sibling tab.
+        """
+        Get sibling tab.
 
         Retrieve the appropriate sibling element. This can get tricky when
         dealing with lists.
@@ -340,7 +341,7 @@ class TabbedTreeprocessor(Treeprocessor):
         header_map = {}
 
         if self.combine_header_slug:
-            parent_map = dict((c, p) for p in doc.iter() for c in p)
+            parent_map = {c: p for p in doc.iter() for c in p}
 
         for el in doc.iter():
             if "id" in el.attrib:

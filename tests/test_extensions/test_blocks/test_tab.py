@@ -297,7 +297,7 @@ class TestBlocksTab(util.MdCase):
             <p>/// tab</p>
             <p>Some <em>content</em>
             ///</p>
-            ''',  # noqa: E501
+            ''',
             True
         )
 

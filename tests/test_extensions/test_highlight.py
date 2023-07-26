@@ -182,7 +182,7 @@ class TestNoClass(util.MdCase):
             <div><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
             <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -200,7 +200,7 @@ class TestNoClass(util.MdCase):
             <div class="more"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
             <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -248,7 +248,7 @@ class TestNoClassNoPygments(util.MdCase):
             r'''
             <pre><code class="language-python">import test
             test.test()</code></pre>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -277,7 +277,7 @@ class TestCustomLangPrefixNoPygments(util.MdCase):
             r'''
             <pre class="highlight"><code class="lang-python">import test
             test.test()</code></pre>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -481,7 +481,7 @@ class TestDisabledLinenums(util.MdCase):
             <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
             <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -511,7 +511,7 @@ class TestDisabledLinenumsNoPygments(util.MdCase):
             <p><code>python linenums="1"
             import test
             test.test()</code></p>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -559,7 +559,7 @@ class TestGlobalLinenums(util.MdCase):
             <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
             <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div>
-            ''',  # noqa: E501
+            ''',
             True
         )
 

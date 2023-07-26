@@ -16,24 +16,12 @@ def get_version_dev_status(root):
     return module.__version_info__._get_dev_status()
 
 
-def get_requirements(root):
-    """Load list of dependencies."""
-
-    install_requires = []
-    with open(os.path.join(root, "requirements", "project.txt")) as f:
-        for line in f:
-            if not line.startswith("#"):
-                install_requires.append(line.strip())
-    return install_requires
-
-
 class CustomMetadataHook(MetadataHookInterface):
     """Our metadata hook."""
 
     def update(self, metadata):
         """See https://ofek.dev/hatch/latest/plugins/metadata-hook/ for more information."""
 
-        metadata["dependencies"] = get_requirements(self.root)
         metadata["classifiers"] = [
             f"Development Status :: {get_version_dev_status(self.root)}",
             "Environment :: Console",
