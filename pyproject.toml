@@ -81,7 +81,6 @@ include = [
     "/docs/theme/**/*.html",
     "/docs/theme/**/*.css.map",
     "/docs/theme/**/*.js.map",
-    "/requirements/*.txt",
     "/pymdownx/**/*.py",
     "/tests/**/*.txt",
     "/tests/**/*.py",
@@ -95,7 +94,6 @@ include = [
     "/.coveragerc",
     "/mkdocs.yml",
     "/run_tests.py",
-    "/tox.ini",
 ]
 
 [tool.hatch.build.targets.wheel]
