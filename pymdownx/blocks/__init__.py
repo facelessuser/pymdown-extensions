@@ -158,16 +158,16 @@ class BlocksProcessor(BlockProcessor):
         # The Block classes indexable by name
         self.blocks = {}
         self.config = {}
-        self.empty_tags = set(['hr'])
+        self.empty_tags = {'hr',}
         self.block_level_tags = set(md.block_level_elements.copy())
         self.block_level_tags.add('html')
 
         # Block-level tags in which the content only gets span level parsing
-        self.span_tags = set(
-            ['address', 'dd', 'dt', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'legend', 'li', 'p', 'summary', 'td', 'th']
-        )
+        self.span_tags = {
+            'address', 'dd', 'dt', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'legend', 'li', 'p', 'summary', 'td', 'th'
+        }
         # Block-level tags which never get their content parsed.
-        self.raw_tags = set(['canvas', 'math', 'option', 'pre', 'script', 'style', 'textarea', 'code'])
+        self.raw_tags = {'canvas', 'math', 'option', 'pre', 'script', 'style', 'textarea', 'code'}
         # Block-level tags in which the content gets parsed as blocks
         self.block_tags = set(self.block_level_tags) - (self.span_tags | self.raw_tags | self.empty_tags)
         self.span_and_blocks_tags = self.block_tags | self.span_tags

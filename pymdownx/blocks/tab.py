@@ -50,7 +50,7 @@ class TabbedTreeprocessor(Treeprocessor):
         header_map = {}
 
         if self.combine_header_slug:
-            parent_map = dict((c, p) for p in doc.iter() for c in p)
+            parent_map = {c: p for p in doc.iter() for c in p}
 
         for el in doc.iter():
             if "id" in el.attrib:

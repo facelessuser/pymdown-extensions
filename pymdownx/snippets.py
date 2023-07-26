@@ -95,6 +95,8 @@ class SnippetPreprocessor(Preprocessor):
         self.tab_length = md.tab_length
         super(SnippetPreprocessor, self).__init__()
 
+        self.download.cache_clear()
+
     def extract_section(self, section, lines):
         """Extract the specified section from the lines."""
 
@@ -178,7 +180,7 @@ class SnippetPreprocessor(Preprocessor):
                         break
         return snippet
 
-    @functools.lru_cache()
+    @functools.lru_cache()  # noqa: B019
     def download(self, url):
         """
         Actually download the snippet pointed to by the passed URL.

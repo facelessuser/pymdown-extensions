@@ -26,7 +26,7 @@ class TestBlocksDefinition(util.MdCase):
             <dd>Pomaceous fruit of plants of the genus Malus in
               the family Rosaceae.</dd>
             </dl>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -55,7 +55,7 @@ class TestBlocksDefinition(util.MdCase):
             <dt>Orange</dt>
             <dd>The fruit of an evergreen tree of the genus Citrus.</dd>
             </dl>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -84,7 +84,7 @@ class TestBlocksDefinition(util.MdCase):
             <dt>Term 3</dt>
             <dd>Definition b</dd>
             </dl>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -108,7 +108,7 @@ class TestBlocksDefinition(util.MdCase):
             <dt>term</dt>
             <dd>Some description.</dd>
             </dl>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -134,6 +134,6 @@ class TestBlocksDefinition(util.MdCase):
             </dt>
             <dd>description</dd>
             </dl>
-            ''',  # noqa: E501
+            ''',
             True
         )

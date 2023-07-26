@@ -29,7 +29,7 @@ class TestSnippetDedent(util.MdCase):
             ```text
             ---8<--- "indented.txt:py-section"
             ```
-            ''',  # noqa: W291
+            ''',
             R'''
             <div class="highlight"><pre><span></span><code>def some_method(self, param):
                 &quot;&quot;&quot;Docstring.&quot;&quot;&quot;
@@ -48,7 +48,7 @@ class TestSnippetDedent(util.MdCase):
             ```text
             ---8<--- "indented.txt:5:8"
             ```
-            ''',  # noqa: W291
+            ''',
             R'''
             <div class="highlight"><pre><span></span><code>def some_method(self, param):
                 &quot;&quot;&quot;Docstring.&quot;&quot;&quot;
@@ -67,7 +67,7 @@ class TestSnippetDedent(util.MdCase):
             Paragraph
 
                 ---8<--- "indented.txt:py-section"
-            ''',  # noqa: W291
+            ''',
             R'''
             <p>Paragraph</p>
             <pre><code>def some_method(self, param):
@@ -106,7 +106,7 @@ class TestSnippets(util.MdCase):
             - Testing indentation
 
                 ---8<--- "b.txt"
-            ''',  # noqa: W291
+            ''',
             R'''
             <p>Snippet
             Snippet
@@ -151,7 +151,7 @@ class TestSnippets(util.MdCase):
                 # Un-nested Inline
                 --8<-- "a.txt"
                 --8<-- "; b.txt"
-            ''',  # noqa: W291
+            ''',
             R'''
             <p>Snippet</p>
             <p>Snippet</p>
@@ -166,7 +166,7 @@ class TestSnippets(util.MdCase):
             <p>Snippet</p>
             </li>
             </ul>
-            ''',  # noqa: W291
+            ''',
             True
         )
 

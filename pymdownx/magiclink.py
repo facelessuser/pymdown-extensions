@@ -1026,7 +1026,7 @@ class MagiclinkExtension(Extension):
         self.shortener_exclusions = {k: set(v) for k, v in DEFAULT_EXCLUDES.items()}
         for key, value in config.get('shortener_user_exclude', {}).items():
             if key in ('github', 'bitbucket', 'gitlab', 'twitter') and isinstance(value, (list, tuple, set)):
-                self.shortener_exclusions[key] = set([x.lower() for x in value])
+                self.shortener_exclusions[key] = {x.lower() for x in value}
 
         # Ensure valid provider
         if self.provider not in PROVIDER_INFO:

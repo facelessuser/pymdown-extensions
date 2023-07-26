@@ -538,7 +538,7 @@ class HighlightExtension(Extension):
         if target is None:
             target = {}
             config_clone = copy.deepcopy(DEFAULT_CONFIG)
-            for k, v in config_clone.items():
+            for k in config_clone.keys():
                 target[k] = config_clone[k][0]
 
         return target

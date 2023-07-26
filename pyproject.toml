@@ -19,8 +19,12 @@ keywords = [
 ]
 dynamic = [
     "classifiers",
-    "dependencies",
     "version",
+]
+
+dependencies = [
+    "Markdown>=3.2",
+    "pyyaml"
 ]
 
 [project.urls]
@@ -29,6 +33,42 @@ Homepage = "https://github.com/facelessuser/pymdown-extensions"
 [tool.hatch.version]
 source = "code"
 path = "pymdownx/__meta__.py"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[project.optional-dependencies]
+extra = [
+    "Pygments>=2.12"
+]
+
+dev = [
+    "build",
+    "tox"
+]
+
+docs = [
+    "mkdocs_pymdownx_material_extras>=2.1",
+    "pymdown_lexers @ git+https://github.com/facelessuser/pymdown-lexers.git",
+    "mkdocs-git-revision-date-localized-plugin",
+    "mkdocs-minify-plugin",
+    "pyspelling"
+]
+
+lint = [
+    "ruff"
+]
+
+test = [
+    "PyYAML>=3.10",
+    "pytest",
+    "pytest-cov",
+    "coverage"
+]
+
+tools = [
+    "requests"
+]
 
 [tool.hatch.build.targets.sdist]
 include = [
@@ -64,3 +104,90 @@ include = [
 ]
 
 [tool.hatch.metadata.hooks.custom]
+
+[tool.ruff]
+line-length = 120
+
+extend-exclude = [
+    "build/*",
+    ".tox/*",
+    "site/*",
+    "tools/tags/*",
+    "node_modules/*",
+    "*_db.py",
+    "dist/*"
+]
+
+select = [
+    "A",    # flake8-builtins
+    "B",    # flake8-bugbear
+    "D",    # pydocstyle
+    "C4",   # flake8-comprehensions
+    "N",    # pep8-naming
+    "E",    # pycodestyle
+    "F",    # pyflakes
+    "PGH",  # pygrep-hooks
+    "RUF",  # ruff
+    # "UP",   # pyupgrade
+    "W",    # pycodestyle
+    "YTT",  # flake8-2020,
+    "PERF"  # Perflint
+]
+
+ignore = [
+    "E741",
+    "D202",
+    "D401",
+    "D212",
+    "D203",
+    "N802",
+    "N801",
+    "N803",
+    "N806",
+    "N813",
+    "N818",
+    "RUF012",
+    "RUF005"
+]
+
+[tool.tox]
+legacy_tox_ini = """
+    [tox]
+    isolated_build = true
+    envlist =
+        {py37,py38,py39,py310,p311}, lint, documents
+
+    [testenv]
+    passenv = LANG
+    deps=
+        .[extra]
+        .[test]
+    commands=
+        {envbindir}/py.test --cov pymdownx --cov-append {toxinidir}
+        {envbindir}/coverage html -d {envtmpdir}/coverage
+        {envbindir}/coverage xml
+        {envbindir}/coverage report --show-missing
+
+    [testenv:documents]
+    deps=
+        .[docs]
+        .[extra]
+    commands=
+        {envpython} -m pip install .
+        {envpython} -m mkdocs build --clean --verbose --strict
+        {envpython} -m pyspelling
+
+    [testenv:lint]
+    deps=
+        .[lint]
+    commands=
+        {envbindir}/ruff check {toxinidir}
+
+    [flake8]
+    exclude=build/*,.tox/*,.c9/*,site/*,tools/tags/*,node_modules/*,*_db.py,dist/*
+    max-line-length=120
+    ignore=D202,N802,D203,D401,W504,N813,E741,N818
+
+    [pytest]
+    addopts=--ignore=tools --ignore=node_modules
+"""

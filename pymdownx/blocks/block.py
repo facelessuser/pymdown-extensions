@@ -24,7 +24,7 @@ def _type_multi(value, types=None):
     for t in types:
         try:
             return t(value)
-        except ValueError:
+        except ValueError:  # noqa: PERF203
             pass
 
     raise ValueError("Type '{}' did not match any of the provided types".format(type(value)))
@@ -274,6 +274,8 @@ class Block(metaclass=ABCMeta):
     def on_init(self):
         """On initialize."""
 
+        return
+
     def on_markdown(self):
         """Check how element should be treated by the Markdown parser."""
 
@@ -365,6 +367,8 @@ class Block(metaclass=ABCMeta):
     def on_end(self, block):
         """Perform any action on end."""
 
+        return
+
     def on_add(self, block):
         """
         Adjust where the content is added and return the desired element.
@@ -377,3 +381,5 @@ class Block(metaclass=ABCMeta):
 
     def on_inline_end(self, block):
         """Perform action on the block after inline parsing."""
+
+        return

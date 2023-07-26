@@ -736,7 +736,7 @@ class TestSuperFencesClassesIdsAttrListNoPygments(util.MdCase):
             ''',
             r'''
             <pre class="highlight"><code class="language-python more">import test</code></pre>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -793,7 +793,7 @@ class TestSuperFencesClassesIdsAttrListNoPygmentsOnPre(util.MdCase):
             ''',
             r'''
             <pre class="language-python highlight more"><code>import test</code></pre>
-            ''',  # noqa: E501
+            ''',
             True
         )
 

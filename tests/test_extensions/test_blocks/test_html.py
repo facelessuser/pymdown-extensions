@@ -20,7 +20,7 @@ class TestBlocksHTML(util.MdCase):
             <p>/// html | 3tag
             Some <em>content</em>
             ///</p>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -37,7 +37,7 @@ class TestBlocksHTML(util.MdCase):
             <p>/// html
             Some <em>content</em>
             ///</p>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -57,7 +57,7 @@ class TestBlocksHTML(util.MdCase):
             <p>Some <em>content</em></p>
             <p>And more <code>content</code>.</p>
             </div>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -76,7 +76,7 @@ class TestBlocksHTML(util.MdCase):
             <span>Will be parsed as inline <em>content</em>
 
             And more <code>content</code>.</span>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -95,7 +95,7 @@ class TestBlocksHTML(util.MdCase):
             <pre>Some *content*
 
             And more `content`.</pre>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -116,7 +116,7 @@ class TestBlocksHTML(util.MdCase):
             <div>Some *content*
 
             And more `content`.</div>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -137,7 +137,7 @@ class TestBlocksHTML(util.MdCase):
             <div>Will be parsed as inline <em>content</em>
 
             And more <code>content</code>.</div>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -156,7 +156,7 @@ class TestBlocksHTML(util.MdCase):
             ''',
             r'''
             <span><p>Some <em>content</em></p><p>And more <code>content</code>.</p></span>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -176,7 +176,7 @@ class TestBlocksHTML(util.MdCase):
             <p>Some <em>content</em></p>
             <p>And more <code>content</code>.</p>
             </div>
-            ''',  # noqa: E501
+            ''',
             True
         )
 

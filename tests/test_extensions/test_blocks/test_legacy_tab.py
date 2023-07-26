@@ -170,7 +170,7 @@ class TestBlocksLegacyTab(util.MdCase):
             <p>/// tab
             Some <em>content</em>
             ///</p>
-            ''',  # noqa: E501
+            ''',
             True
         )
 

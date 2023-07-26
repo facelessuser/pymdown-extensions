@@ -364,10 +364,10 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             for ext in self.md.registeredExtensions:
                 self.highlight_ext = ext
                 try:
-                    config = getattr(ext, "get_pymdownx_highlight_settings")()
-                    self.highlighter = getattr(ext, "get_pymdownx_highlighter")()
+                    config = ext.get_pymdownx_highlight_settings()
+                    self.highlighter = ext.get_pymdownx_highlighter()
                     break
-                except AttributeError:
+                except AttributeError:  # noqa: PERF203
                     pass
 
             self.attr_list = 'attr_list' in self.md.treeprocessors
