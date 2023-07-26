@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Test slugs."""
 from .. import util
+import pytest
 from pymdownx import slugs
 
 
@@ -16,11 +17,11 @@ class TestUslugify(util.MdCase):
 
     def test_slug(self):
         """Test the slug output."""
-
-        self.check_markdown(
-            r'# Testing unicode-slugs_headers ±♠Ωℑ',
-            r'<h1 id="testing-unicode-slugs_headers-ωℑ">Testing unicode-slugs_headers ±♠Ωℑ</h1>'
-        )
+        with pytest.warns(DeprecationWarning):
+            self.check_markdown(
+                r'# Testing unicode-slugs_headers ±♠Ωℑ',
+                r'<h1 id="testing-unicode-slugs_headers-ωℑ">Testing unicode-slugs_headers ±♠Ωℑ</h1>'
+            )
 
 
 class TestUslugifyEncoded(util.MdCase):
@@ -36,11 +37,12 @@ class TestUslugifyEncoded(util.MdCase):
     def test_slug(self):
         """Test the slug output."""
 
-        self.check_markdown(
-            r'# Testing unicode-slugs_headers ±♠Ωℑ with encoding',
-            r'<h1 id="testing-unicode-slugs_headers-%CF%89%E2%84%91-with-encoding">'
-            'Testing unicode-slugs_headers ±♠Ωℑ with encoding</h1>'
-        )
+        with pytest.warns(DeprecationWarning):
+            self.check_markdown(
+                r'# Testing unicode-slugs_headers ±♠Ωℑ with encoding',
+                r'<h1 id="testing-unicode-slugs_headers-%CF%89%E2%84%91-with-encoding">'
+                'Testing unicode-slugs_headers ±♠Ωℑ with encoding</h1>'
+            )
 
 
 class TestUslugifyCased(util.MdCase):
@@ -56,10 +58,11 @@ class TestUslugifyCased(util.MdCase):
     def test_slug(self):
         """Test the slug output."""
 
-        self.check_markdown(
-            r'# Testing cased unicode-slugs_headers ±♠Ωℑ',
-            r'<h1 id="Testing-cased-unicode-slugs_headers-Ωℑ">Testing cased unicode-slugs_headers ±♠Ωℑ</h1>'
-        )
+        with pytest.warns(DeprecationWarning):
+            self.check_markdown(
+                r'# Testing cased unicode-slugs_headers ±♠Ωℑ',
+                r'<h1 id="Testing-cased-unicode-slugs_headers-Ωℑ">Testing cased unicode-slugs_headers ±♠Ωℑ</h1>'
+            )
 
 
 class TestUslugifyCasedEncoded(util.MdCase):
@@ -75,11 +78,12 @@ class TestUslugifyCasedEncoded(util.MdCase):
     def test_slug(self):
         """Test the slug output."""
 
-        self.check_markdown(
-            r'# Testing cased unicode-slugs_headers ±♠Ωℑ with encoding',
-            r'<h1 id="Testing-cased-unicode-slugs_headers-%CE%A9%E2%84%91-with-encoding">'
-            'Testing cased unicode-slugs_headers ±♠Ωℑ with encoding</h1>'
-        )
+        with pytest.warns(DeprecationWarning):
+            self.check_markdown(
+                r'# Testing cased unicode-slugs_headers ±♠Ωℑ with encoding',
+                r'<h1 id="Testing-cased-unicode-slugs_headers-%CE%A9%E2%84%91-with-encoding">'
+                'Testing cased unicode-slugs_headers ±♠Ωℑ with encoding</h1>'
+            )
 
 
 class TestGFM(util.MdCase):
@@ -95,10 +99,11 @@ class TestGFM(util.MdCase):
     def test_slug(self):
         """Test the slug output."""
 
-        self.check_markdown(
-            r'# Testing GFM unicode-slugs_headers ±♠Ωℑ',
-            r'<h1 id="testing-gfm-unicode-slugs_headers-Ωℑ">Testing GFM unicode-slugs_headers ±♠Ωℑ</h1>'
-        )
+        with pytest.warns(DeprecationWarning):
+            self.check_markdown(
+                r'# Testing GFM unicode-slugs_headers ±♠Ωℑ',
+                r'<h1 id="testing-gfm-unicode-slugs_headers-Ωℑ">Testing GFM unicode-slugs_headers ±♠Ωℑ</h1>'
+            )
 
 
 class TestGFMEncoded(util.MdCase):
@@ -114,8 +119,9 @@ class TestGFMEncoded(util.MdCase):
     def test_slug(self):
         """Test the slug output."""
 
-        self.check_markdown(
-            r'# Testing GFM unicode-slugs_headers ±♠Ωℑ with encoding',
-            r'<h1 id="testing-gfm-unicode-slugs_headers-%CE%A9%E2%84%91-with-encoding">'
-            r'Testing GFM unicode-slugs_headers ±♠Ωℑ with encoding</h1>'
-        )
+        with pytest.warns(DeprecationWarning):
+            self.check_markdown(
+                r'# Testing GFM unicode-slugs_headers ±♠Ωℑ with encoding',
+                r'<h1 id="testing-gfm-unicode-slugs_headers-%CE%A9%E2%84%91-with-encoding">'
+                r'Testing GFM unicode-slugs_headers ±♠Ωℑ with encoding</h1>'
+            )

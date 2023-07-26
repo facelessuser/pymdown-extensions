@@ -1,7 +1,7 @@
 """Test cases for Highlight."""
 from .. import util
+import pytest
 import pymdownx.emoji as emoji
-import warnings
 import markdown
 
 
@@ -35,27 +35,18 @@ class TestEmojiOldIndex(util.MdCase):
         }
     }
 
+    @pytest.mark.filterwarnings("ignore")
     def test_old_index(self):
         """Test that index works."""
 
-        self.check_markdown(
-            ':smile:',
-            '<p><img alt="\U0001f604" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f604.png" title=":smile:" /></p>'  # noqa: E501
-        )
-
-    def test_warning(self):
-        """Test that warning is raising."""
-
-        with warnings.catch_warnings(record=True) as w:
-            warnings.simplefilter("always")
-
-            markdown.Markdown(
-                extensions=self.extension,
-                extension_configs=self.extension_configs
-            ).convert(':smile:')
-
-            self.assertTrue(len(w) == 1)
-            self.assertTrue(issubclass(w[-1].category, DeprecationWarning))
+        with pytest.warns(DeprecationWarning):
+            self.assertEqual(
+                markdown.Markdown(
+                    extensions=self.extension,
+                    extension_configs=self.extension_configs
+                ).convert(':smile:'),
+                '<p><img alt="\U0001f604" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f604.png" title=":smile:" /></p>'  # noqa: E501
+            )
 
 
 class TestEmojiNewIndex(util.MdCase):
