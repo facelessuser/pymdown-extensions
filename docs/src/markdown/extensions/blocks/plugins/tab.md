@@ -19,7 +19,7 @@ md = markdown.Markdown(extensions=['pymdownx.blocks.tab'])
 
 ## Usage
 
-A tab can be defined using the generic bock syntax and the name `tab`. Tabs should also specify the tab title in the
+A tab can be defined using the generic block syntax and the name `tab`. Tabs should also specify the tab title in the
 header. Consecutive tabs will automatically be grouped.
 
 ```text title="Tabs"
