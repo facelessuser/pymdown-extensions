@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.1.1
+
+-   **FIX**: SuperFences: Fix issue where when SuperFences attempts to test if a placeholder is its own, it can throw
+    an exception.
+
 ## 10.1
 
 -   **NEW**: Add new `combine_header_slug` option in legacy Tabbed extension and new Block Tab extension that will
