@@ -955,7 +955,7 @@ class SuperFencesCodeBlockProcessor(CodeBlockProcessor):
                 key = m.group(2)
                 indent_level = len(m.group(1))
                 original = None
-                original, pos = self.extension.stash.get(key)
+                original, pos = self.extension.stash.get(key, (None, None))
                 if original is not None:
                     code = self.reindent(original, pos, indent_level)
                     new_block.append(code)
