@@ -103,7 +103,7 @@ def select_tag(repo, no_download):
     while user_input is None:
         try:
             user_input = int(input('Select Tag > '))
-        except Exception:  # noqa: PERF203
+        except Exception:
             user_input = None
         if user_input is not None and (user_input < 0 or user_input >= num_tags):
             user_input = None

@@ -367,7 +367,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                     config = ext.get_pymdownx_highlight_settings()
                     self.highlighter = ext.get_pymdownx_highlighter()
                     break
-                except AttributeError:  # noqa: PERF203
+                except AttributeError:
                     pass
 
             self.attr_list = 'attr_list' in self.md.treeprocessors
