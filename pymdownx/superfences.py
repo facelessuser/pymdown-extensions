@@ -367,7 +367,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                     config = ext.get_pymdownx_highlight_settings()
                     self.highlighter = ext.get_pymdownx_highlighter()
                     break
-                except AttributeError:  # noqa: PERF203
+                except AttributeError:
                     pass
 
             self.attr_list = 'attr_list' in self.md.treeprocessors
@@ -955,7 +955,7 @@ class SuperFencesCodeBlockProcessor(CodeBlockProcessor):
                 key = m.group(2)
                 indent_level = len(m.group(1))
                 original = None
-                original, pos = self.extension.stash.get(key)
+                original, pos = self.extension.stash.get(key, (None, None))
                 if original is not None:
                     code = self.reindent(original, pos, indent_level)
                     new_block.append(code)
