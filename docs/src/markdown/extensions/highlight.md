@@ -86,6 +86,25 @@ extend_pygments_lang = [
 `pygments_lang_class` added in 9.2.
 ///
 
+## Preserve Leading/Trailing Newlines
+
+/// new | New 10.1
+///
+
+It is not uncommon for Markdown parsers to preserve both leading and trailing newlines in things like fenced code. This
+doesn't usually happen for indented code blocks.
+
+To be clear the [SuperFences](./superfences.md) extension does not strip leading and trailing new lines, this is the
+default behavior of the Pygments syntax highlighter, not the SuperFences extension's parsing logic. When Pygments is
+disabled, both leading and trailing newlines are preserved.
+
+While it is rare for people to actually need leading and trailing newlines, if such behavior was desired, it can be
+retained by disabling the [`stripnl`](#options) option in Highlight which will ensure that all Pygments lexers have this
+option disabled.
+
+Inline code blocks, such as those provided by [InlineHilite](./inlinehilite.md), will be unaffected. Indented code
+blocks will also not be affected as leading and trailing newlines are never retained in indented code blocks.
+
 ## Line Number Styles
 
 Pygments has two available styles when outputting source code with line numbers enabled: `table` and `inline`. `table`
@@ -131,6 +150,7 @@ Option                    | Type   | Default               | Description
 `anchor_linenums`         | bool   | `#!py3 False`         | Enables the Pygments option of a similar name. If set to `#!py True`, will wrap line numbers in `#!html <a>` tags. Used in combination with `linenums` and `line_anchors`. If `line_anchors` is not configured, `__codelineno` will be assumed as the ID prefix.
 `line_anchors`            | bool   | `#!py3 False`         | Controls the Pygments option of a similar name. If set to a nonempty string, e.g. `foo`, the formatter will insert an anchor tag with an id (and name) of `foo-<code_block_number>-<line_number>`.
 `pygments_lang_class`     | bool   | `#!py3 False`         | If set to True, the language name used will be included as a class attached to the element with the associated `language_prefix`.
+`stripnl`                 | bool   | `#!py3 True`          | Strips leading and trailing newlines from code blocks. This is Pygments default behavior. Setting this to `#!py False` disables this and will retain leading and trailing newlines. This has no affect on inline code.
 
 /// new | New 7.1
 `linenums_class` was added in `7.1`.

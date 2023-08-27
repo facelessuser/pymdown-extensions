@@ -111,6 +111,42 @@ class TestHighlightTitle(util.MdCase):
         )
 
 
+class TestHighlightStrip(util.MdCase):
+    """Test Highlight's stripping of new lines."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {'pymdownx.highlight': {'stripnl': False}}
+
+    def test_no_stripnl(self):
+        """Test no stripping of leading and trailing new lines."""
+
+        self.check_markdown(
+            r'''
+            ```py
+
+            import foo
+
+
+            import bar
+
+
+
+            ```
+            ''',
+            r'''
+            <div class="highlight"><pre><span></span><code>
+            <span class="kn">import</span> <span class="nn">foo</span>
+
+
+            <span class="kn">import</span> <span class="nn">bar</span>
+
+
+            </code></pre></div>
+            ''',
+            True
+        )
+
+
 class TestHighlightAutoTitleOverride(util.MdCase):
     """Test title cases."""
 

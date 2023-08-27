@@ -1,7 +1,9 @@
 # Changelog
 
-## 10.1.1
+## 10.2
 
+-   **NEW**: Highlight: Add new `stripnl` option to configure Pygments' default handling of stripping leading and
+    and trailing new lines from code blocks. Mainly affects fenced code blocks.
 -   **FIX**: SuperFences: Fix issue where when SuperFences attempts to test if a placeholder is its own, it can throw
     an exception.
 
