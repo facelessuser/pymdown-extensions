@@ -124,6 +124,12 @@ DEFAULT_CONFIG = {
         False,
         'If set to True, the language name used will be included as a class attached to the element. - Defaults: False'
     ],
+    'stripnl': [
+        True,
+        'Strips leading and trailing newlines from code blocks. This is Pygments default behavior. Setting this to '
+        'False disables this and will retain leading and trailing newlines. This has no affect on inline code. '
+        '- Defaults: True'
+    ],
     '_enabled': [
         True,
         'Used internally to communicate if extension has been explicitly enabled - Default: False'
@@ -230,7 +236,7 @@ class Highlight(object):
         noclasses=False, extend_pygments_lang=None, linenums=None, linenums_special=-1,
         linenums_style='table', linenums_class='linenums', language_prefix='language-',
         code_attr_on_pre=False, auto_title=False, auto_title_map=None, line_spans='',
-        anchor_linenums=False, line_anchors='', pygments_lang_class=False
+        anchor_linenums=False, line_anchors='', pygments_lang_class=False, stripnl=True
     ):
         """Initialize."""
 
@@ -249,6 +255,7 @@ class Highlight(object):
         self.line_anchors = line_anchors
         self.anchor_linenums = anchor_linenums
         self.pygments_lang_class = pygments_lang_class
+        self.stripnl = stripnl
 
         if self.anchor_linenums and not self.line_anchors:
             self.line_anchors = '__codelineno'
@@ -274,15 +281,15 @@ class Highlight(object):
 
         return self.extend_pygments_lang.get(language.lower(), (language, {}))
 
-    def get_lexer(self, src, language, inline):
+    def get_lexer(self, src, language, inline, stripnl):
         """Get the Pygments lexer."""
 
         name = language
 
+        lexer_options = {'stripnl': stripnl}
         if language:
-            language, lexer_options = self.get_extended_language(language)
-        else:
-            lexer_options = {}
+            language, options = self.get_extended_language(language)
+            lexer_options.update(options)
 
         # Try and get lexer by the name given.
         try:
@@ -293,12 +300,12 @@ class Highlight(object):
         if lexer is None:
             if (self.guess_lang is True) or (self.guess_lang == 'inline' if inline else self.guess_lang == 'block'):
                 try:
-                    lexer = guess_lexer(src)
+                    lexer = guess_lexer(src, **lexer_options)
                     name = lexer.aliases[0]
                 except Exception:  # pragma: no cover
                     pass
         if lexer is None:
-            lexer = get_lexer_by_name('text')
+            lexer = get_lexer_by_name('text', **lexer_options)
             name = lexer.aliases[0]
         return lexer, name
 
@@ -324,6 +331,7 @@ class Highlight(object):
             (self.linenums and linestart != 0) or
             (self.linenums is not False and linestart > 0)
         ) and not inline > 0
+        class_str = ''
 
         # Convert with Pygments.
         if pygments and self.use_pygments:
@@ -331,8 +339,13 @@ class Highlight(object):
             if p_ver < (2, 12):  # pragma: no cover
                 raise RuntimeError('Pymdownx Highlight requires at least Pygments 2.12+ if enabling Pygments')
 
+            if inline:
+                stripnl = True
+            else:
+                stripnl = self.stripnl
+
             # Setup language lexer.
-            lexer, lang_name = self.get_lexer(src, language, inline)
+            lexer, lang_name = self.get_lexer(src, language, inline, stripnl)
             if self.pygments_lang_class:
                 class_names.insert(0, self.language_prefix + lang_name)
             linenums = self.linenums_style if linenums_enabled else False
@@ -499,7 +512,8 @@ class HighlightTreeprocessor(Treeprocessor):
                     code_attr_on_pre=self.config['code_attr_on_pre'],
                     auto_title=self.config['auto_title'],
                     auto_title_map=self.config['auto_title_map'],
-                    pygments_lang_class=self.config['pygments_lang_class']
+                    pygments_lang_class=self.config['pygments_lang_class'],
+                    stripnl=self.config['stripnl']
                 )
                 placeholder = self.md.htmlStash.store(
                     code.highlight(

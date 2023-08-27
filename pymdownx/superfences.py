@@ -392,6 +392,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             self.line_anchors = config.get('line_anchors', '')
             self.anchor_linenums = config.get('anchor_linenums', False)
             self.pygments_lang_class = config.get('pygments_lang_class', False)
+            self.stripnl = config.get('stripnl', True)
 
     def clear(self):
         """Reset the class variables."""
@@ -795,7 +796,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             line_spans=self.line_spans,
             line_anchors=self.line_anchors,
             anchor_linenums=self.anchor_linenums,
-            pygments_lang_class=self.pygments_lang_class
+            pygments_lang_class=self.pygments_lang_class,
+            stripnl=self.stripnl
         ).highlight(
             src,
             language,
