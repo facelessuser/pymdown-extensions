@@ -1,0 +1,4 @@
+PyYAML>=3.10
+pytest
+pytest-cov
+coverage

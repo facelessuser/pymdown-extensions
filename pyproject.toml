@@ -42,34 +42,6 @@ extra = [
     "Pygments>=2.12"
 ]
 
-dev = [
-    "build",
-    "tox"
-]
-
-docs = [
-    "mkdocs_pymdownx_material_extras>=2.1",
-    "pymdown_lexers @ git+https://github.com/facelessuser/pymdown-lexers.git",
-    "mkdocs-git-revision-date-localized-plugin",
-    "mkdocs-minify-plugin",
-    "pyspelling"
-]
-
-lint = [
-    "ruff"
-]
-
-test = [
-    "PyYAML>=3.10",
-    "pytest",
-    "pytest-cov",
-    "coverage"
-]
-
-tools = [
-    "requests"
-]
-
 [tool.hatch.build.targets.sdist]
 include = [
     "/docs/src/markdown/**/*.md",
@@ -81,6 +53,7 @@ include = [
     "/docs/theme/**/*.html",
     "/docs/theme/**/*.css.map",
     "/docs/theme/**/*.js.map",
+    "/requirements/*.txt",
     "/pymdownx/**/*.py",
     "/tests/**/*.txt",
     "/tests/**/*.py",
@@ -159,7 +132,7 @@ legacy_tox_ini = """
     passenv = LANG
     deps=
         .[extra]
-        .[test]
+        -r requirements/test.txt
     commands=
         {envbindir}/py.test --cov pymdownx --cov-append {toxinidir}
         {envbindir}/coverage html -d {envtmpdir}/coverage
@@ -168,7 +141,7 @@ legacy_tox_ini = """
 
     [testenv:documents]
     deps=
-        .[docs]
+        -r requirements/docs.txt
         .[extra]
     commands=
         {envpython} -m pip install .
@@ -177,7 +150,7 @@ legacy_tox_ini = """
 
     [testenv:lint]
     deps=
-        .[lint]
+        -r requirements/lint.txt
     commands=
         {envbindir}/ruff check {toxinidir}
 
