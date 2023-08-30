@@ -508,6 +508,27 @@ class TestLegacyTab(util.MdCase):
             True
         )
 
+    def test_indented_code(self):
+        """Test indented code."""
+
+        md = """
+        === "Tab 1"
+
+                code
+        """
+
+        self.check_markdown(
+            md,
+            '''
+            <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1">Tab 1</label><div class="tabbed-content">
+            <pre><code>code
+            </code></pre>
+            </div>
+            </div>
+            ''',  # noqa: E501
+            True
+        )
+
 
 class TestLegacyTabSlugs(util.MdCase):
     """Test legacy tab slug cases."""
@@ -586,8 +607,7 @@ class TestTabSlugsCombineHeader(util.MdCase):
     extension_configs = {
         'pymdownx.tabbed': {
             'slugify': slugify(case='lower'),
-            'combine_header_slug': True,
-            'alternate_style': True
+            'combine_header_slug': True
         }
     }
 
@@ -611,21 +631,15 @@ class TestTabSlugsCombineHeader(util.MdCase):
             md,
             '''
             <h3 id="here-is-some-text">Here is some text</h3>
-            <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="here-is-some-text-first-tab" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="here-is-some-text-first-tab">First Tab</label></div>
-            <div class="tabbed-content">
-            <div class="tabbed-block">
+            <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="here-is-some-text-first-tab" name="__tabbed_1" type="radio" /><label for="here-is-some-text-first-tab">First Tab</label><div class="tabbed-content">
             <p>content</p>
-            </div>
             </div>
             </div>
             <h3 id="another-header">Another header</h3>
             <details>
             <summary>title</summary>
-            <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="another-header-second-tab" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="another-header-second-tab">Second Tab</label></div>
-            <div class="tabbed-content">
-            <div class="tabbed-block">
+            <div class="tabbed-set" data-tabs="2:1"><input checked="checked" id="another-header-second-tab" name="__tabbed_2" type="radio" /><label for="another-header-second-tab">Second Tab</label><div class="tabbed-content">
             <p>content</p>
-            </div>
             </div>
             </div>
             </details>
@@ -644,11 +658,8 @@ class TestTabSlugsCombineHeader(util.MdCase):
         self.check_markdown(
             md,
             '''
-            <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="a-tab" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="a-tab">A Tab</label></div>
-            <div class="tabbed-content">
-            <div class="tabbed-block">
+            <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="a-tab" name="__tabbed_1" type="radio" /><label for="a-tab">A Tab</label><div class="tabbed-content">
             <p>content</p>
-            </div>
             </div>
             </div>
             ''',  # noqa: E501
@@ -668,11 +679,8 @@ class TestTabSlugsCombineHeader(util.MdCase):
         self.check_markdown(
             md,
             '''
-            <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="a-tab" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="a-tab">A Tab</label></div>
-            <div class="tabbed-content">
-            <div class="tabbed-block">
+            <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="a-tab" name="__tabbed_1" type="radio" /><label for="a-tab">A Tab</label><div class="tabbed-content">
             <p>content</p>
-            </div>
             </div>
             </div>
             <h1 id="header">Header</h1>
