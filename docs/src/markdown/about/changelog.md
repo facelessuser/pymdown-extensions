@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.2.1
+
+-   **FIX**: Tabbed: Fix regression.
+
 ## 10.2
 
 -   **NEW**: Highlight: Add new `stripnl` option to configure Pygments' default handling of stripping leading and
