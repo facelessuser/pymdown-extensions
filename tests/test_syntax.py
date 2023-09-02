@@ -112,7 +112,7 @@ def gather_test_params():
                 for k, v in cfg.get(key, util.OrderedDict()).items():
                     if k == 'css':
                         for css in v:
-                            test_cfg[k].append(css)  # noqa: PERF402
+                            test_cfg[k].append(css)
                         continue
                     for k1, v1 in v.items():
                         if v1 is not None:
