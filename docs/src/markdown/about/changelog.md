@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.3.0
+
+-   **NEW**: Officially support Python 3.12.
+-   **NEW**: Drop Python 3.7 support.
+
 ## 10.2.1
 
 -   **FIX**: Tabbed: Fix regression.

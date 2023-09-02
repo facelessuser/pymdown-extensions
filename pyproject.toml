@@ -9,7 +9,7 @@ name = "pymdown-extensions"
 description = "Extension pack for Python Markdown."
 readme = "README.md"
 license = "MIT"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 authors = [
     { name = "Isaac Muse", email = "Isaac.Muse@gmail.com" },
 ]
