@@ -1,6 +1,6 @@
 # Changelog
 
-## 10.3.0
+## 10.3
 
 -   **NEW**: Officially support Python 3.12.
 -   **NEW**: Drop Python 3.7 support.
