@@ -2,6 +2,14 @@
 
 # Admonition
 
+/// danger | Using `pymdownx.blocks.admonition` with `admonition`
+The new `pymdownx.blocks.admonition` extension is meant to replace `admonition`, they are not meant to be used together.
+Their output is identical making it easy to transition by simply swapping out the syntax, but using them both together
+can cause issues as they both generate the same output and confuse each other.
+
+If you are switching from `admonition` to `pymdownx.blocks.admonition`, ensure you disable `admonition` to avoid issues.
+///
+
 --8<-- "blocksbeta.md"
 
 ## Overview

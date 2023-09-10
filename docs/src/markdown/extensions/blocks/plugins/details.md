@@ -1,6 +1,15 @@
 [:octicons-file-code-24:][_details_block]{: .source-link }
 # Details
 
+/// danger | Using `pymdownx.blocks.details` with `pymdownx.details`
+The new `pymdownx.blocks.details` extension is meant to replace `pymdownx.details`, they are not meant to be used
+together. Their output is identical making it easy to transition by simply swapping out the syntax, but using them both
+together can cause issues as they both generate the same output and confuse each other.
+
+If you are switching from `pymdownx.details` to `pymdownx.blocks.details`, ensure you disable `pymdownx.details` to
+avoid issues.
+///
+
 --8<-- "blocksbeta.md"
 
 ## Overview
