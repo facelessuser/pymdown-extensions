@@ -2,6 +2,15 @@
 
 # Tab
 
+/// danger | Using `pymdownx.blocks.tab` with `pymdownx.tabbed`
+The new `pymdownx.blocks.tab` extension is meant to replace `pymdownx.tabbed`, they are not meant to be used together.
+Their output is identical making it easy to transition by simply swapping out the syntax, but using them both together
+can cause issues as they both generate the same output and confuse each other.
+
+If you are switching from `pymdownx.tabbed` to `pymdownx.blocks.tab`, ensure you disable `pymdownx.tabbed` to avoid
+issues.
+///
+
 --8<-- "blocksbeta.md"
 
 ## Overview

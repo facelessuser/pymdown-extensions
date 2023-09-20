@@ -2,6 +2,14 @@
 
 # Definition
 
+/// danger | Using `pymdownx.blocks.definition` with `def_list`
+The new `pymdownx.blocks.definition` extension is meant to replace `def_list`, they are not meant to be used together.
+Their output is identical making it easy to transition by simply swapping out the syntax, but using them both together
+can cause issues as they both generate the same output and confuse each other.
+
+If you are switching from `def_list` to `pymdownx.blocks.definition`, ensure you disable `def_list` to avoid issues.
+///
+
 --8<-- "blocksbeta.md"
 
 ## Overview
