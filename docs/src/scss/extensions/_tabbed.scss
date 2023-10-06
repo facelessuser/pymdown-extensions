@@ -67,6 +67,10 @@
   }
 }
 
+.js .md-typeset .tabbed-labels::before {
+  background-color: var(--md-accent-fg-color);
+}
+
 /* Ignore mobile overflow styling that extends the tab bar */
 @include break-to-device(mobile) {
   [dir=ltr] .md-content__inner > .tabbed-set .tabbed-labels {
