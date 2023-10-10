@@ -20,6 +20,7 @@ theme:
     text: Roboto
     code: Roboto Mono
   features:
+    - announce.dismiss
     - navigation.tabs
     - navigation.top
     - navigation.instant
