@@ -105,7 +105,7 @@ Some content
 ///
 ```
 
-As with all block plugins, you can always add new classes IDs or other attributes via `$`.
+As with all block plugins, you can always add new classes IDs or other attributes via the `attributes` option.
 
 ```
 /// note | Some title
