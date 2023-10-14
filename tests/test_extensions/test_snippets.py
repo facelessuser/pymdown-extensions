@@ -454,6 +454,39 @@ class TestSnippets(util.MdCase):
         )
 
 
+class _PathLikeExampleObject:
+    def __fspath__(self):
+        return os.path.join(BASE, '_snippets')
+
+
+class TestSnippetsPathLike(util.MdCase):
+    """Test snippet cases with path-like objects."""
+
+    extension = [
+        'pymdownx.snippets'
+    ]
+
+    extension_configs = {
+        'pymdownx.snippets': {
+            'base_path': _PathLikeExampleObject()
+        }
+    }
+
+    def test_inline(self):
+        """Test inline."""
+
+        self.check_markdown(
+            R'''
+            ---8<--- "a.txt"
+            ''',
+            R'''
+            <p>Snippet</p>
+            ''',
+            True
+        )
+
+
+
 class TestSnippetsFile(util.MdCase):
     """Test snippet file case."""
 
