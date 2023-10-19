@@ -2,7 +2,7 @@
 
 ## 10.3.1
 
--   **FIX**: SuperFences: Fix an issue where attributes would not handle braces in attributes properly. 
+-   **FIX**: SuperFences: Fix an issue where braces were not handled properly in attributes.
 
 ## 10.3
 
