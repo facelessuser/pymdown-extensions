@@ -670,6 +670,22 @@ class TestSuperFencesClassesIdsAttrList(util.MdCase):
     extension = ['pymdownx.superfences', 'markdown.extensions.attr_list']
     extension_configs = {}
 
+    def test_attribute_lists_with_braces(self):
+        """Test attribute lists with braces."""
+
+        self.check_markdown(
+            R'''
+            ``` { .c data-copy="int main() { return 0; }" }
+            Try copying me for some C code
+            ```
+            ''',
+            R'''
+            <div class="highlight" data-copy="int main() { return 0; }"><pre><span></span><code><span class="n">Try</span><span class="w"> </span><span class="n">copying</span><span class="w"> </span><span class="n">me</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">some</span><span class="w"> </span><span class="n">C</span><span class="w"> </span><span class="n">code</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
     def test_classes(self):
         """Test extra classes."""
 

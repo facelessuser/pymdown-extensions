@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.3.1
+
+-   **FIX**: SuperFences: Fix an issue where braces were not handled properly in attributes.
+
 ## 10.3
 
 -   **NEW**: Officially support Python 3.12.
