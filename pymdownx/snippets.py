@@ -80,7 +80,7 @@ class SnippetPreprocessor(Preprocessor):
         """Initialize."""
 
         base = config.get('base_path')
-        if isinstance(base, str):
+        if isinstance(base, (str, os.PathLike)):
             base = [base]
         self.base_path = [os.path.abspath(b) for b in base]
         self.restrict_base_path = config['restrict_base_path']
