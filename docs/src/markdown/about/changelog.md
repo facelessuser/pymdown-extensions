@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.4
+
+-   **NEW**: Snippets: Allow PathLike objects for `base_path` to better support interactions with MkDocs.
+
 ## 10.3.1
 
 -   **FIX**: SuperFences: Fix an issue where braces were not handled properly in attributes.
