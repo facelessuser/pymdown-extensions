@@ -381,7 +381,7 @@ class EmojiExtension(Extension):
                 "Emoji options see documentation for options for github and emojione."
             ]
         }
-        super(EmojiExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Add support for emoji."""

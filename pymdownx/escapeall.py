@@ -98,7 +98,7 @@ class EscapeAllExtension(Extension):
                 "Turn escaped spaces to non-breaking spaces - Default: False"
             ]
         }
-        super(EscapeAllExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Escape all."""

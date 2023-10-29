@@ -132,7 +132,7 @@ class DeleteSubExtension(Extension):
             'subscript': [True, "Enable subscript - Default: True"]
         }
 
-        super(DeleteSubExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Insert `<del>test</del>` tags as `~~test~~` and `<sub>test</sub>` tags as `~test~`."""

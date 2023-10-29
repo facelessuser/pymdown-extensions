@@ -129,7 +129,7 @@ class B64Extension(Extension):
             'base_path': [".", "Base path for b64 to use to resolve paths - Default: \".\""]
         }
 
-        super(B64Extension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Add base 64 tree processor to Markdown instance."""

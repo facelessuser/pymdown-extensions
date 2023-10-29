@@ -169,7 +169,7 @@ class BetterEmExtension(Extension):
             'smart_enable': ["underscore", "Treat connected words intelligently - Default: underscore"]
         }
 
-        super(BetterEmExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Modify inline patterns."""

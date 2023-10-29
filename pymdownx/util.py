@@ -165,7 +165,7 @@ class PatSeqItem(namedtuple('PatSeqItem', ['pattern', 'builder', 'tags', 'full_r
     def __new__(cls, pattern, builder, tags, full_recursion=False):
         """Create object."""
 
-        return super(PatSeqItem, cls).__new__(cls, pattern, builder, tags, full_recursion)
+        return super().__new__(cls, pattern, builder, tags, full_recursion)
 
 
 class PatternSequenceProcessor(InlineProcessor):

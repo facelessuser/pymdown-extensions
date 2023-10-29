@@ -132,7 +132,7 @@ class CriticsPostprocessor(Postprocessor):
     def __init__(self, critic_stash):
         """Initialize."""
 
-        super(CriticsPostprocessor, self).__init__()
+        super().__init__()
         self.critic_stash = critic_stash
 
     def subrestore(self, m):
@@ -181,7 +181,7 @@ class CriticViewPreprocessor(Preprocessor):
     def __init__(self, critic_stash):
         """Initialize."""
 
-        super(CriticViewPreprocessor, self).__init__()
+        super().__init__()
         self.critic_stash = critic_stash
 
     def _ins(self, text):
@@ -298,7 +298,7 @@ class CriticExtension(Extension):
             'raw_view': [False, "Raw view keeps the output as the raw markup for view mode - Default False"]
         }
 
-        super(CriticExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Register the extension."""

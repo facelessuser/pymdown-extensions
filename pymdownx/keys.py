@@ -123,7 +123,7 @@ class KeysPattern(InlineProcessor):
         self.map = self.merge(keymap.keymap, config['key_map'])
         self.aliases = keymap.aliases
         self.camel = config['camel_case']
-        super(KeysPattern, self).__init__(pattern, md)
+        super().__init__(pattern, md)
 
     def merge(self, x, y):
         """Given two dicts, merge them into a new dict."""
@@ -209,7 +209,7 @@ class KeysExtension(Extension):
             'camel_case': [False, 'Allow camelCase conversion for key names PgDn -> pg-dn - Default: False'],
             'key_map': [{}, 'Additional keys to include or keys to override - Default: {}']
         }
-        super(KeysExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Add support for keys."""

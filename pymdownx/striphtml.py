@@ -73,7 +73,7 @@ class StripHtmlPostprocessor(Postprocessor):
                 re.DOTALL | re.UNICODE
             )
 
-        super(StripHtmlPostprocessor, self).__init__(md)
+        super().__init__(md)
 
     def repl(self, m):
         """Replace comments and unwanted attributes."""
@@ -129,7 +129,7 @@ class StripHtmlExtension(Extension):
                 " - Default: True"
             ]
         }
-        super(StripHtmlExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Strip unwanted HTML attributes and/or comments."""
