@@ -86,6 +86,7 @@ Pandoc
 Parsers
 PathConverter
 PathConverter's
+PathLike
 PlainHTML
 Pomaceous
 Postprocessor
