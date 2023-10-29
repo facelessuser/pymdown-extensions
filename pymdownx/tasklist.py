@@ -52,7 +52,7 @@ class TasklistTreeprocessor(Treeprocessor):
     def __init__(self, md):
         """Initialize."""
 
-        super(TasklistTreeprocessor, self).__init__(md)
+        super().__init__(md)
 
     def inline(self, li):
         """Search for checkbox directly in `li` tag."""
@@ -132,7 +132,7 @@ class TasklistExtension(Extension):
             'subscript': [True, "Enable subscript - Default: True"]
         }
 
-        super(TasklistExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Add checklist tree processor to Markdown instance."""

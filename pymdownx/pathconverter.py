@@ -171,7 +171,7 @@ class PathConverterExtension(Extension):
             'file_scheme': [False, "Use file:// scheme for absolute paths - Default: False"],
         }
 
-        super(PathConverterExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Add post processor to Markdown instance."""

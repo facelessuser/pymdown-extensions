@@ -51,7 +51,7 @@ class BypassNormExtension(Extension):
 
         self.inlinehilite = []
         self.config = {}
-        super(BypassNormExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Add extensions that help with bypassing whitespace normalization."""

@@ -117,7 +117,7 @@ class SmartSymbolsPattern(HtmlInlineProcessor):
     def __init__(self, pattern, replace, md):
         """Setup replace pattern."""
 
-        super(SmartSymbolsPattern, self).__init__(pattern, md)
+        super().__init__(pattern, md)
         self.replace = replace
 
     def handleMatch(self, m, data):
@@ -145,7 +145,7 @@ class SmartSymbolsExtension(Extension):
             'ordinal_numbers': [True, 'Ordinal Numbers'],
             'care_of': [True, 'Care/of']
         }
-        super(SmartSymbolsExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def add_pattern(self, patterns, md):
         """Construct the inline symbol pattern."""

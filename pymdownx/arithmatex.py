@@ -367,7 +367,7 @@ class ArithmatexExtension(Extension):
             'inline_tag': ['span', "Specify wrapper tag - Default 'span'"]
         }
 
-        super(ArithmatexExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Extend the inline and block processor objects."""

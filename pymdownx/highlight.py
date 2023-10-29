@@ -481,7 +481,7 @@ class HighlightTreeprocessor(Treeprocessor):
         """Initialize."""
 
         self.ext = ext
-        super(HighlightTreeprocessor, self).__init__(md)
+        super().__init__(md)
 
     def code_unescape(self, text):
         """Unescape code."""
@@ -539,7 +539,7 @@ class HighlightExtension(Extension):
         """Initialize."""
 
         self.config = copy.deepcopy(DEFAULT_CONFIG)
-        super(HighlightExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def get_pymdownx_highlight_settings(self):
         """Get the specified extension."""

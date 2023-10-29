@@ -133,7 +133,7 @@ class InsertSupExtension(Extension):
             'superscript': [True, "Enable superscript - Default: True"]
         }
 
-        super(InsertSupExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Insert `<ins>test</ins>` tags as `^^test^^` and `<sup>test</sup>` tags as `^test^`."""

@@ -209,7 +209,7 @@ class InlineHiliteExtension(Extension):
             ],
             'custom_inline': [[], "Custom inline - default []"]
         }
-        super(InlineHiliteExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Add support for `:::language code` and `#!language code` highlighting."""

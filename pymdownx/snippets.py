@@ -93,7 +93,7 @@ class SnippetPreprocessor(Preprocessor):
         self.url_request_headers = config['url_request_headers']
         self.dedent_subsections = config['dedent_subsections']
         self.tab_length = md.tab_length
-        super(SnippetPreprocessor, self).__init__()
+        super().__init__()
 
         self.download.cache_clear()
 
@@ -391,7 +391,7 @@ class SnippetExtension(Extension):
             'dedent_subsections': [False, "Dedent subsection extractions e.g. 'sections' and/or 'lines'."]
         }
 
-        super(SnippetExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Register the extension."""

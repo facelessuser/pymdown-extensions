@@ -917,7 +917,7 @@ class MagiclinkExtension(Extension):
                 'The base repo to use - Default: ""'
             ]
         }
-        super(MagiclinkExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def setup_autolinks(self, md, config):
         """Setup auto links."""

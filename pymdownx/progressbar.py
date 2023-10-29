@@ -235,7 +235,7 @@ class ProgressBarExtension(Extension):
             ]
         }
 
-        super(ProgressBarExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Add the progress bar pattern handler."""

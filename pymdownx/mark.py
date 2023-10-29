@@ -66,7 +66,7 @@ class MarkExtension(Extension):
             'smart_mark': [True, "Treat ==connected==words== intelligently - Default: True"]
         }
 
-        super(MarkExtension, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def extendMarkdown(self, md):
         """Insert `<mark>test</mark>` tags as `==test==`."""
