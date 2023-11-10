@@ -1,13 +1,10 @@
 # Changelog
 
-## 10.4.1
-
--   **FIX**: Block Admonitions: Empty titles should be respected.
--   **FIX**: Block Details: Empty summary should be respected.
-
 ## 10.4
 
 -   **NEW**: Snippets: Allow PathLike objects for `base_path` to better support interactions with MkDocs.
+-   **FIX**: Block Admonitions: Empty titles should be respected.
+-   **FIX**: Block Details: Empty summary should be respected.
 
 ## 10.3.1
 
