@@ -48,6 +48,26 @@ class TestBlocksAdmonitions(util.MdCase):
             True
         )
 
+    def test_type_empty_title(self):
+        """Test test empty title."""
+
+        self.check_markdown(
+            R'''
+            /// admonition |
+                type: note
+                attrs: {class: other}
+
+            Some *content*
+            ///
+            ''',
+            r'''
+            <div class="admonition note other">
+            <p>Some <em>content</em></p>
+            </div>
+            ''',
+            True
+        )
+
     def test_admonition(self):
         """Test admonition with title."""
 
