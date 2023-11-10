@@ -60,12 +60,11 @@ class Details(Block):
         el = etree.SubElement(parent, 'details', attributes)
 
         # Create the summary
-        if not self.argument:
-            if not dtype:
-                summary = None
-            else:
+        summary = None
+        if self.argument is None:
+            if dtype:
                 summary = dtype.capitalize()
-        else:
+        elif self.argument:
             summary = self.argument
 
         # Create the summary

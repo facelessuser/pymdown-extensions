@@ -49,12 +49,11 @@ class Admonition(Block):
         el = etree.SubElement(parent, 'div', {'class': ' '.join(classes)})
 
         # Create the title
-        if not self.argument:
-            if not atype:
-                title = None
-            else:
+        title = None
+        if self.argument is None:
+            if atype:
                 title = atype.capitalize()
-        else:
+        elif self.argument:
             title = self.argument
 
         if title is not None:

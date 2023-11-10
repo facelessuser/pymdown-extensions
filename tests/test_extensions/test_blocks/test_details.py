@@ -48,6 +48,26 @@ class TestBlocksDetails(util.MdCase):
             True
         )
 
+    def test_type_empty_title(self):
+        """Test test empty title."""
+
+        self.check_markdown(
+            R'''
+            /// details |
+                type: note
+                attrs: {class: other}
+
+            Some *content*
+            ///
+            ''',
+            r'''
+            <details class="note other">
+            <p>Some <em>content</em></p>
+            </details>
+            ''',
+            True
+        )
+
     def test_details(self):
         """Test details with title."""
 
