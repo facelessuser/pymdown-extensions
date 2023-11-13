@@ -12,6 +12,7 @@ export default (className, mode) => {
       }
     }
   } else if (mode === 'mathjax') {
+    MathJax.startup.output.clearCache()
     MathJax.typesetClear()
     MathJax.texReset()
     MathJax.typesetPromise()
