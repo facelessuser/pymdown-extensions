@@ -209,11 +209,11 @@ extra_css:
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css
   - assets/pymdownx-extras/extra-ed665380f8.css
 extra_javascript:
-  - https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js
+  - https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js
   - https://polyfill.io/v3/polyfill.min.js?features=es6
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-  - assets/pymdownx-extras/extra-loader-ytLRhgzw.js
+  - assets/pymdownx-extras/extra-loader-MCFnu0Wd.js
 
 plugins:
   - search:

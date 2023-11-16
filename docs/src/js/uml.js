@@ -12,7 +12,7 @@
  * @param {string} className is the name of the class to target.
  * @return {void}
  */
-export default className => {
+export default async className => {
 
   // Custom element to encapsulate Mermaid content.
   class MermaidDiv extends HTMLElement {
@@ -118,30 +118,26 @@ export default className => {
     surrogate.appendChild(temp)
 
     try {
-      mermaid.mermaidAPI.render(
-        `_diagram_${i}`,
-        getFromCode(parentEl),
-        (content, fn) => {
-          const el = document.createElement("div")
-          el.className = className
-          el.innerHTML = content
-          if (fn) {
-            fn(el)
-          }
+      const res = await mermaid.render(`_diagram_${i}`, getFromCode(parentEl), temp)
+      const content = res.svg
+      const fn = res.bindFunctions
+      const el = document.createElement("div")
+      el.className = className
+      el.innerHTML = content
+      if (fn) {
+        fn(el)
+      }
 
-          // Insert the render where we want it and remove the original text source.
-          // Mermaid will clean up the temporary element.
-          const shadow = document.createElement("diagram-div")
-          shadow.shadowRoot.appendChild(el)
-          block.parentNode.insertBefore(shadow, block)
-          parentEl.style.display = "none"
-          shadow.shadowRoot.appendChild(parentEl)
-          if (parentEl !== block) {
-            block.parentNode.removeChild(block)
-          }
-        },
-        temp
-      )
+      // Insert the render where we want it and remove the original text source.
+      // Mermaid will clean up the temporary element.
+      const shadow = document.createElement("diagram-div")
+      shadow.shadowRoot.appendChild(el)
+      block.parentNode.insertBefore(shadow, block)
+      parentEl.style.display = "none"
+      shadow.shadowRoot.appendChild(parentEl)
+      if (parentEl !== block) {
+        block.parentNode.removeChild(block)
+      }
     } catch (err) {} // eslint-disable-line no-empty
 
     if (surrogate.contains(temp)) {

@@ -332,7 +332,7 @@ and provide the configuration. We also have the custom loader that is runs when 
     end</code></pre>
 
 <!-- Include Mermaid script and user config -->
-<script src="https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js"></script>
+<script src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js"></script>
 <script>
 window.mermaidConfig = {
   startOnLoad: false,
@@ -356,7 +356,7 @@ window.mermaidConfig = {
 
 /// tab | JS
 ```{.js .md-max-height}
-const uml = className => {
+const uml = async className => {
 
   // Custom element to encapsulate Mermaid content.
   class MermaidDiv extends HTMLElement {
@@ -434,7 +434,7 @@ const uml = className => {
 
   // Find all of our Mermaid sources and render them.
   const blocks = document.querySelectorAll(`pre.${className}, diagram-div`)
-  const surrogate = document.querySelector("html")
+  const surrogate = document.querySelector("html body")
   for (let i = 0; i < blocks.length; i++) {
     const block = blocks[i]
     const parentEl = (block.tagName.toLowerCase() === "diagram-div") ?
@@ -453,27 +453,26 @@ const uml = className => {
     surrogate.appendChild(temp)
 
     try {
-      mermaid.mermaidAPI.render(
-        `_diagram_${i}`,
-        getFromCode(parentEl),
-        content => {
-          const el = document.createElement("div")
-          el.className = className
-          el.innerHTML = content
+      const res = await mermaid.render(`_diagram_${i}`, getFromCode(parentEl), temp)
+      const content = res.svg
+      const fn = res.bindFunctions
+      const el = document.createElement("div")
+      el.className = className
+      el.innerHTML = content
+      if (fn) {
+        fn(el)
+      }
 
-          // Insert the render where we want it and remove the original text source.
-          // Mermaid will clean up the temporary element.
-          const shadow = document.createElement("diagram-div")
-          shadow.shadowRoot.appendChild(el)
-          block.parentNode.insertBefore(shadow, block)
-          parentEl.style.display = "none"
-          shadow.shadowRoot.appendChild(parentEl)
-          if (parentEl !== block) {
-            block.parentNode.removeChild(block)
-          }
-        },
-        temp
-      )
+      // Insert the render where we want it and remove the original text source.
+      // Mermaid will clean up the temporary element.
+      const shadow = document.createElement("diagram-div")
+      shadow.shadowRoot.appendChild(el)
+      block.parentNode.insertBefore(shadow, block)
+      parentEl.style.display = "none"
+      shadow.shadowRoot.appendChild(parentEl)
+      if (parentEl !== block) {
+        block.parentNode.removeChild(block)
+      }
     } catch (err) {} // eslint-disable-line no-empty
 
     if (surrogate.contains(temp)) {
@@ -507,7 +506,7 @@ markdown_extensions:
 
 extra_javascript:
   - optionalConfig.js
-  - https://unpkg.com/mermaid@9.4.0/dist/mermaid.min.js
+  - https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js
   - extra-loader.js
 ```
 
