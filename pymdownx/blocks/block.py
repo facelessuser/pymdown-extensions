@@ -208,9 +208,6 @@ class Block(metaclass=ABCMeta):
     ARGUMENT = False
     OPTIONS = {}
 
-    # Extension config
-    CONFIG = {}
-
     def __init__(self, length, tracker, block_mgr, config):
         """
         Initialize.
