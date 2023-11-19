@@ -39,10 +39,12 @@ $new-admonitions: (
     --md-admonition-icon--#{$name}: svg-load("#{nth($prop, 3)}");
     --md-admonition-bg-color--#{$name}: #{transparentize($tint2, 0.9)};
     --md-admonition-icon-color--#{$name}: #{$tint2};
+    --md-admonition-shadow-color--#{$name}: #{transparentize($tint2, 0.9)};
 
     &[data-md-color-scheme="dracula"] {
       --md-admonition-bg-color--#{$name}: var(--md-default-bg-color--ultra-dark);
       --md-admonition-icon-color--#{$name}: #{$tint};
+      --md-admonition-shadow-color--#{$name}: #{transparentize($tint, 0.9)};
     }
   }
 
@@ -50,12 +52,18 @@ $new-admonitions: (
     $name: nth($names, 1);
     --md-admonition-bg-color--#{$name}: var(--md-default-bg-color--ultra-dark);
     --md-admonition-icon-color--#{$name}: #{$tint};
+    --md-admonition-shadow-color--#{$name}: #{transparentize($tint, 0.9)};
   }
 }
 
 /* Dark mode changes */
 [data-md-color-scheme="dracula"] .md-typeset .admonition {
   border-color: var(--md-admonition-icon-color--note);
+
+  &:focus-within {
+    box-shadow: 0 0 0 px2rem(4px) var(--md-admonition-shadow-color--note);
+  }
+
   > .admonition-title {
     background-color: var(--md-admonition-bg-color--note);
     &::before {
@@ -79,6 +87,10 @@ $new-admonitions: (
     // Define base class
     .md-typeset .admonition.#{$name} {
       border-color: var(--md-admonition-icon-color--#{$name});
+
+      &:focus-within {
+        box-shadow: 0 0 0 px2rem(4px) var(--md-admonition-shadow-color--#{$name});
+      }
 
       // Define base class
       > .admonition-title {
@@ -112,6 +124,10 @@ $new-admonitions: (
     // Define base class
   .md-typeset .admonition.#{$name} {
     border-color: var(--md-admonition-icon-color--#{$name});
+
+    &:focus-within {
+      box-shadow: 0 0 0 px2rem(4px) var(--md-admonition-shadow-color--#{$name});
+    }
 
     > .admonition-title {
       background-color: var(--md-admonition-bg-color--#{$name});
