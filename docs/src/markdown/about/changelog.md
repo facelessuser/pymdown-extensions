@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.5
+
+- **FIX**: Keys: Ensure that Keys does not parse base64 encoded URLs.
+
 ## 10.4
 
 -   **NEW**: Snippets: Allow PathLike objects for `base_path` to better support interactions with MkDocs.

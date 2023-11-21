@@ -91,7 +91,7 @@ from . import util
 from . import keymap_db as keymap
 import re
 
-RE_KBD = r'''(?x)
+RE_EARLY_KBD = r'''(?x)
 (?:
     # Escape
     (?<!\\)(?P<escapes>(?:\\{2})+)(?=\+)|
@@ -105,6 +105,8 @@ RE_KBD = r'''(?x)
 )
 '''
 
+RE_KBD = r'\+{2}([\w\-]+(?:\+[\w\-]+)*?)\+{2}'
+
 ESCAPE_RE = re.compile(r'''(?<!\\)(?:\\\\)*\\(.)''')
 UNESCAPED_PLUS = re.compile(r'''(?<!\\)(?:\\\\)*(\+)''')
 ESCAPED_BSLASH = '%s%s%s' % (md_util.STX, ord('\\'), md_util.ETX)
@@ -114,7 +116,7 @@ DOUBLE_BSLASH = '\\\\'
 class KeysPattern(InlineProcessor):
     """Return kbd tag."""
 
-    def __init__(self, pattern, config, md):
+    def __init__(self, pattern, config, md, early=False):
         """Initialize."""
 
         self.ksep = config['separator']
@@ -123,6 +125,7 @@ class KeysPattern(InlineProcessor):
         self.map = self.merge(keymap.keymap, config['key_map'])
         self.aliases = keymap.aliases
         self.camel = config['camel_case']
+        self.early = early
         super().__init__(pattern, md)
 
     def merge(self, x, y):
@@ -166,9 +169,21 @@ class KeysPattern(InlineProcessor):
     def handleMatch(self, m, data):
         """Handle kbd pattern matches."""
 
-        if m.group(1):
-            return m.group('escapes').replace(DOUBLE_BSLASH, ESCAPED_BSLASH), m.start(0), m.end(0)
-        content = [self.process_key(key) for key in UNESCAPED_PLUS.split(m.group(2)) if key != '+']
+        if self.early:
+            if m.group(1):
+                return m.group('escapes').replace(DOUBLE_BSLASH, ESCAPED_BSLASH), m.start(0), m.end(0)
+            quoted = 0
+            content = []
+            for key in UNESCAPED_PLUS.split(m.group(2)):
+                if key != '+':
+                    if key.startswith(('"', "'")):
+                        quoted += 1
+                    content.append(self.process_key(key))
+            # Defer unquoted cases until later to avoid parsing URLs
+            if not quoted:
+                return None, None, None
+        else:
+            content = [self.process_key(key) for key in m.group(1).split('+')]
 
         if None in content:
             return None, None, None
@@ -215,7 +230,8 @@ class KeysExtension(Extension):
         """Add support for keys."""
 
         util.escape_chars(md, ['+'])
-        md.inlinePatterns.register(KeysPattern(RE_KBD, self.getConfigs(), md), "keys", 185)
+        md.inlinePatterns.register(KeysPattern(RE_EARLY_KBD, self.getConfigs(), md, early=True), "keys-custom", 185)
+        md.inlinePatterns.register(KeysPattern(RE_KBD, self.getConfigs(), md), "keys", 70)
 
 
 def makeExtension(*args, **kwargs):
