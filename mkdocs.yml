@@ -232,8 +232,6 @@ extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/facelessuser
-    - icon: fontawesome/brands/discord
-      link: https://discord.gg/TWs8Tgr
 extra_css:
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css
   - assets/pymdownx-extras/extra-fb5a2a1c86.css
