@@ -146,8 +146,7 @@ short names.
 There are a few emoji that are currently Twemoji specific, two of which are likely to always be as they are not
 part of the official emoji spec. The short names are listed below.
 
-//// details | Twemoji Specific Emoji
-    type: info
+//// details-info | Twemoji Specific Emoji
 Twemoji provides some non-standard emoji. We've made them available following the naming patterns that
 EmojiOne follows as we are using their short name index.
 

@@ -32,15 +32,18 @@ class Details(Block):
         'type': ['', type_html_identifier]
     }
 
-    CONFIG = {
-        "types": []
-    }
+    DEF_TITLE = None
+    DEF_CLASS = None
 
     def on_validate(self, parent):
         """Handle on validate event."""
 
         if self.NAME != 'details':
-            self.options['type'] = self.NAME
+            self.options['type'] = {'name': self.NAME}
+            if self.DEF_TITLE:
+                self.options['type']['title'] = self.DEF_TITLE
+            if self.DEF_TITLE:
+                self.options['type']['class'] = self.DEF_CLASS
         return True
 
     def on_create(self, parent):
@@ -52,9 +55,18 @@ class Details(Block):
             attributes['open'] = 'open'
 
         # Set classes
-        dtype = self.options['type']
+        obj = self.options['type']
+        dtype = def_title = class_name = ''
+        if isinstance(obj, dict):
+            dtype = obj['name']
+            class_name = obj.get('class', dtype)
+            def_title = obj.get('title', RE_SEP.sub(' ', class_name).title())
+        elif isinstance(obj, str):
+            dtype = obj
+            class_name = dtype
+            def_title = RE_SEP.sub(' ', class_name).title()
         if dtype:
-            attributes['class'] = dtype
+            attributes['class'] = class_name
 
         # Create Detail element
         el = etree.SubElement(parent, 'details', attributes)
@@ -63,7 +75,7 @@ class Details(Block):
         summary = None
         if self.argument is None:
             if dtype:
-                summary = dtype.capitalize()
+                summary = def_title
         elif self.argument:
             summary = self.argument
 
@@ -96,10 +108,28 @@ class DetailsExtension(BlocksExtension):
         block_mgr.register(Details, self.getConfigs())
 
         # Generate an details subclass based on the given names.
-        for b in self.getConfig('types', []):
-            subclass = RE_SEP.sub('', b.title())
+        for obj in self.getConfig('types', []):
+            if isinstance(obj, dict):
+                name = obj['name']
+                class_name = obj.get('class', name)
+                title = obj.get('title', RE_SEP.sub(' ', class_name).title())
+            else:
+                name = obj
+                class_name = name
+                title = RE_SEP.sub(' ', class_name).title()
+            subclass = RE_SEP.sub('', name).title()
             block_mgr.register(
-                type(subclass, (Details,), {'OPTIONS': {'open': [False, type_boolean]}, 'NAME': b, 'CONFIG': {}}), {}
+                type(
+                    subclass,
+                    (Details,),
+                    {
+                        'OPTIONS': {'open': [False, type_boolean]},
+                        'NAME': name,
+                        'DEF_TITLE': title,
+                        'DEF_CLASS': class_name
+                    }
+                ),
+                {}
             )
 
 

@@ -105,6 +105,41 @@ Some content
 ///
 ```
 
+If further control is desired, you can optionally configure a custom block with a name that differs from the actual
+attached class. You can also configure a default title that is not derived from the attached class.
+
+```py3
+import markdown
+from pymdownx.blocks.details import Details
+
+md = markdown.Markdown(
+    extensions=['pymdownx.blocks.details'],
+    extension_configs={
+        'pymdownx.blocks.details": {
+            'types': [{'name': some-custom-type', 'class': 'custom', 'title': 'My Default title'}]
+        }
+    }
+)
+```
+
+Now when using:
+
+```
+/// some-custom-type
+content
+///
+```
+
+It would be the same as using:
+
+```
+/// details | My Default Title
+    type: custom
+
+content
+///
+```
+
 As with all block plugins, you can always add new classes IDs or other attributes via the `attributes` option.
 
 ```
@@ -114,6 +149,10 @@ As with all block plugins, you can always add new classes IDs or other attribute
 Some content
 ///
 ```
+
+/// new | New 10.5
+Specifying custom blocks with specific classes and default titles is new in 10.5.
+///
 
 ## Global Options
 

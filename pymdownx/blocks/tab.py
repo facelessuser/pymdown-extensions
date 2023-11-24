@@ -120,12 +120,6 @@ class Tab(Block):
         'select': [False, type_boolean]
     }
 
-    CONFIG = {
-        'slugify': None,
-        'separator': '-',
-        'alternate_style': False
-    }
-
     def on_init(self):
         """Handle initialization."""
 

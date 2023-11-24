@@ -7,7 +7,15 @@ class TestBlocksDetails(util.MdCase):
 
     extension = ['pymdownx.blocks.details']
     extension_configs = {
-        'pymdownx.blocks.details': {'types': ['custom']}
+        'pymdownx.blocks.details': {
+            'types': [
+                'custom',
+                {'name': 'custom2'},
+                {'name': 'custom3', 'class': 'different'},
+                {'name': 'custom4', 'class': 'different', 'title': 'Default'},
+                {'name': 'custom5', 'title': 'Default'}
+            ]
+        }
     }
 
     def test_optional_title(self):
@@ -118,6 +126,96 @@ class TestBlocksDetails(util.MdCase):
             r'''
             <details class="custom">
             <summary>A Title</summary>
+            <p>Some <em>content</em></p>
+            </details>
+            ''',
+            True
+        )
+
+    def test_custom_title(self):
+        """Test custom title."""
+
+        self.check_markdown(
+            R'''
+            /// custom
+            Some *content*
+            ///
+            ''',
+            r'''
+            <details class="custom">
+            <summary>Custom</summary>
+            <p>Some <em>content</em></p>
+            </details>
+            ''',
+            True
+        )
+
+    def test_custom_dict_title(self):
+        """Test custom title with dictionary form."""
+
+        self.check_markdown(
+            R'''
+            /// custom2
+            Some *content*
+            ///
+            ''',
+            r'''
+            <details class="custom2">
+            <summary>Custom2</summary>
+            <p>Some <em>content</em></p>
+            </details>
+            ''',
+            True
+        )
+
+    def test_custom_explicit_title(self):
+        """Test custom with an explicit, default title."""
+
+        self.check_markdown(
+            R'''
+            /// custom5
+            Some *content*
+            ///
+            ''',
+            r'''
+            <details class="custom5">
+            <summary>Default</summary>
+            <p>Some <em>content</em></p>
+            </details>
+            ''',
+            True
+        )
+
+    def test_custom_with_class(self):
+        """Test custom title with configured custom class."""
+
+        self.check_markdown(
+            R'''
+            /// custom3
+            Some *content*
+            ///
+            ''',
+            r'''
+            <details class="different">
+            <summary>Different</summary>
+            <p>Some <em>content</em></p>
+            </details>
+            ''',
+            True
+        )
+
+    def test_custom_with_class_and_title(self):
+        """Test custom title with configured custom class and title."""
+
+        self.check_markdown(
+            R'''
+            /// custom4
+            Some *content*
+            ///
+            ''',
+            r'''
+            <details class="different">
+            <summary>Default</summary>
             <p>Some <em>content</em></p>
             </details>
             ''',
