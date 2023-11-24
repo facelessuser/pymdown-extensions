@@ -23,7 +23,7 @@ License is MIT.  See [LICENSE](https://github.com/facelessuser/pymdown-extension
 [github-ci-link]: https://github.com/facelessuser/pymdown-extensions/actions?query=workflow%3Abuild+branch%3Amaster
 [discord-image]: https://img.shields.io/discord/678289859768745989?logo=discord&logoColor=aaaaaa&color=mediumpurple&labelColor=333333
 [discord-link]:https://discord.gg/TWs8Tgr
-[codecov-image]: https://img.shields.io/codecov/c/github/facelessuser/pymdown-extensions/master.svg?logo=codecov&logoColor=aaaaaa&labelColor=333333
+[codecov-image]: https://img.shields.io/codecov/c/github/facelessuser/pymdown-extensions/main.svg?logo=codecov&logoColor=aaaaaa&labelColor=333333
 [codecov-link]: https://codecov.io/github/facelessuser/pymdown-extensions
 [pypi-image]: https://img.shields.io/pypi/v/pymdown-extensions.svg?logo=pypi&logoColor=aaaaaa&labelColor=333333
 [pypi-link]: https://pypi.python.org/pypi/pymdown-extensions
