@@ -309,7 +309,7 @@ class TestBlocksHTML(util.MdCase):
         )
 
     def test_html_and_script(self):
-        """Test inline format that script."""
+        """Test inline format with script."""
 
         self.check_markdown(
             R'''
