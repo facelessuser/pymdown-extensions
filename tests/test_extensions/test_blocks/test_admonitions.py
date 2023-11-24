@@ -7,7 +7,16 @@ class TestBlocksAdmonitions(util.MdCase):
 
     extension = ['pymdownx.blocks.admonition']
     extension_configs = {
-        'pymdownx.blocks.admonition': {'types': ['note', 'custom']}
+        'pymdownx.blocks.admonition': {
+            'types': [
+                'note',
+                'custom',
+                {'name': 'custom2'},
+                {'name': 'custom3', 'class': 'different'},
+                {'name': 'custom4', 'class': 'different', 'title': 'Default'},
+                {'name': 'custom5', 'title': 'Default'}
+            ]
+        }
     }
 
     def test_optional_title(self):
@@ -134,6 +143,96 @@ class TestBlocksAdmonitions(util.MdCase):
             r'''
             <div class="admonition custom">
             <p class="admonition-title">A Title</p>
+            <p>Some <em>content</em></p>
+            </div>
+            ''',
+            True
+        )
+
+    def test_custom_title(self):
+        """Test custom title."""
+
+        self.check_markdown(
+            R'''
+            /// custom
+            Some *content*
+            ///
+            ''',
+            r'''
+            <div class="admonition custom">
+            <p class="admonition-title">Custom</p>
+            <p>Some <em>content</em></p>
+            </div>
+            ''',
+            True
+        )
+
+    def test_custom_dict_title(self):
+        """Test custom title with dictionary form."""
+
+        self.check_markdown(
+            R'''
+            /// custom2
+            Some *content*
+            ///
+            ''',
+            r'''
+            <div class="admonition custom2">
+            <p class="admonition-title">Custom2</p>
+            <p>Some <em>content</em></p>
+            </div>
+            ''',
+            True
+        )
+
+    def test_custom_explicit_title(self):
+        """Test custom with an explicit, default title."""
+
+        self.check_markdown(
+            R'''
+            /// custom5
+            Some *content*
+            ///
+            ''',
+            r'''
+            <div class="admonition custom5">
+            <p class="admonition-title">Default</p>
+            <p>Some <em>content</em></p>
+            </div>
+            ''',
+            True
+        )
+
+    def test_custom_with_class(self):
+        """Test custom title with configured custom class."""
+
+        self.check_markdown(
+            R'''
+            /// custom3
+            Some *content*
+            ///
+            ''',
+            r'''
+            <div class="admonition different">
+            <p class="admonition-title">Different</p>
+            <p>Some <em>content</em></p>
+            </div>
+            ''',
+            True
+        )
+
+    def test_custom_with_class_and_title(self):
+        """Test custom title with configured custom class and title."""
+
+        self.check_markdown(
+            R'''
+            /// custom4
+            Some *content*
+            ///
+            ''',
+            r'''
+            <div class="admonition different">
+            <p class="admonition-title">Default</p>
             <p>Some <em>content</em></p>
             </div>
             ''',
