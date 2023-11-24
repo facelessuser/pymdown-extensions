@@ -2,6 +2,7 @@
 
 ## 10.5
 
+- **NEW**: Blocks: Admonitions and Details now allow configuring custom block classes and default titles.
 - **FIX**: Keys: Ensure that Keys does not parse base64 encoded URLs.
 
 ## 10.4
