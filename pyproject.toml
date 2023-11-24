@@ -23,7 +23,7 @@ dynamic = [
 ]
 
 dependencies = [
-    "Markdown>=3.2",
+    "Markdown>=3.5",
     "pyyaml"
 ]
 

@@ -24,9 +24,7 @@ DEALINGS IN THE SOFTWARE.
 """
 from markdown import Extension
 from markdown.inlinepatterns import InlineProcessor, SubstituteTagInlineProcessor
-from markdown.postprocessors import Postprocessor
 from markdown import util as md_util
-import re
 from . import util
 
 # We need to ignore these as they are used in Markdown processing
@@ -35,7 +33,6 @@ ETX = '\u0003'
 ESCAPE_RE = r'\\(.)'
 ESCAPE_NO_NL_RE = r'\\([^\n])'
 HARDBREAK_RE = r'\\\n'
-UNESCAPE_PATTERN = re.compile(r'%s(\d+)%s' % (md_util.STX, md_util.ETX))
 
 
 class EscapeAllPattern(InlineProcessor):
@@ -68,20 +65,6 @@ class EscapeAllPattern(InlineProcessor):
         return escape, m.start(0), m.end(0)
 
 
-class EscapeAllPostprocessor(Postprocessor):
-    """Post processor to strip out unwanted content."""
-
-    def unescape(self, m):
-        """Unescape the escaped chars."""
-
-        return util.get_char(int(m.group(1)))
-
-    def run(self, text):
-        """Search document for escaped chars."""
-
-        return UNESCAPE_PATTERN.sub(self.unescape, text)
-
-
 class EscapeAllExtension(Extension):
     """Extension that allows you to escape everything."""
 
@@ -111,7 +94,6 @@ class EscapeAllExtension(Extension):
             180
         )
 
-        md.postprocessors.register(EscapeAllPostprocessor(md), "unescape", 10)
         if config['hardbreak']:
             md.inlinePatterns.register(SubstituteTagInlineProcessor(HARDBREAK_RE, 'br'), "hardbreak", 5.1)
 

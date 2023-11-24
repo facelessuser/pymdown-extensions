@@ -33,3 +33,11 @@ class TestEscapeAll(util.MdCase):
             r'This \& that',
             '<p>This &amp; that</p>'
         )
+
+    def test_normal_escape(self):
+        """Test normal escapes."""
+
+        self.check_markdown(
+            r'This & \that',
+            '<p>This &amp; that</p>'
+        )
