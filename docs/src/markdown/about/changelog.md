@@ -1,9 +1,13 @@
 # Changelog
 
+## 10.6
+
+-   **NEW**: MagicLink: Allow configuring custom repository providers based off the existing providers.
+
 ## 10.5
 
-- **NEW**: Blocks: Admonitions and Details now allow configuring custom block classes and default titles.
-- **FIX**: Keys: Ensure that Keys does not parse base64 encoded URLs.
+-   **NEW**: Blocks: Admonitions and Details now allow configuring custom block classes and default titles.
+-   **FIX**: Keys: Ensure that Keys does not parse base64 encoded URLs.
 
 ## 10.4
 

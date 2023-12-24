@@ -64,6 +64,8 @@ RE_LINK = r'''(?xi)
 
 RE_AUTOLINK = r'(?i)<((?:ht|f)tps?://[^<>]*)>'
 
+RE_CUSTOM_NAME = re.compile(r'^[a-zA-Z0-9]+$')
+
 # Provider specific user regex rules
 RE_TWITTER_USER = r'\w{1,15}'
 RE_GITHUB_USER = r'[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?'
@@ -77,13 +79,24 @@ RE_ALL_EXT_MENTIONS = r'''(?x)
     (?:{})
 )\b
 '''
-RE_TWITTER_EXT_MENTIONS = r'twitter:{}'.format(RE_TWITTER_USER)
-RE_GITHUB_EXT_MENTIONS = r'github:{}'.format(RE_GITHUB_USER)
-RE_GITLAB_EXT_MENTIONS = r'gitlab:{}'.format(RE_GITLAB_USER)
-RE_BITBUCKET_EXT_MENTIONS = r'bitbucket:{}'.format(RE_BITBUCKET_USER)
 
 # Internal mention patterns
 RE_INT_MENTIONS = r'(?P<mention>(?<![a-zA-Z])@{})\b'
+
+def create_ext_mentions(name, provider_type):
+    """Create external mentions by provider type."""
+
+    if provider_type == 'github':
+        return r'{}:{}'.format(name, RE_GITHUB_USER)
+    elif provider_type == 'gitlab':
+        return r'{}:{}'.format(name, RE_GITLAB_USER)
+    elif provider_type == 'bitbucket':
+        return r'{}:{}'.format(name, RE_BITBUCKET_USER)
+
+RE_TWITTER_EXT_MENTIONS = r'twitter:{}'.format(RE_TWITTER_USER)
+RE_GITHUB_EXT_MENTIONS = create_ext_mentions('github', 'github')
+RE_GITLAB_EXT_MENTIONS = create_ext_mentions('gitlab', 'gitlab')
+RE_BITBUCKET_EXT_MENTIONS = create_ext_mentions('bitbucket', 'bitbucket')
 
 # External repo mention patterns
 RE_GIT_EXT_REPO_MENTIONS = r'''(?x)
@@ -92,7 +105,7 @@ RE_GIT_EXT_REPO_MENTIONS = r'''(?x)
     @(?:{})
 )\b
 /(?P<mention_repo>[-._a-zA-Z\d]{{0,99}}[a-zA-Z\d])\b
-'''.format('|'.join([RE_GITHUB_EXT_MENTIONS, RE_GITLAB_EXT_MENTIONS, RE_BITBUCKET_EXT_MENTIONS]))
+'''
 
 # Internal repo mention patterns
 RE_GIT_INT_REPO_MENTIONS = r'''(?x)
@@ -105,7 +118,7 @@ RE_GIT_EXT_REFS = r'''(?x)
 (?P<all>(?<![@/])(?:(?P<user>\b{})/)
 (?P<repo>\b[-._a-zA-Z\d]{{0,99}}[a-zA-Z\d])
 (?:(?P<issue>(?:\#|!|\?)[1-9][0-9]*)|(?P<commit>@[a-f\d]{{40}})(?:\.{{3}}(?P<diff>[a-f\d]{{40}}))?))\b
-'''.format('|'.join([RE_GITHUB_EXT_MENTIONS, RE_GITLAB_EXT_MENTIONS, RE_BITBUCKET_EXT_MENTIONS]))
+'''
 
 # Internal reference patterns (issue, pull request, commit, compare)
 RE_GIT_INT_EXT_REFS = r'''(?x)
@@ -121,50 +134,112 @@ RE_GIT_INT_MICRO_REFS = r'''(?x)
 )\b
 '''
 
+RE_WWW = re.compile(r'(https?://)(?:www\\\.)?(.*)')
+
+REPO_LINK_TEMPLATES = {
+    'github': (
+        r'''
+        (?P<github>(?P<github_base>{}/
+        (?P<github_user_repo>(?P<github_user>{})/[^/]+))/
+            (?:issues/(?P<github_issue>\d+)/?|
+                pull/(?P<github_pull>\d+)/?|
+                discussions/(?P<github_discuss>\d+)/?|
+                commit/(?P<github_commit>[\da-f]{{7,40}})/?|
+                compare/(?P<github_diff1>[\da-f]{{7,40}})\.{{3}}
+                    (?P<github_diff2>[\da-f]{{7,40}})))''',
+        RE_GITHUB_USER
+    ),
+    'bitbucket': (
+        r'''
+        (?P<bitbucket>(?P<bitbucket_base>{}/
+        (?P<bitbucket_user_repo>(?P<bitbucket_user>{})/[^/]+))/
+            (?:issues/(?P<bitbucket_issue>\d+)(?:/[^/]+)?/?|
+                pull-requests/(?P<bitbucket_pull>\d+)(?:/[^/]+(?:/diff)?)?/?|
+                commits/commit/(?P<bitbucket_commit>[\da-f]{{7,40}})/?|
+                branches/commits/(?P<bitbucket_diff1>[\da-f]{{7,40}})
+                    (?:\.{{2}}|%0d)(?P<bitbucket_diff2>[\da-f]{{7,40}})\#diff))''',
+        RE_BITBUCKET_USER
+    ),
+    'gitlab': (
+        r'''
+        (?P<gitlab>(?P<gitlab_base>{}/
+        (?P<gitlab_user_repo>(?P<gitlab_user>{})/[^/]+))/(?:-/)?
+            (?:issues/(?P<gitlab_issue>\d+)/?|
+                merge_requests/(?P<gitlab_pull>\d+)/?|
+                commit/(?P<gitlab_commit>[\da-f]{{8,40}})/?|
+                compare/(?P<gitlab_diff1>[\da-f]{{8,40}})\.{{3}}
+                    (?P<gitlab_diff2>[\da-f]{{8,40}})))''',
+        RE_GITLAB_USER
+    )
+}
+
+
+def create_repo_link_pattern(provider, host, www=True):
+    """Create repository link provider."""
+
+    template = REPO_LINK_TEMPLATES[provider]
+    host_pat = re.escape(host.lower().rstrip('/'))
+    if www:
+        m = RE_WWW.match(host_pat)
+        if m:
+            host_pat = m.group(1) + r'(?:w{3}\.)?' + m.group(2)
+    return template[0].format(host_pat, template[1])
+
+
 # Repository link shortening pattern
 RE_REPO_LINK = re.compile(
-    r'''(?xi)
-    ^(?:
-        (?P<github>(?P<github_base>https://(?:w{{3}}\.)?github\.com/
-            (?P<github_user_repo>(?P<github_user>{})/[^/]+))/
-                (?:issues/(?P<github_issue>\d+)/?|
-                    pull/(?P<github_pull>\d+)/?|
-                    discussions/(?P<github_discuss>\d+)/?|
-                    commit/(?P<github_commit>[\da-f]{{7,40}})/?|
-                    compare/(?P<github_diff1>[\da-f]{{7,40}})\.{{3}}
-                        (?P<github_diff2>[\da-f]{{7,40}})))|
-
-        (?P<bitbucket>(?P<bitbucket_base>https://(?:w{{3}}\.)?bitbucket\.org/
-            (?P<bitbucket_user_repo>(?P<bitbucket_user>{})/[^/]+))/
-                (?:issues/(?P<bitbucket_issue>\d+)(?:/[^/]+)?/?|
-                    pull-requests/(?P<bitbucket_pull>\d+)(?:/[^/]+(?:/diff)?)?/?|
-                    commits/commit/(?P<bitbucket_commit>[\da-f]{{7,40}})/?|
-                    branches/commits/(?P<bitbucket_diff1>[\da-f]{{7,40}})
-                        (?:\.{{2}}|%0d)(?P<bitbucket_diff2>[\da-f]{{7,40}})\#diff))|
-
-        (?P<gitlab>(?P<gitlab_base>https://(?:w{{3}}\.)?gitlab\.com/
-            (?P<gitlab_user_repo>(?P<gitlab_user>{})/[^/]+))/(?:-/)?
-                (?:issues/(?P<gitlab_issue>\d+)/?|
-                    merge_requests/(?P<gitlab_pull>\d+)/?|
-                    commit/(?P<gitlab_commit>[\da-f]{{8,40}})/?|
-                    compare/(?P<gitlab_diff1>[\da-f]{{8,40}})\.{{3}}
-                        (?P<gitlab_diff2>[\da-f]{{8,40}})))
-    )/?$
-    '''.format(RE_GITHUB_USER, RE_BITBUCKET_USER, RE_GITLAB_USER)
+    r'''(?xi)^(?:{}|{}|{})/?$'''.format(
+        create_repo_link_pattern('github', "https://github.com"),
+        create_repo_link_pattern('bitbucket', "https://bitbucket.org"),
+        create_repo_link_pattern('gitlab', 'https://gitlab.com'),
+    )
 )
+
+
+USER_LINK_TEMPLATES = {
+    'github': (
+        r'''
+        (?P<github>(?P<github_base>{}/
+            (?P<github_user_repo>(?P<github_user>{})(?:/(?P<github_repo>[^/]+))?)))
+        ''',
+        RE_GITHUB_USER
+    ),
+    'bitbucket': (
+        r'''
+        (?P<bitbucket>(?P<bitbucket_base>{}/
+            (?P<bitbucket_user_repo>(?P<bitbucket_user>{})(?:/(?P<bitbucket_repo>[^/]+)/?)?)))
+        ''',
+        RE_BITBUCKET_USER
+    ),
+    'gitlab': (
+        r'''
+        (?P<gitlab>(?P<gitlab_base>{}/
+            (?P<gitlab_user_repo>(?P<gitlab_user>{})(?:/(?P<gitlab_repo>[^/]+))?)))
+        ''',
+        RE_GITLAB_USER
+    )
+}
+
+
+def create_user_link_pattern(provider, host, www=True):
+    """Create repository link provider."""
+
+    template = USER_LINK_TEMPLATES[provider]
+    host_pat = re.escape(host.lower().rstrip('/'))
+    if www:
+        m = RE_WWW.match(host_pat)
+        if m:
+            host_pat = m.group(1) + r'(?:w{3}\.)?' + m.group(2)
+    return template[0].format(host_pat, template[1])
+
 
 # Repository link shortening pattern
 RE_USER_REPO_LINK = re.compile(
-    r'''(?xi)
-    ^(?:
-        (?P<github>(?P<github_base>https://(?:w{{3}}\.)?github\.com/
-            (?P<github_user_repo>(?P<github_user>{})(?:/(?P<github_repo>[^/]+))?))) |
-        (?P<bitbucket>(?P<bitbucket_base>https://(?:w{{3}}\.)?bitbucket\.org/
-            (?P<bitbucket_user_repo>(?P<bitbucket_user>{})(?:/(?P<bitbucket_repo>[^/]+)/?)?))) |
-        (?P<gitlab>(?P<gitlab_base>https://(?:w{{3}}\.)?gitlab\.com/
-            (?P<gitlab_user_repo>(?P<gitlab_user>{})(?:/(?P<gitlab_repo>[^/]+))?))) |
-    )/?$
-    '''.format(RE_GITHUB_USER, RE_BITBUCKET_USER, RE_GITLAB_USER)
+    r'''(?xi)^(?:{}|{}|{})/?$'''.format(
+        create_user_link_pattern('github', 'https://github.com'),
+        create_user_link_pattern('bitbucket', '"https://bitbucket.org"'),
+        create_user_link_pattern('gitlab', 'https://gitlab.com')
+    )
 )
 
 RE_SOCIAL_LINK = re.compile(
@@ -177,57 +252,83 @@ RE_SOCIAL_LINK = re.compile(
 
 # Provider specific info (links, names, specific patterns, etc.)
 SOCIAL_PROVIDERS = {'twitter'}
-PROVIDER_INFO = {
-    "twitter": {
-        "provider": "Twitter",
-        "url": "https://twitter.com",
-        "user_pattern": RE_TWITTER_USER
-    },
+
+# Templates for providers
+PROVIDER_TEMPLATES = {
     "gitlab": {
         "provider": "GitLab",
-        "url": "https://gitlab.com",
+        "type": "gitlab",
+        "url": "{}",
         "user_pattern": RE_GITLAB_USER,
-        "issue": "https://gitlab.com/{}/{}/-/issues/{}",
-        "pull": "https://gitlab.com/{}/{}/-/merge_requests/{}",
-        "commit": "https://gitlab.com/{}/{}/-/commit/{}",
-        "compare": "https://gitlab.com/{}/{}/-/compare/{}...{}",
+        "issue": "{}/{{}}/{{}}/-/issues/{{}}",
+        "pull": "{}/{{}}/{{}}/-/merge_requests/{{}}",
+        "commit": "{}/{{}}/{{}}/-/commit/{{}}",
+        "compare": "{}/{{}}/{{}}/-/compare/{{}}...{{}}",
         "hash_size": 8
     },
     "bitbucket": {
         "provider": "Bitbucket",
-        "url": "https://bitbucket.org",
+        "type": "bitbucket",
+        "url": "{}",
         "user_pattern": RE_BITBUCKET_USER,
-        "issue": "https://bitbucket.org/{}/{}/issues/{}",
-        "pull": "https://bitbucket.org/{}/{}/pull-requests/{}",
-        "commit": "https://bitbucket.org/{}/{}/commits/commit/{}",
-        "compare": "https://bitbucket.org/{}/{}/branches/commits/{}..{}#diff",
+        "issue": "{}/{{}}/{{}}/issues/{{}}",
+        "pull": "{}/{{}}/{{}}/pull-requests/{{}}",
+        "commit": "{}/{{}}/{{}}/commits/commit/{{}}",
+        "compare": "{}/{{}}/{{}}/branches/commits/{{}}..{{}}#diff",
         "hash_size": 7
     },
     "github": {
         "provider": "GitHub",
-        "url": "https://github.com",
+        "type": "github",
+        "url": "{}",
         "user_pattern": RE_GITHUB_USER,
-        "issue": "https://github.com/{}/{}/issues/{}",
-        "pull": "https://github.com/{}/{}/pull/{}",
-        "discuss": 'https://github.com/{}/{}/discussions/{}',
-        "commit": "https://github.com/{}/{}/commit/{}",
-        "compare": "https://github.com/{}/{}/compare/{}...{}",
+        "issue": "{}/{{}}/{{}}/issues/{{}}",
+        "pull": "{}/{{}}/{{}}/pull/{{}}",
+        "discuss": '{}/{{}}/{{}}/discussions/{{}}',
+        "commit": "{}/{{}}/{{}}/commit/{{}}",
+        "compare": "{}/{{}}/{{}}/compare/{{}}...{{}}",
         "hash_size": 7
-    }
+    },
+    "twitter": {
+        "provider": "Twitter",
+        "type": "twitter",
+        "url": "{}",
+        "user_pattern": RE_TWITTER_USER
+    },
+}
+
+
+def create_provider(provider, host):
+    """Create the provider with the provided host."""
+
+    entry = PROVIDER_TEMPLATES[provider].copy()
+    for key in ('url', 'issue', 'pull', 'commit', 'compare', 'discuss'):
+        if key not in entry:
+            continue
+        entry[key] = entry[key].format(host.lower().rstrip('/'))
+    return entry
+
+
+PROVIDER_INFO = {
+    "twitter": create_provider('twitter', "https://twitter.com"),
+    "gitlab": create_provider('gitlab', 'https://gitlab.com'),
+    "bitbucket": create_provider('bitbucket', "https://bitbucket.org"),
+    "github": create_provider('github', "https://github.com")
 }
 
 
 class _MagiclinkShorthandPattern(InlineProcessor):
     """Base shorthand link class."""
 
-    def __init__(self, pattern, md, user, repo, provider, labels, normalize):
+    def __init__(self, pattern, md, user, repo, provider, labels, normalize, provider_info):
         """Initialize."""
 
         self.user = user
         self.repo = repo
         self.labels = labels
         self.normalize = normalize
-        self.provider = provider if provider in PROVIDER_INFO else ''
+        self.provider_info = provider_info
+        self.provider = provider if provider in self.provider_info else ''
         InlineProcessor.__init__(self, pattern, md)
 
 
@@ -241,17 +342,17 @@ class _MagiclinkReferencePattern(_MagiclinkShorthandPattern):
         issue_value = issue[1:]
 
         if issue_type == '#':
-            issue_link = PROVIDER_INFO[provider]['issue']
+            issue_link = self.provider_info[provider]['issue']
             issue_label = self.labels.get('issue', 'Issue')
             class_name = 'magiclink-issue'
             icon = issue_type
         elif issue_type == '!':
-            issue_link = PROVIDER_INFO[provider]['pull']
+            issue_link = self.provider_info[provider]['pull']
             issue_label = self.labels.get('pull', 'Pull Request')
             class_name = 'magiclink-pull'
             icon = '#' if self.normalize else issue_type
-        elif provider == "github" and issue_type == '?':
-            issue_link = PROVIDER_INFO[provider]['discuss']
+        elif self.provider_info[provider]['type'] == "github" and issue_type == '?':
+            issue_link = self.provider_info[provider]['discuss']
             issue_label = self.labels.get('discuss', 'Discussion')
             class_name = 'magiclink-discussion'
             icon = '#' if self.normalize else issue_type
@@ -270,7 +371,7 @@ class _MagiclinkReferencePattern(_MagiclinkShorthandPattern):
         el.set(
             'title',
             '{} {}: {}/{} #{}'.format(
-                PROVIDER_INFO[provider]['provider'],
+                self.provider_info[provider]['provider'],
                 issue_label,
                 user,
                 repo,
@@ -282,7 +383,7 @@ class _MagiclinkReferencePattern(_MagiclinkShorthandPattern):
     def process_commit(self, el, provider, user, repo, commit):
         """Process commit."""
 
-        hash_ref = commit[0:PROVIDER_INFO[provider]['hash_size']]
+        hash_ref = commit[0:self.provider_info[provider]['hash_size']]
         if self.my_repo:
             text = hash_ref
         elif self.my_user:
@@ -290,13 +391,13 @@ class _MagiclinkReferencePattern(_MagiclinkShorthandPattern):
         else:
             text = '{}/{}@{}'.format(user, repo, hash_ref)
 
-        el.set('href', PROVIDER_INFO[provider]['commit'].format(user, repo, commit))
+        el.set('href', self.provider_info[provider]['commit'].format(user, repo, commit))
         el.text = md_util.AtomicString(text)
         el.set('class', 'magiclink magiclink-{} magiclink-commit'.format(provider))
         el.set(
             'title',
             '{} {}: {}/{}@{}'.format(
-                PROVIDER_INFO[provider]['provider'],
+                self.provider_info[provider]['provider'],
                 self.labels.get('commit', 'Commit'),
                 user,
                 repo,
@@ -307,8 +408,8 @@ class _MagiclinkReferencePattern(_MagiclinkShorthandPattern):
     def process_compare(self, el, provider, user, repo, commit1, commit2):
         """Process commit."""
 
-        hash_ref1 = commit1[0:PROVIDER_INFO[provider]['hash_size']]
-        hash_ref2 = commit2[0:PROVIDER_INFO[provider]['hash_size']]
+        hash_ref1 = commit1[0:self.provider_info[provider]['hash_size']]
+        hash_ref2 = commit2[0:self.provider_info[provider]['hash_size']]
         if self.my_repo:
             text = '{}...{}'.format(hash_ref1, hash_ref2)
         elif self.my_user:
@@ -316,13 +417,13 @@ class _MagiclinkReferencePattern(_MagiclinkShorthandPattern):
         else:
             text = '{}/{}@{}...{}'.format(user, repo, hash_ref1, hash_ref2)
 
-        el.set('href', PROVIDER_INFO[provider]['compare'].format(user, repo, commit1, commit2))
+        el.set('href', self.provider_info[provider]['compare'].format(user, repo, commit1, commit2))
         el.text = md_util.AtomicString(text)
         el.set('class', 'magiclink magiclink-{} magiclink-compare'.format(provider))
         el.set(
             'title',
             '{} {}: {}/{}@{}...{}'.format(
-                PROVIDER_INFO[provider]['provider'],
+                self.provider_info[provider]['provider'],
                 self.labels.get('compare', 'Compare'),
                 user,
                 repo,
@@ -345,17 +446,30 @@ class MagicShortenerTreeprocessor(Treeprocessor):
     USER = 6
 
     def __init__(
-        self, md, base_url, base_user_url, labels, normalize, repo_shortner, social_shortener, excludes, provider
+        self,
+        md,
+        base_url,
+        base_user_url,
+        labels,
+        normalize,
+        repo_shortner,
+        social_shortener,
+        custom_shortners,
+        excludes,
+        provider,
+        provider_info
     ):
         """Initialize."""
 
         self.base = base_url
         self.repo_shortner = repo_shortner
         self.social_shortener = social_shortener
+        self.custom_shortners = custom_shortners
         self.base_user = base_user_url
         self.repo_labels = labels
         self.normalize = normalize
         self.provider = provider
+        self.provider_info = provider_info
         self.labels = {
             "github": "GitHub",
             "bitbucket": "Bitbucket",
@@ -442,6 +556,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         """Shorten issue/pull link."""
 
         # user/repo#(issue|pull)
+        provider_type = self.provider_info[provider]['type']
         if link_type == self.ISSUE:
             issue_type = self.repo_labels.get('issue', 'Issue')
             icon = '#'
@@ -452,7 +567,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
             icon = '#' if self.normalize else '!'
             if 'magiclink-pull' not in class_name:
                 class_name.append('magiclink-pull')
-        elif provider == 'github' and link_type == self.DISCUSS:
+        elif provider_type == 'github' and link_type == self.DISCUSS:
             issue_type = self.repo_labels.get('discuss', 'Discussion')
             icon = '#' if self.normalize else '?'
             if 'magiclink-discussion' not in class_name:
@@ -470,7 +585,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
     def shorten_issue_commit(self, link, provider, link_type, user_repo, value, hash_size):
         """Shorten URL."""
 
-        label = PROVIDER_INFO[provider]['provider']
+        label = self.provider_info[provider]['provider']
         prov_class = 'magiclink-{}'.format(provider)
         class_attr = link.get('class', '')
         class_name = class_attr.split(' ') if class_attr else []
@@ -493,7 +608,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
     def shorten_user_repo(self, link, provider, link_type, user_repo):
         """Shorten URL."""
 
-        label = PROVIDER_INFO[provider]['provider']
+        label = self.provider_info[provider]['provider']
         prov_class = 'magiclink-{}'.format(provider)
         class_attr = link.get('class', '')
         class_name = class_attr.split(' ') if class_attr else []
@@ -511,7 +626,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
             self.shorten_user(link, class_name, label, user_repo)
         link.set('class', ' '.join(class_name))
 
-    def get_provider(self, match):
+    def get_provider_type(self, match):
         """Get the provider and hash size."""
 
         # Set provider specific variables
@@ -565,21 +680,21 @@ class MagicShortenerTreeprocessor(Treeprocessor):
                 link_type = self.USER
         return value, link_type
 
-    def is_my_repo(self, provider, match):
+    def is_my_repo(self, provider_type, match):
         """Check if link is from our specified user and repo."""
 
         # See if these links are from the specified repo.
-        return self.base and match.group(provider + '_base') + '/' == self.base
+        return self.base and match.group(provider_type + '_base') + '/' == self.base
 
-    def is_my_user(self, provider, match):
+    def is_my_user(self, provider_type, match):
         """Check if link is from our specified user."""
 
-        return self.base_user and match.group(provider + '_base').startswith(self.base_user)
+        return self.base_user and match.group(provider_type + '_base').startswith(self.base_user)
 
-    def excluded(self, provider, match):
+    def excluded(self, provider_type, provider, match):
         """Check if user has been excluded."""
 
-        user = match.group(provider + '_user')
+        user = match.group(provider_type + '_user')
         return user.lower() in self.excludes.get(provider, set())
 
     def run(self, root):
@@ -608,39 +723,81 @@ class MagicShortenerTreeprocessor(Treeprocessor):
                 if self.repo_shortner:
                     m = RE_REPO_LINK.match(href)
                     if m:
-                        provider = self.get_provider(m)
-                        self.my_repo = self.is_my_repo(provider, m)
-                        self.my_user = self.my_repo or self.is_my_user(provider, m)
-                        value, link_type = self.get_type(provider, m)
+                        provider_type = self.get_provider_type(m)
+                        provider = provider_type
+                        self.my_repo = self.is_my_repo(provider_type, m)
+                        self.my_user = self.my_repo or self.is_my_user(provider_type, m)
+                        value, link_type = self.get_type(provider_type, m)
                         found = True
 
                         # All right, everything set, let's shorten.
-                        if not self.excluded(provider, m):
+                        if not self.excluded(provider_type, provider, m):
                             self.shorten_issue_commit(
                                 link,
                                 provider,
                                 link_type,
-                                m.group(provider + '_user_repo'),
+                                m.group(provider_type + '_user_repo'),
                                 value,
-                                PROVIDER_INFO[provider]['hash_size']
+                                self.provider_info[provider]['hash_size']
                             )
                 if not found and self.repo_shortner:
                     m = RE_USER_REPO_LINK.match(href)
                     if m:
-                        provider = self.get_provider(m)
-                        self.my_repo = self.is_my_repo(provider, m)
-                        self.my_user = self.my_repo or self.is_my_user(provider, m)
-                        value, link_type = self.get_type(provider, m)
+                        provider_type = self.get_provider_type(m)
+                        provider = provider_type
+                        self.my_repo = self.is_my_repo(provider_type, m)
+                        self.my_user = self.my_repo or self.is_my_user(provider_type, m)
+                        value, link_type = self.get_type(provider_type, m)
                         found = True
 
-                        if not self.excluded(provider, m):
+                        if not self.excluded(provider_type, provider, m):
                             # All right, everything set, let's shorten.
                             self.shorten_user_repo(
                                 link,
                                 provider,
                                 link_type,
-                                m.group(provider + '_user_repo')
+                                m.group(provider_type + '_user_repo')
                             )
+                if not found and self.custom_shortners:
+                    for custom, entry in self.custom_shortners.items():
+                        m = entry['repo'].match(href)
+                        if m:
+                            provider = custom
+                            provider_type = self.provider_info[custom]['type']
+                            self.my_repo = self.is_my_repo(provider_type, m)
+                            self.my_user = self.my_repo or self.is_my_user(provider_type, m)
+                            value, link_type = self.get_type(provider_type, m)
+                            found = True
+
+                            # All right, everything set, let's shorten.
+                            if not self.excluded(provider_type, provider, m):
+                                self.shorten_issue_commit(
+                                    link,
+                                    provider,
+                                    link_type,
+                                    m.group(provider_type + '_user_repo'),
+                                    value,
+                                    self.provider_info[provider]['hash_size']
+                                )
+                        if not found:
+                            m = entry['user'].match(href)
+                            if m:
+                                provider = custom
+                                provider_type = self.provider_info[custom]['type']
+                                self.my_repo = self.is_my_repo(provider_type, m)
+                                self.my_user = self.my_repo or self.is_my_user(provider_type, m)
+                                value, link_type = self.get_type(provider_type, m)
+                                found = True
+
+                                if not self.excluded(provider_type, provider, m):
+                                    # All right, everything set, let's shorten.
+                                    self.shorten_user_repo(
+                                        link,
+                                        provider,
+                                        link_type,
+                                        m.group(provider_type + '_user_repo')
+                                    )
+
                 if not found and self.social_shortener:
                     m = RE_SOCIAL_LINK.match(href)
                     if m:
@@ -649,7 +806,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
                         self.my_user = self.my_repo or self.is_my_user(provider, m)
                         value, link_type = self.get_type(provider, m)
 
-                        if not self.excluded(provider, m):
+                        if not self.excluded(provider, provider, m):
                             # All right, everything set, let's shorten.
                             self.shorten_user_repo(
                                 link,
@@ -740,10 +897,10 @@ class MagiclinkMentionPattern(_MagiclinkShorthandPattern):
             mention = parts[0]
 
         el = etree.Element("a")
-        el.set('href', '{}/{}'.format(PROVIDER_INFO[provider]['url'], mention))
+        el.set('href', '{}/{}'.format(self.provider_info[provider]['url'], mention))
         el.set(
             'title',
-            "{} {}: {}".format(PROVIDER_INFO[provider]['provider'], self.labels.get('mention', "User"), mention)
+            "{} {}: {}".format(self.provider_info[provider]['provider'], self.labels.get('mention', "User"), mention)
         )
         el.set('class', 'magiclink magiclink-{} magiclink-mention'.format(provider))
         el.text = md_util.AtomicString('@{}'.format(mention))
@@ -770,11 +927,11 @@ class MagiclinkRepositoryPattern(_MagiclinkShorthandPattern):
         repo = m.group('mention_repo')
 
         el = etree.Element("a")
-        el.set('href', '{}/{}/{}'.format(PROVIDER_INFO[provider]['url'], user, repo))
+        el.set('href', '{}/{}/{}'.format(self.provider_info[provider]['url'], user, repo))
         el.set(
             'title',
             "{} {}: {}/{}".format(
-                PROVIDER_INFO[provider]['provider'], self.labels.get('repository', 'Repository'), user, repo
+                self.provider_info[provider]['provider'], self.labels.get('repository', 'Repository'), user, repo
             )
         )
         el.set('class', 'magiclink magiclink-{} magiclink-repository'.format(provider))
@@ -915,6 +1072,10 @@ class MagiclinkExtension(Extension):
             'repo': [
                 '',
                 'The base repo to use - Default: ""'
+            ],
+            'custom': [
+                {},
+                "Custom repositories hosts - Default {}"
             ]
         }
         super().__init__(*args, **kwargs)
@@ -933,7 +1094,7 @@ class MagiclinkExtension(Extension):
 
         md.inlinePatterns.register(MagiclinkMailPattern(RE_MAIL, md), "magic-mail", 84.9)
 
-    def setup_shorthand(self, md, int_mentions, ext_mentions, config):
+    def setup_shorthand(self, md, int_mentions, ext_mentions, config, provider_info):
         """Setup shorthand."""
 
         # Setup URL shortener
@@ -943,56 +1104,112 @@ class MagiclinkExtension(Extension):
         # Repository shorthand
         if self.git_short:
             git_ext_repo = MagiclinkRepositoryPattern(
-                RE_GIT_EXT_REPO_MENTIONS, md, self.user, self.repo, self.provider, self.labels, self.normalize
+                self.re_git_ext_repo_mentions,
+                md,
+                self.user,
+                self.repo,
+                self.provider,
+                self.labels,
+                self.normalize,
+                provider_info
             )
             md.inlinePatterns.register(git_ext_repo, "magic-repo-ext-mention", 79.9)
             if not self.is_social:
                 git_int_repo = MagiclinkRepositoryPattern(
-                    RE_GIT_INT_REPO_MENTIONS.format(int_mentions), md, self.user, self.repo, self.provider,
-                    self.labels, self.normalize
+                    RE_GIT_INT_REPO_MENTIONS.format(int_mentions),
+                    md,
+                    self.user,
+                    self.repo,
+                    self.provider,
+                    self.labels,
+                    self.normalize,
+                    provider_info
                 )
                 md.inlinePatterns.register(git_int_repo, "magic-repo-int-mention", 79.8)
 
         # Mentions
         pattern = RE_ALL_EXT_MENTIONS.format('|'.join(ext_mentions))
         git_mention = MagiclinkMentionPattern(
-            pattern, md, self.user, self.repo, self.provider, self.labels, self.normalize
+            pattern,
+            md, self.user,
+            self.repo,
+            self.provider,
+            self.labels,
+            self.normalize,
+            provider_info
         )
         md.inlinePatterns.register(git_mention, "magic-ext-mention", 79.7)
 
         git_mention = MagiclinkMentionPattern(
-            RE_INT_MENTIONS.format(int_mentions), md, self.user, self.repo, self.provider, self.labels, self.normalize
+            RE_INT_MENTIONS.format(int_mentions),
+            md,
+            self.user,
+            self.repo,
+            self.provider,
+            self.labels,
+            self.normalize,
+            provider_info
         )
         md.inlinePatterns.register(git_mention, "magic-int-mention", 79.6)
 
         # Other project refs
         if self.git_short:
             git_ext_refs = MagiclinkExternalRefsPattern(
-                RE_GIT_EXT_REFS, md, self.user, self.repo, self.provider, self.labels, self.normalize
+                self.re_git_ext_refs,
+                md,
+                self.user,
+                self.repo,
+                self.provider,
+                self.labels,
+                self.normalize,
+                provider_info
             )
             md.inlinePatterns.register(git_ext_refs, "magic-ext-refs", 79.5)
             if not self.is_social:
                 git_int_refs = MagiclinkExternalRefsPattern(
-                    RE_GIT_INT_EXT_REFS.format(int_mentions), md, self.user, self.repo, self.provider,
-                    self.labels, self.normalize
+                    RE_GIT_INT_EXT_REFS.format(int_mentions),
+                    md,
+                    self.user,
+                    self.repo,
+                    self.provider,
+                    self.labels,
+                    self.normalize,
+                    provider_info
                 )
                 md.inlinePatterns.register(git_int_refs, "magic-int-refs", 79.4)
                 git_int_micro_refs = MagiclinkInternalRefsPattern(
-                    RE_GIT_INT_MICRO_REFS, md, self.user, self.repo, self.provider, self.labels, self.normalize
+                    RE_GIT_INT_MICRO_REFS,
+                    md,
+                    self.user,
+                    self.repo,
+                    self.provider,
+                    self.labels,
+                    self.normalize,
+                    provider_info
                 )
                 md.inlinePatterns.register(git_int_micro_refs, "magic-int-micro-refs", 79.3)
 
-    def setup_shortener(self, md, base_url, base_user_url, config, repo_shortner, social_shortener):
+    def setup_shortener(
+        self,
+        md,
+        base_url,
+        base_user_url,
+        config,
+        repo_shortner,
+        social_shortener,
+        custom_shortners,
+        provider_info
+    ):
         """Setup shortener."""
 
         shortener = MagicShortenerTreeprocessor(
-            md, base_url, base_user_url, self.labels, self.normalize, repo_shortner, social_shortener,
-            self.shortener_exclusions, self.provider
+            md, base_url, base_user_url, self.labels, self.normalize, repo_shortner, social_shortener, custom_shortners,
+            self.shortener_exclusions, self.provider, provider_info
         )
         shortener.config = config
         md.treeprocessors.register(shortener, "magic-repo-shortener", 9.9)
 
-    def get_base_urls(self, config):
+    def get_base_urls(self, config, provider_info):
         """Get base URLs."""
 
         base_url = ''
@@ -1002,8 +1219,8 @@ class MagiclinkExtension(Extension):
             return base_url, base_user_url
 
         if self.user and self.repo:
-            base_url = '{}/{}/{}/'.format(PROVIDER_INFO[self.provider]['url'], self.user, self.repo)
-            base_user_url = '{}/{}/'.format(PROVIDER_INFO[self.provider]['url'], self.user)
+            base_url = '{}/{}/{}/'.format(provider_info[self.provider]['url'], self.user, self.repo)
+            base_user_url = '{}/{}/'.format(provider_info[self.provider]['url'], self.user)
 
         return base_url, base_user_url
 
@@ -1024,34 +1241,76 @@ class MagiclinkExtension(Extension):
         self.repo_shortner = config.get('repo_url_shortener', False)
         self.social_shortener = config.get('social_url_shortener', False)
         self.shortener_exclusions = {k: set(v) for k, v in DEFAULT_EXCLUDES.items()}
+
+        provider_info = PROVIDER_INFO.copy()
+        custom_provider = config.get('custom', {})
+        excludes = config.get('shortener_user_exclude', {})
+        custom_shortners = {}
+        external_users = [RE_GITHUB_EXT_MENTIONS, RE_GITLAB_EXT_MENTIONS, RE_BITBUCKET_EXT_MENTIONS]
+        for custom, entry in custom_provider.items():
+            if not RE_CUSTOM_NAME.match(custom):
+                raise ValueError(
+                    "Name '{}' not allowed, provider name must contain only letters and numbers".format(custom)
+                )
+            if custom not in provider_info:
+                provider_info[custom] = create_provider(entry['type'], entry['host'])
+                provider_info[custom]['provider'] = entry['label']
+                custom_shortners[custom] = {
+                    'repo': re.compile(
+                        r'(?xi)^{}/?$'.format(
+                            create_repo_link_pattern(entry['type'], entry['host'], entry.get('www', True))
+                        )
+                    ),
+                    'user': re.compile(
+                        r'(?xi)^{}/?$'.format(
+                            create_user_link_pattern(entry['type'], entry['host'], entry.get('www', True))
+                        )
+                    )
+                }
+                if custom not in excludes:
+                    excludes[custom] = excludes.get(entry['type'], [])
+                external_users.append(create_ext_mentions(custom, entry['type']))
+
+        self.re_git_ext_repo_mentions = RE_GIT_EXT_REPO_MENTIONS.format('|'.join(external_users))
+        self.re_git_ext_refs = RE_GIT_EXT_REFS.format('|'.join(external_users))
+
         for key, value in config.get('shortener_user_exclude', {}).items():
-            if key in ('github', 'bitbucket', 'gitlab', 'twitter') and isinstance(value, (list, tuple, set)):
+            if key in provider_info and isinstance(value, (list, tuple, set)):
                 self.shortener_exclusions[key] = {x.lower() for x in value}
 
         # Ensure valid provider
-        if self.provider not in PROVIDER_INFO:
+        if self.provider not in provider_info:
             self.provider = 'github'
 
         int_mentions = None
         ext_mentions = []
         if self.git_short:
-            ext_mentions.extend([RE_BITBUCKET_EXT_MENTIONS, RE_GITHUB_EXT_MENTIONS, RE_GITLAB_EXT_MENTIONS])
+            ext_mentions.extend(external_users)
 
         if self.social_short:
             ext_mentions.append(RE_TWITTER_EXT_MENTIONS)
 
         if self.git_short or self.social_short:
-            int_mentions = PROVIDER_INFO[self.provider]['user_pattern']
+            int_mentions = provider_info[self.provider]['user_pattern']
 
         self.setup_autolinks(md, config)
 
         if self.git_short or self.social_short:
-            self.setup_shorthand(md, int_mentions, ext_mentions, config)
+            self.setup_shorthand(md, int_mentions, ext_mentions, config, provider_info)
 
         # Setup link post processor for shortening repository links
         if self.repo_shortner or self.social_shortener:
-            base_url, base_user_url = self.get_base_urls(config)
-            self.setup_shortener(md, base_url, base_user_url, config, self.repo_shortner, self.social_shortener)
+            base_url, base_user_url = self.get_base_urls(config, provider_info)
+            self.setup_shortener(
+                md,
+                base_url,
+                base_user_url,
+                config,
+                self.repo_shortner,
+                self.social_shortener,
+                custom_shortners,
+                provider_info
+            )
 
 
 def makeExtension(*args, **kwargs):
