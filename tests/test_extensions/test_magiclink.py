@@ -1,5 +1,6 @@
 """Test cases for MagicLink."""
 from .. import util
+import markdown
 
 
 class TestMagicLinkShortner(util.MdCase):
@@ -127,7 +128,7 @@ class TestMagicLinkShortnerSocial(util.MdCase):
     """Test cases for social link shortener."""
 
     extension = [
-        'pymdownx.magiclink',
+        'pymdownx.magiclink'
     ]
 
     extension_configs = {
@@ -160,3 +161,182 @@ class TestMagicLinkShortnerSocial(util.MdCase):
             r'https://twitter.com/home',
             r'<p><a href="https://twitter.com/home">https://twitter.com/home</a></p>'
         )
+
+
+class TestMagicLinkCustom(util.MdCase):
+    """Test cases for custom provider."""
+
+    extension = [
+        'pymdownx.magiclink',
+        'pymdownx.saneheaders'
+    ]
+
+    extension_configs = {
+        'pymdownx.magiclink': {
+            'repo_url_shorthand': True,
+            'repo_url_shortener': True,
+            'user': 'facelessuser',
+            'repo': 'pymdown-extensions',
+            'provider': 'test',
+            'custom': {
+                'test': {
+                    'host': 'http://test.com',
+                    'label': 'Test',
+                    'type': 'github'
+                }
+            }
+        }
+    }
+
+    def test_user(self):
+        """Test user in custom repo."""
+
+        self.check_markdown(
+            '@facelessuser',
+            '<p><a class="magiclink magiclink-test magiclink-mention" href="http://test.com/facelessuser" title="Test User: facelessuser">@facelessuser</a></p>'  # noqa: E501
+        )
+
+    def test_repo(self):
+        """Test repo in custom repo."""
+
+        self.check_markdown(
+            '@facelessuser/pymdown-extensions',
+            '<p><a class="magiclink magiclink-test magiclink-repository" href="http://test.com/facelessuser/pymdown-extensions" title="Test Repository: facelessuser/pymdown-extensions">facelessuser/pymdown-extensions</a></p>'  # noqa: E501
+        )
+
+    def test_default_issue(self):
+        """Test default issue case."""
+
+        self.check_markdown(
+            '#2',
+            '<p><a class="magiclink magiclink-test magiclink-issue" href="http://test.com/facelessuser/pymdown-extensions/issues/2" title="Test Issue: facelessuser/pymdown-extensions #2">#2</a></p>'  # noqa: E501
+        )
+
+    def test_default_pull(self):
+        """Test default pull case."""
+
+        self.check_markdown(
+            '!2',
+            '<p><a class="magiclink magiclink-test magiclink-pull" href="http://test.com/facelessuser/pymdown-extensions/pull/2" title="Test Pull Request: facelessuser/pymdown-extensions #2">!2</a></p>'  # noqa: E501
+        )
+
+    def test_default_discussion(self):
+        """Test default discussion case."""
+
+        self.check_markdown(
+            '?2',
+            '<p><a class="magiclink magiclink-test magiclink-discussion" href="http://test.com/facelessuser/pymdown-extensions/discussions/2" title="Test Discussion: facelessuser/pymdown-extensions #2">?2</a></p>'  # noqa: E501
+        )
+
+    def test_default_commit(self):
+        """Test default commit case."""
+
+        self.check_markdown(
+            '3f6b07a8eeaa9d606115758d90f55fec565d4e2a',
+            '<p><a class="magiclink magiclink-test magiclink-commit" href="http://test.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a" title="Test Commit: facelessuser/pymdown-extensions@3f6b07a">3f6b07a</a></p>'  # noqa: E501
+        )
+
+    def test_default_compare(self):
+        """Test default compare case."""
+
+        self.check_markdown(
+            'e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac',
+            '<p><a class="magiclink magiclink-test magiclink-compare" href="http://test.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac" title="Test Compare: facelessuser/pymdown-extensions@e2ed7e0...90b6fb8">e2ed7e0...90b6fb8</a></p>'  # noqa: E501
+        )
+
+    def test_user_link(self):
+        """Test user link."""
+
+        self.check_markdown(
+            'http://test.com/facelessuser',
+            '<p><a class="magiclink magiclink-test magiclink-mention" href="http://test.com/facelessuser" title="Test User: facelessuser">@facelessuser</a></p>'  # noqa: E501
+        )
+
+    def test_repo_link(self):
+        """Test repository link."""
+
+        self.check_markdown(
+            'http://test.com/facelessuser/pymdown-extensions',
+            '<p><a class="magiclink magiclink-test magiclink-repository" href="http://test.com/facelessuser/pymdown-extensions" title="Test Repository: facelessuser/pymdown-extensions">facelessuser/pymdown-extensions</a></p>'  # noqa: E501
+        )
+
+    def test_issue_link(self):
+        """Test issue link."""
+
+        self.check_markdown(
+            'http://test.com/facelessuser/pymdown-extensions/issues/2',
+            '<p><a class="magiclink magiclink-test magiclink-issue" href="http://test.com/facelessuser/pymdown-extensions/issues/2" title="Test Issue: facelessuser/pymdown-extensions #2">#2</a></p>'  # noqa: E501
+        )
+
+    def test_pull_link(self):
+        """Test issue link."""
+
+        self.check_markdown(
+            'http://test.com/facelessuser/pymdown-extensions/pull/2',
+            '<p><a class="magiclink magiclink-test magiclink-pull" href="http://test.com/facelessuser/pymdown-extensions/pull/2" title="Test Pull Request: facelessuser/pymdown-extensions #2">!2</a></p>'  # noqa: E501
+        )
+
+    def test_discussion_link(self):
+        """Test discussion link."""
+
+        self.check_markdown(
+            'http://test.com/facelessuser/pymdown-extensions/discussions/2',
+            '<p><a class="magiclink magiclink-test magiclink-discussion" href="http://test.com/facelessuser/pymdown-extensions/discussions/2" title="Test Discussion: facelessuser/pymdown-extensions #2">?2</a></p>'  # noqa: E501
+        )
+
+    def test_commit_link(self):
+        """Test commit link."""
+
+        self.check_markdown(
+            'http://test.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a',
+            '<p><a class="magiclink magiclink-test magiclink-commit" href="http://test.com/facelessuser/pymdown-extensions/commit/3f6b07a8eeaa9d606115758d90f55fec565d4e2a" title="Test Commit: facelessuser/pymdown-extensions@3f6b07a">3f6b07a</a></p>'  # noqa: E501
+        )
+
+    def test_compare_link(self):
+        """Test compare link."""
+
+        self.check_markdown(
+            'http://test.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac',
+            '<p><a class="magiclink magiclink-test magiclink-compare" href="http://test.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac" title="Test Compare: facelessuser/pymdown-extensions@e2ed7e0...90b6fb8">e2ed7e0...90b6fb8</a></p>'  # noqa: E501
+        )
+
+    def test_external_user(self):
+        """Test external user in custom repo."""
+
+        self.check_markdown(
+            '@github:facelessuser',
+            '<p><a class="magiclink magiclink-github magiclink-mention" href="https://github.com/facelessuser" title="GitHub User: facelessuser">@facelessuser</a></p>'  # noqa: E501
+        )
+
+        self.check_markdown(
+            '@test:facelessuser',
+            '<p><a class="magiclink magiclink-test magiclink-mention" href="http://test.com/facelessuser" title="Test User: facelessuser">@facelessuser</a></p>'  # noqa: E501
+        )
+
+    def test_bad_name(self):
+        """Test bad name."""
+
+        extension = [
+            'pymdownx.magiclink',
+            'pymdownx.saneheaders'
+        ]
+
+        extension_configs = {
+            'pymdownx.magiclink': {
+                'repo_url_shorthand': True,
+                'repo_url_shortener': True,
+                'user': 'facelessuser',
+                'repo': 'pymdown-extensions',
+                'provider': 'bad-name',
+                'custom': {
+                    'bad-name': {
+                        'host': 'http://bad.com',
+                        'label': 'Bad',
+                        'type': 'github'
+                    }
+                }
+            }
+        }
+
+        with self.assertRaises(ValueError):
+            markdown.markdown('', extensions=extension, extension_configs=extension_configs)
