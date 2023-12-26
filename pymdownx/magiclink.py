@@ -1094,7 +1094,7 @@ class MagiclinkExtension(Extension):
 
         md.inlinePatterns.register(MagiclinkMailPattern(RE_MAIL, md), "magic-mail", 84.9)
 
-    def setup_shorthand(self, md, int_mentions, ext_mentions, config, provider_info):
+    def setup_shorthand(self, md):
         """Setup shorthand."""
 
         # Setup URL shortener
@@ -1111,44 +1111,45 @@ class MagiclinkExtension(Extension):
                 self.provider,
                 self.labels,
                 self.normalize,
-                provider_info
+                self.provider_info
             )
             md.inlinePatterns.register(git_ext_repo, "magic-repo-ext-mention", 79.9)
             if not self.is_social:
                 git_int_repo = MagiclinkRepositoryPattern(
-                    RE_GIT_INT_REPO_MENTIONS.format(int_mentions),
+                    RE_GIT_INT_REPO_MENTIONS.format(self.int_mentions),
                     md,
                     self.user,
                     self.repo,
                     self.provider,
                     self.labels,
                     self.normalize,
-                    provider_info
+                    self.provider_info
                 )
                 md.inlinePatterns.register(git_int_repo, "magic-repo-int-mention", 79.8)
 
         # Mentions
-        pattern = RE_ALL_EXT_MENTIONS.format('|'.join(ext_mentions))
+        pattern = RE_ALL_EXT_MENTIONS.format('|'.join(self.ext_mentions))
         git_mention = MagiclinkMentionPattern(
             pattern,
-            md, self.user,
-            self.repo,
-            self.provider,
-            self.labels,
-            self.normalize,
-            provider_info
-        )
-        md.inlinePatterns.register(git_mention, "magic-ext-mention", 79.7)
-
-        git_mention = MagiclinkMentionPattern(
-            RE_INT_MENTIONS.format(int_mentions),
             md,
             self.user,
             self.repo,
             self.provider,
             self.labels,
             self.normalize,
-            provider_info
+            self.provider_info
+        )
+        md.inlinePatterns.register(git_mention, "magic-ext-mention", 79.7)
+
+        git_mention = MagiclinkMentionPattern(
+            RE_INT_MENTIONS.format(self.int_mentions),
+            md,
+            self.user,
+            self.repo,
+            self.provider,
+            self.labels,
+            self.normalize,
+            self.provider_info
         )
         md.inlinePatterns.register(git_mention, "magic-int-mention", 79.6)
 
@@ -1162,19 +1163,19 @@ class MagiclinkExtension(Extension):
                 self.provider,
                 self.labels,
                 self.normalize,
-                provider_info
+                self.provider_info
             )
             md.inlinePatterns.register(git_ext_refs, "magic-ext-refs", 79.5)
             if not self.is_social:
                 git_int_refs = MagiclinkExternalRefsPattern(
-                    RE_GIT_INT_EXT_REFS.format(int_mentions),
+                    RE_GIT_INT_EXT_REFS.format(self.int_mentions),
                     md,
                     self.user,
                     self.repo,
                     self.provider,
                     self.labels,
                     self.normalize,
-                    provider_info
+                    self.provider_info
                 )
                 md.inlinePatterns.register(git_int_refs, "magic-int-refs", 79.4)
                 git_int_micro_refs = MagiclinkInternalRefsPattern(
@@ -1185,31 +1186,34 @@ class MagiclinkExtension(Extension):
                     self.provider,
                     self.labels,
                     self.normalize,
-                    provider_info
+                    self.provider_info
                 )
                 md.inlinePatterns.register(git_int_micro_refs, "magic-int-micro-refs", 79.3)
 
     def setup_shortener(
         self,
         md,
-        base_url,
-        base_user_url,
-        config,
-        repo_shortner,
-        social_shortener,
-        custom_shortners,
-        provider_info
+        config
     ):
         """Setup shortener."""
 
         shortener = MagicShortenerTreeprocessor(
-            md, base_url, base_user_url, self.labels, self.normalize, repo_shortner, social_shortener, custom_shortners,
-            self.shortener_exclusions, self.provider, provider_info
+            md,
+            self.base_url,
+            self.base_user_url,
+            self.labels,
+            self.normalize,
+            self.repo_shortner,
+            self.social_shortener,
+            self.custom_shortners,
+            self.shortener_exclusions,
+            self.provider,
+            self.provider_info
         )
         shortener.config = config
         md.treeprocessors.register(shortener, "magic-repo-shortener", 9.9)
 
-    def get_base_urls(self, config, provider_info):
+    def get_base_urls(self, config):
         """Get base URLs."""
 
         base_url = ''
@@ -1219,8 +1223,8 @@ class MagiclinkExtension(Extension):
             return base_url, base_user_url
 
         if self.user and self.repo:
-            base_url = '{}/{}/{}/'.format(provider_info[self.provider]['url'], self.user, self.repo)
-            base_user_url = '{}/{}/'.format(provider_info[self.provider]['url'], self.user)
+            base_url = '{}/{}/{}/'.format(self.provider_info[self.provider]['url'], self.user, self.repo)
+            base_user_url = '{}/{}/'.format(self.provider_info[self.provider]['url'], self.user)
 
         return base_url, base_user_url
 
@@ -1242,20 +1246,20 @@ class MagiclinkExtension(Extension):
         self.social_shortener = config.get('social_url_shortener', False)
         self.shortener_exclusions = {k: set(v) for k, v in DEFAULT_EXCLUDES.items()}
 
-        provider_info = PROVIDER_INFO.copy()
+        self.provider_info = PROVIDER_INFO.copy()
         custom_provider = config.get('custom', {})
         excludes = config.get('shortener_user_exclude', {})
-        custom_shortners = {}
+        self.custom_shortners = {}
         external_users = [RE_GITHUB_EXT_MENTIONS, RE_GITLAB_EXT_MENTIONS, RE_BITBUCKET_EXT_MENTIONS]
         for custom, entry in custom_provider.items():
             if not RE_CUSTOM_NAME.match(custom):
                 raise ValueError(
                     "Name '{}' not allowed, provider name must contain only letters and numbers".format(custom)
                 )
-            if custom not in provider_info:
-                provider_info[custom] = create_provider(entry['type'], entry['host'])
-                provider_info[custom]['provider'] = entry['label']
-                custom_shortners[custom] = {
+            if custom not in self.provider_info:
+                self.provider_info[custom] = create_provider(entry['type'], entry['host'])
+                self.provider_info[custom]['provider'] = entry['label']
+                self.custom_shortners[custom] = {
                     'repo': re.compile(
                         r'(?xi)^{}/?$'.format(
                             create_repo_link_pattern(entry['type'], entry['host'], entry.get('www', True))
@@ -1275,42 +1279,29 @@ class MagiclinkExtension(Extension):
         self.re_git_ext_refs = RE_GIT_EXT_REFS.format('|'.join(external_users))
 
         for key, value in config.get('shortener_user_exclude', {}).items():
-            if key in provider_info and isinstance(value, (list, tuple, set)):
+            if key in self.provider_info and isinstance(value, (list, tuple, set)):
                 self.shortener_exclusions[key] = {x.lower() for x in value}
 
         # Ensure valid provider
-        if self.provider not in provider_info:
+        if self.provider not in self.provider_info:
             self.provider = 'github'
-
-        int_mentions = None
-        ext_mentions = []
-        if self.git_short:
-            ext_mentions.extend(external_users)
-
-        if self.social_short:
-            ext_mentions.append(RE_TWITTER_EXT_MENTIONS)
-
-        if self.git_short or self.social_short:
-            int_mentions = provider_info[self.provider]['user_pattern']
 
         self.setup_autolinks(md, config)
 
         if self.git_short or self.social_short:
-            self.setup_shorthand(md, int_mentions, ext_mentions, config, provider_info)
+            self.ext_mentions = []
+            if self.git_short:
+                self.ext_mentions.extend(external_users)
+
+            if self.social_short:
+                self.ext_mentions.append(RE_TWITTER_EXT_MENTIONS)
+            self.int_mentions = self.provider_info[self.provider]['user_pattern']
+            self.setup_shorthand(md)
 
         # Setup link post processor for shortening repository links
         if self.repo_shortner or self.social_shortener:
-            base_url, base_user_url = self.get_base_urls(config, provider_info)
-            self.setup_shortener(
-                md,
-                base_url,
-                base_user_url,
-                config,
-                self.repo_shortner,
-                self.social_shortener,
-                custom_shortners,
-                provider_info
-            )
+            self.base_url, self.base_user_url = self.get_base_urls(config)
+            self.setup_shortener(md, config)
 
 
 def makeExtension(*args, **kwargs):
