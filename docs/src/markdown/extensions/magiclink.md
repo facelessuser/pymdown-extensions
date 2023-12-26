@@ -445,6 +445,40 @@ repository name. You can override them and add more via the option [`shortener_u
 MagicLink added user name and repository name link shortening along.
 ///
 
+## Custom Repository Hosts
+
+It is possible that someone may be running their own private GitHub, GitLab, or Bitbucket repository. MagicLink allows
+for the creating variants of either of these repository providers with a custom host. MagicLink provides no additional
+control over specifics, so if this is sufficient for your needs, then it give it a try!
+
+To specify a custom provider, you simply need to specify them via the `custom` option.
+
+1. Simply specify the name to identify the provider (must only contain alphanumeric characters). Provider name is used
+   when manually specifying a provider (`@provider:user`) and will be used to generate custom CSS classes
+   `magiclink-provider`.
+2. Specify the `type`. Is this a private `github`, `gitlab`, or `bitbucket` provider.
+3. Specify the `label` for tooltips.
+4. Specify the `host` for your private repository.
+
+```js
+'custom': {
+    'test': {
+        'host': 'http://test.com',
+        'label': 'Test',
+        'type': 'github'
+    }
+}
+```
+
+Host URLs assume the `www` subdomain, and will generate the URL pattern to capture explicit or implicit `www` in host
+URLs, whether you specify it in the host URL or not. If your repository does not use `www` subdomain, then set the
+option `www` to `#!py False`. Most people will never need to touch this.
+
+Lastly, `shortener_user_exclude` will assume your custom provider requires the same exclude list of the specified `type`
+and will copy them for your custom repository. If this is not sufficient, you can add an entry to
+`shortener_user_exclude` for your custom repository provider using your specified `name`. If you manually set excludes
+in this manner, no excludes from the same `type` will be copied over.
+
 ## CSS
 
 For normal links, no classes are added to the anchor tags. For repository links, `magiclink` will be added as a class.

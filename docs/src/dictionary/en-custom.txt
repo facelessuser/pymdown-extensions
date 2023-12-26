@@ -263,6 +263,7 @@ syntaxes
 th
 theming
 thumbsup
+tooltips
 tox
 uc
 un
