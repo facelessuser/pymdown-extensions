@@ -43,7 +43,7 @@ toolkit repo @JoyPixels/emoji-toolkit.
 ///
 
 /// tab | Twemoji
-[Twemoji][twemoji] (<img align="absmiddle" alt=":smile:" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f604.png" title=":smile:" /> <img align="absmiddle" alt=":heart:" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/2764.png" title=":heart:" /> <img align="absmiddle" alt=":thumbsup:" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f44d.png" title=":thumbsup:" />):
+[Twemoji][twemoji] (<img align="absmiddle" alt=":smile:" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/72x72/1f604.png" title=":smile:" /> <img align="absmiddle" alt=":heart:" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/72x72/2764.png" title=":heart:" /> <img align="absmiddle" alt=":thumbsup:" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/72x72/1f44d.png" title=":thumbsup:" />):
 Twemoji is Twitter's open source emoji set which also covers a great many emoji with skin tones and gender modifiers.
 The hosted CDN provides 72x72 PNG emoji or SVG emoji.
 
