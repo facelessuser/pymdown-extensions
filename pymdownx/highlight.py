@@ -130,6 +130,10 @@ DEFAULT_CONFIG = {
         'False disables this and will retain leading and trailing newlines. This has no affect on inline code. '
         '- Defaults: True'
     ],
+    'default_lang': [
+        '',
+        'The assumed highlight language of a code block when no language is set. - Default text'
+    ],
     '_enabled': [
         True,
         'Used internally to communicate if extension has been explicitly enabled - Default: False'
@@ -236,7 +240,8 @@ class Highlight(object):
         noclasses=False, extend_pygments_lang=None, linenums=None, linenums_special=-1,
         linenums_style='table', linenums_class='linenums', language_prefix='language-',
         code_attr_on_pre=False, auto_title=False, auto_title_map=None, line_spans='',
-        anchor_linenums=False, line_anchors='', pygments_lang_class=False, stripnl=True
+        anchor_linenums=False, line_anchors='', pygments_lang_class=False, stripnl=True,
+        default_lang=''
     ):
         """Initialize."""
 
@@ -256,6 +261,7 @@ class Highlight(object):
         self.anchor_linenums = anchor_linenums
         self.pygments_lang_class = pygments_lang_class
         self.stripnl = stripnl
+        self.default_lang = default_lang
 
         if self.anchor_linenums and not self.line_anchors:
             self.line_anchors = '__codelineno'
@@ -305,7 +311,7 @@ class Highlight(object):
                 except Exception:  # pragma: no cover
                     pass
         if lexer is None:
-            lexer = get_lexer_by_name('text', **lexer_options)
+            lexer = get_lexer_by_name(self.default_lang or 'text', **lexer_options)
             name = lexer.aliases[0]
         return lexer, name
 
@@ -332,6 +338,9 @@ class Highlight(object):
             (self.linenums is not False and linestart > 0)
         ) and not inline > 0
         class_str = ''
+
+        if not language and self.default_lang:
+            language = self.default_lang
 
         # Convert with Pygments.
         if pygments and self.use_pygments:
@@ -513,7 +522,8 @@ class HighlightTreeprocessor(Treeprocessor):
                     auto_title=self.config['auto_title'],
                     auto_title_map=self.config['auto_title_map'],
                     pygments_lang_class=self.config['pygments_lang_class'],
-                    stripnl=self.config['stripnl']
+                    stripnl=self.config['stripnl'],
+                    default_lang=self.config['default_lang']
                 )
                 placeholder = self.md.htmlStash.store(
                     code.highlight(

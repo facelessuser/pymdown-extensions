@@ -137,6 +137,7 @@ class InlineHilitePattern(InlineProcessor):
         """Syntax highlight the inline code block."""
 
         process_text = self.style_plain_text or language or self.guess_lang
+        default_lang = self.style_plain_text if isinstance(self.style_plain_text, str) else ''
 
         if process_text:
             el = self.highlighter(
@@ -146,7 +147,8 @@ class InlineHilitePattern(InlineProcessor):
                 noclasses=self.noclasses,
                 extend_pygments_lang=self.extend_pygments_lang,
                 language_prefix=self.language_prefix,
-                pygments_lang_class=self.pygments_lang_class
+                pygments_lang_class=self.pygments_lang_class,
+                default_lang=default_lang
             ).highlight(src, language, self.css_class, inline=True)
             el.text = self.md.htmlStash.store(el.text)
         else:
@@ -194,11 +196,12 @@ class InlineHiliteExtension(Extension):
         self.inlinehilite = []
         self.config = {
             'style_plain_text': [
-                False,
-                "Process inline code even when a language is not specified "
-                "or langauge is specified as 'text'. "
-                "When 'False', no classes will be added to 'text' code blocks"
+                0,
+                "Process inline code even when a language is not specified. "
+                "When 'False', no classes will be added to code blocks without shebangs "
                 "and no scoping will performed. The content will just be escaped."
+                "If a language string is provided, then that language will be assumed "
+                "for any inline code block without a shebang. "
                 "- Default: False"
             ],
             'css_class': [

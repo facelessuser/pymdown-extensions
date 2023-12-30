@@ -660,3 +660,71 @@ class TestExtendedLang(util.MdCase):
             ''',  # noqa: E501
             True
         )
+
+
+class TestDefaultLang(util.MdCase):
+    """Test default block language cases."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences', 'pymdownx.inlinehilite']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'default_lang': 'python'
+        }
+    }
+
+    def test_default_block(self):
+        """Test that default language affects block, but not inline code."""
+
+        self.check_markdown(
+            '''
+            `import code`
+
+                import code
+
+            ```
+            import code
+            ```
+            ''',
+            '''
+            <p><code>import code</code></p>
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">code</span>
+            </code></pre></div>
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">code</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestDefaultLangInline(util.MdCase):
+    """Test default inline language cases."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences', 'pymdownx.inlinehilite']
+    extension_configs = {
+        'pymdownx.inlinehilite': {
+            'style_plain_text': 'python'
+        }
+    }
+
+    def test_default_inline(self):
+        """Test that default language affects block, but not inline code."""
+
+        self.check_markdown(
+            '''
+            `import code`
+
+                import code
+
+            ```
+            import code
+            ```
+            ''',
+            '''
+            <p><code class="highlight"><span class="kn">import</span> <span class="nn">code</span></code></p>
+            <div class="highlight"><pre><span></span><code>import code
+            </code></pre></div>
+            <div class="highlight"><pre><span></span><code>import code
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )

@@ -133,7 +133,8 @@ apply when Pygments is disabled. Many of these options are demonstrated in the [
 Option                    | Type   | Default               | Description
 ------------------------- | ------ | ----------------------| -----------
 `css_class`               | string | `#!py3 'highlight'`   | Default class to apply to the wrapper element on code blocks. Other extensions can override this.
-`guess_lang`              | bool   | `#!py3 False`         | Guess what syntax language should be used if no language is specified. `#!py3 True` for always, `#!py3 False` for never, `#!py3 'block'` for block code only, and `#!py3 'inline'` for inline code only.
+`guess_lang`              | bool \| str | `#!py3 False`         | Guess what syntax language should be used if no language is specified. `#!py3 True` for always, `#!py3 False` for never, `#!py3 'block'` for block code only, and `#!py3 'inline'` for inline code only.
+`default_lang`            | str    | `#!py3 ''`            | The assumed highlight language of a code block when no language is set. If something other than plain text is desired for indented blocks or for fenced code blocks (via [SuperFences](./superfences.md)) that have no configured language, this can be set to a language other than plain text. InlineHilite requires you to specifically set its own option (`style_plain_text`) to control this for inline code blocks.
 `pygments_style`          | string | `#!py3 'default'`     | Set the Pygments' style to use.  This really only has an effect when used with `noclasses`.
 `noclasses`               | bool   | `#!py3 False`         | This will cause the styles to directly be written to the tag's style attribute instead of requiring a stylesheet.
 `use_pygments`            | bool   | `#!py3 True`          | Controls whether Pygments (if available) is used to style the code, or if the code will just be escaped and prepped for a JavaScript syntax highlighter.
@@ -164,4 +165,8 @@ still enables globally.
 
 /// new | New 9.0
 `auto_title`, `auto_title_map`, `line_spans`, `anchor_linenums`, and `line_anchors` were all added in `9.0`.
+///
+
+/// new | New 10.7
+`default_lang` added in 10.7.
 ///
