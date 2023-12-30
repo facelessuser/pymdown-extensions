@@ -3,6 +3,8 @@
 ## 10.7
 
 -   **NEW**: Emoji: Update Twemoji and Gemoji data to latest.
+-   **NEW**: Emoji: Due to recent Gemoji update, non-standard emoji are no longer indexed. So emoji such as `:octocat:`
+    are no longer resolved.
 -   **NEW**: Highlight: Added new option `default_lang` which will cause code blocks with no language specifier to be
     highlighted with the specified default language instead of plain text. This affects indented code blocks and code
     blocks defined with SuperFences.

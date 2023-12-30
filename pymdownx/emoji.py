@@ -35,7 +35,6 @@ SUPPORTED_INDEXES = ('emojione', 'gemoji', 'twemoji')
 UNICODE_VARIATION_SELECTOR_16 = 'fe0f'
 EMOJIONE_SVG_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/'
 EMOJIONE_PNG_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/'
-
 TWEMOJI_SVG_CDN = 'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/'
 TWEMOJI_PNG_CDN = 'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/72x72/'
 GITHUB_UNICODE_CDN = 'https://github.githubassets.com/images/icons/emoji/unicode/'
@@ -124,7 +123,7 @@ def to_png(index, shortname, alias, uc, alt, title, category, options, md):
     # We can tell we have a github specific if there is no Unicode value.
     if is_unicode:
         image_path = options.get('image_path', def_image_path)
-    else:
+    else:  # pragma: no cover
         image_path = options.get('non_standard_image_path', def_non_std_image_path)
 
     src = "%s%s.png" % (
@@ -275,10 +274,6 @@ class EmojiPattern(InlineProcessor):
             needed characters to identify the Unicode emoji, but the formatting as well. Joining characters
             and variation characters will be present. If you don't want variation chars, enable the global
             'remove_variation_selector' option.
-
-        If using gemoji, it is possible you will get no Unicode and no Unicode alt.  This occurs with emoji
-        like `:octocat:`.  `:octocat:` is not a real emoji and has no Unicode code points, but it is provided by
-        gemoji as an emoji anyways.
         """
 
         uc = emoji.get('unicode')
