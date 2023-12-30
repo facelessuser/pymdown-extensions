@@ -43,7 +43,7 @@ toolkit repo @JoyPixels/emoji-toolkit.
 ///
 
 /// tab | Twemoji
-[Twemoji][twemoji] (<img align="absmiddle" alt=":smile:" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f604.png" title=":smile:" /> <img align="absmiddle" alt=":heart:" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/2764.png" title=":heart:" /> <img align="absmiddle" alt=":thumbsup:" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f44d.png" title=":thumbsup:" />):
+[Twemoji][twemoji] (<img align="absmiddle" alt=":smile:" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/72x72/1f604.png" title=":smile:" /> <img align="absmiddle" alt=":heart:" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/72x72/2764.png" title=":heart:" /> <img align="absmiddle" alt=":thumbsup:" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/72x72/1f44d.png" title=":thumbsup:" />):
 Twemoji is Twitter's open source emoji set which also covers a great many emoji with skin tones and gender modifiers.
 The hosted CDN provides 72x72 PNG emoji or SVG emoji.
 
@@ -241,7 +241,7 @@ pymdownx.emoji.to_png
 ```
 
 This is a general purpose generator which provides EmojiOne, GitHub, and Twemoji CDN path(s) out of the box.
-Depending on the index you've chosen, you the appropriate CDN will be provided.  If this ever gets out of date,
+Depending on the index you've chosen, the appropriate CDN will be provided.  If this ever gets out of date,
 a new CDN can be passed in via `image_path` and/or `non_standard_image_path`. EmojiOne actually has multiple
 PNGs sizes of 32, 64, and 128, but the default CDN path is the one for size 64:
 `https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/64/`. You can change it for a larger or
@@ -258,7 +258,7 @@ Option                    | Type       | Default                        | Descri
 ------------------------- | ---------- | ------------------------------ | -----------
 `classes`                 | string     | Name of the index used         | Specifies the class(es) to be used in the image element.
 `image_path`              | string     | CDN for the default index used | This can be either a local path or a CDN containing the assets.  By default, an appropriate CDN is provided for EmojiOne, Gemoji, and Twemoji depending on which index is being used.
-`non_standard_image_path` | string     | CDN for the default index used | This can be either a local path, or a CDN containing the assets. Currently, only Gemoji's non-standard emoji take advantage of this as the GitHub CDN alters the path slightly for its non-Unicode emoji.  By default, an appropriate CDN is provided for Gemoji.
+`non_standard_image_path` | string     | CDN for the default index used | This can be either a local path, or a CDN containing the assets. This is often used for non-standard emoji that do not have an actual Unicode number, and cannot be found in this way. Gemoji used to use this for non-standard emoji like `:octocat:`, but none of those are available by default anymore.
 `attributes`              | dictionary | `#!py3 {}`                      | A dictionary containing tag attributes as key value string pairs. The dictionary keys are the attribute names and dictionary values are the attribute values.
 ///
 
@@ -359,8 +359,8 @@ def emoji_index(options, md)
 ```
 
 In order to provide a custom index, the Emoji extension must be given a function that returns a suitable emoji index.
-The function should simply return the custom index. It accepts both on options dictionary and the markdown object. The
-options object is the same object that is specified in in the extensions [settings](#options).
+The function should simply return the custom index. It accepts both an options dictionary and the markdown object. The
+options dictionary is the same object that is specified in in the extensions [settings](#options).
 
 The index should be returned in the following format:
 

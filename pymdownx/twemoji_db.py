@@ -2,8 +2,8 @@
 
 Names from emojione database. Do not edit by hand.
 """
-version = "v14.1.2"
-index_version = "7.0.1"
+version = "v15.0.3"
+index_version = "8.0.0"
 name = "twemoji"
 emoji = {
     ":100:": {
@@ -781,6 +781,11 @@ emoji = {
         "category": "people",
         "name": "biting lip",
         "unicode": "1fae6"
+    },
+    ":black_bird:": {
+        "category": "nature",
+        "name": "black bird",
+        "unicode": "1f426-200d-2b1b"
     },
     ":black_cat:": {
         "category": "nature",
@@ -2953,6 +2958,11 @@ emoji = {
         "name": "dolphin",
         "unicode": "1f42c"
     },
+    ":donkey:": {
+        "category": "nature",
+        "name": "donkey",
+        "unicode": "1facf"
+    },
     ":door:": {
         "category": "objects",
         "name": "door",
@@ -5115,6 +5125,11 @@ emoji = {
         "name": "flushed face",
         "unicode": "1f633"
     },
+    ":flute:": {
+        "category": "activity",
+        "name": "flute",
+        "unicode": "1fa88"
+    },
     ":fly:": {
         "category": "nature",
         "name": "fly",
@@ -5139,6 +5154,11 @@ emoji = {
         "category": "travel",
         "name": "foggy",
         "unicode": "1f301"
+    },
+    ":folding_hand_fan:": {
+        "category": "objects",
+        "name": "folding hand fan",
+        "unicode": "1faad"
     },
     ":fondue:": {
         "category": "food",
@@ -5321,6 +5341,11 @@ emoji = {
         "name": "heart with ribbon",
         "unicode": "1f49d"
     },
+    ":ginger_root:": {
+        "category": "food",
+        "name": "ginger root",
+        "unicode": "1fada"
+    },
     ":giraffe:": {
         "category": "nature",
         "name": "giraffe",
@@ -5386,6 +5411,11 @@ emoji = {
         "name": "flag in hole",
         "unicode": "26f3"
     },
+    ":goose:": {
+        "category": "nature",
+        "name": "goose",
+        "unicode": "1fabf"
+    },
     ":gorilla:": {
         "category": "nature",
         "name": "gorilla",
@@ -5425,6 +5455,11 @@ emoji = {
         "category": "symbols",
         "name": "white exclamation mark",
         "unicode": "2755"
+    },
+    ":grey_heart:": {
+        "category": "symbols",
+        "name": "grey heart",
+        "unicode": "1fa76"
     },
     ":grey_question:": {
         "category": "symbols",
@@ -5490,6 +5525,11 @@ emoji = {
         "category": "objects",
         "name": "pistol",
         "unicode": "1f52b"
+    },
+    ":hair_pick:": {
+        "category": "objects",
+        "name": "hair pick",
+        "unicode": "1faae"
     },
     ":hamburger:": {
         "category": "food",
@@ -6067,6 +6107,11 @@ emoji = {
         "name": "hut",
         "unicode": "1f6d6"
     },
+    ":hyacinth:": {
+        "category": "nature",
+        "name": "hyacinth",
+        "unicode": "1fabb"
+    },
     ":ice_cream:": {
         "category": "food",
         "name": "ice cream",
@@ -6212,6 +6257,11 @@ emoji = {
         "name": "jeans",
         "unicode": "1f456"
     },
+    ":jellyfish:": {
+        "category": "nature",
+        "name": "jellyfish",
+        "unicode": "1fabc"
+    },
     ":jigsaw:": {
         "category": "activity",
         "name": "puzzle piece",
@@ -6291,6 +6341,11 @@ emoji = {
         "category": "symbols",
         "name": "keycap: 10",
         "unicode": "1f51f"
+    },
+    ":khanda:": {
+        "category": "symbols",
+        "name": "khanda",
+        "unicode": "1faaf"
     },
     ":kimono:": {
         "category": "people",
@@ -7012,6 +7067,36 @@ emoji = {
         "name": "leftwards hand: dark skin tone",
         "unicode": "1faf2-1f3ff"
     },
+    ":leftwards_pushing_hand:": {
+        "category": "people",
+        "name": "leftwards pushing hand",
+        "unicode": "1faf7"
+    },
+    ":leftwards_pushing_hand_tone1:": {
+        "category": "people",
+        "name": "leftwards pushing hand: light skin tone",
+        "unicode": "1faf7-1f3fb"
+    },
+    ":leftwards_pushing_hand_tone2:": {
+        "category": "people",
+        "name": "leftwards pushing hand: medium-light skin tone",
+        "unicode": "1faf7-1f3fc"
+    },
+    ":leftwards_pushing_hand_tone3:": {
+        "category": "people",
+        "name": "leftwards pushing hand: medium skin tone",
+        "unicode": "1faf7-1f3fd"
+    },
+    ":leftwards_pushing_hand_tone4:": {
+        "category": "people",
+        "name": "leftwards pushing hand: medium-dark skin tone",
+        "unicode": "1faf7-1f3fe"
+    },
+    ":leftwards_pushing_hand_tone5:": {
+        "category": "people",
+        "name": "leftwards pushing hand: dark skin tone",
+        "unicode": "1faf7-1f3ff"
+    },
     ":leg:": {
         "category": "people",
         "name": "leg",
@@ -7096,6 +7181,11 @@ emoji = {
         "category": "symbols",
         "name": "Libra",
         "unicode": "264e"
+    },
+    ":light_blue_heart:": {
+        "category": "symbols",
+        "name": "light blue heart",
+        "unicode": "1fa75"
     },
     ":light_rail:": {
         "category": "travel",
@@ -9527,6 +9617,11 @@ emoji = {
         "name": "maple leaf",
         "unicode": "1f341"
     },
+    ":maracas:": {
+        "category": "activity",
+        "name": "maracas",
+        "unicode": "1fa87"
+    },
     ":martial_arts_uniform:": {
         "category": "activity",
         "name": "martial arts uniform",
@@ -10021,6 +10116,11 @@ emoji = {
         "category": "food",
         "name": "moon cake",
         "unicode": "1f96e"
+    },
+    ":moose:": {
+        "category": "nature",
+        "name": "moose",
+        "unicode": "1face"
     },
     ":mortar_board:": {
         "category": "people",
@@ -11008,6 +11108,11 @@ emoji = {
         "category": "symbols",
         "name": "pause button",
         "unicode": "23f8"
+    },
+    ":pea_pod:": {
+        "category": "food",
+        "name": "pea pod",
+        "unicode": "1fadb"
     },
     ":peace:": {
         "category": "symbols",
@@ -12649,6 +12754,11 @@ emoji = {
         "name": "ping pong",
         "unicode": "1f3d3"
     },
+    ":pink_heart:": {
+        "category": "symbols",
+        "name": "pink heart",
+        "unicode": "1fa77"
+    },
     ":pirate_flag:": {
         "category": "flags",
         "name": "pirate flag",
@@ -13710,6 +13820,36 @@ emoji = {
         "name": "rightwards hand: dark skin tone",
         "unicode": "1faf1-1f3ff"
     },
+    ":rightwards_pushing_hand:": {
+        "category": "people",
+        "name": "rightwards pushing hand",
+        "unicode": "1faf8"
+    },
+    ":rightwards_pushing_hand_tone1:": {
+        "category": "people",
+        "name": "rightwards pushing hand: light skin tone",
+        "unicode": "1faf8-1f3fb"
+    },
+    ":rightwards_pushing_hand_tone2:": {
+        "category": "people",
+        "name": "rightwards pushing hand: medium-light skin tone",
+        "unicode": "1faf8-1f3fc"
+    },
+    ":rightwards_pushing_hand_tone3:": {
+        "category": "people",
+        "name": "rightwards pushing hand: medium skin tone",
+        "unicode": "1faf8-1f3fd"
+    },
+    ":rightwards_pushing_hand_tone4:": {
+        "category": "people",
+        "name": "rightwards pushing hand: medium-dark skin tone",
+        "unicode": "1faf8-1f3fe"
+    },
+    ":rightwards_pushing_hand_tone5:": {
+        "category": "people",
+        "name": "rightwards pushing hand: dark skin tone",
+        "unicode": "1faf8-1f3ff"
+    },
     ":ring:": {
         "category": "people",
         "name": "ring",
@@ -14080,6 +14220,11 @@ emoji = {
         "category": "people",
         "name": "sewing needle",
         "unicode": "1faa1"
+    },
+    ":shaking_face:": {
+        "category": "people",
+        "name": "shaking face",
+        "unicode": "1fae8"
     },
     ":shallow_pan_of_food:": {
         "category": "food",
@@ -15829,10 +15974,20 @@ emoji = {
         "name": "wine glass",
         "unicode": "1f377"
     },
+    ":wing:": {
+        "category": "nature",
+        "name": "wing",
+        "unicode": "1fabd"
+    },
     ":wink:": {
         "category": "people",
         "name": "winking face",
         "unicode": "1f609"
+    },
+    ":wireless:": {
+        "category": "symbols",
+        "name": "wireless",
+        "unicode": "1f6dc"
     },
     ":wolf:": {
         "category": "nature",
@@ -19215,6 +19370,11 @@ aliases = {
     ":leftwards_hand_medium_dark_skin_tone:": ":leftwards_hand_tone4:",
     ":leftwards_hand_medium_light_skin_tone:": ":leftwards_hand_tone2:",
     ":leftwards_hand_medium_skin_tone:": ":leftwards_hand_tone3:",
+    ":leftwards_pushing_hand_dark_skin_tone:": ":leftwards_pushing_hand_tone5:",
+    ":leftwards_pushing_hand_light_skin_tone:": ":leftwards_pushing_hand_tone1:",
+    ":leftwards_pushing_hand_medium_dark_skin_tone:": ":leftwards_pushing_hand_tone4:",
+    ":leftwards_pushing_hand_medium_light_skin_tone:": ":leftwards_pushing_hand_tone2:",
+    ":leftwards_pushing_hand_medium_skin_tone:": ":leftwards_pushing_hand_tone3:",
     ":leg_dark_skin_tone:": ":leg_tone5:",
     ":leg_light_skin_tone:": ":leg_tone1:",
     ":leg_medium_dark_skin_tone:": ":leg_tone4:",
@@ -20040,6 +20200,11 @@ aliases = {
     ":rightwards_hand_medium_dark_skin_tone:": ":rightwards_hand_tone4:",
     ":rightwards_hand_medium_light_skin_tone:": ":rightwards_hand_tone2:",
     ":rightwards_hand_medium_skin_tone:": ":rightwards_hand_tone3:",
+    ":rightwards_pushing_hand_dark_skin_tone:": ":rightwards_pushing_hand_tone5:",
+    ":rightwards_pushing_hand_light_skin_tone:": ":rightwards_pushing_hand_tone1:",
+    ":rightwards_pushing_hand_medium_dark_skin_tone:": ":rightwards_pushing_hand_tone4:",
+    ":rightwards_pushing_hand_medium_light_skin_tone:": ":rightwards_pushing_hand_tone2:",
+    ":rightwards_pushing_hand_medium_skin_tone:": ":rightwards_pushing_hand_tone3:",
     ":ro:": ":flag_ro:",
     ":robot_face:": ":robot:",
     ":rolled_up_newspaper:": ":newspaper2:",

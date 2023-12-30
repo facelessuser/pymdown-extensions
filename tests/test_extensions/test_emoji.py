@@ -45,7 +45,7 @@ class TestEmojiOldIndex(util.MdCase):
                     extensions=self.extension,
                     extension_configs=self.extension_configs
                 ).convert(':smile:'),
-                '<p><img alt="\U0001f604" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f604.png" title=":smile:" /></p>'  # noqa: E501
+                '<p><img alt="\U0001f604" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/72x72/1f604.png" title=":smile:" /></p>'  # noqa: E501
             )
 
 
@@ -67,5 +67,5 @@ class TestEmojiNewIndex(util.MdCase):
 
         self.check_markdown(
             ':grin:',
-            '<p><img alt="\U0001f604" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@14.1.2/assets/72x72/1f604.png" title=":grin:" /></p>'  # noqa: E501
+            '<p><img alt="\U0001f604" class="twemoji" src="https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/72x72/1f604.png" title=":grin:" /></p>'  # noqa: E501
         )
