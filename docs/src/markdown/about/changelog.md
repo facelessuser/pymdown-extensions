@@ -1,5 +1,14 @@
 # Changelog
 
+## 10.7
+
+-   **NEW**: Highlight: Added new option `default_lang` which will cause code blocks with no language specifier to be
+    highlighted with the specified default language instead of plain text. This affects indented code blocks and code
+    blocks defined with SuperFences.
+-   **NEW**: InlineHilite: `style_plain_text` can be specified with a language string (in addition to its previous
+    boolean requirement) to treat inline code blocks with no explicit language specifier with a specific default
+    language.
+
 ## 10.6
 
 -   **NEW**: MagicLink: Allow configuring custom repository providers based off the existing providers.
