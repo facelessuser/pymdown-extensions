@@ -2,6 +2,7 @@
 
 ## 10.7
 
+-   **NEW**: Emoji: Update Twemoji and Gemoji data to latest.
 -   **NEW**: Highlight: Added new option `default_lang` which will cause code blocks with no language specifier to be
     highlighted with the specified default language instead of plain text. This affects indented code blocks and code
     blocks defined with SuperFences.

@@ -154,6 +154,7 @@ bird :bird:<br>
 birthday :birthday:<br>
 bison :bison:<br>
 biting_lip :biting_lip:<br>
+black_bird :black_bird:<br>
 black_cat :black_cat:<br>
 black_circle :black_circle:<br>
 black_heart :black_heart:<br>
@@ -588,6 +589,7 @@ dog :dog:<br>
 dollar :dollar:<br>
 dolls :dolls:<br>
 dolphin :dolphin:<br>
+donkey :donkey:<br>
 door :door:<br>
 dotted_line_face :dotted_line_face:<br>
 doughnut :doughnut:<br>
@@ -1020,11 +1022,13 @@ fleur-de-lis :fleur-de-lis:<br>
 floppy_disk :floppy_disk:<br>
 flower_playing_cards :flower_playing_cards:<br>
 flushed :flushed:<br>
+flute :flute:<br>
 fly :fly:<br>
 flying_disc :flying_disc:<br>
 flying_saucer :flying_saucer:<br>
 fog :fog:<br>
 foggy :foggy:<br>
+folding_hand_fan :folding_hand_fan:<br>
 fondue :fondue:<br>
 foot :foot:<br>
 foot_tone1 :foot_tone1:<br>
@@ -1061,6 +1065,7 @@ genie :genie:<br>
 ghost :ghost:<br>
 gift :gift:<br>
 gift_heart :gift_heart:<br>
+ginger_root :ginger_root:<br>
 giraffe :giraffe:<br>
 girl :girl:<br>
 girl_tone1 :girl_tone1:<br>
@@ -1074,6 +1079,7 @@ goal :goal:<br>
 goat :goat:<br>
 goggles :goggles:<br>
 golf :golf:<br>
+goose :goose:<br>
 gorilla :gorilla:<br>
 grapes :grapes:<br>
 green_apple :green_apple:<br>
@@ -1082,6 +1088,7 @@ green_circle :green_circle:<br>
 green_heart :green_heart:<br>
 green_square :green_square:<br>
 grey_exclamation :grey_exclamation:<br>
+grey_heart :grey_heart:<br>
 grey_question :grey_question:<br>
 grimacing :grimacing:<br>
 grin :grin:<br>
@@ -1095,6 +1102,7 @@ guard_tone5 :guard_tone5:<br>
 guide_dog :guide_dog:<br>
 guitar :guitar:<br>
 gun :gun:<br>
+hair_pick :hair_pick:<br>
 hamburger :hamburger:<br>
 hammer :hammer:<br>
 hammer_pick :hammer_pick:<br>
@@ -1210,6 +1218,7 @@ house_with_garden :house_with_garden:<br>
 hugging :hugging:<br>
 hushed :hushed:<br>
 hut :hut:<br>
+hyacinth :hyacinth:<br>
 ice_cream :ice_cream:<br>
 ice_cube :ice_cube:<br>
 ice_skate :ice_skate:<br>
@@ -1239,6 +1248,7 @@ japanese_goblin :japanese_goblin:<br>
 japanese_ogre :japanese_ogre:<br>
 jar :jar:<br>
 jeans :jeans:<br>
+jellyfish :jellyfish:<br>
 jigsaw :jigsaw:<br>
 joy :joy:<br>
 joy_cat :joy_cat:<br>
@@ -1255,6 +1265,7 @@ key2 :key2:<br>
 key :key:<br>
 keyboard :keyboard:<br>
 keycap_ten :keycap_ten:<br>
+khanda :khanda:<br>
 kimono :kimono:<br>
 kiss :kiss:<br>
 kiss_man_man_tone1 :kiss_man_man_tone1:<br>
@@ -1399,6 +1410,12 @@ leftwards_hand_tone2 :leftwards_hand_tone2:<br>
 leftwards_hand_tone3 :leftwards_hand_tone3:<br>
 leftwards_hand_tone4 :leftwards_hand_tone4:<br>
 leftwards_hand_tone5 :leftwards_hand_tone5:<br>
+leftwards_pushing_hand :leftwards_pushing_hand:<br>
+leftwards_pushing_hand_tone1 :leftwards_pushing_hand_tone1:<br>
+leftwards_pushing_hand_tone2 :leftwards_pushing_hand_tone2:<br>
+leftwards_pushing_hand_tone3 :leftwards_pushing_hand_tone3:<br>
+leftwards_pushing_hand_tone4 :leftwards_pushing_hand_tone4:<br>
+leftwards_pushing_hand_tone5 :leftwards_pushing_hand_tone5:<br>
 leg :leg:<br>
 leg_tone1 :leg_tone1:<br>
 leg_tone2 :leg_tone2:<br>
@@ -1416,6 +1433,7 @@ levitate_tone3 :levitate_tone3:<br>
 levitate_tone4 :levitate_tone4:<br>
 levitate_tone5 :levitate_tone5:<br>
 libra :libra:<br>
+light_blue_heart :light_blue_heart:<br>
 light_rail :light_rail:<br>
 link :link:<br>
 lion_face :lion_face:<br>
@@ -1902,6 +1920,7 @@ mans_shoe :mans_shoe:<br>
 manual_wheelchair :manual_wheelchair:<br>
 map :map:<br>
 maple_leaf :maple_leaf:<br>
+maracas :maracas:<br>
 martial_arts_uniform :martial_arts_uniform:<br>
 mask :mask:<br>
 mate :mate:<br>
@@ -2001,6 +2020,7 @@ monkey :monkey:<br>
 monkey_face :monkey_face:<br>
 monorail :monorail:<br>
 moon_cake :moon_cake:<br>
+moose :moose:<br>
 mortar_board :mortar_board:<br>
 mosque :mosque:<br>
 mosquito :mosquito:<br>
@@ -2198,6 +2218,7 @@ partly_sunny :partly_sunny:<br>
 partying_face :partying_face:<br>
 passport_control :passport_control:<br>
 pause_button :pause_button:<br>
+pea_pod :pea_pod:<br>
 peace :peace:<br>
 peach :peach:<br>
 peacock :peacock:<br>
@@ -2526,6 +2547,7 @@ pinching_hand_tone4 :pinching_hand_tone4:<br>
 pinching_hand_tone5 :pinching_hand_tone5:<br>
 pineapple :pineapple:<br>
 ping_pong :ping_pong:<br>
+pink_heart :pink_heart:<br>
 pirate_flag :pirate_flag:<br>
 pisces :pisces:<br>
 pizza :pizza:<br>
@@ -2738,6 +2760,12 @@ rightwards_hand_tone2 :rightwards_hand_tone2:<br>
 rightwards_hand_tone3 :rightwards_hand_tone3:<br>
 rightwards_hand_tone4 :rightwards_hand_tone4:<br>
 rightwards_hand_tone5 :rightwards_hand_tone5:<br>
+rightwards_pushing_hand :rightwards_pushing_hand:<br>
+rightwards_pushing_hand_tone1 :rightwards_pushing_hand_tone1:<br>
+rightwards_pushing_hand_tone2 :rightwards_pushing_hand_tone2:<br>
+rightwards_pushing_hand_tone3 :rightwards_pushing_hand_tone3:<br>
+rightwards_pushing_hand_tone4 :rightwards_pushing_hand_tone4:<br>
+rightwards_pushing_hand_tone5 :rightwards_pushing_hand_tone5:<br>
 ring :ring:<br>
 ring_buoy :ring_buoy:<br>
 ringed_planet :ringed_planet:<br>
@@ -2812,6 +2840,7 @@ selfie_tone5 :selfie_tone5:<br>
 service_dog :service_dog:<br>
 seven :seven:<br>
 sewing_needle :sewing_needle:<br>
+shaking_face :shaking_face:<br>
 shallow_pan_of_food :shallow_pan_of_food:<br>
 shamrock :shamrock:<br>
 shark :shark:<br>
@@ -3161,7 +3190,9 @@ wind_blowing_face :wind_blowing_face:<br>
 wind_chime :wind_chime:<br>
 window :window:<br>
 wine_glass :wine_glass:<br>
+wing :wing:<br>
 wink :wink:<br>
+wireless :wireless:<br>
 wolf :wolf:<br>
 woman :woman:<br>
 woman_and_man_holding_hands_tone1 :woman_and_man_holding_hands_tone1:<br>
