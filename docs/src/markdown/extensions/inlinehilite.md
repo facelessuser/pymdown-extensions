@@ -150,11 +150,11 @@ def format_fail(src, language, class_name, md):
 
 ## Options
 
-Option                    | Type         | Default       | Description
-------------------------- | ------------ | ------------- | -----------
-`css_class`               | string       | `#!py3 ''`    | Class name is applied to the wrapper element of the code. If configured, this setting will override the `css_class` option of Highlight. If nothing is configured here or via or Highlight, the class `highlight` will be used.
-`style_plain_text`        | bool \| str  | `#!py3 False` | When `guess_lang` is set to `#!py3 False`, InlineHilite will avoid applying classes to code blocks that do not explicitly set a language. If it is desired to have plain text styled like code, enable this to inject classes so that they can all be styled the same. By default, plain text is assumed, but if this option is set to a langauge string, the specified language will be used for any inline code blocks that does not explicitly set a language.
-`custom_inline`           | [dictionary] | `#!py3 []`    | Custom inline code blocks.
+Option                    | Type            | Default       | Description
+------------------------- | --------------- | ------------- | -----------
+`css_class`               | string          | `#!py3 ''`    | Class name is applied to the wrapper element of the code. If configured, this setting will override the `css_class` option of Highlight. If nothing is configured here or via or Highlight, the class `highlight` will be used.
+`style_plain_text`        | bool \| string  | `#!py3 False` | When `guess_lang` is set to `#!py3 False`, InlineHilite will avoid applying classes to code blocks that do not explicitly set a language. If it is desired to have plain text styled like code, enable this to inject classes so that they can all be styled the same. By default, plain text is assumed, but if this option is set to a language string, the specified language will be used for any inline code blocks that does not explicitly set a language.
+`custom_inline`           | [dictionary]    | `#!py3 []`    | Custom inline code blocks.
 
 /// new | New 10.7
 `style_plain_text` now allows specifying a default language to be assumed.

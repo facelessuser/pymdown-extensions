@@ -691,7 +691,7 @@ class TestDefaultLang(util.MdCase):
             </code></pre></div>
             <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">code</span>
             </code></pre></div>
-            ''',  # noqa: E501
+            ''',
             True
         )
 
@@ -725,6 +725,6 @@ class TestDefaultLangInline(util.MdCase):
             </code></pre></div>
             <div class="highlight"><pre><span></span><code>import code
             </code></pre></div>
-            ''',  # noqa: E501
+            ''',
             True
         )
