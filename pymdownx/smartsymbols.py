@@ -164,7 +164,7 @@ class SmartSymbolsExtension(Extension):
 
         inline_processor = treeprocessors.InlineProcessor(md)
         inline_processor.inlinePatterns = self.patterns
-        md.treeprocessors.register(inline_processor, "smart-symbols", 2.1)
+        md.treeprocessors.register(inline_processor, "smart-symbols", 6.1)
 
 
 def makeExtension(*args, **kwargs):

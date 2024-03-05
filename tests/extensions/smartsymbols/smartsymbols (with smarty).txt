@@ -1,3 +1,0 @@
-right arrow -->
-left arrow <--
-double arrow <-->
