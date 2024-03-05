@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.7.1
+
+-   **FIX**: SmartSymbols: Ensure symbols are properly translated in table of content tokens.
+
 ## 10.7
 
 -   **NEW**: Emoji: Update Twemoji and Gemoji data to latest.
