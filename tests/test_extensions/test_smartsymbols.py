@@ -1,6 +1,9 @@
 """Test cases for SmartSymbols."""
 from .. import util
 import markdown
+from pymdownx.__meta__ import parse_version
+
+PYMD_3_6 = parse_version(markdown.__version__) >= (3, 6, 0)
 
 
 class TestSmartSymbols(util.MdCase):
@@ -139,4 +142,23 @@ class TestSmartSymbols(util.MdCase):
 
         md = markdown.Markdown(extensions=['toc', 'pymdownx.smartsymbols'])
         md.convert('# *Foo* =/= `bar`')
-        self.assertEqual(md.toc_tokens, [{'level': 1, 'id': 'foo-bar', 'name': 'Foo &ne; bar', 'children': []}])
+        self.assertEqual(
+            md.toc_tokens,
+            [
+                {
+                    'children': [],
+                    'data-toc-label': '',
+                    'html': '<em>Foo</em> &ne; <code>bar</code>',
+                    'id': 'foo-bar',
+                    'level': 1,
+                    'name': 'Foo &ne; bar'
+                }
+            ] if PYMD_3_6 else [
+                {
+                    'level': 1,
+                    'id': 'foo-bar',
+                    'name': 'Foo &ne; bar',
+                    'children': []
+                }
+            ]
+        )
