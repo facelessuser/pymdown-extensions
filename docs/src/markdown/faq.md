@@ -24,7 +24,17 @@ markdown_extensions:
       permalink: "\ue157"
 ```
 
-To specify a particular emoji generator in the Emoji extension, which just requires a simple function reference:
+If no parameters are needed, `#!yaml !!python/object/apply:` still require `{}` at the end.
+
+```yaml
+markdown_extensions:
+  - markdown.extensions.toc:
+      slugify: !!python/object/apply:pymdownx.slugs.slugify {}
+      permalink: "\ue157"
+```
+
+To specify a particular emoji generator in the Emoji extension, this requires just a simple function reference using
+`#!yaml !!python/name:`. These take no parameters and do not require `{}` at the end.
 
 ```yaml
 markdown_extensions:
