@@ -27,6 +27,7 @@ from markdown.treeprocessors import Treeprocessor
 from markdown.extensions import toc
 import xml.etree.ElementTree as etree
 import re
+import html
 
 HEADERS = {'h1', 'h2', 'h3', 'h4', 'h5', 'h6'}
 
@@ -184,7 +185,7 @@ class TabbedProcessor(BlockProcessor):
                 first = False
                 tab_group = sibling
                 if self.alternate_style:
-                    index = [index for index, last_input in enumerate(tab_group.findall('input'), 1)][-1]
+                    index = [index for index, _ in enumerate(tab_group.findall('input'), 1)][-1]
                     for d in tab_group.findall('div'):
                         if d.attrib['class'] == 'tabbed-labels':
                             labels = d
@@ -374,8 +375,8 @@ class TabbedTreeprocessor(Treeprocessor):
 
                     # Generate slugged IDs
                     for inpt, label in zip(inputs, labels):
-                        text = toc.get_name(label)
-                        innertext = toc.unescape(toc.stashedHTML2text(text, self.md))
+                        innerhtml = toc.render_inner_html(toc.remove_fnrefs(label), self.md)
+                        innertext = html.unescape(toc.strip_tags(innerhtml))
                         if self.combine_header_slug:
                             parent_slug = self.get_parent_header_slug(doc, header_map, parent_map, el)
                         else:

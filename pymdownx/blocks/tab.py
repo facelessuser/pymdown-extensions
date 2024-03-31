@@ -4,6 +4,7 @@ from markdown.extensions import toc
 from markdown.treeprocessors import Treeprocessor
 from .block import Block, type_boolean
 from ..blocks import BlocksExtension
+import html
 
 HEADERS = {'h1', 'h2', 'h3', 'h4', 'h5', 'h6'}
 
@@ -83,8 +84,8 @@ class TabbedTreeprocessor(Treeprocessor):
 
                     # Generate slugged IDs
                     for inpt, label in zip(inputs, labels):
-                        text = toc.get_name(label)
-                        innertext = toc.unescape(toc.stashedHTML2text(text, self.md))
+                        innerhtml = toc.render_inner_html(toc.remove_fnrefs(label), self.md)
+                        innertext = html.unescape(toc.strip_tags(innerhtml))
                         if self.combine_header_slug:
                             parent_slug = self.get_parent_header_slug(doc, header_map, parent_map, el)
                         else:
