@@ -1,5 +1,11 @@
 # Changelog
 
+## 10.8
+
+-   **NEW**: Require Python Markdown 3.6+.
+-   **FIX**: Fix some test cases.
+-   **FIX**: Fix warnings due to recent changes in Python Markdown.
+
 ## 10.7.1
 
 -   **FIX**: SmartSymbols: Ensure symbols are properly translated in table of content tokens.
