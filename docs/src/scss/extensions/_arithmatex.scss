@@ -31,8 +31,8 @@ mjx-container:not([display]) {
     display: flex !important;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: baseline;
     justify-content: space-between;
+    align-items: baseline;
     // overflow-x: auto;
 
     .base {
