@@ -58,6 +58,7 @@ jobs:
         file: ./coverage.xml
         flags: unittests
         name: ${{ matrix.platform }}-${{ matrix.tox-env }}
+        token: ${{ secrets.CODECOV_TOKEN }} # required
         fail_ci_if_error: false
 
   lint:
