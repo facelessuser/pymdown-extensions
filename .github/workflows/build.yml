@@ -53,11 +53,12 @@ jobs:
         python -m tox
     - name: Upload Results
       if: success()
-      uses: codecov/codecov-action@v3
+      uses: codecov/codecov-action@v4
       with:
         file: ./coverage.xml
         flags: unittests
         name: ${{ matrix.platform }}-${{ matrix.tox-env }}
+        token: ${{ secrets.CODECOV_TOKEN }} # required
         fail_ci_if_error: false
 
   lint:
