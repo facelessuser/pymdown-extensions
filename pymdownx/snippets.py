@@ -292,7 +292,7 @@ class SnippetPreprocessor(Preprocessor):
                     end = int(ending[1:])
                 starting = m.group(2)
                 if starting and len(starting) > 1:
-                    start = max(1, int(starting[1:]) - 1)
+                    start = max(0, int(starting[1:]) - 1)
                 section_name = m.group(4)
                 if section_name:
                     section = section_name[1:]
