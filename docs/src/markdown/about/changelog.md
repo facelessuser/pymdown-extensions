@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.8.1
+
+-   **FIX**: Snippets: Fix snippet line range with a start of line 1.
+
 ## 10.8
 
 -   **NEW**: Require Python Markdown 3.6+.

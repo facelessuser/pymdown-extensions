@@ -209,6 +209,33 @@ class TestSnippets(util.MdCase):
             True
         )
 
+    def test_start_1_1(self):
+        """Test beginning of file, single line range."""
+
+        self.check_markdown(
+            R'''
+            ---8<--- "lines.txt:1:1"
+            ''',
+            '''
+            <p>This is a multi-line</p>
+            ''',
+            True
+        )
+
+    def test_start_1_2(self):
+        """Test beginning of file span of multiple lines."""
+
+        self.check_markdown(
+            R'''
+            ---8<--- "lines.txt:1:2"
+            ''',
+            '''
+            <p>This is a multi-line
+            snippet.</p>
+            ''',
+            True
+        )
+
     def test_end_line_inline(self):
         """Test ending line with inline syntax."""
 
