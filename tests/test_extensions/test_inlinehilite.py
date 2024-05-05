@@ -224,7 +224,7 @@ class TestInlineHiliteGuess(util.MdCase):
 
         self.check_markdown(
             r'`import module`.',
-            r'<p><code class="inlinehilite"><span class="kn">import</span> <span class="nn">module</span></code>.</p>'
+            r'<p><code class="inlinehilite"><span class="kn">import</span><span class="w"> </span><span class="nn">module</span></code>.</p>'  # noqa: E501
         )
 
 
@@ -251,7 +251,7 @@ class TestInlineHiliteGuessInline(util.MdCase):
 
         self.check_markdown(
             r'`import module`.',
-            r'<p><code class="inlinehilite"><span class="kn">import</span> <span class="nn">module</span></code>.</p>'
+            r'<p><code class="inlinehilite"><span class="kn">import</span><span class="w"> </span><span class="nn">module</span></code>.</p>'  # noqa: E501
         )
 
     def test_no_guessing_block(self):

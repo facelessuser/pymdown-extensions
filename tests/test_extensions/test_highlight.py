@@ -23,10 +23,10 @@ class TestHighlightGuess(util.MdCase):
             ```
             ''',
             '''
-            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
             <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div>
-            ''',
+            ''',  # noqa: E501
             True
         )
 
@@ -52,10 +52,10 @@ class TestHighlightGuessBlock(util.MdCase):
             ```
             ''',
             '''
-            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
             <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div>
-            ''',
+            ''',  # noqa: E501
             True
         )
 
