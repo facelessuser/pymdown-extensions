@@ -68,7 +68,7 @@ RE_OPTIONS = re.compile(
 NESTED_FENCE_END = r'%s[ \t]*$'
 
 FENCED_BLOCK_RE = re.compile(
-    r'^([\> ]*)%s(%s)%s$' % (
+    r'^([\> ]*){}({}){}$'.format(
         md_util.HTML_PLACEHOLDER[0],
         md_util.HTML_PLACEHOLDER[1:-1] % r'([0-9]+)',
         md_util.HTML_PLACEHOLDER[-1]
@@ -89,7 +89,7 @@ def _escape(txt):
     return txt
 
 
-class CodeStash(object):
+class CodeStash:
     """
     Stash code for later retrieval.
 
@@ -140,11 +140,11 @@ def fence_code_format(source, language, class_name, options, md, **kwargs):
     if class_name:
         classes.insert(0, class_name)
 
-    id_value = ' id="{}"'.format(id_value) if id_value else ''
+    id_value = f' id="{id_value}"' if id_value else ''
     classes = ' class="{}"'.format(' '.join(classes)) if classes else ''
-    attrs = ' ' + ' '.join('{k}="{v}"'.format(k=k, v=v) for k, v in attrs.items()) if attrs else ''
+    attrs = ' ' + ' '.join(f'{k}="{v}"' for k, v in attrs.items()) if attrs else ''
 
-    return '<pre%s%s%s><code>%s</code></pre>' % (id_value, classes, attrs, _escape(source))
+    return '<pre{}{}{}><code>{}</code></pre>'.format(id_value, classes, attrs, _escape(source))
 
 
 def fence_div_format(source, language, class_name, options, md, **kwargs):
@@ -157,11 +157,11 @@ def fence_div_format(source, language, class_name, options, md, **kwargs):
     if class_name:
         classes.insert(0, class_name)
 
-    id_value = ' id="{}"'.format(id_value) if id_value else ''
+    id_value = f' id="{id_value}"' if id_value else ''
     classes = ' class="{}"'.format(' '.join(classes)) if classes else ''
-    attrs = ' ' + ' '.join('{k}="{v}"'.format(k=k, v=v) for k, v in attrs.items()) if attrs else ''
+    attrs = ' ' + ' '.join(f'{k}="{v}"' for k, v in attrs.items()) if attrs else ''
 
-    return '<div%s%s%s>%s</div>' % (id_value, classes, attrs, _escape(source))
+    return '<div{}{}{}>{}</div>'.format(id_value, classes, attrs, _escape(source))
 
 
 def highlight_validator(language, inputs, options, attrs, md):
@@ -825,13 +825,13 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         """
         # Save the fenced blocks to add once we are done iterating the lines
         placeholder = self.md.htmlStash.store(code)
-        self.stack.append(('%s%s' % (self.ws, placeholder), start, end))
+        self.stack.append(('{}{}'.format(self.ws, placeholder), start, end))
         if not self.disabled_indented:
             # If an indented block consumes this placeholder,
             # we can restore the original source
             self.extension.stash.store(
                 placeholder[1:-1],
-                "%s\n%s%s" % (self.first, self.normalize_ws(source), self.last),
+                "{}\n{}{}".format(self.first, self.normalize_ws(source), self.last),
                 self.ws_virtual_len
             )
 
@@ -903,11 +903,11 @@ class SuperFencesRawBlockPreprocessor(SuperFencesBlockPreprocessor):
         """
         # Just get a placeholder, we won't ever actually retrieve this source
         placeholder = self.md.htmlStash.store('')
-        self.stack.append(('%s%s' % (self.ws, placeholder), start, end))
+        self.stack.append(('{}{}'.format(self.ws, placeholder), start, end))
         # Here is the source we'll actually retrieve.
         self.extension.stash.store(
             placeholder[1:-1],
-            "%s\n%s%s" % (self.first, source, self.last),
+            "{}\n{}{}".format(self.first, source, self.last),
             self.ws_virtual_len
         )
 

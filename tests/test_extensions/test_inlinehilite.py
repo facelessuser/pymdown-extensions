@@ -8,13 +8,13 @@ import warnings
 def _format(src, language, class_name, md):
     """Inline math formatter."""
 
-    return '<span class="lang-%s %s">%s</span>' % (language, class_name, src)
+    return '<span class="lang-{} {}">{}</span>'.format(language, class_name, src)
 
 
 def _default_format(src, language, class_name, md):
     """Inline math formatter."""
 
-    return '<custom class="lang-%s %s">%s</custom>' % (language, class_name, src)
+    return '<custom class="lang-{} {}">{}</custom>'.format(language, class_name, src)
 
 
 def _format_exploder(src, language, class_name, md):

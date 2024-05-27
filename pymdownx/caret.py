@@ -40,11 +40,11 @@ NOT_CARET = r'((^|(?<=\s))(\^+)(?=\s|$))'
 # `^^^ins,sup^^^`
 INS_SUP = r'(\^{3})(?!\s)(\^{1,2}|[^\^\s]+?)(?<!\s)\1'
 # `^^^ins,sup^ins^^`
-INS_SUP2 = r'(\^{3})(?![\s\^])%s(?<!\s)\^%s(?<!\s)\^{2}' % (CONTENT, CONTENT2)
+INS_SUP2 = r'(\^{{3}})(?![\s\^]){}(?<!\s)\^{}(?<!\s)\^{{2}}'.format(CONTENT, CONTENT2)
 # `^^^sup,ins^^sup^`
-SUP_INS = r'(\^{3})(?![\s\^])%s(?<!\s)\^{2}%s(?<!\s)\^' % (CONTENT, CONTENT)
+SUP_INS = r'(\^{{3}})(?![\s\^]){}(?<!\s)\^{{2}}{}(?<!\s)\^'.format(CONTENT, CONTENT)
 # `^^ins^sup,ins^^^`
-INS_SUP3 = r'(\^{2})(?![\s\^])%s\^(?![\s\^])%s(?<!\s)\^{3}' % (CONTENT2, CONTENT)
+INS_SUP3 = r'(\^{{2}})(?![\s\^]){}\^(?![\s\^]){}(?<!\s)\^{{3}}'.format(CONTENT2, CONTENT)
 # `^^ins^^`
 INS = r'(\^{2})(?!\s)%s(?<!\s)\1' % CONTENT2
 # `^sup^`
@@ -58,12 +58,12 @@ SUP2 = r'(?<!\^)(\^)(?![\^\s])([^\s]+?)(?<![\^\s])(\^)(?!\^)'
 SMART_INS_SUP = r'(\^{3})(?![\s\^])%s(?<!\s)\1' % CONTENT
 # `^^^ins,sup^ ins^^`
 SMART_INS_SUP2 = \
-    r'(\^{3})(?![\s\^])%s(?<!\s)\^(?:(?=_)|(?![\w\^]))%s(?<!\s)\^{2}' % (
+    r'(\^{{3}})(?![\s\^]){}(?<!\s)\^(?:(?=_)|(?![\w\^])){}(?<!\s)\^{{2}}'.format(
         CONTENT, SMART_CONTENT
     )
 # `^^^sup,ins^^ sup^`
 SMART_SUP_INS = \
-    r'(\^{3})(?![\s\^])%s(?<!\s)\^{2}(?:(?=_)|(?![\w\^]))%s(?<!\s)\^' % (
+    r'(\^{{3}})(?![\s\^]){}(?<!\s)\^{{2}}(?:(?=_)|(?![\w\^])){}(?<!\s)\^'.format(
         CONTENT, CONTENT
     )
 # `^^ins^^`

@@ -83,7 +83,7 @@ def repl_relative(m, base_path, relative_path):
                 )
                 # Convert the path, URL encode it, and format it as a link
                 path = util.path2url(path)
-                link = '%s"%s"' % (
+                link = '{}"{}"'.format(
                     m.group('name'),
                     urlunparse((scheme, netloc, path, params, query, fragment))
                 )
@@ -106,13 +106,13 @@ def repl_absolute(m, base_path, file_scheme):
             path = os.path.normpath(os.path.join(base_path, path))
             path = util.path2url(path)
             if file_scheme:
-                link = '%s"%s"' % (
+                link = '{}"{}"'.format(
                     m.group('name'),
                     urlunparse(("file", netloc, path, params, query, fragment))
                 )
             else:
                 start = '/' if not path.startswith('/') else ''
-                link = '%s"%s%s"' % (
+                link = '{}"{}{}"'.format(
                     m.group('name'),
                     start,
                     urlunparse((scheme, netloc, path, params, query, fragment))

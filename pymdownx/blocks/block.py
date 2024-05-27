@@ -27,7 +27,7 @@ def _type_multi(value, types=None):
         except ValueError:  # noqa: PERF203
             pass
 
-    raise ValueError("Type '{}' did not match any of the provided types".format(type(value)))
+    raise ValueError(f"Type '{type(value)}' did not match any of the provided types")
 
 
 def type_multi(*args):
@@ -46,7 +46,7 @@ def type_none(value):
     """Ensure type None or fail."""
 
     if value is not None:
-        raise ValueError('{} is not None'.format(type(value)))
+        raise ValueError(f'{type(value)} is not None')
 
 
 def _ranged_number(value, minimum, maximum, number_type):
@@ -54,10 +54,10 @@ def _ranged_number(value, minimum, maximum, number_type):
 
     value = number_type(value)
     if minimum is not None and value < minimum:
-        raise ValueError('{} is not greater than {}'.format(value, minimum))
+        raise ValueError(f'{value} is not greater than {minimum}')
 
     if maximum is not None and value > maximum:
-        raise ValueError('{} is not greater than {}'.format(value, minimum))
+        raise ValueError(f'{value} is not greater than {minimum}')
 
     return value
 
@@ -66,7 +66,7 @@ def type_number(value):
     """Ensure type number or fail."""
 
     if not isinstance(value, (float, int)):
-        raise ValueError("Could not convert type {} to a number".format(type(value)))
+        raise ValueError(f"Could not convert type {type(value)} to a number")
 
     return value
 
@@ -76,7 +76,7 @@ def type_integer(value):
 
     if not isinstance(value, int):
         if not isinstance(value, float) or not value.is_integer():
-            raise ValueError("Could not convert type {} to an integer".format(type(value)))
+            raise ValueError(f"Could not convert type {type(value)} to an integer")
         value = int(value)
 
     return value
@@ -98,7 +98,7 @@ def type_boolean(value):
     """Ensure type boolean or fail."""
 
     if not isinstance(value, bool):
-        raise ValueError("Could not convert type {} to a boolean".format(type(value)))
+        raise ValueError(f"Could not convert type {type(value)} to a boolean")
     return value
 
 
@@ -111,7 +111,7 @@ def type_string(value):
     if isinstance(value, str):
         return value
 
-    raise ValueError("Could not convert type {} to a string".format(type(value)))
+    raise ValueError(f"Could not convert type {type(value)} to a string")
 
 
 def type_string_insensitive(value):
@@ -151,7 +151,7 @@ def _string_in(value, accepted, string_type):
 
     value = string_type(value)
     if value not in accepted:
-        raise ValueError('{} not found in {}'.format(value, str(accepted)))
+        raise ValueError(f'{value} not found in {str(accepted)}')
     return value
 
 

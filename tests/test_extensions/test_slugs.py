@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """Test slugs."""
 from .. import util
 from pymdownx import slugs

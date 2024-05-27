@@ -18,7 +18,7 @@ def get_unicode_alt(value):
 def parse(repo, tag):
     """Save test files."""
     # Load emoji database
-    with open(os.path.join(current_dir, 'tags', repo, repo, 'emoji.json'), 'r') as f:
+    with open(os.path.join(current_dir, 'tags', repo, repo, 'emoji.json')) as f:
         emojis = json.loads(f.read())
 
     emoji_db = {}

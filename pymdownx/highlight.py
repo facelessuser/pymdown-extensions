@@ -232,7 +232,7 @@ if pygments:
                 yield t, self.RE_TABLE_NUMS.sub(r'\1<span></span>', line)
 
 
-class Highlight(object):
+class Highlight:
     """Highlight class."""
 
     def __init__(
@@ -376,7 +376,7 @@ class Highlight(object):
                 temp = []
                 for k, v in attrs.items():
                     if k.startswith('data-'):
-                        temp.append('{k}="{v}"'.format(k=k, v=v))
+                        temp.append(f'{k}="{v}"')
                 attr_str = ' ' + ' '.join(temp) if temp else ''
 
             # Setup line specific settings.
@@ -410,9 +410,9 @@ class Highlight(object):
                 hl_lines=hl_lines,
                 wrapcode=True,
                 filename=title if not inline else "",
-                linespans="{}-{}".format(self.line_spans, lineno_id) if self.line_spans and not inline else '',
+                linespans=f"{self.line_spans}-{lineno_id}" if self.line_spans and not inline else '',
                 lineanchors=(
-                    "{}-{}".format(self.line_anchors, lineno_id) if self.line_anchors and not inline else ""
+                    f"{self.line_anchors}-{lineno_id}" if self.line_anchors and not inline else ""
                 ),
                 anchorlinenos=self.anchor_linenums if not inline else False
             )
@@ -435,7 +435,7 @@ class Highlight(object):
                     else:
                         classes = ' ' + m.group(2).lstrip() if m.group(2) else ''
 
-                    code = '{}<{}{}{}{}>{}'.format(code[:start], m.group(1), id_str, classes, attr_str, code[end:])
+                    code = f'{code[:start]}<{m.group(1)}{id_str}{classes}{attr_str}>{code[end:]}'
 
         elif inline:
             # Format inline code for a JavaScript Syntax Highlighter by specifying language.
@@ -454,7 +454,7 @@ class Highlight(object):
                 class_names.insert(0, self.language_prefix + language)
             class_str = CLASS_ATTR.format(' '.join(class_names)) if class_names else ''
             id_str = ID_ATTR.format(id_value) if id_value else ''
-            attr_str = ' ' + ' '.join('{k}="{v}"'.format(k=k, v=v) for k, v in attrs.items()) if attrs else ''
+            attr_str = ' ' + ' '.join(f'{k}="{v}"' for k, v in attrs.items()) if attrs else ''
             if not self.code_attr_on_pre:
                 highlight_class = (CLASS_ATTR.format(css_class)) if css_class else ''
                 code = CODE_WRAP.format(highlight_class, id_str, class_str, attr_str, self.escape(src))

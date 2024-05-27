@@ -21,7 +21,7 @@ from markdown import util as md_util
 import xml.etree.ElementTree as etree
 import functools
 
-ESCAPED_BSLASH = '%s%s%s' % (md_util.STX, ord('\\'), md_util.ETX)
+ESCAPED_BSLASH = '{}{}{}'.format(md_util.STX, ord('\\'), md_util.ETX)
 DOUBLE_BSLASH = '\\\\'
 BACKTICK_CODE_RE = r'''(?x)
 (?:

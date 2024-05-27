@@ -39,7 +39,7 @@ if sys.maxunicode == 0xFFFF:
         """Get Unicode ordinal number."""
 
         if len(c) == 2:
-            high, low = [ord(p) for p in c]
+            high, low = (ord(p) for p in c)
             ordinal = (high - 0xD800) * 0x400 + low - 0xDC00 + 0x10000
         else:
             ordinal = ord(c)
@@ -116,12 +116,12 @@ def parse(repo, tag):
             f.write('# Emojis\n')
             count = 0
             for emoji in sorted(shortnames):
-                f.write(''.join('%s %s<br>\n' % (emoji[1:-1], emoji)))
+                f.write(''.join('{} {}<br>\n'.format(emoji[1:-1], emoji)))
                 count += 1
                 if test != 'png' and count == 10:
                     break
 
-    with open(os.path.join(current_dir, 'tags', repo, repo, 'LICENSE'), 'r') as f:
+    with open(os.path.join(current_dir, 'tags', repo, repo, 'LICENSE')) as f:
         license_content = f.read()
 
     # Write out essential info

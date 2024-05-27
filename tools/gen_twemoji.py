@@ -265,7 +265,7 @@ def parse(repo, tag, jtag, emojis, emoji_aliases):
             f.write('# Emojis\n')
             count = 0
             for emoji in sorted(shortnames):
-                f.write(''.join('%s %s<br>\n' % (emoji[1:-1], emoji)))
+                f.write(''.join('{} {}<br>\n'.format(emoji[1:-1], emoji)))
                 count += 1
                 if test != 'png' and count == 10:
                     break

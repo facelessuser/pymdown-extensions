@@ -109,7 +109,7 @@ RE_KBD = r'\+{2}([\w\-]+(?:\+[\w\-]+)*?)\+{2}'
 
 ESCAPE_RE = re.compile(r'''(?<!\\)(?:\\\\)*\\(.)''')
 UNESCAPED_PLUS = re.compile(r'''(?<!\\)(?:\\\\)*(\+)''')
-ESCAPED_BSLASH = '%s%s%s' % (md_util.STX, ord('\\'), md_util.ETX)
+ESCAPED_BSLASH = '{}{}{}'.format(md_util.STX, ord('\\'), md_util.ETX)
 DOUBLE_BSLASH = '\\\\'
 
 
