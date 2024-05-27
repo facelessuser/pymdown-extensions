@@ -151,7 +151,7 @@ def _string_in(value, accepted, string_type):
 
     value = string_type(value)
     if value not in accepted:
-        raise ValueError(f'{value} not found in {str(accepted)}')
+        raise ValueError(f'{value} not found in {accepted!s}')
     return value
 
 
