@@ -9,7 +9,8 @@ import warnings
 def custom_format(source, language, class_name, options, md, **kwargs):
     """Custom format."""
 
-    return '<div lang="{}" class_name="class-{}", option="{}">{}</div>'.format(language, class_name, options['opt'], source)
+    return '<div lang="{}" class_name="class-{}", option="{}">{}</div>'.format(language, class_name,
+        options['opt'], source)
 
 
 def default_format(source, language, class_name, options, md, **kwargs):
