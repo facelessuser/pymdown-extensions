@@ -139,7 +139,7 @@ def parse_url(url):
         is_absolute = True
     elif RE_WIN_DRIVE_LETTER.match(scheme):
         # c:/path
-        path = '/%s:%s' % (scheme, path.replace('\\', '/'))
+        path = '/{}:{}'.format(scheme, path.replace('\\', '/'))
         scheme = 'file'
         netloc = ''
         is_absolute = True

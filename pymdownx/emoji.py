@@ -126,7 +126,7 @@ def to_png(index, shortname, alias, uc, alt, title, category, options, md):
     else:  # pragma: no cover
         image_path = options.get('non_standard_image_path', def_non_std_image_path)
 
-    src = "%s%s.png" % (
+    src = "{}{}.png".format(
         image_path,
         uc if is_unicode else shortname[1:-1]
     )
@@ -156,7 +156,7 @@ def to_svg(index, shortname, alias, uc, alt, title, category, options, md):
     attributes = {
         "class": options.get('classes', index),
         "alt": alt,
-        "src": "%s%s.svg" % (
+        "src": "{}{}.svg".format(
             options.get('image_path', svg_path),
             uc
         )
@@ -203,7 +203,7 @@ def to_svg_sprite(index, shortname, alias, uc, alt, title, category, options, md
     ```
     """
 
-    xlink_href = '%s#emoji-%s' % (
+    xlink_href = '{}#emoji-{}'.format(
         options.get('image_path', './../assets/sprites/emojione.sprites.svg'), uc
     )
     svg = etree.Element("svg", {"class": options.get('classes', index)})

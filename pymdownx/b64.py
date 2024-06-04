@@ -84,7 +84,7 @@ def repl_path(m, base_path):
             for b64_ext in file_types:
                 if ext in b64_ext:
                     with open(file_name, "rb") as f:
-                        link = " src=\"data:%s;base64,%s\"" % (
+                        link = " src=\"data:{};base64,{}\"".format(
                             file_types[b64_ext],
                             base64.b64encode(f.read()).decode('ascii')
                         )

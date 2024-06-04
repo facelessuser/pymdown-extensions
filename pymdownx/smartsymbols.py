@@ -58,7 +58,7 @@ RE_ORDINAL_NUMBERS = (
     (?P<tail>(?<=1)(?:1|2|3)th|1st|2nd|3rd|[04-9]th)
     \b
     ''',
-    lambda m: '%s%s<sup>%s</sup>' % (
+    lambda m: '{}{}<sup>{}</sup>'.format(
         m.group('leading') if m.group('leading') else '',
         m.group('tail')[:-2], m.group('tail')[1:]
     )

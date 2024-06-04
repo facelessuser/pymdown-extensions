@@ -39,11 +39,11 @@ NOT_TILDE = r'((^|(?<=\s))(~+)(?=\s|$))'
 # `~~~del,sub~~~`
 DEL_SUB = r'(~{3})(?!\s)(~{1,2}|[^~\s]+?)(?<!\s)\1'
 # `~~~del,sub~del~~`
-DEL_SUB2 = r'(~{3})(?![\s~])%s(?<!\s)~%s(?<!\s)~{2}' % (CONTENT, CONTENT2)
+DEL_SUB2 = r'(~{{3}})(?![\s~]){}(?<!\s)~{}(?<!\s)~{{2}}'.format(CONTENT, CONTENT2)
 # `~~~sub,del~~sub~`
-SUB_DEL = r'(~{3})(?![\s~])%s(?<!\s)~{2}%s(?<!\s)~' % (CONTENT, CONTENT)
+SUB_DEL = r'(~{{3}})(?![\s~]){}(?<!\s)~{{2}}{}(?<!\s)~'.format(CONTENT, CONTENT)
 # `~~del~sub,del~~~`
-DEL_SUB3 = r'(~{2})(?![\s~])%s~(?![\s~])%s(?<!\s)~{3}' % (CONTENT2, CONTENT)
+DEL_SUB3 = r'(~{{2}})(?![\s~]){}~(?![\s~]){}(?<!\s)~{{3}}'.format(CONTENT2, CONTENT)
 # `~~del~~`
 DEL = r'(~{2})(?!\s)%s(?<!\s)\1' % CONTENT2
 # `~sub~`
@@ -57,12 +57,12 @@ SUB2 = r'(?<!~)(~)(?![~\s])([^\s]+?)(?<![~\s])(~)(?!~)'
 SMART_DEL_SUB = r'(~{3})(?![\s~])%s(?<!\s)\1' % CONTENT
 # `~~~del,sub~ del~~`
 SMART_DEL_SUB2 = \
-    r'(~{3})(?![\s~])%s(?<!\s)~(?:(?=_)|(?![\w~]))%s(?<!\s)~{2}' % (
+    r'(~{{3}})(?![\s~]){}(?<!\s)~(?:(?=_)|(?![\w~])){}(?<!\s)~{{2}}'.format(
         CONTENT, SMART_CONTENT
     )
 # `~~~sub,del~~ sub~`
 SMART_SUB_DEL = \
-    r'(~{3})(?![\s~])%s(?<!\s)~{2}(?:(?=_)|(?![\w~]))%s(?<!\s)~' % (
+    r'(~{{3}})(?![\s~]){}(?<!\s)~{{2}}(?:(?=_)|(?![\w~])){}(?<!\s)~'.format(
         CONTENT, CONTENT
     )
 # `~~del~~`

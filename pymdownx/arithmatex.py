@@ -176,7 +176,7 @@ def _fence_mathjax_format(
 ):
     """Block math formatter."""
 
-    text = '<{} class="arithmatex">\n'.format(tag)
+    text = f'<{tag} class="arithmatex">\n'
     if preview:
         text += (
             '<div class="MathJax_Preview">\n' +
@@ -205,11 +205,11 @@ def _fence_generic_format(
 
     classes.insert(0, class_name)
 
-    id_value = ' id="{}"'.format(id_value) if id_value else ''
+    id_value = f' id="{id_value}"' if id_value else ''
     classes = ' class="{}"'.format(' '.join(classes))
-    attrs = ' ' + ' '.join('{k}="{v}"'.format(k=k, v=v) for k, v in attrs.items()) if attrs else ''
+    attrs = ' ' + ' '.join(f'{k}="{v}"' for k, v in attrs.items()) if attrs else ''
 
-    return '<{}{}{}{}>{}</{}>'.format(tag, id_value, classes, attrs, wrap.format(math), tag)
+    return f'<{tag}{id_value}{classes}{attrs}>{wrap.format(math)}</{tag}>'
 
 
 def arithmatex_fenced_format(**kwargs):

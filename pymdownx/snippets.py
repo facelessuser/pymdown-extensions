@@ -146,7 +146,7 @@ class SnippetPreprocessor(Preprocessor):
                 new_lines.append(l)
 
         if not found and self.check_paths:
-            raise SnippetMissingError("Snippet section '{}' could not be located".format(section))
+            raise SnippetMissingError(f"Snippet section '{section}' could not be located")
 
         return self.dedent(new_lines) if self.dedent_subsections else new_lines
 
@@ -180,7 +180,7 @@ class SnippetPreprocessor(Preprocessor):
                         break
         return snippet
 
-    @functools.lru_cache()  # noqa: B019
+    @functools.lru_cache  # noqa: B019
     def download(self, url):
         """
         Actually download the snippet pointed to by the passed URL.
@@ -195,7 +195,7 @@ class SnippetPreprocessor(Preprocessor):
             # Fail if status is not OK
             status = response.status if util.PY39 else response.code
             if status != 200:
-                raise SnippetMissingError("Cannot download snippet '{}'".format(url))
+                raise SnippetMissingError(f"Cannot download snippet '{url}'")
 
             # We provide some basic protection against absurdly large files.
             # 32MB is chosen as an arbitrary upper limit. This can be raised if desired.
@@ -205,7 +205,7 @@ class SnippetPreprocessor(Preprocessor):
             content_length = int(length)
 
             if self.url_max_size != 0 and content_length >= self.url_max_size:
-                raise ValueError("refusing to read payloads larger than or equal to {}".format(self.url_max_size))
+                raise ValueError(f"refusing to read payloads larger than or equal to {self.url_max_size}")
 
             # Nothing to return
             if content_length == 0:
@@ -284,7 +284,7 @@ class SnippetPreprocessor(Preprocessor):
                 # Looks like we have an empty file and only lines specified
                 if not path:
                     if self.check_paths:
-                        raise SnippetMissingError("Snippet at path '{}' could not be found".format(path))
+                        raise SnippetMissingError(f"Snippet at path '{path}' could not be found")
                     else:
                         continue
                 ending = m.group(3)
@@ -348,7 +348,7 @@ class SnippetPreprocessor(Preprocessor):
                     )
 
                 elif self.check_paths:
-                    raise SnippetMissingError("Snippet at path '{}' could not be found".format(path))
+                    raise SnippetMissingError(f"Snippet at path '{path}' could not be found")
 
         # Pop the current file name out of the cache
         if file_name:

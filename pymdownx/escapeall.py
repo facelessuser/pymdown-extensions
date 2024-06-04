@@ -61,7 +61,7 @@ class EscapeAllPattern(InlineProcessor):
         elif char in (STX, ETX):
             escape = char
         else:
-            escape = '%s%s%s' % (md_util.STX, util.get_ord(char), md_util.ETX)
+            escape = '{}{}{}'.format(md_util.STX, util.get_ord(char), md_util.ETX)
         return escape, m.start(0), m.end(0)
 
 

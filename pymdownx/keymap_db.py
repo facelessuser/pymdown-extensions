@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """English US keymap."""
 
 keymap = {

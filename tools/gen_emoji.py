@@ -64,7 +64,7 @@ def download_tag(repo, tag, url):
         shutil.rmtree(destination)
         os.makedirs(destination)
     file_location = os.path.join(destination, os.path.basename(url) + '.zip')
-    print('Downloading: %s --> %s' % (url, file_location))
+    print('Downloading: {} --> {}'.format(url, file_location))
     resp = requests.get(
         url,
         headers={'Accept': GITHUB_API_HEADER},

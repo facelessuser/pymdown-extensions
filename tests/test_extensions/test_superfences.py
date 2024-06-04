@@ -9,13 +9,14 @@ import warnings
 def custom_format(source, language, class_name, options, md, **kwargs):
     """Custom format."""
 
-    return '<div lang="%s" class_name="class-%s", option="%s">%s</div>' % (language, class_name, options['opt'], source)
+    return '<div lang="{}" class_name="class-{}", option="{}">{}</div>'.format(language, class_name,
+        options['opt'], source)
 
 
 def default_format(source, language, class_name, options, md, **kwargs):
     """Default format."""
 
-    return '<custom lang="%s" class_name="class-%s">%s</custom>' % (language, class_name, source)
+    return '<custom lang="{}" class_name="class-{}">{}</custom>'.format(language, class_name, source)
 
 
 def custom_exploder(source, language, class_name, options, md, **kwargs):

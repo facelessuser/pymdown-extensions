@@ -36,12 +36,12 @@ def get_checkbox(state, custom_checkbox=False, clickable_checkbox=False):
     if custom_checkbox:
         return (
             '<label class="task-list-control">' +
-            '<input type="checkbox"%s%s/>' % (
+            '<input type="checkbox"{}{}/>'.format(
                 ' disabled' if not clickable_checkbox else '',
                 ' checked' if state.lower() == 'x' else '') +
             '<span class="task-list-indicator"></span></label> '
         )
-    return '<input type="checkbox"%s%s/> ' % (
+    return '<input type="checkbox"{}{}/> '.format(
         ' disabled' if not clickable_checkbox else '',
         ' checked' if state.lower() == 'x' else '')
 

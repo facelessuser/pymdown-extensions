@@ -54,8 +54,8 @@ class CollapseCode(Block):
             'input',
             {
                 "type": "checkbox",
-                "id": "__collapse{}".format(self.count),
-                "name": "__collapse{}".format(self.count),
+                "id": f"__collapse{self.count}",
+                "name": f"__collapse{self.count}",
                 'checked': 'checked'
             }
         )
@@ -65,13 +65,13 @@ class CollapseCode(Block):
         """Convert non list items to details."""
 
         el = etree.SubElement(block, 'div', {'class': 'code-footer'})
-        attrs = {'for': '__collapse{}'.format(self.count), 'class': 'expand', 'tabindex': '0'}
+        attrs = {'for': f'__collapse{self.count}', 'class': 'expand', 'tabindex': '0'}
         if self.expand_title:
             attrs['title'] = self.expand_title
         expand = etree.SubElement(el, 'label', attrs)
         expand.text = self.expand
 
-        attrs = {'for': '__collapse{}'.format(self.count), 'class': 'collapse', 'tabindex': '0'}
+        attrs = {'for': f'__collapse{self.count}', 'class': 'collapse', 'tabindex': '0'}
         if self.collapse_title:
             attrs['title'] = self.collapse_title
         collapse = etree.SubElement(el, 'label', attrs)

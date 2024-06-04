@@ -229,7 +229,7 @@ class TabbedProcessor(BlockProcessor):
                 attributes['checked'] = 'checked'
                 # Remove any previously assigned "checked states" to siblings
                 for i in tab_group.findall('input'):
-                    if i.attrib.get('name', '') == '__tabbed_{}'.format(tab_set):
+                    if i.attrib.get('name', '') == f'__tabbed_{tab_set}':
                         if 'checked' in i.attrib:
                             del i.attrib['checked']
 

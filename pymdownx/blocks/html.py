@@ -8,7 +8,7 @@ import re
 # Whitespace
 WS = r'(?:[ \t])'
 # CSS escapes
-CSS_ESCAPES = r'(?:\\(?:[a-f0-9]{{1,6}}{ws}?|[^\r\n\f]|$))'.format(ws=WS)
+CSS_ESCAPES = fr'(?:\\(?:[a-f0-9]{{1,6}}{WS}?|[^\r\n\f]|$))'
 # CSS Identifier
 IDENTIFIER = r'''
 (?:(?:-?(?:[^\x00-\x2f\x30-\x40\x5B-\x5E\x60\x7B-\x9f])+|--)
@@ -24,9 +24,9 @@ ATTR = r'''
 '''.format(ws=WS, value=VALUE)
 # Selector patterns
 # IDs (`#id`)
-PAT_ID = r'\#{ident}'.format(ident=IDENTIFIER)
+PAT_ID = fr'\#{IDENTIFIER}'
 # Classes (`.class`)
-PAT_CLASS = r'\.{ident}'.format(ident=IDENTIFIER)
+PAT_CLASS = fr'\.{IDENTIFIER}'
 # Attributes (`[attr]`, `[attr=value]`, etc.)
 PAT_ATTR = r'''
 \[(?:{ws}*(?P<attr_name>{ident}){attr})+{ws}*\]
@@ -36,7 +36,7 @@ RE_IDENT = re.compile(IDENTIFIER, flags=re.I | re.X)
 RE_ID = re.compile(PAT_ID, flags=re.I | re.X)
 RE_CLASS = re.compile(PAT_CLASS, flags=re.I | re.X)
 RE_ATTRS = re.compile(PAT_ATTR, flags=re.I | re.X)
-RE_ATTR = re.compile(r'(?P<attr_name>{ident}){attr}'.format(ident=IDENTIFIER, attr=ATTR), flags=re.I | re.X)
+RE_ATTR = re.compile(fr'(?P<attr_name>{IDENTIFIER}){ATTR}', flags=re.I | re.X)
 
 ATTRIBUTES = {'id': RE_ID, 'class': RE_CLASS, 'attr': RE_ATTRS}
 

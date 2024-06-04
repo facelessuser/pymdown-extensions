@@ -87,13 +87,13 @@ def create_ext_mentions(name, provider_type):
     """Create external mentions by provider type."""
 
     if provider_type == 'github':
-        return r'{}:{}'.format(name, RE_GITHUB_USER)
+        return fr'{name}:{RE_GITHUB_USER}'
     elif provider_type == 'gitlab':
-        return r'{}:{}'.format(name, RE_GITLAB_USER)
+        return fr'{name}:{RE_GITLAB_USER}'
     elif provider_type == 'bitbucket':
-        return r'{}:{}'.format(name, RE_BITBUCKET_USER)
+        return fr'{name}:{RE_BITBUCKET_USER}'
 
-RE_TWITTER_EXT_MENTIONS = r'twitter:{}'.format(RE_TWITTER_USER)
+RE_TWITTER_EXT_MENTIONS = fr'twitter:{RE_TWITTER_USER}'
 RE_GITHUB_EXT_MENTIONS = create_ext_mentions('github', 'github')
 RE_GITLAB_EXT_MENTIONS = create_ext_mentions('gitlab', 'gitlab')
 RE_BITBUCKET_EXT_MENTIONS = create_ext_mentions('bitbucket', 'bitbucket')
@@ -360,14 +360,14 @@ class _MagiclinkReferencePattern(_MagiclinkShorthandPattern):
             return False
 
         if self.my_repo:
-            el.text = md_util.AtomicString('{}{}'.format(icon, issue_value))
+            el.text = md_util.AtomicString(f'{icon}{issue_value}')
         elif self.my_user:
-            el.text = md_util.AtomicString('{}{}{}'.format(repo, icon, issue_value))
+            el.text = md_util.AtomicString(f'{repo}{icon}{issue_value}')
         else:
-            el.text = md_util.AtomicString('{}/{}{}{}'.format(user, repo, icon, issue_value))
+            el.text = md_util.AtomicString(f'{user}/{repo}{icon}{issue_value}')
 
         el.set('href', issue_link.format(user, repo, issue_value))
-        el.set('class', 'magiclink magiclink-{} {}'.format(provider, class_name))
+        el.set('class', f'magiclink magiclink-{provider} {class_name}')
         el.set(
             'title',
             '{} {}: {}/{} #{}'.format(
@@ -387,13 +387,13 @@ class _MagiclinkReferencePattern(_MagiclinkShorthandPattern):
         if self.my_repo:
             text = hash_ref
         elif self.my_user:
-            text = '{}@{}'.format(repo, hash_ref)
+            text = f'{repo}@{hash_ref}'
         else:
-            text = '{}/{}@{}'.format(user, repo, hash_ref)
+            text = f'{user}/{repo}@{hash_ref}'
 
         el.set('href', self.provider_info[provider]['commit'].format(user, repo, commit))
         el.text = md_util.AtomicString(text)
-        el.set('class', 'magiclink magiclink-{} magiclink-commit'.format(provider))
+        el.set('class', f'magiclink magiclink-{provider} magiclink-commit')
         el.set(
             'title',
             '{} {}: {}/{}@{}'.format(
@@ -411,15 +411,15 @@ class _MagiclinkReferencePattern(_MagiclinkShorthandPattern):
         hash_ref1 = commit1[0:self.provider_info[provider]['hash_size']]
         hash_ref2 = commit2[0:self.provider_info[provider]['hash_size']]
         if self.my_repo:
-            text = '{}...{}'.format(hash_ref1, hash_ref2)
+            text = f'{hash_ref1}...{hash_ref2}'
         elif self.my_user:
-            text = '{}@{}...{}'.format(repo, hash_ref1, hash_ref2)
+            text = f'{repo}@{hash_ref1}...{hash_ref2}'
         else:
-            text = '{}/{}@{}...{}'.format(user, repo, hash_ref1, hash_ref2)
+            text = f'{user}/{repo}@{hash_ref1}...{hash_ref2}'
 
         el.set('href', self.provider_info[provider]['compare'].format(user, repo, commit1, commit2))
         el.text = md_util.AtomicString(text)
-        el.set('class', 'magiclink magiclink-{} magiclink-compare'.format(provider))
+        el.set('class', f'magiclink magiclink-{provider} magiclink-compare')
         el.set(
             'title',
             '{} {}: {}/{}@{}...{}'.format(
@@ -497,7 +497,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
     def shorten_user(self, link, class_name, label, user_repo):
         """Shorten user link."""
 
-        link.text = md_util.AtomicString('@{}'.format(user_repo))
+        link.text = md_util.AtomicString(f'@{user_repo}')
 
         if 'magiclink-mention' not in class_name:
             class_name.append('magiclink-mention')
@@ -514,11 +514,11 @@ class MagicShortenerTreeprocessor(Treeprocessor):
 
         repo_label = self.repo_labels.get('compare', 'Compare')
         if self.my_repo:
-            text = '{}...{}'.format(value[0][0:hash_size], value[1][0:hash_size])
+            text = f'{value[0][0:hash_size]}...{value[1][0:hash_size]}'
         elif self.my_user:
             text = '{}@{}...{}'.format(user_repo.split('/')[1], value[0][0:hash_size], value[1][0:hash_size])
         else:
-            text = '{}@{}...{}'.format(user_repo, value[0][0:hash_size], value[1][0:hash_size])
+            text = f'{user_repo}@{value[0][0:hash_size]}...{value[1][0:hash_size]}'
         link.text = md_util.AtomicString(text)
 
         if 'magiclink-compare' not in class_name:
@@ -541,7 +541,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         elif self.my_user:
             text = '{}@{}'.format(user_repo.split('/')[1], value[0:hash_size])
         else:
-            text = '{}@{}'.format(user_repo, value[0:hash_size])
+            text = f'{user_repo}@{value[0:hash_size]}'
         link.text = md_util.AtomicString(text)
 
         if 'magiclink-commit' not in class_name:
@@ -574,11 +574,11 @@ class MagicShortenerTreeprocessor(Treeprocessor):
                 class_name.append('magiclink-discussion')
 
         if self.my_repo:
-            link.text = md_util.AtomicString("{}{}".format(icon, value))
+            link.text = md_util.AtomicString(f"{icon}{value}")
         elif self.my_user:
             link.text = md_util.AtomicString("{}{}{}".format(user_repo.split('/')[1], icon, value))
         else:
-            link.text = md_util.AtomicString("{}{}{}".format(user_repo, icon, value))
+            link.text = md_util.AtomicString(f"{user_repo}{icon}{value}")
 
         link.set('title', '{} {}: {} #{}'.format(label, issue_type, user_repo.rstrip('/'), value))
 
@@ -586,7 +586,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         """Shorten URL."""
 
         label = self.provider_info[provider]['provider']
-        prov_class = 'magiclink-{}'.format(provider)
+        prov_class = f'magiclink-{provider}'
         class_attr = link.get('class', '')
         class_name = class_attr.split(' ') if class_attr else []
 
@@ -609,7 +609,7 @@ class MagicShortenerTreeprocessor(Treeprocessor):
         """Shorten URL."""
 
         label = self.provider_info[provider]['provider']
-        prov_class = 'magiclink-{}'.format(provider)
+        prov_class = f'magiclink-{provider}'
         class_attr = link.get('class', '')
         class_name = class_attr.split(' ') if class_attr else []
 
@@ -866,16 +866,16 @@ class MagiclinkMailPattern(InlineProcessor):
 
     def email_encode(self, code):
         """Return entity definition by code, or the code if not defined."""
-        return "{}#{:d};".format(md_util.AMP_SUBSTITUTE, code)
+        return f"{md_util.AMP_SUBSTITUTE}#{code:d};"
 
     def handleMatch(self, m, data):
         """Handle email link patterns."""
 
         el = etree.Element("a")
         email = self.unescape(m.group('mail'))
-        href = "mailto:{}".format(email)
+        href = f"mailto:{email}"
         el.text = md_util.AtomicString(''.join([self.email_encode(ord(c)) for c in email]))
-        el.set("href", ''.join([md_util.AMP_SUBSTITUTE + '#{:d};'.format(ord(c)) for c in href]))
+        el.set("href", ''.join([md_util.AMP_SUBSTITUTE + f'#{ord(c):d};' for c in href]))
         return el, m.start(0), m.end(0)
 
 
@@ -902,8 +902,8 @@ class MagiclinkMentionPattern(_MagiclinkShorthandPattern):
             'title',
             "{} {}: {}".format(self.provider_info[provider]['provider'], self.labels.get('mention', "User"), mention)
         )
-        el.set('class', 'magiclink magiclink-{} magiclink-mention'.format(provider))
-        el.text = md_util.AtomicString('@{}'.format(mention))
+        el.set('class', f'magiclink magiclink-{provider} magiclink-mention')
+        el.text = md_util.AtomicString(f'@{mention}')
 
         return el, m.start(0), m.end(0)
 
@@ -934,8 +934,8 @@ class MagiclinkRepositoryPattern(_MagiclinkShorthandPattern):
                 self.provider_info[provider]['provider'], self.labels.get('repository', 'Repository'), user, repo
             )
         )
-        el.set('class', 'magiclink magiclink-{} magiclink-repository'.format(provider))
-        el.text = md_util.AtomicString('{}/{}'.format(user, repo))
+        el.set('class', f'magiclink magiclink-{provider} magiclink-repository')
+        el.text = md_util.AtomicString(f'{user}/{repo}')
         return el, m.start(0), m.end(0)
 
 
@@ -1254,7 +1254,7 @@ class MagiclinkExtension(Extension):
         for custom, entry in custom_provider.items():
             if not RE_CUSTOM_NAME.match(custom):
                 raise ValueError(
-                    "Name '{}' not allowed, provider name must contain only letters and numbers".format(custom)
+                    f"Name '{custom}' not allowed, provider name must contain only letters and numbers"
                 )
             if custom not in self.provider_info:
                 self.provider_info[custom] = create_provider(entry['type'], entry['host'])

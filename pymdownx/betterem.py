@@ -42,17 +42,17 @@ STAR_STRONG_EM = r'(\*{3})(?!\s)(\*{1,2}|[^\*]+?)(?<!\s)\1'
 # ___strong,em___
 UNDER_STRONG_EM = r'(_{3})(?!\s)(_{1,2}|[^_]+?)(?<!\s)\1'
 # ***strong,em*strong**
-STAR_STRONG_EM2 = r'(\*{3})(?![\s\*])%s(?<!\s)\*%s(?<!\s)\*{2}' % (STAR_CONTENT, STAR_CONTENT2)
+STAR_STRONG_EM2 = r'(\*{{3}})(?![\s\*]){}(?<!\s)\*{}(?<!\s)\*{{2}}'.format(STAR_CONTENT, STAR_CONTENT2)
 # ___strong,em_strong__
-UNDER_STRONG_EM2 = r'(_{3})(?![\s_])%s(?<!\s)_%s(?<!\s)_{2}' % (UNDER_CONTENT, UNDER_CONTENT2)
+UNDER_STRONG_EM2 = r'(_{{3}})(?![\s_]){}(?<!\s)_{}(?<!\s)_{{2}}'.format(UNDER_CONTENT, UNDER_CONTENT2)
 # ***em,strong**em*
-STAR_EM_STRONG = r'(\*{3})(?![\s\*])%s(?<!\s)\*{2}%s(?<!\s)\*' % (STAR_CONTENT2, STAR_CONTENT)
+STAR_EM_STRONG = r'(\*{{3}})(?![\s\*]){}(?<!\s)\*{{2}}{}(?<!\s)\*'.format(STAR_CONTENT2, STAR_CONTENT)
 # **strong*em,strong***
-STAR_STRONG_EM3 = r'(\*{2})(?![\s\*])%s\*(?![\s\*])%s(?<!\s)\*{3}' % (STAR_CONTENT, STAR_CONTENT)
+STAR_STRONG_EM3 = r'(\*{{2}})(?![\s\*]){}\*(?![\s\*]){}(?<!\s)\*{{3}}'.format(STAR_CONTENT, STAR_CONTENT)
 # ___em,strong__em_
-UNDER_EM_STRONG = r'(_{3})(?![\s_])%s(?<!\s)_{2}%s(?<!\s)_' % (UNDER_CONTENT2, UNDER_CONTENT)
+UNDER_EM_STRONG = r'(_{{3}})(?![\s_]){}(?<!\s)_{{2}}{}(?<!\s)_'.format(UNDER_CONTENT2, UNDER_CONTENT)
 # __strong_em,strong___
-UNDER_STRONG_EM3 = r'(_{2})(?![\s_])%s_(?![\s_])%s(?<!\s)_{3}' % (UNDER_CONTENT, UNDER_CONTENT)
+UNDER_STRONG_EM3 = r'(_{{2}})(?![\s_]){}_(?![\s_]){}(?<!\s)_{{3}}'.format(UNDER_CONTENT, UNDER_CONTENT)
 # **strong**
 STAR_STRONG = r'(\*{2})(?!\s)%s(?<!\s)\1' % STAR_CONTENT2
 # __strong__
@@ -73,10 +73,10 @@ UNDER_EM = r'(_)(?!\s)%s(?<!\s)\1' % UNDER_CONTENT
 SMART_UNDER_STRONG_EM = r'(?<!\w)(_{3})(?![\s_])%s(?<!\s)\1(?!\w)' % SMART_UNDER_CONTENT
 # ___strong,em_ strong__
 SMART_UNDER_STRONG_EM2 = \
-    r'(?<!\w)(_{3})(?![\s_])%s(?<!\s)_(?!\w)%s(?<!\s)_{2}(?!\w)' % (SMART_UNDER_CONTENT, SMART_UNDER_CONTENT)
+    r'(?<!\w)(_{{3}})(?![\s_]){}(?<!\s)_(?!\w){}(?<!\s)_{{2}}(?!\w)'.format(SMART_UNDER_CONTENT, SMART_UNDER_CONTENT)
 # ___em,strong__ em_
 SMART_UNDER_EM_STRONG = \
-    r'(?<!\w)(_{3})(?![\s_])%s(?<!\s)_{2}(?!\w)%s(?<!\s)_(?!\w)' % (SMART_UNDER_CONTENT, SMART_UNDER_CONTENT)
+    r'(?<!\w)(_{{3}})(?![\s_]){}(?<!\s)_{{2}}(?!\w){}(?<!\s)_(?!\w)'.format(SMART_UNDER_CONTENT, SMART_UNDER_CONTENT)
 # __strong__
 SMART_UNDER_STRONG = r'(?<!\w)(_{2})(?![\s_])%s(?<!\s)\1(?!\w)' % SMART_UNDER_CONTENT
 # SMART _em_
@@ -89,12 +89,12 @@ SMART_UNDER_EM2 = r'(?<![\w_])(_)(?![_\s])(.+?)(?<![_\s])(_)(?![_\w])'
 SMART_STAR_STRONG_EM = r'(?:(?<=_)|(?<![\w\*]))(\*{3})(?![\s\*])%s(?<!\s)\1(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT
 # ***strong,em* strong**
 SMART_STAR_STRONG_EM2 = \
-    r'(?:(?<=_)|(?<![\w\*]))(\*{3})(?![\s\*])%s(?<!\s)\*(?:(?=_)|(?![\w\*]))%s(?<!\s)\*{2}(?:(?=_)|(?![\w\*]))' % (
+    r'(?:(?<=_)|(?<![\w\*]))(\*{{3}})(?![\s\*]){}(?<!\s)\*(?:(?=_)|(?![\w\*])){}(?<!\s)\*{{2}}(?:(?=_)|(?![\w\*]))'.format(
         SMART_STAR_CONTENT, SMART_STAR_CONTENT
     )
 # ***em,strong** em*
 SMART_STAR_EM_STRONG = \
-    r'(?:(?<=_)|(?<![\w\*]))(\*{3})(?![\s\*])%s(?<!\s)\*{2}(?:(?=_)|(?![\w\*]))%s(?<!\s)\*(?:(?=_)|(?![\w\*]))' % (
+    r'(?:(?<=_)|(?<![\w\*]))(\*{{3}})(?![\s\*]){}(?<!\s)\*{{2}}(?:(?=_)|(?![\w\*])){}(?<!\s)\*(?:(?=_)|(?![\w\*]))'.format(
         SMART_STAR_CONTENT, SMART_STAR_CONTENT
     )
 # **strong**

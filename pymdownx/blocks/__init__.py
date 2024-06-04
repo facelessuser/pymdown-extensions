@@ -196,7 +196,7 @@ class BlocksProcessor(BlockProcessor):
         """Register a block."""
 
         if b.NAME in self.blocks:
-            raise ValueError('The block name {} is already registered!'.format(b.NAME))
+            raise ValueError(f'The block name {b.NAME} is already registered!')
         self.blocks[b.NAME] = b
         self.config[b.NAME] = config
 
