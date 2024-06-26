@@ -123,7 +123,6 @@ of including MathJax is to use the CDN. Latest version at time of writing this i
 
 /// tab | MathJax 3
 ```html
-<script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 ```
 ///
