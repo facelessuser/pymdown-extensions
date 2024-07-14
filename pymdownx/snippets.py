@@ -199,10 +199,14 @@ class SnippetPreprocessor(Preprocessor):
 
             # We provide some basic protection against absurdly large files.
             # 32MB is chosen as an arbitrary upper limit. This can be raised if desired.
-            length = response.headers.get("content-length")
-            if length is None:
-                raise ValueError("Missing content-length header")
-            content_length = int(length)
+            content = None
+            if "content-length" not in response.headers:
+                # we have to read to know if we went over the max, but never more than url_max_size
+                # where url_max_size == 0 means unlimited
+                content = response.read(self.url_max_size) if self.url_max_size != 0 else response.read()
+                content_length = len(content)
+            else:
+                content_length = int(response.headers["content-length"])
 
             if self.url_max_size != 0 and content_length >= self.url_max_size:
                 raise ValueError(f"refusing to read payloads larger than or equal to {self.url_max_size}")
@@ -211,8 +215,12 @@ class SnippetPreprocessor(Preprocessor):
             if content_length == 0:
                 return ['']
 
+            if content is None:
+                # content-length was in the header, so we did not read yet
+                content = response.read()
+
             # Process lines
-            return [l.decode(self.encoding).rstrip('\r\n') for l in response.readlines()]
+            return [l.decode(self.encoding).rstrip('\r\n') for l in content.splitlines()]
 
     def parse_snippets(self, lines, file_name=None, is_url=False):
         """Parse snippets snippet."""
