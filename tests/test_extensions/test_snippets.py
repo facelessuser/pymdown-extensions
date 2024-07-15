@@ -806,7 +806,7 @@ class TestURLSnippets(util.MdCase):
         cm = MagicMock()
         cm.status = 200
         cm.code = 200
-        cm.readlines.return_value = [b'contents']
+        cm.read.return_value = b'contents'
         cm.headers = {'content-length': '8'}
         cm.__enter__.return_value = cm
         mock_urlopen.return_value = cm
@@ -828,7 +828,7 @@ class TestURLSnippets(util.MdCase):
         cm = MagicMock()
         cm.status = 200
         cm.code = 200
-        cm.readlines.side_effect = [[b'content', b'', b'--8<-- "https://test.com/myfile2.md"'], [b'other']]
+        cm.read.side_effect = [b'content\n\n--8<-- "https://test.com/myfile2.md"', b'other']
         cm.headers = {'content-length': '8'}
         cm.__enter__.return_value = cm
         mock_urlopen.return_value = cm
@@ -851,7 +851,7 @@ class TestURLSnippets(util.MdCase):
         cm = MagicMock()
         cm.status = 200
         cm.code = 200
-        cm.readlines.side_effect = [[b'content', b'', b'--8<-- "https://test.com/myfile.md"'], [b'other']]
+        cm.read.side_effect = [b'content\n\n--8<-- "https://test.com/myfile.md"', b'other']
         cm.headers = {'content-length': '8'}
         cm.__enter__.return_value = cm
         mock_urlopen.return_value = cm
@@ -873,7 +873,7 @@ class TestURLSnippets(util.MdCase):
         cm = MagicMock()
         cm.status = 200
         cm.code = 200
-        cm.readlines.return_value = [b'content', b'', b'--8<-- "b.txt"']
+        cm.read.return_value = b'content\n\n--8<-- "b.txt"'
         cm.headers = {'content-length': '8'}
         cm.__enter__.return_value = cm
         mock_urlopen.return_value = cm
@@ -892,17 +892,14 @@ class TestURLSnippets(util.MdCase):
     def test_url_lines(self, mock_urlopen):
         """Test specifying specific lines in a URL."""
 
-        content = []
-        length = 0
         with open('tests/test_extensions/_snippets/lines.txt', 'rb') as f:
-            for l in f:
-                length += len(l)
-                content.append(l)
+            content = f.read()
+        length = len(content)
 
         cm = MagicMock()
         cm.status = 200
         cm.code = 200
-        cm.readlines.return_value = content
+        cm.read.return_value = content
         cm.headers = {'content-length': length}
         cm.__enter__.return_value = cm
         mock_urlopen.return_value = cm
@@ -926,7 +923,7 @@ class TestURLSnippets(util.MdCase):
         cm = MagicMock()
         cm.status = 404
         cm.code = 404
-        cm.readlines.return_value = []
+        cm.read.return_value = b''
         cm.headers = {'content-length': '0'}
         cm.__enter__.return_value = cm
         mock_urlopen.return_value = cm
@@ -946,20 +943,19 @@ class TestURLSnippets(util.MdCase):
         cm = MagicMock()
         cm.status = 200
         cm.code = 200
-        cm.readlines.return_value = []
+        cm.read.return_value = b''
         cm.headers = {}
         cm.__enter__.return_value = cm
         mock_urlopen.return_value = cm
 
-        with self.assertRaises(ValueError):
-            self.check_markdown(
-                R'''
-                --8<-- "https://test.com/myfile.md"
-                ''',
-                '''
-                ''',
-                True
-            )
+        self.check_markdown(
+            R'''
+            --8<-- "https://test.com/myfile.md"
+            ''',
+            '''
+            ''',
+            True
+        )
 
     @patch('urllib.request.urlopen')
     def test_missing_content_length_too_big(self, mock_urlopen):
@@ -968,7 +964,7 @@ class TestURLSnippets(util.MdCase):
         cm = MagicMock()
         cm.status = 200
         cm.code = 200
-        cm.readlines.return_value = []
+        cm.read.return_value = b''
         cm.headers = {'content-length': str(1024 * 1024 * 48)}
         cm.__enter__.return_value = cm
         mock_urlopen.return_value = cm
@@ -984,13 +980,33 @@ class TestURLSnippets(util.MdCase):
             )
 
     @patch('urllib.request.urlopen')
+    def test_content_too_big_no_content_length(self, mock_urlopen):
+        """Test content length too big."""
+
+        cm = MagicMock()
+        cm.status = 200
+        cm.code = 200
+        cm.read = lambda count: b"-" * (1024 * 1024 * 48)
+        cm.__enter__.return_value = cm
+        mock_urlopen.return_value = cm
+
+        with self.assertRaises(ValueError):
+            self.check_markdown(
+                R'''
+                --8<-- "https://test.com/myfile.md"
+                ''',
+                '''
+                ''',
+                True
+            )
+    @patch('urllib.request.urlopen')
     def test_content_length_zero(self, mock_urlopen):
         """Test empty content."""
 
         cm = MagicMock()
         cm.status = 200
         cm.code = 200
-        cm.readlines.return_value = []
+        cm.read.return_value = b''
         cm.headers = {'content-length': '0'}
         cm.__enter__.return_value = cm
         mock_urlopen.return_value = cm
@@ -1007,17 +1023,14 @@ class TestURLSnippets(util.MdCase):
     def test_url_sections(self, mock_urlopen):
         """Test specifying a section in a URL."""
 
-        content = []
-        length = 0
         with open('tests/test_extensions/_snippets/section.txt', 'rb') as f:
-            for l in f:
-                length += len(l)
-                content.append(l)
+            content = f.read()
+        length = len(content)
 
         cm = MagicMock()
         cm.status = 200
         cm.code = 200
-        cm.readlines.return_value = content
+        cm.read.return_value = content
         cm.headers = {'content-length': length}
         cm.__enter__.return_value = cm
         mock_urlopen.return_value = cm
@@ -1052,17 +1065,14 @@ class TestURLDedentSnippets(util.MdCase):
     def test_url_sections(self, mock_urlopen):
         """Test specifying a section in a URL."""
 
-        content = []
-        length = 0
         with open('tests/test_extensions/_snippets/indented.txt', 'rb') as f:
-            for l in f:
-                length += len(l)
-                content.append(l)
+            content = f.read()
+        length = len(content)
 
         cm = MagicMock()
         cm.status = 200
         cm.code = 200
-        cm.readlines.return_value = content
+        cm.read.return_value = content
         cm.headers = {'content-length': length}
         cm.__enter__.return_value = cm
         mock_urlopen.return_value = cm
@@ -1106,7 +1116,7 @@ class TestURLSnippetsNoMax(util.MdCase):
         cm = MagicMock()
         cm.status = 200
         cm.code = 200
-        cm.readlines.return_value = [b'contents']
+        cm.read.return_value = b'contents'
         cm.headers = {'content-length': str(1024 * 1024 * 48)}
         cm.__enter__.return_value = cm
         mock_urlopen.return_value = cm
@@ -1145,7 +1155,7 @@ class TestURLSnippetsMissing(util.MdCase):
         cm = MagicMock()
         cm.status = 404
         cm.code = 404
-        cm.readlines.return_value = []
+        cm.read.return_value = b''
         cm.headers = {'content-length': '0'}
         cm.__enter__.return_value = cm
         mock_urlopen.return_value = cm
