@@ -892,7 +892,8 @@ class TestURLSnippets(util.MdCase):
     def test_url_lines(self, mock_urlopen):
         """Test specifying specific lines in a URL."""
 
-        content = open('tests/test_extensions/_snippets/lines.txt', 'rb').read()
+        with open('tests/test_extensions/_snippets/lines.txt', 'rb') as f:
+            content = f.read()
         length = len(content)
 
         cm = MagicMock()
@@ -1022,7 +1023,8 @@ class TestURLSnippets(util.MdCase):
     def test_url_sections(self, mock_urlopen):
         """Test specifying a section in a URL."""
 
-        content = open('tests/test_extensions/_snippets/section.txt', 'rb').read()
+        with open('tests/test_extensions/_snippets/section.txt', 'rb') as f:
+            content = f.read()
         length = len(content)
 
         cm = MagicMock()
@@ -1063,7 +1065,8 @@ class TestURLDedentSnippets(util.MdCase):
     def test_url_sections(self, mock_urlopen):
         """Test specifying a section in a URL."""
 
-        content = open('tests/test_extensions/_snippets/indented.txt', 'rb').read()
+        with open('tests/test_extensions/_snippets/indented.txt', 'rb') as f:
+            content = f.read()
         length = len(content)
 
         cm = MagicMock()
