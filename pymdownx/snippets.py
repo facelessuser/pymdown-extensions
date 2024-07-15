@@ -201,8 +201,8 @@ class SnippetPreprocessor(Preprocessor):
             # 32MB is chosen as an arbitrary upper limit. This can be raised if desired.
             content = None
             if "content-length" not in response.headers:
-                # we have to read to know if we went over the max, but never more than url_max_size
-                # where url_max_size == 0 means unlimited
+                # we have to read to know if we went over the max, but never more than `url_max_size`
+                # where `url_max_size` == 0 means unlimited
                 content = response.read(self.url_max_size) if self.url_max_size != 0 else response.read()
                 content_length = len(content)
             else:
