@@ -177,6 +177,15 @@ class TabbedProcessor(BlockProcessor):
             labels = None
             content = None
 
+            if self.alternate_style:
+                # Add labels to the top of each content block
+                print_label_div = etree.Element('div', {'class': 'tabbed-label-print', 'hidden':''})
+                print_label_label = etree.SubElement(print_label_div, 'label')
+                print_label_label.text = title
+
+                # Prepend the print_label_div to the block
+                block = etree.tostring(print_label_div, encoding='unicode') + block
+
             if (
                 sibling is not None and sibling.tag.lower() == 'div' and
                 sibling.attrib.get('class', '') == tabbed_set and

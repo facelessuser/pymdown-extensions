@@ -64,6 +64,22 @@
         }
       }
     }
+    &.tabbed-set > .tabbed-labels {
+      @media print {
+        display: none;
+      }
+    }
+    &.tabbed-set .tabbed-label-print > label {
+      @extend .tabbed-labels;
+      @media print {
+        display: block;
+      }
+    }
+  }
+}
+.tabbed-label-print > label {
+  @media screen {
+    display: none;
   }
 }
 
