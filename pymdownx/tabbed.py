@@ -48,7 +48,10 @@ class TabbedProcessor(BlockProcessor):
         self.current_sibling = None
         self.content_indention = 0
         self.alternate_style = config['alternate_style']
+        self.alternate_style_for_pdf = config['alternate_style_for_pdf']
         self.slugify = callable(config['slugify'])
+        if self.alternate_style_for_pdf:
+            self.alternate_style = self.alternate_style_for_pdf
 
     def detab_by_length(self, text, length):
         """Remove a tab from the front of each line of the given text."""
@@ -177,7 +180,7 @@ class TabbedProcessor(BlockProcessor):
             labels = None
             content = None
 
-            if self.alternate_style:
+            if self.alternate_style_for_pdf:
                 # Add labels to the top of each content block
                 print_label_div = etree.Element('div', {'class': 'tabbed-label-print', 'hidden':''})
                 print_label_label = etree.SubElement(print_label_div, 'label')
@@ -406,6 +409,7 @@ class TabbedExtension(Extension):
 
         self.config = {
             'alternate_style': [False, "Use alternate style - Default: False"],
+            'alternate_style_for_pdf': [False, "Use alternate style with additional elements for exporting to PDF - Default: False"],
             'slugify': [0, "Slugify function used to create tab specific IDs - Default: None"],
             'combine_header_slug': [False, "Combine the tab slug with the slug of the parent header - Default: False"],
             'separator': ['-', "Slug separator - Default: '-'"]
