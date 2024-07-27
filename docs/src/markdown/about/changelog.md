@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.8.2
+
+-   **FIX**: Snippets: Better handling of cases where URL snippet requests contain no header length.
+
 ## 10.8.1
 
 -   **FIX**: Snippets: Fix snippet line range with a start of line 1.
