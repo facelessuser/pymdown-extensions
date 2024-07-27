@@ -474,7 +474,7 @@ class Highlight:
             if id_str:  # pragma: no cover
                 attributes['id'] = id_str
             for k, v in attrs:  # pragma: no cover
-                attributes[k] = v
+                attributes[k] = v  # noqa: PERF403
 
             el = etree.Element('code', attributes)
             el.text = code
