@@ -173,6 +173,15 @@ html {
 .md-typeset diagram-div,
 .md-typeset pre.arithmatex,
 .md-typeset div.arithmatex {
+  // Firefox scrollbar and thumb
+  scrollbar-color: var(--md-default-fg-color--lighter) transparent;
+  scrollbar-width: thin;
+
+  // Firefox hovered scrollbar and thumb
+  &:hover {
+    scrollbar-color: var(--md-accent-fg-color) transparent;
+  }
+
   // Override native scrollbar styles
   &::-webkit-scrollbar {
     width: px2rem(4px);
@@ -191,14 +200,5 @@ html {
     &:hover {
       background-color: var(--md-accent-fg-color);
     }
-  }
-
-  // Firefox scrollbar and thumb
-  scrollbar-color: var(--md-default-fg-color--lighter) transparent;
-  scrollbar-width: thin;
-
-  // Firefox hovered scrollbar and thumb
-  &:hover {
-    scrollbar-color: var(--md-accent-fg-color) transparent;
   }
 }

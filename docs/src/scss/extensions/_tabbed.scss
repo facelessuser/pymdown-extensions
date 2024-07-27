@@ -31,15 +31,14 @@
         .highlighttable {
 
           &:only-child {
-
-            span.filename {
-              margin-top: 0;
-            }
-
             margin-right: px2rem(-24px);
             margin-left: px2rem(-24px);
             padding-right: px2rem(12px);
             padding-left: px2rem(12px);
+
+            span.filename {
+              margin-top: 0;
+            }
           }
         }
 
