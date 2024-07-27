@@ -1,7 +1,8 @@
 # Changelog
 
-## 10.8.2
+## 10.9
 
+-   **NEW**: Officially support Python 3.13.
 -   **FIX**: Snippets: Better handling of cases where URL snippet requests contain no header length.
 
 ## 10.8.1
