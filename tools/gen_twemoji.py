@@ -227,7 +227,7 @@ def parse(repo, tag, jtag, emojis, emoji_aliases):
 
     for k, v in emoji_aliases.items():
         if v in emoji_db:
-            aliases[k] = v
+            aliases[k] = v  # noqa: PERF403
 
     # Copy emoji only found in EmojiOne
     for k, v in SPECIAL_EMOJI.items():
