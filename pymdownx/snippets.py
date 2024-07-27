@@ -220,7 +220,7 @@ class SnippetPreprocessor(Preprocessor):
                 content = response.read()
 
             # Process lines
-            return [l.decode(self.encoding).rstrip('\r\n') for l in content.splitlines()]
+            return [l.decode(self.encoding) for l in content.splitlines()]
 
     def parse_snippets(self, lines, file_name=None, is_url=False):
         """Parse snippets snippet."""
