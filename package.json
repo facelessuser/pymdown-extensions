@@ -55,7 +55,7 @@
     "postcss-scss": "^4.0.9",
     "postcss-svgo": "^7.0.1",
     "promise": "^8.3.0",
-    "rollup": "^4.19.1",
+    "rollup": "^4.21.0",
     "rollup-plugin-output-manifest": "^2.0.0",
     "sass": "^1.77.8",
     "stylelint": "^15.11.0",
