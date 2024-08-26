@@ -62,7 +62,7 @@
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^36.0.1",
     "stylelint-order": "^6.0.4",
-    "stylelint-scss": "^6.4.1",
+    "stylelint-scss": "^6.5.1",
     "terser": "^5.31.3",
     "vinyl-paths": "^5.0.0",
     "yargs": "^17.7.2"
