@@ -81,3 +81,64 @@ class TestBetterSmartAll(util.MdCase):
             ''',
             True
         )
+
+class TestBetterSmartEnableAll(util.MdCase):
+    """Test specific cases for BetterEm with smart_enable: 'all'."""
+
+    extension = [
+        'pymdownx.betterem'
+    ]
+    extension_configs = {
+        "pymdownx.betterem": {
+            "smart_enable": "all"
+        }
+    }
+
+    def test_bold_no_spaces(self):
+        """Test bold with no spaces around the asterisks."""
+
+        self.check_markdown(
+            'test**foo**test',
+            '<p>test<strong>foo</strong>test</p>'
+        )
+
+
+    def test_bold_with_spaces(self):
+        """Test bold with spaces around the asterisks."""
+
+        self.check_markdown(
+            'test **foo** test',
+            '<p>test <strong>foo</strong> test</p>'
+        )
+
+    def test_bold_with_special_characters(self):
+        """Test bold with special characters nearby."""
+
+        self.check_markdown(
+            'test**foo!**bar',
+            '<p>test<strong>foo!</strong>bar</p>'
+        )
+
+    def test_italic_no_spaces(self):
+        """Test italic with no spaces around the asterisks."""
+
+        self.check_markdown(
+            'test*foo*test',
+            '<p>test<em>foo</em>test</p>'
+        )
+
+    def test_italic_with_spaces(self):
+        """Test italic with spaces around the asterisks."""
+
+        self.check_markdown(
+            'test *foo* test',
+            '<p>test <em>foo</em> test</p>'
+        )
+
+    def test_italic_with_special_characters(self):
+        """Test italic with special characters nearby."""
+
+        self.check_markdown(
+            'test*foo!*bar',
+            '<p>test<em>foo!</em>bar</p>'
+        )
