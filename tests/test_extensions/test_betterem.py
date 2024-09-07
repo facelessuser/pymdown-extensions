@@ -82,18 +82,6 @@ class TestBetterSmartAll(util.MdCase):
             True
         )
 
-class TestBetterSmartEnableAll(util.MdCase):
-    """Test specific cases for BetterEm with smart_enable: 'all'."""
-
-    extension = [
-        'pymdownx.betterem'
-    ]
-    extension_configs = {
-        "pymdownx.betterem": {
-            "smart_enable": "all"
-        }
-    }
-
     def test_bold_no_spaces(self):
         """Test bold with no spaces around the asterisks."""
 
@@ -101,7 +89,6 @@ class TestBetterSmartEnableAll(util.MdCase):
             'test**foo**test',
             '<p>test<strong>foo</strong>test</p>'
         )
-
 
     def test_bold_with_spaces(self):
         """Test bold with spaces around the asterisks."""
