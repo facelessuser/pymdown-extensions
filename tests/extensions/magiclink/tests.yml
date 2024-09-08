@@ -70,7 +70,7 @@ magiclink (shorthand-social):
       repo_url_shortener: true
       repo_url_shorthand: true
       social_url_shorthand: true
-      provider: twitter
+      provider: x
       user: facelessuser
       repo: pymdown-extensions
 

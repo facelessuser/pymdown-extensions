@@ -1,6 +1,7 @@
 """Test cases for MagicLink."""
 from .. import util
 import markdown
+import warnings
 
 
 class TestMagicLinkShortner(util.MdCase):
@@ -38,8 +39,8 @@ class TestMagicLinkShortner(util.MdCase):
         """Test that social shortening does not happen."""
 
         self.check_markdown(
-            r'https://twitter.com/someuser',
-            r'<p><a href="https://twitter.com/someuser">https://twitter.com/someuser</a></p>'
+            r'https://x.com/someuser',
+            r'<p><a href="https://x.com/someuser">https://x.com/someuser</a></p>'
         )
 
     def test_excluded_user(self):
@@ -142,8 +143,8 @@ class TestMagicLinkShortnerSocial(util.MdCase):
 
         # Test #! original syntax
         self.check_markdown(
-            r'https://twitter.com/someuser',
-            r'<p><a class="magiclink magiclink-twitter magiclink-mention" href="https://twitter.com/someuser" title="Twitter User: someuser">@someuser</a></p>'  # noqa: E501
+            r'https://x.com/someuser',
+            r'<p><a class="magiclink magiclink-x magiclink-mention" href="https://x.com/someuser" title="X User: someuser">@someuser</a></p>'  # noqa: E501
         )
 
     def test_no_repo(self):
@@ -158,8 +159,8 @@ class TestMagicLinkShortnerSocial(util.MdCase):
         """Test excluded user."""
 
         self.check_markdown(
-            r'https://twitter.com/home',
-            r'<p><a href="https://twitter.com/home">https://twitter.com/home</a></p>'
+            r'https://x.com/home',
+            r'<p><a href="https://x.com/home">https://x.com/home</a></p>'
         )
 
 
@@ -340,3 +341,61 @@ class TestMagicLinkCustom(util.MdCase):
 
         with self.assertRaises(ValueError):
             markdown.markdown('', extensions=extension, extension_configs=extension_configs)
+
+class TestMagicLinkWarning(util.MdCase):
+    """Test cases for social link shortener."""
+
+    extension = [
+        'pymdownx.magiclink'
+    ]
+
+    extension_configs = {
+        'pymdownx.magiclink': {
+            'social_url_shortener': True,
+            'social_url_shorthand': True
+        }
+    }
+
+    def test_deprecated_twitter(self):
+        """Test deprecation warning."""
+
+        with warnings.catch_warnings(record=True) as w:
+            # Cause all warnings to always be triggered.
+
+            # Trigger a warning.
+            warnings.simplefilter("always")
+            self.check_markdown(
+                '@twitter:user',
+                '<p><a class="magiclink magiclink-twitter magiclink-mention" href="https://twitter.com/user" title="Twitter User: user">@user</a></p>'  # noqa: E501
+            )
+            target = "The 'twitter' social provider has been deprecated, please use 'x' instead"
+            for warn in w:
+                if target in str(warn.message):
+                    found = True
+                    break
+            # Verify some things
+            self.assertTrue(len(w) == 1)
+            self.assertTrue(issubclass(w[-1].category, DeprecationWarning))
+            self.assertTrue(found)
+
+    def test_deprecated_twitter_shortener(self):
+        """Test shortener deprecation warning."""
+
+        with warnings.catch_warnings(record=True) as w:
+            # Cause all warnings to always be triggered.
+
+            # Trigger a warning.
+            warnings.simplefilter("always")
+            self.check_markdown(
+                'https://twitter.com/user',
+                '<p><a class="magiclink magiclink-twitter magiclink-mention" href="https://twitter.com/user" title="Twitter User: user">@user</a></p>'  # noqa: E501
+            )
+            target = "The 'twitter' social provider has been deprecated, please use 'x' instead"
+            for warn in w:
+                if target in str(warn.message):
+                    found = True
+                    break
+            # Verify some things
+            self.assertTrue(len(w) == 1)
+            self.assertTrue(issubclass(w[-1].category, DeprecationWarning))
+            self.assertTrue(found)

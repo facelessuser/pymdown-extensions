@@ -26,6 +26,7 @@ DEALINGS IN THE SOFTWARE.
 from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
 from markdown import util as md_util
+from .util import warn_deprecated
 import xml.etree.ElementTree as etree
 from . import util
 import re
@@ -38,7 +39,8 @@ DEFAULT_EXCLUDES = {
     "bitbucket": ['dashboard', 'account', 'plans', 'support', 'repo'],
     "github": ['marketeplace', 'notifications', 'issues', 'pull', 'sponsors', 'settings', 'support'],
     "gitlab": ['dashboard', '-', 'explore', 'help', 'projects'],
-    "twitter": ['i', 'messages', 'bookmarks', 'home']
+    "twitter": ['i', 'messages', 'bookmarks', 'home'],
+    "x": ['i', 'messages', 'bookmarks', 'home']
 }
 
 # Bare link/email detection
@@ -68,6 +70,7 @@ RE_CUSTOM_NAME = re.compile(r'^[a-zA-Z0-9]+$')
 
 # Provider specific user regex rules
 RE_TWITTER_USER = r'\w{1,15}'
+RE_X_USER = r'\w{1,15}'
 RE_GITHUB_USER = r'[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?'
 RE_GITLAB_USER = r'[\.a-zA-Z\d_](?:[-a-zA-Z\d_\.]{0,37}[-a-zA-Z\d_])?'
 RE_BITBUCKET_USER = r'[-a-zA-Z\d_]{1,39}'
@@ -94,6 +97,7 @@ def create_ext_mentions(name, provider_type):
         return fr'{name}:{RE_BITBUCKET_USER}'
 
 RE_TWITTER_EXT_MENTIONS = fr'twitter:{RE_TWITTER_USER}'
+RE_X_EXT_MENTIONS = fr'x:{RE_X_USER}'
 RE_GITHUB_EXT_MENTIONS = create_ext_mentions('github', 'github')
 RE_GITLAB_EXT_MENTIONS = create_ext_mentions('gitlab', 'gitlab')
 RE_BITBUCKET_EXT_MENTIONS = create_ext_mentions('bitbucket', 'bitbucket')
@@ -245,13 +249,14 @@ RE_USER_REPO_LINK = re.compile(
 RE_SOCIAL_LINK = re.compile(
     r'''(?xi)
     ^(?:
-        (?P<twitter>(?P<twitter_base>https://(?:w{{3}}\.)?twitter\.com/(?P<twitter_user>{})))
+        (?P<twitter>(?P<twitter_base>https://(?:w{{3}}\.)?twitter\.com/(?P<twitter_user>{}))) |
+        (?P<x>(?P<x_base>https://(?:w{{3}}\.)?x\.com/(?P<x_user>{})))
     )/?$
-    '''.format(RE_TWITTER_USER)
+    '''.format(RE_TWITTER_USER, RE_X_USER)
 )
 
 # Provider specific info (links, names, specific patterns, etc.)
-SOCIAL_PROVIDERS = {'twitter'}
+SOCIAL_PROVIDERS = {'x', 'twitter'}
 
 # Templates for providers
 PROVIDER_TEMPLATES = {
@@ -295,6 +300,12 @@ PROVIDER_TEMPLATES = {
         "url": "{}",
         "user_pattern": RE_TWITTER_USER
     },
+    "x": {
+        "provider": "X",
+        "type": "x",
+        "url": "{}",
+        "user_pattern": RE_X_USER
+    }
 }
 
 
@@ -311,6 +322,7 @@ def create_provider(provider, host):
 
 PROVIDER_INFO = {
     "twitter": create_provider('twitter', "https://twitter.com"),
+    "x": create_provider('x', "https://x.com"),
     "gitlab": create_provider('gitlab', 'https://gitlab.com'),
     "bitbucket": create_provider('bitbucket', "https://bitbucket.org"),
     "github": create_provider('github', "https://github.com")
@@ -643,6 +655,9 @@ class MagicShortenerTreeprocessor(Treeprocessor):
 
         if match.group('twitter'):
             provider = 'twitter'
+
+        elif match.group('x'):
+            provider = 'x'
         return provider
 
     def get_type(self, provider, match):
@@ -802,6 +817,8 @@ class MagicShortenerTreeprocessor(Treeprocessor):
                     m = RE_SOCIAL_LINK.match(href)
                     if m:
                         provider = self.get_social_provider(m)
+                        if provider == 'twitter':
+                            warn_deprecated("The 'twitter' social provider has been deprecated, please use 'x' instead")
                         self.my_repo = self.is_my_repo(provider, m)
                         self.my_user = self.my_repo or self.is_my_user(provider, m)
                         value, link_type = self.get_type(provider, m)
@@ -895,6 +912,9 @@ class MagiclinkMentionPattern(_MagiclinkShorthandPattern):
         else:
             provider = self.provider
             mention = parts[0]
+
+        if provider == 'twitter':
+            warn_deprecated("The 'twitter' social provider has been deprecated, please use 'x' instead")
 
         el = etree.Element("a")
         el.set('href', '{}/{}'.format(self.provider_info[provider]['url'], mention))
@@ -1041,7 +1061,8 @@ class MagiclinkExtension(Extension):
                     "bitbucket": ['dashboard', 'account', 'plans', 'support', 'repo'],
                     "github": ['marketeplace', 'notifications', 'issues', 'pull', 'sponsors', 'settings', 'support'],
                     "gitlab": ['dashboard', '-', 'explore', 'help', 'projects'],
-                    "twitter": ['i', 'messages', 'bookmarks', 'home']
+                    "twitter": ['i', 'messages', 'bookmarks', 'home'],
+                    "x": ['i', 'messages', 'bookmarks', 'home']
                 },
                 "A list of user names to exclude from URL shortening."
             ],
@@ -1055,7 +1076,7 @@ class MagiclinkExtension(Extension):
             ],
             'provider': [
                 'github',
-                'The base provider to use (github, gitlab, bitbucket, twitter) - Default: "github"'
+                'The base provider to use (github, gitlab, bitbucket, x) - Default: "github"'
             ],
             'labels': [
                 {},
@@ -1294,6 +1315,7 @@ class MagiclinkExtension(Extension):
                 self.ext_mentions.extend(external_users)
 
             if self.social_short:
+                self.ext_mentions.append(RE_X_EXT_MENTIONS)
                 self.ext_mentions.append(RE_TWITTER_EXT_MENTIONS)
             self.int_mentions = self.provider_info[self.provider]['user_pattern']
             self.setup_shorthand(md)

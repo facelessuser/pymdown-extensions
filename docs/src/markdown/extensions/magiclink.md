@@ -90,7 +90,7 @@ requests (!13{.magiclink-ignore}), GitHub Discussion (?1173{.magiclink-ignore}),
 (7d1b1902ea7fe00043a249564ed5032f08dd7152{.magiclink-ignore}), and compares
 (e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac{.magiclink-ignore}). You can also
 reference repositories (@facelessuser/pymdown-extensions{.magiclink-ignore}) and users
-(@facelessuser{.magiclink-ignore}). Mentions also works for social media (only Twitter is supported at this time).
+(@facelessuser{.magiclink-ignore}). Mentions also works for social media (only X is supported at this time).
 ```
 
 The syntax used is actually very similar to GitLab's syntax. GitLab was chosen as its syntax bridges the gaps between
@@ -127,7 +127,7 @@ default, use the format `@{provider}:{user}`
 ```text title="Mentions"
 @facelessuser
 
-@twitter:twitter
+@x:x
 ```
 
 /// html | div.result
@@ -149,7 +149,7 @@ extension_configs:
 ---
 @facelessuser
 
-@twitter:twitter
+@x:x
 ```
 ///
 
@@ -496,7 +496,7 @@ Compares             | `magiclink-compare`
 GitHub               | `magiclink-github`
 Bitbucket            | `magiclink-bitbucket`
 GitLab               | `magiclink-gitlab`
-Twitter              | `magiclink-twitter`
+X                    | `magiclink-x`
 
 /// tip | Styling Links
 With a little bit of CSS^[†](#_fn_1)^, you can also add icons in front: 7d1b1902ea7fe00043a249564ed5032f08dd7152,
@@ -515,7 +515,7 @@ Option                          | Type   | Default                     | Descrip
 ------------------------------- | ------ | --------------------------- | -----------
 `hide_protocol`                 | bool   | `#!py3 False`               | If `True`, links are displayed without the initial `ftp://`, `http://`, `https://`, or `ftps://`.
 `repo_url_shortener`            | bool   | `#!py3 False`               | If `True`, GitHub, Bitbucket, and GitLab commit, pull, and issue links are are rendered in a shorthand syntax.
-`social_url_shortener`          | bool   | `#!py3 False`               | if `True`, Twitter user links are rendered in a shorthand syntax.
+`social_url_shortener`          | bool   | `#!py3 False`               | if `True`, X user links are rendered in a shorthand syntax.
 `shortener_user_exclude`        | dict   | [See below](#user-excludes) | Specifies a list of user names to avoid when attempting to shorten links. See [User Excludes](#user-excludes) for more info.
 `repo_url_shorthand`            | bool   | `#!py3 False`               | If `True`, you can directly use a shorthand syntax to represent commit, pull, issue, and mention links for repository providers and they will be auto-linked.
 `social_url_shorthand`          | bool   | `#!py3 False`               | If `True`, you can directly use a shorthand syntax to represent mention links for social media providers and they will be auto-linked.
@@ -534,7 +534,7 @@ Defaults for `shortener_user_exclude`:
     "bitbucket": ['dashboard', 'account', 'plans', 'support', 'repo'],
     "github": ['marketeplace', 'notifications', 'issues', 'pull', 'sponsors', 'settings', 'support'],
     "gitlab": ['dashboard', '-', 'explore', 'help', 'projects'],
-    "twitter": ['i', 'messages', 'bookmarks', 'home']
+    "x": ['i', 'messages', 'bookmarks', 'home']
 }
 ```
 

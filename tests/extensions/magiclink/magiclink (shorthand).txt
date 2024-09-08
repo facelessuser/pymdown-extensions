@@ -44,7 +44,7 @@ Compare gitlab:some-user/some-repo@e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90
 
 ---
 
-@twitter:username
+@x:username
 
 ---
 
