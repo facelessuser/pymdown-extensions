@@ -36,7 +36,7 @@ Commit gitlab:some-user/some-repo@3f6b07a8eeaa9d606115758d90f55fec565d4e2a
 
 ---
 
-@twitter:username
+@x:username
 
 ---
 
