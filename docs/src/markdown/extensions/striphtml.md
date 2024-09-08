@@ -24,7 +24,7 @@ Here is a <strong onclick="myFunction();">test</strong>.
 Because comments aren't stripped until the end in a post-processing step, they are present throughout the entire
 Markdown conversion process and could possibly affect parsing, so be careful how you generally insert comments.
 
-/// caution | Warning
+/// warning
 This is not meant to be a sanitizer for HTML.  This is just meant to try and strip out style, script, classes, etc.
 to provide a plain HTML output for the times this is desired; this is not meant as a security extension.  If you
 want something to secure the output, you should consider running a sanitizer like [Bleach][bleach].
