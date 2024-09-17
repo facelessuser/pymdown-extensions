@@ -58,6 +58,7 @@ nav:
     - Emoji: extensions/emoji.md
     - EscapeAll: extensions/escapeall.md
     - Extra: extensions/extra.md
+    - Fancylists: extensions/fancylists
     - Highlight: extensions/highlight.md
     - InlineHilite: extensions/inlinehilite.md
     - Keys: extensions/keys.md
@@ -172,6 +173,7 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.saneheaders:
+  - pymdownx.fancylists:
   - pymdownx.blocks.admonition:
       types:
       - new

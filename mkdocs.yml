@@ -58,6 +58,7 @@ nav:
     - Emoji: extensions/emoji.md
     - EscapeAll: extensions/escapeall.md
     - Extra: extensions/extra.md
+    - Fancylists: extensions/fancylists
     - Highlight: extensions/highlight.md
     - InlineHilite: extensions/inlinehilite.md
     - Keys: extensions/keys.md
@@ -172,6 +173,7 @@ markdown_extensions:
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.saneheaders:
+  - pymdownx.fancylists:
   - pymdownx.blocks.admonition:
       types:
       - new
@@ -234,7 +236,7 @@ extra:
       link: https://github.com/facelessuser
 extra_css:
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css
-  - assets/pymdownx-extras/extra-8611f6c398.css
+  - assets/pymdownx-extras/extra-ea58a5cc04.css
 extra_javascript:
   - https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js

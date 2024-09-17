@@ -161,6 +161,16 @@ html {
     color: var(--md-text-color);
     text-transform: none;
   }
+
+  ol ol{
+    // Nested ordered list
+    list-style-type: revert-layer;
+
+    // Triply nested ordered list
+    ol {
+      list-style-type: revert-layer;
+    }
+  }
 }
 
 .md-typeset__scrollwrap,
