@@ -55,7 +55,7 @@ def roman2int(s):
 
 
 class FancyOListProcessor(BlockProcessor):
-    """Process fancy ordered list blocks. """
+    """Process fancy ordered list blocks."""
 
     TAG = 'ol'
     SIBLING_TAGS = ['ol']

@@ -58,7 +58,7 @@ nav:
     - Emoji: extensions/emoji.md
     - EscapeAll: extensions/escapeall.md
     - Extra: extensions/extra.md
-    - Fancylists: extensions/fancylists
+    - Fancylists: extensions/fancylists.md
     - Highlight: extensions/highlight.md
     - InlineHilite: extensions/inlinehilite.md
     - Keys: extensions/keys.md
