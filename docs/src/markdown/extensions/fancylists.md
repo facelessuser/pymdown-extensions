@@ -213,13 +213,17 @@ C       | 100
 D       | 500
 M       | 1000
 
-There are 3 rules for combining the Roman numerals.
+#### Rules of Addition
+
+There are 3 rules for combining the Roman numerals. Using the following rules, the numerals are added together.
 
 1. Numerals must be arranged in descending order of size.
 2. **M**, **C**, and **X** cannot be equaled or exceeded by smaller denominations.
 3. **D**, **L**, and **V** can each only appear once.
 
-Additionally, there are subtractive rules where a smaller denomination can precede a larger value and will be
+#### Rules of Subtraction
+
+Additionally, there are subtractive rules where a smaller denomination can precede a larger one and will be
 subtracted from the larger value.
 
 1. Only one **I**, **X**, and **C** can be used as the leading numeral in part of a subtractive pair.
@@ -227,50 +231,127 @@ subtracted from the larger value.
 3. **X** can only be placed before **L** and **C**.
 4. **C** can only be placed before **D** and **M**.
 
+#### Rule of 3?
+
 If following the strictest rules you may find on the internet, you will often find an additional rule that limits the
-consecutive use of a symbol to three. This was more of a common convention than it was a rule as sometimes presented in
-modern times. Such a rule would mean that **III** is valid and **IIII** is invalid. We do not apply this rule as
-historically, this wasn't even always followed. As examples, Roman clocks often used **IIII** instead of **IV**, and
-the church of Sant'Agnese fuori le Mura, found in Rome, has a tomb inscription dated the year 1606 as **MCCCCCCVI**
-instead of the more expected **MDCVI**.
+repetition of symbols to only 3. In short, if following this rule, **III** is valid and **IIII** is invalid. The problem
+with this rule is that it developed more as a common convention than a hard rule. Roman clocks often used **IIII**
+instead of **IV**, and the church of Saint Agnes Outside the Walls, found in Rome, has a tomb inscription dated with the
+year 1606 as **MCCCCCCVI** instead of the more expected **MDCVI**. Both these cases clearly break this "rule of 3".
 
 The Roman numeral system evolved over time and was often not as strict as many may insist in modern times. There are
-even cases beyond what is described here that deviate with more loose subtractive approaches and other non-standard
-conventions. Some may disagree about what is the "most correct", rules, but if we believe the adage, "when in Rome do as
-the Romans do," and we look at historical evidence of how Romans wrote their numerals, we clearly have more freedom than
-some may like to admit.
+even historical cases that break the first rule of subtraction that we follow. Some may disagree about what are the
+"most correct" rules, but if we believe the adage, "when in Rome do as the Romans do," and we look at historical
+evidence of how Romans wrote their numerals, we clearly have more freedom than some may like to admit.
 
-We adhere to the rules as stated in this documentation. This slightly more flexible rule set allows us to more easily
-resolve issues such as where **V** could be confused as an alphabetical list if it starts a list block where **IIIII**
-would not.
+In short, we do not follow the "rule of 3" as described above, but adhere only to the rules as previously stated. This
+does end up coming in handy in a few [special cases](#special-cases).
+
+### Special Cases
+
+If you've been paying attention, you may have noticed that when alphabetical lists and Roman numeral lists are enabled,
+there are two conflicts: alphabetical lists can never start with `I` and Romans numeral lists can never start with
+single values of `M`, `D`, `C`, `L`, `X`, and `V`. This is true for both uppercase and lowercase. This does not affect
+list items in the middle of a list.
+
+In the example below, we can see that using `v` in the middle of a Roman numeral list works just fine, but if we try
+and start a new list with `v`, we get an alphabetically ordered list.
 
 ```
-i. item 1
-ii. item 2
 iii. item 3
 iv. item 4
 v. item 5
 
-v) alphabetical list!
-w) Another item.
+---
 
-iiiii. Start a new Roman numeral list.
-vi. Another item.
+v. v
+w. w
 ```
 
 /// html | div.result
-i. item 1
-ii. item 2
 iii. item 3
 iv. item 4
 v. item 5
 
-v) alphabetical list!
-w) Another item.
+---
 
-iiiii. Start a new Roman numeral list.
-vi. Another item.
+v. item v
+w. item w
 ///
+
+Since we do not follow the ["rule of 3"](#rule-of-3) in Roman numerals, we can easily work around this edge case. This
+can be applied to `M`, `D`, `C`, `L`, `X`, and `V`.
+
+```
+IIIII. Roman numeral V
+
+---
+
+VIIIII. Roman numeral X
+
+---
+
+XXXXX. Roman numeral L
+
+---
+
+XCVIIIII. Roman numeral C
+
+---
+
+CCCCC. Roman numeral D
+
+---
+
+CMXCVIIIII. Roman numeral M
+```
+
+/// html | div.result
+IIIII. Roman numeral V
+
+---
+
+VIIIII. Roman numeral X
+
+---
+
+XXXXX. Roman numeral L
+
+---
+
+XCVIIIII. Roman numeral C
+
+---
+
+CCCCC. Roman numeral D
+
+---
+
+CMXCVIIIII. Roman numeral M
+///
+
+The last issue, where alphabetically ordered lists cannot start with `I`, is not so easy. This issue exists in pretty
+much all implementations that support this way of including both alphabetically ordered and Roman numeral ordered lists.
+
+Luckily, if you have the [HTML Block extension](./blocks/plugins/html.md) enabled, you can just wrap the list,
+specifying the `start` and `type` manually, and it should work fine.
+
+```
+/// html | ol[start="9"][type="a"]
+i. item i!
+j. item j
+///
+```
+
+//// html | div.result
+/// html | ol[start="9"][type="a"]
+i. item i
+j. item j
+///
+////
+
+It may be assumed that the [`md_in_html` plugin][md-in-html] could be used, but due to how Python Markdown process block
+tags in that extension, it doesn't quite work as expected.
 
 ## Options
 

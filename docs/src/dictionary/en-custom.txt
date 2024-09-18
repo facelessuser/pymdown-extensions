@@ -81,7 +81,6 @@ MaxCDN
 MiB
 MkDocs
 MultiMarkdown
-Mura
 NONINFRINGEMENT
 NOOP
 Num
@@ -113,7 +112,6 @@ SCSS
 SVG
 SVGs
 SaneHeaders
-Sant'Agnese
 Scrollbar
 Shachnev
 Slugify
@@ -178,7 +176,6 @@ formatter
 formatter's
 formatters
 frontmatter
-fuori
 gantt
 gemoji
 gfm
@@ -199,7 +196,6 @@ jQuery
 js
 kbd
 keymap
-le
 lexer's
 linkafies
 linter
