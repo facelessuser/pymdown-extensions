@@ -26,7 +26,6 @@ from markdown.treeprocessors import Treeprocessor
 import xml.etree.ElementTree as etree
 import re
 
-VALID_ROMAN = re.compile(r'M{0,3}(?:C[MD]|D?C{0,3})(?:X[CL]|L?X{0,3})(?:I[XV]|V?I{0,3})')
 ROMAN_MAP = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
 
 
@@ -91,9 +90,10 @@ class FancyOListProcessor(BlockProcessor):
             formats += r'| \#'
 
         if 'roman' in list_types:
+            # https://projecteuler.net/about=roman_numerals
             formats += r'''
-            | (?=[IVXLCDM]{2})M{0,3}(?:C[MD]|D?C{0,3})(?:X[CL]|L?X{0,3})(?:I[XV]|V?I{0,3})
-            | m{0,3}(?:c[md]|d?c{0,3})(?:x[cl]|l?x{0,3})(?:i[xv]|v?i{0,3})
+            | (?=[IVXLCDM]{2})M*(?:C[MD]|D?C{0,9})(?:X[CL]|L?X{0,9})(?:I[XV]|V?I{0,9})
+            | m*(?:c[md]|d?c{0,9})(?:x[cl]|l?x{0,9})(?:i[xv]|v?i{0,9})
             '''
 
             if 'alpha' not in list_types:
@@ -309,9 +309,9 @@ class FancyOListProcessor(BlockProcessor):
                     list_type += 'ALPHA'
                 else:
                     list_type += 'ROMAN'
-        elif value.isupper() and VALID_ROMAN.match(value[:-1]):
+        elif value.isupper():
             list_type += 'ROMAN'
-        elif value.islower() and VALID_ROMAN.match(value[:-1].upper()):
+        elif value.islower():
             list_type += 'roman'
 
         return list_type

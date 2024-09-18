@@ -54,9 +54,9 @@ All changes Copyright 2008-2014 The Python Markdown Project
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 ```
 
-## FancyList
+## FancyLists
 
-`fancylist.py` is derived from Python Markdown's list handler.
+`fancylists.py` is derived from Python Markdown's list handler.
 
 ```
 Started by Manfred Stienstra (http://www.dwerg.net/).

@@ -53,6 +53,8 @@ Gruber's
 HeaderAnchor
 HeaderAnchor's
 Hunspell
+IIII
+IIIII
 Inline
 InlineHilite
 InlineHilite's
@@ -66,6 +68,8 @@ KBD
 KaTeX
 LaTeX
 Limberg
+MCCCCCCVI
+MDCVI
 MERCHANTABILITY
 MagicLink
 MagicLink's
@@ -77,6 +81,7 @@ MaxCDN
 MiB
 MkDocs
 MultiMarkdown
+Mura
 NONINFRINGEMENT
 NOOP
 Num
@@ -108,6 +113,7 @@ SCSS
 SVG
 SVGs
 SaneHeaders
+Sant'Agnese
 Scrollbar
 Shachnev
 Slugify
@@ -172,6 +178,7 @@ formatter
 formatter's
 formatters
 frontmatter
+fuori
 gantt
 gemoji
 gfm
@@ -192,6 +199,7 @@ jQuery
 js
 kbd
 keymap
+le
 lexer's
 linkafies
 linter
@@ -265,6 +273,7 @@ stylesheet
 stylesheets
 subclasses
 sublicense
+subtractive
 superfences
 syntaxes
 th
@@ -277,6 +286,7 @@ un
 underscore's
 unescaping
 unicode
+unindented
 unittest
 unstyled
 uslugify

@@ -355,8 +355,28 @@ class TestFancyLists(util.MdCase):
             True
         )
 
-    def test_list_corner_case(self):
-        """Test odd list case."""
+    def test_roman_relaxed(self):
+        """Test cases related to our less strict approach."""
+
+        self.check_markdown(
+            R'''
+            iiii.  item 1
+
+            MCCCCCCVI. item 1
+            ''',
+            R'''
+            <ol start="4" type="i">
+            <li>item 1</li>
+            </ol>
+            <ol start="1606" type="I">
+            <li>item 1</li>
+            </ol>
+            ''',
+            True
+        )
+
+    def test_list_nested_same_line(self):
+        """Test list nested on same line."""
 
         self.check_markdown(
             R'''
@@ -377,7 +397,7 @@ class TestFancyLists(util.MdCase):
         )
 
     def test_indented_content(self):
-        """Test odd list case."""
+        """Test indented content."""
 
         self.check_markdown(
             R'''
@@ -412,7 +432,7 @@ class TestFancyLists(util.MdCase):
         )
 
     def test_unindented_content(self):
-        """Test odd list case."""
+        """Test indented content with unindented lines."""
 
         self.check_markdown(
             R'''
@@ -492,8 +512,8 @@ class TestFancyLists(util.MdCase):
             True
         )
 
-    def test_mixed_case(self):
-        """Test mixed case."""
+    def test_mixed_nesting_case(self):
+        """Test mixed nesting case."""
 
         self.check_markdown(
             R'''
@@ -541,8 +561,8 @@ class TestFancyLists(util.MdCase):
             True
         )
 
-    def test_weird_spacing(self):
-        """Test weird spacing."""
+    def test_tight_loose_mix(self):
+        """Test inconsistent loose and tight list item spacing."""
 
         self.check_markdown(
             R'''
