@@ -5,8 +5,7 @@
 ## Overview
 
 FancyLists is inspired by [Pandoc's lists][pandoc-lists] list handling. FancyLists extends the list handling formats
-to support parenthesis style lists along with additional ordered formats. Various ordered formats are controlled by
-setting the `type` attribute to the appropriate value on the `#!html <ol>` element.
+to support parenthesis style lists along with additional ordered formats.
 
 ```
 1.  Item 1
@@ -44,6 +43,18 @@ FancyLists adds the following features:
 Additional ordered list formats such as Roman numeral, alphabetical, and generic are optional and can be disabled via
 [options](#options).
 
+Ordered types are controlled by setting the `type` attribute to the appropriate value on the `#!html <ol>` element. If
+you have CSS that overrides styling, you may not see the appropriate types, so if you want allow control at the Markdown
+level, make sure CSS doesn't override the list styles.
+
+List\ Types             | HTML\ List\ Type
+----------------------- | ----------------
+Decimal                 | 1
+Lowercase Alphabetical  | a
+Uppercase Alphabetical  | A
+Lowercase Roman Numeral | i
+Uppercase Roman Numeral | I
+
 /// note
 We do not support Pandoc's list notation that includes full parentheses (`(marker)`).
 ///
@@ -71,12 +82,12 @@ appended to the previous list.
         2.  Item 2
         ```
 
-        ///// html | div.result
+        /// html | div.result
         -   Item 1
         -   Item 2
         1.  Item 1
         2.  Item 2
-        /////
+        ///
 
     b.  Change from using trailing dot or single right-parenthesis.
 
@@ -87,12 +98,12 @@ appended to the previous list.
         2)  Item 2
         ```
 
-        ///// html | div.result
+        /// html | div.result
         1.  Item 1
         2.  Item 2
         1)  Item 1
         2)  Item 2
-        /////
+        ///
 
     c.  A change between using uppercase and lowercase.
         ```
@@ -102,12 +113,12 @@ appended to the previous list.
         B.  Item B
         ```
 
-        ///// html | div.result
+        /// html | div.result
         a.  Item a
         b.  Item b
         A.  Item A
         B.  Item B
-        /////
+        ///
 
     d.  A change in ordered type: numerical, roman numeral, alphabetical, or generic.
 
@@ -120,14 +131,14 @@ appended to the previous list.
         2.  Item 2
         ```
 
-        ///// html | div.result
+        /// html | div.result
         #.  Item 1
         #.  Item 2
         a.  Item a
         b.  Item b
         1.  Item 1
         2.  Item 2
-        /////
+        ///
 
 2.  If using uppercase list markers, a list marker consisting of a single uppercase letter followed by a dot will
     require two spaces after the marker instead of the usual 1 to avoid false positive matches with names that start
@@ -139,11 +150,11 @@ appended to the previous list.
     A.  This is a list.
     ```
 
-    ///// html | div.result
+    /// html | div.result
     B. Russell was an English philosopher.
 
     A.  This is a list.
-    /////
+    ///
 
 4.  If a roman numeral consisting of a single letter is used within an alphabetical list (assuming no indication of a
     list type change) the list item will be treated as an alphabetical list item.
@@ -160,7 +171,7 @@ appended to the previous list.
     x. Item x
     ```
 
-    ///// html | div.result
+    /// html | div.result
     iii. Item 3
     iv.  Item 4
     v.   Item 5
@@ -170,7 +181,7 @@ appended to the previous list.
     v. Item v
     w. Item w
     x. Item x
-    /////
+    ///
 
 5.  If a single letter is used to start a list, it is assumed to be an alphabetical list unless the first letter is `i`
     or `I`.
@@ -187,7 +198,7 @@ appended to the previous list.
     iii. Item 3
     ```
 
-    ///// html | div.result
+    /// html | div.result
     h. Item h
     i.  Item i
     j.   Item j
@@ -197,7 +208,7 @@ appended to the previous list.
     i.   Item 1
     ii.  Item 2
     iii. Item 3
-    /////
+    ///
 
 ### Roman Numeral Rules
 
@@ -253,6 +264,11 @@ If you've been paying attention, you may have noticed that when alphabetical lis
 there are two conflicts: alphabetical lists can never start with `I` and Romans numeral lists can never start with
 single values of `M`, `D`, `C`, `L`, `X`, and `V`. This is true for both uppercase and lowercase. This does not affect
 list items in the middle of a list.
+
+/// note
+It should be noted that these issues exists in pretty much all implementations that support this way of including both
+alphabetically ordered and Roman numeral ordered lists. This is not an issue specific to this implementation.
+///
 
 In the example below, we can see that using `v` in the middle of a Roman numeral list works just fine, but if we try
 and start a new list with `v`, we get an alphabetically ordered list.
@@ -347,6 +363,22 @@ j. item j
 /// html | ol[start="9"][type="a"]
 i. item i
 j. item j
+///
+////
+
+This approach also works for Roman numeral edge cases if it is found to be more straight forward.
+
+```
+/// html | ol[start="5"][type="I"]
+V.   item V
+VI.  item VI
+///
+```
+
+//// html | div.result
+/// html | ol[start="5"][type="I"]
+V.   item V
+VI.  item VI
 ///
 ////
 
