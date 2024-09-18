@@ -41,8 +41,8 @@ md = markdown.Markdown(extensions=['pymdownx.fancylists', 'pymdownx.saneheaders'
     b.  Change from using trailing dot or single right-parenthesis.
     c.  A change from using uppercase vs lowercase.
     d.  A change in ordered type: numerical, roman numeral, alphabetical, or generic.
-3.  If using uppercase list markers, a list marker consisting of a single uppercase letter will require two spaces
-    after the marker instead of the usual 1.
+3.  If using uppercase list markers, a list marker consisting of a single uppercase letter followed by a dot will
+    require two spaces after the marker instead of the usual 1.
 4.  The generic ordered list format (`#`) requires [SaneHeaders](./saneheaders.md) to be enabled.
 5.  Roman numeral ordered lists require valid roman numerals.
 6.  If a roman numeral consisting of a single letter is used within an alphabetical list (assuming trailing symbol and

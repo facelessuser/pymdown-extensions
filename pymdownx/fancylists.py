@@ -31,12 +31,13 @@ ROMAN_MAP = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
 
 
 def roman2int(s):
-    """Convert Roman numeral to integer."""
+    """
+    Convert Roman numeral to integer.
+
+    Values should be validated before as no validation during conversion.
+    """
 
     s = s.upper()
-
-    if not s or VALID_ROMAN.match(s) is None:
-        raise ValueError('invalid')
 
     # Initialize result
     total = 0
@@ -81,6 +82,8 @@ class FancyOListProcessor(BlockProcessor):
         super().__init__(parser)
 
         list_types = config['additional_ordered_styles']
+        self.alpha_enabled = 'alpha' in list_types
+        self.roman_enabled = 'roman' in list_types
 
         formats = ''
 
@@ -94,12 +97,14 @@ class FancyOListProcessor(BlockProcessor):
             '''
 
             if 'alpha' not in list_types:
-                formats = r'| [IVXLCDM](?=[.)][ ]{2})'
+                formats += r'''
+                | [IVXLCDM](?=\)|\.[ ]{2})
+                '''
 
         if 'alpha' in list_types:
             formats += r'''
             | [a-z]
-            | [A-Z](?=[.)][ ]{2})
+            | [A-Z](?=\)|\.[ ]{2})
             '''
 
         # Detect an item (`1. item`). `group(1)` contains contents of item.
@@ -179,10 +184,10 @@ class FancyOListProcessor(BlockProcessor):
             # Previous block was a list item, so set that as parent
             lst = sibling
 
-            # make sure previous item is in a `p` - if the item has text,
-            # then it isn't in a `p`
+            # Make sure previous item is in a `p` - if the item has text,
+            # then it isn't in a `p`.
             if lst[-1].text:
-                # since it's possible there are other children for this
+                # Since it's possible there are other children for this
                 # sibling, we can't just `SubElement` the `p`, we need to
                 # insert it as the first item.
                 p = etree.Element('p')
@@ -190,25 +195,27 @@ class FancyOListProcessor(BlockProcessor):
                 lst[-1].text = ''
                 lst[-1].insert(0, p)
 
-            # if the last item has a tail, then the tail needs to be put in a `p`
-            # likely only when a header is not followed by a blank line
+            # If the last item has a tail, then the tail needs to be put in a `p`
+            # likely only when a header is not followed by a blank line.
             lch = self.lastChild(lst[-1])
             if lch is not None and lch.tail:
                 p = etree.SubElement(lst[-1], 'p')
                 p.text = lch.tail.lstrip()
                 lch.tail = ''
 
-            # parse first block differently as it gets wrapped in a `p`.
+            # Parse first block differently as it gets wrapped in a `p`.
             li = etree.SubElement(lst, 'li')
             self.parser.state.set('looselist')
             firstitem = items.pop(0)
             self.parser.parseBlocks(li, [firstitem])
             self.parser.state.reset()
 
-        # this catches the edge case of a multi-item indented list whose
+        # This catches the edge case of a multi-item indented list whose
         # first item is in a blank parent-list item:
+        # ```
         #     * * subitem1
         #         * subitem2
+        # ```
         # see also `ListIndentProcessor`
         elif parent.tag in ['ol', 'ul']:
             lst = parent
@@ -275,16 +282,30 @@ class FancyOListProcessor(BlockProcessor):
             list_type += 'num'
         elif len(value) == 1 and value.isalpha():
             if value.islower():
-                if first and (value not in 'ivxlcdm' or ((list_type + 'roman') != fancy_type and value != 'i')):
+                in_roman = value in 'ivxlcdm'
+                if (
+                    self.alpha_enabled and (
+                        not self.roman_enabled or (
+                            first and (not in_roman or ((list_type + 'roman') != fancy_type and value != 'i'))
+                        )
+                    )
+                ):
                     list_type += 'alpha'
-                elif not first and (list_type + 'alpha') == fancy_type:
+                elif self.alpha_enabled and not first and ((list_type + 'alpha') == fancy_type or not in_roman):
                     list_type += 'alpha'
                 else:
                     list_type += 'roman'
             elif value.isupper():
-                if first and (value not in 'IVXLCDM' or ((list_type + 'ROMAN') != fancy_type and value != 'I')):
+                in_roman = value in 'IVXLCDM'
+                if (
+                    self.alpha_enabled and (
+                        not self.roman_enabled or (
+                            first and (not in_roman or ((list_type + 'ROMAN') != fancy_type and value != 'I'))
+                        )
+                    )
+                ):
                     list_type += 'ALPHA'
-                elif not first and (list_type + 'ALPHA') == fancy_type:
+                elif self.alpha_enabled and not first and ((list_type + 'ALPHA') == fancy_type or not in_roman):
                     list_type += 'ALPHA'
                 else:
                     list_type += 'ROMAN'
@@ -292,8 +313,6 @@ class FancyOListProcessor(BlockProcessor):
             list_type += 'ROMAN'
         elif value.islower() and VALID_ROMAN.match(value[:-1].upper()):
             list_type += 'roman'
-        else:
-            list_type = ''
 
         return list_type
 
