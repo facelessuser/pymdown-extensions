@@ -14,7 +14,7 @@ Currently, Pymdown Extensions has two extensions where SaneHeaders can help.
     represent issue links. There may be extensions that use names after hashes to provide tags (`#tag`). With
     SaneHeaders, these syntaxes can coexist. Those familiar with CommonMark may recognize this behavior.
 
-2.  [FancyLists' sytax](./fancylists.md) exposes a a generic ordered list style that doesn't require you to provide
+2.  [FancyLists' syntax](./fancylists.md) exposes a a generic ordered list style that doesn't require you to provide
     numbers. This syntax utilize the `#.` marker for list items.
 
 ```py3
