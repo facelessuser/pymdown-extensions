@@ -106,6 +106,8 @@ def repl_absolute(m, base_path, file_scheme):
             path = os.path.normpath(os.path.join(base_path, path))
             path = util.path2url(path)
             if file_scheme:
+                if not path.startswith('/'):
+                    path = '/' + path
                 link = '{}"{}"'.format(
                     m.group('name'),
                     urlunparse(("file", netloc, path, params, query, fragment))
