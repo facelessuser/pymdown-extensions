@@ -363,7 +363,7 @@ manner, but if we have the [HTML Block extension](./blocks/plugins/html.md) enab
 
 ```
 /// html | ol[start="9"][type="a"]
-i. item i!
+i. item i
 j. item j
 ///
 ```

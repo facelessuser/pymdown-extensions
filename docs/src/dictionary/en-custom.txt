@@ -55,6 +55,7 @@ HeaderAnchor's
 Hunspell
 IIII
 IIIII
+IXI
 Inline
 InlineHilite
 InlineHilite's
@@ -135,6 +136,7 @@ UML
 UTF
 Uml
 Unescape
+VIIIII
 Validators
 Virtualenv
 Waylan
