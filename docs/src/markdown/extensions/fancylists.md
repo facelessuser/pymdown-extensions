@@ -212,7 +212,7 @@ appended to the previous list.
 
 ### Roman Numeral Rules
 
-Roman numerals have 7 symbols
+The Roman numerals consists of 7 numerals that are combined to make all the numbers in the system.
 
 Numeral | Decimal
 ------- | -------
@@ -224,46 +224,52 @@ C       | 100
 D       | 500
 M       | 1000
 
+These numbers, depending on how they are combined, are added and subtracted to make bigger numbers.
+
+In modern day, we've added strict rules to the system, but looking at historical examples, the system was for less
+strict. FancyLists airs on the side of less strict to facilitate user inputs, browsers will render them in a more
+strict form.
+
 #### Rules of Addition
 
-There are 3 rules for combining the Roman numerals. Using the following rules, the numerals are added together.
+When Roman numerals are chained in descending order according to denomination, the values are just added together.
+When that said, there are a few rules as to how the numerals are allowed to be sequenced.
 
 1. Numerals must be arranged in descending order of size.
-2. **M**, **C**, and **X** cannot be equaled or exceeded by smaller denominations.
-3. **D**, **L**, and **V** can each only appear once.
+2. **D**, **L**, and **V** can each only appear once.
+3. **M**, **C**, and **X** cannot be equaled or exceeded by smaller denominations.
+
+It should be noted that while the user is encouraged to generally follow rule 3 as it is outlined, this is the only rule
+that FancyLists does not explicitly enforce. FancyLists actually enforces the rule as shown below.
+
+> **M**, **C**, and **X** cannot be exceeded by smaller denominations.
+
+Generally, it is recommended to use higher denomination numerals when possible, like using **X** instead of **VIIIII**.
+Despite this recommendation, we allow some flexibility in this area for user input. Additionally, this flexibility makes
+What this means is while we encourage users to generally not represent **X** with **VIIIII**, we only prevent cases that
+it easier to handle certain [special cases](#special-cases) that we will be covered later. Regardless of how the user
+inputs the numbers, browsers will use a more strict rendering.
 
 #### Rules of Subtraction
 
-Additionally, there are subtractive rules where a smaller denomination can precede a larger one and will be
-subtracted from the larger value.
+When using only additive rules, many Roman numerals can get quite long. Subtractive rules allow for shortening additive
+sequences with shorter subtractive sequences. In subtractive sequences, certain lesser denomination can actually be
+placed before larger denominations, and when done, the lesser denomination is subtracted from the larger denomination.
+As an example, with subtractive rules, **IIII** can be written more simply as **IV**. The rules are specified below.
 
 1. Only one **I**, **X**, and **C** can be used as the leading numeral in part of a subtractive pair.
+2. When **I**, **X**, and **C** are used as the lead in a subtractive pair, they can't be used immediately after the
+   subtractive pair.
 2. **I** can only be placed before **V** and **X**.
 3. **X** can only be placed before **L** and **C**.
 4. **C** can only be placed before **D** and **M**.
 
-#### Rule of 3?
-
-If following the strictest rules you may find on the internet, you will often find an additional rule that limits the
-repetition of symbols to only 3. In short, if following this rule, **III** is valid and **IIII** is invalid. The problem
-with this rule is that it developed more as a common convention than a hard rule. Roman clocks often used **IIII**
-instead of **IV**, and the church of Saint Agnes Outside the Walls, found in Rome, has a tomb inscription dated with the
-year 1606 as **MCCCCCCVI** instead of the more expected **MDCVI**. Both these cases clearly break this "rule of 3".
-
-The Roman numeral system evolved over time and was often not as strict as many may insist in modern times. There are
-even historical cases that break the first rule of subtraction that we follow. Some may disagree about what are the
-"most correct" rules, but if we believe the adage, "when in Rome do as the Romans do," and we look at historical
-evidence of how Romans wrote their numerals, we clearly have more freedom than some may like to admit.
-
-In short, we do not follow the "rule of 3" as described above, but adhere only to the rules as previously stated. This
-does end up coming in handy in a few [special cases](#special-cases).
-
 ### Special Cases
 
-If you've been paying attention, you may have noticed that when alphabetical lists and Roman numeral lists are enabled,
-there are two conflicts: alphabetical lists can never start with `I` and Romans numeral lists can never start with
-single values of `M`, `D`, `C`, `L`, `X`, and `V`. This is true for both uppercase and lowercase. This does not affect
-list items in the middle of a list.
+If you've been paying attention, you may have noticed that when alphabetical lists and Roman numeral lists are **both**
+enabled, there are two conflicts: alphabetical lists can never start with `I` and Romans numeral lists can never start
+with single values of `M`, `D`, `C`, `L`, `X`, and `V`. This is true for both uppercase and lowercase variants. This
+does not affect list items in the middle or end of a list.
 
 /// note
 It should be noted that these issues exists in pretty much all implementations that support this way of including both
@@ -295,8 +301,10 @@ v. item v
 w. item w
 ///
 
-Since we do not follow the ["rule of 3"](#rule-of-3) in Roman numerals, we can easily work around this edge case. This
-can be applied to `M`, `D`, `C`, `L`, `X`, and `V`.
+As noted in the ["additive rules"](#rules-of-addition), while we encourage users to generally not represent numerals
+such as **X** with **VIIIII**, we do not enforce the restriction. The reason is for these specific edge cases. In these
+few instances ignoring this rule can help bypass this conflict. If you need to start or restart a Roman numeral list
+value consisting of a single numeral, we can use the flexibility in the rules to mitigate the issue.
 
 ```
 IIIII. Roman numeral V
@@ -311,7 +319,7 @@ XXXXX. Roman numeral L
 
 ---
 
-XCVIIIII. Roman numeral C
+LXXXXX. Roman numeral C
 
 ---
 
@@ -319,7 +327,8 @@ CCCCC. Roman numeral D
 
 ---
 
-CMXCVIIIII. Roman numeral M
+DCCCCC. Roman numeral M
+
 ```
 
 /// html | div.result
@@ -335,7 +344,7 @@ XXXXX. Roman numeral L
 
 ---
 
-XCVIIIII. Roman numeral C
+LXXXXX. Roman numeral C
 
 ---
 
@@ -343,14 +352,12 @@ CCCCC. Roman numeral D
 
 ---
 
-CMXCVIIIII. Roman numeral M
+DCCCCC. Roman numeral M
 ///
 
-The last issue, where alphabetically ordered lists cannot start with `I`, is not so easy. This issue exists in pretty
-much all implementations that support this way of including both alphabetically ordered and Roman numeral ordered lists.
-
-Luckily, if you have the [HTML Block extension](./blocks/plugins/html.md) enabled, you can just wrap the list,
-specifying the `start` and `type` manually, and it should work fine.
+The reverse case, where alphabetical lists cannot start with `I` (or `i`), cannot be mitigated in the aforementioned
+manner, but if we have the [HTML Block extension](./blocks/plugins/html.md) enabled, we can specify the `start` and
+`type` manually which can allow us to to mitigate the conflict.
 
 ```
 /// html | ol[start="9"][type="a"]
@@ -366,7 +373,8 @@ j. item j
 ///
 ////
 
-This approach also works for Roman numeral edge cases if it is found to be more straight forward.
+If a more "strictly correct" mitigation is desired for the earlier mentioned Roman numeral conflict cases, the HTML
+Block approach can also be applied there as well. This allows for the use of more _proper_ Roman numerals.
 
 ```
 /// html | ol[start="5"][type="I"]
@@ -382,8 +390,10 @@ VI.  item VI
 ///
 ////
 
+/// note
 It may be assumed that the [`md_in_html` plugin][md-in-html] could be used, but due to how Python Markdown process block
 tags in that extension, it doesn't quite work as expected.
+///
 
 ## Options
 

@@ -92,8 +92,15 @@ class FancyOListProcessor(BlockProcessor):
         if 'roman' in list_types:
             # https://projecteuler.net/about=roman_numerals
             formats += r'''
-            | (?=[IVXLCDM]{2})M*(?:C[MD]|D?C{0,9})(?:X[CL]|L?X{0,9})(?:I[XV]|V?I{0,9})
-            | m*(?:c[md]|d?c{0,9})(?:x[cl]|l?x{0,9})(?:i[xv]|v?i{0,9})
+            | (?=[IVXLCDM]{2})
+              M*
+              (?:C[MD]|D(?:C{0,4}|C{5}\b)|(?:C{0,9}|C{10}\b))
+              (?:X[CL]|L(?:X{0,4}|X{5}\b)|(?:X{0,9}|X{10}\b))
+              (?:I[XV]|V(?:I{0,4}|I{5}\b)|(?:I{0,9}|I{10}\b))
+            | m*
+              (?:c[md]|d(?:c{0,4}|c{5}\b)|(?:c{0,9}|c{10}\b))
+              (?:x[cl]|l(?:x{0,4}|x{5}\b)|(?:x{0,9}|x{10}\b))
+              (?:i[xv]|v(?:i{0,4}|i{5}\b)|(?:i{0,9}|i{10}\b))
             '''
 
             if 'alpha' not in list_types:
