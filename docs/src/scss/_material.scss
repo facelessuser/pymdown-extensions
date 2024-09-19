@@ -155,21 +155,18 @@ html {
   }
 }
 
-/* Don't force capitalization of `H5` elements. */
 .md-typeset {
+
+  /* Don't force capitalization of `H5` elements. */
   h5 {
     color: var(--md-text-color);
     text-transform: none;
   }
 
-  ol ol{
+  /* Override Material's list type preference. */
+  ol[type]{
     // Nested ordered list
     list-style-type: revert-layer;
-
-    // Triply nested ordered list
-    ol {
-      list-style-type: revert-layer;
-    }
   }
 }
 

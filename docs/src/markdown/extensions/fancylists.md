@@ -38,9 +38,10 @@ FancyLists adds the following features:
     list type than lowercase.
 -   Support a generic numerical format via `#.`. Requires [SaneHeaders](./saneheaders.md) to be enabled.
 -   Using a different list type will start a new list. Trailing dot vs parenthesis are treated as separate types.
--   Ordered lists are sensitive to the starting value and will start a new list using the specified value.
+-   Ordered lists are sensitive to the starting value and can restart a list/create a new list using the first value
+    in the list.
 
-Additional ordered list formats such as Roman numeral, alphabetical, and generic are optional and can be disabled via
+Additional ordered list types such as Roman numeral, alphabetical, and generic are optional and can be disabled via
 [options](#options).
 
 Ordered types are controlled by setting the `type` attribute to the appropriate value on the `#!html <ol>` element. If
@@ -67,8 +68,8 @@ md = markdown.Markdown(extensions=['pymdownx.fancylists', 'pymdownx.saneheaders'
 
 ## Syntax
 
-Ordered lists have a number rules to determine when a list item is recognized and when a new list is created vs an item
-appended to the previous list.
+Ordered lists have a number rules to determine when a list item is recognized and when a new list is created/restarted
+vs an item appended to the previous list.
 
 ### Ordered List Rules
 
@@ -157,7 +158,8 @@ appended to the previous list.
     ///
 
 4.  If a roman numeral consisting of a single letter is used within an alphabetical list (assuming no indication of a
-    list type change) the list item will be treated as an alphabetical list item.
+    list type change) the list item will be treated as an alphabetical list item.  See [special cases](#special-cases)
+    on how to navigate these edge cases.
 
     ```
     iii. Item 3
@@ -184,7 +186,8 @@ appended to the previous list.
     ///
 
 5.  If a single letter is used to start a list, it is assumed to be an alphabetical list unless the first letter is `i`
-    or `I`.
+    or `I`.  See [special cases](#special-cases)
+    on how to navigate these edge cases.
 
     ```
     h. Item h
@@ -212,7 +215,7 @@ appended to the previous list.
 
 ### Roman Numeral Rules
 
-The Roman numerals consists of 7 numerals that are combined to make all the numbers in the system.
+The Roman numeral system consists of 7 numerals that are combined to make all the numbers in the system.
 
 Numeral | Decimal
 ------- | -------
@@ -227,13 +230,13 @@ M       | 1000
 These numbers, depending on how they are combined, are added and subtracted to make bigger numbers.
 
 In modern day, we've added strict rules to the system, but looking at historical examples, the system was for less
-strict. FancyLists airs on the side of less strict to facilitate user inputs, browsers will render them in a more
-strict form.
+strict. FancyLists airs on the side of less strict to be more forgiving of user inputs, browsers will always render them
+in a more strict form regardless of what the user inputs.
 
 #### Rules of Addition
 
 When Roman numerals are chained in descending order according to denomination, the values are just added together.
-When that said, there are a few rules as to how the numerals are allowed to be sequenced.
+With that said, there are a few rules as to how the numerals are allowed to be sequenced.
 
 1. Numerals must be arranged in descending order of size.
 2. **D**, **L**, and **V** can each only appear once.
@@ -246,7 +249,6 @@ that FancyLists does not explicitly enforce. FancyLists actually enforces the ru
 
 Generally, it is recommended to use higher denomination numerals when possible, like using **X** instead of **VIIIII**.
 Despite this recommendation, we allow some flexibility in this area for user input. Additionally, this flexibility makes
-What this means is while we encourage users to generally not represent **X** with **VIIIII**, we only prevent cases that
 it easier to handle certain [special cases](#special-cases) that we will be covered later. Regardless of how the user
 inputs the numbers, browsers will use a more strict rendering.
 
@@ -259,7 +261,7 @@ As an example, with subtractive rules, **IIII** can be written more simply as **
 
 1. Only one **I**, **X**, and **C** can be used as the leading numeral in part of a subtractive pair.
 2. When **I**, **X**, and **C** are used as the lead in a subtractive pair, they can't be used immediately after the
-   subtractive pair.
+   subtractive pair. So **IXI** is invalid.
 2. **I** can only be placed before **V** and **X**.
 3. **X** can only be placed before **L** and **C**.
 4. **C** can only be placed before **D** and **M**.
@@ -267,9 +269,9 @@ As an example, with subtractive rules, **IIII** can be written more simply as **
 ### Special Cases
 
 If you've been paying attention, you may have noticed that when alphabetical lists and Roman numeral lists are **both**
-enabled, there are two conflicts: alphabetical lists can never start with `I` and Romans numeral lists can never start
-with single values of `M`, `D`, `C`, `L`, `X`, and `V`. This is true for both uppercase and lowercase variants. This
-does not affect list items in the middle or end of a list.
+enabled, there are two conflicts due them relying on the same characters: alphabetical lists can never start with `I`
+and Romans numeral lists can never start with single values of `M`, `D`, `C`, `L`, `X`, and `V`. This is true for both
+uppercase and lowercase variants. This does not affect list items in the middle or end of a list.
 
 /// note
 It should be noted that these issues exists in pretty much all implementations that support this way of including both
@@ -277,7 +279,7 @@ alphabetically ordered and Roman numeral ordered lists. This is not an issue spe
 ///
 
 In the example below, we can see that using `v` in the middle of a Roman numeral list works just fine, but if we try
-and start a new list with `v`, we get an alphabetically ordered list.
+and restart/start a new list with `v`, we get an alphabetically ordered list.
 
 ```
 iii. item 3
