@@ -90,7 +90,11 @@ class FancyOListProcessor(BlockProcessor):
             formats += r'| \#'
 
         if 'roman' in list_types:
-            # https://projecteuler.net/about=roman_numerals
+            # Rules are similar to https://projecteuler.net/about=roman_numerals
+            # We do not follow the "rule of 3": repeated values should not occur more than 3 times.
+            # The above link suggests that repeats should be restricted such that lower denominations
+            # do not equal or exceed X, C or M. We alter this to allow equaling to help mitigate
+            # conflicts with alphabetical lists.
             formats += r'''
             | (?=[IVXLCDM]{2})
               M*
