@@ -65,7 +65,7 @@ class TestFancyLists(util.MdCase):
             True
         )
 
-    def test_oredered_generic(self):
+    def test_ordered_generic(self):
         """Test generic ordered list."""
 
         self.check_markdown(
@@ -84,7 +84,7 @@ class TestFancyLists(util.MdCase):
             True
         )
 
-    def test_oredered_generic_paren(self):
+    def test_ordered_generic_paren(self):
         """Test generic ordered list with parenthesis."""
 
         self.check_markdown(
@@ -98,6 +98,52 @@ class TestFancyLists(util.MdCase):
             <li>item 1</li>
             <li>item 2</li>
             <li>item 3</li>
+            </ol>
+            ''',
+            True
+        )
+
+    def test_ordered_generic_switch(self):
+        """Test generic ordered list switching over to other style."""
+
+        self.check_markdown(
+            R'''
+            #. item 1
+            #. item 2
+            #) item 1
+            #) item 2
+            ''',
+            r'''
+            <ol type="1">
+            <li>item 1</li>
+            <li>item 2</li>
+            </ol>
+            <ol type="1">
+            <li>item 1</li>
+            <li>item 2</li>
+            </ol>
+            ''',
+            True
+        )
+
+    def test_ordered_generic_inherit(self):
+        """Test generic ordered list inheritance."""
+
+        self.check_markdown(
+            R'''
+            i.  item i
+            #.  item ii
+            #.  item iii
+            I.  New list
+            ''',
+            r'''
+            <ol type="i">
+            <li>item i</li>
+            <li>item ii</li>
+            <li>item iii</li>
+            </ol>
+            <ol type="I">
+            <li>New list</li>
             </ol>
             ''',
             True
