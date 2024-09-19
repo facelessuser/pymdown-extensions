@@ -4,8 +4,8 @@
 
 ## Overview
 
-FancyLists is inspired by [Pandoc's lists][pandoc-lists] list handling. FancyLists extends the list handling formats
-to support parenthesis style lists along with additional ordered formats.
+FancyLists is inspired by [Pandoc's list handling][pandoc-lists]. FancyLists extends the list handling formats to
+support parenthesis style lists along with additional ordered formats.
 
 ```
 1.  Item 1
