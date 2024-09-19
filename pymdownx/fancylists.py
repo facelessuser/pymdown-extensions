@@ -261,10 +261,12 @@ class FancyOListProcessor(BlockProcessor):
     def get_start(self, fancy_type, m):
         """Translate list convention into a logical start."""
 
-        t = fancy_type.split('-')[1].lower()
-        if t == 'hash':
+        # Generic marker
+        if m.group(1).startswith('#'):
             return '1'
-        elif t == 'num':
+
+        t = fancy_type.split('-')[1].lower()
+        if t == 'num':
             return m.group(1)[:-1].lstrip('(')
         elif t == 'roman':
             return str(roman2int(m.group(1)[:-1]))
@@ -288,7 +290,7 @@ class FancyOListProcessor(BlockProcessor):
 
         # Determine numbering: numerical, roman numerical, alphabetic, or `#` numerical placeholder.
         if value == '#':
-            list_type += 'hash'
+            list_type += fancy_type.split('-', 1)[1] if fancy_type else 'num'
         elif value.isdigit():
             list_type += 'num'
         elif len(value) == 1 and value.isalpha():

@@ -36,7 +36,9 @@ FancyLists adds the following features:
     list type than lowercase.
 -   Support ordered lists with alphabetical format, both lowercase and uppercase. Uppercase is treated as a different
     list type than lowercase.
--   Support a generic numerical format via `#.`. Requires [SaneHeaders](./saneheaders.md) to be enabled.
+-   Support a generic ordered list marker via `#.` or `#)`. These can be used in place of numerals and will inherit the
+    type of the current list as long as the use the same convention (`.` or `)`). If used to start a list, decimal
+    format will be assumed. Requires [SaneHeaders](./saneheaders.md) to be enabled.
 -   Using a different list type will start a new list. Trailing dot vs parenthesis are treated as separate types.
 -   Ordered lists are sensitive to the starting value and can restart a list/create a new list using the first value
     in the list.
@@ -396,6 +398,38 @@ VI.  item VI
 It may be assumed that the [`md_in_html` plugin][md-in-html] could be used, but due to how Python Markdown process block
 tags in that extension, it doesn't quite work as expected.
 ///
+
+## Generic Numeral Markers
+
+Generic numeral markers are initially assumed to be decimal. If used within another list, they assume the type of
+whatever list they are under.
+
+To get a default, decimal list.
+
+```
+#. item 1
+#. item 2
+```
+
+//// html | div.result
+#. item 1
+#. item 2
+////
+
+
+If used under an existing list.
+
+```
+i. item i
+#. item ii
+#. item iii
+```
+
+//// html | div.result
+i. item i
+#. item ii
+#. item iii
+////
 
 ## Options
 
