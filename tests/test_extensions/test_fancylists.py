@@ -5,7 +5,7 @@ from .. import util
 class TestFancyLists(util.MdCase):
     """Test fancy lists."""
 
-    extension = ['pymdownx.fancylists', 'pymdownx.saneheaders']
+    extension = ['pymdownx.fancylists', 'pymdownx.saneheaders', 'pymdownx.blocks.html']
     extension_configs = {}
 
     def test_unordered(self):
@@ -583,6 +583,85 @@ class TestFancyLists(util.MdCase):
             </li>
             <li>item 4</li>
             </ul>
+            ''',
+            True
+        )
+
+    def test_roman_mitigation(self):
+        """Test mitigation for conflict case with alphabetical lists."""
+
+        self.check_markdown(
+            R'''
+            IIIII. Roman numeral V
+
+            ---
+
+            VIIIII. Roman numeral X
+
+            ---
+
+            XXXXX. Roman numeral L
+
+            ---
+
+            LXXXXX. Roman numeral C
+
+            ---
+
+            CCCCC. Roman numeral D
+
+            ---
+
+            DCCCCC. Roman numeral M
+
+            /// html | ol[start="5"][type="I"]
+            V.  Alternate work around
+            ///
+            ''',
+            R'''
+            <ol start="5" type="I">
+            <li>Roman numeral V</li>
+            </ol>
+            <hr />
+            <ol start="10" type="I">
+            <li>Roman numeral X</li>
+            </ol>
+            <hr />
+            <ol start="50" type="I">
+            <li>Roman numeral L</li>
+            </ol>
+            <hr />
+            <ol start="100" type="I">
+            <li>Roman numeral C</li>
+            </ol>
+            <hr />
+            <ol start="500" type="I">
+            <li>Roman numeral D</li>
+            </ol>
+            <hr />
+            <ol start="1000" type="I">
+            <li>Roman numeral M</li>
+            </ol>
+            <ol start="5" type="I">
+            <li>Alternate work around</li>
+            </ol>
+            ''',
+            True
+        )
+
+    def test_alpha_mitigation(self):
+        """Test mitigation for conflict case with Roman numeral lists."""
+
+        self.check_markdown(
+            R'''
+            /// html | ol[start="9"][type="a"]
+            i.  Workaround
+            ///
+            ''',
+            R'''
+            <ol start="9" type="a">
+            <li>Workaround</li>
+            </ol>
             ''',
             True
         )
