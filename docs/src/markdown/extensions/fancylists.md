@@ -362,35 +362,53 @@ DCCCCC. Roman numeral M
 ///
 
 The reverse case, where alphabetical lists cannot start with `I` (or `i`), cannot be mitigated in the aforementioned
-manner, but we can wrap it in a special [Block](./blocks/index.md) and specify the `start` and `type` manually. This
-will force the first list item to be treated as an ordered list item with the specified type and start value.
+manner, but we can wrap it in a special [Block](./blocks/index.md) and specify the `start` and/or `type` manually. By
+setting the `type` to `a`, we will force the creation of a lowercase alphabetic list and the first list item will be
+included under it, parsing it under the assumption of a lowercase alphabetical list (if possible). If a `start` is
+given, the actual value of the first list item will be ignored.
 
 ```
-/// fancylists | start=9 type=a
+/// fancylists | type=a
 i. item i
 j. item j
-/// 
+///
 ```
 
 //// html | div.result
-/// fancylists | start=9 type=a
+/// fancylists | type=a
 i. item i
 j. item j
 ///
 ////
 
-If a more "strictly correct" mitigation is desired for the earlier mentioned Roman numeral conflict cases, the HTML
-Block approach can also be applied there as well. This allows for the use of more _proper_ Roman numerals.
+This can also be applied to generic lists and a `start` value given. 
 
 ```
-/// fancylists | start=5 type=I
+/// fancylists | type=a start=9
+#. item i
+#. item j
+///
+```
+
+//// html | div.result
+/// fancylists | type=a start=9
+#. item i
+#. item j
+///
+////
+
+If a more "strictly correct" mitigation is desired for the earlier mentioned Roman numeral conflict cases, wrapping
+the Roman numeral list will work as well. This allows for the use of more _proper_ Roman numerals.
+
+```
+/// fancylists | type=I
 V.   item V
 VI.  item VI
 ///
 ```
 
 //// html | div.result
-/// fancylists | start=5 type=I
+/// fancylists | type=I
 V.   item V
 VI.  item VI
 ///

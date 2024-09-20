@@ -695,17 +695,37 @@ class TestFancyLists(util.MdCase):
             True
         )
 
-    def test_alpha_mitigation(self):
-        """Test mitigation for conflict case with Roman numeral lists."""
+    def test_alpha_mitigation_start(self):
+        """Test mitigation for conflict case with Roman numeral lists with explicit start."""
 
         self.check_markdown(
             R'''
-            /// fancylists | start=9 type=a
+            /// fancylists | start=3 type=a
+            i.  Workaround
+            j.  Workaround
+            ///
+            ''',
+            R'''
+            <ol start="3" type="a">
+            <li>Workaround</li>
+            <li>Workaround</li>
+            </ol>
+            ''',
+            True
+        )
+
+
+    def test_alpha_mitigation(self):
+        """Test mitigation for conflict case with Roman numeral lists with explicit start."""
+
+        self.check_markdown(
+            R'''
+            /// fancylists | type=a
             i.  Workaround
             j.  Workaround
             ///
 
-            /// fancylists | start=9 type=a
+            /// fancylists | type=a
             i)  Workaround
             j)  Workaround
             ///
@@ -715,7 +735,6 @@ class TestFancyLists(util.MdCase):
             <li>Workaround</li>
             <li>Workaround</li>
             </ol>
-
             <ol start="9" type="a">
             <li>Workaround</li>
             <li>Workaround</li>
@@ -729,7 +748,7 @@ class TestFancyLists(util.MdCase):
 
         self.check_markdown(
             R'''
-            /// fancylists | start=9 type=a
+            /// fancylists | type=a
             i.  Workaround
             j)  Workaround
             ///
@@ -745,31 +764,12 @@ class TestFancyLists(util.MdCase):
             True
         )
 
-    def test_alpha_mitigation(self):
-        """Test mitigation for conflict case with Roman numeral lists."""
-
-        self.check_markdown(
-            R'''
-            /// fancylists | start=9 type=a
-            i)  Workaround
-            j)  Workaround
-            ///
-            ''',
-            R'''
-            <ol start="9" type="a">
-            <li>Workaround</li>
-            <li>Workaround</li>
-            </ol>
-            ''',
-            True
-        )
-
     def test_alpha_mitigation_complex(self):
         """Test mitigation for complex conflict case with Roman numeral lists."""
 
         self.check_markdown(
             R'''
-            /// fancylists | start=9 type=a
+            /// fancylists | type=a
             i.  Workaround
 
                 Workaround
@@ -791,12 +791,12 @@ class TestFancyLists(util.MdCase):
             True
         )
 
-    def test_alpha_mitigation_ul(self):
+    def test_alpha_mitigation_ul_ignored(self):
         """Test that mitigation won't target unordered lists."""
 
         self.check_markdown(
             R'''
-            /// fancylists | start=9 type=a
+            /// fancylists | type=a
             -  Workaround
 
                 Workaround
@@ -845,6 +845,108 @@ class TestFancyLists(util.MdCase):
             True
         )
 
+    def test_alpha_mitigation_generic_no_start(self):
+        """Test that mitigation works on generic with no start."""
+
+        self.check_markdown(
+            R'''
+            /// fancylists | type=a
+            #.  Workaround
+
+                Workaround
+
+            #. Workaround
+            ///
+            ''',
+            R'''
+            <ol type="a">
+            <li>
+            <p>Workaround</p>
+            <p>Workaround</p>
+            </li>
+            <li>
+            <p>Workaround</p>
+            </li>
+            </ol>
+            ''',
+            True
+        )
+
+    def test_mitigation_no_force_alpha(self):
+        """Test case that can't be forced."""
+
+        self.check_markdown(
+            R'''
+            /// fancylists | type=a
+            1. Can't force
+            ///
+            ''',
+            R'''
+            <ol type="a">
+            <li>Can't force</li>
+            </ol>
+            ''',
+            True
+        )
+
+    def test_mitigation_bad_type(self):
+        """Test bad type in mitigation."""
+
+        self.check_markdown(
+            R'''
+            /// fancylists | type=j
+
+            1. Can't force
+            ///
+            ''',
+            R'''
+            <p>/// fancylists | type=j</p>
+            <ol type="1">
+            <li>Can't force
+            ///</li>
+            </ol>
+            ''',
+            True
+        )
+
+    def test_mitigation_no_type(self):
+        """Test no type in mitigation."""
+
+        self.check_markdown(
+            R'''
+            /// fancylists |
+
+            a. Can't force
+            ///
+            ''',
+            R'''
+            <p>/// fancylists |</p>
+            <ol type="a">
+            <li>Can't force
+            ///</li>
+            </ol>
+            ''',
+            True
+        )
+
+    def test_mitigation_only_start(self):
+        """Test no type in mitigation."""
+
+        self.check_markdown(
+            R'''
+            /// fancylists | start=5
+
+            a. item 5
+            ///
+            ''',
+            R'''
+            <ol start="5" type="1">
+            <li>item 5</li>
+            </ol>
+            ''',
+            True
+        )
+
 
 class TestFancyListsDisableAlpha(util.MdCase):
     """Test fancy lists."""
@@ -876,6 +978,28 @@ class TestFancyListsDisableAlpha(util.MdCase):
             <p>a. item 1</p>
             <ol start="5" type="I">
             <li>item 1</li>
+            </ol>
+            ''',
+            True
+        )
+
+    def test_no_alpha_force(self):
+        """Test attempting to force alphabetical when they are disabled."""
+
+        self.check_markdown(
+            R'''
+            /// fancylists | type=a
+
+            i. item 1
+            j. item 2
+            ///
+            ''',
+            R'''
+            <p>/// fancylists | type=a</p>
+            <ol type="i">
+            <li>item 1
+            j. item 2
+            ///</li>
             </ol>
             ''',
             True
@@ -916,6 +1040,28 @@ class TestFancyListsDisableRoman(util.MdCase):
             </ol>
             <ol start="22" type="A">
             <li>item 1</li>
+            </ol>
+            ''',
+            True
+        )
+
+    def test_no_roman_force(self):
+        """Test attempting to force Roman numerals when they are disabled."""
+
+        self.check_markdown(
+            R'''
+            /// fancylists | type=i
+
+            v. item 1
+            vi. item 2
+            ///
+            ''',
+            R'''
+            <p>/// fancylists | type=i</p>
+            <ol start="22" type="a">
+            <li>item 1
+            vi. item 2
+            ///</li>
             </ol>
             ''',
             True

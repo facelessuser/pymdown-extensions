@@ -201,12 +201,16 @@ class FancyOListProcessor(BlockProcessor):
                     sibling.attrib['__fancylist'] = fancy_type
                     lst = sibling
                 else:
-                    lst = etree.SubElement(parent, self.TAG, {'type': self.OL_TYPES[fancy_type], '__fancylist': fancy_type})
+                    lst = etree.SubElement(
+                        parent,
+                        self.TAG,
+                        {'type': self.OL_TYPES[fancy_type], '__fancylist': fancy_type}
+                    )
             else:
                 lst = etree.SubElement(parent, self.TAG)
 
             # Check if a custom start integer is set
-            if self.startswith != '1':
+            if self.startswith != '1' and not lst.attrib.get('start', ''):
                 lst.attrib['start'] = self.startswith
 
         # Set the parse set to list
@@ -257,8 +261,24 @@ class FancyOListProcessor(BlockProcessor):
 
         # The first item will be forced to assume the sibling list's type
         if fancy_type.startswith('force'):
-            fancy_type = list_type + fancy_type.split('-', 1)[1] if list_type else list_type
-            return fancy_type, fancy_type
+            ltype = fancy_type.split('-', 1)[1]
+            # Make sure we aren't forcing an impossible scenario.
+            # If everything looks sound, return the types
+            if value == '#' or (
+                (ltype.lower() == 'decimal' and value.isdigit()) or
+                (
+                    ltype.lower() == 'roman' and
+                    self.roman_enabled and
+                    value.isalpha() and
+                    (len(value) > 2 or value in 'ivxlcdm')
+                ) or
+                (ltype.lower() == 'alpha' and self.alpha_enabled and len(value) == 1 and value.isalpha())
+            ):
+                fancy_type = list_type + fancy_type.split('-', 1)[1] if list_type else list_type
+                return fancy_type, fancy_type
+
+            # Ignore the force as it cannot be done
+            fancy_type = ''
 
         # Determine numbering: numerical, roman numerical, alphabetic, or `#` numerical placeholder.
         if value == '#':
@@ -333,7 +353,8 @@ class FancyOListProcessor(BlockProcessor):
                     rest.append(line)
                     continue
 
-                # Detect the integer value of first list item
+                # Detect the integer value of first list item.
+                # If we are already in a list, just grab that.
                 if not items and self.TAG == 'ol':
                     self.startswith = self.get_start(fancy, m)
                 fancy_type = fancy
@@ -377,22 +398,28 @@ class FancyListBlock(Block):
     def on_init(self):
         """Handle initialization."""
 
-        self.ordered_styles = self.config['additional_ordered_styles']
+        ordered_styles = self.config['additional_ordered_styles']
+        self.roman_enabled = 'roman' in ordered_styles
+        self.alpha_enabled = 'alpha' in ordered_styles
 
     def on_validate(self, parent):
         """Handle on validate event."""
 
         self.type = '1'
-        self.start = 1
+        self.start = None
         self.count = 0
 
         try:
             for a in self.argument.split():
                 name, value = [x.strip() for x in a.split('=')]
                 if name == 'type' and value in ['a', 'A', 'i', 'I', '1']:
+                    if value.lower() == 'a' and not self.alpha_enabled:
+                        raise ValueError('Alphabetical lists not enabled')
+                    if value.lower() == 'i' and not self.roman_enabled:
+                        raise ValueError('Alphabetical lists not enabled')
                     self.type = value
                 elif name == 'start':
-                    self.start = int(value)
+                    self.start = max(0, int(value))
                 else:
                     raise ValueError('Not a valid option')
         except Exception:
@@ -404,12 +431,12 @@ class FancyListBlock(Block):
         """Create the element."""
 
         # Create an ordered list that will guide the first list item's type
+        attrib = {'type': self.type, '__fancylist': 'force-' + self.OL_TYPE[self.type]}
+        if self.start is not None:
+            attrib['start'] = str(self.start)
+
         self.parent = parent
-        self.ol = etree.SubElement(
-            parent,
-            'ol',
-            {'start': str(self.start), 'type': self.type, '__fancylist': 'force-' + self.OL_TYPE[self.type]}
-        )
+        self.ol = etree.SubElement(parent, 'ol', attrib)
         return parent
 
     def on_end(self, block):
