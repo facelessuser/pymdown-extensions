@@ -90,6 +90,7 @@ class FancyOListProcessor(BlockProcessor):
         self.alpha_enabled = 'alpha' in list_types
         self.roman_enabled = 'roman' in list_types
         self.inject_style = config['inject_style']
+        self.inject_class = config['inject_class']
 
         formats = ''
 
@@ -213,6 +214,8 @@ class FancyOListProcessor(BlockProcessor):
                     attrib = {'type': self.OL_TYPES[fancy_type], '__fancylist': fancy_type}
                     if self.inject_style:
                         attrib['style'] = f"list-style-type: {OL_STYLE[attrib['type']]};"
+                    if self.inject_class:
+                        attrib['class'] = f"fancylists-{OL_STYLE[attrib['type']]};"
                     lst = etree.SubElement(
                         parent,
                         self.TAG,
@@ -412,6 +415,7 @@ class FancyListBlock(Block):
 
         ordered_styles = self.config['additional_ordered_styles']
         self.inject_style = self.config['inject_style']
+        self.inject_class = self.config['inject_class']
         self.roman_enabled = 'roman' in ordered_styles
         self.alpha_enabled = 'alpha' in ordered_styles
 
@@ -449,6 +453,8 @@ class FancyListBlock(Block):
             attrib['start'] = str(self.start)
         if self.inject_style:
             attrib['style'] = f"list-style-type: {OL_STYLE[self.type]};"
+        if self.inject_class:
+            attrib['class'] = f"fancylists-{OL_STYLE[self.type]};"
 
         self.parent = parent
         self.ol = etree.SubElement(parent, 'ol', attrib)
@@ -501,6 +507,10 @@ class FancyListExtension(BlocksExtension):
             'inject_style': [
                 False,
                 "Inject style attribute with the appropriate 'list-style-type'"
+            ],
+            'inject_class': [
+                False,
+                "Inject a class indicating the 'list-style-type'"
             ]
         }
 

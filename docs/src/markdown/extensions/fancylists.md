@@ -462,9 +462,22 @@ To make styling easier, if you are struggling with getting the types properly st
 [option](#options) to inject a style attribute on each `#!html <ol>` tag that sets the `list-style-type` to the
 appropriate value.
 
+If more advanced CSS styling is desired, and many browsers have not yet implemented the case-sensitive `s` flag for
+attribute selectors, it can be very hard to target an uppercase vs lowercase ordered list. To mitigate this issue,
+a class indicating the current list type can be injected into the `#!html <ol>` element.
+
+CSS\ Classes             |
+------------------------ |
+`fancylists-decimal`     |
+`fancylists-lower-alpha` |
+`fancylists-upper-alpha` |
+`fancylists-lower-roman` |
+`fancylists-upper-roman` |
+
 ## Options
 
 Option                      | Type     | Default                               | Description
 --------------------------- | -------- | ------------------------------------- | ------------
 `additional_ordered_styles` | [string] | `#!py3 ['roman', 'alpha', 'generic']` | A list of additional ordered list styles. Accepted inputs: `roman`, `alpha`, and `generic`.
 `inject_style`              | bool     | `#!py3 False`                         | Inject styling into `ol` for list styling.
+`inject_class`              | bool     | `#!py3 False`                         | Inject class into `ol` for list styling.

@@ -991,6 +991,49 @@ class TestFancyListsStyle(util.MdCase):
         )
 
 
+class TestFancyListsStyle(util.MdCase):
+    """Test fancy lists."""
+
+    extension = ['pymdownx.fancylists', 'pymdownx.saneheaders']
+    extension_configs = {
+        'pymdownx.fancylists': {
+            'inject_class': True
+        }
+    }
+
+    def test_inject_class(self):
+        """Test injecting class."""
+
+        self.check_markdown(
+            R'''
+            i. Item i
+            ''',
+            R'''
+            <ol class="fancylists-lower-roman;" type="i">
+            <li>Item i</li>
+            </ol>
+            ''',
+            True
+        )
+
+    def test_inject_class_force(self):
+        """Test injecting class in forced lists."""
+
+        self.check_markdown(
+            R'''
+            /// fancylists | type=i
+            v. Item v
+            ///
+            ''',
+            R'''
+            <ol class="fancylists-lower-roman;" start="5" type="i">
+            <li>Item v</li>
+            </ol>
+            ''',
+            True
+        )
+
+
 class TestFancyListsDisableAlpha(util.MdCase):
     """Test fancy lists."""
 
