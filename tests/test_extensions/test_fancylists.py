@@ -991,7 +991,7 @@ class TestFancyListsStyle(util.MdCase):
         )
 
 
-class TestFancyListsStyle(util.MdCase):
+class TestFancyListsClass(util.MdCase):
     """Test fancy lists."""
 
     extension = ['pymdownx.fancylists', 'pymdownx.saneheaders']
