@@ -5,7 +5,7 @@ from .. import util
 class TestFancyLists(util.MdCase):
     """Test fancy lists."""
 
-    extension = ['pymdownx.fancylists', 'pymdownx.saneheaders', 'pymdownx.blocks.html']
+    extension = ['pymdownx.fancylists', 'pymdownx.saneheaders']
     extension_configs = {}
 
     def test_unordered(self):
@@ -660,7 +660,7 @@ class TestFancyLists(util.MdCase):
 
             DCCCCC. Roman numeral M
 
-            /// html | ol[start="5"][type="I"]
+            /// fancylists | start=5 type=I
             V.  Alternate work around
             ///
             ''',
@@ -700,13 +700,146 @@ class TestFancyLists(util.MdCase):
 
         self.check_markdown(
             R'''
-            /// html | ol[start="9"][type="a"]
+            /// fancylists | start=9 type=a
             i.  Workaround
+            j.  Workaround
+            ///
+
+            /// fancylists | start=9 type=a
+            i)  Workaround
+            j)  Workaround
             ///
             ''',
             R'''
             <ol start="9" type="a">
             <li>Workaround</li>
+            <li>Workaround</li>
+            </ol>
+
+            <ol start="9" type="a">
+            <li>Workaround</li>
+            <li>Workaround</li>
+            </ol>
+            ''',
+            True
+        )
+
+    def test_alpha_mitigation_switch(self):
+        """Test mitigation for conflict case with Roman numeral lists."""
+
+        self.check_markdown(
+            R'''
+            /// fancylists | start=9 type=a
+            i.  Workaround
+            j)  Workaround
+            ///
+            ''',
+            R'''
+            <ol start="9" type="a">
+            <li>Workaround</li>
+            </ol>
+            <ol start="10" type="a">
+            <li>Workaround</li>
+            </ol>
+            ''',
+            True
+        )
+
+    def test_alpha_mitigation(self):
+        """Test mitigation for conflict case with Roman numeral lists."""
+
+        self.check_markdown(
+            R'''
+            /// fancylists | start=9 type=a
+            i)  Workaround
+            j)  Workaround
+            ///
+            ''',
+            R'''
+            <ol start="9" type="a">
+            <li>Workaround</li>
+            <li>Workaround</li>
+            </ol>
+            ''',
+            True
+        )
+
+    def test_alpha_mitigation_complex(self):
+        """Test mitigation for complex conflict case with Roman numeral lists."""
+
+        self.check_markdown(
+            R'''
+            /// fancylists | start=9 type=a
+            i.  Workaround
+
+                Workaround
+
+            j.  Workaround
+            ///
+            ''',
+            R'''
+            <ol start="9" type="a">
+            <li>
+            <p>Workaround</p>
+            <p>Workaround</p>
+            </li>
+            <li>
+            <p>Workaround</p>
+            </li>
+            </ol>
+            ''',
+            True
+        )
+
+    def test_alpha_mitigation_ul(self):
+        """Test that mitigation won't target unordered lists."""
+
+        self.check_markdown(
+            R'''
+            /// fancylists | start=9 type=a
+            -  Workaround
+
+                Workaround
+
+            -  Workaround
+            ///
+            ''',
+            R'''
+            <ul>
+            <li>
+            <p>Workaround</p>
+            <p>Workaround</p>
+            </li>
+            <li>
+            <p>Workaround</p>
+            </li>
+            </ul>
+            ''',
+            True
+        )
+
+    def test_alpha_mitigation_generic(self):
+        """Test that mitigation works on generic."""
+
+        self.check_markdown(
+            R'''
+            /// fancylists | start=9 type=a
+            #.  Workaround
+
+                Workaround
+
+            #. Workaround
+            ///
+            ''',
+            R'''
+            <ol start="9" type="a">
+            <li>
+            <p>Workaround</p>
+            <p>Workaround</p>
+            </li>
+            <li>
+            <p>Workaround</p>
+            </li>
             </ol>
             ''',
             True

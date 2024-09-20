@@ -241,15 +241,15 @@ When Roman numerals are chained in descending order according to denomination, t
 With that said, there are a few rules as to how the numerals are allowed to be sequenced.
 
 1. Numerals must be arranged in descending order of size.
-2. **D**, **L**, and **V** can each only appear once.
-3. **M**, **C**, and **X** cannot be equaled or exceeded by smaller denominations.
+2. `D`, `L`, and `V` can each only appear once.
+3. `M`, `C`, and `X` cannot be equaled or exceeded by smaller denominations.
 
 It should be noted that while the user is encouraged to generally follow rule 3 as it is outlined, this is the only rule
 that FancyLists does not explicitly enforce. FancyLists actually enforces the rule as shown below.
 
-> **M**, **C**, and **X** cannot be exceeded by smaller denominations.
+> `M`, `C`, and `X` cannot be exceeded by smaller denominations.
 
-Generally, it is recommended to use higher denomination numerals when possible, like using **X** instead of **VIIIII**.
+Generally, it is recommended to use higher denomination numerals when possible, like using `X` instead of `VIIIII`.
 Despite this recommendation, we allow some flexibility in this area for user input. Additionally, this flexibility makes
 it easier to handle certain [special cases](#special-cases) that we will be covered later. Regardless of how the user
 inputs the numbers, browsers will use a more strict rendering.
@@ -259,21 +259,22 @@ inputs the numbers, browsers will use a more strict rendering.
 When using only additive rules, many Roman numerals can get quite long. Subtractive rules allow for shortening additive
 sequences with shorter subtractive sequences. In subtractive sequences, certain lesser denomination can actually be
 placed before larger denominations, and when done, the lesser denomination is subtracted from the larger denomination.
-As an example, with subtractive rules, **IIII** can be written more simply as **IV**. The rules are specified below.
+As an example, with subtractive rules, `IIII` can be written more simply as `IV`. The rules are specified below.
 
-1. Only one **I**, **X**, and **C** can be used as the leading numeral in part of a subtractive pair.
-2. When **I**, **X**, and **C** are used as the lead in a subtractive pair, they can't be used immediately after the
-   subtractive pair. So **IXI** is invalid.
-2. **I** can only be placed before **V** and **X**.
-3. **X** can only be placed before **L** and **C**.
-4. **C** can only be placed before **D** and **M**.
+1. Only one `I`, `X`, and `C` can be used as the leading numeral in part of a subtractive pair.
+2. When `I`, `X`, and `C` are used as the lead in a subtractive pair, they can't be used immediately after the
+   subtractive pair. So `IXI` is invalid.
+2. `I` can only be placed before `V` and `X`.
+3. `X` can only be placed before `L` and `C`.
+4. `C` can only be placed before `D` and `M`.
 
 ### Special Cases
 
 If you've been paying attention, you may have noticed that when alphabetical lists and Roman numeral lists are **both**
-enabled, there are two conflicts due them relying on the same characters: alphabetical lists can never start with `I`
-and Romans numeral lists can never start with single values of `M`, `D`, `C`, `L`, `X`, and `V`. This is true for both
-uppercase and lowercase variants. This does not affect list items in the middle or end of a list.
+enabled, there arises some ambiguous cases. Currently if `I` occurs in the middle of an alphabetical list, it is assumed
+to be an alphabetical list item, but if it starts a list, it is assumed to be a Roman numeral list item. The reverse is
+is true for `M`, `D`, `C`, `L`, `X`, and `V` where it is assumed that these are Roman numeral list items if they occur
+in the middle of a Roman numeral list, but are assumed to be alphabetical list items if they start a list.
 
 /// note
 It should be noted that these issues exists in pretty much all implementations that support this way of including both
@@ -305,10 +306,11 @@ v. item v
 w. item w
 ///
 
-As noted in the ["additive rules"](#rules-of-addition), while we encourage users to generally not represent numerals
-such as **X** with **VIIIII**, we do not enforce the restriction. The reason is for these specific edge cases. In these
-few instances ignoring this rule can help bypass this conflict. If you need to start or restart a Roman numeral list
-value consisting of a single numeral, we can use the flexibility in the rules to mitigate the issue.
+As noted in ["additive rules"](#rules-of-addition), while we encourage users to generally not represent numerals such as
+`X` with `VIIIII`, we do not enforce the restriction. The reason is for these specific edge cases. In these few
+instances ignoring this rule can help bypass this conflict. If you need to start or restart a Roman numeral list value
+consisting of a single numeral (that is not `I`), we can use the flexibility in the rules to mitigate the issue.
+Regardless of our input, browsers will render these list items in the more common, strict format.
 
 ```
 IIIII. Roman numeral V
@@ -360,18 +362,18 @@ DCCCCC. Roman numeral M
 ///
 
 The reverse case, where alphabetical lists cannot start with `I` (or `i`), cannot be mitigated in the aforementioned
-manner, but if we have the [HTML Block extension](./blocks/plugins/html.md) enabled, we can specify the `start` and
-`type` manually which can allow us to to mitigate the conflict.
+manner, but we can wrap it in a special [Block](./blocks/index.md) and specify the `start` and `type` manually. This
+will force the first list item to be treated as an ordered list item with the specified type and start value.
 
 ```
-/// html | ol[start="9"][type="a"]
+/// fancylists | start=9 type=a
 i. item i
 j. item j
-///
+/// 
 ```
 
 //// html | div.result
-/// html | ol[start="9"][type="a"]
+/// fancylists | start=9 type=a
 i. item i
 j. item j
 ///
@@ -381,14 +383,14 @@ If a more "strictly correct" mitigation is desired for the earlier mentioned Rom
 Block approach can also be applied there as well. This allows for the use of more _proper_ Roman numerals.
 
 ```
-/// html | ol[start="5"][type="I"]
+/// fancylists | start=5 type=I
 V.   item V
 VI.  item VI
 ///
 ```
 
 //// html | div.result
-/// html | ol[start="5"][type="I"]
+/// fancylists | start=5 type=I
 V.   item V
 VI.  item VI
 ///

@@ -20,9 +20,10 @@ Adapted to support "fancy" behavior by Copyright 2024 Isaac Muse.
 
 Work in progress, not fully tested.
 """
-from markdown import Extension
 from markdown.blockprocessors import BlockProcessor
 from markdown.treeprocessors import Treeprocessor
+from .blocks.block import Block
+from .blocks import BlocksExtension
 import xml.etree.ElementTree as etree
 import re
 
@@ -60,10 +61,8 @@ class FancyOListProcessor(BlockProcessor):
     TAG = 'ol'
     SIBLING_TAGS = ['ol']
     OL_TYPES = {
-        'dot-hash': '1',
-        'paren-hash': '1',
-        'dot-num': '1',
-        'paren-num': '1',
+        'dot-decimal': '1',
+        'paren-decimal': '1',
         'dot-roman': 'i',
         'paren-roman': 'i',
         'dot-ROMAN': 'I',
@@ -197,7 +196,12 @@ class FancyOListProcessor(BlockProcessor):
         # This is a new, unique list so create parent with appropriate tag.
         else:
             if self.TAG == 'ol':
-                lst = etree.SubElement(parent, self.TAG, {'type': self.OL_TYPES[fancy_type], '__fancylist': fancy_type})
+                # Correct the metadata of a forced list to now represent the actual content
+                if sibling is not None and sibling.attrib.get('__fancylist', '').startswith('force'):
+                    sibling.attrib['__fancylist'] = fancy_type
+                    lst = sibling
+                else:
+                    lst = etree.SubElement(parent, self.TAG, {'type': self.OL_TYPES[fancy_type], '__fancylist': fancy_type})
             else:
                 lst = etree.SubElement(parent, self.TAG)
 
@@ -218,7 +222,7 @@ class FancyOListProcessor(BlockProcessor):
                 li = etree.SubElement(lst, 'li')
                 self.parser.parseBlocks(li, [item])
 
-        # Rest the parse state
+        # Reset the parse state
         self.parser.state.reset()
 
     def get_start(self, fancy_type, m):
@@ -229,7 +233,7 @@ class FancyOListProcessor(BlockProcessor):
             return '1'
 
         t = fancy_type.split('-')[1].lower()
-        if t == 'num':
+        if t == 'decimal':
             return m.group(1)[:-1].lstrip('(')
         elif t == 'roman':
             return str(roman2int(m.group(1)[:-1]))
@@ -249,13 +253,18 @@ class FancyOListProcessor(BlockProcessor):
         elif sep == ')':
             list_type += 'paren-'
         else:
-            return list_type
+            return list_type, fancy_type
+
+        # The first item will be forced to assume the sibling list's type
+        if fancy_type.startswith('force'):
+            fancy_type = list_type + fancy_type.split('-', 1)[1] if list_type else list_type
+            return fancy_type, fancy_type
 
         # Determine numbering: numerical, roman numerical, alphabetic, or `#` numerical placeholder.
         if value == '#':
-            list_type += fancy_type.split('-', 1)[1] if fancy_type else 'num'
+            list_type += fancy_type.split('-', 1)[1] if fancy_type else 'decimal'
         elif value.isdigit():
-            list_type += 'num'
+            list_type += 'decimal'
         elif len(value) == 1 and value.isalpha():
             if value.islower():
                 in_roman = value in 'ivxlcdm'
@@ -290,7 +299,7 @@ class FancyOListProcessor(BlockProcessor):
         elif value.islower():
             list_type += 'roman'
 
-        return list_type
+        return list_type, fancy_type
 
     def get_items(self, sibling, block, blocks):
         """Break a block into list items."""
@@ -317,7 +326,7 @@ class FancyOListProcessor(BlockProcessor):
             if m:
                 # This is a new list item check first item for the start index.
                 # Also check for list items that differ from the first.
-                fancy = self.get_fancy_type(m, not items, fancy)
+                fancy, fancy_type = self.get_fancy_type(m, not items, fancy)
 
                 # We found a different fancy type, so handle these separately
                 if items and fancy != fancy_type:
@@ -352,6 +361,65 @@ class FancyOListProcessor(BlockProcessor):
         return items, fancy_type
 
 
+class FancyListBlock(Block):
+    """Collapse code."""
+
+    NAME = 'fancylists'
+    ARGUMENT = True
+    OL_TYPE = {
+        '1': 'decimal',
+        'a': 'alpha',
+        'A': 'ALPHA',
+        'i': 'roman',
+        'I': 'ROMAN'
+    }
+
+    def on_init(self):
+        """Handle initialization."""
+
+        self.ordered_styles = self.config['additional_ordered_styles']
+
+    def on_validate(self, parent):
+        """Handle on validate event."""
+
+        self.type = '1'
+        self.start = 1
+        self.count = 0
+
+        try:
+            for a in self.argument.split():
+                name, value = [x.strip() for x in a.split('=')]
+                if name == 'type' and value in ['a', 'A', 'i', 'I', '1']:
+                    self.type = value
+                elif name == 'start':
+                    self.start = int(value)
+                else:
+                    raise ValueError('Not a valid option')
+        except Exception:
+            return False
+
+        return True
+
+    def on_create(self, parent):
+        """Create the element."""
+
+        # Create an ordered list that will guide the first list item's type
+        self.parent = parent
+        self.ol = etree.SubElement(
+            parent,
+            'ol',
+            {'start': str(self.start), 'type': self.type, '__fancylist': 'force-' + self.OL_TYPE[self.type]}
+        )
+        return parent
+
+    def on_end(self, block):
+        """On end."""
+
+        # Remove the ordered list if empty.
+        if not list(self.ol):
+            self.parent.remove(self.ol)
+
+
 class FancyUListProcessor(FancyOListProcessor):
     """Process unordered list blocks."""
 
@@ -377,7 +445,7 @@ class FancyListTreeprocessor(Treeprocessor):
         return root
 
 
-class FancyListExtension(Extension):
+class FancyListExtension(BlocksExtension):
     """HTML Blocks Extension."""
 
     def __init__(self, *args, **kwargs):
@@ -392,11 +460,11 @@ class FancyListExtension(Extension):
 
         super().__init__(*args, **kwargs)
 
-    def extendMarkdown(self, md):
+    def extendMarkdownBlocks(self, md, blocks):
         """Add Details to Markdown instance."""
-        md.registerExtension(self)
 
         config = self.getConfigs()
+        blocks.register(FancyListBlock, config)
         ol = FancyOListProcessor(md.parser, config)
         ul = FancyUListProcessor(md.parser, config)
         md.parser.blockprocessors.register(ol, 'olist', 40)

@@ -166,7 +166,7 @@ html {
   /* Override Material's list type preference. */
   ol[type]{
     // Nested ordered list
-    list-style-type: revert-layer;
+    list-style-type: revert;
   }
 }
 

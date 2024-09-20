@@ -53,9 +53,6 @@ Gruber's
 HeaderAnchor
 HeaderAnchor's
 Hunspell
-IIII
-IIIII
-IXI
 Inline
 InlineHilite
 InlineHilite's
@@ -69,8 +66,6 @@ KBD
 KaTeX
 LaTeX
 Limberg
-MCCCCCCVI
-MDCVI
 MERCHANTABILITY
 MagicLink
 MagicLink's
@@ -136,7 +131,6 @@ UML
 UTF
 Uml
 Unescape
-VIIIII
 Validators
 Virtualenv
 Waylan
