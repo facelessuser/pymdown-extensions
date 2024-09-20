@@ -59,8 +59,7 @@ class FancyOListProcessor(BlockProcessor):
 
     TAG = 'ol'
     SIBLING_TAGS = ['ol']
-    LAZY_OL = False
-    TYPES = {
+    OL_TYPES = {
         'dot-hash': '1',
         'paren-hash': '1',
         'dot-num': '1',
@@ -118,57 +117,21 @@ class FancyOListProcessor(BlockProcessor):
             | [A-Z](?=\)|\.[ ]{2})
             '''
 
-        # Detect an item (`1. item`). `group(1)` contains contents of item.
+        # Detect an item list item.
         self.list_re = re.compile(
-            r'''
-            ^[ ]{0,%d}
-            (?:
-                (?:
-                    \d+
-                    %s
-                )
-                [).]
-            )
-            [ ]+(.*)
-            ''' % (self.tab_length - 1, formats),
+            r'^[ ]{0,%d}(?:(?:\d+%s)[).])[ ]+(.*)' % (self.tab_length - 1, formats),
             re.VERBOSE
         )
 
-        # Detect items on secondary lines. they can be of either list type.
+        # Detect items on secondary lines which can be of any list type.
         self.child_re = re.compile(
-            r'''
-            ^[ ]{0,%d}
-            ((
-                (?:
-                    (?:
-                        \d+
-                        %s
-                    )
-                    [).] |
-                    [-*+]
-                )
-            ))[ ]+(.*)
-            ''' % (self.tab_length - 1, formats),
+            r'^[ ]{0,%d}((?:(?:\d+%s)[).]|[-*+]))[ ]+(.*)' % (self.tab_length - 1, formats),
             re.VERBOSE
         )
 
-        # Detect indented (nested) items of either type
+        # Detect indented (nested) list items of any type.
         self.indent_re = re.compile(
-            r'''
-            ^[ ]{%d,%d}
-            (
-                (
-                    (?:
-                        (?:
-                            \d+ |
-                            %s
-                        )
-                        [).] |
-                        [-*+]
-                    )
-                )
-            )[ ]+.*
-            ''' % (self.tab_length, self.tab_length * 2 - 1, formats),
+            r'^[ ]{%d,%d}(?:(?:\d+%s)[).]|[-*+])[ ]+.*' % (self.tab_length, self.tab_length * 2 - 1, formats),
             re.VERBOSE
         )
 
@@ -234,12 +197,12 @@ class FancyOListProcessor(BlockProcessor):
         # This is a new, unique list so create parent with appropriate tag.
         else:
             if self.TAG == 'ol':
-                lst = etree.SubElement(parent, self.TAG, {'type': self.TYPES[fancy_type], '__fancylist': fancy_type})
+                lst = etree.SubElement(parent, self.TAG, {'type': self.OL_TYPES[fancy_type], '__fancylist': fancy_type})
             else:
                 lst = etree.SubElement(parent, self.TAG)
 
             # Check if a custom start integer is set
-            if not self.LAZY_OL and self.startswith != '1':
+            if self.startswith != '1':
                 lst.attrib['start'] = self.startswith
 
         # Set the parse set to list
@@ -367,7 +330,7 @@ class FancyOListProcessor(BlockProcessor):
                 fancy_type = fancy
 
                 # Append to the list
-                items.append(m.group(3))
+                items.append(m.group(2))
 
             # Indented, possibly nested content
             elif self.indent_re.match(line):
