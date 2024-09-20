@@ -48,7 +48,7 @@ Additional ordered list types such as Roman numeral, alphabetical, and generic a
 
 Ordered types are controlled by setting the `type` attribute to the appropriate value on the `#!html <ol>` element. If
 you have CSS that overrides styling, you may not see the appropriate types, so if you want allow control at the Markdown
-level, make sure CSS doesn't override the list styles.
+level, make sure CSS doesn't override the list styles or see the [styling](#styling) section for more info.
 
 List\ Types             | HTML\ List\ Type
 ----------------------- | ----------------
@@ -381,7 +381,7 @@ j. item j
 ///
 ////
 
-This can also be applied to generic lists and a `start` value given. 
+This can also be applied to generic lists and a `start` value given.
 
 ```
 /// fancylists | type=a start=9
@@ -451,8 +451,20 @@ i. item i
 #. item iii
 ////
 
+## Styling
+
+By default, browsers should style ordered list types without any issues, but if you are displaying your content in HTML
+that already provides CSS for lists, you may have to override the CSS. This can sometimes be difficult, and if you want
+to style each type appropriately, CSS is currently lacking as the case sensitive attribute flag is not implemented in
+all browsers.
+
+To make styling easier, if you are struggling with getting the types properly styled, you can enable the `inject_style`
+[option](#options) to inject a style attribute on each `#!html <ol>` tag that sets the `list-style-type` to the
+appropriate value.
+
 ## Options
 
 Option                      | Type     | Default                               | Description
 --------------------------- | -------- | ------------------------------------- | ------------
 `additional_ordered_styles` | [string] | `#!py3 ['roman', 'alpha', 'generic']` | A list of additional ordered list styles. Accepted inputs: `roman`, `alpha`, and `generic`.
+`inject_style`              | bool     | `#!py3 False`                         | Inject styling into `ol` for list styling.

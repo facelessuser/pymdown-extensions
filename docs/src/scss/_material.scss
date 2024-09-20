@@ -162,12 +162,6 @@ html {
     color: var(--md-text-color);
     text-transform: none;
   }
-
-  /* Override Material's list type preference. */
-  ol[type]{
-    // Nested ordered list
-    list-style-type: revert;
-  }
 }
 
 .md-typeset__scrollwrap,

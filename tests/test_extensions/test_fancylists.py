@@ -948,6 +948,49 @@ class TestFancyLists(util.MdCase):
         )
 
 
+class TestFancyListsStyle(util.MdCase):
+    """Test fancy lists."""
+
+    extension = ['pymdownx.fancylists', 'pymdownx.saneheaders']
+    extension_configs = {
+        'pymdownx.fancylists': {
+            'inject_style': True
+        }
+    }
+
+    def test_inject_style(self):
+        """Test injecting styles."""
+
+        self.check_markdown(
+            R'''
+            i. Item i
+            ''',
+            R'''
+            <ol style="list-style-type: lower-roman;" type="i">
+            <li>Item i</li>
+            </ol>
+            ''',
+            True
+        )
+
+    def test_inject_style_force(self):
+        """Test injecting styles in forced lists."""
+
+        self.check_markdown(
+            R'''
+            /// fancylists | type=i
+            v. Item v
+            ///
+            ''',
+            R'''
+            <ol start="5" style="list-style-type: lower-roman;" type="i">
+            <li>Item v</li>
+            </ol>
+            ''',
+            True
+        )
+
+
 class TestFancyListsDisableAlpha(util.MdCase):
     """Test fancy lists."""
 

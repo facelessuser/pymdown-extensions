@@ -29,6 +29,14 @@ import re
 
 ROMAN_MAP = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
 
+OL_STYLE = {
+    '1': 'decimal',
+    'a': 'lower-alpha',
+    'A': 'upper-alpha',
+    'i': 'lower-roman',
+    'I': 'upper-roman'
+}
+
 
 def roman2int(s):
     """
@@ -81,6 +89,7 @@ class FancyOListProcessor(BlockProcessor):
         list_types = config['additional_ordered_styles']
         self.alpha_enabled = 'alpha' in list_types
         self.roman_enabled = 'roman' in list_types
+        self.inject_style = config['inject_style']
 
         formats = ''
 
@@ -201,10 +210,13 @@ class FancyOListProcessor(BlockProcessor):
                     sibling.attrib['__fancylist'] = fancy_type
                     lst = sibling
                 else:
+                    attrib = {'type': self.OL_TYPES[fancy_type], '__fancylist': fancy_type}
+                    if self.inject_style:
+                        attrib['style'] = f"list-style-type: {OL_STYLE[attrib['type']]};"
                     lst = etree.SubElement(
                         parent,
                         self.TAG,
-                        {'type': self.OL_TYPES[fancy_type], '__fancylist': fancy_type}
+                        attrib
                     )
             else:
                 lst = etree.SubElement(parent, self.TAG)
@@ -270,7 +282,7 @@ class FancyOListProcessor(BlockProcessor):
                     ltype.lower() == 'roman' and
                     self.roman_enabled and
                     value.isalpha() and
-                    (len(value) > 2 or value in 'ivxlcdm')
+                    (len(value) > 2 or value.lower() in 'ivxlcdm')
                 ) or
                 (ltype.lower() == 'alpha' and self.alpha_enabled and len(value) == 1 and value.isalpha())
             ):
@@ -399,6 +411,7 @@ class FancyListBlock(Block):
         """Handle initialization."""
 
         ordered_styles = self.config['additional_ordered_styles']
+        self.inject_style = self.config['inject_style']
         self.roman_enabled = 'roman' in ordered_styles
         self.alpha_enabled = 'alpha' in ordered_styles
 
@@ -434,6 +447,8 @@ class FancyListBlock(Block):
         attrib = {'type': self.type, '__fancylist': 'force-' + self.OL_TYPE[self.type]}
         if self.start is not None:
             attrib['start'] = str(self.start)
+        if self.inject_style:
+            attrib['style'] = f"list-style-type: {OL_STYLE[self.type]};"
 
         self.parent = parent
         self.ol = etree.SubElement(parent, 'ol', attrib)
@@ -481,7 +496,11 @@ class FancyListExtension(BlocksExtension):
         self.config = {
             'additional_ordered_styles': [
                 ['roman', 'alpha', 'generic'],
-                "Specify the ordered list formats to add in addition to decimal."
+                "Specify the ordered list formats to add in addition to decimal.",
+            ],
+            'inject_style': [
+                False,
+                "Inject style attribute with the appropriate 'list-style-type'"
             ]
         }
 
