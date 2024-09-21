@@ -149,6 +149,27 @@ class TestFancyLists(util.MdCase):
             True
         )
 
+    def test_ordered_generic_inherit_no_change(self):
+        """Test generic ordered list inheritance no new list if same type."""
+
+        self.check_markdown(
+            R'''
+            i.  item i
+            #.  item ii
+            #.  item iii
+            iv. item iv
+            ''',
+            r'''
+            <ol type="i">
+            <li>item i</li>
+            <li>item ii</li>
+            <li>item iii</li>
+            <li>item iv</li>
+            </ol>
+            ''',
+            True
+        )
+
     def test_roman(self):
         """Test Roman numeral lists."""
 

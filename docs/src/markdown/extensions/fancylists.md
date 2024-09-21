@@ -8,8 +8,8 @@ FancyLists is inspired by [Pandoc's list handling][pandoc-lists]. FancyLists ext
 support parenthesis style lists along with additional ordered formats.
 
 ```
-1.  Item 1
-2.  Item 2
+1)  Item 1
+2)  Item 2
     i.  Item 1
     ii. Item 2
         a.  Item a
@@ -19,8 +19,8 @@ support parenthesis style lists along with additional ordered formats.
 ```
 
 ///// html | div.result
-1.  Item 1
-2.  Item 2
+1)  Item 1
+2)  Item 2
     i.  Item 1
     ii. Item 2
         a.  Item a
@@ -37,17 +37,17 @@ FancyLists adds the following features:
 -   Support ordered lists with alphabetical format, both lowercase and uppercase. Uppercase is treated as a different
     list type than lowercase.
 -   Support a generic ordered list marker via `#.` or `#)`. These can be used in place of numerals and will inherit the
-    type of the current list as long as the use the same convention (`.` or `)`). If used to start a list, decimal
+    type of the current list as long as they use the same convention (`.` or `)`). If used to start a list, decimal
     format will be assumed. Requires [SaneHeaders](./saneheaders.md) to be enabled.
 -   Using a different list type will start a new list. Trailing dot vs parenthesis are treated as separate types.
--   Ordered lists are sensitive to the starting value and can restart a list/create a new list using the first value
+-   Ordered lists are sensitive to the starting value and can restart a list or create a new list using the first value
     in the list.
 
 Additional ordered list types such as Roman numeral, alphabetical, and generic are optional and can be disabled via
 [options](#options).
 
 Ordered types are controlled by setting the `type` attribute to the appropriate value on the `#!html <ol>` element. If
-you have CSS that overrides styling, you may not see the appropriate types, so if you want allow control at the Markdown
+you have CSS that overrides styling, you may not see the appropriate types, so if you want control at the Markdown
 level, make sure CSS doesn't override the list styles or see the [styling](#styling) section for more info.
 
 List\ Types             | HTML\ List\ Type
@@ -143,7 +143,25 @@ vs an item appended to the previous list.
         2.  Item 2
         ///
 
-2.  If using uppercase list markers, a list marker consisting of a single uppercase letter followed by a dot will
+2.  Generic list items inherit type from the current list and if starting a new list will assume the decimal type. List
+    items following a generic list will not cause a new list as long as the list item is consistent with the current
+    list type.
+
+    ```
+    i.  item i
+    #.  item ii
+    #.  item iii
+    iv. item iv
+    ```
+
+    //// html | div.result
+    i.  item i
+    #.  item ii
+    #.  item iii
+    iv. item iv
+    ////
+
+3.  If using uppercase list markers, a list marker consisting of a single uppercase letter followed by a dot will
     require two spaces after the marker instead of the usual 1 to avoid false positive matches with names that start
     with an initial.
 
@@ -231,9 +249,9 @@ M       | 1000
 
 These numbers, depending on how they are combined, are added and subtracted to make bigger numbers.
 
-In modern day, we've added strict rules to the system, but looking at historical examples, the system was for less
-strict. FancyLists airs on the side of less strict to be more forgiving of user inputs, browsers will always render them
-in a more strict form regardless of what the user inputs.
+In modern day, many assume more strict rules, but looking at historical examples, the system was for less strict.
+FancyLists airs on the side of being a little less strict to be more forgiving of user inputs, browsers will always
+render them in a more strict form regardless of what the user inputs.
 
 #### Rules of Addition
 
@@ -259,7 +277,8 @@ inputs the numbers, browsers will use a more strict rendering.
 When using only additive rules, many Roman numerals can get quite long. Subtractive rules allow for shortening additive
 sequences with shorter subtractive sequences. In subtractive sequences, certain lesser denomination can actually be
 placed before larger denominations, and when done, the lesser denomination is subtracted from the larger denomination.
-As an example, with subtractive rules, `IIII` can be written more simply as `IV`. The rules are specified below.
+As an example, with subtractive rules, `IIII` can be written more simply as `IV` which subtracts 1 from 5. The rules are
+specified below.
 
 1. Only one `I`, `X`, and `C` can be used as the leading numeral in part of a subtractive pair.
 2. When `I`, `X`, and `C` are used as the lead in a subtractive pair, they can't be used immediately after the
@@ -414,49 +433,12 @@ VI.  item VI
 ///
 ////
 
-/// note
-It may be assumed that the [`md_in_html` plugin][md-in-html] could be used, but due to how Python Markdown process block
-tags in that extension, it doesn't quite work as expected.
-///
-
-## Generic Numeral Markers
-
-Generic numeral markers are initially assumed to be decimal. If used within another list, they assume the type of
-whatever list they are under.
-
-To get a default, decimal list.
-
-```
-#. item 1
-#. item 2
-```
-
-//// html | div.result
-#. item 1
-#. item 2
-////
-
-
-If used under an existing list.
-
-```
-i. item i
-#. item ii
-#. item iii
-```
-
-//// html | div.result
-i. item i
-#. item ii
-#. item iii
-////
-
 ## Styling
 
 By default, browsers should style ordered list types without any issues, but if you are displaying your content in HTML
 that already provides CSS for lists, you may have to override the CSS. This can sometimes be difficult, and if you want
 to style each type appropriately, CSS is currently lacking as the case sensitive attribute flag is not implemented in
-all browsers.
+all browsers to properly target `type=a` vs `type=A`.
 
 To make styling easier, if you are struggling with getting the types properly styled, you can enable the `inject_style`
 [option](#options) to inject a style attribute on each `#!html <ol>` tag that sets the `list-style-type` to the
