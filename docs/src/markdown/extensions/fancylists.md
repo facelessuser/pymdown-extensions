@@ -381,7 +381,7 @@ j. item j
 ///
 ////
 
-This can also be applied to generic lists and a `start` value given.
+This can also be applied to generic lists by also adding `start` value to anchor the first value.
 
 ```
 /// fancylists | type=a start=9
