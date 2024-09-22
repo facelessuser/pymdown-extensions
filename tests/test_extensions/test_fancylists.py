@@ -1030,7 +1030,7 @@ class TestFancyListsClass(util.MdCase):
             i. Item i
             ''',
             R'''
-            <ol class="fancylists-lower-roman;" type="i">
+            <ol class="fancylists-lower-roman" type="i">
             <li>Item i</li>
             </ol>
             ''',
@@ -1047,7 +1047,7 @@ class TestFancyListsClass(util.MdCase):
             ///
             ''',
             R'''
-            <ol class="fancylists-lower-roman;" start="5" type="i">
+            <ol class="fancylists-lower-roman" start="5" type="i">
             <li>Item v</li>
             </ol>
             ''',
