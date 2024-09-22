@@ -5,6 +5,7 @@
 -   **NEW**: FancyLists: Add new FancyLists extension.
 -   **NEW**: MagicLink: Change social process to support `x` instead of `twitter`. `twitter` is still recognized but is
     now deprecated and will be removed at a future time.
+-   **NEW**: Emoji: Update Twemoji data to the latest.
 -   **FIX**: PathConverter: Fixes for latest changes in Python regarding `urlunparse`.
 
 ## 10.9
