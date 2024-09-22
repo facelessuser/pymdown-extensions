@@ -11,6 +11,7 @@
 [_emoji]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/emoji.py "Source"
 [_escapeall]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/escapeall.py "Source"
 [_extra]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/extra.py "Source"
+[_fancylists]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/fancylists.py "Source"
 [_highlight]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/highlight.py "Source"
 [_html_block]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/blocks/html.py "Source"
 [_inlinehilite]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/inlinehilite.py "Source"
@@ -67,6 +68,7 @@
 [nl2br]: https://python-markdown.github.io/extensions/nl2br/
 [octicons]: https://octicons.github.com/
 [onready-event]: https://github.com/facelessuser/pymdown-extensions/blob/master/docs/src/js/extra-uml.js
+[pandoc-lists]: https://pandoc.org/chunkedhtml-demo/8.7-lists.html
 [pep8-naming]: https://pypi.python.org/pypi/pep8-naming
 [pygments]: http://pygments.org/
 [pymdown-styles]: https://github.com/facelessuser/pymdown-styles/tree/master/pymdown_styles

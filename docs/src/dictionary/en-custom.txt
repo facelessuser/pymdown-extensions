@@ -24,6 +24,7 @@ DOM
 De
 Dedent
 Dicts
+Dmitry
 Donath
 ElementTree
 Emmet
@@ -34,6 +35,7 @@ Esc
 EscapeAll
 ExtraRawHTML
 ExtraRawHtml
+FancyLists
 Formatters
 GFM
 GIF
@@ -47,6 +49,7 @@ GitHubEmoji
 GitLab
 GitLab's
 Gitter
+Gruber's
 HeaderAnchor
 HeaderAnchor's
 Hunspell
@@ -83,6 +86,7 @@ PHP
 PNG
 PNGs
 Pandoc
+Pandoc's
 Parsers
 PathConverter
 PathConverter's
@@ -105,12 +109,15 @@ SVG
 SVGs
 SaneHeaders
 Scrollbar
+Shachnev
 Slugify
 SmartSymbols
+Stienstra
 StripHTML
 Stylesheets
 SuperFences
 TODO
+Takhteyev
 Tasklist
 Tidelift
 Toc
@@ -258,6 +265,7 @@ stylesheet
 stylesheets
 subclasses
 sublicense
+subtractive
 superfences
 syntaxes
 th
@@ -270,6 +278,7 @@ un
 underscore's
 unescaping
 unicode
+unindented
 unittest
 unstyled
 uslugify

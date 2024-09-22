@@ -54,6 +54,23 @@ All changes Copyright 2008-2014 The Python Markdown Project
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 ```
 
+## FancyLists
+
+`fancylists.py` is derived from Python Markdown's list handler.
+
+```
+Started by Manfred Stienstra (http://www.dwerg.net/).
+Maintained for a few years by Yuri Takhteyev (http://www.freewisdom.org).
+Currently maintained by Waylan Limberg (https://github.com/waylan),
+Dmitry Shachnev (https://github.com/mitya57) and Isaac Muse (https://github.com/facelessuser).
+
+Copyright 2007-2023 The Python Markdown Project (v. 1.7 and later)
+Copyright 2004, 2005, 2006 Yuri Takhteyev (v. 0.2-1.6b)
+Copyright 2004 Manfred Stienstra (the original version)
+
+License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
+```
+
 ## Gemoji Index
 
 `gemoji_db.py` is generated from Gemoji's source code: @github/gemoji.

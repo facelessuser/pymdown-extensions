@@ -155,8 +155,9 @@ html {
   }
 }
 
-/* Don't force capitalization of `H5` elements. */
 .md-typeset {
+
+  /* Don't force capitalization of `H5` elements. */
   h5 {
     color: var(--md-text-color);
     text-transform: none;

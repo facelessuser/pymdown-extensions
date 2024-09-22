@@ -6,10 +6,16 @@
 
 SaneHeaders is an extension that alters the default hashed headers extension to require headers to have spaces after the
 hashes (`#`) in order to be recognized as headers. This allows for other extension syntaxes to use `#` in their syntaxes
-as long as no spaces follow the `#` at the beginning of a line. For instance,
-[MagicLink's issue syntax](./magiclink.md#issues-and-pull-requests) issue syntax uses hashes followed by numbers
-(`#998`) to represent issue links. There may be extensions that use names after hashes to provide tags (`#tag`). With
-SaneHeaders, these syntaxes can coexist. Those familiar with CommonMark may recognize this behavior.
+as long as no spaces follow the `#` at the beginning of a line.
+
+Currently, Pymdown Extensions has two extensions where SaneHeaders can help.
+
+1.  [MagicLink's issue syntax](./magiclink.md#issues-and-pull-requests) uses hashes followed by numbers (`#998`) to
+    represent issue links. There may be extensions that use names after hashes to provide tags (`#tag`). With
+    SaneHeaders, these syntaxes can coexist. Those familiar with CommonMark may recognize this behavior.
+
+2.  [FancyLists' syntax](./fancylists.md) exposes a a generic ordered list style that doesn't require you to provide
+    numbers. This syntax utilize the `#.` marker for list items.
 
 ```py3
 import markdown
