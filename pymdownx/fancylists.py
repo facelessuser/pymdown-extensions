@@ -215,7 +215,7 @@ class FancyOListProcessor(BlockProcessor):
                     if self.inject_style:
                         attrib['style'] = f"list-style-type: {OL_STYLE[attrib['type']]};"
                     if self.inject_class:
-                        attrib['class'] = f"fancylists-{OL_STYLE[attrib['type']]};"
+                        attrib['class'] = f"fancylists-{OL_STYLE[attrib['type']]}"
                     lst = etree.SubElement(
                         parent,
                         self.TAG,
@@ -454,7 +454,7 @@ class FancyListBlock(Block):
         if self.inject_style:
             attrib['style'] = f"list-style-type: {OL_STYLE[self.type]};"
         if self.inject_class:
-            attrib['class'] = f"fancylists-{OL_STYLE[self.type]};"
+            attrib['class'] = f"fancylists-{OL_STYLE[self.type]}"
 
         self.parent = parent
         self.ol = etree.SubElement(parent, 'ol', attrib)
