@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.10.1
+
+-   **FIX**: FancyLists: Remove a mistaken semicolon from injected classes.
+
 ## 10.10
 
 -   **NEW**: FancyLists: Add new FancyLists extension.
