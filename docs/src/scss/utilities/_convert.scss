@@ -19,7 +19,7 @@
 /// FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 /// DEALINGS
 ////
-
+@use "sass:color";
 @use "sass:math";
 
 // ----------------------------------------------------------------------------
@@ -31,9 +31,9 @@
 ///
 @function hex2hsl($color) {
   @return
-    round(hue($color)),
-    round(saturation($color)),
-    round(lightness($color));
+    round(color.channel($color, "hue", $space: hsl)),
+    round(color.channel($color, "saturation", $space: hsl)),
+    round(color.channel($color, "lightness", $space: hsl));
 }
 
 // ----------------------------------------------------------------------------

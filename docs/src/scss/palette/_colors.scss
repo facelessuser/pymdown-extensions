@@ -1,4 +1,5 @@
-@import "./dracula";
+@use "sass:color";
+@import "./dracula"; /* stylelint-disable-line no-invalid-position-at-import-rule */
 
 :root > * {
   // Custom code colors
@@ -8,7 +9,7 @@
   --md-code-title-bg-color: var(--md-code-bg-color);
   --md-code-inline-bg-color: var(--md-code-bg-color);
 
-  --md-code-special-bg-color: #{darken(hsl(0, 0%, 96%), 5%)};
+  --md-code-special-bg-color: #{color.adjust(hsl(0, 0%, 96%), $lightness: -5%)};
   --md-code-alternate-bg-color: var(--md-code-bg-color);
 
   --md-code-hl-punctuation-color: var(--md-code-fg-color);
@@ -40,37 +41,37 @@
     // Custom code colors
     --md-code-link-bg-color: hsla(232, 15%, 15%, 1);
     --md-code-link-accent-bg-color: var(--md-code-link-bg-color);
-    --md-code-special-bg-color: #{lighten(hsl(232, 15%, 15%), 5%)};
+    --md-code-special-bg-color: #{color.adjust(hsl(232, 15%, 15%), $lightness: 5%)};
     --md-default-bg-color--trans: hsla(232,15%,15%, 0);
 
     // Keys colors
     --md-typeset-kbd-color: var(--md-default-fg-color--lightest);
-    --md-typeset-kbd-border-color: #{darken(rgb(46, 48, 62), 9%)};
+    --md-typeset-kbd-border-color: #{color.adjust(rgb(46, 48, 62), $lightness: -9%)};
     --md-typeset-kbd-accent-color: var(--md-default-fg-color--lighter);
   }
 
   // Dark mode color changes
   &[data-md-color-scheme="dracula"] {
     // Default color shades
-    --md-default-fg-color:               #{transparentize($drac-fg, 0.13)};
-    --md-default-fg-color--light:        #{transparentize($drac-fg, 0.46)};
-    --md-default-fg-color--lighter:      #{transparentize($drac-fg, 0.84)};
-    --md-default-fg-color--lightest:     #{transparentize($drac-fg, 0.93)};
-    --md-default-autocomplete-fg-color:  #{transparentize($drac-fg, 0.60)};
+    --md-default-fg-color:               #{color.adjust($drac-fg, $alpha: -0.13)};
+    --md-default-fg-color--light:        #{color.adjust($drac-fg, $alpha: -0.46)};
+    --md-default-fg-color--lighter:      #{color.adjust($drac-fg, $alpha: -0.84)};
+    --md-default-fg-color--lightest:     #{color.adjust($drac-fg, $alpha: -0.93)};
+    --md-default-autocomplete-fg-color:  #{color.adjust($drac-fg, $alpha: -0.60)};
     --md-shadow-z2:                      0 #{px2rem(4px)} #{px2rem(10px)} hsla(0, 0%, 0%, 0.3),
                                          0 0              #{px2rem(1px)}  hsla(0, 0%, 0%, 0.2);
 
     --md-default-bg-color:               var(--md-default-bg-color--darkest);
-    --md-default-bg-color--light:        #{transparentize($drac-default-bg, 0.3)};
-    --md-default-bg-color--lighter:      #{transparentize($drac-default-bg, 0.7)};
-    --md-default-bg-color--lightest:     #{transparentize($drac-default-bg, 0.88)};
-    --md-default-bg-color--trans:        #{transparentize($drac-default-bg, 1)};
+    --md-default-bg-color--light:        #{color.adjust($drac-default-bg, $alpha: -0.3)};
+    --md-default-bg-color--lighter:      #{color.adjust($drac-default-bg, $alpha: -0.7)};
+    --md-default-bg-color--lightest:     #{color.adjust($drac-default-bg, $alpha: -0.88)};
+    --md-default-bg-color--trans:        #{color.adjust($drac-default-bg, $alpha: -1)};
 
     // Dark specific colors
-    --md-default-bg-color--dark:         #{darken($drac-default-bg, 3%)};
-    --md-default-bg-color--darker:       #{darken($drac-default-bg, 6%)};
-    --md-default-bg-color--darkest:      #{darken($drac-default-bg, 9%)};
-    --md-default-bg-color--ultra-dark:   #{darken($drac-default-bg, 15%)};
+    --md-default-bg-color--dark:         #{color.adjust($drac-default-bg, $lightness: -3%)};
+    --md-default-bg-color--darker:       #{color.adjust($drac-default-bg, $lightness: -6%)};
+    --md-default-bg-color--darkest:      #{color.adjust($drac-default-bg, $lightness: -9%)};
+    --md-default-bg-color--ultra-dark:   #{color.adjust($drac-default-bg, $lightness: -15%)};
 
     // General text
     --md-text-color: var(--md-default-fg-color);
@@ -83,7 +84,7 @@
     --md-code-fg-color: #{$drac-fg};
     --md-code-bg-color: #{$drac-bg};
     --md-code-title-bg-color: var(--md-default-bg-color--ultra-dark);
-    --md-code-inline-bg-color: #{lighten($drac-bg, 5%)};
+    --md-code-inline-bg-color: #{color.adjust($drac-bg, $lightness: 5%)};
     --md-code-hl-operator-color: #{$drac-pink};
     --md-code-hl-punctuation-color: #{$drac-fg};
     --md-code-hl-string-color: #{$drac-yellow};
@@ -105,7 +106,7 @@
     --md-code-hl-builtin-color: #{$drac-cyan};
     --md-code-hl-class-color: #{$drac-cyan};
 
-    --md-code-special-bg-color: #{darken($drac-bg, 5%)};
+    --md-code-special-bg-color: #{color.adjust($drac-bg, $lightness: -5%)};
     --md-code-alternate-bg-color: #{tint($drac-bg, 10%)};
     --md-code-link-bg-color: #{mix($drac-cyan, $drac-bg, 15%)};
 
@@ -136,22 +137,22 @@
 // ----------------------------------------------------------------------------
 
 @each $name, $colors in (
-  "red":         $drac-red         lighten($drac-red, 5%)   darken($drac-red, 5%),
-  "pink":        $drac-pink        lighten($drac-pink, 5%)   darken($drac-pink, 5%),
-  "purple":      $drac-purple      lighten($drac-purple, 5%)   darken($drac-purple, 5%),
-  "deep-purple": $drac-purple      lighten($drac-purple, 5%)   darken($drac-purple, 5%),
-  "blue":        $drac-blue        lighten($drac-blue, 5%)   darken($drac-blue, 5%),
-  "indigo":      $drac-blue        lighten($drac-blue, 5%)   darken($drac-blue, 5%),
-  "light-blue":  $drac-blue        lighten($drac-blue, 5%)   darken($drac-blue, 5%),
-  "cyan":        $drac-cyan        lighten($drac-cyan, 5%)   darken($drac-cyan, 5%),
-  "teal":        $drac-cyan        lighten($drac-cyan, 5%)   darken($drac-cyan, 5%),
-  "green":       $drac-green       lighten($drac-green, 5%)   darken($drac-green, 5%),
-  "light-green": $drac-green       lighten($drac-green, 5%)   darken($drac-green, 5%),
-  "lime":        $drac-green       lighten($drac-green, 5%)   darken($drac-green, 5%),
-  "yellow":      $drac-yellow      lighten($drac-yellow, 5%)   darken($drac-yellow, 5%),
-  "amber":       $drac-yellow      lighten($drac-yellow, 5%)   darken($drac-yellow, 5%),
-  "orange":      $drac-orange      lighten($drac-orange, 5%)   darken($drac-orange, 5%),
-  "deep-orange": $drac-orange      lighten($drac-orange, 5%)   darken($drac-orange, 5%)
+  "red":         $drac-red         color.adjust($drac-red, $lightness: 5%)   color.adjust($drac-red, $lightness: -5%),
+  "pink":        $drac-pink        color.adjust($drac-pink, $lightness: 5%)   color.adjust($drac-pink, $lightness: -5%),
+  "purple":      $drac-purple      color.adjust($drac-purple, $lightness: 5%)   color.adjust($drac-purple, $lightness: -5%),
+  "deep-purple": $drac-purple      color.adjust($drac-purple, $lightness: 5%)   color.adjust($drac-purple, $lightness: -5%),
+  "blue":        $drac-blue        color.adjust($drac-blue, $lightness: 5%)   color.adjust($drac-blue, $lightness: -5%),
+  "indigo":      $drac-blue        color.adjust($drac-blue, $lightness: 5%)   color.adjust($drac-blue, $lightness: -5%),
+  "light-blue":  $drac-blue        color.adjust($drac-blue, $lightness: 5%)   color.adjust($drac-blue, $lightness: -5%),
+  "cyan":        $drac-cyan        color.adjust($drac-cyan, $lightness: 5%)   color.adjust($drac-cyan, $lightness: -5%),
+  "teal":        $drac-cyan        color.adjust($drac-cyan, $lightness: 5%)   color.adjust($drac-cyan, $lightness: -5%),
+  "green":       $drac-green       color.adjust($drac-green, $lightness: 5%)   color.adjust($drac-green, $lightness: -5%),
+  "light-green": $drac-green       color.adjust($drac-green, $lightness: 5%)   color.adjust($drac-green, $lightness: -5%),
+  "lime":        $drac-green       color.adjust($drac-green, $lightness: 5%)   color.adjust($drac-green, $lightness: -5%),
+  "yellow":      $drac-yellow      color.adjust($drac-yellow, $lightness: 5%)   color.adjust($drac-yellow, $lightness: -5%),
+  "amber":       $drac-yellow      color.adjust($drac-yellow, $lightness: 5%)   color.adjust($drac-yellow, $lightness: -5%),
+  "orange":      $drac-orange      color.adjust($drac-orange, $lightness: 5%)   color.adjust($drac-orange, $lightness: -5%),
+  "deep-orange": $drac-orange      color.adjust($drac-orange, $lightness: 5%)   color.adjust($drac-orange, $lightness: -5%)
 ) {
 
   // Color palette
@@ -174,22 +175,22 @@
 // ----------------------------------------------------------------------------
 
 @each $name, $color in (
-  "red":         darken($drac-red, 5%),
-  "pink":        darken($drac-pink, 5%),
-  "purple":      darken($drac-purple, 5%),
-  "deep-purple": darken($drac-purple, 5%),
-  "blue":        darken($drac-blue, 5%),
-  "indigo":      darken($drac-blue, 5%),
-  "light-blue":  darken($drac-blue, 5%),
-  "cyan":        darken($drac-cyan, 5%),
-  "teal":        darken($drac-cyan, 5%),
-  "green":       darken($drac-green, 5%),
-  "light-green": darken($drac-green, 5%),
-  "lime":        darken($drac-green, 5%),
-  "yellow":      darken($drac-yellow, 5%),
-  "amber":       darken($drac-yellow, 5%),
-  "orange":      darken($drac-orange, 5%),
-  "deep-orange": darken($drac-orange, 5%)
+  "red":         color.adjust($drac-red, $lightness: -5%),
+  "pink":        color.adjust($drac-pink, $lightness: -5%),
+  "purple":      color.adjust($drac-purple, $lightness: -5%),
+  "deep-purple": color.adjust($drac-purple, $lightness: -5%),
+  "blue":        color.adjust($drac-blue, $lightness: -5%),
+  "indigo":      color.adjust($drac-blue, $lightness: -5%),
+  "light-blue":  color.adjust($drac-blue, $lightness: -5%),
+  "cyan":        color.adjust($drac-cyan, $lightness: -5%),
+  "teal":        color.adjust($drac-cyan, $lightness: -5%),
+  "green":       color.adjust($drac-green, $lightness: -5%),
+  "light-green": color.adjust($drac-green, $lightness: -5%),
+  "lime":        color.adjust($drac-green, $lightness: -5%),
+  "yellow":      color.adjust($drac-yellow, $lightness: -5%),
+  "amber":       color.adjust($drac-yellow, $lightness: -5%),
+  "orange":      color.adjust($drac-orange, $lightness: -5%),
+  "deep-orange": color.adjust($drac-orange, $lightness: -5%)
 ) {
 
   // Color palette

@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .md-typeset .admonition {
   border-width: 0;
   border-left-width: 4px;
@@ -38,15 +40,15 @@ $new-admonitions: (
 
     & {
       --md-admonition-icon--#{$name}: svg-load("#{nth($prop, 3)}");
-      --md-admonition-bg-color--#{$name}: #{transparentize($tint2, 0.9)};
+      --md-admonition-bg-color--#{$name}: #{color.adjust($tint2, $alpha: -0.9)};
       --md-admonition-icon-color--#{$name}: #{$tint2};
-      --md-admonition-shadow-color--#{$name}: #{transparentize($tint2, 0.9)};
+      --md-admonition-shadow-color--#{$name}: #{color.adjust($tint2, $alpha: -0.9)};
     }
 
     &[data-md-color-scheme="dracula"] {
       --md-admonition-bg-color--#{$name}: var(--md-default-bg-color--ultra-dark);
       --md-admonition-icon-color--#{$name}: #{$tint};
-      --md-admonition-shadow-color--#{$name}: #{transparentize($tint, 0.9)};
+      --md-admonition-shadow-color--#{$name}: #{color.adjust($tint, $alpha: -0.9)};
     }
 
     @each $names, $tint in $old-admonitions {
@@ -55,7 +57,7 @@ $new-admonitions: (
       & {
         --md-admonition-bg-color--#{$name}: var(--md-default-bg-color--ultra-dark);
         --md-admonition-icon-color--#{$name}: #{$tint};
-        --md-admonition-shadow-color--#{$name}: #{transparentize($tint, 0.9)};
+        --md-admonition-shadow-color--#{$name}: #{color.adjust($tint, $alpha: 0.9)};
       }
     }
   }
