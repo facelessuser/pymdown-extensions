@@ -68,7 +68,7 @@ SMART_SUB_DEL = \
     )
 # SMART: `~~del~~`
 SMART_DEL = r'(?:(?<=_)|(?<![\w~]))(~{{2}})(?![\s~]){}(?<!\s)\1(?:(?=_)|(?![\w~]))'.format(SMART_CONTENT)
-# SMART: ~sub ~~sub,del~~~
+# SMART: `~sub ~~sub,del~~~`
 SMART_SUB_DEL2 = \
     r'(?<!~)(~)(?![\s~]){}(?:(?<=_)|(?<![\w~]))~{{2}}(?![\s~]){}(?<!\s)~{{3}}'.format(
         CONTENT, CONTENT

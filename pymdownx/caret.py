@@ -69,7 +69,7 @@ SMART_SUP_INS = \
     )
 # SMART: `^^ins^^`
 SMART_INS = r'(?:(?<=_)|(?<![\w\^]))(\^{{2}})(?![\s\^]){}(?<!\s)\1(?:(?=_)|(?![\w\^]))'.format(SMART_CONTENT)
-# SMART: ^sup ^^sup,ins^^^
+# SMART: `^sup ^^sup,ins^^^`
 SMART_SUP_INS2 = \
     r'(?<!\^)(\^)(?![\s\^]){}(?:(?<=_)|(?<![\w\^]))\^{{2}}(?![\s\^]){}(?<!\s)\^{{3}}'.format(
         CONTENT, CONTENT
