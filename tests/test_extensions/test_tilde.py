@@ -15,7 +15,7 @@ class TestTildeSmart(util.MdCase):
     }
 
     def test_case_1(self):
-        """Test case 1"""
+        """Test case 1."""
 
         self.check_markdown(
             R"CH~3~CH~2~OH",
@@ -24,7 +24,7 @@ class TestTildeSmart(util.MdCase):
         )
 
     def test_case_2(self):
-        """Test case 2"""
+        """Test case 2."""
 
         self.check_markdown(
             R"Text~subscript~",
@@ -33,7 +33,7 @@ class TestTildeSmart(util.MdCase):
         )
 
     def test_case_3(self):
-        """Test case 3"""
+        """Test case 3."""
 
         self.check_markdown(
             R"Text~subscript failed~",
@@ -42,7 +42,7 @@ class TestTildeSmart(util.MdCase):
         )
 
     def test_case_4(self):
-        """Test case 4"""
+        """Test case 4."""
 
         self.check_markdown(
             R"Text~subscript\ success~",
@@ -51,7 +51,7 @@ class TestTildeSmart(util.MdCase):
         )
 
     def test_case_5(self):
-        """Test case 5"""
+        """Test case 5."""
 
         self.check_markdown(
             R"Test: ~~ Won't delete ~~",
@@ -60,7 +60,7 @@ class TestTildeSmart(util.MdCase):
         )
 
     def test_case_6(self):
-        """Test case 6"""
+        """Test case 6."""
 
         self.check_markdown(
             R"Test: ~~Will delete~~",
@@ -69,7 +69,7 @@ class TestTildeSmart(util.MdCase):
         )
 
     def test_case_7(self):
-        """Test case 7"""
+        """Test case 7."""
 
         self.check_markdown(
             R"Test: \~\~Escaped\~\~",
@@ -78,7 +78,7 @@ class TestTildeSmart(util.MdCase):
         )
 
     def test_case_8(self):
-        """Test case 8"""
+        """Test case 8."""
 
         self.check_markdown(
             R"Test: ~~This will all be deleted ~~because of the placement of the center tilde.~~",
@@ -87,7 +87,7 @@ class TestTildeSmart(util.MdCase):
         )
 
     def test_case_9(self):
-        """Test case 9"""
+        """Test case 9."""
 
         self.check_markdown(
             R"Test: ~~This will all be deleted ~~ because of the placement of the center tilde.~~",
@@ -96,7 +96,7 @@ class TestTildeSmart(util.MdCase):
         )
 
     def test_case_10(self):
-        """Test case 10"""
+        """Test case 10."""
 
         self.check_markdown(
             R"Test: ~~This will NOT all be deleted~~ because of the placement of the center tilde.~~",
@@ -105,7 +105,7 @@ class TestTildeSmart(util.MdCase):
         )
 
     def test_case_11(self):
-        """Test case 11"""
+        """Test case 11."""
 
         self.check_markdown(
             R"Test: ~~This will all be deleted~ because of the token is less than that of the tilde.~~",
@@ -143,7 +143,7 @@ class TestTildeNoSmart(util.MdCase):
     }
 
     def test_case_1(self):
-        """Test case 1"""
+        """Test case 1."""
 
         self.check_markdown(
             R"CH~3~CH~2~OH",
@@ -152,7 +152,7 @@ class TestTildeNoSmart(util.MdCase):
         )
 
     def test_case_2(self):
-        """Test case 2"""
+        """Test case 2."""
 
         self.check_markdown(
             R"Text~subscript~",
@@ -161,7 +161,7 @@ class TestTildeNoSmart(util.MdCase):
         )
 
     def test_case_3(self):
-        """Test case 3"""
+        """Test case 3."""
 
         self.check_markdown(
             R"Text~subscript failed~",
@@ -170,7 +170,7 @@ class TestTildeNoSmart(util.MdCase):
         )
 
     def test_case_4(self):
-        """Test case 4"""
+        """Test case 4."""
 
         self.check_markdown(
             R"Text~subscript\ success~",
@@ -179,7 +179,7 @@ class TestTildeNoSmart(util.MdCase):
         )
 
     def test_case_5(self):
-        """Test case 5"""
+        """Test case 5."""
 
         self.check_markdown(
             R"Test: ~~ Won't delete ~~",
@@ -188,7 +188,7 @@ class TestTildeNoSmart(util.MdCase):
         )
 
     def test_case_6(self):
-        """Test case 6"""
+        """Test case 6."""
 
         self.check_markdown(
             R"Test: ~~Will delete~~",
@@ -197,7 +197,7 @@ class TestTildeNoSmart(util.MdCase):
         )
 
     def test_case_7(self):
-        """Test case 7"""
+        """Test case 7."""
 
         self.check_markdown(
             R"Test: \~\~Escaped\~\~",
@@ -206,7 +206,7 @@ class TestTildeNoSmart(util.MdCase):
         )
 
     def test_case_8(self):
-        """Test case 8"""
+        """Test case 8."""
 
         self.check_markdown(
             R"Test: ~~All will ~ be deleted~~",
@@ -215,7 +215,7 @@ class TestTildeNoSmart(util.MdCase):
         )
 
     def test_case_9(self):
-        """Test case 9"""
+        """Test case 9."""
 
         self.check_markdown(
             R"Test: ~~All will~\~~ be deleted with subscript in middle~~",
@@ -224,7 +224,7 @@ class TestTildeNoSmart(util.MdCase):
         )
 
     def test_case_10(self):
-        """Test case 10"""
+        """Test case 10."""
 
         self.check_markdown(
             R"Test: ~~All will ~\~~ be deleted with subscript in middle~~",
@@ -233,7 +233,7 @@ class TestTildeNoSmart(util.MdCase):
         )
 
     def test_case_11(self):
-        """Test case 11"""
+        """Test case 11."""
 
         self.check_markdown(
             R"Test: Subscript ~~~",
