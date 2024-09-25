@@ -35,9 +35,9 @@ CONTENT = r'((?:[^=]|(?<!={2})=)+?)'
 NOT_MARK = r'((^|(?<=\s))(=+)(?=\s|$))'
 
 # ==mark==
-MARK = r'(={2})(?!\s)%s(?<!\s)\1' % CONTENT
+MARK = r'(={{2}})(?!\s){}(?<!\s)\1'.format(CONTENT)
 # ==mark==
-SMART_MARK = r'(?:(?<=_)|(?<![\w=]))(={2})(?![\s=])%s(?<!\s)\1(?:(?=_)|(?![\w=]))' % SMART_CONTENT
+SMART_MARK = r'(?:(?<=_)|(?<![\w=]))(={{2}})(?![\s=]){}(?<!\s)\1(?:(?=_)|(?![\w=]))'.format(SMART_CONTENT)
 
 
 class MarkProcessor(util.PatternSequenceProcessor):

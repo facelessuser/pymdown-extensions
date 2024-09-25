@@ -114,7 +114,7 @@ SMART_STAR_STRONG = r'(?:(?<=_)|(?<![\w\*]))(\*{{2}})(?![\s\*]){}(?<!\s)\1(?:(?=
 SMART_STAR_EM = r'(?:(?<=_)|(?<![\w\*]))(\*)(?![\s\*]){}(?<!\s)\1(?:(?=_)|(?![\w\*]))'.format(SMART_STAR_CONTENT)
 # SMART: Prioritize *value* when **value** is nested within
 SMART_STAR_EM2 = r'(?<![\w\*])(\*)(?![\*\s])(.+?)(?<![\*\s])(\*)(?![\*\w])'
-# SMART *em **strong***
+# SMART: *em **strong***
 SMART_STAR_EM_STRONG2 = \
     r'(?:(?<=_)|(?<![\w\*]))(\*)(?![\s\*]){}(?:(?<=_)|(?<![\w\*]))\*{{2}}(?![\s\*]){}(?<!\s)\*{{3}}(?:(?=_)|(?![\w\*]))'.format(
         SMART_STAR_CONTENT, SMART_STAR_CONTENT
