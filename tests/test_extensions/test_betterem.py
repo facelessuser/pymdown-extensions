@@ -62,6 +62,14 @@ class TestBetterNoSmart(util.MdCase):
             "<p><em>I'm italic. <strong>I'm bold and italic.</strong></em></p>"
         )
 
+    def test_complex_strong_em_under(self):
+        """Test `__text _text___`."""
+
+        self.check_markdown(
+            "__I'm bold. _I'm bold and italic.___",
+            "<p><strong>I'm bold. <em>I'm bold and italic.</em></strong></p>"
+        )
+
 
 class TestBetterSmartAll(util.MdCase):
     """Test escaping cases for BetterEm with smart enabled everywhere."""
@@ -121,4 +129,12 @@ class TestBetterSmartAll(util.MdCase):
         self.check_markdown(
             "_I'm italic. __I'm bold and italic.___",
             "<p><em>I'm italic. <strong>I'm bold and italic.</strong></em></p>"
+        )
+
+    def test_complex_strong_em_under(self):
+        """Test `__text _text___`."""
+
+        self.check_markdown(
+            "__I'm bold. _I'm bold and italic.___",
+            "<p><strong>I'm bold. <em>I'm bold and italic.</em></strong></p>"
         )
