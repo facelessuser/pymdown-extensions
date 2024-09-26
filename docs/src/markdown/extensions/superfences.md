@@ -118,7 +118,7 @@ import hello_world
 
 /// html | div.result
 ```html
-<pre id="id" class="highlight"><code class="extra-class language-python linenums">import hello_world</code></pre>
+<pre class="highlight"><code id="id" class="language-python extra-class" linenums="1">import hello_world</code></pre>
 ```
 ///
 
