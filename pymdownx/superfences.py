@@ -51,7 +51,7 @@ RE_NESTED_FENCE_START = re.compile(
                 (?:\b[a-zA-Z][a-zA-Z0-9_]*(?:=(?P<quot>"|').*?(?P=quot))?[ \t]*) |  # Options
             )*
         )
-    )[ \t]*$
+    )+[ \t]*$
     '''
 )
 
