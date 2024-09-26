@@ -1,5 +1,11 @@
 # Changelog
 
+## 10.10.2
+
+-   **FIX**: BetterEm: Add better support for `*em, **em,strong***` and `_em, __em,strong___` cases.
+-   **FIX**: Caret: Add better support for `*sup, **sup,ins***`.
+-   **FIX**: Tilde: Add better support for `*sub, **sub,del***`.
+
 ## 10.10.1
 
 -   **FIX**: FancyLists: Remove a mistaken semicolon from injected classes.

@@ -46,28 +46,34 @@ SUP_INS = r'(\^{{3}})(?![\s\^]){}(?<!\s)\^{{2}}{}(?<!\s)\^'.format(CONTENT, CONT
 # `^^ins^sup,ins^^^`
 INS_SUP3 = r'(\^{{2}})(?![\s\^]){}\^(?![\s\^]){}(?<!\s)\^{{3}}'.format(CONTENT2, CONTENT)
 # `^^ins^^`
-INS = r'(\^{2})(?!\s)%s(?<!\s)\1' % CONTENT2
+INS = r'(\^{{2}})(?!\s){}(?<!\s)\1'.format(CONTENT2)
 # `^sup^`
-SUP = r'(\^)(?!\s)%s(?<!\s)\1' % CONTENT
-
+SUP = r'(\^)(?!\s){}(?<!\s)\1'.format(CONTENT)
+# `^sup ^^sup,ins^^^`
+SUP_INS2 = r'(?<!\^)(\^)(?![\^\s]){}\^{{2}}{}\^{{3}}'.format(CONTENT, CONTENT)
 # Prioritize ^value^ when ^^value^^ is nested within
 SUP2 = r'(?<!\^)(\^)(?![\^\s])([^\s]+?)(?<![\^\s])(\^)(?!\^)'
 
 # Smart rules for when "smart caret" is enabled
 # SMART: `^^^ins,sup^^^`
-SMART_INS_SUP = r'(\^{3})(?![\s\^])%s(?<!\s)\1' % CONTENT
-# `^^^ins,sup^ ins^^`
+SMART_INS_SUP = r'(\^{{3}})(?![\s\^]){}(?<!\s)\1'.format(CONTENT)
+# SMART: `^^^ins,sup^ ins^^`
 SMART_INS_SUP2 = \
     r'(\^{{3}})(?![\s\^]){}(?<!\s)\^(?:(?=_)|(?![\w\^])){}(?<!\s)\^{{2}}'.format(
         CONTENT, SMART_CONTENT
     )
-# `^^^sup,ins^^ sup^`
+# SMART: `^^^sup,ins^^ sup^`
 SMART_SUP_INS = \
     r'(\^{{3}})(?![\s\^]){}(?<!\s)\^{{2}}(?:(?=_)|(?![\w\^])){}(?<!\s)\^'.format(
         CONTENT, CONTENT
     )
-# `^^ins^^`
-SMART_INS = r'(?:(?<=_)|(?<![\w\^]))(\^{2})(?![\s\^])%s(?<!\s)\1(?:(?=_)|(?![\w\^]))' % SMART_CONTENT
+# SMART: `^^ins^^`
+SMART_INS = r'(?:(?<=_)|(?<![\w\^]))(\^{{2}})(?![\s\^]){}(?<!\s)\1(?:(?=_)|(?![\w\^]))'.format(SMART_CONTENT)
+# SMART: `^sup ^^sup,ins^^^`
+SMART_SUP_INS2 = \
+    r'(?<!\^)(\^)(?![\s\^]){}(?:(?<=_)|(?<![\w\^]))\^{{2}}(?![\s\^]){}(?<!\s)\^{{3}}'.format(
+        CONTENT, CONTENT
+    )
 
 
 class CaretProcessor(util.PatternSequenceProcessor):
@@ -80,6 +86,7 @@ class CaretProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(INS_SUP3, re.DOTALL | re.UNICODE), 'double2', 'ins,sup'),
         util.PatSeqItem(re.compile(INS, re.DOTALL | re.UNICODE), 'single', 'ins'),
         util.PatSeqItem(re.compile(SUP2, re.DOTALL | re.UNICODE), 'single', 'sup', True),
+        util.PatSeqItem(re.compile(SUP_INS2, re.DOTALL | re.UNICODE), 'double2', 'sup,ins'),
         util.PatSeqItem(re.compile(SUP, re.DOTALL | re.UNICODE), 'single', 'sup')
     ]
 
@@ -93,6 +100,7 @@ class CaretSmartProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(SMART_INS_SUP2, re.DOTALL | re.UNICODE), 'double', 'ins,sup'),
         util.PatSeqItem(re.compile(SMART_INS, re.DOTALL | re.UNICODE), 'single', 'ins'),
         util.PatSeqItem(re.compile(SUP2, re.DOTALL | re.UNICODE), 'single', 'sup', True),
+        util.PatSeqItem(re.compile(SMART_SUP_INS2, re.DOTALL | re.UNICODE), 'double2', 'sup,ins'),
         util.PatSeqItem(re.compile(SUP, re.DOTALL | re.UNICODE), 'single', 'sup')
     ]
 

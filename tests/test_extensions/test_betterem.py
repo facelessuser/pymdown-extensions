@@ -2,7 +2,7 @@
 from .. import util
 
 
-class TestBetterEmNoSmart(util.MdCase):
+class TestBetterNoSmart(util.MdCase):
     """Test escaping cases for BetterEm without smart enabled."""
 
     extension = [
@@ -46,9 +46,42 @@ class TestBetterEmNoSmart(util.MdCase):
             '<p>on the <strong>1-4 row</strong> of the AP Combat Table <strong><em>and</em></strong> receive</p>'
         )
 
+    def test_complex_em_strong_star(self):
+        """Test `*text **text***`."""
+
+        self.check_markdown(
+            "*I'm italic. **I'm bold and italic.***",
+            "<p><em>I'm italic. <strong>I'm bold and italic.</strong></em></p>"
+        )
+
+    def test_complex_em_strong_under(self):
+        """Test `_text __text___`."""
+
+        self.check_markdown(
+            "_I'm italic. __I'm bold and italic.___",
+            "<p><em>I'm italic. <strong>I'm bold and italic.</strong></em></p>"
+        )
+
+    def test_complex_strong_em_under(self):
+        """Test `__text _text___`."""
+
+        self.check_markdown(
+            "__I'm bold. _I'm bold and italic.___",
+            "<p><strong>I'm bold. <em>I'm bold and italic.</em></strong></p>"
+        )
+
 
 class TestBetterSmartAll(util.MdCase):
     """Test escaping cases for BetterEm with smart enabled everywhere."""
+
+    extension = [
+        'pymdownx.betterem'
+    ]
+    extension_configs = {
+        "pymdownx.betterem": {
+            "smart_enable": "all"
+        }
+    }
 
     def test_smart_complex_cases_star(self):
         """Test some complex cases with star."""
@@ -80,4 +113,28 @@ class TestBetterSmartAll(util.MdCase):
             <p><em><strong>I'm bold and italic!</strong> I am just italic.</em></p>
             ''',
             True
+        )
+
+    def test_smart_complex_em_strong_star(self):
+        """Test `*text **text***`."""
+
+        self.check_markdown(
+            "*I'm italic. **I'm bold and italic.***",
+            "<p><em>I'm italic. <strong>I'm bold and italic.</strong></em></p>"
+        )
+
+    def test_smart_complex_em_strong_under(self):
+        """Test `_text __text___`."""
+
+        self.check_markdown(
+            "_I'm italic. __I'm bold and italic.___",
+            "<p><em>I'm italic. <strong>I'm bold and italic.</strong></em></p>"
+        )
+
+    def test_complex_strong_em_under(self):
+        """Test `__text _text___`."""
+
+        self.check_markdown(
+            "__I'm bold. _I'm bold and italic.___",
+            "<p><strong>I'm bold. <em>I'm bold and italic.</em></strong></p>"
         )

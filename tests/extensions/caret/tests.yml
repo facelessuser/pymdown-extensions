@@ -1,14 +1,5 @@
 __default__: {}
 
-caret:
-  extensions:
-    pymdownx.caret:
-
-caret (dumb):
-  extensions:
-    pymdownx.caret:
-      smart_insert: false
-
 caret (dumb no sup):
   extensions:
     pymdownx.caret:

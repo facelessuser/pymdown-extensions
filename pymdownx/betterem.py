@@ -54,55 +54,71 @@ UNDER_EM_STRONG = r'(_{{3}})(?![\s_]){}(?<!\s)_{{2}}{}(?<!\s)_'.format(UNDER_CON
 # __strong_em,strong___
 UNDER_STRONG_EM3 = r'(_{{2}})(?![\s_]){}_(?![\s_]){}(?<!\s)_{{3}}'.format(UNDER_CONTENT, UNDER_CONTENT)
 # **strong**
-STAR_STRONG = r'(\*{2})(?!\s)%s(?<!\s)\1' % STAR_CONTENT2
+STAR_STRONG = r'(\*{{2}})(?!\s){}(?<!\s)\1'.format(STAR_CONTENT2)
 # __strong__
-UNDER_STRONG = r'(_{2})(?!\s)%s(?<!\s)\1' % UNDER_CONTENT2
-
+UNDER_STRONG = r'(_{{2}})(?!\s){}(?<!\s)\1'.format(UNDER_CONTENT2)
+# *em **strong***
+STAR_EM_STRONG2 = r'(?<!\*)(\*)(?![\*\s]){}\*{{2}}{}\*{{3}}'.format(STAR_CONTENT, STAR_CONTENT2)
+# _em __strong___
+UNDER_EM_STRONG2 = r'(?<!_)(_)(?![_\s]){}_{{2}}{}_{{3}}'.format(UNDER_CONTENT, UNDER_CONTENT2)
 # Prioritize *value* when **value** is nested within
 STAR_EM2 = r'(?<!\*)(\*)(?![\*\s])(.+?)(?<![\*\s])(\*)(?!\*)'
 # Prioritize _value_ when __value__ is nested within
 UNDER_EM2 = r'(?<!_)(_)(?![_\s])(.+?)(?<![_\s])(_)(?!_)'
-
 # *emphasis*
-STAR_EM = r'(\*)(?!\s)%s(?<!\s)\1' % STAR_CONTENT
+STAR_EM = r'(\*)(?!\s){}(?<!\s)\1'.format(STAR_CONTENT)
 # _emphasis_
-UNDER_EM = r'(_)(?!\s)%s(?<!\s)\1' % UNDER_CONTENT
+UNDER_EM = r'(_)(?!\s){}(?<!\s)\1'.format(UNDER_CONTENT)
 
 # Smart rules for when "smart underscore" is enabled
 # SMART: ___strong,em___
-SMART_UNDER_STRONG_EM = r'(?<!\w)(_{3})(?![\s_])%s(?<!\s)\1(?!\w)' % SMART_UNDER_CONTENT
-# ___strong,em_ strong__
+SMART_UNDER_STRONG_EM = r'(?<!\w)(_{{3}})(?![\s_]){}(?<!\s)\1(?!\w)'.format(SMART_UNDER_CONTENT)
+# SMART: ___strong,em_ strong__
 SMART_UNDER_STRONG_EM2 = \
     r'(?<!\w)(_{{3}})(?![\s_]){}(?<!\s)_(?!\w){}(?<!\s)_{{2}}(?!\w)'.format(SMART_UNDER_CONTENT, SMART_UNDER_CONTENT)
-# ___em,strong__ em_
+# SMART: ___em,strong__ em_
 SMART_UNDER_EM_STRONG = \
     r'(?<!\w)(_{{3}})(?![\s_]){}(?<!\s)_{{2}}(?!\w){}(?<!\s)_(?!\w)'.format(SMART_UNDER_CONTENT, SMART_UNDER_CONTENT)
-# __strong__
-SMART_UNDER_STRONG = r'(?<!\w)(_{2})(?![\s_])%s(?<!\s)\1(?!\w)' % SMART_UNDER_CONTENT
-# SMART _em_
-SMART_UNDER_EM = r'(?<!\w)(_)(?![\s_])%s(?<!\s)\1(?!\w)' % SMART_UNDER_CONTENT
-# Prioritize _value_ when __value__ is nested within
+# SMART: __strong__
+SMART_UNDER_STRONG = r'(?<!\w)(_{{2}})(?![\s_]){}(?<!\s)\1(?!\w)'.format(SMART_UNDER_CONTENT)
+# SMART: _em_
+SMART_UNDER_EM = r'(?<!\w)(_)(?![\s_]){}(?<!\s)\1(?!\w)'.format(SMART_UNDER_CONTENT)
+# SMART: Prioritize _value_ when __value__ is nested within
 SMART_UNDER_EM2 = r'(?<![\w_])(_)(?![_\s])(.+?)(?<![_\s])(_)(?![_\w])'
+# SMART: _em __strong___
+SMART_UNDER_EM_STRONG2 = \
+    r'(?<!\w)(_)(?![\s_]){}(?<!\w)_{{2}}(?![\s_]){}(?<!\s)_{{3}}(?!\w)'.format(
+        SMART_UNDER_CONTENT, SMART_UNDER_CONTENT
+    )
 
 # Smart rules for when "smart asterisk" is enabled
 # SMART: ***strong,em***
-SMART_STAR_STRONG_EM = r'(?:(?<=_)|(?<![\w\*]))(\*{3})(?![\s\*])%s(?<!\s)\1(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT
-# ***strong,em* strong**
+SMART_STAR_STRONG_EM = r'(?:(?<=_)|(?<![\w\*]))(\*{{3}})(?![\s\*]){}(?<!\s)\1(?:(?=_)|(?![\w\*]))'.format(
+    SMART_STAR_CONTENT
+)
+# SMART: ***strong,em* strong**
 SMART_STAR_STRONG_EM2 = \
     r'(?:(?<=_)|(?<![\w\*]))(\*{{3}})(?![\s\*]){}(?<!\s)\*(?:(?=_)|(?![\w\*])){}(?<!\s)\*{{2}}(?:(?=_)|(?![\w\*]))'.format(
         SMART_STAR_CONTENT, SMART_STAR_CONTENT
     )
-# ***em,strong** em*
+# SMART: ***em,strong** em*
 SMART_STAR_EM_STRONG = \
     r'(?:(?<=_)|(?<![\w\*]))(\*{{3}})(?![\s\*]){}(?<!\s)\*{{2}}(?:(?=_)|(?![\w\*])){}(?<!\s)\*(?:(?=_)|(?![\w\*]))'.format(
         SMART_STAR_CONTENT, SMART_STAR_CONTENT
     )
-# **strong**
-SMART_STAR_STRONG = r'(?:(?<=_)|(?<![\w\*]))(\*{2})(?![\s\*])%s(?<!\s)\1(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT
-# SMART *em*
-SMART_STAR_EM = r'(?:(?<=_)|(?<![\w\*]))(\*)(?![\s\*])%s(?<!\s)\1(?:(?=_)|(?![\w\*]))' % SMART_STAR_CONTENT
-# Prioritize *value* when **value** is nested within
+# SMART: **strong**
+SMART_STAR_STRONG = r'(?:(?<=_)|(?<![\w\*]))(\*{{2}})(?![\s\*]){}(?<!\s)\1(?:(?=_)|(?![\w\*]))'.format(
+    SMART_STAR_CONTENT
+)
+# SMART: *em*
+SMART_STAR_EM = r'(?:(?<=_)|(?<![\w\*]))(\*)(?![\s\*]){}(?<!\s)\1(?:(?=_)|(?![\w\*]))'.format(SMART_STAR_CONTENT)
+# SMART: Prioritize *value* when **value** is nested within
 SMART_STAR_EM2 = r'(?<![\w\*])(\*)(?![\*\s])(.+?)(?<![\*\s])(\*)(?![\*\w])'
+# SMART: *em **strong***
+SMART_STAR_EM_STRONG2 = \
+    r'(?:(?<=_)|(?<![\w\*]))(\*)(?![\s\*]){}(?:(?<=_)|(?<![\w\*]))\*{{2}}(?![\s\*]){}(?<!\s)\*{{3}}(?:(?=_)|(?![\w\*]))'.format(
+        SMART_STAR_CONTENT, SMART_STAR_CONTENT
+    )
 
 
 class AsteriskProcessor(util.PatternSequenceProcessor):
@@ -115,6 +131,7 @@ class AsteriskProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(STAR_STRONG_EM3, re.DOTALL | re.UNICODE), 'double2', 'strong,em'),
         util.PatSeqItem(re.compile(STAR_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
         util.PatSeqItem(re.compile(STAR_EM2, re.DOTALL | re.UNICODE), 'single', 'em', True),
+        util.PatSeqItem(re.compile(STAR_EM_STRONG2, re.DOTALL | re.UNICODE), 'double2', 'em,strong'),
         util.PatSeqItem(re.compile(STAR_EM, re.DOTALL | re.UNICODE), 'single', 'em')
     ]
 
@@ -128,6 +145,7 @@ class SmartAsteriskProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(SMART_STAR_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
         util.PatSeqItem(re.compile(SMART_STAR_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
         util.PatSeqItem(re.compile(SMART_STAR_EM2, re.DOTALL | re.UNICODE), 'single', 'em', True),
+        util.PatSeqItem(re.compile(SMART_STAR_EM_STRONG2, re.DOTALL | re.UNICODE), 'double2', 'em,strong'),
         util.PatSeqItem(re.compile(SMART_STAR_EM, re.DOTALL | re.UNICODE), 'single', 'em')
     ]
 
@@ -142,6 +160,7 @@ class UnderscoreProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(UNDER_STRONG_EM3, re.DOTALL | re.UNICODE), 'double2', 'strong,em'),
         util.PatSeqItem(re.compile(UNDER_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
         util.PatSeqItem(re.compile(UNDER_EM2, re.DOTALL | re.UNICODE), 'single', 'em', True),
+        util.PatSeqItem(re.compile(UNDER_EM_STRONG2, re.DOTALL | re.UNICODE), 'double2', 'em,strong'),
         util.PatSeqItem(re.compile(UNDER_EM, re.DOTALL | re.UNICODE), 'single', 'em')
     ]
 
@@ -155,6 +174,7 @@ class SmartUnderscoreProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(SMART_UNDER_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
         util.PatSeqItem(re.compile(SMART_UNDER_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
         util.PatSeqItem(re.compile(SMART_UNDER_EM2, re.DOTALL | re.UNICODE), 'single', 'em', True),
+        util.PatSeqItem(re.compile(SMART_UNDER_EM_STRONG2, re.DOTALL | re.UNICODE), 'double2', 'em,strong'),
         util.PatSeqItem(re.compile(SMART_UNDER_EM, re.DOTALL | re.UNICODE), 'single', 'em')
     ]
 
