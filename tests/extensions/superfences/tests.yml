@@ -86,3 +86,15 @@ superfences (preserve tabs):
         - name: sequence
           class: uml-sequence-diagram
           format: !!python/name:pymdownx.superfences.fence_code_format
+
+superfences (language with attributes):
+  extensions:
+    markdown.extensions.attr_list:
+    pymdownx.superfences:
+      custom_fences:
+        - name: test
+          class: test
+          format: !!python/name:pymdownx.superfences.fence_div_format
+        - name: test2
+          class: test2
+          format: !!python/name:pymdownx.superfences.fence_div_format

@@ -584,9 +584,6 @@ class SuperFencesBlockPreprocessor(Preprocessor):
 
         okay = False
 
-        if m.group('lang'):
-            self.lang = m.group('lang')
-
         string = m.group('options')
 
         self.options = {}
@@ -640,7 +637,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             else:
                 values[k] = v
 
-        self.lang = self.classes.pop(0) if self.classes else ''
+        self.lang = self.classes.pop(0) if self.classes and not self.lang else self.lang
 
         # Run per language validator
         for entry in reversed(self.extension.superfences):
@@ -680,6 +677,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 if m is not None:
 
                     # Parse options
+                    self.lang = m.group('lang') or ''
                     if m.group('attrs'):
                         okay = self.handle_attrs(m)
                     else:
