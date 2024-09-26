@@ -78,8 +78,7 @@ ___A lot of underscores____________is okay___
 ___A lot of underscores____________is okay___
 ///
 
-BetterEm will also ensure that smart mode breaks proper when an inner like token signifies an end.
-
+BetterEm will also ensure that smart mode breaks properly when an inner like token signifies an end.
 
 ```text title="Smart Break"
 __This will all be bold __because of the placement of the center underscores.__
@@ -94,7 +93,7 @@ __This will all be bold_ because of the token is less than that of the surroundi
 /// html | div.result
 __This will all be bold __because of the placement of the center underscores.__
 
-__This will all be bold __ because of the placement of the center asterisks.__
+__This will all be bold __ because of the placement of the center underscores.__
 
 __This will NOT all be bold__ because of the placement of the center underscores.__
 
