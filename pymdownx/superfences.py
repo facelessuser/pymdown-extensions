@@ -43,15 +43,16 @@ PREFIX_CHARS = ('>', ' ', '\t')
 
 RE_NESTED_FENCE_START = re.compile(
     r'''(?x)
-    (?P<fence>~{3,}|`{3,})[ \t]*                                                    # Fence opening
-    (?:(\{(?P<attrs>[^\n]*)\})?|                                                    # Optional attributes or
-        (?:\.?(?P<lang>[\w#.+-]*))?[ \t]*                                           # Language
+    (?P<fence>~{3,}|`{3,})
+    (?:[ \t]*\.?(?P<lang>[\w#.+-]+))?                                           # Language
+    (?:
+        [ \t]*(\{(?P<attrs>[^\n]*)\}) |                                         # Optional attributes or
         (?P<options>
             (?:
-                (?:\b[a-zA-Z][a-zA-Z0-9_]*(?:=(?P<quot>"|').*?(?P=quot))?[ \t]*) |  # Options
-            )*
+                (?:[ \t]*[a-zA-Z][a-zA-Z0-9_]*(?:=(?P<quot>"|').*?(?P=quot))?)  # Options
+            )+
         )
-    )[ \t]*$
+    )?[ \t]*$
     '''
 )
 
@@ -639,7 +640,10 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             else:
                 values[k] = v
 
-        self.lang = self.classes.pop(0) if self.classes else ''
+        if m.group('lang'):
+            self.lang = m.group('lang')
+        else:
+            self.lang = self.classes.pop(0) if self.classes else ''
 
         # Run per language validator
         for entry in reversed(self.extension.superfences):

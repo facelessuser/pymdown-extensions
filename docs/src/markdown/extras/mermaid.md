@@ -355,7 +355,7 @@ window.mermaidConfig = {
 ///
 
 /// tab | JS
-```{.js .md-max-height}
+```js {.md-max-height}
 const uml = async className => {
 
   // Custom element to encapsulate Mermaid content.
