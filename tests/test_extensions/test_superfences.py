@@ -961,7 +961,7 @@ class TestSuperFencesBad(util.MdCase):
 class TestSuperFencesCustom(util.MdCase):
     """Test custom validator and format."""
 
-    extension = ['pymdownx.superfences']
+    extension = ['pymdownx.superfences', 'attr_list']
     extension_configs = {
         'pymdownx.superfences': {
             'custom_fences': [
@@ -1049,6 +1049,21 @@ class TestSuperFencesCustom(util.MdCase):
         self.check_markdown(
             r'''
             ```test opt="A"
+            test
+            ```
+            ''',
+            r'''
+            <div lang="test" class_name="class-test", option="A">test</div>
+            ''',
+            True
+        )
+
+    def test_custom_options_attr_list(self):
+        """Test option with correct value."""
+
+        self.check_markdown(
+            r'''
+            ```test {opt="A"}
             test
             ```
             ''',
