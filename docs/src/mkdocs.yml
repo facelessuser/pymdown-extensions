@@ -23,7 +23,7 @@ theme:
     - announce.dismiss
     - navigation.tabs
     - navigation.top
-    # - navigation.instant
+    - navigation.instant
     - navigation.indexes
     - toc.follow
     - content.tabs.link

@@ -23,7 +23,7 @@ theme:
     - announce.dismiss
     - navigation.tabs
     - navigation.top
-    # - navigation.instant
+    - navigation.instant
     - navigation.indexes
     - toc.follow
     - content.tabs.link
@@ -242,7 +242,7 @@ extra_javascript:
   - https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-  - assets/pymdownx-extras/extra-loader-iLQ-keay.js
+  - assets/pymdownx-extras/extra-loader-DzDY65is.js
 
 plugins:
   - search:

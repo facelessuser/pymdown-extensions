@@ -47,11 +47,5 @@ import arithmatex from "./arithmatex"
     }
   }
 
-  if (window.document$) {
-    // Material specific hook
-    window.document$.subscribe(main)
-  } else {
-    // Normal non-Material specific hook
-    document.addEventListener("DOMContentLoaded", main)
-  }
+  window.document$.subscribe(main)
 })()
