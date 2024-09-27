@@ -2,7 +2,7 @@
 
 ## 10.11
 
--   **NEW**: Allow fenced code to be parsed in the form ` ```lang {.class #id} `.
+-   **NEW**: SuperFences: Allow fenced code to be parsed in the form ` ```lang {.class #id} `.
 
 ## 10.10.2
 
