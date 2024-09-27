@@ -664,6 +664,22 @@ class TestSuperFencesClassesIds(util.MdCase):
             True
         )
 
+    def test_attrs_alternate_form(self):
+        """Test attributes with new alternate form."""
+
+        self.check_markdown(
+            r'''
+            ```python {.test .class #class}
+            import test
+            ```
+            ''',
+            r'''
+            <div id="class" class="test class highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
 
 class TestSuperFencesClassesIdsAttrList(util.MdCase):
     """Test fence ids and classes with attribute lists."""
@@ -762,6 +778,22 @@ class TestSuperFencesClassesIdsAttrList(util.MdCase):
             ''',
             r'''
             <div id="id" class="highlight" data-attr="test"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            </code></pre></div></td></tr></table></div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_attrs_alternate_form(self):
+        """Test attributes with new alternate form."""
+
+        self.check_markdown(
+            r'''
+            ```python {.test .class #id data-attr="test" linenums="1"}
+            import test
+            ```
+            ''',
+            r'''
+            <div id="id" class="test class highlight" data-attr="test"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
             </code></pre></div></td></tr></table></div>
             ''',  # noqa: E501
             True

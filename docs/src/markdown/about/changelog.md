@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.11
+
+-   **NEW**: Allow fenced code to be parsed in the form ` ```lang {.class #id} `.
+
 ## 10.10.2
 
 -   **FIX**: BetterEm: Add better support for `*em, **em,strong***` and `_em, __em,strong___` cases.
