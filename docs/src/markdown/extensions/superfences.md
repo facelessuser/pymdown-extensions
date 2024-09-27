@@ -89,21 +89,36 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
 
 ## Injecting Classes, IDs, and Attributes
 
-You can use the brace format to specify classes and IDs. The first provided class is always used as the language class.
-IDs (`#id`) can also be inserted as well. Arbitrary attributes in the form `key="value"` can be inserted as well if
-the [`attr_list`][attr-list] extension is enabled, but when using Pygments, only `key="value"` attributes that start
-with the `data-` prefix will be recognized, all others will be treated as options for Pygments and will be rejected if
-not valid.
+You can use the brace format to specify classes and IDs where IDs use the form `#id` and classes use the form `.class`.
+Arbitrary attributes in the form `key="value"` can be inserted as well if the [`attr_list`][attr-list] extension is
+enabled, but when using Pygments, only `key="value"` attributes that start with the `data-` prefix will be recognized,
+all others will be treated as options for Pygments and will be rejected if not valid.
 
 ````text title="Injecting Classes"
-```{.python .extra-class linenums="1"}
+```python {.extra-class #id linenums="1"}
 import hello_world
 ```
 ````
 
 /// html | div.result
 ```html
-<div class="extra-class highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span>1</pre></div></td><td class="code"><div><pre><span></span><code><span cv></td><td class="code"><div><pre><span></span><code><span class="kn">import</span> <spanlass="kn">import</span> <span class="nn">hello_world</span>\n</code></pre></div>\n</td></tr></table></div>
+<div id="id" class="extra-class highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">import</span> <span class="nn">hello_world</span>
+</code></pre></div></td></tr></table></div>
+```
+///
+
+Alternatively, if a language is not provided, the first class is assumed to specify the language.
+
+````text title="Injecting Classes"
+```{.python .extra-class #id linenums="1"}
+import hello_world
+```
+````
+
+/// html | div.result
+```html
+<div id="id" class="extra-class highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">import</span> <span class="nn">hello_world</span>
+</code></pre></div></td></tr></table></div>
 ```
 ///
 
@@ -111,7 +126,7 @@ When generating additional classes on a JavaScript style code block (non-Pygment
 the `#!html code` block.
 
 ````text title="Non-Pygments Injecting Classes"
-```{.python .extra-class #id linenums="1"}
+```python {.extra-class #id linenums="1"}
 import hello_world
 ```
 ````
@@ -206,13 +221,13 @@ sign and the value must be quoted.  Valid line numbers are n > 0.  If `linenums`
 control the starting line shown in the block.
 
 ````text title="Line Numbers"
-```{.python linenums="1"}
+```python {linenums="1"}
 import foo.bar
 ```
 ````
 
 /// html | div.result
-```{.python linenums="1"}
+```python {linenums="1"}
 import foo.bar
 ```
 ///
@@ -221,13 +236,13 @@ import foo.bar
 And, if we wanted to start with a different starting line number, we would just specify something other than `1`.
 
 ````text title="Custom Line Number Start"
-```{.python linenums="2"}
+```python {linenums="2"}
 import foo.bar
 ```
 ````
 
 /// html | div.result
-```{.python linenums="2"}
+```python {linenums="2"}
 import foo.bar
 ```
 ///
@@ -241,7 +256,7 @@ So to set showing only every other line number, we could do the following. Line 
 "line step" is always the second option, so you must specify line start before line step.
 
 ````text title="N<sup>th</sup> Line"
-``` {.python linenums="1 2"}
+```python {linenums="1 2"}
 """Some file."""
 import foo.bar
 import boo.baz
@@ -250,7 +265,7 @@ import foo.bar.baz
 ````
 
 /// html | div.result
-``` {.python linenums="1 2"}
+```python {linenums="1 2"}
 """Some file."""
 import foo.bar
 import boo.baz
@@ -291,7 +306,7 @@ after the opening tokens (and language if present).  The setting is named `hl_li
 targeted line numbers separated by spaces.
 
 ````text title="Highlight Lines"
-```{.python hl_lines="1 3"}
+```python {hl_lines="1 3"}
 """Some file."""
 import foo.bar
 import boo.baz
@@ -300,7 +315,7 @@ import foo.bar.baz
 ````
 
 /// html | div.result
-```{.python hl_lines="1 3"}
+```python {hl_lines="1 3"}
 """Some file."""
 import foo.bar
 import boo.baz
@@ -312,7 +327,7 @@ import foo.bar.baz
 Line numbers are always referenced starting at 1 ignoring what the line number is labeled as when showing line numbers.
 
 ````text title="Highlight Lines with Line Numbers"
-```{.py3 hl_lines="1 3" linenums="2"}
+```python {hl_lines="1 3" linenums="2"}
 """Some file."""
 import foo.bar
 import boo.baz
@@ -321,7 +336,7 @@ import foo.bar.baz
 ````
 
 /// html | div.result
-```{.py3 hl_lines="1 3" linenums="2"}
+```python {hl_lines="1 3" linenums="2"}
 """Some file."""
 import foo.bar
 import boo.baz
@@ -333,7 +348,7 @@ If you'd like to do a range of lines, you can use the notation `x-y` where `x` i
 ending line. You can do multiple ranges and even mix them with non ranges.
 
 ````text title="Highlight Ranges"
-```{.py3 hl_lines="1-2 5 7-8"}
+```python {hl_lines="1-2 5 7-8"}
 import foo
 import boo.baz
 import foo.bar.baz
@@ -347,7 +362,7 @@ class Foo:
 ````
 
 /// html | div.result
-```{.py3 hl_lines="1-2 5 7-8"}
+```python {hl_lines="1-2 5 7-8"}
 import foo
 import boo.baz
 import foo.bar.baz
@@ -398,7 +413,7 @@ element at the start of the table set to span both the line number column and th
 ```
 
 ````text title="Adding Titles"
-```{.py3 title="My Cool Header"}
+```python {title="My Cool Header"}
 import foo.bar
 import boo.baz
 import foo.bar.baz
@@ -406,7 +421,7 @@ import foo.bar.baz
 ````
 
 /// html | div.result
-```{.py3 title="My Cool Header"}
+```python {title="My Cool Header"}
 import foo.bar
 import boo.baz
 import foo.bar.baz
@@ -535,7 +550,7 @@ extension_configs = {
 
 /// tab | Markdown
 ````
-```{.python linenums="1 1" }
+```python {linenums="1 1" }
 import foo
 ```
 ````
@@ -576,7 +591,7 @@ extension_configs = {
 
 /// tab | Markdown
 ````
-```{.python linenums="1 1" }
+```python {linenums="1 1" }
 import foo
 ```
 ````
@@ -705,7 +720,7 @@ conditionally control logic within the formatter. If no validator is defined, th
 inputs to `attrs`.
 
 SuperFences will only pass `attrs` to a formatter if an attribute style header is used for a fenced block
-(` ``` {.lang attr="value"}`) and the [`attr_list`][attr-list] extension is enabled. Attribute are not supported in the
+(` ```lang {attr="value"}`) and the [`attr_list`][attr-list] extension is enabled. Attribute are not supported in the
 form (` ```lang attr=value`) and will cause the parsing of the fenced block to abort.
 
 Custom options can be used as keys with quoted values (`key="value"`), or as keys with no value (`key`). If a key is
@@ -753,7 +768,7 @@ def custom_format(source, language, class_name, options, md, **kwargs):
 This would allow us to use the following custom fence:
 
 ````
-```{.test opt="A"}
+```test {opt="A"}
 test
 ```
 ````
