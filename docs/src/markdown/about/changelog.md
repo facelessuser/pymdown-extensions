@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.11.1
+
+-   **Fix**: SuperFences: Fix regression where an omitted language in conjunction with options in the fenced header
+    can cause a fence to not be parsed.
+
 ## 10.11
 
 -   **NEW**: SuperFences: Allow fenced code to be parsed in the form ` ```lang {.class #id} `.

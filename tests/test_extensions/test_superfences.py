@@ -609,6 +609,24 @@ class TestHighlightLines(util.MdCase):
             True
         )
 
+    def test_omitted_language(self):
+        """Test when language is omitted."""
+
+        self.check_markdown(
+            """
+            ```hl_lines="1"
+            some
+            code
+            ```
+            """,
+            """
+            <div class="highlight"><pre><span></span><code><span class="hll">some
+            </span>code
+            </code></pre></div>
+            """,
+            True
+        )
+
 
 class TestSuperFencesClassesIds(util.MdCase):
     """Test classes and ids without attribute lists."""
