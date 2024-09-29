@@ -22,7 +22,7 @@ extensions are very similar.
 A Block extension is comprised of two parts: the `Block` object and the `BlocksExtension`. It should be noted that we do
 not use `markdown.Extension`, but `BlocksExtension` which is derived from it. This is done so we can abstract away the
 management of all the various registered `Block` extensions. It is important to note though that when using the
-`BlocksExtension` that we do not override the `extendMarkdown` method, but instead override `extendMarkdownBlocks`. In
+`BlocksExtension` we do not override the `extendMarkdown` method, but instead override `extendMarkdownBlocks`. In
 all other respects, `BlocksExtension` is just like `markdown.Extension` and you can register traditional processors via
 the `md` object or register `Block` objects via the `block_mgr` object.
 
