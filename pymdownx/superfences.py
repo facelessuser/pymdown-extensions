@@ -44,7 +44,7 @@ PREFIX_CHARS = ('>', ' ', '\t')
 RE_NESTED_FENCE_START = re.compile(
     r'''(?x)
     (?P<fence>~{3,}|`{3,})
-    (?:[ \t]*\.?(?P<lang>[\w#.+-]+))?                                           # Language
+    (?:[ \t]*\.?(?P<lang>[\w#.+-]+)(?=[\t ]|$))?                                           # Language
     (?:
         [ \t]*(\{(?P<attrs>[^\n]*)\}) |                                         # Optional attributes or
         (?P<options>
