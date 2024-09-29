@@ -621,7 +621,7 @@ class TestHighlightLines(util.MdCase):
             """
             <div class="highlight"><pre><span></span><code><span class="hll"><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;iostream&gt;</span>
             </span></code></pre></div>
-            """,
+            """,  # noqa: E501
             True
         )
 
