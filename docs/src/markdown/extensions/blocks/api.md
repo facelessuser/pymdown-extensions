@@ -16,7 +16,7 @@ Markdown content.
 ## Block Extension Anatomy
 
 Normally with Python Markdown, you'd create a processor derived from the various processor types available in the
-library. You'd then derive an extension from `markdown.Extension` that would register the the processor. Block
+library. You'd then derive an extension from `markdown.Extension` that would register the processor. Block
 extensions are very similar.
 
 A Block extension is comprised of two parts: the `Block` object and the `BlocksExtension`. It should be noted that we do
