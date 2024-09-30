@@ -84,7 +84,7 @@ support. There are more elaborate polyfills available that support jQuery, add k
 IE8. Feel free to modify what is here or find a solution that fits your needs.
 
 /// settings | Basic Polyfill Setup
-Here is the basic CSS that that can be used.  It is meant to provide a consistent CSS in both browsers that support
+Here is the basic CSS that can be used.  It is meant to provide a consistent CSS in both browsers that support
 `#!html <details><summary>` tags and those that do not.
 
 //// collapse-code

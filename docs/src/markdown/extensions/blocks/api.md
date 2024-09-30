@@ -16,8 +16,8 @@ Markdown content.
 ## Block Extension Anatomy
 
 Normally with Python Markdown, you'd create a processor derived from the various processor types available in the
-library. You'd then derive an extension from `markdown.Extension` that would register the the processor. Block
-extensions are very similar.
+library. You'd then derive an extension from `markdown.Extension` that would register the processor. Block extensions
+are very similar.
 
 A Block extension is comprised of two parts: the `Block` object and the `BlocksExtension`. It should be noted that we do
 not use `markdown.Extension`, but `BlocksExtension` which is derived from it. This is done so we can abstract away the
@@ -171,7 +171,7 @@ class MyBlock(Block):
 `attrs` takes a dictionary of `str` keys  and `str` values describing the attributes to apply to the outer element of
 the block as returned by the [`on_create`](#on_create-event).
 
-The `attrs` input input is sent through [`type_html_attribute_dict`](#type_html_attribute_dict) and is accessible to
+The `attrs` input is sent through [`type_html_attribute_dict`](#type_html_attribute_dict) and is accessible to 
 developers via `self.options['attrs']`. The result is a dictionary of key/value pairs where the key is a `#!py3 str` and
 the value is a `#!py3 str` (or `#!py3 list[str]` in the special case of `class`).
 ///
@@ -222,7 +222,7 @@ execute. Each block in a document that is encountered generates its own, new ins
 Only the global `config` is available at this time via `self.config`. The `Markdown` object is also available via
 `self.md`.
 
-The can be a good way to perform setup based on on global or local options.
+The can be a good way to perform setup based on global or local options.
 
 ## `on_validate` Event
 

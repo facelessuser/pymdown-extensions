@@ -291,9 +291,8 @@ pymdownx.emoji.to_png_sprite
 ```
 
 This generator was written to support PNG sprite output for EmojiOne.  It is expected that this will be used in
-conjunction with the the official EmojiOne CSS.  You can include the CSS from the CDN in your document. The CSS
-comes in three sizes: 32, 64, 128. Make sure to set the correct size in the options to generate the appropriate
-classes.
+conjunction with the official EmojiOne CSS.  You can include the CSS from the CDN in your document. The CSS comes in
+three sizes: 32, 64, 128. Make sure to set the correct size in the options to generate the appropriate classes.
 
 Example CDN for the 2.2.7 version with 64px PNGs:
 `https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/sprites/emojione.sprites.css`.
@@ -320,9 +319,9 @@ pymdownx.emoji.to_svg_sprite
 ```
 
 This was written to support EmojiOne SVG sprite output.  The output form was taken directly from an example in the
-EmojiOne source.  It is expected that the the user will provide a local version of the official SVG sprite and the
-path to it.  Unfortunately there is no free 3.0 SVG sprite, so you will need to [download][emojione-sprites-svg] the
-old 2.27 one. The output is:
+EmojiOne source.  It is expected that the user will provide a local version of the official SVG sprite and the path to
+it.  Unfortunately there is no free 3.0 SVG sprite, so you will need to [download][emojione-sprites-svg] the old 2.27
+one. The output is:
 
 ```html
 <svg class="emojione"><description>😄</description><use xlink:href="./../assets/sprites/emojione.sprites.svg#emoji-1f604"></use></svg>
@@ -360,7 +359,7 @@ def emoji_index(options, md)
 
 In order to provide a custom index, the Emoji extension must be given a function that returns a suitable emoji index.
 The function should simply return the custom index. It accepts both an options dictionary and the markdown object. The
-options dictionary is the same object that is specified in in the extensions [settings](#options).
+options dictionary is the same object that is specified in the extensions [settings](#options).
 
 The index should be returned in the following format:
 
@@ -451,7 +450,7 @@ def emoji_generator(index, shortname, alias, uc, alt, title, category, options, 
 ```
 
 Each different kind of output is controlled by a different emoji generator function, but all generator functions have
-the same input format. The options object is the same object that is specified in in the extensions [settings](#options)
+the same input format. The options object is the same object that is specified in the extensions [settings](#options)
 and is shared with the index as well.
 
 Parameter   | Type       |Description

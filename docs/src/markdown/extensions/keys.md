@@ -111,8 +111,8 @@ maps some aliases to entries in the key-map index.
 
 If you want to add additional keys, or override text of existing keys, you can feed in your keys via the `key_map`
 option. The `key_map` parameter takes a simple dictionary with *key names* that are represented by lowercase
-alphanumeric characters and hyphens (`-`). The values of the dictionary represent the the text that is displayed for the
-key in the HTML output.
+alphanumeric characters and hyphens (`-`). The values of the dictionary represent the text that is displayed for the key
+in the HTML output.
 
 So if you wanted to add a custom key, you could do this: `#!py3 {"custom": "Custom Key"}`.  If you wanted to override
 the output of the `option` key and change it from `Option` to `Opt`, you could do this: `#!py3 {"option": "Opt"}`.

@@ -75,8 +75,8 @@ filename.md
 filename.log
 ;--8<--
 ```
-The block format differs from the single format by requiring the the content to be fenced between two `--8<--`. The
-start and end `--8<--` must be on a line by themselves.
+The block format differs from the single format by requiring the content to be fenced between two `--8<--`. The start
+and end `--8<--` must be on a line by themselves.
 
 When using the block format empty lines are also preserved within the block. Consider the example below.
 

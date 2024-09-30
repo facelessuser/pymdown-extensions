@@ -216,7 +216,7 @@ Line numbers are provided via Pygments and can either be shown per code block or
 [`pymdownx.highlight`](./highlight.md), you must set `linenums` to `#!py3 True` in the respective extension.
 
 To set line numbers per code block, you can specify a special setting directly after the opening tokens (and language if
-present). Simply specify the starting line line number with option `linenums="1"`. The setting is followed by the equal
+present). Simply specify the starting line number with option `linenums="1"`. The setting is followed by the equal
 sign and the value must be quoted.  Valid line numbers are n > 0.  If `linenums` is enabled globally, this will just
 control the starting line shown in the block.
 
@@ -430,7 +430,7 @@ import foo.bar.baz
 
 If the `auto_title` option is enabled in the [Highlight extension](./highlight.md), the title will be auto populated
 with the name of the lexer used to highlight the code (unless `title` is manually specified). In the example below,
-no `title` is specified, but the the title is extracted from the Python lexer.
+no `title` is specified, but the title is extracted from the Python lexer.
 
 ````text title="Automatic Titles"
 ```python
@@ -570,8 +570,8 @@ import foo
 ```
 ///
 
-We can also wrap line numbers with with a link and inject anchors so you can click line numbers and be taken to said
-line. To do this, `anchor_linenums` must be enabled and then a prefix should be provided via `line_anchors`, just like
+We can also wrap line numbers with a link and inject anchors so you can click line numbers and be taken to said line. To
+do this, `anchor_linenums` must be enabled and then a prefix should be provided via `line_anchors`, just like 
 `line_spans`, `line_anchors` will produce an ID in the form `prefix-x-y` where `x` is a unique number for the code block
 and `y` is the line number. If you wish to not have the line numbers clickable, and just have the anchors inserted,
 you can omit enabling `anchor_linenums`.
@@ -801,7 +801,7 @@ not go back to validate the use of a different formatter.
 
 Some users may want such failures to not silently go by. SuperFences exposes a special exception called
 `SuperFencesException` which, if raised, will not gracefully be handled. If `SuperFencesException` is raised, this will
-likely bubble all the way up and cause Markdown parsing to halt. `SuperFencesException` can be used to to raise other
+likely bubble all the way up and cause Markdown parsing to halt. `SuperFencesException` can be used to raise other
 exceptions if desired.
 
 Here we have a contrived example. When no options are provided in this validator, we will try and access a non-existent

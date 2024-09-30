@@ -42,8 +42,8 @@ Some content
 ////
 ///
 
-If desired, you can attach a class to an admonition using the the option `type`. If type is set, a class with that name
-will be added, and if there is no title, the class name will be used as the title: `note` -> `Note`.
+If desired, you can attach a class to an admonition using the option `type`. If type is set, a class with that name will
+be added, and if there is no title, the class name will be used as the title: `note` -> `Note`.
 
 ```text title="Admonition"
 /// admonition | Some title

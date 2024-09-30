@@ -41,7 +41,7 @@ they are asking about. Feel free to share your experience to help others out.
 
 ## Pull Requests :octicons-git-pull-request-24:
 
-Pull requests are welcome, and a great way to help fix bugs and add new features. If you you are interested in directly
+Pull requests are welcome, and a great way to help fix bugs and add new features. If you are interested in directly
 contributing to the code, please check out [Development](./development.md) for more info on the environment and process.
 
 ## Documentation Improvements :material-pencil:

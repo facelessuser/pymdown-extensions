@@ -46,8 +46,8 @@ HTML output. This is because `#!tex $...$` is extremely problematic to scan for,
 disable `#!tex $...$` by default in their plain text scanners, and why Arithmatex enables `smart_dollar` by default
 when scanning for `#!tex $...$`.
 
-It is advised that if you are outputting in in `generic` mode that you do not configure your JavaScript library to
-look for `#!tex $...$` and instead look for `#!tex \(...\)`, and let Arithmatex's handle `#!tex $...$`.
+It is advised that if you are outputting in `generic` mode that you do not configure your JavaScript library to look for
+`#!tex $...$` and instead look for `#!tex \(...\)`, and let Arithmatex's handle `#!tex $...$`.
 ///
 
 For block forms, the block must start with the appropriate opening for the block type: `#!tex $$`, `#!tex \[`, and

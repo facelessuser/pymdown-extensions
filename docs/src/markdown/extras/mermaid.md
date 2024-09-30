@@ -20,8 +20,8 @@ in the best way possible. To be honest, Mermaid is a little buggy and required s
 quirks.
 
 In general, we leave setting up custom fences for the user to explore, but we do get asked occasionally how to get
-Mermaid working, and what we are doing, so we thought we'd share some some additional information in case there is a
-strong desire from any of our users to implement a robust Mermaid solution.
+Mermaid working, and what we are doing, so we thought we'd share some additional information in case there is a strong
+desire from any of our users to implement a robust Mermaid solution.
 
 If you'd like to see exactly what we do, you can checkout our source code, but in this example, we will show the basics.
 

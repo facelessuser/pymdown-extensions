@@ -16,8 +16,8 @@ email links. It can auto-convert repository links (GitHub, GitLab, and Bitbucket
 shorthand format. MagicLink can also be configured to directly auto-link the aforementioned shorthand format.
 
 If you happen to have some conflicts with syntax for a specific case, you can always revert to the old auto-link format
-as well: `#!md <https://www.link.com>`. If enabled, repository link shortening will be applied to the the angle
-bracketed auto-link format as well.
+as well: `#!md <https://www.link.com>`. If enabled, repository link shortening will be applied to the angle bracketed
+  auto-link format as well.
 
 /// tip | SaneHeaders
 It is also recommended to use [SaneHeaders](./saneheaders.md) when using MagicLink to avoid problems when specifying
@@ -204,7 +204,7 @@ The syntax was borrowed and adapted from GitLab as they use `!{num}` for pulls a
 own take for discussions. This syntax was
 mainly used to ensure we could provide context to the link generator. When rendering the actual links in your documents,
 it will use the syntax associated with the specified provider. If this is unsatisfactory, you can override this behavior
-with the `icons` option and all links will will use the same specified convention on output regardless of the provider.
+with the `icons` option and all links will use the same specified convention on output regardless of the provider.
 
 ```text title="Issues"
 #1

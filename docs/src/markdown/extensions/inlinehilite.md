@@ -131,7 +131,7 @@ def format_fail(src, language, class_name, md):
     raise InlineHiliteException('Fail!')
 ```
 
-`InlineHiliteException` can be used to to raise other exceptions if desired.
+`InlineHiliteException` can be used to raise other exceptions if desired.
 
 
 ```py

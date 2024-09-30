@@ -292,8 +292,8 @@ specified below.
 If you've been paying attention, you may have noticed that when alphabetical lists and Roman numeral lists are **both**
 enabled, there arises some ambiguous cases. Currently if `I` occurs in the middle of an alphabetical list, it is assumed
 to be an alphabetical list item, but if it starts a list, it is assumed to be a Roman numeral list item. The reverse is
-is true for `M`, `D`, `C`, `L`, `X`, and `V` where it is assumed that these are Roman numeral list items if they occur
-in the middle of a Roman numeral list, but are assumed to be alphabetical list items if they start a list.
+true for `M`, `D`, `C`, `L`, `X`, and `V` where it is assumed that these are Roman numeral list items if they occur in
+the middle of a Roman numeral list, but are assumed to be alphabetical list items if they start a list.
 
 /// note
 It should be noted that these issues exists in pretty much all implementations that support this way of including both
