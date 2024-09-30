@@ -514,7 +514,7 @@ documents will often have links with special icons._
 Option                          | Type   | Default                     | Description
 ------------------------------- | ------ | --------------------------- | -----------
 `hide_protocol`                 | bool   | `#!py3 False`               | If `True`, links are displayed without the initial `ftp://`, `http://`, `https://`, or `ftps://`.
-`repo_url_shortener`            | bool   | `#!py3 False`               | If `True`, GitHub, Bitbucket, and GitLab commit, pull, and issue links are are rendered in a shorthand syntax.
+`repo_url_shortener`            | bool   | `#!py3 False`               | If `True`, GitHub, Bitbucket, and GitLab commit, pull, and issue links are rendered in a shorthand syntax.
 `social_url_shortener`          | bool   | `#!py3 False`               | if `True`, X user links are rendered in a shorthand syntax.
 `shortener_user_exclude`        | dict   | [See below](#user-excludes) | Specifies a list of user names to avoid when attempting to shorten links. See [User Excludes](#user-excludes) for more info.
 `repo_url_shorthand`            | bool   | `#!py3 False`               | If `True`, you can directly use a shorthand syntax to represent commit, pull, issue, and mention links for repository providers and they will be auto-linked.
