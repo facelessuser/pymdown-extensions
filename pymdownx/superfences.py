@@ -46,10 +46,10 @@ RE_NESTED_FENCE_START = re.compile(
     (?P<fence>~{3,}|`{3,})
     (?:[ \t]*\.?(?P<lang>[\w#.+-]+)(?=[\t ]|$))?                                           # Language
     (?:
-        [ \t]*(\{(?P<attrs>[^\n]*)\}) |                                         # Optional attributes or
+        [ \t]*(\{(?P<attrs>[^\n]*)\}) |                                                    # Optional attributes or
         (?P<options>
             (?:
-                (?:[ \t]*[a-zA-Z][a-zA-Z0-9_]*(?:=(?P<quot>"|').*?(?P=quot))?)  # Options
+                (?:[ \t]*[a-zA-Z][a-zA-Z0-9_]*(?:=(?P<quot>"|').*?(?P=quot))?)(?=[\t ]|$)  # Options
             )+
         )
     )?[ \t]*$

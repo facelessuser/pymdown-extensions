@@ -714,6 +714,17 @@ class TestSuperFencesClassesIds(util.MdCase):
             True
         )
 
+    def test_issue_2479(self):
+        """Test issue #2479."""
+
+        self.check_markdown(
+            """```test_test_test_test_test_test_test_test``` test test.""",
+            """
+            <p><code>test_test_test_test_test_test_test_test</code> test test.</p>
+            """,
+            True
+        )
+
 
 class TestSuperFencesClassesIdsAttrList(util.MdCase):
     """Test fence ids and classes with attribute lists."""
