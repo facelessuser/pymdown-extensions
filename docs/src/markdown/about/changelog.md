@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.11.2
+
+-   **FIX**: SuperFences: Fix a regression where certain patterns could cause a hang.
+
 ## 10.11.1
 
 -   **Fix**: SuperFences: Fix regression where an omitted language in conjunction with options in the fenced header
