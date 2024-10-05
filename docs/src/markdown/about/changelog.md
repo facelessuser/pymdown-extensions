@@ -1,5 +1,10 @@
 # Changelog
 
+## 10.12
+
+-   **NEW**: Emoji: Add a new `strict` option that will raise an exception if an emoji is used whose name has changed,
+    removed, or never existed.
+
 ## 10.11.2
 
 -   **FIX**: SuperFences: Fix a regression where certain patterns could cause a hang.
