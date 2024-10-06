@@ -500,15 +500,20 @@ Option                      | Type       | Default              | Description
 --------------------------- | ---------- | -------------------- | -----------
 `emoji_index`               | function   | `emojione` index     | A function that returns the index to use when parsing `:short_name:` syntax. See [Default Emoji Indexes](#default-emoji-indexes) to see the provided indexes.
 `emoji_generator`           | function   | `to_png` generator   | A function that takes the emoji info and constructs the desired emoji output. See [Default Emoji Generators](#default-emoji-generators) to see the provided generators.
-`title`                     | string     | `#!py3thon 'short'`   | Specifies the title format that is fed into the emoji generator function.  Can either be `long` which is the long description of the emoji, `short` which is the short name (`:short:`), or `none` which will simply pass `None`.
-`alt`                       | string     | `#!py3thon 'unicode'` | Specifies the format for the alt value that is passed to the emoji generator function. If `alt` is set to `short`, the short name will be passed to the generator.  If `alt` is set to `unicode` the Unicode characters are passed to the generator.  Lastly, if `alt` is set to `html_entity`, the Unicode characters are passed encoded as HTML entities.
-`remove_variation_selector` | bool       | `#!py3thon False`     | Specifies whether variation selectors should be removed from Unicode alt. Currently, only `fe0f` is removed as it is the only one presently found in the current emoji sets.
-`options`                   | dictionary | `#!py3thon {}`        | Options that are specific to emoji generator functions.  Supported parameters can vary from function to function.
+`title`                     | string     | `#!python 'short'`   | Specifies the title format that is fed into the emoji generator function.  Can either be `long` which is the long description of the emoji, `short` which is the short name (`:short:`), or `none` which will simply pass `None`.
+`alt`                       | string     | `#!python 'unicode'` | Specifies the format for the alt value that is passed to the emoji generator function. If `alt` is set to `short`, the short name will be passed to the generator.  If `alt` is set to `unicode` the Unicode characters are passed to the generator.  Lastly, if `alt` is set to `html_entity`, the Unicode characters are passed encoded as HTML entities.
+`remove_variation_selector` | bool       | `#!python False`     | Specifies whether variation selectors should be removed from Unicode alt. Currently, only `fe0f` is removed as it is the only one presently found in the current emoji sets.
+`options`                   | dictionary | `#!python {}`        | Options that are specific to emoji generator functions.  Supported parameters can vary from function to function.
+`strict`                    | bool       | `#!python False`     | Raise an exception if an emoji is used whose name is not found in the database.
 
 /// new | New 7.1
 `options` is now shared between index and generator functions opposed to being passed to the generator function
 only. The generator and/or index function should decide which of the arguments are relevant for its usage and parse
 accordingly.
+///
+
+/// new | New 10.12
+Added `strict` mode.
 ///
 
 /// tip | Legacy GitHubEmoji Emulation

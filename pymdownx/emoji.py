@@ -24,6 +24,7 @@ DEALINGS IN THE SOFTWARE.
 """
 from markdown import Extension
 from markdown.inlinepatterns import InlineProcessor
+from markdown.postprocessors import Postprocessor
 from markdown import util as md_util
 import xml.etree.ElementTree as etree
 import inspect
@@ -35,8 +36,8 @@ SUPPORTED_INDEXES = ('emojione', 'gemoji', 'twemoji')
 UNICODE_VARIATION_SELECTOR_16 = 'fe0f'
 EMOJIONE_SVG_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/svg/'
 EMOJIONE_PNG_CDN = 'https://cdnjs.cloudflare.com/ajax/libs/emojione/2.2.7/assets/png/'
-TWEMOJI_SVG_CDN = 'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/svg/'
-TWEMOJI_PNG_CDN = 'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.0.3/assets/72x72/'
+TWEMOJI_SVG_CDN = 'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/'
+TWEMOJI_PNG_CDN = 'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/72x72/'
 GITHUB_UNICODE_CDN = 'https://github.githubassets.com/images/icons/emoji/unicode/'
 GITHUB_CDN = 'https://github.githubassets.com/images/icons/emoji/'
 NO_TITLE = 'none'
@@ -50,6 +51,13 @@ LEGACY_ARG_COUNT = 8
 MSG_INDEX_WARN = """Using emoji indexes with no arguments is now deprecated.
 Emoji indexes now take 2 arguments: 'options' and 'md'.
 Please update your custom index accordingly.
+"""
+
+MSG_BAD_EMOJI = """
+Emoji Extension (strict mode): The following emoji were detected and either had
+their name change, were removed, or have never existed.
+
+{}
 """
 
 
@@ -226,7 +234,7 @@ def to_alt(index, shortname, alias, uc, alt, title, category, options, md):
 class EmojiPattern(InlineProcessor):
     """Return element of type `tag` with a text attribute of group(2) of an `InlineProcessor`."""
 
-    def __init__(self, pattern, config, md):
+    def __init__(self, pattern, config, strict_mode, md):
         """Initialize."""
 
         InlineProcessor.__init__(self, pattern, md)
@@ -240,6 +248,8 @@ class EmojiPattern(InlineProcessor):
         self.remove_var_sel = config['remove_variation_selector']
         self.title = title if title in VALID_TITLE else NO_TITLE
         self.generator = config['emoji_generator']
+        self.strict = config['strict']
+        self.strict_cache = strict_mode
 
     def _set_index(self, index):
         """Set the index."""
@@ -336,8 +346,28 @@ class EmojiPattern(InlineProcessor):
                 self.options,
                 self.md
             )
+        elif self.strict:
+            self.strict_cache.add(shortname)
 
         return el, m.start(0), m.end(0)
+
+
+class EmojiAlertPostprocessor(Postprocessor):
+    """Post processor to strip out unwanted content."""
+
+    def __init__(self, strict_cache, md):
+        """Initialize."""
+
+        self.strict_cache = strict_cache
+
+    def run(self, text):
+        """Strip out ids and classes for a simplified HTML output."""
+
+        if len(self.strict_cache):
+            raise RuntimeError(
+                MSG_BAD_EMOJI.format('\n'.join([f'- {x}' for x in sorted(self.strict_cache)]))
+            )
+        return text
 
 
 class EmojiExtension(Extension):
@@ -371,6 +401,10 @@ class EmojiExtension(Extension):
                 False,
                 "Remove variation selector 16 from unicode. - Default: False"
             ],
+            'strict': [
+                False,
+                "When enabled, if an emoji with a missing name is detected, an exception will be raised."
+            ],
             'options': [
                 {},
                 "Emoji options see documentation for options for github and emojione."
@@ -378,14 +412,24 @@ class EmojiExtension(Extension):
         }
         super().__init__(*args, **kwargs)
 
+    def reset(self):
+        """Reset."""
+
+        self.strict_cache.clear()
+
     def extendMarkdown(self, md):
         """Add support for emoji."""
+
+        md.registerExtension(self)
 
         config = self.getConfigs()
 
         util.escape_chars(md, [':'])
 
-        md.inlinePatterns.register(EmojiPattern(RE_EMOJI, config, md), "emoji", 75)
+        self.strict_cache = set()
+        md.inlinePatterns.register(EmojiPattern(RE_EMOJI, config, self.strict_cache, md), "emoji", 75)
+        if config['strict']:
+            md.postprocessors.register(EmojiAlertPostprocessor(self.strict_cache, md), "emoji-alert", 50)
 
 
 ###################
