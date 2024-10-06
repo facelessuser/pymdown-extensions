@@ -351,11 +351,6 @@ class EmojiPattern(InlineProcessor):
 
         return el, m.start(0), m.end(0)
 
-    def _reset(self):
-        """Clear strict cache."""
-
-        self.strict_cache.clear()
-
 
 class EmojiAlertPostprocessor(Postprocessor):
     """Post processor to strip out unwanted content."""
