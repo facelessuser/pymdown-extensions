@@ -54,9 +54,11 @@ class CaptionTreeprocessor(Treeprocessor):
         parent_map = {c: p for p in doc.iter() for c in p}
         count = [0]
         last = 0
+        skip = set()
 
         # Calculate the depth and iteration at that depth of the given figure.
         for el in doc.iter():
+            prefix = self.prefix
             stack = -1
             if el.tag == 'figure' and (not self.autoid or 'id' not in el.attrib):
                 stack += 1
@@ -68,20 +70,20 @@ class CaptionTreeprocessor(Treeprocessor):
                     if parent is None:
                         break
 
-                    if parent.tag == 'figure':
-                        # Figure that we can apply IDs and/or prefixes to
-                        if (
-                            (not self.autoid or 'id' not in parent.attrib) and
-                            not (self.prefix_level and stack >= (self.prefix_level - 1))
-                        ):
-                            stack += 1
+                    if parent.tag == 'figure' and parent not in skip:
+                        stack += 1
+                        if self.prefix_level and stack >= (self.prefix_level - 1):
+                            prefix = False
 
-                        # We need to skip the current figure
-                        else:
-                            stack = -1
-                            break
+                    elif parent.tag == 'figure':
+                        skip.add(el)
+                        stack = -1
+                        break
 
                     current = parent
+            elif el.tag == 'figure':
+                skip.add(el)
+                continue
 
             # Found an appropriate figure at an acceptable depth
             if stack > -1:
@@ -102,20 +104,20 @@ class CaptionTreeprocessor(Treeprocessor):
                     el.attrib['id'] = '__caption_' + '_'.join(str(x) for x in count[:stack + 1])
 
                 # Prefix the caption with a given numbered prefix
-                if self.prefix:
+                if prefix:
                     for child in list(el) if self.prefix else reversed(el):
                         if child.tag == 'figcaption':
                             children = list(child)
-                            prefix = self.prefix.format('.'.join(str(x) for x in count[:stack + 1]))
+                            value = self.prefix.format('.'.join(str(x) for x in count[:stack + 1]))
                             if not len(children) or children[0].tag != 'p':
                                 p = etree.Element('p')
-                                p.text = prefix
+                                p.text = value
                                 child.insert(0, p)
                             else:
                                 text = children[0].text
                                 if text is None:
                                     text = ''
-                                children[0].text = prefix + text
+                                children[0].text = value + text
 
 
 class Caption(Block):
