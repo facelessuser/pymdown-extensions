@@ -180,6 +180,7 @@ github
 highlighter's
 hostnames
 html
+incrementing
 indepth
 indexable
 injectable
