@@ -979,3 +979,50 @@ class TestBlocksCaptionAutoidPrefixLevelPrepend(util.MdCase):
             ''',
             True
         )
+
+    def test_nested_captions_manual_id(self):
+        """Test nested captions with `autoid` and `prefix` with manual IDs."""
+
+        self.check_markdown(
+            R'''
+            A paragraph with a caption.
+            /// caption
+            Level 4 caption.
+            ///
+            /// caption
+                attrs:
+                  id: test
+            Level 3 caption.
+            ///
+            /// caption
+            Level 2 caption.
+            ///
+            /// caption
+            Level 1 caption.
+            ///
+            ''',
+            R'''
+            <figure id="__caption_1">
+            <figcaption>
+            <p>1. Level 1 caption.</p>
+            </figcaption>
+            <figure id="__caption_1_1">
+            <figcaption>
+            <p>1.1. Level 2 caption.</p>
+            </figcaption>
+            <figure id="test">
+            <figcaption>
+            <p>Level 3 caption.</p>
+            </figcaption>
+            <figure>
+            <figcaption>
+            <p>Level 4 caption.</p>
+            </figcaption>
+            <p>A paragraph with a caption.</p>
+            </figure>
+            </figure>
+            </figure>
+            </figure>
+            ''',
+            True
+        )
