@@ -92,7 +92,7 @@ class CaptionTreeprocessor(Treeprocessor):
                     count.append(1)
                 elif stack == last:
                     count[stack] += 1
-                elif stack < last:
+                else:
                     count = count[:stack + 1]
                     count[-1] += 1
                 last = stack
