@@ -130,8 +130,8 @@ class TestBlocksCaptionAutoid(util.MdCase):
             True
         )
 
-    def test_two_captions(self):
-        """Test two captions with autoid."""
+    def test_consecutive_captions(self):
+        """Test consecutive captions with autoid."""
 
         self.check_markdown(
             R'''
@@ -285,8 +285,8 @@ class TestBlocksCaptionPrefix(util.MdCase):
             True
         )
 
-    def test_two_captions(self):
-        """Test two captions with prefix."""
+    def test_consecutive_captions(self):
+        """Test consecutive captions with prefix."""
 
         self.check_markdown(
             R'''
