@@ -45,6 +45,7 @@ class CaptionTreeprocessor(Treeprocessor):
         super().__init__(md)
 
         self.autoid = config['autoid']
+        self.prepend = config['prepend']
         self.prefix = config['prefix']
         self.prefix_level = config['prefix_level']
 
@@ -71,9 +72,9 @@ class CaptionTreeprocessor(Treeprocessor):
                         break
 
                     if parent.tag == 'figure' and parent not in skip:
-                        stack += 1
                         if self.prefix_level and stack >= (self.prefix_level - 1):
                             prefix = False
+                        stack += 1
 
                     elif parent.tag == 'figure':
                         skip.add(el)
@@ -95,7 +96,7 @@ class CaptionTreeprocessor(Treeprocessor):
                 elif stack == last:
                     count[stack] += 1
                 elif stack < last:
-                    count = count[:stack]
+                    count = count[:stack + 1]
                     count[-1] += 1
                 last = stack
 
@@ -105,7 +106,7 @@ class CaptionTreeprocessor(Treeprocessor):
 
                 # Prefix the caption with a given numbered prefix
                 if prefix:
-                    for child in list(el) if self.prefix else reversed(el):
+                    for child in list(el) if self.prepend else reversed(el):
                         if child.tag == 'figcaption':
                             children = list(child)
                             value = self.prefix.format('.'.join(str(x) for x in count[:stack + 1]))

@@ -110,7 +110,7 @@ class TestBlocksCaptionAutoid(util.MdCase):
     }
 
     def test_caption(self):
-        """Test basic caption with autoid."""
+        """Test basic caption with `autoid`."""
 
         self.check_markdown(
             R'''
@@ -131,7 +131,7 @@ class TestBlocksCaptionAutoid(util.MdCase):
         )
 
     def test_consecutive_captions(self):
-        """Test consecutive captions with autoid."""
+        """Test consecutive captions with `autoid`."""
 
         self.check_markdown(
             R'''
@@ -163,7 +163,7 @@ class TestBlocksCaptionAutoid(util.MdCase):
         )
 
     def test_nested_captions(self):
-        """Test nested captions with autoid."""
+        """Test nested captions with `autoid`."""
 
         self.check_markdown(
             R'''
@@ -200,7 +200,7 @@ class TestBlocksCaptionAutoid(util.MdCase):
         )
 
     def test_nested_consecutive_captions(self):
-        """Test nested captions with autoid."""
+        """Test nested captions with `autoid`."""
 
         self.check_markdown(
             R'''
@@ -250,6 +250,7 @@ class TestBlocksCaptionAutoid(util.MdCase):
             <figcaption>
             <p>Level 1 caption.</p>
             </figcaption>
+            </figure>
             ''',
             True
         )
@@ -265,7 +266,7 @@ class TestBlocksCaptionPrefix(util.MdCase):
     }
 
     def test_caption(self):
-        """Test basic caption with prefix."""
+        """Test basic caption with `prefix`."""
 
         self.check_markdown(
             R'''
@@ -286,7 +287,7 @@ class TestBlocksCaptionPrefix(util.MdCase):
         )
 
     def test_consecutive_captions(self):
-        """Test consecutive captions with prefix."""
+        """Test consecutive captions with `prefix`."""
 
         self.check_markdown(
             R'''
@@ -318,7 +319,7 @@ class TestBlocksCaptionPrefix(util.MdCase):
         )
 
     def test_nested_captions(self):
-        """Test nested captions with prefix."""
+        """Test nested captions with `prefix`."""
 
         self.check_markdown(
             R'''
@@ -355,7 +356,7 @@ class TestBlocksCaptionPrefix(util.MdCase):
         )
 
     def test_nested_consecutive_captions(self):
-        """Test nested captions with prefix."""
+        """Test nested captions with `prefix`."""
 
         self.check_markdown(
             R'''
@@ -405,12 +406,13 @@ class TestBlocksCaptionPrefix(util.MdCase):
             <figcaption>
             <p>2. Level 1 caption.</p>
             </figcaption>
+            </figure>
             ''',
             True
         )
 
 class TestBlocksCaptionPrefixLevel(util.MdCase):
-    """Test Blocks caption cases with prefix level."""
+    """Test Blocks caption cases with `prefix` level."""
 
     extension = ['pymdownx.blocks.caption']
     extension_configs = {
@@ -421,7 +423,7 @@ class TestBlocksCaptionPrefixLevel(util.MdCase):
     }
 
     def test_caption(self):
-        """Test basic caption with prefix level."""
+        """Test basic caption with `prefix` level."""
 
         self.check_markdown(
             R'''
@@ -442,7 +444,7 @@ class TestBlocksCaptionPrefixLevel(util.MdCase):
         )
 
     def test_nested_captions(self):
-        """Test nested captions with prefix level."""
+        """Test nested captions with `prefix` level."""
 
         self.check_markdown(
             R'''
@@ -479,7 +481,7 @@ class TestBlocksCaptionPrefixLevel(util.MdCase):
         )
 
     def test_nested_consecutive_captions(self):
-        """Test nested consecutive captions with prefix level."""
+        """Test nested consecutive captions with `prefix` level."""
 
         self.check_markdown(
             R'''
@@ -529,12 +531,13 @@ class TestBlocksCaptionPrefixLevel(util.MdCase):
             <figcaption>
             <p>2. Level 1 caption.</p>
             </figcaption>
+            </figure>
             ''',
             True
         )
 
 class TestBlocksCaptionAutoidPrefixLevel(util.MdCase):
-    """Test Blocks caption cases with enabled `autoid` and prefix."""
+    """Test Blocks caption cases with enabled `autoid` and `prefix`."""
 
     extension = ['pymdownx.blocks.caption']
     extension_configs = {
@@ -546,7 +549,7 @@ class TestBlocksCaptionAutoidPrefixLevel(util.MdCase):
     }
 
     def test_caption(self):
-        """Test basic caption with autoid and prefix."""
+        """Test basic caption with `autoid` and `prefix`."""
 
         self.check_markdown(
             R'''
@@ -567,7 +570,7 @@ class TestBlocksCaptionAutoidPrefixLevel(util.MdCase):
         )
 
     def test_consecutive_captions(self):
-        """Test consecutive captions with autoid and prefix."""
+        """Test consecutive captions with `autoid` and `prefix`."""
 
         self.check_markdown(
             R'''
@@ -599,7 +602,7 @@ class TestBlocksCaptionAutoidPrefixLevel(util.MdCase):
         )
 
     def test_nested_captions(self):
-        """Test nested captions with autoid and prefix."""
+        """Test nested captions with `autoid` and `prefix`."""
 
         self.check_markdown(
             R'''
@@ -636,7 +639,7 @@ class TestBlocksCaptionAutoidPrefixLevel(util.MdCase):
         )
 
     def test_nested_consecutive_captions(self):
-        """Test nested consecutive captions with autoid and prefix."""
+        """Test nested consecutive captions with `autoid` and `prefix`."""
 
         self.check_markdown(
             R'''
@@ -686,6 +689,7 @@ class TestBlocksCaptionAutoidPrefixLevel(util.MdCase):
             <figcaption>
             <p>2. Level 1 caption.</p>
             </figcaption>
+            </figure>
             ''',
             True
         )
