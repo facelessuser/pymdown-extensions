@@ -258,7 +258,7 @@ class TestBlocksCaptionAutoid(util.MdCase):
 class TestBlocksCaptionPrefix(util.MdCase):
     """Test Blocks caption cases with enabled `autoid`."""
 
-    extension = ['pymdownx.blocks.caption']
+    extension = ['pymdownx.blocks.caption', 'md_in_html']
     extension_configs = {
         'pymdownx.blocks.caption': {
             'prefix': '{}. '
@@ -410,6 +410,59 @@ class TestBlocksCaptionPrefix(util.MdCase):
             ''',
             True
         )
+
+    def test_inject_new_p_in_caption(self):
+        """Test `prefix` cases that require the prefix to be injected in a new paragraph."""
+
+        self.check_markdown(
+            R"""
+            Test
+            /// caption
+            ///
+
+            Test
+            /// caption
+            > blockquote
+            ///
+            """,
+            R"""
+            <figure>
+            <p>Test</p>
+            <figcaption><p>1. </p></figcaption>
+            </figure>
+            <figure>
+            <p>Test</p>
+            <figcaption>
+            <p>2. </p><blockquote>
+            <p>blockquote</p>
+            </blockquote>
+            </figcaption>
+            </figure>
+            """,
+            True
+        )
+
+    def test_empty_paragraph(self):
+        """Test `prefix` cases that require prefix to inject a new paragraph."""
+
+        self.check_markdown(
+            R"""
+            Test
+            /// caption
+            <p markdown></p>
+            ///
+            """,
+            R"""
+            <figure>
+            <p>Test</p>
+            <figcaption>
+            <p>1. </p>
+            </figcaption>
+            </figure>
+            """,
+            True
+        )
+
 
 class TestBlocksCaptionPrefixLevel(util.MdCase):
     """Test Blocks caption cases with `prefix` level."""
