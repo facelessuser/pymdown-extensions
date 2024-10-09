@@ -89,10 +89,7 @@ class CaptionTreeprocessor(Treeprocessor):
             # Found an appropriate figure at an acceptable depth
             if stack > -1:
                 if stack > last:
-                    if (stack + 1) > len(count):
-                        count.append(1)
-                    else:
-                        count[stack] = 1
+                    count.append(1)
                 elif stack == last:
                     count[stack] += 1
                 elif stack < last:
