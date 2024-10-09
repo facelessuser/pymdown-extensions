@@ -193,7 +193,7 @@ class TestBlocksCaption(util.MdCase):
 class TestBlocksCaptionAutoid(util.MdCase):
     """Test Blocks caption cases with enabled `autoid`."""
 
-    extension = ['pymdownx.blocks.caption']
+    extension = ['pymdownx.blocks.caption', 'pymdownx.blocks.html']
     extension_configs = {
         'pymdownx.blocks.caption': {
             'autoid': True
@@ -345,6 +345,49 @@ class TestBlocksCaptionAutoid(util.MdCase):
             ''',
             True
         )
+
+    def test_caption_complex(self):
+        """Test a complex caption case."""
+
+        self.check_markdown(
+            R"""
+            /// html | figure
+            Paragraph 1
+            //// caption
+            Caption 1
+            ////
+
+            Paragraph 2
+            //// caption
+            Caption 2
+            ////
+            ///
+            /// caption
+            Outer caption.
+            ///
+            """,
+            """
+            <figure id="__caption_1">
+            <figure id="__caption_1_1">
+            <p>Paragraph 1</p>
+            <figcaption>
+            <p>Caption 1</p>
+            </figcaption>
+            </figure>
+            <figure id="__caption_1_2">
+            <p>Paragraph 2</p>
+            <figcaption>
+            <p>Caption 2</p>
+            </figcaption>
+            </figure>
+            <figcaption>
+            <p>Outer caption.</p>
+            </figcaption>
+            </figure>
+            """,
+            True
+        )
+
 
 class TestBlocksCaptionPrefix(util.MdCase):
     """Test Blocks caption cases with enabled `autoid`."""
