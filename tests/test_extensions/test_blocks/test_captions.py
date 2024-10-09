@@ -5,7 +5,7 @@ from ... import util
 class TestBlocksCaption(util.MdCase):
     """Test Blocks caption cases with default configuration."""
 
-    extension = ['pymdownx.blocks.caption']
+    extension = ['pymdownx.blocks.caption', 'md_in_html', 'pymdownx.blocks.html']
 
     def test_caption(self):
         """Test basic caption."""
@@ -98,6 +98,97 @@ class TestBlocksCaption(util.MdCase):
             ''',
             True
         )
+
+    def test_caption_in_figure_block(self):
+        """Test that captions are injected into existing figures."""
+
+        self.check_markdown(
+            R"""
+            <figure markdown>
+            Some content
+            </figure>
+            /// caption
+            Caption.
+            ///
+
+            /// html | figure
+            Some content
+            ///
+            /// caption
+            Caption.
+            ///
+            """,
+            """
+            <figure>
+            <p>Some content</p>
+            <figcaption>
+            <p>Caption.</p>
+            </figcaption>
+            </figure>
+            <figure>
+            <p>Some content</p>
+            <figcaption>
+            <p>Caption.</p>
+            </figcaption>
+            </figure>
+            """,
+            True
+        )
+
+    def test_caption_not_in_figure_block(self):
+        """Test that captions are not injected into existing figures that already have captions."""
+
+        self.check_markdown(
+            R"""
+            <figure markdown>
+            Some content
+
+            <figcaption markdown>
+            Existing caption
+            </figcaption>
+
+            </figure>
+            /// caption
+            Caption.
+            ///
+
+            /// html | figure
+            Some content
+            //// html | figcaption
+            Existing caption
+            ////
+            ///
+            /// caption
+            Caption.
+            ///
+            """,
+            R"""
+            <figure>
+            <figure>
+            <p>Some content</p>
+            <figcaption>
+            <p>Existing caption</p>
+            </figcaption>
+            </figure>
+            <figcaption>
+            <p>Caption.</p>
+            </figcaption>
+            </figure>
+            <figure>
+            <figure>
+            <p>Some content</p>
+            <figcaption>
+            <p>Existing caption</p>
+            </figcaption>
+            </figure>
+            <figcaption>
+            <p>Caption.</p>
+            </figcaption>
+            </figure>
+            """,
+            True
+        )
+
 
 class TestBlocksCaptionAutoid(util.MdCase):
     """Test Blocks caption cases with enabled `autoid`."""
