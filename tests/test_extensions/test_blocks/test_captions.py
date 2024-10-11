@@ -221,6 +221,23 @@ class TestBlocksCaption(util.MdCase):
             True
         )
 
+    def test_bad_header(self):
+        """Test a bad header."""
+
+        self.check_markdown(
+            R"""
+            Test
+            /// caption | bad
+            ///
+            """,
+            """
+            <p>Test
+            /// caption | bad
+            ///</p>
+            """,
+            True
+        )
+
 
 class TestBlocksCaptionPrefix(util.MdCase):
     """Test Blocks caption cases with enabled `auto`."""
