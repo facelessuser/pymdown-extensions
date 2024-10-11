@@ -262,9 +262,7 @@ class CaptionExtension(BlocksExtension):
         self.config = {
             "types": [
                 [
-                    {
-                        'name': 'caption',
-                    },
+                    'caption',
                     {
                         'name': 'figure-caption',
                         'prefix': 'Figure {}.'
@@ -302,8 +300,12 @@ class CaptionExtension(BlocksExtension):
         # Generate an details subclass based on the given names.
         types = {}
         for obj in config['types']:
-            name = obj['name']
-            prefix = obj.get('prefix', '')
+            if isinstance(obj, dict):
+                name = obj['name']
+                prefix = obj.get('prefix', '')
+            else:
+                name = obj
+                prefix = ''
             types[name] = prefix
             subclass = RE_SEP.sub('', name).title()
             block_mgr.register(
