@@ -10,58 +10,107 @@ is not present on the caption, the caption will be invisible to this extension.
 
 Class, IDs, or other attributes will be attached to the figure, not the caption.
 
+`types`:
+    A dictionary with figure type names and prefix templates. A template will be
+    used depending on whether the current type is assumed or directly specified.
 `prepend`:
     Will prepend `figcaption` at the start of a `figure` instead of the end.
-`autoid`:
-    Will generate IDs for all figures unless they have an ID defined already.
-    If a figure manually defines an ID, that figure will be skipped along with
-    all descendant figures under it since descendant IDs are all relative to the
-    parent.
-`prefix`:
-    Provide a template that will be used to add a prefix with auto incrementing
-    figure count. If `autoid` is enabled, there will be interlock between the
-    `prefix` and the `autoid` such that the numbers will correspond with one
-    another. If a figure defines its own ID, and `autoid` is enabled, `prefix`
-    will not be applied to that figure as IDs will not be populated for that
-    figure, nor its descendant figures.
-`prefix_level`:
-    When set to 0, prefixes are added to all figures, but when a non-zero depth
-    is provided, prefixes will only be applied to that depth, 1 meaning only the
-    outermost `figure`.
+`auto`:
+    Will generate IDs and prefixes via the provided template for all figures of
+    a given type as long as they also define a prefix template.
+`auto_level`:
+    Auto number will not be shown below the given level depth. A value of 0, the
+    default, disables the feature, 1 would show only auto-generate IDs and
+    prefixes for the outermost figures with prefixes, etc. This level is only
+    considered for each figure type individually.
 
 """
 import xml.etree.ElementTree as etree
-from .block import Block
+from .block import Block, type_html_identifier
 from .. blocks import BlocksExtension
 from markdown.treeprocessors import Treeprocessor
+import re
+
+RE_FIG_NUM = re.compile(r'^(?:[1-9][0-9]*(?:.[1-9][0-9]*)*|0)(?= |$)')
+RE_FIG_TYPE = re.compile(r'^\[[ ]*([a-zA-Z][-a-zA-Z0-9]*)[ ]*\]')
+RE_FIG_TYPE_GLOBAL = re.compile(r'^[a-zA-Z][-a-zA-Z0-9]*$')
+RE_SEP = re.compile(r'[_-]+')
+
+
+def update_tag(el, fig_type, fig_num, template, prepend):
+    """Update tag ID and caption prefix."""
+
+    # Auto add an ID
+    if 'id' not in el.attrib:
+        el.attrib['id'] = f'__{fig_type}_' + '_'.join(str(x) for x in fig_num.split('.'))
+
+    # Prefix the caption with a given numbered prefix
+    if template:
+        for child in list(el) if prepend else reversed(el):
+            if child.tag == 'figcaption':
+                children = list(child)
+                value = template.format(fig_num)
+                if not len(children) or children[0].tag != 'p':
+                    p = etree.Element('p')
+                    span = etree.SubElement(p, 'span', {'class': 'caption-prefix'})
+                    span.text = value
+                    p.tail = child.text
+                    child.text = None
+                    child.insert(0, p)
+                else:
+                    p = children[0]
+                    span = etree.Element('span', {'class': 'caption-prefix'})
+                    span.text = value
+                    span.tail = (' ' + p.text) if p.text is not None else p.text
+                    p.text = None
+                    p.insert(0, span)
 
 
 class CaptionTreeprocessor(Treeprocessor):
     """Caption tree processor."""
 
-    def __init__(self, md, config):
+    def __init__(self, md, types, config):
         """Initialize."""
 
         super().__init__(md)
 
-        self.autoid = config['autoid']
+        self.auto = config['auto']
         self.prepend = config['prepend']
-        self.prefix = config['prefix']
-        self.prefix_level = config['prefix_level']
+        self.type = ''
+        self.auto_level = config['auto_level']
+        self.fig_types = types
 
     def run(self, doc):
         """Update caption IDs and prefixes."""
 
         parent_map = {c: p for p in doc.iter() for c in p}
-        count = [0]
-        last = 0
-        skip = set()
+        last = {k: 0 for k in self.fig_types}
+        counters = {k: [0] for k in self.fig_types}
+        fig_type = last_type = self.type
+        figs = []
 
         # Calculate the depth and iteration at that depth of the given figure.
         for el in doc.iter():
-            prefix = self.prefix
             stack = -1
-            if el.tag == 'figure' and (not self.autoid or 'id' not in el.attrib):
+            if el.tag == 'figure':
+                fig_type = last_type
+                prepend = False
+                skip = False
+                if '__figure_prepend' in el.attrib:
+                    prepend = True
+                    del el.attrib['__figure_prepend']
+                if '__figure_type' in el.attrib:
+                    fig_type = el.attrib['__figure_type']
+                    figs.append(el)
+
+                else:
+                    # Found a figure that was not generated by this plugin.
+                    continue
+
+                if fig_type not in self.fig_types or not self.fig_types[fig_type]:
+                    # We have an unknown type or the type has no prefix template.
+                    continue
+
                 stack += 1
                 current = el
                 while True:
@@ -71,63 +120,79 @@ class CaptionTreeprocessor(Treeprocessor):
                     if parent is None:
                         break
 
-                    if parent.tag == 'figure' and parent not in skip:
-                        if self.prefix_level and stack >= (self.prefix_level - 1):
-                            prefix = False
+                    if parent.tag == 'figure' and parent.attrib['__figure_type'] == fig_type:
+                        if self.auto_level and stack >= (self.auto_level - 1):
+                            skip = True
+                            break
                         stack += 1
 
-                    elif parent.tag == 'figure':
-                        skip.add(el)
-                        stack = -1
-                        break
-
                     current = parent
-            elif el.tag == 'figure':
-                skip.add(el)
-                continue
+
+                if skip:
+                    # Parent has been skipped so all children are also skipped
+                    continue
 
             # Found an appropriate figure at an acceptable depth
             if stack > -1:
-                if stack > last:
-                    count.append(1)
-                elif stack == last:
-                    count[stack] += 1
+                l = last[fig_type]
+                counter = counters[fig_type]
+                if stack > l:
+                    counter.append(1)
+                elif stack == l:
+                    counter[stack] += 1
                 else:
-                    count = count[:stack + 1]
-                    count[-1] += 1
-                last = stack
+                    del counter[stack + 1:]
+                    counter[-1] += 1
+                last[fig_type] = stack
 
-                # Auto add an ID
-                if self.autoid:
-                    el.attrib['id'] = '__caption_' + '_'.join(str(x) for x in count[:stack + 1])
+                prefix = self.fig_types.get(fig_type, '')
 
-                # Prefix the caption with a given numbered prefix
-                if prefix:
-                    for child in list(el) if self.prepend else reversed(el):
-                        if child.tag == 'figcaption':
-                            children = list(child)
-                            value = self.prefix.format('.'.join(str(x) for x in count[:stack + 1]))
-                            if not len(children) or children[0].tag != 'p':
-                                p = etree.Element('p')
-                                p.text = value
-                                child.insert(0, p)
-                            else:
-                                text = children[0].text
-                                if text is None:
-                                    text = ''
-                                children[0].text = value + text
+                update_tag(el, fig_type, '.'.join(str(x) for x in counter[:stack + 1]), prefix, prepend)
+                if fig_type:
+                    last_type = fig_type
+
+        for fig in figs:
+            del fig.attrib['__figure_type']
 
 
-class Caption(Block):
+class Fig(Block):
     """Figure captions."""
 
-    NAME = 'caption'
+    NAME = ''
+    PREFIX = ''
+    ARGUMENT = None
+    OPTIONS = {
+        'type': ['', type_html_identifier]
+    }
 
     def on_init(self):
         """Initialize."""
 
+        self.auto = self.config['auto']
         self.prepend = self.config['prepend']
         self.caption = None
+        self.fig_num = ''
+
+    def on_validate(self, parent):
+        """Handle on validate event."""
+
+        argument = self.argument
+        if argument:
+            if argument.startswith('>'):
+                self.prepend = False
+                argument = argument[1:].lstrip()
+            elif argument.startswith('<'):
+                self.prepend = True
+                argument = argument[1:].lstrip()
+
+            m = RE_FIG_NUM.match(argument)
+            if m:
+                self.fig_num = m.group(0)
+                argument = argument[m.end():].lstrip()
+
+        if argument:
+            return False
+        return True
 
     def on_create(self, parent):
         """Create the element."""
@@ -154,8 +219,13 @@ class Caption(Block):
                 fig.append(child)
                 parent.remove(child)
 
+        if self.auto:
+            fig.attrib['__figure_type'] = self.NAME
+
         # Add caption to the target figure.
         if self.prepend:
+            if self.auto:
+                fig.attrib['__figure_prepend'] = "1"
             self.caption = etree.Element('figcaption')
             fig.insert(0, self.caption)
         else:
@@ -168,6 +238,20 @@ class Caption(Block):
 
         return self.caption
 
+    def on_end(self, block):
+        """Handle explicit, manual prefixes on block end."""
+
+        prefix = self.PREFIX
+        if prefix and not self.auto:
+            if self.fig_num:
+                update_tag(
+                    block,
+                    self.NAME,
+                    self.fig_num,
+                    prefix,
+                    self.prepend
+                )
+
 
 class CaptionExtension(BlocksExtension):
     """Caption Extension."""
@@ -176,17 +260,31 @@ class CaptionExtension(BlocksExtension):
         """Initialize."""
 
         self.config = {
-            "prefix": [
-                "",
-                "Specify a prefix to add to captions `{}` will have an incrementing numerical count - Default: ''"
+            "types": [
+                [
+                    {
+                        'name': 'caption',
+                    },
+                    {
+                        'name': 'figure-caption',
+                        'prefix': 'Figure {}.'
+                    },
+                    {
+                        'name': 'table-caption',
+                        'prefix': 'Table {}.'
+                    }
+                ],
+                "Configure types a list of types, each type is a dictionary that defines a 'name' and 'prefix' "
+                "A template must contain '{}' for numerical insertions unless the template is an empty string "
+                "which will assume no prefix should be used."
             ],
-            "prefix_level": [
+            "auto_level": [
                 0,
-                "Depth of children to add prefixes to - Default: 0"
+                "Depth of children to add prefixes to - Default: 1"
             ],
-            "autoid": [
+            "auto": [
                 False,
-                "Auto add IDs - Default: False"
+                "Auto add IDs with prefixes (prefixes are only added if prefix template is defined) - Default: False"
             ],
             "prepend": [
                 False,
@@ -200,9 +298,29 @@ class CaptionExtension(BlocksExtension):
         """Extend Markdown blocks."""
 
         config = self.getConfigs()
-        block_mgr.register(Caption, config)
-        if config['autoid'] or config['prefix']:
-            md.treeprocessors.register(CaptionTreeprocessor(md, config), 'caption_id', 4)
+
+        # Generate an details subclass based on the given names.
+        types = {}
+        for obj in config['types']:
+            name = obj['name']
+            prefix = obj.get('prefix', '')
+            types[name] = prefix
+            subclass = RE_SEP.sub('', name).title()
+            block_mgr.register(
+                type(
+                    subclass,
+                    (Fig,),
+                    {
+                        'OPTIONS': {},
+                        'NAME': name,
+                        'PREFIX': prefix
+                    }
+                ),
+                {'auto_level': config['auto_level'], 'auto': config['auto'], 'prepend': config['prepend']}
+            )
+
+        if config['auto']:
+            md.treeprocessors.register(CaptionTreeprocessor(md, types, config), 'caption-auto', 4)
 
 
 def makeExtension(*args, **kwargs):

@@ -189,199 +189,32 @@ class TestBlocksCaption(util.MdCase):
             True
         )
 
-
-class TestBlocksCaptionAutoid(util.MdCase):
-    """Test Blocks caption cases with enabled `autoid`."""
-
-    extension = ['pymdownx.blocks.caption', 'pymdownx.blocks.html']
-    extension_configs = {
-        'pymdownx.blocks.caption': {
-            'autoid': True
-        }
-    }
-
-    def test_caption(self):
-        """Test basic caption with `autoid`."""
-
-        self.check_markdown(
-            R'''
-            A paragraph with a caption.
-            /// caption
-            This is the caption.
-            ///
-            ''',
-            R'''
-            <figure id="__caption_1">
-            <p>A paragraph with a caption.</p>
-            <figcaption>
-            <p>This is the caption.</p>
-            </figcaption>
-            </figure>
-            ''',
-            True
-        )
-
-    def test_consecutive_captions(self):
-        """Test consecutive captions with `autoid`."""
-
-        self.check_markdown(
-            R'''
-            A paragraph with a caption.
-            /// caption
-            This is the caption.
-            ///
-
-            A paragraph with a caption.
-            /// caption
-            This is the caption.
-            ///
-            ''',
-            R'''
-            <figure id="__caption_1">
-            <p>A paragraph with a caption.</p>
-            <figcaption>
-            <p>This is the caption.</p>
-            </figcaption>
-            </figure>
-            <figure id="__caption_2">
-            <p>A paragraph with a caption.</p>
-            <figcaption>
-            <p>This is the caption.</p>
-            </figcaption>
-            </figure>
-            ''',
-            True
-        )
-
-    def test_nested_captions(self):
-        """Test nested captions with `autoid`."""
-
-        self.check_markdown(
-            R'''
-            A paragraph with a caption.
-            /// caption
-            Level 3 caption.
-            ///
-            /// caption
-            Level 2 caption.
-            ///
-            /// caption
-            Level 1 caption.
-            ///
-            ''',
-            R'''
-            <figure id="__caption_1">
-            <figure id="__caption_1_1">
-            <figure id="__caption_1_1_1">
-            <p>A paragraph with a caption.</p>
-            <figcaption>
-            <p>Level 3 caption.</p>
-            </figcaption>
-            </figure>
-            <figcaption>
-            <p>Level 2 caption.</p>
-            </figcaption>
-            </figure>
-            <figcaption>
-            <p>Level 1 caption.</p>
-            </figcaption>
-            </figure>
-            ''',
-            True
-        )
-
-    def test_nested_consecutive_captions(self):
-        """Test nested captions with `autoid`."""
-
-        self.check_markdown(
-            R'''
-            A paragraph with a caption.
-            /// caption
-            Level 3 caption.
-            ///
-            /// caption
-            Level 2 caption.
-            ///
-            /// caption
-            Level 1 caption.
-            ///
-
-            A paragraph with a caption.
-            /// caption
-            Level 2 caption.
-            ///
-            /// caption
-            Level 1 caption.
-            ///
-            ''',
-            R'''
-            <figure id="__caption_1">
-            <figure id="__caption_1_1">
-            <figure id="__caption_1_1_1">
-            <p>A paragraph with a caption.</p>
-            <figcaption>
-            <p>Level 3 caption.</p>
-            </figcaption>
-            </figure>
-            <figcaption>
-            <p>Level 2 caption.</p>
-            </figcaption>
-            </figure>
-            <figcaption>
-            <p>Level 1 caption.</p>
-            </figcaption>
-            </figure>
-            <figure id="__caption_2">
-            <figure id="__caption_2_1">
-            <p>A paragraph with a caption.</p>
-            <figcaption>
-            <p>Level 2 caption.</p>
-            </figcaption>
-            </figure>
-            <figcaption>
-            <p>Level 1 caption.</p>
-            </figcaption>
-            </figure>
-            ''',
-            True
-        )
-
-    def test_caption_complex(self):
-        """Test a complex caption case."""
+    def test_manual_prepend(self):
+        """Test manual prepend."""
 
         self.check_markdown(
             R"""
-            /// html | figure
-            Paragraph 1
-            //// caption
-            Caption 1
-            ////
-
-            Paragraph 2
-            //// caption
-            Caption 2
-            ////
+            Text
+            /// caption | <
+            Prepended
             ///
-            /// caption
-            Outer caption.
+
+            Text
+            /// caption | >
+            Appended
             ///
             """,
-            """
-            <figure id="__caption_1">
-            <figure id="__caption_1_1">
-            <p>Paragraph 1</p>
+            R"""
+            <figure>
             <figcaption>
-            <p>Caption 1</p>
+            <p>Prepended</p>
             </figcaption>
+            <p>Text</p>
             </figure>
-            <figure id="__caption_1_2">
-            <p>Paragraph 2</p>
+            <figure>
+            <p>Text</p>
             <figcaption>
-            <p>Caption 2</p>
-            </figcaption>
-            </figure>
-            <figcaption>
-            <p>Outer caption.</p>
+            <p>Appended</p>
             </figcaption>
             </figure>
             """,
@@ -390,30 +223,29 @@ class TestBlocksCaptionAutoid(util.MdCase):
 
 
 class TestBlocksCaptionPrefix(util.MdCase):
-    """Test Blocks caption cases with enabled `autoid`."""
+    """Test Blocks caption cases with enabled `auto`."""
 
     extension = ['pymdownx.blocks.caption', 'md_in_html']
     extension_configs = {
         'pymdownx.blocks.caption': {
-            'prefix': '{}. '
         }
     }
 
     def test_caption(self):
-        """Test basic caption with `prefix`."""
+        """Test basic caption with `auto`."""
 
         self.check_markdown(
             R'''
             A paragraph with a caption.
-            /// caption
+            /// figure-caption | 1
             This is the caption.
             ///
             ''',
             R'''
-            <figure>
+            <figure id="__figure-caption_1">
             <p>A paragraph with a caption.</p>
             <figcaption>
-            <p>1. This is the caption.</p>
+            <p><span class="caption-prefix">Figure 1.</span> This is the caption.</p>
             </figcaption>
             </figure>
             ''',
@@ -421,31 +253,31 @@ class TestBlocksCaptionPrefix(util.MdCase):
         )
 
     def test_consecutive_captions(self):
-        """Test consecutive captions with `prefix`."""
+        """Test consecutive captions with `auto`."""
 
         self.check_markdown(
             R'''
             A paragraph with a caption.
-            /// caption
+            /// figure-caption | 1
             This is the caption.
             ///
 
             A paragraph with a caption.
-            /// caption
+            /// figure-caption | 2
             This is the caption.
             ///
             ''',
             R'''
-            <figure>
+            <figure id="__figure-caption_1">
             <p>A paragraph with a caption.</p>
             <figcaption>
-            <p>1. This is the caption.</p>
+            <p><span class="caption-prefix">Figure 1.</span> This is the caption.</p>
             </figcaption>
             </figure>
-            <figure>
+            <figure id="__figure-caption_2">
             <p>A paragraph with a caption.</p>
             <figcaption>
-            <p>2. This is the caption.</p>
+            <p><span class="caption-prefix">Figure 2.</span> This is the caption.</p>
             </figcaption>
             </figure>
             ''',
@@ -453,36 +285,36 @@ class TestBlocksCaptionPrefix(util.MdCase):
         )
 
     def test_nested_captions(self):
-        """Test nested captions with `prefix`."""
+        """Test nested captions with `auto`."""
 
         self.check_markdown(
             R'''
             A paragraph with a caption.
-            /// caption
+            /// figure-caption | 1.1.1
             Level 3 caption.
             ///
-            /// caption
+            /// figure-caption | 1.1
             Level 2 caption.
             ///
-            /// caption
+            /// figure-caption | 1
             Level 1 caption.
             ///
             ''',
             R'''
-            <figure>
-            <figure>
-            <figure>
+            <figure id="__figure-caption_1">
+            <figure id="__figure-caption_1_1">
+            <figure id="__figure-caption_1_1_1">
             <p>A paragraph with a caption.</p>
             <figcaption>
-            <p>1.1.1. Level 3 caption.</p>
+            <p><span class="caption-prefix">Figure 1.1.1.</span> Level 3 caption.</p>
             </figcaption>
             </figure>
             <figcaption>
-            <p>1.1. Level 2 caption.</p>
+            <p><span class="caption-prefix">Figure 1.1.</span> Level 2 caption.</p>
             </figcaption>
             </figure>
             <figcaption>
-            <p>1. Level 1 caption.</p>
+            <p><span class="caption-prefix">Figure 1.</span> Level 1 caption.</p>
             </figcaption>
             </figure>
             ''',
@@ -490,55 +322,55 @@ class TestBlocksCaptionPrefix(util.MdCase):
         )
 
     def test_nested_consecutive_captions(self):
-        """Test nested captions with `prefix`."""
+        """Test nested captions with `auto`."""
 
         self.check_markdown(
             R'''
             A paragraph with a caption.
-            /// caption
+            /// figure-caption | 1.1.1
             Level 3 caption.
             ///
-            /// caption
+            /// figure-caption | 1.1
             Level 2 caption.
             ///
-            /// caption
+            /// figure-caption | 1
             Level 1 caption.
             ///
 
             A paragraph with a caption.
-            /// caption
+            /// figure-caption | 2.1
             Level 2 caption.
             ///
-            /// caption
+            /// figure-caption | 2
             Level 1 caption.
             ///
             ''',
             R'''
-            <figure>
-            <figure>
-            <figure>
+            <figure id="__figure-caption_1">
+            <figure id="__figure-caption_1_1">
+            <figure id="__figure-caption_1_1_1">
             <p>A paragraph with a caption.</p>
             <figcaption>
-            <p>1.1.1. Level 3 caption.</p>
+            <p><span class="caption-prefix">Figure 1.1.1.</span> Level 3 caption.</p>
             </figcaption>
             </figure>
             <figcaption>
-            <p>1.1. Level 2 caption.</p>
+            <p><span class="caption-prefix">Figure 1.1.</span> Level 2 caption.</p>
             </figcaption>
             </figure>
             <figcaption>
-            <p>1. Level 1 caption.</p>
+            <p><span class="caption-prefix">Figure 1.</span> Level 1 caption.</p>
             </figcaption>
             </figure>
-            <figure>
-            <figure>
+            <figure id="__figure-caption_2">
+            <figure id="__figure-caption_2_1">
             <p>A paragraph with a caption.</p>
             <figcaption>
-            <p>2.1. Level 2 caption.</p>
+            <p><span class="caption-prefix">Figure 2.1.</span> Level 2 caption.</p>
             </figcaption>
             </figure>
             <figcaption>
-            <p>2. Level 1 caption.</p>
+            <p><span class="caption-prefix">Figure 2.</span> Level 1 caption.</p>
             </figcaption>
             </figure>
             ''',
@@ -546,28 +378,31 @@ class TestBlocksCaptionPrefix(util.MdCase):
         )
 
     def test_inject_new_p_in_caption(self):
-        """Test `prefix` cases that require the prefix to be injected in a new paragraph."""
+        """Test `auto` cases that require the prefix to be injected in a new paragraph."""
 
         self.check_markdown(
             R"""
             Test
-            /// caption
+            /// figure-caption | 1
             ///
 
             Test
-            /// caption
+            /// figure-caption | 2
             > blockquote
             ///
             """,
             R"""
-            <figure>
-            <p>Test</p>
-            <figcaption><p>1. </p></figcaption>
-            </figure>
-            <figure>
+            <figure id="__figure-caption_1">
             <p>Test</p>
             <figcaption>
-            <p>2. </p><blockquote>
+            <p><span class="caption-prefix">Figure 1.</span></p>
+            </figcaption>
+            </figure>
+            <figure id="__figure-caption_2">
+            <p>Test</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 2.</span></p>
+            <blockquote>
             <p>blockquote</p>
             </blockquote>
             </figcaption>
@@ -577,20 +412,52 @@ class TestBlocksCaptionPrefix(util.MdCase):
         )
 
     def test_empty_paragraph(self):
-        """Test `prefix` cases that require prefix to inject a new paragraph."""
+        """Test `auto` cases that require prefix to inject a new paragraph."""
 
         self.check_markdown(
             R"""
             Test
-            /// caption
+            /// figure-caption | 1
             <p markdown></p>
             ///
             """,
             R"""
-            <figure>
+            <figure id="__figure-caption_1">
             <p>Test</p>
             <figcaption>
-            <p>1. </p>
+            <p><span class="caption-prefix">Figure 1.</span></p>
+            </figcaption>
+            </figure>
+            """,
+            True
+        )
+
+    def test_manual_prepend(self):
+        """Test manual prepend."""
+
+        self.check_markdown(
+            R"""
+            Text
+            /// figure-caption | < 2
+            Prepended
+            ///
+
+            Text
+            /// figure-caption | > 5
+            Appended
+            ///
+            """,
+            R"""
+            <figure id="__figure-caption_2">
+            <figcaption>
+            <p><span class="caption-prefix">Figure 2.</span> Prepended</p>
+            </figcaption>
+            <p>Text</p>
+            </figure>
+            <figure id="__figure-caption_5">
+            <p>Text</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 5.</span> Appended</p>
             </figcaption>
             </figure>
             """,
@@ -598,158 +465,31 @@ class TestBlocksCaptionPrefix(util.MdCase):
         )
 
 
-class TestBlocksCaptionPrefixLevel(util.MdCase):
-    """Test Blocks caption cases with `prefix` level."""
+class TestBlocksCaptionAutoPrefix(util.MdCase):
+    """Test Blocks caption cases with enabled `auto`."""
 
-    extension = ['pymdownx.blocks.caption']
+    extension = ['pymdownx.blocks.caption', 'md_in_html']
     extension_configs = {
         'pymdownx.blocks.caption': {
-            'prefix': '{}. ',
-            'prefix_level': 2
+            'auto': True
         }
     }
 
     def test_caption(self):
-        """Test basic caption with `prefix` level."""
+        """Test basic caption with `auto`."""
 
         self.check_markdown(
             R'''
             A paragraph with a caption.
-            /// caption
+            /// figure-caption
             This is the caption.
             ///
             ''',
             R'''
-            <figure>
+            <figure id="__figure-caption_1">
             <p>A paragraph with a caption.</p>
             <figcaption>
-            <p>1. This is the caption.</p>
-            </figcaption>
-            </figure>
-            ''',
-            True
-        )
-
-    def test_nested_captions(self):
-        """Test nested captions with `prefix` level."""
-
-        self.check_markdown(
-            R'''
-            A paragraph with a caption.
-            /// caption
-            Level 3 caption.
-            ///
-            /// caption
-            Level 2 caption.
-            ///
-            /// caption
-            Level 1 caption.
-            ///
-            ''',
-            R'''
-            <figure>
-            <figure>
-            <figure>
-            <p>A paragraph with a caption.</p>
-            <figcaption>
-            <p>Level 3 caption.</p>
-            </figcaption>
-            </figure>
-            <figcaption>
-            <p>1.1. Level 2 caption.</p>
-            </figcaption>
-            </figure>
-            <figcaption>
-            <p>1. Level 1 caption.</p>
-            </figcaption>
-            </figure>
-            ''',
-            True
-        )
-
-    def test_nested_consecutive_captions(self):
-        """Test nested consecutive captions with `prefix` level."""
-
-        self.check_markdown(
-            R'''
-            A paragraph with a caption.
-            /// caption
-            Level 3 caption.
-            ///
-            /// caption
-            Level 2 caption.
-            ///
-            /// caption
-            Level 1 caption.
-            ///
-
-            A paragraph with a caption.
-            /// caption
-            Level 2 caption.
-            ///
-            /// caption
-            Level 1 caption.
-            ///
-            ''',
-            R'''
-            <figure>
-            <figure>
-            <figure>
-            <p>A paragraph with a caption.</p>
-            <figcaption>
-            <p>Level 3 caption.</p>
-            </figcaption>
-            </figure>
-            <figcaption>
-            <p>1.1. Level 2 caption.</p>
-            </figcaption>
-            </figure>
-            <figcaption>
-            <p>1. Level 1 caption.</p>
-            </figcaption>
-            </figure>
-            <figure>
-            <figure>
-            <p>A paragraph with a caption.</p>
-            <figcaption>
-            <p>2.1. Level 2 caption.</p>
-            </figcaption>
-            </figure>
-            <figcaption>
-            <p>2. Level 1 caption.</p>
-            </figcaption>
-            </figure>
-            ''',
-            True
-        )
-
-class TestBlocksCaptionAutoidPrefixLevel(util.MdCase):
-    """Test Blocks caption cases with enabled `autoid` and `prefix`."""
-
-    extension = ['pymdownx.blocks.caption']
-    extension_configs = {
-        'pymdownx.blocks.caption': {
-            'autoid': True,
-            'prefix': '{}. ',
-            'prefix_level': 2
-        }
-    }
-
-    def test_caption(self):
-        """Test basic caption with `autoid` and `prefix`."""
-
-        self.check_markdown(
-            R'''
-            A paragraph with a caption.
-            /// caption
-            This is the caption.
-            ///
-            ''',
-            R'''
-            <figure id="__caption_1">
-            <p>A paragraph with a caption.</p>
-            <figcaption>
-            <p>1. This is the caption.</p>
+            <p><span class="caption-prefix">Figure 1.</span> This is the caption.</p>
             </figcaption>
             </figure>
             ''',
@@ -757,31 +497,31 @@ class TestBlocksCaptionAutoidPrefixLevel(util.MdCase):
         )
 
     def test_consecutive_captions(self):
-        """Test consecutive captions with `autoid` and `prefix`."""
+        """Test consecutive captions with `auto`."""
 
         self.check_markdown(
             R'''
             A paragraph with a caption.
-            /// caption
+            /// figure-caption
             This is the caption.
             ///
 
             A paragraph with a caption.
-            /// caption
+            /// figure-caption
             This is the caption.
             ///
             ''',
             R'''
-            <figure id="__caption_1">
+            <figure id="__figure-caption_1">
             <p>A paragraph with a caption.</p>
             <figcaption>
-            <p>1. This is the caption.</p>
+            <p><span class="caption-prefix">Figure 1.</span> This is the caption.</p>
             </figcaption>
             </figure>
-            <figure id="__caption_2">
+            <figure id="__figure-caption_2">
             <p>A paragraph with a caption.</p>
             <figcaption>
-            <p>2. This is the caption.</p>
+            <p><span class="caption-prefix">Figure 2.</span> This is the caption.</p>
             </figcaption>
             </figure>
             ''',
@@ -789,36 +529,36 @@ class TestBlocksCaptionAutoidPrefixLevel(util.MdCase):
         )
 
     def test_nested_captions(self):
-        """Test nested captions with `autoid` and `prefix`."""
+        """Test nested captions with `auto`."""
 
         self.check_markdown(
             R'''
             A paragraph with a caption.
-            /// caption
+            /// figure-caption
             Level 3 caption.
             ///
-            /// caption
+            /// figure-caption
             Level 2 caption.
             ///
-            /// caption
+            /// figure-caption
             Level 1 caption.
             ///
             ''',
             R'''
-            <figure id="__caption_1">
-            <figure id="__caption_1_1">
-            <figure id="__caption_1_1_1">
+            <figure id="__figure-caption_1">
+            <figure id="__figure-caption_1_1">
+            <figure id="__figure-caption_1_1_1">
             <p>A paragraph with a caption.</p>
             <figcaption>
-            <p>Level 3 caption.</p>
+            <p><span class="caption-prefix">Figure 1.1.1.</span> Level 3 caption.</p>
             </figcaption>
             </figure>
             <figcaption>
-            <p>1.1. Level 2 caption.</p>
+            <p><span class="caption-prefix">Figure 1.1.</span> Level 2 caption.</p>
             </figcaption>
             </figure>
             <figcaption>
-            <p>1. Level 1 caption.</p>
+            <p><span class="caption-prefix">Figure 1.</span> Level 1 caption.</p>
             </figcaption>
             </figure>
             ''',
@@ -826,390 +566,543 @@ class TestBlocksCaptionAutoidPrefixLevel(util.MdCase):
         )
 
     def test_nested_consecutive_captions(self):
-        """Test nested consecutive captions with `autoid` and `prefix`."""
+        """Test nested captions with `auto`."""
 
         self.check_markdown(
             R'''
             A paragraph with a caption.
-            /// caption
+            /// figure-caption
             Level 3 caption.
             ///
-            /// caption
+            /// figure-caption
             Level 2 caption.
             ///
-            /// caption
+            /// figure-caption
             Level 1 caption.
             ///
 
             A paragraph with a caption.
-            /// caption
+            /// figure-caption
             Level 2 caption.
             ///
-            /// caption
+            /// figure-caption
             Level 1 caption.
             ///
             ''',
             R'''
-            <figure id="__caption_1">
-            <figure id="__caption_1_1">
-            <figure id="__caption_1_1_1">
+            <figure id="__figure-caption_1">
+            <figure id="__figure-caption_1_1">
+            <figure id="__figure-caption_1_1_1">
             <p>A paragraph with a caption.</p>
             <figcaption>
-            <p>Level 3 caption.</p>
+            <p><span class="caption-prefix">Figure 1.1.1.</span> Level 3 caption.</p>
             </figcaption>
             </figure>
             <figcaption>
-            <p>1.1. Level 2 caption.</p>
+            <p><span class="caption-prefix">Figure 1.1.</span> Level 2 caption.</p>
             </figcaption>
             </figure>
             <figcaption>
-            <p>1. Level 1 caption.</p>
+            <p><span class="caption-prefix">Figure 1.</span> Level 1 caption.</p>
             </figcaption>
             </figure>
-            <figure id="__caption_2">
-            <figure id="__caption_2_1">
+            <figure id="__figure-caption_2">
+            <figure id="__figure-caption_2_1">
             <p>A paragraph with a caption.</p>
             <figcaption>
-            <p>2.1. Level 2 caption.</p>
+            <p><span class="caption-prefix">Figure 2.1.</span> Level 2 caption.</p>
             </figcaption>
             </figure>
             <figcaption>
-            <p>2. Level 1 caption.</p>
+            <p><span class="caption-prefix">Figure 2.</span> Level 1 caption.</p>
             </figcaption>
             </figure>
             ''',
             True
         )
 
+    def test_manual_prepend(self):
+        """Test manual prepend."""
 
-class TestBlocksCaptionPrefixLevelPrepend(util.MdCase):
-    """Test Blocks caption cases with `prefix` level."""
+        self.check_markdown(
+            R"""
+            Text
+            /// figure-caption | < 2
+            Prepended and number ignored
+            ///
 
-    extension = ['pymdownx.blocks.caption']
-    extension_configs = {
-        'pymdownx.blocks.caption': {
-            'prefix': '{}. ',
-            'prefix_level': 2,
-            'prepend': True
-        }
-    }
+            Text
+            /// figure-caption | >
+            Appended
+            ///
+            """,
+            R"""
+            <figure id="__figure-caption_1">
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.</span> Prepended and number ignored</p>
+            </figcaption>
+            <p>Text</p>
+            </figure>
+            <figure id="__figure-caption_2">
+            <p>Text</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 2.</span> Appended</p>
+            </figcaption>
+            </figure>
+            """,
+            True
+        )
 
-    def test_caption(self):
-        """Test basic caption with `prefix` level and `prepend`."""
+    def test_mixed_captions(self):
+        """Test mixed captions with `auto`."""
 
         self.check_markdown(
             R'''
-            A paragraph with a caption.
+            Paragraph
             /// caption
-            This is the caption.
+            Not numbered
+            ///
+
+            Paragraph
+            /// figure-caption
+            Numbered level 2 caption.
+            ///
+            /// caption
+            Not numbered level 1.
+            ///
+            /// figure-caption
+            Numbered level 1 caption.
             ///
             ''',
             R'''
             <figure>
+            <p>Paragraph</p>
             <figcaption>
-            <p>1. This is the caption.</p>
+            <p>Not numbered</p>
             </figcaption>
-            <p>A paragraph with a caption.</p>
+            </figure>
+            <figure id="__figure-caption_1">
+            <figure>
+            <figure id="__figure-caption_1_1">
+            <p>Paragraph</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.1.</span> Numbered level 2 caption.</p>
+            </figcaption>
+            </figure>
+            <figcaption>
+            <p>Not numbered level 1.</p>
+            </figcaption>
+            </figure>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.</span> Numbered level 1 caption.</p>
+            </figcaption>
             </figure>
             ''',
             True
         )
 
-    def test_nested_captions(self):
-        """Test nested captions with `prefix` level and `prepend`."""
+    def test_existing_fig_caption(self):
+        """Test when a figure has a figure caption and we don't know what type it is."""
 
         self.check_markdown(
-            R'''
-            A paragraph with a caption.
-            /// caption
-            Level 3 caption.
-            ///
-            /// caption
-            Level 2 caption.
-            ///
-            /// caption
-            Level 1 caption.
-            ///
-            ''',
-            R'''
-            <figure>
-            <figcaption>
-            <p>1. Level 1 caption.</p>
+            R"""
+            <figure markdown>
+            Some text.
+            <figcaption markdown>
+            Caption.
             </figcaption>
+            </figure>
+            """,
+            R"""
             <figure>
+            <p>Some text.</p>
             <figcaption>
-            <p>1.1. Level 2 caption.</p>
+            <p>Caption.</p>
             </figcaption>
-            <figure>
-            <figcaption>
-            <p>Level 3 caption.</p>
-            </figcaption>
-            <p>A paragraph with a caption.</p>
             </figure>
-            </figure>
-            </figure>
-            ''',
+            """,
             True
         )
 
-    def test_nested_consecutive_captions(self):
-        """Test nested consecutive captions with `prefix` level and `prepend`."""
+    def test_inject_new_p_in_caption(self):
+        """Test `auto` cases that require the prefix to be injected in a new paragraph."""
 
         self.check_markdown(
-            R'''
-            A paragraph with a caption.
-            /// caption
-            Level 3 caption.
-            ///
-            /// caption
-            Level 2 caption.
-            ///
-            /// caption
-            Level 1 caption.
+            R"""
+            Test
+            /// figure-caption
             ///
 
-            A paragraph with a caption.
-            /// caption
-            Level 2 caption.
+            Test
+            /// figure-caption
+            > blockquote
             ///
-            /// caption
-            Level 1 caption.
-            ///
-            ''',
-            R'''
-            <figure>
-            <figcaption>
-            <p>1. Level 1 caption.</p>
-            </figcaption>
-            <figure>
-            <figcaption>
-            <p>1.1. Level 2 caption.</p>
-            </figcaption>
-            <figure>
-            <figcaption>
-            <p>Level 3 caption.</p>
-            </figcaption>
-            <p>A paragraph with a caption.</p>
+            """,
+            R"""
+            <figure id="__figure-caption_1">
+            <p>Test</p>
+            <figcaption><p><span class="caption-prefix">Figure 1.</span></p></figcaption>
             </figure>
-            </figure>
-            </figure>
-            <figure>
-            <figcaption>
-            <p>2. Level 1 caption.</p>
+            <figure id="__figure-caption_2">
+            <p>Test</p>
+            <figcaption><p><span class="caption-prefix">Figure 2.</span></p>
+            <blockquote>
+            <p>blockquote</p>
+            </blockquote>
             </figcaption>
-            <figure>
-            <figcaption>
-            <p>2.1. Level 2 caption.</p>
-            </figcaption>
-            <p>A paragraph with a caption.</p>
             </figure>
-            </figure>
-            ''',
+            """,
             True
         )
 
-class TestBlocksCaptionAutoidPrefixLevelPrepend(util.MdCase):
-    """Test Blocks caption cases with enabled `autoid` and `prefix`."""
-
-    extension = ['pymdownx.blocks.caption']
-    extension_configs = {
-        'pymdownx.blocks.caption': {
-            'autoid': True,
-            'prefix': '{}. ',
-            'prefix_level': 2,
-            'prepend': True
-        }
-    }
-
-    def test_caption(self):
-        """Test basic caption with `autoid` and `prefix`."""
+    def test_empty_paragraph(self):
+        """Test `auto` cases that require prefix to inject a new paragraph."""
 
         self.check_markdown(
-            R'''
-            A paragraph with a caption.
-            /// caption
-            This is the caption.
+            R"""
+            Test
+            /// figure-caption
+            <p markdown></p>
             ///
-            ''',
-            R'''
-            <figure id="__caption_1">
+            """,
+            R"""
+            <figure id="__figure-caption_1">
+            <p>Test</p>
             <figcaption>
-            <p>1. This is the caption.</p>
+            <p><span class="caption-prefix">Figure 1.</span></p>
             </figcaption>
-            <p>A paragraph with a caption.</p>
             </figure>
-            ''',
-            True
-        )
-
-    def test_consecutive_captions(self):
-        """Test consecutive captions with `autoid` and `prefix`."""
-
-        self.check_markdown(
-            R'''
-            A paragraph with a caption.
-            /// caption
-            This is the caption.
-            ///
-
-            A paragraph with a caption.
-            /// caption
-            This is the caption.
-            ///
-            ''',
-            R'''
-            <figure id="__caption_1">
-            <figcaption>
-            <p>1. This is the caption.</p>
-            </figcaption>
-            <p>A paragraph with a caption.</p>
-            </figure>
-            <figure id="__caption_2">
-            <figcaption>
-            <p>2. This is the caption.</p>
-            </figcaption>
-            <p>A paragraph with a caption.</p>
-            </figure>
-            ''',
-            True
-        )
-
-    def test_nested_captions(self):
-        """Test nested captions with `autoid` and `prefix`."""
-
-        self.check_markdown(
-            R'''
-            A paragraph with a caption.
-            /// caption
-            Level 3 caption.
-            ///
-            /// caption
-            Level 2 caption.
-            ///
-            /// caption
-            Level 1 caption.
-            ///
-            ''',
-            R'''
-            <figure id="__caption_1">
-            <figcaption>
-            <p>1. Level 1 caption.</p>
-            </figcaption>
-            <figure id="__caption_1_1">
-            <figcaption>
-            <p>1.1. Level 2 caption.</p>
-            </figcaption>
-            <figure id="__caption_1_1_1">
-            <figcaption>
-            <p>Level 3 caption.</p>
-            </figcaption>
-            <p>A paragraph with a caption.</p>
-            </figure>
-            </figure>
-            </figure>
-            ''',
-            True
-        )
-
-    def test_nested_consecutive_captions(self):
-        """Test nested consecutive captions with `autoid` and `prefix`."""
-
-        self.check_markdown(
-            R'''
-            A paragraph with a caption.
-            /// caption
-            Level 3 caption.
-            ///
-            /// caption
-            Level 2 caption.
-            ///
-            /// caption
-            Level 1 caption.
-            ///
-
-            A paragraph with a caption.
-            /// caption
-            Level 2 caption.
-            ///
-            /// caption
-            Level 1 caption.
-            ///
-            ''',
-            R'''
-            <figure id="__caption_1">
-            <figcaption>
-            <p>1. Level 1 caption.</p>
-            </figcaption>
-            <figure id="__caption_1_1">
-            <figcaption>
-            <p>1.1. Level 2 caption.</p>
-            </figcaption>
-            <figure id="__caption_1_1_1">
-            <figcaption>
-            <p>Level 3 caption.</p>
-            </figcaption>
-            <p>A paragraph with a caption.</p>
-            </figure>
-            </figure>
-            </figure>
-            <figure id="__caption_2">
-            <figcaption>
-            <p>2. Level 1 caption.</p>
-            </figcaption>
-            <figure id="__caption_2_1">
-            <figcaption>
-            <p>2.1. Level 2 caption.</p>
-            </figcaption>
-            <p>A paragraph with a caption.</p>
-            </figure>
-            </figure>
-            ''',
+            """,
             True
         )
 
     def test_nested_captions_manual_id(self):
-        """Test nested captions with `autoid` and `prefix` with manual IDs."""
+        """Test nested captions with `auto` and `auto` with manual IDs."""
 
         self.check_markdown(
             R'''
             A paragraph with a caption.
-            /// caption
+            /// figure-caption
             Level 4 caption.
             ///
-            /// caption
-                attrs:
-                  id: test
+            /// figure-caption
+                attrs: {id: test}
             Level 3 caption.
             ///
-            /// caption
+            /// figure-caption
             Level 2 caption.
             ///
-            /// caption
+            /// figure-caption
             Level 1 caption.
             ///
             ''',
             R'''
-            <figure id="__caption_1">
-            <figcaption>
-            <p>1. Level 1 caption.</p>
-            </figcaption>
-            <figure id="__caption_1_1">
-            <figcaption>
-            <p>1.1. Level 2 caption.</p>
-            </figcaption>
+            <figure id="__figure-caption_1">
+            <figure id="__figure-caption_1_1">
             <figure id="test">
+            <figure id="__figure-caption_1_1_1_1">
+            <p>A paragraph with a caption.</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.1.1.1.</span> Level 4 caption.</p>
+            </figcaption>
+            </figure>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.1.1.</span> Level 3 caption.</p>
+            </figcaption>
+            </figure>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.1.</span> Level 2 caption.</p>
+            </figcaption>
+            </figure>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.</span> Level 1 caption.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+
+class TestBlocksCaptionAutoLevel(util.MdCase):
+    """Test Blocks caption cases with `auto` level."""
+
+    extension = ['pymdownx.blocks.caption']
+    extension_configs = {
+        'pymdownx.blocks.caption': {
+            "auto": True,
+            'auto_level': 2
+        }
+    }
+
+    def test_caption(self):
+        """Test basic caption with `auto` level."""
+
+        self.check_markdown(
+            R'''
+            A paragraph with a caption.
+            /// figure-caption
+            This is the caption.
+            ///
+            ''',
+            R'''
+            <figure id="__figure-caption_1">
+            <p>A paragraph with a caption.</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.</span> This is the caption.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_nested_captions(self):
+        """Test nested captions with `auto` level."""
+
+        self.check_markdown(
+            R'''
+            A paragraph with a caption.
+            /// figure-caption
+            Level 3 caption.
+            ///
+            /// figure-caption
+            Level 2 caption.
+            ///
+            /// figure-caption
+            Level 1 caption.
+            ///
+            ''',
+            R'''
+            <figure id="__figure-caption_1">
+            <figure id="__figure-caption_1_1">
+            <figure>
+            <p>A paragraph with a caption.</p>
             <figcaption>
             <p>Level 3 caption.</p>
             </figcaption>
+            </figure>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.1.</span> Level 2 caption.</p>
+            </figcaption>
+            </figure>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.</span> Level 1 caption.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_nested_consecutive_captions(self):
+        """Test nested consecutive captions with `auto` level."""
+
+        self.check_markdown(
+            R'''
+            A paragraph with a caption.
+            /// figure-caption
+            Level 3 caption.
+            ///
+            /// figure-caption
+            Level 2 caption.
+            ///
+            /// figure-caption
+            Level 1 caption.
+            ///
+
+            A paragraph with a caption.
+            /// figure-caption
+            Level 2 caption.
+            ///
+            /// figure-caption
+            Level 1 caption.
+            ///
+            ''',
+            R'''
+            <figure id="__figure-caption_1">
+            <figure id="__figure-caption_1_1">
+            <figure>
+            <p>A paragraph with a caption.</p>
+            <figcaption>
+            <p>Level 3 caption.</p>
+            </figcaption>
+            </figure>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.1.</span> Level 2 caption.</p>
+            </figcaption>
+            </figure>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.</span> Level 1 caption.</p>
+            </figcaption>
+            </figure>
+            <figure id="__figure-caption_2">
+            <figure id="__figure-caption_2_1">
+            <p>A paragraph with a caption.</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 2.1.</span> Level 2 caption.</p>
+            </figcaption>
+            </figure>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 2.</span> Level 1 caption.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+
+class TestBlocksCaptionAutoLevelPrepend(util.MdCase):
+    """Test Blocks caption cases with `auto` level."""
+
+    extension = ['pymdownx.blocks.caption']
+    extension_configs = {
+        'pymdownx.blocks.caption': {
+            'auto': True,
+            'auto_level': 2,
+            'prepend': True
+        }
+    }
+
+    def test_caption(self):
+        """Test basic caption with `auto` level and `prepend`."""
+
+        self.check_markdown(
+            R'''
+            A paragraph with a caption.
+            /// figure-caption
+            This is the caption.
+            ///
+            ''',
+            R'''
+            <figure id="__figure-caption_1">
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.</span> This is the caption.</p>
+            </figcaption>
+            <p>A paragraph with a caption.</p>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_nested_captions(self):
+        """Test nested captions with `auto` level and `prepend`."""
+
+        self.check_markdown(
+            R'''
+            A paragraph with a caption.
+            /// figure-caption
+            Level 3 caption.
+            ///
+            /// figure-caption
+            Level 2 caption.
+            ///
+            /// figure-caption
+            Level 1 caption.
+            ///
+            ''',
+            R'''
+            <figure id="__figure-caption_1">
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.</span> Level 1 caption.</p>
+            </figcaption>
+            <figure id="__figure-caption_1_1">
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.1.</span> Level 2 caption.</p>
+            </figcaption>
             <figure>
             <figcaption>
-            <p>Level 4 caption.</p>
+            <p>Level 3 caption.</p>
             </figcaption>
             <p>A paragraph with a caption.</p>
             </figure>
             </figure>
             </figure>
+            ''',
+            True
+        )
+
+    def test_nested_consecutive_captions(self):
+        """Test nested consecutive captions with `auto` level and `prepend`."""
+
+        self.check_markdown(
+            R'''
+            A paragraph with a caption.
+            /// figure-caption
+            Level 3 caption.
+            ///
+            /// figure-caption
+            Level 2 caption.
+            ///
+            /// figure-caption
+            Level 1 caption.
+            ///
+
+            A paragraph with a caption.
+            /// figure-caption
+            Level 2 caption.
+            ///
+            /// figure-caption
+            Level 1 caption.
+            ///
+            ''',
+            R'''
+            <figure id="__figure-caption_1">
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.</span> Level 1 caption.</p>
+            </figcaption>
+            <figure id="__figure-caption_1_1">
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.1.</span> Level 2 caption.</p>
+            </figcaption>
+            <figure>
+            <figcaption>
+            <p>Level 3 caption.</p>
+            </figcaption>
+            <p>A paragraph with a caption.</p>
+            </figure>
+            </figure>
+            </figure>
+            <figure id="__figure-caption_2">
+            <figcaption>
+            <p><span class="caption-prefix">Figure 2.</span> Level 1 caption.</p>
+            </figcaption>
+            <figure id="__figure-caption_2_1">
+            <figcaption>
+            <p><span class="caption-prefix">Figure 2.1.</span> Level 2 caption.</p>
+            </figcaption>
+            <p>A paragraph with a caption.</p>
+            </figure>
             </figure>
             ''',
+            True
+        )
+
+    def test_manual_prepend(self):
+        """Test manual prepend."""
+
+        self.check_markdown(
+            R"""
+            Text
+            /// figure-caption | <
+            Prepended
+            ///
+
+            Text
+            /// figure-caption | >
+            Appended
+            ///
+            """,
+            R"""
+            <figure id="__figure-caption_1">
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.</span> Prepended</p>
+            </figcaption>
+            <p>Text</p>
+            </figure>
+            <figure id="__figure-caption_2">
+            <p>Text</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 2.</span> Appended</p>
+            </figcaption>
+            </figure>
+            """,
             True
         )
