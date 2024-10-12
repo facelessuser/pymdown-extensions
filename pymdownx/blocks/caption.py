@@ -278,7 +278,7 @@ class CaptionExtension(BlocksExtension):
             ],
             "auto_level": [
                 0,
-                "Depth of children to add prefixes to - Default: 1"
+                "Depth of children to add prefixes to - Default: 0"
             ],
             "auto": [
                 False,
