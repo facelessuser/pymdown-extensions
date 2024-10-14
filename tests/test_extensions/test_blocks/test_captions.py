@@ -6,6 +6,11 @@ class TestBlocksCaption(util.MdCase):
     """Test Blocks caption cases with default configuration."""
 
     extension = ['pymdownx.blocks.caption', 'md_in_html', 'pymdownx.blocks.html']
+    extension_configs = {
+        'pymdownx.blocks.caption': {
+            'auto': False
+        }
+    }
 
     def test_caption(self):
         """Test basic caption."""
@@ -245,6 +250,7 @@ class TestBlocksCaptionPrefix(util.MdCase):
     extension = ['pymdownx.blocks.caption', 'md_in_html']
     extension_configs = {
         'pymdownx.blocks.caption': {
+            'auto': False
         }
     }
 
@@ -488,7 +494,6 @@ class TestBlocksCaptionAutoPrefix(util.MdCase):
     extension = ['pymdownx.blocks.caption', 'md_in_html']
     extension_configs = {
         'pymdownx.blocks.caption': {
-            'auto': True
         }
     }
 
@@ -846,7 +851,6 @@ class TestBlocksCaptionAutoLevel(util.MdCase):
     extension = ['pymdownx.blocks.caption']
     extension_configs = {
         'pymdownx.blocks.caption': {
-            "auto": True,
             'auto_level': 2
         }
     }
@@ -972,7 +976,6 @@ class TestBlocksCaptionAutoLevelPrepend(util.MdCase):
     extension = ['pymdownx.blocks.caption']
     extension_configs = {
         'pymdownx.blocks.caption': {
-            'auto': True,
             'auto_level': 2,
             'prepend': True
         }

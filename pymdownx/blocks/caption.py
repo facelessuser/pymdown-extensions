@@ -281,7 +281,7 @@ class CaptionExtension(BlocksExtension):
                 "Depth of children to add prefixes to - Default: 0"
             ],
             "auto": [
-                False,
+                True,
                 "Auto add IDs with prefixes (prefixes are only added if prefix template is defined) - Default: False"
             ],
             "prepend": [
