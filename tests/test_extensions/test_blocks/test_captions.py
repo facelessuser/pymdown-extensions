@@ -659,16 +659,16 @@ class TestBlocksCaptionAutoPrefix(util.MdCase):
             ///
             """,
             R"""
-            <figure id="__figure-caption_1">
+            <figure id="__figure-caption_2">
             <figcaption>
-            <p><span class="caption-prefix">Figure 1.</span> Prepended and number ignored</p>
+            <p><span class="caption-prefix">Figure 2.</span> Prepended and number ignored</p>
             </figcaption>
             <p>Text</p>
             </figure>
-            <figure id="__figure-caption_2">
+            <figure id="__figure-caption_3">
             <p>Text</p>
             <figcaption>
-            <p><span class="caption-prefix">Figure 2.</span> Appended</p>
+            <p><span class="caption-prefix">Figure 3.</span> Appended</p>
             </figcaption>
             </figure>
             """,

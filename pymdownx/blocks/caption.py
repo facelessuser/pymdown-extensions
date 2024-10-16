@@ -31,9 +31,7 @@ from .. blocks import BlocksExtension
 from markdown.treeprocessors import Treeprocessor
 import re
 
-RE_FIG_NUM = re.compile(r'^(?:[1-9][0-9]*(?:.[1-9][0-9]*)*|0)(?= |$)')
-RE_FIG_TYPE = re.compile(r'^\[[ ]*([a-zA-Z][-a-zA-Z0-9]*)[ ]*\]')
-RE_FIG_TYPE_GLOBAL = re.compile(r'^[a-zA-Z][-a-zA-Z0-9]*$')
+RE_FIG_NUM = re.compile(r'^(\^)?([1-9][0-9]*(?:.[1-9][0-9]*)*)(?= |$)')
 RE_SEP = re.compile(r'[_-]+')
 
 
@@ -88,9 +86,11 @@ class CaptionTreeprocessor(Treeprocessor):
         counters = {k: [0] for k in self.fig_types}
         fig_type = last_type = self.type
         figs = []
+        fig_num = ''
 
         # Calculate the depth and iteration at that depth of the given figure.
         for el in doc.iter():
+            fig_num = ''
             stack = -1
             if el.tag == 'figure':
                 fig_type = last_type
@@ -111,38 +111,58 @@ class CaptionTreeprocessor(Treeprocessor):
                     # We have an unknown type or the type has no prefix template.
                     continue
 
-                stack += 1
-                current = el
-                while True:
-                    parent = parent_map.get(current, None)
+                if '__figure_num' in el.attrib:
+                    fig_num = [int(x) for x in el.attrib['__figure_num'].split('.')]
+                    del el.attrib['__figure_num']
+                    stack = len(fig_num) - 1
+                elif '__figure_level' in el.attrib:
+                    stack = int(el.attrib['__figure_level']) - 1
+                    if self.auto_level and stack >= (self.auto_level - 1):
+                        continue
+                else:
+                    stack += 1
+                    current = el
+                    while True:
+                        parent = parent_map.get(current, None)
 
-                    # No more parents
-                    if parent is None:
-                        break
-
-                    if parent.tag == 'figure' and parent.attrib['__figure_type'] == fig_type:
-                        if self.auto_level and stack >= (self.auto_level - 1):
-                            skip = True
+                        # No more parents
+                        if parent is None:
                             break
-                        stack += 1
 
-                    current = parent
+                        if parent.tag == 'figure' and parent.attrib['__figure_type'] == fig_type:
+                            level = '__figure_level' in parent.attrib
+                            if level:
+                                stack = int(el.attrib['__figure_level']) - 1
+                            else:
+                                stack += 1
+                            if self.auto_level and stack >= self.auto_level:
+                                skip = True
+                                break
+                            if level:
+                                break
 
-                if skip:
-                    # Parent has been skipped so all children are also skipped
-                    continue
+                        current = parent
+
+                    if skip:
+                        # Parent has been skipped so all children are also skipped
+                        continue
 
             # Found an appropriate figure at an acceptable depth
             if stack > -1:
                 l = last[fig_type]
                 counter = counters[fig_type]
                 if stack > l:
-                    counter.append(1)
+                    counter.extend([1] * (stack - l))
                 elif stack == l:
                     counter[stack] += 1
                 else:
                     del counter[stack + 1:]
                     counter[-1] += 1
+
+                if fig_num:
+                    if all(a <= b for a, b in zip(counter, fig_num)):
+                        counter[:] = fig_num[:]
+
                 last[fig_type] = stack
 
                 prefix = self.fig_types.get(fig_type, '')
@@ -153,6 +173,8 @@ class CaptionTreeprocessor(Treeprocessor):
 
         for fig in figs:
             del fig.attrib['__figure_type']
+            if '__figure_level' in fig.attrib:
+                del fig.attrib['__figure_level']
 
 
 class Fig(Block):
@@ -172,6 +194,7 @@ class Fig(Block):
         self.prepend = self.config['prepend']
         self.caption = None
         self.fig_num = ''
+        self.level = ''
 
     def on_validate(self, parent):
         """Handle on validate event."""
@@ -187,7 +210,10 @@ class Fig(Block):
 
             m = RE_FIG_NUM.match(argument)
             if m:
-                self.fig_num = m.group(0)
+                if m.group(1):
+                    self.level = m.group(2)
+                else:
+                    self.fig_num = m.group(2)
                 argument = argument[m.end():].lstrip()
 
         if argument:
@@ -221,6 +247,10 @@ class Fig(Block):
 
         if self.auto:
             fig.attrib['__figure_type'] = self.NAME
+            if self.level:
+                fig.attrib['__figure_level'] = self.level
+            if self.fig_num:
+                fig.attrib['__figure_num'] = self.fig_num
 
         # Add caption to the target figure.
         if self.prepend:
