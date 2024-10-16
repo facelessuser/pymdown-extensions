@@ -152,8 +152,6 @@ class CaptionTreeprocessor(Treeprocessor):
                             if self.auto_level and stack >= self.auto_level:
                                 skip = True
                                 break
-                            if level:
-                                break
 
                         current = parent
 
