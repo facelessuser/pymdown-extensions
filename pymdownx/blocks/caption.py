@@ -288,6 +288,9 @@ class Caption(Block):
 
         prefix = self.PREFIX
         if prefix and not self.auto:
+            # Levels should not be used in manual mode, but if they are, give a generic result.
+            if self.level:
+                self.fig_num = '.'.join(['1'] * int(self.level))
             if self.fig_num:
                 update_tag(
                     block,
