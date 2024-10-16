@@ -117,17 +117,19 @@ class CaptionTreeprocessor(Treeprocessor):
                 if '__figure_num' in el.attrib:
                     fig_num = [int(x) for x in el.attrib['__figure_num'].split('.')]
                     del el.attrib['__figure_num']
+                    el.attrib['__figure_level'] = str(len(fig_num))
                     stack = len(fig_num) - 1
-
-                # Handle a specified relative nesting depth
-                elif '__figure_level' in el.attrib:
-                    stack = int(el.attrib['__figure_level']) - 1
-                    if self.auto_level and stack >= (self.auto_level - 1):
-                        continue
 
                 # Determine depth
                 else:
-                    stack += 1
+                    # Handle a specified relative nesting depth
+                    if '__figure_level' in el.attrib:
+                        stack += int(el.attrib['__figure_level']) + 1
+                        if self.auto_level and stack >= (self.auto_level - 1):
+                            continue
+                    else:
+                        stack += 1
+
                     current = el
                     while True:
                         parent = parent_map.get(current, None)
@@ -141,9 +143,11 @@ class CaptionTreeprocessor(Treeprocessor):
                             # See if position in stack is manually specified
                             level = '__figure_level' in parent.attrib
                             if level:
-                                stack = int(el.attrib['__figure_level']) - 1
+                                stack += int(parent.attrib['__figure_level']) + 1
                             else:
                                 stack += 1
+                            if level:
+                                el.attrib['__figure_level'] = str(stack + 1)
                             # Ensure position in stack is not deeper than the specified level
                             if self.auto_level and stack >= self.auto_level:
                                 skip = True
