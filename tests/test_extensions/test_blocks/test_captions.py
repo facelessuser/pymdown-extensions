@@ -487,6 +487,60 @@ class TestBlocksCaptionPrefix(util.MdCase):
             True
         )
 
+    def test_depth(self):
+        """Depth is not really supported in manual, so a generic response is expected."""
+
+        self.check_markdown(
+            R"""
+            Paragraph
+            /// figure-caption
+            Caption 1
+            ///
+
+            Paragraph
+            /// figure-caption | ^1
+            Caption 1.1
+            ///
+
+            Paragraph
+            /// figure-caption | ^2
+            Caption 1.1.1
+            ///
+
+            Paragraph
+            /// figure-caption | ^3
+            Caption 1.1.1.1
+            ///
+            """,
+            """
+            <figure>
+            <p>Paragraph</p>
+            <figcaption>
+            <p>Caption 1</p>
+            </figcaption>
+            </figure>
+            <figure id="__figure-caption_1_1">
+            <p>Paragraph</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.1.</span> Caption 1.1</p>
+            </figcaption>
+            </figure>
+            <figure id="__figure-caption_1_1_1">
+            <p>Paragraph</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.1.1.</span> Caption 1.1.1</p>
+            </figcaption>
+            </figure>
+            <figure id="__figure-caption_1_1_1_1">
+            <p>Paragraph</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.1.1.1.</span> Caption 1.1.1.1</p>
+            </figcaption>
+            </figure>
+            """,
+            True
+        )
+
 
 class TestBlocksCaptionAutoPrefix(util.MdCase):
     """Test Blocks caption cases with enabled `auto`."""
@@ -844,6 +898,127 @@ class TestBlocksCaptionAutoPrefix(util.MdCase):
             True
         )
 
+    def test_depth(self):
+        """Test level depth."""
+
+        self.check_markdown(
+            R"""
+            Paragraph
+            /// figure-caption
+            Caption 1
+            ///
+
+            Paragraph
+            /// figure-caption
+            Caption 1.1.1
+            ///
+
+            /// figure-caption | ^1
+            Caption 1.1
+            ///
+
+            Paragraph
+            /// figure-caption | ^1
+            Caption 2.1
+            ///
+
+            /// figure-caption
+            Caption 2
+            ///
+            """,
+            """
+            <figure id="__figure-caption_1">
+            <p>Paragraph</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.</span> Caption 1</p>
+            </figcaption>
+            </figure>
+            <figure id="__figure-caption_1_1">
+            <figure id="__figure-caption_1_1_1">
+            <p>Paragraph</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.1.1.</span> Caption 1.1.1</p>
+            </figcaption>
+            </figure>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.1.</span> Caption 1.1</p>
+            </figcaption>
+            </figure>
+            <figure id="__figure-caption_2">
+            <figure id="__figure-caption_2_1_1">
+            <p>Paragraph</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 2.1.1.</span> Caption 2.1</p>
+            </figcaption>
+            </figure>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 2.</span> Caption 2</p>
+            </figcaption>
+            </figure>
+            """,
+            True
+        )
+
+    def test_manual_number(self):
+        """Test manual number."""
+
+        self.check_markdown(
+            R"""
+            Paragraph
+            /// figure-caption
+            Caption 4.2.1
+            ///
+
+            /// figure-caption | 4.2
+            Caption 4.2
+            ///
+
+
+            Paragraph
+            /// figure-caption
+            Caption 5.2.1
+            ///
+
+            /// figure-caption | 5.2
+            Caption 5.2
+            ///
+
+            /// figure-caption
+            Caption 5
+            ///
+            """,
+            """
+            <figure id="__figure-caption_4_2">
+            <figure id="__figure-caption_4_2_1">
+            <p>Paragraph</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 4.2.1.</span> Caption 4.2.1</p>
+            </figcaption>
+            </figure>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 4.2.</span> Caption 4.2</p>
+            </figcaption>
+            </figure>
+            <figure id="__figure-caption_5">
+            <figure id="__figure-caption_5_2">
+            <figure id="__figure-caption_5_2_1">
+            <p>Paragraph</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 5.2.1.</span> Caption 5.2.1</p>
+            </figcaption>
+            </figure>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 5.2.</span> Caption 5.2</p>
+            </figcaption>
+            </figure>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 5.</span> Caption 5</p>
+            </figcaption>
+            </figure>
+            """,
+            True
+        )
+
 
 class TestBlocksCaptionAutoLevel(util.MdCase):
     """Test Blocks caption cases with `auto` level."""
@@ -966,6 +1141,92 @@ class TestBlocksCaptionAutoLevel(util.MdCase):
             </figcaption>
             </figure>
             ''',
+            True
+        )
+
+    def test_depth(self):
+        """Test depth with auto level limit."""
+
+        self.check_markdown(
+            R"""
+            Paragraph
+            /// figure-caption
+            Caption 1
+            ///
+
+            Paragraph
+            /// figure-caption | ^1
+            Caption 1.1
+            ///
+
+            Paragraph
+            /// figure-caption | ^2
+            Caption None
+            ///
+            """,
+            """
+            <figure id="__figure-caption_1">
+            <p>Paragraph</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.</span> Caption 1</p>
+            </figcaption>
+            </figure>
+            <figure id="__figure-caption_1_1">
+            <p>Paragraph</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.1.</span> Caption 1.1</p>
+            </figcaption>
+            </figure>
+            <figure>
+            <p>Paragraph</p>
+            <figcaption>
+            <p>Caption None</p>
+            </figcaption>
+            </figure>
+            """,
+            True
+        )
+
+    def test_manual_numbers(self):
+        """Test manual numbers with auto level limit."""
+
+        self.check_markdown(
+            R"""
+            Paragraph
+            /// figure-caption | 1
+            Caption 1
+            ///
+
+            Paragraph
+            /// figure-caption | 2.3
+            Caption 2.3
+            ///
+
+            Paragraph
+            /// figure-caption | 4.3.1
+            Caption None
+            ///
+            """,
+            """
+            <figure id="__figure-caption_1">
+            <p>Paragraph</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.</span> Caption 1</p>
+            </figcaption>
+            </figure>
+            <figure id="__figure-caption_2_3">
+            <p>Paragraph</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 2.3.</span> Caption 2.3</p>
+            </figcaption>
+            </figure>
+            <figure id="__figure-caption_4_3_1">
+            <p>Paragraph</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 4.3.1.</span> Caption None</p>
+            </figcaption>
+            </figure>
+            """,
             True
         )
 

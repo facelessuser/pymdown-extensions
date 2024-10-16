@@ -116,7 +116,7 @@ class CaptionTreeprocessor(Treeprocessor):
                 # Handle a specified relative nesting depth
                 if '__figure_level' in el.attrib:
                     stack += int(el.attrib['__figure_level']) + 1
-                    if self.auto_level and stack >= (self.auto_level - 1):
+                    if self.auto_level and stack >= self.auto_level:
                         continue
                 else:
                     stack += 1
@@ -291,7 +291,7 @@ class Caption(Block):
         if prefix and not self.auto:
             # Levels should not be used in manual mode, but if they are, give a generic result.
             if self.level:
-                self.fig_num = '.'.join(['1'] * int(self.level))
+                self.fig_num = '.'.join(['1'] * (int(self.level) + 1))
             if self.fig_num:
                 update_tag(
                     block,
