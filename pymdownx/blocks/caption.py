@@ -75,7 +75,7 @@ class CaptionTreeprocessor(Treeprocessor):
         self.auto = config['auto']
         self.prepend = config['prepend']
         self.type = ''
-        self.auto_level = config['auto_level']
+        self.auto_level = max(0, config['auto_level'])
         self.fig_types = types
 
     def run(self, doc):
@@ -177,7 +177,7 @@ class CaptionTreeprocessor(Treeprocessor):
                 del fig.attrib['__figure_level']
 
 
-class Fig(Block):
+class Caption(Block):
     """Figure captions."""
 
     NAME = ''
@@ -341,7 +341,7 @@ class CaptionExtension(BlocksExtension):
             block_mgr.register(
                 type(
                     subclass,
-                    (Fig,),
+                    (Caption,),
                     {
                         'OPTIONS': {},
                         'NAME': name,
