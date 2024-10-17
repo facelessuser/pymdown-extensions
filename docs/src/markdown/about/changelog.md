@@ -3,8 +3,8 @@
 ## 10.12
 
 -   **NEW**: Blocks: Blocks extensions no longer considered in beta.
--   **NEW**: Details: Details is marked as "legacy" in documentation in favor of the new "blocks" approach.
--   **NEW**: Tabbed: Tabbed is marked as "legacy" in documentation in favor of the new "blocks" approach.
+-   **NEW**: Details: Details is marked as "legacy" in documentation in favor of the new `pymdownx.blocks.details` approach.
+-   **NEW**: Tabbed: Tabbed is marked as "legacy" in documentation in favor of the new `pymdownx.blocks.tab` approach.
 -   **NEW**: Caption: Add new "blocks" style extension called Caption which helps with specifying figures with captions.
 -   **NEW**: Emoji: Add a new `strict` option that will raise an exception if an emoji is used whose name has changed,
     removed, or never existed.
