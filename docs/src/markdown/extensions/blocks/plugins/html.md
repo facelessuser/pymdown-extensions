@@ -2,8 +2,6 @@
 
 # HTML
 
---8<-- "blocksbeta.md"
-
 ## Overview
 
 The HTML block allows a user to wrap Markdown in arbitrary HTML elements.
@@ -116,4 +114,4 @@ some *markdown* content
 Options      | Type       | Descriptions
 ------------ | ---------- | ------------
 `markdown`   | string     | String value to control how Markdown content is processed. Valid options are: `auto`, `block`, `inline`, `html`, and `raw`.
-`attrs`      | string     | A string that defines attributes for the outer, wrapper element.
+`attrs`      | dictionary | A dictionary that defines attributes for the outer, wrapper element.

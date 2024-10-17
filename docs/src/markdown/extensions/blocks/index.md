@@ -2,8 +2,6 @@
 
 # Blocks
 
---8<-- "blocksbeta.md"
-
 ## Overview
 
 Blocks is an extension aimed at providing generic blocks inspired by reStructuredText directives. While inspired by

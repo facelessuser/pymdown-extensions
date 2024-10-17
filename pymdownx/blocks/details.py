@@ -5,7 +5,6 @@ from ..blocks import BlocksExtension
 import re
 
 RE_SEP = re.compile(r'[_-]+')
-RE_VALID_NAME = re.compile(r'[\w-]+')
 
 
 class Details(Block):

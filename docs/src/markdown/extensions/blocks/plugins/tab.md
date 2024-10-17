@@ -11,8 +11,6 @@ If you are switching from `pymdownx.tabbed` to `pymdownx.blocks.tab`, ensure you
 issues.
 ///
 
---8<-- "blocksbeta.md"
-
 ## Overview
 
 Tab blocks are aimed at replacing the [Tabbed extension](../../tabbed.md). They function identical to Tabbed in every
@@ -168,4 +166,4 @@ Options      | Type       | Descriptions
 ------------ | ---------- | ------------
 `new`        | bool       | Force the current tab to start a new tab container.
 `select`     | bool       | Force the given tab to be selected in the parent tab container.
-`attrs`          | string     | A string that defines attributes for the outer, wrapper element.
+`attrs`      | dictionary | A dictionary that defines attributes for the outer, wrapper element.

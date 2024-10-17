@@ -10,8 +10,6 @@ can cause issues as they both generate the same output and confuse each other.
 If you are switching from `def_list` to `pymdownx.blocks.definition`, ensure you disable `def_list` to avoid issues.
 ///
 
---8<-- "blocksbeta.md"
-
 ## Overview
 
 The definition blocks are an alternative to using Python Markdown's [built-in extension][def-list]. The output is very
@@ -131,4 +129,4 @@ Definitions provide no global options.
 
 Options      | Type       | Descriptions
 ------------ | ---------- | ------------
-`attrs`      | string     | A string that defines attributes for the outer, wrapper element.
+`attrs`      | dictionary | A dictionary that defines attributes for the outer, wrapper element.

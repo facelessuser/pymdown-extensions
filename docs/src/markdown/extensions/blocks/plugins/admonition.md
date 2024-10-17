@@ -10,8 +10,6 @@ can cause issues as they both generate the same output and confuse each other.
 If you are switching from `admonition` to `pymdownx.blocks.admonition`, ensure you disable `admonition` to avoid issues.
 ///
 
---8<-- "blocksbeta.md"
-
 ## Overview
 
 Admonition blocks are an alternative to using Python Markdown's [built-in extension][admonition]. The output is
@@ -165,4 +163,4 @@ Options | Type       | Descriptions
 Options      | Type       | Descriptions
 ------------ | ---------- | ------------
 `type`       | string     | A class name to apply as the admonition type.
-`attrs`      | string     | A string that defines attributes for the outer, wrapper element.
+`attrs`      | dictionary | A dictionary that defines attributes for the outer, wrapper element.
