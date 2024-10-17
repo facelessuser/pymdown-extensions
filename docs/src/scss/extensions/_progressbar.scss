@@ -1,3 +1,6 @@
+@use "material-color";
+@use "../utilities/convert";
+
 .md-typeset {
 
   /* Progress Bars */
@@ -7,20 +10,20 @@
     margin: 0;
     color: var(--md-text-color);
     font-weight: 700;
-    line-height: px2rem(28px);
+    line-height: convert.px2rem(28px);
     white-space: nowrap;
     text-align: center;
     text-shadow:
-      px2em(-1px) px2em(-1px) px2em(6px) var(--md-default-bg-color--light),
-      px2em(1px) px2em(-1px) px2em(6px) var(--md-default-bg-color--light),
-      px2em(-1px) px2em(1px) px2em(6px) var(--md-default-bg-color--light),
-      px2em(1px) px2em(1px) px2em(6px) var(--md-default-bg-color--light);
+      convert.px2em(-1px) convert.px2em(-1px) convert.px2em(6px) var(--md-default-bg-color--light),
+      convert.px2em(1px) convert.px2em(-1px) convert.px2em(6px) var(--md-default-bg-color--light),
+      convert.px2em(-1px) convert.px2em(1px) convert.px2em(6px) var(--md-default-bg-color--light),
+      convert.px2em(1px) convert.px2em(1px) convert.px2em(6px) var(--md-default-bg-color--light);
   }
 
   .progress-bar {
     float: left;
-    height: px2rem(24px);
-    background-color: $clr-blue-a400;
+    height: convert.px2rem(24px);
+    background-color: material-color.$clr-blue-a400;
   }
 
   /* Stripe animation */
@@ -34,20 +37,20 @@
     position: relative;
     display: block;
     width: 100%;
-    height: px2rem(24px);
-    margin: px2rem(10px) 0;
+    height: convert.px2rem(24px);
+    margin: convert.px2rem(10px) 0;
     background-color: var(--md-default-fg-color--lightest);
 
     &.thin {
-      height: px2rem(8px);
-      margin-top: px2rem(18px);
+      height: convert.px2rem(8px);
+      margin-top: convert.px2rem(18px);
 
       .progress-label {
-        margin-top: px2rem(-8px);
+        margin-top: convert.px2rem(-8px);
       }
 
       .progress-bar {
-        height: px2rem(8px);
+        height: convert.px2rem(8px);
       }
     }
 
@@ -63,7 +66,7 @@
           transparent 77%,
           transparent
         );
-      background-size: px2rem(40px) px2rem(40px);
+      background-size: convert.px2rem(40px) convert.px2rem(40px);
     }
   }
 
@@ -88,7 +91,7 @@
     }
 
     100% {
-      background-position: px2rem(120px) 0;
+      background-position: convert.px2rem(120px) 0;
     }
   }
 }

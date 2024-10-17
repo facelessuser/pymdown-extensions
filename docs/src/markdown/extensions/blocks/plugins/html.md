@@ -66,7 +66,7 @@ Markdown\ Modes | Description
 `block`         | Parsed block content will be handled by the Markdown parser as content under a block element.
 `inline`        | Parsed block content will be handled by the Markdown parser as content under an inline element.
 `raw`           | Parsed block content will be preserved. No additional Markdown parsing will be applied. Content will be HTML escaped to preserve the content as is.
-`auto`          | Depending on whether the wrapping parent is a block element, inline element, or something like a code element, Blocks will choose the best approach for the content. Decision is made based on the element returned by the [`on_add` event](#on_add-event).
+`auto`          | Depending on whether the wrapping parent is a block element, inline element, or something like a code element, Blocks will choose the best approach for the content. Decision is made based on the element returned by the [`on_add` event](../api.md#on_add-event).
 `html`          | Like `raw`, content will be preserved, but the content will _not_ be HTML escaped and will be passed through as unmodified HTML. Any required sanitizing should be provided by the user post Markdown processing.
 
 /// tip | Raw and HTML Mode

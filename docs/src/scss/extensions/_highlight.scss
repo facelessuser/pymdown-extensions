@@ -1,3 +1,6 @@
+@use "../utilities/break";
+@use "../utilities/convert";
+
 .highlight {
   .kc { // Keyword constant
     color: var(--md-code-hl-constant-color);
@@ -38,7 +41,7 @@
   /* Allow code to look like code everywhere despite Material's current preference */
   *:not(pre) > code {
       margin: 0;
-      padding: 0 px2em( 4px, 13.6px);
+      padding: 0 convert.px2em( 4px, 13.6px);
       color: var(--md-code-fg-color);
       background-color: var(--md-code-inline-bg-color);
       border-radius: px2rem(2px);
@@ -100,10 +103,10 @@
   .highlighttable {
     .linenodiv {
       .special {
-        margin-right: px2em(-8px, 13.6px);
-        margin-left: px2em(-16px, 13.6px);
-        padding-right: px2em(8px, 13.6px);
-        padding-left: px2em(16px, 13.6px);
+        margin-right: convert.px2em(-8px, 13.6px);
+        margin-left: convert.px2em(-16px, 13.6px);
+        padding-right: convert.px2em(8px, 13.6px);
+        padding-left: convert.px2em(16px, 13.6px);
         background-color: var(--md-code-special-bg-color);
       }
     }
@@ -116,7 +119,7 @@
     position: relative;
     display: block;
     margin-top: 1em;
-    padding: px2em(8px) px2em(16px, 13.6px) px2em(8px) px2em(40px, 13.6px);
+    padding: convert.px2em(8px) convert.px2em(16px, 13.6px) convert.px2em(8px) convert.px2em(40px, 13.6px);
     font-weight: 700;
     font-size: px2rem(13.6px);
     background-color: var(--md-code-title-bg-color);
@@ -136,9 +139,9 @@
     // Add code icon
     &::before {
       position: absolute;
-      left: px2em(12px, 13.6px);
-      width: px2em(20px, 13.6px);
-      height: px2em(20px, 13.6px);
+      left: convert.px2em(12px, 13.6px);
+      width: convert.px2em(20px, 13.6px);
+      height: convert.px2em(20px, 13.6px);
       background-color: var(--md-default-fg-color);
       mask-image: svg-load("@mdi/svg/svg/console.svg");
       mask-repeat: no-repeat;
@@ -163,7 +166,7 @@
       ~ .code-footer {
         width: 100%;
         margin: 0;
-        padding: px2em(4px) px2em(8px) px2em(4px) px2em(0px);
+        padding: convert.px2em(4px) convert.px2em(8px) convert.px2em(4px) convert.px2em(0px);
 
         label {
           position: relative;
@@ -218,7 +221,7 @@
         }
 
         + div.highlight code {
-          max-height: px2em(150px);
+          max-height: convert.px2em(150px);
           overflow: hidden;
         }
 
@@ -226,7 +229,7 @@
           position: absolute;
           bottom: 0;
           left: 0;
-          padding: px2em(32px) px2em(8px) px2em(8px) px2rem(16px);
+          padding: convert.px2em(32px) convert.px2em(8px) convert.px2em(8px) px2rem(16px);
           background-image: linear-gradient(to bottom,
               transparent,
               var(--md-default-bg-color) 80%
@@ -236,7 +239,7 @@
     }
   }
 
-  @include break-to-device(mobile) {
+  @include break.break-to-device(mobile) {
 
     > {
       diagram-div {

@@ -1,3 +1,5 @@
+@use "../utilities/convert";
+
 .md-typeset {
 
   // Keyboard key
@@ -10,7 +12,7 @@
       "fingerprint":   "\261D",
     ) {
       .key-#{$name}::before {
-        padding-right: px2em(6.4px);
+        padding-right: convert.px2em(6.4px);
         content: $code;
       }
     }
@@ -20,7 +22,7 @@
         // Extra Keys
     ) {
       .key-#{$name}::after {
-        padding-left: px2em(6.4px);
+        padding-left: convert.px2em(6.4px);
         content: $code;
       }
     }

@@ -1,3 +1,5 @@
+@use "../utilities/convert";
+
 /* Dark mode changes */
 [data-md-color-scheme="dracula"] {
   .md-typeset table:not([class]) {
@@ -10,11 +12,11 @@
     th {
       color: var(--md-text-color);
       background-color: var(--md-default-bg-color--ultra-dark);
-      border-bottom: px2rem(1px) solid var(--md-primary-fg-color);
+      border-bottom: convert.px2rem(1px) solid var(--md-primary-fg-color);
     }
 
     td {
-      border-top: px2rem(1px) solid var(--md-default-fg-color--lighter);
+      border-top: convert.px2rem(1px) solid var(--md-default-fg-color--lighter);
     }
   }
 }

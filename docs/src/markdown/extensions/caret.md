@@ -18,7 +18,7 @@ md = markdown.Markdown(extensions=['pymdownx.caret'])
 ## Insert
 
 To wrap content in an **insert** tag, simply surround the text with double `^`. You can also enable `smart_insert` in
-the [options](#options). Smart behavior of **insert** models that of [BetterEm](betterem.md#differences).
+the [options](#options). Smart behavior of **insert** models that of [BetterEm](betterem.md#rules).
 
 ```text title="Insert"
 ^^Insert me^^

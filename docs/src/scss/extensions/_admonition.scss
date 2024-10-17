@@ -1,4 +1,7 @@
 @use "sass:color";
+@use "material-color";
+@use "../utilities/convert";
+@use "../palette/dracula";
 
 .md-typeset .admonition {
   border-width: 0;
@@ -6,23 +9,23 @@
 }
 
 $new-admonitions: (
-  settings config: $drac-pink $clr-purple-a700 "@mdi/svg/svg/cog.svg",
-  new: $drac-yellow $clr-yellow-a700 "@mdi/svg/svg/alert-decagram.svg"
+  settings config: dracula.$drac-pink material-color.$clr-purple-a700 "@mdi/svg/svg/cog.svg",
+  new: dracula.$drac-yellow material-color.$clr-yellow-a700 "@mdi/svg/svg/alert-decagram.svg"
 ) !default;
 
   $old-admonitions: (
-    note:                       $drac-dark-yellow,
-    abstract:                   $drac-cyan,
-    info:                       $drac-light-blue,
-    tip:                        $drac-teal,
-    success:                    $drac-green,
-    question:                   $drac-light-green,
-    warning:                    $drac-orange,
-    failure:                    $drac-dark-red,
-    danger:                     $drac-red,
-    bug:                        $drac-dark-pink,
-    example:                    $drac-purple,
-    quote:                      $drac-grey
+    note:                       dracula.$drac-dark-yellow,
+    abstract:                   dracula.$drac-cyan,
+    info:                       dracula.$drac-light-blue,
+    tip:                        dracula.$drac-teal,
+    success:                    dracula.$drac-green,
+    question:                   dracula.$drac-light-green,
+    warning:                    dracula.$drac-orange,
+    failure:                    dracula.$drac-dark-red,
+    danger:                     dracula.$drac-red,
+    bug:                        dracula.$drac-dark-pink,
+    example:                    dracula.$drac-purple,
+    quote:                      dracula.$drac-grey
   ) !default;
 
 /* Style new admonitions with dark or light colors */
@@ -30,7 +33,7 @@ $new-admonitions: (
   --md-admonition-bg-color: transparent;
 
   &[data-md-color-scheme="dracula"] {
-    --md-admonition-icon-color: $drac-dark-yellow;
+    --md-admonition-icon-color: dracula.$drac-dark-yellow;
   }
 
   @each $names, $prop in $new-admonitions {
@@ -69,7 +72,7 @@ $new-admonitions: (
   box-shadow: var(--md-shadow-z2);
 
   &:focus-within {
-    box-shadow: 0 0 0 px2rem(4px) var(--md-admonition-shadow-color--note);
+    box-shadow: 0 0 0 convert.px2rem(4px) var(--md-admonition-shadow-color--note);
   }
 
   > .admonition-title {
@@ -95,7 +98,7 @@ $new-admonitions: (
       border-color: var(--md-admonition-icon-color--#{$name});
 
       &:focus-within {
-        box-shadow: 0 0 0 px2rem(4px) var(--md-admonition-shadow-color--#{$name});
+        box-shadow: 0 0 0 convert.px2rem(4px) var(--md-admonition-shadow-color--#{$name});
       }
 
       // Define base class
@@ -132,7 +135,7 @@ $new-admonitions: (
     border-color: var(--md-admonition-icon-color--#{$name});
 
     &:focus-within {
-      box-shadow: 0 0 0 px2rem(4px) var(--md-admonition-shadow-color--#{$name});
+      box-shadow: 0 0 0 convert.px2rem(4px) var(--md-admonition-shadow-color--#{$name});
     }
 
     > .admonition-title {
@@ -141,10 +144,10 @@ $new-admonitions: (
 
       // Icon
       &::before {
-        width: px2rem(20px);
-        height: px2rem(20px);
+        width: convert.px2rem(20px);
+        height: convert.px2rem(20px);
         background-color: var(--md-admonition-icon-color--#{$name});
-        background-size: px2rem(20px);
+        background-size: convert.px2rem(20px);
         mask-image: var(--md-admonition-icon--#{$name});
         content: "\a0";
       }

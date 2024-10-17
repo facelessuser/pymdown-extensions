@@ -1,3 +1,5 @@
+@use "palette/dracula";
+
 /* Dark mode changes */
 [data-md-color-scheme="dracula"] {
   .md-typeset .task-list-control {
@@ -6,7 +8,7 @@
     }
 
     [type=checkbox]:checked + .task-list-indicator::before {
-    	background-color: $drac-green;
+    	background-color: dracula.$drac-green;
     }
   }
 }

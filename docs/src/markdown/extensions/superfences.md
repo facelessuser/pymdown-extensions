@@ -701,7 +701,7 @@ see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify funct
 
 /// new | New 7.0
 The addition of the parameters `classes` and `id_value` is new in 7.0. If injecting additional classes or ids via
-[brace headers](#injecting-classes-and-ids), only then will `classes` and `id_value` be passed in to preserve
+[brace headers](#injecting-classes-ids-and-attributes), only then will `classes` and `id_value` be passed in to preserve
 backwards compatibility with old custom formatters. Users, moving forward, should at the very least update their
 formatters with `**kwargs` to future proof their custom formatters in case additional parameters are added in the
 future.

@@ -1,29 +1,20 @@
-@import "material-color";
-@import "material-shadows";
+@use "palette/colors";
 
-@import "utilities/break";
-@import "utilities/convert";
-@import "utilities/color_tools";
+@use "general";
 
-@import "config";
+@use "extensions/admonition";
+@use "extensions/arithmatex";
+@use "extensions/critic";
+@use "extensions/details";
+@use "extensions/highlight";
+@use "extensions/keys";
+@use "extensions/magiclink";
+@use "extensions/mark";
+@use "extensions/progressbar";
+@use "extensions/tabbed";
+@use "extensions/tables";
+@use "extensions/tasklist";
+@use "extensions/toc";
+@use "extensions/superfences";
 
-@import "palette/colors";
-
-@import "general";
-
-@import "extensions/admonition";
-@import "extensions/arithmatex";
-@import "extensions/critic";
-@import "extensions/details";
-@import "extensions/highlight";
-@import "extensions/keys";
-@import "extensions/magiclink";
-@import "extensions/mark";
-@import "extensions/progressbar";
-@import "extensions/tabbed";
-@import "extensions/tables";
-@import "extensions/tasklist";
-@import "extensions/toc";
-@import "extensions/superfences";
-
-@import "material";
+@use "material";

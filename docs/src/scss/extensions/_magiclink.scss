@@ -1,3 +1,5 @@
+@use "../utilities/convert";
+
 // General styling for repository link icons
 :root > * {
   --magiclink-email-icon: svg-load("@mdi/svg/svg/mail.svg");
@@ -25,7 +27,7 @@
   a[href^="mailto:"] {
     &:not(.magiclink-ignore) {
       position: relative;
-      padding-left: px2em(22px);
+      padding-left: convert.px2em(22px);
 
       &::before {
         position: absolute;
@@ -33,10 +35,10 @@
         left: 0;
         display: block;
         box-sizing: border-box;
-        width: px2em(20px);
-        height: px2em(20px);
+        width: convert.px2em(20px);
+        height: convert.px2em(20px);
         background-color: var(--md-typeset-a-color);
-        background-size: px2em(20px);
+        background-size: convert.px2em(20px);
         transition: background-color 125ms;
         mask-repeat: no-repeat;
         mask-size: contain;

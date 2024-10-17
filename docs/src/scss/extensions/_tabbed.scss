@@ -1,8 +1,11 @@
+@use "../utilities/break";
+@use "../utilities/convert";
+
 /* Dark mode changes */
 [data-md-color-scheme="dracula"] {
   .md-typeset {
     .tabbed-set > .tabbed-labels {
-      box-shadow: 0 px2rem(-1px) var(--md-default-fg-color--lighter) inset;
+      box-shadow: 0 convert.px2rem(-1px) var(--md-default-fg-color--lighter) inset;
     }
   }
 }
@@ -12,16 +15,16 @@
 .md-typeset {
   .tabbed-alternate {
     &.tabbed-set .tabbed-control {
-      width: px2rem(40px);
+      width: convert.px2rem(40px);
 
       &[hidden] {
-        width: px2rem(24px);
+        width: convert.px2rem(24px);
         opacity: 0;
       }
     }
 
     &.tabbed-set > .tabbed-content > .tabbed-block {
-      padding: 0 px2rem(12px);
+      padding: 0 convert.px2rem(12px);
 
       > {
         pre,
@@ -31,10 +34,10 @@
         .highlighttable {
 
           &:only-child {
-            margin-right: px2rem(-24px);
-            margin-left: px2rem(-24px);
-            padding-right: px2rem(12px);
-            padding-left: px2rem(12px);
+            margin-right: convert.px2rem(-24px);
+            margin-left: convert.px2rem(-24px);
+            padding-right: convert.px2rem(12px);
+            padding-left: convert.px2rem(12px);
 
             span.filename {
               margin-top: 0;
@@ -45,21 +48,21 @@
         .collapse-code:only-child {
           margin-top: 0;
 
-          margin-right: px2rem(-24px);
-          margin-left: px2rem(-24px);
-          padding-right: px2rem(12px);
-          padding-left: px2rem(12px);
+          margin-right: convert.px2rem(-24px);
+          margin-left: convert.px2rem(-24px);
+          padding-right: convert.px2rem(12px);
+          padding-left: convert.px2rem(12px);
 
           > .code-footer {
-            left: px2rem(12px)
+            left: convert.px2rem(12px)
           }
         }
 
         diagram-div:only-child {
-          margin-right: px2rem(-24px);
-          margin-left: px2rem(-24px);
-          padding-right: px2rem(12px);
-          padding-left: px2rem(12px);
+          margin-right: convert.px2rem(-24px);
+          margin-left: convert.px2rem(-24px);
+          padding-right: convert.px2rem(12px);
+          padding-left: convert.px2rem(12px);
         }
       }
     }
@@ -71,7 +74,7 @@
 }
 
 /* Ignore mobile overflow styling that extends the tab bar */
-@include break-to-device(mobile) {
+@include break.break-to-device(mobile) {
   [dir=ltr] .md-content__inner > .tabbed-set .tabbed-labels {
     padding-left: 0;
   }

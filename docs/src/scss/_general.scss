@@ -1,7 +1,12 @@
+@use "material-color";
+@use "palette/dracula";
+@use "utilities/break";
+@use "utilities/convert";
+
 /* Normal colors */
 :root {
-  --md-heart: #{$clr-red-a200};
-  --md-heart-big: #{$clr-red-a400};
+  --md-heart: #{material-color.$clr-red-a200};
+  --md-heart-big: #{material-color.$clr-red-a400};
 
   :focus-visible {
     outline-style: solid;
@@ -9,8 +14,8 @@
 
   /* Dark mode colors */
   [data-md-color-scheme="dracula"] {
-    --md-heart: #{$drac-pink};
-    --md-heart-big: #{$drac-red};
+    --md-heart: #{dracula.$drac-pink};
+    --md-heart-big: #{dracula.$drac-red};
   }
 }
 
@@ -22,7 +27,7 @@
 
     a.source-link {
         position: relative;
-        top: px2rem(-12px);
+        top: convert.px2rem(-12px);
         float: right;
         color: var(--md-default-fg-color--lighter);
         transition: color 125ms;
@@ -32,17 +37,17 @@
         }
 
         .twemoji {
-            height: px2rem(24px);
+            height: convert.px2rem(24px);
 
             svg {
-                width: px2rem(24px);
-                height: px2rem(24px);
+                width: convert.px2rem(24px);
+                height: convert.px2rem(24px);
             }
         }
     }
 
     div.highlight.md-max-height pre > code {
-      max-height: px2rem(300px);
+      max-height: convert.px2rem(300px);
     }
 }
 
@@ -69,8 +74,8 @@ footer.sponsorship {
 
   hr {
     display: inline-block;
-    width: px2rem(32px);
-    margin: 0 px2rem(14px);
+    width: convert.px2rem(32px);
+    margin: 0 convert.px2rem(14px);
     vertical-align: middle;
     border-bottom: 2px solid var(--md-default-fg-color--lighter);
   }
@@ -128,7 +133,7 @@ body {
   z-index: 0;
 }
 
-@include break-to-device(tablet portrait) {
+@include break.break-to-device(tablet portrait) {
   .md-header-nav__scheme {
     padding-right: 0;
   }

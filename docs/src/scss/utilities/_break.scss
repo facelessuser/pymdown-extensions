@@ -44,7 +44,24 @@
 ///     )
 ///   );
 ///
-$break-devices: () !default;
+@use "sass:map";
+@use "./convert";
+
+$break-devices: (
+  mobile: (
+    portrait:  convert.px2em(220px)  convert.px2em(479px),
+    landscape: convert.px2em(480px)  convert.px2em(719px)
+  ),
+  tablet: (
+    portrait:  convert.px2em(720px)  convert.px2em(959px),
+    landscape: convert.px2em(960px)  convert.px2em(1219px)
+  ),
+  screen: (
+    small:     convert.px2em(1220px) convert.px2em(1599px),
+    medium:    convert.px2em(1600px) convert.px2em(1999px),
+    large:     convert.px2em(2000px)
+  )
+) !default;
 
 // ----------------------------------------------------------------------------
 // Helpers
@@ -88,7 +105,7 @@ $break-devices: () !default;
   $current: $break-devices;
   @for $n from 1 through length($device) {
     @if type-of($current) == map {
-      $current: map-get($current, nth($device, $n));
+      $current: map.get($current, nth($device, $n));
     } @else {
       @error "Invalid device map: #{$devices}";
     }

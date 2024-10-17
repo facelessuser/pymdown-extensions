@@ -17,7 +17,7 @@ md = markdown.Markdown(extensions=['pymdownx.tilde'])
 ## Delete
 
 To wrap content in a **delete** tag, simply surround the text with double `~`. You can also enable `smart_delete` in the
-[options](#options). Smart behavior of **delete** models that of [BetterEm](betterem.md#differences).
+[options](#options). Smart behavior of **delete** models that of [BetterEm](betterem.md#rules).
 
 ```text title="Delete"
 ~~Delete me~~
