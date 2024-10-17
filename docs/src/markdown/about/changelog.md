@@ -2,7 +2,10 @@
 
 ## 10.12
 
--   **NEW**: Caption: Add new Caption extension to help with specifying figures with captions.
+-   **NEW**: Blocks: Blocks extensions no longer considered in beta.
+-   **NEW**: Details: Details is marked as "legacy" in documentation favoring of the new "blocks" approach.
+-   **NEW**: Tabbed: Tabbed is marked as "legacy" in documentation favoring of the new "blocks" approach.
+-   **NEW**: Caption: Add new "blocks" style extension called Caption which helps with specifying figures with captions.
 -   **NEW**: Emoji: Add a new `strict` option that will raise an exception if an emoji is used whose name has changed,
     removed, or never existed.
 -   **FIX**: Emoji: Emoji links should be generated such that they point to the new CDN version.

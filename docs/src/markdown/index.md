@@ -27,14 +27,16 @@ aware of when using these extensions.
 
 ## Extensions
 
-&nbsp;                                       | Extensions                                   | &nbsp;
--------------------------------------------- | -------------------------------------------- | ------
-[Arithmatex](extensions/arithmatex.md)       | [B64](extensions/b64.md)                     | [BetterEm](extensions/betterem.md)
-[Blocks](extensions/blocks/index.md)         | [Caret](extensions/caret.md)                 | [Critic](extensions/critic.md)
-[Details](extensions/details.md)             | [Emoji](extensions/emoji.md)                 | [EscapeAll](extensions/escapeall.md)
-[Extra](extensions/extra.md)                 | [FancyLists](extensions/fancylists.md)       | [Highlight](extensions/highlight.md)
-[InlineHilite](extensions/inlinehilite.md)   | [Keys](extensions/keys.md)                   | [MagicLink](extensions/magiclink.md)
-[Mark](extensions/mark.md)                   | [PathConverter](extensions/pathconverter.md) | [ProgressBar](extensions/progressbar.md)
-[SaneHeaders](extensions/saneheaders.md)     | [SmartSymbols](extensions/smartsymbols.md)   | [Snippets](extensions/snippets.md)
-[StripHTML](extensions/striphtml.md)         | [SuperFences](extensions/superfences.md)     | [Tabbed](extensions/tabbed.md)
-[Tasklist](extensions/tasklist.md)           | [Tilde](extensions/tilde.md)
+&nbsp;                                                        | Extensions                                              | &nbsp;
+------------------------------------------------------------- | ------------------------------------------------------- | ------
+[Arithmatex](extensions/arithmatex.md)                        | [B64](extensions/b64.md)                                | [BetterEm](extensions/betterem.md)
+[Blocks: Admonition](extensions/blocks/plugins/admonition.md) | [Blocks: Caption](extensions/blocks/plugins/caption.md) | [Blocks: Definition](extensions/blocks/plugins/definition.md)
+[Blocks: Details](extensions/blocks/plugins/details.md)       | [Blocks: HTML](extensions/blocks/plugins/html.md)       | [Blocks: Tab](extensions/blocks/plugins/tab.md)
+[Caret](extensions/caret.md)                                  | [Critic](extensions/critic.md)                          | [Emoji](extensions/emoji.md)
+[EscapeAll](extensions/escapeall.md)                          | [Extra](extensions/extra.md)                            | [FancyLists](extensions/fancylists.md)
+[Highlight](extensions/highlight.md)                          | [InlineHilite](extensions/inlinehilite.md)              | [Keys](extensions/keys.md)
+[Legacy: Details](extensions/details.md)                      | [Legacy: Tabbed](extensions/tabbed.md)                  | [MagicLink](extensions/magiclink.md)
+[Mark](extensions/mark.md)                                    | [PathConverter](extensions/pathconverter.md)            | [ProgressBar](extensions/progressbar.md)
+[SaneHeaders](extensions/saneheaders.md)                      | [SmartSymbols](extensions/smartsymbols.md)              | [Snippets](extensions/snippets.md)
+[StripHTML](extensions/striphtml.md)                          | [SuperFences](extensions/superfences.md)                | [Tasklist](extensions/tasklist.md)
+[Tilde](extensions/tilde.md)
