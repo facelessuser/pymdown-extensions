@@ -1,4 +1,4 @@
-@use "material-color";
+@use "../palette/material_color";
 @use "../utilities/convert";
 
 .md-typeset {
@@ -23,7 +23,7 @@
   .progress-bar {
     float: left;
     height: convert.px2rem(24px);
-    background-color: material-color.$clr-blue-a400;
+    background-color: material_color.$clr-blue-a400;
   }
 
   /* Stripe animation */

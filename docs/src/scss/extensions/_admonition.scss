@@ -1,6 +1,7 @@
 @use "sass:color";
-@use "material-color";
+@use "sass:list";
 @use "../utilities/convert";
+@use "../palette/material_color";
 @use "../palette/dracula";
 
 .md-typeset .admonition {
@@ -9,8 +10,8 @@
 }
 
 $new-admonitions: (
-  settings config: dracula.$drac-pink material-color.$clr-purple-a700 "@mdi/svg/svg/cog.svg",
-  new: dracula.$drac-yellow material-color.$clr-yellow-a700 "@mdi/svg/svg/alert-decagram.svg"
+  settings config: dracula.$drac-pink material_color.$clr-purple-a700 "@mdi/svg/svg/cog.svg",
+  new: dracula.$drac-yellow material_color.$clr-yellow-a700 "@mdi/svg/svg/alert-decagram.svg"
 ) !default;
 
   $old-admonitions: (
@@ -37,12 +38,12 @@ $new-admonitions: (
   }
 
   @each $names, $prop in $new-admonitions {
-    $tint: nth($prop, 1);
-    $tint2: nth($prop, 2);
-    $name: nth($names, 1);
+    $tint: list.nth($prop, 1);
+    $tint2: list.nth($prop, 2);
+    $name: list.nth($names, 1);
 
     & {
-      --md-admonition-icon--#{$name}: svg-load("#{nth($prop, 3)}");
+      --md-admonition-icon--#{$name}: svg-load("#{list.nth($prop, 3)}");
       --md-admonition-bg-color--#{$name}: #{color.adjust($tint2, $alpha: -0.9)};
       --md-admonition-icon-color--#{$name}: #{$tint2};
       --md-admonition-shadow-color--#{$name}: #{color.adjust($tint2, $alpha: -0.9)};
@@ -55,7 +56,7 @@ $new-admonitions: (
     }
 
     @each $names, $tint in $old-admonitions {
-      $name: nth($names, 1);
+      $name: list.nth($names, 1);
 
       & {
         --md-admonition-bg-color--#{$name}: var(--md-default-bg-color--ultra-dark);
@@ -91,7 +92,7 @@ $new-admonitions: (
 
   @each $names, $prop in $old-admonitions {
 
-    $name: nth($names, 1);
+    $name: list.nth($names, 1);
 
     // Define base class
     .md-typeset .admonition.#{$name} {
@@ -117,9 +118,9 @@ $new-admonitions: (
     }
 
     // Define synonyms for base class
-    @if length($names) > 1 {
-      @for $n from 2 through length($names) {
-        .#{nth($names, $n)} {
+    @if list.length($names) > 1 {
+      @for $n from 2 through list.length($names) {
+        .#{list.nth($names, $n)} {
           @extend .#{$name};
         }
       }
@@ -128,7 +129,7 @@ $new-admonitions: (
 }
 
 @each $names, $prop in $new-admonitions {
-  $name: nth($names, 1);
+  $name: list.nth($names, 1);
 
     // Define base class
   .md-typeset .admonition.#{$name} {
@@ -158,9 +159,9 @@ $new-admonitions: (
   }
 
   // Define synonyms for base class
-  @if length($names) > 1 {
-    @for $n from 2 through length($names) {
-      .#{nth($names, $n)} {
+  @if list.length($names) > 1 {
+    @for $n from 2 through list.length($names) {
+      .#{list.nth($names, $n)} {
         @extend .#{$name};
       }
     }

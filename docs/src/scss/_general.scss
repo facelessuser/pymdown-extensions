@@ -1,12 +1,12 @@
-@use "material-color";
+@use "palette/material_color";
 @use "palette/dracula";
 @use "utilities/break";
 @use "utilities/convert";
 
 /* Normal colors */
 :root {
-  --md-heart: #{material-color.$clr-red-a200};
-  --md-heart-big: #{material-color.$clr-red-a400};
+  --md-heart: #{material_color.$clr-red-a200};
+  --md-heart-big: #{material_color.$clr-red-a400};
 
   :focus-visible {
     outline-style: solid;

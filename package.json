@@ -48,8 +48,6 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-stylelint": "^13.0.0",
     "gulp-touch-fd": "github:funkedigital/gulp-touch-fd",
-    "material-design-color": "^2.3.2",
-    "material-shadows": "^3.0.1",
     "postcss-inline-svg": "^6.0.0",
     "postcss-pseudo-classes": "^0.4.0",
     "postcss-scss": "^4.0.9",

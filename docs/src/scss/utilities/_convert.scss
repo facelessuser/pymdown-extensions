@@ -42,8 +42,8 @@
 /// Convert font size in px to em
 ///
 @function px2em($size, $base: 16px) {
-  @if unit($size) == px {
-    @if unit($base) == px {
+  @if math.unit($size) == px {
+    @if math.unit($base) == px {
       @return math.div($size, $base) * 1em;
     } @else {
       @error "Invalid base: #{$base} - unit must be 'px'";
@@ -57,8 +57,8 @@
 /// Convert font size in px to rem
 ///
 @function px2rem($size, $base: 20px) {
-  @if unit($size) == px {
-    @if unit($base) == px {
+  @if math.unit($size) == px {
+    @if math.unit($base) == px {
       @return math.div($size, $base) * 1.0rem;
     } @else {
       @error "Invalid base: #{$base} - unit must be 'px'";
