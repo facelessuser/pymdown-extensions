@@ -10,8 +10,6 @@ If you are switching from `pymdownx.details` to `pymdownx.blocks.details`, ensur
 avoid issues.
 ///
 
---8<-- "blocksbeta.md"
-
 ## Overview
 
 Details blocks are an alternative to using [`pymdownx.details`](../../details.md) and, in fact, aim to potentially replace
@@ -116,7 +114,7 @@ md = markdown.Markdown(
     extensions=['pymdownx.blocks.details'],
     extension_configs={
         'pymdownx.blocks.details": {
-            'types': [{'name': some-custom-type', 'class': 'custom', 'title': 'My Default title'}]
+            'types': [{'name': 'some-custom-type', 'class': 'custom', 'title': 'My Default title'}]
         }
     }
 )
@@ -166,4 +164,4 @@ Options      | Type       | Descriptions
 ------------ | ---------- | ------------
 `open`       | bool       | A boolean that determines if the details block is open or closed.
 `type`       | string     | A class name to apply as the admonition type.
-`attrs`      | string     | A string that defines attributes for the outer, wrapper element.
+`attrs`      | dictionary | A dictionary that defines attributes for the outer, wrapper element.
