@@ -477,6 +477,27 @@ extenconfigs = {
 }
 ```
 
+If desired, you can also specify optional classes to be added to a specific figure type via the `classes` option.
+
+```py
+extenconfigs = {
+    "pymdownx.blocks.caption": {
+        "types": [
+            'caption',
+            {
+                'name': 'figure-caption',
+                'prefix': 'Figure {}.'
+                'classes': 'one-class two-class'
+            },
+            {
+                'name': 'table-caption',
+                'prefix': 'Table {}.'
+            }
+        ]
+    }
+}
+```
+
 ## Global Options
 
 Options        | Type       | Descriptions

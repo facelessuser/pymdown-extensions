@@ -244,6 +244,86 @@ class TestBlocksCaption(util.MdCase):
         )
 
 
+class TestBlocksCaptionClass(util.MdCase):
+    """Test caption classes."""
+
+    extension = ['pymdownx.blocks.caption', 'md_in_html', 'pymdownx.blocks.html']
+    extension_configs = {
+        'pymdownx.blocks.caption': {
+            'types': [
+                {"name": "figure-class", "classes": "class1 class2"}
+            ]
+        }
+    }
+
+    def test_class_insertion(self):
+        """Test class insertion."""
+
+        self.check_markdown(
+            R'''
+            A paragraph with a caption.
+            /// figure-class
+            This is the caption.
+            ///
+            ''',
+            R'''
+            <figure class="class1 class2">
+            <p>A paragraph with a caption.</p>
+            <figcaption>
+            <p>This is the caption.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_class_insertion_existing_figure(self):
+        """Test class insertion on existing figure."""
+
+        self.check_markdown(
+            R'''
+            /// html | figure
+            A paragraph with a caption.
+            ///
+            /// figure-class
+            This is the caption.
+            ///
+            ''',
+            R'''
+            <figure class="class1 class2">
+            <p>A paragraph with a caption.</p>
+            <figcaption>
+            <p>This is the caption.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_class_insertion_existing_class(self):
+        """Test class insertion on existing figure with existing class."""
+
+        self.check_markdown(
+            R'''
+            /// html | figure.class1
+            A paragraph with a caption.
+            ///
+            /// figure-class
+            This is the caption.
+            ///
+            ''',
+            R'''
+            <figure class="class1 class2">
+            <p>A paragraph with a caption.</p>
+            <figcaption>
+            <p>This is the caption.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+
 class TestBlocksCaptionPrefix(util.MdCase):
     """Test Blocks caption cases with enabled `auto`."""
 

@@ -198,6 +198,7 @@ class Caption(Block):
 
     NAME = ''
     PREFIX = ''
+    CLASSES = ''
     ARGUMENT = None
     OPTIONS = {
         'type': ['', type_html_identifier]
@@ -211,6 +212,7 @@ class Caption(Block):
         self.caption = None
         self.fig_num = ''
         self.level = ''
+        self.classes = self.CLASSES.split()
 
     def on_validate(self, parent):
         """Handle on validate event."""
@@ -256,10 +258,23 @@ class Caption(Block):
         # Create a new figure if sibling is not a figure or already has a caption.
         # Add sibling to the new figure.
         if fig is None:
-            fig = etree.SubElement(parent, 'figure')
+            attrib = {} if not self.classes else {'class': ' '.join(self.classes)}
+            fig = etree.SubElement(parent, 'figure', attrib)
             if child is not None:
                 fig.append(child)
                 parent.remove(child)
+
+        # Add classes to existing figure
+        elif self.CLASSES:
+            classes = fig.attrib.get('class', '').strip()
+            if classes:
+                class_list = classes.split()
+                for c in self.classes:
+                    if c not in class_list:
+                        classes += " " + c
+            else:
+                classes = ' '.join(self.classes)
+            fig.attrib['class'] = classes
 
         if self.auto:
             fig.attrib['__figure_type'] = self.NAME
@@ -352,9 +367,11 @@ class CaptionExtension(BlocksExtension):
             if isinstance(obj, dict):
                 name = obj['name']
                 prefix = obj.get('prefix', '')
+                classes = obj.get('classes', '')
             else:
                 name = obj
                 prefix = ''
+                classes = ''
             types[name] = prefix
             subclass = RE_SEP.sub('', name).title()
             block_mgr.register(
@@ -364,7 +381,8 @@ class CaptionExtension(BlocksExtension):
                     {
                         'OPTIONS': {},
                         'NAME': name,
-                        'PREFIX': prefix
+                        'PREFIX': prefix,
+                        'CLASSES': classes
                     }
                 ),
                 {'auto_level': config['auto_level'], 'auto': config['auto'], 'prepend': config['prepend']}
