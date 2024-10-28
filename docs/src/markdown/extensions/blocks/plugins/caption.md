@@ -53,7 +53,7 @@ Captions can be nested, and if multiple captions are used on a single block, the
 nested figures.
 
 ```text title="Nested Captions"
-Paragraph
+![placeholder](../../../images/placeholder.jpeg)
 
 /// caption
 Inner caption
@@ -65,7 +65,7 @@ Outer caption
 ```
 
 //// html | div.result
-Paragraph
+![placeholder](../../../images/placeholder.jpeg)
 
 /// caption
 Inner caption
@@ -81,13 +81,13 @@ into that figure. This allows for more complex figures with sub-figures.
 
 ```html title="Complex Captions"
 //// html | figure
-Paragraph 1
+![placeholder](../../../images/placeholder.jpeg)
 
 /// caption
 Caption 1
 ///
 
-Paragraph 2
+![placeholder](../../../images/placeholder.jpeg)
 
 /// caption
 Caption 2
@@ -108,13 +108,13 @@ figure.general > figcaption {
 
 ///// html | div.result
 //// html | figure
-Paragraph 1
+![placeholder](../../../images/placeholder.jpeg)
 
 /// caption
 Caption 1
 ///
 
-Paragraph 2
+![placeholder](../../../images/placeholder.jpeg)
 
 /// caption
 Caption 2
@@ -140,13 +140,13 @@ caption.
 
 ```html title="Complex Captions: <code>md_in_html</code>"
 <figure markdown>
-Paragraph 1
+![placeholder](../../../images/placeholder.jpeg)
 
 /// caption
 Caption 1
 ///
 
-Paragraph 2
+![placeholder](../../../images/placeholder.jpeg)
 
 /// caption
 Caption 2
@@ -167,13 +167,13 @@ figure.general > figcaption {
 
 ///// html | div.result
 <figure markdown>
-Paragraph 1
+![placeholder](../../../images/placeholder.jpeg)
 
 /// caption
 Caption 1
 ///
 
-Paragraph 2
+![placeholder](../../../images/placeholder.jpeg)
 
 /// caption
 Caption 2
@@ -237,13 +237,13 @@ Regardless of whether `prepend` is enabled or disabled globally, you can force p
 `<` or `>` in the header for prepending or appending respectively.
 
 ```text title="Manual Prepend/Append"
-Paragraph 1
+![placeholder](../../../images/placeholder.jpeg)
 
 /// caption | <
 Caption 1
 ///
 
-Paragraph 2 | >
+![placeholder](../../../images/placeholder.jpeg)
 
 /// caption
 Caption 2
@@ -251,13 +251,13 @@ Caption 2
 ```
 
 //// html | div.result
-Paragraph 1
+![placeholder](../../../images/placeholder.jpeg)
 
 /// caption | <
 Caption 1
 ///
 
-Paragraph 2 | >
+![placeholder](../../../images/placeholder.jpeg)
 
 /// caption
 Caption 2
@@ -340,44 +340,44 @@ increase the numbering depth for that specific figure by the specified value rel
 still subject to the `auto_levels` limit.
 
 ```text title="Nesting Depth"
-Paragraph
+![placeholder](../../../images/placeholder.jpeg)
 /// figure-caption
 Caption
 ///
 
-Paragraph
+![placeholder](../../../images/placeholder.jpeg)
 /// figure-caption | ^1
 Caption
 ///
 
-Paragraph
+![placeholder](../../../images/placeholder.jpeg)
 /// figure-caption | ^1
 Caption
 ///
 
-Paragraph
+![placeholder](../../../images/placeholder.jpeg)
 /// figure-caption
 Caption
 ///
 ```
 
 //// html | div.result
-Paragraph
+![placeholder](../../../images/placeholder.jpeg)
 /// figure-caption
 Caption
 ///
 
-Paragraph
+![placeholder](../../../images/placeholder.jpeg)
 /// figure-caption | ^1
 Caption
 ///
 
-Paragraph
+![placeholder](../../../images/placeholder.jpeg)
 /// figure-caption | ^1
 Caption
 ///
 
-Paragraph
+![placeholder](../../../images/placeholder.jpeg)
 /// figure-caption
 Caption
 ///
@@ -401,14 +401,14 @@ of figure types that specify a prefix template. Manual mode does not not check o
 they are in fact numbers that are formatted properly.
 
 ```text title="Manual Numbers"
-Paragraph
+![placeholder](../../../images/placeholder.jpeg)
 /// figure-caption | 12
 Caption
 ///
 ```
 
 //// html | div.result
-Paragraph
+![placeholder](../../../images/placeholder.jpeg)
 /// figure-caption | 12
 Caption
 ///
@@ -436,7 +436,7 @@ the ID will be applied instead of any auto-generated ID. Manually specified IDs 
 numerical prefixes.
 
 ```
-Paragraph
+![placeholder](../../../images/placeholder.jpeg)
 
 /// figure-caption
     attrs: {id: static-id}
