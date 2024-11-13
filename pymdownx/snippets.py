@@ -345,7 +345,7 @@ class SnippetPreprocessor(Preprocessor):
                             if start is not None or end is not None:
                                 s = slice(start, end)
                                 s_lines = self.dedent(s_lines[s]) if self.dedent_subsections else s_lines[s]
-                            elif section.startswith("/") and section.endswith("/"): # if section is a regex
+                            elif section and section.startswith("/") and section.endswith("/"): # if section is a regex
                                 s_lines = self.extract_regex(section, s_lines)
                             elif section:
                                 s_lines = self.extract_section(section, s_lines)
@@ -356,7 +356,7 @@ class SnippetPreprocessor(Preprocessor):
                             if start is not None or end is not None:
                                 s = slice(start, end)
                                 s_lines = self.dedent(s_lines[s]) if self.dedent_subsections else s_lines[s]
-                            elif section.startswith("/") and section.endswith("/"): # if section is a regex
+                            elif section and section.startswith("/") and section.endswith("/"): # if section is a regex
                                 s_lines = self.extract_regex(section, s_lines)
                             elif section:
                                 s_lines = self.extract_section(section, s_lines)
