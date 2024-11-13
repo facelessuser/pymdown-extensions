@@ -141,8 +141,8 @@ groups = cool,fun,smart
 ```
 
 - To extract the line that contains `username =`, use `file.md:/username =/`. This returns `username = alice`.
-- To extract parts of a line, use match groups: `file.md:/username = (.*)`. This returns `alice`.
-- If you use multiple groups, they are joined together: `file.md:/groups = ([a-z]+),([a-z]+),([a-z]+)` returns `cool fun smart`.
+- To extract parts of a line, use match groups: `file.md:/username = (.*)/`. This returns `alice`.
+- If you use multiple groups, they are joined together: `file.md:/groups = ([a-z]+),([a-z]+),([a-z]+)/` returns `cool fun smart`.
 - The regex can match multiple lines in a file: `file.md:/=/` returns both lines that contain a `=`, but not the comments in between.
 
 ### Snippet Sections
