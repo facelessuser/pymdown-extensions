@@ -110,7 +110,7 @@ class SnippetPreprocessor(Preprocessor):
                     new_lines.append(line)
             
             if not new_lines and self.check_paths:
-                raise SnippetMissingError(f"No line matched the regex {regex}")
+                raise SnippetMissingError(f"No line matched the regex /{regex}/")
             
             return self.dedent(new_lines) if self.dedent_subsections else new_lines
 
