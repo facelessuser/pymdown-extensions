@@ -105,7 +105,7 @@ class SnippetPreprocessor(Preprocessor):
             for line in lines:
                 m = re.match(regex, line) 
                 if m and m.groups():
-                    new_lines.append(" ".join(re.match(regex, line).groups())) # join the groups together
+                    new_lines.append(" ".join(m.groups())) # join the groups together
                 elif m:
                     new_lines.append(line)
             
