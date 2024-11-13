@@ -101,7 +101,7 @@ class SnippetPreprocessor(Preprocessor):
         """Extract the specified regex from the lines. If the regex contains groups, they will be joined together."""
             
             new_lines = []
-            regex = regex[1:-1] # remove the slashes
+            regex = regex[1:-1] # We expect a string wrapped in slashes. This removes the slashes.
             for line in lines:
                 m = re.match(regex, line) 
                 if m and m.groups():
