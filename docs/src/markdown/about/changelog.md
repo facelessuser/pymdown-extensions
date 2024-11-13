@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.13
+
+-   **NEW**: Snippets: Snippets can now extract lines that match a regex string.
+
 ## 10.12
 
 -   **NEW**: Blocks: Blocks extensions no longer considered in beta.

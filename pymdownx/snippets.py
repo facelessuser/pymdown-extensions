@@ -97,6 +97,23 @@ class SnippetPreprocessor(Preprocessor):
 
         self.download.cache_clear()
 
+    def extract_regex(self, regex, lines):
+        """Extract the specified regex from the lines. If the regex contains groups, they will be joined together."""
+            
+            new_lines = []
+            regex = re.match(r'^/(.*)/$', regex).group(1) # remove the slashes
+            for line in lines:
+                m = re.match(regex, line) 
+                if m and m.groups():
+                    new_lines.append(" ".join(re.match(regex, line).groups())) # join the groups together
+                elif m:
+                    new_lines.append(line)
+            
+            if not new_lines and self.check_paths:
+                raise SnippetMissingError(f"No line matched the regex {regex}")
+            
+            return self.dedent(new_lines) if self.dedent_subsections else new_lines
+
     def extract_section(self, section, lines):
         """Extract the specified section from the lines."""
 
@@ -328,6 +345,8 @@ class SnippetPreprocessor(Preprocessor):
                             if start is not None or end is not None:
                                 s = slice(start, end)
                                 s_lines = self.dedent(s_lines[s]) if self.dedent_subsections else s_lines[s]
+                            elif re.match(r'^/.*/$', section): # if section is a regex
+                                s_lines = self.extract_regex(section, s_lines)
                             elif section:
                                 s_lines = self.extract_section(section, s_lines)
                     else:
@@ -337,6 +356,8 @@ class SnippetPreprocessor(Preprocessor):
                             if start is not None or end is not None:
                                 s = slice(start, end)
                                 s_lines = self.dedent(s_lines[s]) if self.dedent_subsections else s_lines[s]
+                            elif re.match(r'^/.*/$', section): # if section is a regex
+                                s_lines = self.extract_regex(section, s_lines)
                             elif section:
                                 s_lines = self.extract_section(section, s_lines)
                         except SnippetMissingError:
