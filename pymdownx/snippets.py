@@ -122,7 +122,7 @@ class SnippetPreprocessor(Preprocessor):
                     new_lines.append(line)
             
         if not new_lines and self.check_paths:
-            flagstring = f"with flags {self.regex_flags}" if flags else "" # If flags is 0, we don't want to print it (re.NOFLAGS == 0).
+            flagstring = f"with flags {self.regex_flags}" if flags else "" # If flags is 0, we don't want to print it (re.NOFLAG == 0).
             raise SnippetMissingError(f"No line matched the regex /{regex}/ {flagstring}")
         
         return self.dedent(new_lines) if self.dedent_subsections else new_lines
