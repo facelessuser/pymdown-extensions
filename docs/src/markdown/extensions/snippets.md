@@ -144,6 +144,7 @@ groups = cool,fun,smart
 - To extract parts of a line, use match groups: `file.md:/username = (.*)/`. This returns `alice`.
 - If you use multiple groups, they are joined together: `file.md:/groups = ([a-z]+),([a-z]+),([a-z]+)/` returns `cool fun smart`.
 - The regex can match multiple lines in a file: `file.md:/=/` returns both lines that contain a `=`, but not the comments in between.
+- If you set `['DOTALL']` and/or `['MULTILINE']` in the `regex_flags` option, the matches can span multiple lines.
 
 ### Snippet Sections
 
@@ -273,15 +274,16 @@ appended to every to Markdown content. Each entry in the list searched for relat
 
 ## Options
 
-Option                 | Type            | Default          | Description
----------------------- | --------------- | ---------------- |------------
-`base_path`            | \[string\]      | `#!py3 ['.']`    | A list of strings indicating base paths to be used resolve snippet locations. For legacy purposes, a single string will also be accepted as well. Base paths will be resolved in the order they are specified. When resolving a file name, the first match wins. If a file name is specified, the base name will be matched.
-`encoding`             | string          | `#!py3 'utf-8'`  | Encoding to use when reading in the snippets.
-`check_paths`          | bool            | `#!py3 False`    | Make the build fail if a snippet can't be found.
-`auto_append`          | \[string\]      | `#!py3 []`       | A list of snippets (relative to the `base_path`) to auto append to the Markdown content.
-`url_download`         | bool            | `#!py3 False`    | Allows URLs to be specified as file snippets. URLs will be downloaded and inserted accordingly.
-`url_max_size`         | int             | `#!py3 33554432` | Sets an arbitrary max content size. If content length is reported to be larger, and exception will be thrown. Default is ~32 MiB.
-`url_timeout`          | float           | `#!py3 10.0`     | Passes an arbitrary timeout in seconds to URL requestor. By default this is set to 10 seconds.
-`url_request_headers`  | {string:string} | `#!py3 {}`       | Passes arbitrary headers to URL requestor. By default this is set to empty map.
-`dedent_subsections`   | bool            | `#!py3 False`    | Remove any common leading whitespace from every line in text of a subsection that is inserted via "sections" or by "lines".
-`restrict_base_path`   | bool            | `#!py True`      | Ensure that the specified snippets are children of the specified base path(s). This prevents a path relative to the base path, but not explicitly a child of the base path.
+Option                 | Type            | Default            | Description
+---------------------- | --------------- | ------------------ |------------
+`base_path`            | \[string\]      | `#!py3 ['.']`      | A list of strings indicating base paths to be used resolve snippet locations. For legacy purposes, a single string will also be accepted as well. Base paths will be resolved in the order they are specified. When resolving a file name, the first match wins. If a file name is specified, the base name will be matched.
+`encoding`             | string          | `#!py3 'utf-8'`    | Encoding to use when reading in the snippets.
+`check_paths`          | bool            | `#!py3 False`      | Make the build fail if a snippet can't be found.
+`auto_append`          | \[string\]      | `#!py3 []`         | A list of snippets (relative to the `base_path`) to auto append to the Markdown content.
+`url_download`         | bool            | `#!py3 False`      | Allows URLs to be specified as file snippets. URLs will be downloaded and inserted accordingly.
+`url_max_size`         | int             | `#!py3 33554432`   | Sets an arbitrary max content size. If content length is reported to be larger, and exception will be thrown. Default is ~32 MiB.
+`url_timeout`          | float           | `#!py3 10.0`       | Passes an arbitrary timeout in seconds to URL requestor. By default this is set to 10 seconds.
+`url_request_headers`  | {string:string} | `#!py3 {}`         | Passes arbitrary headers to URL requestor. By default this is set to empty map.
+`dedent_subsections`   | bool            | `#!py3 False`      | Remove any common leading whitespace from every line in text of a subsection that is inserted via "sections" or by "lines".
+`restrict_base_path`   | bool            | `#!py True`        | Ensure that the specified snippets are children of the specified base path(s). This prevents a path relative to the base path, but not explicitly a child of the base path.
+`regex_flags`          | \[string\]      | `#!py ['NOFLAGS']` | Flags to pass to re.search (such as `DOTALL`, `MULTILINE` and/or `IGNORECASE`).

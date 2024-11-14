@@ -92,6 +92,7 @@ class SnippetPreprocessor(Preprocessor):
         self.url_timeout = config['url_timeout']
         self.url_request_headers = config['url_request_headers']
         self.dedent_subsections = config['dedent_subsections']
+        self.regex_flags = config['regex_flags']
         self.tab_length = md.tab_length
         super().__init__()
 
@@ -99,20 +100,32 @@ class SnippetPreprocessor(Preprocessor):
 
     def extract_regex(self, regex, lines):
         """Extract the specified regex from the lines. If the regex contains groups, they will be joined together."""
-            
-            new_lines = []
-            regex = regex[1:-1] # We expect a string wrapped in slashes. This removes the slashes.
+        
+        new_lines = []
+        regex = regex[1:-1] # We expect a string wrapped in slashes. This removes the slashes.
+        flags = 0
+        for flag in self.regex_flags:
+            flags |= getattr(re, flag) # The flags are joined together using bitwise OR as per the re module documentation.
+        if "MULTILINE" in self.regex_flags or "DOTALL" in self.regex_flags:
+            m = re.search(regex, "\n".join(lines), flags)
+            if m and m.groups():
+                for group in m.groups():
+                    new_lines.append(group)
+            elif m:
+                new_lines.append(m.group())
+        else:
             for line in lines:
-                m = re.match(regex, line) 
+                m = re.search(regex, line, flags) 
                 if m and m.groups():
                     new_lines.append(" ".join(m.groups())) # join the groups together
                 elif m:
                     new_lines.append(line)
             
-            if not new_lines and self.check_paths:
-                raise SnippetMissingError(f"No line matched the regex /{regex}/")
-            
-            return self.dedent(new_lines) if self.dedent_subsections else new_lines
+        if not new_lines and self.check_paths:
+            flagstring = f"with flags {self.regex_flags}" if flags else "" # If flags is 0, we don't want to print it (re.NOFLAGS == 0).
+            raise SnippetMissingError(f"No line matched the regex /{regex}/ {flagstring}")
+        
+        return self.dedent(new_lines) if self.dedent_subsections else new_lines
 
     def extract_section(self, section, lines):
         """Extract the specified section from the lines."""
@@ -417,7 +430,8 @@ class SnippetExtension(Extension):
             'url_max_size': [DEFAULT_URL_SIZE, "External URL max size (0 means no limit)- Default: 32 MiB"],
             'url_timeout': [DEFAULT_URL_TIMEOUT, 'Defualt URL timeout (0 means no timeout) - Default: 10 sec'],
             'url_request_headers': [DEFAULT_URL_REQUEST_HEADERS, "Extra request Headers - Default: {}"],
-            'dedent_subsections': [False, "Dedent subsection extractions e.g. 'sections' and/or 'lines'."]
+            'dedent_subsections': [False, "Dedent subsection extractions e.g. 'sections' and/or 'lines'."],
+            'regex_flags': [['NOFLAG'], "Flags to pass to re.search (such as DOTALL, MULTILINE and/or IGNORECASE) - Default: ['NOFLAG']"]
         }
 
         super().__init__(*args, **kwargs)
