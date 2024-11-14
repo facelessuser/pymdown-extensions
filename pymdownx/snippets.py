@@ -111,11 +111,11 @@ class SnippetPreprocessor(Preprocessor):
             flags |= getattr(re, flag) # The flags are joined together using bitwise OR as per the re module documentation.
         if "MULTILINE" in self.regex_flags or "DOTALL" in self.regex_flags:
             m = re.finditer(regex, "\n".join(lines), flags)
-        for match in m:
-            if match and match.groups():
-                new_lines.append(" ".join(match.groups()))
-            elif match:
-                new_lines.append(match[0])
+            for match in m:
+                if match and match.groups():
+                    new_lines.append(" ".join(match.groups()))
+                elif match:
+                    new_lines.append(match[0])
         else:
             for line in lines:
                 m = re.search(regex, line, flags) 
