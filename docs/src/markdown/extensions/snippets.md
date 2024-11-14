@@ -146,6 +146,14 @@ groups = cool,fun,smart
 - The regex can match multiple lines in a file: `file.md:/=/` returns both lines that contain a `=`, but not the comments in between.
 - If you set `['DOTALL']` and/or `['MULTILINE']` in the `regex_flags` option, the matches can span multiple lines.
 
+/// tip
+The regex matching uses [the python `re` library](https://docs.python.org/3/library/re.html) with [the `search` function](https://docs.python.org/3/library/re.html#re.search).
+This means that if a line matches, the entire line is returned (unless there is a match group).
+
+Please [refer to the documentation for details on how the regex flags work](https://docs.python.org/3/library/re.html#flags).
+Make sure to validate and debug your regex using tools like regex101.com.
+///
+
 ### Snippet Sections
 
 /// new | New 9.7
