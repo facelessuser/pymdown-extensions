@@ -109,9 +109,9 @@ class SnippetPreprocessor(Preprocessor):
         if "MULTILINE" in self.regex_flags or "DOTALL" in self.regex_flags:
             m = re.finditer(regex, "\n".join(lines), flags)
         for match in m:
-            if match.groups():
+            if match and match.groups():
                 new_lines.append(" ".join(match.groups()))
-            else:
+            elif match:
                 new_lines.append(match[0])
         else:
             for line in lines:
