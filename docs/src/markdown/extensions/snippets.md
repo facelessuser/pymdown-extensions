@@ -294,4 +294,4 @@ Option                 | Type            | Default           | Description
 `url_request_headers`  | {string:string} | `#!py3 {}`        | Passes arbitrary headers to URL requestor. By default this is set to empty map.
 `dedent_subsections`   | bool            | `#!py3 False`     | Remove any common leading whitespace from every line in text of a subsection that is inserted via "sections" or by "lines".
 `restrict_base_path`   | bool            | `#!py True`       | Ensure that the specified snippets are children of the specified base path(s). This prevents a path relative to the base path, but not explicitly a child of the base path.
-`regex_flags`          | \[string\]      | `#!py ['NOFLAG']` | Flags to pass to re.search (such as `DOTALL`, `MULTILINE` and/or `IGNORECASE`).
+`regex_flags`          | \[string\]      | `#!py ['NOFLAG']` | A list of flags to pass to re.search (such as `DOTALL`, `MULTILINE` and/or `IGNORECASE`).
