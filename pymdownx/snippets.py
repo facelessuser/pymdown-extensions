@@ -104,6 +104,9 @@ class SnippetPreprocessor(Preprocessor):
         new_lines = []
         regex = regex[1:-1] # We expect a string wrapped in slashes. This removes the slashes.
         flags = 0
+        if type(self.regex_flags) != list:
+            raise TypeError(f"regex_flags must be a list, not a {type(self.regex_flags)}. Got: {self.regex_flags}")
+
         for flag in self.regex_flags:
             flags |= getattr(re, flag) # The flags are joined together using bitwise OR as per the re module documentation.
         if "MULTILINE" in self.regex_flags or "DOTALL" in self.regex_flags:
