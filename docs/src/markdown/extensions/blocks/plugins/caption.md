@@ -195,7 +195,7 @@ figure.general > figcaption {
 ### Prepending Captions
 
 Captions are appended by default, but can be configured to be prepended by default is desired. Simply set the global
-[`prepend` option](#options) to `#!py True`.
+[`prepend` option](#global-options) to `#!py True`.
 
 ```text title="Prepend Caption"
 Fruit      | Amount
@@ -330,7 +330,7 @@ outermost figure plus one level of nested children of the same type.
 ### Increase Nesting Depth
 
 /// warning
-Requires [`auto`](#options) to be set to `#!py True` (the default).
+Requires [`auto`](#global-options) to be set to `#!py True` (the default).
 ///
 
 To accommodate various needs, some more control over numbering is exposed. If a user would like to show sub-figure
@@ -390,12 +390,12 @@ Nesting depths can be used with per block prepend notation as long as `<` or `>`
 ### Manual Figure Numbers
 
 /// warning
-It is recommended to use [`auto`](#options) set to `#!py False`, i.e. "manual mode", but can be used with when it is set
+It is recommended to use [`auto`](#global-options) set to `#!py False`, i.e. "manual mode", but can be used with when it is set
 to `#!py True` with some limitations.
 ///
 
 Captions allows for setting figures numbers for prefixes and IDs on the fly. This is mainly designed for use in "manual
-mode" ([`auto`](#options) set to `#!py False`). The idea was to provide a mode where the user has complete control of
+mode" ([`auto`](#global-options) set to `#!py False`). The idea was to provide a mode where the user has complete control of
 figure numbers if so desired. When in manual mode, the user will only get prefixes when specifying numbers in the header
 of figure types that specify a prefix template. Manual mode does not not check or validate these numbers beyond ensuring
 they are in fact numbers that are formatted properly.
@@ -453,7 +453,7 @@ While Caption provides a few default figure types, users are free to define thei
 If a figure type is defined with no prefix, that type will never have IDs or prefixes generated for it. The default
 generic `caption` type is an example of a non-prefix caption type.
 
-Users can override the default types with their own via the [`types` option](#options). `types` is defined as a list
+Users can override the default types with their own via the [`types` option](#global-options). `types` is defined as a list
 of types which can either be a single string specifying the name of the caption type (with no prefix), or a dictionary
 object that specifies, the `name` and `prefix` template for the caption prefix. An empty string for the `prefix` is the
 same as no prefix being specified. `{}` must be specified for non-empty templates and is used to insert the
