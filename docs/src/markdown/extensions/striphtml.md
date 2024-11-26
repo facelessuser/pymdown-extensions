@@ -39,7 +39,7 @@ md = markdown.Markdown(extensions=['pymdownx.striphtml'])
 
 ## Options
 
-By default, StripHTML strips the following attributes: `style`, `id`, `class`, and `on<name>`.  StripHTML also strips
+By default, StripHTML only strips attributes starting with `on` (for instance `onclick`).  StripHTML also strips
 HTML comments. If desired, its behavior can be configured to strip less or even more, but it is limited to attributes
 and comments.
 
