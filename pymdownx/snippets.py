@@ -92,10 +92,43 @@ class SnippetPreprocessor(Preprocessor):
         self.url_timeout = config['url_timeout']
         self.url_request_headers = config['url_request_headers']
         self.dedent_subsections = config['dedent_subsections']
+        self.regex_flags = config['regex_flags']
         self.tab_length = md.tab_length
         super().__init__()
 
         self.download.cache_clear()
+
+    def extract_regex(self, regex, lines):
+        """Extract the specified regex from the lines. If the regex contains groups, they will be joined together."""
+        
+        new_lines = []
+        regex = regex[1:-1] # We expect a string wrapped in slashes. This removes the slashes.
+        flags = 0
+        if type(self.regex_flags) != list:
+            raise TypeError(f"regex_flags must be a list, not a {type(self.regex_flags)}. Got: {self.regex_flags}")
+
+        for flag in self.regex_flags:
+            flags |= getattr(re, flag) # The flags are joined together using bitwise OR as per the re module documentation.
+        if "MULTILINE" in self.regex_flags or "DOTALL" in self.regex_flags:
+            m = re.finditer(regex, "\n".join(lines), flags)
+            for match in m:
+                if match and match.groups():
+                    new_lines.append(" ".join(match.groups()))
+                elif match:
+                    new_lines.append(match[0])
+        else:
+            for line in lines:
+                m = re.search(regex, line, flags) 
+                if m and m.groups():
+                    new_lines.append(" ".join(m.groups())) # join the groups together
+                elif m:
+                    new_lines.append(m[0])
+            
+        if not new_lines and self.check_paths:
+            flagstring = f"with flag{'s' if len(self.regex_flags) > 1 else ''} {self.regex_flags}" if flags else "" # If flags is 0, we don't want to print it (re.NOFLAG == 0).
+            raise SnippetMissingError(f"No line matched the regex /{regex}/ {flagstring}")
+        
+        return self.dedent(new_lines) if self.dedent_subsections else new_lines
 
     def extract_section(self, section, lines):
         """Extract the specified section from the lines."""
@@ -328,6 +361,8 @@ class SnippetPreprocessor(Preprocessor):
                             if start is not None or end is not None:
                                 s = slice(start, end)
                                 s_lines = self.dedent(s_lines[s]) if self.dedent_subsections else s_lines[s]
+                            elif section and section.startswith("/") and section.endswith("/"): # if section is a regex
+                                s_lines = self.extract_regex(section, s_lines)
                             elif section:
                                 s_lines = self.extract_section(section, s_lines)
                     else:
@@ -337,6 +372,8 @@ class SnippetPreprocessor(Preprocessor):
                             if start is not None or end is not None:
                                 s = slice(start, end)
                                 s_lines = self.dedent(s_lines[s]) if self.dedent_subsections else s_lines[s]
+                            elif section and section.startswith("/") and section.endswith("/"): # if section is a regex
+                                s_lines = self.extract_regex(section, s_lines)
                             elif section:
                                 s_lines = self.extract_section(section, s_lines)
                         except SnippetMissingError:
@@ -396,7 +433,8 @@ class SnippetExtension(Extension):
             'url_max_size': [DEFAULT_URL_SIZE, "External URL max size (0 means no limit)- Default: 32 MiB"],
             'url_timeout': [DEFAULT_URL_TIMEOUT, 'Defualt URL timeout (0 means no timeout) - Default: 10 sec'],
             'url_request_headers': [DEFAULT_URL_REQUEST_HEADERS, "Extra request Headers - Default: {}"],
-            'dedent_subsections': [False, "Dedent subsection extractions e.g. 'sections' and/or 'lines'."]
+            'dedent_subsections': [False, "Dedent subsection extractions e.g. 'sections' and/or 'lines'."],
+            'regex_flags': [['NOFLAG'], "Flags to pass to re.search (such as DOTALL, MULTILINE and/or IGNORECASE) - Default: ['NOFLAG']"]
         }
 
         super().__init__(*args, **kwargs)
