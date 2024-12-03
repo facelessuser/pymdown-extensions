@@ -222,7 +222,7 @@ class SnippetPreprocessor(Preprocessor):
             # Process lines
             return [l.decode(self.encoding) for l in content.splitlines()]
 
-    def parse_snippets(self, lines, file_name=None, is_url=False):
+    def parse_snippets(self, lines, file_name=None, is_url=False, is_section=False):
         """Parse snippets snippet."""
 
         if file_name:
@@ -257,6 +257,20 @@ class SnippetPreprocessor(Preprocessor):
                     continue
 
             elif not block:
+                if not is_section:
+                    # Check for section line, if present remove, if escaped, reformat it
+                    m2 = self.RE_SNIPPET_SECTION.match(line)
+                    if m2 and m2.group('escape'):
+                        line = (
+                            m2.group('pre') + m2.group('escape').replace(';', '', 1) + m2.group('inline_marker') +
+                            m2.group('section') + m2.group('post')
+                        )
+                        m2 = None
+
+                    # Found a section that must be removed
+                    if m2 is not None:
+                        continue
+
                 # Not in snippet, and we didn't find an inline,
                 # so just a normal line
                 new_lines.append(line)
@@ -350,7 +364,8 @@ class SnippetPreprocessor(Preprocessor):
                             space + l2 for l2 in self.parse_snippets(
                                 s_lines,
                                 snippet,
-                                is_url=url
+                                is_url=url,
+                                is_section=section is not None
                             )
                         ]
                     )
