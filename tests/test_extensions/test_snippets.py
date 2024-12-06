@@ -401,6 +401,41 @@ class TestSnippets(util.MdCase):
             True
         )
 
+    def test_whole_file_with_sections(self):
+        """Test whole file with sections."""
+
+        self.check_markdown(
+            R'''
+            ```
+            -8<- "section_nested.txt"
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code>div {
+                color: red;
+                background-color: white;
+                padding: 16px
+            }
+
+
+            div {
+                color: red;
+                /* --8&lt;-- [start: css-section4] */
+                background-color: white;
+                padding: 16px
+                /* --8&lt;-- [end: css-section4] */
+            }
+
+            div {
+                color: red;
+                background-color: white;
+                padding: 16px
+            }
+            </code></pre></div>
+            ''',
+            True
+        )
+
     def test_section_ignore_double_start_section(self):
         """Test nested sections."""
 

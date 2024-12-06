@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.12.1
+
+-   **FIX**: Snippets: Fix issue where when non sections of files are included, section labels are not stripped.
+
 ## 10.12
 
 -   **NEW**: Blocks: Blocks extensions no longer considered in beta.
