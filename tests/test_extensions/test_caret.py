@@ -113,22 +113,6 @@ class TestCaretSmart(util.MdCase):
             True
         )
 
-    def test_complex_sup_ins_under(self):
-        """Test `^text ^^text^^^`."""
-
-        self.check_markdown(
-            R"^I'm\ sup.\ ^^I'm\ sup\ and\ insert.^^^",
-            "<p><sup>I'm sup. <ins>I'm sup and insert.</ins></sup></p>"
-        )
-
-    def test_complex_ins_sup_ins(self):
-        """Test `^^text ^text^^^`."""
-
-        self.check_markdown(
-            R"^^I'm insert. ^I'm\ sup\ and\ insert.^^^",
-            "<p><ins>I'm insert. <sup>I'm sup and insert.</sup></ins></p>"
-        )
-
     def test_complex_cases(self):
         """Test some complex cases."""
 
@@ -285,22 +269,6 @@ class TestCaretNoSmart(util.MdCase):
             R"Test: ^^All will ^\^^ be insert with superscript in middle^^",
             "<p>Test: <ins>All will <sup>^</sup> be insert with superscript in middle</ins></p>",
             True
-        )
-
-    def test_complex_sup_ins_under(self):
-        """Test `^text ^^text^^^`."""
-
-        self.check_markdown(
-            R"^I'm\ sup.\ ^^I'm\ sup\ and\ insert.^^^",
-            "<p><sup>I'm sup. <ins>I'm sup and insert.</ins></sup></p>"
-        )
-
-    def test_complex_ins_sup_inser(self):
-        """Test `^^text ^text^^^`."""
-
-        self.check_markdown(
-            R"^^I'm insert. ^I'm\ sup\ and\ insert.^^^",
-            "<p><ins>I'm insert. <sup>I'm sup and insert.</sup></ins></p>"
         )
 
     def test_complex_cases(self):

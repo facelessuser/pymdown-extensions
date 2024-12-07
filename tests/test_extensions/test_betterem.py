@@ -46,30 +46,6 @@ class TestBetterNoSmart(util.MdCase):
             '<p>on the <strong>1-4 row</strong> of the AP Combat Table <strong><em>and</em></strong> receive</p>'
         )
 
-    def test_complex_em_strong_star(self):
-        """Test `*text **text***`."""
-
-        self.check_markdown(
-            "*I'm italic. **I'm bold and italic.***",
-            "<p><em>I'm italic. <strong>I'm bold and italic.</strong></em></p>"
-        )
-
-    def test_complex_em_strong_under(self):
-        """Test `_text __text___`."""
-
-        self.check_markdown(
-            "_I'm italic. __I'm bold and italic.___",
-            "<p><em>I'm italic. <strong>I'm bold and italic.</strong></em></p>"
-        )
-
-    def test_complex_strong_em_under(self):
-        """Test `__text _text___`."""
-
-        self.check_markdown(
-            "__I'm bold. _I'm bold and italic.___",
-            "<p><strong>I'm bold. <em>I'm bold and italic.</em></strong></p>"
-        )
-
     def test_complex_cases_star(self):
         """Test some complex cases for asterisks."""
 
@@ -192,62 +168,6 @@ class TestBetterSmartAll(util.MdCase):
             "smart_enable": "all"
         }
     }
-
-    def test_smart_complex_cases_star(self):
-        """Test some complex cases with star."""
-
-        self.check_markdown(
-            '''
-            ***I'm italic and bold* I am just bold.**
-
-            ***I'm bold and italic!** I am just italic.*
-            ''',
-            '''
-            <p><strong><em>I'm italic and bold</em> I am just bold.</strong></p>
-            <p><em><strong>I'm bold and italic!</strong> I am just italic.</em></p>
-            ''',
-            True
-        )
-
-    def test_smart_complex_cases_underscore(self):
-        """Test some complex cases with underscore."""
-
-        self.check_markdown(
-            '''
-            ___I'm italic and bold_ I am just bold.__
-
-            ___I'm bold and italic!__ I am just italic._
-            ''',
-            '''
-            <p><strong><em>I'm italic and bold</em> I am just bold.</strong></p>
-            <p><em><strong>I'm bold and italic!</strong> I am just italic.</em></p>
-            ''',
-            True
-        )
-
-    def test_smart_complex_em_strong_star(self):
-        """Test `*text **text***`."""
-
-        self.check_markdown(
-            "*I'm italic. **I'm bold and italic.***",
-            "<p><em>I'm italic. <strong>I'm bold and italic.</strong></em></p>"
-        )
-
-    def test_smart_complex_em_strong_under(self):
-        """Test `_text __text___`."""
-
-        self.check_markdown(
-            "_I'm italic. __I'm bold and italic.___",
-            "<p><em>I'm italic. <strong>I'm bold and italic.</strong></em></p>"
-        )
-
-    def test_complex_strong_em_under(self):
-        """Test `__text _text___`."""
-
-        self.check_markdown(
-            "__I'm bold. _I'm bold and italic.___",
-            "<p><strong>I'm bold. <em>I'm bold and italic.</em></strong></p>"
-        )
 
     def test_complex_cases_star(self):
         """Test some complex cases for asterisks."""

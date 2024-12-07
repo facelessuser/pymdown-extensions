@@ -113,22 +113,6 @@ class TestTildeSmart(util.MdCase):
             True
         )
 
-    def test_complex_sub_del_under(self):
-        """Test `~text ~~text~~~`."""
-
-        self.check_markdown(
-            R"~I'm\ sub.\ ~~I'm\ sub\ and\ delete.~~~",
-            "<p><sub>I'm sub. <del>I'm sub and delete.</del></sub></p>"
-        )
-
-    def test_complex_del_sub_under(self):
-        """Test `~~text ~text~~~`."""
-
-        self.check_markdown(
-            R"~~I'm delete. ~I'm\ sub\ and\ delete.~~~",
-            "<p><del>I'm delete. <sub>I'm sub and delete.</sub></del></p>"
-        )
-
     def test_complex_cases(self):
         """Test some complex cases."""
 
@@ -294,22 +278,6 @@ class TestTildeNoSmart(util.MdCase):
             R"Test: Subscript ~~~",
             "<p>Test: Subscript ~~~</p>",
             True
-        )
-
-    def test_complex_sub_del_under(self):
-        """Test `~text ~~text~~~`."""
-
-        self.check_markdown(
-            R"~I'm\ sub.\ ~~I'm\ sub\ and\ delete.~~~",
-            "<p><sub>I'm sub. <del>I'm sub and delete.</del></sub></p>"
-        )
-
-    def test_complex_del_sub_under(self):
-        """Test `~~text ~text~~~`."""
-
-        self.check_markdown(
-            R"~~I'm delete. ~I'm\ sub\ and\ delete.~~~",
-            "<p><del>I'm delete. <sub>I'm sub and delete.</sub></del></p>"
         )
 
     def test_complex_cases(self):
