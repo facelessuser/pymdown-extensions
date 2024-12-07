@@ -3,6 +3,7 @@
 ## 10.12.1
 
 -   **FIX**: Snippets: Fix issue where when non sections of files are included, section labels are not stripped.
+-   **FIX**: BetterEm: Fixes for complex cases.
 
 ## 10.12
 

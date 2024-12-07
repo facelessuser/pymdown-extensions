@@ -113,20 +113,59 @@ class TestTildeSmart(util.MdCase):
             True
         )
 
-    def test_complex_sub_del_under(self):
-        """Test `~text ~~text~~~`."""
+    def test_complex_cases(self):
+        """Test some complex cases."""
 
         self.check_markdown(
-            R"~I'm\ sub.\ ~~I'm\ sub\ and\ delete.~~~",
-            "<p><sub>I'm sub. <del>I'm sub and delete.</del></sub></p>"
-        )
+            R'''
+            ~~~I'm\ delete\ and\ sub~ I am just delete.~~
 
-    def test_complex_del_sub_under(self):
-        """Test `~~text ~text~~~`."""
+            ~~~I'm\ delete\ and\ sub!~~\ I\ am\ just\ sub.~
 
-        self.check_markdown(
-            R"~~I'm delete. ~I'm\ sub\ and\ delete.~~~",
-            "<p><del>I'm delete. <sub>I'm sub and delete.</sub></del></p>"
+            ~sub\ and\ ~~sub\ delete~~~ and ~sub~
+
+            ~~delete and ~sub\ delete~~~ and ~sub~
+
+            ~~~I'm\ sub\ and\ delete~ I am just delete.~~ ~sub~
+
+            ~~~I'm\ delete\ and\ sub!~~\ I\ am\ just\ sub.~ ~sub~
+
+            ~sub\ and\ ~~sub\ delete~~~ and not sub~
+
+            ~~delete and ~sub\ delete~~~ and not sub~
+
+            ~sub\ and\ ~~sub\ delete~~~
+
+            ~~delete and ~sub\ delete~~~
+
+            ~sub\ ~~sub\ delete~~\ sub~
+
+            ~~~sub\ and\ delete~ delete~~: foo bar ~~delete~~
+
+            ~~~sub\ and\ delete~~\ sub~ foo bar ~~delete~~
+
+            ~sub\ and\ ~~sub\ delete~~~ ~~delete~~
+
+            ~~delete and ~sub\ delete~~~ ~~delete~~
+            ''',
+            '''
+            <p><del><sub>I'm delete and sub</sub> I am just delete.</del></p>
+            <p><sub><del>I'm delete and sub!</del> I am just sub.</sub></p>
+            <p><sub>sub and <del>sub delete</del></sub> and <sub>sub</sub></p>
+            <p><del>delete and <sub>sub delete</sub></del> and <sub>sub</sub></p>
+            <p><del><sub>I'm sub and delete</sub> I am just delete.</del> <sub>sub</sub></p>
+            <p><sub><del>I'm delete and sub!</del> I am just sub.</sub> <sub>sub</sub></p>
+            <p><sub>sub and <del>sub delete</del></sub> and not sub~</p>
+            <p><del>delete and <sub>sub delete</sub></del> and not sub~</p>
+            <p><sub>sub and <del>sub delete</del></sub></p>
+            <p><del>delete and <sub>sub delete</sub></del></p>
+            <p><sub>sub <del>sub delete</del> sub</sub></p>
+            <p><del><sub>sub and delete</sub> delete</del>: foo bar <del>delete</del></p>
+            <p><sub><del>sub and delete</del> sub</sub> foo bar <del>delete</del></p>
+            <p><sub>sub and <del>sub delete</del></sub> <del>delete</del></p>
+            <p><del>delete and <sub>sub delete</sub></del> <del>delete</del></p>
+            ''',
+            True
         )
 
 
@@ -241,18 +280,57 @@ class TestTildeNoSmart(util.MdCase):
             True
         )
 
-    def test_complex_sub_del_under(self):
-        """Test `~text ~~text~~~`."""
+    def test_complex_cases(self):
+        """Test some complex cases."""
 
         self.check_markdown(
-            R"~I'm\ sub.\ ~~I'm\ sub\ and\ delete.~~~",
-            "<p><sub>I'm sub. <del>I'm sub and delete.</del></sub></p>"
-        )
+            R'''
+            ~~~I'm\ delete\ and\ sub~ I am just delete.~~
 
-    def test_complex_del_sub_under(self):
-        """Test `~~text ~text~~~`."""
+            ~~~I'm\ delete\ and\ sub!~~\ I\ am\ just\ sub.~
 
-        self.check_markdown(
-            R"~~I'm delete. ~I'm\ sub\ and\ delete.~~~",
-            "<p><del>I'm delete. <sub>I'm sub and delete.</sub></del></p>"
+            ~sub\ and\ ~~sub\ delete~~~ and ~sub~
+
+            ~~delete and ~sub\ delete~~~ and ~sub~
+
+            ~~~I'm\ sub\ and\ delete~ I am just delete.~~ ~sub~
+
+            ~~~I'm\ delete\ and\ sub!~~\ I\ am\ just\ sub.~ ~sub~
+
+            ~sub\ and\ ~~sub\ delete~~~ and not sub~
+
+            ~~delete and ~sub\ delete~~~ and not sub~
+
+            ~sub\ and\ ~~sub\ delete~~~
+
+            ~~delete and ~sub\ delete~~~
+
+            ~sub\ ~~sub\ delete~~\ sub~
+
+            ~~~sub\ and\ delete~ delete~~: foo bar ~~delete~~
+
+            ~~~sub\ and\ delete~~\ sub~ foo bar ~~delete~~
+
+            ~sub\ and\ ~~sub\ delete~~~ ~~delete~~
+
+            ~~delete and ~sub\ delete~~~ ~~delete~~
+            ''',
+            '''
+            <p><del><sub>I'm delete and sub</sub> I am just delete.</del></p>
+            <p><sub><del>I'm delete and sub!</del> I am just sub.</sub></p>
+            <p><sub>sub and <del>sub delete</del></sub> and <sub>sub</sub></p>
+            <p><del>delete and <sub>sub delete</sub></del> and <sub>sub</sub></p>
+            <p><del><sub>I'm sub and delete</sub> I am just delete.</del> <sub>sub</sub></p>
+            <p><sub><del>I'm delete and sub!</del> I am just sub.</sub> <sub>sub</sub></p>
+            <p><sub>sub and <del>sub delete</del></sub> and not sub~</p>
+            <p><del>delete and <sub>sub delete</sub></del> and not sub~</p>
+            <p><sub>sub and <del>sub delete</del></sub></p>
+            <p><del>delete and <sub>sub delete</sub></del></p>
+            <p><sub>sub <del>sub delete</del> sub</sub></p>
+            <p><del><sub>sub and delete</sub> delete</del>: foo bar <del>delete</del></p>
+            <p><sub><del>sub and delete</del> sub</sub> foo bar <del>delete</del></p>
+            <p><sub>sub and <del>sub delete</del></sub> <del>delete</del></p>
+            <p><del>delete and <sub>sub delete</sub></del> <del>delete</del></p>
+            ''',
+            True
         )

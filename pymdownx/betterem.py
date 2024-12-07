@@ -29,6 +29,8 @@ from . import util
 
 SMART_UNDER_CONTENT = r'(.+?_*?)'
 SMART_STAR_CONTENT = r'(.+?\**?)'
+SMART_STAR_LIMITED_CONTENT = r'((?:[^\*]|(?<=\w)\*+?(?=\w)|(?<=\s)\*+?(?=\s))+?)'
+SMART_UNDER_LIMITED_CONTENT = r'((?:[^_]|(?<=[^\W_])_+?(?=[^\W_])|(?<=\s)_+?(?=\s))+?)'
 UNDER_CONTENT = r'(_|(?:(?<=\s)_|[^_])+?)'
 UNDER_CONTENT2 = r'((?:[^_]|(?<!_{2})_)+?)'
 STAR_CONTENT = r'(\*|(?:(?<=\s)\*|[^\*])+?)'
@@ -42,15 +44,15 @@ STAR_STRONG_EM = r'(\*{3})(?!\s)(\*{1,2}|[^\*]+?)(?<!\s)\1'
 # ___strong,em___
 UNDER_STRONG_EM = r'(_{3})(?!\s)(_{1,2}|[^_]+?)(?<!\s)\1'
 # ***strong,em*strong**
-STAR_STRONG_EM2 = r'(\*{{3}})(?![\s\*]){}(?<!\s)\*{}(?<!\s)\*{{2}}'.format(STAR_CONTENT, STAR_CONTENT2)
+STAR_STRONG_EM2 = r'(\*{{3}})(?![\s\*]){}(?<!\s)\*{}(?<!\s)\*{{2}}'.format(STAR_CONTENT, STAR_CONTENT)
 # ___strong,em_strong__
-UNDER_STRONG_EM2 = r'(_{{3}})(?![\s_]){}(?<!\s)_{}(?<!\s)_{{2}}'.format(UNDER_CONTENT, UNDER_CONTENT2)
+UNDER_STRONG_EM2 = r'(_{{3}})(?![\s_]){}(?<!\s)_{}(?<!\s)_{{2}}'.format(UNDER_CONTENT, UNDER_CONTENT)
 # ***em,strong**em*
-STAR_EM_STRONG = r'(\*{{3}})(?![\s\*]){}(?<!\s)\*{{2}}{}(?<!\s)\*'.format(STAR_CONTENT2, STAR_CONTENT)
+STAR_EM_STRONG = r'(\*{{3}})(?![\s\*]){}(?<!\s)\*{{2}}{}(?<!\s)\*'.format(STAR_CONTENT, STAR_CONTENT)
 # **strong*em,strong***
 STAR_STRONG_EM3 = r'(\*{{2}})(?![\s\*]){}\*(?![\s\*]){}(?<!\s)\*{{3}}'.format(STAR_CONTENT, STAR_CONTENT)
 # ___em,strong__em_
-UNDER_EM_STRONG = r'(_{{3}})(?![\s_]){}(?<!\s)_{{2}}{}(?<!\s)_'.format(UNDER_CONTENT2, UNDER_CONTENT)
+UNDER_EM_STRONG = r'(_{{3}})(?![\s_]){}(?<!\s)_{{2}}{}(?<!\s)_'.format(UNDER_CONTENT, UNDER_CONTENT)
 # __strong_em,strong___
 UNDER_STRONG_EM3 = r'(_{{2}})(?![\s_]){}_(?![\s_]){}(?<!\s)_{{3}}'.format(UNDER_CONTENT, UNDER_CONTENT)
 # **strong**
@@ -58,13 +60,13 @@ STAR_STRONG = r'(\*{{2}})(?!\s){}(?<!\s)\1'.format(STAR_CONTENT2)
 # __strong__
 UNDER_STRONG = r'(_{{2}})(?!\s){}(?<!\s)\1'.format(UNDER_CONTENT2)
 # *em **strong***
-STAR_EM_STRONG2 = r'(?<!\*)(\*)(?![\*\s]){}\*{{2}}{}\*{{3}}'.format(STAR_CONTENT, STAR_CONTENT2)
+STAR_EM_STRONG2 = r'(?<!\*)(\*)(?![\*\s]){}\*{{2}}{}\*{{3}}'.format(STAR_CONTENT, STAR_CONTENT)
 # _em __strong___
-UNDER_EM_STRONG2 = r'(?<!_)(_)(?![_\s]){}_{{2}}{}_{{3}}'.format(UNDER_CONTENT, UNDER_CONTENT2)
+UNDER_EM_STRONG2 = r'(?<!_)(_)(?![_\s]){}_{{2}}{}_{{3}}'.format(UNDER_CONTENT, UNDER_CONTENT)
 # Prioritize *value* when **value** is nested within
-STAR_EM2 = r'(?<!\*)(\*)(?![\*\s])(.+?)(?<![\*\s])(\*)(?!\*)'
+STAR_EM2 = r'(?<!\*)(\*)(?![\*\s])((?:[^\*]|\*{2,})+?)(?<![\*\s])(\*)(?!\*)'
 # Prioritize _value_ when __value__ is nested within
-UNDER_EM2 = r'(?<!_)(_)(?![_\s])(.+?)(?<![_\s])(_)(?!_)'
+UNDER_EM2 = r'(?<!_)(_)(?![_\s])((?:[^_]|_{2,})+?)(?<![_\s])(_)(?!_)'
 # *emphasis*
 STAR_EM = r'(\*)(?!\s){}(?<!\s)\1'.format(STAR_CONTENT)
 # _emphasis_
@@ -75,20 +77,28 @@ UNDER_EM = r'(_)(?!\s){}(?<!\s)\1'.format(UNDER_CONTENT)
 SMART_UNDER_STRONG_EM = r'(?<!\w)(_{{3}})(?![\s_]){}(?<!\s)\1(?!\w)'.format(SMART_UNDER_CONTENT)
 # SMART: ___strong,em_ strong__
 SMART_UNDER_STRONG_EM2 = \
-    r'(?<!\w)(_{{3}})(?![\s_]){}(?<!\s)_(?!\w){}(?<!\s)_{{2}}(?!\w)'.format(SMART_UNDER_CONTENT, SMART_UNDER_CONTENT)
+    r'(?<!\w)(_{{3}})(?![\s_]){}(?<!\s)_(?!\w){}(?<!\s)_{{2}}(?!\w)'.format(
+        SMART_UNDER_LIMITED_CONTENT, SMART_UNDER_LIMITED_CONTENT
+    )
 # SMART: ___em,strong__ em_
 SMART_UNDER_EM_STRONG = \
-    r'(?<!\w)(_{{3}})(?![\s_]){}(?<!\s)_{{2}}(?!\w){}(?<!\s)_(?!\w)'.format(SMART_UNDER_CONTENT, SMART_UNDER_CONTENT)
+    r'(?<!\w)(_{{3}})(?![\s_]){}(?<!\s)_{{2}}(?!\w){}(?<!\s)_(?!\w)'.format(
+        SMART_UNDER_LIMITED_CONTENT, SMART_UNDER_LIMITED_CONTENT
+    )
 # SMART: __strong__
 SMART_UNDER_STRONG = r'(?<!\w)(_{{2}})(?![\s_]){}(?<!\s)\1(?!\w)'.format(SMART_UNDER_CONTENT)
 # SMART: _em_
 SMART_UNDER_EM = r'(?<!\w)(_)(?![\s_]){}(?<!\s)\1(?!\w)'.format(SMART_UNDER_CONTENT)
 # SMART: Prioritize _value_ when __value__ is nested within
-SMART_UNDER_EM2 = r'(?<![\w_])(_)(?![_\s])(.+?)(?<![_\s])(_)(?![_\w])'
+SMART_UNDER_EM2 = r'(?<![\w_])(_)(?![_\s])((?:[^_]|_{2,})+?)(?<![_\s])(_)(?!\w)'
 # SMART: _em __strong___
 SMART_UNDER_EM_STRONG2 = \
     r'(?<!\w)(_)(?![\s_]){}(?<!\w)_{{2}}(?![\s_]){}(?<!\s)_{{3}}(?!\w)'.format(
-        SMART_UNDER_CONTENT, SMART_UNDER_CONTENT
+        SMART_UNDER_LIMITED_CONTENT, SMART_UNDER_LIMITED_CONTENT
+    )
+SMART_UNDER_STRONG_EM3 = \
+    r'(?<!\w)(_{{2}})(?![\s_]){}(?<!\w)_(?![\s_]){}(?<!\s)_{{3}}(?!\w)'.format(
+        SMART_UNDER_LIMITED_CONTENT, SMART_UNDER_LIMITED_CONTENT
     )
 
 # Smart rules for when "smart asterisk" is enabled
@@ -98,13 +108,13 @@ SMART_STAR_STRONG_EM = r'(?:(?<=_)|(?<![\w\*]))(\*{{3}})(?![\s\*]){}(?<!\s)\1(?:
 )
 # SMART: ***strong,em* strong**
 SMART_STAR_STRONG_EM2 = \
-    r'(?:(?<=_)|(?<![\w\*]))(\*{{3}})(?![\s\*]){}(?<!\s)\*(?:(?=_)|(?![\w\*])){}(?<!\s)\*{{2}}(?:(?=_)|(?![\w\*]))'.format(
-        SMART_STAR_CONTENT, SMART_STAR_CONTENT
+    r'(?:(?<=_)|(?<![\w\*]))(\*{{3}})(?![\s\*]){}(?<![\s\*])\*(?:(?=_)|(?![\w\*])){}(?<![\s\*])\*{{2}}(?:(?=_)|(?![\w\*]))'.format(
+        SMART_STAR_LIMITED_CONTENT, SMART_STAR_LIMITED_CONTENT
     )
 # SMART: ***em,strong** em*
 SMART_STAR_EM_STRONG = \
-    r'(?:(?<=_)|(?<![\w\*]))(\*{{3}})(?![\s\*]){}(?<!\s)\*{{2}}(?:(?=_)|(?![\w\*])){}(?<!\s)\*(?:(?=_)|(?![\w\*]))'.format(
-        SMART_STAR_CONTENT, SMART_STAR_CONTENT
+    r'(?:(?<=_)|(?<![\w\*]))(\*{{3}})(?![\s\*]){}(?<![\s\*])\*{{2}}(?:(?=_)|(?![\w\*])){}(?<![\s\*])\*(?:(?=_)|(?![\w\*]))'.format(
+        SMART_STAR_LIMITED_CONTENT, SMART_STAR_LIMITED_CONTENT
     )
 # SMART: **strong**
 SMART_STAR_STRONG = r'(?:(?<=_)|(?<![\w\*]))(\*{{2}})(?![\s\*]){}(?<!\s)\1(?:(?=_)|(?![\w\*]))'.format(
@@ -113,13 +123,17 @@ SMART_STAR_STRONG = r'(?:(?<=_)|(?<![\w\*]))(\*{{2}})(?![\s\*]){}(?<!\s)\1(?:(?=
 # SMART: *em*
 SMART_STAR_EM = r'(?:(?<=_)|(?<![\w\*]))(\*)(?![\s\*]){}(?<!\s)\1(?:(?=_)|(?![\w\*]))'.format(SMART_STAR_CONTENT)
 # SMART: Prioritize *value* when **value** is nested within
-SMART_STAR_EM2 = r'(?<![\w\*])(\*)(?![\*\s])(.+?)(?<![\*\s])(\*)(?![\*\w])'
+SMART_STAR_EM2 = r'(?:(?<=_)|(?<![\w\*]))(\*)(?![\*\s])((?:[^\*]|\*{2,})+?)(?<![\*\s])(\*)(?:(?=_)|(?![\w\*]))'
 # SMART: *em **strong***
 SMART_STAR_EM_STRONG2 = \
     r'(?:(?<=_)|(?<![\w\*]))(\*)(?![\s\*]){}(?:(?<=_)|(?<![\w\*]))\*{{2}}(?![\s\*]){}(?<!\s)\*{{3}}(?:(?=_)|(?![\w\*]))'.format(
-        SMART_STAR_CONTENT, SMART_STAR_CONTENT
+        SMART_STAR_LIMITED_CONTENT, SMART_STAR_LIMITED_CONTENT
     )
-
+# SMART: **em *strong***
+SMART_STAR_STRONG_EM3 = \
+    r'(?:(?<=_)|(?<![\w\*]))(\*{{2}})(?![\s\*]){}(?:(?<=_)|(?<![\w\*]))\*(?![\s\*]){}(?<![\s\*])\*{{3}}(?:(?=_)|(?![\w\*]))'.format(
+        SMART_STAR_LIMITED_CONTENT, SMART_STAR_LIMITED_CONTENT
+    )
 
 class AsteriskProcessor(util.PatternSequenceProcessor):
     """Emphasis processor for handling strong and em matches."""
@@ -130,8 +144,8 @@ class AsteriskProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(STAR_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
         util.PatSeqItem(re.compile(STAR_STRONG_EM3, re.DOTALL | re.UNICODE), 'double2', 'strong,em'),
         util.PatSeqItem(re.compile(STAR_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
-        util.PatSeqItem(re.compile(STAR_EM2, re.DOTALL | re.UNICODE), 'single', 'em', True),
         util.PatSeqItem(re.compile(STAR_EM_STRONG2, re.DOTALL | re.UNICODE), 'double2', 'em,strong'),
+        util.PatSeqItem(re.compile(STAR_EM2, re.DOTALL | re.UNICODE), 'single', 'em', True),
         util.PatSeqItem(re.compile(STAR_EM, re.DOTALL | re.UNICODE), 'single', 'em')
     ]
 
@@ -143,9 +157,10 @@ class SmartAsteriskProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(SMART_STAR_STRONG_EM, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
         util.PatSeqItem(re.compile(SMART_STAR_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
         util.PatSeqItem(re.compile(SMART_STAR_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        util.PatSeqItem(re.compile(SMART_STAR_STRONG_EM3, re.DOTALL | re.UNICODE), 'double2', 'strong,em'),
         util.PatSeqItem(re.compile(SMART_STAR_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
-        util.PatSeqItem(re.compile(SMART_STAR_EM2, re.DOTALL | re.UNICODE), 'single', 'em', True),
         util.PatSeqItem(re.compile(SMART_STAR_EM_STRONG2, re.DOTALL | re.UNICODE), 'double2', 'em,strong'),
+        util.PatSeqItem(re.compile(SMART_STAR_EM2, re.DOTALL | re.UNICODE), 'single', 'em', True),
         util.PatSeqItem(re.compile(SMART_STAR_EM, re.DOTALL | re.UNICODE), 'single', 'em')
     ]
 
@@ -159,8 +174,8 @@ class UnderscoreProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(UNDER_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
         util.PatSeqItem(re.compile(UNDER_STRONG_EM3, re.DOTALL | re.UNICODE), 'double2', 'strong,em'),
         util.PatSeqItem(re.compile(UNDER_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
-        util.PatSeqItem(re.compile(UNDER_EM2, re.DOTALL | re.UNICODE), 'single', 'em', True),
         util.PatSeqItem(re.compile(UNDER_EM_STRONG2, re.DOTALL | re.UNICODE), 'double2', 'em,strong'),
+        util.PatSeqItem(re.compile(UNDER_EM2, re.DOTALL | re.UNICODE), 'single', 'em', True),
         util.PatSeqItem(re.compile(UNDER_EM, re.DOTALL | re.UNICODE), 'single', 'em')
     ]
 
@@ -172,9 +187,10 @@ class SmartUnderscoreProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(SMART_UNDER_STRONG_EM, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
         util.PatSeqItem(re.compile(SMART_UNDER_EM_STRONG, re.DOTALL | re.UNICODE), 'double', 'em,strong'),
         util.PatSeqItem(re.compile(SMART_UNDER_STRONG_EM2, re.DOTALL | re.UNICODE), 'double', 'strong,em'),
+        util.PatSeqItem(re.compile(SMART_UNDER_STRONG_EM3, re.DOTALL | re.UNICODE), 'double2', 'strong,em'),
         util.PatSeqItem(re.compile(SMART_UNDER_STRONG, re.DOTALL | re.UNICODE), 'single', 'strong'),
-        util.PatSeqItem(re.compile(SMART_UNDER_EM2, re.DOTALL | re.UNICODE), 'single', 'em', True),
         util.PatSeqItem(re.compile(SMART_UNDER_EM_STRONG2, re.DOTALL | re.UNICODE), 'double2', 'em,strong'),
+        util.PatSeqItem(re.compile(SMART_UNDER_EM2, re.DOTALL | re.UNICODE), 'single', 'em', True),
         util.PatSeqItem(re.compile(SMART_UNDER_EM, re.DOTALL | re.UNICODE), 'single', 'em')
     ]
 
