@@ -30,6 +30,7 @@ from markdown.inlinepatterns import SimpleTextInlineProcessor
 from . import util
 
 SMART_CONTENT = r'(.+?~*?)'
+SMART_LIMITED_CONTENT = r'((?:[^~]|(?<=\w)~+?(?=\w)|(?<=\s)~+?(?=\s))+?)'
 CONTENT = r'(~|[^\s]+?)'
 CONTENT2 = r'((?:[^~]|(?<!~{2})~)+?)'
 
@@ -51,7 +52,7 @@ SUB = r'(~)(?!\s){}(?<!\s)\1'.format(CONTENT)
 # `~sub ~~sub,del~~~`
 SUB_DEL2 = r'(?<!~)(~)(?![~\s]){}~{{2}}{}~{{3}}'.format(CONTENT, CONTENT)
 # Prioritize ~value~ when ~~value~~ is nested within
-SUB2 = r'(?<!~)(~)(?![~\s])([^\s]+?)(?<![~\s])(~)(?!~)'
+SUB2 = r'(?<!~)(~)(?![~\s])((?:[^\s~]|~{2,})+?)(?<![~\s])(~)(?!~)'
 
 # Smart rules for when "smart tilde" is enabled
 # SMART: `~~~del,sub~~~`
@@ -59,7 +60,7 @@ SMART_DEL_SUB = r'(~{{3}})(?![\s~]){}(?<!\s)\1'.format(CONTENT)
 # SMART: `~~~del,sub~ del~~`
 SMART_DEL_SUB2 = \
     r'(~{{3}})(?![\s~]){}(?<!\s)~(?:(?=_)|(?![\w~])){}(?<!\s)~{{2}}'.format(
-        CONTENT, SMART_CONTENT
+        CONTENT, SMART_LIMITED_CONTENT
     )
 # SMART: `~~~sub,del~~ sub~`
 SMART_SUB_DEL = \
@@ -73,6 +74,11 @@ SMART_SUB_DEL2 = \
     r'(?<!~)(~)(?![\s~]){}(?:(?<=_)|(?<![\w~]))~{{2}}(?![\s~]){}(?<!\s)~{{3}}'.format(
         CONTENT, CONTENT
     )
+# SMART: `~sub ~~sub,del~~~`
+SMART_DEL_SUB3 = \
+    r'(?<!~)(~{{2}})(?![\s~]){}(?:(?<=_)|(?<![\w~]))~(?![\s~]){}(?<!\s)~{{3}}'.format(
+        SMART_LIMITED_CONTENT, CONTENT
+    )
 
 
 class TildeProcessor(util.PatternSequenceProcessor):
@@ -84,8 +90,8 @@ class TildeProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(DEL_SUB2, re.DOTALL | re.UNICODE), 'double', 'del,sub'),
         util.PatSeqItem(re.compile(DEL_SUB3, re.DOTALL | re.UNICODE), 'double2', 'del,sub'),
         util.PatSeqItem(re.compile(DEL, re.DOTALL | re.UNICODE), 'single', 'del'),
-        util.PatSeqItem(re.compile(SUB2, re.DOTALL | re.UNICODE), 'single', 'sub', True),
         util.PatSeqItem(re.compile(SUB_DEL2, re.DOTALL | re.UNICODE), 'double2', 'sub,del'),
+        util.PatSeqItem(re.compile(SUB2, re.DOTALL | re.UNICODE), 'single', 'sub', True),
         util.PatSeqItem(re.compile(SUB, re.DOTALL | re.UNICODE), 'single', 'sub')
     ]
 
@@ -97,9 +103,10 @@ class TildeSmartProcessor(util.PatternSequenceProcessor):
         util.PatSeqItem(re.compile(SMART_DEL_SUB, re.DOTALL | re.UNICODE), 'double', 'del,sub'),
         util.PatSeqItem(re.compile(SMART_SUB_DEL, re.DOTALL | re.UNICODE), 'double', 'sub,del'),
         util.PatSeqItem(re.compile(SMART_DEL_SUB2, re.DOTALL | re.UNICODE), 'double', 'del,sub'),
+        util.PatSeqItem(re.compile(SMART_DEL_SUB3, re.DOTALL | re.UNICODE), 'double2', 'del,sub'),
         util.PatSeqItem(re.compile(SMART_DEL, re.DOTALL | re.UNICODE), 'single', 'del'),
-        util.PatSeqItem(re.compile(SUB2, re.DOTALL | re.UNICODE), 'single', 'sub', True),
         util.PatSeqItem(re.compile(SMART_SUB_DEL2, re.DOTALL | re.UNICODE), 'double2', 'sub,del'),
+        util.PatSeqItem(re.compile(SUB2, re.DOTALL | re.UNICODE), 'single', 'sub', True),
         util.PatSeqItem(re.compile(SUB, re.DOTALL | re.UNICODE), 'single', 'sub')
     ]
 

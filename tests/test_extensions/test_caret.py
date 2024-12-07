@@ -121,12 +121,67 @@ class TestCaretSmart(util.MdCase):
             "<p><sup>I'm sup. <ins>I'm sup and insert.</ins></sup></p>"
         )
 
-    def test_complex_del_sup_inser(self):
+    def test_complex_ins_sup_ins(self):
         """Test `^^text ^text^^^`."""
 
         self.check_markdown(
             R"^^I'm insert. ^I'm\ sup\ and\ insert.^^^",
             "<p><ins>I'm insert. <sup>I'm sup and insert.</sup></ins></p>"
+        )
+
+    def test_complex_cases(self):
+        """Test some complex cases."""
+
+        self.check_markdown(
+            R'''
+            ^^^I'm\ insert\ and\ sup^ I am just insert.^^
+
+            ^^^I'm\ insert\ and\ sup!^^\ I\ am\ just\ sup.^
+
+            ^sup\ and\ ^^sup\ insert^^^ and ^sup^
+
+            ^^insert and ^sup\ insert^^^ and ^sup^
+
+            ^^^I'm\ sup\ and\ insert^ I am just insert.^^ ^sup^
+
+            ^^^I'm\ insert\ and\ sup!^^\ I\ am\ just\ sup.^ ^sup^
+
+            ^sup\ and\ ^^sup\ insert^^^ and not sup^
+
+            ^^insert and ^sup\ insert^^^ and not sup^
+
+            ^sup\ and\ ^^sup\ insert^^^
+
+            ^^insert and ^sup\ insert^^^
+
+            ^sup\ ^^sup\ insert^^\ sup^
+
+            ^^^sup\ and\ insert^ insert^^: foo bar ^^insert^^
+
+            ^^^sup\ and\ insert^^\ sup^ foo bar ^^insert^^
+
+            ^sup\ and\ ^^sup\ insert^^^ ^^insert^^
+
+            ^^insert and ^sup\ insert^^^ ^^insert^^
+            ''',
+            '''
+            <p><ins><sup>I'm insert and sup</sup> I am just insert.</ins></p>
+            <p><sup><ins>I'm insert and sup!</ins> I am just sup.</sup></p>
+            <p><sup>sup and <ins>sup insert</ins></sup> and <sup>sup</sup></p>
+            <p><ins>insert and <sup>sup insert</sup></ins> and <sup>sup</sup></p>
+            <p><ins><sup>I'm sup and insert</sup> I am just insert.</ins> <sup>sup</sup></p>
+            <p><sup><ins>I'm insert and sup!</ins> I am just sup.</sup> <sup>sup</sup></p>
+            <p><sup>sup and <ins>sup insert</ins></sup> and not sup^</p>
+            <p><ins>insert and <sup>sup insert</sup></ins> and not sup^</p>
+            <p><sup>sup and <ins>sup insert</ins></sup></p>
+            <p><ins>insert and <sup>sup insert</sup></ins></p>
+            <p><sup>sup <ins>sup insert</ins> sup</sup></p>
+            <p><ins><sup>sup and insert</sup> insert</ins>: foo bar <ins>insert</ins></p>
+            <p><sup><ins>sup and insert</ins> sup</sup> foo bar <ins>insert</ins></p>
+            <p><sup>sup and <ins>sup insert</ins></sup> <ins>insert</ins></p>
+            <p><ins>insert and <sup>sup insert</sup></ins> <ins>insert</ins></p>
+            ''',
+            True
         )
 
 
@@ -240,10 +295,65 @@ class TestCaretNoSmart(util.MdCase):
             "<p><sup>I'm sup. <ins>I'm sup and insert.</ins></sup></p>"
         )
 
-    def test_complex_del_sup_inser(self):
+    def test_complex_ins_sup_inser(self):
         """Test `^^text ^text^^^`."""
 
         self.check_markdown(
             R"^^I'm insert. ^I'm\ sup\ and\ insert.^^^",
             "<p><ins>I'm insert. <sup>I'm sup and insert.</sup></ins></p>"
+        )
+
+    def test_complex_cases(self):
+        """Test some complex cases."""
+
+        self.check_markdown(
+            R'''
+            ^^^I'm\ insert\ and\ sup^ I am just insert.^^
+
+            ^^^I'm\ insert\ and\ sup!^^\ I\ am\ just\ sup.^
+
+            ^sup\ and\ ^^sup\ insert^^^ and ^sup^
+
+            ^^insert and ^sup\ insert^^^ and ^sup^
+
+            ^^^I'm\ sup\ and\ insert^ I am just insert.^^ ^sup^
+
+            ^^^I'm\ insert\ and\ sup!^^\ I\ am\ just\ sup.^ ^sup^
+
+            ^sup\ and\ ^^sup\ insert^^^ and not sup^
+
+            ^^insert and ^sup\ insert^^^ and not sup^
+
+            ^sup\ and\ ^^sup\ insert^^^
+
+            ^^insert and ^sup\ insert^^^
+
+            ^sup\ ^^sup\ insert^^\ sup^
+
+            ^^^sup\ and\ insert^ insert^^: foo bar ^^insert^^
+
+            ^^^sup\ and\ insert^^\ sup^ foo bar ^^insert^^
+
+            ^sup\ and\ ^^sup\ insert^^^ ^^insert^^
+
+            ^^insert and ^sup\ insert^^^ ^^insert^^
+            ''',
+            '''
+            <p><ins><sup>I'm insert and sup</sup> I am just insert.</ins></p>
+            <p><sup><ins>I'm insert and sup!</ins> I am just sup.</sup></p>
+            <p><sup>sup and <ins>sup insert</ins></sup> and <sup>sup</sup></p>
+            <p><ins>insert and <sup>sup insert</sup></ins> and <sup>sup</sup></p>
+            <p><ins><sup>I'm sup and insert</sup> I am just insert.</ins> <sup>sup</sup></p>
+            <p><sup><ins>I'm insert and sup!</ins> I am just sup.</sup> <sup>sup</sup></p>
+            <p><sup>sup and <ins>sup insert</ins></sup> and not sup^</p>
+            <p><ins>insert and <sup>sup insert</sup></ins> and not sup^</p>
+            <p><sup>sup and <ins>sup insert</ins></sup></p>
+            <p><ins>insert and <sup>sup insert</sup></ins></p>
+            <p><sup>sup <ins>sup insert</ins> sup</sup></p>
+            <p><ins><sup>sup and insert</sup> insert</ins>: foo bar <ins>insert</ins></p>
+            <p><sup><ins>sup and insert</ins> sup</sup> foo bar <ins>insert</ins></p>
+            <p><sup>sup and <ins>sup insert</ins></sup> <ins>insert</ins></p>
+            <p><ins>insert and <sup>sup insert</sup></ins> <ins>insert</ins></p>
+            ''',
+            True
         )
