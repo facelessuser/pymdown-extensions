@@ -399,3 +399,65 @@ class TestMagicLinkWarning(util.MdCase):
             self.assertTrue(len(w) == 1)
             self.assertTrue(issubclass(w[-1].category, DeprecationWarning))
             self.assertTrue(found)
+
+class TestMagicLinkCustomRefs(util.MdCase):
+    """Test cases for custom references."""
+
+    extension = [
+        'pymdownx.magiclink'
+    ]
+
+    extension_configs = {
+        'pymdownx.magiclink': {
+            'custom_refs': [
+                {
+                    'ref_prefix': 'TICKET-',
+                    'target_url': 'https://ticket.test.com/TICKET-<id>'
+                },
+                {
+                    'ref_prefix': 'go/',
+                    'target_url': 'https://go.test.com/<id>'
+                },
+            ]
+        }
+    }
+
+    def test_numeric(self):
+        """Test numeric identifiers."""
+
+        self.check_markdown(
+            'TICKET-123',
+            '<p><a class="magiclink magiclink-customref magiclink-customref-ticket" href="https://ticket.test.com/TICKET-123">TICKET-123</a></p>'  # noqa: E501
+        )
+
+    def test_word_boundary(self):
+        """Test numeric identifiers."""
+
+        self.check_markdown(
+            'Hello, TICKET-123!',
+            '<p>Hello, <a class="magiclink magiclink-customref magiclink-customref-ticket" href="https://ticket.test.com/TICKET-123">TICKET-123</a>!</p>'  # noqa: E501
+        )
+
+    def test_alphanumeric(self):
+        """Test alphanumeric identifiers."""
+
+        self.check_markdown(
+            'go/abc123',
+            '<p><a class="magiclink magiclink-customref magiclink-customref-go" href="https://go.test.com/abc123">go/abc123</a></p>'  # noqa: E501
+        )
+
+    def test_underscores(self):
+        """Test underscore counts as a word character."""
+
+        self.check_markdown(
+            'go/abc_123',
+            '<p><a class="magiclink magiclink-customref magiclink-customref-go" href="https://go.test.com/abc_123">go/abc_123</a></p>'  # noqa: E501
+        )
+
+    def test_hyphen(self):
+        """Test hyphen breaks matching."""
+
+        self.check_markdown(
+            'go/abc-123',
+            '<p><a class="magiclink magiclink-customref magiclink-customref-go" href="https://go.test.com/abc">go/abc</a>-123</p>'  # noqa: E501
+        )

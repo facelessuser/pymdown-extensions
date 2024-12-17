@@ -86,6 +86,15 @@ RE_ALL_EXT_MENTIONS = r'''(?x)
 # Internal mention patterns
 RE_INT_MENTIONS = r'(?P<mention>(?<![a-zA-Z])@{})\b'
 
+# Custom references
+RE_CUSTOM_REFS_TEMPLATE = r'''(?xi)
+    (?:(?<=\b)|(?<=_))(?:
+        (?P<prefix>%s)                                      # prefix; to be injected
+        (?P<id>\w+)                                         # identifier
+    )
+'''
+
+
 def create_ext_mentions(name, provider_type):
     """Create external mentions by provider type."""
 
@@ -1036,6 +1045,33 @@ class MagiclinkInternalRefsPattern(_MagiclinkReferencePattern):
         return el, m.start(0), m.end(0)
 
 
+class MagiclinkCustomRefPattern(InlineProcessor):
+    """Return a link Element given a custom prefix."""
+
+    ANCESTOR_EXCLUDES = ('a',)
+
+    def __init__(self, pattern, md, shortname, target_url):
+        """Initialize."""
+
+        self.shortname = shortname
+        self.target_url = target_url
+        InlineProcessor.__init__(self, pattern, md)
+
+    def handleMatch(self, m, data):
+        """Return link."""
+
+        el = etree.Element("a")
+        prefix = m.group(1)
+        identifier = m.group(2)
+        el.set('href', self.target_url.replace('<id>', identifier))
+        el.text = prefix + identifier
+
+        el.set('class', f'magiclink magiclink-customref magiclink-customref-{self.shortname}')
+
+        return el, m.start(0), m.end(0)
+
+
+
 class MagiclinkExtension(Extension):
     """Add auto link and link transformation extensions to Markdown class."""
 
@@ -1097,6 +1133,10 @@ class MagiclinkExtension(Extension):
             'custom': [
                 {},
                 "Custom repositories hosts - Default {}"
+            ],
+            'custom_refs': [
+                [],
+                "Custom reference patterns - Default []"
             ]
         }
         super().__init__(*args, **kwargs)
@@ -1114,6 +1154,17 @@ class MagiclinkExtension(Extension):
         md.inlinePatterns.register(link_pattern, "magic-link", 85)
 
         md.inlinePatterns.register(MagiclinkMailPattern(RE_MAIL, md), "magic-mail", 84.9)
+
+    def setup_custom_refs(self, md, config):
+        """Setup custom refs."""
+
+        for custom_ref_config in config.get('custom_refs', []):
+            ref_prefix = custom_ref_config['ref_prefix']
+            target_url = custom_ref_config['target_url']
+            pattern_re = RE_CUSTOM_REFS_TEMPLATE % ref_prefix
+            shortname = re.sub(r'\W+', '', ref_prefix).lower()
+            pattern = MagiclinkCustomRefPattern(pattern_re, md, shortname, target_url)
+            md.inlinePatterns.register(pattern, "customref-" + shortname, 120)
 
     def setup_shorthand(self, md):
         """Setup shorthand."""
@@ -1308,6 +1359,7 @@ class MagiclinkExtension(Extension):
             self.provider = 'github'
 
         self.setup_autolinks(md, config)
+        self.setup_custom_refs(md, config)
 
         if self.git_short or self.social_short:
             self.ext_mentions = []
