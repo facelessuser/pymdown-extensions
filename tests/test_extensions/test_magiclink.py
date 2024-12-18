@@ -400,8 +400,8 @@ class TestMagicLinkWarning(util.MdCase):
             self.assertTrue(issubclass(w[-1].category, DeprecationWarning))
             self.assertTrue(found)
 
-class TestMagicLinkCustomRefs(util.MdCase):
-    """Test cases for custom references."""
+class TestMagicLinkSimpleRefs(util.MdCase):
+    """Test cases for autolinking of user-defined simple references."""
 
     extension = [
         'pymdownx.magiclink'
@@ -409,7 +409,7 @@ class TestMagicLinkCustomRefs(util.MdCase):
 
     extension_configs = {
         'pymdownx.magiclink': {
-            'custom_refs': [
+            'simplerefs': [
                 {
                     'ref_prefix': 'TICKET-',
                     'target_url': 'https://ticket.test.com/TICKET-<id>'
@@ -427,7 +427,7 @@ class TestMagicLinkCustomRefs(util.MdCase):
 
         self.check_markdown(
             'TICKET-123',
-            '<p><a class="magiclink magiclink-customref magiclink-customref-ticket" href="https://ticket.test.com/TICKET-123">TICKET-123</a></p>'  # noqa: E501
+            '<p><a class="magiclink magiclink-simpleref magiclink-simpleref-ticket" href="https://ticket.test.com/TICKET-123">TICKET-123</a></p>'  # noqa: E501
         )
 
     def test_word_boundary(self):
@@ -435,7 +435,7 @@ class TestMagicLinkCustomRefs(util.MdCase):
 
         self.check_markdown(
             'Hello, TICKET-123!',
-            '<p>Hello, <a class="magiclink magiclink-customref magiclink-customref-ticket" href="https://ticket.test.com/TICKET-123">TICKET-123</a>!</p>'  # noqa: E501
+            '<p>Hello, <a class="magiclink magiclink-simpleref magiclink-simpleref-ticket" href="https://ticket.test.com/TICKET-123">TICKET-123</a>!</p>'  # noqa: E501
         )
 
     def test_alphanumeric(self):
@@ -443,7 +443,7 @@ class TestMagicLinkCustomRefs(util.MdCase):
 
         self.check_markdown(
             'go/abc123',
-            '<p><a class="magiclink magiclink-customref magiclink-customref-go" href="https://go.test.com/abc123">go/abc123</a></p>'  # noqa: E501
+            '<p><a class="magiclink magiclink-simpleref magiclink-simpleref-go" href="https://go.test.com/abc123">go/abc123</a></p>'  # noqa: E501
         )
 
     def test_underscores(self):
@@ -451,7 +451,7 @@ class TestMagicLinkCustomRefs(util.MdCase):
 
         self.check_markdown(
             'go/abc_123',
-            '<p><a class="magiclink magiclink-customref magiclink-customref-go" href="https://go.test.com/abc_123">go/abc_123</a></p>'  # noqa: E501
+            '<p><a class="magiclink magiclink-simpleref magiclink-simpleref-go" href="https://go.test.com/abc_123">go/abc_123</a></p>'  # noqa: E501
         )
 
     def test_hyphen(self):
@@ -459,5 +459,5 @@ class TestMagicLinkCustomRefs(util.MdCase):
 
         self.check_markdown(
             'go/abc-123',
-            '<p><a class="magiclink magiclink-customref magiclink-customref-go" href="https://go.test.com/abc">go/abc</a>-123</p>'  # noqa: E501
+            '<p><a class="magiclink magiclink-simpleref magiclink-simpleref-go" href="https://go.test.com/abc">go/abc</a>-123</p>'  # noqa: E501
         )
