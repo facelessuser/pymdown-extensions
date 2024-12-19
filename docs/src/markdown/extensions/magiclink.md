@@ -13,7 +13,8 @@ implement (if desired) via the provided [classes](#css). User's are free to refe
 
 MagicLink is an extension that provides a number of useful link related features. MagicLink can auto-link HTML, FTP, and
 email links. It can auto-convert repository links (GitHub, GitLab, and Bitbucket) and display them in a more concise,
-shorthand format. MagicLink can also be configured to directly auto-link the aforementioned shorthand format.
+shorthand format. MagicLink can be configured to directly auto-link the aforementioned shorthand format.
+MagicLink can also auto-link simple user-defined patterns for use cases like ticketing systems.
 
 If you happen to have some conflicts with syntax for a specific case, you can always revert to the old auto-link format
 as well: `#!md <https://www.link.com>`. If enabled, repository link shortening will be applied to the angle bracketed
@@ -478,6 +479,51 @@ Lastly, `shortener_user_exclude` will assume your custom provider requires the s
 and will copy them for your custom repository. If this is not sufficient, you can add an entry to
 `shortener_user_exclude` for your custom repository provider using your specified `name`. If you manually set excludes
 in this manner, no excludes from the same `type` will be copied over.
+
+## Simple User-Defined References
+
+You can integrate with additional services like ticketing systems or shortlink providers (sometimes called `go/` links) by defining simple patterns that will be autolinked.
+
+The `simplerefs` configuration supports matching a static prefix followed by an alphanumeric identifier. We look for patterns of form `{ref_prefix}{identifier}` with the following restrictions:
+
+- `ref_prefix` is a configured literal value consisting of a letter followed by alphanumeric characters or punctuation from the set `_/-`; it will usually end with punctuation like `TICKET-`
+- `identifier` is an alphanumeric string containing at least one character; it will be captured and injected into a configured target URL
+- The pattern must be preceeded by whitespace or be at the beginning of the line
+- The pattern must be followed by whitespace or punctuation from the set `.,!?:`
+
+Suppose we have a Jira project called `TICKET` where the issues are referred to like `TICKET-123` and a shortlink service where labels look like `go/myproject`. Our configuration will be:
+
+```
+'simplerefs': [
+    {
+        # Anchor tags will have class name "magiclink-simplerefs-ticket"
+        'ref_prefix': 'TICKET-',
+        # The target must contain "<id>" to indicate where to inject the captured identifier
+        'target_url': 'https://ticket.test.com/TICKET-<id>'
+    },
+    {
+        # Anchor tags will have class name "magiclink-simplerefs-go"
+        'ref_prefix': 'go/',
+        'target_url': 'https://go.test.com/<id>'
+    }
+]
+```
+
+Each `ref_prefix` is paired with a `target_url` that must contain an `<id>` placeholder where the captured identifier will be injected. Although matching is case-insensitive, `simplerefs` will preserve casing of the input text. Note that the `ref_prefix` is also used to derive a class name attached to the links it produces; the class name will be the value of `ref_prefix` downcased and with punctuation removed.
+
+To make this concrete, consider the following cases using the above config:
+
+Markdown Input | HTML Output
+-------------- | -----------
+`TICKET-123`   | `<a class="magiclink magiclink-simpleref magiclink-simpleref-ticket" href="https://ticket.test.com/TICKET-123">TICKET-123</a>`
+`ticket-123`   | `<a class="magiclink magiclink-simpleref magiclink-simpleref-ticket" href="https://ticket.test.com/TICKET-123">ticket-123</a>`
+`go/myproject` | `<a class="magiclink magiclink-simpleref magiclink-simpleref-go" href="https://go.test.com/myproject">go/myproject</a>`
+`go/my-project`| `go/my-project` (not matched due to `-` in identifier position)
+
+Users should be aware of the following restrictions:
+
+- Do not configure overlapping prefixes; for example, `TICKET` and `TICKETNUM` prefixes would both match `TICKETNUM123` so only one rule can be applied
+- Do not configure prefixes that differ only in punctuation; `TICKET-` and `TICKET:` would both have the same derived class name, which will throw a configuration error
 
 ## CSS
 
