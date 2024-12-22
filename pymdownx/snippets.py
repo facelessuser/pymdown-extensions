@@ -321,7 +321,7 @@ class SnippetPreprocessor(Preprocessor):
                         st = int(span[0]) if span[0] else None
                         start.append(st if st is None or st < 0 else max(0, st - 1))
                         en = int(span[1]) if len(span) > 1 and span[1] else None
-                        end.append(en if en is None or en >= 0 else en)
+                        end.append(en)
                 elif m.group(3):
                     section = m.group(3)[1:]
 

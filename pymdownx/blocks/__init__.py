@@ -372,10 +372,10 @@ class BlocksProcessor(BlockProcessor):
             if is_atomic or not is_block:
                 child = list(target)[-1] if len(target) else None
                 text = target.text if child is None else child.tail
-                b = '\n\n'.join(unescape_markdown(self.md, [b], is_atomic))
+                b = '\n\n'.join(unescape_markdown(self.md, [b], is_atomic)).strip('\n')
 
                 if text:
-                    text += '\n\n' + b
+                    text += b if not b else '\n\n' + b
                 else:
                     text = b
 

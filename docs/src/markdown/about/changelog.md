@@ -8,6 +8,7 @@
 -   **FIX**: Snippets: Properly capture empty newline at end of file.
 -   **FIX**: Snippets: Fix issue where when non sections of files are included, section labels are not stripped.
 -   **FIX**: BetterEm: Fixes for complex cases.
+-   **FIX**: Blocks: More consistent handling of empty newlines in block processor extensions.
 
 ## 10.12
 
