@@ -314,11 +314,10 @@ class SnippetPreprocessor(Preprocessor):
                 if m.group(2):
                     for nums in m.group(2)[1:].split(','):
                         span = nums.split(':')
+                        start.append(max(0, int(span[0]) - 1) if span[0] else None)
                         if len(span) > 1:
-                            start.append(max(0, int(span[0]) - 1) if span[0] else None)
                             end.append(int(span[1]) if span[1] else None)
                         else:
-                            start.append(max(0, int(span[0]) - 1) if span[0] else None)
                             end.append(None)
                 elif m.group(3):
                     section = m.group(3)[1:]
@@ -343,28 +342,23 @@ class SnippetPreprocessor(Preprocessor):
                         # Read file content
                         with codecs.open(snippet, 'r', encoding=self.encoding) as f:
                             s_lines = [l.rstrip('\r\n') for l in f]
-                            if start and end:
-                                final_lines = []
-                                for entry in zip(start, end):
-                                    final_lines.extend(s_lines[slice(entry[0], entry[1], None)])
-                                s_lines = self.dedent(final_lines) if self.dedent_subsections else final_lines
-                            elif section:
-                                s_lines = self.extract_section(section, s_lines)
                     else:
                         # Read URL content
                         try:
                             s_lines = self.download(snippet)
-                            if start and end:
-                                final_lines = []
-                                for entry in zip(start, end):
-                                    final_lines.extend(s_lines[slice(entry[0], entry[1], None)])
-                                s_lines = self.dedent(final_lines) if self.dedent_subsections else final_lines
-                            elif section:
-                                s_lines = self.extract_section(section, s_lines)
                         except SnippetMissingError:
                             if self.check_paths:
                                 raise
                             s_lines = []
+
+                    if s_lines:
+                        if start and end:
+                            final_lines = []
+                            for entry in zip(start, end):
+                                final_lines.extend(s_lines[slice(entry[0], entry[1], None)])
+                            s_lines = self.dedent(final_lines) if self.dedent_subsections else final_lines
+                        elif section:
+                            s_lines = self.extract_section(section, s_lines)
 
                     # Process lines looking for more snippets
                     new_lines.extend(
