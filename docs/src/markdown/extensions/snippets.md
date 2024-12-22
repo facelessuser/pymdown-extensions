@@ -132,7 +132,7 @@ include.md::3
 ```
 
 /// new | 10.13
-Specifying multiple line selections separted with `,` was added in 10.13.
+Specifying multiple line selections separated with `,` was added in 10.13.
 ///
 
 ### Snippet Sections
