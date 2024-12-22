@@ -138,6 +138,19 @@ class TestUrlParse(unittest.TestCase):
         self.assertEqual(is_url, False)
         self.assertEqual(is_absolute, False)
 
+    def test_clamp(self):
+        """Test clamp."""
+
+        self.assertEqual(util.clamp(3, None, None), 3)
+        self.assertEqual(util.clamp(3, 4, None), 4)
+        self.assertEqual(util.clamp(4, 4, None), 4)
+        self.assertEqual(util.clamp(4, None, 4), 4)
+        self.assertEqual(util.clamp(5, None, 4), 4)
+        self.assertEqual(util.clamp(3, 4, 6), 4)
+        self.assertEqual(util.clamp(7, 4, 6), 6)
+        self.assertEqual(util.clamp(4, 4, 6), 4)
+        self.assertEqual(util.clamp(6, 4, 6), 6)
+
 
 def run():
     """Run pytest."""

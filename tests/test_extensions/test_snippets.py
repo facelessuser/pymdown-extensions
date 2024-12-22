@@ -108,9 +108,9 @@ class TestSnippets(util.MdCase):
                 ---8<--- "b.txt"
             ''',
             R'''
-            <p>Snippet
-            Snippet
-            ---8&lt;--- "b.txt"</p>
+            <p>Snippet</p>
+            <p>Snippet</p>
+            <p>---8&lt;--- "b.txt"</p>
             <ul>
             <li>
             <p>Testing indentation</p>
@@ -296,6 +296,67 @@ class TestSnippets(util.MdCase):
             ---8<--- "lines.txt:1:2,"
             ''',
             '''
+            ''',
+            True
+        )
+
+    def test_negative_range(self):
+        """Test negative indexing range."""
+
+        self.check_markdown(
+            R'''
+            ---8<--- "lines.txt:-3:-2"
+            ''',
+            '''
+            <p>This is the end of the file.
+            There is no more.</p>
+            ''',
+            True
+        )
+
+    def test_negative_single(self):
+        """Test negative indexing single line."""
+
+        self.check_markdown(
+            R'''
+            ---8<--- "lines.txt:-2:-2"
+            ''',
+            '''
+            <p>There is no more.</p>
+            ''',
+            True
+        )
+
+    def test_mixed_negative(self):
+        """Test negative indexing single line."""
+
+        self.check_markdown(
+            R'''
+            ---8<--- "lines.txt:8:-2"
+
+            ---8<--- "lines.txt:-3:9"
+            ''',
+            '''
+            <p>This is the end of the file.
+            There is no more.</p>
+            <p>This is the end of the file.
+            There is no more.</p>
+            ''',
+            True
+        )
+
+    def test_start_negative_multi(self):
+        """Test multiple line specifiers with negative indexes."""
+
+        self.check_markdown(
+            R'''
+            ---8<--- "lines.txt:1:2,-3:-2"
+            ''',
+            '''
+            <p>This is a multi-line
+            snippet.
+            This is the end of the file.
+            There is no more.</p>
             ''',
             True
         )

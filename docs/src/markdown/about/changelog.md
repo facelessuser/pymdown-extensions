@@ -1,8 +1,11 @@
 # Changelog
 
-## 10.12.1
+## 10.13
 
 -   **NEW**: Snippets: Allow multiple line numbers or line number blocks separated by `,`.
+-   **NEW**: Snippets: Allow using a negative index for number start indexes and end indexes. Negative indexes are
+    converted to positive indexes based on the number of lines in the snippet.
+-   **FIX**: Snippets: Properly capture empty newline at end of file.
 -   **FIX**: Snippets: Fix issue where when non sections of files are included, section labels are not stripped.
 -   **FIX**: BetterEm: Fixes for complex cases.
 

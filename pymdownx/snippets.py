@@ -75,7 +75,7 @@ class SnippetPreprocessor(Preprocessor):
     )
 
     RE_SNIPPET_FILE = re.compile(
-        r'(?i)(.*?)(?:((?::[0-9]*){1,2}(?:(?:,(?=[0-9:])[0-9]*)(?::[0-9]*)?)*)|(:[a-z][-_0-9a-z]*))?$'
+        r'(?i)(.*?)(?:((?::-?[0-9]*){1,2}(?:(?:,(?=[-0-9:])-?[0-9]*)(?::-?[0-9]*)?)*)|(:[a-z][-_0-9a-z]*))?$'
     )
 
     def __init__(self, config, md):
@@ -222,7 +222,11 @@ class SnippetPreprocessor(Preprocessor):
                 content = response.read()
 
             # Process lines
-            return [l.decode(self.encoding) for l in content.splitlines()]
+            last = content.endswith((b'\r', b'\n'))
+            s_lines = [l.decode(self.encoding) for l in content.splitlines()]
+            if last:
+                s_lines.append('')
+            return s_lines
 
     def parse_snippets(self, lines, file_name=None, is_url=False, is_section=False):
         """Parse snippets snippet."""
@@ -314,8 +318,10 @@ class SnippetPreprocessor(Preprocessor):
                 if m.group(2):
                     for nums in m.group(2)[1:].split(','):
                         span = nums.split(':')
-                        start.append(max(0, int(span[0]) - 1) if span[0] else None)
-                        end.append(int(span[1]) if len(span) > 1 and span[1] else None)
+                        st = int(span[0]) if span[0] else None
+                        start.append(st if st is None or st < 0 else max(0, st - 1))
+                        en = int(span[1]) if len(span) > 1 and span[1] else None
+                        end.append(en if en is None or en >= 0 else en)
                 elif m.group(3):
                     section = m.group(3)[1:]
 
@@ -338,7 +344,13 @@ class SnippetPreprocessor(Preprocessor):
                     if not url:
                         # Read file content
                         with codecs.open(snippet, 'r', encoding=self.encoding) as f:
-                            s_lines = [l.rstrip('\r\n') for l in f]
+                            last = False
+                            s_lines = []
+                            for l in f:
+                                last = l.endswith(('\r', '\n'))
+                                s_lines.append(l.strip('\r\n'))
+                            if last:
+                                s_lines.append('')
                     else:
                         # Read URL content
                         try:
@@ -349,10 +361,13 @@ class SnippetPreprocessor(Preprocessor):
                             s_lines = []
 
                     if s_lines:
+                        total = len(s_lines)
                         if start and end:
                             final_lines = []
-                            for entry in zip(start, end):
-                                final_lines.extend(s_lines[slice(entry[0], entry[1], None)])
+                            for sel in zip(start, end):
+                                s_start = util.clamp(total + sel[0], 0, total) if sel[0] and sel[0] < 0 else sel[0]
+                                s_end = util.clamp(total + 1 + sel[1], 0, total) if sel[1] and sel[1] < 0 else sel[1]
+                                final_lines.extend(s_lines[slice(s_start, s_end, None)])
                             s_lines = self.dedent(final_lines) if self.dedent_subsections else final_lines
                         elif section:
                             s_lines = self.extract_section(section, s_lines)
