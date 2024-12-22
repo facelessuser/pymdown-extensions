@@ -32,6 +32,19 @@ else:
 PY39 = (3, 9) <= sys.version_info
 
 
+def clamp(value, mn, mx):
+    """Clamp the value to the given minimum and maximum."""
+
+    if mn is not None and mx is not None:
+        return max(min(value, mx), mn)
+    elif mn is not None:
+        return max(value, mn)
+    elif mx is not None:
+        return min(value, mx)
+    else:
+        return value
+
+
 def is_win():  # pragma: no cover
     """Is Windows."""
 
