@@ -236,6 +236,70 @@ class TestSnippets(util.MdCase):
             True
         )
 
+    def test_start_multi(self):
+        """Test multiple line specifiers."""
+
+        self.check_markdown(
+            R'''
+            ---8<--- "lines.txt:1:2,8:9"
+            ''',
+            '''
+            <p>This is a multi-line
+            snippet.
+            This is the end of the file.
+            There is no more.</p>
+            ''',
+            True
+        )
+
+    def test_start_multi_no_end(self):
+        """Test multiple line specifiers but the last has no end."""
+
+        self.check_markdown(
+            R'''
+            ---8<--- "lines.txt:1:2,8"
+            ''',
+            '''
+            <p>This is a multi-line
+            snippet.
+            This is the end of the file.
+            There is no more.</p>
+            ''',
+            True
+        )
+
+    def test_start_multi_no_start(self):
+        """Test multiple line specifiers but the last has no start."""
+
+        self.check_markdown(
+            R'''
+            ---8<--- "lines.txt:1:2,:8"
+            ''',
+            '''
+            <p>This is a multi-line
+            snippet.
+            This is a multi-line
+            snippet.</p>
+            <p>Content resides on various lines.
+            If we use line specifiers,
+            we can select any number of lines we want.</p>
+            <p>This is the end of the file.</p>
+            ''',
+            True
+        )
+
+    def test_start_multi_hanging_comma(self):
+        """Test multiple line specifiers but there is a hanging comma."""
+
+        self.check_markdown(
+            R'''
+            ---8<--- "lines.txt:1:2,"
+            ''',
+            '''
+            ''',
+            True
+        )
+
     def test_end_line_inline(self):
         """Test ending line with inline syntax."""
 

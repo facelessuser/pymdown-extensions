@@ -74,7 +74,9 @@ class SnippetPreprocessor(Preprocessor):
         '''
     )
 
-    RE_SNIPPET_FILE = re.compile(r'(?i)(.*?)(?:(:[0-9]*)?(:[0-9]*)?|(:[a-z][-_0-9a-z]*)?)$')
+    RE_SNIPPET_FILE = re.compile(
+        r'(?i)(.*?)(?:((?::[0-9]*){1,2}(?:(?:,(?=[0-9:])[0-9]*)(?::[0-9]*)?)*)|(:[a-z][-_0-9a-z]*))?$'
+    )
 
     def __init__(self, config, md):
         """Initialize."""
@@ -298,26 +300,28 @@ class SnippetPreprocessor(Preprocessor):
                     continue
 
                 # Get line numbers (if specified)
-                end = None
-                start = None
+                end = []
+                start = []
                 section = None
                 m = self.RE_SNIPPET_FILE.match(path)
-                path = m.group(1).strip()
+                path = '' if m is None else m.group(1).strip()
                 # Looks like we have an empty file and only lines specified
                 if not path:
                     if self.check_paths:
                         raise SnippetMissingError(f"Snippet at path '{path}' could not be found")
                     else:
                         continue
-                ending = m.group(3)
-                if ending and len(ending) > 1:
-                    end = int(ending[1:])
-                starting = m.group(2)
-                if starting and len(starting) > 1:
-                    start = max(0, int(starting[1:]) - 1)
-                section_name = m.group(4)
-                if section_name:
-                    section = section_name[1:]
+                if m.group(2):
+                    for nums in m.group(2)[1:].split(','):
+                        span = nums.split(':')
+                        if len(span) > 1:
+                            start.append(max(0, int(span[0]) - 1) if span[0] else None)
+                            end.append(int(span[1]) if span[1] else None)
+                        else:
+                            start.append(max(0, int(span[0]) - 1) if span[0] else None)
+                            end.append(None)
+                elif m.group(3):
+                    section = m.group(3)[1:]
 
                 # Ignore path links if we are in external, downloaded content
                 is_link = path.lower().startswith(('https://', 'http://'))
@@ -339,18 +343,22 @@ class SnippetPreprocessor(Preprocessor):
                         # Read file content
                         with codecs.open(snippet, 'r', encoding=self.encoding) as f:
                             s_lines = [l.rstrip('\r\n') for l in f]
-                            if start is not None or end is not None:
-                                s = slice(start, end)
-                                s_lines = self.dedent(s_lines[s]) if self.dedent_subsections else s_lines[s]
+                            if start and end:
+                                final_lines = []
+                                for entry in zip(start, end):
+                                    final_lines.extend(s_lines[slice(entry[0], entry[1], None)])
+                                s_lines = self.dedent(final_lines) if self.dedent_subsections else final_lines
                             elif section:
                                 s_lines = self.extract_section(section, s_lines)
                     else:
                         # Read URL content
                         try:
                             s_lines = self.download(snippet)
-                            if start is not None or end is not None:
-                                s = slice(start, end)
-                                s_lines = self.dedent(s_lines[s]) if self.dedent_subsections else s_lines[s]
+                            if start and end:
+                                final_lines = []
+                                for entry in zip(start, end):
+                                    final_lines.extend(s_lines[slice(entry[0], entry[1], None)])
+                                s_lines = self.dedent(final_lines) if self.dedent_subsections else final_lines
                             elif section:
                                 s_lines = self.extract_section(section, s_lines)
                         except SnippetMissingError:
