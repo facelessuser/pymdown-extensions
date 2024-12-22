@@ -315,10 +315,7 @@ class SnippetPreprocessor(Preprocessor):
                     for nums in m.group(2)[1:].split(','):
                         span = nums.split(':')
                         start.append(max(0, int(span[0]) - 1) if span[0] else None)
-                        if len(span) > 1:
-                            end.append(int(span[1]) if span[1] else None)
-                        else:
-                            end.append(None)
+                        end.append(int(span[1]) if len(span) > 1 and span[1] else None)
                 elif m.group(3):
                     section = m.group(3)[1:]
 
