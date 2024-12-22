@@ -2,6 +2,7 @@
 
 ## 10.12.1
 
+-   **NEW**: Snippets: Allow multiple line numbers or line number blocks separated by `,`.
 -   **FIX**: Snippets: Fix issue where when non sections of files are included, section labels are not stripped.
 -   **FIX**: BetterEm: Fixes for complex cases.
 

@@ -116,7 +116,12 @@ numbers, simply append the start and/or end to the end of the file name with eac
 -   To specify extraction of content to start at a specific line number, simply use `file.md:3`.
 -   To extract all content up to a specific line, use `file.md::3`. This will extract lines 1 - 3.
 -   To extract all content starting at a specific line up to another line, use `file.md:4:6`. This will extract lines
-  4 - 6.
+    4 - 6.
+-   If you'd like to specify multiple blocks of extraction, separate each one with a `,`: `file.md:1:3,5:6`.
+
+    Each line selection is evaluated independently of previous selections. Selections will be performed in the order
+    they are specified. No additional separators (empty lines or otherwise) are inserted between selections, they are
+    inserted exactly as specified.
 
 ```
 ;--8<-- "file.md:4:6"
@@ -125,6 +130,10 @@ numbers, simply append the start and/or end to the end of the file name with eac
 include.md::3
 ;--8<--
 ```
+
+/// new | 10.13
+Specifying multiple line selections separated with `,` was added in 10.13.
+///
 
 ### Snippet Sections
 
