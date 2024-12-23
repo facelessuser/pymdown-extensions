@@ -251,8 +251,6 @@ class TestBlocksHTML(util.MdCase):
             **content**
             </div>
 
-
-
             <strong>content</strong></div>
             ''',
             True
