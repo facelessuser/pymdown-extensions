@@ -122,6 +122,15 @@ numbers, simply append the start and/or end to the end of the file name with eac
     Each line selection is evaluated independently of previous selections. Selections will be performed in the order
     they are specified. No additional separators (empty lines or otherwise) are inserted between selections, they are
     inserted exactly as specified.
+-   Negative indexes can be used as well and will be converted to positive indexes based on the total number of lines
+    in the snippet. If a snippet has 10 lines, then `-1` would correspond with line `10` and `-10` would correspond with
+    line `1`.
+
+    Be mindful of snippets with trailing, empty new lines at the end as those will be considered as well.
+
+/// note
+Lines are never specified with `0`. If `0` is used it will be clamped to `1`.
+///
 
 ```
 ;--8<-- "file.md:4:6"
@@ -132,7 +141,7 @@ include.md::3
 ```
 
 /// new | 10.13
-Specifying multiple line selections separated with `,` was added in 10.13.
+Specifying multiple line selections separated with `,` and negative indexing was added in 10.13.
 ///
 
 ### Snippet Sections
