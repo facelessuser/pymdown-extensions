@@ -50,13 +50,15 @@ class TestInlineHilite(util.MdCase):
         # Test #! original syntax
         self.check_markdown(
             r'`#!python import module`.',
-            r'<p><code class="inlinehilite"><span class="kn">import</span> <span class="nn">module</span></code>.</p>'
+            R'<p><code class="inlinehilite">'
+            R'<span class="kn">import</span><span class="w"> </span><span class="nn">module</span>'
+            R'</code>.</p>'
         )
 
         # Test ::: syntax
         self.check_markdown(
             r'`:::python import module`.',
-            r'<p><code class="inlinehilite"><span class="kn">import</span> <span class="nn">module</span></code>.</p>'
+            r'<p><code class="inlinehilite"><span class="kn">import</span><span class="w"> </span><span class="nn">module</span></code>.</p>'  # noqa: E501
         )
 
         # Test escaping language with space
@@ -105,8 +107,8 @@ class TestInlineHilite(util.MdCase):
         self.check_markdown(
             r'`#!python import module`{: .test}',
             r'<p><code class="inlinehilite test">'
-            r'<span class="kn">import</span> <span class="nn">module</span>'
-            r'</code></p>'
+            '<span class="kn">import</span><span class="w"> </span><span class="nn">module</span>'
+            '</code></p>'
         )
 
 
@@ -150,7 +152,7 @@ class TestInlineHiliteNoClass(util.MdCase):
 
         self.check_markdown(
             r'Lets test inline highlight no guessing and no text styling `#!python import module`.',
-            r'<p>Lets test inline highlight no guessing and no text styling <code><span class="kn">import</span> <span class="nn">module</span></code>.</p>'  # noqa: E501
+            r'<p>Lets test inline highlight no guessing and no text styling <code><span class="kn">import</span><span class="w"> </span><span class="nn">module</span></code>.</p>'  # noqa: E501
         )
 
 
@@ -305,13 +307,13 @@ class TestInlineHiliteCodeHilite(util.MdCase):
         # Test #! original syntax
         self.check_markdown(
             r'`#!python import module`.',
-            r'<p><code class="highlight"><span class="kn">import</span> <span class="nn">module</span></code>.</p>'
+            r'<p><code class="highlight"><span class="kn">import</span><span class="w"> </span><span class="nn">module</span></code>.</p>'  # noqa: E501
         )
 
         # Test ::: syntax
         self.check_markdown(
             r'`:::python import module`.',
-            r'<p><code class="highlight"><span class="kn">import</span> <span class="nn">module</span></code>.</p>'
+            r'<p><code class="highlight"><span class="kn">import</span><span class="w"> </span><span class="nn">module</span></code>.</p>'  # noqa: E501
         )
 
         # Test escaping language with space
