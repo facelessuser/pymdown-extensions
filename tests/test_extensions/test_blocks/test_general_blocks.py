@@ -309,10 +309,10 @@ class TestCodeHandling(util.MdCase):
             ''',
             '''
             <div>
-            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">foo</span>
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">foo</span>
             </code></pre></div>
             </div>
-            ''',
+            ''',  # noqa: E501
             True
         )
 

@@ -92,7 +92,7 @@ class TestHighlightAutoTitle(util.MdCase):
             ```
             ''',
             r'''
-            <div class="highlight"><span class="filename">Python Console Session</span><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">test</span>
+            <div class="highlight"><span class="filename">Python Console Session</span><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
             </code></pre></div>
             ''',  # noqa: E501
             True
@@ -122,7 +122,7 @@ class TestHighlightAutoTitleMap(util.MdCase):
             ```
             ''',
             r'''
-            <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">test</span>
+            <div class="highlight"><span class="filename">Python</span><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
             </code></pre></div>
             ''',  # noqa: E501
             True
@@ -150,7 +150,7 @@ class TestHighlightInline(util.MdCase):
             ```
             ''',
             r'''
-            <div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="kn">import</span> <span class="nn">test</span>
+            <div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
             <span class="linenos" data-linenos="2 "></span><span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div>
             ''',  # noqa: E501
@@ -179,10 +179,10 @@ class TestNoClass(util.MdCase):
             ```
             ''',
             r'''
-            <div><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <div><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
             <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div>
-            ''',
+            ''',  # noqa: E501
             True
         )
 
@@ -197,10 +197,10 @@ class TestNoClass(util.MdCase):
             ```
             ''',
             r'''
-            <div class="more"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <div class="more"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
             <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div>
-            ''',
+            ''',  # noqa: E501
             True
         )
 
@@ -216,7 +216,7 @@ class TestNoClass(util.MdCase):
             ''',
             r'''
             <div class="more"><table class="table"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-            <span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
             <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div></td></tr></table></div>
             ''',  # noqa: E501
@@ -431,7 +431,7 @@ class TestHighlightSpecial(util.MdCase):
             ```
             ''',
             r'''
-            <div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="kn">import</span> <span class="nn">test</span>
+            <div class="highlight"><pre><span></span><code><span class="linenos" data-linenos="1 "></span><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
             <span class="linenos special" data-linenos="2 "></span><span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div>
             ''',  # noqa: E501
@@ -449,7 +449,7 @@ class TestHighlightSpecial(util.MdCase):
             ```
             ''',
             r'''
-            <div class="highlight"><pre><span></span><code><span class="linenos special" data-linenos="1 "></span><span class="kn">import</span> <span class="nn">test</span>
+            <div class="highlight"><pre><span></span><code><span class="linenos special" data-linenos="1 "></span><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
             <span class="linenos special" data-linenos="2 "></span><span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div>
             ''',  # noqa: E501
@@ -478,10 +478,10 @@ class TestDisabledLinenums(util.MdCase):
             ```
             ''',
             r'''
-            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
             <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div>
-            ''',
+            ''',  # noqa: E501
             True
         )
 
@@ -538,7 +538,7 @@ class TestGlobalLinenums(util.MdCase):
             ''',
             r'''
             <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
-            <span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <span class="normal">2</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
             <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div></td></tr></table></div>
             ''',  # noqa: E501
@@ -556,10 +556,10 @@ class TestGlobalLinenums(util.MdCase):
             ```
             ''',
             r'''
-            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
             <span class="n">test</span><span class="o">.</span><span class="n">test</span><span class="p">()</span>
             </code></pre></div>
-            ''',
+            ''',  # noqa: E501
             True
         )
 
@@ -584,7 +584,7 @@ class TestPygmentsLangClass(util.MdCase):
             ```
             ''',
             r'''
-            <div class="language-python highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">test</span>
+            <div class="language-python highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
             </code></pre></div>
             ''',  # noqa: E501
             True
@@ -598,7 +598,7 @@ class TestPygmentsLangClass(util.MdCase):
             `#!python import test`
             ''',
             '''
-            <p><code class="language-python highlight"><span class="kn">import</span> <span class="nn">test</span></code></p>
+            <p><code class="language-python highlight"><span class="kn">import</span><span class="w"> </span><span class="nn">test</span></code></p>
             ''',  # noqa: E501
             True
         )
@@ -687,11 +687,11 @@ class TestDefaultLang(util.MdCase):
             ''',
             '''
             <p><code>import code</code></p>
-            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">code</span>
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">code</span>
             </code></pre></div>
-            <div class="highlight"><pre><span></span><code><span class="kn">import</span> <span class="nn">code</span>
+            <div class="highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">code</span>
             </code></pre></div>
-            ''',
+            ''',  # noqa: E501
             True
         )
 
@@ -720,11 +720,11 @@ class TestDefaultLangInline(util.MdCase):
             ```
             ''',
             '''
-            <p><code class="highlight"><span class="kn">import</span> <span class="nn">code</span></code></p>
+            <p><code class="highlight"><span class="kn">import</span><span class="w"> </span><span class="nn">code</span></code></p>
             <div class="highlight"><pre><span></span><code>import code
             </code></pre></div>
             <div class="highlight"><pre><span></span><code>import code
             </code></pre></div>
-            ''',
+            ''',  # noqa: E501
             True
         )
