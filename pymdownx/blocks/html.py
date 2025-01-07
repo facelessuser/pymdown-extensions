@@ -39,6 +39,7 @@ RE_ATTRS = re.compile(PAT_ATTR, flags=re.I | re.X)
 RE_ATTR = re.compile(fr'(?P<attr_name>{IDENTIFIER}){ATTR}', flags=re.I | re.X)
 
 ATTRIBUTES = {'id': RE_ID, 'class': RE_CLASS, 'attr': RE_ATTRS}
+VALID_MODES = {'auto', 'inline', 'block', 'raw', 'html'}
 
 
 def parse_selectors(selector):
@@ -125,13 +126,17 @@ class HTML(Block):
     NAME = 'html'
     ARGUMENT = True
     OPTIONS = {
-        'markdown': ['auto', type_string_in(['auto', 'inline', 'block', 'raw', 'html'])]
+        'markdown': ['auto', type_string_in(VALID_MODES)]
     }
 
     def __init__(self, length, tracker, md, config):
         """Initialize."""
 
         self.markdown = None
+        self.custom = {}
+        for entry in config.get('custom'):
+            mode = entry.get('mode', 'auto')
+            self.custom[entry['tag']] = mode if mode in VALID_MODES else 'auto'
         super().__init__(length, tracker, md, config)
 
     def on_validate(self, parent):
@@ -148,6 +153,10 @@ class HTML(Block):
         """Check if this is atomic."""
 
         mode = self.options['markdown']
+        if mode == 'auto':
+            tag = self.tag.lower()
+            mode = self.custom.get(tag, mode)
+
         if mode == 'html':
             mode = 'raw'
         return mode
@@ -167,6 +176,10 @@ class HTML(Block):
         """On end event."""
 
         mode = self.options['markdown']
+        if mode == 'auto':
+            tag = self.tag.lower()
+            mode = self.custom.get(tag, mode)
+
         if (mode == 'auto' and self.is_html(block)) or mode == 'html':
             block.text = self.md.htmlStash.store(block.text)
         elif (mode == 'auto' and self.is_raw(block)) or mode == 'raw':
@@ -175,6 +188,18 @@ class HTML(Block):
 
 class HTMLExtension(BlocksExtension):
     """HTML Blocks Extension."""
+
+    def __init__(self, *args, **kwargs):
+        """Initialize."""
+
+        self.config = {
+            "custom": [
+                [],
+                "Specify handling for custom blocks."
+            ]
+        }
+
+        super().__init__(*args, **kwargs)
 
     def extendMarkdownBlocks(self, md, block_mgr):
         """Extend Markdown blocks."""

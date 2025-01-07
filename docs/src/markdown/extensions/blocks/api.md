@@ -290,7 +290,7 @@ Result\ Value | Description
 When using `raw` mode, all text will be accumulated under the specified element as an [`AtomicString`][atomic]. If
 nothing is done with the content during the [`on_end` event](#on_end-event), all the content will be HTML escaped by the
 Python Markdown parser. If desired, the content can be placed into the Python Markdown [HTML stash][stash] which will
-protect it from any other rouge Treeprocessors. Keep in mind, if the content is stashed HTML escaping will not be
+protect it from any other rouge Treeprocessors. Keep in mind, if the content is stashed, HTML escaping will not be
 applied automatically, so HTML escape if it is required.
 
 /// warning | Indent Raw Content
