@@ -1,0 +1,43 @@
+@use "../utilities/convert";
+
+.md-typeset div.steps > ol {
+  counter-reset: item;
+
+  li {
+    position: relative;
+    padding-left: 1em;
+    list-style: none;
+
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      display: block;
+      width: 1.75em;
+      height: 1.75em;
+      margin-left: -1.25em;
+      color: var(--md-steps-fg-color);
+      font-weight: 600;
+      font-size: 0.9em;
+      text-align: center;
+      background-color: var(--md-steps-bg-color);
+      border: 1px solid var(--md-steps-border-color);
+      border-radius: 100px;
+      content: counter(item);
+      counter-increment: item;
+    }
+
+    &::after {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: -0.36em;
+      display: block;
+      width: 1px;
+      margin-top: 2em;
+      border-left: 1px solid var(--md-steps-border-color);
+      content: '';
+    }
+  }
+}

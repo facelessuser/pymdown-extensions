@@ -453,19 +453,24 @@ control over specifics, so if this is sufficient for your needs, then it give it
 
 To specify a custom provider, you simply need to specify them via the `custom` option.
 
+/// html | div.steps
 1. Simply specify the name to identify the provider (must only contain alphanumeric characters). Provider name is used
    when manually specifying a provider (`@provider:user`) and will be used to generate custom CSS classes
    `magiclink-provider`.
+
 2. Specify the `type`. Is this a private `github`, `gitlab`, or `bitbucket` provider.
-3. Specify the `label` for tooltips.
-4. Specify the `host` for your private repository.
+
+3. Specify the `host` for your private repository.
+
+4. Specify the `label` for tooltips.
+///
 
 ```js
 'custom': {
     'test': {
+        'type': 'github',
         'host': 'http://test.com',
         'label': 'Test',
-        'type': 'github'
     }
 }
 ```

@@ -24,6 +24,11 @@
   --md-code-hl-builtin-color: var(--md-code-hl-constant-color);
   --md-code-hl-class-color: var(--md-code-hl-function-color);
 
+  // List steps
+  --md-steps-bg-color: var(--md-code-bg-color);
+  --md-steps-fg-color: var(--md-code-fg-color);
+  --md-steps-border-color: hsla(0, 0%, 75%, 1);
+
   // Various Material related color variables
   --md-typeset-a-color: #{material_color.$clr-cyan-500};
 
@@ -47,6 +52,9 @@
     --md-code-link-accent-bg-color: var(--md-code-link-bg-color);
     --md-code-special-bg-color: #{color.adjust(hsl(232, 15%, 15%), $lightness: 5%)};
     --md-default-bg-color--trans: hsla(232,15%,15%, 0);
+
+    // List steps
+    --md-steps-border-color: hsla(225, 15%, 30%, 1);
 
     // Keys colors
     --md-typeset-kbd-color: var(--md-default-fg-color--lightest);
@@ -113,6 +121,9 @@
     --md-code-special-bg-color: #{color.adjust(dracula.$drac-bg, $lightness: -5%)};
     --md-code-alternate-bg-color: #{color_tools.tint(dracula.$drac-bg, 10%)};
     --md-code-link-bg-color: #{color.mix(dracula.$drac-cyan, dracula.$drac-bg, 15%)};
+
+    // List steps
+    --md-steps-border-color: #{color.adjust(dracula.$drac-bg, $lightness: 10%)};
 
     // Various Material related color variables
     --md-typeset-a-color: #{dracula.$drac-cyan};
