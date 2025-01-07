@@ -109,6 +109,49 @@ some *markdown* content
 ////
 ///
 
+## Custom Tag Handling
+
+It is possible that in the future new tags could be added to the HTML spec, and it is also possible that the extension
+may not recognize such tags for some length of time. While such tags can be added in future releases, the HTML extension
+allows for users to specify such tags to navigate around such issues, or even make up their own tags.
+
+To teach the HTML extension about unknown tags, simply use the `custom` [option](#global-options) to specify a tag name
+and the assumed default `mode`.
+
+```py3
+import markdown
+from pymdownx.blocks.html import HTML
+extensions = ['pymdownx.blocks.html']
+extension_configs = {
+    'pymdown.blocks.html': {
+        'custom': [
+            {'tag': 'sometag', 'mode': 'block'}
+        ]
+    }
+}
+md = markdown.Markdown(extensions=extensions, extension_configs=extension_configs)
+```
+
+Then you can use your custom tag knowing it will be handled properly.
+
+```
+/// html | sometag
+
+Some block content.
+
+- List item A.
+
+- List item B.
+///
+
+```
+
+## Global Options
+
+Options  | Type            | Descriptions
+-------- | --------------- | ------------
+`custom` | \[dictionary\] | Specify custom tags with assumed default handling.
+
 ## Per Block Options
 
 Options      | Type       | Descriptions

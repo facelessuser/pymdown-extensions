@@ -1,5 +1,11 @@
 # Changelog
 
+## 10.14
+
+-   **NEW**: Blocks.HTML: Add new `custom` option to specify tags and the assumed handling for them when automatic mode
+    is assumed. This can also be used to override the handling for recognized tags with automatic handling.
+-   **FIX**: Fix tests to pass with Pygments 2.19+.
+
 ## 10.13
 
 -   **NEW**: Snippets: Allow multiple line numbers or line number blocks separated by `,`.
