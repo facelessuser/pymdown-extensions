@@ -347,7 +347,7 @@ extensions = [
 extension_config = {
     "pymdownx.superfences": {
         "custom_fences": [
-            {"name": "math", "class": "arithmatex", arithmatex.arithmatex_fenced_format(which="generic")}
+            {"name": "math", "class": "arithmatex", "format": arithmatex.arithmatex_fenced_format(which="generic")}
         ]
     }
 }
