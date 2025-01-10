@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.14.1
+
+-   **FIX**: Magiclink: Ensure that repo names that start with `.` are handled correctly.
+
 ## 10.14
 
 -   **NEW**: Blocks.HTML: Add new `custom` option to specify tags and the assumed handling for them when automatic mode

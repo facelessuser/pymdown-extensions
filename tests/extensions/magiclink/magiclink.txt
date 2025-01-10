@@ -227,6 +227,8 @@ test@...........com
 
 https://github.com/facelessuser/pymdown-extensions/issues/49
 
+https://github.com/facelessuser/.repo/issues/49
+
 https://github.com/facelessuser/pymdown-extensions/pull/87
 
 https://github.com/facelessuser/pymdown-extensions/commit/6a09fde5c1cad66c660c3aa7792385c52c49e819
@@ -234,6 +236,8 @@ https://github.com/facelessuser/pymdown-extensions/commit/6a09fde5c1cad66c660c3a
 https://github.com/facelessuser/pymdown-extensions/compare/e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
 
 https://github.com/fake-user/fake-repository/issues/538
+
+https://github.com/fake-user/.repo/issues/49
 
 https://github.com/fake-user/fake-repository/pull/539
 
