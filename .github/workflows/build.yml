@@ -107,7 +107,7 @@ jobs:
     - name: Setup Node
       uses: actions/setup-node@v4
       with:
-        node-version: '16'
+        node-version: '22'
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip build tox
