@@ -42,6 +42,14 @@ Commit gitlab:some-user/some-repo@3f6b07a8eeaa9d606115758d90f55fec565d4e2a
 
 Compare gitlab:some-user/some-repo@e2ed7e0b3973f3f9eb7a26b8ef7ae514eebfe0d2...90b6fb8711e75732f987982cc024e9bb0111beac
 
+Mention @facelessuser/.repo
+
+Mention facelessuser/.repo#3
+
+.repo#3
+
+some-user/.repo#3
+
 ---
 
 @x:username

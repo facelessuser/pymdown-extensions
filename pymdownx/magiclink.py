@@ -120,14 +120,14 @@ RE_GIT_INT_REPO_MENTIONS = r'''(?x)
 # External reference patterns (issue, pull request, commit, compare)
 RE_GIT_EXT_REFS = r'''(?x)
 (?P<all>(?<![@/])(?:(?P<user>\b{})/)
-(?P<repo>\b[-._a-zA-Z\d]{{0,99}}[a-zA-Z\d])
+(?P<repo>[-._a-zA-Z\d]{{0,99}}[a-zA-Z\d])
 (?:(?P<issue>(?:\#|!|\?)[1-9][0-9]*)|(?P<commit>@[a-f\d]{{40}})(?:\.{{3}}(?P<diff>[a-f\d]{{40}}))?))\b
 '''
 
 # Internal reference patterns (issue, pull request, commit, compare)
 RE_GIT_INT_EXT_REFS = r'''(?x)
 (?P<all>(?<![@/])(?:(?P<user>\b{})/)?
-(?P<repo>\b[-._a-zA-Z\d]{{0,99}}[a-zA-Z\d])
+(?P<repo>[-._a-zA-Z\d]{{0,99}}[a-zA-Z\d])
 (?:(?P<issue>(?:\#|!|\?)[1-9][0-9]*)|(?P<commit>@[a-f\d]{{40}})(?:\.{{3}}(?P<diff>[a-f\d]{{40}}))?))\b
 '''
 
