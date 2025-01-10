@@ -1,4 +1,4 @@
-"""HTML."""
+"""HTML."""  # noqa:  A005
 import xml.etree.ElementTree as etree
 from .block import Block, type_string_in
 from ..blocks import BlocksExtension
