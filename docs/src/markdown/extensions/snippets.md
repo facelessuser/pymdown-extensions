@@ -171,10 +171,10 @@ are always omitted.
 If we wanted to include a function from a Python source, we could specify the snippet as follows:
 
 ```python
-# --8<-- [start:func]
+# ;--8<-- [start:func]
 def my_function(var):
     pass
-# --8<-- [end:func]
+# ;--8<-- [end:func]
 ```
 
 And then just include it in our document:
