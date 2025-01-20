@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.14.2
+
+-   **FIX**: FancyLists: Fix case were lists could be falsely created when a line started with `.` or `)`.
+
 ## 10.14.1
 
 -   **FIX**: MagicLink: Ensure that repo names that start with `.` are handled correctly.

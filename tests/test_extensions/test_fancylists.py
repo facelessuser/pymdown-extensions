@@ -8,6 +8,30 @@ class TestFancyLists(util.MdCase):
     extension = ['pymdownx.fancylists', 'pymdownx.saneheaders']
     extension_configs = {}
 
+    def test_fail_case(self):
+        """Test failed case."""
+
+        self.check_markdown(
+            """
+            1. foo
+            . bar
+
+            1) foo
+            ) bar
+            """,
+            """
+            <ol type="1">
+            <li>foo
+            . bar</li>
+            </ol>
+            <ol type="1">
+            <li>foo
+            ) bar</li>
+            </ol>
+            """,
+            True
+        )
+
     def test_unordered(self):
         """Test unordered lists."""
 
