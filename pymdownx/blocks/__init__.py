@@ -192,6 +192,22 @@ class BlocksProcessor(BlockProcessor):
         self.end = RE_END
         self.yaml_line = RE_INDENT_YAML_LINE
 
+    def detab_by_length(self, text, length):
+        """Remove a tab from the front of each line of the given text."""
+
+        newtext = []
+        lines = text.split('\n')
+        for line in lines:
+            if line.startswith(' ' * length):
+                newtext.append(line[length:])
+            elif not line.strip():
+                newtext.append('')  # pragma: no cover
+            else:
+                break
+        if newtext:
+            return '\n'.join(newtext), '\n'.join(lines[len(newtext):])
+        return '\n'.join(lines[len(newtext):]), ''
+
     def register(self, b, config):
         """Register a block."""
 
@@ -251,46 +267,37 @@ class BlocksProcessor(BlockProcessor):
         self.working = None
         self.trackers = {d: {} for d in self.blocks.keys()}
 
-    def split_end(self, blocks, length):
+    def split_end(self, block, length):
         """Search for end and split the blocks while removing the end."""
 
-        good = []
-        bad = []
+        good = None
+        bad = None
         end = False
 
-        # Split on our end notation for the current Block
-        for e, block in enumerate(blocks):
-
-            # Find the end of the Block
-            m = None
-            for match in self.end.finditer(block):
-                if len(match.group(1)) == length:
-                    m = match
-                    break
-
-            # Separate everything from before the "end" and after
-            if m:
-                temp = block[:m.start(0)]
-                if temp:
-                    good.append(temp[:-1] if temp.endswith('\n') else temp)
-                end = True
-
-                # Since we found our end, everything after is unwanted
-                temp = block[m.end(0):]
-                if temp:
-                    bad.append(temp)
-                bad.extend(blocks[e + 1:])
+        # Find the end of the Block
+        m = None
+        for match in self.end.finditer(block):
+            if len(match.group(1)) == length:
+                m = match
                 break
-            else:
-                # Gather blocks until we find our end
-                good.append(block)
 
-        # Augment the blocks
-        blocks.clear()
-        blocks.extend(bad)
+        # Separate everything from before the "end" and after
+        if m:
+            temp = block[:m.start(0)]
+            if temp:
+                good = temp[:-1] if temp.endswith('\n') else temp
+            end = True
+
+            # Since we found our end, everything after is unwanted
+            temp = block[m.end(0):]
+            if temp:
+                bad = temp
+        else:
+            # Gather blocks until we find our end
+            good = block
 
         # Send back the new list of blocks to parse and note whether we found our end
-        return good, end
+        return good, bad, end
 
     def split_header(self, block, length):
         """Split, YAML-ish header out."""
@@ -349,52 +356,83 @@ class BlocksProcessor(BlockProcessor):
 
         return tag.tag in self.block_tags
 
-    def parse_blocks(self, blocks, entry):
+    def parse_blocks(self, blocks):
         """Parse the blocks."""
 
         # Get the target element and parse
+        while blocks and self.stack:
+            b = blocks.pop(0)
 
-        for b in blocks:
+            # Get the latest block on the stack
+            # This is required to avoid some issues with `md_in_html`
+            entry = self.stack[-1]
             target = entry.block.on_add(entry.el)
+
+            # Since we are juggling the block parsers on the stack, the pipeline
+            # has not fully adjusted list indentation, so look at how many
+            # list item parents we have on the stack and adjust the content
+            # accordingly.
+            li = [e.parent.tag in ('li', 'dd') for e in self.stack[:-1]]
+            length = len(li) * self.tab_length
+            b, a = self.detab_by_length(b, length)
+            if a:
+                blocks.insert(0, a)
+
+            # Split out blocks we care about
+            b, bad, end = self.split_end(b, entry.block.length)
+            if bad is not None:
+                blocks.insert(0, bad)
+
+            # Parse the block under the given target
+            if b is not None and target is not None:
+                # Resolve modes
+                mode = entry.block.on_markdown()
+                if mode not in ('block', 'inline', 'raw'):
+                    mode = 'auto'
+                is_block = mode == 'block' or (mode == 'auto' and self.is_block(target))
+                is_atomic = mode == 'raw' or (mode == 'auto' and self.is_raw(target))
+
+                # We should revert fenced code in spans or atomic tags.
+                # Make sure atomic tags have content wrapped as `AtomicString`.
+                if is_atomic or not is_block:
+                    child = list(target)[-1] if len(target) else None
+                    text = target.text if child is None else child.tail
+                    b = '\n\n'.join(unescape_markdown(self.md, [b], is_atomic)).strip('\n')
+
+                    if text:
+                        text += b if not b else '\n\n' + b
+                    else:
+                        text = b
+
+                    if child is None:
+                        target.text = mutil.AtomicString(text) if is_atomic else text
+                    else:  # pragma: no cover
+                        # TODO: We would need to build a special plugin to test this,
+                        # as none of the default ones do this, but we have verified this
+                        # locally. Once we've written a test, we can remove this.
+                        child.tail = mutil.AtomicString(text) if is_atomic else text
+
+                # Block tags should have content go through the normal block processor
+                else:
+                    self.parser.state.set('blocks')
+                    working = self.working
+                    self.working = entry
+                    self.parser.parseChunk(target, b)
+                    self.parser.state.reset()
+                    self.working = working
+
+            # Run "on end" event when we finish a block
+            if end:
+                entry.block._end(entry.el)
+                self.inline_stack.append(entry)
+                del self.stack[-1]
 
             # The Block does not or no longer accepts more content
             if target is None:  # pragma: no cover
                 break
 
-            mode = entry.block.on_markdown()
-            if mode not in ('block', 'inline', 'raw'):
-                mode = 'auto'
-            is_block = mode == 'block' or (mode == 'auto' and self.is_block(target))
-            is_atomic = mode == 'raw' or (mode == 'auto' and self.is_raw(target))
-
-            # We should revert fenced code in spans or atomic tags.
-            # Make sure atomic tags have content wrapped as `AtomicString`.
-            if is_atomic or not is_block:
-                child = list(target)[-1] if len(target) else None
-                text = target.text if child is None else child.tail
-                b = '\n\n'.join(unescape_markdown(self.md, [b], is_atomic)).strip('\n')
-
-                if text:
-                    text += b if not b else '\n\n' + b
-                else:
-                    text = b
-
-                if child is None:
-                    target.text = mutil.AtomicString(text) if is_atomic else text
-                else:  # pragma: no cover
-                    # TODO: We would need to build a special plugin to test this,
-                    # as none of the default ones do this, but we have verified this
-                    # locally. Once we've written a test, we can remove this.
-                    child.tail = mutil.AtomicString(text) if is_atomic else text
-
-            # Block tags should have content go through the normal block processor
-            else:
-                self.parser.state.set('blocks')
-                working = self.working
-                self.working = entry
-                self.parser.parseChunk(target, b)
-                self.parser.state.reset()
-                self.working = working
+        if self.stack:
+            self.stack[-1].hungry = True
 
     def run(self, parent, blocks):
         """Convert to details/summary block."""
@@ -429,42 +467,16 @@ class BlocksProcessor(BlockProcessor):
             # Push a Block entry on the stack.
             self.stack.append(BlockEntry(generic_block, el, parent))
 
-            # Split out blocks we care about
-            ours, end = self.split_end(blocks, generic_block.length)
-
             # Parse the text blocks under the Block
-            index = len(self.stack) - 1
-            self.parse_blocks(ours, self.stack[-1])
-
-            # Remove Block from the stack if we are at the end
-            # or add it to the hungry list.
-            if end:
-                # Run the "on end" event
-                generic_block._end(el)
-                self.inline_stack.append(self.stack[index])
-                del self.stack[index]
-            else:
-                self.stack[index].hungry = True
+            self.parse_blocks(blocks)
 
         else:
             for r in range(len(self.stack)):
                 entry = self.stack[r]
                 if entry.hungry and parent is entry.parent:
-                    # Find and remove end from the blocks
-                    ours, end = self.split_end(blocks, entry.block.length)
-
                     # Get the target element and parse
                     entry.hungry = False
-                    self.parse_blocks(ours, entry)
-
-                    # Clean up if we completed the Block
-                    if end:
-                        # Run "on end" event
-                        entry.block._end(entry.el)
-                        self.inline_stack.append(entry)
-                        del self.stack[r]
-                    else:
-                        entry.hungry = True
+                    self.parse_blocks(blocks)
 
                     break
 

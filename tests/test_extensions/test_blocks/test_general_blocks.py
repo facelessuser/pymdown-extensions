@@ -384,6 +384,47 @@ class TestAttributes(util.MdCase):
         )
 
 
+class TestBlocksMdInHTML(util.MdCase):
+    """Test blocks with `md_in_html`."""
+
+    extension = ['pymdownx.blocks.tab', 'pymdownx.blocks.html', 'markdown.extensions.md_in_html']
+    extension_configs = {
+        'pymdownx.blocks.tab': {'alternate_style': True}
+    }
+
+
+    def test_md_in_html_inserted_correctly(self):
+        """Test that `md_in_html` inserts under the correct target."""
+
+        self.check_markdown(
+            R"""
+            //// html | div.my-div
+
+            /// tab | TEST
+            <div class="mf-generated" markdown>
+            Hello I'm in a div which can contain **markdown**!
+            </div>
+            ///
+
+            ////
+            """,
+            """
+            <div class="my-div">
+            <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">TEST</label></div>
+            <div class="tabbed-content">
+            <div class="tabbed-block">
+            <div class="mf-generated">
+            <p>Hello I'm in a div which can contain <strong>markdown</strong>!</p>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            """,  # noqa: E501
+            True
+        )
+
+
 class TestBlocksTab(util.MdCase):
     """Test Blocks tab cases."""
 
@@ -594,13 +635,15 @@ class TestBlocksTab(util.MdCase):
             - List
 
                 /// tab | Tab
-                - Paragraph
+                -   Paragraph
 
-                    /// tab | Tab
-                    1. Paragraph
+                    //// tab | Tab
+                    1.  Paragraph
 
                         Paragraph
-                    ///
+
+                        Paragraph
+                    ////
                 ///
             ''',
             '''
@@ -618,6 +661,7 @@ class TestBlocksTab(util.MdCase):
             <div class="tabbed-block">
             <ol>
             <li>
+            <p>Paragraph</p>
             <p>Paragraph</p>
             <p>Paragraph</p>
             </li>
