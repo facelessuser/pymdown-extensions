@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.14.2
+
+-   **FIX**: Blocks: Fix some corner cases with `md_in_html`.
+
 ## 10.14.1
 
 -   **FIX**: MagicLink: Ensure that repo names that start with `.` are handled correctly.
