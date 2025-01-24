@@ -239,7 +239,7 @@ extra:
       link: https://github.com/facelessuser
 extra_css:
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css
-  - assets/pymdownx-extras/extra-3005714f37.css
+  - assets/pymdownx-extras/extra-38dae67b1c.css
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/mermaid@11.3.0/dist/mermaid.min.js
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js

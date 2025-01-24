@@ -1,5 +1,9 @@
 @use "../utilities/convert";
 
+:root > * {
+  --toc-svg-link: svg-load("@mdi/svg/svg/link.svg");
+}
+
 // Header anchors
 .md-typeset {
   .headerlink {
@@ -11,7 +15,7 @@
     mask-size: convert.px2em(16px);
     mask-repeat: no-repeat;
     visibility: visible;
-    mask-image: svg-load("@mdi/svg/svg/link.svg");
+    mask-image: var(--toc-svg-link);
   }
 
   .headerlink:hover,

@@ -1,6 +1,12 @@
 @use "../utilities/break";
 @use "../utilities/convert";
 
+:root > * {
+  --highlight-svg-console: svg-load("@mdi/svg/svg/console.svg");
+  --highlight-svg-arrow-expand: svg-load("@mdi/svg/svg/arrow-expand.svg");
+  --highlight-svg-arrow-collapse: svg-load("@mdi/svg/svg/arrow-collapse.svg");
+}
+
 .highlight {
   .kc { // Keyword constant
     color: var(--md-code-hl-constant-color);
@@ -44,7 +50,7 @@
       padding: 0 convert.px2em( 4px, 13.6px);
       color: var(--md-code-fg-color);
       background-color: var(--md-code-inline-bg-color);
-      border-radius: px2rem(2px);
+      border-radius: convert.px2rem(2px);
       box-shadow: none;
   }
 
@@ -86,7 +92,7 @@
     tab-size: 8;
 
     + .result {
-      border-width: px2rem(2px);
+      border-width: convert.px2rem(2px);
     }
 
     /* `pymdownx-inline` mode */
@@ -121,10 +127,10 @@
     margin-top: 1em;
     padding: convert.px2em(8px) convert.px2em(16px, 13.6px) convert.px2em(8px) convert.px2em(40px, 13.6px);
     font-weight: 700;
-    font-size: px2rem(13.6px);
+    font-size: convert.px2rem(13.6px);
     background-color: var(--md-code-title-bg-color);
-    border-top-left-radius: px2rem(2px);
-    border-top-right-radius: px2rem(2px);
+    border-top-left-radius: convert.px2rem(2px);
+    border-top-right-radius: convert.px2rem(2px);
 
     // Adjust margins and and general container look of code block
     + pre {
@@ -143,7 +149,7 @@
       width: convert.px2em(20px, 13.6px);
       height: convert.px2em(20px, 13.6px);
       background-color: var(--md-default-fg-color);
-      mask-image: svg-load("@mdi/svg/svg/console.svg");
+      mask-image: var(--highlight-svg-console);
       mask-repeat: no-repeat;
       mask-size: contain;
       content: "";
@@ -177,7 +183,7 @@
           background-color: var(--md-primary-fg-color);
           mask-repeat: no-repeat;
           mask-size: contain;
-          border-radius: px2rem(2px);
+          border-radius: convert.px2rem(2px);
           cursor: pointer;
           content: "";
 
@@ -202,11 +208,11 @@
             display: none;
 
             &::before {
-              mask-image: svg-load("@mdi/svg/svg/arrow-expand.svg");
+              mask-image: var(--highlight-svg-arrow-expand);
             }
           }
           &.collapse::before {
-            mask-image: svg-load("@mdi/svg/svg/arrow-collapse.svg");
+            mask-image: var(--highlight-svg-arrow-collapse);
           }
         }
       }
@@ -229,7 +235,7 @@
           position: absolute;
           bottom: 0;
           left: 0;
-          padding: convert.px2em(32px) convert.px2em(8px) convert.px2em(8px) px2rem(16px);
+          padding: convert.px2em(32px) convert.px2em(8px) convert.px2em(8px) convert.px2rem(16px);
           background-image: linear-gradient(to bottom,
               transparent,
               var(--md-default-bg-color) 80%
@@ -243,15 +249,15 @@
 
     > {
       diagram-div {
-        margin-right: px2rem(-16px);
-        margin-left: px2rem(-16px);
+        margin-right: convert.px2rem(-16px);
+        margin-left: convert.px2rem(-16px);
       }
       .collapse-code {
-        margin-right: px2rem(-16px);
-        margin-left: px2rem(-16px);
+        margin-right: convert.px2rem(-16px);
+        margin-left: convert.px2rem(-16px);
 
         label.collapse {
-          left: px2rem(16px);
+          left: convert.px2rem(16px);
         }
       }
     }
