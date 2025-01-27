@@ -13,7 +13,6 @@ import * as sassCompiler from "sass"
 import postcss from "gulp-postcss"
 import scss from "postcss-scss"
 import autoprefixer from "autoprefixer"
-import cleanCSS from "gulp-clean-css"
 import childProcess from "child_process"
 import gulpif from "gulp-if"
 import concat from "gulp-concat"
@@ -178,10 +177,10 @@ gulp.task("scss:build:sass", () => {
         "node_modules/modularscale-sass/stylesheets",
         "node_modules/material-design-color",
         "node_modules/material-shadows"],
-      silenceDeprecations: ['legacy-js-api']
+      silenceDeprecations: ['legacy-js-api'],
+      style: "compressed"
     }).on("error", sass.logError))
     .pipe(postcss(plugins))
-    .pipe(gulpif(config.compress.enabled, cleanCSS()))
     .pipe(
       vinylPaths(
         filepath => {
