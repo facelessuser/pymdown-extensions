@@ -315,7 +315,7 @@ extensions = [
 extension_config = {
     "pymdownx.inlinehilite": {
         "custom_inline": [
-            {"name": "math", "class": "arithmatex", "format": arithmatex.arithmatex_inline_format(which="generic")}
+            {"name": "math", "class": "arithmatex", "format": arithmatex.arithmatex_inline_format(mode="generic")}
         ]
     }
 }
@@ -347,7 +347,7 @@ extensions = [
 extension_config = {
     "pymdownx.superfences": {
         "custom_fences": [
-            {"name": "math", "class": "arithmatex", "format": arithmatex.arithmatex_fenced_format(which="generic")}
+            {"name": "math", "class": "arithmatex", "format": arithmatex.arithmatex_fenced_format(mode="generic")}
         ]
     }
 }
