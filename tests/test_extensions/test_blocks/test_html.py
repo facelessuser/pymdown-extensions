@@ -14,6 +14,22 @@ class TestBlocksHTML(util.MdCase):
         }
     }
 
+
+    def test_raw_empty_block(self):
+        """Test that raw empty blocks are handled properly."""
+
+        self.check_markdown(
+            R'''
+            /// html | pre
+            ///
+            ''',
+            R'''
+            <pre></pre>
+            ''',
+            True
+        )
+
+
     def test_bad_tag(self):
         """Test bad HTML tag."""
 
