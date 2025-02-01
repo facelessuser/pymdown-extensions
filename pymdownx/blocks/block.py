@@ -357,7 +357,8 @@ class Block(metaclass=ABCMeta):
         mode = self.on_markdown()
         add = self.on_add(block)
         if mode == 'raw' or (mode == 'auto' and self.is_raw(add)):
-            add.text = mutil.AtomicString(self.dedent(add.text))
+            text = add.text if add.text is not None else ''
+            add.text = mutil.AtomicString(self.dedent(text))
 
         self.on_end(block)
 

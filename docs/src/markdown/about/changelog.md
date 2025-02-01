@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.14.3
+
+-   **FIX**: Blocks: An empty, raw block type should not cause an error.
+
 ## 10.14.2
 
 -   **FIX**: Blocks: Fix some corner cases with `md_in_html`.
