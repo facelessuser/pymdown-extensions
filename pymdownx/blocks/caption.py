@@ -82,7 +82,7 @@ class CaptionTreeprocessor(Treeprocessor):
         """Update caption IDs and prefixes."""
 
         parent_map = {c: p for p in doc.iter() for c in p}
-        last = {k: 0 for k in self.fig_types}
+        last = dict.fromkeys(self.fig_types, 0)
         counters = {k: [0] for k in self.fig_types}
         fig_type = last_type = self.type
         figs = []
