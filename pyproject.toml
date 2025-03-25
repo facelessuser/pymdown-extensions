@@ -76,6 +76,13 @@ include = [
 
 [tool.hatch.metadata.hooks.custom]
 
+[tool.mypy]
+files = [
+    "pymdownx/blocks/block.py"
+]
+strict = true
+show_error_codes = true
+
 [tool.ruff]
 line-length = 120
 
