@@ -138,6 +138,7 @@ legacy_tox_ini = """
         {envbindir}/coverage html -d {envtmpdir}/coverage
         {envbindir}/coverage xml
         {envbindir}/coverage report --show-missing
+        {envpython} -m mypy
 
     [testenv:documents]
     deps=

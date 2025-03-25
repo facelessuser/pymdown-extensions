@@ -4,6 +4,9 @@ import functools
 import copy
 import re
 from markdown import util as mutil
+import xml.etree.ElementTree as etree
+from typing import Any, Callable
+from collections.abc import Iterable
 
 RE_IDENT = re.compile(
     r'''
@@ -18,7 +21,7 @@ RE_INDENT = re.compile(r'(?m)^([ ]*)[^ \n]')
 RE_DEDENT = re.compile(r'(?m)^([ ]*)($)?')
 
 
-def _type_multi(value, types=None):
+def _type_multi(value, types=()):
     """Multi types."""
 
     for t in types:
@@ -105,7 +108,7 @@ def type_boolean(value):
 type_ternary = type_multi(type_none, type_boolean)
 
 
-def type_string(value):
+def type_string(value: Any) -> str:
     """Ensure type string or fail."""
 
     if isinstance(value, str):
@@ -114,7 +117,7 @@ def type_string(value):
     raise ValueError(f"Could not convert type {type(value)} to a string")
 
 
-def type_string_insensitive(value):
+def type_string_insensitive(value: Any) -> str:
     """Ensure type string and normalize case."""
 
     return type_string(value).lower()
@@ -146,7 +149,7 @@ def _delimiter(string, split, string_type):
     return l
 
 
-def _string_in(value, accepted, string_type):
+def _string_in(value: Any, accepted: Iterable[str], string_type: Callable[[Any], str]) -> str:
     """Ensure type string is within the accepted values."""
 
     value = string_type(value)
@@ -155,7 +158,7 @@ def _string_in(value, accepted, string_type):
     return value
 
 
-def type_string_in(accepted, insensitive=True):
+def type_string_in(accepted: Iterable[str], insensitive: bool = True) -> Callable[[Any], str]:
     """Ensure type string is within the accepted list."""
 
     return functools.partial(
@@ -205,8 +208,8 @@ class Block(metaclass=ABCMeta):
     NAME = ''
 
     # Instance arguments and options
-    ARGUMENT = False
-    OPTIONS = {}
+    ARGUMENT: bool | None = False
+    OPTIONS: dict[str, Any] = {}
 
     def __init__(self, length, tracker, block_mgr, config):
         """
@@ -233,7 +236,7 @@ class Block(metaclass=ABCMeta):
         self.tracker = tracker
         self.md = block_mgr.md
         self.arguments = []
-        self.options = {}
+        self.options: dict[str, Any] = {}
         self.config = config
         self.on_init()
 
@@ -317,7 +320,7 @@ class Block(metaclass=ABCMeta):
 
         return self.on_validate(parent)
 
-    def on_validate(self, parent):
+    def on_validate(self, parent: etree.Element):
         """
         Handle validation event.
 
@@ -331,10 +334,11 @@ class Block(metaclass=ABCMeta):
         return True
 
     @abstractmethod
-    def on_create(self, parent):
+    def on_create(self, parent: etree.Element) -> etree.Element:
         """Create the needed element and return it."""
+        ...
 
-    def _create(self, parent):
+    def _create(self, parent: etree.Element):
         """Create the element."""
 
         el = self.on_create(parent)
@@ -351,7 +355,7 @@ class Block(metaclass=ABCMeta):
                 attrib[k] = v
         return el
 
-    def _end(self, block):
+    def _end(self, block: etree.Element) -> None:
         """Reached end of the block, dedent raw blocks and call `on_end` hook."""
 
         mode = self.on_markdown()
@@ -362,12 +366,12 @@ class Block(metaclass=ABCMeta):
 
         self.on_end(block)
 
-    def on_end(self, block):
+    def on_end(self, block: etree.Element) -> None:
         """Perform any action on end."""
 
         return
 
-    def on_add(self, block):
+    def on_add(self, block: etree.Element) -> etree.Element:
         """
         Adjust where the content is added and return the desired element.
 
@@ -377,7 +381,7 @@ class Block(metaclass=ABCMeta):
 
         return block
 
-    def on_inline_end(self, block):
+    def on_inline_end(self, block: etree.Element) -> None:
         """Perform action on the block after inline parsing."""
 
         return
