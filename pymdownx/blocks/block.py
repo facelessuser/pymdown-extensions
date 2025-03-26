@@ -5,6 +5,7 @@ from abc import ABCMeta, abstractmethod
 import functools
 import copy
 import re
+import sys
 from markdown import util as mutil
 import xml.etree.ElementTree as etree
 from typing import Any, Callable, TypeVar, TYPE_CHECKING
@@ -272,9 +273,10 @@ class Block(metaclass=ABCMeta):
         if length is None:
             length = self.md.tab_length
 
-        min_length = length
+        min_length = sys.maxsize
         for x in RE_INDENT.findall(text):
             min_length = min(len(x), min_length)
+        min_length = min(min_length, length)
 
         def on_match(m: re.Match[str], l: int = min_length) -> str:
             return '' if m.group(2) is not None else m.group(1)[l:]
