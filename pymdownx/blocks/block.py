@@ -176,7 +176,7 @@ def type_string_delimiter(split: str, string_type: Callable[[Any], str] = type_s
     return functools.partial(_delimiter, split=split, string_type=string_type)
 
 
-def type_html_attribute_dict(value: dict[str, str | list[str]]) -> dict[str, str | list[str]]:
+def type_html_attribute_dict(value: Any) -> dict[str, str | list[str]]:
     """Attribute dictionary."""
 
     if not isinstance(value, dict):
