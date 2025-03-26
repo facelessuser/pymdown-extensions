@@ -1,12 +1,17 @@
 """Block class."""
+from __future__ import annotations
+
 from abc import ABCMeta, abstractmethod
 import functools
 import copy
 import re
-from markdown import util as mutil, Markdown
+from markdown import util as mutil
 import xml.etree.ElementTree as etree
-from typing import Any, Callable, TypeVar
+from typing import Any, Callable, TypeVar, TYPE_CHECKING
 from collections.abc import Iterable
+
+if TYPE_CHECKING:
+    from ..blocks import BlocksProcessor
 
 RE_IDENT = re.compile(
     r'''
@@ -201,16 +206,6 @@ def type_html_attribute_dict(value: Any) -> dict[str, str | list[str]]:
 # Ensure class(es) or fail
 type_html_classes = type_string_delimiter(' ', type_html_identifier)
 
-from typing import Protocol
-
-
-class _BlocksProcessor(Protocol):
-    """Protocol defining the interface needed by Block."""
-
-    md: Markdown
-    def is_raw(self, tag: etree.Element) -> bool: ...
-    def is_block(self, tag: etree.Element) -> bool: ...
-
 
 
 class Block(metaclass=ABCMeta):
@@ -224,7 +219,7 @@ class Block(metaclass=ABCMeta):
     ARGUMENT: bool | None = False
     OPTIONS: dict[str, Any] = {}
 
-    def __init__(self, length: float, tracker: Any, block_mgr: _BlocksProcessor, config: Any):
+    def __init__(self, length: float, tracker: Any, block_mgr: BlocksProcessor, config: Any):
         """
         Initialize.
 

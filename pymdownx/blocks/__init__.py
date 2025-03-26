@@ -1,5 +1,5 @@
 """Generic blocks extension."""
-from markdown import Extension
+from markdown import Extension, Markdown
 from markdown.blockprocessors import BlockProcessor
 from markdown.treeprocessors import Treeprocessor
 from markdown import util as mutil
@@ -150,7 +150,7 @@ class BlocksTreeprocessor(Treeprocessor):
 class BlocksProcessor(BlockProcessor):
     """Generic block processor."""
 
-    def __init__(self, parser, md):
+    def __init__(self, parser, md: Markdown):
         """Initialization."""
 
         self.md = md
@@ -346,12 +346,12 @@ class BlocksProcessor(BlockProcessor):
                 temp = self.lastChild(temp)
         return None
 
-    def is_raw(self, tag):
+    def is_raw(self, tag: etree.Element) -> bool:
         """Is tag raw."""
 
         return tag.tag in self.raw_tags
 
-    def is_block(self, tag):
+    def is_block(self, tag: etree.Element) -> bool:
         """Is tag block."""
 
         return tag.tag in self.block_tags
