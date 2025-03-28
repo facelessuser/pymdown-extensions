@@ -174,6 +174,19 @@ journey
       Sit down: 5: Me
 ```
 ////
+
+//// tab | Pie
+
+```diagram
+pie
+    title Key elements in Product X
+    "Calcium" : 42.96
+    "Potassium" : 50.05
+    "Magnesium" : 10.01
+    "Iron" :  5
+```
+
+////
 ///
 
 /// failure | Impractical
@@ -198,22 +211,6 @@ gantt
 
 ////
 
-//// tab | Pie
-
-Pie at times can seem to work great, but other times it can be hard to read or missing labels all together.
-Like the others in this list, it relates to sizing and scaling. For instance, if you were to view this on a
-mobile device, you'd likely see the key for the pie chart missing.
-
-```diagram
-pie
-    title Key elements in Product X
-    "Calcium" : 42.96
-    "Potassium" : 50.05
-    "Magnesium" : 10.01
-    "Iron" :  5
-```
-
-////
 ///
 
 ## Configuration
@@ -332,7 +329,7 @@ and provide the configuration. We also have the custom loader that is runs when 
     end</code></pre>
 
 <!-- Include Mermaid script and user config -->
-<script src="https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.5.0/dist/mermaid.min.js"></script>
 <script>
 window.mermaidConfig = {
   startOnLoad: false,
@@ -506,7 +503,7 @@ markdown_extensions:
 
 extra_javascript:
   - optionalConfig.js
-  - https://unpkg.com/mermaid@10.6.1/dist/mermaid.min.js
+  - https://cdn.jsdelivr.net/npm/mermaid@11.5.0/dist/mermaid.min.js
   - extra-loader.js
 ```
 
