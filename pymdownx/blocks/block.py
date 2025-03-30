@@ -217,7 +217,7 @@ class Block(metaclass=ABCMeta):
 
     # Instance arguments and options
     ARGUMENT: bool | None = False
-    OPTIONS: dict[str, Any] = {}
+    OPTIONS: dict[str, tuple[Any, Callable[[Any], Any]]] = {}
 
     def __init__(self, length: float, tracker: Any, block_mgr: BlocksProcessor, config: Any):
         """
@@ -237,7 +237,7 @@ class Block(metaclass=ABCMeta):
         self.option_spec = copy.deepcopy(self.OPTIONS)
         if 'attrs' in self.option_spec:  # pragma: no cover
             raise ValueError("'attrs' is a reserved option name and cannot be overriden")
-        self.option_spec['attrs'] = [{}, type_html_attribute_dict]
+        self.option_spec['attrs'] = ({}, type_html_attribute_dict)
 
         self._block_mgr = block_mgr
         self.length = length
