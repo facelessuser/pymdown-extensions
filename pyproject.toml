@@ -83,6 +83,15 @@ files = [
 strict = true
 show_error_codes = true
 
+[[tool.mypy.overrides]]
+module = [
+    "pymdownx.util",
+    "pymdownx.__meta__",
+    "pymdownx.superfences",
+    "pymdownx.blocks"
+]
+ignore_errors = true
+
 [tool.ruff]
 line-length = 120
 
