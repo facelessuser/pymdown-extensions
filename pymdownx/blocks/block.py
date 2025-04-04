@@ -347,7 +347,6 @@ class Block(metaclass=ABCMeta):
     @abstractmethod
     def on_create(self, parent: etree.Element) -> etree.Element:
         """Create the needed element and return it."""
-        ...
 
     def _create(self, parent: etree.Element) -> etree.Element:
         """Create the element."""
