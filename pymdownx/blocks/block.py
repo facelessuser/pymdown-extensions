@@ -10,7 +10,7 @@ import xml.etree.ElementTree as etree
 from typing import Any, Callable, TypeVar, TYPE_CHECKING
 from collections.abc import Iterable
 
-if TYPE_CHECKING:
+if TYPE_CHECKING: # pragma: no cover
     from ..blocks import BlocksProcessor
 
 RE_IDENT = re.compile(
