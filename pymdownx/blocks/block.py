@@ -59,7 +59,12 @@ def type_none(value: Any) -> None:
         raise ValueError(f'{type(value)} is not None')
 
 
-def _ranged_number(value: Any, minimum: int | float | None, maximum: int | float | None, number_type: Callable[[Any], int | float]) -> int | float:
+def _ranged_number(
+    value: Any,
+    minimum: int | float | None,
+    maximum: int | float | None,
+    number_type: Callable[[Any], int | float]
+) -> int | float:
     """Check the range of the given number type."""
 
     _value = number_type(value)
