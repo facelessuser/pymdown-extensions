@@ -53,3 +53,22 @@ jobs:
         with:
           user: __token__
           password: ${{ secrets.PYPI_TOKEN }}
+
+  gh-release:
+    runs-on: ubuntu-latest
+    needs:
+      - documents
+      - pypi
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract release notes
+        uses: ffurrer2/extract-release-notes@v2
+        with:
+          changelog_file: docs/src/markdown/about/changelog.md
+          release_notes_file: RELEASE_NOTES.md
+      - name: Create release
+        run: gh release create ${{ github.ref_name }} --notes-file RELEASE_NOTES.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
