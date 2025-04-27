@@ -616,8 +616,8 @@ import foo
 /// new | New in 10.15
 ///
 
-The `relaxed_header` [option][#options] is a feature that can be enabled which will cause SuperFences to treat fenced
-code headers in a more releaxed manner.
+The `relaxed_headers` [option][#options] is a feature that can be enabled which will cause SuperFences to treat fenced
+code headers in a more relaxed manner.
 
 The default approach of SuperFences is to bail on processing a fenced code if the there is invalid content in a fenced
 header. This may be because you are processing fenced code blocks from other, incompatible Markdown parsers. Having a

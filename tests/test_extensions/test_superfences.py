@@ -1637,7 +1637,7 @@ class TestSuperFencesCustomValidatorBroken(util.MdCase):
 
 
 class TestHighlightRelaxedHeaders(util.MdCase):
-    """Test releaxed header cases."""
+    """Test relaxed header cases."""
 
     extension = ['pymdownx.highlight', 'pymdownx.superfences', 'attr_list']
     extension_configs = {
