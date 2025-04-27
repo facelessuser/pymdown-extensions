@@ -27,7 +27,6 @@ All changes Copyright 2008-2014 The Python Markdown Project
 
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 """
-
 from markdown.extensions import Extension
 from markdown.preprocessors import Preprocessor
 from markdown.blockprocessors import CodeBlockProcessor
@@ -51,6 +50,9 @@ RE_NESTED_FENCE_START = re.compile(
             (?:
                 (?:[ \t]*[a-zA-Z][a-zA-Z0-9_]*(?:=(?P<quot>"|').*?(?P=quot))?)(?=[\t ]|$)  # Options
             )+
+        ) |
+        (?P<unrecognized>
+            (?:([ \t]*[^\s]+)(?=[\t ]|$))+
         )
     )?[ \t]*$
     '''
@@ -231,7 +233,8 @@ class SuperFencesCodeExtension(Extension):
                 "if nothing is set. - "
                 "Default: ''"
             ],
-            'preserve_tabs': [False, "Preserve tabs in fences - Default: False"]
+            'preserve_tabs': [False, "Preserve tabs in fences - Default: False"],
+            'relaxed_headers': [False, "Relaxed fenced code headers - Default: False"]
         }
         super().__init__(*args, **kwargs)
 
@@ -376,6 +379,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             css_class = self.config['css_class']
             self.css_class = css_class if css_class else config['css_class']
 
+            self.relaxed_headers = self.config.get('relaxed_headers', False)
             self.extend_pygments_lang = config.get('extend_pygments_lang', None)
             self.guess_lang = config['guess_lang']
             self.pygments_style = config['pygments_style']
@@ -594,9 +598,9 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         self.formatter = None
         values = {}
         if string:
-            for m in RE_OPTIONS.finditer(string):
-                key = m.group('key')
-                value = m.group('value')
+            for m2 in RE_OPTIONS.finditer(string):
+                key = m2.group('key')
+                value = m2.group('value')
                 if value is None:
                     value = key
                 values[key] = value
@@ -620,7 +624,47 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                     self.options = options
                     break
 
+        if not okay and self.relaxed_headers:
+            return self.handle_unrecognized(m)
+
         return okay
+
+    def handle_unrecognized(self, m):
+        """Handle unrecognized code headers."""
+
+        okay = False
+        if not self.relaxed_headers:
+            return okay
+
+        if m.group('lang'):
+            self.lang = m.group('lang')
+
+        self.options = {}
+        self.attrs = {}
+        self.formatter = None
+
+        # Run per language validator
+        for entry in reversed(self.extension.superfences):
+            if entry["test"](self.lang):
+                options = {}
+                attrs = {}
+                validator = entry.get("validator", functools.partial(_validator, validator=default_validator))
+                try:
+                    okay = validator(self.lang, {}, options, attrs, self.md)
+                except SuperFencesException:
+                    raise
+                except Exception:
+                    pass
+                if okay:
+                    self.formatter = entry.get("formatter")
+                    self.options = options
+                    if self.attr_list:
+                        self.attrs = attrs
+                    break
+
+        if not okay:
+            self.lang = None  # pragma: no cover
+        return True
 
     def handle_attrs(self, m):
         """Handle attribute list."""
@@ -664,6 +708,9 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                         self.attrs = attrs
                     break
 
+        if not okay and self.relaxed_headers:
+            return self.handle_unrecognized(m)  # pragma: no cover
+
         return okay
 
     def search_nested(self, lines):
@@ -683,7 +730,9 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                 if m is not None:
 
                     # Parse options
-                    if m.group('attrs'):
+                    if m.group('unrecognized'):
+                        okay = self.handle_unrecognized(m)
+                    elif m.group('attrs'):
                         okay = self.handle_attrs(m)
                     else:
                         okay = self.parse_options(m)
