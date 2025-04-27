@@ -611,6 +611,54 @@ import foo
 ```
 ///
 
+## Relaxed Headers
+
+/// new | New in 10.15
+///
+
+The `relaxed_headers` [option][#options] is a feature that can be enabled which will cause SuperFences to treat fenced
+code headers in a more relaxed manner.
+
+The default approach of SuperFences is to bail on processing a fenced code if the there is invalid content in a fenced
+header. This may be because you are processing fenced code blocks from other, incompatible Markdown parsers. Having a
+way to treat incompatible code blocks as code blocks, even if they have invalid syntax may be desirable.
+
+As an example, some Markdown parsers may allow for specifying line highlights with `[number]`. This is not supported in
+SuperFences, but if we were processing such a block, with `relaxed_headers` enabled, we would treat it as an actual
+code block ignoring the invalid syntax instead of assuming the entire code block was invalid.
+
+````text title="Bad Code Header Syntax"
+```python [3]
+import code
+
+code.do_stuff()
+```
+````
+
+/// html | div.result
+````md-render
+---
+extensions:
+- pymdownx.highlight
+- pymdownx.superfences
+
+extension_configs:
+  pymdownx.superfences:
+    relaxed_headers: true
+---
+```python [3]
+import code
+
+code.do_stuff()
+```
+````
+///
+
+It should be noted that this mode does not always guarantee that your code language will be picked up or that relevant
+classes, IDs, attributes, or options will be recognized if invalid content is present, only that it will try and process
+the block as a code block. Additionally, a custom block that explicitly throws a `SuperFencesException` will still have
+that exception raised which will terminate Markdown processing.
+
 ## Custom Fences
 
 SuperFences allows defining custom fences for special purposes. For instance, we could create special fences for
@@ -911,3 +959,4 @@ Option                         | Type         | Default       | Description
 `disable_indented_code_blocks` | bool         | `#!py3 False` | Disables Python Markdown's indented code block parsing.  This is nice if you only ever use fenced blocks.
 `custom_fences`                | [dictionary] | `#!py3 []`    | Custom fences.
 `preserve_tabs`                | bool         | `#!py3 False` | Experimental feature that preserves tabs in fenced code blocks.
+`relaxed_headers`              | bool         | `#!py3 False` | Enable relaxed fenced code headers that are more forgiving of invalid content in the fenced header.

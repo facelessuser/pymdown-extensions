@@ -108,6 +108,7 @@ markdown_extensions:
   - markdown.extensions.md_in_html:
   - pymdownx.superfences:
       preserve_tabs: true
+      relaxed_headers: true
       custom_fences:
         # Mermaid diagrams
         - name: diagram
@@ -239,7 +240,7 @@ extra:
       link: https://github.com/facelessuser
 extra_css:
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css
-  - assets/pymdownx-extras/extra-c6ab11540a.css
+  - assets/pymdownx-extras/extra-387ece14f1.css
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/mermaid@11.5.0/dist/mermaid.min.js
   # - https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.js

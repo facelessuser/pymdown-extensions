@@ -59,6 +59,10 @@ The dashes can be as few as 1 (`-8<-`) or longer if desired (`---8<---------`); 
 important thing is that the notation must reside on a line(s) by itself, and the path, must be quoted in the case of the
 single line notation.  If the file name is indented, the content will be indented to that level as well.
 
+/// note
+XML parsers are sensitive to dashes, so snippet syntax should use single dashes (`-8<-`) when placed within an XML.
+///
+
 You can temporarily disable the snippet by placing a `;` before the file name:
 
 ```

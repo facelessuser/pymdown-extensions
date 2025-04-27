@@ -1,5 +1,14 @@
 # Changelog
 
+## 10.15.0
+
+-   **NEW**: SuperFences: Add `relaxed_headers` option which can tolerate bad content in the fenced code header. When
+    enabled, code blocks with bad content in the header will likely still convert into code blocks, often respecting
+    the specified language.
+-   **FIX**: Blocks: Fix some corner cases of nested blocks with lists.
+-   **FIX**: Tab and Tabbed: Fix a case where tabs could fail if `combine_header_slug` was enabled and there was no
+    header.
+
 ## 10.14.3
 
 -   **FIX**: Blocks: An empty, raw block type should not cause an error.
