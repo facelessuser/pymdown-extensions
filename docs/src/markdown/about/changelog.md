@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+-   **FIX**: Tab and Tabbed: Fix a case where tabs could fail if `combine_header_slug` was enabled and there was no
+    header.
+
 ## 10.14.3
 
 -   **FIX**: Blocks: An empty, raw block type should not cause an error.

@@ -327,7 +327,7 @@ class TabbedTreeprocessor(Treeprocessor):
                 for i in list(parent):
                     if i is el and header is None:
                         break
-                    if i is last_parent:
+                    if i is last_parent and header is not None:
                         return header.attrib.get("id", '')
                     if i in headers:
                         header = i
