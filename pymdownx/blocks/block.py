@@ -212,7 +212,6 @@ def type_html_attribute_dict(value: Any) -> dict[str, str | list[str]]:
 type_html_classes = type_string_delimiter(' ', type_html_identifier)
 
 
-
 class Block(metaclass=ABCMeta):
     """Block."""
 
@@ -224,7 +223,7 @@ class Block(metaclass=ABCMeta):
     ARGUMENT: bool | None = False
     OPTIONS: dict[str, tuple[Any, Callable[[Any], Any]]] = {}
 
-    def __init__(self, length: float, tracker: Any, block_mgr: BlocksProcessor, config: Any):
+    def __init__(self, length: int, tracker: Any, block_mgr: BlocksProcessor, config: Any):
         """
         Initialize.
 

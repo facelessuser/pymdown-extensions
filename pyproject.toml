@@ -85,10 +85,7 @@ show_error_codes = true
 
 [[tool.mypy.overrides]]
 module = [
-    "pymdownx.util",
-    "pymdownx.__meta__",
-    "pymdownx.superfences",
-    "pymdownx.blocks"
+    "pymdownx.superfences"
 ]
 ignore_errors = true
 
@@ -150,11 +147,11 @@ legacy_tox_ini = """
         .[extra]
         -r requirements/test.txt
     commands=
+        "{envpython}" -m mypy
         {envbindir}/py.test --cov pymdownx --cov-append {toxinidir}
         {envbindir}/coverage html -d {envtmpdir}/coverage
         {envbindir}/coverage xml
         {envbindir}/coverage report --show-missing
-        {envpython} -m mypy
 
     [testenv:documents]
     deps=

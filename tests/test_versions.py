@@ -89,3 +89,5 @@ class TestVersion(unittest.TestCase):
             Version(1, 2, 3, pre=1)
         with self.assertRaises(ValueError):
             Version(1, 2, 3, dev=1)
+        with self.assertRaises(ValueError):
+            parse_version('bad&version')
