@@ -202,7 +202,7 @@ class Caption(Block):
     CLASSES = ''
     ARGUMENT = None
     OPTIONS = {
-        'type': ['', type_html_identifier]
+        'type': ('', type_html_identifier)
     }
 
     def on_init(self):

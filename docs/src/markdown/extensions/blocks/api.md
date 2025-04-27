@@ -162,7 +162,7 @@ class MyBlock(Block):
     # Name used for the block
     NAME = 'my-block'
     OPTIONS = {
-        'tag_name': ['default', type_html_indentifier]
+        'tag_name': ('default', type_html_indentifier)
     }
 ```
 
@@ -340,7 +340,7 @@ you'd want to use.
 
 ```py
 class Block:
-    OPTIONS = {'name': [{}, type_any]}
+    OPTIONS = {'name': ({}, type_any)}
 ```
 
 ### `type_none`
@@ -355,7 +355,7 @@ indicate the option is "unset". See [`type_multi`](#type_multi) to learn how to 
 
 ```py
 class Block:
-    OPTIONS = {'name': [none, type_multi(type_none, type_string)]}
+    OPTIONS = {'name': (none, type_multi(type_none, type_string))}
 ```
 
 ### `type_number`
@@ -371,7 +371,7 @@ Returns the valid number (`float` or `int`) or raises a `ValueError`.
 
 ```py
 class Block:
-    OPTIONS = {'keyword': [0.0, type_number]}
+    OPTIONS = {'keyword': (0.0, type_number)}
 ```
 
 ### `type_integer`
@@ -387,7 +387,7 @@ Returns the valid `int` or raises a `ValueError`.
 
 ```py
 class Block:
-    OPTIONS = {'keyword': [0, type_integer]}
+    OPTIONS = {'keyword': (0, type_integer)}
 ```
 
 ### `type_ranged_number`
@@ -404,7 +404,7 @@ Returns the valid number (`float` or `int`) or raises a `ValueError`.
 
 ```py
 class Block:
-    OPTIONS = {'keyword': [0.0, type_ranged_number(0.0, 100.0)]}
+    OPTIONS = {'keyword': (0.0, type_ranged_number(0.0, 100.0))}
 ```
 
 ### `type_ranged_integer`
@@ -422,7 +422,7 @@ Returns the valid `int` or raises a `ValueError`.
 
 ```py
 class Block:
-    OPTIONS = {'keyword': [0, type_ranged_integer(0, 100)]}
+    OPTIONS = {'keyword': (0, type_ranged_integer(0, 100))}
 ```
 
 ### `type_boolean`
@@ -438,7 +438,7 @@ Returns the valid boolean or raises a `ValueError`.
 
 ```py
 class Block:
-    OPTIONS = {'keyword': [False, type_boolean]}
+    OPTIONS = {'keyword': (False, type_boolean)}
 ```
 
 ### `type_ternary`
@@ -454,7 +454,7 @@ Returns the valid `bool` or `#!py3 None` or raises a `ValueError`.
 
 ```py
 class Block:
-    OPTIONS = {'keyword': [None, type_ternary]}
+    OPTIONS = {'keyword': (None, type_ternary)}
 ```
 
 ### `type_string`
@@ -470,7 +470,7 @@ Returns the valid `str` or raises a `ValueError`.
 
 ```py
 class Block:
-    OPTIONS = {'keyword': ['default', type_string]}
+    OPTIONS = {'keyword': ('default', type_string)}
 ```
 
 ### `type_insensitive_string`
@@ -486,7 +486,7 @@ Returns the valid, lowercase `str` or raises a `ValueError`.
 
 ```py
 class Block:
-    OPTIONS = {'keyword': ['default', type_insensitive_string]}
+    OPTIONS = {'keyword': ('default', type_insensitive_string)}
 ```
 
 ### `type_string_in`
@@ -504,7 +504,7 @@ Returns the valid `str` or raises a `ValueError`.
 
 ```py
 class Block:
-    OPTIONS = {'keyword': ['this', type_string_in(['this', 'that'], type_insensitive_string)]}
+    OPTIONS = {'keyword': ('this', type_string_in(['this', 'that'], type_insensitive_string))}
 ```
 
 ### `type_string_delimiter`
@@ -521,7 +521,7 @@ Returns a list of valid `str` values or raises a `ValueError`.
 
 ```py
 class Block:
-    OPTIONS = {'keyword': ['default', type_string_delimiter(',' type_insensitive_string)]}
+    OPTIONS = {'keyword': ('default', type_string_delimiter(',' type_insensitive_string))}
 ```
 
 ### `type_html_identifier`
@@ -538,7 +538,7 @@ Returns a `str` that is a valid identifier or raises `ValueError`.
 
 ```py
 class Block:
-    OPTIONS = {'keyword': ['default', type_html_indentifier]}
+    OPTIONS = {'keyword': ('default', type_html_indentifier)}
 ```
 
 ### `type_html_classes`
@@ -555,7 +555,7 @@ Returns a list of `str` that are valid CSS classes or raises `ValueError`.
 
 ```py
 class Block:
-    OPTIONS = {'keyword': ['default', type_html_classes]}
+    OPTIONS = {'keyword': ('default', type_html_classes)}
 ```
 
 ### `type_html_attribute_dict`
@@ -581,7 +581,7 @@ Returns a `dict[str, Any]` where the values will either be `str` or `list[str]` 
 
 ```py
 class Block:
-    OPTIONS = {'attributes': [{}, type_html_attribute_dict]}
+    OPTIONS = {'attributes': ({}, type_html_attribute_dict)}
 ```
 
 ## `type_multi`

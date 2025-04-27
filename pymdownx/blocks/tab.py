@@ -117,8 +117,8 @@ class Tab(Block):
 
     ARGUMENT = True
     OPTIONS = {
-        'new': [False, type_boolean],
-        'select': [False, type_boolean]
+        'new': (False, type_boolean),
+        'select': (False, type_boolean)
     }
 
     def on_init(self):

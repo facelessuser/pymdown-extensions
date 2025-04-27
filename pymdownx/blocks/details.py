@@ -27,8 +27,8 @@ class Details(Block):
 
     ARGUMENT = None
     OPTIONS = {
-        'open': [False, type_boolean],
-        'type': ['', type_html_identifier]
+        'open': (False, type_boolean),
+        'type': ('', type_html_identifier)
     }
 
     DEF_TITLE = None

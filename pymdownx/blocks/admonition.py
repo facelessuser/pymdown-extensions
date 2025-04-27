@@ -25,7 +25,7 @@ class Admonition(Block):
     NAME = 'admonition'
     ARGUMENT = None
     OPTIONS = {
-        'type': ['', type_html_identifier],
+        'type': ('', type_html_identifier),
     }
     DEF_TITLE = None
     DEF_CLASS = None

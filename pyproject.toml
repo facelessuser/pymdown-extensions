@@ -76,6 +76,22 @@ include = [
 
 [tool.hatch.metadata.hooks.custom]
 
+[tool.mypy]
+files = [
+    "pymdownx/blocks/block.py"
+]
+strict = true
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = [
+    "pymdownx.util",
+    "pymdownx.__meta__",
+    "pymdownx.superfences",
+    "pymdownx.blocks"
+]
+ignore_errors = true
+
 [tool.ruff]
 line-length = 120
 
@@ -138,6 +154,7 @@ legacy_tox_ini = """
         {envbindir}/coverage html -d {envtmpdir}/coverage
         {envbindir}/coverage xml
         {envbindir}/coverage report --show-missing
+        {envpython} -m mypy
 
     [testenv:documents]
     deps=
