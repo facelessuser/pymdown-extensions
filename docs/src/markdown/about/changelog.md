@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+-   **FIX**: Blocks: Fix some corner cases of nested blocks with lists.
 -   **FIX**: Tab and Tabbed: Fix a case where tabs could fail if `combine_header_slug` was enabled and there was no
     header.
 
