@@ -1,13 +1,19 @@
 """Generic blocks extension."""
+from __future__ import annotations
 from markdown import Extension, Markdown
 from markdown.blockprocessors import BlockProcessor
 from markdown.treeprocessors import Treeprocessor
+from markdown.blockparser import BlockParser
 from markdown import util as mutil
 from .. import util
 import xml.etree.ElementTree as etree
 import re
 import yaml
 import textwrap
+from typing import cast, Any, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .block import Block
 
 # Fenced block placeholder for SuperFences
 FENCED_BLOCK_RE = re.compile(
@@ -40,16 +46,16 @@ RE_INDENT_YAML_LINE = re.compile(r'(?m)^(?:[ ]{4,}(?!\s).*?(?:\n|$))+')
 class BlockEntry:
     """Track Block entries."""
 
-    def __init__(self, block, el, parent):
+    def __init__(self, block: Block, el: etree.Element, parent: etree.Element) -> None:
         """Block entry."""
 
-        self.block = block
-        self.el = el
-        self.parent = parent
-        self.hungry = False
+        self.block: 'Block' = block
+        self.el: etree.Element = el
+        self.parent: etree.Element = parent
+        self.hungry: bool = False
 
 
-def get_frontmatter(string):
+def get_frontmatter(string: str) -> dict[str, Any] | None:
     """
     Get frontmatter from string.
 
@@ -67,10 +73,10 @@ def get_frontmatter(string):
     except Exception:
         pass
 
-    return frontmatter
+    return cast('dict[str, Any]', frontmatter)
 
 
-def reindent(text, pos, level):
+def reindent(text: str, pos: int, level: int) -> list[str]:
     """Reindent the code to where it is supposed to be."""
 
     indented = []
@@ -80,7 +86,7 @@ def reindent(text, pos, level):
     return indented
 
 
-def unescape_markdown(md, blocks, is_raw):
+def unescape_markdown(md: Markdown, blocks: list[str], is_raw: bool) -> list[str]:
     """Look for SuperFences code placeholders and other HTML stash placeholders and revert them back to plain text."""
 
     superfences = None
@@ -88,7 +94,7 @@ def unescape_markdown(md, blocks, is_raw):
         from ..superfences import SuperFencesBlockPreprocessor
         processor = md.preprocessors['fenced_code_block']
         if isinstance(processor, SuperFencesBlockPreprocessor):
-            superfences = processor.extension
+            superfences = processor.extension  # type: ignore[attr-defined]
     except Exception:
         pass
 
@@ -132,14 +138,14 @@ def unescape_markdown(md, blocks, is_raw):
 class BlocksTreeprocessor(Treeprocessor):
     """Blocks tree processor."""
 
-    def __init__(self, md, blocks):
+    def __init__(self, md: Markdown, blocks: BlocksProcessor):
         """Initialize."""
 
         super().__init__(md)
 
         self.blocks = blocks
 
-    def run(self, doc):
+    def run(self, root: etree.Element) -> None:
         """Update tab IDs."""
 
         while self.blocks.inline_stack:
@@ -150,14 +156,14 @@ class BlocksTreeprocessor(Treeprocessor):
 class BlocksProcessor(BlockProcessor):
     """Generic block processor."""
 
-    def __init__(self, parser, md: Markdown):
+    def __init__(self, parser: BlockParser, md: Markdown) -> None:
         """Initialization."""
 
         self.md = md
 
         # The Block classes indexable by name
-        self.blocks = {}
-        self.config = {}
+        self.blocks: dict[str, type[Block]] = {}
+        self.config: dict[str, dict[str, Any]] = {}
         self.empty_tags = {'hr',}
         self.block_level_tags = set(md.block_level_elements.copy())
         self.block_level_tags.add('html')
@@ -175,24 +181,24 @@ class BlocksProcessor(BlockProcessor):
         super().__init__(parser)
 
         # Persistent storage across a document for blocks
-        self.trackers = {}
+        self.trackers: dict[str, dict[str, Any]] = {}
         # Currently queued up blocks
-        self.stack = []
+        self.stack: list[BlockEntry] = []
         # Blocks that should be processed after inline.
-        self.inline_stack = []
+        self.inline_stack: list[BlockEntry] = []
         # When set, the assigned block is actively parsing blocks.
-        self.working = None
+        self.working: BlockEntry | None = None
         # Cached the found parent when testing
         # so we can quickly retrieve it when running
-        self.cached_parent = None
-        self.cached_block = None
+        self.cached_parent: etree.Element | None = None
+        self.cached_block: tuple['Block', str] | None = None
 
         # Used during the alpha/beta stage
         self.start = RE_START
         self.end = RE_END
         self.yaml_line = RE_INDENT_YAML_LINE
 
-    def detab_by_length(self, text, length):
+    def detab_by_length(self, text: str, length: int) -> tuple[str, str]:
         """Remove a tab from the front of each line of the given text."""
 
         newtext = []
@@ -208,7 +214,7 @@ class BlocksProcessor(BlockProcessor):
             return '\n'.join(newtext), '\n'.join(lines[len(newtext):])
         return '\n'.join(lines[len(newtext):]), ''
 
-    def register(self, b, config):
+    def register(self, b: type[Block], config: dict[str, Any]) -> None:
         """Register a block."""
 
         if b.NAME in self.blocks:
@@ -216,7 +222,7 @@ class BlocksProcessor(BlockProcessor):
         self.blocks[b.NAME] = b
         self.config[b.NAME] = config
 
-    def test(self, parent, block):
+    def test(self, parent: etree.Element, block: str) -> bool:
         """Test to see if we should process the block."""
 
         # Are we hungry for more?
@@ -246,7 +252,7 @@ class BlocksProcessor(BlockProcessor):
 
                 # Update the config for the Block
                 if status:
-                    status = generic_block._validate(parent, arguments, **options)
+                    status = generic_block._validate(parent, arguments, **options)  # type: ignore[arg-type]
 
                 # Cache the found Block and any remaining content
                 if status:
@@ -259,7 +265,7 @@ class BlocksProcessor(BlockProcessor):
                 return status
         return False
 
-    def _reset(self):
+    def _reset(self) -> None:
         """Reset."""
 
         self.stack.clear()
@@ -267,7 +273,7 @@ class BlocksProcessor(BlockProcessor):
         self.working = None
         self.trackers = {d: {} for d in self.blocks.keys()}
 
-    def split_end(self, block, length):
+    def split_end(self, block: str, length: int) -> tuple[str | None, str | None, bool]:
         """Search for end and split the blocks while removing the end."""
 
         good = None
@@ -299,12 +305,12 @@ class BlocksProcessor(BlockProcessor):
         # Send back the new list of blocks to parse and note whether we found our end
         return good, bad, end
 
-    def split_header(self, block, length):
+    def split_header(self, block: str, length: int) -> tuple[dict[str, Any] | None, str]:
         """Split, YAML-ish header out."""
 
         # Search for end in first block
         m = None
-        blocks = []
+        blocks: list[str] = []
         for match in self.end.finditer(block):
             if len(match.group(1)) == length:
                 m = match
@@ -327,7 +333,7 @@ class BlocksProcessor(BlockProcessor):
 
         return {}, '\n'.join(blocks)
 
-    def get_parent(self, parent):
+    def get_parent(self, parent: etree.Element) -> etree.Element | None:
         """Get parent."""
 
         # Returned the cached parent from our last attempt
@@ -336,7 +342,7 @@ class BlocksProcessor(BlockProcessor):
             self.cached_parent = None
             return parent
 
-        temp = parent
+        temp: etree.Element | None = parent
         while temp is not None:
             if not self.stack:
                 break
@@ -357,12 +363,12 @@ class BlocksProcessor(BlockProcessor):
 
         return tag.tag in self.block_tags
 
-    def parse_blocks(self, blocks, current_parent):
+    def parse_blocks(self, blocks: list[str], current_parent: etree.Element) -> None:
         """Parse the blocks."""
 
         # Get the target element and parse
         while blocks and self.stack:
-            b = blocks.pop(0)
+            b: str | None = blocks.pop(0)
 
             # Get the latest block on the stack
             # This is required to avoid some issues with `md_in_html`
@@ -385,7 +391,7 @@ class BlocksProcessor(BlockProcessor):
                     continue
                 break
 
-            b, a = self.detab_by_length(b, li * self.tab_length)
+            b, a = self.detab_by_length(cast(str, b), li * self.tab_length)
             if a:
                 blocks.insert(0, a)
 
@@ -445,7 +451,7 @@ class BlocksProcessor(BlockProcessor):
         if self.stack:
             self.stack[-1].hungry = True
 
-    def run(self, parent, blocks):
+    def run(self, parent: etree.Element, blocks: list[str]) -> None:
         """Convert to details/summary block."""
 
         # Get the appropriate parent for this Block
@@ -495,7 +501,7 @@ class BlocksProcessor(BlockProcessor):
 class BlocksMgrExtension(Extension):
     """Add generic Blocks extension."""
 
-    def extendMarkdown(self, md):
+    def extendMarkdown(self, md: Markdown) -> None:
         """Add Blocks to Markdown instance."""
 
         md.registerExtension(self)
@@ -507,7 +513,7 @@ class BlocksMgrExtension(Extension):
         tree = BlocksTreeprocessor(md, self.extension)
         md.treeprocessors.register(tree, 'blocks_on_inline_end', 19.99)
 
-    def reset(self):
+    def reset(self) -> None:
         """Reset."""
 
         self.extension._reset()
@@ -516,7 +522,7 @@ class BlocksMgrExtension(Extension):
 class BlocksExtension(Extension):
     """Blocks Extension."""
 
-    def register_block_mgr(self, md):
+    def register_block_mgr(self, md: Markdown) -> BlocksProcessor:
         """Add Blocks to Markdown instance."""
 
         if 'blocks' not in md.parser.blockprocessors:
@@ -524,14 +530,14 @@ class BlocksExtension(Extension):
             ext.extendMarkdown(md)
             mgr = ext.extension
         else:
-            mgr = md.parser.blockprocessors['blocks']
+            mgr = cast('BlocksProcessor', md.parser.blockprocessors['blocks'])
         return mgr
 
-    def extendMarkdown(self, md):
+    def extendMarkdown(self, md: Markdown) -> None:
         """Extend markdown."""
 
         mgr = self.register_block_mgr(md)
         self.extendMarkdownBlocks(md, mgr)
 
-    def extendMarkdownBlocks(self, md, block_mgr):
+    def extendMarkdownBlocks(self, md: Markdown, block_mgr: BlocksProcessor) -> None:
         """Extend Markdown blocks."""
