@@ -131,7 +131,7 @@ matrix:
       context_visible_first: true
       delimiters:
       # Ignore lint (noqa) and coverage (pragma) as well as shebang (#!)
-      - open: '^(?: *(?:noqa\b|pragma: no cover)|!)'
+      - open: '^(?: *(?:noqa\b|pragma: no cover|type: .*?)|!)'
         close: '$'
       # Ignore Python encoding string -*- encoding stuff -*-
       - open: '^ *-\*-'

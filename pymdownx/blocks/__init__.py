@@ -12,7 +12,7 @@ import yaml
 import textwrap
 from typing import cast, Any, TYPE_CHECKING
 
-if TYPE_CHECKING:
+if TYPE_CHECKING:  # pragma: no cover
     from .block import Block
 
 # Fenced block placeholder for SuperFences
