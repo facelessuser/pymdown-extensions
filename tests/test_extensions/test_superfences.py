@@ -1642,9 +1642,69 @@ class TestHighlightRelaxedHeaders(util.MdCase):
     extension = ['pymdownx.highlight', 'pymdownx.superfences', 'attr_list']
     extension_configs = {
         'pymdownx.superfences': {
-            'relaxed_headers': True
+            'relaxed_headers': True,
+            'custom_fences': [
+                {
+                    'name': 'test',
+                    'class': 'test',
+                    'format': custom_format,
+                    'validator': custom_validator_except
+                },
+                {
+                    'name': 'test2',
+                    'class': 'test',
+                    'format': custom_format,
+                    'validator': custom_validator_exploder
+                }
+            ]
         }
     }
+
+    def test_custom_fail_exception(self):
+        """Test custom fences forced exception."""
+
+        with self.assertRaises(SuperFencesException):
+            self.check_markdown(
+                r'''
+                ```test [1]
+                test
+                ```
+                ''',
+                '',
+                True
+            )
+
+    def test_custom_fail_exception_relaxed(self):
+        """Test custom fences relaxed forced exception."""
+
+        self.check_markdown(
+            r'''
+            ```test2 [1]
+            test
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code>test
+            </code></pre></div>
+            ''',
+            True
+        )
+
+    def test_bad_lang(self):
+        """Test bad language."""
+
+        self.check_markdown(
+            r'''
+            ```bad
+            test
+            ```
+            ''',
+            '''
+            <div class="highlight"><pre><span></span><code>test
+            </code></pre></div>
+            ''',
+            True
+        )
 
     def test_bad_option(self):
         """Test bad options."""

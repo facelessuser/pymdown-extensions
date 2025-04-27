@@ -663,7 +663,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                     break
 
         if not okay:
-            self.lang = None
+            self.lang = None  # pragma: no cover
         return True
 
     def handle_attrs(self, m):
@@ -709,7 +709,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
                     break
 
         if not okay and self.relaxed_headers:
-            return self.handle_unrecognized(m)
+            return self.handle_unrecognized(m)  # pragma: no cover
 
         return okay
 
