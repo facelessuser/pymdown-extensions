@@ -1,6 +1,6 @@
 # Changelog
 
-## 10.15.0
+## 10.15
 
 -   **NEW**: SuperFences: Add `relaxed_headers` option which can tolerate bad content in the fenced code header. When
     enabled, code blocks with bad content in the header will likely still convert into code blocks, often respecting
