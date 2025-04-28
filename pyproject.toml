@@ -9,7 +9,7 @@ name = "pymdown-extensions"
 description = "Extension pack for Python Markdown."
 readme = "README.md"
 license = "MIT"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 authors = [
     { name = "Isaac Muse", email = "Isaac.Muse@gmail.com" },
 ]
@@ -139,7 +139,7 @@ legacy_tox_ini = """
     [tox]
     isolated_build = true
     envlist =
-        {py38,py39,py310,py311,py312,py313}, lint, documents
+        {py39,py310,py311,py312,py313}, lint, documents
 
     [testenv]
     passenv = LANG

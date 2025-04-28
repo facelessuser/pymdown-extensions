@@ -17,10 +17,8 @@ jobs:
       max-parallel: 4
       matrix:
         platform: [ubuntu-latest, windows-latest]
-        python-version: [3.8, 3.9, '3.10', '3.11', '3.12', '3.13']
+        python-version: [3.9, '3.10', '3.11', '3.12', '3.13']
         include:
-          - python-version: 3.8
-            tox-env: py38
           - python-version: 3.9
             tox-env: py39
           - python-version: '3.10'
@@ -33,7 +31,7 @@ jobs:
             tox-env: py313
         # exclude:
         #   - platform: windows-latest
-        #     python-version: 3.10
+        #     python-version: 3.14
 
     env:
       TOXENV: ${{ matrix.tox-env }}
@@ -67,7 +65,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: ['3.11']
+        python-version: ['3.13']
 
     env:
       TOXENV: lint
@@ -91,7 +89,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: ['3.11']
+        python-version: ['3.13']
 
     env:
       TOXENV: documents
