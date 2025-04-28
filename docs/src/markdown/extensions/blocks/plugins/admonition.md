@@ -114,7 +114,7 @@ md = markdown.Markdown(
     extensions=['pymdownx.blocks.admonition'],
     extension_configs={
         'pymdownx.blocks.admonition": {
-            'types': [{'name': some-custom-type', 'class': 'custom', 'title': 'My Default title'}]
+            'types': [{'name': 'some-custom-type', 'class': 'custom', 'title': 'My Default title'}]
         }
     }
 )
