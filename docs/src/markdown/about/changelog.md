@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.16
+
+-   **NEW**: Drop support for Python 3.8.
+
 ## 10.15
 
 -   **NEW**: SuperFences: Add `relaxed_headers` option which can tolerate bad content in the fenced code header. When
