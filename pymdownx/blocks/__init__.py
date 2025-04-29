@@ -41,7 +41,7 @@ RE_YAML_END = re.compile(
 )
 
 RE_INDENT_YAML_LINE = re.compile(r'(?m)^(?:[ ]{4,}(?!\s).*?(?:\n|$))+')
-
+RE_ALTERNATE_YAML_LINE = re.compile(r'(?m)^(?:@ *)(.*?)(?:\n|$)+')
 
 class BlockEntry:
     """Track Block entries."""
@@ -197,6 +197,7 @@ class BlocksProcessor(BlockProcessor):
         self.start = RE_START
         self.end = RE_END
         self.yaml_line = RE_INDENT_YAML_LINE
+        self.yaml_line_alternate = RE_ALTERNATE_YAML_LINE
 
     def detab_by_length(self, text: str, length: int) -> tuple[str, str]:
         """Remove a tab from the front of each line of the given text."""
@@ -322,6 +323,12 @@ class BlocksProcessor(BlockProcessor):
             blocks.insert(0, end)
             block = block[:m.start(0)]
 
+        # Convert alternative yaml-ish header
+        m = self.yaml_line_alternate.match(block)
+        if m is not None:
+            block = ' ' * 4 + m.group(1)
+
+        # Extract header
         m = self.yaml_line.match(block)
         if m is not None:
             config = textwrap.dedent(m.group(0))

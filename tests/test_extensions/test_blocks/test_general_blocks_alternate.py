@@ -22,7 +22,7 @@ class TestBlockUndefinedOptionAlternate(util.MdCase):
             ''',
             '''
             <p>/// html | div
-                option: whatever</p>
+            @option: whatever</p>
             <p>content
             ///</p>
             ''',
@@ -42,7 +42,7 @@ class TestBlockUndefinedOptionAlternate(util.MdCase):
             ''',
             '''
             <p>/// html | div
-                attrs: whatever</p>
+            @attrs: whatever</p>
             <p>content
             ///</p>
             ''',
@@ -62,7 +62,7 @@ class TestBlockUndefinedOptionAlternate(util.MdCase):
             ''',
             '''
             <p>/// html
-                attrs: whatever</p>
+            @attrs: whatever</p>
             <p>content
             ///</p>
             ''',
@@ -82,7 +82,7 @@ class TestBlockUndefinedOptionAlternate(util.MdCase):
             ''',
             '''
             <p>/// define
-                option: whatever</p>
+            @option: whatever</p>
             <p>content
             ///</p>
             ''',
@@ -134,6 +134,26 @@ class TestAttributesAlternate(util.MdCase):
             True
         )
 
+    def test_attributes_with_spaces(self):
+        """Test attributes."""
+
+        self.check_markdown(
+            R'''
+            /// admonition | Title
+            @  attrs: {class: some classes, id: an-id, name: some value}
+
+            content
+            ///
+            ''',
+            '''
+            <div class="admonition some classes" id="an-id" name="some value">
+            <p class="admonition-title">Title</p>
+            <p>content</p>
+            </div>
+            ''',
+            True
+        )
+
     def test_bad_attributes(self):
         """Test no attributes."""
 
@@ -146,7 +166,7 @@ class TestAttributesAlternate(util.MdCase):
             ''',
             '''
             <p>/// admonition | Title
-                attrs: {'+': 'value'}
+            @attrs: {'+': 'value'}
             content
             ///</p>
             ''',
