@@ -237,6 +237,19 @@ If either of these is set to zero, the limits will be ignored.
 
 To pass arbitrary HTTP headers in every HTTP request use `url_request_headers`.
 
+/// new | New 10.16
+Rate limiting support was introduced in 10.16. When a URL returns a 429 (Too Many Requests) status code, the extension
+will automatically retry the request with linear backoff. The retry behavior can be configured with:
+
+- `max_retries`: Maximum number of retry attempts (default: 3)
+- `backoff_factor`: Backoff factor for retry attempts (default: 2)
+
+For example, with default settings, the retry sequence would be:
+- First retry: 2 seconds
+- Second retry: 4 seconds
+- Third retry: 6 seconds
+///
+
 /// warning | Nested Snippets
 One thing to note though, if a snippet is included via a URL, all nested snippets within it must also be URLs. URL
 snippets are not allowed to reference local snippet files.
@@ -288,3 +301,5 @@ Option                 | Type            | Default          | Description
 `url_request_headers`  | {string:string} | `#!py3 {}`       | Passes arbitrary headers to URL requestor. By default this is set to empty map.
 `dedent_subsections`   | bool            | `#!py3 False`    | Remove any common leading whitespace from every line in text of a subsection that is inserted via "sections" or by "lines".
 `restrict_base_path`   | bool            | `#!py True`      | Ensure that the specified snippets are children of the specified base path(s). This prevents a path relative to the base path, but not explicitly a child of the base path.
+`max_retries`          | int             | `#!py3 3`        | Maximum number of retry attempts when a URL returns a 429 (Too Many Requests) status code.
+`backoff_factor`       | float           | `#!py3 2.0`      | Backoff factor for retry attempts. The wait time between retries is calculated as `backoff_factor * attempt_number` seconds.
