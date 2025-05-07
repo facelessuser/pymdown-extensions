@@ -50,7 +50,7 @@
     "postcss-inline-svg": "^6.0.0",
     "postcss-pseudo-classes": "^0.4.0",
     "postcss-scss": "^4.0.9",
-    "postcss-svgo": "^7.0.1",
+    "postcss-svgo": "^7.0.2",
     "promise": "^8.3.0",
     "rollup": "^4.40.0",
     "rollup-plugin-output-manifest": "^2.0.0",
