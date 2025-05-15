@@ -237,8 +237,7 @@ If either of these is set to zero, the limits will be ignored.
 
 To pass arbitrary HTTP headers in every HTTP request use `url_request_headers`.
 
-/// new | New 10.16
-Rate limiting support was introduced in 10.16. When a URL returns a 429 (Too Many Requests) status code, the extension
+When a URL returns a 429 (Too Many Requests) status code, the extension
 will automatically retry the request with linear backoff. The retry behavior can be configured with:
 
 - `max_retries`: Maximum number of retry attempts (default: 3)
@@ -248,7 +247,6 @@ For example, with default settings, the retry sequence would be:
 - First retry: 2 seconds
 - Second retry: 4 seconds
 - Third retry: 6 seconds
-///
 
 /// warning | Nested Snippets
 One thing to note though, if a snippet is included via a URL, all nested snippets within it must also be URLs. URL
