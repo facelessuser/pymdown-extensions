@@ -31,11 +31,14 @@ import codecs
 import os
 from . import util
 import textwrap
+import time
 
 MI = 1024 * 1024  # mebibyte (MiB)
 DEFAULT_URL_SIZE = MI * 32
 DEFAULT_URL_TIMEOUT = 10.0  # in seconds
 DEFAULT_URL_REQUEST_HEADERS = {}
+DEFAULT_MAX_RETRIES = 3
+DEFAULT_BACKOFF_FACTOR = 2
 
 
 class SnippetMissingError(Exception):
@@ -94,6 +97,8 @@ class SnippetPreprocessor(Preprocessor):
         self.url_timeout = config['url_timeout']
         self.url_request_headers = config['url_request_headers']
         self.dedent_subsections = config['dedent_subsections']
+        self.max_retries = config['max_retries']
+        self.backoff_factor = config['backoff_factor']
         self.tab_length = md.tab_length
         super().__init__()
 
@@ -190,43 +195,65 @@ class SnippetPreprocessor(Preprocessor):
         The most recently used files are kept in a cache until the next reset.
         """
 
-        http_request = urllib.request.Request(url, headers=self.url_request_headers)
-        timeout = None if self.url_timeout == 0 else self.url_timeout
-        with urllib.request.urlopen(http_request, timeout=timeout) as response:
+        for attempt in range(1, self.max_retries + 1):
+            try:
+                http_request = urllib.request.Request(url, headers=self.url_request_headers)
+                timeout = None if self.url_timeout == 0 else self.url_timeout
+                with urllib.request.urlopen(http_request, timeout=timeout) as response:
+                    # Fail if status is not OK
+                    status = response.status if util.PY39 else response.code
+                    
+                    if status == 429:  # Rate limited
+                        if attempt < self.max_retries:
+                            wait = self.backoff_factor * attempt
+                            time.sleep(wait)
+                            continue
+                        else:
+                            raise SnippetMissingError(f"Rate limited after {self.max_retries} attempts")
 
-            # Fail if status is not OK
-            status = response.status if util.PY39 else response.code
-            if status != 200:
-                raise SnippetMissingError(f"Cannot download snippet '{url}'")
+                    if status != 200:
+                        raise SnippetMissingError(f"Cannot download snippet '{url}'")
 
-            # We provide some basic protection against absurdly large files.
-            # 32MB is chosen as an arbitrary upper limit. This can be raised if desired.
-            content = None
-            if "content-length" not in response.headers:
-                # we have to read to know if we went over the max, but never more than `url_max_size`
-                # where `url_max_size` == 0 means unlimited
-                content = response.read(self.url_max_size) if self.url_max_size != 0 else response.read()
-                content_length = len(content)
-            else:
-                content_length = int(response.headers["content-length"])
+                    # We provide some basic protection against absurdly large files.
+                    # 32MB is chosen as an arbitrary upper limit. This can be raised if desired.
+                    content = None
+                    if "content-length" not in response.headers:
+                        # we have to read to know if we went over the max, but never more than `url_max_size`
+                        # where `url_max_size` == 0 means unlimited
+                        content = response.read(self.url_max_size) if self.url_max_size != 0 else response.read()
+                        content_length = len(content)
+                    else:
+                        content_length = int(response.headers["content-length"])
 
-            if self.url_max_size != 0 and content_length >= self.url_max_size:
-                raise ValueError(f"refusing to read payloads larger than or equal to {self.url_max_size}")
+                    if self.url_max_size != 0 and content_length >= self.url_max_size:
+                        raise ValueError(f"refusing to read payloads larger than or equal to {self.url_max_size}")
 
-            # Nothing to return
-            if content_length == 0:
-                return ['']
+                    # Nothing to return
+                    if content_length == 0:
+                        return ['']
 
-            if content is None:
-                # content-length was in the header, so we did not read yet
-                content = response.read()
+                    if content is None:
+                        # content-length was in the header, so we did not read yet
+                        content = response.read()
 
-            # Process lines
-            last = content.endswith((b'\r', b'\n'))
-            s_lines = [l.decode(self.encoding) for l in content.splitlines()]
-            if last:
-                s_lines.append('')
-            return s_lines
+                    # Process lines
+                    last = content.endswith((b'\r', b'\n'))
+                    s_lines = [l.decode(self.encoding) for l in content.splitlines()]
+                    if last:
+                        s_lines.append('')
+                    return s_lines
+
+            except urllib.error.HTTPError as e:
+                if e.code == 429 and attempt < self.max_retries:
+                    wait = self.backoff_factor * attempt
+                    time.sleep(wait)
+                    continue
+                raise SnippetMissingError(f"Cannot download snippet '{url}': {str(e)}")
+            except Exception as e:
+                if attempt == self.max_retries:
+                    raise SnippetMissingError(f"Cannot download snippet '{url}': {str(e)}")
+                wait = self.backoff_factor * attempt
+                time.sleep(wait)
 
     def parse_snippets(self, lines, file_name=None, is_url=False, is_section=False):
         """Parse snippets snippet."""
@@ -425,7 +452,9 @@ class SnippetExtension(Extension):
             'url_max_size': [DEFAULT_URL_SIZE, "External URL max size (0 means no limit)- Default: 32 MiB"],
             'url_timeout': [DEFAULT_URL_TIMEOUT, 'Defualt URL timeout (0 means no timeout) - Default: 10 sec'],
             'url_request_headers': [DEFAULT_URL_REQUEST_HEADERS, "Extra request Headers - Default: {}"],
-            'dedent_subsections': [False, "Dedent subsection extractions e.g. 'sections' and/or 'lines'."]
+            'dedent_subsections': [False, "Dedent subsection extractions e.g. 'sections' and/or 'lines'."],
+            'max_retries': [DEFAULT_MAX_RETRIES, "Maximum number of retry attempts for rate-limited requests - Default: 3"],
+            'backoff_factor': [DEFAULT_BACKOFF_FACTOR, "Backoff factor for retry attempts - Default: 2"]
         }
 
         super().__init__(*args, **kwargs)
