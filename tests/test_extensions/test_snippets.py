@@ -3,6 +3,7 @@ from .. import util
 import os
 from pymdownx.snippets import SnippetMissingError
 from unittest.mock import patch, MagicMock
+import urllib.error
 
 BASE = os.path.abspath(os.path.dirname(__file__))
 
@@ -1328,3 +1329,159 @@ class TestURLSnippetsMissing(util.MdCase):
                 '',
                 True
             )
+
+
+class TestURLSnippetsRetry(util.MdCase):
+    """Test snippet URL retry cases."""
+
+    extension = [
+        'pymdownx.snippets',
+    ]
+    extension_configs = {
+        'pymdownx.snippets': {
+            'base_path': [os.path.join(BASE, '_snippets')],
+            'url_download': True,
+            'check_paths': True
+        }
+    }
+
+    @patch('urllib.request.urlopen')
+    @patch('time.sleep')
+    def test_successful_retry(self, mock_sleep, mock_urlopen):
+        """Test successful retry after 429."""
+
+        cm = MagicMock()
+        cm.status = 200
+        cm.code = 200
+        cm.read.return_value = b'content\n'
+        cm.headers = {'content-length': '8'}
+        cm.__enter__.return_value = cm
+        cm.__exit__.return_value = None  # Mock __exit__
+
+        mock_urlopen.side_effect = [
+            urllib.error.HTTPError('http://example.com', 429, 'Too Many Requests', {}, None),
+            urllib.error.HTTPError('http://example.com', 429, 'Too Many Requests', {}, None),
+            cm
+        ]
+
+        self.check_markdown(
+            R'''
+            --8<-- "http://example.com"
+            ''',
+            '''
+            <p>content</p>
+            ''',
+            True
+        )
+
+        mock_sleep.assert_any_call(2)
+        mock_sleep.assert_any_call(4)
+
+    @patch('urllib.request.urlopen')
+    @patch('time.sleep')
+    def test_exhaust_retries(self, mock_sleep, mock_urlopen):
+        """Test exhausting all retries."""
+
+        mock_urlopen.side_effect = [
+            urllib.error.HTTPError('http://example.com', 429, 'Too Many Requests', {}, None),
+            urllib.error.HTTPError('http://example.com', 429, 'Too Many Requests', {}, None),
+            urllib.error.HTTPError('http://example.com', 429, 'Too Many Requests', {}, None),
+            urllib.error.HTTPError('http://example.com', 429, 'Too Many Requests', {}, None),
+        ]
+
+        with self.assertRaises(SnippetMissingError) as cm:
+            self.md.convert(
+                R'''
+                --8<-- "http://example.com"
+                '''
+            )
+
+        self.assertIn("Cannot download snippet 'http://example.com': HTTP Error 429", str(cm.exception))
+
+        mock_sleep.assert_any_call(2)
+        mock_sleep.assert_any_call(4)
+        mock_sleep.assert_any_call(6)
+
+
+class TestURLSnippetsRetryCustomBackoff(util.MdCase):
+    """Test snippet URL retry cases with custom backoff."""
+
+    extension = [
+        'pymdownx.snippets',
+    ]
+    extension_configs = {
+        'pymdownx.snippets': {
+            'base_path': [os.path.join(BASE, '_snippets')],
+            'url_download': True,
+            'backoff_factor': 1.5,
+            'check_paths': True
+        }
+    }
+
+    @patch('urllib.request.urlopen')
+    @patch('time.sleep')
+    def test_custom_backoff(self, mock_sleep, mock_urlopen):
+        """Test custom backoff factor."""
+
+        cm = MagicMock()
+        cm.status = 200
+        cm.code = 200
+        cm.read.return_value = b'content\n'
+        cm.headers = {'content-length': '8'}
+        cm.__enter__.return_value = cm
+        cm.__exit__.return_value = None  # Mock __exit__
+
+        mock_urlopen.side_effect = [
+            urllib.error.HTTPError('http://example.com', 429, 'Too Many Requests', {}, None),
+            cm
+        ]
+
+        self.check_markdown(
+            R'''
+            --8<-- "http://example.com"
+            ''',
+            '''
+            <p>content</p>
+            ''',
+            True
+        )
+
+        mock_sleep.assert_called_once_with(1.5)
+
+
+class TestURLSnippetsRetryCustomRetries(util.MdCase):
+    """Test snippet URL retry cases with custom retries."""
+
+    extension = [
+        'pymdownx.snippets',
+    ]
+    extension_configs = {
+        'pymdownx.snippets': {
+            'base_path': [os.path.join(BASE, '_snippets')],
+            'url_download': True,
+            'max_retries': 2,
+            'check_paths': True
+        }
+    }
+
+    @patch('urllib.request.urlopen')
+    @patch('time.sleep')
+    def test_custom_max_retries(self, mock_sleep, mock_urlopen):
+        """Test custom max retries."""
+
+        mock_urlopen.side_effect = [
+            urllib.error.HTTPError('http://example.com', 429, 'Too Many Requests', {}, None),
+            urllib.error.HTTPError('http://example.com', 429, 'Too Many Requests', {}, None),
+            urllib.error.HTTPError('http://example.com', 429, 'Too Many Requests', {}, None),
+        ]
+
+        with self.assertRaises(SnippetMissingError) as cm:
+            self.md.convert(
+                R'''
+                --8<-- "http://example.com"
+                '''
+            )
+        self.assertIn("Cannot download snippet 'http://example.com': HTTP Error 429", str(cm.exception))
+
+        mock_sleep.assert_any_call(2)
+        mock_sleep.assert_any_call(4)

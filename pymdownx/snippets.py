@@ -31,11 +31,14 @@ import codecs
 import os
 from . import util
 import textwrap
+import time
 
 MI = 1024 * 1024  # mebibyte (MiB)
 DEFAULT_URL_SIZE = MI * 32
 DEFAULT_URL_TIMEOUT = 10.0  # in seconds
 DEFAULT_URL_REQUEST_HEADERS = {}
+DEFAULT_MAX_RETRIES = 3
+DEFAULT_BACKOFF_FACTOR = 2
 
 
 class SnippetMissingError(Exception):
@@ -94,6 +97,8 @@ class SnippetPreprocessor(Preprocessor):
         self.url_timeout = config['url_timeout']
         self.url_request_headers = config['url_request_headers']
         self.dedent_subsections = config['dedent_subsections']
+        self.max_retries = config['max_retries']
+        self.backoff_factor = config['backoff_factor']
         self.tab_length = md.tab_length
         super().__init__()
 
@@ -190,43 +195,57 @@ class SnippetPreprocessor(Preprocessor):
         The most recently used files are kept in a cache until the next reset.
         """
 
-        http_request = urllib.request.Request(url, headers=self.url_request_headers)
-        timeout = None if self.url_timeout == 0 else self.url_timeout
-        with urllib.request.urlopen(http_request, timeout=timeout) as response:
+        retries = self.max_retries
 
-            # Fail if status is not OK
-            status = response.status if util.PY39 else response.code
-            if status != 200:
-                raise SnippetMissingError(f"Cannot download snippet '{url}'")
+        while True:
+            try:
+                http_request = urllib.request.Request(url, headers=self.url_request_headers)
+                timeout = None if self.url_timeout == 0 else self.url_timeout
+                with urllib.request.urlopen(http_request, timeout=timeout) as response:
+                    # Fail if status is not OK
+                    status = response.status if util.PY39 else response.code
 
-            # We provide some basic protection against absurdly large files.
-            # 32MB is chosen as an arbitrary upper limit. This can be raised if desired.
-            content = None
-            if "content-length" not in response.headers:
-                # we have to read to know if we went over the max, but never more than `url_max_size`
-                # where `url_max_size` == 0 means unlimited
-                content = response.read(self.url_max_size) if self.url_max_size != 0 else response.read()
-                content_length = len(content)
-            else:
-                content_length = int(response.headers["content-length"])
+                    if status != 200:
+                        raise SnippetMissingError(f"Cannot download snippet '{url}'")
 
-            if self.url_max_size != 0 and content_length >= self.url_max_size:
-                raise ValueError(f"refusing to read payloads larger than or equal to {self.url_max_size}")
+                    # We provide some basic protection against absurdly large files.
+                    # 32MB is chosen as an arbitrary upper limit. This can be raised if desired.
+                    content = None
+                    if "content-length" not in response.headers:
+                        # we have to read to know if we went over the max, but never more than `url_max_size`
+                        # where `url_max_size` == 0 means unlimited
+                        content = response.read(self.url_max_size) if self.url_max_size != 0 else response.read()
+                        content_length = len(content)
+                    else:
+                        content_length = int(response.headers["content-length"])
 
-            # Nothing to return
-            if content_length == 0:
-                return ['']
+                    if self.url_max_size != 0 and content_length >= self.url_max_size:
+                        raise ValueError(f"refusing to read payloads larger than or equal to {self.url_max_size}")
 
-            if content is None:
-                # content-length was in the header, so we did not read yet
-                content = response.read()
+                    # Nothing to return
+                    if content_length == 0:
+                        return ['']
 
-            # Process lines
-            last = content.endswith((b'\r', b'\n'))
-            s_lines = [l.decode(self.encoding) for l in content.splitlines()]
-            if last:
-                s_lines.append('')
-            return s_lines
+                    if content is None:
+                        # content-length was in the header, so we did not read yet
+                        content = response.read()
+
+                    # Process lines
+                    last = content.endswith((b'\r', b'\n'))
+                    s_lines = [l.decode(self.encoding) for l in content.splitlines()]
+                    if last:
+                        s_lines.append('')
+                    return s_lines
+
+            except urllib.error.HTTPError as e:  # noqa: PERF203
+                # Handle rate limited error codes
+                if e.code == 429 and retries:
+                    retries -= 1
+                    wait = self.backoff_factor * (self.max_retries - retries)
+                    time.sleep(wait)
+                    continue
+                raise SnippetMissingError(f"Cannot download snippet '{url}': {e!s}") from e
+
 
     def parse_snippets(self, lines, file_name=None, is_url=False, is_section=False):
         """Parse snippets snippet."""
@@ -425,7 +444,11 @@ class SnippetExtension(Extension):
             'url_max_size': [DEFAULT_URL_SIZE, "External URL max size (0 means no limit)- Default: 32 MiB"],
             'url_timeout': [DEFAULT_URL_TIMEOUT, 'Defualt URL timeout (0 means no timeout) - Default: 10 sec'],
             'url_request_headers': [DEFAULT_URL_REQUEST_HEADERS, "Extra request Headers - Default: {}"],
-            'dedent_subsections': [False, "Dedent subsection extractions e.g. 'sections' and/or 'lines'."]
+            'dedent_subsections': [False, "Dedent subsection extractions e.g. 'sections' and/or 'lines'."],
+            'max_retries': [
+                DEFAULT_MAX_RETRIES, "Maximum number of retry attempts for rate-limited requests - Default: 3"
+            ],
+            'backoff_factor': [DEFAULT_BACKOFF_FACTOR, "Backoff factor for retry attempts - Default: 2"]
         }
 
         super().__init__(*args, **kwargs)
