@@ -5,6 +5,7 @@ Arithmatex
 Arithmatex's
 Aspell
 AttrList
+Backoff
 BeautifulSoup
 BetterEm
 Bitbucket
@@ -136,6 +137,7 @@ Virtualenv
 Waylan
 YAML
 accessor
+backoff
 backrefs
 backtick
 backticks
