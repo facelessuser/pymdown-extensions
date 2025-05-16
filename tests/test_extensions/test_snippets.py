@@ -1396,7 +1396,7 @@ class TestURLSnippetsRetry(util.MdCase):
                 '''
             )
 
-        self.assertIn("Cannot download snippet 'http://example.com': HTTP Error 429", str(cm.exception))
+        self.assertIn("Cannot download snippet 'http://example.com' (HTTP Error 429)", str(cm.exception))
 
         mock_sleep.assert_any_call(2)
         mock_sleep.assert_any_call(4)
@@ -1481,7 +1481,7 @@ class TestURLSnippetsRetryCustomRetries(util.MdCase):
                 --8<-- "http://example.com"
                 '''
             )
-        self.assertIn("Cannot download snippet 'http://example.com': HTTP Error 429", str(cm.exception))
+        self.assertIn("Cannot download snippet 'http://example.com' (HTTP Error 429)", str(cm.exception))
 
         mock_sleep.assert_any_call(2)
         mock_sleep.assert_any_call(4)

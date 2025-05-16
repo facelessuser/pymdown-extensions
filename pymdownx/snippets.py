@@ -206,7 +206,7 @@ class SnippetPreprocessor(Preprocessor):
                     status = response.status if util.PY39 else response.code
 
                     if status != 200:
-                        raise SnippetMissingError(f"Cannot download snippet '{url}'")
+                        raise SnippetMissingError(f"Cannot download snippet '{url}' (HTTP Error {status})")
 
                     # We provide some basic protection against absurdly large files.
                     # 32MB is chosen as an arbitrary upper limit. This can be raised if desired.
@@ -244,7 +244,7 @@ class SnippetPreprocessor(Preprocessor):
                     wait = self.backoff_factor * (self.max_retries - retries)
                     time.sleep(wait)
                     continue
-                raise SnippetMissingError(f"Cannot download snippet '{url}': {e!s}") from e
+                raise SnippetMissingError(f"Cannot download snippet '{url}' (HTTP Error {e.code})") from e
 
 
     def parse_snippets(self, lines, file_name=None, is_url=False, is_section=False):
