@@ -37,7 +37,7 @@ MAGIC_AUTO_LINK = 2
 
 DEFAULT_EXCLUDES = {
     "bitbucket": ['dashboard', 'account', 'plans', 'support', 'repo'],
-    "github": ['marketeplace', 'notifications', 'issues', 'pull', 'sponsors', 'settings', 'support'],
+    "github": ['marketplace', 'notifications', 'issues', 'pull', 'sponsors', 'settings', 'support'],
     "gitlab": ['dashboard', '-', 'explore', 'help', 'projects'],
     "twitter": ['i', 'messages', 'bookmarks', 'home'],
     "x": ['i', 'messages', 'bookmarks', 'home']
@@ -1059,7 +1059,7 @@ class MagiclinkExtension(Extension):
             'shortener_user_exclude': [
                 {
                     "bitbucket": ['dashboard', 'account', 'plans', 'support', 'repo'],
-                    "github": ['marketeplace', 'notifications', 'issues', 'pull', 'sponsors', 'settings', 'support'],
+                    "github": ['marketplace', 'notifications', 'issues', 'pull', 'sponsors', 'settings', 'support'],
                     "gitlab": ['dashboard', '-', 'explore', 'help', 'projects'],
                     "twitter": ['i', 'messages', 'bookmarks', 'home'],
                     "x": ['i', 'messages', 'bookmarks', 'home']
