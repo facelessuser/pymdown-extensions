@@ -537,7 +537,7 @@ Defaults for `shortener_user_exclude`:
 ```py
 {
     "bitbucket": ['dashboard', 'account', 'plans', 'support', 'repo'],
-    "github": ['marketeplace', 'notifications', 'issues', 'pull', 'sponsors', 'settings', 'support'],
+    "github": ['marketplace', 'notifications', 'issues', 'pull', 'sponsors', 'settings', 'support'],
     "gitlab": ['dashboard', '-', 'explore', 'help', 'projects'],
     "x": ['i', 'messages', 'bookmarks', 'home']
 }
