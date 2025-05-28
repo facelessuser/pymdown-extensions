@@ -175,7 +175,7 @@ class CaptionTreeprocessor(Treeprocessor):
                 last_type = fig_type
 
                 # Determine if manual number is not smaller than existing figure numbers at that depth
-                if fig_num and all(a <= b for a, b in zip(counter, fig_num)):
+                if fig_num and fig_num > counter:
                     counter[:] = fig_num[:]
 
                 # Apply prefix and ID
