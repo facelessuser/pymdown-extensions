@@ -89,12 +89,12 @@ def type_number(value: Any) -> int | float:
 def type_integer(value: Any) -> int:
     """Ensure type integer or fail."""
 
-    if not isinstance(value, int):
-        if not isinstance(value, float) or not value.is_integer():
-            raise ValueError(f"Could not convert type {type(value)} to an integer")
-        value = int(value)
+    if isinstance(value, int):
+        return value
 
-    return value
+    if not isinstance(value, float) or not value.is_integer():
+        raise ValueError(f"Could not convert type {type(value)} to an integer")
+    return int(value)
 
 
 def type_ranged_number(minimum: int | None = None, maximum: int | None = None) -> Callable[[Any], int | float]:
