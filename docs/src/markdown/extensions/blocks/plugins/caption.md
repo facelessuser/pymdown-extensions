@@ -498,6 +498,32 @@ extenconfigs = {
 }
 ```
 
+Prefix templates are inserted exactly as specified, that means you can also use raw HTML. That also means you must
+HTML escape anything that needs it as well.
+
+```py
+extenconfigs = {
+    "pymdownx.blocks.caption": {
+        "types": [
+            'caption',
+            {
+                'name': 'figure-caption',
+                'prefix': 'Figure <span class="prefix-fig-num">{}</span>.'
+                'classes': 'one-class two-class'
+            },
+            {
+                'name': 'table-caption',
+                'prefix': 'Table <span class="prefix-fig-num">{}</span>.'
+            }
+        ]
+    }
+}
+```
+
+/// new | New 10.16
+Using raw HTML in prefix templates was added in 10.16.
+///
+
 ## Global Options
 
 Options        | Type       | Descriptions
