@@ -35,7 +35,7 @@ RE_FIG_NUM = re.compile(r'^(\^)?([1-9][0-9]*(?:.[1-9][0-9]*)*)(?= |$)')
 RE_SEP = re.compile(r'[_-]+')
 
 
-def update_tag(el, fig_type, fig_num, template, prepend):
+def update_tag(el, fig_type, fig_num, template, prepend, md):
     """Update tag ID and caption prefix."""
 
     # Auto add an ID
@@ -47,7 +47,7 @@ def update_tag(el, fig_type, fig_num, template, prepend):
         for child in list(el) if prepend else reversed(el):
             if child.tag == 'figcaption':
                 children = list(child)
-                value = template.format(fig_num)
+                value = md.htmlStash.store(template.format(fig_num))
                 if not len(children) or children[0].tag != 'p':
                     p = etree.Element('p')
                     span = etree.SubElement(p, 'span', {'class': 'caption-prefix'})
@@ -184,7 +184,8 @@ class CaptionTreeprocessor(Treeprocessor):
                     fig_type,
                     '.'.join(str(x) for x in counter[:stack + 1]),
                     self.fig_types.get(fig_type, ''),
-                    prepend
+                    prepend,
+                    self.md
                 )
 
         # Clean up attributes
@@ -314,7 +315,8 @@ class Caption(Block):
                     self.NAME,
                     self.fig_num,
                     prefix,
-                    self.prepend
+                    self.prepend,
+                    self.md
                 )
 
 

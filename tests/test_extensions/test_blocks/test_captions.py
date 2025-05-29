@@ -1522,3 +1522,45 @@ class TestBlocksCaptionAutoLevelPrepend(util.MdCase):
             """,
             True
         )
+
+
+class TestBlocksCaptionCustomPrefix(util.MdCase):
+    """Test Blocks caption cases with `auto` level."""
+
+    extension = ['pymdownx.blocks.caption']
+    extension_configs = {
+        'pymdownx.blocks.caption': {
+            'types': [
+                'caption',
+                {
+                    'name': 'figure-caption',
+                    'prefix': 'Figure <span class="caption-num">{}</span>.'
+                },
+                {
+                    'name': 'table-caption',
+                    'prefix': 'Table <span class="caption-num">{}</span>.'
+                }
+            ]
+        }
+    }
+
+    def test_custom_prefix(self):
+        """Test custom prefix."""
+
+        self.check_markdown(
+            R'''
+            A paragraph with a caption.
+            /// figure-caption
+            This is the caption.
+            ///
+            ''',
+            R'''
+            <figure id="__figure-caption_1">
+            <p>A paragraph with a caption.</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure <span class="caption-num">1</span>.</span> This is the caption.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )

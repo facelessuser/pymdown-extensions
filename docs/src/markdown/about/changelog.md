@@ -3,8 +3,10 @@
 ## 10.16
 
 -   **NEW**: Drop support for Python 3.8.
--   **NEW**: Snippets: Added `max_retries` and `backoff_retries` options to configure new retry logic for HTTP 429 errors
-    (Too Many Requests client error).
+-   **NEW**: Snippets: Added `max_retries` and `backoff_retries` options to configure new retry logic for HTTP 429
+    errors (Too Many Requests client error).
+-   **NEW**: Caption: Prefix templates are now preserved exactly as specified allowing the insertion of HTML tags if
+    desired.
 -   **FIX**: Caption: Fix issue where manual numbers in auto were not respected appropriately.
 
 ## 10.15
