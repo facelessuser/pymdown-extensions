@@ -34,7 +34,7 @@
     "css-mqpacker": "^7.0.0",
     "del": "^8.0.0",
     "eslint": "^9.27.0",
-    "gulp": "^5.0.0",
+    "gulp": "^5.0.1",
     "gulp-concat": "^2.6.1",
     "gulp-eslint": "^6.0.0",
     "gulp-if": "^3.0.0",
