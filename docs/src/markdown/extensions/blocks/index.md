@@ -131,6 +131,46 @@ Indented content should always be separated from the block header by one empty l
 option block.
 ///
 
+### Alternative syntax for options
+
+Some formatters tends to remove the leading four spaces before the additional option. In that case, an alternative syntax is possible by replacing the spaces by a single `@` :
+
+/// tab | Alternative syntax
+```text title="Admonition"
+/// admonition | Some title
+@type: warning
+
+Some content
+///
+```
+
+//// html | div.result
+///// admonition | Some title
+@type: warning
+
+Some content
+/////
+////
+///
+
+/// tab | Normal syntax
+```text title="Admonition"
+/// admonition | Some title
+    type: warning
+
+Some content
+///
+```
+
+//// html | div.result
+///// admonition | Some title
+    type: warning
+
+Some content
+/////
+////
+///
+
 ## Nesting
 
 Generic blocks can be nested as long as the block fence differs in number of leading tokens. This is similar to how
