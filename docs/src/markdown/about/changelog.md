@@ -2,6 +2,7 @@
 
 ## 10.16
 
+-   **NEW**: Add early support for Python 3.14.
 -   **NEW**: Drop support for Python 3.8.
 -   **NEW**: Snippets: Added `max_retries` and `backoff_retries` options to configure new retry logic for HTTP 429
     errors (Too Many Requests client error).
