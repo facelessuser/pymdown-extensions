@@ -33,6 +33,7 @@ else:
     _PLATFORM = "linux"
 
 PY39 = (3, 9) <= sys.version_info
+PY314 = (3, 14) <= sys.version_info
 
 
 def clamp(value: float, mn: float, mx: float) -> float:
@@ -79,6 +80,8 @@ def path2url(url: str) -> str:
     # If on windows, replace the notation to use a default protocol `///` with nothing.
     if is_win() and RE_WIN_DEFAULT_PROTOCOL.match(path):
         path = path.replace('///', '', 1)
+    if PY314:
+        path = path.replace('///', '/')
     return path
 
 

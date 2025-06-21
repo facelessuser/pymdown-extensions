@@ -17,7 +17,7 @@ jobs:
       max-parallel: 4
       matrix:
         platform: [ubuntu-latest, windows-latest]
-        python-version: [3.9, '3.10', '3.11', '3.12', '3.13']
+        python-version: [3.9, '3.10', '3.11', '3.12', '3.13', '3.14']
         include:
           - python-version: 3.9
             tox-env: py39
@@ -29,6 +29,8 @@ jobs:
             tox-env: py312
           - python-version: '3.13'
             tox-env: py313
+          - python-version: '3.14'
+            tox-env: py314
         # exclude:
         #   - platform: windows-latest
         #     python-version: 3.14

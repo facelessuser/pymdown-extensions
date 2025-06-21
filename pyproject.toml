@@ -139,7 +139,7 @@ legacy_tox_ini = """
     [tox]
     isolated_build = true
     envlist =
-        {py39,py310,py311,py312,py313}, lint, documents
+        {py39,py310,py311,py312,py313,py314}, lint, documents
 
     [testenv]
     passenv = LANG

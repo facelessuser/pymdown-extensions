@@ -2,7 +2,6 @@
 import os
 import markdown
 import difflib
-import codecs
 import pytest
 import copy
 from . import util
@@ -55,7 +54,7 @@ def check_markdown(testfile, extension, extension_config, wrapper, update=False)
     """Check the markdown."""
 
     expected_html = os.path.splitext(testfile)[0] + '.html'
-    with codecs.open(testfile, 'r', encoding='utf-8') as f:
+    with open(testfile, 'r', encoding='utf-8') as f:
         source = f.read()
 
     results = wrapper % markdown.Markdown(
@@ -63,7 +62,7 @@ def check_markdown(testfile, extension, extension_config, wrapper, update=False)
     ).convert(source)
 
     try:
-        with codecs.open(expected_html, 'r', encoding='utf-8') as f:
+        with open(expected_html, 'r', encoding='utf-8') as f:
             expected = f.read().replace("\r\n", "\n")
     except Exception:
         expected = ''
@@ -80,7 +79,7 @@ def check_markdown(testfile, extension, extension_config, wrapper, update=False)
     if diff:
         if update:
             print('Updated: %s' % expected_html)
-            with codecs.open(expected_html, 'w', encoding='utf-8') as f:
+            with open(expected_html, 'w', encoding='utf-8') as f:
                 f.write(results)
         else:
             raise Exception(
@@ -100,7 +99,7 @@ def gather_test_params():
         if os.path.exists(cfg_path):
             files.remove('tests.yml')
             [files.remove(file) for file in files[:] if not file.endswith('.txt')]
-            with codecs.open(cfg_path, 'r', encoding='utf-8') as f:
+            with open(cfg_path, 'r', encoding='utf-8') as f:
                 cfg = util.yaml_load(f.read())
             for testfile in files:
                 key = os.path.splitext(testfile)[0]

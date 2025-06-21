@@ -27,7 +27,6 @@ from markdown.preprocessors import Preprocessor
 import functools
 import urllib
 import re
-import codecs
 import os
 from . import util
 import textwrap
@@ -362,7 +361,7 @@ class SnippetPreprocessor(Preprocessor):
 
                     if not url:
                         # Read file content
-                        with codecs.open(snippet, 'r', encoding=self.encoding) as f:
+                        with open(snippet, 'r', encoding=self.encoding) as f:
                             last = False
                             s_lines = []
                             for l in f:
