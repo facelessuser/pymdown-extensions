@@ -4,7 +4,7 @@
 [![PyPI Version][pypi-image]][pypi-link]
 [![PyPI Downloads][pypi-down]][pypi-link]
 [![PyPI - Python Version][python-image]][pypi-link]
-![License][license-image-mit]
+[![License][license-image-mit]][license-link]
 
 # PyMdown Extensions
 
@@ -27,5 +27,6 @@ License is MIT.  See [LICENSE](https://github.com/facelessuser/pymdown-extension
 [python-image]: https://img.shields.io/pypi/pyversions/pymdown-extensions?logo=python&logoColor=aaaaaa&labelColor=333333
 [pypi-down]: https://img.shields.io/pypi/dm/pymdown-extensions.svg?logo=pypi&logoColor=aaaaaa&labelColor=333333
 [license-image-mit]: https://img.shields.io/badge/license-MIT-blue.svg?labelColor=333333
+[license-link]: https://github.com/facelessuser/pymdown-extensions/blob/main/LICENSE.md
 [donate-image]: https://img.shields.io/badge/Donate-PayPal-3fabd1?logo=paypal
 [donate-link]: https://www.paypal.me/facelessuser
