@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.16.1
+
+-   **FIX**: Inefficient regular expression pattern for figure caption numbers.
+
 ## 10.16
 
 -   **NEW**: Add early support for Python 3.14.

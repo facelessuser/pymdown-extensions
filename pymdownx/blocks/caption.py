@@ -31,7 +31,7 @@ from .. blocks import BlocksExtension
 from markdown.treeprocessors import Treeprocessor
 import re
 
-RE_FIG_NUM = re.compile(r'^(\^)?([1-9][0-9]*(?:.[1-9][0-9]*)*)(?= |$)')
+RE_FIG_NUM = re.compile(r'^(\^)?([1-9][0-9]*(?:\.[1-9][0-9]*)*)(?= |$)')
 RE_SEP = re.compile(r'[_-]+')
 
 
