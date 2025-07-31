@@ -245,6 +245,9 @@ class SnippetPreprocessor(Preprocessor):
                     continue
                 raise SnippetMissingError(f"Cannot download snippet '{url}' (HTTP Error {e.code})") from e
 
+    def post_process_snippet(self, s_lines, snippet):
+        """Override to post-process the snippet's content."""
+        return s_lines
 
     def parse_snippets(self, lines, file_name=None, is_url=False, is_section=False):
         """Parse snippets snippet."""
@@ -389,6 +392,10 @@ class SnippetPreprocessor(Preprocessor):
                             s_lines = self.dedent(final_lines) if self.dedent_subsections else final_lines
                         elif section:
                             s_lines = self.extract_section(section, s_lines)
+
+                    # call the post-process hook
+                    if s_lines:
+                        s_lines = self.post_process_snippet(s_lines, snippet)
 
                     # Process lines looking for more snippets
                     new_lines.extend(
