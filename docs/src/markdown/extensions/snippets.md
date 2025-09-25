@@ -288,7 +288,7 @@ a given file to *every* Markdown document without having to manually include the
 is especially useful for including a page of reference links or abbreviations on every page.
 
 Snippets provides an `auto_append` option that allows a user to specify a list of files that will be automatically
-appended to every to Markdown content. Each entry in the list searched for relative to the `base_path` entries.
+appended to every Markdown content. Each entry in the list is searched for relative to the `base_path` entries.
 
 ## Options
 
