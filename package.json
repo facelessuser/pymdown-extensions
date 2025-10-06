@@ -55,7 +55,7 @@
     "rollup": "^4.44.0",
     "rollup-plugin-output-manifest": "^2.0.0",
     "sass": "^1.89.2",
-    "stylelint": "^16.21.0",
+    "stylelint": "^16.25.0",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^38.0.0",
     "stylelint-order": "^7.0.0",
