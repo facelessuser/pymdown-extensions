@@ -226,6 +226,69 @@ class TestBlocksCaption(util.MdCase):
             True
         )
 
+    def test_caption_inline_id(self):
+        """Test caption with inline shorthand ID."""
+
+        self.check_markdown(
+            R'''
+            Paragraph
+            /// figure-caption | #custom-id
+            Caption text.
+            ///
+            ''',
+            R'''
+            <figure id="custom-id">
+            <p>Paragraph</p>
+            <figcaption>
+            <p>Caption text.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_caption_inline_id_prepend(self):
+        """Test caption with inline shorthand ID and prepend marker."""
+
+        self.check_markdown(
+            R'''
+            Text
+            /// figure-caption | < #custom-prepend
+            Prepended caption.
+            ///
+            ''',
+            R'''
+            <figure id="custom-prepend">
+            <figcaption>
+            <p>Prepended caption.</p>
+            </figcaption>
+            <p>Text</p>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_table_caption_inline_id(self):
+        """Test table caption with inline shorthand ID."""
+
+        self.check_markdown(
+            R'''
+            Paragraph
+            /// table-caption | #custom-table
+            Table caption text.
+            ///
+            ''',
+            R'''
+            <figure id="custom-table">
+            <p>Paragraph</p>
+            <figcaption>
+            <p>Table caption text.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
     def test_bad_header(self):
         """Test a bad header."""
 
@@ -424,6 +487,48 @@ class TestBlocksCaptionPrefix(util.MdCase):
             True
         )
 
+    def test_caption_inline_id(self):
+        """Test caption with inline shorthand ID."""
+
+        self.check_markdown(
+            R'''
+            Paragraph
+            /// figure-caption | #custom-id
+            Caption text.
+            ///
+            ''',
+            R'''
+            <figure id="custom-id">
+            <p>Paragraph</p>
+            <figcaption>
+            <p>Caption text.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_caption_inline_id_prepend(self):
+        """Test caption with inline shorthand ID and prepend marker."""
+
+        self.check_markdown(
+            R'''
+            Text
+            /// figure-caption | < #custom-prepend
+            Prepended caption.
+            ///
+            ''',
+            R'''
+            <figure id="custom-prepend">
+            <figcaption>
+            <p>Prepended caption.</p>
+            </figcaption>
+            <p>Text</p>
+            </figure>
+            ''',
+            True
+        )
+
     def test_nested_consecutive_captions(self):
         """Test nested captions with `auto`."""
 
@@ -475,6 +580,48 @@ class TestBlocksCaptionPrefix(util.MdCase):
             <figcaption>
             <p><span class="caption-prefix">Figure 2.</span> Level 1 caption.</p>
             </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_caption_inline_id(self):
+        """Test caption with inline shorthand ID."""
+
+        self.check_markdown(
+            R'''
+            Paragraph
+            /// figure-caption | #custom-id
+            Caption text.
+            ///
+            ''',
+            R'''
+            <figure id="custom-id">
+            <p>Paragraph</p>
+            <figcaption>
+            <p>Caption text.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_caption_inline_id_prepend(self):
+        """Test caption with inline shorthand ID and prepend marker."""
+
+        self.check_markdown(
+            R'''
+            Text
+            /// figure-caption | < #custom-prepend
+            Prepended caption.
+            ///
+            ''',
+            R'''
+            <figure id="custom-prepend">
+            <figcaption>
+            <p>Prepended caption.</p>
+            </figcaption>
+            <p>Text</p>
             </figure>
             ''',
             True
