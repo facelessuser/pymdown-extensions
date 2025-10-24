@@ -22,7 +22,7 @@
     "@babel/core": "^7.27.4",
     "@babel/eslint-parser": "^7.27.5",
     "@babel/plugin-external-helpers": "^7.27.1",
-    "@babel/preset-env": "^7.27.2",
+    "@babel/preset-env": "^7.28.5",
     "@babel/register": "^7.27.1",
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@mdi/svg": "^7.4.47",
