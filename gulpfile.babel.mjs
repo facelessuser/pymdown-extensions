@@ -150,14 +150,7 @@ gulp.task("scss:build:sass", () => {
       {
         plugins: [
           {
-            name: "preset-default",
-            params: {
-              overrides: {
-                removeViewBox: {
-                  active: false
-                }
-              }
-            }
+            name: "preset-default"
           },
           'removeDimensions'
         ],
