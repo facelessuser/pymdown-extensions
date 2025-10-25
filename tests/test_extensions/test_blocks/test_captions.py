@@ -268,6 +268,44 @@ class TestBlocksCaption(util.MdCase):
             True
         )
 
+    def test_caption_inline_id_with_extra_token(self):
+        """Ensure inline shorthand ID with extra tokens is rejected."""
+
+        self.check_markdown(
+            R"""
+            Paragraph
+            /// figure-caption | #custom-id extra
+            Caption text.
+            ///
+            """,
+            """
+            <p>Paragraph
+            /// figure-caption | #custom-id extra
+            Caption text.
+            ///</p>
+            """,
+            True
+        )
+
+    def test_caption_inline_id_invalid_identifier(self):
+        """Ensure inline shorthand ID with invalid characters is rejected."""
+
+        self.check_markdown(
+            R"""
+            Paragraph
+            /// figure-caption | #invalid!
+            Caption text.
+            ///
+            """,
+            """
+            <p>Paragraph
+            /// figure-caption | #invalid!
+            Caption text.
+            ///</p>
+            """,
+            True
+        )
+
     def test_table_caption_inline_id(self):
         """Test table caption with inline shorthand ID."""
 
@@ -289,19 +327,19 @@ class TestBlocksCaption(util.MdCase):
             True
         )
 
-    def test_caption_inline_id_attrs_override(self):
-        """Test inline shorthand ID does not override attrs ID."""
+    def test_caption_inline_id_attribute_override(self):
+        """Ensure inline shorthand ID does not override attribute-defined ID."""
 
         self.check_markdown(
             R'''
             Paragraph
             /// figure-caption | #inline-id
-                attrs: {id: attrs-id}
+                attrs: {id: attribute-id}
             Caption text.
             ///
             ''',
             R'''
-            <figure id="attrs-id">
+            <figure id="attribute-id">
             <p>Paragraph</p>
             <figcaption>
             <p>Caption text.</p>
