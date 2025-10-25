@@ -446,6 +446,35 @@ caption
 
 IDs specified in this way will also override IDs generated in [manual mode](#manual-figure-numbers).
 
+If you prefer a more compact syntax, the ID can also be specified inline in the caption header. Use `#id-value` after
+any prepend marker or manual numbering:
+
+```
+![placeholder](../../../images/placeholder.jpeg)
+
+/// figure-caption | #static-id
+caption
+///
+
+![placeholder](../../../images/placeholder.jpeg)
+/// figure-caption | < #prepend-id
+caption
+///
+```
+
+If using figure numbers and IDs, the figure number notation must come before the ID.
+
+```
+![placeholder](../../../images/placeholder.jpeg)
+
+/// figure-caption | 3 #static-id
+caption
+///
+```
+
+The inline shorthand behaves the same as the `attrs` front matter and will override any automatically generated ID. It
+is available for all caption types, so the same syntax applies to `table-caption`, custom types, etc.
+
 ### Configuring Figure Types
 
 While Caption provides a few default figure types, users are free to define their own with different prefixes.

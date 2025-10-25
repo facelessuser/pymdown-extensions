@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.17
+
+-   **NEW**: Allow specifying static IDs in caption block headers via `#id` syntax.
+
 ## 10.16.1
 
 -   **FIX**: Inefficient regular expression pattern for figure caption numbers.

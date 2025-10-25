@@ -236,8 +236,24 @@ class Caption(Block):
                     self.fig_num = m.group(2)
                 argument = argument[m.end():].lstrip()
 
-        if argument:
-            return False
+            if argument:
+                tokens = argument.split()
+                if len(tokens) > 1:
+                    return False
+                id_token = tokens[0]
+                if not id_token.startswith('#'):
+                    return False
+                identifier = id_token[1:]
+                try:
+                    identifier = type_html_identifier(identifier)
+                except ValueError:
+                    return False
+                attrs = dict(self.options['attrs'])
+                if 'id' not in attrs:
+                    attrs['id'] = identifier
+                    self.options['attrs'] = attrs
+                return True
+
         return True
 
     def on_create(self, parent):
