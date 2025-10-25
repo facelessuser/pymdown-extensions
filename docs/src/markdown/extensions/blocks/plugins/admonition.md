@@ -88,7 +88,7 @@ from pymdownx.blocks.admonition import Admonition
 md = markdown.Markdown(
     extensions=['pymdownx.blocks.admonition'],
     extension_configs={
-        'pymdownx.blocks.admonition": {
+        'pymdownx.blocks.admonition': {
             'types': ['note', 'warning', 'some-custom-type']
         }
     }
