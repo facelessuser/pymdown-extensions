@@ -446,8 +446,8 @@ caption
 
 IDs specified in this way will also override IDs generated in [manual mode](#manual-figure-numbers).
 
-If you prefer a more compact syntax, the ID can also be specified inline in the caption header. Use `#id-value` (or
-`id=id-value`) after any prepend marker or manual numbering:
+If you prefer a more compact syntax, the ID can also be specified inline in the caption header. Use `#id-value` after
+any prepend marker or manual numbering:
 
 ```
 ![placeholder](../../../images/placeholder.jpeg)

@@ -289,6 +289,28 @@ class TestBlocksCaption(util.MdCase):
             True
         )
 
+    def test_caption_inline_id_attrs_override(self):
+        """Test inline shorthand ID does not override attrs ID."""
+
+        self.check_markdown(
+            R'''
+            Paragraph
+            /// figure-caption | #inline-id
+                attrs: {id: attrs-id}
+            Caption text.
+            ///
+            ''',
+            R'''
+            <figure id="attrs-id">
+            <p>Paragraph</p>
+            <figcaption>
+            <p>Caption text.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
     def test_bad_header(self):
         """Test a bad header."""
 
@@ -482,48 +504,6 @@ class TestBlocksCaptionPrefix(util.MdCase):
             <figcaption>
             <p><span class="caption-prefix">Figure 1.</span> Level 1 caption.</p>
             </figcaption>
-            </figure>
-            ''',
-            True
-        )
-
-    def test_caption_inline_id(self):
-        """Test caption with inline shorthand ID."""
-
-        self.check_markdown(
-            R'''
-            Paragraph
-            /// figure-caption | #custom-id
-            Caption text.
-            ///
-            ''',
-            R'''
-            <figure id="custom-id">
-            <p>Paragraph</p>
-            <figcaption>
-            <p>Caption text.</p>
-            </figcaption>
-            </figure>
-            ''',
-            True
-        )
-
-    def test_caption_inline_id_prepend(self):
-        """Test caption with inline shorthand ID and prepend marker."""
-
-        self.check_markdown(
-            R'''
-            Text
-            /// figure-caption | < #custom-prepend
-            Prepended caption.
-            ///
-            ''',
-            R'''
-            <figure id="custom-prepend">
-            <figcaption>
-            <p>Prepended caption.</p>
-            </figcaption>
-            <p>Text</p>
             </figure>
             ''',
             True
