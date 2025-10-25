@@ -796,6 +796,38 @@ class TestBlocksCaptionAutoPrefix(util.MdCase):
         }
     }
 
+    def test_caption_number_and_id(self):
+        """Test captions with IDs and number."""
+
+        self.check_markdown(
+            R'''
+            A paragraph with a caption.
+            /// figure-caption | 3 #id
+            This is the caption.
+            ///
+
+            A paragraph with a caption.
+            /// figure-caption | < 4 #id2
+            This is the caption.
+            ///
+            ''',
+            R'''
+            <figure id="id">
+            <p>A paragraph with a caption.</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 3.</span> This is the caption.</p>
+            </figcaption>
+            </figure>
+            <figure id="id2">
+            <figcaption>
+            <p><span class="caption-prefix">Figure 4.</span> This is the caption.</p>
+            </figcaption>
+            <p>A paragraph with a caption.</p>
+            </figure>
+            ''',
+            True
+        )
+
     def test_caption(self):
         """Test basic caption with `auto`."""
 

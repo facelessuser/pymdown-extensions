@@ -462,6 +462,16 @@ caption
 ///
 ```
 
+If using figure numbers and IDs, the figure number notation must come before the ID.
+
+```
+![placeholder](../../../images/placeholder.jpeg)
+
+/// figure-caption | 3 #static-id
+caption
+///
+```
+
 The inline shorthand behaves the same as the `attrs` front matter and will override any automatically generated ID. It
 is available for all caption types, so the same syntax applies to `table-caption`, custom types, etc.
 
