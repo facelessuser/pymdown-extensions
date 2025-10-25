@@ -226,6 +226,129 @@ class TestBlocksCaption(util.MdCase):
             True
         )
 
+    def test_caption_inline_id(self):
+        """Test caption with inline shorthand ID."""
+
+        self.check_markdown(
+            R'''
+            Paragraph
+            /// figure-caption | #custom-id
+            Caption text.
+            ///
+            ''',
+            R'''
+            <figure id="custom-id">
+            <p>Paragraph</p>
+            <figcaption>
+            <p>Caption text.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_caption_inline_id_prepend(self):
+        """Test caption with inline shorthand ID and prepend marker."""
+
+        self.check_markdown(
+            R'''
+            Text
+            /// figure-caption | < #custom-prepend
+            Prepended caption.
+            ///
+            ''',
+            R'''
+            <figure id="custom-prepend">
+            <figcaption>
+            <p>Prepended caption.</p>
+            </figcaption>
+            <p>Text</p>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_caption_inline_id_with_extra_token(self):
+        """Ensure inline shorthand ID with extra tokens is rejected."""
+
+        self.check_markdown(
+            R"""
+            Paragraph
+            /// figure-caption | #custom-id extra
+            Caption text.
+            ///
+            """,
+            """
+            <p>Paragraph
+            /// figure-caption | #custom-id extra
+            Caption text.
+            ///</p>
+            """,
+            True
+        )
+
+    def test_caption_inline_id_invalid_identifier(self):
+        """Ensure inline shorthand ID with invalid characters is rejected."""
+
+        self.check_markdown(
+            R"""
+            Paragraph
+            /// figure-caption | #invalid!
+            Caption text.
+            ///
+            """,
+            """
+            <p>Paragraph
+            /// figure-caption | #invalid!
+            Caption text.
+            ///</p>
+            """,
+            True
+        )
+
+    def test_table_caption_inline_id(self):
+        """Test table caption with inline shorthand ID."""
+
+        self.check_markdown(
+            R'''
+            Paragraph
+            /// table-caption | #custom-table
+            Table caption text.
+            ///
+            ''',
+            R'''
+            <figure id="custom-table">
+            <p>Paragraph</p>
+            <figcaption>
+            <p>Table caption text.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_caption_inline_id_attribute_override(self):
+        """Ensure inline shorthand ID does not override attribute-defined ID."""
+
+        self.check_markdown(
+            R'''
+            Paragraph
+            /// figure-caption | #inline-id
+                attrs: {id: attribute-id}
+            Caption text.
+            ///
+            ''',
+            R'''
+            <figure id="attribute-id">
+            <p>Paragraph</p>
+            <figcaption>
+            <p>Caption text.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
     def test_bad_header(self):
         """Test a bad header."""
 
@@ -475,6 +598,48 @@ class TestBlocksCaptionPrefix(util.MdCase):
             <figcaption>
             <p><span class="caption-prefix">Figure 2.</span> Level 1 caption.</p>
             </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_caption_inline_id(self):
+        """Test caption with inline shorthand ID."""
+
+        self.check_markdown(
+            R'''
+            Paragraph
+            /// figure-caption | #custom-id
+            Caption text.
+            ///
+            ''',
+            R'''
+            <figure id="custom-id">
+            <p>Paragraph</p>
+            <figcaption>
+            <p>Caption text.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_caption_inline_id_prepend(self):
+        """Test caption with inline shorthand ID and prepend marker."""
+
+        self.check_markdown(
+            R'''
+            Text
+            /// figure-caption | < #custom-prepend
+            Prepended caption.
+            ///
+            ''',
+            R'''
+            <figure id="custom-prepend">
+            <figcaption>
+            <p>Prepended caption.</p>
+            </figcaption>
+            <p>Text</p>
             </figure>
             ''',
             True
