@@ -225,8 +225,6 @@ gulp.task("js:build:rollup", async() => {
 
   return await rollupjs(
     [
-      `${config.folders.src}/js/material-extra-theme.js`,
-      `${config.folders.src}/js/material-extra-3rdparty.js`,
       `${config.folders.src}/js/extra-loader.js`
     ],
     {
@@ -253,7 +251,8 @@ gulp.task("html:watch", () => {
   gulp.watch("./docs/src/html/*.html", gulp.series("html:build", "mkdocs:update"))
 })
 
-gulp.task("js:build", gulp.series("js:build:rollup", "html:build", () => {
+// Add `html:build` if you have HTML files.`
+gulp.task("js:build", gulp.series("js:build:rollup", () => {
   return gulp.src(config.files.mkdocsSrc)
     .pipe(gulpif(config.revision, revReplace({
       manifest: gulp.src(`${config.folders.theme}/manifest*.json`, {allowEmpty: true}),
@@ -322,7 +321,7 @@ gulp.task("serve", gulp.series(
   gulp.parallel(
     "scss:watch",
     "js:watch",
-    "html:watch",
+    // "html:watch",
     "mkdocs:watch"
   )
 ))

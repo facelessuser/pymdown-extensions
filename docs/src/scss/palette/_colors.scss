@@ -13,6 +13,8 @@
   --md-code-title-bg-color: var(--md-code-bg-color);
   --md-code-inline-bg-color: var(--md-code-bg-color);
 
+  --md-tab-control-bg: var(--md-default-bg-color);
+
   --md-code-special-bg-color: #{color.adjust(hsl(0, 0%, 96%), $lightness: -5%)};
   --md-code-alternate-bg-color: var(--md-code-bg-color);
 
@@ -46,24 +48,8 @@
   --md-typeset-kbd-border-color: #{color_tools.shade(hsla(0, 100%, 100%, 1), 28%)};
   --md-typeset-kbd-accent-color: hsla(0, 100%, 100%, 1);
 
-  &[data-md-color-scheme="slate"] {
-    // Custom code colors
-    --md-code-link-bg-color: hsla(232, 15%, 15%, 1);
-    --md-code-link-accent-bg-color: var(--md-code-link-bg-color);
-    --md-code-special-bg-color: #{color.adjust(hsl(232, 15%, 15%), $lightness: 5%)};
-    --md-default-bg-color--trans: hsla(232,15%,15%, 0);
-
-    // List steps
-    --md-steps-border-color: hsla(225, 15%, 30%, 1);
-
-    // Keys colors
-    --md-typeset-kbd-color: var(--md-default-fg-color--lightest);
-    --md-typeset-kbd-border-color: #{color.adjust(rgb(46, 48, 62), $lightness: -9%)};
-    --md-typeset-kbd-accent-color: var(--md-default-fg-color--lighter);
-  }
-
   // Dark mode color changes
-  &[data-md-color-scheme="dracula"] {
+  &[data-md-color-scheme="slate"] {
     // Default color shades
     --md-default-fg-color:               #{color.adjust(dracula.$drac-fg, $alpha: -0.13)};
     --md-default-fg-color--light:        #{color.adjust(dracula.$drac-fg, $alpha: -0.46)};
@@ -73,11 +59,15 @@
     --md-shadow-z2:                      0 #{convert.px2rem(4px)} #{convert.px2rem(10px)} hsla(0, 0%, 0%, 0.3),
                                          0 0                      #{convert.px2rem(1px)}  hsla(0, 0%, 0%, 0.2);
 
-    --md-default-bg-color:               var(--md-default-bg-color--darkest);
-    --md-default-bg-color--light:        #{color.adjust(dracula.$drac-default-bg, $alpha: -0.3)};
-    --md-default-bg-color--lighter:      #{color.adjust(dracula.$drac-default-bg, $alpha: -0.7)};
-    --md-default-bg-color--lightest:     #{color.adjust(dracula.$drac-default-bg, $alpha: -0.88)};
-    --md-default-bg-color--trans:        #{color.adjust(dracula.$drac-default-bg, $alpha: -1)};
+    --md-footer-fg-color: var(--md-default-fg-color);
+
+    --md-default-bg-color:               var(--md-default-bg-color--ultra-dark);
+    --md-default-bg-color--light:        #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -15%), $alpha: -0.3)};
+    --md-default-bg-color--lighter:      #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -15%), $alpha: -0.7)};
+    --md-default-bg-color--lightest:     #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -15%), $alpha: -0.88)};
+    --md-default-bg-color--trans:        #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -15%), $alpha: -1)};
+
+    --md-tab-control-bg: var(--md-default-bg-color);
 
     // Dark specific colors
     --md-default-bg-color--dark:         #{color.adjust(dracula.$drac-default-bg, $lightness: -3%)};
@@ -95,7 +85,7 @@
     // Code colors
     --md-code-fg-color: #{dracula.$drac-fg};
     --md-code-bg-color: #{dracula.$drac-bg};
-    --md-code-title-bg-color: var(--md-default-bg-color--ultra-dark);
+    --md-code-title-bg-color: #{dracula.$drac-bg};
     --md-code-inline-bg-color: #{color.adjust(dracula.$drac-bg, $lightness: 5%)};
     --md-code-hl-operator-color: #{dracula.$drac-pink};
     --md-code-hl-punctuation-color: #{dracula.$drac-fg};
@@ -171,8 +161,8 @@
 ) {
 
   // Color palette
-  [data-md-color-scheme="dracula"][data-md-color-primary="#{$name}"],
-  [data-md-color-scheme="dracula"] :not([data-md-color-scheme])[data-md-color-primary="#{$name}"]
+  [data-md-color-scheme="slate"][data-md-color-primary="#{$name}"],
+  [data-md-color-scheme="slate"] :not([data-md-color-scheme])[data-md-color-primary="#{$name}"]
    {
 
     --md-primary-code-bg-color:         #{color.mix(dracula.$drac-bg, list.nth($colors, 1), 85%)};
@@ -209,8 +199,8 @@
 ) {
 
   // Color palette
-  [data-md-color-scheme="dracula"][data-md-color-accent="#{$name}"],
-  [data-md-color-scheme="dracula"] :not([data-md-color-scheme])[data-md-color-primary="#{$name}"] {
+  [data-md-color-scheme="slate"][data-md-color-accent="#{$name}"],
+  [data-md-color-scheme="slate"] :not([data-md-color-scheme])[data-md-color-primary="#{$name}"] {
     --md-code-link-accent-bg-color:    #{color.mix($color, dracula.$drac-bg, 15%)};
     --md-accent-fg-color:              hsla(#{convert.hex2hsl($color)}, 1);
     --md-accent-fg-color--transparent: hsla(#{convert.hex2hsl($color)}, 0.1);

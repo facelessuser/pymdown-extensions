@@ -33,7 +33,6 @@ mjx-container:not([display]) {
   }
 }
 
-
 /* Instant mode in the Material theme wipes out menu CSS and MathJax has no easy way of reinserting it */
 
 /* stylelint-disable */
@@ -78,8 +77,7 @@ mjx-container:not([display]) {
 .CtxtMenu_SelectionDivider {  clear: both; border-top: 2px solid #000000;}
 .CtxtMenu_Menu .CtxtMenu_MenuClose {  top:-10px; left:-10px}
 
-[data-md-color-scheme="slate"],
-[data-md-color-scheme="dracula"] {
+[data-md-color-scheme="slate"] {
   .CtxtMenu_InfoSignature input,
   .CtxtMenu_InfoContent pre {
     color: rgb(0, 0, 0);

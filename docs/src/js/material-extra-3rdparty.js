@@ -23,7 +23,7 @@ if (!('mermaidConfig' in window)) {
   // Our loader looks for `mermaidConfig` and will load the the appropriate
   // configuration based on our current scheme: light, dark, etc.
   window.mermaidConfig = {
-    dracula: {
+    slate: {
       startOnLoad: false,
       theme: "base",
       themeCSS: "\
@@ -266,36 +266,6 @@ if (!('mermaidConfig' in window)) {
     default: {
       startOnLoad: false,
       theme: "default",
-      flowchart: {
-        htmlLabels: false,
-        useMaxWidth: false
-      },
-      er: {
-        useMaxWidth: false
-      },
-      sequence: {
-        useMaxWidth: false,
-        noteFontWeight: "14px",
-        actorFontSize: "14px",
-        messageFontSize: "16px"
-      },
-      journey: {
-        useMaxWidth: false
-      },
-      pie: {
-        useMaxWidth: false
-      },
-      gantt: {
-        useMaxWidth: false
-      },
-      gitGraph: {
-        useMaxWidth: false
-      }
-    },
-
-    slate: {
-      startOnLoad: false,
-      theme: "dark",
       flowchart: {
         htmlLabels: false,
         useMaxWidth: false

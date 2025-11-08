@@ -90,7 +90,7 @@ export default async className => {
   try {
     scheme = document.querySelector("[data-md-color-scheme]").getAttribute("data-md-color-scheme")
   } catch (err) {
-    scheme = "default"
+    scheme = "slate"
   }
   const config = (typeof mermaidConfig === "undefined") ?
     defaultConfig :

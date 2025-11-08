@@ -13,9 +13,30 @@ theme:
   icon:
     logo: material/book-open-page-variant
   palette:
-    scheme: dracula
-    primary: deep purple
-    accent: deep purple
+
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+
+    # Palette toggle for light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: deep purple
+      accent: deep purple
+      toggle:
+        icon: lucide/sun
+        name: Switch to dark mode
+
+    # Palette toggle for dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: deep purple
+      accent: deep purple
+      toggle:
+        icon: lucide/moon
+        name: Switch to light mode
+
   font:
     text: Roboto
     code: Roboto Mono
@@ -240,16 +261,16 @@ extra:
       link: https://github.com/facelessuser
 extra_css:
   # - https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.css
-  - assets/pymdownx-extras/extra-387ece14f1.css
+  - assets/pymdownx-extras/extra-28f9655a1b.css
 extra_javascript:
-  - https://cdn.jsdelivr.net/npm/mermaid@11.5.0/dist/mermaid.min.js
+  - assets/pymdownx-extras/extra-loader-5Vq_g83X.js
+  - https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.min.js
   # - https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.js
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-  - assets/pymdownx-extras/extra-loader-CI415qCE.js
 
-plugins:
-  - search:
-  - git-revision-date-localized:
-      fallback_to_build_date: true
-  - minify:
-      minify_html: true
+# plugins:
+#   - search:
+#   - git-revision-date-localized:
+#       fallback_to_build_date: true
+#   - minify:
+#       minify_html: true
