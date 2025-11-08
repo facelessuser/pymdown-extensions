@@ -136,6 +136,7 @@ Validators
 Virtualenv
 Waylan
 YAML
+Zensical
 accessor
 backoff
 backrefs
