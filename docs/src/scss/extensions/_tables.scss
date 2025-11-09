@@ -1,0 +1,7 @@
+@use "../utilities/convert";
+
+.md-typeset table:not([class]) {
+  th {
+    border-bottom: convert.px2rem(2px) solid var(--md-primary-fg-color);
+  }
+}

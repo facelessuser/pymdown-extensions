@@ -11,7 +11,7 @@ html {
 
 // Header
 .md-header {
-  border-bottom: convert.px2rem(1px) solid var(--md-primary-fg-color);
+  border-bottom: convert.px2rem(2px) solid var(--md-primary-fg-color);
 }
 
 .md-container .md-tabs {
@@ -32,7 +32,7 @@ html {
   }
 
   &-meta {
-    border-top: convert.px2rem(1px) solid var(--md-primary-fg-color);
+    border-top: convert.px2rem(2px) solid var(--md-primary-fg-color);
   }
 }
 
