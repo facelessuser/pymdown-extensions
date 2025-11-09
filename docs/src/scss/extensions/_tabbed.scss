@@ -5,11 +5,13 @@
     background: none;
 
     button {
-      background: var(--md-tab-control-bg);
+      color: var(--md-default-fg-color--light);
+      background-color: var(--md-tab-control-bg);
+      box-shadow: var(--md-shadow-z2);
 
       &:hover {
         color: var(--md-default-bg-color);
-        background: var(--md-default-fg-color);
+        background: var(--md-primary-fg-color);
       }
     }
 }
@@ -18,11 +20,13 @@
     background: none;
 
     button {
-      background: var(--md-tab-control-bg);
+      color: var(--md-default-fg-color--light);
+      background-color: var(--md-tab-control-bg);
+      box-shadow: var(--md-shadow-z2);
 
       &:hover {
         color: var(--md-default-bg-color);
-        background: var(--md-default-fg-color);
+        background: var(--md-primary-fg-color);
       }
     }
 }
