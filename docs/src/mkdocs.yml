@@ -46,6 +46,7 @@ theme:
     - navigation.top
     - navigation.instant
     - navigation.indexes
+    - navigation.footer
     - toc.follow
     - content.tabs.link
     - search.share

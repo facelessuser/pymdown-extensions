@@ -7,24 +7,38 @@
 
 :root > * {
   // Custom code colors
-  --md-code-link-bg-color: hsla(0, 0%, 96%, 1);
-  --md-code-link-accent-bg-color: var(--md-code-link-bg-color);
   --md-default-bg-color--trans: rgb(100%, 100%, 100%, 0);
-  --md-code-title-bg-color: var(--md-code-bg-color);
-  --md-code-inline-bg-color: var(--md-code-bg-color);
-
   --md-tab-control-bg: var(--md-default-bg-color);
 
-  --md-code-special-bg-color: #{color.adjust(hsl(0, 0%, 96%), $lightness: -5%)};
-  --md-code-alternate-bg-color: var(--md-code-bg-color);
+  // Code colors
+  --md-code-fg-color: #{dracula.$alucard-fg};
+  --md-code-bg-color: #{dracula.$alucard-bg};
+  --md-code-title-bg-color: #{dracula.$alucard-bg};
+  --md-code-inline-bg-color: #{color.adjust(dracula.$alucard-bg, $lightness: -2%)};
+  --md-code-hl-operator-color: #{dracula.$alucard-pink};
+  --md-code-hl-punctuation-color: #{dracula.$alucard-fg};
+  --md-code-hl-string-color: #{dracula.$alucard-yellow};
+  --md-code-hl-special-color: #{dracula.$alucard-purple};
+  --md-code-hl-number-color: #{dracula.$alucard-purple};
+  --md-code-hl-keyword-color: #{dracula.$alucard-pink};
+  --md-code-hl-name-color: #{dracula.$alucard-fg};
+  --md-code-hl-constant-color: #{dracula.$alucard-purple};
+  --md-code-hl-function-color: #{dracula.$alucard-green};
+  --md-code-hl-comment-color: #{dracula.$alucard-comment};
+  --md-code-hl-variable-color: #{dracula.$alucard-orange};
+  --md-code-hl-generic-color: #{dracula.$alucard-comment};
+  --md-code-hl-color: #{dracula.$alucard-selection};
+  --md-code-hl-color--light: #{dracula.$alucard-highlight};
 
-  --md-code-hl-punctuation-color: var(--md-code-fg-color);
-  --md-code-hl-namespace-color: var(--md-code-fg-color);
+  // Custom code colors
+  --md-code-hl-entity-color: #{dracula.$alucard-green};
+  --md-code-hl-tag-color: #{dracula.$alucard-pink};
+  --md-code-hl-namespace-color: #{dracula.$alucard-fg};
+  --md-code-hl-builtin-color: #{dracula.$alucard-cyan};
+  --md-code-hl-class-color: #{dracula.$alucard-cyan};
 
-  --md-code-hl-entity-color: var(--md-code-hl-keyword-color);
-  --md-code-hl-tag-color: var(--md-code-hl-keyword-color);
-  --md-code-hl-builtin-color: var(--md-code-hl-constant-color);
-  --md-code-hl-class-color: var(--md-code-hl-function-color);
+  --md-code-special-bg-color: #{color.adjust(dracula.$alucard-bg, $lightness: -5%)};
+  --md-code-alternate-bg-color: #{color_tools.tint(dracula.$alucard-bg, 10%)};
 
   // List steps
   --md-steps-bg-color: var(--md-code-bg-color);
@@ -61,11 +75,11 @@
 
     --md-footer-fg-color: var(--md-default-fg-color);
 
-    --md-default-bg-color:               var(--md-default-bg-color--ultra-dark);
-    --md-default-bg-color--light:        #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -15%), $alpha: -0.3)};
-    --md-default-bg-color--lighter:      #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -15%), $alpha: -0.7)};
-    --md-default-bg-color--lightest:     #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -15%), $alpha: -0.88)};
-    --md-default-bg-color--trans:        #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -15%), $alpha: -1)};
+    --md-default-bg-color:               var(--md-default-bg-color--darkest);
+    --md-default-bg-color--light:        #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -9%), $alpha: -0.3)};
+    --md-default-bg-color--lighter:      #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -9%), $alpha: -0.7)};
+    --md-default-bg-color--lightest:     #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -9%), $alpha: -0.88)};
+    --md-default-bg-color--trans:        #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -9%), $alpha: -1)};
 
     --md-tab-control-bg: var(--md-default-bg-color);
 
@@ -96,10 +110,11 @@
     --md-code-hl-name-color: #{dracula.$drac-fg};
     --md-code-hl-constant-color: #{dracula.$drac-purple};
     --md-code-hl-function-color: #{dracula.$drac-green};
-    --md-code-hl-comment-color: #{dracula.$drac-blue};
+    --md-code-hl-comment-color: #{dracula.$drac-comment};
     --md-code-hl-variable-color: #{dracula.$drac-orange};
-    --md-code-hl-generic-color: #{dracula.$drac-blue};
+    --md-code-hl-generic-color: #{dracula.$drac-comment};
     --md-code-hl-color: #{dracula.$drac-selection};
+    --md-code-hl-color--light: #{dracula.$drac-highlight};
 
     // Custom code colors
     --md-code-hl-entity-color: #{dracula.$drac-green};
@@ -110,7 +125,6 @@
 
     --md-code-special-bg-color: #{color.adjust(dracula.$drac-bg, $lightness: -5%)};
     --md-code-alternate-bg-color: #{color_tools.tint(dracula.$drac-bg, 10%)};
-    --md-code-link-bg-color: #{color.mix(dracula.$drac-cyan, dracula.$drac-bg, 15%)};
 
     // List steps
     --md-steps-border-color: #{color.adjust(dracula.$drac-bg, $lightness: 10%)};
@@ -123,12 +137,12 @@
 
     // Progressbar colors
     --md-progress-stripe: var(--md-default-bg-color--lightest);
-    --md-progress-100: #{dracula.$drac-green};
-    --md-progress-80: #{dracula.$drac-light-green};
+    --md-progress-100: #{color.adjust(dracula.$drac-green, $lightness: -10%)};
+    --md-progress-80: #{dracula.$drac-green};
     --md-progress-60: #{dracula.$drac-yellow};
     --md-progress-40: #{dracula.$drac-orange};
-    --md-progress-20: #{dracula.$drac-pink};
-    --md-progress-0: #{dracula.$drac-red};
+    --md-progress-20: #{dracula.$drac-red};
+    --md-progress-0: #{dracula.$drac-pink};
 
     // Keys colors
     --md-typeset-kbd-color: var(--md-default-fg-color--lightest);

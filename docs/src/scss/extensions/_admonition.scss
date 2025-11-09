@@ -4,37 +4,34 @@
 @use "../palette/material_color";
 @use "../palette/dracula";
 
-.md-typeset .admonition {
-  border-width: 0;
-  border-left-width: 4px;
-}
-
 $new-admonitions: (
   settings config: dracula.$drac-pink   material_color.$clr-purple-a700 "@mdi/svg/svg/cog.svg",
   new:             dracula.$drac-yellow material_color.$clr-yellow-a700 "@mdi/svg/svg/alert-decagram.svg"
 ) !default;
 
 $old-admonitions: (
-  note:     dracula.$drac-dark-yellow material_color.$clr-blue-a200,
-  abstract: dracula.$drac-cyan        material_color.$clr-light-blue-a400,
-  info:     dracula.$drac-light-blue  material_color.$clr-cyan-a700,
-  tip:      dracula.$drac-teal        material_color.$clr-teal-a700,
-  success:  dracula.$drac-green       material_color.$clr-green-a700,
-  question: dracula.$drac-light-green material_color.$clr-light-green-a700,
-  warning:  dracula.$drac-orange      material_color.$clr-orange-a400,
-  failure:  dracula.$drac-dark-red    material_color.$clr-red-a200,
-  danger:   dracula.$drac-red         material_color.$clr-red-a400,
-  bug:      dracula.$drac-dark-pink   material_color.$clr-pink-a400,
-  example:  dracula.$drac-purple      material_color.$clr-deep-purple-a200,
-  quote:    dracula.$drac-grey        material_color.$clr-grey
+  note:     dracula.$drac-blue                                                   material_color.$clr-blue-a200,
+  abstract: color.mix(dracula.$drac-blue, dracula.$drac-cyan, $method: oklab)    material_color.$clr-light-blue-a400,
+  info:     dracula.$drac-cyan                                                   material_color.$clr-cyan-a700,
+  tip:      color.mix(dracula.$drac-cyan, dracula.$drac-green, $method: oklab)   material_color.$clr-teal-a700,
+  success:  dracula.$drac-green                                                  material_color.$clr-green-a700,
+  question: color.mix(dracula.$drac-green, dracula.$drac-orange, $method: oklab) material_color.$clr-light-green-a700,
+  warning:  dracula.$drac-orange                                                 material_color.$clr-orange-a400,
+  failure:  color.mix(dracula.$drac-orange, dracula.$drac-red, $method: oklab)   material_color.$clr-red-a200,
+  danger:   dracula.$drac-red                                                    material_color.$clr-red-a400,
+  bug:      color.mix(dracula.$drac-red, dracula.$drac-purple, $method: oklab)   material_color.$clr-pink-a400,
+  example:  dracula.$drac-purple                                                 material_color.$clr-deep-purple-a200,
+  quote:    dracula.$drac-grey                                                   material_color.$clr-grey
 ) !default;
 
 /* Style new admonitions with dark or light colors */
 :root > * {
-  --md-admonition-bg-color: transparent;
+  --md-admonition-icon-color: #{dracula.$alucard-blue};
+  --md-admonition-bg-color: #{color.mix(dracula.$alucard-blue, dracula.$alucard-bg, $weight: 12%, $method: oklab)};
 
   &[data-md-color-scheme="slate"] {
-    --md-admonition-icon-color: dracula.$drac-dark-yellow;
+    --md-admonition-icon-color: #{dracula.$drac-blue};
+    --md-admonition-bg-color: #{color.mix(dracula.$drac-blue, dracula.$drac-bg, $weight: 12%, $method: oklab)};
   }
 
   @each $names, $prop in $new-admonitions {
@@ -44,12 +41,12 @@ $old-admonitions: (
 
     & {
       --md-admonition-icon--#{$name}: svg-load("#{list.nth($prop, 3)}");
-      --md-admonition-bg-color--#{$name}: #{color.mix($tint2, #FFFFFF, $weight: 20%, $method: oklab)};
+      --md-admonition-bg-color--#{$name}: #{color.mix($tint2, dracula.$alucard-bg, $weight: 12%, $method: oklab)};
       --md-admonition-icon-color--#{$name}: #{$tint2};
     }
 
     &[data-md-color-scheme="slate"] {
-      --md-admonition-bg-color--#{$name}: #{color.mix($tint, dracula.$drac-bg, $weight: 20%, $method: oklab)};
+      --md-admonition-bg-color--#{$name}: #{color.mix($tint, dracula.$drac-bg, $weight: 12%, $method: oklab)};
       --md-admonition-icon-color--#{$name}: #{$tint};
     }
   }
@@ -60,21 +57,23 @@ $old-admonitions: (
     $name: list.nth($names, 1);
 
     & {
-      --md-admonition-bg-color--#{$name}: #{color.mix($tint2, #FFFFFF, $weight: 20%, $method: oklab)};
+      --md-admonition-bg-color--#{$name}: #{color.mix($tint2, dracula.$alucard-bg, $weight: 12%, $method: oklab)};
       --md-admonition-icon-color--#{$name}: #{$tint2};
     }
 
     &[data-md-color-scheme="slate"] {
-      --md-admonition-bg-color--#{$name}: #{color.mix($tint, dracula.$drac-bg, $weight: 20%, $method: oklab)};
+      --md-admonition-bg-color--#{$name}: #{color.mix($tint, dracula.$drac-bg, $weight: 12%, $method: oklab)};
       --md-admonition-icon-color--#{$name}: #{$tint};
     }
   }
 }
 
 /* Dark mode changes */
-[data-md-color-scheme="slate"] .md-typeset .admonition {
-  background: var(--md-admonition-icon-color--note);
+.md-typeset .admonition {
   --md-tab-control-bg: var(--md-admonition-bg-color--note);
+  background: var(--md-admonition-bg-color--note);
+  border-width: 0;
+  border-left-width: 4px;
 
   > .admonition-title {
     &::before {
