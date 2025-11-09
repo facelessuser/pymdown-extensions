@@ -33,6 +33,10 @@
     }
 }
 
+.js .md-typeset .tabbed-labels::before {
+  background-color: var(--md-accent-fg-color);
+}
+
 /* Style code blocks to fill full tab,
    but otherwise, pad content. */
 .md-typeset {
