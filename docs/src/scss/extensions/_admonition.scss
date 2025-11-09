@@ -27,11 +27,12 @@ $old-admonitions: (
 /* Style new admonitions with dark or light colors */
 :root > * {
   --md-admonition-icon-color: #{dracula.$alucard-blue};
-  --md-admonition-bg-color: #{color.mix(dracula.$alucard-blue, dracula.$alucard-bg, $weight: 12%, $method: oklab)};
+  --md-admonition-bg-color: #{color.change(dracula.$alucard-blue, $alpha: 0.255)};
+  // --md-admonition-bg-color: #{color.mix(dracula.$alucard-blue, dracula.$alucard-bg, $weight: 12%, $method: oklab)};
 
   &[data-md-color-scheme="slate"] {
     --md-admonition-icon-color: #{dracula.$drac-blue};
-    --md-admonition-bg-color: #{color.mix(dracula.$drac-blue, dracula.$drac-bg, $weight: 12%, $method: oklab)};
+    --md-admonition-bg-color: #{color.change(dracula.$drac-blue, $alpha: 0.102)};
   }
 
   @each $names, $prop in $new-admonitions {
@@ -41,12 +42,12 @@ $old-admonitions: (
 
     & {
       --md-admonition-icon--#{$name}: svg-load("#{list.nth($prop, 3)}");
-      --md-admonition-bg-color--#{$name}: #{color.mix($tint2, dracula.$alucard-bg, $weight: 12%, $method: oklab)};
+      --md-admonition-bg-color--#{$name}: #{color.change($tint2, $alpha: 0.102)};
       --md-admonition-icon-color--#{$name}: #{$tint2};
     }
 
     &[data-md-color-scheme="slate"] {
-      --md-admonition-bg-color--#{$name}: #{color.mix($tint, dracula.$drac-bg, $weight: 12%, $method: oklab)};
+      --md-admonition-bg-color--#{$name}: #{color.change($tint, $alpha: 0.102)};
       --md-admonition-icon-color--#{$name}: #{$tint};
     }
   }
@@ -57,12 +58,12 @@ $old-admonitions: (
     $name: list.nth($names, 1);
 
     & {
-      --md-admonition-bg-color--#{$name}: #{color.mix($tint2, dracula.$alucard-bg, $weight: 12%, $method: oklab)};
+      --md-admonition-bg-color--#{$name}: #{color.change($tint2, $alpha: 0.102)};
       --md-admonition-icon-color--#{$name}: #{$tint2};
     }
 
     &[data-md-color-scheme="slate"] {
-      --md-admonition-bg-color--#{$name}: #{color.mix($tint, dracula.$drac-bg, $weight: 12%, $method: oklab)};
+      --md-admonition-bg-color--#{$name}: #{color.change($tint, $alpha: 0.102)};
       --md-admonition-icon-color--#{$name}: #{$tint};
     }
   }
@@ -70,7 +71,6 @@ $old-admonitions: (
 
 /* Dark mode changes */
 .md-typeset .admonition {
-  --md-tab-control-bg: var(--md-admonition-bg-color--note);
   background: var(--md-admonition-bg-color--note);
   border-width: 0;
   border-left-width: 4px;
@@ -93,7 +93,6 @@ $old-admonitions: (
 
   // Define base class
   .md-typeset .admonition.#{$name} {
-    --md-tab-control-bg: var(--md-admonition-bg-color--#{$name});
     background: var(--md-admonition-bg-color--#{$name});
 
     // Define base class
@@ -116,7 +115,6 @@ $old-admonitions: (
 
     // Define base class
   .md-typeset .admonition.#{$name} {
-    --md-tab-control-bg: var(--md-admonition-icon-color--#{$name});
     background: var(--md-admonition-bg-color--#{$name});
 
     > .admonition-title {

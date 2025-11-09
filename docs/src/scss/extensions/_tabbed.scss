@@ -2,11 +2,33 @@
 @use "../utilities/convert";
 
 .md-typeset .tabbed-control {
-    background: linear-gradient(to right, var(--md-tab-control-bg) 60%, transparent);
+    background: none;
+    mask: linear-gradient(to right, #000000 60%, transparent);
+    backdrop-filter: blur(1px);
+
+    button {
+      background: var(--md-tab-control-bg);
+
+      &:hover {
+        color: var(--md-default-bg-color);
+        background: var(--md-default-fg-color);
+      }
+    }
 }
 
 .md-typeset .tabbed-control--next {
-    background: linear-gradient(to left, var(--md-tab-control-bg) 60%, transparent);
+    background: none;
+    mask: linear-gradient(to left, #000000 60%, transparent);
+    backdrop-filter: blur(1px);
+
+    button {
+      background: var(--md-tab-control-bg);
+
+      &:hover {
+        color: var(--md-default-bg-color);
+        background: var(--md-default-fg-color);
+      }
+    }
 }
 
 /* Style code blocks to fill full tab,

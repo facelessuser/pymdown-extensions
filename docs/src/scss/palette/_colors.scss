@@ -8,7 +8,7 @@
 :root > * {
   // Custom code colors
   --md-default-bg-color--trans: rgb(100%, 100%, 100%, 0);
-  --md-tab-control-bg: var(--md-default-bg-color);
+  --md-tab-control-bg: rgb(220 220 220 / 85%);
 
   // Code colors
   --md-code-fg-color: #{dracula.$alucard-fg};
@@ -81,7 +81,7 @@
     --md-default-bg-color--lightest:     #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -9%), $alpha: -0.88)};
     --md-default-bg-color--trans:        #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -9%), $alpha: -1)};
 
-    --md-tab-control-bg: var(--md-default-bg-color);
+    --md-tab-control-bg: rgb(107 107 107 / 85%);
 
     // Dark specific colors
     --md-default-bg-color--dark:         #{color.adjust(dracula.$drac-default-bg, $lightness: -3%)};
