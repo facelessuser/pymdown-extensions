@@ -3,8 +3,6 @@
 
 .md-typeset .tabbed-control {
     background: none;
-    mask: linear-gradient(to right, #000000 60%, transparent);
-    backdrop-filter: blur(1px);
 
     button {
       background: var(--md-tab-control-bg);
@@ -18,8 +16,6 @@
 
 .md-typeset .tabbed-control--next {
     background: none;
-    mask: linear-gradient(to left, #000000 60%, transparent);
-    backdrop-filter: blur(1px);
 
     button {
       background: var(--md-tab-control-bg);
