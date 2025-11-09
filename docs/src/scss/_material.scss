@@ -9,34 +9,6 @@ html {
   color: var(--md-primary-fg-color);
 }
 
-/* Dark mode changes */
-[data-md-color-scheme="slate"] {
-
-  --md-text-color: var(--md-default-fg-color);
-  background-color: var(--md-default-bg-color);
-
-  // Footer color shades
-  --md-footer-bg-color:                transparent;
-  --md-footer-bg-color--dark:          var(--md-default-bg-color--darkest);
-
-  // Header colors
-  --md-header-fg-color: var(--md-text-color);
-  --md-header-bg-color: var(--md-default-bg-color--darkest);
-
-  .md-top {
-    background-color: var(--md-default-bg-color--dark);
-
-    &:hover {
-      background-color: var(--md-primary-fg-color);
-    }
-  }
-
-  // Announcements
-  [data-md-component="announce"] {
-    background-color: var(--md-default-bg-color--ultra-dark);
-  }
-}
-
 // Header
 .md-header {
   border-bottom: convert.px2rem(1px) solid var(--md-primary-fg-color);

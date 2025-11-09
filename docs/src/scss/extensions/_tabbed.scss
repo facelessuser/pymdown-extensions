@@ -6,8 +6,9 @@
 
     button {
       color: var(--md-default-fg-color--light);
-      background-color: var(--md-tab-control-bg);
+      background-color: var(--md-default-bg-color--light);
       box-shadow: var(--md-shadow-z2);
+      backdrop-filter: blur(convert.px2rem(8px));
 
       &:hover {
         color: var(--md-default-bg-color);
@@ -21,8 +22,9 @@
 
     button {
       color: var(--md-default-fg-color--light);
-      background-color: var(--md-tab-control-bg);
+      background-color: var(--md-default-bg-color--light);
       box-shadow: var(--md-shadow-z2);
+      backdrop-filter: blur(convert.px2rem(8px));
 
       &:hover {
         color: var(--md-default-bg-color);
