@@ -2,7 +2,6 @@
 
    Minimize JavaScript.
    Convert SASS to CSS and minify.
-   Start MkDocs server
 */
 import Promise from "promise"
 import yargs from "yargs"
@@ -13,7 +12,6 @@ import * as sassCompiler from "sass"
 import postcss from "gulp-postcss"
 import scss from "postcss-scss"
 import autoprefixer from "autoprefixer"
-import childProcess from "child_process"
 import gulpif from "gulp-if"
 import concat from "gulp-concat"
 import mqpacker from "css-mqpacker"
@@ -26,7 +24,6 @@ import rev from "gulp-rev"
 import revReplace from "gulp-rev-replace"
 import vinylPaths from "vinyl-paths"
 import {deleteAsync, deleteSync} from "del"
-import touch from "gulp-touch-fd"
 import path from "path"
 import inlineSvg from "postcss-inline-svg"
 import cssSvgo from "postcss-svgo"
@@ -42,9 +39,9 @@ const args = yargs(hideBin(process.argv))
   .boolean("lint")
   .boolean("clean")
   .boolean("sourcemaps")
-  .boolean("buildmkdocs")
+  .boolean("buildzensical")
   .boolean("revision")
-  .default("mkdocs", "mkdocs")
+  .default("zensical", "zensical")
   .argv
 
 // ------------------------------
@@ -63,10 +60,10 @@ const config = {
       "./docs/theme/assets/pymdownx-extras/*.js.map"
     ],
     gulp: "gulpfile.babel.mjs",
-    mkdocsSrc: "./docs/src/mkdocs.yml"
+    zensicalSrc: "./docs/src/zensical.yml"
   },
   folders: {
-    mkdocs: "./site",
+    zensical: "./site",
     theme: "./docs/theme/assets/pymdownx-extras",
     src: "./docs/src"
   },
@@ -88,9 +85,7 @@ const config = {
   },
   clean: args.clean,
   sourcemaps: args.sourcemaps,
-  buildmkdocs: args.buildmkdocs,
-  revision: args.revision,
-  mkdocsCmd: args.mkdocs
+  revision: args.revision
 }
 
 const rollupjs = async(sources, options) => {
@@ -193,7 +188,7 @@ gulp.task("scss:build:sass", () => {
 })
 
 gulp.task("scss:build", gulp.series("scss:build:sass", () => {
-  return gulp.src(config.files.mkdocsSrc)
+  return gulp.src(config.files.zensicalSrc)
     .pipe(gulpif(config.revision, revReplace({
       manifest: gulp.src(`${config.folders.theme}/manifest*.json`, {allowEmpty: true}),
       replaceInExtensions: [".yml"]
@@ -210,10 +205,6 @@ gulp.task("scss:lint", () => {
           {formatter: "string", console: true}
         ]
       }))
-})
-
-gulp.task("scss:watch", () => {
-  gulp.watch(config.files.scss, gulp.series("scss:build", "mkdocs:update"))
 })
 
 gulp.task("scss:clean", () => {
@@ -247,13 +238,9 @@ gulp.task("html:build", () => {
     .pipe(gulp.dest("./docs/theme/partials/"))
 })
 
-gulp.task("html:watch", () => {
-  gulp.watch("./docs/src/html/*.html", gulp.series("html:build", "mkdocs:update"))
-})
-
 // Add `html:build` if you have HTML files.`
 gulp.task("js:build", gulp.series("js:build:rollup", () => {
-  return gulp.src(config.files.mkdocsSrc)
+  return gulp.src(config.files.zensicalSrc)
     .pipe(gulpif(config.revision, revReplace({
       manifest: gulp.src(`${config.folders.theme}/manifest*.json`, {allowEmpty: true}),
       replaceInExtensions: [".yml"]
@@ -268,68 +255,24 @@ gulp.task("js:lint", () => {
     .pipe(eslint.failAfterError())
 })
 
-gulp.task("js:watch", () => {
-  gulp.watch(config.files.jsSrc, gulp.series("js:build", "mkdocs:update"))
-})
-
 gulp.task("js:clean", () => {
   return deleteAsync(config.files.js)
 })
 
 // ------------------------------
-// MkDocs
+// Zensical
 // ------------------------------
-gulp.task("mkdocs:watch", () => {
-  gulp.watch(config.files.mkdocsSrc, gulp.series("mkdocs:update"))
-})
-
-gulp.task("mkdocs:update", () => {
-  return gulp.src(config.files.mkdocsSrc)
-    .pipe(gulp.dest("."))
-    .pipe(touch())
-})
-
-gulp.task("mkdocs:build", () => {
-  return new Promise((resolve, reject) => {
-    const cmdParts = (`${config.mkdocsCmd} build`).split(/ +/)
-    const cmd = cmdParts[0]
-    const cmdArgs = cmdParts.slice(1, cmdParts.length - 1)
-
-    const proc = childProcess.spawnSync(cmd, cmdArgs)
-    if (proc.status)
-      reject(proc.stderr.toString())
-    else
-      resolve()
-  })
-})
-
-gulp.task("mkdocs:clean", () => {
-  return deleteAsync(config.folders.mkdocs)
+gulp.task("zensical:clean", () => {
+  return deleteAsync(config.folders.zensical)
 })
 
 // ------------------------------
 // Main entry points
 // ------------------------------
-gulp.task("serve", gulp.series(
-  // Clean
-  "scss:clean",
-  "js:clean",
-  // Build JS and CSS
-  "js:build",
-  "scss:build",
-  // Watch for changes and start mkdocs
-  gulp.parallel(
-    "scss:watch",
-    "js:watch",
-    // "html:watch",
-    "mkdocs:watch"
-  )
-))
-
 gulp.task("clean", gulp.series(
   "scss:clean",
   "js:clean",
-  "mkdocs:clean"
+  "zensical:clean"
 ))
 
 gulp.task("lint", gulp.series(
@@ -345,8 +288,6 @@ gulp.task("build", gulp.series(
   "scss:build",
   [
     // Lint
-    config.lint.enabled ? "lint" : false,
-    // Build Mkdocs
-    config.buildmkdocs ? "mkdocs:build" : false
+    config.lint.enabled ? "lint" : false
   ].filter(t => t)
 ))

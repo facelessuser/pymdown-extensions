@@ -13,7 +13,7 @@ theme:
   icon:
     logo: material/book-open-page-variant
   palette:
-
+    # Palette toggle for system
     - media: "(prefers-color-scheme)"
       toggle:
         icon: material/brightness-auto
@@ -36,7 +36,6 @@ theme:
       toggle:
         icon: lucide/moon
         name: Switch to light mode
-
   font:
     text: Roboto
     code: Roboto Mono
@@ -260,6 +259,7 @@ extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/facelessuser
+
 extra_css:
   # - https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.css
   - assets/pymdownx-extras/extra-2a1405f331.css
@@ -268,10 +268,3 @@ extra_javascript:
   - https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.min.js
   # - https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.js
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-
-# plugins:
-#   - search:
-#   - git-revision-date-localized:
-#       fallback_to_build_date: true
-#   - minify:
-#       minify_html: true
