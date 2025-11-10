@@ -2,7 +2,6 @@ API
 Accessors
 Apr
 Arithmatex
-Arithmatex's
 Aspell
 AttrList
 Backoff
@@ -16,7 +15,6 @@ CVE
 Changelog
 Cloudflare
 CodeHilite
-CodeHilite's
 CodePen
 CommonMark
 CriticMarkup
@@ -31,7 +29,6 @@ ElementTree
 Emmet
 Emoji
 EmojiOne
-EmojiOne's
 Esc
 EscapeAll
 ExtraRawHTML
@@ -42,21 +39,15 @@ GFM
 GIF
 Gantt
 Gemoji
-Gemoji's
 Gendered
 GitHub
-GitHub's
 GitHubEmoji
 GitLab
-GitLab's
 Gitter
-Gruber's
 HeaderAnchor
-HeaderAnchor's
 Hunspell
 Inline
 InlineHilite
-InlineHilite's
 JPEG
 JSON
 Jan
@@ -69,7 +60,6 @@ LaTeX
 Limberg
 MERCHANTABILITY
 MagicLink
-MagicLink's
 Malus
 Mar
 MathJax
@@ -87,21 +77,20 @@ PHP
 PNG
 PNGs
 Pandoc
-Pandoc's
 Parsers
 PathConverter
-PathConverter's
 PathLike
 PlainHTML
 Pomaceous
 Postprocessor
 ProgressBar
+EmojiOne
 PyMdown
 PyPI
 PyYAML
 PyYaml
-PyYaml's
 Pygments
+Gruber
 Pymdownx
 Reindent
 Rosaceae
@@ -126,8 +115,6 @@ Tox
 Treeprocessor
 Treeprocessors
 Twemoji
-Twemoji's
-Twitter's
 UML
 UTF
 Uml
@@ -172,7 +159,6 @@ eslint
 etree
 facelessuser
 formatter
-formatter's
 formatters
 frontmatter
 gantt
@@ -180,7 +166,6 @@ gemoji
 gfm
 gforcada
 github
-highlighter's
 hostnames
 html
 incrementing
@@ -196,7 +181,6 @@ jQuery
 js
 kbd
 keymap
-lexer's
 linkafies
 linter
 lowercased
@@ -214,7 +198,6 @@ ned
 nl
 octocat
 online
-parser's
 parsers
 plugin
 plugins
@@ -279,7 +262,6 @@ tooltips
 tox
 uc
 un
-underscore's
 unescaping
 unicode
 unindented

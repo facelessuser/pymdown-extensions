@@ -12,6 +12,11 @@ matrix:
       - '.md-social__link'
       - 'span.keys'
       - '.arithmatex, .md-nav__link, .md-footer-custom-text, .md-source__repository, .headerlink, .md-icon'
+  - pyspelling.filters.context:
+      context_visible_first: true
+      delimiters:
+      - open: '(?<=\w)''s(?!\w)'
+        close: '\b'
   - pyspelling.filters.url:
   sources:
   - site/**/*.html
@@ -44,6 +49,11 @@ matrix:
       - alt
       ignores:
       - ':matches(code, pre)'
+  - pyspelling.filters.context:
+      context_visible_first: true
+      delimiters:
+      - open: '(?<=\w)''s(?!\w)'
+        close: '\b'
   - pyspelling.filters.url:
 
 - name: javascript
@@ -63,6 +73,11 @@ matrix:
       # Ignore text between inline back ticks
       - open: '(?P<open>`+)'
         close: '(?P=open)'
+  - pyspelling.filters.context:
+      context_visible_first: true
+      delimiters:
+      - open: '(?<=\w)''s(?!\w)'
+        close: '\b'
   - pyspelling.filters.url:
   default_encoding: utf-8
   sources:
@@ -105,6 +120,11 @@ matrix:
       # Ignore text between inline back ticks
       - open: '(?P<open>`+)'
         close: '(?P=open)'
+  - pyspelling.filters.context:
+      context_visible_first: true
+      delimiters:
+      - open: '(?<=\w)''s(?!\w)'
+        close: '\b'
   - pyspelling.filters.url:
 
 - name: python
@@ -136,6 +156,11 @@ matrix:
       # Ignore Python encoding string -*- encoding stuff -*-
       - open: '^ *-\*-'
         close: '-\*-$'
+  - pyspelling.filters.context:
+      context_visible_first: true
+      delimiters:
+      - open: '(?<=\w)''s(?!\w)'
+        close: '\b'
   - pyspelling.filters.context:
       context_visible_first: true
       escapes: '\\[\\`]'

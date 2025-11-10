@@ -83,3 +83,4 @@
 [twemoji-index]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/twemoji_db.py
 [twemoji]: https://github.com/twitter/twemoji
 [unicode-norm]: http://unicode.org/reports/tr15/#Norm_Forms
+[zensical]: https://zensical.org/

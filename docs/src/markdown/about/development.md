@@ -45,10 +45,8 @@ flake8
 Documents are in Markdown (with some additional syntax) and converted to HTML via Python Markdown and this
 extension bundle. If you would like to build and preview the documentation, you must have these packages installed:
 
+-   @zensical/zensical: the document site generator.
 -   @Python-Markdown/markdown: the Markdown parser.
--   @mkdocs/mkdocs: the document site generator.
--   @squidfunk/mkdocs-material: a material theme for MkDocs.
--   @timvink/mkdocs-git-revision-date-localized-plugin: inserts date a page was last updated.
 -   @facelessuser/pymdown-extensions: this Python Markdown extension bundle.
 
 These can be installed via:
@@ -62,17 +60,17 @@ able to view the documents at `localhost:8000` in your browser. After that, you 
 and have your browser preview update live.
 
 ```
-mkdocs serve
+python3 -m zensical serve -f zensical.yml
 ```
 
 ## Editing Document Theme
 
 It isn't expected that people will need to mess with the theme, but if it is needed, a little additional work is
-required. The documents use the [Material][mkdocs-material] theme for [MkDocs][mkdocs] with some additional local tweaks
-and additions.  JavaScript additions are provided in `docs/src/js` and are in es2020 syntax and are converted to es5.
-Stylesheets are located at `docs/src/scss` and are written in SCSS, and are converted to CSS.  All conversions are done
-in a `Node.js` environment.  In order to get up and running, ensure you have a [`Node.js`](https://nodejs.org/en/)
-version >= 10. Then install the required modules with:
+required. The documents use [Zensical][zensical] with some additional local tweaks and additions.  JavaScript additions
+are provided in `docs/src/js` and are in es2020 syntax and are converted to es5. Stylesheets are located at
+`docs/src/scss` and are written in SCSS, and are converted to CSS.  All conversions are done in a `Node.js` environment.
+In order to get up and running, ensure you have a [`Node.js`](https://nodejs.org/en/) version >= 10. Then install the
+required modules with:
 
 ```
 npm install
@@ -83,21 +81,13 @@ make edits, lint your changes, or build the final output.
 
 Commands            | Description
 ------------------- | -----------
-`npm run serve`     | Create a live preview at `localhost:8000` that will pick up your changes as you make them.
-`npm run build`     | Build the final output which will package, minimize, and revision the scripts and stylesheets.  It will also update the `mkdocs.yml` file to point to the new revisioned files.
+`npm run build`     | Build the final output which will package, minimize, and revision the scripts and stylesheets.  It will also update the `zensical.yml` file to point to the new revisioned files.
 `npm run lint`      | Run just lint on the files.
-`npm run clean_all` | This will clean out the generated CSS and JavaScript files. It will also cleanup the generated MkDocs' site.
+`npm run clean_all` | This will clean out the generated CSS and JavaScript files. It will also cleanup the generated Zensical's site.
 
-If you need to make changes to the `mkdocs.yml` file, do not update the one in project root directly, but update the one
-in `docs/src`. The build environment copies the one in `docs/src` to the project root and injects the revisioned script
-name(s) and stylesheet name(s).
-
-When serving via `npm`, if you want to make sure that the local version of `pymdown-extensions` is used, you need to
-configure `npm run serve` to call with Python instead of calling the MkDocs binary:
-`npm run serve --mkdocs="python3 -m mkdocs"`.  This is because if you are calling Python, it will look in the current
-working directory first for a given module when importing, but if you call the MkDocs binary, it will instead import the
-installed `pymdown-extensions`. Configuring the `--mkdocs` option is also useful if `mkdocs` is not in your path, or you
-want to call with a specific version of Python.
+If you need to make changes to the `zenscial.yml` file, do not update the one in project root directly, but update the
+one in `docs/src`. The build environment copies the one in `docs/src` to the project root and injects the revisioned
+script name(s) and stylesheet name(s).
 
 ## Spell Checking Documents
 
@@ -119,7 +109,7 @@ sudo apt-get install aspell aspell-en
 Then build the docs:
 
 ```
-mkdocs build --clean
+python3 -m zensical build-f zensical.yml --clean
 ```
 
 And then run the spell checker:
