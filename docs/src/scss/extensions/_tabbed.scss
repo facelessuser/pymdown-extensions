@@ -1,36 +1,18 @@
 @use "../utilities/break";
 @use "../utilities/convert";
 
-.md-typeset .tabbed-control {
-    background: none;
-
-    button {
-      color: var(--md-default-fg-color--light);
-      background-color: var(--md-default-bg-color--light);
-      box-shadow: var(--md-shadow-z2);
-      backdrop-filter: blur(convert.px2rem(8px));
-
-      &:hover {
-        color: var(--md-default-bg-color);
-        background: var(--md-primary-fg-color);
-      }
-    }
+.md-typeset .tabbed-control button{
+  &:hover {
+    color: var(--md-default-bg-color);
+    background: var(--md-primary-fg-color);
+  }
 }
 
-.md-typeset .tabbed-control--next {
-    background: none;
-
-    button {
-      color: var(--md-default-fg-color--light);
-      background-color: var(--md-default-bg-color--light);
-      box-shadow: var(--md-shadow-z2);
-      backdrop-filter: blur(convert.px2rem(8px));
-
-      &:hover {
-        color: var(--md-default-bg-color);
-        background: var(--md-primary-fg-color);
-      }
-    }
+.md-typeset .tabbed-control--next button {
+  &:hover {
+    color: var(--md-default-bg-color);
+    background: var(--md-primary-fg-color);
+  }
 }
 
 .js .md-typeset .tabbed-labels::before {

@@ -32,7 +32,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - run: pip install zensical
-      - run: zensical -f zensical.yml build --clean
+      - run: python3 -m zensical.main build -f zensical.yml --clean
       - uses: actions/upload-pages-artifact@v4
         with:
           path: site
