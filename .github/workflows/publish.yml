@@ -35,7 +35,7 @@ jobs:
           python -m pip install --upgrade pip build
           python -m pip install -r requirements/docs.txt
       - run: python -m zensical.main build -f zensical.yml --clean
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: site
       - uses: actions/deploy-pages@v4
