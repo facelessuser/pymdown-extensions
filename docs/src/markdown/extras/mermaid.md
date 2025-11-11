@@ -229,7 +229,6 @@ window.mermaidConfig = {
   startOnLoad: false,
   theme: "default",
   flowchart: {
-    htmlLabels: false,
     useMaxWidth: false
   },
   er: {
@@ -251,17 +250,14 @@ window.mermaidConfig = {
 ```
 
 /// note  | Configuration Notes
-1.  We disable `htmlLabels` in flowcharts as we've had issues with it in the past. It may or may not be okay to
-    enable. Your mileage may vary.
-
-2.  If the option is available in a diagram, we disable `useMaxWidth` as we prefer that our diagrams do not scale
+1.  If the option is available in a diagram, we disable `useMaxWidth` as we prefer that our diagrams do not scale
     within their parent element, we rather them overflow with a scrollbar. You can leave these enabled if you like.
     Since we render our diagrams under a custom element with a shadow DOM, to get scrollbars, we simply enable
     `#!css overflow: auto` on the custom `diagram-div` element (under the host DOM, not the shadow DOM).
 
-3.  We disable `startOnLoad` as we provide our own loader (for reasons we will get into later).
+2.  We disable `startOnLoad` as we provide our own loader (for reasons we will get into later).
 
-4.  We do a quite a bit of custom theme overrides. Most of this is done through the Mermaid configuration options:
+3.  We do a quite a bit of custom theme overrides. Most of this is done through the Mermaid configuration options:
     `theme`, `themeVariables`, and `themeCSS`. Most users would simply use one of the default themes via the `theme`
     option, so that is what we've shown above.
 ///
@@ -335,7 +331,7 @@ window.mermaidConfig = {
   startOnLoad: false,
   theme: "default",
   flowchart: {
-    htmlLabels: false
+    useMaxWidth: false
   },
   er: {
     useMaxWidth: false
@@ -411,7 +407,7 @@ const uml = async className => {
     startOnLoad: false,
     theme: "default",
     flowchart: {
-      htmlLabels: false
+      useMaxWidth: false
     },
     er: {
       useMaxWidth: false

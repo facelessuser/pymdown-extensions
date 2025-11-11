@@ -7,6 +7,18 @@
   --highlight-svg-arrow-collapse: svg-load("@mdi/svg/svg/arrow-collapse.svg");
 }
 
+.md-code__button {
+  background-color: transparent !important;
+}
+
+.md-code__nav {
+  background-color: transparent !important;
+
+  &:hover {
+    background-color: var(--md-code-bg-color) !important;
+  }
+}
+
 .highlight {
   .kc { // Keyword constant
     color: var(--md-code-hl-constant-color);
@@ -54,29 +66,6 @@
       box-shadow: none;
   }
 
-  /* Code that is also a link */
-  a {
-    > code {
-      color: inherit !important;
-      background-color: var(--md-code-link-bg-color) !important;
-      transition: color 125ms;
-      transition: background-color 125ms;
-
-      /* If we are linking highlighted, inline code, force it to just look like a code link */
-      * {
-        color: var(--md-typeset-a-color) !important;
-      }
-
-      &:hover {
-        background-color: var(--md-code-link-accent-bg-color) !important;
-
-        * {
-          color: var(--md-accent-fg-color) !important;
-        }
-      }
-    }
-  }
-
   pre > code {
     outline: none;
   }
@@ -90,10 +79,6 @@
 
     /* Needed for tab preserving mode */
     tab-size: 8;
-
-    + .result {
-      border-width: convert.px2rem(2px);
-    }
 
     /* `pymdownx-inline` mode */
     [data-linenos] {
@@ -129,8 +114,8 @@
     font-weight: 700;
     font-size: convert.px2rem(13.6px);
     background-color: var(--md-code-title-bg-color);
-    border-top-left-radius: convert.px2rem(2px);
-    border-top-right-radius: convert.px2rem(2px);
+    border-top-left-radius: convert.px2rem(9.6px);
+    border-top-right-radius: convert.px2rem(9.6px);
 
     // Adjust margins and and general container look of code block
     + pre {
@@ -232,14 +217,17 @@
         }
 
         ~ .code-footer {
-          position: absolute;
-          bottom: 0;
+          position: relative;
+          bottom: 4.3em;
           left: 0;
+          margin-bottom: -4.3em;
           padding: convert.px2em(32px) convert.px2em(8px) convert.px2em(8px) convert.px2rem(16px);
           background-image: linear-gradient(to bottom,
               transparent,
               var(--md-default-bg-color) 80%
           100%);
+          border-bottom-right-radius: convert.px2rem(9.6px);
+          border-bottom-left-radius: convert.px2rem(9.6px);
         }
       }
     }

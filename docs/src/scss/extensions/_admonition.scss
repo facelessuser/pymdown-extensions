@@ -4,37 +4,35 @@
 @use "../palette/material_color";
 @use "../palette/dracula";
 
-.md-typeset .admonition {
-  border-width: 0;
-  border-left-width: 4px;
-}
-
 $new-admonitions: (
-  settings config: dracula.$drac-pink material_color.$clr-purple-a700 "@mdi/svg/svg/cog.svg",
-  new: dracula.$drac-yellow material_color.$clr-yellow-a700 "@mdi/svg/svg/alert-decagram.svg"
+  settings config: dracula.$drac-pink   material_color.$clr-purple-a700 "@mdi/svg/svg/cog.svg",
+  new:             dracula.$drac-yellow material_color.$clr-yellow-a700 "@mdi/svg/svg/alert-decagram.svg"
 ) !default;
 
-  $old-admonitions: (
-    note:                       dracula.$drac-dark-yellow,
-    abstract:                   dracula.$drac-cyan,
-    info:                       dracula.$drac-light-blue,
-    tip:                        dracula.$drac-teal,
-    success:                    dracula.$drac-green,
-    question:                   dracula.$drac-light-green,
-    warning:                    dracula.$drac-orange,
-    failure:                    dracula.$drac-dark-red,
-    danger:                     dracula.$drac-red,
-    bug:                        dracula.$drac-dark-pink,
-    example:                    dracula.$drac-purple,
-    quote:                      dracula.$drac-grey
-  ) !default;
+$old-admonitions: (
+  note:     dracula.$drac-blue                                                   material_color.$clr-blue-a200,
+  abstract: color.mix(dracula.$drac-blue, dracula.$drac-cyan, $method: oklab)    material_color.$clr-light-blue-a400,
+  info:     dracula.$drac-cyan                                                   material_color.$clr-cyan-a700,
+  tip:      color.mix(dracula.$drac-cyan, dracula.$drac-green, $method: oklab)   material_color.$clr-teal-a700,
+  success:  dracula.$drac-green                                                  material_color.$clr-green-a700,
+  question: color.mix(dracula.$drac-green, dracula.$drac-orange, $method: oklab) material_color.$clr-light-green-a700,
+  warning:  dracula.$drac-orange                                                 material_color.$clr-orange-a400,
+  failure:  color.mix(dracula.$drac-orange, dracula.$drac-red, $method: oklab)   material_color.$clr-red-a200,
+  danger:   dracula.$drac-red                                                    material_color.$clr-red-a400,
+  bug:      color.mix(dracula.$drac-red, dracula.$drac-purple, $method: oklab)   material_color.$clr-pink-a400,
+  example:  dracula.$drac-purple                                                 material_color.$clr-deep-purple-a200,
+  quote:    dracula.$drac-grey                                                   material_color.$clr-grey
+) !default;
 
 /* Style new admonitions with dark or light colors */
 :root > * {
-  --md-admonition-bg-color: transparent;
+  --md-admonition-icon-color: #{dracula.$alucard-blue};
+  --md-admonition-bg-color: #{color.change(dracula.$alucard-blue, $alpha: 0.255)};
+  // --md-admonition-bg-color: #{color.mix(dracula.$alucard-blue, dracula.$alucard-bg, $weight: 12%, $method: oklab)};
 
-  &[data-md-color-scheme="dracula"] {
-    --md-admonition-icon-color: dracula.$drac-dark-yellow;
+  &[data-md-color-scheme="slate"] {
+    --md-admonition-icon-color: #{dracula.$drac-blue};
+    --md-admonition-bg-color: #{color.change(dracula.$drac-blue, $alpha: 0.102)};
   }
 
   @each $names, $prop in $new-admonitions {
@@ -44,40 +42,40 @@ $new-admonitions: (
 
     & {
       --md-admonition-icon--#{$name}: svg-load("#{list.nth($prop, 3)}");
-      --md-admonition-bg-color--#{$name}: #{color.adjust($tint2, $alpha: -0.9)};
+      --md-admonition-bg-color--#{$name}: #{color.change($tint2, $alpha: 0.102)};
       --md-admonition-icon-color--#{$name}: #{$tint2};
-      --md-admonition-shadow-color--#{$name}: #{color.adjust($tint2, $alpha: -0.9)};
     }
 
-    &[data-md-color-scheme="dracula"] {
-      --md-admonition-bg-color--#{$name}: var(--md-default-bg-color--ultra-dark);
+    &[data-md-color-scheme="slate"] {
+      --md-admonition-bg-color--#{$name}: #{color.change($tint, $alpha: 0.102)};
       --md-admonition-icon-color--#{$name}: #{$tint};
-      --md-admonition-shadow-color--#{$name}: #{color.adjust($tint, $alpha: -0.9)};
+    }
+  }
+
+  @each $names, $prop in $old-admonitions {
+    $tint: list.nth($prop, 1);
+    $tint2: list.nth($prop, 2);
+    $name: list.nth($names, 1);
+
+    & {
+      --md-admonition-bg-color--#{$name}: #{color.change($tint2, $alpha: 0.102)};
+      --md-admonition-icon-color--#{$name}: #{$tint2};
     }
 
-    @each $names, $tint in $old-admonitions {
-      $name: list.nth($names, 1);
-
-      & {
-        --md-admonition-bg-color--#{$name}: var(--md-default-bg-color--ultra-dark);
-        --md-admonition-icon-color--#{$name}: #{$tint};
-        --md-admonition-shadow-color--#{$name}: #{color.adjust($tint, $alpha: 0.9)};
-      }
+    &[data-md-color-scheme="slate"] {
+      --md-admonition-bg-color--#{$name}: #{color.change($tint, $alpha: 0.102)};
+      --md-admonition-icon-color--#{$name}: #{$tint};
     }
   }
 }
 
 /* Dark mode changes */
-[data-md-color-scheme="dracula"] .md-typeset .admonition {
-  border-color: var(--md-admonition-icon-color--note);
-  box-shadow: var(--md-shadow-z2);
-
-  &:focus-within {
-    box-shadow: 0 0 0 convert.px2rem(4px) var(--md-admonition-shadow-color--note);
-  }
+.md-typeset .admonition {
+  background: var(--md-admonition-bg-color--note);
+  border-width: 0;
+  border-left-width: 4px;
 
   > .admonition-title {
-    background-color: var(--md-admonition-bg-color--note);
     &::before {
       background-color: var(--md-admonition-icon-color--note);
     }
@@ -88,41 +86,24 @@ $new-admonitions: (
 }
 
 /* Style existing admonitions with dark mode colors */
-[data-md-color-scheme="dracula"] {
+@each $names, $prop in $old-admonitions {
 
-  @each $names, $prop in $old-admonitions {
+  $name: list.nth($names, 1);
+  $tint: list.nth($prop, 1);
 
-    $name: list.nth($names, 1);
+  // Define base class
+  .md-typeset .admonition.#{$name} {
+    background: var(--md-admonition-bg-color--#{$name});
 
     // Define base class
-    .md-typeset .admonition.#{$name} {
-      border-color: var(--md-admonition-icon-color--#{$name});
+    > .admonition-title {
 
-      &:focus-within {
-        box-shadow: 0 0 0 convert.px2rem(4px) var(--md-admonition-shadow-color--#{$name});
+      // Icon
+      &::before {
+        background-color: var(--md-admonition-icon-color--#{$name});
       }
-
-      // Define base class
-      > .admonition-title {
-        background-color: var(--md-admonition-bg-color--#{$name});
-        border-color: var(--md-admonition-icon-color--#{$name});
-
-        // Icon
-        &::before {
-          background-color: var(--md-admonition-icon-color--#{$name});
-        }
-        &::after {
-          color: var(--md-admonition-icon-color--#{$name});
-        }
-      }
-    }
-
-    // Define synonyms for base class
-    @if list.length($names) > 1 {
-      @for $n from 2 through list.length($names) {
-        .#{list.nth($names, $n)} {
-          @extend .#{$name};
-        }
+      &::after {
+        color: var(--md-admonition-icon-color--#{$name});
       }
     }
   }
@@ -130,19 +111,13 @@ $new-admonitions: (
 
 @each $names, $prop in $new-admonitions {
   $name: list.nth($names, 1);
+  $tint: list.nth($prop, 1);
 
     // Define base class
   .md-typeset .admonition.#{$name} {
-    border-color: var(--md-admonition-icon-color--#{$name});
-
-    &:focus-within {
-      box-shadow: 0 0 0 convert.px2rem(4px) var(--md-admonition-shadow-color--#{$name});
-    }
+    background: var(--md-admonition-bg-color--#{$name});
 
     > .admonition-title {
-      background-color: var(--md-admonition-bg-color--#{$name});
-      border-color: var(--md-admonition-icon-color--#{$name});
-
       // Icon
       &::before {
         width: convert.px2rem(20px);
@@ -157,13 +132,8 @@ $new-admonitions: (
       }
     }
   }
+}
 
-  // Define synonyms for base class
-  @if list.length($names) > 1 {
-    @for $n from 2 through list.length($names) {
-      .#{list.nth($names, $n)} {
-        @extend .#{$name};
-      }
-    }
-  }
+.admonition:has(.admonition-title:only-child) {
+  padding-bottom: convert.px2em(7.68px);
 }

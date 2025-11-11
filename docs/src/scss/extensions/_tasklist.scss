@@ -1,7 +1,7 @@
 @use "palette/dracula";
 
 /* Dark mode changes */
-[data-md-color-scheme="dracula"] {
+[data-md-color-scheme="slate"] {
   .md-typeset .task-list-control {
     .task-list-indicator::before {
     	background-color: var(--md-default-fg-color--lighter);

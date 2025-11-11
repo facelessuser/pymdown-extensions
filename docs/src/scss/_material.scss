@@ -9,152 +9,50 @@ html {
   color: var(--md-primary-fg-color);
 }
 
-/* Dark mode changes */
-[data-md-color-scheme="dracula"] {
+// Header
+.md-header {
+  border-bottom: convert.px2rem(2px) solid var(--md-primary-fg-color);
+}
 
-  --md-text-color: var(--md-default-fg-color);
-  background-color: var(--md-default-bg-color);
+.md-container .md-tabs {
+  background-color: var(--md-accent-fg-color--transparent);
+  box-shadow: none;
 
-  // Footer color shades
-  --md-footer-bg-color:                transparent;
-  --md-footer-bg-color--dark:          var(--md-default-bg-color--darkest);
+  .md-tabs__item--active {
+    border-bottom: none;
+  }
+}
 
-  // Header colors
-  --md-header-fg-color: var(--md-text-color);
-  --md-header-bg-color: var(--md-default-bg-color--darkest);
+// Footer
+.md-footer {
+  border-top: none;
 
-  // Header
-  .md-header {
-    color: var(--md-text-color);
-    background-color: var(--md-header-bg-color);
-    border-bottom: convert.px2rem(1px) solid var(--md-primary-fg-color);
-
-    &[data-md-state=shadow] {
-        box-shadow: 0 0 convert.px2rem(4px) rgba(0,0,0,.15),
-                    0 0 convert.px2rem(4px) convert.px2rem(8px) rgba(0,0,0,.2);
-    }
+  .md-footer-meta {
+    background-color: var(--md-default-bg-color);
   }
 
-  .md-top {
-    background-color: var(--md-default-bg-color--dark);
-
-    &:hover {
-      background-color: var(--md-primary-fg-color);
-    }
+  &-meta {
+    border-top: convert.px2rem(2px) solid var(--md-primary-fg-color);
   }
+}
 
-  // Tabs
-  .md-tabs {
-    color: var(--md-text-color);
-    background-color: var(--md-primary-fg-color--transparent);
+ // // Navigation
+.md-nav__source {
+  color: var(--md-text-color);
+}
 
-    &__link--active {
-        color: var(--md-primary-fg-color);
-    }
+.md-nav__link[data-md-state=blur] {
+  color: var(--md-default-fg-color--light);
+}
 
-    &__link:hover {
-        color: var(--md-accent-fg-color);
-    }
-  }
+.md-nav__item .md-nav__link--active {
+  color: var(--md-primary-fg-color);
+}
 
-  // Hero
-  .md-hero {
-    color: var(--md-text-color);
-    background-color: var(--md-primary-fg-color--transparent);
-  }
-
-  // Navigation
-  .md-nav__source {
-    color: var(--md-text-color);
-  }
-
-  .md-nav__link[data-md-state=blur] {
-    color: var(--md-default-fg-color--light);
-  }
-
-  .md-nav__item .md-nav__link--active {
-    color: var(--md-primary-fg-color);
-  }
-
-  .md-nav__link {
-    &:focus,
-    &:hover {
-      color: var(--md-accent-fg-color);
-    }
-  }
-
-  @include break.break-to-device(tablet) {
-
-    .md-nav--primary .md-nav__item--active > .md-nav__link:not(:hover) {
-      color: var(--md-primary-fg-color);
-    }
-
-    // Site title in main navigation
-    .md-nav--primary .md-nav__title {
-      color: var(--md-text-color);
-      background-color: var(--md-header-bg-color);
-      border-bottom: convert.px2rem(1px) solid var(--md-primary-fg-color);
-    }
-  }
-
-  @include break.break-to-device(tablet portrait) {
-
-    // Repository containing source
-    .md-nav__source {
-      color: var(--md-text-color);
-      background-color: var(--md-primary-fg-color--transparent);
-    }
-
-    .md-nav .md-nav__title {
-      color: var(--md-text-color);
-      background-color: var(--md-header-bg-color);
-      border-bottom: convert.px2rem(1px) solid var(--md-primary-fg-color);
-    }
-  }
-
-  // Search
-  .md-search__input {
-    color: var(--md-text-color);
-    background-color: var(--md-accent-bg-color--light);
-
-    &:hover {
-      background-color: var(--md-default-bg-color--light);
-    }
-
-    ~ .md-search__icon {
-      color: var(--md-text-color);
-    }
-    &::placeholder {
-      color: var(--md-default-fg-color--light);
-    }
-  }
-
-  [data-md-toggle=search]:checked~.md-header .md-search__input {
-    background-color: transparent;
-  }
-
-  .md-search__suggest {
-    color: var(--md-default-autocomplete-fg-color);
-  }
-
-  .md-search__overlay, .md-overlay {
-    background-color: var(--md-default-bg-color--light);
-  }
-
-  // Footer
-  .md-footer {
-    &-nav__direction {
-      color: var(--md-primary-fg-color);
-    }
-
-    &-meta {
-      border-top: convert.px2rem(1px) solid var(--md-primary-fg-color);
-    }
-  }
-
-  // Announcements
-  [data-md-component="announce"] {
-    background-color: var(--md-default-bg-color--ultra-dark);
+.md-nav__link {
+  &:focus,
+  &:hover {
+    color: var(--md-accent-fg-color);
   }
 }
 

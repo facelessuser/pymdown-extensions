@@ -1,25 +1,37 @@
 @use "sass:color";
 
-$drac-fg: hsl(60, 30%, 96%);
-$drac-bg: hsl(231, 15%, 18%);
-$drac-highlight: hsl(66, 94%, 73%);
-$drac-selection: hsl(231, 25%, 25%);
-$drac-blue: hsl(225, 27%, 51%);
-$drac-cyan: hsl(191, 97%, 77%);
-$drac-green: hsl(135, 94%, 65%);
-$drac-orange: hsl(31, 100%, 71%);
-$drac-pink: hsl(326, 100%, 74%);
-$drac-purple: hsl(265, 89%, 78%);
-$drac-red: hsl(0, 100%, 67%);
-$drac-yellow: hsl(65, 92%, 76%);
+$drac-fg: #f8f8f2;
+$drac-bg: #22212c;
+$drac-comment: #7470a9;
+$drac-highlight: hsl(245, 25%, 25%);
+$drac-selection: #434158;
+$drac-blue: hsl(210, 100%, 75%);
+$drac-cyan: hsl(170, 100%, 75%);
+$drac-green: hsl(115, 100%, 75%);
+$drac-orange: hsl(35, 100%, 75%);
+$drac-pink: hsl(330, 100%, 75%);
+$drac-purple: hsl(250, 100%, 75%);
+$drac-red: hsl(10, 100%, 75%);
+$drac-yellow: hsl(60, 100%, 75%);
 
 // Non-standard Dracula colors
 $drac-grey: hsl(225, 8%, 51%);
-$drac-teal: hsl(161, 97%, 77%);
-$drac-light-blue: hsl(190, 94%, 87%);
-$drac-light-green: hsl(135, 92%, 79%);
-$drac-dark-pink: hsl(325, 100%, 64%);
-$drac-dark-red: hsl(0, 100%, 59%);
-$drac-dark-yellow: hsl(51, 94%, 73%);
 
 $drac-default-bg: color.adjust($drac-bg, $lightness: 5%);
+
+// An approximation of the Alucard theme
+$alucard-fg: #1F1F1F;
+$alucard-bg: #F5F5F5;
+$alucard-comment: #635D97;
+$alucard-highlight: #DCDEEF;
+$alucard-selection: #CFCFDE;
+$alucard-blue: #4b5e9e;
+$alucard-cyan: #036A96;
+$alucard-green: #14720A;
+$alucard-orange: #A34D14;
+$alucard-pink: #A3134D;
+$alucard-purple: #644AC9;
+$alucard-red: #CB3A2A;
+$alucard-yellow: #836E15;
+
+$alucard-default-bg: color.adjust($alucard-bg, $lightness: 5%);

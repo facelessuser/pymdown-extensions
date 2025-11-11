@@ -1,13 +1,40 @@
 @use "../utilities/break";
 @use "../utilities/convert";
 
-/* Dark mode changes */
-[data-md-color-scheme="dracula"] {
-  .md-typeset {
-    .tabbed-set > .tabbed-labels {
-      box-shadow: 0 convert.px2rem(-1px) var(--md-default-fg-color--lighter) inset;
+.md-typeset .tabbed-control {
+    background: none;
+
+    button {
+      color: var(--md-default-fg-color--light);
+      background-color: var(--md-default-bg-color--light);
+      box-shadow: var(--md-shadow-z2);
+      backdrop-filter: blur(convert.px2rem(8px));
+
+      &:hover {
+        color: var(--md-default-bg-color);
+        background: var(--md-primary-fg-color);
+      }
     }
-  }
+}
+
+.md-typeset .tabbed-control--next {
+    background: none;
+
+    button {
+      color: var(--md-default-fg-color--light);
+      background-color: var(--md-default-bg-color--light);
+      box-shadow: var(--md-shadow-z2);
+      backdrop-filter: blur(convert.px2rem(8px));
+
+      &:hover {
+        color: var(--md-default-bg-color);
+        background: var(--md-primary-fg-color);
+      }
+    }
+}
+
+.js .md-typeset .tabbed-labels::before {
+  background-color: var(--md-accent-fg-color);
 }
 
 /* Style code blocks to fill full tab,
@@ -53,8 +80,15 @@
           padding-right: convert.px2rem(12px);
           padding-left: convert.px2rem(12px);
 
-          > .code-footer {
-            left: convert.px2rem(12px)
+          pre,
+          .codehilite,
+          .codehilitetable,
+          .highlight,
+          .highlighttable {
+            code {
+              border-top-left-radius: 0;
+              border-top-right-radius: 0;
+            }
           }
         }
 
@@ -67,10 +101,6 @@
       }
     }
   }
-}
-
-.js .md-typeset .tabbed-labels::before {
-  background-color: var(--md-accent-fg-color);
 }
 
 /* Ignore mobile overflow styling that extends the tab bar */

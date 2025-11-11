@@ -1,5 +1,6 @@
 import uml from "./uml"
 import arithmatex from "./arithmatex"
+import "./material-extra-3rdparty"
 
 // Main function
 (() => {
@@ -11,9 +12,8 @@ import arithmatex from "./arithmatex"
       if (mutation.type === "attributes") {
         let scheme = mutation.target.getAttribute("data-md-color-scheme")
         if (!scheme) {
-          scheme = "default"
+          scheme = "slate"
         }
-        localStorage.setItem("data-md-color-scheme", scheme)
         if (typeof mermaid !== "undefined") {
           uml("diagram")
         }
