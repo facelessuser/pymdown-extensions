@@ -72,7 +72,7 @@ export default async className => {
     startOnLoad: false,
     theme: "default",
     flowchart: {
-      htmlLabels: false
+      useMaxWidth: false
     },
     er: {
       useMaxWidth: false

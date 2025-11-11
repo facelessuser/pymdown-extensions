@@ -234,7 +234,6 @@ if (!('mermaidConfig' in window)) {
         commitLabelBackground: '#297d3e'
       },
       flowchart: {
-        htmlLabels: false,
         useMaxWidth: false
       },
       er: {
@@ -267,7 +266,6 @@ if (!('mermaidConfig' in window)) {
       startOnLoad: false,
       theme: "default",
       flowchart: {
-        htmlLabels: false,
         useMaxWidth: false
       },
       er: {

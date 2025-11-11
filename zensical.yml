@@ -264,7 +264,7 @@ extra_css:
   # - https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.css
   - assets/pymdownx-extras/extra-2a1405f331.css
 extra_javascript:
-  - assets/pymdownx-extras/extra-loader-5Vq_g83X.js
+  - assets/pymdownx-extras/extra-loader-Ccztcqfq.js
   - https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.min.js
   # - https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.js
   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
