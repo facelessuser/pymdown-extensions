@@ -221,6 +221,7 @@ class BlocksProcessor(BlockProcessor):
             raise ValueError(f'The block name {b.NAME} is already registered!')
         self.blocks[b.NAME] = b
         self.config[b.NAME] = config
+        self.trackers[b.NAME] = {}
 
     def test(self, parent: etree.Element, block: str) -> bool:
         """Test to see if we should process the block."""

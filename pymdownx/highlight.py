@@ -589,6 +589,7 @@ class HighlightExtension(Extension):
             if isinstance(ext, HighlightExtension):
                 register = not ext.enabled and self.enabled
                 break
+            index += 1
 
         if register is None:
             register = True

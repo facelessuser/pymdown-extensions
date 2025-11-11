@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.17.1
+
+-   **FIX**: Fix an issue where Highlight can override another extension in the "registered" list in Python Markdown.
+
 ## 10.17
 
 -   **NEW**: Allow specifying static IDs in caption block headers via `#id` syntax.
