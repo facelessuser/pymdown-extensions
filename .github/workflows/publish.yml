@@ -31,8 +31,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-      - run: pip install zensical
-      - run: python3 -m zensical.main build -f zensical.yml --clean
+      - run: |
+          python -m pip install --upgrade pip build
+          python -m pip install -r requirements/docs.txt
+      - run: python -m zensical.main build -f zensical.yml --clean
       - uses: actions/upload-pages-artifact@v4
         with:
           path: site
