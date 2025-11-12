@@ -114,7 +114,7 @@ nav:
     - License: about/license.md
 
 markdown_extensions:
-  - markdown.extensions.toc:
+  - toc:
       slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
       permalink: ""
   - markdown.extensions.admonition:

@@ -37,8 +37,7 @@
   --md-code-hl-builtin-color: #{dracula.$alucard-cyan};
   --md-code-hl-class-color: #{dracula.$alucard-cyan};
 
-  --md-code-special-bg-color: #{color.adjust(dracula.$alucard-bg, $lightness: -5%)};
-  --md-code-alternate-bg-color: #{color_tools.tint(dracula.$alucard-bg, 10%)};
+  --md-code-special-bg-color: #{dracula.$alucard-highlight};
 
   // List steps
   --md-steps-bg-color: var(--md-code-bg-color);
@@ -67,8 +66,8 @@
     // Default color shades
     --md-default-fg-color:               #{color.adjust(dracula.$drac-fg, $alpha: -0.13)};
     --md-default-fg-color--light:        #{color.adjust(dracula.$drac-fg, $alpha: -0.46)};
-    --md-default-fg-color--lighter:      #{color.adjust(dracula.$drac-fg, $alpha: -0.84)};
-    --md-default-fg-color--lightest:     #{color.adjust(dracula.$drac-fg, $alpha: -0.93)};
+    --md-default-fg-color--lighter:      #{color.adjust(dracula.$drac-fg, $alpha: -0.64)};
+    --md-default-fg-color--lightest:     #{color.adjust(dracula.$drac-fg, $alpha: -0.88)};
     --md-default-autocomplete-fg-color:  #{color.adjust(dracula.$drac-fg, $alpha: -0.60)};
     --md-shadow-z2:                      0 #{convert.px2rem(4px)} #{convert.px2rem(10px)} hsla(0, 0%, 0%, 0.3),
                                          0 0                      #{convert.px2rem(1px)}  hsla(0, 0%, 0%, 0.2);
@@ -123,8 +122,7 @@
     --md-code-hl-builtin-color: #{dracula.$drac-cyan};
     --md-code-hl-class-color: #{dracula.$drac-cyan};
 
-    --md-code-special-bg-color: #{color.adjust(dracula.$drac-bg, $lightness: -5%)};
-    --md-code-alternate-bg-color: #{color_tools.tint(dracula.$drac-bg, 10%)};
+    --md-code-special-bg-color: #{dracula.$drac-highlight};
 
     // List steps
     --md-steps-border-color: #{color.adjust(dracula.$drac-bg, $lightness: 10%)};
@@ -137,12 +135,13 @@
 
     // Progressbar colors
     --md-progress-stripe: var(--md-default-bg-color--lightest);
-    --md-progress-100: #{color.adjust(dracula.$drac-green, $lightness: -10%)};
-    --md-progress-80: #{dracula.$drac-green};
+
+    --md-progress-100: #{dracula.$drac-green};
+    --md-progress-80: #{color.mix(dracula.$drac-green, dracula.$drac-yellow, $method: oklab)};
     --md-progress-60: #{dracula.$drac-yellow};
     --md-progress-40: #{dracula.$drac-orange};
-    --md-progress-20: #{dracula.$drac-red};
-    --md-progress-0: #{dracula.$drac-pink};
+    --md-progress-20: #{dracula.$drac-pink};
+    --md-progress-0: #{dracula.$drac-red};
 
     // Keys colors
     --md-typeset-kbd-color: var(--md-default-fg-color--lightest);
@@ -181,7 +180,7 @@
 
     --md-primary-code-bg-color:         #{color.mix(dracula.$drac-bg, list.nth($colors, 1), 85%)};
     --md-primary-fg-color:              hsla(#{convert.hex2hsl(list.nth($colors, 1))}, 1);
-    --md-primary-fg-color--transparent: hsla(#{convert.hex2hsl(list.nth($colors, 1))}, 0.1);
+    --md-primary-fg-color--transparent: hsla(#{convert.hex2hsl(list.nth($colors, 1))}, 0.2);
     --md-primary-fg-color--light:       hsla(#{convert.hex2hsl(list.nth($colors, 2))}, 1);
     --md-primary-fg-color--dark:        hsla(#{convert.hex2hsl(list.nth($colors, 3))}, 1);
     --md-primary-bg-color:              var(--md-default-bg-color);
@@ -194,22 +193,22 @@
 // ----------------------------------------------------------------------------
 
 @each $name, $color in (
-  "red":         color.adjust(dracula.$drac-red, $lightness: -5%),
-  "pink":        color.adjust(dracula.$drac-pink, $lightness: -5%),
-  "purple":      color.adjust(dracula.$drac-purple, $lightness: -5%),
-  "deep-purple": color.adjust(dracula.$drac-purple, $lightness: -5%),
-  "blue":        color.adjust(dracula.$drac-blue, $lightness: -5%),
-  "indigo":      color.adjust(dracula.$drac-blue, $lightness: -5%),
-  "light-blue":  color.adjust(dracula.$drac-blue, $lightness: -5%),
-  "cyan":        color.adjust(dracula.$drac-cyan, $lightness: -5%),
-  "teal":        color.adjust(dracula.$drac-cyan, $lightness: -5%),
-  "green":       color.adjust(dracula.$drac-green, $lightness: -5%),
-  "light-green": color.adjust(dracula.$drac-green, $lightness: -5%),
-  "lime":        color.adjust(dracula.$drac-green, $lightness: -5%),
-  "yellow":      color.adjust(dracula.$drac-yellow, $lightness: -5%),
-  "amber":       color.adjust(dracula.$drac-yellow, $lightness: -5%),
-  "orange":      color.adjust(dracula.$drac-orange, $lightness: -5%),
-  "deep-orange": color.adjust(dracula.$drac-orange, $lightness: -5%)
+  "red":         dracula.$drac-red,
+  "pink":        dracula.$drac-pink,
+  "purple":      dracula.$drac-purple,
+  "deep-purple": dracula.$drac-purple,
+  "blue":        dracula.$drac-blue,
+  "indigo":      dracula.$drac-blue,
+  "light-blue":  dracula.$drac-blue,
+  "cyan":        dracula.$drac-cyan,
+  "teal":        dracula.$drac-cyan,
+  "green":       dracula.$drac-green,
+  "light-green": dracula.$drac-green,
+  "lime":        dracula.$drac-green,
+  "yellow":      dracula.$drac-yellow,
+  "amber":       dracula.$drac-yellow,
+  "orange":      dracula.$drac-orange,
+  "deep-orange": dracula.$drac-orange
 ) {
 
   // Color palette
@@ -217,7 +216,7 @@
   [data-md-color-scheme="slate"] :not([data-md-color-scheme])[data-md-color-primary="#{$name}"] {
     --md-code-link-accent-bg-color:    #{color.mix($color, dracula.$drac-bg, 15%)};
     --md-accent-fg-color:              hsla(#{convert.hex2hsl($color)}, 1);
-    --md-accent-fg-color--transparent: hsla(#{convert.hex2hsl($color)}, 0.1);
+    --md-accent-fg-color--transparent: hsla(#{convert.hex2hsl($color)}, 0.2);
     --md-accent-bg-color:              var(--md-default-bg-color);
     --md-accent-bg-color--light:       var(--md-default-bg-color--light);
   }

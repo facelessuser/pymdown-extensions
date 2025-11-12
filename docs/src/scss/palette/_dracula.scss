@@ -2,21 +2,20 @@
 
 $drac-fg: #f8f8f2;
 $drac-bg: #22212c;
-$drac-comment: #7470a9;
-$drac-highlight: hsl(245, 25%, 25%);
-$drac-selection: #434158;
-$drac-blue: hsl(210, 100%, 75%);
-$drac-cyan: hsl(170, 100%, 75%);
-$drac-green: hsl(115, 100%, 75%);
-$drac-orange: hsl(35, 100%, 75%);
-$drac-pink: hsl(330, 100%, 75%);
-$drac-purple: hsl(250, 100%, 75%);
-$drac-red: hsl(10, 100%, 75%);
-$drac-yellow: hsl(60, 100%, 75%);
-
+$drac-comment: #6272a4;
+$drac-bg: hsl(231, 15%, 18%);
+$drac-highlight: hsl(231, 25%, 25%) ;
+$drac-selection: hsl(231, 15%, 30%);
+$drac-blue: hsl(225, 27%, 51%);
+$drac-cyan: hsl(191, 97%, 77%);
+$drac-green: hsl(135, 94%, 65%);
+$drac-orange: hsl(31, 100%, 71%);
+$drac-pink: hsl(326, 100%, 74%);
+$drac-purple: hsl(265, 89%, 78%);
+$drac-red: hsl(0, 100%, 67%);
+$drac-yellow: hsl(65, 92%, 76%);
 // Non-standard Dracula colors
 $drac-grey: hsl(225, 8%, 51%);
-
 $drac-default-bg: color.adjust($drac-bg, $lightness: 5%);
 
 // An approximation of the Alucard theme
@@ -33,5 +32,5 @@ $alucard-pink: #A3134D;
 $alucard-purple: #644AC9;
 $alucard-red: #CB3A2A;
 $alucard-yellow: #836E15;
-
+// Non-standard Dracula colors
 $alucard-default-bg: color.adjust($alucard-bg, $lightness: 5%);

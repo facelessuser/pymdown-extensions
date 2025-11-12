@@ -9,28 +9,75 @@ html {
   color: var(--md-primary-fg-color);
 }
 
-// Header
-.md-header {
-  border-bottom: convert.px2rem(1px) solid var(--md-accent-fg-color);
-}
-
 .md-container .md-tabs {
-  background-color: var(--md-accent-fg-color--transparent);
-  box-shadow: none;
-
   .md-tabs__item--active {
-    border-bottom: none;
+    border-bottom: convert.px2rem(2px) solid var(--md-accent-fg-color);
   }
 }
 
-// Footer
-.md-footer {
-  .md-footer-meta {
-    background-color: var(--md-default-bg-color);
+// Navigation
+.md-nav--secondary {
+  > ul {
+    border-left: convert.px2rem(2px) solid var(--md-default-fg-color--lightest);
   }
 
-  &-meta {
-    border-top: convert.px2rem(1px) solid var(--md-accent-fg-color);
+  ul .md-nav__item {
+    .md-nav__link--active {
+      margin-left: convert.px2rem(-2px);
+      padding-left: convert.px2rem(16px);
+    }
+
+    ul .md-nav__item {
+      .md-nav__link--active {
+        margin-left: convert.px2rem(-14px);
+        padding-left: convert.px2rem(28px);
+      }
+
+      ul .md-nav__item {
+        .md-nav__link--active {
+          margin-left: convert.px2rem(-26px);
+          padding-left: convert.px2rem(40px);
+        }
+
+        ul .md-nav__item {
+          .md-nav__link--active {
+            margin-left: convert.px2rem(-38px);
+            padding-left: convert.px2rem(52px);
+          }
+
+          ul .md-nav__item {
+            .md-nav__link--active {
+              margin-left: convert.px2rem(-50px);
+              padding-left: convert.px2rem(64px);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .md-nav__item {
+    color: var(--md-default-fg-color--light);
+
+    .md-nav__link--active {
+      color: var(--md-default-fg-color);
+      border-left: convert.px2rem(2px) solid var(--md-accent-fg-color);
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    .md-nav__link {
+      &:focus,
+      &:hover {
+        color: var(--md-default-fg-color);
+      }
+    }
+  }
+}
+
+.md-nav--primary {
+  .md-nav__item {
+    color: var(--md-default-fg-color--light);
   }
 }
 
@@ -41,17 +88,6 @@ html {
 
 .md-nav__link[data-md-state=blur] {
   color: var(--md-default-fg-color--light);
-}
-
-.md-nav__item .md-nav__link--active {
-  color: var(--md-primary-fg-color);
-}
-
-.md-nav__link {
-  &:focus,
-  &:hover {
-    color: var(--md-accent-fg-color);
-  }
 }
 
 .md-typeset {

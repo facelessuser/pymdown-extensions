@@ -114,7 +114,7 @@ nav:
     - License: about/license.md
 
 markdown_extensions:
-  - markdown.extensions.toc:
+  - toc:
       slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
       permalink: ""
   - markdown.extensions.admonition:
@@ -262,7 +262,7 @@ extra:
 
 extra_css:
   # - https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.css
-  - assets/pymdownx-extras/extra-aaec66f9ad.css
+  - assets/pymdownx-extras/extra-c7a8e25032.css
 extra_javascript:
   - assets/pymdownx-extras/extra-loader-Ccztcqfq.js
   - https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.min.js

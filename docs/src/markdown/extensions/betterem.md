@@ -4,12 +4,15 @@
 
 ## Overview
 
-BetterEm is an extension that aims to improve emphasis (bold and italic) handling.  It provides two modes that control
-both asterisk's and underscore's bold and italic syntax: **smart** when `smart_enable` is turned on and **normal** if
-`smart_enable` is turned off.  `smart_enable` prevents emphasis mid-word. Since mid-word emphasis is usually
-undesirable for underscores, it is only enabled for underscore emphasis by default. When **smart** is enabled for
-either asterisks and/or underscores, it is enabled for all variants: single and double. When **smart** is enabled with
-the default settings, the behavior will be very similar in feel to GFM bold and italic (but not necessarily exact).
+BetterEm is an extension that aims to improve emphasis (bold and italic) handling.
+
+BetterEm provides a **smart** which controls whether emphasis is processed mid-word or not. When `smart_enable` is
+enabled, mid-word emphasis is intelligently ignored. This can be applied to asterisk and underscore emphasis, but since
+it usually only desireable to avoid mid-word emphasis in with underscores, it is only enabled for underscores by
+default.
+
+With the default behavior, the feel will be very similar to GFM bold and italic, within the bounds of what Python
+Markdown is capable of.
 
 The BetterEm extension can be included in Python Markdown by using the following:
 
