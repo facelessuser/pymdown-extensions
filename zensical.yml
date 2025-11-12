@@ -45,6 +45,8 @@ theme:
     - navigation.top
     - navigation.instant
     - navigation.indexes
+    - navigation.path
+    - navigation.prune
     - navigation.footer
     - toc.follow
     - content.tabs.link
@@ -52,9 +54,8 @@ theme:
     - search.highlight
     - search.suggest
     - content.code.copy
+    - content.tabs.link
     - content.code.annotations
-  pymdownx:
-    sponsor: "https://github.com/sponsors/facelessuser"
 
 nav:
   - Home:
@@ -117,16 +118,16 @@ markdown_extensions:
   - toc:
       slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
       permalink: ""
-  - markdown.extensions.admonition:
-  - markdown.extensions.smarty:
+  - admonition:
+  - smarty:
       smart_quotes: false
   - pymdownx.betterem:
-  - markdown.extensions.attr_list:
-  - markdown.extensions.def_list:
-  - markdown.extensions.tables:
-  - markdown.extensions.abbr:
-  - markdown.extensions.footnotes:
-  - markdown.extensions.md_in_html:
+  - attr_list:
+  - def_list:
+  - tables:
+  - abbr:
+  - footnotes:
+  - md_in_html:
   - pymdownx.superfences:
       preserve_tabs: true
       relaxed_headers: true
@@ -262,7 +263,7 @@ extra:
 
 extra_css:
   # - https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.css
-  - assets/pymdownx-extras/extra-c7a8e25032.css
+  - assets/pymdownx-extras/extra-a1ecc5dcda.css
 extra_javascript:
   - assets/pymdownx-extras/extra-loader-Ccztcqfq.js
   - https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.min.js

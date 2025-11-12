@@ -14,7 +14,7 @@
   --md-code-fg-color: #{dracula.$alucard-fg};
   --md-code-bg-color: #{dracula.$alucard-bg};
   --md-code-title-bg-color: #{dracula.$alucard-bg};
-  --md-code-inline-bg-color: #{color.adjust(dracula.$alucard-bg, $lightness: -2%)};
+  --md-code-inline-bg-color: #{dracula.$alucard-bg};
   --md-code-hl-operator-color: #{dracula.$alucard-pink};
   --md-code-hl-punctuation-color: #{dracula.$alucard-fg};
   --md-code-hl-string-color: #{dracula.$alucard-yellow};
