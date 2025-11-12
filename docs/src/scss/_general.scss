@@ -8,14 +8,10 @@
   --md-heart: #{material_color.$clr-red-a200};
   --md-heart-big: #{material_color.$clr-red-a400};
 
-  :focus-visible {
-    outline-style: solid;
-  }
-
   /* Dark mode colors */
   [data-md-color-scheme="slate"] {
-    --md-heart: #{dracula.$drac-pink};
-    --md-heart-big: #{dracula.$drac-red};
+    --md-heart: #{dracula.$drac-red};
+    --md-heart-big: #{dracula.$drac-pink};
   }
 }
 

@@ -11,11 +11,12 @@ html {
 
 // Header
 .md-header {
-  border-bottom: convert.px2rem(2px) solid var(--md-primary-fg-color);
+  border-bottom: convert.px2rem(1px) solid var(--md-accent-fg-color);
 }
 
 .md-container .md-tabs {
   background-color: var(--md-accent-fg-color--transparent);
+  // border-bottom: convert.px2rem(1px) solid var(--md-default-fg-color--lightest);
   box-shadow: none;
 
   .md-tabs__item--active {
@@ -25,18 +26,16 @@ html {
 
 // Footer
 .md-footer {
-  border-top: none;
-
   .md-footer-meta {
     background-color: var(--md-default-bg-color);
   }
 
   &-meta {
-    border-top: convert.px2rem(2px) solid var(--md-primary-fg-color);
+    border-top: convert.px2rem(1px) solid var(--md-accent-fg-color);
   }
 }
 
- // // Navigation
+// Navigation
 .md-nav__source {
   color: var(--md-text-color);
 }

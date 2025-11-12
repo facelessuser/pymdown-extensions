@@ -4,14 +4,14 @@
 .md-typeset .tabbed-control button{
   &:hover {
     color: var(--md-default-bg-color);
-    background: var(--md-primary-fg-color);
+    background: var(--md-accent-fg-color);
   }
 }
 
 .md-typeset .tabbed-control--next button {
   &:hover {
     color: var(--md-default-bg-color);
-    background: var(--md-primary-fg-color);
+    background: var(--md-accent-fg-color);
   }
 }
 
