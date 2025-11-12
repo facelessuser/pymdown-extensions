@@ -8,7 +8,7 @@ BetterEm is an extension that aims to improve emphasis (bold and italic) handlin
 
 BetterEm provides a **smart** which controls whether emphasis is processed mid-word or not. When `smart_enable` is
 enabled, mid-word emphasis is intelligently ignored. This can be applied to asterisk and underscore emphasis, but since
-it usually only desireable to avoid mid-word emphasis in with underscores, it is only enabled for underscores by
+it usually only desirable to avoid mid-word emphasis in with underscores, it is only enabled for underscores by
 default.
 
 With the default behavior, the feel will be very similar to GFM bold and italic, within the bounds of what Python
