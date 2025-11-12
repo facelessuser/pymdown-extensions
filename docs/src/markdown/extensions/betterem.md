@@ -6,8 +6,8 @@
 
 BetterEm is an extension that aims to improve emphasis (bold and italic) handling.  It provides two modes that control
 both asterisk's and underscore's bold and italic syntax: **smart** when `smart_enable` is turned on and **normal** if
-`smart_enable` is turned off.  `smart_enable` prevents empahsis mid-word. Since mid-word emphasis is usually
-undesireable for underscores, it is only enabled for underscore emphasis by default. When **smart** is enabled for
+`smart_enable` is turned off.  `smart_enable` prevents emphasis mid-word. Since mid-word emphasis is usually
+undesirable for underscores, it is only enabled for underscore emphasis by default. When **smart** is enabled for
 either asterisks and/or underscores, it is enabled for all variants: single and double. When **smart** is enabled with
 the default settings, the behavior will be very similar in feel to GFM bold and italic (but not necessarily exact).
 
