@@ -1,3 +1,6 @@
+---
+icon: lucide/info
+---
 # Usage Notes
 
 ## Incompatible Extensions

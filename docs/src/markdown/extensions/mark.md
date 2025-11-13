@@ -1,3 +1,6 @@
+---
+icon: lucide/highlighter
+---
 [:octicons-file-code-24:][_mark]{: .source-link }
 
 # Mark

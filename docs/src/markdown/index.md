@@ -1,3 +1,6 @@
+---
+icon: lucide/house
+---
 # PyMdown Extensions
 
 ## Overview

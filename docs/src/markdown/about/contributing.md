@@ -1,3 +1,6 @@
+---
+icon: lucide/users
+---
 # Contributing &amp; Support
 
 ## Become a Sponsor :octicons-heart-fill-16:{: .heart-throb}

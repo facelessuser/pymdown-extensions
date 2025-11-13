@@ -1,3 +1,6 @@
+---
+icon: Lucide/cuboid
+---
 [:octicons-file-code-24:][_blocks]{: .source-link }
 
 # Blocks

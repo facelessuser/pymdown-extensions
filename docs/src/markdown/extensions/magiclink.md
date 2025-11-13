@@ -1,3 +1,6 @@
+---
+icon: lucide/link
+---
 [:octicons-file-code-24:][_magiclink]{: .source-link }
 
 # MagicLink

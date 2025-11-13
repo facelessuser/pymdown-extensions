@@ -1,3 +1,6 @@
+---
+icon: lucide/chevrons-left-right-ellipsis
+---
 [:octicons-file-code-24:][_inlinehilite]{: .source-link }
 
 # InlineHilite

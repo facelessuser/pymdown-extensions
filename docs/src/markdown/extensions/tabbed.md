@@ -1,3 +1,6 @@
+---
+icon: lucide/notebook-tabs
+---
 [:octicons-file-code-24:][_tabbed]{: .source-link }
 
 # Tabbed

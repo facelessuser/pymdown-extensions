@@ -1,3 +1,6 @@
+---
+icon: lucide/boxes
+---
 [:octicons-file-code-24:][_extra]{: .source-link }
 
 # Extra

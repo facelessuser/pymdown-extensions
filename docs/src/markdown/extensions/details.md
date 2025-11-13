@@ -1,3 +1,6 @@
+---
+icon: lucide/chevrons-up-down
+---
 [:octicons-file-code-24:][_details]{: .source-link }
 
 # Details

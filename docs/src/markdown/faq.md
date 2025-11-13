@@ -1,3 +1,6 @@
+---
+icon: lucide/circle-question-mark
+---
 # Frequently Asked Questions
 
 ## Function References in YAML

@@ -1,3 +1,6 @@
+---
+icon: lucide/graduation-cap
+---
 [:octicons-file-code-24:][_smartsymbols]{: .source-link }
 
 # SmartSymbols

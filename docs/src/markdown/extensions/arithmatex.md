@@ -1,3 +1,6 @@
+---
+icon: Lucide/calculator
+---
 [:octicons-file-code-24:][_arithmatex]{: .source-link }
 
 # Arithmatex

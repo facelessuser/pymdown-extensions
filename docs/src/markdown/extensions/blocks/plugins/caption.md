@@ -1,3 +1,6 @@
+---
+icon: lucide/captions
+---
 [:octicons-file-code-24:][_admonition_block]{: .source-link }
 
 # Caption

@@ -1,3 +1,6 @@
+---
+icon: lucide/list
+---
 [:octicons-file-code-24:][_fancylists]{: .source-link }
 
 # FancyLists

@@ -1,3 +1,6 @@
+---
+icon: lucide/folder
+---
 [:octicons-file-code-24:][_pathconverter]{: .source-link }
 
 # PathConverter

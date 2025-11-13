@@ -1,3 +1,6 @@
+---
+icon: Lucide/asterisk
+---
 [:octicons-file-code-24:][_betterem]{: .source-link }
 
 # BetterEm

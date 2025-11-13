@@ -1,3 +1,6 @@
+---
+icon: lucide/fence
+---
 [:octicons-file-code-24:][_superfences]{: .source-link }
 
 # SuperFences

@@ -1,3 +1,6 @@
+---
+icon: lucide/square-scissors
+---
 [:octicons-file-code-24:][_snippets]{: .source-link }
 
 # Snippets

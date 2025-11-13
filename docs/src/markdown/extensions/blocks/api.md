@@ -1,3 +1,6 @@
+---
+icon: lucide/book-open
+---
 # Blocks Extension API
 
 ## Block Structure

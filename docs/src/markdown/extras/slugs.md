@@ -1,3 +1,6 @@
+---
+icon: lucide/link
+---
 [:octicons-file-code-24:][_slugs]{: .source-link }
 
 # Slugs

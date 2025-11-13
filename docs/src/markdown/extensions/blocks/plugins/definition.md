@@ -1,3 +1,6 @@
+---
+icon: lucide/book-a
+---
 [:octicons-file-code-24:][_definition_block]{: .source-link }
 
 # Definition

@@ -46,7 +46,6 @@ theme:
     - navigation.instant
     - navigation.indexes
     - navigation.path
-    - navigation.prune
     - navigation.footer
     - toc.follow
     - content.tabs.link
@@ -106,13 +105,13 @@ nav:
     - Contributing &amp; Support: about/contributing.md
     - Development: about/development.md
     - Security Vulnerabilities: about/security.md
+    - License: about/license.md
     - Changelog: about/changelog.md
     - Migration Notes:
         - '6.0': about/releases/6.0.md
         - '7.0': about/releases/7.0.md
         - '8.0': about/releases/8.0.md
         - '9.0': about/releases/9.0.md
-    - License: about/license.md
 
 markdown_extensions:
   - toc:

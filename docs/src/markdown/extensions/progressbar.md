@@ -1,3 +1,6 @@
+---
+icon: lucide/percent
+---
 [:octicons-file-code-24:][_progressbar]{: .source-link }
 
 # ProgressBar

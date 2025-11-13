@@ -1,3 +1,6 @@
+---
+icon: lucide/smile
+---
 [:octicons-file-code-24:][_emoji]{: .source-link }
 
 # Emoji

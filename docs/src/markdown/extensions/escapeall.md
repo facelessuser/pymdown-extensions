@@ -1,3 +1,6 @@
+---
+icon: lucide/locate-off
+---
 [:octicons-file-code-24:][_escapeall]{: .source-link }
 
 # EscapeAll

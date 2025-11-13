@@ -1,3 +1,6 @@
+---
+icon: lucide/hash
+---
 [:octicons-file-code-24:][_saneheaders]{: .source-link }
 
 # SaneHeaders

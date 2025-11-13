@@ -1,3 +1,6 @@
+---
+icon: lucide/keyboard
+---
 [:octicons-file-code-24:][_keys]{: .source-link }
 
 # Keys

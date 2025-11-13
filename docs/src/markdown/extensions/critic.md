@@ -1,3 +1,6 @@
+---
+icon: lucide/pencil-line
+---
 [:octicons-file-code-24:][_critic]{: .source-link }
 
 # Critic

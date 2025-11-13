@@ -1,3 +1,6 @@
+---
+icon: lucide/list-todo
+---
 [:octicons-file-code-24:][_tasklist]{: .source-link }
 
 # Tasklist

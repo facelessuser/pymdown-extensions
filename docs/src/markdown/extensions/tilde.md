@@ -1,3 +1,6 @@
+---
+icon: lucide/subscript
+---
 [:octicons-file-code-24:][_tilde]{: .source-link }
 
 # Tilde

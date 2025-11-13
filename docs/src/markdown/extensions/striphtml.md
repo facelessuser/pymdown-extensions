@@ -1,3 +1,6 @@
+---
+icon: lucide/eraser
+---
 [:octicons-file-code-24:][_striphtml]{: .source-link }
 
 # StripHTML

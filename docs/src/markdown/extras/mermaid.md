@@ -1,3 +1,6 @@
+---
+icon: lucide/chart-pie
+---
 # Advanced Mermaid Notes
 
 ## Overview

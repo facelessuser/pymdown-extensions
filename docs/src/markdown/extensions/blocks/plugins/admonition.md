@@ -1,3 +1,7 @@
+---
+icon: lucide/sticky-note
+---
+
 [:octicons-file-code-24:][_admonition_block]{: .source-link }
 
 # Admonition
