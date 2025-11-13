@@ -42,11 +42,25 @@
         .highlight,
         .highlighttable {
 
+          &:first-child {
+            margin-top: convert.px2em(15px);
+
+            code {
+              border-top-left-radius: convert.px2rem(9.6px);
+              border-top-right-radius: convert.px2rem(9.6px);
+            }
+          }
+
           &:only-child {
+            margin-top: 0;
             margin-right: convert.px2rem(-24px);
             margin-left: convert.px2rem(-24px);
             padding-right: convert.px2rem(12px);
             padding-left: convert.px2rem(12px);
+            code {
+              border-top-left-radius: 0;
+              border-top-right-radius: 0;
+            }
 
             span.filename {
               margin-top: 0;

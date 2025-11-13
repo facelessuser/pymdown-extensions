@@ -75,18 +75,18 @@
     --md-footer-fg-color: var(--md-default-fg-color);
 
     --md-default-bg-color:               var(--md-default-bg-color--darkest);
-    --md-default-bg-color--light:        #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -9%), $alpha: -0.3)};
-    --md-default-bg-color--lighter:      #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -9%), $alpha: -0.7)};
-    --md-default-bg-color--lightest:     #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -9%), $alpha: -0.88)};
-    --md-default-bg-color--trans:        #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -9%), $alpha: -1)};
+    --md-default-bg-color--light:        #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -10%, $space: oklab), $alpha: -0.3)};
+    --md-default-bg-color--lighter:      #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -10%, $space: oklab), $alpha: -0.7)};
+    --md-default-bg-color--lightest:     #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -10%, $space: oklab), $alpha: -0.88)};
+    --md-default-bg-color--trans:        #{color.adjust(color.adjust(dracula.$drac-default-bg, $lightness: -10%, $space: oklab), $alpha: -1)};
 
     --md-tab-control-bg: var(--md-default-bg-color--dark);
 
     // Dark specific colors
-    --md-default-bg-color--dark:         #{color.adjust(dracula.$drac-default-bg, $lightness: -3%)};
-    --md-default-bg-color--darker:       #{color.adjust(dracula.$drac-default-bg, $lightness: -6%)};
-    --md-default-bg-color--darkest:      #{color.adjust(dracula.$drac-default-bg, $lightness: -9%)};
-    --md-default-bg-color--ultra-dark:   #{color.adjust(dracula.$drac-default-bg, $lightness: -15%)};
+    --md-default-bg-color--dark:         #{color.adjust(dracula.$drac-default-bg, $lightness: -3%, $space: oklab)};
+    --md-default-bg-color--darker:       #{color.adjust(dracula.$drac-default-bg, $lightness: -6%, $space: oklab)};
+    --md-default-bg-color--darkest:      #{color.adjust(dracula.$drac-default-bg, $lightness: -10%, $space: oklab)};
+    --md-default-bg-color--ultra-dark:   #{color.adjust(dracula.$drac-default-bg, $lightness: -15%, $space: oklab)};
 
     // General text
     --md-text-color: var(--md-default-fg-color);
@@ -99,7 +99,7 @@
     --md-code-fg-color: #{dracula.$drac-fg};
     --md-code-bg-color: #{dracula.$drac-bg};
     --md-code-title-bg-color: #{dracula.$drac-bg};
-    --md-code-inline-bg-color: #{color.adjust(dracula.$drac-bg, $lightness: 5%)};
+    --md-code-inline-bg-color: #{color.adjust(dracula.$drac-bg, $lightness: 5%, $space: oklab)};
     --md-code-hl-operator-color: #{dracula.$drac-pink};
     --md-code-hl-punctuation-color: #{dracula.$drac-fg};
     --md-code-hl-string-color: #{dracula.$drac-yellow};
@@ -125,13 +125,13 @@
     --md-code-special-bg-color: #{dracula.$drac-highlight};
 
     // List steps
-    --md-steps-border-color: #{color.adjust(dracula.$drac-bg, $lightness: 10%)};
+    --md-steps-border-color: #{color.adjust(dracula.$drac-bg, $lightness: 10%, $space: oklab)};
 
     // Various Material related color variables
     --md-typeset-a-color: #{dracula.$drac-cyan};
-    --md-typeset-mark-color: #{color.mix(dracula.$drac-yellow, dracula.$drac-bg, 35%)};
-    --md-typeset-del-color: #{color.mix(dracula.$drac-pink, dracula.$drac-bg, 35%)};
-    --md-typeset-ins-color: #{color.mix(dracula.$drac-green, dracula.$drac-bg, 35%)};
+    --md-typeset-mark-color: #{color.mix(dracula.$drac-yellow, dracula.$drac-bg, 35%, $method: oklab)};
+    --md-typeset-del-color: #{color.mix(dracula.$drac-pink, dracula.$drac-bg, 35%, $method: oklab)};
+    --md-typeset-ins-color: #{color.mix(dracula.$drac-green, dracula.$drac-bg, 35%, $method: oklab)};
 
     // Progressbar colors
     --md-progress-stripe: var(--md-default-bg-color--lightest);
@@ -178,7 +178,7 @@
   [data-md-color-scheme="slate"] :not([data-md-color-scheme])[data-md-color-primary="#{$name}"]
    {
 
-    --md-primary-code-bg-color:         #{color.mix(dracula.$drac-bg, list.nth($colors, 1), 85%)};
+    --md-primary-code-bg-color:         #{color.mix(dracula.$drac-bg, list.nth($colors, 1), 85%, $method: oklab)};
     --md-primary-fg-color:              hsla(#{convert.hex2hsl(list.nth($colors, 1))}, 1);
     --md-primary-fg-color--transparent: hsla(#{convert.hex2hsl(list.nth($colors, 1))}, 0.2);
     --md-primary-fg-color--light:       hsla(#{convert.hex2hsl(list.nth($colors, 2))}, 1);
@@ -214,7 +214,7 @@
   // Color palette
   [data-md-color-scheme="slate"][data-md-color-accent="#{$name}"],
   [data-md-color-scheme="slate"] :not([data-md-color-scheme])[data-md-color-primary="#{$name}"] {
-    --md-code-link-accent-bg-color:    #{color.mix($color, dracula.$drac-bg, 15%)};
+    --md-code-link-accent-bg-color:    #{color.mix($color, dracula.$drac-bg, 15%, $method: oklab)};
     --md-accent-fg-color:              hsla(#{convert.hex2hsl($color)}, 1);
     --md-accent-fg-color--transparent: hsla(#{convert.hex2hsl($color)}, 0.2);
     --md-accent-bg-color:              var(--md-default-bg-color);

@@ -1,5 +1,5 @@
 ---
-icon: lucide/notebook-tabs
+icon: lucide/app-window
 ---
 [:octicons-file-code-24:][_tabbed]{: .source-link }
 

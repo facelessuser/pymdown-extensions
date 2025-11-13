@@ -1,10 +1,10 @@
 @use "sass:color";
 
 @function tint($color, $percentage) {
-  @return color.mix(white, $color, $percentage);
+  @return color.mix(white, $color, $percentage, $method: oklab);
 }
 
 
 @function shade($color, $percentage) {
-  @return color.mix(black, $color, $percentage);
+  @return color.mix(black, $color, $percentage, $method: oklab);
 }

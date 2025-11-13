@@ -27,12 +27,12 @@ $old-admonitions: (
 /* Style new admonitions with dark or light colors */
 :root > * {
   --md-admonition-icon-color: #{dracula.$alucard-blue};
-  --md-admonition-bg-color: #{color.change(dracula.$alucard-blue, $alpha: 0.255)};
+  --md-admonition-bg-color: #{color.adjust(dracula.$alucard-blue, $alpha: -0.9)};
   // --md-admonition-bg-color: #{color.mix(dracula.$alucard-blue, dracula.$alucard-bg, $weight: 12%, $method: oklab)};
 
   &[data-md-color-scheme="slate"] {
     --md-admonition-icon-color: #{dracula.$drac-blue};
-    --md-admonition-bg-color: #{color.change(dracula.$drac-blue, $alpha: 0.102)};
+    --md-admonition-bg-color: #{color.adjust(dracula.$drac-blue, $alpha: -0.9)};
   }
 
   @each $names, $prop in $new-admonitions {
@@ -42,12 +42,12 @@ $old-admonitions: (
 
     & {
       --md-admonition-icon--#{$name}: svg-load("#{list.nth($prop, 3)}");
-      --md-admonition-bg-color--#{$name}: #{color.change($tint2, $alpha: 0.102)};
+      --md-admonition-bg-color--#{$name}: #{color.adjust($tint2, $alpha: -0.9)};
       --md-admonition-icon-color--#{$name}: #{$tint2};
     }
 
     &[data-md-color-scheme="slate"] {
-      --md-admonition-bg-color--#{$name}: #{color.change($tint, $alpha: 0.102)};
+      --md-admonition-bg-color--#{$name}: #{color.adjust($tint, $alpha: -0.9)};
       --md-admonition-icon-color--#{$name}: #{$tint};
     }
   }
@@ -58,12 +58,12 @@ $old-admonitions: (
     $name: list.nth($names, 1);
 
     & {
-      --md-admonition-bg-color--#{$name}: #{color.change($tint2, $alpha: 0.102)};
+      --md-admonition-bg-color--#{$name}: #{color.adjust($tint2, $alpha: -0.9)};
       --md-admonition-icon-color--#{$name}: #{$tint2};
     }
 
     &[data-md-color-scheme="slate"] {
-      --md-admonition-bg-color--#{$name}: #{color.change($tint, $alpha: 0.102)};
+      --md-admonition-bg-color--#{$name}: #{color.adjust($tint, $alpha: -0.9)};
       --md-admonition-icon-color--#{$name}: #{$tint};
     }
   }
