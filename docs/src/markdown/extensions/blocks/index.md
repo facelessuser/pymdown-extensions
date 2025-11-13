@@ -1,5 +1,5 @@
 ---
-icon: Lucide/cuboid
+icon: lucide/cuboid
 ---
 [:octicons-file-code-24:][_blocks]{: .source-link }
 

@@ -1,5 +1,5 @@
 ---
-icon: Lucide/calculator
+icon: lucide/calculator
 ---
 [:octicons-file-code-24:][_arithmatex]{: .source-link }
 

@@ -1,5 +1,5 @@
 ---
-icon: Lucide/asterisk
+icon: lucide/asterisk
 ---
 [:octicons-file-code-24:][_betterem]{: .source-link }
 
