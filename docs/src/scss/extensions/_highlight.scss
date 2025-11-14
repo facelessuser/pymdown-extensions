@@ -7,18 +7,6 @@
   --highlight-svg-arrow-collapse: svg-load("@mdi/svg/svg/arrow-collapse.svg");
 }
 
-.md-code__button {
-  background-color: transparent !important;
-}
-
-.md-code__nav {
-  background-color: transparent !important;
-
-  &:hover {
-    background-color: var(--md-code-bg-color) !important;
-  }
-}
-
 .highlight {
   .kc { // Keyword constant
     color: var(--md-code-hl-constant-color);
