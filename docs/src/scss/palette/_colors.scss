@@ -75,10 +75,10 @@
     --md-footer-fg-color: var(--md-default-fg-color);
 
     --md-default-bg-color:               var(--md-default-bg-color--darkest);
-    --md-default-bg-color--light:        #{color.adjust(color.mix(color(srgb 0 0 0), dracula.$drac-bg, 20%, $method: oklab), $alpha: -0.3)};
-    --md-default-bg-color--lighter:      #{color.adjust(color.mix(color(srgb 0 0 0), dracula.$drac-bg, 20%, $method: oklab), $alpha: -0.6)};
-    --md-default-bg-color--lightest:     #{color.adjust(color.mix(color(srgb 0 0 0), dracula.$drac-bg, 20%, $method: oklab), $alpha: -0.9)};
-    --md-default-bg-color--trans:        #{color.adjust(color.mix(color(srgb 0 0 0), dracula.$drac-bg, 20%, $method: oklab), $alpha: -1)};
+    --md-default-bg-color--light:        #{color.adjust(color.mix(color(srgb 0 0 0), dracula.$drac-bg, 25%, $method: oklab), $alpha: -0.3)};
+    --md-default-bg-color--lighter:      #{color.adjust(color.mix(color(srgb 0 0 0), dracula.$drac-bg, 25%, $method: oklab), $alpha: -0.6)};
+    --md-default-bg-color--lightest:     #{color.adjust(color.mix(color(srgb 0 0 0), dracula.$drac-bg, 25%, $method: oklab), $alpha: -0.9)};
+    --md-default-bg-color--trans:        #{color.adjust(color.mix(color(srgb 0 0 0), dracula.$drac-bg, 25%, $method: oklab), $alpha: -1)};
 
     --md-tab-control-bg: var(--md-default-bg-color--dark);
 
