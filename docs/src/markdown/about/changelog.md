@@ -3,6 +3,12 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 10.18
+
+-   **NEW**: Critic: `view` mode has been deprecated. To avoid warnings or future issues, explicitly set `mode` to
+    either `accept` or `reject`. In the future, the new default will be `accept` and the `view` mode will be removed
+    entirely.
+
 ## 10.17.2
 
 -   **FIX**: Blocks: Blocks extensions will now better handle nesting of indented style Admonitions, Details, and Tabbed
