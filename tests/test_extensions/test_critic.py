@@ -53,7 +53,7 @@ class TestCriticViewMode(util.MdCase):
             * test
 
             ++}
-            """,
+            """,  # noqa: E501
             """
             <p>Here is some <del class="critic"><em>incorrect</em></del> Markdown.  I am adding this<ins class="critic"> here.</ins>.  Here is some more <del class="critic">text
             that I am removing</del>text.  And here is even more <ins class="critic">text that I
@@ -85,7 +85,7 @@ class TestCriticViewMode(util.MdCase):
             <li>test</li>
             </ul>
             </ins>
-            """,
+            """,  # noqa: E501
             True
         )
 
@@ -139,7 +139,7 @@ class TestCriticAcceptMode(util.MdCase):
             * test
 
             ++}
-            """,
+            """,  # noqa: E501
             """
             <p>Here is some  Markdown.  I am adding this here..  Here is some more text.  And here is even more text that I
             am adding.  Paragraph was deleted and replaced with some spaces.</p>
@@ -156,7 +156,7 @@ class TestCriticAcceptMode(util.MdCase):
             <li>test</li>
             <li>test</li>
             </ul>
-            """,
+            """,  # noqa: E501
             True
         )
 
@@ -210,7 +210,7 @@ class TestCriticRejectMode(util.MdCase):
             * test
 
             ++}
-            """,
+            """,  # noqa: E501
             """
             <p>Here is some <em>incorrect</em> Markdown.  I am adding this.  Here is some more text
             that I am removingtext.  And here is even more adding.</p>
