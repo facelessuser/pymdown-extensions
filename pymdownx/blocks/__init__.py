@@ -492,6 +492,17 @@ class BlocksProcessor(BlockProcessor):
             for r in range(len(self.stack)):
                 entry = self.stack[r]
                 if entry.hungry and parent is entry.parent:
+
+                    # Old school, non-block admonitions, details, and content tabs
+                    # can intercept content before it makes it to blocks. If they
+                    # process content and an HTML sibling is found after the current
+                    # block, move it inside the the current target.
+                    last_child = self.lastChild(parent)
+                    if last_child is not None and last_child is not entry.el:
+                        target = entry.block.on_add(entry.el)
+                        parent.remove(last_child)
+                        target.append(last_child)
+
                     # Get the target element and parse
                     entry.hungry = False
                     self.parse_blocks(blocks, parent)

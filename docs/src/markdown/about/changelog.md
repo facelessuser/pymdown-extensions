@@ -3,6 +3,11 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 10.17.2
+
+-   **FIX**: Blocks: Blocks extensions will now better handle nesting of indented style Admonitions, Details, and Tabbed
+    and other non-conflicting blocks.
+
 ## 10.17.1
 
 -   **FIX**: Fix an issue where Highlight can override another extension in the "registered" list in Python Markdown.
