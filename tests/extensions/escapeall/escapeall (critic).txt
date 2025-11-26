@@ -1,3 +1,0 @@
-We shouldn't escape STX and ETX characters:
-
-Don't escape crtiic placeholder: \{>>comment<<}
