@@ -5,7 +5,9 @@ icon: lucide/circle-question-mark
 
 ## Function References in YAML
 
-> How do I specify function references in YAML if I am using a module like [MkDocs][mkdocs]?
+/// question
+How do I specify function references in YAML if I am using a module like [MkDocs][mkdocs]?
+///
 
 Pymdown Extensions has a number of extensions that expose customization via options that take function references. If
 you are using a project like [MkDocs][mkdocs], which allows a user to configure Python Markdown extensions via YAML,
@@ -47,7 +49,9 @@ markdown_extensions:
 
 ## GitHub-ish Configurations
 
-> How do I get GitHub Flavored Markdown?
+/// question
+How do I get GitHub Flavored Markdown?
+///
 
 A recommended GitHub configuration is provided below to emulate a setup that gives a GitHub feel.
 

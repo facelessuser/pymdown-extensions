@@ -499,7 +499,13 @@ class TestBlocksMdInHTML(util.MdCase):
 class TestBlocksTab(util.MdCase):
     """Test Blocks tab cases."""
 
-    extension = ['pymdownx.blocks.tab', 'pymdownx.superfences', 'markdown.extensions.def_list', 'pymdownx.details']
+    extension = [
+        'admonition',
+        'pymdownx.blocks.tab',
+        'pymdownx.superfences',
+        'markdown.extensions.def_list',
+        'pymdownx.details'
+    ]
     extension_configs = {
         'pymdownx.blocks.tab': {'alternate_style': True}
     }
@@ -894,6 +900,65 @@ class TestBlocksTab(util.MdCase):
             <ul>
             <li>Parent 2</li>
             </ul>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_nesting_with_legacy_style(self):
+        """Test nesting with legacy style admonitions."""
+
+        self.check_markdown(
+            '''
+            !!! note "Admonition 1"
+
+                Admonition 1
+
+                /// tab | Tab 1
+
+                Test tab 1
+
+                !!! note "Admonition 2"
+
+                    Admonition 2
+
+                    //// tab | Tab 2
+
+                    Test tab 2
+
+                    !!! note "Admonition 3"
+
+                        Admonition 3
+
+                    ////
+                ///
+            ''',
+            '''
+            <div class="admonition note">
+            <p class="admonition-title">Admonition 1</p>
+            <p>Admonition 1</p>
+            <div class="tabbed-set tabbed-alternate" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Tab 1</label></div>
+            <div class="tabbed-content">
+            <div class="tabbed-block">
+            <p>Test tab 1</p>
+            <div class="admonition note">
+            <p class="admonition-title">Admonition 2</p>
+            <p>Admonition 2</p>
+            <div class="tabbed-set tabbed-alternate" data-tabs="2:1"><input checked="checked" id="__tabbed_2_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="__tabbed_2_1">Tab 2</label></div>
+            <div class="tabbed-content">
+            <div class="tabbed-block">
+            <p>Test tab 2</p>
+            <div class="admonition note">
+            <p class="admonition-title">Admonition 3</p>
+            <p>Admonition 3</p>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
+            </div>
             ''',  # noqa: E501
             True
         )
