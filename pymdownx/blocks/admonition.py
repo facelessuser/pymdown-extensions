@@ -86,7 +86,7 @@ class AdmonitionExtension(BlocksExtension):
 
         self.config = {
             "types": [
-                ['note', 'attention', 'caution', 'danger', 'error', 'tip', 'hint', 'warning'],
+                ['note', 'attention', 'caution', 'danger', 'error', 'tip', 'hint', 'warning', 'important'],
                 "Generate Admonition block extensions for the given types."
             ]
         }

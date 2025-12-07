@@ -8,6 +8,7 @@ icon: lucide/scroll-text
 -   **NEW**: Critic: `view` mode has been deprecated. To avoid warnings or future issues, explicitly set `mode` to
     either `accept` or `reject`. In the future, the new default will be `accept` and the `view` mode will be removed
     entirely.
+-   **FIX**: Block Admonition: `important` should have always been available as a default.
 
 ## 10.17.2
 
