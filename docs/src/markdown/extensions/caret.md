@@ -37,13 +37,13 @@ To denote a superscript, you can surround the desired content in single `^`.  It
 superscript needs to have spaces, you must escape the spaces.
 
 ```text title="Superscript"
-H^2^0
+X^2^ + 4x - 8
 
 text^a\ superscript^
 ```
 
 /// html | div.result
-H^2^0
+X^2^ + 4x - 8
 
 text^a\ superscript^
 ///
