@@ -15,7 +15,7 @@ Adds code/syntax highlighting to standard Python-Markdown code blocks.
 See <https://pythonhosted.org/Markdown/extensions/code_hilite.html>
 for documentation.
 
-Original code Copyright 2006-2008 [Waylan Limberg](http://achinghead.com/).
+Original code Copyright 2006-2008 [Waylan Limberg](https://github.com/waylan).
 
 All changes Copyright 2008-2014 The Python Markdown Project
 
