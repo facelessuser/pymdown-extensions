@@ -34,7 +34,7 @@ Fenced Code Extension for Python Markdown
 This extension adds Fenced Code Blocks to Python-Markdown.
 See <https://python-markdown.github.io/extensions/fenced_code_blocks/>
 for documentation.
-Original code Copyright 2007-2008 [Waylan Limberg](http://achinghead.com/).
+Original code Copyright 2007-2008 [Waylan Limberg](https://github.com/waylan).
 All changes Copyright 2008-2014 The Python Markdown Project
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 ```
@@ -49,7 +49,7 @@ CodeHilite Extension for Python-Markdown
 Adds code/syntax highlighting to standard Python-Markdown code blocks.
 See <https://python-markdown.github.io/extensions/code_hilite/>
 for documentation.
-Original code Copyright 2006-2008 [Waylan Limberg](http://achinghead.com/).
+Original code Copyright 2006-2008 [Waylan Limberg](https://github.com/waylan).
 All changes Copyright 2008-2014 The Python Markdown Project
 License: [BSD](http://www.opensource.org/licenses/bsd-license.php)
 ```
