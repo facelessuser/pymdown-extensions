@@ -13,15 +13,6 @@ represent edits to a Markdown document.  This extension runs before all other ex
 Critic allows you to automatically accept edits or reject the edits and render the output accordingly. It also allows
 for visually displaying the changes in HTML output ([mileage may vary](#limitations-with-previewing-critic-markup)).
 
-/// warning | Previews Deprecated
-The preview mode has been deprecated, and the default `mode` will be set to `accept` in the future. If you rely on
-Critic, is advised to explicitly set `mode` to either `accept` or `reject` to be protected against any issues related
-to this change in default and removal of the `view` mode in the future.
-
-The `view` mode is being removed simply because support was never that great, and in order to get the quality expected,
-the feature would have to be implemented into the core of Python Markdown, something that is impossible for us to do.
-///
-
 The Critic extension can be included in Python Markdown by using the following:
 
 ```py3
@@ -225,8 +216,8 @@ here:
 The Critic extension does its best by employing a preprocessor to inject the critic tags before all other parsing and a
 post-processor to clean up some of the weird side effects of the injection (only selected odd cases as others are more
 difficult to fix).  It injects some classes into the edit region's HTML output which allows for CSS styling.  There is
-probably a lot more post-processing that could be done to fix more issues, but whether this extension will be going
-further down that road has not yet been decided.
+probably a lot more post-processing that could be done to fix more issues, but there are no plans to enhance the view
+mode any further than it already has been.
 
 ## CSS
 

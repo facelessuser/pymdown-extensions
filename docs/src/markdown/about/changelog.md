@@ -6,6 +6,8 @@ icon: lucide/scroll-text
 ## 10.19
 
 -   **NEW**: Emoji: Update Twemoji to use Unicode 16.
+-   **NEW**: Critic: Roll back `view` mode deprecation as some still like to use it, though further enhancements to this
+    mode are not planned.
 
 ## 10.18
 

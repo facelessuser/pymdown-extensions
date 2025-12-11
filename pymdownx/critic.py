@@ -27,7 +27,6 @@ from markdown import Extension
 from markdown.preprocessors import Preprocessor
 from markdown.postprocessors import Postprocessor
 from markdown.util import STX, ETX
-from .util import warn_deprecated
 import re
 
 SOH = '\u0001'  # start
@@ -297,7 +296,7 @@ class CriticExtension(Extension):
         self.config = {
             'mode': [
                 'view',
-                "Critic mode to run in: 'view' (deprecated), 'accept' (future default), or 'reject' - Default: view "
+                "Critic mode to run in: 'view', 'accept', or 'reject' - Default: view "
             ],
             'raw_view': [False, "Raw view keeps the output as the raw markup for view mode - Default False"]
         }
@@ -312,12 +311,6 @@ class CriticExtension(Extension):
         post = CriticsPostprocessor(self.critic_stash)
         critic = CriticViewPreprocessor(self.critic_stash)
         critic.config = self.getConfigs()
-        if critic.config['mode'] == 'view':
-            warn_deprecated(
-                "pymdownx.critic has deprecated the 'view' mode and will default the option to 'accept' "
-                "in the future. It is advised to set the 'mode' option explicitly to either 'accept' or "
-                "'reject' to avoid issues when this change takes place."
-            )
         md.preprocessors.register(critic, "critic", 31.1)
         md.postprocessors.register(post, "critic-post", 25)
         md.registerExtensions(["pymdownx._bypassnorm"], {})

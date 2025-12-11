@@ -1,7 +1,5 @@
 """Test caret."""
 from .. import util
-import pytest
-
 
 class TestCriticViewMode(util.MdCase):
     """Test view mode."""
@@ -15,7 +13,6 @@ class TestCriticViewMode(util.MdCase):
         }
     }
 
-    @pytest.mark.filterwarnings("ignore")
     def test_view(self):
         """Test view mode."""
 
@@ -245,7 +242,6 @@ class TestCriticEscapeAll(util.MdCase):
         }
     }
 
-    @pytest.mark.filterwarnings("ignore")
     def test_escape(self):
         """Test with escapes."""
 
