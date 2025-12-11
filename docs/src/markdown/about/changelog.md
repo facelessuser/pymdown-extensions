@@ -3,6 +3,10 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 10.19
+
+-   **NEW**: Emoji: Update Twemoji to use Unicode 16.
+
 ## 10.18
 
 -   **NEW**: Critic: `view` mode has been deprecated. To avoid warnings or future issues, explicitly set `mode` to

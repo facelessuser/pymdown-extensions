@@ -2,8 +2,8 @@
 
 Names from emojione database. Do not edit by hand.
 """
-version = "v15.1.0"
-index_version = "9.0.1"
+version = "v16.0.1"
+index_version = "10.0.0"
 name = "twemoji"
 emoji = {
     ":100:": {
@@ -363,7 +363,7 @@ emoji = {
     },
     ":asterisk:": {
         "category": "symbols",
-        "name": "keycap: *",
+        "name": "keycap: asterisk",
         "unicode": "2a-20e3",
         "unicode_alt": "002a-20e3"
     },
@@ -3314,6 +3314,11 @@ emoji = {
         "name": "face vomiting",
         "unicode": "1f92e"
     },
+    ":face_with_bags_under_eyes:": {
+        "category": "people",
+        "name": "face with bags under eyes",
+        "unicode": "1fae9"
+    },
     ":face_with_diagonal_mouth:": {
         "category": "people",
         "name": "face with diagonal mouth",
@@ -3668,6 +3673,11 @@ emoji = {
         "category": "objects",
         "name": "film frames",
         "unicode": "1f39e"
+    },
+    ":fingerprint:": {
+        "category": "people",
+        "name": "fingerprint",
+        "unicode": "1fac6"
     },
     ":fingers_crossed:": {
         "category": "people",
@@ -4820,6 +4830,11 @@ emoji = {
         "name": "flag: Saudi Arabia",
         "unicode": "1f1f8-1f1e6"
     },
+    ":flag_sark:": {
+        "category": "flags",
+        "name": "flag: Sark",
+        "unicode": "1f1e8-1f1f6"
+    },
     ":flag_sb:": {
         "category": "flags",
         "name": "flag: Solomon Islands",
@@ -5781,9 +5796,14 @@ emoji = {
         "name": "handshake: dark skin tone, medium-dark skin tone",
         "unicode": "1faf1-1f3ff-200d-1faf2-1f3fe"
     },
+    ":harp:": {
+        "category": "activity",
+        "name": "harp",
+        "unicode": "1fa89"
+    },
     ":hash:": {
         "category": "symbols",
-        "name": "keycap: #",
+        "name": "keycap: pound",
         "unicode": "23-20e3",
         "unicode_alt": "0023-20e3"
     },
@@ -7016,6 +7036,11 @@ emoji = {
         "category": "people",
         "name": "grinning squinting face",
         "unicode": "1f606"
+    },
+    ":leafless_tree:": {
+        "category": "nature",
+        "name": "leafless tree",
+        "unicode": "1fabe"
     },
     ":leafy_green:": {
         "category": "food",
@@ -14320,6 +14345,11 @@ emoji = {
         "name": "rooster",
         "unicode": "1f413"
     },
+    ":root_vegetable:": {
+        "category": "food",
+        "name": "root vegetable",
+        "unicode": "1fadc"
+    },
     ":rose:": {
         "category": "nature",
         "name": "rose",
@@ -14705,6 +14735,11 @@ emoji = {
         "category": "people",
         "name": "shorts",
         "unicode": "1fa73"
+    },
+    ":shovel:": {
+        "category": "objects",
+        "name": "shovel",
+        "unicode": "1fa8f"
     },
     ":shower:": {
         "category": "objects",
@@ -15106,6 +15141,11 @@ emoji = {
         "category": "nature",
         "name": "spider web",
         "unicode": "1f578"
+    },
+    ":splatter:": {
+        "category": "activity",
+        "name": "splatter",
+        "unicode": "1fadf"
     },
     ":sponge:": {
         "category": "objects",

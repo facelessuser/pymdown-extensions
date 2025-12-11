@@ -660,6 +660,7 @@ face_exhaling :face_exhaling:<br>
 face_holding_back_tears :face_holding_back_tears:<br>
 face_in_clouds :face_in_clouds:<br>
 face_vomiting :face_vomiting:<br>
+face_with_bags_under_eyes :face_with_bags_under_eyes:<br>
 face_with_diagonal_mouth :face_with_diagonal_mouth:<br>
 face_with_hand_over_mouth :face_with_hand_over_mouth:<br>
 face_with_monocle :face_with_monocle:<br>
@@ -731,6 +732,7 @@ field_hockey :field_hockey:<br>
 file_cabinet :file_cabinet:<br>
 file_folder :file_folder:<br>
 film_frames :film_frames:<br>
+fingerprint :fingerprint:<br>
 fingers_crossed :fingers_crossed:<br>
 fingers_crossed_tone1 :fingers_crossed_tone1:<br>
 fingers_crossed_tone2 :fingers_crossed_tone2:<br>
@@ -961,6 +963,7 @@ flag_rs :flag_rs:<br>
 flag_ru :flag_ru:<br>
 flag_rw :flag_rw:<br>
 flag_sa :flag_sa:<br>
+flag_sark :flag_sark:<br>
 flag_sb :flag_sb:<br>
 flag_sc :flag_sc:<br>
 flag_sd :flag_sd:<br>
@@ -1153,6 +1156,7 @@ handshake_tone5_tone1 :handshake_tone5_tone1:<br>
 handshake_tone5_tone2 :handshake_tone5_tone2:<br>
 handshake_tone5_tone3 :handshake_tone5_tone3:<br>
 handshake_tone5_tone4 :handshake_tone5_tone4:<br>
+harp :harp:<br>
 hash :hash:<br>
 hatched_chick :hatched_chick:<br>
 hatching_chick :hatching_chick:<br>
@@ -1400,6 +1404,7 @@ large_orange_diamond :large_orange_diamond:<br>
 last_quarter_moon :last_quarter_moon:<br>
 last_quarter_moon_with_face :last_quarter_moon_with_face:<br>
 laughing :laughing:<br>
+leafless_tree :leafless_tree:<br>
 leafy_green :leafy_green:<br>
 leaves :leaves:<br>
 ledger :ledger:<br>
@@ -2860,6 +2865,7 @@ roller_coaster :roller_coaster:<br>
 roller_skate :roller_skate:<br>
 rolling_eyes :rolling_eyes:<br>
 rooster :rooster:<br>
+root_vegetable :root_vegetable:<br>
 rose :rose:<br>
 rosette :rosette:<br>
 rotating_light :rotating_light:<br>
@@ -2937,6 +2943,7 @@ shirt :shirt:<br>
 shopping_bags :shopping_bags:<br>
 shopping_cart :shopping_cart:<br>
 shorts :shorts:<br>
+shovel :shovel:<br>
 shower :shower:<br>
 shrimp :shrimp:<br>
 shushing_face :shushing_face:<br>
@@ -3017,6 +3024,7 @@ speech_left :speech_left:<br>
 speedboat :speedboat:<br>
 spider :spider:<br>
 spider_web :spider_web:<br>
+splatter :splatter:<br>
 sponge :sponge:<br>
 spoon :spoon:<br>
 squeeze_bottle :squeeze_bottle:<br>
