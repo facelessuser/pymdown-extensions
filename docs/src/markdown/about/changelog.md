@@ -3,6 +3,11 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 10.19.1
+
+-   **FIX**: Arithmatex: Fix issue where block `$$` math used inline within a paragraph could result in nested math
+    parsing.
+
 ## 10.19
 
 -   **NEW**: Emoji: Update Twemoji to use Unicode 16.
