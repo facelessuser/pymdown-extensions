@@ -149,9 +149,18 @@ class TestArithmatexBlockEscapes(util.MdCase):
             True
         )
 
+    def test_nested_inline_dollar(self):
+        """Test nested inline dollar."""
 
-class TestArithmatexHang(util.MdCase):
-    """Test hang cases."""
+        self.check_markdown(
+            R'''
+            a $$x$$ b
+            ''',
+            R'''
+            <p>a $<span class="arithmatex"><span class="MathJax_Preview">x</span><script type="math/tex">x</script></span>$ b</p>
+            ''',  # noqa: E501
+            True
+        )
 
     def test_hang_dollar(self):
         """
