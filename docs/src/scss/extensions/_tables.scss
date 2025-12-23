@@ -1,6 +1,9 @@
 @use "../utilities/convert";
 
 .md-typeset table:not([class]) {
+  background: none;
+  border-radius: convert.px2rem(8px);
+
   th {
     border-bottom: convert.px2rem(2px) solid var(--md-accent-fg-color);
   }

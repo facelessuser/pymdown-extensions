@@ -71,6 +71,7 @@ $old-admonitions: (
 
 /* Dark mode changes */
 .md-typeset .admonition {
+  font-size: inherit;
   background: var(--md-admonition-bg-color--note);
   border-width: 0;
   border-left-width: 4px;
@@ -132,8 +133,4 @@ $old-admonitions: (
       }
     }
   }
-}
-
-.admonition:has(.admonition-title:only-child) {
-  padding-bottom: convert.px2em(7.68px);
 }

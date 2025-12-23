@@ -30,6 +30,9 @@
   --md-code-hl-color: #{dracula.$alucard-selection};
   --md-code-hl-color--light: #{dracula.$alucard-highlight};
 
+  // Table colors
+  --md-typeset-table-color: rgb(0% 0% 0% / 15%);
+
   // Custom code colors
   --md-code-hl-entity-color: #{dracula.$alucard-green};
   --md-code-hl-tag-color: #{dracula.$alucard-pink};
@@ -75,17 +78,17 @@
     --md-footer-fg-color: var(--md-default-fg-color);
 
     --md-default-bg-color:               var(--md-default-bg-color--darkest);
-    --md-default-bg-color--light:        #{color.adjust(color.mix(color(srgb 0 0 0), dracula.$drac-bg, 25%, $method: oklab), $alpha: -0.3)};
-    --md-default-bg-color--lighter:      #{color.adjust(color.mix(color(srgb 0 0 0), dracula.$drac-bg, 25%, $method: oklab), $alpha: -0.6)};
-    --md-default-bg-color--lightest:     #{color.adjust(color.mix(color(srgb 0 0 0), dracula.$drac-bg, 25%, $method: oklab), $alpha: -0.9)};
-    --md-default-bg-color--trans:        #{color.adjust(color.mix(color(srgb 0 0 0), dracula.$drac-bg, 25%, $method: oklab), $alpha: -1)};
+    --md-default-bg-color--light:        #{color.adjust(color.mix(color(srgb 0 0 0), dracula.$drac-bg, 50%, $method: oklab), $alpha: -0.3)};
+    --md-default-bg-color--lighter:      #{color.adjust(color.mix(color(srgb 0 0 0), dracula.$drac-bg, 50%, $method: oklab), $alpha: -0.6)};
+    --md-default-bg-color--lightest:     #{color.adjust(color.mix(color(srgb 0 0 0), dracula.$drac-bg, 50%, $method: oklab), $alpha: -0.9)};
+    --md-default-bg-color--trans:        #{color.adjust(color.mix(color(srgb 0 0 0), dracula.$drac-bg, 50%, $method: oklab), $alpha: -1)};
 
     --md-tab-control-bg: var(--md-default-bg-color--dark);
 
     // Dark specific colors
-    --md-default-bg-color--dark:         #{color.mix(color(srgb 0 0 0), dracula.$drac-bg, 5%, $method: oklab)};
-    --md-default-bg-color--darker:       #{color.mix(color(srgb 0 0 0), dracula.$drac-bg, 10%, $method: oklab)};
-    --md-default-bg-color--darkest:      #{color.mix(color(srgb 0 0 0), dracula.$drac-bg, 25%, $method: oklab)};
+    --md-default-bg-color--dark:         #{color.mix(color(srgb 0 0 0), dracula.$drac-bg, 15%, $method: oklab)};
+    --md-default-bg-color--darker:       #{color.mix(color(srgb 0 0 0), dracula.$drac-bg, 30%, $method: oklab)};
+    --md-default-bg-color--darkest:      #{color.mix(color(srgb 0 0 0), dracula.$drac-bg, 50%, $method: oklab)};
 
     // General text
     --md-text-color: var(--md-default-fg-color);
@@ -115,6 +118,9 @@
     --md-code-hl-color--light: #{dracula.$drac-highlight};
     --md-code-bg-color--light: #{color.change(dracula.$drac-bg, $alpha: 0.9)};
     --md-code-bg-color--lighter: #{color.change(dracula.$drac-bg, $alpha: 0.5)};
+
+    // Table colors
+    --md-typeset-table-color: rgb(100% 100% 100% / 15%);
 
     // Custom code colors
     --md-code-hl-entity-color: #{dracula.$drac-green};

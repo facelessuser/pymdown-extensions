@@ -220,22 +220,31 @@
       }
     }
   }
+}
 
-  @include break.break-to-device(mobile) {
+@include break.break-to-device(mobile) {
+  .md-content__inner > {
+    diagram-div {
+      margin-right: convert.px2rem(-16px);
+      margin-left: convert.px2rem(-16px);
+    }
+    .highlight span.filename {
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+    .collapse-code {
+      margin-right: convert.px2rem(-16px);
+      margin-left: convert.px2rem(-16px);
 
-    > {
-      diagram-div {
-        margin-right: convert.px2rem(-16px);
-        margin-left: convert.px2rem(-16px);
-      }
-      .collapse-code {
-        margin-right: convert.px2rem(-16px);
-        margin-left: convert.px2rem(-16px);
-
-        label.collapse {
-          left: convert.px2rem(16px);
-        }
+      label.collapse {
+        left: convert.px2rem(16px);
       }
     }
   }
+}
+
+.md-typeset .highlight+.result {
+  border-right-width: convert.px2rem(2px);
+  border-bottom-width: convert.px2rem(2px);
+  border-left-width: convert.px2rem(2px);
 }
