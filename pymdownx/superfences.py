@@ -34,6 +34,7 @@ from markdown.extensions.attr_list import get_attrs
 from markdown import util as md_util
 import functools
 import re
+from .quotes import QuotesExtension
 
 SOH = '\u0001'  # start
 EOT = '\u0004'  # end
@@ -346,6 +347,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         self.tab_len = self.md.tab_length
         self.checked_hl_settings = False
         self.codehilite_conf = {}
+        self.checked_quotes = False
+        self.quotes_logic = False
 
     def normalize_ws(self, text):
         """Normalize whitespace."""
@@ -356,6 +359,17 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         """Dedent the fenced block lines."""
 
         return '\n'.join([line[self.ws_virtual_len:] for line in lines])
+
+    def is_pymdownx_quotes_logic(self):
+        """Check if we are using the Quotes blockquote logic."""
+
+        if not self.checked_quotes:
+            self.checked_quotes = True
+            for ext in self.md.registeredExtensions:
+                if isinstance(ext, QuotesExtension):
+                    self.quotes_logic = True
+                    break
+        return self.quotes_logic
 
     def get_hl_settings(self):
         """Check for Highlight extension to get its configurations."""
@@ -444,33 +458,41 @@ class SuperFencesBlockPreprocessor(Preprocessor):
     def eval_quoted(self, ws, content, quote_level, start, end):
         """Evaluate fence inside a blockquote."""
 
+        quotes_logic = self.is_pymdownx_quotes_logic()
+
         if quote_level > self.quote_level:
             # Quote level exceeds the starting quote level
             self.clear()
-        elif quote_level <= self.quote_level:
-            if content == '':
-                # Empty line is okay
-                self.code.append(ws + content)
-                self.empty_lines += 1
-            elif len(ws) < self.ws_len:
-                # Not indented enough
+            return
+
+        if quotes_logic and quote_level != self.quote_level:
+            # If we are using the Quotes extension, quote levels on each line must match.
+            self.clear()
+            return
+
+        if content == '':
+            # Empty line is okay
+            self.code.append(ws + content)
+            self.empty_lines += 1
+        elif len(ws) < self.ws_len:
+            # Not indented enough
+            self.clear()
+        elif self.empty_lines and quote_level < self.quote_level:
+            # Quote levels don't match and we are signified
+            # the end of the block with an empty line
+            self.clear()
+        elif self.fence_end.match(content) is not None:
+            # End of fence
+            try:
+                self.process_nested_block(ws, content, start, end)
+            except SuperFencesException:
+                raise
+            except Exception:
                 self.clear()
-            elif self.empty_lines and quote_level < self.quote_level:
-                # Quote levels don't match and we are signified
-                # the end of the block with an empty line
-                self.clear()
-            elif self.fence_end.match(content) is not None:
-                # End of fence
-                try:
-                    self.process_nested_block(ws, content, start, end)
-                except SuperFencesException:
-                    raise
-                except Exception:
-                    self.clear()
-            else:
-                # Content line
-                self.empty_lines = 0
-                self.code.append(ws + content)
+        else:
+            # Content line
+            self.empty_lines = 0
+            self.code.append(ws + content)
 
     def process_nested_block(self, ws, content, start, end):
         """Process the contents of the nested block."""

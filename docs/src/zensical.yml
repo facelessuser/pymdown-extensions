@@ -88,6 +88,7 @@ nav:
     - Mark: extensions/mark.md
     - PathConverter: extensions/pathconverter.md
     - ProgressBar: extensions/progressbar.md
+    - Quotes: extensions/quotes.md
     - SaneHeaders: extensions/saneheaders.md
     - SmartSymbols: extensions/smartsymbols.md
     - Snippets: extensions/snippets.md
@@ -213,6 +214,7 @@ markdown_extensions:
       - danger
       - bug
       - example
+      - important
       - quote
   - pymdownx.blocks.details:
       types:
@@ -242,6 +244,8 @@ markdown_extensions:
         class: bug
       - name: details-example
         class: example
+      - name: details-important
+        class: important
       - name: details-quote
         class: quote
   - pymdownx.blocks.html:
@@ -251,6 +255,8 @@ markdown_extensions:
       combine_header_slug: True
       slugify: !!python/object/apply:pymdownx.slugs.slugify {kwds: {case: lower}}
   - pymdownx.blocks.caption:
+  - pymdownx.quotes:
+      callouts: true
   - tools.collapse_code:
       expand_text: ''
       collapse_text: ''

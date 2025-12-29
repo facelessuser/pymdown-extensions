@@ -12,6 +12,8 @@ CDN
 CDNs
 CSS
 CVE
+Callout
+Callouts
 Changelog
 Cloudflare
 CodeHilite
@@ -44,6 +46,7 @@ GitHub
 GitHubEmoji
 GitLab
 Gitter
+Gruber
 HeaderAnchor
 Hunspell
 Inline
@@ -84,13 +87,11 @@ PlainHTML
 Pomaceous
 Postprocessor
 ProgressBar
-EmojiOne
 PyMdown
 PyPI
 PyYAML
 PyYaml
 Pygments
-Gruber
 Pymdownx
 Reindent
 Rosaceae
@@ -134,6 +135,8 @@ blockquotes
 bool
 boolean
 builtins
+callout
+callouts
 checkbox
 checkboxes
 cmd

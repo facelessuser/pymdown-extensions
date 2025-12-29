@@ -3,6 +3,15 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 10.20
+
+-   **NEW**: Quotes: New blockquotes extension added that uses a more modern approach when compared to Python Markdown's
+    default. Quotes specifically will not group consecutive blockquotes together in the same lazy fashion that the
+    default Python Markdown does which follows a more modern trend to how parsers these days handle block quotes.
+
+    In addition, Quotes also provides an optional feature to enable specifying callouts/alerts in the style used by
+    GitHub and Obsidian.
+
 ## 10.19.1
 
 -   **FIX**: Arithmatex: Fix issue where block `$$` math used inline within a paragraph could result in nested math

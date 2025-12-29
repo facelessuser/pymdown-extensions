@@ -23,7 +23,7 @@ MagicLink extension, we would include it in Python Markdown like so:
 
 Check out documentation on each extension to learn more about how to configure and use each one.
 
-/// danger | Reminder
+/// important | Reminder
 Please read the [Usage Notes](usage_notes.md) for information on extension compatibility and general notes to be
 aware of when using these extensions.
 ///
@@ -40,6 +40,6 @@ aware of when using these extensions.
 [Highlight](extensions/highlight.md)                          | [InlineHilite](extensions/inlinehilite.md)              | [Keys](extensions/keys.md)
 [Legacy: Details](extensions/details.md)                      | [Legacy: Tabbed](extensions/tabbed.md)                  | [MagicLink](extensions/magiclink.md)
 [Mark](extensions/mark.md)                                    | [PathConverter](extensions/pathconverter.md)            | [ProgressBar](extensions/progressbar.md)
-[SaneHeaders](extensions/saneheaders.md)                      | [SmartSymbols](extensions/smartsymbols.md)              | [Snippets](extensions/snippets.md)
-[StripHTML](extensions/striphtml.md)                          | [SuperFences](extensions/superfences.md)                | [Tasklist](extensions/tasklist.md)
-[Tilde](extensions/tilde.md)
+[Quotes](extensions/quotes.md)                                | [SaneHeaders](extensions/saneheaders.md)                | [SmartSymbols](extensions/smartsymbols.md)
+[Snippets](extensions/snippets.md)                            | [StripHTML](extensions/striphtml.md)                    | [SuperFences](extensions/superfences.md)
+[Tasklist](extensions/tasklist.md)                            | [Tilde](extensions/tilde.md)                            |
