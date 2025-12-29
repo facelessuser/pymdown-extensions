@@ -85,12 +85,17 @@ This will not.
 
 ## Callouts
 
-GitHub and [Obsidian](https://obsidian.md/) allow for specifying special alerts/admonitions via a blockquote syntax
-called callouts. The Quotes extensions allows you to opt-in to specifying such alerts that mimics Obsidian's approach,
-which is GitHub compatible. Quotes will take the special blockquote syntax and output HTML that matches the output
-of [Admonitions][admonition] or [Details](./details.md).
+[GitHub][github-alerts] and [Obsidian](https://help.obsidian.md/callouts) allow for specifying admonitions (also known
+as alerts or callouts) by using a special syntax at the start of a blockquote. While Obsidian does this with a more
+feature rich syntax, GitHub offers a more stripped down version.
 
-To specify normal callouts, simply ensure the that the first line of a blockquote contains the a class name in within
+The Quotes extensions allows you to opt-in approach to specifying admonitions in a similar approach that is compatible
+with Obsidian and GitHub if usage is limited to what they offer.
+
+Quotes will take the special blockquote syntax and output HTML that matches the output of [Admonitions][admonition] or
+[Details](./details.md).
+
+To specify normal callouts, simply ensure the that the first line of a blockquote contains a class name in within
 `[!...]`.
 
 ```text title="Callout"
@@ -103,7 +108,15 @@ To specify normal callouts, simply ensure the that the first line of a blockquot
 > Here is a note
 ///
 
-If you'd like a custom title, simply provide one after the callout class specifier.
+/// note
+GitHub only supports the simple class notation, and only recognizes the classes: note, tip, important, warning, caution.
+
+There are no restrictions as to which classes you can specify, but if cross compliance is desired, take note of what
+GitHub supports. Learn more [here][github-alerts].
+///
+
+Borrowing from Obsidian, Quotes also enables a few more advanced features. If you'd like a custom title, simply provide
+one on the same line as the class specifier. If one is not provided, a title is sourced from the first the class.
 
 ```text title="Callout with Custom Title"
 > [!tip] Here's a tip
@@ -125,6 +138,24 @@ To make a collapsible callout, just add `+` (open) or `-` (closed) immediately a
 /// html | div.result
 > [!danger]- Click to see more
 > I'm collapsible.
+///
+
+Lastly, if you need to specify more multiple classes, you can utilize the Obsidian approach and and separate each class
+with `|`. The first class will be used as the main title if no title is provided, but all classes will be applied to the
+callout.
+
+```text title="Collapsible Callout"
+> [!warning | inline | end]
+> Make inline and set at the end.
+
+A paragraph.
+```
+
+/// html | div.result
+> [!warning | inline | end]
+> Make inline and set at the end.
+
+A paragraph.
 ///
 
 ## Options

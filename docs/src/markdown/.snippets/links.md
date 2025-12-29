@@ -52,6 +52,7 @@
 [footnotes]: https://python-markdown.github.io/extensions/footnotes/
 [gemoji-index]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/gemoji_db.py
 [gemoji]: https://github.com/github/gemoji
+[github-alerts]: https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax#alerts
 [github-api-emoji]: https://developer.github.com/v3/emojis/
 [github-api-oauth]: https://developer.github.com/v3/oauth/
 [highlightjs]: https://highlightjs.org/

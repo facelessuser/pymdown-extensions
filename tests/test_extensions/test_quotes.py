@@ -192,3 +192,20 @@ class TestQuotes(util.MdCase):
             """,
             True
         )
+
+    def test_multi_class(self):
+        """Test multiple classes."""
+
+        self.check_markdown(
+            """
+            > [!note | inline | end]
+            > This is a note
+            """,
+            """
+            <div class="admonition note inline end">
+            <p class="admonition-title">Note</p>
+            <p>This is a note</p>
+            </div>
+            """,
+            True
+        )

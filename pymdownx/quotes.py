@@ -20,7 +20,7 @@ class QuotesProcessor(BlockProcessor):
     """Process blockquotes."""
 
     RE = re.compile(r'(^|\n)[ ]{0,3}>[ ]?(.*)')
-    RE_CALLOUT = re.compile(r'>[ ]*\[!(\w+)]([-+])?(.*?)(?:\n|$)')
+    RE_CALLOUT = re.compile(r'> *\[!([\w-]+(?: *\| *[\w-]+)*)]([-+])?(.*?)(?:\n|$)')
 
     def __init__(self, parser: BlockParser, config: dict[str, Any]) -> None:
         """Initialize."""
@@ -37,7 +37,7 @@ class QuotesProcessor(BlockProcessor):
         """Create blockquote."""
 
         block = blocks.pop(0)
-        alert = ''
+        alert = []
         details = ''
         m = self.RE.search(block)
         if m:
@@ -55,18 +55,18 @@ class QuotesProcessor(BlockProcessor):
                         break
                     index += 1
                 if m2:
-                    alert = m2.group(1).lower()
+                    alert = [x.strip() for x in m2.group(1).split('|')]
                     if m2.group(2):
                         details = 'open' if m2.group(2) == '+' else 'closed'
                     title = m2.group(3).strip() if m2.group(3) else ''
                     if not title:
-                        title = alert.title()
+                        title = alert[0].title()
                     lines[index] = ''
                     lines.insert(index, title)
             block = '\n'.join([self.clean(l) for l in lines])
 
         # This is a new blockquote. Create a new parent element.
-        attrs = {'data-alert': alert, 'data-alert-collapse': details} if alert else {}
+        attrs = {'data-alert': ' '.join(alert), 'data-alert-collapse': details} if alert else {}
         quote = etree.SubElement(parent, 'blockquote', attrs)
 
         # Recursively parse block with blockquote as parent.
