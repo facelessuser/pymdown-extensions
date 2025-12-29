@@ -20,6 +20,7 @@
 [_mark]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/mark.py "Source"
 [_pathconverter]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/pathconverter.py "Source"
 [_progressbar]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/progressbar.py "Source"
+[_quotes]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/quotes.py "Source"
 [_saneheaders]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/saneheaders.py "Source"
 [_slugs]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/slugs.py "Source"
 [_smartsymbols]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/smartsymbols.py "Source"
@@ -36,6 +37,7 @@
 [atomic]: https://python-markdown.github.io/extensions/api/#working_with_et
 [attr-list]: https://python-markdown.github.io/extensions/attr_list/
 [bleach]: https://pypi.python.org/pypi/bleach
+[blockquotes]: https://daringfireball.net/projects/markdown/syntax#blockquote
 [codehilite]: https://python-markdown.github.io/extensions/code_hilite/
 [coverage]: https://coverage.readthedocs.io
 [critic-markup]: http://criticmarkup.com/
@@ -64,6 +66,7 @@
 [mkdocs-config]: https://github.com/facelessuser/pymdown-extensions/blob/master/mkdocs.yml
 [mkdocs-material]: https://github.com/squidfunk/mkdocs-material
 [mkdocs]: https://github.com/mkdocs/mkdocs
+[multimarkdown-critic]: https://fletcher.github.io/MultiMarkdown-6/syntax/critic.html
 [nested-markdown]: https://python-markdown.github.io/extensions/extra/#nested-markdown-inside-html-blocks
 [nl2br]: https://python-markdown.github.io/extensions/nl2br/
 [octicons]: https://octicons.github.com/
