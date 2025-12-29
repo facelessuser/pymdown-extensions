@@ -98,19 +98,18 @@ class QuotesTreeprocessor(Treeprocessor):
                 collapse = b.attrib.get('data-alert-collapse', '')
                 if collapse:
                     b.tag = 'details'
+                    child = b.find('*')
                     if collapse == 'open':
                         b.attrib['open'] = 'open'
                     c = b.attrib.get('class', '').split(' ')
-                    child = b.find('*')
-                    if child:
+                    if child is not None and child.tag.lower() == 'p':
                         child.tag = 'summary'
                 else:
                     b.tag = 'div'
+                    child = b.find('*')
                     c = b.attrib.get('class', '').split(' ')
                     c.append('admonition')
-                    child = b.find('*')
-                    if child:
-                        child.tag = 'div'
+                    if child is not None and child.tag.lower() == 'p':
                         c2 = child.attrib.get('class', '').split(' ')
                         c2.append('admonition-title')
                         child.attrib['class'] = ' '.join(_c for _c in c2 if _c)
