@@ -11,7 +11,9 @@ import xml.etree.ElementTree as etree
 from markdown.blockprocessors import BlockProcessor
 from markdown.treeprocessors import Treeprocessor
 from markdown import util
-from markdown import Extension
+from markdown import Extension, Markdown
+from markdown.blockparser import BlockParser
+from typing import Any
 
 
 class QuotesProcessor(BlockProcessor):
@@ -20,7 +22,7 @@ class QuotesProcessor(BlockProcessor):
     RE = re.compile(r'(^|\n)[ ]{0,3}>[ ]?(.*)')
     RE_CALLOUT = re.compile(r'>[ ]*\[!(\w+)]([-+])?(.*?)(?:\n|$)')
 
-    def __init__(self, parser, config):
+    def __init__(self, parser: BlockParser, config: dict[str, Any]) -> None:
         """Initialize."""
 
         super().__init__(parser)
@@ -88,7 +90,7 @@ class QuotesProcessor(BlockProcessor):
 class QuotesTreeprocessor(Treeprocessor):
     """Convert "special" quotes to the common output format for Admonitions and Details."""
 
-    def run(self, root):
+    def run(self, root: etree.Element) -> etree.Element:
         """Find and convert "special" blockquotes."""
 
         for b in root.iter('blockquote'):
@@ -99,17 +101,20 @@ class QuotesTreeprocessor(Treeprocessor):
                     if collapse == 'open':
                         b.attrib['open'] = 'open'
                     c = b.attrib.get('class', '').split(' ')
-                    b.find('*').tag = 'summary'
+                    child = b.find('*')
+                    if child:
+                        child.tag = 'summary'
                 else:
                     b.tag = 'div'
                     c = b.attrib.get('class', '').split(' ')
                     c.append('admonition')
                     child = b.find('*')
-                    child.tag = 'div'
-                    c2 = child.attrib.get('class', '').split(' ')
-                    c2.append('admonition-title')
-                    child.attrib['class'] = ' '.join(_c for _c in c2 if _c)
-                c.append(b.attrib.get('data-alert'))
+                    if child:
+                        child.tag = 'div'
+                        c2 = child.attrib.get('class', '').split(' ')
+                        c2.append('admonition-title')
+                        child.attrib['class'] = ' '.join(_c for _c in c2 if _c)
+                c.append(b.attrib.get('data-alert', ''))
                 b.attrib['class'] = ' '.join(_c for _c in c if _c)
                 del b.attrib['data-alert']
                 del b.attrib['data-alert-collapse']
@@ -119,7 +124,7 @@ class QuotesTreeprocessor(Treeprocessor):
 class QuotesExtension(Extension):
     """Add blockquotes extension to Markdown class."""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         """Initialize."""
 
         self.config = {
@@ -127,7 +132,7 @@ class QuotesExtension(Extension):
         }
         super().__init__(*args, **kwargs)
 
-    def extendMarkdown(self, md):
+    def extendMarkdown(self, md: Markdown) -> None:
         """Add support for blockquotes."""
 
         md.registerExtension(self)
@@ -137,7 +142,7 @@ class QuotesExtension(Extension):
             md.treeprocessors.register(QuotesTreeprocessor(md), 'quotes', 19.99)
 
 
-def makeExtension(*args, **kwargs):
+def makeExtension(*args: Any, **kwargs: Any) -> Extension:
     """Return extension."""
 
     return QuotesExtension(*args, **kwargs)
