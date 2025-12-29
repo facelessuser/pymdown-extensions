@@ -1,6 +1,5 @@
 """Test cases for Quotes."""
 from .. import util
-import markdown
 
 
 class TestQuotes(util.MdCase):
