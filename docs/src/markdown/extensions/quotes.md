@@ -33,7 +33,7 @@ The problem with this approach is that if you have a need to have two separate b
 
 The Quotes extensions follows logic that is seen in more modern approaches to Markdown.
 
-```text title="Seperate Blockquotes"
+```text title="Separate Blockquotes"
 > This is a paragraph
 
 > This is another paragraph.
@@ -88,7 +88,7 @@ This will not.
 GitHub and [Obsidian](https://obsidian.md/) allow for specifying special alerts/admonitions via a blockquote syntax
 called callouts. The Quotes extensions allows you to opt-in to specifying such alerts that mimics Obsidian's approach,
 which is GitHub compatible. Quotes will take the special blockquote syntax and output HTML that matches the output
-of [Admonitons][admonition] or [Details](./details.md).
+of [Admonitions][admonition] or [Details](./details.md).
 
 To specify normal callouts, simply ensure the that the first line of a blockquote contains the a class name in within
 `[!...]`.
