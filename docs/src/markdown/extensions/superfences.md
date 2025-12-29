@@ -42,7 +42,7 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
     exempted.
 
 5.  If you are using a fenced block inside a blockquote, at the very least, the first line of the fenced block needs to
-    have the appropriate number of `>` characters signifying the quote depth.
+    have the appropriate number of `>` characters signifying the quote depth. This i
 
     ````
     > ```
@@ -50,7 +50,7 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
       ```
     ````
 
-6.  Too many blank lines will cause a blockquote to terminate, so remember to use `>` markers accordingly if not marking
+    Too many blank lines will cause a blockquote to terminate, so remember to use `>` markers accordingly if not marking
     every line.
 
     ````
@@ -61,7 +61,22 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
       ```
     ````
 
-7.  If using a fenced block as the first line of a list, you will have to leave the first line blank, but remember that
+    If you are using the [Quotes](./quotes.md) extension, you must include the entire fenced code block within the
+    blockquote as Quotes purposely does not use lazy blockquote logic.
+
+    ````
+    > ```
+    > a fenced block
+    > ```
+    ````
+
+    /// tip
+    If you always include the entire code block within the blockquote, you will always get good results and is generally
+    the recommended approach regardless if you are using the default lazy blockquote logic that comes stock with Python
+    Markdown or using the [Quotes](./quotes.md) extension.
+    ///
+
+6.  If using a fenced block as the first line of a list, you will have to leave the first line blank, but remember that
     the list marker must be immediately followed by at least one space. To avoid accidentally deleting the space and to
     make your intentions clear, you might want to also add an explicit unicode space (`&#32;`) as shown here:
 
@@ -78,7 +93,7 @@ md = markdown.Markdown(extensions=['pymdownx.superfences'])
         ```
     ````
 
-8.  Fenced blocks should be separated from other blocks by an empty line.
+7.  Fenced blocks should be separated from other blocks by an empty line.
 
     ````
     Paragraph.
