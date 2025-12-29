@@ -76,7 +76,8 @@ extensions = [
     'pymdownx.emoji',
     'pymdownx.tasklist',
     'pymdownx.superfences',
-    'pymdownx.saneheaders'
+    'pymdownx.saneheaders',
+    'pymdownx.quotes'
 ]
 
 extension_configs = {
@@ -103,6 +104,9 @@ extension_configs = {
             "image_path": "https://github.githubassets.com/images/icons/emoji/unicode/",
             "non_standard_image_path": "https://github.githubassets.com/images/icons/emoji/"
         }
+    },
+    "pymdownx.quotes": {
+        "callouts": True
     }
 }
 ```
