@@ -23,7 +23,7 @@ MagicLink extension, we would include it in Python Markdown like so:
 
 Check out documentation on each extension to learn more about how to configure and use each one.
 
-/// danger | Reminder
+/// important | Reminder
 Please read the [Usage Notes](usage_notes.md) for information on extension compatibility and general notes to be
 aware of when using these extensions.
 ///

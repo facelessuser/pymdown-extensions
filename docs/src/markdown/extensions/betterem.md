@@ -24,7 +24,7 @@ import markdown
 md = markdown.Markdown(extensions=['pymdownx.betterem'])
 ```
 
-/// danger | Reminder
+/// important | Reminder
 Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this
 extension!
 ///

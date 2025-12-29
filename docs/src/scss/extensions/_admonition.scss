@@ -5,8 +5,9 @@
 @use "../palette/dracula";
 
 $new-admonitions: (
-  settings config: dracula.$drac-pink   material_color.$clr-purple-a700 "@mdi/svg/svg/cog.svg",
-  new:             dracula.$drac-yellow material_color.$clr-yellow-a700 "@mdi/svg/svg/alert-decagram.svg"
+  settings:   dracula.$drac-pink                                                  material_color.$clr-purple-a700      "@mdi/svg/svg/cog.svg",
+  new:        dracula.$drac-yellow                                                material_color.$clr-yellow-a700      "@mdi/svg/svg/alert-decagram.svg",
+  important:  color.mix(dracula.$drac-purple, dracula.$drac-blue, $method: oklab) material_color.$clr-deep-purple-a700 "@mdi/svg/svg/comment-alert-outline.svg"
 ) !default;
 
 $old-admonitions: (

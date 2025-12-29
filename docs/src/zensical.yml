@@ -214,6 +214,7 @@ markdown_extensions:
       - danger
       - bug
       - example
+      - important
       - quote
   - pymdownx.blocks.details:
       types:
@@ -243,6 +244,8 @@ markdown_extensions:
         class: bug
       - name: details-example
         class: example
+      - name: details-important
+        class: important
       - name: details-quote
         class: quote
   - pymdownx.blocks.html:
