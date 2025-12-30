@@ -82,6 +82,7 @@ class TasklistTreeprocessor(Treeprocessor):
 
         self.custom_checkbox = bool(self.config["custom_checkbox"])
         self.clickable_checkbox = bool(self.config["clickable_checkbox"])
+        self.clickable_label = bool(self.config["clickable_label"])
         parent_map = {c: p for p in root.iter() for c in p}
         task_items = []
         lilinks = root.iter('li')
@@ -123,6 +124,10 @@ class TasklistExtension(Extension):
             'clickable_checkbox': [
                 False,
                 "Allow user to check/uncheck the checkbox - Default: False"
+            ],
+            'clickable_label': [
+                False,
+                "Allow user to use the text following the checkbox to activate it - Default: False"
             ],
             'delete': [True, "Enable delete - Default: True"],
             'subscript': [True, "Enable subscript - Default: True"]
