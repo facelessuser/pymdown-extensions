@@ -44,7 +44,7 @@ class TasklistTreeprocessor(Treeprocessor):
         found = False
         m = RE_CHECKBOX.match(li.text)
         if m is not None:
-            li.text = self.md.htmlStash.store(self.get_checkbox(m)) + m.group('line')
+            li.text = self.get_checkbox(m)
             found = True
         return found
 
@@ -57,7 +57,7 @@ class TasklistTreeprocessor(Treeprocessor):
             if first.tag == "p" and first.text is not None:
                 m = RE_CHECKBOX.match(first.text)
                 if m is not None:
-                    first.text = self.md.htmlStash.store(self.get_checkbox(m)) + m.group('line')
+                    first.text = self.get_checkbox(m)
                     found = True
         return found
 
@@ -66,16 +66,16 @@ class TasklistTreeprocessor(Treeprocessor):
         state = match.group('state')
 
         if self.custom_checkbox:
-            return (
+            return self.md.htmlStash.store(
                 '<label class="task-list-control">' +
                 '<input type="checkbox"{}{}/>'.format(
                     ' disabled' if not self.clickable_checkbox else '',
                     ' checked' if state.lower() == 'x' else '') +
                 '<span class="task-list-indicator"></span></label> '
-            )
-        return '<input type="checkbox"{}{}/> '.format(
+            ) + match.group('line')
+        return self.md.htmlStash.store('<input type="checkbox"{}{}/> '.format(
             " disabled" if not self.clickable_checkbox else "", " checked" if state.lower() == "x" else ""
-        )
+        )) + match.group('line')
 
     def run(self, root):
         """Find list items that start with [ ] or [x] or [X]."""
