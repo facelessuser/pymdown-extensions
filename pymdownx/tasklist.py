@@ -30,22 +30,6 @@ import re
 RE_CHECKBOX = re.compile(r"^(?P<checkbox> *\[(?P<state>(?:x|X| ){1})\] +)(?P<line>.*)", re.DOTALL)
 
 
-def get_checkbox(state, custom_checkbox=False, clickable_checkbox=False):
-    """Get checkbox tag."""
-
-    if custom_checkbox:
-        return (
-            '<label class="task-list-control">' +
-            '<input type="checkbox"{}{}/>'.format(
-                ' disabled' if not clickable_checkbox else '',
-                ' checked' if state.lower() == 'x' else '') +
-            '<span class="task-list-indicator"></span></label> '
-        )
-    return '<input type="checkbox"{}{}/> '.format(
-        ' disabled' if not clickable_checkbox else '',
-        ' checked' if state.lower() == 'x' else '')
-
-
 class TasklistTreeprocessor(Treeprocessor):
     """Tasklist tree processor that finds lists with checkboxes."""
 
@@ -60,9 +44,7 @@ class TasklistTreeprocessor(Treeprocessor):
         found = False
         m = RE_CHECKBOX.match(li.text)
         if m is not None:
-            li.text = self.md.htmlStash.store(
-                get_checkbox(m.group('state'), self.custom_checkbox, self.clickable_checkbox)
-            ) + m.group('line')
+            li.text = self.md.htmlStash.store(self.get_checkbox(m)) + m.group('line')
             found = True
         return found
 
@@ -75,11 +57,25 @@ class TasklistTreeprocessor(Treeprocessor):
             if first.tag == "p" and first.text is not None:
                 m = RE_CHECKBOX.match(first.text)
                 if m is not None:
-                    first.text = self.md.htmlStash.store(
-                        get_checkbox(m.group('state'), self.custom_checkbox, self.clickable_checkbox)
-                    ) + m.group('line')
+                    first.text = self.md.htmlStash.store(self.get_checkbox(m)) + m.group('line')
                     found = True
         return found
+
+    def get_checkbox(self, match):
+        """Get checkbox tag."""
+        state = match.group('state')
+
+        if self.custom_checkbox:
+            return (
+                '<label class="task-list-control">' +
+                '<input type="checkbox"{}{}/>'.format(
+                    ' disabled' if not self.clickable_checkbox else '',
+                    ' checked' if state.lower() == 'x' else '') +
+                '<span class="task-list-indicator"></span></label> '
+            )
+        return '<input type="checkbox"{}{}/> '.format(
+            " disabled" if not self.clickable_checkbox else "", " checked" if state.lower() == "x" else ""
+        )
 
     def run(self, root):
         """Find list items that start with [ ] or [x] or [X]."""
