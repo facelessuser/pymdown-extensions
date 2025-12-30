@@ -66,16 +66,27 @@ class TasklistTreeprocessor(Treeprocessor):
         state = match.group('state')
 
         if self.custom_checkbox:
-            return self.md.htmlStash.store(
-                '<label class="task-list-control">' +
-                '<input type="checkbox"{}{}/>'.format(
-                    ' disabled' if not self.clickable_checkbox else '',
-                    ' checked' if state.lower() == 'x' else '') +
-                '<span class="task-list-indicator"></span></label> '
-            ) + match.group('line')
-        return self.md.htmlStash.store('<input type="checkbox"{}{}/> '.format(
-            " disabled" if not self.clickable_checkbox else "", " checked" if state.lower() == "x" else ""
-        )) + match.group('line')
+            if self.clickable_label:
+                line = self.md.htmlStash.store(
+                    '<label><span class="task-list-control">' +
+                    '<input type="checkbox"{}{}/>'.format(
+                        ' disabled' if not self.clickable_checkbox else '',
+                        ' checked' if state.lower() == 'x' else '') +
+                    '<span class="task-list-indicator"></span></span>'
+                ) + match.group('line') + self.md.htmlStash.store("</label>")
+            else:
+                line = self.md.htmlStash.store(
+                    '<label class="task-list-control">' +
+                    '<input type="checkbox"{}{}/>'.format(
+                        ' disabled' if not self.clickable_checkbox else '',
+                        ' checked' if state.lower() == 'x' else '') +
+                    '<span class="task-list-indicator"></span></label> '
+                ) + match.group('line')
+        else:
+            line = self.md.htmlStash.store('<input type="checkbox"{}{}/> '.format(
+                " disabled" if not self.clickable_checkbox else "", " checked" if state.lower() == "x" else ""
+            )) + match.group('line')
+        return line
 
     def run(self, root):
         """Find list items that start with [ ] or [x] or [X]."""
