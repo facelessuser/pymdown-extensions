@@ -5,9 +5,9 @@
 @use "../palette/dracula";
 
 $new-admonitions: (
-  settings:   dracula.$drac-pink                                                  material_color.$clr-purple-a700      "@mdi/svg/svg/cog.svg",
-  new:        dracula.$drac-yellow                                                material_color.$clr-yellow-a700      "@mdi/svg/svg/alert-decagram.svg",
-  important:  color.mix(dracula.$drac-purple, dracula.$drac-blue, $method: oklab) material_color.$clr-deep-purple-a700 "@mdi/svg/svg/comment-alert-outline.svg"
+  settings:  dracula.$drac-pink                                                  material_color.$clr-purple-a700       "@mdi/svg/svg/cog.svg",
+  new:       dracula.$drac-yellow                                                material_color.$clr-yellow-a700       "@mdi/svg/svg/alert-decagram.svg",
+  important: color.mix(dracula.$drac-pink, dracula.$drac-purple, $method: oklab) material_color.$clr-deep-purple-a200  "@mdi/svg/svg/comment-alert-outline.svg"
 ) !default;
 
 $old-admonitions: (
@@ -16,12 +16,12 @@ $old-admonitions: (
   info:     dracula.$drac-cyan                                                   material_color.$clr-cyan-a700,
   tip:      color.mix(dracula.$drac-cyan, dracula.$drac-green, $method: oklab)   material_color.$clr-teal-a700,
   success:  dracula.$drac-green                                                  material_color.$clr-green-a700,
-  question: color.mix(dracula.$drac-green, dracula.$drac-orange, $method: oklab) material_color.$clr-light-green-a700,
+  question: color.mix(dracula.$drac-green, dracula.$drac-yellow, $method: oklab) material_color.$clr-light-green-a700,
   warning:  dracula.$drac-orange                                                 material_color.$clr-orange-a400,
   failure:  color.mix(dracula.$drac-orange, dracula.$drac-red, $method: oklab)   material_color.$clr-red-a200,
   danger:   dracula.$drac-red                                                    material_color.$clr-red-a400,
-  bug:      color.mix(dracula.$drac-red, dracula.$drac-purple, $method: oklab)   material_color.$clr-pink-a400,
-  example:  dracula.$drac-purple                                                 material_color.$clr-deep-purple-a200,
+  bug:      color.mix(dracula.$drac-red, dracula.$drac-pink, $method: oklab)     material_color.$clr-pink-a400,
+  example:  dracula.$drac-purple                                                 material_color.$clr-deep-purple-a700,
   quote:    dracula.$drac-grey                                                   material_color.$clr-grey
 ) !default;
 
