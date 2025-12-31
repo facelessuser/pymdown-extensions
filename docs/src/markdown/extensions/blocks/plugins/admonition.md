@@ -14,6 +14,11 @@ can cause issues as they both generate the same output and confuse each other.
 If you are switching from `admonition` to `pymdownx.blocks.admonition`, ensure you disable `admonition` to avoid issues.
 ///
 
+/// tip
+If an approach like Obsidian is preferred, 10.20 adds support via the [Quotes extension](../../quotes.md) for Obsidian
+style callouts.
+///
+
 ## Overview
 
 Admonition blocks are an alternative to using Python Markdown's [built-in extension][admonition]. The output is

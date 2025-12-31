@@ -5,8 +5,11 @@ icon: lucide/chevrons-up-down
 
 # Details
 
-/// tip | 9.10 New Approach to Details
+/// tip
 9.10 has added a new approach to creating details. Checkout the new [Details extension here](./blocks/plugins/details.md)!
+
+If an approach like Obsidian is preferred, 10.20 adds support via the [Quotes extension](./quotes.md) for Obsidian
+style, collapsible callouts.
 ///
 
 ## Overview

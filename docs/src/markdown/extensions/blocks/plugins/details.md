@@ -13,6 +13,11 @@ If you are switching from `pymdownx.details` to `pymdownx.blocks.details`, ensur
 avoid issues.
 ///
 
+/// tip
+If an approach like Obsidian is preferred, 10.20 adds support via the [Quotes extension](../../quotes.md) for Obsidian
+style, collapsible callouts.
+///
+
 ## Overview
 
 Details blocks are an alternative to using [`pymdownx.details`](../../details.md) and, in fact, aim to potentially replace
