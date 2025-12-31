@@ -268,7 +268,7 @@ if pygments:
                     source = self._wrap_lineanchors(source)
                 if self.linespans:
                     source = self._wrap_linespans(source)
-                elif self.linenos in (0, 2):
+                else:
                     source = self._wrap_lines(source)
                 source = self.wrap(source)
                 if self.linenos == 1:

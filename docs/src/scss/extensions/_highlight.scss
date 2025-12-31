@@ -8,6 +8,10 @@
 }
 
 .highlight {
+  .hll {
+    box-shadow: 2px 0 0 0 var(--md-accent-fg-color) inset;
+  }
+
   .kc { // Keyword constant
     color: var(--md-code-hl-constant-color);
   }
@@ -75,6 +79,10 @@
       &.special::before {
         background-color: var(--md-code-special-bg-color);
       }
+    }
+
+    .hll [data-linenos]::before {
+      box-shadow: -2px 0 var(--md-accent-fg-color) inset;
     }
   }
 
