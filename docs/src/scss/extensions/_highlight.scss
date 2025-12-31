@@ -55,7 +55,7 @@
   }
 
   pre > code {
-    outline: none;
+    display: grid;
   }
 
   /* Don't always like code breaking in table cells */

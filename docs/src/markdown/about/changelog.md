@@ -11,6 +11,9 @@ icon: lucide/scroll-text
 
     In addition, Quotes also provides an optional feature to enable specifying callouts/alerts in the style used by
     GitHub and Obsidian.
+-   **NEW**: Highlight: When using Pygments and not using the table format for line numbers, lines are now wrapped in
+    `<span>` tags. This allows for easier and better styling of line highlights. Using `line_spans` will additionally
+    add IDs as they always did.
 
 ## 10.19.1
 
