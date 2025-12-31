@@ -468,6 +468,9 @@ extensions:
 extension_configs:
   pymdownx.highlight:
     auto_title: true
+    line_spans: __codeline_a
+    line_anchors: __codelineno_a
+    anchor_linenums: True
 ---
 ```python
 import foo.bar
@@ -497,6 +500,9 @@ extensions:
 extension_configs:
   pymdownx.highlight:
     auto_title: true
+    line_spans: __codeline_b
+    line_anchors: __codelineno_b
+    anchor_linenums: True
 ---
 ```pycon
 >>> 3 + 3
@@ -532,6 +538,9 @@ extension_configs:
   pymdownx.highlight:
     auto_title: true
     auto_title_map: {"Python Console Session": "Python"}
+    line_spans: __codeline_c
+    line_anchors: __codelineno_c
+    anchor_linenums: True
 ---
 ```pycon
 >>> 3 + 3
@@ -663,6 +672,10 @@ extensions:
 extension_configs:
   pymdownx.superfences:
     relaxed_headers: true
+  pymdownx.highlight:
+    line_spans: __codeline_d
+    line_anchors: __codelineno_d
+    anchor_linenums: True
 ---
 ```python [3]
 import code

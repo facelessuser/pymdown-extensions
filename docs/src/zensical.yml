@@ -143,6 +143,9 @@ markdown_extensions:
           class: md-render
           format: !!python/name:tools.pymdownx_md_render.md_sub_render
   - pymdownx.highlight:
+      line_spans: __codeline
+      line_anchors: __codelineno
+      anchor_linenums: True
       extend_pygments_lang:
         - name: php-inline
           lang: php

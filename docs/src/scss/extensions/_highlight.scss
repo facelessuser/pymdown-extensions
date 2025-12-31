@@ -75,6 +75,10 @@
     /* `pymdownx-inline` mode */
     [data-linenos] {
 
+      &:hover::before {
+        color: var(--md-accent-fg-color);
+      }
+
       /* Special line mode coloring */
       &.special::before {
         background-color: var(--md-code-special-bg-color);
