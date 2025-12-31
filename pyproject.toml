@@ -160,7 +160,7 @@ legacy_tox_ini = """
     commands=
         {envpython} -m pip install .
         {envpython} -m zensical build -f zensical.yml --clean --strict
-        {envpython} -m pyspelling
+        {envpython} -m pyspelling -j 8
 
     [testenv:lint]
     deps=

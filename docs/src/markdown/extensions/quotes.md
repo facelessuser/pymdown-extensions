@@ -29,9 +29,10 @@ blocks.
 ```
 ///
 
-The problem with this approach is that if you have a need to have two separate blockquotes, this because difficult.
+The problem with this approach is that if you have a need to have two separate blockquotes, this becomes difficult.
 
-The Quotes extensions follows logic that is seen in more modern approaches to Markdown.
+The Quotes extensions follows logic that is seen in more modern approaches to Markdown where each blockquote is distinct
+and separate.
 
 ```text title="Separate Blockquotes"
 > This is a paragraph
@@ -47,9 +48,11 @@ The Quotes extensions follows logic that is seen in more modern approaches to Ma
 
 It should be noted that since this extension does not use lazy formatting, you should be stricter with your leading
 blockquote `>`. For instance, when using [SuperFences](./superfences.md), you will find that these must be fully
-contained in the blockquotes. In the past, the lazy handling would have allowed for 
+contained in the blockquotes. In the past, the lazy handling would have allowed a more relaxed behavior.
 
 ````text title="Blockquotes and SuperFences"
+This will work.
+
 > ```
 > Test
 >
@@ -89,14 +92,21 @@ This will not.
 as alerts or callouts) by using a special syntax at the start of a blockquote. While Obsidian does this with a more
 feature rich syntax, GitHub offers a more stripped down version.
 
-The Quotes extensions allows you to opt-in approach to specifying admonitions in a similar approach that is compatible
-with Obsidian and GitHub if usage is limited to what they offer.
+The Quotes extensions allows you to opt-in to specifying admonitions in a similar approach that is compatible with
+Obsidian and GitHub.
+
+/// note
+GitHub only supports the simple, single class notation, and only recognizes specific classes.
+
+Quotes does not physically add restrictions to which classes you can specify, or how many, but if compatibility is
+desired, take note of what GitHub supports. Learn more [here][github-alerts].
+///
 
 Quotes will take the special blockquote syntax and output HTML that matches the output of [Admonitions][admonition] or
 [Details](./details.md).
 
 To specify normal callouts, simply ensure the that the first line of a blockquote contains a class name in within
-`[!...]`.
+`[!<type>]` where `<type>` is the specific callout type.
 
 ```text title="Callout"
 > [!note]
@@ -106,13 +116,6 @@ To specify normal callouts, simply ensure the that the first line of a blockquot
 /// html | div.result
 > [!note]
 > Here is a note
-///
-
-/// note
-GitHub only supports the simple class notation, and only recognizes the classes: note, tip, important, warning, caution.
-
-There are no restrictions as to which classes you can specify, but if cross compliance is desired, take note of what
-GitHub supports. Learn more [here][github-alerts].
 ///
 
 Borrowing from Obsidian, Quotes also enables a few more advanced features. If you'd like a custom title, simply provide
@@ -140,9 +143,9 @@ To make a collapsible callout, just add `+` (open) or `-` (closed) immediately a
 > I'm collapsible.
 ///
 
-Lastly, if you need to specify more multiple classes, you can utilize the Obsidian approach and and separate each class
-with `|`. The first class will be used as the main title if no title is provided, but all classes will be applied to the
-callout.
+Lastly, if you need to specify multiple classes, you can utilize the Obsidian approach and separate each class with `|`.
+The first class will be used as the type and also the title if no title is provided, but all classes will be applied to
+the callout.
 
 ```text title="Collapsible Callout"
 > [!warning | inline | end]
@@ -156,6 +159,34 @@ A paragraph.
 > Make inline and set at the end.
 
 A paragraph.
+///
+
+While GitHub does not support nesting, nesting is also supported which aligns with Obsidian.
+
+```text title="Nesting"
+> [!note]
+> Content
+> > [!danger]
+> > Content
+> > > [!important]
+> > > Content
+> >
+> > Content
+>
+> > [!tip]
+```
+
+/// html | div.result
+> [!note]
+> Content
+> > [!danger]
+> > Content
+> > > [!important]
+> > > Content
+> >
+> > Content
+>
+> > [!tip]
 ///
 
 ## Options

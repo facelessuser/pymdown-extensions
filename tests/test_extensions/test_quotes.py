@@ -209,3 +209,43 @@ class TestQuotes(util.MdCase):
             """,
             True
         )
+
+    def test_nested(self):
+        """Test multiple classes."""
+
+        self.check_markdown(
+            """
+            > [!note]
+            > Content
+            > > [!danger]
+            > > Content
+            > > > [!important]
+            > > > Content
+            > > Content
+            > >
+            > > Content
+            >
+            > > [!tip]
+            """,
+            """
+            <div class="admonition note">
+            <p class="admonition-title">Note</p>
+            <p>Content</p>
+            <div class="admonition danger">
+            <p class="admonition-title">Danger</p>
+            <p>Content</p>
+            <div class="admonition important">
+            <p class="admonition-title">Important</p>
+            <p>Content
+            Content</p>
+            </div>
+            <p>Content</p>
+            </div>
+            <div class="admonition tip">
+            <p class="admonition-title">Tip
+            </p>
+            </div>
+            </div>
+            """,
+            True
+        )
