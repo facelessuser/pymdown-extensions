@@ -72,8 +72,6 @@
     --md-default-fg-color--lighter:      #{color.adjust(dracula.$drac-fg, $alpha: -0.64)};
     --md-default-fg-color--lightest:     #{color.adjust(dracula.$drac-fg, $alpha: -0.88)};
     --md-default-autocomplete-fg-color:  #{color.adjust(dracula.$drac-fg, $alpha: -0.60)};
-    --md-shadow-z2:                      0 #{convert.px2rem(4px)} #{convert.px2rem(10px)} hsla(0, 0%, 0%, 0.3),
-                                         0 0                      #{convert.px2rem(1px)}  hsla(0, 0%, 0%, 0.2);
 
     --md-footer-fg-color: var(--md-default-fg-color);
 
