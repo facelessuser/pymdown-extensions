@@ -10,11 +10,11 @@
 
 Extensions for [Python Markdown](https://python-markdown.github.io).
 
-# Documentation
+## Documentation
 
 Extension documentation is found here: https://facelessuser.github.io/pymdown-extensions/.
 
-# License
+## License
 
 License is MIT.  See [LICENSE](https://github.com/facelessuser/pymdown-extensions/blob/master/LICENSE.md) for more info.
 
