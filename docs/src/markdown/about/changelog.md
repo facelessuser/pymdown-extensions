@@ -5,7 +5,7 @@ icon: lucide/scroll-text
 
 ## 10.20.1
 
--   **FIX**: Quotes: Ensure the first class for callouts (the alert type) is always rendered lower case.
+-   **FIX**: Quotes: Ensure the first class for callouts (the alert type) is always rendered lowercase.
 
 ## 10.20
 
