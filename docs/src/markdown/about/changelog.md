@@ -3,6 +3,10 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 10.20.1
+
+-   **FIX**: Quotes: Ensure the first class for callouts (the alert type) is always rendered lower case.
+
 ## 10.20
 
 -   **NEW**: Quotes: New blockquotes extension added that uses a more modern approach when compared to Python Markdown's

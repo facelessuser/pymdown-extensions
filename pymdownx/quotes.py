@@ -63,6 +63,8 @@ class QuotesProcessor(BlockProcessor):
                         title = alert[0].title()
                     lines[index] = ''
                     lines.insert(index, title)
+                if alert:
+                    alert[0] = alert[0].lower()
             block = '\n'.join([self.clean(l) for l in lines])
 
         # This is a new blockquote. Create a new parent element.

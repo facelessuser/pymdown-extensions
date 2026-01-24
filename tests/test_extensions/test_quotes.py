@@ -37,7 +37,7 @@ class TestQuotes(util.MdCase):
         )
 
     def test_together_quotes(self):
-        """Test separate quotes."""
+        """Test quotes together."""
 
         self.check_markdown(
             """
@@ -55,7 +55,7 @@ class TestQuotes(util.MdCase):
         )
 
     def test_callout(self):
-        """Test separate quotes."""
+        """Test callout."""
 
         self.check_markdown(
             """
@@ -71,8 +71,25 @@ class TestQuotes(util.MdCase):
             True
         )
 
+    def test_callout_case(self):
+        """Test callout class case insensitive."""
+
+        self.check_markdown(
+            """
+            > [!NOTE]
+            > Here is a note
+            """,
+            """
+            <div class="admonition note">
+            <p class="admonition-title">Note</p>
+            <p>Here is a note</p>
+            </div>
+            """,
+            True
+        )
+
     def test_callout_title(self):
-        """Test separate quotes."""
+        """Test callout title."""
 
         self.check_markdown(
             """
@@ -89,7 +106,7 @@ class TestQuotes(util.MdCase):
         )
 
     def test_callout_open(self):
-        """Test separate quotes."""
+        """Test callout open."""
 
         self.check_markdown(
             """
@@ -106,7 +123,7 @@ class TestQuotes(util.MdCase):
         )
 
     def test_callout_closed(self):
-        """Test separate quotes."""
+        """Test callout closed."""
 
         self.check_markdown(
             """
@@ -123,7 +140,7 @@ class TestQuotes(util.MdCase):
         )
 
     def test_blank_start(self):
-        """Test separate quotes."""
+        """Test blank start."""
 
         self.check_markdown(
             """
@@ -210,8 +227,25 @@ class TestQuotes(util.MdCase):
             True
         )
 
+    def test_multi_class_case(self):
+        """Ensure first class is case insensitive."""
+
+        self.check_markdown(
+            """
+            > [!NOTE | INLINE | END]
+            > This is a note
+            """,
+            """
+            <div class="admonition note INLINE END">
+            <p class="admonition-title">Note</p>
+            <p>This is a note</p>
+            </div>
+            """,
+            True
+        )
+
     def test_nested(self):
-        """Test multiple classes."""
+        """Test nested content."""
 
         self.check_markdown(
             """
