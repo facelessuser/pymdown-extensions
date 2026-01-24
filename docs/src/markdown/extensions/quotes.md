@@ -106,7 +106,7 @@ Quotes will take the special blockquote syntax and output HTML that matches the 
 [Details](./details.md).
 
 To specify normal callouts, simply ensure the that the first line of a blockquote contains a class name in within
-`[!<type>]` where `<type>` is the specific callout type.
+`[!<type>]` where `<type>` is the specific callout type. The type is always converted to a lowercase CSS class.
 
 ```text title="Callout"
 > [!note]
