@@ -30,22 +30,6 @@ import re
 RE_CHECKBOX = re.compile(r"^(?P<checkbox> *\[(?P<state>(?:x|X| ){1})\] +)(?P<line>.*)", re.DOTALL)
 
 
-def get_checkbox(state, custom_checkbox=False, clickable_checkbox=False):
-    """Get checkbox tag."""
-
-    if custom_checkbox:
-        return (
-            '<label class="task-list-control">' +
-            '<input type="checkbox"{}{}/>'.format(
-                ' disabled' if not clickable_checkbox else '',
-                ' checked' if state.lower() == 'x' else '') +
-            '<span class="task-list-indicator"></span></label> '
-        )
-    return '<input type="checkbox"{}{}/> '.format(
-        ' disabled' if not clickable_checkbox else '',
-        ' checked' if state.lower() == 'x' else '')
-
-
 class TasklistTreeprocessor(Treeprocessor):
     """Tasklist tree processor that finds lists with checkboxes."""
 
@@ -60,9 +44,7 @@ class TasklistTreeprocessor(Treeprocessor):
         found = False
         m = RE_CHECKBOX.match(li.text)
         if m is not None:
-            li.text = self.md.htmlStash.store(
-                get_checkbox(m.group('state'), self.custom_checkbox, self.clickable_checkbox)
-            ) + m.group('line')
+            li.text = self.get_checkbox(m)
             found = True
         return found
 
@@ -75,17 +57,43 @@ class TasklistTreeprocessor(Treeprocessor):
             if first.tag == "p" and first.text is not None:
                 m = RE_CHECKBOX.match(first.text)
                 if m is not None:
-                    first.text = self.md.htmlStash.store(
-                        get_checkbox(m.group('state'), self.custom_checkbox, self.clickable_checkbox)
-                    ) + m.group('line')
+                    first.text = self.get_checkbox(m)
                     found = True
         return found
+
+    def get_checkbox(self, match):
+        """Get checkbox tag."""
+        state = match.group('state')
+
+        if self.custom_checkbox:
+            if self.clickable_label:
+                line = self.md.htmlStash.store(
+                    '<label><span class="task-list-control">' +
+                    '<input type="checkbox"{}{}/>'.format(
+                        ' disabled' if not self.clickable_checkbox else '',
+                        ' checked' if state.lower() == 'x' else '') +
+                    '<span class="task-list-indicator"></span></span>'
+                ) + match.group('line') + self.md.htmlStash.store("</label>")
+            else:
+                line = self.md.htmlStash.store(
+                    '<label class="task-list-control">' +
+                    '<input type="checkbox"{}{}/>'.format(
+                        ' disabled' if not self.clickable_checkbox else '',
+                        ' checked' if state.lower() == 'x' else '') +
+                    '<span class="task-list-indicator"></span></label> '
+                ) + match.group('line')
+        else:
+            line = self.md.htmlStash.store('<input type="checkbox"{}{}/> '.format(
+                " disabled" if not self.clickable_checkbox else "", " checked" if state.lower() == "x" else ""
+            )) + match.group('line')
+        return line
 
     def run(self, root):
         """Find list items that start with [ ] or [x] or [X]."""
 
         self.custom_checkbox = bool(self.config["custom_checkbox"])
         self.clickable_checkbox = bool(self.config["clickable_checkbox"])
+        self.clickable_label = bool(self.config["clickable_label"])
         parent_map = {c: p for p in root.iter() for c in p}
         task_items = []
         lilinks = root.iter('li')
@@ -127,6 +135,10 @@ class TasklistExtension(Extension):
             'clickable_checkbox': [
                 False,
                 "Allow user to check/uncheck the checkbox - Default: False"
+            ],
+            'clickable_label': [
+                False,
+                "Allow user to use the text following the checkbox to activate it - Default: False"
             ],
             'delete': [True, "Enable delete - Default: True"],
             'subscript': [True, "Enable subscript - Default: True"]

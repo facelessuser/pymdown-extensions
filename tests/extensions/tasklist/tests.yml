@@ -27,4 +27,13 @@ tasklist (custom checkable):
     pymdownx.tasklist:
       custom_checkbox: true
       clickable_checkbox: true
+
+tasklist (custom checkable and clickable_label):
+  css:
+    - ../_assets/tasklist_custom.css
+  extensions:
+    pymdownx.tasklist:
+      custom_checkbox: true
+      clickable_checkbox: true
+      clickable_label: true
       
