@@ -241,7 +241,7 @@ def create_user_link_pattern(provider, host, www=True):
 RE_USER_REPO_LINK = re.compile(
     r'''(?xi)^(?:{}|{}|{})/?$'''.format(
         create_user_link_pattern('github', 'https://github.com'),
-        create_user_link_pattern('bitbucket', '"https://bitbucket.org"'),
+        create_user_link_pattern('bitbucket', 'https://bitbucket.org'),
         create_user_link_pattern('gitlab', 'https://gitlab.com')
     )
 )
