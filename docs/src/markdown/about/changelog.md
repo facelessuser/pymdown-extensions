@@ -3,6 +3,10 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 10.20.2
+
+-   **FIX**: MagicLink: Fix a matching pattern for Bitbucket repo.
+
 ## 10.20.1
 
 -   **FIX**: Quotes: Ensure the first class for callouts (the alert type) is always rendered lowercase.
