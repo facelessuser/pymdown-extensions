@@ -238,21 +238,34 @@ class Caption(Block):
 
             if argument:
                 tokens = argument.split()
-                if len(tokens) > 1:
-                    return False
-                id_token = tokens[0]
-                if not id_token.startswith('#'):
-                    return False
-                identifier = id_token[1:]
-                try:
-                    identifier = type_html_identifier(identifier)
-                except ValueError:
-                    return False
+                identifier = None
+                classes = []
+
+                for t in tokens:
+                    if t.startswith('#'):
+                        if identifier:
+                            return False
+
+                        try:
+                            identifier = type_html_identifier(t[1:])
+                        except ValueError:
+                            return False
+                    elif t.startswith('.'):
+                        try:
+                            _class = type_html_identifier(t[1:])
+                            classes.append(_class)
+                        except ValueError:
+                            return False
+                    else:
+                        return False
+
                 attrs = dict(self.options['attrs'])
-                if 'id' not in attrs:
+                if identifier and 'id' not in attrs:
                     attrs['id'] = identifier
                     self.options['attrs'] = attrs
-                return True
+                if classes and 'class' not in attrs:
+                    attrs['class'] = classes
+                    self.options['attrs'] = attrs
 
         return True
 

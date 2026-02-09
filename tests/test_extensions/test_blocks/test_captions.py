@@ -327,6 +327,25 @@ class TestBlocksCaption(util.MdCase):
             True
         )
 
+    def test_table_caption_multiple_inline_id_not_allowed(self):
+        """Ensure multiple inline shorthand IDs are rejected."""
+
+        self.check_markdown(
+            R"""
+            Paragraph
+            /// table-caption | #id1 #id2
+            Table caption text.
+            ///
+            """,
+            """
+            <p>Paragraph
+            /// table-caption | #id1 #id2
+            Table caption text.
+            ///</p>
+            """,
+            True
+        )
+
     def test_caption_inline_id_attribute_override(self):
         """Ensure inline shorthand ID does not override attribute-defined ID."""
 
@@ -340,6 +359,91 @@ class TestBlocksCaption(util.MdCase):
             ''',
             R'''
             <figure id="attribute-id">
+            <p>Paragraph</p>
+            <figcaption>
+            <p>Caption text.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_caption_inline_class(self):
+        """Test caption with inline shorthand class."""
+
+        self.check_markdown(
+            R'''
+            Paragraph
+            /// figure-caption | .custom-class
+            Caption text.
+            ///
+            ''',
+            R'''
+            <figure class="custom-class">
+            <p>Paragraph</p>
+            <figcaption>
+            <p>Caption text.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_caption_multiple_inline_class(self):
+        """Test caption with multiple inline shorthand class."""
+
+        self.check_markdown(
+            R'''
+            Paragraph
+            /// figure-caption | .custom-class1 .custom-class2
+            Caption text.
+            ///
+            ''',
+            R'''
+            <figure class="custom-class1 custom-class2">
+            <p>Paragraph</p>
+            <figcaption>
+            <p>Caption text.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_caption_inline_class_and_id(self):
+        """Test caption with inline shorthand class and id."""
+
+        self.check_markdown(
+            R'''
+            Paragraph
+            /// figure-caption | .custom-class #custom-id
+            Caption text.
+            ///
+            ''',
+            R'''
+            <figure class="custom-class" id="custom-id">
+            <p>Paragraph</p>
+            <figcaption>
+            <p>Caption text.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_caption_inline_class_attribute_override(self):
+        """Ensure inline shorthand class does not override attribute-defined class."""
+
+        self.check_markdown(
+            R'''
+            Paragraph
+            /// figure-caption | .inline-class
+                attrs: {class: attribute-class}
+            Caption text.
+            ///
+            ''',
+            R'''
+            <figure class="attribute-class">
             <p>Paragraph</p>
             <figcaption>
             <p>Caption text.</p>
