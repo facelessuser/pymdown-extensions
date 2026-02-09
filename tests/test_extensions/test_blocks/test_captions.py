@@ -368,6 +368,25 @@ class TestBlocksCaption(util.MdCase):
             True
         )
 
+    def test_caption_inline_class_invalid_identifier(self):
+        """Ensure inline shorthand classes with invalid characters is rejected."""
+
+        self.check_markdown(
+            R"""
+            Paragraph
+            /// figure-caption | .invalid!
+            Caption text.
+            ///
+            """,
+            """
+            <p>Paragraph
+            /// figure-caption | .invalid!
+            Caption text.
+            ///</p>
+            """,
+            True
+        )
+
     def test_caption_inline_class(self):
         """Test caption with inline shorthand class."""
 
