@@ -239,7 +239,7 @@ class Caption(Block):
             if argument:
                 tokens = argument.split()
                 identifier = None
-                classes = []
+                classes = set()
 
                 for t in tokens:
                     if t.startswith('#'):
@@ -253,7 +253,7 @@ class Caption(Block):
                     elif t.startswith('.'):
                         try:
                             _class = type_html_identifier(t[1:])
-                            classes.append(_class)
+                            classes.add(_class)
                         except ValueError:
                             return False
                     else:
@@ -263,8 +263,10 @@ class Caption(Block):
                 if identifier and 'id' not in attrs:
                     attrs['id'] = identifier
                     self.options['attrs'] = attrs
-                if classes and 'class' not in attrs:
-                    attrs['class'] = classes
+                if classes:
+                    if 'class' in attrs:
+                        classes.update(attrs['class'])
+                    attrs['class'] = sorted(classes)
                     self.options['attrs'] = attrs
 
         return True

@@ -450,8 +450,8 @@ class TestBlocksCaption(util.MdCase):
             True
         )
 
-    def test_caption_inline_class_attribute_override(self):
-        """Ensure inline shorthand class does not override attribute-defined class."""
+    def test_caption_inline_class_attribute_merge(self):
+        """Ensure inline shorthand class merges with attribute-defined class."""
 
         self.check_markdown(
             R'''
@@ -462,7 +462,50 @@ class TestBlocksCaption(util.MdCase):
             ///
             ''',
             R'''
-            <figure class="attribute-class">
+            <figure class="attribute-class inline-class">
+            <p>Paragraph</p>
+            <figcaption>
+            <p>Caption text.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_caption_inline_class_unique(self):
+        """Ensure inline shorthand classes are unique"""
+
+        self.check_markdown(
+            R'''
+            Paragraph
+            /// figure-caption | .custom-class .custom-class
+            Caption text.
+            ///
+            ''',
+            R'''
+            <figure class="custom-class">
+            <p>Paragraph</p>
+            <figcaption>
+            <p>Caption text.</p>
+            </figcaption>
+            </figure>
+            ''',
+            True
+        )
+
+    def test_caption_inline_class_attribute_unique(self):
+        """Ensure inline shorthand classes and attribute classes are unique after merging"""
+
+        self.check_markdown(
+            R'''
+            Paragraph
+            /// figure-caption | .custom-class
+                attrs: {class: custom-class}
+            Caption text.
+            ///
+            ''',
+            R'''
+            <figure class="custom-class">
             <p>Paragraph</p>
             <figcaption>
             <p>Caption text.</p>
