@@ -473,7 +473,7 @@ class TestBlocksCaption(util.MdCase):
         )
 
     def test_caption_inline_class_unique(self):
-        """Ensure inline shorthand classes are unique"""
+        """Ensure inline shorthand classes are unique."""
 
         self.check_markdown(
             R'''
@@ -494,7 +494,7 @@ class TestBlocksCaption(util.MdCase):
         )
 
     def test_caption_inline_class_attribute_unique(self):
-        """Ensure inline shorthand classes and attribute classes are unique after merging"""
+        """Ensure inline shorthand classes and attribute classes are unique after merging."""
 
         self.check_markdown(
             R'''
