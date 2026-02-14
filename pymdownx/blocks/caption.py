@@ -28,6 +28,7 @@ Class, IDs, or other attributes will be attached to the figure, not the caption.
 import xml.etree.ElementTree as etree
 from .block import Block, type_html_identifier
 from .. blocks import BlocksExtension
+from .html import parse_selectors
 from markdown.treeprocessors import Treeprocessor
 import re
 
@@ -237,21 +238,20 @@ class Caption(Block):
                 argument = argument[m.end():].lstrip()
 
             if argument:
-                tokens = argument.split()
-                if len(tokens) > 1:
-                    return False
-                id_token = tokens[0]
-                if not id_token.startswith('#'):
-                    return False
-                identifier = id_token[1:]
+
                 try:
-                    identifier = type_html_identifier(identifier)
+                    _, attrs = parse_selectors(argument, require_tag=False)
                 except ValueError:
                     return False
-                attrs = dict(self.options['attrs'])
-                if 'id' not in attrs:
-                    attrs['id'] = identifier
-                    self.options['attrs'] = attrs
+                attrs_original = dict(self.options['attrs'])
+                for k, v in attrs.items():
+                    if k == 'class':
+                        classes = {x for x in attrs_original.get('class', []) if x}
+                        classes |= {x for x in v.split(' ') if x}
+                        attrs_original['class'] = sorted(classes)
+                    elif k not in attrs_original:
+                        attrs_original[k] = v
+                self.options['attrs'] = attrs_original
                 return True
 
         return True

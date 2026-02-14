@@ -195,7 +195,7 @@ class TestBlocksHTML(util.MdCase):
             ///
             ''',
             r'''
-            <div class="some classes" id="an-id" name1="name1" name2="value" name3="string value">
+            <div class="classes some" id="an-id" name1="name1" name2="value" name3="string value">
             <p>Some <em>content</em></p>
             <p>And more <code>content</code>.</p>
             </div>

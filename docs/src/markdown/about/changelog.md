@@ -5,6 +5,8 @@ icon: lucide/scroll-text
 
 ## 10.20.2
 
+-   **NEW**: Caption: Add support for specifying not only IDs but classes and arbitrary attributes. Initial work by
+    @joapuiib.
 -   **FIX**: MagicLink: Fix a matching pattern for Bitbucket repo.
 
 ## 10.20.1

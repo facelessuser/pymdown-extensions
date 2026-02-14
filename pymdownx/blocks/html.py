@@ -42,7 +42,7 @@ ATTRIBUTES = {'id': RE_ID, 'class': RE_CLASS, 'attr': RE_ATTRS}
 VALID_MODES = {'auto', 'inline', 'block', 'raw', 'html'}
 
 
-def parse_selectors(selector):
+def parse_selectors(selector, require_tag=True):
     """Parse the selector."""
 
     eol = len(selector)
@@ -51,19 +51,25 @@ def parse_selectors(selector):
     end = 0
     m = None
 
-    m = RE_IDENT.match(selector)
-    if m is None:
-        raise ValueError('No defined tag')
-    tag = m.group(0)
-    end = m.end()
+    if require_tag:
+        m = RE_IDENT.match(selector)
+        if m is None:
+            raise ValueError('No defined tag')
+        tag = m.group(0)
+        end = m.end()
 
+    found_id = False
     while end < eol:
         for atype, pat in ATTRIBUTES.items():
             m = pat.match(selector, end)
             if m is not None:
                 if atype == 'id':
-                    attrs[atype] = m.group(0)[1:]
-                    end = m.end()
+                    if not found_id:
+                        attrs[atype] = m.group(0)[1:]
+                        end = m.end()
+                        found_id = True
+                    else:
+                        raise ValueError('Only one ID is allowed')
                 elif atype == 'class':
                     if atype not in attrs:
                         attrs[atype] = [m.group(0)[1:]]
@@ -100,7 +106,7 @@ def parse_selectors(selector):
             raise ValueError('Invalid selector')
 
     if 'class' in attrs:
-        attrs['class'] = ' '.join(attrs['class'])
+        attrs['class'] = ' '.join(sorted(attrs['class']))
 
     return tag, attrs
 
