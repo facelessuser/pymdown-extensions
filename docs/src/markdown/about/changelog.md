@@ -3,7 +3,7 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
-## 10.20.2
+## 10.21
 
 -   **NEW**: Caption: Add support for specifying not only IDs but classes and arbitrary attributes. Initial work by
     @joapuiib.
