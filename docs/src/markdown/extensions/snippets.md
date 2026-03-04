@@ -8,8 +8,14 @@ icon: lucide/square-scissors
 ## Overview
 
 /// warning | Not Meant for User Facing Sites
-Snippets is meant to make including snippets in documentation easier, but it should not be used for user facing sites
-that take and parse user content dynamically.
+Snippets is intended for documentation/static content workflows and **must not** be used to render untrusted/user-supplied
+content dynamically (public-facing sites, user comments, wikis, etc.).
+
+**Security note:** enabling features like **URL Snippets** (`url_download`) can cause the renderer to make outbound HTTP
+requests to arbitrary URLs (including localhost/internal networks), which can lead to SSRF-style risk in unsafe
+deployments.
+
+See [Security Considerations](#security-considerations) for details and concrete examples.
 ///
 
 Snippets is an extension to insert markdown or HTML snippets into another markdown file.  Snippets is great for
@@ -292,6 +298,42 @@ is especially useful for including a page of reference links or abbreviations on
 
 Snippets provides an `auto_append` option that allows a user to specify a list of files that will be automatically
 appended to every Markdown content. Each entry in the list is searched for relative to the `base_path` entries.
+
+## Security Considerations
+
+Snippets is designed for documentation workflows and static content generation. It is **not** intended for use in
+public-facing services that render untrusted/user-supplied Markdown dynamically.
+
+### Why This Matters
+
+When Snippets processes a directive as shown below, it will attempt to include the referenced content into the rendered
+output.
+
+```text
+---8<--- "some-target"
+```
+
+If **URL Snippets** are enabled via `url_download`, the renderer may download content from arbitrary URLs. In unsafe
+deployments, this can cause the rendering environment to make outbound HTTP requests to attacker-chosen locations
+(including localhost and internal networks), which can resemble SSRF-style behavior.
+
+### Unsafe Example (Do Not Use With Untrusted Input)
+
+If an attacker can influence Markdown content and `url_download` is enabled, they may be able to trigger requests such
+as:
+
+```text
+---8<--- "http://127.0.0.1:9999/"
+```
+
+### Safe Usage Guidance
+
+If you use Snippets in public-facing CI, preview builds, or documentation pipelines:
+
+- Treat untrusted contributions with caution (e.g., PRs from external contributors).
+- Run builds in a sandbox/container with restrictive network/egress policies.
+- Avoid enabling `url_download` unless you fully understand the risk and have appropriate isolation in place.
+- Prefer static, trusted snippet sources whenever possible.
 
 ## Options
 
