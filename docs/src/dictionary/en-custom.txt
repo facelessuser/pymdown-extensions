@@ -79,6 +79,7 @@ Octicons
 PHP
 PNG
 PNGs
+PRs
 Pandoc
 Parsers
 PathConverter
@@ -96,6 +97,7 @@ Pymdownx
 Reindent
 Rosaceae
 SCSS
+SSRF
 SVG
 SVGs
 SaneHeaders
@@ -187,6 +189,7 @@ kbd
 keymap
 linkafies
 linter
+localhost
 lowercased
 lowercases
 macOS
@@ -271,6 +274,7 @@ unicode
 unindented
 unittest
 unstyled
+untrusted
 uslugify
 validator
 validators

@@ -310,7 +310,7 @@ When Snippets processes a directive as shown below, it will attempt to include t
 output.
 
 ```text
----8<--- "some-target"
+;--8<-- "some-target"
 ```
 
 If **URL Snippets** are enabled via `url_download`, the renderer may download content from arbitrary URLs. In unsafe
@@ -323,7 +323,7 @@ If an attacker can influence Markdown content and `url_download` is enabled, the
 as:
 
 ```text
----8<--- "http://127.0.0.1:9999/"
+;--8<-- "http://127.0.0.1:9999/"
 ```
 
 ### Safe Usage Guidance
