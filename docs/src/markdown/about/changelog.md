@@ -3,6 +3,10 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 10.21.1
+
+-   **FIX**: Highlight: Latest Pygments versions cannot handle a "filename" for code block titles of `None`.
+
 ## 10.21
 
 -   **NEW**: Caption: Add support for specifying not only IDs but classes and arbitrary attributes. Initial work by
