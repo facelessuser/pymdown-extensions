@@ -3,7 +3,7 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
-## 10.21.1
+## 10.21.2
 
 -   **FIX**: Highlight: Latest Pygments versions cannot handle a "filename" for code block titles of `None`.
 
