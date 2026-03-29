@@ -394,6 +394,8 @@ class Highlight:
                 title = self.auto_title_map.get(name, name)
             if title:
                 title = title.strip()
+            if title is None:
+                title = ''
 
             # Setup formatter
             html_formatter = InlineHtmlFormatter if inline else BlockHtmlFormatter
