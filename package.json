@@ -28,7 +28,7 @@
     "@primer/octicons": "^19.23.1",
     "@rollup/plugin-babel": "^7.0.0",
     "@rollup/plugin-terser": "^1.0.0",
-    "autoprefixer": "^10.4.27",
+    "autoprefixer": "^10.5.0",
     "babel-core": "^7.0.0-bridge.0",
     "del": "^8.0.1",
     "eslint": "^10.1.0",
