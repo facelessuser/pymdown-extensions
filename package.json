@@ -58,7 +58,7 @@
     "stylelint-config-standard": "^40.0.0",
     "stylelint-order": "^8.1.1",
     "stylelint-scss": "^7.0.0",
-    "terser": "^5.46.1",
+    "terser": "^5.46.2",
     "vinyl-paths": "^5.0.0",
     "yargs": "^18.0.0"
   }
