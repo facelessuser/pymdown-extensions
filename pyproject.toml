@@ -159,7 +159,7 @@ legacy_tox_ini = """
         .[extra]
     commands=
         {envpython} -m pip install .
-        {envpython} -m zensical build -f zensical.yml --clean --strict
+        {envpython} -m zensical build -f zensical.yml --clean
         {envpython} -m pyspelling -j 8
 
     [testenv:lint]

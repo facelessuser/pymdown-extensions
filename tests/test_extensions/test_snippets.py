@@ -730,6 +730,20 @@ class TestSnippetsNested(util.MdCase):
                 True
             )
 
+    def test_restricted_directory_traversal(self):
+        """Test file restriction directory traversal."""
+
+        with self.assertRaises(SnippetMissingError):
+            self.check_markdown(
+                R'''
+                --8<-- "../nested_b.txt"
+                ''',
+                '''
+                <p>Snippet</p>
+                ''',
+                True
+            )
+
 
 class TestSnippetsMultiNested(util.MdCase):
     """Test multi-nested restriction."""
@@ -779,6 +793,19 @@ class TestSnippetsNestedUnrestricted(util.MdCase):
         self.check_markdown(
             R'''
             --8<-- "../b.txt"
+            ''',
+            '''
+            <p>Snippet</p>
+            ''',
+            True
+        )
+
+    def test_restricted_directory_traversal(self):
+        """Test file restriction directory traversal."""
+
+        self.check_markdown(
+            R'''
+            --8<-- "../nested_b.txt"
             ''',
             '''
             <p>Snippet</p>

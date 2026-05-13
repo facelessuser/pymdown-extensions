@@ -3,6 +3,11 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 10.21.3
+
+-   **FIX**: Fix regression that allows a snippet to be loaded outside of the base path using directory traversal when
+    `restrict_base_path` is enabled (the default). Found by @gistrec.
+
 ## 10.21.2
 
 -   **FIX**: Highlight: Latest Pygments versions cannot handle a "filename" for code block titles of `None`.
