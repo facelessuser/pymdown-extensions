@@ -170,6 +170,7 @@ gantt
 gemoji
 gfm
 gforcada
+gistrec
 github
 hostnames
 html
