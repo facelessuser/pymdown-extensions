@@ -65,8 +65,8 @@ include = [
     "/tools/pymdownx_md_render.py",
     "/.pyspelling.yml",
     "/.coveragerc",
-    "/mkdocs.yml",
-    "/run_tests.py",
+    "/zensical.yml",
+    "/run_tests.py"
 ]
 
 [tool.hatch.build.targets.wheel]
