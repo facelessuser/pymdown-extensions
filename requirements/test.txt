@@ -1,4 +1,4 @@
-PyYAML>=3.10
+PyYAML>=6.0.3
 pytest
 pytest-cov
 coverage
