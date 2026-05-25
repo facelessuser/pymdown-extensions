@@ -172,7 +172,7 @@ class TabbedProcessor(BlockProcessor):
 
         if m:
             special = m.group(1) if m.group(1) else ''
-            title = m.group(2) if m.group(2) else m.group(3)
+            title = m.group(2) if m.group(2) else ''
             index = 0
             labels = None
             content = None

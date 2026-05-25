@@ -3,10 +3,14 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 10.22
+
+-   **FIX**: Tabbed: Fix issue where an empty title would cause an exception.
+
 ## 10.21.3
 
--   **FIX**: Fix regression that allows a snippet to be loaded outside of the base path using directory traversal when
-    `restrict_base_path` is enabled (the default). Found by @gistrec.
+-   **FIX**: Snippets: Fix regression that allows a snippet to be loaded outside of the base path using directory
+    traversal when `restrict_base_path` is enabled (the default). Found by @gistrec.
 
 ## 10.21.2
 

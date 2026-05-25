@@ -529,6 +529,25 @@ class TestLegacyTab(util.MdCase):
             True
         )
 
+    def test_empty_title(self):
+        """Test empty title."""
+
+        md = R"""
+        === ""
+            Content
+        """
+
+        self.check_markdown(
+            md,
+            '''
+            <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><label for="__tabbed_1_1"></label><div class="tabbed-content">
+            <p>Content</p>
+            </div>
+            </div>
+            ''',  # noqa: E501
+            True
+        )
+
 
 class TestLegacyTabSlugs(util.MdCase):
     """Test legacy tab slug cases."""
@@ -684,6 +703,25 @@ class TestTabSlugsCombineHeader(util.MdCase):
             </div>
             </div>
             <h1 id="header">Header</h1>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_empty_title(self):
+        """Test empty title."""
+
+        md = R"""
+        === ""
+            Content
+        """
+
+        self.check_markdown(
+            md,
+            '''
+            <div class="tabbed-set" data-tabs="1:1"><input checked="checked" id="_1" name="__tabbed_1" type="radio" /><label for="_1"></label><div class="tabbed-content">
+            <p>Content</p>
+            </div>
+            </div>
             ''',  # noqa: E501
             True
         )
