@@ -417,3 +417,20 @@ class TestBlocksTab(util.MdCase):
             ''',  # noqa: E501
             True
         )
+
+    def test_empty_title(self):
+        """Force a split of tab sets."""
+
+        self.check_markdown(
+            R'''
+            /// tab |
+            Content
+            ///
+            ''',
+            r'''
+            <p>/// tab |
+            Content
+            ///</p>
+            ''',
+            True
+        )
