@@ -374,7 +374,7 @@ class TabbedTreeprocessor(Treeprocessor):
                                 labels.append(i)
 
                     # Generate slugged IDs
-                    for inpt, label in zip(inputs, labels):
+                    for inpt, label in zip(inputs, labels, strict=True):
                         innerhtml = toc.render_inner_html(toc.remove_fnrefs(label), self.md)
                         innertext = html.unescape(toc.strip_tags(innerhtml))
                         if self.combine_header_slug:

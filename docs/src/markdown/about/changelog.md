@@ -5,6 +5,7 @@ icon: lucide/scroll-text
 
 ## 10.22
 
+-   **NEW**: Drop Python 3.9 support.
 -   **FIX**: Tabbed: Fix issue where an empty title would cause an exception.
 
 ## 10.21.3
