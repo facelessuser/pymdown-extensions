@@ -384,7 +384,7 @@ class SnippetPreprocessor(Preprocessor):
                         total = len(s_lines)
                         if start and end:
                             final_lines = []
-                            for sel in zip(start, end):
+                            for sel in zip(start, end, strict=True):
                                 s_start = util.clamp(total + sel[0], 0, total) if sel[0] and sel[0] < 0 else sel[0]
                                 s_end = util.clamp(total + 1 + sel[1], 0, total) if sel[1] and sel[1] < 0 else sel[1]
                                 final_lines.extend(s_lines[slice(s_start, s_end, None)])
