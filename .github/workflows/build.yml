@@ -17,10 +17,8 @@ jobs:
       max-parallel: 4
       matrix:
         platform: [ubuntu-latest, windows-latest]
-        python-version: [3.9, '3.10', '3.11', '3.12', '3.13', '3.14']
+        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
         include:
-          - python-version: 3.9
-            tox-env: py39
           - python-version: '3.10'
             tox-env: py310
           - python-version: '3.11'
@@ -67,7 +65,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: ['3.13']
+        python-version: ['3.14']
 
     env:
       TOXENV: lint
@@ -91,7 +89,7 @@ jobs:
     strategy:
       max-parallel: 4
       matrix:
-        python-version: ['3.13']
+        python-version: ['3.14']
 
     env:
       TOXENV: documents
