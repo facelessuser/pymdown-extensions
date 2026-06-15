@@ -5,6 +5,7 @@ from ..blocks import BlocksExtension
 import re
 
 RE_SEP = re.compile(r'[_-]+')
+RE_HEADING = re.compile(r'^(?P<level>#{1,6})(?P<header>(?:\\.|[^\\])*?)#*$')
 
 
 class Details(Block):
@@ -81,7 +82,12 @@ class Details(Block):
         # Create the summary
         if summary is not None:
             s = etree.SubElement(el, 'summary')
-            s.text = summary
+            m = RE_HEADING.match(summary)
+            if m:
+                h = etree.SubElement(s, f'h{len(m.group('level'))}')
+                h.text = m.group('header').strip()
+            else:
+                s.text = summary
 
         return el
 
