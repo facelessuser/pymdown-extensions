@@ -76,6 +76,26 @@ class TestBlocksDetails(util.MdCase):
             True
         )
 
+    def test_heading_in_title(self):
+        """Test details with heading in title."""
+
+        self.check_markdown(
+            R'''
+            /// details | ## A Title
+            Some *content*
+            ///
+            ''',
+            r'''
+            <details>
+            <summary>
+            <h2>A Title</h2>
+            </summary>
+            <p>Some <em>content</em></p>
+            </details>
+            ''',
+            True
+        )
+
     def test_details(self):
         """Test details with title."""
 
