@@ -47,7 +47,7 @@
     "postcss-inline-svg": "^6.0.0",
     "postcss-pseudo-classes": "^0.4.0",
     "postcss-scss": "^4.0.9",
-    "postcss-sort-media-queries": "^6.6.1",
+    "postcss-sort-media-queries": "^6.6.2",
     "postcss-svgo": "^8.0.0",
     "promise": "^8.3.0",
     "rollup": "^4.60.4",
