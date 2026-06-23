@@ -65,7 +65,7 @@ RE_TAG_LINK_ATTR = re.compile(
 )
 
 
-def repl_path(m, base_path):
+def repl_path(m, base_path, root_path, restrict_path=True):
     """Replace path with b64 encoded data."""
 
     link = m.group(0)
@@ -78,6 +78,14 @@ def repl_path(m, base_path):
             file_name = os.path.normpath(path)
         else:
             file_name = os.path.normpath(os.path.join(base_path, path))
+
+        if restrict_path:
+            filename = os.path.abspath(file_name)
+            # If the absolute path is no longer under the specified base path, reject the file
+            # Append `os.sep` so a sibling directory whose name shares a prefix
+            # (e.g. `/x/docs` vs `/x/docs_evil`) cannot satisfy the check.
+            if not filename.startswith(root_path + os.sep if not root_path.endswith(os.sep) else root_path):
+                return link
 
         if os.path.exists(file_name):
             ext = os.path.splitext(file_name)[1].lower()
@@ -96,14 +104,17 @@ def repl_path(m, base_path):
     return link
 
 
-def repl(m, base_path):
+def repl(m, base_path, root_path, restrict_path=True):
     """Replace."""
 
     if m.group('avoid'):
         tag = m.group('avoid')
     else:
         tag = m.group('open')
-        tag += RE_TAG_LINK_ATTR.sub(lambda m2: repl_path(m2, base_path), m.group('attr'))
+        tag += RE_TAG_LINK_ATTR.sub(
+            lambda m2: repl_path(m2, base_path, root_path, restrict_path),
+            m.group('attr')
+        )
         tag += m.group('close')
     return tag
 
@@ -114,8 +125,11 @@ class B64Postprocessor(Postprocessor):
     def run(self, text):
         """Find and replace paths with base64 encoded file."""
 
-        basepath = self.config['base_path']
-        text = RE_TAG_HTML.sub(lambda m: repl(m, basepath), text)
+        base_path = os.path.abspath(self.config['base_path'])
+        root_path = self.config['root_path']
+        root_path = base_path if not root_path else os.path.abspath(root_path)
+        restrict_path = self.config['restrict_path']
+        text = RE_TAG_HTML.sub(lambda m: repl(m, base_path, root_path, restrict_path=restrict_path), text)
         return text
 
 
@@ -126,7 +140,20 @@ class B64Extension(Extension):
         """Initialize."""
 
         self.config = {
-            'base_path': [".", "Base path for b64 to use to resolve paths - Default: \".\""]
+            'base_path': [
+                ".",
+                "Base path for b64 to use. Operates as restricted root directory and a relative anchor to resolve "
+                "paths if `relative_path` is not defined - Default: \".\""
+            ],
+            'root_path': [
+                "",
+                "Root path to restrict links to if `base_path` is not sufficient. Ignored if not defined."
+            ],
+            'restrict_path': [
+                True,
+                "Restrict B64 paths such that they are under the base path (`base_path`); if `root_path` is provided, "
+                "links must be under `root_path` instead - Default: True"
+            ],
         }
 
         super().__init__(*args, **kwargs)
