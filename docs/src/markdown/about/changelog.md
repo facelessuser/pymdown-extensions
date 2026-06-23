@@ -8,9 +8,6 @@ icon: lucide/scroll-text
 -   **BREAK**: B64: Restricts relative links to `base_path` by default. Can be disabled by setting new `restrict_path`
     option to `False`. The new `root_path` can be specified if paths are desired to be restricted to a different
     location separate  `base_path` which is also used as a relative base for image paths.
-
-## 10.22
-
 -   **NEW**: Drop Python 3.9 support.
 -   **FIX**: Tabbed: Fix issue where an empty title would cause an exception.
 
