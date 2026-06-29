@@ -50,7 +50,7 @@
     "postcss-sort-media-queries": "^6.6.2",
     "postcss-svgo": "^8.0.1",
     "promise": "^8.3.0",
-    "rollup": "^4.62.0",
+    "rollup": "^4.62.2",
     "rollup-plugin-output-manifest": "^2.0.0",
     "sass": "^1.101.0",
     "stylelint": "^17.13.0",
