@@ -3,5 +3,5 @@ pytest
 pytest-cov
 coverage
 mypy>=1.19.1
-types-markdown>=3.10.0.20251106
+types-markdown>=3.10.2.20260712
 types-pyyaml>=6.0.12.20250915
