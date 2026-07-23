@@ -23,7 +23,7 @@
     "@babel/plugin-external-helpers": "^7.29.7",
     "@babel/preset-env": "^7.29.7",
     "@babel/register": "^7.29.7",
-    "@fortawesome/fontawesome-free": "^7.2.0",
+    "@fortawesome/fontawesome-free": "^7.3.1",
     "@mdi/svg": "^7.4.47",
     "@primer/octicons": "^19.28.1",
     "@rollup/plugin-babel": "^7.1.0",
