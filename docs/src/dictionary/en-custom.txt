@@ -189,6 +189,7 @@ joapuiib
 js
 kbd
 keymap
+lexdotdev
 linkafies
 linter
 localhost
@@ -208,6 +209,7 @@ nl
 octocat
 online
 parsers
+performant
 plugin
 plugins
 plusminus

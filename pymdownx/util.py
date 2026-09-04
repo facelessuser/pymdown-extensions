@@ -9,7 +9,7 @@ from __future__ import annotations
 from markdown import Markdown
 from markdown.inlinepatterns import InlineProcessor
 import xml.etree.ElementTree as etree
-from collections import namedtuple
+from collections import deque
 import sys
 import copy
 import re
@@ -18,7 +18,7 @@ from urllib.request import pathname2url, url2pathname
 from urllib.parse import urlparse
 from functools import wraps
 import warnings
-from typing import Sequence, Callable, Any
+from typing import Sequence, Callable, Any, cast
 
 RE_WIN_DRIVE_LETTER = re.compile(r"^[A-Za-z]$")
 RE_WIN_DRIVE_PATH = re.compile(r"^[A-Za-z]:(?:\\.*)?$")
@@ -178,161 +178,485 @@ def parse_url(url: str) -> tuple[str, str, str, str, str, str, bool, bool]:
     return (scheme, netloc, path, params, query, fragment, is_url, is_absolute)
 
 
-class PatSeqItem(namedtuple('PatSeqItem', ['pattern', 'builder', 'tags', 'full_recursion'])):
-    """Pattern sequence item item."""
-
-    def __new__(cls, pattern: re.Pattern[str], builder: str, tags: str, full_recursion: bool = False) -> PatSeqItem:
-        """Create object."""
-
-        return super().__new__(cls, pattern, builder, tags, full_recursion)
-
-
-class PatternSequenceProcessor(InlineProcessor):
+class DelimeterProcessor(InlineProcessor):
     """Processor for handling complex nested patterns such as strong and em matches."""
 
-    PATTERNS = []  # type: list[PatSeqItem]
+    SPACE = re.compile(r'\s')
 
-    def build_single(self, m: re.Match[str], tag: str, full_recursion: bool, idx: int) -> etree.Element:
-        """Return single tag."""
-        el1 = etree.Element(tag)
-        text = m.group(2)
-        self.parse_sub_patterns(text, el1, None, full_recursion, idx)
-        return el1
-
-    def build_double(self, m: re.Match[str], tags: str, full_recursion: bool, idx: int) -> etree.Element:
-        """Return double tag."""
-
-        tag1, tag2 = tags.split(",")
-        el1 = etree.Element(tag1)
-        el2 = etree.Element(tag2)
-        text = m.group(2)
-        self.parse_sub_patterns(text, el2, None, full_recursion, idx)
-        el1.append(el2)
-        if len(m.groups()) == 3:
-            text = m.group(3)
-            self.parse_sub_patterns(text, el1, el2, full_recursion, idx)
-        return el1
-
-    def build_double2(self, m: re.Match[str], tags: str, full_recursion: bool, idx: int) -> etree.Element:
-        """Return double tags (variant 2): `<strong>text <em>text</em></strong>`."""
-
-        tag1, tag2 = tags.split(",")
-        el1 = etree.Element(tag1)
-        el2 = etree.Element(tag2)
-        text = m.group(2)
-        self.parse_sub_patterns(text, el1, None, full_recursion, idx)
-        text = m.group(3)
-        el1.append(el2)
-        self.parse_sub_patterns(text, el2, None, full_recursion, idx)
-        return el1
-
-    def parse_sub_patterns(
+    def __init__(
         self,
-        data: str,
-        parent: etree.Element,
-        last: etree.Element | None,
-        full_recursion: bool,
-        idx: int
+        token: str,
+        tags: str,
+        md: Markdown | None = None,
+        no_space: bool = False,
+        smart: bool = False,
+        double: bool = False
     ) -> None:
         """
-        Parses sub patterns.
+        Initialize.
 
-        `data` (`str`):
-            text to evaluate.
+        Arguments:
+            `token`: should be a single character.
 
-        `parent` (`etree.Element`):
-            Parent to attach text and sub elements to.
+            `tags`: should be specified as a single tag or two tags with the one that requires
+                    repeated tokens first.
 
-        `last` (`etree.Element`):
-            Last appended child to parent. Can also be None if parent has no children.
+            `md`: the Markdown object.
 
-        `idx` (`int`):
-            Current pattern index that was used to evaluate the parent.
+            `no_space`: The "no space" option should be enabled only for Pandoc style spans that require
+                        spaces to be escaped (e.g. subscript and superscript). This logic is only applied
+                        to single token spans.
+
+            `smart`: enable if intelligent word logic should be applied.
+
+            `double`: if only one tag is specified, indicate whether it requires repeated tokens.
 
         """
 
-        offset = 0
-        pos = 0
+        # Cache info
+        self.regions: list[tuple[int, int, int, int, int]] = []
+        self.stack: deque[tuple[int, int, int]] = deque()
+        self.cache_index = 0
+        self.cache_pos = 0
 
-        length = len(data)
-        while pos < length:
-            # Find the start of potential emphasis or strong tokens
-            if self.compiled_re.match(data, pos):
-                matched = False
-                # See if the we can match an emphasis/strong pattern
-                for index, item in enumerate(self.PATTERNS):
-                    # Only evaluate patterns that are after what was used on the parent
-                    if not full_recursion and index <= idx:
-                        continue
-                    m = item.pattern.match(data, pos)
-                    if m:
-                        # Append child nodes to parent
-                        # Text nodes should be appended to the last
-                        # child if present, and if not, it should
-                        # be added as the parent's text node.
-                        text = data[offset:m.start(0)]
-                        if text:
-                            if last is not None:
-                                last.tail = text
-                            else:
-                                parent.text = text
-                        el = self.build_element(m, item.builder, item.tags, item.full_recursion, index)
-                        parent.append(el)
-                        last = el
-                        # Move our position past the matched hunk
-                        offset = pos = m.end(0)
-                        matched = True
-                if not matched:
-                    # We matched nothing, move on to the next character
-                    pos += 1
+        self.no_space = no_space
+        self.smart = smart
+        self.tags = tags.split(',')
+        self.double = len(tags) != 2 and double
+        super().__init__(self._build_patterns(token), md)
+
+    def _build_patterns(self, token: str) -> str:
+        """Build regular expression patterns."""
+
+        # Build up patterns
+        self.token = token
+        etoken = re.escape(token)
+        avoid_start = fr'(?:(?<=_)|(?<![\w{etoken}]))' if token != '_' else fr'(?<![\w{etoken}])'
+        avoid_end = fr'(?:(?=_)|(?![\w{etoken}]))' if token != '_' else fr'(?![\w{etoken}])'
+
+        # Patterns for when the larger delimiter is "smart" and the smaller is "dumb".
+        if self.smart and self.no_space and len(self.tags) == 2:
+            self.boundary = re.compile(
+                fr'''(?x)(?:
+                (?:
+                    (?P<ambiguous3>(?<!^)(?<![\s{etoken}]){etoken}{{3}}(?![\s{etoken}])(?!$))|
+                    (?P<end3>(?<!^)(?<![\s{etoken}]){etoken}{{3}})|
+                    (?P<start3>{etoken}{{3}}(?![\s{etoken}])(?!$))
+                )|
+                (?:
+                    (?P<ambiguous2>(?<!^)(?<![\s{etoken}]){avoid_start}{etoken}{{2}}{avoid_end}(?![\s{etoken}])(?!$))|
+                    (?P<end2>(?<!^)(?<![\s{etoken}]){etoken}{{2}}{avoid_end})|
+                    (?P<start2>{avoid_start}{etoken}{{2}}(?![\s{etoken}])(?!$))
+                )|
+                (?:
+                    (?P<ambiguous1>(?<!^)(?<![\s{etoken}]){etoken}{{1}}(?![\s{etoken}])(?!$))|
+                    (?P<end1>(?<!^)(?<![\s{etoken}]){etoken}{{1}})|
+                    (?P<start1>{etoken}{{1}}(?![\s{etoken}])(?!$))
+                )
+                )''',
+                flags=re.UNICODE
+            )
+        # Patterns for "smart" cases.
+        elif self.smart and (not self.no_space or self.double):
+            if len(self.tags) == 2:
+                self.boundary = re.compile(
+                    fr'''(?x)
+                    (?P<ambiguous>(?<!^)(?<![\s{etoken}]){avoid_start}{etoken}{{1,3}}{avoid_end}(?![\s{etoken}])(?!$))|
+                    (?P<end>(?<!^)(?<![\s{etoken}]){etoken}{{1,3}}{avoid_end})|
+                    (?P<start>{avoid_start}{etoken}{{1,3}}(?![\s{etoken}])(?!$))
+                    ''',
+                    flags=re.UNICODE
+                )
+            elif self.double:
+                self.boundary = re.compile(
+                    fr'''(?x)
+                    (?P<ambiguous>(?<!^)(?<![\s{etoken}]){avoid_start}{etoken}{{2}}{avoid_end}(?![\s{etoken}])(?!$))|
+                    (?P<end>(?<!^)(?<![\s{etoken}]){etoken}{{2}}{avoid_end})|
+                    (?P<start>{avoid_start}{etoken}{{2}}(?![\s{etoken}])(?!$))
+                    ''',
+                    flags=re.UNICODE
+                )
+            else:  # pragma: no cover
+                # This case is not currently used
+                self.boundary = re.compile(
+                    fr'''(?x)
+                    (?P<ambiguous>(?<!^)(?<![\s{etoken}]){avoid_start}{etoken}{{1}}{avoid_end}(?![\s{etoken}])(?!$))|
+                    (?P<end>(?<!^)(?<![\s{etoken}]){etoken}{{1}}{avoid_end})|
+                    (?P<start>{avoid_start}{etoken}{{1}}(?![\s{etoken}])(?!$))
+                    ''',
+                    flags=re.UNICODE
+                )
+        # Patterns for "dumb" cases.
+        else:
+            if len(self.tags) == 2:
+                self.boundary = re.compile(
+                    fr'''(?x)(?:
+                    (?P<ambiguous>(?<!^)(?<![\s{etoken}]){etoken}{{1,3}}(?![\s{etoken}])(?!$))|
+                    (?P<end>(?<!^)(?<![\s{etoken}]){etoken}{{1,3}})|
+                    (?P<start>{etoken}{{1,3}}(?![\s{etoken}])(?!$))
+                    )''',
+                    flags=re.UNICODE
+                )
+            elif self.double:
+                self.boundary = re.compile(
+                    fr'''(?x)
+                    (?P<ambiguous>(?<!^)(?<![\s{etoken}]){etoken}{{2}}(?![\s{etoken}])(?!$))|
+                    (?P<end>(?<!^)(?<![\s{etoken}]){etoken}{{2}})|
+                    (?P<start>{etoken}{{2}}(?![\s{etoken}])(?!$))
+                    ''',
+                    flags=re.UNICODE
+                )
             else:
-                # Increment position as no potential emphasis start was found.
-                pos += 1
+                self.boundary = re.compile(
+                    fr'''(?x)
+                    (?P<ambiguous>(?<!^)(?<![\s{etoken}]){etoken}{{1}}(?![\s{etoken}])(?!$))|
+                    (?P<end>(?<!^)(?<![\s{etoken}]){etoken}{{1}})|
+                    (?P<start>{etoken}{{1}}(?![\s{etoken}])(?!$))
+                    ''',
+                    flags=re.UNICODE
+                )
 
-        # Append any leftover text as a text node.
-        text = data[offset:]
-        if text:
-            if last is not None:
-                last.tail = text
-            else:
-                parent.text = text
+        self.bad = re.compile(fr'{etoken}+')
+        return fr'{etoken}'
 
-    def build_element(
+    def _build_element(
         self,
-        m: re.Match[str],
-        builder: str,
-        tags: str,
-        full_recursion: bool,
-        index: int
-    ) -> etree.Element:
+        data: str,
+        start: int = 0,
+        offset: int = 0
+    ) -> tuple[etree.Element, int]:
         """Element builder."""
 
-        if builder == 'double2':
-            return self.build_double2(m, tags, full_recursion, index)
-        elif builder == 'double':
-            return self.build_double(m, tags, full_recursion, index)
+        regions = self.regions
+        el: etree.Element | None = None
+        last: Any = None
+        previous: Any = None
+        greater: Any = None
+        lesser: Any = None
+
+        triple = set()
+        outer: list[etree.Element] = []
+        outer_r: list[tuple[int, int, int, int, int]] = []
+
+        if len(self.tags) == 2:
+            greater, lesser = self.tags
+        elif self.double:
+            greater = self.tags[0]
+            lesser = None
         else:
-            return self.build_single(m, tags, full_recursion, index)
+            lesser = self.tags[0]
+            greater = None
+
+        # Iterate regions creating the elements they represent
+        end = len(regions)
+        idx = 0
+        for idx, i in enumerate(range(start, end), 1):
+            r = regions[i]
+            # Not contained within region
+            if idx and r[0] > regions[start][3]:
+                idx -= 1
+                break
+            # Get the appropriate element(s)
+            if r[4] == 3:
+                el1 = etree.Element(greater)
+                el2 = etree.Element(lesser)
+            elif r[4] == 2:
+                el1 = etree.Element(greater)
+                el2 = None
+            else:
+                el1 = etree.Element(lesser)
+                el2 = None
+
+            # Populate the elements with their text
+            if idx > 1:
+                if last.text is None:
+                    if previous[2] < r[0]:
+                        last.text = data[previous[1]+offset:previous[2]+offset]
+                    else:
+                        last.text = data[previous[1]+offset:r[0]+offset]
+                if last is not outer[-1] and last.tail is None:
+                    if r[0] < outer_r[-1][3]:
+                        last.tail = data[previous[3]+offset:r[0]+offset]
+                    else:
+                        last.tail = data[previous[3]+offset:outer_r[-1][2]+offset]
+                        outer[-1].tail = data[outer_r[-1][3]+offset:r[0]+offset]
+
+            # First element
+            if el is None:
+                el = el1
+                last = el
+                outer.append(el)
+                outer_r.append(r)
+
+            # Subsequent elements
+            else:
+                # Is the current outer element no longer wrapping this one?
+                while len(outer_r) > 1 and r[3] > outer_r[-1][3]:
+                    outer.pop()
+                    outer_r.pop()
+
+                # Double nested element (triple token)
+                if outer[-1] in triple:
+                    outer[-1][-1].append(el1)
+
+                # Non-nested
+                else:
+                    outer[-1].append(el1)
+
+                # Is this element wrapping the next?
+                if i + 1 < end:
+                    if r[3] > regions[i + 1][3]:
+                        outer.append(el1)
+                        outer_r.append(r)
+
+                # Track the last element we parsed.
+                last = el1
+
+            # Nest secondary element if there is one.
+            # Track triple tokens (double elements)
+            # so we can identify quickly and properly nest.
+            if el2 is not None:
+                el1.append(el2)
+                last = el2
+                triple.add(el1)
+
+            # Track the previous region.
+            previous = r
+
+        # Populate remaining elements with their text
+        while outer:
+            if last.text is None:
+                last.text = data[previous[1]+offset:previous[2]+offset]
+            if last.tail is None and last is not outer[-1]:
+                last.tail = data[previous[3]+offset:outer_r[-1][2]+offset]
+            last = outer.pop()
+            previous = outer_r.pop()
+
+        return cast('etree.Element', el), idx
+
+    def get_cached_result(self, pos: int, data: str) -> tuple[etree.Element, int, int]:
+        """Get a cached result."""
+
+        stack = self.stack
+        regions = self.regions
+
+        # Process the next region(s) in the cache
+        offset = pos - self.cache_pos
+        start, end = regions[self.cache_index][0], regions[self.cache_index][3]
+        el, count = self._build_element(data, self.cache_index, offset)
+
+        # Determine next offset
+        self.cache_index += count
+        if self.cache_index < len(regions):
+            self.cache_pos = regions[self.cache_index][0]
+            while stack:
+                entry = stack.popleft()
+                if entry[0] > end:
+                    if entry[0] < self.cache_pos:
+                        self.cache_pos = entry[0]
+                    break
+
+        # Nothing left to process
+        else:
+            regions.clear()
+            stack.clear()
+            self.cache_index = 0
+            self.cache_pos = 0
+
+        # Whether element is valid or not, we'll advance past the end
+        return el, start + offset, end + offset
 
     def handleMatch(  # type: ignore[override]
         self,
         m: re.Match[str],
         data: str
     ) -> tuple[etree.Element | None, int | None, int | None]:
-        """Parse patterns."""
+        """Parse delimiter pattern."""
 
-        el = None
-        start = None
-        end = None
+        # Do we have entries we haven't returned yet?
+        if self.regions:
+            return self.get_cached_result(m.start(0), data)
 
-        for index, item in enumerate(self.PATTERNS):
-            m1 = item.pattern.match(data, m.start(0))
-            if m1:
-                start = m1.start(0)
-                end = m1.end(0)
-                el = self.build_element(m1, item.builder, item.tags, item.full_recursion, index)
+        # If token is not an opening, quit
+        m2 = self.boundary.match(data, m.start(0))
+        if m2 is None or m2.lastgroup[0] == 'e':  # type: ignore[index]
+            if m2 is not None:
+                m = m2
+            # Advance past the full length of the delimiter found
+            return None, m.start(0), m.end(0)
+
+        # Get the stack and regions
+        stack = self.stack
+        regions = self.regions
+
+        # Delimiter length
+        l = len(m2.group(0))
+        # Data offset
+        offset = m2.end(0)
+        # Stack of opening delimiters
+        stack.append((m2.start(0), offset, l))
+        # Track how many tokens in the stack require or possibly require no spaces.
+        no_space = 1 if l != 2 else 0
+        # Track how many single width tokens we have in the stack.
+        # This bookkeeping allows us to know when we can no longer pair matches.
+        singles = 0
+
+        # Pair tokens until the stack is empty or we can no longer find tokens.
+        while stack:
+            m2 = self.boundary.search(data, offset)
+            if m2 is None:
                 break
-        return el, start, end
+            offset = m2.end(0)
+
+            # Get current and last delimiter size
+            current = len(m2.group(0))
+            last = stack[-1][-1]
+
+            # Some delimiters may be ambiguous and look like both a start or an end
+            is_start = m2.lastgroup[0] != 'e'  # type: ignore[index]
+            is_end = not is_start or m2.lastgroup[0] != 's'  # type: ignore[index]
+            is_ambiguous = is_start and is_end
+
+            # Find closing tokens
+            # Looking for:
+            # - `*em*`
+            # - `**strong**`
+            # - `***strong,em***`
+            # - `*em**`
+            # - `*em***`
+            # - `**strong***`
+            #
+            # Avoid ambiguous tokens that could be a start or an end.
+            # Consume starts until the end token is fully consumed.
+            # If we don't consume the entire end, see if next rule consumes it.
+            if is_end and ((not is_ambiguous and current > last) or (current == last)):
+                is_start = False
+
+                # Consume previous points until the delimiter is consumed
+                s = m2.start(0)
+                furthest = stack[-1]
+                while current and last <= current:
+                    okay = True
+                    delimiter = stack.pop()
+                    # Reject start/end pair if whitespace requirement is not satisfied.
+                    # Try to find a pair that can work if the first fails.
+                    if self.no_space:
+                        if delimiter[-1] == 1:
+                            singles -= 1
+                        while True:
+                            okay = True
+                            if (no_space or current == 1) and self.SPACE.search(data[delimiter[1]:s]):
+                                okay = False
+                                if stack:
+                                    if delimiter[-1] != 2:
+                                        no_space -= 1
+                                    delimiter = stack.pop()
+                                    if delimiter[-1] == 1:
+                                        singles -= 1
+                                    last = delimiter[-1]
+                                    continue
+                            break
+
+                    # We've exhausted our options, unable to make a reasonable pair.
+                    # Append the furthest we searched so we can avoid it on next pass.
+                    if not okay:
+                        stack.append(furthest)
+                        break
+
+                    # Build up region for pair and adjust accounting.
+                    regions.append((delimiter[0], delimiter[1], s, s + delimiter[-1], delimiter[-1]))
+                    s += delimiter[-1]
+                    current -= delimiter[-1]
+                    if not stack:
+                        is_end = False
+                        break
+                    last = stack[-1][-1]
+                    if delimiter[-1] != 2 and last == 2:
+                        no_space -= 1
+
+                # Do we still have more to consume?
+                is_end = current and stack and last > current
+
+            # Find closing tokens
+            # Looking for:
+            # - `***em*`
+            # - `***strong**`
+            # - `**em*`
+            if is_end and (last == 3 or not is_ambiguous) and last > current:
+                delimiter = stack.pop()
+                ignore = False
+                # Reject end if the content's white space invalidates it.
+                if self.no_space:
+                    if current == 1 and self.SPACE.search(data[delimiter[1]:m2.start(0)]):
+                        stack.append(delimiter)
+                        ignore = True
+
+                # Create new region if end is valid.
+                # If not valid, ignore the end but continue parsing.
+                if not ignore:
+                    is_start = False
+                    new = last - current
+                    regions.append((delimiter[0] + new, delimiter[1], m2.start(0), offset, current))
+                    stack.append((delimiter[0], delimiter[0] + new, new))
+
+                    # Bookkeeping for no space requirement
+                    if self.no_space:
+                        if new == 1:
+                            singles += 1
+                        if delimiter[-1] != 2 and new == 2:
+                            no_space -= 1
+
+            # Find opening tokens
+            # Looking for:
+            # - `*em ...*`
+            # - `**strong ...*`
+            # - `***em ...*`
+            if is_start:
+                # Start a new nested span, but avoid adding new spans if it no space requirement
+                # cannot be fulfilled. Abort if it is impossible to meet the requirement.
+                if self.no_space and no_space and self.SPACE.search(data[stack[-1][1]:m2.start(0)]):
+                    if no_space > 1 or singles:
+                        break
+                    continue
+
+                stack.append((m2.start(0), m2.end(0), current))
+
+                # Bookkeeping for no space requirement
+                if self.no_space:
+                    if current != 2:
+                        no_space += 1
+                    if current == 1:
+                        singles += 1
+
+        # Build the HTML elements
+        if regions:
+            # Regions may be out of order.
+            regions.sort(key=lambda x: x[0])
+            start, end = regions[0][0], regions[0][3]
+            el, count = self._build_element(data)
+
+            # Cache unprocessed regions to avoid repeated searches
+            if count < len(regions):
+                self.cache_index = count
+                self.cache_pos = self.regions[count][0]
+                while stack:
+                    entry = stack.popleft()
+                    if entry[0] > end:
+                        if entry[0] < self.cache_pos:
+                            self.cache_pos = entry[0]
+                        break
+            else:
+                # Cleanup
+                stack.clear()
+                regions.clear()
+
+            return el, start, end
+
+        # We failed to pair any valid start/end delimiters, avoid the parsed range next pass.
+        start = m.start(0)
+        end = stack[-1][1] if stack else m.end(0)
+        stack.clear()
+        return None, start, end
 
 
 def deprecated(message: str, stacklevel: int = 2) -> Callable[..., Any]:  # pragma: no cover

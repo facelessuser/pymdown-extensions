@@ -3,6 +3,14 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 12.0
+
+-   **BREAK**: BetterEm, Tilde, Caret, Mark: Rewrite extensions to be more performant and also to address a number
+    non-traditional matching behaviors with complex cases. There may be subtle differences in parsing behavior. Changes
+    were carefully considered with the intent to improve user experience while also ensuring much better performance. If
+    such changes cannot currently be tolerated, version <12 can be used until migration is possible, but no legacy
+    behavior is planned in versions moving forward. Issue noted by (@lexdotdev).
+
 ## 11.0.2
 
 -   **FIX**: InlineHilite: Improve performance of inline code matching.

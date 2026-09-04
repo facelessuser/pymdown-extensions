@@ -7,9 +7,14 @@ icon: lucide/highlighter
 
 ## Overview
 
+> [!new] New in 12.0
+> Mark was rewritten from the ground up. Some subtle difference may be observed compared to older versions, but these
+> changes were made to align better with expected nesting conventions in the majority of parsers and to improve
+> performance.
+
 Mark adds the ability to insert `#!html <mark></mark>` tags.  The syntax requires the text to be surrounded by double
 equal signs. It can optionally be configured to use smart logic. Syntax behavior for smart and non-smart variants of
-**mark** models that of [BetterEm](betterem.md#rules).
+**mark** models that of [BetterEm](betterem.md).
 
 To Mark some text, simply surround the text with double `=`.
 
