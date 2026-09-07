@@ -71,15 +71,15 @@ class BetterEmExtension(Extension):
         md.inlinePatterns.deregister('emphasis2', False)
 
         if enable_star:
-            asterisk = util.DelimeterProcessor('*','strong,em', md, smart=True)
+            asterisk = util.DelimiterProcessor('*','strong,em', md, smart=True)
         else:
-            asterisk = util.DelimeterProcessor('*', 'strong,em', md)
+            asterisk = util.DelimiterProcessor('*', 'strong,em', md)
         md.inlinePatterns.register(asterisk, "strong_em", 50)
 
         if enable_under:
-            underscore = util.DelimeterProcessor('_', 'strong,em', md, smart=True)
+            underscore = util.DelimiterProcessor('_', 'strong,em', md, smart=True)
         else:
-            underscore = util.DelimeterProcessor('_', 'strong,em', md)
+            underscore = util.DelimiterProcessor('_', 'strong,em', md)
         md.inlinePatterns.register(underscore, "strong_em2", 40)
 
 

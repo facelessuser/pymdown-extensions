@@ -185,7 +185,7 @@ def parse_url(url: str) -> tuple[str, str, str, str, str, str, bool, bool]:
     return (scheme, netloc, path, params, query, fragment, is_url, is_absolute)
 
 
-class DelimeterProcessor(InlineProcessor):
+class DelimiterProcessor(InlineProcessor):
     """Processor for handling complex nested patterns such as strong and em matches."""
 
     SPACE = re.compile(r'\s')

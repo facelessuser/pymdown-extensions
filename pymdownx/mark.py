@@ -52,9 +52,9 @@ class MarkExtension(Extension):
         util.escape_chars(md, escape_chars)
 
         if smart:
-            mark = util.DelimeterProcessor('=', 'mark', md, smart=True, double=True)
+            mark = util.DelimiterProcessor('=', 'mark', md, smart=True, double=True)
         else:
-            mark = util.DelimeterProcessor('=', 'mark', md, double=True)
+            mark = util.DelimiterProcessor('=', 'mark', md, double=True)
         md.inlinePatterns.register(mark, "mark", 65)
 
 
