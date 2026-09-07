@@ -6,6 +6,7 @@ MIT license.
 Copyright (c) 2017 Isaac Muse <isaacmuse@gmail.com>
 """
 from __future__ import annotations
+from markdown import __version_info__
 from markdown import Markdown
 from markdown.inlinepatterns import InlineProcessor
 import xml.etree.ElementTree as etree
@@ -34,6 +35,12 @@ else:
 
 PY39 = (3, 9) <= sys.version_info
 PY314 = (3, 14) <= sys.version_info
+
+# TODO: Remove from main when Python Markdown releases https://github.com/Python-Markdown/markdown/commit/152a16f.
+# Commit is required to actually see speed improvements, without, this is actually slower.
+MD_FAST = __version_info__[:3] > (3, 10, 3)
+if not MD_FAST:
+    warnings.warn('For performance, Pymodwn Extensions requires a Python Markdown > 3.10.3', ResourceWarning, 2)
 
 
 def clamp(value: float, mn: float, mx: float) -> float:
@@ -434,7 +441,8 @@ class DelimeterProcessor(InlineProcessor):
 
         return cast('etree.Element', el), idx
 
-    def get_cached_result(self, pos: int, data: str) -> tuple[etree.Element, int, int]:
+    # TODO: Coverage should be ignored until we can test with required Python Markdown.
+    def get_cached_result(self, pos: int, data: str) -> tuple[etree.Element, int, int]:  # pragma: no cover
         """Get a cached result."""
 
         stack = self.stack
@@ -474,7 +482,8 @@ class DelimeterProcessor(InlineProcessor):
         """Parse delimiter pattern."""
 
         # Do we have entries we haven't returned yet?
-        if self.regions:
+        # TODO: Coverage should be ignored until we can test with required Python Markdown.
+        if self.regions:  # pragma: no cover
             return self.get_cached_result(m.start(0), data)
 
         # If token is not an opening, quit
@@ -636,7 +645,8 @@ class DelimeterProcessor(InlineProcessor):
             el, count = self._build_element(data)
 
             # Cache unprocessed regions to avoid repeated searches
-            if count < len(regions):
+            # TODO: Coverage should be ignored until we can test with required Python Markdown.
+            if count < len(regions) and MD_FAST:  # pragma: no cover
                 self.cache_index = count
                 self.cache_pos = self.regions[count][0]
                 while stack:
@@ -656,7 +666,7 @@ class DelimeterProcessor(InlineProcessor):
         start = m.start(0)
         end = stack[-1][1] if stack else m.end(0)
         stack.clear()
-        return None, start, end
+        return (None, start, end) if MD_FAST else (None, None, None)
 
 
 def deprecated(message: str, stacklevel: int = 2) -> Callable[..., Any]:  # pragma: no cover
