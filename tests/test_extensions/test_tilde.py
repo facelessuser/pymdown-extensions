@@ -1,4 +1,6 @@
 """Test tilde."""
+import markdown
+import pytest
 from .. import util
 
 
@@ -81,8 +83,8 @@ class TestTildeSmart(util.MdCase):
         """Test case 8."""
 
         self.check_markdown(
-            R"Test: ~~This will all be deleted ~~because of the placement of the center tilde.~~",
-            "<p>Test: <del>This will all be deleted ~~because of the placement of the center tilde.</del></p>",
+            R"Test: ~~This will NOT all be deleted ~~because of the placement of the center tilde.~~",
+            "<p>Test: ~~This will NOT all be deleted <del>because of the placement of the center tilde.</del></p>",
             True
         )
 
@@ -111,6 +113,86 @@ class TestTildeSmart(util.MdCase):
             R"Test: ~~This will all be deleted~ because of the token is less than that of the tilde.~~",
             "<p>Test: <del>This will all be deleted~ because of the token is less than that of the tilde.</del></p>",
             True
+        )
+
+    def test_case12(self):
+        """Test case 12."""
+
+        self.check_markdown(
+            R"~~~a~~b~~c ~ d~~",
+            "<p><del><sub>a</sub><sub>b</sub>~c ~ d</del></p>"
+        )
+
+    def test_case13(self):
+        """Test case 13."""
+
+        self.check_markdown(
+            R"~~~a~a~b~c ~ d~~",
+            "<p><del><sub>a</sub>a<sub>b</sub>c ~ d</del></p>"
+        )
+
+    def test_case14(self):
+        """Test case 14."""
+
+        self.check_markdown(
+            R"~~~ a a~ b~~~",
+            "<p>~~~ a a~ b~~~</p>"
+        )
+
+    def test_case15(self):
+        """Test case 15."""
+
+        self.check_markdown(
+            R"~~~aa~ b~~~",
+            "<p><del><sub>aa</sub> b</del>~</p>"
+        )
+
+    def test_case16(self):
+        """Test case 16."""
+
+        self.check_markdown(
+            R"~~~aaa~~ ~b~ c~",
+            "<p>~<del>aaa</del> <sub>b</sub> c~</p>"
+        )
+
+    def test_case17(self):
+        """Test case 17."""
+
+        self.check_markdown(
+            R"~~~aaa~~~b~~c c~",
+            "<p><del><sub>aaa</sub></del>b~~c c~</p>"
+        )
+
+    def test_case18(self):
+        """Test case 18."""
+
+        self.check_markdown(
+            R"~~~aaa~~~~b~~ ~c c~",
+            "<p><del><sub>aaa</sub></del><sub>b</sub>~ ~c c~</p>"
+        )
+
+    def test_case19(self):
+        """Test case 19."""
+
+        self.check_markdown(
+            R"~~~a b~ c~~",
+            "<p>~<del>a b~ c</del></p>"
+        )
+
+    def test_case20(self):
+        """Test case 20."""
+
+        self.check_markdown(
+            "~a ~~b~~",
+            '<p>~a <del>b</del></p>'
+        )
+
+    def test_case21(self):
+        """Test case 21."""
+
+        self.check_markdown(
+            "~~~a ~b~~",
+            '<p>~<del>a ~b</del></p>'
         )
 
     def test_complex_cases(self):
@@ -280,6 +362,86 @@ class TestTildeNoSmart(util.MdCase):
             True
         )
 
+    def test_case12(self):
+        """Test case 12."""
+
+        self.check_markdown(
+            R"~~~a~~b~~c ~ d~~",
+            "<p>~<del>a</del>b<del>c ~ d</del></p>"
+        )
+
+    def test_case13(self):
+        """Test case 13."""
+
+        self.check_markdown(
+            R"~~~a~a~b~c ~ d~~",
+            "<p><del><sub>a</sub>a<sub>b</sub>c ~ d</del></p>"
+        )
+
+    def test_case14(self):
+        """Test case 14."""
+
+        self.check_markdown(
+            R"~~~ a a~ b~~~",
+            "<p>~~~ a a~ b~~~</p>"
+        )
+
+    def test_case15(self):
+        """Test case 15."""
+
+        self.check_markdown(
+            R"~~~aa~ b~~~",
+            "<p><del><sub>aa</sub> b</del>~</p>"
+        )
+
+    def test_case16(self):
+        """Test case 16."""
+
+        self.check_markdown(
+            R"~~~aaa~~ ~b~ c~",
+            "<p>~<del>aaa</del> <sub>b</sub> c~</p>"
+        )
+
+    def test_case17(self):
+        """Test case 17."""
+
+        self.check_markdown(
+            R"~~~aaa~~~b~~c c~",
+            "<p><del><sub>aaa</sub></del>b~~c c~</p>"
+        )
+
+    def test_case18(self):
+        """Test case 18."""
+
+        self.check_markdown(
+            R"~~~aaa~~~~b~~ ~c c~",
+            "<p><del><sub>aaa</sub></del><sub>b</sub>~ ~c c~</p>"
+        )
+
+    def test_case19(self):
+        """Test case 19."""
+
+        self.check_markdown(
+            R"~~~a b~ c~~",
+            "<p>~<del>a b~ c</del></p>"
+        )
+
+    def test_case20(self):
+        """Test case 20."""
+
+        self.check_markdown(
+            "~a ~~b~~",
+            '<p>~a <del>b</del></p>'
+        )
+
+    def test_case21(self):
+        """Test case 21."""
+
+        self.check_markdown(
+            "~~~a ~b~~",
+            '<p>~<del>a ~b</del></p>'
+        )
+
     def test_complex_cases(self):
         """Test some complex cases."""
 
@@ -334,3 +496,135 @@ class TestTildeNoSmart(util.MdCase):
             ''',
             True
         )
+
+
+class TestTildeNoSmartNoSub(util.MdCase):
+    """Test cases for Tilde without smart enabled and no subscript."""
+
+    extension = [
+        'pymdownx.tilde'
+    ]
+    extension_configs = {
+        "pymdownx.tilde": {
+            "smart_delete": False,
+            "subscript": False
+        }
+    }
+
+    def test_complex_cases(self):
+        """Test some complex cases."""
+
+        self.check_markdown(
+            R"""
+            Test: ~~ Won't delete ~~
+
+            Test: ~~Will delete~~
+
+            Test: \~\~Escaped\~\~
+
+            Test: ~~All will ~ be deleted~~
+
+            Test: ~~All will~~~ not be deleted~~
+
+            Test: ~~All will ~~~ be deleted~~
+            """,
+            """
+            <p>Test: ~~ Won't delete ~~</p>
+            <p>Test: <del>Will delete</del></p>
+            <p>Test: ~~Escaped~~</p>
+            <p>Test: <del>All will ~ be deleted</del></p>
+            <p>Test: <del>All will</del>~ not be deleted~~</p>
+            <p>Test: <del>All will ~~~ be deleted</del></p>
+            """,
+            True
+        )
+
+
+class TestTildeNoDelete(util.MdCase):
+    """Test cases for Tilde without delete."""
+
+    extension = [
+        'pymdownx.tilde'
+    ]
+    extension_configs = {
+        "pymdownx.tilde": {
+            "delete": False
+        }
+    }
+
+    def test_complex_cases(self):
+        """Test some complex cases."""
+
+        self.check_markdown(
+            R"""
+            CH~3~CH~2~OH
+
+            Text~subscript~
+
+            Text~subscript failed~
+
+            Text~subscript\ success~
+
+            Test: ~~Won't delete~~
+            """,
+            """
+            <p>CH<sub>3</sub>CH<sub>2</sub>OH</p>
+            <p>Text<sub>subscript</sub></p>
+            <p>Text~subscript failed~</p>
+            <p>Text<sub>subscript success</sub></p>
+            <p>Test: ~~Won't delete~~</p>
+            """,
+            True
+        )
+
+
+class TestTildeNoSub(util.MdCase):
+    """Test cases for Tilde without subscript enabled."""
+
+    extension = [
+        'pymdownx.tilde'
+    ]
+    extension_configs = {
+        "pymdownx.tilde": {
+            "subscript": False
+        }
+    }
+
+    def test_complex_cases(self):
+        """Test some complex cases."""
+
+        self.check_markdown(
+            R"""
+            Test: ~~ Won't delete ~~
+
+            Test: ~~Will delete~~
+
+            Test: \~\~Escaped\~\~
+
+            Test: ~~This will NOT all be deleted ~~because of the placement of the center tilde.~~
+
+            Test: ~~This will all be deleted ~~ because of the placement of the center tilde.~~
+
+            Test: ~~This will NOT all be deleted~~ because of the placement of the center tilde.~~
+
+            Test: ~~This will all be deleted~ because of the token is less than that of the tilde.~~
+            """,
+            """
+            <p>Test: ~~ Won't delete ~~</p>
+            <p>Test: <del>Will delete</del></p>
+            <p>Test: ~~Escaped~~</p>
+            <p>Test: ~~This will NOT all be deleted <del>because of the placement of the center tilde.</del></p>
+            <p>Test: <del>This will all be deleted ~~ because of the placement of the center tilde.</del></p>
+            <p>Test: <del>This will NOT all be deleted</del> because of the placement of the center tilde.~~</p>
+            <p>Test: <del>This will all be deleted~ because of the token is less than that of the tilde.</del></p>
+            """,
+            True
+        )
+
+
+@pytest.mark.parametrize("space", [" ", "\n", "\u00a0", "\u2003"])
+def test_reject_unescaped_whitespace(space):
+    """Test that all white spaces are handled."""
+
+    source = f"~a{space}b~"
+    assert markdown.markdown(source, extensions=['pymdownx.tilde']) == f"<p>{source}</p>"

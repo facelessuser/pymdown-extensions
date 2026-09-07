@@ -1,5 +1,7 @@
 """Test caret."""
 from .. import util
+import markdown
+import pytest
 
 
 class TestCaretSmart(util.MdCase):
@@ -81,8 +83,8 @@ class TestCaretSmart(util.MdCase):
         """Test case 8."""
 
         self.check_markdown(
-            R"Test: ^^This will all be inserted ^^because of the placement of the center carets.^^",
-            "<p>Test: <ins>This will all be inserted ^^because of the placement of the center carets.</ins></p>",
+            R"Test: ^^This will NOT all be inserted ^^because of the placement of the center carets.^^",
+            "<p>Test: ^^This will NOT all be inserted <ins>because of the placement of the center carets.</ins></p>",
             True
         )
 
@@ -111,6 +113,86 @@ class TestCaretSmart(util.MdCase):
             R"Test: ^^This will all be inserted^ because of the token is less than that of the caret.^^",
             "<p>Test: <ins>This will all be inserted^ because of the token is less than that of the caret.</ins></p>",
             True
+        )
+
+    def test_case12(self):
+        """Test case 12."""
+
+        self.check_markdown(
+            R"^^^a^^b^^c ^ d^^",
+            "<p><ins><sup>a</sup><sup>b</sup>^c ^ d</ins></p>"
+        )
+
+    def test_case13(self):
+        """Test case 13."""
+
+        self.check_markdown(
+            R"^^^a^a^b^c ^ d^^",
+            "<p><ins><sup>a</sup>a<sup>b</sup>c ^ d</ins></p>"
+        )
+
+    def test_case14(self):
+        """Test case 14."""
+
+        self.check_markdown(
+            R"^^^ a a^ b^^^",
+            "<p>^^^ a a^ b^^^</p>"
+        )
+
+    def test_case15(self):
+        """Test case 15."""
+
+        self.check_markdown(
+            R"^^^aa^ b^^^",
+            "<p><ins><sup>aa</sup> b</ins>^</p>"
+        )
+
+    def test_case16(self):
+        """Test case 16."""
+
+        self.check_markdown(
+            R"^^^aaa^^ ^b^ c^",
+            "<p>^<ins>aaa</ins> <sup>b</sup> c^</p>"
+        )
+
+    def test_case17(self):
+        """Test case 17."""
+
+        self.check_markdown(
+            R"^^^aaa^^^b^^c c^",
+            "<p><ins><sup>aaa</sup></ins>b^^c c^</p>"
+        )
+
+    def test_case18(self):
+        """Test case 18."""
+
+        self.check_markdown(
+            R"^^^aaa^^^^b^^ ^c c^",
+            "<p><ins><sup>aaa</sup></ins><sup>b</sup>^ ^c c^</p>"
+        )
+
+    def test_case19(self):
+        """Test case 19."""
+
+        self.check_markdown(
+            R"^^^a b^ c^^",
+            "<p>^<ins>a b^ c</ins></p>"
+        )
+
+    def test_case20(self):
+        """Test case 20."""
+
+        self.check_markdown(
+            "^a ^^b^^",
+            '<p>^a <ins>b</ins></p>'
+        )
+
+    def test_case21(self):
+        """Test case 21."""
+
+        self.check_markdown(
+            "^^^a ^b^^",
+            '<p>^<ins>a ^b</ins></p>'
         )
 
     def test_complex_cases(self):
@@ -271,6 +353,86 @@ class TestCaretNoSmart(util.MdCase):
             True
         )
 
+    def test_case12(self):
+        """Test case 12."""
+
+        self.check_markdown(
+            R"^^^a^^b^^c ^ d^^",
+            "<p>^<ins>a</ins>b<ins>c ^ d</ins></p>"
+        )
+
+    def test_case13(self):
+        """Test case 13."""
+
+        self.check_markdown(
+            R"^^^a^a^b^c ^ d^^",
+            "<p><ins><sup>a</sup>a<sup>b</sup>c ^ d</ins></p>"
+        )
+
+    def test_case14(self):
+        """Test case 14."""
+
+        self.check_markdown(
+            R"^^^ a a^ b^^^",
+            "<p>^^^ a a^ b^^^</p>"
+        )
+
+    def test_case15(self):
+        """Test case 15."""
+
+        self.check_markdown(
+            R"^^^aa^ b^^^",
+            "<p><ins><sup>aa</sup> b</ins>^</p>"
+        )
+
+    def test_case16(self):
+        """Test case 16."""
+
+        self.check_markdown(
+            R"^^^aaa^^ ^b^ c^",
+            "<p>^<ins>aaa</ins> <sup>b</sup> c^</p>"
+        )
+
+    def test_case17(self):
+        """Test case 17."""
+
+        self.check_markdown(
+            R"^^^aaa^^^b^^c c^",
+            "<p><ins><sup>aaa</sup></ins>b^^c c^</p>"
+        )
+
+    def test_case18(self):
+        """Test case 18."""
+
+        self.check_markdown(
+            R"^^^aaa^^^^b^^ ^c c^",
+            "<p><ins><sup>aaa</sup></ins><sup>b</sup>^ ^c c^</p>"
+        )
+
+    def test_case19(self):
+        """Test case 19."""
+
+        self.check_markdown(
+            R"^^^a b^ c^^",
+            "<p>^<ins>a b^ c</ins></p>"
+        )
+
+    def test_case20(self):
+        """Test case 20."""
+
+        self.check_markdown(
+            "^a ^^b^^",
+            '<p>^a <ins>b</ins></p>'
+        )
+
+    def test_case21(self):
+        """Test case 21."""
+
+        self.check_markdown(
+            "^^^a ^b^^",
+            '<p>^<ins>a ^b</ins></p>'
+        )
+
     def test_complex_cases(self):
         """Test some complex cases."""
 
@@ -325,3 +487,135 @@ class TestCaretNoSmart(util.MdCase):
             ''',
             True
         )
+
+
+class TestCaretNoSmartNoSup(util.MdCase):
+    """Test cases for Caret without smart enabled and no superscript."""
+
+    extension = [
+        'pymdownx.caret'
+    ]
+    extension_configs = {
+        "pymdownx.caret": {
+            "smart_insert": False,
+            "superscript": False
+        }
+    }
+
+    def test_complex_cases(self):
+        """Test some complex cases."""
+
+        self.check_markdown(
+            R"""
+            Test: ^^ Won't insert ^^
+
+            Test: ^^Will insert^^
+
+            Test: \^\^Escaped\^\^
+
+            Test: ^^All will ^ be insert^^
+
+            Test: ^^All will^^^ not be insert^^
+
+            Test: ^^All will ^^^ be insert^^
+            """,
+            """
+            <p>Test: ^^ Won't insert ^^</p>
+            <p>Test: <ins>Will insert</ins></p>
+            <p>Test: ^^Escaped^^</p>
+            <p>Test: <ins>All will ^ be insert</ins></p>
+            <p>Test: <ins>All will</ins>^ not be insert^^</p>
+            <p>Test: <ins>All will ^^^ be insert</ins></p>
+            """,
+            True
+        )
+
+
+class TestCaretNoInsert(util.MdCase):
+    """Test cases for Caret without insert."""
+
+    extension = [
+        'pymdownx.caret'
+    ]
+    extension_configs = {
+        "pymdownx.caret": {
+            "insert": False
+        }
+    }
+
+    def test_complex_cases(self):
+        """Test some complex cases."""
+
+        self.check_markdown(
+            R"""
+            x^2^ + y^2^ = 4
+
+            Text^superscript^
+
+            Text^superscript failed^
+
+            Text^superscript\ success^
+
+            Test: ^^Won't insert^^
+            """,
+            """
+            <p>x<sup>2</sup> + y<sup>2</sup> = 4</p>
+            <p>Text<sup>superscript</sup></p>
+            <p>Text^superscript failed^</p>
+            <p>Text<sup>superscript success</sup></p>
+            <p>Test: ^^Won't insert^^</p>
+            """,
+            True
+        )
+
+
+class TestCaretNoSup(util.MdCase):
+    """Test cases for Caret without superscript."""
+
+    extension = [
+        'pymdownx.caret'
+    ]
+    extension_configs = {
+        "pymdownx.caret": {
+            "superscript": False
+        }
+    }
+
+    def test_complex_cases(self):
+        """Test some complex cases."""
+
+        self.check_markdown(
+            R"""
+            Test: ^^ Won't insert ^^
+
+            Test: ^^Will insert^^
+
+            Test: \^\^Escaped\^\^
+
+            Test: ^^This will NOT all be inserted ^^because of the placement of the center carets.^^
+
+            Test: ^^This will all be inserted ^^ because of the placement of the center carets.^^
+
+            Test: ^^This will NOT all be inserted^^ because of the placement of the center caret.^^
+
+            Test: ^^This will all be inserted^ because of the token is less than that of the caret.^^
+            """,
+            """
+            <p>Test: ^^ Won't insert ^^</p>
+            <p>Test: <ins>Will insert</ins></p>
+            <p>Test: ^^Escaped^^</p>
+            <p>Test: ^^This will NOT all be inserted <ins>because of the placement of the center carets.</ins></p>
+            <p>Test: <ins>This will all be inserted ^^ because of the placement of the center carets.</ins></p>
+            <p>Test: <ins>This will NOT all be inserted</ins> because of the placement of the center caret.^^</p>
+            <p>Test: <ins>This will all be inserted^ because of the token is less than that of the caret.</ins></p>
+            """,
+            True
+        )
+
+
+@pytest.mark.parametrize("space", [" ", "\n", "\u00a0", "\u2003"])
+def test_reject_unescaped_whitespace(space):
+    """Test that all white spaces are handled."""
+
+    source = f"^a{space}b^"
+    assert markdown.markdown(source, extensions=['pymdownx.tilde']) == f"<p>{source}</p>"

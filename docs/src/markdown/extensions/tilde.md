@@ -7,6 +7,11 @@ icon: lucide/subscript
 
 ## Overview
 
+> [!new] New in 12.0
+> Tilde was rewritten from the ground up. Some subtle difference may be observed compared to older versions, but these
+> changes were made to align better with expected nesting conventions in the majority of parsers and to improve
+> performance.
+
 Tilde optionally adds two different features which are syntactically built around the `~` character: **delete** which
 inserts `#!html <del></del>` tags and **subscript** which inserts `#!html <sub></sub>` tags.
 
@@ -20,7 +25,7 @@ md = markdown.Markdown(extensions=['pymdownx.tilde'])
 ## Delete
 
 To wrap content in a **delete** tag, simply surround the text with double `~`. You can also enable `smart_delete` in the
-[options](#options). Smart behavior of **delete** models that of [BetterEm](betterem.md#rules).
+[options](#options). Smart behavior of **delete** models that of [BetterEm](betterem.md).
 
 ```text title="Delete"
 ~~Delete me~~

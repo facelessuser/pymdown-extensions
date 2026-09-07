@@ -7,7 +7,14 @@ icon: lucide/asterisk
 
 ## Overview
 
-BetterEm is an extension that aims to improve emphasis (bold and italic) handling.
+> [!new] New in 12.0
+> BetterEm was rewritten from the ground up. Results should be the closest to CommonMark parsing that is possible within
+> Python Markdown. Some subtle difference may be observed compared to older versions, but these changes were made to
+> align better with expected nesting conventions in the majority of parsers and to improve performance.
+
+BetterEm is an extension that aims to improve emphasis (bold and italic) handling over the standard Python Markdown
+handling. In general, parsing behavior should be much closer to other parsers, within the bounds of what Python Markdown
+is capable of.
 
 BetterEm provides a **smart** which controls whether emphasis is processed mid-word or not. When `smart_enable` is
 enabled, mid-word emphasis is intelligently ignored. This can be applied to asterisk and underscore emphasis, but since
@@ -28,8 +35,6 @@ md = markdown.Markdown(extensions=['pymdownx.betterem'])
 Remember to read the [Usage Notes](../usage_notes.md) for information that may be relevant when using this
 extension!
 ///
-
-## Rules
 
 /// note | Note
 For all examples on this page, underscores are __smart__ and asterisks are not.
@@ -67,82 +72,14 @@ BetterEm will try to prioritize the more sane option when nesting bold (`**`) be
 
 ```text title="Prioritize Best"
 *I'm italic. **I'm bold and italic.** I'm also just italic.*
+
+**I'm bold. *I'm bold and italic.* I'm also just bold.**
 ```
 
 /// html | div.result
 *I'm italic. **I'm bold and italic.** I'm also just italic.*
-///
 
-
-BetterEm will ensure smart mode doesn't terminate in scenarios where there are a large amount of consecutive tokens
-inside.
-
-```text title="Consecutive Token"
-___A lot of underscores____________is okay___
-```
-
-/// html | div.result
-___A lot of underscores____________is okay___
-///
-
-BetterEm will also ensure that smart mode breaks properly when an inner like token signifies an end.
-
-```text title="Smart Break"
-__This will all be bold __because of the placement of the center underscores.__
-
-__This will all be bold __ because of the placement of the center underscores.__
-
-__This will NOT all be bold__ because of the placement of the center underscores.__
-
-__This will all be bold_ because of the token is less than that of the surrounding.__
-```
-
-/// html | div.result
-__This will all be bold __because of the placement of the center underscores.__
-
-__This will all be bold __ because of the placement of the center underscores.__
-
-__This will NOT all be bold__ because of the placement of the center underscores.__
-
-__This will all be bold_ because the token count is less than that of the surrounding.__
-///
-
-BetterEm will allow non-smart emphasis to contain "floating" like tokens.
-
-```text title="Floating Token"
-*All will * be italic*
-
-*All will *be italic*
-
-*All will not* be italic*
-
-*All will not ** be italic*
-
-**All will * be bold**
-
-**All will *be bold**
-
-**All will not*** be bold**
-
-**All will not *** be bold**
-```
-
-/// html | div.result
-*All will * be italic*
-
-*All will *be italic*
-
-*All will not* be italic*
-
-*All will ** be italic*
-
-**All will * be bold**
-
-**All will *be bold**
-
-**All will not*** be bold**
-
-**All will not ***be bold**
+**I'm bold. *I'm bold and italic.* I'm also just bold.**
 ///
 
 ## Options

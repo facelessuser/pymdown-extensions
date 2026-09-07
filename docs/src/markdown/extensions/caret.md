@@ -7,6 +7,11 @@ icon: lucide/superscript
 
 ## Overview
 
+> [!new] New in 12.0
+> Caret was rewritten from the ground up. Some subtle difference may be observed compared to older versions, but these
+> changes were made to align better with expected nesting conventions in the majority of parsers and to improve
+> performance.
+
 Caret optionally adds two different features which are syntactically built around the `^` character. The first is
 **insert** which inserts `#!html <ins></ins>` tags.  The second is **superscript** which inserts `#!html <sup></sup>`
 tags.
@@ -21,7 +26,7 @@ md = markdown.Markdown(extensions=['pymdownx.caret'])
 ## Insert
 
 To wrap content in an **insert** tag, simply surround the text with double `^`. You can also enable `smart_insert` in
-the [options](#options). Smart behavior of **insert** models that of [BetterEm](betterem.md#rules).
+the [options](#options). Smart behavior of **insert** models that of [BetterEm](betterem.md).
 
 ```text title="Insert"
 ^^Insert me^^

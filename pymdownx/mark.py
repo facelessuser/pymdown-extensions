@@ -23,37 +23,8 @@ THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABI
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
-import re
 from markdown import Extension
-from markdown.inlinepatterns import SimpleTextInlineProcessor
 from . import util
-
-SMART_CONTENT = r'((?:(?<=\s)=+?(?=\s)|.)+?=*?)'
-CONTENT = r'((?:[^=]|(?<!={2})=)+?)'
-
-# Avoid starting a pattern with caret tokens that are surrounded by white space.
-NOT_MARK = r'((^|(?<=\s))(=+)(?=\s|$))'
-
-# ==mark==
-MARK = r'(={{2}})(?!\s){}(?<!\s)\1'.format(CONTENT)
-# ==mark==
-SMART_MARK = r'(?:(?<=_)|(?<![\w=]))(={{2}})(?![\s=]){}(?<!\s)\1(?:(?=_)|(?![\w=]))'.format(SMART_CONTENT)
-
-
-class MarkProcessor(util.PatternSequenceProcessor):
-    """Handle mark patterns."""
-
-    PATTERNS = [
-        util.PatSeqItem(re.compile(MARK, re.DOTALL | re.UNICODE), 'single', 'mark')
-    ]
-
-
-class MarkSmartProcessor(util.PatternSequenceProcessor):
-    """Handle smart mark patterns."""
-
-    PATTERNS = [
-        util.PatSeqItem(re.compile(SMART_MARK, re.DOTALL | re.UNICODE), 'single', 'mark')
-    ]
 
 
 class MarkExtension(Extension):
@@ -80,8 +51,10 @@ class MarkExtension(Extension):
         escape_chars.append('=')
         util.escape_chars(md, escape_chars)
 
-        md.inlinePatterns.register(SimpleTextInlineProcessor(NOT_MARK), 'not_tilde', 70)
-        mark = MarkSmartProcessor(r'=') if smart else MarkProcessor(r'=')
+        if smart:
+            mark = util.DelimeterProcessor('=', 'mark', md, smart=True, double=True)
+        else:
+            mark = util.DelimeterProcessor('=', 'mark', md, double=True)
         md.inlinePatterns.register(mark, "mark", 65)
 
 
