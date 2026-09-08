@@ -220,17 +220,21 @@ class DelimiterProcessor(InlineProcessor):
 
         """
 
+        self.no_space = no_space
+        self.smart = smart
+        self.tags = tags.split(',')
+        self.double = len(tags) != 2 and double
+        self.reset()
+        super().__init__(self._build_patterns(token), md)
+
+    def reset(self):
+        """Reset."""
+
         # Cache info
         self.regions: list[tuple[int, int, int, int, int]] = []
         self.stack: deque[tuple[int, int, int]] = deque()
         self.cache_index = 0
         self.cache_pos = 0
-
-        self.no_space = no_space
-        self.smart = smart
-        self.tags = tags.split(',')
-        self.double = len(tags) != 2 and double
-        super().__init__(self._build_patterns(token), md)
 
     def _build_patterns(self, token: str) -> str:
         """Build regular expression patterns."""

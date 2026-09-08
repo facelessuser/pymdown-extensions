@@ -74,8 +74,16 @@ class InsertSupExtension(Extension):
         elif superscript:
             caret = util.DelimiterProcessor('^', 'sup', md, no_space=True)
 
+        self.processor = caret
+
         if caret is not None:
             md.inlinePatterns.register(caret, "sup_ins", 65)
+
+    def reset(self):
+        """Reset."""
+
+        if self.processor is not None:
+            self.processor.reset()
 
 
 def makeExtension(*args, **kwargs):

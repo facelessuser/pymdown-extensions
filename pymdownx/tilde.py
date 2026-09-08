@@ -73,8 +73,16 @@ class DeleteSubExtension(Extension):
         elif subscript:
             tilde = util.DelimiterProcessor(r'~', 'sub', md, no_space=True)
 
+        self.processor = tilde
+
         if tilde is not None:
             md.inlinePatterns.register(tilde, "sub_del", 65)
+
+    def reset(self):
+        """Reset."""
+
+        if self.processor is not None:
+            self.processor.reset()
 
 
 def makeExtension(*args, **kwargs):

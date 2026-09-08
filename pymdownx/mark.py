@@ -55,7 +55,14 @@ class MarkExtension(Extension):
             mark = util.DelimiterProcessor('=', 'mark', md, smart=True, double=True)
         else:
             mark = util.DelimiterProcessor('=', 'mark', md, double=True)
+
+        self.processor = mark
         md.inlinePatterns.register(mark, "mark", 65)
+
+    def reset(self):
+        """Reset."""
+
+        self.processor.reset()
 
 
 def makeExtension(*args, **kwargs):
