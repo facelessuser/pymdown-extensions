@@ -470,10 +470,7 @@ class DelimiterProcessor(InlineProcessor):
 
         # Nothing left to process
         else:
-            regions.clear()
-            stack.clear()
-            self.cache_index = 0
-            self.cache_pos = 0
+            self.reset()
 
         return el, start + offset, end + offset
 
@@ -660,15 +657,14 @@ class DelimiterProcessor(InlineProcessor):
                         break
             else:
                 # Cleanup
-                stack.clear()
-                regions.clear()
+                self.reset()
 
             return el, start, end
 
         # We failed to pair any valid start/end delimiters, avoid the parsed range next pass.
         start = m.start(0)
         end = stack[-1][1] if stack else m.end(0)
-        stack.clear()
+        self.reset()
         return (None, start, end) if MD_FAST else (None, None, None)
 
 
