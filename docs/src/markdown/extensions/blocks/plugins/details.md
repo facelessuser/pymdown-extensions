@@ -160,6 +160,23 @@ Some content
 Specifying custom blocks with specific classes and default titles is new in 10.5.
 ///
 
+Details allows for special handling of header syntax in the title.
+
+```text title="Headers in Title"
+/// details | ### Header in Title
+Content.
+///
+```
+
+//// html | div.result
+/// details | ### Header in Title
+Content.
+///
+////
+
+> [!new] New in 12.0
+> 12.0 adds special handling for headers in titles.
+
 ## Global Options
 
 Options | Type       | Descriptions

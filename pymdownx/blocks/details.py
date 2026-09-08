@@ -2,6 +2,8 @@
 import xml.etree.ElementTree as etree
 from .block import Block, type_boolean, type_html_identifier
 from ..blocks import BlocksExtension
+from ..saneheaders import RE_HEADER, SaneHeadersProcessor
+from .admonition import RE_NORMAL_HEADING
 import re
 
 RE_SEP = re.compile(r'[_-]+')
@@ -33,6 +35,20 @@ class Details(Block):
 
     DEF_TITLE = None
     DEF_CLASS = None
+
+
+    def on_init(self):
+        """Handle initialization event."""
+
+        if 'saneheaders' not in self.tracker:
+            self.tracker['saneheaders'] = False
+            try:
+                index = self.md.parser.blockprocessors.get_index_for_name('hashheader')
+                ext = self.md.parser.blockprocessors[index]
+                if isinstance(ext, SaneHeadersProcessor):
+                    self.tracker['saneheaders'] = True
+            except Exception:  # pragma: no cover
+                pass
 
     def on_validate(self, parent):
         """Handle on validate event."""
@@ -81,7 +97,12 @@ class Details(Block):
         # Create the summary
         if summary is not None:
             s = etree.SubElement(el, 'summary')
-            s.text = summary
+            m = (RE_HEADER if self.tracker['saneheaders'] else RE_NORMAL_HEADING).match(summary)
+            if m:
+                h = etree.SubElement(s, f'h{len(m.group("level"))}')
+                h.text = m.group('header').strip()
+            else:
+                s.text = summary
 
         return el
 
@@ -130,7 +151,6 @@ class DetailsExtension(BlocksExtension):
                 ),
                 {}
             )
-
 
 def makeExtension(*args, **kwargs):
     """Return extension."""

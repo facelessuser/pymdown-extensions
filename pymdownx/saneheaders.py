@@ -10,11 +10,13 @@ import re
 from markdown import Extension
 from markdown.blockprocessors import HashHeaderProcessor
 
+RE_HEADER = re.compile(r'(?:^|\n)(?P<level>#{1,6})(?=[ ])(?P<header>(?:\\.|[^\\])*?)#*(?:\n|$)')
+
 
 class SaneHeadersProcessor(HashHeaderProcessor):
     """Process hash headers syntax."""
 
-    RE = re.compile(r'(?:^|\n)(?P<level>#{1,6})(?=[ ])(?P<header>(?:\\.|[^\\])*?)#*(?:\n|$)')
+    RE = RE_HEADER
 
 
 class SaneHeadersExtension(Extension):

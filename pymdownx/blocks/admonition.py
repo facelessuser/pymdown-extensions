@@ -2,9 +2,11 @@
 import xml.etree.ElementTree as etree
 from .block import Block, type_html_identifier
 from .. blocks import BlocksExtension
+from ..saneheaders import RE_HEADER, SaneHeadersProcessor
 import re
 
 RE_SEP = re.compile(r'[_-]+')
+RE_NORMAL_HEADING = re.compile(r'^(?P<level>#{1,6})(?P<header>(?:\\.|[^\\])*?)#*$')
 
 
 class Admonition(Block):
@@ -29,6 +31,19 @@ class Admonition(Block):
     }
     DEF_TITLE = None
     DEF_CLASS = None
+
+    def on_init(self):
+        """Handle initialization event."""
+
+        if 'saneheaders' not in self.tracker:
+            self.tracker['saneheaders'] = False
+            try:
+                index = self.md.parser.blockprocessors.get_index_for_name('hashheader')
+                ext = self.md.parser.blockprocessors[index]
+                if isinstance(ext, SaneHeadersProcessor):
+                    self.tracker['saneheaders'] = True
+            except Exception:  # pragma: no cover
+                pass
 
     def on_validate(self, parent):
         """Handle on validate event."""
@@ -73,6 +88,10 @@ class Admonition(Block):
 
         if title is not None:
             ad_title = etree.SubElement(el, 'p', {'class': 'admonition-title'})
+            m = (RE_HEADER if self.tracker['saneheaders'] else RE_NORMAL_HEADING).match(title)
+            if m is not None:
+                ad_title.tag = f'h{len(m.group("level"))}'
+                title = m.group('header').strip()
             ad_title.text = title
 
         return el

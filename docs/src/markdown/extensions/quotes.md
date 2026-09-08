@@ -189,6 +189,22 @@ While GitHub does not support nesting, nesting is also supported which aligns wi
 > > [!tip]
 ///
 
+Lastly, callouts allows for special handling of header syntax in the title. This works for collapsible callouts and
+normal callouts.
+
+```text title="Headers in Title"
+> [!note] ### Header in Title
+> Content.
+```
+
+//// html | div.result
+> [!note] ### Header in Title
+> Content.
+////
+
+> [!new] New in 12.0
+> 12.0 adds special handling for headers in titles.
+
 ## Options
 
 Option               | Type    | Default      | Description
