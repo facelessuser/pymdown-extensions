@@ -190,7 +190,7 @@ class DetailsExtension(Extension):
         md.registerExtension(self)
 
         self.processor = DetailsProcessor(md.parser)
-        md.parser.blockprocessors.register(DetailsProcessor(md.parser), "details", 105)
+        md.parser.blockprocessors.register(self.processor, "details", 105)
         self.md = md
 
     def reset(self):
