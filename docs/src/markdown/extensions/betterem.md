@@ -8,7 +8,7 @@ icon: lucide/asterisk
 ## Overview
 
 > [!new] New in 12.0
-> BetterEm was rewritten from the ground up. Results should be the closest to CommonMark parsing that is possible within
+> BetterEm was rewritten from the ground up. Results should be as close to CommonMark parsing that is possible within
 > Python Markdown. Some subtle difference may be observed compared to older versions, but these changes were made to
 > align better with expected nesting conventions in the majority of parsers and to improve performance.
 
