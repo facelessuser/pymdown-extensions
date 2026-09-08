@@ -1,5 +1,4 @@
 [![Donate via PayPal][donate-image]][donate-link]
-[![Build][github-ci-image]][github-ci-link]
 [![Coverage Status][codecov-image]][codecov-link]
 [![PyPI Version][pypi-image]][pypi-link]
 [![PyPI Downloads][pypi-down]][pypi-link]
@@ -18,8 +17,6 @@ Extension documentation is found here: https://facelessuser.github.io/pymdown-ex
 
 License is MIT.  See [LICENSE](https://github.com/facelessuser/pymdown-extensions/blob/master/LICENSE.md) for more info.
 
-[github-ci-image]: https://github.com/facelessuser/pymdown-extensions/workflows/build/badge.svg?branch=main&event=push
-[github-ci-link]: https://github.com/facelessuser/pymdown-extensions/actions?query=workflow%3Abuild+branch%3Amain
 [codecov-image]: https://img.shields.io/codecov/c/github/facelessuser/pymdown-extensions/main.svg?logo=codecov&logoColor=aaaaaa&labelColor=333333
 [codecov-link]: https://codecov.io/github/facelessuser/pymdown-extensions
 [pypi-image]: https://img.shields.io/pypi/v/pymdown-extensions.svg?logo=pypi&logoColor=aaaaaa&labelColor=333333
