@@ -283,3 +283,124 @@ class TestQuotes(util.MdCase):
             """,
             True
         )
+
+    def test_headers(self):
+        """Test headers in title."""
+
+        self.check_markdown(
+            """
+            > [!note] ### Header in Ttile
+            > Content.
+
+            > [!note]+ ### Header in Ttile
+            > Content.
+
+            > [!note] ###Header in Ttile
+            > Content.
+
+            > [!note]+ ###Header in Ttile
+            > Content.
+            """,
+            """
+            <div class="admonition note">
+            <h3 class="admonition-title">Header in Ttile</h3>
+            <p>Content.</p>
+            </div>
+            <details class="note" open="open">
+            <summary>
+            <h3>Header in Ttile</h3>
+            </summary>
+            <p>Content.</p>
+            </details>
+            <div class="admonition note">
+            <h3 class="admonition-title">Header in Ttile</h3>
+            <p>Content.</p>
+            </div>
+            <details class="note" open="open">
+            <summary>
+            <h3>Header in Ttile</h3>
+            </summary>
+            <p>Content.</p>
+            </details>
+            """,
+            True
+        )
+
+    def test_headers_first_line(self):
+        """Test headers on first line."""
+
+        self.check_markdown(
+            """
+            > [!note]
+            > ### Header in Ttile
+            > Content.
+
+            > [!note]+
+            > ### Header in Ttile
+            > Content.
+            """,
+            """
+            <div class="admonition note">
+            <p class="admonition-title">Note</p>
+            <h3>Header in Ttile</h3>
+            <p>Content.</p>
+            </div>
+            <details class="note" open="open">
+            <summary>Note</summary>
+            <h3>Header in Ttile</h3>
+            <p>Content.</p>
+            </details>
+            """,
+            True
+        )
+
+
+class TestAdmonitionSaneHeaders(util.MdCase):
+    """Test Admonition with SaneHeaders."""
+
+    extension = ['pymdownx.quotes', 'pymdownx.saneheaders']
+    extension_configs = {
+        'pymdownx.quotes': {
+            'callouts': True
+        }
+    }
+
+    def test_headers(self):
+        """Test headers in title."""
+
+        self.check_markdown(
+            """
+            > [!note] ### Header in Ttile
+            > Content.
+
+            > [!note]+ ### Header in Ttile
+            > Content.
+
+            > [!note] ###Header in Ttile
+            > Content.
+
+            > [!note]+ ###Header in Ttile
+            > Content.
+            """,
+            """
+            <div class="admonition note">
+            <h3 class="admonition-title">Header in Ttile</h3>
+            <p>Content.</p>
+            </div>
+            <details class="note" open="open">
+            <summary>
+            <h3>Header in Ttile</h3>
+            </summary>
+            <p>Content.</p>
+            </details>
+            <div class="admonition note">
+            <p class="admonition-title">###Header in Ttile</p>
+            <p>Content.</p>
+            </div>
+            <details class="note" open="open">
+            <summary>###Header in Ttile</summary>
+            <p>Content.</p>
+            </details>
+            """,
+            True
+        )

@@ -79,6 +79,21 @@ Details will be output in the format below. The content will always be encapsula
 <details class="optional-class"><summary>Text</summary><p>Content</p></details>
 ```
 
+Lastly, Details allows for special handling of header syntax in the title.
+
+```text title="Headers in Title"
+??? note "### Headers in Title"
+    Content.
+```
+
+/// html | div.result
+??? note "### Headers in Title"
+    Content.
+///
+
+> [!new] New in 12.0
+> 12.0 adds special handling for headers in titles.
+
 ## Browser Support
 
 Unfortunately, due to how new `#!html <details><summary>` tags are, not all browsers support them yet.  In order to have

@@ -23,8 +23,11 @@ DEALINGS IN THE SOFTWARE.
 """
 from markdown import Extension
 from markdown.blockprocessors import BlockProcessor
+from .saneheaders import RE_HEADER, SaneHeadersProcessor
 import xml.etree.ElementTree as etree
 import re
+
+RE_NORMAL_HEADING = re.compile(r'^(?P<level>#{1,6})(?P<header>(?:\\.|[^\\])*?)#*$')
 
 
 class DetailsProcessor(BlockProcessor):
@@ -40,6 +43,7 @@ class DetailsProcessor(BlockProcessor):
 
         super().__init__(parser)
 
+        self.saneheaders = False
         self.current_sibling = None
         self.content_indention = 0
 
@@ -155,7 +159,12 @@ class DetailsProcessor(BlockProcessor):
             if class_name:
                 div.set('class', class_name)
             summary = etree.SubElement(div, 'summary')
-            summary.text = title
+            m2 = (RE_HEADER if self.saneheaders else RE_NORMAL_HEADING).match(title)
+            if m2:
+                h = etree.SubElement(summary, f'h{len(m2.group("level"))}')
+                h.text = m2.group('header').strip()
+            else:
+                summary.text = title
         else:
             # Sibling is a list item, but we need to wrap it's content should be wrapped in <p>
             if sibling.tag in ('li', 'dd') and sibling.text:
@@ -180,7 +189,22 @@ class DetailsExtension(Extension):
         """Add Details to Markdown instance."""
         md.registerExtension(self)
 
-        md.parser.blockprocessors.register(DetailsProcessor(md.parser), "details", 105)
+        self.processor = DetailsProcessor(md.parser)
+        md.parser.blockprocessors.register(self.processor, "details", 105)
+        self.md = md
+
+    def reset(self):
+        """Reset."""
+
+        try:
+            index = self.md.parser.blockprocessors.get_index_for_name('hashheader')
+            ext = self.md.parser.blockprocessors[index]
+            if isinstance(ext, SaneHeadersProcessor):
+                self.processor.saneheaders = True
+            else:
+                self.processor.saneheaders = False
+        except Exception:  # pragma: no cover
+            self.processor.saneheaders = False
 
 
 def makeExtension(*args, **kwargs):

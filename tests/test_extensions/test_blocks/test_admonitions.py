@@ -238,3 +238,62 @@ class TestBlocksAdmonitions(util.MdCase):
             ''',
             True
         )
+
+    def test_headers(self):
+        """Test headers in title."""
+
+        self.check_markdown(
+            """
+            /// note | ### Header in Title
+            Content.
+            ///
+
+            /// note | ###Header in Title
+            Content.
+            ///
+            """,
+            """
+            <div class="admonition note">
+            <h3 class="admonition-title">Header in Title</h3>
+            <p>Content.</p>
+            </div>
+            <div class="admonition note">
+            <h3 class="admonition-title">Header in Title</h3>
+            <p>Content.</p>
+            </div>
+            """,
+            True
+        )
+
+
+class TestAdmonitionSaneHeaders(util.MdCase):
+    """Test Admonition with SaneHeaders."""
+
+    extension = ['pymdownx.blocks.admonition', 'pymdownx.saneheaders']
+    extension_configs = {}
+
+    def test_headers(self):
+        """Test headers in title."""
+
+        self.check_markdown(
+            """
+            /// note | ### Header in Title
+            Content.
+            ///
+
+            /// note | ###Header in Title
+            Content.
+            ///
+            """,
+            """
+            <div class="admonition note">
+            <h3 class="admonition-title">Header in Title</h3>
+            <p>Content.</p>
+            </div>
+            <div class="admonition note">
+            <p class="admonition-title">###Header in Title</p>
+            <p>Content.</p>
+            </div>
+            """,
+            True
+        )

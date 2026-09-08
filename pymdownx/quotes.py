@@ -104,17 +104,27 @@ class QuotesTreeprocessor(Treeprocessor):
                     if collapse == 'open':
                         b.attrib['open'] = 'open'
                     c = b.attrib.get('class', '').split(' ')
-                    if child is not None and child.tag.lower() == 'p':
-                        child.tag = 'summary'
+                    if child is not None:
+                        if child.tag.lower() == 'p':
+                            child.tag = 'summary'
+                        else:
+                            tag = child.tag.lower()
+                            if len(tag) == 2 and tag.startswith('h') and tag[1].isdigit():
+                                el = etree.Element('summary')
+                                b.remove(child)
+                                b.insert(0, el)
+                                el.append(child)
                 else:
                     b.tag = 'div'
                     child = b.find('*')
                     c = b.attrib.get('class', '').split(' ')
                     c.append('admonition')
-                    if child is not None and child.tag.lower() == 'p':
-                        c2 = child.attrib.get('class', '').split(' ')
-                        c2.append('admonition-title')
-                        child.attrib['class'] = ' '.join(_c for _c in c2 if _c)
+                    if child is not None:
+                        tag = child.tag.lower()
+                        if tag == 'p' or (len(tag) == 2 and tag.startswith('h') and tag[1].isdigit()):
+                            c2 = child.attrib.get('class', '').split(' ')
+                            c2.append('admonition-title')
+                            child.attrib['class'] = ' '.join(_c for _c in c2 if _c)
                 c.append(b.attrib.get('data-alert', ''))
                 b.attrib['class'] = ' '.join(_c for _c in c if _c)
                 del b.attrib['data-alert']

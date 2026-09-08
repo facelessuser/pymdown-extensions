@@ -100,6 +100,8 @@ $old-admonitions: (
     // Define base class
     > .admonition-title {
 
+      font-size: inherit;
+
       // Icon
       &::before {
         background-color: var(--md-admonition-icon-color--#{$name});

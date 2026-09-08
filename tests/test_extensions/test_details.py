@@ -6,11 +6,7 @@ class TestDetails(util.MdCase):
     """Test Details."""
 
     extension = ['pymdownx.details', 'markdown.extensions.def_list']
-    extension_configs = {
-        'pymdownx.blocks': {
-            'blocks': ['pymdownx.blocks.details:Details']
-        }
-    }
+    extension_configs = {}
 
     def test_with_preceding_text(self):
         """Test content right before details."""
@@ -416,5 +412,66 @@ class TestDetails(util.MdCase):
             <li>Parent 2</li>
             </ul>
             ''',
+            True
+        )
+
+    def test_headers(self):
+        """Test headers in summary."""
+
+        self.check_markdown(
+            """
+            ??? "### Header in Title"
+                Content.
+
+            ??? "###Header in Title"
+                Content.
+            """,
+            """
+            <details>
+            <summary>
+            <h3>Header in Title</h3>
+            </summary>
+            <p>Content.</p>
+            </details>
+            <details>
+            <summary>
+            <h3>Header in Title</h3>
+            </summary>
+            <p>Content.</p>
+            </details>
+            """,
+            True
+        )
+
+
+class TestDetailsSaneHeaders(util.MdCase):
+    """Test Details."""
+
+    extension = ['pymdownx.details', 'pymdownx.saneheaders']
+    extension_configs = {}
+
+    def test_headers(self):
+        """Test headers in summary."""
+
+        self.check_markdown(
+            """
+            ??? "### Header in Title"
+                Content.
+
+            ??? "###Header in Title"
+                Content.
+            """,
+            """
+            <details>
+            <summary>
+            <h3>Header in Title</h3>
+            </summary>
+            <p>Content.</p>
+            </details>
+            <details>
+            <summary>###Header in Title</summary>
+            <p>Content.</p>
+            </details>
+            """,
             True
         )

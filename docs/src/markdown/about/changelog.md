@@ -10,6 +10,8 @@ icon: lucide/scroll-text
     were carefully considered with the intent to improve user experience while also ensuring much better performance. If
     such changes cannot currently be tolerated, version <12 can be used until migration is possible, but no legacy
     behavior is planned in versions moving forward. Issue noted by (@lexdotdev).
+-   **NEW**: Details, Blocks.Details, Blocks.Admonitions: Allow and handle headers special in titles.
+-   **NEW**: Quotes: Allow and handle headers special in callout titles.
 
 ## 11.0.2
 
