@@ -74,6 +74,7 @@ nav:
       - Details: extensions/blocks/plugins/details.md
       - HTML: extensions/blocks/plugins/html.md
       - Tab: extensions/blocks/plugins/tab.md
+    - BracketSpan: extensions/bracketspan.md
     - Caret: extensions/caret.md
     - Critic: extensions/critic.md
     - Details: extensions/details.md
@@ -260,6 +261,7 @@ markdown_extensions:
   - pymdownx.blocks.caption:
   - pymdownx.quotes:
       callouts: true
+  - pymdownx.bracketspan:
   - tools.collapse_code:
       expand_text: ''
       collapse_text: ''
