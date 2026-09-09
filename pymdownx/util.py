@@ -37,10 +37,7 @@ PY39 = (3, 9) <= sys.version_info
 PY314 = (3, 14) <= sys.version_info
 
 # TODO: Remove from main when Python Markdown releases https://github.com/Python-Markdown/markdown/commit/152a16f.
-# Commit is required to actually see speed improvements, without, this is actually slower.
 MD_FAST = __version_info__[:3] > (3, 10, 3)
-if not MD_FAST:
-    warnings.warn('For performance, Pymodwn Extensions requires a Python Markdown > 3.10.3', ResourceWarning, 2)
 
 
 def clamp(value: float, mn: float, mx: float) -> float:
@@ -235,6 +232,7 @@ class DelimiterProcessor(InlineProcessor):
         self.stack: deque[tuple[int, int, int]] = deque()
         self.cache_index = 0
         self.cache_pos = 0
+        self.cache_legacy_pos = -1
 
     def _build_patterns(self, token: str) -> str:
         """Build regular expression patterns."""
@@ -445,8 +443,7 @@ class DelimiterProcessor(InlineProcessor):
 
         return cast('etree.Element', el), idx
 
-    # TODO: Coverage should be ignored until we can test with required Python Markdown.
-    def get_cached_result(self, pos: int, data: str) -> tuple[etree.Element, int, int]:  # pragma: no cover
+    def get_cached_result(self, pos: int, data: str) -> tuple[etree.Element, int, int]:
         """Get a cached result."""
 
         stack = self.stack
@@ -461,6 +458,7 @@ class DelimiterProcessor(InlineProcessor):
         self.cache_index += count
         if self.cache_index < len(regions):
             self.cache_pos = regions[self.cache_index][0]
+            self.cache_legacy_pos = start + offset
             while stack:
                 entry = stack.popleft()
                 if entry[0] > end:
@@ -481,9 +479,13 @@ class DelimiterProcessor(InlineProcessor):
     ) -> tuple[etree.Element | None, int | None, int | None]:
         """Parse delimiter pattern."""
 
+        # TODO: Remove when Python Markdown > 3.10.3 releases.
+        if not MD_FAST and self.cache_legacy_pos > -1 and m.end(0) < self.cache_legacy_pos:
+            return None, m.start(0), self.cache_legacy_pos
+        self.cache_legacy_pos = -1
+
         # Do we have entries we haven't returned yet?
-        # TODO: Coverage should be ignored until we can test with required Python Markdown.
-        if self.regions:  # pragma: no cover
+        if self.regions:
             return self.get_cached_result(m.start(0), data)
 
         # If token is not an opening, quit
@@ -645,10 +647,10 @@ class DelimiterProcessor(InlineProcessor):
             el, count = self._build_element(data)
 
             # Cache unprocessed regions to avoid repeated searches
-            # TODO: Coverage should be ignored until we can test with required Python Markdown.
-            if count < len(regions) and MD_FAST:  # pragma: no cover
+            if count < len(regions):
                 self.cache_index = count
                 self.cache_pos = self.regions[count][0]
+                self.cache_legacy_pos = start
                 while stack:
                     entry = stack.popleft()
                     if entry[0] > end:
@@ -663,9 +665,9 @@ class DelimiterProcessor(InlineProcessor):
 
         # We failed to pair any valid start/end delimiters, avoid the parsed range next pass.
         start = m.start(0)
-        end = stack[-1][1] if stack else m.end(0)
+        end = stack[-1][1] if stack and (MD_FAST or len(stack) > 1) else m.end(0)
         self.reset()
-        return (None, start, end) if MD_FAST else (None, None, None)
+        return None, start, end
 
 
 def deprecated(message: str, stacklevel: int = 2) -> Callable[..., Any]:  # pragma: no cover
