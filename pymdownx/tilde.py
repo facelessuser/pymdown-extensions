@@ -61,15 +61,9 @@ class DeleteSubExtension(Extension):
 
         tilde = None
         if delete and subscript:
-            if smart:
-                tilde = util.DelimiterProcessor(r'~', 'del,sub', md, smart=True, no_space=True)
-            else:
-                tilde = util.DelimiterProcessor(r'~', 'del,sub', md, no_space=True)
+            tilde = util.DelimiterProcessor(r'~', 'del,sub', md, smart=smart, no_space=True)
         elif delete:
-            if smart:
-                tilde = util.DelimiterProcessor(r'~', 'del', md, smart=True, no_space=True, double=True)
-            else:
-                tilde = util.DelimiterProcessor(r'~', 'del', md, no_space=True, double=True)
+            tilde = util.DelimiterProcessor(r'~', 'del', md, smart=smart, no_space=True, double=True)
         elif subscript:
             tilde = util.DelimiterProcessor(r'~', 'sub', md, no_space=True)
 

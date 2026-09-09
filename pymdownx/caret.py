@@ -62,15 +62,9 @@ class InsertSupExtension(Extension):
 
         caret = None
         if insert and superscript:
-            if smart:
-                caret = util.DelimiterProcessor('^', 'ins,sup', md, smart=True, no_space=True)
-            else:
-                caret = util.DelimiterProcessor('^', 'ins,sup', md, no_space=True)
+            caret = util.DelimiterProcessor('^', 'ins,sup', md, smart=smart, no_space=True)
         elif insert:
-            if smart:
-                caret = util.DelimiterProcessor('^', 'ins', md, smart=True, no_space=True, double=True)
-            else:
-                caret = util.DelimiterProcessor('^', 'ins', md, no_space=True, double=True)
+            caret = util.DelimiterProcessor('^', 'ins', md, smart=smart, no_space=True, double=True)
         elif superscript:
             caret = util.DelimiterProcessor('^', 'sup', md, no_space=True)
 

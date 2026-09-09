@@ -50,14 +50,8 @@ class MarkExtension(Extension):
         escape_chars = []
         escape_chars.append('=')
         util.escape_chars(md, escape_chars)
-
-        if smart:
-            mark = util.DelimiterProcessor('=', 'mark', md, smart=True, double=True)
-        else:
-            mark = util.DelimiterProcessor('=', 'mark', md, double=True)
-
-        self.processor = mark
-        md.inlinePatterns.register(mark, "mark", 65)
+        self.processor = util.DelimiterProcessor('=', 'mark', md, smart=smart, double=True)
+        md.inlinePatterns.register(self.processor, "mark", 65)
 
     def reset(self):
         """Reset."""
