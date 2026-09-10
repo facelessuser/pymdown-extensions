@@ -229,7 +229,7 @@ class DelimiterProcessor(InlineProcessor):
 
         # Cache info
         self.regions: list[tuple[int, int, int, int, int]] = []
-        self.stack: deque[tuple[int, int, int]] = deque()
+        self.stack: deque[tuple[int, int, bool, int]] = deque()
         self.cache_index = 0
         self.cache_pos = 0
         self.cache_legacy_pos = -1
@@ -362,7 +362,7 @@ class DelimiterProcessor(InlineProcessor):
         for idx, i in enumerate(range(start, end), 1):
             r = regions[i]
             # Not contained within region
-            if idx and r[0] > regions[start][3]:
+            if idx and r[0] >= regions[start][3]:
                 idx -= 1
                 break
             # Get the appropriate element(s)
@@ -443,7 +443,7 @@ class DelimiterProcessor(InlineProcessor):
 
         return cast('etree.Element', el), idx
 
-    def increment_next_position(self, start: int, end: int, count: int, offset: int) -> None:
+    def increment_next_position(self, start: int, count: int, offset: int) -> None:
         """
         Increment cache position to the next location that we can initiate an insertion.
 
@@ -461,7 +461,7 @@ class DelimiterProcessor(InlineProcessor):
             self.cache_legacy_pos = start + offset
             while self.stack:
                 entry = self.stack.popleft()
-                if entry[0] > end:
+                if entry[0] > start:
                     self.cache_pos = entry[0]
                     break
 
@@ -477,7 +477,7 @@ class DelimiterProcessor(InlineProcessor):
         offset = pos - self.cache_pos
         start, end = regions[self.cache_index][0], regions[self.cache_index][3]
         el, count = self._build_element(data, self.cache_index, offset)
-        self.increment_next_position(start, end, count, offset)
+        self.increment_next_position(start, count, offset)
         return el, start + offset, end + offset
 
     def handleMatch(  # type: ignore[override]
@@ -513,7 +513,8 @@ class DelimiterProcessor(InlineProcessor):
         # Data offset
         offset = m2.end(0)
         # Stack of opening delimiters
-        stack.append((m2.start(0), offset, l))
+        is_ambiguous =  m2.lastgroup[0] != 's'  # type: ignore[index]
+        stack.append((m2.start(0), offset, is_ambiguous, l))
         # Track how many tokens in the stack require or possibly require no spaces.
         no_space = 1 if l != 2 else 0
         # Track how many single width tokens we have in the stack.
@@ -548,11 +549,12 @@ class DelimiterProcessor(InlineProcessor):
             # Avoid ambiguous tokens that could be a start or an end.
             # Consume starts until the end token is fully consumed.
             # If we don't consume the entire end, see if next rule consumes it.
-            if is_end and ((not is_ambiguous and current > last) or (current == last)):
+            if is_end and ((not is_ambiguous and current > last) or current in (last, 3)):
                 is_start = False
 
                 # Consume previous points until the delimiter is consumed
                 s = m2.start(0)
+                original = current
                 furthest = stack[-1]
                 while current and last <= current:
                     okay = True
@@ -593,8 +595,15 @@ class DelimiterProcessor(InlineProcessor):
                     if delimiter[-1] != 2 and last == 2:
                         no_space -= 1
 
+                # Should remainder be treated as a new start?
+                if original == 3 and current and is_ambiguous:
+                    self.stack.append((m2.start(0) + regions[-1][-1], m2.end(0), False, current))
+                    is_end = False
+
                 # Do we still have more to consume?
-                is_end = current and stack and last > current
+                else:
+                    # Do we still have more to consume?
+                    is_end = current and stack and last > current
 
             # Find closing tokens
             # Looking for:
@@ -603,6 +612,16 @@ class DelimiterProcessor(InlineProcessor):
             # - `**em*`
             if is_end and (last == 3 or not is_ambiguous) and last > current:
                 delimiter = stack.pop()
+
+                # Don't pair with an ambiguous opening
+                while stack and delimiter[2] and last > current:
+                    if self.no_space and delimiter[-1] == 1:
+                        no_space -= 1
+                    delimiter =  stack.pop()
+                    last = delimiter[-1]
+                if delimiter[2]:
+                    break
+
                 ignore = False
                 # Reject end if the content's white space invalidates it.
                 if self.no_space:
@@ -616,7 +635,7 @@ class DelimiterProcessor(InlineProcessor):
                     is_start = False
                     new = last - current
                     regions.append((delimiter[0] + new, delimiter[1], m2.start(0), offset, current))
-                    stack.append((delimiter[0], delimiter[0] + new, new))
+                    stack.append((delimiter[0], delimiter[0] + new, False, new))
 
                     # Bookkeeping for no space requirement
                     if self.no_space:
@@ -638,7 +657,7 @@ class DelimiterProcessor(InlineProcessor):
                         break
                     continue
 
-                stack.append((m2.start(0), m2.end(0), current))
+                stack.append((m2.start(0), m2.end(0), is_ambiguous, current))
 
                 # Bookkeeping for no space requirement
                 if self.no_space:
@@ -653,7 +672,7 @@ class DelimiterProcessor(InlineProcessor):
             regions.sort(key=lambda x: x[0])
             start, end = regions[0][0], regions[0][3]
             el, count = self._build_element(data)
-            self.increment_next_position(start, end, count, 0)
+            self.increment_next_position(start, count, 0)
             return el, start, end
 
         # We failed to pair any valid start/end delimiters, avoid the parsed range next pass.

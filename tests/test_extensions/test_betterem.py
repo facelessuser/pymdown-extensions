@@ -543,6 +543,8 @@ class TestBetterEmMixedSmart(util.MdCase):
 
             Test: **test ** test**
 
+            *a**b**c**d**e**f*
+
             Test: __test _test_ _test_ test__
 
             Test: ___test_ test _test___
@@ -576,6 +578,12 @@ class TestBetterEmMixedSmart(util.MdCase):
             with spaces: _ _ _
 
             One char: _a_
+
+            _a__b__c__d__e__f_
+
+            *a**b***c**d***e**f**
+
+            *a**b***c**d***e**f*
             """,
             """
             <p>Test: * Won't highlight *</p>
@@ -601,6 +609,7 @@ class TestBetterEmMixedSmart(util.MdCase):
             <p>Test: <strong><em>test</em> test <em>test</em></strong></p>
             <p>Test: <em>test * test</em></p>
             <p>Test: <strong>test ** test</strong></p>
+            <p><em>a<strong>b</strong>c<strong>d</strong>e**f</em></p>
             <p>Test: <strong>test <em>test</em> <em>test</em> test</strong></p>
             <p>Test: <strong><em>test</em> test <em>test</em></strong></p>
             <p>Test: <em>test _ test</em></p>
@@ -618,6 +627,9 @@ class TestBetterEmMixedSmart(util.MdCase):
             <p>three underscores: ___</p>
             <p>with spaces: _ _ _</p>
             <p>One char: <em>a</em></p>
+            <p><em>a__b__c__d__e__f</em></p>
+            <p><em>a<strong>b</strong></em>c<strong>d</strong>*e<strong>f</strong></p>
+            <p><em>a<strong>b</strong></em>c<strong>d</strong><em>e**f</em></p>
             """,  # noqa: E501
             True
         )
