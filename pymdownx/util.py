@@ -620,8 +620,6 @@ class DelimiterProcessor(InlineProcessor):
 
                 # Don't pair with an ambiguous opening
                 while stack and delimiter[2] and last > current:
-                    if self.no_space and delimiter[-1] == 1:
-                        no_space -= 1
                     delimiter =  stack.pop()
                     last = delimiter[-1]
                 if delimiter[2]:
