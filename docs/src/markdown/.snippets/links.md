@@ -3,6 +3,7 @@
 [_b64]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/b64.py "Source"
 [_betterem]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/betterem.py "Source"
 [_blocks]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/blocks/__init__.py "Source"
+[_bracketspan]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/bracketspan.py "Source"
 [_caret]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/caret.py "Source"
 [_critic]: https://github.com/facelessuser/pymdown-extensions/blob/master/pymdownx/critic.py "Source"
 [_definition_block]: https://github.com/facelessuser/pymdown-extensions/blob/feature/directives/pymdownx/blocks/definition.py "Source"

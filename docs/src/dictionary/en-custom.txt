@@ -8,6 +8,7 @@ Backoff
 BeautifulSoup
 BetterEm
 Bitbucket
+BracketSpan
 CDN
 CDNs
 CSS

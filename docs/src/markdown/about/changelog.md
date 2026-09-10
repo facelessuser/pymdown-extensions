@@ -12,6 +12,7 @@ icon: lucide/scroll-text
     behavior is planned in versions moving forward. Issue noted by (@lexdotdev).
 -   **NEW**: Details, Blocks.Details, Blocks.Admonitions: Allow and handle headers special in titles.
 -   **NEW**: Quotes: Allow and handle headers special in callout titles.
+-   **NEW**: BracketSpan: New extension that allows the creation of spans using a Pandoc style bracket notation.
 
 ## 11.0.2
 
