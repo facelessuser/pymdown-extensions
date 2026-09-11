@@ -52,7 +52,7 @@
     "promise": "^8.3.0",
     "rollup": "^4.63.1",
     "rollup-plugin-output-manifest": "^2.0.0",
-    "sass": "^1.103.1",
+    "sass": "^1.104.0",
     "stylelint": "^17.14.1",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-standard": "^40.0.0",
