@@ -302,11 +302,11 @@ class DelimiterProcessor(InlineProcessor):
         self.cache_pos = 0
         self.cache_legacy_pos = -1
 
-        self.double = len(tags) != 2 and double
-        self.single = len(tags) != 2 and not double
+        self.tags = tags.split(',')
+        self.double = len(self.tags) != 2 and double
+        self.single = len(self.tags) != 2 and not double
         self.no_space = no_space and not self.double
         self.smart = smart
-        self.tags = tags.split(',')
         super().__init__(self._build_patterns(token), md)
 
     def reset(self) -> None:
@@ -643,17 +643,20 @@ class DelimiterProcessor(InlineProcessor):
                     # Reject start/end pair if whitespace requirement is not satisfied.
                     # Try to find a pair that can work if the first fails.
                     if self.no_space:
-                        if delimiter[-1] == 1:
+                        if not self.single and delimiter[-1] == 1:
                             singles -= 1
                         while True:
                             okay = True
-                            if (no_space or current == 1) and self.SPACE.search(data[delimiter[1]:start]):
+                            if (
+                                (no_space or self.single or current == 1) and
+                                self.SPACE.search(data[delimiter[1]:start])
+                            ):
                                 okay = False
                                 if stack:
-                                    if delimiter[-1] != 2:
+                                    if not self.single and delimiter[-1] != 2:
                                         no_space -= 1
                                     delimiter = stack.pop()
-                                    if delimiter[-1] == 1:
+                                    if not self.single and delimiter[-1] == 1:
                                         singles -= 1
                                     last = delimiter[-1]
                                     continue
@@ -674,18 +677,35 @@ class DelimiterProcessor(InlineProcessor):
                     if size < delimiter[-1] and (not self.double or (delimiter[-1] - size) != 1):
                         new = delimiter[-1] - size
                         stack.append((delimiter[0], delimiter[1] - size, delimiter[2], new))
+
+                        # No space bookkeeping
+                        if self.no_space and not self.single and new == 1:
+                            singles += 1
+
                     if not stack:
                         is_end = False
                         break
 
                     last = stack[-1][-1]
-                    if delimiter[-1] != 2 and last == 2:
-                        no_space -= 1
+
+                    # No space bookkeeping
+                    if self.no_space and not self.single:
+                        if delimiter[-1] != 2 and new in (2, 0):
+                            no_space -= 1
+                        elif delimiter[-1] == 2 and new == 1:
+                            no_space += 1
 
                 # Should remainder be treated as a new start?
                 if original >= 3 and current and is_ambiguous:
                     self.stack.append((regions[-1][3], end, False, current))
                     is_end = False
+
+                    # No space bookkeeping
+                    if self.no_space and not self.single:
+                        if current != 2:
+                            no_space += 1
+                        if current == 1:
+                            singles += 1
 
                 # Do we still have more to consume?
                 else:
@@ -701,6 +721,11 @@ class DelimiterProcessor(InlineProcessor):
 
                 # Don't pair with an ambiguous opening
                 while stack and delimiter[2] and last > current:
+                    if self.no_space and not self.single:
+                        if delimiter[-1] != 2:
+                            no_space -= 1
+                        if delimiter[-1] == 1:
+                            singles -= 1
                     delimiter =  stack.pop()
                     last = delimiter[-1]
                 if delimiter[2]:
@@ -730,7 +755,7 @@ class DelimiterProcessor(InlineProcessor):
                         stack.append((ds, de, False, last))
 
                     # Bookkeeping for no space requirement
-                    if self.no_space:
+                    if self.no_space and not self.single:
                         if last == 1:
                             singles += 1
                         if delimiter[-1] != 2 and last == 2:
@@ -744,15 +769,15 @@ class DelimiterProcessor(InlineProcessor):
             if is_start and (not self.double or current != 1):
                 # Start a new nested span, but avoid adding new spans if it no space requirement
                 # cannot be fulfilled. Abort if it is impossible to meet the requirement.
-                if self.no_space and no_space and self.SPACE.search(data[stack[-1][1]:start]):
-                    if no_space > 1 or singles:
+                if self.no_space and (no_space or self.single) and self.SPACE.search(data[stack[-1][1]:start]):
+                    if no_space > 1 or singles or self.single:
                         break
                     continue
 
                 stack.append((start, end, is_ambiguous, current))
 
                 # Bookkeeping for no space requirement
-                if self.no_space:
+                if self.no_space and not self.single:
                     if current != 2:
                         no_space += 1
                     if current == 1:

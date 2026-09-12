@@ -192,7 +192,7 @@ class TestTildeSmart(util.MdCase):
 
         self.check_markdown(
             "~~~a ~b~~",
-            '<p>~~~a <sub>b</sub>~</p>'
+            '<p>~<del>a ~b</del></p>'
         )
 
     def test_complex_cases(self):
@@ -439,7 +439,7 @@ class TestTildeNoSmart(util.MdCase):
 
         self.check_markdown(
             "~~~a ~b~~",
-            '<p>~~~a <sub>b</sub>~</p>'
+            '<p>~<del>a ~b</del></p>'
         )
 
     def test_complex_cases(self):
@@ -572,7 +572,7 @@ class TestTildeNoDelete(util.MdCase):
             <p>Text<sub>subscript</sub></p>
             <p>Text~subscript failed~</p>
             <p>Text<sub>subscript success</sub></p>
-            <p>Test: ~<sub>Won't delete</sub>~</p>
+            <p>Test: ~~Won't delete~~</p>
             """,
             True
         )
