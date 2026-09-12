@@ -631,7 +631,7 @@ class DelimiterProcessor(InlineProcessor):
             # Avoid ambiguous tokens that could be a start or an end.
             # Consume starts until the end token is fully consumed.
             # If we don't consume the entire end, see if next rule consumes it.
-            if is_end and ((not is_ambiguous and current > last) or (current <= 3 and current == last) or current >= 3):
+            if is_end and ((not is_ambiguous and current > last) or current == last or current >= 3):
                 is_start = False
 
                 # Consume previous points until the delimiter is consumed
