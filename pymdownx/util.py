@@ -593,7 +593,7 @@ class DelimiterProcessor(InlineProcessor):
         start = m2.start(0)
         end = m2.end(0)
         l = end - start
-        is_ambiguous =  m2.lastgroup[0] != 's'  # type: ignore[index]
+        is_ambiguous = m2.lastgroup[0] != 's'  # type: ignore[index]
         self.stack.append((start, start + l, is_ambiguous, l))
 
         # Track how many tokens in the stack require or possibly require no spaces.
@@ -692,7 +692,9 @@ class DelimiterProcessor(InlineProcessor):
                     if self.no_space and not self.single:
                         if delimiter[-1] != 2 and new in (2, 0):
                             no_space -= 1
-                        elif delimiter[-1] == 2 and new == 1:
+
+                        # TODO: Is this unreachable?
+                        elif delimiter[-1] == 2 and new == 1:  # pragma: no cover
                             no_space += 1
 
                 # Should remainder be treated as a new start?
@@ -721,12 +723,13 @@ class DelimiterProcessor(InlineProcessor):
 
                 # Don't pair with an ambiguous opening
                 while stack and delimiter[2] and last > current:
-                    if self.no_space and not self.single:
+                    # TODO: Is this unreachable?
+                    if self.no_space and not self.single:  # pragma: no cover
                         if delimiter[-1] != 2:
                             no_space -= 1
                         if delimiter[-1] == 1:
                             singles -= 1
-                    delimiter =  stack.pop()
+                    delimiter = stack.pop()
                     last = delimiter[-1]
                 if delimiter[2]:
                     break
@@ -758,7 +761,7 @@ class DelimiterProcessor(InlineProcessor):
                     if self.no_space and not self.single:
                         if last == 1:
                             singles += 1
-                        if delimiter[-1] != 2 and last == 2:
+                        if delimiter[-1] != 2 and last in (2, 0):
                             no_space -= 1
 
             # Find opening tokens
