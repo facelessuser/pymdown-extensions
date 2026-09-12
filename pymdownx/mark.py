@@ -34,7 +34,7 @@ class MarkExtension(Extension):
         """Initialize."""
 
         self.config = {
-            'smart_mark': [True, "Treat ==connected==words== intelligently - Default: True"]
+            'smart_mark': [False, "Treat ==connected==words== intelligently - Default: True"]
         }
 
         super().__init__(*args, **kwargs)
