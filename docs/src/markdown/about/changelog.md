@@ -18,6 +18,14 @@ icon: lucide/scroll-text
 -   **NEW**: Details, Blocks.Details, Blocks.Admonitions: Allow and handle headers special in titles.
 -   **NEW**: Quotes: Allow and handle headers special in callout titles.
 -   **NEW**: BracketSpan: New extension that allows the creation of spans using a Pandoc style bracket notation.
+-   **NEW**: Arithmatex: Remove deprecated `inline_mathjax_preview_format`, `inline_mathjax_format`, and
+    `inline_generic_format`. Use `arithmatex_inline_format` instead.
+-   **NEW**: Arithmatex: Remove deprecated `fence_mathjax_preview_format`, `fence_mathjax_format`, and
+    `fence_generic_format`. Use `arithmatex_fenced_format` instead.
+-   **NEW**: Emoji: Remove undocumented and deprecated "old style" custom emoji index logic.
+-   **NEW**: Slugs: Remove deprecated `uslugify`, `uslugify_encoded`, `uslugify_cased`, `uslugify_cased_encoded`, `gfm`,
+    and `gfm_encoded`. Use the documented `slugify` method with appropriate arguments instead.
+
 
 ## 11.0.2
 

@@ -70,40 +70,6 @@ def _escape(txt):
     return txt
 
 
-# Formatters usable with InlineHilite
-@util.deprecated(
-    "The inline MathJax Preview formatter has been deprecated in favor of the configurable 'arithmatex_fenced_format'. "
-    "Please see relevant documentation for more information on how to switch before this function is "
-    "removed in the future."
-)
-def inline_mathjax_preview_format(math, language='math', class_name='arithmatex', md=None):
-    """Inline math formatter with preview."""
-
-    return _inline_mathjax_format(math, preview=True)
-
-
-@util.deprecated(
-    "The inline MathJax formatter has been deprecated in favor of the configurable 'arithmatex_fenced_format'. "
-    "Please see relevant documentation for more information on how to switch before this function is "
-    "removed in the future."
-)
-def inline_mathjax_format(math, language='math', class_name='arithmatex', md=None):
-    """Inline math formatter."""
-
-    return _inline_mathjax_format(math, preview=False)
-
-
-@util.deprecated(
-    "The inline generic math formatter has been deprecated in favor of the configurable 'arithmatex_inline_format'. "
-    "Please see relevant documentation for more information on how to switch before this function is "
-    "removed in the future."
-)
-def inline_generic_format(math, language='math', class_name='arithmatex', md=None, **kwargs):
-    """Inline generic formatter."""
-
-    return _inline_generic_format(math, language, class_name, md, **kwargs)
-
-
 def _inline_mathjax_format(math, language='math', class_name='arithmatex', md=None, tag='span', preview=False):
     """Inline math formatter."""
 
@@ -135,40 +101,6 @@ def arithmatex_inline_format(**kwargs):
         return partial(_inline_generic_format, tag=tag)
     elif mode == 'mathjax':
         return partial(_inline_mathjax_format, preview=preview)
-
-
-# Formatters usable with SuperFences
-@util.deprecated(
-    "The fenced MathJax preview formatter has been deprecated in favor of the configurable 'arithmatex_fenced_format'. "
-    "Please see relevant documentation for more information on how to switch before this function is "
-    "removed in the future."
-)
-def fence_mathjax_preview_format(math, language='math', class_name='arithmatex', options=None, md=None, **kwargs):
-    """Block MathJax formatter with preview."""
-
-    return _fence_mathjax_format(math, preview=True)
-
-
-@util.deprecated(
-    "The fenced MathJax preview formatter has been deprecated in favor of the configurable 'arithmatex_fenced_format'. "
-    "Please see relevant documentation for more information on how to switch before this function is "
-    "removed in the future."
-)
-def fence_mathjax_format(math, language='math', class_name='arithmatex', options=None, md=None, **kwargs):
-    """Block MathJax formatter."""
-
-    return _fence_mathjax_format(math, preview=False)
-
-
-@util.deprecated(
-    "The generic math formatter has been deprecated in favor of the configurable 'arithmatex_fenced_format'. "
-    "Please see relevant documentation for more information on how to switch before this function is "
-    "removed in the future."
-)
-def fence_generic_format(math, language='math', class_name='arithmatex', options=None, md=None, **kwargs):
-    """Generic block formatter."""
-
-    return _fence_generic_format(math, language, class_name, options, md, **kwargs)
 
 
 def _fence_mathjax_format(

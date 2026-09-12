@@ -1,16 +1,9 @@
 """Test cases for Highlight."""
 from .. import util
-import pytest
 import pymdownx.emoji as emoji
 import markdown
 import textwrap
 from pymdownx.emoji import EMOJIONE_PNG_CDN, TWEMOJI_PNG_CDN
-
-
-def _old_style_index():
-    """Custom index with no arguments (old style)."""
-
-    return emoji.twemoji({}, None)
 
 
 def _new_style_index(options, md):
@@ -23,32 +16,6 @@ def _new_style_index(options, md):
             index['aliases'][alias] = original
 
     return index
-
-
-class TestEmojiOldIndex(util.MdCase):
-    """Test old style index."""
-
-    extension = [
-        'pymdownx.emoji'
-    ]
-    extension_configs = {
-        'pymdownx.emoji': {
-            'emoji_index': _old_style_index
-        }
-    }
-
-    @pytest.mark.filterwarnings("ignore")
-    def test_old_index(self):
-        """Test that index works."""
-
-        with pytest.warns(DeprecationWarning):
-            self.assertEqual(
-                markdown.Markdown(
-                    extensions=self.extension,
-                    extension_configs=self.extension_configs
-                ).convert(':smile:'),
-                f'<p><img alt="\U0001f604" class="twemoji" src="{TWEMOJI_PNG_CDN}1f604.png" title=":smile:" /></p>'
-            )
 
 
 class TestEmojiNewIndex(util.MdCase):

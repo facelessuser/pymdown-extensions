@@ -27,7 +27,6 @@ from markdown.inlinepatterns import InlineProcessor
 from markdown.postprocessors import Postprocessor
 from markdown import util as md_util
 import xml.etree.ElementTree as etree
-import inspect
 import copy
 from . import util
 
@@ -254,11 +253,7 @@ class EmojiPattern(InlineProcessor):
     def _set_index(self, index):
         """Set the index."""
 
-        if len(inspect.getfullargspec(index).args):
-            self.emoji_index = index(self.options, self.md)
-        else:
-            util.warn_deprecated(MSG_INDEX_WARN)
-            self.emoji_index = index()
+        self.emoji_index = index(self.options, self.md)
 
     def _remove_variation_selector(self, value):
         """Remove variation selectors."""

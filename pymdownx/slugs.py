@@ -25,7 +25,6 @@ import re
 import unicodedata
 import functools
 from urllib.parse import quote
-from . import util
 
 RE_TAGS = re.compile(r'</?[^>]*>', re.UNICODE)
 RE_INVALID_SLUG_CHAR = re.compile(r'[^\w\- ]', re.UNICODE)
@@ -63,63 +62,3 @@ def slugify(**kwargs):
     percent = kwargs.get('percent_encode', False)
     normalize = kwargs.get('normalize', 'NFC')
     return functools.partial(_uslugify, case=case, percent_encode=percent, normalize=normalize)
-
-
-@util.deprecated(
-    "'uslugify' is deprecated in favor of the configurable 'slugify' function. "
-    "See documentation for more info."
-)
-def uslugify(text, sep):
-    """Unicode slugify."""
-
-    return slugify(case='lower')(text, sep)
-
-
-@util.deprecated(
-    "'uslugify_encoded' is deprecated in favor of the configurable 'slugify' function. "
-    "See documentation for more info."
-)
-def uslugify_encoded(text, sep):
-    """Unicode slugify (percent encoded)."""
-
-    return slugify(case='lower', percent_encode=True)(text, sep)
-
-
-@util.deprecated(
-    "'uslugify_cased' is deprecated in favor of the configurable 'slugify' function. "
-    "See documentation for more info."
-)
-def uslugify_cased(text, sep):
-    """Unicode slugify cased (keep case) (`utf-8`)."""
-
-    return slugify()(text, sep)
-
-
-@util.deprecated(
-    "'uslugify_cased_encode' is deprecated in favor of the configurable 'slugify' function. "
-    "See documentation for more info."
-)
-def uslugify_cased_encoded(text, sep):
-    """Unicode slugify cased (keep case) (percent encoded)."""
-
-    return slugify(percent_encode=True)(text, sep)
-
-
-@util.deprecated(
-    "'gfm' is deprecated in favor of the configurable 'slugify' function. "
-    "See documentation for more info."
-)
-def gfm(text, sep):
-    """Unicode slugify cased (cased Unicode only) (`utf-8`)."""
-
-    return slugify(case="lower-ascii")(text, sep)
-
-
-@util.deprecated(
-    "'gfm_encoded' is deprecated in favor of the configurable 'slugify' function. "
-    "See documentation for more info."
-)
-def gfm_encoded(text, sep):
-    """Unicode slugify cased (cased Unicode only) (percent encoded)."""
-
-    return slugify(case='lower-ascii', percent_encode=True)(text, sep)
