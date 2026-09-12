@@ -272,7 +272,7 @@ class DelimiterProcessor(InlineProcessor):
         tags: str,
         md: Markdown | None = None,
         no_space: bool = False,
-        smart: bool | str = False,
+        smart: bool = False,
         double: bool = False
     ) -> None:
         """
@@ -302,11 +302,11 @@ class DelimiterProcessor(InlineProcessor):
         self.cache_pos = 0
         self.cache_legacy_pos = -1
 
-        self.no_space = no_space
+        self.double = len(tags) != 2 and double
+        self.single = len(tags) != 2 and not double
+        self.no_space = no_space and not self.double
         self.smart = smart
         self.tags = tags.split(',')
-        self.double = len(tags) != 2 and double
-        self.single = len(tags) != 1 and not double
         super().__init__(self._build_patterns(token), md)
 
     def reset(self) -> None:
@@ -338,7 +338,7 @@ class DelimiterProcessor(InlineProcessor):
         stx, etx = '\x02', '\x03'
 
         # Patterns for when the larger delimiter is "smart" and the smaller is "dumb".
-        if self.smart and (self.no_space or self.smart == 'double') and len(self.tags) == 2:
+        if self.smart and self.no_space and len(self.tags) == 2:
             self.boundary = re.compile(
                 fr'''(?x)
                 (?:
@@ -387,7 +387,7 @@ class DelimiterProcessor(InlineProcessor):
                 flags=re.UNICODE
             )
         # Patterns for "smart" cases.
-        elif self.smart and (not self.no_space or self.double):
+        elif self.smart:
             self.boundary = re.compile(
                 fr'''(?x)
                 (?P<ambiguous>
