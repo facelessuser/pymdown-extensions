@@ -35,9 +35,10 @@ class DeleteSubExtension(Extension):
         """Initialize."""
 
         self.config = {
-            'smart_delete': [True, "Treat ~~connected~~words~~ intelligently - Default: True"],
+            'smart_delete': [False, "Treat ~~connected~~words~~ intelligently - Default: True"],
             'delete': [True, "Enable delete - Default: True"],
-            'subscript': [True, "Enable subscript - Default: True"]
+            'subscript': [True, "Enable subscript - Default: True"],
+            'no_space': [True, "Pandoc style 'no space' requirement"]
         }
 
         super().__init__(*args, **kwargs)
@@ -49,23 +50,24 @@ class DeleteSubExtension(Extension):
         delete = bool(config.get('delete', True))
         subscript = bool(config.get('subscript', True))
         smart = bool(config.get('smart_delete', True))
+        no_space = bool(config.get('no_space', True))
 
         md.registerExtension(self)
 
         escape_chars = []
         if delete or subscript:
             escape_chars.append('~')
-        if subscript:
+        if subscript and no_space:
             escape_chars.append(' ')
         util.escape_chars(md, escape_chars)
 
         tilde = None
         if delete and subscript:
-            tilde = util.DelimiterProcessor(r'~', 'del,sub', md, smart=smart, no_space=True)
+            tilde = util.DelimiterProcessor(r'~', 'del,sub', md, smart="double" if smart else False, no_space=no_space)
         elif delete:
-            tilde = util.DelimiterProcessor(r'~', 'del', md, smart=smart, no_space=True, double=True)
+            tilde = util.DelimiterProcessor(r'~', 'del', md, smart=smart, no_space=no_space, double=True)
         elif subscript:
-            tilde = util.DelimiterProcessor(r'~', 'sub', md, no_space=True)
+            tilde = util.DelimiterProcessor(r'~', 'sub', md, no_space=no_space)
 
         self.processor = tilde
 

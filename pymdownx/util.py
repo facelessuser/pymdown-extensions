@@ -272,7 +272,7 @@ class DelimiterProcessor(InlineProcessor):
         tags: str,
         md: Markdown | None = None,
         no_space: bool = False,
-        smart: bool = False,
+        smart: bool | str = False,
         double: bool = False
     ) -> None:
         """
@@ -340,7 +340,7 @@ class DelimiterProcessor(InlineProcessor):
         stx, etx = '\x02', '\x03'
 
         # Patterns for when the larger delimiter is "smart" and the smaller is "dumb".
-        if self.smart and self.no_space and len(self.tags) == 2:
+        if self.smart and (self.no_space or self.smart == 'double') and len(self.tags) == 2:
             self.boundary = re.compile(
                 fr'''(?x)
                 (?:

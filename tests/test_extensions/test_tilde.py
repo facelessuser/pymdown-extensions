@@ -622,6 +622,77 @@ class TestTildeNoSub(util.MdCase):
         )
 
 
+class TestTildeSpaces(util.MdCase):
+    """Test Tilde with spaces allowed."""
+
+    extension = [
+        'pymdownx.tilde'
+    ]
+    extension_configs = {
+        "pymdownx.tilde": {
+            "no_space": False
+        }
+    }
+
+    def test_spaces(self):
+        """Test allowed spaces."""
+
+        self.check_markdown(
+            R"""
+            ~~~I'm sub and del~ I am just del.~~
+
+            ~~~I'm sub and del!~~ I am just del.~
+
+            ~del and ~~del sub~~~ and ~del~
+
+            ~~sub and ~del sub~~~ and ~del~
+
+            ~~~I'm del and sub~ I am just sub.~~ ~del~
+
+            ~~~I'm sub and del!~~ I am just del.~ ~del~
+
+            ~del and ~~del sub~~~ and not del~
+
+            ~~sub and ~del sub~~~ and not sub~
+
+            ~del and ~~del sub~~~
+
+            ~~sub and ~del sub~~~
+
+            ~del ~~del sub~~ del~
+
+            ~~~del and sub~ sub~~: foo bar ~~del~~
+
+            ~~~del and sub~~ del~ foo bar ~~del~~
+
+            ~del and ~~del sub~~~ ~~del~~
+
+            ~~sub and ~del sub~~~ ~~del~~
+
+            ~~sub~del sub~~~
+            """,
+            """
+            <p><del><sub>I'm sub and del</sub> I am just del.</del></p>
+            <p><sub><del>I'm sub and del!</del> I am just del.</sub></p>
+            <p><sub>del and <del>del sub</del></sub> and <sub>del</sub></p>
+            <p><del>sub and <sub>del sub</sub></del> and <sub>del</sub></p>
+            <p><del><sub>I'm del and sub</sub> I am just sub.</del> <sub>del</sub></p>
+            <p><sub><del>I'm sub and del!</del> I am just del.</sub> <sub>del</sub></p>
+            <p><sub>del and <del>del sub</del></sub> and not del~</p>
+            <p><del>sub and <sub>del sub</sub></del> and not sub~</p>
+            <p><sub>del and <del>del sub</del></sub></p>
+            <p><del>sub and <sub>del sub</sub></del></p>
+            <p><sub>del <del>del sub</del> del</sub></p>
+            <p><del><sub>del and sub</sub> sub</del>: foo bar <del>del</del></p>
+            <p><sub><del>del and sub</del> del</sub> foo bar <del>del</del></p>
+            <p><sub>del and <del>del sub</del></sub> <del>del</del></p>
+            <p><del>sub and <sub>del sub</sub></del> <del>del</del></p>
+            <p><del>sub<sub>del sub</sub></del></p>
+            """,
+            True
+        )
+
+
 @pytest.mark.parametrize("space", [" ", "\n", "\u00a0", "\u2003"])
 def test_reject_unescaped_whitespace(space):
     """Test that all white spaces are handled."""

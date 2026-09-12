@@ -52,10 +52,25 @@ CH~3~CH~2~OH
 text~a\ subscript~
 ///
 
+If desired, the Pandoc requirement of "no spaces", unless they are escaped, can be disabled via the `no_space`
+[option](#options).
+
+```text title="Superscript"
+text~a subscript~
+```
+
+/// html | div.result
+text~a subscript~
+///
+
+> [!new] New in 12.0
+> `no_space` is new in 12.0.
+
 ## Options
 
-Option         | Type | Default     | Description
--------------- | ---- | ----------- | -----------
+Option         | Type | Default      | Description
+-------------- | ---- | ------------ | -----------
 `smart_delete` | bool | `#!py3 True` | Use smart logic with delete characters.
 `delete`       | bool | `#!py3 True` | Enable delete feature.
 `subscript`    | bool | `#!py3 True` | Enable subscript feature.
+`no_space`     | bool | `#!py3 True` | Enable Pandoc style requirement of "no unescaped spaces".

@@ -36,9 +36,10 @@ class InsertSupExtension(Extension):
         """Initialize."""
 
         self.config = {
-            'smart_insert': [True, "Treat ^^connected^^words^^ intelligently - Default: True"],
+            'smart_insert': [False, "Treat ^^connected^^words^^ intelligently - Default: True"],
             'insert': [True, "Enable insert - Default: True"],
-            'superscript': [True, "Enable superscript - Default: True"]
+            'superscript': [True, "Enable superscript - Default: True"],
+            'no_space': [True, "Pandoc style 'no space' requirement"]
         }
 
         super().__init__(*args, **kwargs)
@@ -50,23 +51,24 @@ class InsertSupExtension(Extension):
         insert = bool(config.get('insert', True))
         superscript = bool(config.get('superscript', True))
         smart = bool(config.get('smart_insert', True))
+        no_space = bool(config.get('no_space', True))
 
         md.registerExtension(self)
 
         escape_chars = []
         if insert or superscript:
             escape_chars.append('^')
-        if superscript:
+        if superscript and no_space:
             escape_chars.append(' ')
         util.escape_chars(md, escape_chars)
 
         caret = None
         if insert and superscript:
-            caret = util.DelimiterProcessor('^', 'ins,sup', md, smart=smart, no_space=True)
+            caret = util.DelimiterProcessor('^', 'ins,sup', md, smart="double" if smart else False, no_space=no_space)
         elif insert:
-            caret = util.DelimiterProcessor('^', 'ins', md, smart=smart, no_space=True, double=True)
+            caret = util.DelimiterProcessor('^', 'ins', md, smart=smart, no_space=no_space, double=True)
         elif superscript:
-            caret = util.DelimiterProcessor('^', 'sup', md, no_space=True)
+            caret = util.DelimiterProcessor('^', 'sup', md, no_space=no_space)
 
         self.processor = caret
 

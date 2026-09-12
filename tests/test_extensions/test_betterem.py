@@ -159,9 +159,9 @@ class TestBetterNoSmart(util.MdCase):
 
             ***I'm bold and italic!** I am just italic.* *italic*
 
-            *italic and **italic bold*** and italic*
+            *italic and **italic bold*** and not italic*
 
-            **bold and *italic bold*** and bold*
+            **bold and *italic bold*** and not bold*
 
             *italic and **italic bold***
 
@@ -186,8 +186,8 @@ class TestBetterNoSmart(util.MdCase):
             <p><strong>bold and <em>italic bold</em></strong> and <em>italic</em></p>
             <p><strong><em>I'm italic and bold</em> I am just bold.</strong> <em>italic</em></p>
             <p><em><strong>I'm bold and italic!</strong> I am just italic.</em> <em>italic</em></p>
-            <p><em>italic and <strong>italic bold</strong></em> and italic*</p>
-            <p><strong>bold and <em>italic bold</em></strong> and bold*</p>
+            <p><em>italic and <strong>italic bold</strong></em> and not italic*</p>
+            <p><strong>bold and <em>italic bold</em></strong> and not bold*</p>
             <p><em>italic and <strong>italic bold</strong></em></p>
             <p><strong>bold and <em>italic bold</em></strong></p>
             <p><em>italic <strong>italic bold</strong> italic</em></p>
@@ -217,9 +217,9 @@ class TestBetterNoSmart(util.MdCase):
 
             ___I'm bold and italic!__ I am just italic._ _italic_
 
-            _italic and __italic bold___ and italic_
+            _italic and __italic bold___ and not italic_
 
-            __bold and _italic bold___ and bold_
+            __bold and _italic bold___ and not bold_
 
             _italic and __italic bold___
 
@@ -244,8 +244,8 @@ class TestBetterNoSmart(util.MdCase):
             <p><strong>bold and <em>italic bold</em></strong> and <em>italic</em></p>
             <p><strong><em>I'm italic and bold</em> I am just bold.</strong> <em>italic</em></p>
             <p><em><strong>I'm bold and italic!</strong> I am just italic.</em> <em>italic</em></p>
-            <p><em>italic and <strong>italic bold</strong></em> and italic_</p>
-            <p><strong>bold and <em>italic bold</em></strong> and bold_</p>
+            <p><em>italic and <strong>italic bold</strong></em> and not italic_</p>
+            <p><strong>bold and <em>italic bold</em></strong> and not bold_</p>
             <p><em>italic and <strong>italic bold</strong></em></p>
             <p><strong>bold and <em>italic bold</em></strong></p>
             <p><em>italic <strong>italic bold</strong> italic</em></p>

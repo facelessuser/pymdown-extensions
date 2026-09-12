@@ -613,6 +613,77 @@ class TestCaretNoSup(util.MdCase):
         )
 
 
+class TestCaretSpaces(util.MdCase):
+    """Test Caret with spaces allowed."""
+
+    extension = [
+        'pymdownx.caret'
+    ]
+    extension_configs = {
+        "pymdownx.caret": {
+            "no_space": False
+        }
+    }
+
+    def test_spaces(self):
+        """Test allowed spaces."""
+
+        self.check_markdown(
+            R"""
+            ^^^I'm sup and ins^ I am just ins.^^
+
+            ^^^I'm sup and ins!^^ I am just ins.^
+
+            ^ins and ^^ins sup^^^ and ^ins^
+
+            ^^sup and ^ins sup^^^ and ^ins^
+
+            ^^^I'm ins and sup^ I am just sup.^^ ^ins^
+
+            ^^^I'm sup and ins!^^ I am just ins.^ ^ins^
+
+            ^ins and ^^ins sup^^^ and not ins^
+
+            ^^sup and ^ins sup^^^ and not sup^
+
+            ^ins and ^^ins sup^^^
+
+            ^^sup and ^ins sup^^^
+
+            ^ins ^^ins sup^^ ins^
+
+            ^^^ins and sup^ sup^^: foo bar ^^ins^^
+
+            ^^^ins and sup^^ ins^ foo bar ^^ins^^
+
+            ^ins and ^^ins sup^^^ ^^ins^^
+
+            ^^sup and ^ins sup^^^ ^^ins^^
+
+            ^^sup^ins sup^^^
+            """,
+            """
+            <p><ins><sup>I'm sup and ins</sup> I am just ins.</ins></p>
+            <p><sup><ins>I'm sup and ins!</ins> I am just ins.</sup></p>
+            <p><sup>ins and <ins>ins sup</ins></sup> and <sup>ins</sup></p>
+            <p><ins>sup and <sup>ins sup</sup></ins> and <sup>ins</sup></p>
+            <p><ins><sup>I'm ins and sup</sup> I am just sup.</ins> <sup>ins</sup></p>
+            <p><sup><ins>I'm sup and ins!</ins> I am just ins.</sup> <sup>ins</sup></p>
+            <p><sup>ins and <ins>ins sup</ins></sup> and not ins^</p>
+            <p><ins>sup and <sup>ins sup</sup></ins> and not sup^</p>
+            <p><sup>ins and <ins>ins sup</ins></sup></p>
+            <p><ins>sup and <sup>ins sup</sup></ins></p>
+            <p><sup>ins <ins>ins sup</ins> ins</sup></p>
+            <p><ins><sup>ins and sup</sup> sup</ins>: foo bar <ins>ins</ins></p>
+            <p><sup><ins>ins and sup</ins> ins</sup> foo bar <ins>ins</ins></p>
+            <p><sup>ins and <ins>ins sup</ins></sup> <ins>ins</ins></p>
+            <p><ins>sup and <sup>ins sup</sup></ins> <ins>ins</ins></p>
+            <p><ins>sup<sup>ins sup</sup></ins></p>
+            """,
+            True
+        )
+
+
 @pytest.mark.parametrize("space", [" ", "\n", "\u00a0", "\u2003"])
 def test_reject_unescaped_whitespace(space):
     """Test that all white spaces are handled."""

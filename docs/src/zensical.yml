@@ -171,7 +171,9 @@ markdown_extensions:
       repo: pymdown-extensions
       normalize_issue_symbols: true
   - pymdownx.tilde:
+      no_space: false
   - pymdownx.caret:
+      no_space: false
   - pymdownx.smartsymbols:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji

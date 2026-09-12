@@ -53,6 +53,22 @@ X^2^ + 4x - 8
 text^a\ superscript^
 ///
 
+If desired, the Pandoc requirement of "no spaces", unless they are escaped, can be disabled via the `no_space`
+[option](#options).
+
+```text title="Superscript"
+X^2^ + 4x - 8
+
+text^a superscript^
+```
+
+/// html | div.result
+text^a superscript^
+///
+
+> [!new] New in 12.0
+> `no_space` is new in 12.0.
+
 ## Options
 
 Option         | Type | Default      | Description
@@ -60,3 +76,4 @@ Option         | Type | Default      | Description
 `smart_insert` | bool | `#!py3 True` | Use smart logic with insert characters.
 `insert`       | bool | `#!py3 True` | Enable insert feature.
 `superscript`  | bool | `#!py3 True` | Enable superscript feature.
+`no_space`     | bool | `#!py3 True` | Enable Pandoc style requirement of "no unescaped spaces".
