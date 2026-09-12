@@ -334,7 +334,7 @@ class DelimiterProcessor(InlineProcessor):
 
         # Python Markdown uses `STX` (`\0x2`) and `ETX` (`\0x3`) for placeholders.
         # Include handling for these characters in addition to CommonMark rules.
-        stx, etx = 0x02, 0x03
+        stx, etx = '\x02', '\x03'
 
         # Patterns for when the larger delimiter is "smart" and the smaller is "dumb".
         if self.smart and self.no_space and len(self.tags) == 2:
