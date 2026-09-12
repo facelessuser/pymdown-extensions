@@ -160,7 +160,7 @@ class TestCaretSmart(util.MdCase):
 
         self.check_markdown(
             R"^^^aaa^^^b^^c c^",
-            "<p><ins><sup>aaa</sup></ins>b^^c c^</p>"
+            "<p><sup><ins>aaa</ins></sup>b^^c c^</p>"
         )
 
     def test_case18(self):
@@ -168,7 +168,7 @@ class TestCaretSmart(util.MdCase):
 
         self.check_markdown(
             R"^^^aaa^^^^b^^ ^c c^",
-            "<p><ins><sup>aaa</sup></ins><sup>b</sup>^ ^c c^</p>"
+            "<p><sup><ins>aaa</ins></sup><sup>b</sup>^ ^c c^</p>"
         )
 
     def test_case19(self):
@@ -398,7 +398,7 @@ class TestCaretNoSmart(util.MdCase):
 
         self.check_markdown(
             R"^^^aaa^^^b^^c c^",
-            "<p><ins><sup>aaa</sup></ins>b^^c c^</p>"
+            "<p><sup><ins>aaa</ins></sup>b^^c c^</p>"
         )
 
     def test_case18(self):
@@ -406,7 +406,7 @@ class TestCaretNoSmart(util.MdCase):
 
         self.check_markdown(
             R"^^^aaa^^^^b^^ ^c c^",
-            "<p><ins><sup>aaa</sup></ins><sup>b</sup>^ ^c c^</p>"
+            "<p><sup><ins>aaa</ins></sup><sup>b</sup>^ ^c c^</p>"
         )
 
     def test_case19(self):

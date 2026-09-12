@@ -160,7 +160,7 @@ class TestTildeSmart(util.MdCase):
 
         self.check_markdown(
             R"~~~aaa~~~b~~c c~",
-            "<p><del><sub>aaa</sub></del>b~~c c~</p>"
+            "<p><sub><del>aaa</del></sub>b~~c c~</p>"
         )
 
     def test_case18(self):
@@ -168,7 +168,7 @@ class TestTildeSmart(util.MdCase):
 
         self.check_markdown(
             R"~~~aaa~~~~b~~ ~c c~",
-            "<p><del><sub>aaa</sub></del><sub>b</sub>~ ~c c~</p>"
+            "<p><sub><del>aaa</del></sub><sub>b</sub>~ ~c c~</p>"
         )
 
     def test_case19(self):
@@ -407,7 +407,7 @@ class TestTildeNoSmart(util.MdCase):
 
         self.check_markdown(
             R"~~~aaa~~~b~~c c~",
-            "<p><del><sub>aaa</sub></del>b~~c c~</p>"
+            "<p><sub><del>aaa</del></sub>b~~c c~</p>"
         )
 
     def test_case18(self):
@@ -415,7 +415,7 @@ class TestTildeNoSmart(util.MdCase):
 
         self.check_markdown(
             R"~~~aaa~~~~b~~ ~c c~",
-            "<p><del><sub>aaa</sub></del><sub>b</sub>~ ~c c~</p>"
+            "<p><sub><del>aaa</del></sub><sub>b</sub>~ ~c c~</p>"
         )
 
     def test_case19(self):
