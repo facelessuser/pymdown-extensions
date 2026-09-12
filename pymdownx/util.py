@@ -306,6 +306,7 @@ class DelimiterProcessor(InlineProcessor):
         self.smart = smart
         self.tags = tags.split(',')
         self.double = len(tags) != 2 and double
+        self.single = len(tags) != 1 and not double
         super().__init__(self._build_patterns(token), md)
 
     def reset(self) -> None:
@@ -328,12 +329,9 @@ class DelimiterProcessor(InlineProcessor):
         xstart = fr'(?:(?<=_)|(?<![\w{etoken}]))' if token != '_' else fr'(?<![\w{etoken}])'
         xend = fr'(?:(?=_)|(?![\w{etoken}]))' if token != '_' else fr'(?![\w{etoken}])'
         # Regex Unicode punctuation and symbols. Must be inserted in `[]`
-        if len(self.tags) == 2:
-            n = '1,'
-        elif self.double:
-            n = '2'
-        else:
-            n = '1'
+        self.max_size = 2
+        if len(self.tags) != 2 and not self.double:
+            self.max_size = 1
 
         # Python Markdown uses `STX` (`\0x2`) and `ETX` (`\0x3`) for placeholders.
         # Include handling for these characters in addition to CommonMark rules.
@@ -393,16 +391,16 @@ class DelimiterProcessor(InlineProcessor):
             self.boundary = re.compile(
                 fr'''(?x)
                 (?P<ambiguous>
-                    (?<!^)(?<![\s{etoken}{PUNCT}]){xstart}{etoken}{{{n}}}{xend}(?![\s{etoken}{PUNCT}])(?!$)|
-                    (?<!^)(?<=[{PUNCT}{etx}])(?<!{etoken}){etoken}{{{n}}}(?!{etoken})(?=[{PUNCT}{stx}])(?!$)
+                    (?<!^)(?<![\s{etoken}{PUNCT}]){xstart}{etoken}{{1,}}{xend}(?![\s{etoken}{PUNCT}])(?!$)|
+                    (?<!^)(?<=[{PUNCT}{etx}])(?<!{etoken}){etoken}{{1,}}(?!{etoken})(?=[{PUNCT}{stx}])(?!$)
                 )|
                 (?P<end>
-                    (?<!^)(?<![\s{etoken}{PUNCT}]){etoken}{{{n}}}{xend}|
-                    (?<=[{PUNCT}])(?<!{etoken}){etoken}{{{n}}}(?!{etoken})(?=[\s{stx}{PUNCT}]|$)
+                    (?<!^)(?<![\s{etoken}{PUNCT}]){etoken}{{1,}}{xend}|
+                    (?<=[{PUNCT}])(?<!{etoken}){etoken}{{1,}}(?!{etoken})(?=[\s{stx}{PUNCT}]|$)
                 )|
                 (?P<start>
-                    {xstart}{etoken}{{{n}}}(?![\s{etoken}{PUNCT}])(?!$)|
-                    (?:(?<=[\s{etx}{PUNCT}])|^)(?<!{etoken}){etoken}{{{n}}}(?!{etoken})(?=[{PUNCT}])
+                    {xstart}{etoken}{{1,}}(?![\s{etoken}{PUNCT}])(?!$)|
+                    (?:(?<=[\s{etx}{PUNCT}])|^)(?<!{etoken}){etoken}{{1,}}(?!{etoken})(?=[{PUNCT}])
                 )
                 ''',
                 flags=re.UNICODE
@@ -412,16 +410,16 @@ class DelimiterProcessor(InlineProcessor):
             self.boundary = re.compile(
                 fr'''(?x)
                 (?P<ambiguous>
-                    (?<!^)(?<![\s{etoken}{PUNCT}]){etoken}{{{n}}}(?![\s{etoken}{PUNCT}])(?!$)|
-                    (?<!^)(?<=[{PUNCT}{etx}])(?<!{etoken}){etoken}{{{n}}}(?!{etoken})(?=[{PUNCT}{stx}])(?!$)
+                    (?<!^)(?<![\s{etoken}{PUNCT}]){etoken}{{1,}}(?![\s{etoken}{PUNCT}])(?!$)|
+                    (?<!^)(?<=[{PUNCT}{etx}])(?<!{etoken}){etoken}{{1,}}(?!{etoken})(?=[{PUNCT}{stx}])(?!$)
                 )|
                 (?P<end>
-                    (?<!^)(?<![\s{etoken}{PUNCT}]){etoken}{{{n}}}|
-                    (?<=[{PUNCT}])(?<!{etoken}){etoken}{{{n}}}(?!{etoken})(?=[\s{stx}{PUNCT}]|$)
+                    (?<!^)(?<![\s{etoken}{PUNCT}]){etoken}{{1,}}|
+                    (?<=[{PUNCT}])(?<!{etoken}){etoken}{{1,}}(?!{etoken})(?=[\s{stx}{PUNCT}]|$)
                 )|
                 (?P<start>
-                    {etoken}{{{n}}}(?![\s{etoken}{PUNCT}])(?!$)|
-                    (?:(?<=[\s{etx}{PUNCT}])|^)(?<!{etoken}){etoken}{{{n}}}(?!{etoken})(?=[{PUNCT}])
+                    {etoken}{{1,}}(?![\s{etoken}{PUNCT}])(?!$)|
+                    (?:(?<=[\s{etx}{PUNCT}])|^)(?<!{etoken}){etoken}{{1,}}(?!{etoken})(?=[{PUNCT}])
                 )
                 ''',
                 flags=re.UNICODE
@@ -668,16 +666,18 @@ class DelimiterProcessor(InlineProcessor):
                         break
 
                     # Build up region for pair and adjust accounting.
-                    size = min(delimiter[-1], 2)
+                    size = min(delimiter[-1], self.max_size)
                     regions.append((delimiter[1] - size, delimiter[1], start, start + size, size))
                     start += size
                     current -= size
-                    if size < delimiter[-1]:
+                    new = 0
+                    if size < delimiter[-1] and (not self.double or (delimiter[-1] - size) != 1):
                         new = delimiter[-1] - size
                         stack.append((delimiter[0], delimiter[1] - size, delimiter[2], new))
                     if not stack:
                         is_end = False
                         break
+
                     last = stack[-1][-1]
                     if delimiter[-1] != 2 and last == 2:
                         no_space -= 1
@@ -709,7 +709,7 @@ class DelimiterProcessor(InlineProcessor):
                 ignore = False
                 # Reject end if the content's white space invalidates it.
                 if self.no_space:
-                    if current == 1 and self.SPACE.search(data[delimiter[1]:m2.start(0)]):
+                    if (current == 1 or self.single) and self.SPACE.search(data[delimiter[1]:m2.start(0)]):
                         stack.append(delimiter)
                         ignore = True
 
@@ -718,15 +718,16 @@ class DelimiterProcessor(InlineProcessor):
                 if not ignore:
                     is_start = False
                     ds, de = delimiter[:2]
-                    while current:
-                        size = min(current, 2)
+                    while current and (not self.double or current != 1):
+                        size = min(current, self.max_size)
                         new = last - size
                         regions.append((ds + new, de, start, start + size, size))
                         start += size
                         current -= size
                         last -= size
                         de -= size
-                    stack.append((ds, de, False, last))
+                    if not self.double or last != 1:
+                        stack.append((ds, de, False, last))
 
                     # Bookkeeping for no space requirement
                     if self.no_space:
@@ -740,7 +741,7 @@ class DelimiterProcessor(InlineProcessor):
             # - `*em ...*`
             # - `**strong ...*`
             # - `***em ...*`
-            if is_start:
+            if is_start and (not self.double or current != 1):
                 # Start a new nested span, but avoid adding new spans if it no space requirement
                 # cannot be fulfilled. Abort if it is impossible to meet the requirement.
                 if self.no_space and no_space and self.SPACE.search(data[stack[-1][1]:start]):

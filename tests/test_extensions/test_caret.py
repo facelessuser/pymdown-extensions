@@ -563,7 +563,7 @@ class TestCaretNoInsert(util.MdCase):
             <p>Text<sup>superscript</sup></p>
             <p>Text^superscript failed^</p>
             <p>Text<sup>superscript success</sup></p>
-            <p>Test: ^^Won't insert^^</p>
+            <p>Test: ^<sup>Won't insert</sup>^</p>
             """,
             True
         )
