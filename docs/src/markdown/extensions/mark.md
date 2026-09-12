@@ -39,6 +39,6 @@ md = markdown.Markdown(extensions=['pymdownx.mark'])
 
 ## Options
 
-Option       | Type | Default     | Description
------------- | ---- | ----------- |------------
-`smart_mark` | bool | `#!py3 True` | Use smart logic with mark characters.
+Option       | Type | Default       | Description
+------------ | ---- | ------------- |------------
+`smart_mark` | bool | `#!py3 False` | Use smart logic with mark characters.

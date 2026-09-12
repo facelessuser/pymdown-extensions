@@ -12,8 +12,9 @@ icon: lucide/scroll-text
     behavior is planned in versions moving forward. Issue noted by (@lexdotdev).
 -   **NEW**: Tilde, Caret: Add new option `no_space` to control whether the Pandoc style requirement of "no unescaped
     spaces" is enabled for subscript and superscript, respectively. `no_space` is enabled by default.
--   **NEW**: Tilde, Caret: Allow deletion and insertions mid word by default. Set `smart_delete` or `smart_insert`,
-    respectively, to enable previous behavior which prevent mid word deletion and insertion.
+-   **NEW**: Tilde, Caret, Mark: Allow deletion, insertions, marking mid word by default. Set `smart_delete`,
+    `smart_insert`, or `smart_mark`, respectively, to enable previous behavior which prevent mid word deletion,
+    insertion, and marking.
 -   **NEW**: Details, Blocks.Details, Blocks.Admonitions: Allow and handle headers special in titles.
 -   **NEW**: Quotes: Allow and handle headers special in callout titles.
 -   **NEW**: BracketSpan: New extension that allows the creation of spans using a Pandoc style bracket notation.

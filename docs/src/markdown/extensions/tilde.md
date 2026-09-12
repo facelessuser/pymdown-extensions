@@ -70,7 +70,7 @@ text~a subscript~
 
 Option         | Type | Default      | Description
 -------------- | ---- | ------------ | -----------
-`smart_delete` | bool | `#!py3 True` | Use smart logic with delete characters.
+`smart_delete` | bool | `#!py3 False`| Use smart logic with delete characters.
 `delete`       | bool | `#!py3 True` | Enable delete feature.
 `subscript`    | bool | `#!py3 True` | Enable subscript feature.
 `no_space`     | bool | `#!py3 True` | Enable Pandoc style requirement of "no unescaped spaces".
