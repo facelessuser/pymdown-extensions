@@ -546,7 +546,7 @@ class DelimiterProcessor(InlineProcessor):
             self.cache_legacy_pos = start + offset
             while self.stack:
                 entry = self.stack.popleft()
-                if entry[0] > start:
+                if start < entry[0] <= self.cache_pos:
                     self.cache_pos = entry[0]
                     break
 
