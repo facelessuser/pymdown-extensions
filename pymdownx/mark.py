@@ -25,6 +25,8 @@ DEALINGS IN THE SOFTWARE.
 """
 from markdown import Extension
 from . import util
+from .delimiterprocessor import DelimiterProcessor
+from typing import cast
 
 
 class MarkExtension(Extension):
@@ -50,8 +52,20 @@ class MarkExtension(Extension):
         escape_chars = []
         escape_chars.append('=')
         util.escape_chars(md, escape_chars)
-        self.processor = util.DelimiterProcessor('=', 'mark', md, smart=smart, double=True)
-        md.inlinePatterns.register(self.processor, "mark", 65)
+
+        add = False
+        if (
+            'delimiter' not in md.inlinePatterns or
+            not isinstance(md.inlinePatterns['delimiter'], DelimiterProcessor)
+        ):
+            add = True
+            self.processor = DelimiterProcessor(md)
+        else:
+            self.processor = cast('DelimiterProcessor', md.inlinePatterns['delimiter'])
+
+        self.processor.register('=', 'mark', smart=smart, double=True)
+        if add:
+            md.inlinePatterns.register(self.processor, "delimiter", 50)
 
     def reset(self):
         """Reset."""

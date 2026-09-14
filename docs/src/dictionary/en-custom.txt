@@ -25,6 +25,7 @@ Ctrl
 DOM
 De
 Dedent
+Deregister
 Dicts
 Dmitry
 Donath

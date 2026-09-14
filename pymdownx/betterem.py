@@ -23,7 +23,7 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 DEALINGS IN THE SOFTWARE.
 """
 from markdown import Extension
-from . import util
+from .delimiterprocessor import DelimiterProcessor
 
 
 class BetterEmExtension(Extension):
@@ -70,27 +70,25 @@ class BetterEmExtension(Extension):
         md.inlinePatterns.deregister('strong2', False)
         md.inlinePatterns.deregister('emphasis2', False)
 
-        if enable_star:
-            asterisk = util.DelimiterProcessor('*','strong,em', md, smart=True)
+        add = False
+        if (
+            'delimiter' not in md.inlinePatterns or
+            not isinstance(md.inlinePatterns['delimiter'], DelimiterProcessor)
+        ):
+            add = True
+            self.processor = DelimiterProcessor(md)
         else:
-            asterisk = util.DelimiterProcessor('*', 'strong,em', md)
+            self.processor = md.inlinePatterns['delimiter']
 
-        self.processor1 = asterisk
-        md.inlinePatterns.register(asterisk, "strong_em", 50)
-
-        if enable_under:
-            underscore = util.DelimiterProcessor('_', 'strong,em', md, smart=True)
-        else:
-            underscore = util.DelimiterProcessor('_', 'strong,em', md)
-
-        self.processor2 = underscore
-        md.inlinePatterns.register(underscore, "strong_em2", 40)
+        self.processor.register('*', 'strong,em', smart=enable_star)
+        self.processor.register('_', 'strong,em', smart=enable_under)
+        if add:
+            md.inlinePatterns.register(self.processor, "delimiter", 50)
 
     def reset(self):
         """Reset."""
 
-        self.processor1.reset()
-        self.processor2.reset()
+        self.processor.reset()
 
 
 def makeExtension(*args, **kwargs):

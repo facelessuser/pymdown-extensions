@@ -27,6 +27,8 @@ DEALINGS IN THE SOFTWARE.
 """
 from markdown import Extension
 from . import util
+from .delimiterprocessor import DelimiterProcessor
+from typing import cast
 
 
 class InsertSupExtension(Extension):
@@ -62,18 +64,29 @@ class InsertSupExtension(Extension):
             escape_chars.append(' ')
         util.escape_chars(md, escape_chars)
 
-        caret = None
+        if not insert and not superscript:  # pragma: no cover
+            self.processor: DelimiterProcessor | None = None
+            return
+
+        add = False
+        if (
+            'delimiter' not in md.inlinePatterns or
+            not isinstance(md.inlinePatterns['delimiter'], DelimiterProcessor)
+        ):
+            add = True
+            self.processor = DelimiterProcessor(md)
+        else:
+            self.processor = cast('DelimiterProcessor', md.inlinePatterns['delimiter'])
+
         if insert and superscript:
-            caret = util.DelimiterProcessor('^', 'ins,sup', md, smart=smart, no_space=no_space)
+            self.processor.register('^', 'ins,sup', smart=smart, no_space=no_space)
         elif insert:
-            caret = util.DelimiterProcessor('^', 'ins', md, smart=smart, no_space=no_space, double=True)
+            self.processor.register('^', 'ins', smart=smart, no_space=no_space, double=True)
         elif superscript:
-            caret = util.DelimiterProcessor('^', 'sup', md, no_space=no_space)
+            self.processor.register('^', 'sup', no_space=no_space)
 
-        self.processor = caret
-
-        if caret is not None:
-            md.inlinePatterns.register(caret, "sup_ins", 65)
+        if add:
+            md.inlinePatterns.register(self.processor, "delimiter", 50)
 
     def reset(self):
         """Reset."""

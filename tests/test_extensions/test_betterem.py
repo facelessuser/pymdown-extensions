@@ -1,5 +1,6 @@
 """Test cases for BetterEm."""
 from .. import util
+import unittest
 
 
 class TestBetterNoSmart(util.MdCase):
@@ -584,6 +585,8 @@ class TestBetterEmMixedSmart(util.MdCase):
             *a**b***c**d***e**f**
 
             *a**b***c**d***e**f*
+
+            ___bold and italic***bold and italic**bold and italic*__ italic_
             """,
             """
             <p>Test: * Won't highlight *</p>
@@ -630,6 +633,7 @@ class TestBetterEmMixedSmart(util.MdCase):
             <p><em>a__b__c__d__e__f</em></p>
             <p><em>a<strong>b</strong></em>c<strong>d</strong>*e<strong>f</strong></p>
             <p><em>a<strong>b</strong></em>c<strong>d</strong><em>e**f</em></p>
+            <p><em><strong>bold and italic<em><strong>bold and italic</strong>bold and italic</em></strong> italic</em></p>
             """,  # noqa: E501
             True
         )
@@ -1011,8 +1015,7 @@ class TestCommonMark(util.MdCase):
 
             *foo _bar* baz_
 
-            <!-- we run * and _ in different passes, we cannot match CommonMark here currently>
-            <!-- *foo __bar *baz bim__ bam* -->
+            *foo __bar *baz bim__ bam*
 
             **foo **bar baz**
 
@@ -1166,9 +1169,7 @@ class TestCommonMark(util.MdCase):
             <p><em><strong>foo</strong></em></p>
             <p><em><strong><strong>foo</strong></strong></em></p>
             <p><em>foo _bar</em> baz_</p>
-            <!-- we run * and _ in different passes, we cannot match CommonMark here currently>
-            <!-- *foo __bar *baz bim__ bam* -->
-
+            <p><em>foo <strong>bar *baz bim</strong> bam</em></p>
             <p>**foo <strong>bar baz</strong></p>
             <p>*foo <em>bar baz</em></p>
             <p>*<a href="/url">bar*</a></p>
@@ -1201,3 +1202,29 @@ class TestBetterCached(util.MdCase):
             '*a **b** *c **d** *e **f**',
             '<p>*a <strong>b</strong> *c <strong>d</strong> *e <strong>f</strong></p>'
         )
+
+
+class TestDelimiterProcessor(unittest.TestCase):
+    """Test the delimiter processor."""
+
+    def test_removal(self):
+        """Test removal."""
+
+        import markdown
+
+        md = markdown.Markdown(extensions=['pymdownx.betterem', 'pymdownx.tilde'])
+        d = md.inlinePatterns['delimiter']
+        self.assertEqual(sorted(d.tokens), sorted(['*', '~', '_']))
+        d.deregister('~')
+        self.assertEqual(sorted(d.tokens), sorted(['*', '_']))
+
+    def test_removal_bad(self):
+        """Test bad removal."""
+
+        import markdown
+
+        md = markdown.Markdown(extensions=['pymdownx.betterem', 'pymdownx.tilde'])
+        d = md.inlinePatterns['delimiter']
+        self.assertEqual(sorted(d.tokens), sorted(['*', '~', '_']))
+        d.deregister('^')
+        self.assertEqual(sorted(d.tokens), sorted(['*', '~', '_']))

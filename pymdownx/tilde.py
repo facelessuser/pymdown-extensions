@@ -26,6 +26,8 @@ DEALINGS IN THE SOFTWARE.
 """
 from markdown import Extension
 from . import util
+from .delimiterprocessor import DelimiterProcessor
+from typing import cast
 
 
 class DeleteSubExtension(Extension):
@@ -61,18 +63,29 @@ class DeleteSubExtension(Extension):
             escape_chars.append(' ')
         util.escape_chars(md, escape_chars)
 
-        tilde = None
+        if not delete and not subscript:  # pragma: no cover
+            self.processor: DelimiterProcessor | None = None
+            return
+
+        add = False
+        if (
+            'delimiter' not in md.inlinePatterns or
+            not isinstance(md.inlinePatterns['delimiter'], DelimiterProcessor)
+        ):
+            add = True
+            self.processor = DelimiterProcessor(md)
+        else:
+            self.processor = cast('DelimiterProcessor', md.inlinePatterns['delimiter'])
+
         if delete and subscript:
-            tilde = util.DelimiterProcessor(r'~', 'del,sub', md, smart=smart, no_space=no_space)
+            self.processor.register(r'~', 'del,sub', smart=smart, no_space=no_space)
         elif delete:
-            tilde = util.DelimiterProcessor(r'~', 'del', md, smart=smart, no_space=no_space, double=True)
-        elif subscript:
-            tilde = util.DelimiterProcessor(r'~', 'sub', md, no_space=no_space)
+            self.processor.register(r'~', 'del', smart=smart, no_space=no_space, double=True)
+        else:
+            self.processor.register(r'~', 'sub', no_space=no_space)
 
-        self.processor = tilde
-
-        if tilde is not None:
-            md.inlinePatterns.register(tilde, "sub_del", 65)
+        if add:
+            md.inlinePatterns.register(self.processor, "delimiter", 50)
 
     def reset(self):
         """Reset."""

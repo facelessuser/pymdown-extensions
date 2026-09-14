@@ -684,6 +684,44 @@ class TestCaretSpaces(util.MdCase):
         )
 
 
+class TestCaretMixed(util.MdCase):
+    """Test mixed with emphasis."""
+
+    extension = [
+        'pymdownx.caret',
+        'pymdownx.betterem'
+    ]
+    extension_configs = {}
+
+    def test_mixed(self):
+        """Test mixed cases."""
+
+        self.check_markdown(
+            """
+            **a ^b c d^^^ e**
+
+            **a ^b c ^d e**
+
+            ^b **c** d^^^
+
+            ^b **c** ^d
+
+            ***bold and italic^^^insert^^sup^** italic*
+
+            **bold a^^b^ bold**
+            """,
+            """
+            <p><strong>a ^b c d^^^ e</strong></p>
+            <p><strong>a ^b c ^d e</strong></p>
+            <p>^b <strong>c</strong> d^^^</p>
+            <p>^b <strong>c</strong> ^d</p>
+            <p><em><strong>bold and italic<sup><ins>insert</ins>sup</sup></strong> italic</em></p>
+            <p><strong>bold a^^b^ bold</strong></p>
+            """,
+            True
+        )
+
+
 @pytest.mark.parametrize("space", [" ", "\n", "\u00a0", "\u2003"])
 def test_reject_unescaped_whitespace(space):
     """Test that all white spaces are handled."""

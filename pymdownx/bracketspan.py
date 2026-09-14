@@ -2,6 +2,7 @@
 from markdown import Extension, Markdown
 from markdown.inlinepatterns import InlineProcessor
 from . import util
+from .delimiterprocessor import MD_FAST
 import re
 import xml.etree.ElementTree as etree
 from markdown.extensions import attr_list
@@ -128,7 +129,7 @@ class BracketSpanProcessor(InlineProcessor):
         if not self.attr_list_enabled:
             return None, None, None
 
-        if not util.MD_FAST and self.legacy_pos >= 0 and m.start(0) < self.legacy_pos:
+        if not MD_FAST and self.legacy_pos >= 0 and m.start(0) < self.legacy_pos:
             return None, m.start(0), m.end(0)
         self.legacy_pos = -1
 

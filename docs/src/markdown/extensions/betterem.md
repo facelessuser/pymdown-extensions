@@ -8,9 +8,9 @@ icon: lucide/asterisk
 ## Overview
 
 > [!new] New in 12.0
-> BetterEm was rewritten from the ground up. Results should be as close to CommonMark parsing that is possible within
-> Python Markdown. Some subtle difference may be observed compared to older versions, but these changes were made to
-> align better with expected nesting conventions in the majority of parsers and to improve performance.
+> BetterEm was rewritten from the ground up. Results are compatible with CommonMark parsing and pass all related tests.
+> Some subtle difference may be observed compared to older versions, but these changes were made to align better with
+> expected nesting conventions in the majority of parsers and to improve performance.
 
 BetterEm is an extension that aims to improve emphasis (bold and italic) handling over the standard Python Markdown
 handling. In general, parsing behavior should be much closer to other parsers, within the bounds of what Python Markdown
