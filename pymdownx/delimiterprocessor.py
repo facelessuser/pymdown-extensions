@@ -237,7 +237,12 @@ class DelimiterProcessor(InlineProcessor):
 
     def __init__(
         self,
-        md: Markdown
+        token: str,
+        tags: str,
+        md: Markdown,
+        no_space: bool = False,
+        smart: bool = False,
+        double: bool = False
     ) -> None:
         """
         Initialize.
@@ -272,10 +277,9 @@ class DelimiterProcessor(InlineProcessor):
         self.md = md
         # API for Markdown to pass `safe_mode` into instance
         self.safe_mode = False
-        self.pattern = r'(?!)'
-        self.compiled_re = re.compile(r'(?!)')
+        self.add(token, tags, no_space, smart, double)
 
-    def register(
+    def add(
         self,
         token: str,
         tags: str,
@@ -283,7 +287,7 @@ class DelimiterProcessor(InlineProcessor):
         smart: bool = False,
         double: bool = False
     ) -> None:
-        """Register a delimiter."""
+        """Add a delimiter."""
 
         if token not in self.tokens:
             self.tokens.append(token)
@@ -291,8 +295,8 @@ class DelimiterProcessor(InlineProcessor):
         self.pattern = '|'.join([re.escape(t) for t in self.tokens])
         self.compiled_re = re.compile(self.pattern, re.DOTALL | re.UNICODE)
 
-    def deregister(self, token: str) -> None:
-        """Deregister a token."""
+    def remove(self, token: str) -> None:
+        """Remove a token."""
 
         try:
             i = self.tokens.index(token)

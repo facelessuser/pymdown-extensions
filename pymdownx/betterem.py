@@ -70,20 +70,17 @@ class BetterEmExtension(Extension):
         md.inlinePatterns.deregister('strong2', False)
         md.inlinePatterns.deregister('emphasis2', False)
 
-        add = False
         if (
             'delimiter' not in md.inlinePatterns or
             not isinstance(md.inlinePatterns['delimiter'], DelimiterProcessor)
         ):
-            add = True
-            self.processor = DelimiterProcessor(md)
+            self.processor = DelimiterProcessor('*', 'strong,em', md, smart=enable_star)
+            self.processor.add('_', 'strong,em', smart=enable_under)
+            md.inlinePatterns.register(self.processor, "delimiter", 60)
         else:
             self.processor = md.inlinePatterns['delimiter']
-
-        self.processor.register('*', 'strong,em', smart=enable_star)
-        self.processor.register('_', 'strong,em', smart=enable_under)
-        if add:
-            md.inlinePatterns.register(self.processor, "delimiter", 50)
+            self.processor.add('*', 'strong,em', smart=enable_star)
+            self.processor.add('_', 'strong,em', smart=enable_under)
 
     def reset(self):
         """Reset."""

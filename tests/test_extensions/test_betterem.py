@@ -1215,7 +1215,7 @@ class TestDelimiterProcessor(unittest.TestCase):
         md = markdown.Markdown(extensions=['pymdownx.betterem', 'pymdownx.tilde'])
         d = md.inlinePatterns['delimiter']
         self.assertEqual(sorted(d.tokens), sorted(['*', '~', '_']))
-        d.deregister('~')
+        d.remove('~')
         self.assertEqual(sorted(d.tokens), sorted(['*', '_']))
 
     def test_removal_bad(self):
@@ -1226,5 +1226,5 @@ class TestDelimiterProcessor(unittest.TestCase):
         md = markdown.Markdown(extensions=['pymdownx.betterem', 'pymdownx.tilde'])
         d = md.inlinePatterns['delimiter']
         self.assertEqual(sorted(d.tokens), sorted(['*', '~', '_']))
-        d.deregister('^')
+        d.remove('^')
         self.assertEqual(sorted(d.tokens), sorted(['*', '~', '_']))

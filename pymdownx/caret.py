@@ -55,6 +55,9 @@ class InsertSupExtension(Extension):
         smart = bool(config.get('smart_insert', True))
         no_space = bool(config.get('no_space', True))
 
+        if not insert and not superscript:  # pragma: no cover
+            return
+
         md.registerExtension(self)
 
         escape_chars = []
@@ -64,35 +67,29 @@ class InsertSupExtension(Extension):
             escape_chars.append(' ')
         util.escape_chars(md, escape_chars)
 
-        if not insert and not superscript:  # pragma: no cover
-            self.processor: DelimiterProcessor | None = None
-            return
+        double = False
+        if insert and superscript:
+            tags = 'ins,sup'
+        elif insert:
+            tags = 'ins'
+            double = True
+        else:
+            tags = 'sup'
 
-        add = False
         if (
             'delimiter' not in md.inlinePatterns or
             not isinstance(md.inlinePatterns['delimiter'], DelimiterProcessor)
         ):
-            add = True
-            self.processor = DelimiterProcessor(md)
+            self.processor = DelimiterProcessor('^', tags, md, smart=smart, no_space=no_space, double=double)
+            md.inlinePatterns.register(self.processor, "delimiter", 60)
         else:
             self.processor = cast('DelimiterProcessor', md.inlinePatterns['delimiter'])
-
-        if insert and superscript:
-            self.processor.register('^', 'ins,sup', smart=smart, no_space=no_space)
-        elif insert:
-            self.processor.register('^', 'ins', smart=smart, no_space=no_space, double=True)
-        elif superscript:
-            self.processor.register('^', 'sup', no_space=no_space)
-
-        if add:
-            md.inlinePatterns.register(self.processor, "delimiter", 50)
+            self.processor.add('^', tags, smart=smart, no_space=no_space, double=double)
 
     def reset(self):
         """Reset."""
 
-        if self.processor is not None:
-            self.processor.reset()
+        self.processor.reset()
 
 
 def makeExtension(*args, **kwargs):

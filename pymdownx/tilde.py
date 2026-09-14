@@ -54,6 +54,9 @@ class DeleteSubExtension(Extension):
         smart = bool(config.get('smart_delete', True))
         no_space = bool(config.get('no_space', True))
 
+        if not delete and not subscript:  # pragma: no cover
+            return
+
         md.registerExtension(self)
 
         escape_chars = []
@@ -63,35 +66,29 @@ class DeleteSubExtension(Extension):
             escape_chars.append(' ')
         util.escape_chars(md, escape_chars)
 
-        if not delete and not subscript:  # pragma: no cover
-            self.processor: DelimiterProcessor | None = None
-            return
+        double = False
+        if delete and subscript:
+            tags = 'del,sub'
+        elif delete:
+            tags = 'del'
+            double = True
+        else:
+            tags = 'sub'
 
-        add = False
         if (
             'delimiter' not in md.inlinePatterns or
             not isinstance(md.inlinePatterns['delimiter'], DelimiterProcessor)
         ):
-            add = True
-            self.processor = DelimiterProcessor(md)
+            self.processor = DelimiterProcessor('~', tags, md, smart=smart, no_space=no_space, double=double)
+            md.inlinePatterns.register(self.processor, "delimiter", 60)
         else:
             self.processor = cast('DelimiterProcessor', md.inlinePatterns['delimiter'])
-
-        if delete and subscript:
-            self.processor.register(r'~', 'del,sub', smart=smart, no_space=no_space)
-        elif delete:
-            self.processor.register(r'~', 'del', smart=smart, no_space=no_space, double=True)
-        else:
-            self.processor.register(r'~', 'sub', no_space=no_space)
-
-        if add:
-            md.inlinePatterns.register(self.processor, "delimiter", 50)
+            self.processor.add('~', tags, smart=smart, no_space=no_space, double=double)
 
     def reset(self):
         """Reset."""
 
-        if self.processor is not None:
-            self.processor.reset()
+        self.processor.reset()
 
 
 def makeExtension(*args, **kwargs):

@@ -53,19 +53,15 @@ class MarkExtension(Extension):
         escape_chars.append('=')
         util.escape_chars(md, escape_chars)
 
-        add = False
         if (
             'delimiter' not in md.inlinePatterns or
             not isinstance(md.inlinePatterns['delimiter'], DelimiterProcessor)
         ):
-            add = True
-            self.processor = DelimiterProcessor(md)
+            self.processor = DelimiterProcessor('=', 'mark', md, smart=smart, double=True)
+            md.inlinePatterns.register(self.processor, "delimiter", 60)
         else:
             self.processor = cast('DelimiterProcessor', md.inlinePatterns['delimiter'])
-
-        self.processor.register('=', 'mark', smart=smart, double=True)
-        if add:
-            md.inlinePatterns.register(self.processor, "delimiter", 50)
+            self.processor.add('=', 'mark', smart=smart, double=True)
 
     def reset(self):
         """Reset."""
