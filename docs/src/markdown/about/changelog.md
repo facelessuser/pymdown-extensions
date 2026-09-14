@@ -9,11 +9,15 @@ icon: lucide/scroll-text
     non-traditional matching behaviors with complex cases. There may be subtle differences in parsing behavior. Changes
     were carefully considered with the intent to improve user experience while also ensuring much better performance. If
     such changes cannot currently be tolerated, version <12 can be used until migration is possible, but no legacy
-    behavior is planned in versions moving forward. Issue noted by (@lexdotdev).
+    behavior is planned in versions moving forward. Performance issues reported by (@lexdotdev).
+-   **NEW**: BetterEm: Now passes all related CommonMark tests and handles underscore and asterisk emphasis at the same
+    time via a common processor to ensure proper nesting behavior.
+-   **NEW**: Tilde, Caret, Mark: These are now added to the same processor as BetterEm so that Tilde and Caret are
+    processed at the same time as emphasis to provide results when all nested inside each other.
 -   **NEW**: Tilde, Caret: Add new option `no_space` to control whether the Pandoc style requirement of "no unescaped
     spaces" is enabled for subscript and superscript, respectively. `no_space` is enabled by default.
--   **NEW**: Tilde, Caret, Mark: Allow deletion, insertions, marking mid word by default. Set `smart_delete`,
-    `smart_insert`, or `smart_mark`, respectively, to enable previous behavior which prevent mid word deletion,
+-   **NEW**: Tilde, Caret, Mark: Allow deletion, insertions, and marking mid word by default. Set `smart_delete`,
+    `smart_insert`, or `smart_mark`, respectively, to enable previous behavior which prevented mid word deletion,
     insertion, and marking.
 -   **NEW**: Details, Blocks.Details, Blocks.Admonitions: Allow and handle headers special in titles.
 -   **NEW**: Quotes: Allow and handle headers special in callout titles.
