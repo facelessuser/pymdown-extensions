@@ -776,8 +776,7 @@ class TestCommonMark(util.MdCase):
 
             *€*charlie.
 
-            <!-- Augment because Python Markdown parses lists first -->
-            test * a *
+            * a *
 
             foo*bar*
 
@@ -1046,8 +1045,7 @@ class TestCommonMark(util.MdCase):
             <p>*$*alpha.</p>
             <p>*£*bravo.</p>
             <p>*€*charlie.</p>
-            <!-- Augment because Python Markdown parses lists first -->
-            <p>test * a *</p>
+            <p>* a *</p>
             <p>foo<em>bar</em></p>
             <p>5<em>6</em>78</p>
             <p><em>foo bar</em></p>
