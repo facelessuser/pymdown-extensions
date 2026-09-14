@@ -1037,7 +1037,7 @@ class TestCommonMark(util.MdCase):
             **a<https://foo.bar/?q=**>
 
             __a<https://foo.bar/?q=__>
-            """,
+            """,  # noqa: RUF001
             """
             <p><em>foo bar</em></p>
             <p>a * foo bar*</p>
@@ -1179,7 +1179,7 @@ class TestCommonMark(util.MdCase):
             <p><em>a <code>_</code></em></p>
             <p>**a<a href="https://foo.bar/?q=**">https://foo.bar/?q=**</a></p>
             <p>__a<a href="https://foo.bar/?q=__">https://foo.bar/?q=__</a></p>
-            """,
+            """,  # noqa: RUF001
             True
         )
 
