@@ -5,7 +5,7 @@ icon: lucide/scroll-text
 
 ## 12.0.1
 
--   **FIX**: Fix a case with BetterEm logic.
+-   **FIX**: BetterEm: fix a case with new logic.
 
 ## 12.0
 
