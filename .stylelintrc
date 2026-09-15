@@ -11,6 +11,7 @@
     "at-rule-empty-line-before": null,
     "at-rule-no-unknown": null,
     "at-rule-no-vendor-prefix": true,
+    "at-rule-prelude-no-invalid": null,
     "color-hex-length": "long",
     "color-named": "never",
     "comment-empty-line-before": ["always", {
