@@ -20,44 +20,45 @@ jobs:
         python-version: ['3.10', '3.11', '3.12', '3.13', '3.14']
         include:
           - python-version: '3.10'
-            tox-env: py310
+            hatch-env: py310
           - python-version: '3.11'
-            tox-env: py311
+            hatch-env: py311
           - python-version: '3.12'
-            tox-env: py312
+            hatch-env: py312
           - python-version: '3.13'
-            tox-env: py313
+            hatch-env: py313
           - python-version: '3.14'
-            tox-env: py314
+            hatch-env: py314
         # exclude:
         #   - platform: windows-latest
         #     python-version: 3.14
 
-    env:
-      TOXENV: ${{ matrix.tox-env }}
-
     runs-on: ${{ matrix.platform }}
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v7
       with:
         python-version: ${{ matrix.python-version }}
         allow-prereleases: true
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip build tox coverage
+        python -m pip install --upgrade pip build hatch coverage
+    - name: Types
+      if: matrix.dev == 'dev'
+      run: |
+        hatch run +py=${{ matrix.python-version }} dev:types
     - name: Test
       run: |
-        python -m tox
+        hatch run +py=${{ matrix.python-version }} dev:tests
     - name: Upload Results
       if: success()
       uses: codecov/codecov-action@v5
       with:
         files: ./coverage.xml
         flags: unittests
-        name: ${{ matrix.platform }}-${{ matrix.tox-env }}
+        name: ${{ matrix.platform }}-${{ matrix.hatch-env }}
         token: ${{ secrets.CODECOV_TOKEN }} # required
         fail_ci_if_error: false
 
@@ -67,23 +68,20 @@ jobs:
       matrix:
         python-version: ['3.14']
 
-    env:
-      TOXENV: lint
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v7
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip build tox
+        python -m pip install --upgrade pip build hatch
     - name: Lint
       run: |
-        python -m tox
+        python -m hatch run +py=${{ matrix.python-version }} dev:lint
 
   documents:
     strategy:
@@ -91,24 +89,21 @@ jobs:
       matrix:
         python-version: ['3.14']
 
-    env:
-      TOXENV: documents
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+      uses: actions/setup-python@v7
       with:
         python-version: ${{ matrix.python-version }}
     - name: Setup Node
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v7
       with:
-        node-version: '22'
+        node-version: '24'
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip build tox
+        python -m pip install --upgrade pip build hatch
         npm install --legacy-peer-deps
     - name: Install Aspell
       run: |
@@ -116,4 +111,4 @@ jobs:
     - name: Build documents
       run: |
         npm run build
-        python -m tox
+        python -m hatch run docs:spellcheck
