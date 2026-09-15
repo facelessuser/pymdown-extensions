@@ -12,18 +12,18 @@ icon: lucide/scroll-text
     -   More performant.
     -   CommonMark compliant.
 
--   **BREAK**: Tilde, Caret, Mark: Rewritten and now built upon latest BetterEm logic.
+-   **BREAK**: Tilde, Caret, Mark: Rewritten and now built upon the latest BetterEm logic.
 
     -   When used with BetterEm, Tilde, Caret, and Mark will be added to the same delimiter processor under the hood and
-        will be parsed at the same time as emphasis allowing for better nesting logic.
+        will be parsed at the same time as emphasis, allowing for better nesting logic.
     -   More performant. Performance issues reported by (@lexdotdev).
-    -   Tilde, Caret, Mark: Allow deletion, insertions, and marking mid word by default. Set `smart_delete`,
-        `smart_insert`, or `smart_mark`, respectively, to enable previous behavior which prevented mid word deletion.
+    -   Tilde, Caret, Mark: Allow deletion, insertions, and marking mid-word by default. Set `smart_delete`,
+        `smart_insert`, or `smart_mark`, respectively, to enable previous behavior, which prevented mid-word deletion.
     -   Tilde, Caret: Add new option `no_space` to control whether the Pandoc style requirement of "no unescaped
         spaces" is enabled for subscript and superscript, respectively. `no_space` is enabled by default.
 
--   **NEW**: Details, Blocks.Details, Blocks.Admonitions: Allow and handle headers special in titles.
--   **NEW**: Quotes: Allow and handle headers special in callout titles.
+-   **NEW**: Details, Blocks.Details, Blocks.Admonitions: Allow and handle headers specially in titles.
+-   **NEW**: Quotes: Allow and handle headers specially in callout titles.
 -   **NEW**: BracketSpan: New extension that allows for the creation of spans using a Pandoc style bracket notation.
 -   **NEW**: Arithmatex: Remove deprecated `inline_mathjax_preview_format`, `inline_mathjax_format`, and
     `inline_generic_format`. Use `arithmatex_inline_format` instead.
