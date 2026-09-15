@@ -3,6 +3,10 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 12.0.1
+
+-   **FIX**: Fix a case with BetterEm logic.
+
 ## 12.0
 
 -   **BREAK**: BetterEm: Complete rewrite. There may be some subtle differences between legacy behavior and new

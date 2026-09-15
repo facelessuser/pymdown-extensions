@@ -713,6 +713,8 @@ class TestBetterEmReverseMixed(util.MdCase):
             Test: **test *(test)* test**
 
             Test: __test _(test)_ test__
+
+            *test *test te**st test* test*
             """,
             """
             <p>Test: _ Won't highlight _</p>
@@ -744,6 +746,7 @@ class TestBetterEmReverseMixed(util.MdCase):
             <p>Test: <strong>test __ test</strong></p>
             <p>Test: <strong>test <em>(test)</em> test</strong></p>
             <p>Test: <strong>test <em>(test)</em> test</strong></p>
+            <p><em>test <em>test te**st test</em> test</em></p>
             """,  # noqa: E501
             True
 
