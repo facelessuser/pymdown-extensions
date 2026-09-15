@@ -33,9 +33,14 @@ We will strive to acknowledge the report in about two business days.
 Reports will be kept private until the issue is properly understood.
 
 If the report is accepted we will notify Tidelift (who we've partnered with), request a CVE from GitHub, and work with
-the reporter to find a resolution. Work will be done privately, and the final commit will not mention the security
-issue.
+the reporter to find a resolution. Work will be done privately.
 
 The fix, announcement, and release will be negotiated with the reporter.
 
 Afterwards, a release will be made and the vulnerability will be made public as close to each other as possible.
+
+## Security Notes
+
+Performance related issues will be taken into considerations, but these extensions are also subject to any existing
+performance limitations of Python Markdown, which this project is simply a collection of extensions for. Any performance
+filings should take into consideration where the root of the problem actually resides.
