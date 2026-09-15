@@ -5,20 +5,23 @@ icon: lucide/scroll-text
 
 ## 12.0
 
--   **BREAK**: BetterEm, Tilde, Caret, Mark: Rewrite extensions to be more performant and also to address a number
-    non-traditional matching behaviors with complex cases. There may be subtle differences in parsing behavior. Changes
-    were carefully considered with the intent to improve user experience while also ensuring much better performance. If
-    such changes cannot currently be tolerated, version <12 can be used until migration is possible, but no legacy
-    behavior is planned in versions moving forward. Performance issues reported by (@lexdotdev).
--   **NEW**: BetterEm: Now passes all related CommonMark tests and handles underscore and asterisk emphasis at the same
-    time via a common processor to ensure proper nesting behavior.
--   **NEW**: Tilde, Caret, Mark: These are now added to the same processor as BetterEm so that Tilde and Caret are
-    processed at the same time as emphasis to provide results when all nested inside each other.
--   **NEW**: Tilde, Caret: Add new option `no_space` to control whether the Pandoc style requirement of "no unescaped
-    spaces" is enabled for subscript and superscript, respectively. `no_space` is enabled by default.
--   **NEW**: Tilde, Caret, Mark: Allow deletion, insertions, and marking mid word by default. Set `smart_delete`,
-    `smart_insert`, or `smart_mark`, respectively, to enable previous behavior which prevented mid word deletion,
-    insertion, and marking.
+-   **BREAK**: BetterEm: Complete rewrite. There may be some subtle differences between legacy behavior and new
+    CommonMark behavior.
+
+    -   `*` and `_` emphasis are handled at the same time to provide more natural nesting.
+    -   More performant.
+    -   CommonMark compliant.
+
+-   **BREAK**: Tilde, Caret, Mark: Rewritten and now built upon latest BetterEm logic.
+
+    -   When used with BetterEm, Tilde, Caret, and Mark will be added to the same delimiter processor under the hood and
+        will be parsed at the same time as emphasis allowing for better nesting logic.
+    -   More performant. Performance issues reported by (@lexdotdev).
+    -   Tilde, Caret, Mark: Allow deletion, insertions, and marking mid word by default. Set `smart_delete`,
+        `smart_insert`, or `smart_mark`, respectively, to enable previous behavior which prevented mid word deletion.
+    -   Tilde, Caret: Add new option `no_space` to control whether the Pandoc style requirement of "no unescaped
+        spaces" is enabled for subscript and superscript, respectively. `no_space` is enabled by default.
+
 -   **NEW**: Details, Blocks.Details, Blocks.Admonitions: Allow and handle headers special in titles.
 -   **NEW**: Quotes: Allow and handle headers special in callout titles.
 -   **NEW**: BracketSpan: New extension that allows the creation of spans using a Pandoc style bracket notation.
