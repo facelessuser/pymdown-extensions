@@ -23,6 +23,16 @@ import markdown
 md = markdown.Markdown(extensions=['pymdownx.caret'])
 ```
 
+> [!tip]
+> PyMdown Extensions uses one delimiter processor for emphasis, deletions, insertions, subscripts, superscripts and
+> marks via [BetterEm](betterem.md), [Tilde](tilde.md), Caret, and [Mark](mark.md). This allows all delimiter to be parsed
+> simultaneously providing the best nesting logic. So for best results, pair Caret with [BetterEm](betterem.md).
+>
+> ```py3
+> import markdown
+> md = markdown.Markdown(extensions=['pymdownx.betterem', 'pymdownx.caret'])
+> ```
+
 ## Insert
 
 To wrap content in an **insert** tag, simply surround the text with double `^`. You can also enable `smart_insert` in

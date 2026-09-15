@@ -22,6 +22,16 @@ import markdown
 md = markdown.Markdown(extensions=['pymdownx.tilde'])
 ```
 
+> [!tip]
+> PyMdown Extensions uses one delimiter processor for emphasis, deletions, insertions, subscripts, superscripts and
+> marks via [BetterEm](betterem.md), Tilde, [Caret](caret.md), and [Mark](mark.md). This allows all delimiter to be parsed
+> simultaneously providing the best nesting logic. So for best results, pair Tilde with [BetterEm](betterem.md).
+>
+> ```py3
+> import markdown
+> md = markdown.Markdown(extensions=['pymdownx.betterem', 'pymdownx.tilde'])
+> ```
+
 ## Delete
 
 To wrap content in a **delete** tag, simply surround the text with double `~`. You can also enable `smart_delete` in the

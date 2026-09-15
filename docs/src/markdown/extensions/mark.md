@@ -37,6 +37,16 @@ import markdown
 md = markdown.Markdown(extensions=['pymdownx.mark'])
 ```
 
+> [!tip]
+> PyMdown Extensions uses one delimiter processor for emphasis, deletions, insertions, subscripts, superscripts and
+> marks via [BetterEm](betterem.md), [Tilde](tilde.md), [Caret](caret.md), and Mark. This allows all delimiter to be
+> parsed simultaneously providing the best nesting logic. So for best results, pair Caret with [BetterEm](betterem.md).
+>
+> ```py3
+> import markdown
+> md = markdown.Markdown(extensions=['pymdownx.betterem', 'pymdownx.mark'])
+> ```
+
 ## Options
 
 Option       | Type | Default       | Description
