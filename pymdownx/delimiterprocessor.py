@@ -520,6 +520,24 @@ class DelimiterProcessor(InlineProcessor):
                     continue
                 break
 
+    def increment_space_trackers(self, delim: Delimiter, length: int) -> None:
+        """Increment space trackers."""
+
+        if delim.no_space and not delim.single:
+            if length == 1:
+                delim.singles += 1
+            if length != 2:
+                delim.space_track += 1
+
+    def decrement_space_trackers(self, delim: Delimiter, length: int) -> None:
+        """Decrement space trackers."""
+
+        if delim.no_space and not delim.single:
+            if length == 1:
+                delim.singles -= 1
+            if length != 2:
+                delim.space_track -= 1
+
     def handleMatch(  # type: ignore[override]
         self,
         m: re.Match[str],
@@ -559,12 +577,7 @@ class DelimiterProcessor(InlineProcessor):
 
         is_ambiguous = m2.lastgroup[0] != 's'  # type: ignore[index]
         stack.append((start, start + l, is_ambiguous, l))
-
-        # Track how many tokens in the stack require or possibly require no spaces.
-        delim.space_track = 1 if l == 1 or l > 2 else 0
-        # Track how many single width tokens we have in the stack.
-        # This bookkeeping allows us to know when we can no longer pair matches.
-        delim.singles = 1 if l == 1 else 0
+        self.increment_space_trackers(delim, l)
 
         # Pair tokens until the stack is empty or we can no longer find tokens.
         while any(d.stack for d in self.delimiters.values()):
@@ -613,23 +626,17 @@ class DelimiterProcessor(InlineProcessor):
                     # Reject start/end pair if whitespace requirement is not satisfied.
                     # Try to find a pair that can work if the first fails.
                     if delim.no_space:
-                        if not delim.single and delimiter[-1] == 1:
-                            delim.singles -= 1
                         while True:
-                            okay = True
-                            if (
+                            okay = not (
                                 (delim.space_track or delim.single or current == 1) and
                                 self.check_space(data, delimiter[1], start)
-                            ):
-                                okay = False
-                                if stack:
-                                    if not delim.single and delimiter[-1] != 2:
-                                        delim.space_track -= 1
-                                    delimiter = stack.pop()
-                                    if not delim.single and delimiter[-1] == 1:
-                                        delim.singles -= 1
-                                    last = delimiter[-1]
-                                    continue
+                            )
+
+                            self.decrement_space_trackers(delim, delimiter[-1])
+                            if not okay and stack:
+                                delimiter = stack.pop()
+                                last = delimiter[-1]
+                                continue
                             break
 
                     # We've exhausted our options, unable to make a reasonable pair.
@@ -646,14 +653,10 @@ class DelimiterProcessor(InlineProcessor):
                     self.add_region(delim, delimiter[1] - size, delimiter[1], start, start + size, size)
                     start += size
                     current -= size
-                    new = 0
                     if size < delimiter[-1] and (not delim.double or (delimiter[-1] - size) != 1):
                         new = delimiter[-1] - size
                         stack.append((delimiter[0], delimiter[1] - size, delimiter[2], new))
-
-                        # No space bookkeeping
-                        if delim.no_space and not delim.single and new == 1:
-                            delim.singles += 1
+                        self.increment_space_trackers(delim, new)
 
                     if not stack:
                         if any(d.stack for d in self.delimiters.values() if d is not delim):
@@ -664,26 +667,11 @@ class DelimiterProcessor(InlineProcessor):
 
                     last = stack[-1][-1]
 
-                    # No space bookkeeping
-                    if delim.no_space and not delim.single:
-                        if delimiter[-1] != 2 and new in (2, 0):
-                            delim.space_track -= 1
-
-                        # TODO: Is this unreachable?
-                        elif delimiter[-1] == 2 and new == 1:  # pragma: no cover
-                            delim.space_track += 1
-
                 # Should remainder be treated as a new start?
                 if original >= 3 and current and is_ambiguous:
                     delim.stack.append((m2.start(0) + (original - current), end, False, current))
+                    self.increment_space_trackers(delim, current)
                     is_end = False
-
-                    # No space bookkeeping
-                    if delim.no_space and not delim.single:
-                        if current != 2:
-                            delim.space_track += 1
-                        if current == 1:
-                            delim.singles += 1
 
                 # Do we still have more to consume?
                 else:
@@ -699,12 +687,7 @@ class DelimiterProcessor(InlineProcessor):
 
                 # Don't pair with an ambiguous opening
                 while stack and delimiter[-1] != 3 and delimiter[2]:
-                    # TODO: Is this unreachable?
-                    if delim.no_space and not delim.single:  # pragma: no cover
-                        if delimiter[-1] != 2:
-                            delim.space_track -= 1
-                        if delimiter[-1] == 1:
-                            delim.singles -= 1
+                    self.decrement_space_trackers(delim, delimiter[-1])
                     delimiter = stack.pop()
                     last = delimiter[-1]
                 if delimiter[2] and delimiter[-1] != 3:
@@ -723,6 +706,7 @@ class DelimiterProcessor(InlineProcessor):
                 # Create new region if end is valid.
                 # If not valid, ignore the end but continue parsing.
                 if not ignore:
+                    self.decrement_space_trackers(delim, delimiter[-1])
                     is_start = False
                     ds, de = delimiter[:2]
                     while current and (not delim.double or current != 1):
@@ -733,15 +717,10 @@ class DelimiterProcessor(InlineProcessor):
                         current -= size
                         last -= size
                         de -= size
-                    if not delim.double or last > 1:
-                        stack.append((ds, de, False, last))
 
-                    # Bookkeeping for no space requirement
-                    if delim.no_space and not delim.single:
-                        if last == 1:
-                            delim.singles += 1
-                        if delimiter[-1] != 2 and last in (2, 0):
-                            delim.space_track -= 1
+                    if last and (not delim.double or last > 1):
+                        stack.append((ds, de, False, last))
+                        self.increment_space_trackers(delim, last)
 
             # Find opening tokens
             # Looking for:
@@ -762,13 +741,7 @@ class DelimiterProcessor(InlineProcessor):
                     continue
 
                 stack.append((start, end, is_ambiguous, current))
-
-                # Bookkeeping for no space requirement
-                if delim.no_space and not delim.single:
-                    if current != 2:
-                        delim.space_track += 1
-                    if current == 1:
-                        delim.singles += 1
+                self.increment_space_trackers(delim, current)
 
         # Build the HTML elements
         for delim in self.delimiters.values():
