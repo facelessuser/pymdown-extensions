@@ -3,7 +3,7 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
-## 13.0
+## 12.1
 
 -   **NEW**: SuperFences: Add optional `reset` function that can be specified for custom fences.
 
