@@ -8,6 +8,11 @@ from pymdownx.superfences import SuperFencesException
 def custom_format(source, language, class_name, options, md, **kwargs):
     """Custom format."""
 
+    if hasattr(md, 'special_tracker'):
+        md.special_tracker = 0
+
+    md.special_tracker += 1
+
     return '<div lang="{}" class_name="class-{}", option="{}">{}</div>'.format(language, class_name,
         options['opt'], source)
 
@@ -16,6 +21,12 @@ def default_format(source, language, class_name, options, md, **kwargs):
     """Default format."""
 
     return '<custom lang="{}" class_name="class-{}">{}</custom>'.format(language, class_name, source)
+
+
+def custom_reset(md):
+    """Default format."""
+
+    md.special_tracker = 0
 
 
 def custom_exploder(source, language, class_name, options, md, **kwargs):
@@ -1013,7 +1024,8 @@ class TestSuperFencesCustom(util.MdCase):
                     'name': 'test',
                     'class': 'test',
                     'format': custom_format,
-                    'validator': custom_validator
+                    'validator': custom_validator,
+                    'reset': custom_reset
                 }
             ]
         }
@@ -1116,6 +1128,41 @@ class TestSuperFencesCustom(util.MdCase):
             ''',
             True
         )
+
+    def test_reset(self):
+        """Test reset."""
+
+        import markdown
+        import textwrap
+        content = textwrap.dedent(
+            """
+            ```test opt="A"
+            content
+            ```
+            """
+        )
+
+        md = markdown.Markdown(
+            extensions=['pymdownx.superfences'],
+            extension_configs={
+                'pymdownx.superfences': {
+                    'custom_fences': [
+                        {
+                            'name': 'test',
+                            'class': 'test',
+                            'format': custom_format,
+                            'validator': custom_validator,
+                            'reset': custom_reset
+                        }
+                    ]
+                }
+            }
+        )
+
+        print(md.convert(content))
+        self.assertEqual(md.special_tracker, 1)
+        md.reset()
+        self.assertEqual(md.special_tracker, 0)
 
 
 class TestSuperFencesCustomException(util.MdCase):

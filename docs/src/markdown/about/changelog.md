@@ -3,6 +3,10 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 13.0
+
+-   **NEW**: SuperFences: Add optional `reset` function that can be specified for custom fences.
+
 ## 12.0.1
 
 -   **FIX**: BetterEm: fix a case with new logic.

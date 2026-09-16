@@ -732,6 +732,7 @@ Keys        | Description
 `class`     | The class name assigned to the HTML element when converting from Markdown to HTML.
 `format`    | A function that formats the HTML output. The function should return a string as HTML.
 `validator` | An optional parameter that is used to provide a function to validate custom fence parameters.
+`reset`     | An optional parameter that is used to provide a function that is called when the `Markdown` object has reset called on it.
 
 /// warning | Logging
 When a custom fence fails, the error will be swallowed up and the error will be handled gracefully. If logging is
@@ -870,6 +871,20 @@ see the [FAQ](../faq.md#function-references-in-yaml) to see how to specify funct
     [`attr_list`][attr-list].
 -   If a `validator` fails, the next `validator`/`formatter` pair will be tired.
 ///
+
+### Reset
+
+> [!new] New in 13.0
+
+Some custom fences may track data and may require a way to reset that data when the `Markdown` object has its own reset
+called. A special reset can be crafted using the format below and set to `reset` when defining a custom fence.
+
+```
+def custom_reset(md):
+    """Custom reset."""
+```
+
+`md` is the `Markdown` object.
 
 ### Exception Handling
 

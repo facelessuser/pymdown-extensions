@@ -203,19 +203,32 @@ def _validator(language, inputs, options, attrs, md, validator=None):
     """Validator wrapper."""
 
     md.preprocessors['fenced_code_block'].get_hl_settings()
-    return validator(language, inputs, options, attrs, md)
+    if validator:
+        return validator(language, inputs, options, attrs, md)
 
 
 def _formatter(src='', language='', options=None, md=None, class_name="", _fmt=None, **kwargs):
     """Formatter wrapper."""
 
-    return _fmt(src, language, class_name, options, md, **kwargs)
+    if _fmt:
+        return _fmt(src, language, class_name, options, md, **kwargs)
 
 
 def _test(language, test_language=None):
     """Test language."""
 
     return test_language is None or test_language == "*" or language == test_language
+
+
+def _reset(md, _reset=None):
+    """Reset wrapper."""
+
+    if _reset:
+        _reset(md)
+
+
+def default_reset(md):
+    """Default reset."""
 
 
 class SuperFencesCodeExtension(Extension):
@@ -239,14 +252,15 @@ class SuperFencesCodeExtension(Extension):
         }
         super().__init__(*args, **kwargs)
 
-    def extend_super_fences(self, name, formatter, validator):
+    def extend_super_fences(self, name, formatter, validator, reset):
         """Extend SuperFences with the given name, language, and formatter."""
 
         obj = {
             "name": name,
             "test": functools.partial(_test, test_language=name),
             "formatter": formatter,
-            "validator": validator
+            "validator": validator,
+            "reset": reset
         }
 
         if name == '*':
@@ -268,7 +282,8 @@ class SuperFencesCodeExtension(Extension):
                 "name": "superfences",
                 "test": _test,
                 "formatter": None,
-                "validator": functools.partial(_validator, validator=highlight_validator)
+                "validator": functools.partial(_validator, validator=highlight_validator),
+                "reset": None
             }
         )
 
@@ -279,11 +294,13 @@ class SuperFencesCodeExtension(Extension):
             class_name = custom.get('class')
             fence_format = custom.get('format', fence_code_format)
             validator = custom.get('validator', default_validator)
+            reset = custom.get('reset', default_reset)
             if name is not None and class_name is not None:
                 self.extend_super_fences(
                     name,
                     functools.partial(_formatter, class_name=class_name, _fmt=fence_format),
-                    functools.partial(_validator, validator=validator)
+                    functools.partial(_validator, validator=validator),
+                    functools.partial(_reset, _reset=reset)
                 )
 
         self.md = md
@@ -327,6 +344,9 @@ class SuperFencesCodeExtension(Extension):
         """Clear the stash."""
 
         self.stash.clear_stash()
+        for entry in self.superfences:
+            if entry['reset'] is not None:
+                entry['reset'](self.md)
 
 
 class SuperFencesBlockPreprocessor(Preprocessor):
