@@ -48,6 +48,10 @@
 
 .md-typeset {
 
+  code {
+    border: convert.px2rem(1px) solid var(--md-code-border-color);
+  }
+
   /* Allow code to look like code everywhere despite Material's current preference */
   *:not(pre) > code {
       margin: 0;
@@ -65,6 +69,11 @@
   /* Don't always like code breaking in table cells */
   td code {
     word-break: normal;
+  }
+
+  :is(.highlight, pre):has(+ div.result) code {
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
   }
 
   .highlight {
@@ -115,6 +124,8 @@
     font-weight: 700;
     font-size: convert.px2rem(13.6px);
     background-color: var(--md-code-title-bg-color);
+    border: convert.px2rem(1px) solid var(--md-code-border-color);
+    border-bottom-width: 0;
     border-top-left-radius: convert.px2rem(9.6px);
     border-top-right-radius: convert.px2rem(9.6px);
 
@@ -227,6 +238,8 @@
               transparent,
               var(--md-default-bg-color) 80%
           100%);
+          border: convert.px2rem(1px) solid var(--md-code-border-color);
+          border-top-width: 0;
           border-bottom-right-radius: convert.px2rem(9.6px);
           border-bottom-left-radius: convert.px2rem(9.6px);
         }
@@ -257,7 +270,9 @@
 }
 
 .md-typeset .highlight+.result {
-  border-right-width: convert.px2rem(2px);
-  border-bottom-width: convert.px2rem(2px);
-  border-left-width: convert.px2rem(2px);
+  border-color: var(--md-code-border-color);
+  border-top-color: transparent;
+  border-right-width: convert.px2rem(1px);
+  border-bottom-width: convert.px2rem(1px);
+  border-left-width: convert.px2rem(1px);
 }

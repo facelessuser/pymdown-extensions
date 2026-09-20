@@ -13,6 +13,7 @@
   // Code colors
   --md-code-fg-color: #{dracula.$alucard-fg};
   --md-code-bg-color: #{dracula.$alucard-bg};
+  --md-code-border-color: #{color.adjust(dracula.$alucard-bg, $lightness: -5%, $space: oklab)};
   --md-code-title-bg-color: #{dracula.$alucard-bg};
   --md-code-inline-bg-color: #{dracula.$alucard-bg};
   --md-code-hl-operator-color: #{dracula.$alucard-pink};
@@ -98,6 +99,7 @@
     // Code colors
     --md-code-fg-color: #{dracula.$drac-fg};
     --md-code-bg-color: #{dracula.$drac-bg};
+    --md-code-border-color: #{color.adjust(dracula.$drac-bg, $lightness: 5%, $space: oklab)};
     --md-code-title-bg-color: #{dracula.$drac-bg};
     --md-code-inline-bg-color: #{dracula.$drac-bg};
     --md-code-hl-operator-color: #{dracula.$drac-pink};

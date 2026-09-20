@@ -29,11 +29,13 @@ $old-admonitions: (
 :root > * {
   --md-admonition-icon-color: #{dracula.$alucard-blue};
   --md-admonition-bg-color: #{color.adjust(dracula.$alucard-blue, $alpha: -0.9)};
+  --md-admonition-border-color: #{color.adjust(dracula.$alucard-blue, $alpha: -0.85)};
   // --md-admonition-bg-color: #{color.mix(dracula.$alucard-blue, dracula.$alucard-bg, $weight: 12%, $method: oklab)};
 
   &[data-md-color-scheme="slate"] {
     --md-admonition-icon-color: #{dracula.$drac-blue};
     --md-admonition-bg-color: #{color.adjust(dracula.$drac-blue, $alpha: -0.9)};
+    --md-admonition-border-color: #{color.adjust(dracula.$drac-blue, $alpha: -0.85)};
   }
 
   @each $names, $prop in $new-admonitions {
@@ -45,11 +47,13 @@ $old-admonitions: (
       --md-admonition-icon--#{$name}: svg-load("#{list.nth($prop, 3)}");
       --md-admonition-bg-color--#{$name}: #{color.adjust($tint2, $alpha: -0.9)};
       --md-admonition-icon-color--#{$name}: #{$tint2};
+      --md-admonition-border-color--#{$name}: #{color.adjust($tint2, $alpha: -0.85)};
     }
 
     &[data-md-color-scheme="slate"] {
       --md-admonition-bg-color--#{$name}: #{color.adjust($tint, $alpha: -0.9)};
       --md-admonition-icon-color--#{$name}: #{$tint};
+      --md-admonition-border-color--#{$name}: #{color.adjust($tint2, $alpha: -0.85)};
     }
   }
 
@@ -61,11 +65,13 @@ $old-admonitions: (
     & {
       --md-admonition-bg-color--#{$name}: #{color.adjust($tint2, $alpha: -0.9)};
       --md-admonition-icon-color--#{$name}: #{$tint2};
+      --md-admonition-border-color--#{$name}: #{color.adjust($tint2, $alpha: -0.85)};
     }
 
     &[data-md-color-scheme="slate"] {
       --md-admonition-bg-color--#{$name}: #{color.adjust($tint, $alpha: -0.9)};
       --md-admonition-icon-color--#{$name}: #{$tint};
+      --md-admonition-border-color--#{$name}: #{color.adjust($tint2, $alpha: -0.85)};
     }
   }
 }
@@ -74,6 +80,7 @@ $old-admonitions: (
 .md-typeset .admonition {
   font-size: inherit;
   background: var(--md-admonition-bg-color--note);
+  border: convert.px2rem(1px) solid var(--md-admonition-border-color--note);
   border-width: 0;
   border-left-width: 4px;
 
@@ -96,6 +103,7 @@ $old-admonitions: (
   // Define base class
   .md-typeset .admonition.#{$name} {
     background: var(--md-admonition-bg-color--#{$name});
+    border: convert.px2rem(1px) solid var(--md-admonition-border-color--#{$name});
 
     // Define base class
     > .admonition-title {
@@ -120,6 +128,7 @@ $old-admonitions: (
     // Define base class
   .md-typeset .admonition.#{$name} {
     background: var(--md-admonition-bg-color--#{$name});
+    border: convert.px2rem(1px) solid var(--md-admonition-border-color--#{$name});
 
     > .admonition-title {
       // Icon
