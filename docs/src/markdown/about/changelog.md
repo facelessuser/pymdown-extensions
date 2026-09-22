@@ -6,6 +6,7 @@ icon: lucide/scroll-text
 ## 12.1
 
 -   **NEW**: SuperFences: Add optional `reset` function that can be specified for custom fences.
+-   **FIX**: Tilde, Caret: Fix performance for long invalid delimiters.
 
 ## 12.0.1
 
