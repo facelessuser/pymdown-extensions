@@ -276,3 +276,7 @@
   border-bottom-width: convert.px2rem(1px);
   border-left-width: convert.px2rem(1px);
 }
+
+.md-nav__link .md-ellipsis code {
+    padding: .0em .4em;
+}
