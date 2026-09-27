@@ -84,6 +84,11 @@
     /* `pymdownx-inline` mode */
     [data-linenos] {
 
+      &::before {
+        left: convert.px2em(-16px, 12.6px);
+        margin-left: convert.px2em(-16px, 12.6px);
+      }
+
       &:hover::before {
         color: var(--md-accent-fg-color);
         font-weight: 700;
@@ -96,18 +101,27 @@
     }
 
     .hll [data-linenos]::before {
-      box-shadow: -2px 0 var(--md-accent-fg-color) inset;
+      border-right: 2px solid var(--md-accent-fg-color);
     }
   }
 
     /* Special line number coloring for tables */
   .highlighttable {
+    code {
+      border-left-width: 0;
+    }
+
+    .linenos {
+      border: convert.px2rem(1px) solid var(--md-code-border-color);
+      border-right-width: 0;
+    }
+
     .linenodiv {
       .special {
-        margin-right: convert.px2em(-8px, 13.6px);
-        margin-left: convert.px2em(-16px, 13.6px);
-        padding-right: convert.px2em(8px, 13.6px);
-        padding-left: convert.px2em(16px, 13.6px);
+        margin-right: convert.px2em(1px, 12.6px);
+        margin-left: convert.px2em(-16px, 12.6px);
+        padding-right: convert.px2em(8px, 12.6px);
+        padding-left: convert.px2em(16px, 12.6px);
         background-color: var(--md-code-special-bg-color);
       }
     }
