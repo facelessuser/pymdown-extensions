@@ -3,6 +3,10 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 12.2
+
+-   **NEW**: Add official support for Python 3.15.
+
 ## 12.1
 
 -   **NEW**: SuperFences: Add optional `reset` function that can be specified for custom fences.
