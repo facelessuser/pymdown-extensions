@@ -27,7 +27,7 @@ DEALINGS IN THE SOFTWARE.
 """
 from markdown import Extension
 from . import util
-from .delimiterprocessor import DelimiterProcessor
+from .delimiterprocessor import DelimiterProcessor, Delimiter
 from typing import cast
 
 
@@ -41,7 +41,8 @@ class InsertSupExtension(Extension):
             'smart_insert': [False, "Treat ^^connected^^words^^ intelligently - Default: False"],
             'insert': [True, "Enable insert - Default: True"],
             'superscript': [True, "Enable superscript - Default: True"],
-            'no_space': [True, "Pandoc style 'no space' requirement - Default: True"]
+            'no_space': [True, "Pandoc style 'no space' requirement - Default: True"],
+            'punctuation': [False, "Force CommonMark punctuation rules when superscript is enabled - Default: False"]
         }
 
         super().__init__(*args, **kwargs)
@@ -54,6 +55,7 @@ class InsertSupExtension(Extension):
         superscript = bool(config.get('superscript', True))
         smart = bool(config.get('smart_insert', True))
         no_space = bool(config.get('no_space', True))
+        punct = bool(config.get('punctuation', False))
 
         if not insert and not superscript:  # pragma: no cover
             return
@@ -73,18 +75,20 @@ class InsertSupExtension(Extension):
         elif insert:
             tags = 'ins'
             double = True
+            punct= True
         else:
             tags = 'sup'
 
+        delim = Delimiter('^', tags, smart=smart, no_space=no_space, double=double, punct=punct)
         if (
             'delimiter' not in md.inlinePatterns or
             not isinstance(md.inlinePatterns['delimiter'], DelimiterProcessor)
         ):
-            self.processor = DelimiterProcessor('^', tags, md, smart=smart, no_space=no_space, double=double)
+            self.processor = DelimiterProcessor(delim, md)
             md.inlinePatterns.register(self.processor, "delimiter", 60)
         else:
             self.processor = cast('DelimiterProcessor', md.inlinePatterns['delimiter'])
-            self.processor.add('^', tags, smart=smart, no_space=no_space, double=double)
+            self.processor.add(delim)
 
     def reset(self):
         """Reset."""

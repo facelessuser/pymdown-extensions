@@ -23,7 +23,7 @@ CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFT
 DEALINGS IN THE SOFTWARE.
 """
 from markdown import Extension
-from .delimiterprocessor import DelimiterProcessor
+from .delimiterprocessor import DelimiterProcessor, Delimiter
 
 
 class BetterEmExtension(Extension):
@@ -70,17 +70,20 @@ class BetterEmExtension(Extension):
         md.inlinePatterns.deregister('strong2', False)
         md.inlinePatterns.deregister('emphasis2', False)
 
+        delim_star = Delimiter('*', 'strong,em', smart=enable_star)
+        delim_under = Delimiter('_', 'strong,em', smart=enable_under)
+
         if (
             'delimiter' not in md.inlinePatterns or
             not isinstance(md.inlinePatterns['delimiter'], DelimiterProcessor)
         ):
-            self.processor = DelimiterProcessor('*', 'strong,em', md, smart=enable_star)
-            self.processor.add('_', 'strong,em', smart=enable_under)
+            self.processor = DelimiterProcessor(delim_star, md)
+            self.processor.add(delim_under)
             md.inlinePatterns.register(self.processor, "delimiter", 60)
         else:
             self.processor = md.inlinePatterns['delimiter']
-            self.processor.add('*', 'strong,em', smart=enable_star)
-            self.processor.add('_', 'strong,em', smart=enable_under)
+            self.processor.add(delim_star)
+            self.processor.add(delim_under)
 
     def reset(self):
         """Reset."""
