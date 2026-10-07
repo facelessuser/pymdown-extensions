@@ -79,6 +79,17 @@ text^a superscript^
 > [!new] New in 12.0
 > `no_space` is new in 12.0.
 
+> [!new] 12.2 CommonMark Punctuation Rule Change
+> 12.0 introduced a rewrite of emphasis handling which brought emphasis handling into alignment with CommonMark rules.
+> Caret, being based on the same core logic, inherits the same CommonMark rules.
+>
+> It was found that specifically the CommonMark punctuation rules were somewhat surprising for some when dealing with
+> superscripts. In 12.2, for backwards compatibility, Caret now disables CommonMark punctuation rules any time
+> superscript is enabled. If superscript is not enabled, insert notations will follow CommonMark punctuation rules.
+>
+> If it is desired to force CommonMark punctuation rules in superscript, [`punctuation`](#options) can be enabled in the
+> options. You will need to escape punctuation any time it conflicts with CommonMark rules.
+
 ## Options
 
 Option         | Type | Default      | Description
@@ -87,3 +98,4 @@ Option         | Type | Default      | Description
 `insert`       | bool | `#!py3 True` | Enable insert feature.
 `superscript`  | bool | `#!py3 True` | Enable superscript feature.
 `no_space`     | bool | `#!py3 True` | Enable Pandoc style requirement of "no unescaped spaces".
+`punctuation`  | bool | `#!py3 False`| Enable CommonMark punctuation rules even when subscript tags are enabled".
