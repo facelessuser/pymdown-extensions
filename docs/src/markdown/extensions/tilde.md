@@ -76,6 +76,17 @@ text~a subscript~
 > [!new] New in 12.0
 > `no_space` is new in 12.0.
 
+> [!new] 12.2 CommonMark Punctuation Rule Change
+> 12.0 introduced a rewrite of emphasis handling which brought emphasis handling into alignment with CommonMark rules.
+> Tilde, being based on the same core logic, inherits the same CommonMark rules.
+>
+> It was found that specifically the CommonMark punctuation rules were somewhat surprises for some when dealing with
+> subscripts. In 12.2, for backwards compatibility, Tilde now disables CommonMark punctuation rules any time subscript
+> is enabled. If subscript is not enabled, delete notations will follow CommonMark punctuation rules.
+>
+> If it is desired to force CommonMark punctuation rules in subscript, [`punctuation`](#options) can be enabled in the
+> options. You will need to escape punctuation any time it conflicts with CommonMark rules.
+
 ## Options
 
 Option         | Type | Default      | Description
@@ -84,3 +95,4 @@ Option         | Type | Default      | Description
 `delete`       | bool | `#!py3 True` | Enable delete feature.
 `subscript`    | bool | `#!py3 True` | Enable subscript feature.
 `no_space`     | bool | `#!py3 True` | Enable Pandoc style requirement of "no unescaped spaces".
+`punctuation`  | bool | `#!py3 False`| Enable CommonMark punctuation rules even when subscript tags are enabled".

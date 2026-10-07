@@ -6,6 +6,10 @@ icon: lucide/scroll-text
 ## 12.2
 
 -   **NEW**: Add official support for Python 3.15.
+-   **NEW**: Tilde, Caret: For backwards compatibility, disable CommonMark punctuation rules by default. If subscript or
+    superscript is disabled in the respective extension, CommonMark rules will be honored again. A new `punctuation`
+    rule has been added to force CommonMark rules. When done, people will need to be aware of punctuation in when
+    subscript or superscript is enabled and escape any that violates CommonMark rules.
 
 ## 12.1
 

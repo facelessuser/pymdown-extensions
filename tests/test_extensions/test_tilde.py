@@ -731,6 +731,48 @@ class TestTildeMixed(util.MdCase):
         )
 
 
+class TestNoPunctuationRules(util.MdCase):
+    """Test no punctuation rules."""
+
+    extension = [
+        'pymdownx.tilde'
+    ]
+    extension_configs = {}
+
+    def test_no_punct(self):
+        """Test no punctuation rules."""
+
+        self.check_markdown(
+            'a~-3~',
+            '<p>a<sub>-3</sub></p>'
+        )
+
+
+class TestPunctuationRules(util.MdCase):
+    """Test punctuation rules."""
+
+    extension = [
+        'pymdownx.tilde'
+    ]
+    extension_configs = {'pymdownx.tilde': {'punctuation': True}}
+
+    def test_punct(self):
+        """Test punctuation rules."""
+
+        self.check_markdown(
+            R"""
+            a~-3~
+
+            a~\-3~
+            """,
+            """
+            <p>a~-3~</p>
+            <p>a<sub>-3</sub></p>
+            """,
+            True
+        )
+
+
 @pytest.mark.parametrize("space", [" ", "\n", "\u00a0", "\u2003"])
 def test_reject_unescaped_whitespace(space):
     """Test that all white spaces are handled."""

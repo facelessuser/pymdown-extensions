@@ -96,11 +96,37 @@ class Delimiter:
     Delimiter.
 
     Handles a specific delimiter instance regarding individual patterns, stacks, and tracking.
+
+    Arguments:
+        `token`: should be a single character.
+
+        `tags`: should be specified as a single tag or two tags with the one that requires
+                repeated tokens first.
+
+        `smart`: enable if intelligent word logic should be applied.
+
+        `double`: if only one tag is specified, indicate whether it requires repeated tokens.
+
+        `punct`: Enable CommonMark punctuation rules.
+
+        `no_space`: The "no space" option should be enabled only for Pandoc style spans that require
+                    spaces to be escaped (e.g. subscript and superscript). This logic is only applied
+                    to single token spans.
+
     """
 
-    def __init__(self, token: str, tags: str, no_space: bool, smart: bool, double: bool):
+    def __init__(
+        self,
+        token: str,
+        tags: str,
+        smart: bool = False,
+        double: bool = False,
+        punct: bool = True,
+        no_space: bool = False
+    ):
         """Initialize."""
 
+        self.token = token
         self.stack: deque[tuple[int, int, bool, int]] = deque()
         temp = tags.split(',')
         self.tag_count = len(temp)
@@ -111,6 +137,7 @@ class Delimiter:
         self.space_track = 0
         self.singles = 0
         self.smart = smart
+        self.punct = punct
         self._build_patterns(token)
 
     def _build_patterns(self, token: str) -> str:
@@ -130,6 +157,8 @@ class Delimiter:
         # Python Markdown uses `STX` (`\0x2`) and `ETX` (`\0x3`) for placeholders.
         # Include handling for these characters in addition to CommonMark rules.
         stx, etx = '\x02', '\x03'
+        # Setup punctuation exclusion unless disabled
+        npunct = PUNCT if self.punct else ''
 
         # Patterns for when the larger delimiter is "smart" and the smaller is "dumb".
         if self.smart and self.no_space and len(self.tags) == 2:
@@ -137,43 +166,43 @@ class Delimiter:
                 fr'''(?x)
                 (?:
                     (?P<ambiguous3>
-                        (?<!^)(?<![\s{etoken}{PUNCT}]){etoken}{{3,}}(?![\s{etoken}{PUNCT}])(?!$)|
+                        (?<!^)(?<![\s{etoken}{npunct}]){etoken}{{3,}}(?![\s{etoken}{npunct}])(?!$)|
                         (?<!^)(?<=[{PUNCT}{etx}])(?<!{etoken}){etoken}{{3,}}(?!{etoken})(?=[{stx}{PUNCT}])(?!$)
                     )|
                     (?P<end3>
-                        (?<!^)(?<![\s{etoken}{PUNCT}]){etoken}{{3,}}|
+                        (?<!^)(?<![\s{etoken}{npunct}]){etoken}{{3,}}|
                         (?<=[{PUNCT}])(?<!{etoken}){etoken}{{3,}}(?!{etoken})(?=[\s{stx}{PUNCT}]|$)
                     )|
                     (?P<start3>
-                        {etoken}{{3,}}(?![\s{etoken}{PUNCT}])(?!$)|
+                        {etoken}{{3,}}(?![\s{etoken}{npunct}])(?!$)|
                         (?:(?<=[\s{etx}{PUNCT}])|^)(?<!{etoken}){etoken}{{3,}}(?!{etoken})(?=[{PUNCT}])
                     )
                 )|
                 (?:
                     (?P<ambiguous2>
-                        (?<!^)(?<![\s{etoken}{PUNCT}]){xstart}{etoken}{{2}}{xend}(?![\s{etoken}{PUNCT}])(?!$)|
+                        (?<!^)(?<![\s{etoken}{npunct}]){xstart}{etoken}{{2}}{xend}(?![\s{etoken}{npunct}])(?!$)|
                         (?<!^)(?<=[{PUNCT}{etx}])(?<!{etoken}){etoken}{{2}}(?!{etoken})(?=[{stx}{PUNCT}])(?!$)
                     )|
                     (?P<end2>
-                        (?<!^)(?<![\s{etoken}{PUNCT}]){etoken}{{2}}{xend}|
+                        (?<!^)(?<![\s{etoken}{npunct}]){etoken}{{2}}{xend}|
                         (?<=[{PUNCT}])(?<!{etoken}){etoken}{{2}}(?!{etoken})(?=[\s{stx}{PUNCT}]|$)
                     )|
                     (?P<start2>
-                        {xstart}{etoken}{{2}}(?![\s{etoken}{PUNCT}])(?!$)|
+                        {xstart}{etoken}{{2}}(?![\s{etoken}{npunct}])(?!$)|
                         (?:(?<=[\s{etx}{PUNCT}])|^)(?<!{etoken}){etoken}{{2}}(?!{etoken})(?=[{PUNCT}])
                     )
                 )|
                 (?:
                     (?P<ambiguous1>
-                        (?<!^)(?<![\s{etoken}{PUNCT}]){etoken}{{1}}(?![\s{etoken}{PUNCT}])(?!$)|
+                        (?<!^)(?<![\s{etoken}{npunct}]){etoken}{{1}}(?![\s{etoken}{npunct}])(?!$)|
                         (?<!^)(?<=[{PUNCT}{etx}])(?<!{etoken}){etoken}{{1}}(?!{etoken})(?=[{stx}{PUNCT}])(?!$)
                     )|
                     (?P<end1>
-                        (?<!^)(?<![\s{etoken}{PUNCT}]){etoken}{{1}}|
+                        (?<!^)(?<![\s{etoken}{npunct}]){etoken}{{1}}|
                         (?<=[{PUNCT}])(?<!{etoken}){etoken}{{1}}(?!{etoken})(?=[\s{stx}{PUNCT}]|$)
                     )|
                     (?P<start1>
-                        {etoken}{{1}}(?![\s{etoken}{PUNCT}])(?!$)|
+                        {etoken}{{1}}(?![\s{etoken}{npunct}])(?!$)|
                         (?:(?<=[\s{etx}{PUNCT}])|^)(?<!{etoken}){etoken}{{1}}(?!{etoken})(?=[{PUNCT}])
                     )
                 )
@@ -185,15 +214,15 @@ class Delimiter:
             self.boundary = re.compile(
                 fr'''(?x)
                 (?P<ambiguous>
-                    (?<!^)(?<![\s{etoken}{PUNCT}]){xstart}{etoken}{{1,}}{xend}(?![\s{etoken}{PUNCT}])(?!$)|
+                    (?<!^)(?<![\s{etoken}{npunct}]){xstart}{etoken}{{1,}}{xend}(?![\s{etoken}{npunct}])(?!$)|
                     (?<!^)(?<=[{PUNCT}{etx}])(?<!{etoken}){etoken}{{1,}}(?!{etoken})(?=[{PUNCT}{stx}])(?!$)
                 )|
                 (?P<end>
-                    (?<!^)(?<![\s{etoken}{PUNCT}]){etoken}{{1,}}{xend}|
+                    (?<!^)(?<![\s{etoken}{npunct}]){etoken}{{1,}}{xend}|
                     (?<=[{PUNCT}])(?<!{etoken}){etoken}{{1,}}(?!{etoken})(?=[\s{stx}{PUNCT}]|$)
                 )|
                 (?P<start>
-                    {xstart}{etoken}{{1,}}(?![\s{etoken}{PUNCT}])(?!$)|
+                    {xstart}{etoken}{{1,}}(?![\s{etoken}{npunct}])(?!$)|
                     (?:(?<=[\s{etx}{PUNCT}])|^)(?<!{etoken}){etoken}{{1,}}(?!{etoken})(?=[{PUNCT}])
                 )
                 ''',
@@ -204,15 +233,15 @@ class Delimiter:
             self.boundary = re.compile(
                 fr'''(?x)
                 (?P<ambiguous>
-                    (?<!^)(?<![\s{etoken}{PUNCT}]){etoken}{{1,}}(?![\s{etoken}{PUNCT}])(?!$)|
+                    (?<!^)(?<![\s{etoken}{npunct}]){etoken}{{1,}}(?![\s{etoken}{npunct}])(?!$)|
                     (?<!^)(?<=[{PUNCT}{etx}])(?<!{etoken}){etoken}{{1,}}(?!{etoken})(?=[{PUNCT}{stx}])(?!$)
                 )|
                 (?P<end>
-                    (?<!^)(?<![\s{etoken}{PUNCT}]){etoken}{{1,}}|
+                    (?<!^)(?<![\s{etoken}{npunct}]){etoken}{{1,}}|
                     (?<=[{PUNCT}])(?<!{etoken}){etoken}{{1,}}(?!{etoken})(?=[\s{stx}{PUNCT}]|$)
                 )|
                 (?P<start>
-                    {etoken}{{1,}}(?![\s{etoken}{PUNCT}])(?!$)|
+                    {etoken}{{1,}}(?![\s{etoken}{npunct}])(?!$)|
                     (?:(?<=[\s{etx}{PUNCT}])|^)(?<!{etoken}){etoken}{{1,}}(?!{etoken})(?=[{PUNCT}])
                 )
                 ''',
@@ -239,31 +268,16 @@ class DelimiterProcessor(InlineProcessor):
 
     def __init__(
         self,
-        token: str,
-        tags: str,
+        delimiter: Delimiter,
         md: Markdown,
-        no_space: bool = False,
-        smart: bool = False,
-        double: bool = False
     ) -> None:
         """
         Initialize.
 
         Arguments:
-            `token`: should be a single character.
-
-            `tags`: should be specified as a single tag or two tags with the one that requires
-                    repeated tokens first.
+            `delimiter`: A delimiter object.
 
             `md`: the Markdown object.
-
-            `no_space`: The "no space" option should be enabled only for Pandoc style spans that require
-                        spaces to be escaped (e.g. subscript and superscript). This logic is only applied
-                        to single token spans.
-
-            `smart`: enable if intelligent word logic should be applied.
-
-            `double`: if only one tag is specified, indicate whether it requires repeated tokens.
 
         """
 
@@ -279,21 +293,15 @@ class DelimiterProcessor(InlineProcessor):
         self.md = md
         # API for Markdown to pass `safe_mode` into instance
         self.safe_mode = False
-        self.add(token, tags, no_space, smart, double)
+        self.add(delimiter)
 
-    def add(
-        self,
-        token: str,
-        tags: str,
-        no_space: bool = False,
-        smart: bool = False,
-        double: bool = False
-    ) -> None:
+    def add(self, delimiter: Delimiter) -> None:
         """Add a delimiter."""
 
+        token = delimiter.token
         if token not in self.tokens:
             self.tokens.append(token)
-        self.delimiters[token] = Delimiter(token, tags, no_space, smart, double)
+        self.delimiters[token] = delimiter
         self.pattern = '|'.join([re.escape(t) for t in self.tokens])
         self.compiled_re = re.compile(self.pattern, re.DOTALL | re.UNICODE)
 

@@ -722,6 +722,48 @@ class TestCaretMixed(util.MdCase):
         )
 
 
+class TestNoPunctuationRules(util.MdCase):
+    """Test no punctuation rules."""
+
+    extension = [
+        'pymdownx.caret'
+    ]
+    extension_configs = {}
+
+    def test_no_punct(self):
+        """Test no punctuation rules."""
+
+        self.check_markdown(
+            'a^-3^',
+            '<p>a<sup>-3</sup></p>'
+        )
+
+
+class TestPunctuationRules(util.MdCase):
+    """Test punctuation rules."""
+
+    extension = [
+        'pymdownx.caret'
+    ]
+    extension_configs = {'pymdownx.caret': {'punctuation': True}}
+
+    def test_punct(self):
+        """Test punctuation rules."""
+
+        self.check_markdown(
+            R"""
+            a^-3^
+
+            a^\-3^
+            """,
+            """
+            <p>a^-3^</p>
+            <p>a<sup>-3</sup></p>
+            """,
+            True
+        )
+
+
 @pytest.mark.parametrize("space", [" ", "\n", "\u00a0", "\u2003"])
 def test_reject_unescaped_whitespace(space):
     """Test that all white spaces are handled."""

@@ -26,7 +26,7 @@ DEALINGS IN THE SOFTWARE.
 """
 from markdown import Extension
 from . import util
-from .delimiterprocessor import DelimiterProcessor
+from .delimiterprocessor import DelimiterProcessor, Delimiter
 from typing import cast
 
 
@@ -40,7 +40,8 @@ class DeleteSubExtension(Extension):
             'smart_delete': [False, "Treat ~~connected~~words~~ intelligently - Default: False"],
             'delete': [True, "Enable delete - Default: True"],
             'subscript': [True, "Enable subscript - Default: True"],
-            'no_space': [True, "Pandoc style 'no space' requirement - Default: True"]
+            'no_space': [True, "Pandoc style 'no space' requirement - Default: True"],
+            'punctuation': [False, "Force CommonMark punctuation rules when subscript is enabled - Default: False"]
         }
 
         super().__init__(*args, **kwargs)
@@ -53,6 +54,7 @@ class DeleteSubExtension(Extension):
         subscript = bool(config.get('subscript', True))
         smart = bool(config.get('smart_delete', True))
         no_space = bool(config.get('no_space', True))
+        punct = bool(config.get('punctuation', False))
 
         if not delete and not subscript:  # pragma: no cover
             return
@@ -72,18 +74,20 @@ class DeleteSubExtension(Extension):
         elif delete:
             tags = 'del'
             double = True
+            punct = True
         else:
             tags = 'sub'
 
+        delim = Delimiter('~', tags, smart=smart, no_space=no_space, double=double, punct=punct)
         if (
             'delimiter' not in md.inlinePatterns or
             not isinstance(md.inlinePatterns['delimiter'], DelimiterProcessor)
         ):
-            self.processor = DelimiterProcessor('~', tags, md, smart=smart, no_space=no_space, double=double)
+            self.processor = DelimiterProcessor(delim, md)
             md.inlinePatterns.register(self.processor, "delimiter", 60)
         else:
             self.processor = cast('DelimiterProcessor', md.inlinePatterns['delimiter'])
-            self.processor.add('~', tags, smart=smart, no_space=no_space, double=double)
+            self.processor.add(delim)
 
     def reset(self):
         """Reset."""
