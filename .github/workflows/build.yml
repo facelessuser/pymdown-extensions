@@ -17,10 +17,8 @@ jobs:
       max-parallel: 4
       matrix:
         platform: [ubuntu-latest, windows-latest]
-        python-version: ['3.10', '3.11', '3.12', '3.13', '3.14', '3.15']
+        python-version: ['3.11', '3.12', '3.13', '3.14', '3.15']
         include:
-          - python-version: '3.10'
-            hatch-env: py310
           - python-version: '3.11'
             hatch-env: py311
           - python-version: '3.12'
