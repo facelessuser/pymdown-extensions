@@ -129,6 +129,66 @@ class TestHighlightAutoTitleMap(util.MdCase):
         )
 
 
+class TestHighlightAutoTitleMapHTML(util.MdCase):
+    """Test title cases."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'auto_title': True,
+            "auto_title_map": {
+                "Python Console Session": {"title": "<strong>Python</strong>", "mode": "html"}
+            }
+        }
+    }
+
+    def test_auto_tile_map(self):
+        """Test auto title."""
+
+        self.check_markdown(
+            r'''
+            ```pycon
+            >>> import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><span class="filename"><strong>Python</strong></span><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestHighlightAutoTitleMapBadTitleMode(util.MdCase):
+    """Test title cases."""
+
+    extension = ['pymdownx.highlight', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'auto_title': True,
+            "auto_title_map": {
+                "Python Console Session": {"title": "<strong>Python</strong>", "mode": "bad"}
+            }
+        }
+    }
+
+    def test_auto_tile_map(self):
+        """Test auto title."""
+
+        self.check_markdown(
+            r'''
+            ```pycon
+            >>> import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><span class="filename">&lt;strong&gt;Python&lt;/strong&gt;</span><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+
 class TestHighlightInline(util.MdCase):
     """Test highlight inline."""
 

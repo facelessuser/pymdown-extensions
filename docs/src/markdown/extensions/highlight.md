@@ -149,27 +149,26 @@ Option                    | Type           | Default               | Description
 `language_prefix`         | string         | `#!py3 'language-'`   | Controls the prefix applied to the language class when Pygments is not used. By default, uses the HTML5 prefix of `language-`.
 `code_attr_on_pre`        | bool           | `#!py3 False`         | By default, the language class and all attributes added via the [`attr_list`][attr-list] extension are attached to the `#!html <code>` element. This forces them to be attached to the `#!html <pre>` element.
 `auto_title`              | bool           | `#!py3 False`         | When using Pygments, for all code blocks generate a title header with the name of the lexer being used. The lexer name is pulled directly from Pygments and title cased appropriately.
-`auto_title_map`          | dict           | `#!py3 {}`            | A dictionary used to override certain titles returned by `auto_title`. Simply specify the title to override as the key and the desired title as the value.
+`auto_title_map`          | dict           | `#!py3 {}`            | A dictionary used to override certain titles returned by `auto_title`. Simply specify the title to override as the key and the desired title as the value. If you desire the title to be treated as HTML, specify the title as a dictionary `#!py {"title": "My Title", "mode": "html"}`.
 `line_spans`              | string         | `#!py3 ''`            | Controls the Pygments option of a similar name. If set to a nonempty string, e.g. `foo`, the formatter will wrap each output line in a `#!html <span>` tag with an id of `foo-<code_block_number>-<line_number>`.
 `anchor_linenums`         | bool           | `#!py3 False`         | Enables the Pygments option of a similar name. If set to `#!py True`, will wrap line numbers in `#!html <a>` tags. Used in combination with `linenums` and `line_anchors`. If `line_anchors` is not configured, `__codelineno` will be assumed as the ID prefix.
 `line_anchors`            | bool           | `#!py3 False`         | Controls the Pygments option of a similar name. If set to a nonempty string, e.g. `foo`, the formatter will insert an anchor tag with an id (and name) of `foo-<code_block_number>-<line_number>`.
 `pygments_lang_class`     | bool           | `#!py3 False`         | If set to True, the language name used will be included as a class attached to the element with the associated `language_prefix`.
 `stripnl`                 | bool           | `#!py3 True`          | Strips leading and trailing newlines from code blocks. This is Pygments default behavior. Setting this to `#!py False` disables this and will retain leading and trailing newlines. This has no affect on inline code.
 
-/// new | New 7.1
-`linenums_class` was added in `7.1`.
-///
+> [!new] New 7.1
+> `linenums_class` was added in `7.1`.
 
-/// new | New 7.2
-`linenums` now accepts `#!py3 None` as the default for allow line numbers to be enabled per code block.
-`#!py3 False` now disables line numbers globally preventing line numbers even if specified per code block. `True`
-still enables globally.
-///
+> [!new] New 7.2
+> `linenums` now accepts `#!py3 None` as the default for allow line numbers to be enabled per code block.
+> `#!py3 False` now disables line numbers globally preventing line numbers even if specified per code block. `True`
+> still enables globally.
 
-/// new | New 9.0
-`auto_title`, `auto_title_map`, `line_spans`, `anchor_linenums`, and `line_anchors` were all added in `9.0`.
-///
+> [!new] New 9.0
+> `auto_title`, `auto_title_map`, `line_spans`, `anchor_linenums`, and `line_anchors` were all added in `9.0`.
 
-/// new | New 10.7
-`default_lang` added in 10.7.
-///
+> [!new] New 10.7
+> `default_lang` added in 10.7.
+
+> [!new] New 12.2
+> Added the ability to specify the title mode as `html` in the `auto_title_map`.

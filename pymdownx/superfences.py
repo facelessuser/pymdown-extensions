@@ -172,6 +172,7 @@ def highlight_validator(language, inputs, options, attrs, md):
     """Highlight validator."""
 
     use_pygments = md.preprocessors['fenced_code_block'].use_pygments
+    opts = (('hl_lines', RE_HL_LINES), ('linenums', RE_LINENUMS), ('title', None), ('title_mode', None))
 
     for k, v in inputs.items():
         matched = False
@@ -179,7 +180,7 @@ def highlight_validator(language, inputs, options, attrs, md):
             if k.startswith('data-'):
                 attrs[k] = v
                 continue
-            for opt, validator in (('hl_lines', RE_HL_LINES), ('linenums', RE_LINENUMS), ('title', None)):
+            for opt, validator in opts:
                 if k == opt:
                     if v is not True and (validator is None or validator.match(v) is not None):
                         options[k] = v
@@ -433,6 +434,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             self.pygments_lang_class = config.get('pygments_lang_class', False)
             self.stripnl = config.get('stripnl', True)
             self.default_lang = config.get('default_lang', True)
+            self.title_mode = config.get('title_mode', 'text')
 
     def clear(self):
         """Reset the class variables."""
@@ -852,6 +854,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         linespecial = None
         hl_lines = None
         title = None
+        title_mode = self.title_mode
 
         if self.use_pygments:
             if 'hl_lines' in options:
@@ -867,6 +870,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             if 'title' in options:
                 title = options['title']
                 del options['title']
+            if 'title_mode' in options:
+                title_mode = options['title_mode']
 
         linestep = self.parse_line_step(linestep)
         linestart = self.parse_line_start(linestart)
@@ -876,6 +881,7 @@ class SuperFencesBlockPreprocessor(Preprocessor):
         self.highlight_ext.pygments_code_block += 1
 
         el = self.highlighter(
+            self.md,
             guess_lang=self.guess_lang,
             pygments_style=self.pygments_style,
             use_pygments=self.use_pygments,
@@ -894,7 +900,8 @@ class SuperFencesBlockPreprocessor(Preprocessor):
             anchor_linenums=self.anchor_linenums,
             pygments_lang_class=self.pygments_lang_class,
             stripnl=self.stripnl,
-            default_lang=self.default_lang
+            default_lang=self.default_lang,
+            title_mode=title_mode
         ).highlight(
             src,
             language,

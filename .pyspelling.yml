@@ -7,8 +7,8 @@ matrix:
       - title
       - alt
       ignores:
-      - ':matches(code, pre)'
-      - 'a:matches(.magiclink-compare, .magiclink-commit, .magiclink-repository)'
+      - 'code, pre'
+      - 'a:is(.magiclink-compare, .magiclink-commit, .magiclink-repository)'
       - '.md-social__link'
       - 'span.keys'
       - '.arithmatex, .md-nav__link, .md-footer-custom-text, .md-source__repository, .headerlink, .md-icon'

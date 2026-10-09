@@ -105,6 +105,54 @@ class TestHighlightTitle(util.MdCase):
             True
         )
 
+    def test_title_html(self):
+        """Test auto title."""
+
+        self.check_markdown(
+            r'''
+            ```pycon title="My <strong>title</strong>" title_mode="html"
+            >>> import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><span class="filename">My <strong>title</strong></span><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_title_no_html(self):
+        """Test auto title no HTML."""
+
+        self.check_markdown(
+            r'''
+            ```pycon title="My <strong>title</strong>"
+            >>> import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><span class="filename">My &lt;strong&gt;title&lt;/strong&gt;</span><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+    def test_title_bad_title_mode(self):
+        """Test auto title no HTML."""
+
+        self.check_markdown(
+            r'''
+            ```pycon title="My <strong>title</strong>" title_mode="bad"
+            >>> import test
+            ```
+            ''',
+            r'''
+            <div class="highlight"><span class="filename">My &lt;strong&gt;title&lt;/strong&gt;</span><pre><span></span><code><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">test</span>
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
     def test_title_table(self):
         """Test auto title."""
 

@@ -234,15 +234,16 @@ class Highlight:
     """Highlight class."""
 
     def __init__(
-        self, guess_lang=False, pygments_style='default', use_pygments=True,
+        self, md, guess_lang=False, pygments_style='default', use_pygments=True,
         noclasses=False, extend_pygments_lang=None, linenums=None, linenums_special=-1,
         linenums_style='table', linenums_class='linenums', language_prefix='language-',
         code_attr_on_pre=False, auto_title=False, auto_title_map=None, line_spans='',
         anchor_linenums=False, line_anchors='', pygments_lang_class=False, stripnl=True,
-        default_lang=''
+        default_lang='', title_mode='text'
     ):
         """Initialize."""
 
+        self.md = md
         self.guess_lang = guess_lang
         self.pygments_style = pygments_style
         self.use_pygments = use_pygments
@@ -260,6 +261,7 @@ class Highlight:
         self.pygments_lang_class = pygments_lang_class
         self.stripnl = stripnl
         self.default_lang = default_lang
+        self.title_mode=title_mode
 
         if self.anchor_linenums and not self.line_anchors:
             self.line_anchors = '__codelineno'
@@ -343,6 +345,7 @@ class Highlight:
         # Convert with Pygments.
         if pygments and self.use_pygments:
 
+            title_mode = self.title_mode
             if p_ver < (2, 12):  # pragma: no cover
                 raise RuntimeError('Pymdownx Highlight requires at least Pygments 2.12+ if enabling Pygments')
 
@@ -391,11 +394,22 @@ class Highlight:
 
             if title is None and self.auto_title:
                 name = " ".join([w.title() if w.islower() else w for w in lexer.name.split()])
-                title = self.auto_title_map.get(name, name)
+                result = self.auto_title_map.get(name, name)
+                if isinstance(result, dict):
+                    title = result.get('title', '')
+                    title_mode = result.get('mode', 'text').lower()
+                else:
+                    title = result
+                    title_mode = 'text'
+                if title_mode not in ('text', 'html'):
+                    title_mode = 'text'
             if title:
                 title = title.strip()
             if title is None:
                 title = ''
+
+            if title and title_mode == 'html':
+                title = self.md.htmlStash.store(title)
 
             # Setup formatter
             html_formatter = InlineHtmlFormatter if inline else BlockHtmlFormatter
@@ -508,6 +522,7 @@ class HighlightTreeprocessor(Treeprocessor):
 
                 self.ext.pygments_code_block += 1
                 code = Highlight(
+                    self.md,
                     guess_lang=self.config['guess_lang'],
                     pygments_style=self.config['pygments_style'],
                     use_pygments=self.config['use_pygments'],

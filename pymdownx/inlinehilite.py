@@ -136,6 +136,7 @@ class InlineHilitePattern(InlineProcessor):
 
         if process_text:
             el = self.highlighter(
+                self.md,
                 guess_lang=self.guess_lang,
                 pygments_style=self.pygments_style,
                 use_pygments=self.use_pygments,

@@ -548,6 +548,53 @@ extension_configs:
 ```
 ````
 
+Lastly, it may be desirable to utilize raw HTML in titles, if so, `title_mode` can be used to enable HTML mode.
+
+````text title="Undesired Automatic Title"
+```py title="HTML <em>example</em>" title_mode="html"
+>>> 3 + 3
+6
+```
+````
+
+/// html | div.result
+````md-render
+---
+extensions:
+- pymdownx.highlight
+- pymdownx.superfences
+
+extension_configs:
+  pymdownx.highlight:
+    auto_title: true
+    line_spans: __codeline_b
+    line_anchors: __codelineno_b
+    anchor_linenums: True
+---
+```py title="HTML <em>example</em>" title_mode="html"
+>>> 3 + 3
+6
+```
+````
+///
+
+This can also be applied to `auto_title_map`. If HTML mode is desired, just specify the title as a dictionary specifying
+the title and the mode:
+
+```py3
+extension_configs = {
+    "pymdownx.highlight": {
+        "auto_title": True,
+        "auto_title_map": {
+            "Python Console Session": {"title": "<strong>Python</strong>", "mode": "html"}
+        }
+    }
+}
+```
+
+> [!new] 12.2
+> HTML mode for titles was added in 12.2.
+
 ## Pygments Line Anchors and Spans
 
 /// new | New 9.0
