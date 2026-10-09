@@ -34,7 +34,7 @@ def _type_multi(value: Any, types: Iterable[Callable[[Any], _T]] = ()) -> _T:
     for t in types:
         try:
             return t(value)
-        except ValueError:  # noqa: PERF203
+        except ValueError:
             pass
 
     raise ValueError(f"Type '{type(value)}' did not match any of the provided types")
