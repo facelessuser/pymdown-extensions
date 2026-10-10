@@ -9,8 +9,8 @@ icon: lucide/scroll-text
 -   **NEW**: Add official support for Python 3.15.
 -   **NEW**: Tilde, Caret: For backwards compatibility, disable CommonMark punctuation rules by default. If subscript or
     superscript is disabled in the respective extension, CommonMark rules will be honored again. A new `punctuation`
-    rule has been added to force CommonMark rules. When done, people will need to be aware of punctuation in when
-    subscript or superscript is enabled and escape any that violates CommonMark rules.
+    rule has been added to force CommonMark rules. When done, people will need to be aware of punctuation when subscript
+    or superscript is enabled and escape any that violates CommonMark rules.
 -   **NEW**: Highlight: Highlight now allows in the `auto_title_map` specifying the title as a simple string or a
     dictionary containing the title and the title mode: either `text` or `html`, with `text` being the default. This
     allows a title title to be specified and treated as HTML when the mode is `html`.
