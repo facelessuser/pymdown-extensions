@@ -81,8 +81,6 @@ $old-admonitions: (
   font-size: inherit;
   background: var(--md-admonition-bg-color--note);
   border: convert.px2rem(1px) solid var(--md-admonition-border-color--note);
-  border-width: 0;
-  border-left-width: 4px;
 
   > .admonition-title {
     &::before {
