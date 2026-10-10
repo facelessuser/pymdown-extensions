@@ -238,7 +238,7 @@ class SnippetPreprocessor(Preprocessor):
                         s_lines.append('')
                     return s_lines
 
-            except urllib.error.HTTPError as e:
+            except urllib.error.HTTPError as e:  # noqa: PERF203
                 # Handle rate limited error codes
                 if e.code == 429 and retries:
                     retries -= 1
