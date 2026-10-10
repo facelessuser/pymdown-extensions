@@ -400,7 +400,7 @@ to `#!py True` with some limitations.
 Captions allows for setting figures numbers for prefixes and IDs on the fly. This is mainly designed for use in "manual
 mode" ([`auto`](#global-options) set to `#!py False`). The idea was to provide a mode where the user has complete control of
 figure numbers if so desired. When in manual mode, the user will only get prefixes when specifying numbers in the header
-of figure types that specify a prefix template. Manual mode does not not check or validate these numbers beyond ensuring
+of figure types that specify a prefix template. Manual mode does not check or validate these numbers beyond ensuring
 they are in fact numbers that are formatted properly.
 
 ```text title="Manual Numbers"

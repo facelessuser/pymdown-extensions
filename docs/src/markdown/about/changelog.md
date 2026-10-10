@@ -12,7 +12,7 @@ icon: lucide/scroll-text
     or superscript is enabled and escape any that violates CommonMark rules.
 -   **NEW**: Highlight: Highlight now allows in the `auto_title_map` specifying the title as a simple string or a
     dictionary containing the title and the title mode: either `text` or `html`, with `text` being the default. This
-    allows a title title to be specified and treated as HTML when the mode is `html`.
+    allows a title to be specified and treated as HTML when the mode is `html`.
 -   **NEW**: SuperFences: Add new `title_mode` option for Pygments fenced blocks that allows a user to specify a title
     to be treated as HTML via `title_mode="html"`.
 
