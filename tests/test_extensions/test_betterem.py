@@ -1187,6 +1187,27 @@ class TestCommonMark(util.MdCase):
         )
 
 
+class TestNoPunctuationRules(util.MdCase):
+    """Test no punctuation rules."""
+
+    extension = [
+        'pymdownx.betterem'
+    ]
+    extension_configs = {
+        'pymdownx.betterem': {
+            'punctuation': False
+        }
+    }
+
+    def test_no_punct(self):
+        """Test no punctuation rules."""
+
+        self.check_markdown(
+            '**단어(설명)**입니다.',
+            '<p><strong>단어(설명)</strong>입니다.</p>'
+        )
+
+
 class TestBetterCached(util.MdCase):
     """Tests BetterEm with cached cases."""
 

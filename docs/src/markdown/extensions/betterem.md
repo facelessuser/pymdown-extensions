@@ -82,8 +82,14 @@ BetterEm will try to prioritize the more sane option when nesting bold (`**`) be
 **I'm bold. *I'm bold and italic.* I'm also just bold.**
 ///
 
+> [!new] 12.3 CommonMark Punctuation Control
+> 12.0 introduced a rewrite of emphasis handling which brought emphasis handling into alignment with CommonMark rules.
+> Because there may be some languages or some users that may prefer the previous punctuation rules, the ability to
+> disable CommonMark punctuation rules has been exposed via the [`punctuation`](#options) option.
+
 ## Options
 
-Option         | Type   | Default             | Description
--------------- | ------ | ------------------- | -----------
+Option         | Type   | Default              | Description
+-------------- | ------ | -------------------- | -----------
 `smart_enable` | string | `#!py3 'underscore'` | A string that specifies whether smart should be enabled for `all`, `asterisk`, `underscore`, or `none`.
+`punctuation`  | bool   | `#!py3 True`         | Enable/Disable CommonMark punctuation rules. Enabled by default.

@@ -33,7 +33,8 @@ class BetterEmExtension(Extension):
         """Initialize."""
 
         self.config = {
-            'smart_enable': ["underscore", "Treat connected words intelligently - Default: underscore"]
+            'smart_enable': ["underscore", "Treat connected words intelligently - Default: underscore"],
+            'punctuation': [True, "Force CommonMark punctuation rules when superscript is enabled - Default: True"]
         }
 
         super().__init__(*args, **kwargs)
@@ -58,6 +59,7 @@ class BetterEmExtension(Extension):
         enable_all = enabled == "all"
         enable_under = enabled == "underscore" or enable_all
         enable_star = enabled == "asterisk" or enable_all
+        punct = bool(config['punctuation'])
 
         # If we don't have to move an existing extension, use the same priority,
         # but if we do have to, move it closely to the relative needed position.
@@ -70,8 +72,8 @@ class BetterEmExtension(Extension):
         md.inlinePatterns.deregister('strong2', False)
         md.inlinePatterns.deregister('emphasis2', False)
 
-        delim_star = Delimiter('*', 'strong,em', smart=enable_star)
-        delim_under = Delimiter('_', 'strong,em', smart=enable_under)
+        delim_star = Delimiter('*', 'strong,em', smart=enable_star, punct=punct)
+        delim_under = Delimiter('_', 'strong,em', smart=enable_under, punct=punct)
 
         if (
             'delimiter' not in md.inlinePatterns or

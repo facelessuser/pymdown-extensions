@@ -3,6 +3,11 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 12.3
+
+-   **NEW**: BetterEm: Expose a way to disable CommonMark punctuation rules in BetterEm if desired via a new
+   `punctuation` option.
+
 ## 12.2
 
 -   **NEW**: Add official support for Python 3.15.
