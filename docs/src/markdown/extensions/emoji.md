@@ -58,7 +58,7 @@ behind, we may wait for JoyPixels to catch up.
 ///
 
 /// tab | Gemoji
-[Gemoji][gemoji] (<img align="absmiddle" alt=":smile:" class="gemoji" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" title=":smile:"/> <img align="absmiddle" alt=":heart:" class="gemoji"src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png" title=":heart:"/> <img align="absmiddle" alt=":+1:" class="gemoji" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44d.png" title=":+1:" />):
+[Gemoji][gemoji] (<img align="absmiddle" alt=":smile:" class="gemoji" src="https://github.githubassets.com/images/icons/emoji/unicode/1f604.png" title=":smile:"/> <img align="absmiddle" alt=":heart:" class="gemoji" src="https://github.githubassets.com/images/icons/emoji/unicode/2764.png" title=":heart:"/> <img align="absmiddle" alt=":+1:" class="gemoji" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44d.png" title=":+1:" />):
 Gemoji is GitHub's open source emoji solution. It contains a lot of common emoji and a couple special, non Unicode
 emoji (like Gemoji's `:octocat:` <img align="absmiddle" alt=":octocat:" class="gemoji" src="https://github.githubassets.com/images/icons/emoji/octocat.png" title=":octocat:" />).
 If you are a GitHub user, you are probably familiar with some of the short names associated with it. Their
