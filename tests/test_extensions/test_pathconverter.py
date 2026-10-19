@@ -50,6 +50,14 @@ class TestRelative(util.MdCase):
             r'<p><img alt="picture" src="test_extensions/_assets/bg.png" /></p>'
         )
 
+    def test_unquoted_attribute(self):
+        """Test that a tag with an unquoted attribute value is still converted."""
+
+        self.check_markdown(
+            r'<img alt="picture" src="../test_extensions/_assets/bg.png" width=100>',
+            r'<p><img alt="picture" src="test_extensions/_assets/bg.png" width=100></p>'
+        )
+
     def test_file_win_file_path_root(self):
         """Test windows file:// path with root slash."""
 
@@ -184,6 +192,14 @@ class TestAbsolute(util.MdCase):
             r'<p><img alt="picture" src="/Some/fake/path/test_extensions/_assets/bg.png" /></p>'
         )
 
+    def test_unquoted_attribute(self):
+        """Test that a tag with an unquoted attribute value is still converted."""
+
+        self.check_markdown(
+            r'<a href="./test_extensions/page.html" class=link>page</a>',
+            r'<p><a href="/Some/fake/path/test_extensions/page.html" class=link>page</a></p>'
+        )
+
     def test_file_win_file_path_root(self):
         """Test windows file:// path with root slash."""
 
@@ -292,6 +308,14 @@ class TestAbsoluteFileScheme(TestAbsolute):
         self.check_markdown(
             r'![picture](./test_extensions/_assets/bg.png)',
             r'<p><img alt="picture" src="file:///Some/fake/path/test_extensions/_assets/bg.png" /></p>'
+        )
+
+    def test_unquoted_attribute(self):
+        """Test that a tag with an unquoted attribute value is still converted."""
+
+        self.check_markdown(
+            r'<a href="./test_extensions/page.html" class=link>page</a>',
+            r'<p><a href="file:///Some/fake/path/test_extensions/page.html" class=link>page</a></p>'
         )
 
 
