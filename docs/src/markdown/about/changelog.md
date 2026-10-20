@@ -6,6 +6,7 @@ icon: lucide/scroll-text
 ## 12.3.1
 
 -   **FIX**: PathConverter, B64: Handle elements with unquoted attributes.
+-   **FIX**: Arithmatex: Fix `generic` mode output when `tex_inline_wrap` or `tex_block_wrap` contain braces.
 
 ## 12.3
 

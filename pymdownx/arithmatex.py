@@ -169,7 +169,7 @@ class InlineArithmatexPattern(InlineProcessor):
         self.generic = config.get('generic', False)
         wrap = config.get('tex_inline_wrap', ["\\(", "\\)"])
         self.wrap = (
-            wrap[0].replace('{', '}}').replace('}', '}}') + '{}' + wrap[1].replace('{', '}}').replace('}', '}}')
+            wrap[0].replace('{', '{{').replace('}', '}}') + '{}' + wrap[1].replace('{', '{{').replace('}', '}}')
         )
         self.inline_tag = config.get('inline_tag', 'span')
 
@@ -209,7 +209,7 @@ class BlockArithmatexProcessor(BlockProcessor):
         self.generic = config.get('generic', False)
         wrap = config.get('tex_block_wrap', ['\\[', '\\]'])
         self.wrap = (
-            wrap[0].replace('{', '}}').replace('}', '}}') + '{}' + wrap[1].replace('{', '}}').replace('}', '}}')
+            wrap[0].replace('{', '{{').replace('}', '}}') + '{}' + wrap[1].replace('{', '{{').replace('}', '}}')
         )
         self.block_tag = config.get('block_tag', 'div')
 
