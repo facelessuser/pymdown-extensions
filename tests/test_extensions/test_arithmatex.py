@@ -179,3 +179,43 @@ class TestArithmatexBlockEscapes(util.MdCase):
             ''',  # noqa: E501
             True
         )
+
+
+class TestArithmatexGenericWrap(util.MdCase):
+    """Test generic wraps that contain braces."""
+
+    extension = [
+        'pymdownx.arithmatex'
+    ]
+    extension_configs = {
+        'pymdownx.arithmatex': {
+            'generic': True,
+            'tex_inline_wrap': ['\\begin{math}', '\\end{math}'],
+            'tex_block_wrap': ['\\begin{equation}', '\\end{equation}']
+        }
+    }
+
+    def test_inline_wrap(self):
+        """Test inline wrap with braces."""
+
+        self.check_markdown(
+            "$1 + 2$",
+            r"""<p><span class="arithmatex">\begin{math}1 + 2\end{math}</span></p>"""
+        )
+
+    def test_block_wrap(self):
+        """Test block wrap with braces."""
+
+        self.check_markdown(
+            r"""
+            $$
+            1 + 2
+            $$
+            """,
+            r"""
+            <div class="arithmatex">\begin{equation}
+            1 + 2
+            \end{equation}</div>
+            """,
+            True
+        )
