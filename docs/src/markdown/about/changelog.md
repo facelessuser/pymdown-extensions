@@ -3,6 +3,10 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 12.3.1
+
+-   **FIX**: PathConverter, B64: Handle elements with unquoted attributes.
+
 ## 12.3
 
 -   **NEW**: BetterEm: Expose a way to disable CommonMark punctuation rules in BetterEm if desired via a new
