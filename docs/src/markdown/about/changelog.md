@@ -7,6 +7,7 @@ icon: lucide/scroll-text
 
 -   **FIX**: PathConverter, B64: Handle elements with unquoted attributes.
 -   **FIX**: Arithmatex: Fix `generic` mode output when `tex_inline_wrap` or `tex_block_wrap` contain braces.
+-   **FIX**: InlineHilite: Fix regression related to unmatched opening and closing.
 
 ## 12.3
 

@@ -110,6 +110,23 @@ class TestInlineHilite(util.MdCase):
             '</code></p>'
         )
 
+    def test_bigger_end(self):
+        """Test when end is bigger than end."""
+
+        # https://github.com/Python-Markdown/markdown/issues/1668
+        self.check_markdown(
+            'a ``` b ````` c',
+            '<p>a ``` b ````` c</p>'
+        )
+
+    def test_smaller_end(self):
+        """Test when end is smaller than start."""
+
+        self.check_markdown(
+            'a ``` b `` c',
+            '<p>a <code class="inlinehilite">` b</code> c</p>'
+        )
+
 
 class TestInlineHilitePlainText(util.MdCase):
     """Test inline highlight when not styling plain text."""

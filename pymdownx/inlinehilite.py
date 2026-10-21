@@ -166,7 +166,7 @@ class InlineHilitePattern(InlineProcessor):
                     value = self.md.htmlStash.store(value)
                 return value
 
-    def find_code_spans(self, start: int, text: str) -> tuple[int, int] | None:
+    def find_code_spans(self, start: int, text: str) -> tuple[int, int | None]:
         """Find code spans."""
 
         last = len(text)
@@ -176,10 +176,6 @@ class InlineHilitePattern(InlineProcessor):
         while start < last and text[start] == '`':
             max_ticks += 1
             start += 1
-
-        if not max_ticks:  # pragma: no cover
-            # This is not ever expected to happen.
-            return None
 
         longest_span = 0
         end = 0
@@ -207,11 +203,11 @@ class InlineHilitePattern(InlineProcessor):
 
         # Since we didn't find an exact matching start and end,
         # adjust start to match the largest end we could calculate.
-        if longest_span:
+        if 0 < longest_span < max_ticks:
             return start - (max_ticks - longest_span), end - longest_span
 
         # We could not find a suitable pairing
-        return None
+        return start + max_ticks, None
 
     def handleMatch(self, m, data):
         """Handle the pattern match."""
@@ -220,9 +216,8 @@ class InlineHilitePattern(InlineProcessor):
             return m.group(1).replace(DOUBLE_BSLASH, ESCAPED_BSLASH), m.start(0), m.end(0)
 
         begin = m.start(0)
-        result = self.find_code_spans(begin, data)
-        if result is not None:
-            start, end = result
+        start, end = self.find_code_spans(begin, data)
+        if end is not None:
             src = data[start:end]
             m2 = self.RE_LANG.match(src)
             lang = ''
@@ -231,12 +226,13 @@ class InlineHilitePattern(InlineProcessor):
                 src = src[m2.end('lang'):]
             self.get_settings()
             try:
-                return self.handle_code(lang, src.strip()), begin, result[1] + (start - begin)
+                return self.handle_code(lang, src.strip()), begin, end + (start - begin)
             except InlineHiliteException:
                 raise
             except Exception:
-                return m.group(0), None, None
-        return None, None, None
+                return m.group(0), begin, m.end(0)
+        # Skip over backtick group as we could find no match
+        return None, begin, start
 
 
 class InlineHiliteExtension(Extension):
