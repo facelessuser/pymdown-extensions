@@ -1,0 +1,4 @@
+Use ;--8<-- [end:api] to close a section.
+--8<-- [start:api]
+keep me
+--8<-- [end:api]

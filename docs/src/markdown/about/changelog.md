@@ -10,6 +10,7 @@ icon: lucide/scroll-text
 -   **FIX**: InlineHilite: Fix regression related to unmatched opening and closing.
 -   **FIX**: FancyLists: Keep `i` and `I` in alphabetical lists after a blank line.
 -   **FIX**: BracketSpan: Fix unwanted colon attributes with `{: ...}` syntax.
+-   **FIX**: Snippets: Fix escaped section markers starting or ending a section before its start.
 
 ## 12.3
 
