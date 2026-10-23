@@ -11,6 +11,7 @@ icon: lucide/scroll-text
 -   **FIX**: FancyLists: Keep `i` and `I` in alphabetical lists after a blank line.
 -   **FIX**: BracketSpan: Fix unwanted colon attributes with `{: ...}` syntax.
 -   **FIX**: Snippets: Fix escaped section markers starting or ending a section before its start.
+-   **FIX**: Quotes: Fix callouts in indented blockquotes.
 
 ## 12.3
 
