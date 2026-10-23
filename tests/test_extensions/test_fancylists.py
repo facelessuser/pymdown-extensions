@@ -398,6 +398,50 @@ class TestFancyLists(util.MdCase):
             True
         )
 
+    def test_alpha_i_after_blank_line(self):
+        """Test lowercase i after a blank line in an alphabetical list."""
+
+        self.check_markdown(
+            R'''
+            h. one
+
+            i. two
+            ''',
+            R'''
+            <ol start="8" type="a">
+            <li>
+            <p>one</p>
+            </li>
+            <li>
+            <p>two</p>
+            </li>
+            </ol>
+            ''',
+            True
+        )
+
+    def test_alpha_i_after_blank_line_upper(self):
+        """Test uppercase I after a blank line in an alphabetical list."""
+
+        self.check_markdown(
+            R'''
+            H.  one
+
+            I.  two
+            ''',
+            R'''
+            <ol start="8" type="A">
+            <li>
+            <p>one</p>
+            </li>
+            <li>
+            <p>two</p>
+            </li>
+            </ol>
+            ''',
+            True
+        )
+
     def test_bad_roman(self):
         """Test bad Roman numeral."""
 

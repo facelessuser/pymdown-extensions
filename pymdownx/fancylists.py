@@ -307,7 +307,10 @@ class FancyOListProcessor(BlockProcessor):
                 if (
                     self.alpha_enabled and (
                         not self.roman_enabled or (
-                            first and (not in_roman or ((list_type + 'roman') != fancy_type and value != 'i'))
+                            first and (
+                                not in_roman or (list_type + 'alpha') == fancy_type or
+                                ((list_type + 'roman') != fancy_type and value != 'i')
+                            )
                         )
                     )
                 ):
@@ -321,7 +324,10 @@ class FancyOListProcessor(BlockProcessor):
                 if (
                     self.alpha_enabled and (
                         not self.roman_enabled or (
-                            first and (not in_roman or ((list_type + 'ROMAN') != fancy_type and value != 'I'))
+                            first and (
+                                not in_roman or (list_type + 'ALPHA') == fancy_type or
+                                ((list_type + 'ROMAN') != fancy_type and value != 'I')
+                            )
                         )
                     )
                 ):
