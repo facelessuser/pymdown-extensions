@@ -20,7 +20,7 @@ class QuotesProcessor(BlockProcessor):
     """Process blockquotes."""
 
     RE = re.compile(r'(^|\n)[ ]{0,3}>[ ]?(.*)')
-    RE_CALLOUT = re.compile(r'> *\[!([\w-]+(?: *\| *[\w-]+)*)]([-+])?(.*?)(?:\n|$)')
+    RE_CALLOUT = re.compile(r'[ ]{0,3}> *\[!([\w-]+(?: *\| *[\w-]+)*)]([-+])?(.*?)(?:\n|$)')
 
     def __init__(self, parser: BlockParser, config: dict[str, Any]) -> None:
         """Initialize."""
