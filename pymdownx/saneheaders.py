@@ -10,7 +10,7 @@ import re
 from markdown import Extension
 from markdown.blockprocessors import HashHeaderProcessor
 
-RE_HEADER = re.compile(r'(?:^|\n)(?P<level>#{1,6})(?=[ ])(?P<header>(?:\\.|[^\\])*?)#*(?:\n|$)')
+RE_HEADER = re.compile(r'(?:^|\n)(?P<level>#{1,6})(?=[ ])(?P<header>(?:\\.|[^\\#]|#+(?=[^#\n]))*?)#*(?:\n|$)')
 
 
 class SaneHeadersProcessor(HashHeaderProcessor):
