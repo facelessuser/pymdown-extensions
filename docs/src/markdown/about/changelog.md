@@ -9,6 +9,7 @@ icon: lucide/scroll-text
 -   **FIX**: Arithmatex: Fix `generic` mode output when `tex_inline_wrap` or `tex_block_wrap` contain braces.
 -   **FIX**: InlineHilite: Fix regression related to unmatched opening and closing.
 -   **FIX**: FancyLists: Keep `i` and `I` in alphabetical lists after a blank line.
+-   **FIX**: BracketSpan: Fix unwanted colon attributes with `{: ...}` syntax.
 
 ## 12.3
 

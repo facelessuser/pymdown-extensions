@@ -47,6 +47,25 @@ class TestBracketSpan(util.MdCase):
             True
         )
 
+    def test_bracketspan_colon_attributes(self):
+        """Test attributes with a leading colon."""
+
+        self.check_markdown(
+            R'''
+            [text]{: .cls}
+
+            [text]{:.cls}
+
+            [a [b]{: .x} c]{: #y}
+            ''',
+            '''
+            <p><span class="cls">text</span></p>
+            <p><span class="cls">text</span></p>
+            <p><span id="y">a <span class="x">b</span> c</span></p>
+            ''',
+            True
+        )
+
 
 class TestBracketSpanNoAttrList(util.MdCase):
     """Test BracketSpan with no `attr_list`."""

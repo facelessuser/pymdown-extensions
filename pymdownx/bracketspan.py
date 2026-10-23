@@ -149,7 +149,7 @@ class BracketSpanProcessor(InlineProcessor):
                 if m2:
 
                     current = self.stack.pop()
-                    span, r_offset = self.build_element(data, i, current, m2.group(0)[1:-1])
+                    span, r_offset = self.build_element(data, i, current, m2.group(1) or '')
 
                     # Store the span
                     if self.stack:
