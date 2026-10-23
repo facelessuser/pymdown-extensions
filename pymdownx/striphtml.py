@@ -102,7 +102,7 @@ class StripHtmlPostprocessor(Postprocessor):
     def run(self, text):
         """Strip out ids and classes for a simplified HTML output."""
 
-        strip = self.strip_comments or self.strip_js_on_attributes or self.re_attributes
+        strip = self.strip_comments or self.re_attributes
         return RE_TAG_HTML.sub(self.repl, text) if strip else text
 
 
