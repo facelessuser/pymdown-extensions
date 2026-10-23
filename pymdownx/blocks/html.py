@@ -8,19 +8,22 @@ import re
 # Whitespace
 WS = r'(?:[ \t])'
 # CSS escapes
-CSS_ESCAPES = fr'(?:\\(?:[a-f0-9]{{1,6}}{WS}?|[^\r\n\f]|$))'
+CSS_ESCAPES = fr'(?:\\(?:[a-f0-9]{{1,6}}{WS}?+|[^\r\n\f]|$))'
 # CSS Identifier
-IDENTIFIER = r'''
-(?:(?:--|-?[^\x00-\x2f\x30-\x40\x5B-\x5E\x60\x7B-\x9f])
-[^\x00-\x2c\x2e\x2f\x3A-\x40\x5B-\x5E\x60\x7B-\x9f]*)
+IDENT_START = r'[A-Za-z_\x80-\U0010ffff]'
+IDENT_CHAR = r'[-0-9A-Za-z_\x80-\U0010ffff]'
+# CSS Identifier
+IDENTIFIER = fr'''
+(?:(?:--|-?+(?:{IDENT_START}|{CSS_ESCAPES}))
+(?:{IDENT_CHAR}|{CSS_ESCAPES})*+)
 '''
 # Value: quoted string or identifier
 VALUE = fr'''
-(?:"(?:\\.|[^\\"\r\n\f])*?"|'(?:\\.|[^\\'\r\n\f])*?'|{IDENTIFIER}+)
+(?:"(?:\\.|[^\\"\r\n\f])*+"|'(?:\\.|[^\\'\r\n\f])*+'|{IDENTIFIER}++)
 '''
 # Attribute value comparison.
 ATTR = fr'''
-(?:{WS}*(?P<cmp>=){WS}*(?P<value>{VALUE}))?
+(?:{WS}*+(?P<cmp>=){WS}*+(?P<value>{VALUE}))?+
 '''
 # Selector patterns
 # IDs (`#id`)
@@ -28,15 +31,15 @@ PAT_ID = fr'\#{IDENTIFIER}'
 # Classes (`.class`)
 PAT_CLASS = fr'\.{IDENTIFIER}'
 # Attributes (`[attr]`, `[attr=value]`, etc.)
-PAT_ATTR_OPEN = fr'\[{WS}*'
-PAT_ATTR_CLOSE = fr'{WS}*\]'
+PAT_ATTR_OPEN = fr'\[{WS}*+'
+PAT_ATTR_CLOSE = fr'{WS}*+\]'
 
 RE_IDENT = re.compile(IDENTIFIER, flags=re.I | re.X)
 RE_ID = re.compile(PAT_ID, flags=re.I | re.X)
 RE_CLASS = re.compile(PAT_CLASS, flags=re.I | re.X)
 RE_ATTR_OPEN = re.compile(PAT_ATTR_OPEN)
 RE_ATTR_CLOSE = re.compile(PAT_ATTR_CLOSE)
-RE_ATTR = re.compile(fr'{WS}*(?P<attr_name>{IDENTIFIER}){ATTR}', flags=re.I | re.X)
+RE_ATTR = re.compile(fr'{WS}*+(?P<attr_name>{IDENTIFIER}){ATTR}', flags=re.I | re.X)
 
 ATTRIBUTES = {'id': RE_ID, 'class': RE_CLASS, 'attr': RE_ATTR_OPEN}
 VALID_MODES = {'auto', 'inline', 'block', 'raw', 'html'}

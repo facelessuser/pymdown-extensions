@@ -3,14 +3,17 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
-## 12.3.1
+## 12.4
 
+-   **NEW**: Drop Python 3.10 and require Python >= 3.11.5 as possessive quantifiers are broken on lower versions.
 -   **FIX**: PathConverter, B64: Handle elements with unquoted attributes.
 -   **FIX**: Arithmatex: Fix `generic` mode output when `tex_inline_wrap` or `tex_block_wrap` contain braces.
 -   **FIX**: InlineHilite: Fix regression related to unmatched opening and closing.
 -   **FIX**: FancyLists: Keep `i` and `I` in alphabetical lists after a blank line.
 -   **FIX**: BracketSpan: Fix unwanted colon attributes with `{: ...}` syntax.
 -   **FIX**: Quotes: Fix callouts in indented blockquotes.
+-   **FIX**: Details, Admonitions, SaneHeaders: Improve performance of header patterns.
+-   **FIX**: Blocks.HTML: Improve performance of HTML patterns.
 
 ## 12.3
 
