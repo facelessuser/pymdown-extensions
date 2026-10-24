@@ -11,6 +11,7 @@ icon: lucide/scroll-text
 -   **FIX**: InlineHilite: Fix regression related to unmatched opening and closing.
 -   **FIX**: FancyLists: Keep `i` and `I` in alphabetical lists after a blank line.
 -   **FIX**: BracketSpan: Fix unwanted colon attributes with `{: ...}` syntax.
+-   **FIX**: StripHTML: Fix crash when `strip_comments` is disabled.
 -   **FIX**: Quotes: Fix callouts in indented blockquotes.
 -   **FIX**: Details, Admonitions, SaneHeaders: Improve performance of header patterns.
 -   **FIX**: Blocks.HTML: Improve performance of HTML patterns.
