@@ -47,3 +47,31 @@ class TestStripHTML(util.MdCase):
             ''',
             True
         )
+
+
+class TestStripHTMLKeepComments(util.MdCase):
+    """Test stripping with comments preserved."""
+
+    extension = ['pymdownx.striphtml']
+    extension_configs = {
+        'pymdownx.striphtml': {
+            'strip_comments': False
+        }
+    }
+
+    def test_keep_comments(self):
+        """Test that comments are kept and `on*` attributes are still stripped."""
+
+        self.check_markdown(
+            r'''
+            <!-- comment -->
+
+            <div onclick="alert()">text</div>
+            ''',
+            r'''
+            <!-- comment -->
+
+            <div>text</div>
+            ''',
+            True
+        )

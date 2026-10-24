@@ -6,7 +6,7 @@ from ..saneheaders import RE_HEADER, SaneHeadersProcessor
 import re
 
 RE_SEP = re.compile(r'[_-]+')
-RE_NORMAL_HEADING = re.compile(r'^(?P<level>#{1,6})(?P<header>(?:\\.|[^\\])*?)#*$')
+RE_NORMAL_HEADING = re.compile(r'^(?P<level>#{1,6})(?P<header>(?:\\.|[^\\]|#+(?=[^#\n]))*?)#*$')
 
 
 class Admonition(Block):
