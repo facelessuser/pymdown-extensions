@@ -626,6 +626,32 @@ class TestSnippets(util.MdCase):
             True
         )
 
+    def test_section_escaped_end_before_start(self):
+        """Test an escaped end before the section start."""
+
+        self.check_markdown(
+            R'''
+            --8<-- "section_escaped_end_first.txt:api"
+            ''',
+            '''
+            <p>keep me</p>
+            ''',
+            True
+        )
+
+    def test_section_escaped_start_before_start(self):
+        """Test an escaped start before the section start."""
+
+        self.check_markdown(
+            R'''
+            --8<-- "section_escaped_start_first.txt:api"
+            ''',
+            '''
+            <p>keep me</p>
+            ''',
+            True
+        )
+
     def test_section_no_end(self):
         """Test section when the end is not specified."""
 

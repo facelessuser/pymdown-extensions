@@ -1,0 +1,5 @@
+Open with ;--8<-- [start:api]
+lead-in
+--8<-- [start:api]
+keep me
+--8<-- [end:api]
