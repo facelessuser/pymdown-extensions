@@ -27,7 +27,7 @@ from .saneheaders import RE_HEADER, SaneHeadersProcessor
 import xml.etree.ElementTree as etree
 import re
 
-RE_NORMAL_HEADING = re.compile(r'^(?P<level>#{1,6})(?P<header>(?:\\.|[^\\])*?)#*$')
+RE_NORMAL_HEADING = re.compile(r'^(?P<level>#{1,6})(?P<header>(?:\\.|[^\\]|#+(?=[^#\n]))*?)#*$')
 
 
 class DetailsProcessor(BlockProcessor):

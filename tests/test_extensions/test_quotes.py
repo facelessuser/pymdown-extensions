@@ -71,6 +71,23 @@ class TestQuotes(util.MdCase):
             True
         )
 
+    def test_indented_callout(self):
+        """Recognize callouts at every indentation accepted for blockquotes."""
+
+        for indent in (' ', '  ', '   '):
+            for suffix in ('', '+', '-'):
+                with self.subTest(indent=len(indent), suffix=suffix):
+                    source = indent + '> [!note]' + suffix + '\n' + indent + '> Content'
+                    if suffix:
+                        opening = '<details class="note"' + (' open="open"' if suffix == '+' else '') + '>'
+                        expected = opening + '\n<summary>Note</summary>\n<p>Content</p>\n</details>'
+                    else:
+                        expected = (
+                            '<div class="admonition note">\n'
+                            '<p class="admonition-title">Note</p>\n<p>Content</p>\n</div>'
+                        )
+                    self.check_markdown(source, expected)
+
     def test_callout_case(self):
         """Test callout class case insensitive."""
 
