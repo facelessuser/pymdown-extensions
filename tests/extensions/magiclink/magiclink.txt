@@ -45,6 +45,12 @@ http://localhost/website
 
 http://3628126748
 
+(see http://foo.com/blah_blah)
+
+(see http://foo.com/blah_(wikipedia))
+
+www.example.com/blah_(wikipedia_(again))
+
 # Should Fail
 
 http://

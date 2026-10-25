@@ -15,6 +15,7 @@ icon: lucide/scroll-text
 -   **FIX**: Quotes: Fix callouts in indented blockquotes.
 -   **FIX**: Details, Admonitions, SaneHeaders: Improve performance of header patterns.
 -   **FIX**: Blocks.HTML: Improve performance of HTML patterns.
+-   **FIX**: MagicLink: Fix URLs with balanced parentheses losing their closing parenthesis.
 
 ## 12.3
 

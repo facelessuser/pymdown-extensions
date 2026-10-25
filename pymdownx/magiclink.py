@@ -842,12 +842,21 @@ class MagiclinkPattern(LinkInlineProcessor):
     def handleMatch(self, m, data):
         """Handle URL matches."""
 
+        link = m.group('link')
+        end = m.end(0)
+        # Keep a closing parenthesis that matches an opening one in the link
+        unclosed = link.count('(') - link.count(')')
+        while unclosed > 0 and data.startswith(')', end):
+            unclosed -= 1
+            end += 1
+        link = data[m.start(0):end]
+
         el = etree.Element("a")
-        el.text = md_util.AtomicString(m.group('link'))
+        el.text = md_util.AtomicString(link)
         if m.group("www"):
-            href = "http://{}".format(m.group('link'))
+            href = "http://{}".format(link)
         else:
-            href = m.group('link')
+            href = link
             if self.config['hide_protocol']:
                 el.text = md_util.AtomicString(el.text[el.text.find("://") + 3:])
         el.set("href", self.unescape(href.strip()))
@@ -855,7 +864,7 @@ class MagiclinkPattern(LinkInlineProcessor):
         if self.config.get('repo_url_shortener', False):
             el.set('magiclink', str(MAGIC_LINK))
 
-        return el, m.start(0), m.end(0)
+        return el, m.start(0), end
 
 
 class MagiclinkAutoPattern(InlineProcessor):
