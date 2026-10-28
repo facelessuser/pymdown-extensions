@@ -4,6 +4,38 @@ import markdown
 import warnings
 
 
+class TestMagicLink(util.MdCase):
+    """Test cases for direct links."""
+
+    extension = [
+        'pymdownx.magiclink'
+    ]
+
+    def test_unmatched_closing_parenthesis(self):
+        """Keep an unmatched closing parenthesis outside the link."""
+
+        self.check_markdown(
+            '(see http://foo.com/blah_blah)',
+            '<p>(see <a href="http://foo.com/blah_blah">http://foo.com/blah_blah</a>)</p>'
+        )
+
+    def test_balanced_parentheses(self):
+        """Keep a matching closing parenthesis in the link."""
+
+        self.check_markdown(
+            '(see http://foo.com/blah_(wikipedia))',
+            '<p>(see <a href="http://foo.com/blah_(wikipedia)">http://foo.com/blah_(wikipedia)</a>)</p>'
+        )
+
+    def test_nested_parentheses(self):
+        """Keep nested matching parentheses in a domain link."""
+
+        self.check_markdown(
+            'www.example.com/blah_(wikipedia_(again))',
+            '<p><a href="http://www.example.com/blah_(wikipedia_(again))">www.example.com/blah_(wikipedia_(again))</a></p>'
+        )
+
+
 class TestMagicLinkShortner(util.MdCase):
     """Test cases for repo link shortening."""
 
