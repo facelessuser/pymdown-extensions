@@ -28,7 +28,7 @@ class TestMagicLink(util.MdCase):
         )
 
     def test_nested_parentheses(self):
-        """Keep nested matching parentheses in a www link."""
+        """Keep nested matching parentheses in a domain link."""
 
         self.check_markdown(
             'www.example.com/blah_(wikipedia_(again))',
