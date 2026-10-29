@@ -239,6 +239,7 @@ class SnippetPreprocessor(Preprocessor):
                     return s_lines
 
             except urllib.error.HTTPError as e:
+                e.close()
                 # Handle rate limited error codes
                 if e.code == 429 and retries:
                     retries -= 1
