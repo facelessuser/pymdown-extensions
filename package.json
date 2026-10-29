@@ -27,7 +27,7 @@
     "@mdi/svg": "^7.4.47",
     "@primer/octicons": "^19.40.0",
     "@rollup/plugin-babel": "^7.1.0",
-    "@rollup/plugin-terser": "^1.0.0",
+    "@rollup/plugin-terser": "^1.0.2",
     "autoprefixer": "^10.6.1",
     "babel-core": "^7.0.0-bridge.0",
     "del": "^9.0.1",
