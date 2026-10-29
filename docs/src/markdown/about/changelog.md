@@ -17,6 +17,7 @@ icon: lucide/scroll-text
 -   **FIX**: Details, Admonitions, SaneHeaders: Improve performance of header patterns.
 -   **FIX**: Blocks.HTML: Improve performance of HTML patterns.
 -   **FIX**: MagicLink: Fix URLs with balanced parentheses losing their closing parenthesis.
+-   **FIX**: ProgressBar: Fix crash on malformed `100` percent values like `[=100,0%]`.
 
 ## 12.3
 
