@@ -2,8 +2,10 @@
 from .. import util
 import os
 from pymdownx.snippets import SnippetMissingError
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch, MagicMock, call
 import urllib.error
+import io
+from http.client import HTTPResponse
 
 BASE = os.path.abspath(os.path.dirname(__file__))
 
@@ -1538,3 +1540,95 @@ class TestURLSnippetsRetryCustomRetries(util.MdCase):
 
         mock_sleep.assert_any_call(2)
         mock_sleep.assert_any_call(4)
+
+
+class TestURLSnippetsErrorCleanup(util.MdCase):
+    """Test cleanup of real HTTP responses attached to download errors."""
+
+    extension = ['pymdownx.snippets']
+    extension_configs = {
+        'pymdownx.snippets': {
+            'url_download': True,
+            'check_paths': True,
+            'max_retries': 2
+        }
+    }
+
+    def make_response(self, status, body=b'error body'):
+        """Create a real HTTP response with an in-memory HTTP message."""
+
+        wire = (
+            f'HTTP/1.1 {status} Response\r\n'
+            f'Content-Length: {len(body)}\r\n'
+            'X-Snippet: original\r\n\r\n'
+        ).encode('ascii') + body
+        sock = MagicMock()
+        sock.makefile.return_value = io.BytesIO(wire)
+        response = HTTPResponse(sock)
+        response.begin()
+        self.addCleanup(response.close)
+        return response
+
+    def make_error(self, status):
+        """Create a real HTTP error owning an unread HTTP response."""
+
+        response = self.make_response(status)
+        return urllib.error.HTTPError(
+            'http://example.com/snippet', status, response.reason, response.headers, response
+        )
+
+    @patch('urllib.request.urlopen')
+    def test_error_cause_closed(self, mock_urlopen):
+        """Keep diagnostic metadata without retaining an open response body."""
+
+        error = self.make_error(404)
+        mock_urlopen.side_effect = error
+
+        with self.assertRaises(SnippetMissingError) as caught:
+            self.md.convert('--8<-- "http://example.com/snippet"')
+
+        self.assertIs(caught.exception.__cause__, error)
+        self.assertEqual(error.code, 404)
+        self.assertEqual(error.geturl(), 'http://example.com/snippet')
+        self.assertEqual(error.headers['X-Snippet'], 'original')
+        self.assertIn('HTTP Error 404', str(caught.exception))
+        self.assertTrue(error.fp.closed)
+        mock_urlopen.assert_called_once()
+
+    @patch('urllib.request.urlopen')
+    @patch('time.sleep')
+    def test_retry_closed_before_backoff(self, mock_sleep, mock_urlopen):
+        """Close rate-limited responses before backoff and a successful retry."""
+
+        errors = [self.make_error(429), self.make_error(429)]
+        response = self.make_response(200, b'contents\n')
+        mock_urlopen.side_effect = [*errors, response]
+        delays = []
+
+        def check_closed(delay):
+            self.assertTrue(errors[len(delays)].fp.closed)
+            delays.append(delay)
+
+        mock_sleep.side_effect = check_closed
+        self.check_markdown('--8<-- "http://example.com/snippet"', '<p>contents</p>')
+        self.assertEqual(delays, [2, 4])
+        self.assertEqual(mock_urlopen.call_count, 3)
+        self.assertTrue(response.closed)
+
+    @patch('urllib.request.urlopen')
+    @patch('time.sleep')
+    def test_exhausted_retry_cause_closed(self, mock_sleep, mock_urlopen):
+        """Close the final rate-limited response while preserving its cause."""
+
+        errors = [self.make_error(429) for _ in range(3)]
+        mock_urlopen.side_effect = errors
+
+        with self.assertRaises(SnippetMissingError) as caught:
+            self.md.convert('--8<-- "http://example.com/snippet"')
+
+        self.assertIs(caught.exception.__cause__, errors[-1])
+        self.assertEqual(caught.exception.__cause__.code, 429)
+        self.assertIn('HTTP Error 429', str(caught.exception))
+        self.assertTrue(all(error.fp.closed for error in errors))
+        self.assertEqual(mock_urlopen.call_count, 3)
+        self.assertEqual(mock_sleep.call_args_list, [call(2), call(4)])
