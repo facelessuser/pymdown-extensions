@@ -115,7 +115,7 @@ from . import util
 RE_PROGRESS = r'''(?x)
 \[={1,}\s*                                                          # Opening
 (?:
-  (?P<percent>100(?:.0+)?|[1-9]?[0-9](?:\.\d+)?)% |                 # Percent
+  (?P<percent>100(?:\.0+)?|[1-9]?[0-9](?:\.\d+)?)% |                # Percent
   (?:(?P<frac_num>\d+(?:\.\d+)?)\s*/\s*(?P<frac_den>\d+(?:\.\d+)?)) # Fraction
 )
 (?P<title>\s+(?P<quote>['"]).*?(?P=quote))?\s*                      # Title
