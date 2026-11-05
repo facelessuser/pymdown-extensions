@@ -275,6 +275,7 @@ tooltips
 tox
 uc
 un
+unclosed
 unescaped
 unescaping
 unicode

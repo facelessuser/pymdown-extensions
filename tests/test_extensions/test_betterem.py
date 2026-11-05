@@ -1296,6 +1296,38 @@ class TestNoPunctuationRules(util.MdCase):
             '<p><strong>단어(설명)</strong>입니다.</p>'
         )
 
+    def test_ambiguous_closer_skips_rejected_opener(self):
+        """Test that an ambiguous closer can skip an opener rejected by the rule of 3."""
+
+        self.check_markdown(
+            '__a "_b"__: x',
+            '<p><strong>a "_b"</strong>: x</p>'
+        )
+
+    def test_attribute_list_like_content(self):
+        """Test the rule of 3 with a link followed by attribute list like content."""
+
+        self.check_markdown(
+            '__[A](u){target="_blank"}__: x',
+            '<p><strong><a href="u">A</a>{target="_blank"}</strong>: x</p>'
+        )
+
+    def test_remainder_classified_by_original_context(self):
+        """Test that the unused part of a closing run is classified by what preceded the run."""
+
+        self.check_markdown(
+            '_a__"__"_: x',
+            '<p><em>a</em>_"__"_: x</p>'
+        )
+
+    def test_placeholder_treated_as_punctuation(self):
+        """Test that a placeholder from a different delimiter is still treated as punctuation."""
+
+        self.check_markdown(
+            '*test*_"test"_',
+            '<p><em>test</em><em>"test"</em></p>'
+        )
+
 
 class TestBetterCached(util.MdCase):
     """Tests BetterEm with cached cases."""

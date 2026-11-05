@@ -298,6 +298,8 @@ class DelimiterProcessor(InlineProcessor):
         self.cache_legacy_pos = -1
         self.contains_space = [-1, -1]
         self.contains_non_space = [-1, -1]
+        # Info about the unused part of a closing delimiter run that directly follows the last returned element
+        self.remainder: tuple[str, str] | None = None
         self.md = md
         # API for Markdown to pass `safe_mode` into instance
         self.safe_mode = False
@@ -338,6 +340,7 @@ class DelimiterProcessor(InlineProcessor):
         self.cache_legacy_pos = -1
         self.contains_space = [-1, -1]
         self.contains_non_space = [-1, -1]
+        self.remainder = None
 
     def _build_element(
         self,
@@ -476,10 +479,10 @@ class DelimiterProcessor(InlineProcessor):
         # End should be the character position.
         e -= 1
         p1, p2 = self.contains_space
-        if max(s, p1) <= min(e, p2):
+        if max(s, p1) <= min(e, p2):  # pragma: no cover
             if p1 == -1 or s < p1:
                 self.contains_space[0] = s
-            if p2 == -1 or e > p2:  # pragma: no cover
+            if p2 == -1 or e > p2:
                 self.contains_space[1] = e
             return True
         p3, p4 = self.contains_non_space
@@ -573,6 +576,30 @@ class DelimiterProcessor(InlineProcessor):
     ) -> tuple[etree.Element | None, int | None, int | None]:
         """Parse delimiter pattern."""
 
+        remainder = self.remainder
+        self.remainder = None
+        el, start, end = self._handle_match(m, data, remainder)
+
+        # If the element did not consume the entire closing delimiter run, the rest of the run directly follows
+        # the placeholder that will replace the element. The placeholder will hide what preceded the run, which
+        # is needed to correctly classify the rest of the run, so save it for the next match.
+        if el is not None and end is not None and end < len(data) and data[end] == data[end - 1]:
+            run = end - 1
+            while run > 0 and data[run - 1] == data[end]:
+                run -= 1
+            if run > 0:
+                self.remainder = (data[end], data[run - 1])
+
+        return el, start, end
+
+    def _handle_match(
+        self,
+        m: re.Match[str],
+        data: str,
+        remainder: tuple[str, str] | None
+    ) -> tuple[etree.Element | None, int | None, int | None]:
+        """Parse delimiter pattern."""
+
         # TODO: Remove when Python Markdown > 3.10.3 releases.
         if not MD_FAST and self.cache_legacy_pos > -1 and m.end(0) < self.cache_legacy_pos:
             return None, m.start(0), self.cache_legacy_pos
@@ -583,7 +610,14 @@ class DelimiterProcessor(InlineProcessor):
             return self.get_cached_result(m.start(0), data)
 
         # If token is not an opening, quit
-        m2 = self.get_match(data, m.start(0))
+        # If this is the rest of a closing run that was partially consumed, the placeholder directly before it is
+        # treated as punctuation by the patterns, but the run should be classified by what actually preceded it.
+        text = data
+        pos = m.start(0)
+        if remainder is not None and pos and data[pos - 1] == '\x03' and data[pos] == remainder[0]:
+            text = f'{data[:pos - 1]}{remainder[1]}{data[pos:]}'
+
+        m2 = self.get_match(text, pos)
         if m2 is None or m2.lastgroup[0] == 'e':  # type: ignore[index]
             if m2 is None:
                 delim = self.delimiters[m.group(0)]

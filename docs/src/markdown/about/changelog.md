@@ -20,6 +20,8 @@ icon: lucide/scroll-text
 -   **FIX**: ProgressBar: Fix crash on malformed `100` percent values like `[=100,0%]`.
 -   **FIX**: BetterEm, Tilde, Caret, Mark: Apply the CommonMark "rule of 3" so an ambiguous closing delimiter can skip
     an incompatible opener and pair with an earlier one, e.g. `__[A](u){target="_blank"}__: x`.
+-   **FIX**: BetterEm, Tilde, Caret, Mark: Better handling of Python Markdown placeholders when when evaluating
+    CommonMark punctuation rules.
 
 ## 12.3
 
