@@ -358,7 +358,7 @@ class TestCaretNoSmart(util.MdCase):
 
         self.check_markdown(
             R"^^^a^^b^^c ^ d^^",
-            "<p>^<ins>a</ins>b<ins>c ^ d</ins></p>"
+            "<p><sup><ins>a</ins>b</sup>^c ^ d^^</p>"
         )
 
     def test_case13(self):

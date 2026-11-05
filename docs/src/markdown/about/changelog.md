@@ -18,6 +18,8 @@ icon: lucide/scroll-text
 -   **FIX**: Blocks.HTML: Improve performance of HTML patterns.
 -   **FIX**: MagicLink: Fix URLs with balanced parentheses losing their closing parenthesis.
 -   **FIX**: ProgressBar: Fix crash on malformed `100` percent values like `[=100,0%]`.
+-   **FIX**: BetterEm, Tilde, Caret, Mark: Apply the CommonMark "rule of 3" so an ambiguous closing delimiter can skip
+    an incompatible opener and pair with an earlier one, e.g. `__[A](u){target="_blank"}__: x`.
 
 ## 12.3
 

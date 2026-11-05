@@ -367,7 +367,7 @@ class TestTildeNoSmart(util.MdCase):
 
         self.check_markdown(
             R"~~~a~~b~~c ~ d~~",
-            "<p>~<del>a</del>b<del>c ~ d</del></p>"
+            "<p><sub><del>a</del>b</sub>~c ~ d~~</p>"
         )
 
     def test_case13(self):
