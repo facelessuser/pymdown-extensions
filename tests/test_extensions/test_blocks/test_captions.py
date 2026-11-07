@@ -1264,6 +1264,31 @@ class TestBlocksCaptionAutoPrefix(util.MdCase):
             True
         )
 
+    def test_caption_inside_untyped_figure(self):
+        """Test a numbered caption nested in a figure not created by the caption block."""
+
+        self.check_markdown(
+            R"""
+            <figure markdown>
+            Some text.
+            /// figure-caption
+            Caption.
+            ///
+            </figure>
+            """,
+            R"""
+            <figure>
+            <figure id="__figure-caption_1">
+            <p>Some text.</p>
+            <figcaption>
+            <p><span class="caption-prefix">Figure 1.</span> Caption.</p>
+            </figcaption>
+            </figure>
+            </figure>
+            """,
+            True
+        )
+
     def test_inject_new_p_in_caption(self):
         """Test `auto` cases that require the prefix to be injected in a new paragraph."""
 
