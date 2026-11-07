@@ -20,14 +20,10 @@ To Mark some text, simply surround the text with double `=`.
 
 ```text title="Marking"
 ==mark me==
-
-==smart==mark==
 ```
 
 /// html | div.result
 ==mark me==
-
-==smart==mark==
 ///
 
 The Mark extension can be included in Python Markdown by using the following:
