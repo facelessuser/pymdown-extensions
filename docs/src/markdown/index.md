@@ -3,18 +3,6 @@ icon: lucide/house
 ---
 # PyMdown Extensions
 
-<div>
-\(3 + 3\)
-
-$$
-3 + 3
-$$
-</div>
-
-$$
-</script><img src=x onerror=alert(document.domain)>
-$$
-
 ## Overview
 
 PyMdown Extensions is a collection of extensions for Python Markdown. They were originally written to make writing
