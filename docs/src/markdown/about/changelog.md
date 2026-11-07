@@ -12,6 +12,10 @@ icon: lucide/scroll-text
     unintended behavior. Guidance on configuration for non-generic mode has been updated in the documentation.
 -   **NEW**: Require at least Python Markdown 3.10.3 for performance improvements.
 -   **NEW**: Drop Python 3.10 and require Python >= 3.11.5 as possessive quantifiers are broken on lower versions.
+-   **NEW**: MagicLink: Bare `http://`, `https://`, and `www.` links now follow GFM's extended autolink rules for what
+    is considered the end of a link (trailing punctuation, entities, unbalanced `)` and `]`) and what a link can follow.
+    Links no longer start after arbitrary punctuation (quotes are still allowed), and `http://host` style links with a
+    short host are allowed.
 -   **FIX**: Critic: Fix quadratic (and cubic for substitutions) time complexity when parsing a large number of unclosed
     CriticMarkup openers by replacing the regular expression with a linear time scanner.
 -   **FIX**: PathConverter, B64: Handle elements with unquoted attributes.
@@ -24,10 +28,6 @@ icon: lucide/scroll-text
 -   **FIX**: Quotes: Fix callouts in indented blockquotes.
 -   **FIX**: Details, Admonitions, SaneHeaders: Improve performance of header patterns.
 -   **FIX**: Blocks.HTML: Improve performance of HTML patterns.
--   **NEW**: MagicLink: Bare `http://`, `https://`, and `www.` links now follow GFM's extended autolink rules for what
-    is considered the end of a link (trailing punctuation, entities, unbalanced `)` and `]`) and what a link can follow.
-    Links no longer start after arbitrary punctuation (quotes are still allowed), and `http://host` style links with a
-    short host are allowed.
 -   **FIX**: MagicLink: Fix URLs with balanced parentheses or brackets losing their closing character.
 -   **FIX**: MagicLink: Improve performance of link and email patterns by removing excessive backtracking.
 -   **FIX**: ProgressBar: Fix crash on malformed `100` percent values like `[=100,0%]`.
