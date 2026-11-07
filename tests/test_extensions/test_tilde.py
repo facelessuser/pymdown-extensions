@@ -731,6 +731,65 @@ class TestTildeMixed(util.MdCase):
         )
 
 
+class TestTildeMixedNoDelete(util.MdCase):
+    """Test mixed with emphasis when only subscript is enabled."""
+
+    extension = [
+        'pymdownx.tilde',
+        'pymdownx.betterem'
+    ]
+    extension_configs = {
+        "pymdownx.tilde": {
+            "delete": False
+        }
+    }
+
+    def test_sub_in_emphasis(self):
+        """Test that a subscript can start inside emphasis."""
+
+        self.check_markdown(
+            """
+            *a ~b~*
+
+            **a ~b~ c**
+
+            _a ~b c~_
+            """,
+            """
+            <p><em>a <sub>b</sub></em></p>
+            <p><strong>a <sub>b</sub> c</strong></p>
+            <p><em>a ~b c~</em></p>
+            """,
+            True
+        )
+
+
+class TestTildeMixedUnusable(util.MdCase):
+    """Test that unusable delimiters inside a region do not affect later delimiters."""
+
+    extension = [
+        'pymdownx.tilde',
+        'pymdownx.betterem'
+    ]
+    extension_configs = {}
+
+    def test_unusable_inside_region(self):
+        """Test that a delimiter dropped by another delimiter's region is no longer tracked."""
+
+        self.check_markdown(
+            """
+            _*~*~.
+
+            ~~)_~b_) ~*)^(.~~ba.
+            """,
+            """
+            <p>_<em>~</em>~.</p>
+            <p><del>)<em>~b</em>) ~*)^(.</del>ba.</p>
+            """,
+            True
+        )
+
+
 class TestNoPunctuationRules(util.MdCase):
     """Test no punctuation rules."""
 

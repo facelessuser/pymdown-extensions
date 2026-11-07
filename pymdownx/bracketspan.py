@@ -36,16 +36,21 @@ class BracketSpanProcessor(InlineProcessor):
         While getting next entry, flag the first match of `[` we encounter.
         We use this to correct our offset so we can jump to, and process the
         next entry without having to iterate all bad matches in between.
+
+        `cache_pos` is expected to hold the end of the last span returned.
         """
 
         span = None
         updated = False
+        previous_end = self.cache_pos
         for _ in range(len(self.stack)):
             entry = self.stack[0]
             if entry[1]:
                 span = entry[1].pop(0)
                 if not updated:
-                    self.cache_pos = span[1]
+                    # An unpaired `[` that contains the span comes before it. If it has not been passed
+                    # yet, Python Markdown will call us there first, not at the start of the span.
+                    self.cache_pos = entry[0] if entry[0] >= previous_end else span[1]
                 if not entry[1]:
                     self.stack.popleft()
                 break

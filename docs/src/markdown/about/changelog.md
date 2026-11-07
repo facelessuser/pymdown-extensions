@@ -18,11 +18,24 @@ icon: lucide/scroll-text
 -   **FIX**: Blocks.HTML: Improve performance of HTML patterns.
 -   **FIX**: MagicLink: Fix URLs with balanced parentheses losing their closing parenthesis.
 -   **FIX**: ProgressBar: Fix crash on malformed `100` percent values like `[=100,0%]`.
+-   **FIX**: BracketSpan: Fix text being dropped or misplaced when an unpaired `[` precedes a span that is returned from
+    the cache, e.g. `[[]{#a}[b[]{#c}`.
 -   **FIX**: BetterEm, Tilde, Caret, Mark: Apply the CommonMark "rule of 3" so an ambiguous closing delimiter can skip
     an incompatible opener and pair with an earlier one, e.g. `__[A](u){target="_blank"}__: x`.
 -   **FIX**: BetterEm, Tilde, Caret, Mark: Better handling of Python Markdown placeholders when when evaluating
     CommonMark punctuation rules.
--   **FIX**: Blocks.Caption: Fix crash when a numbered caption is nested inside a figure not created by the caption block.
+-   **FIX**: Blocks.Caption: Fix crash when a numbered caption is nested inside a figure not created by the caption
+    block.
+-   **FIX**: BetterEm, Tilde, Caret, Mark: Fix text being dropped when a stray delimiter that cannot open or close
+    appears between delimiter pairs parsed together, e.g. `***l* * **e**`.
+-   **FIX**: BetterEm, Tilde, Caret, Mark: Fix text being dropped or misplaced when unused delimiters inside a
+    parsed span were reprocessed against delimiter pairs found later in the same text.
+-   **FIX**: Tilde, Caret: Fix a crash when a subscript or superscript with no space allowed starts inside emphasis,
+    e.g. `*a ~b~*` with `delete` disabled.
+-   **FIX**: BetterEm, Tilde, Caret, Mark: Unusable delimiters dropped by another delimiter's region no longer leave
+    stale space tracking that can reject valid pairs later.
+-   **FIX**: Blocks.Caption: Fix crash when a numbered caption is nested inside a figure not created by the caption
+    block.
 
 ## 12.3
 
