@@ -131,6 +131,8 @@ Waylan
 YAML
 Zensical
 accessor
+autolink
+autolinks
 backoff
 backrefs
 backtick
