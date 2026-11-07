@@ -41,8 +41,8 @@ $p(x|y) = \frac{p(y|x)p(x)}{p(y)}$, \(p(x|y) = \frac{p(y|x)p(x)}{p(y)}\).
 
 
 /// tip | Inline Configuration
-When using MathJax, for best results, it is advised to not use [`generic`](#options) mode, and configure MathJax
-without the `text2jax` extension since MathJax automatically detects Arithmatex's default output.
+When using MathJax, for best results, it is advised to use the [`generic`](#options) mode, and configure MathJax
+with the `text2jax` extension.
 
 If using generic mode (for libraries like KaTeX), Arithmatex will convert dollars to the form `#!tex \(...\)` in the
 HTML output. This is because `#!tex $...$` is extremely problematic to scan for, which is why MathJax and KaTeX
@@ -84,15 +84,24 @@ $$
 \end{align}
 ///
 
+## Generic Output Format
+
+If [`generic`](#options) is enabled (which it is by default), the extension will escape necessary symbols and normalize
+all output to be wrapped in the more reliable `#!tex \(...\)` for inline math and `#!tex \[...\]` for display math
+(unless changed via `tex_inline_wrap` and `tex_block_wrap` in the [options](#options)). Lastly, everything is inserted
+into a `#!html <span>` or `#!html <div>` for inline and display math respectively.
+
+With the default settings, if in your Markdown you used `#!tex $...$` for inline math, it would be converted to
+`#!html <span class="arithmatex">\(...\)</span>` in the HTML. Blocks would be normalized from `#!tex $$...$$` to
+`#!html <div class="arithmatex">\[...\]</div>`.  In the case of `#!tex \begin{}...\end{}`, begins and ends will not be
+replaced, only wrapped: `#!html <div class="arithmatex">\[\begin{}...\end{}\]</div>`.
+
 ## MathJax Output Format
 
 /// note | Format Dropped in MathJax 3
 The title is a bit misleading. Yes, MathJax 3 dropped supporting the format as a default recognized form, but you
-can still use the form with MathJax 3, you just have to add a little more configuration.
-
-This used to be a supported format for MathJax 2. It appears this form was dropped in MathJax 3. While it is the
-current default for Arithmatex, it may be relegated to a secondary option in the future. If this output is preferred
-method, setting `generic` to `#!py False` will prevent any surprises in the future if/when the default changes.
+can still use the form with MathJax 3, you just have to add a little more configuration. It is also not the default
+mode anymore as of Pymdown Extensions 13.0.
 ///
 
 The math equations will be wrapped in a special MathJax script tag and embedded into the HTML. This format does not
@@ -104,20 +113,8 @@ By default, Arithmatex will also generate a preview span with the class `MathJax
 the math content is actually loaded. If you do not want to generate the preview, simply set `preview` to
 `#!py3 False`.
 
-All elements are additionally wrapped in a `#!html <div class="arithmatex"></div>` container by default (`span` if outputting
-inline math).
-
-## Generic Output Format
-
-If [`generic`](#options) is enabled, the extension will escape necessary symbols and normalize all output to be wrapped
-in the more reliable `#!tex \(...\)` for inline math and `#!tex \[...\]` for display math (unless changed via
-`tex_inline_wrap` and `tex_block_wrap` in the [options](#options)). Lastly, everything is inserted into a
-`#!html <span>` or `#!html <div>` for inline and display math respectively.
-
-With the default settings, if in your Markdown you used `#!tex $...$` for inline math, it would be converted to
-`#!html <span class="arithmatex">\(...\)</span>` in the HTML. Blocks would be normalized from `#!tex $$...$$` to
-`#!html <div class="arithmatex">\[...\]</div>`.  In the case of `#!tex \begin{}...\end{}`, begins and ends will not be
-replaced, only wrapped: `#!html <div class="arithmatex">\[\begin{}...\end{}\]</div>`.
+All elements are additionally wrapped in a `#!html <div class="arithmatex"></div>` container by default (`span` if
+outputting inline math).
 
 ## Loading MathJax
 
@@ -127,12 +124,6 @@ of including MathJax is to use the CDN. Latest version at time of writing this i
 /// tab | MathJax 3
 ```html
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
-```
-///
-
-/// tab | Legacy: MathJax 2
-```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js"></script>
 ```
 ///
 
@@ -166,19 +157,34 @@ window.MathJax = {
 /// tab | Script - MathJax 3
 ```js
 window.MathJax = {
+  tex: {
+    inlineMath: [],
+    displayMath: []
+  },
   options: {
-    ignoreHtmlClass: 'tex2jax_ignore',
-    processHtmlClass: 'tex2jax_process',
+    ignoreHtmlClass: '.*',
     renderActions: {
-      find: [10, function (doc) {
+      findMath: [10, function(doc) {
+        // Used to decode script content
+        const temp = document.createElement('textarea');
         for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
           const display = !!node.type.match(/; *mode=display/);
-          const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+          temp.innerHTML = node.textContent;
+          const math = new doc.options.MathItem(
+            temp.textContent, doc.inputJax[0], display
+          );
+
+          // Create a <pre> with an empty text node inside
           const text = document.createTextNode('');
           const sibling = node.previousElementSibling;
+
+          // Replace the <script> with the text node
           node.parentNode.replaceChild(text, node);
+
+          // Point the MathItem at the text node inside <pre>
           math.start = {node: text, delim: '', n: 0};
-          math.end = {node: text, delim: '', n: 0};
+          math.end   = {node: text, delim: '', n: 0};
+
           doc.math.push(math);
           if (sibling && sibling.matches('.MathJax_Preview')) {
             sibling.parentNode.removeChild(sibling);
@@ -188,34 +194,6 @@ window.MathJax = {
     }
   }
 };
-```
-///
-
-/// tab | Legacy: Generic - MathJax 2
-```js
-MathJax.Hub.Config({
-  config: ["MMLorHTML.js"],
-  extensions: ["tex2jax.js"],
-  jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
-  tex2jax: {
-    inlineMath: [ ["\\(","\\)"] ],
-    displayMath: [ ["\\[","\\]"] ],
-    processEscapes: true,
-    processEnvironments: true,
-    ignoreClass: ".*|",
-    processClass: "arithmatex"
-  },
-});
-```
-///
-
-/// tab | Legacy: Script - MathJax 2
-```js
-MathJax.Hub.Config({
-  config: ["MMLorHTML.js"],
-  jax: ["input/TeX", "output/HTML-CSS", "output/NativeMML"],
-  extensions: ["MathMenu.js", "MathZoom.js"]
-});
 ```
 ///
 
@@ -395,7 +373,7 @@ Option            | Type     | Default                               | Descripti
 ----------------- | -------- | ------------------------------------- |------------
 `inline_syntax`   | [string] | `#!py3 ['dollar', 'round']`           | Syntax to search for: dollar=`#!tex $...$` and round=`#!tex \(...\)`.
 `block_syntax`    | [string] | `#!py3 ['dollar', 'square', 'begin']` | Syntax to search for: dollar=`#!tex $...$`, square=`#!tex \[...\]`, and `#!tex \begin{}...\end{}`.
-`generic`         | bool     | `#!py3 False`                         | Output in a generic format suitable for non MathJax libraries.
+`generic`         | bool     | `#!py3 True`                          | Output in a generic format suitable for non MathJax libraries.
 `tex_inline_wrap` | [string] | `#!py3 ['\\(', '\\)']`                | An array containing the opening and closing portion of the `generic` wrap.
 `tex_block_wrap`  | [string] | `#!py3 ['\\[', '\\]']`                | An array containing the opening and closing portion of the `generic` wrap.
 `smart_dollar`    | bool     | `#!py3 True`                          | Enable Arithmatex's smart dollar logic to minimize math detection issues with `#!tex $`.

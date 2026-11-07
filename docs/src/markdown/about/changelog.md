@@ -3,8 +3,13 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
-## 12.4
+## 13.0
 
+-   **BREAK**: Arithmatex: Generic mode is now the default mode as the old MathJax script approach has not been
+    supported in MathJax for a long time now. We still provide script approach and have updated configuration to get it
+    properly working in recent MathJax versions.
+-   **BREAK**: Arithmatex: Non-generic mode now escapes content in script to prevent closing `</script>` from causing
+    unintended behavior. Guidance on configuration for non-generic mode has been updated in the documentation.
 -   **NEW**: Require at least Python Markdown 3.10.3 for performance improvements.
 -   **NEW**: Drop Python 3.10 and require Python >= 3.11.5 as possessive quantifiers are broken on lower versions.
 -   **FIX**: Critic: Fix quadratic (and cubic for substitutions) time complexity when parsing a large number of unclosed

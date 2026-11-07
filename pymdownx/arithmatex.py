@@ -76,9 +76,9 @@ def _inline_mathjax_format(math, language='math', class_name='arithmatex', md=No
     el = etree.Element(tag, {'class': 'arithmatex'})
     if preview:
         pre = etree.SubElement(el, 'span', {'class': 'MathJax_Preview'})
-        pre.text = md_util.AtomicString(math)
+        pre.text = md_util.AtomicString(_escape(math))
     script = etree.SubElement(el, 'script', {'type': 'math/tex'})
-    script.text = md_util.AtomicString(math)
+    script.text = md_util.AtomicString(_escape(math))
     return el
 
 
@@ -118,7 +118,7 @@ def _fence_mathjax_format(
 
     text += (
         '<script type="math/tex; mode=display">\n' +
-        math +
+        _escape(math) +
         '\n</script>\n'
     )
     text += '</div>'
@@ -141,7 +141,7 @@ def _fence_generic_format(
     classes = ' class="{}"'.format(' '.join(classes))
     attrs = ' ' + ' '.join(f'{k}="{v}"' for k, v in attrs.items()) if attrs else ''
 
-    return f'<{tag}{id_value}{classes}{attrs}>{wrap.format(math)}</{tag}>'
+    return f'<{tag}{id_value}{classes}{attrs}>{wrap.format(_escape(math))}</{tag}>'
 
 
 def arithmatex_fenced_format(**kwargs):
@@ -236,13 +236,13 @@ class BlockArithmatexProcessor(BlockProcessor):
             preview = etree.SubElement(parent, 'div', {'class': 'MathJax_Preview'})
             preview.text = md_util.AtomicString(math)
         el = etree.SubElement(parent, 'script', {'type': 'math/tex; mode=display'})
-        el.text = md_util.AtomicString(math)
+        el.text = md_util.AtomicString(_escape(math))
 
     def generic_output(self, parent, math):
         """Generic output."""
 
         el = etree.SubElement(parent, self.block_tag, {'class': 'arithmatex'})
-        el.text = md_util.AtomicString(self.wrap.format(math))
+        el.text = md_util.AtomicString(self.wrap.format(_escape(math)))
 
     def run(self, parent, blocks):
         """Find and handle block content."""
