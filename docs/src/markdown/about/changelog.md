@@ -22,6 +22,7 @@ icon: lucide/scroll-text
     an incompatible opener and pair with an earlier one, e.g. `__[A](u){target="_blank"}__: x`.
 -   **FIX**: BetterEm, Tilde, Caret, Mark: Better handling of Python Markdown placeholders when when evaluating
     CommonMark punctuation rules.
+-   **FIX**: Blocks.Caption: Fix crash when a numbered caption is nested inside a figure not created by the caption block.
 
 ## 12.3
 

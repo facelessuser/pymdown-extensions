@@ -132,7 +132,7 @@ class CaptionTreeprocessor(Treeprocessor):
                         break
 
                     # Check if parent element is a figure of the current type
-                    if parent.tag == 'figure' and parent.attrib['__figure_type'] == fig_type:
+                    if parent.tag == 'figure' and parent.attrib.get('__figure_type') == fig_type:
                         # See if position in stack is manually specified
                         level = '__figure_level' in parent.attrib
                         if level:
