@@ -849,6 +849,11 @@ class MagiclinkPattern(LinkInlineProcessor):
         while unclosed > 0 and data.startswith(')', end):
             unclosed -= 1
             end += 1
+        # Keep a closing square bracket that matches an opening one in the link
+        unclosed = link.count('[') - link.count(']')
+        while unclosed > 0 and data.startswith(']', end):
+            unclosed -= 1
+            end += 1
         link = data[m.start(0):end]
 
         el = etree.Element("a")

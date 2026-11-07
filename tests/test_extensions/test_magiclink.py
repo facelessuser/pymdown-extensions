@@ -35,6 +35,30 @@ class TestMagicLink(util.MdCase):
             '<p><a href="http://www.example.com/blah_(wikipedia_(again))">www.example.com/blah_(wikipedia_(again))</a></p>'
         )
 
+    def test_unmatched_closing_bracket(self):
+        """Keep an unmatched closing square bracket outside the link."""
+
+        self.check_markdown(
+            'http://foo.com/blah_blah]',
+            '<p><a href="http://foo.com/blah_blah">http://foo.com/blah_blah</a>]</p>'
+        )
+
+    def test_balanced_brackets(self):
+        """Keep a matching closing square bracket in the link."""
+
+        self.check_markdown(
+            'http://foo.com/blah_blah_[wikipedia]',
+            '<p><a href="http://foo.com/blah_blah_[wikipedia]">http://foo.com/blah_blah_[wikipedia]</a></p>'
+        )
+
+    def test_nested_brackets(self):
+        """Keep nested matching square brackets in a domain link."""
+
+        self.check_markdown(
+            'www.example.com/blah_[nested_[brackets]]',
+            '<p><a href="http://www.example.com/blah_[nested_[brackets]]">www.example.com/blah_[nested_[brackets]]</a></p>'
+        )
+
 
 class TestMagicLinkShortner(util.MdCase):
     """Test cases for repo link shortening."""

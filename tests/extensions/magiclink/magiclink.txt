@@ -7,6 +7,12 @@ http://foo.com/blah_blah_(wikipedia)
 
 http://foo.com/blah_blah_(wikipedia)_(again)
 
+http://foo.com/blah_blah_[wikipedia]
+
+http://foo.com/blah_blah_[wikipedia]_[again]
+
+http://foo.com/blah_[nested_[brackets]]
+
 http://www.example.com/wpstyle/?p=364
 
 https://www.example.com/foo/?bar=baz&inga=42&quux
