@@ -6,11 +6,7 @@ from markdown import Markdown
 from markdown.inlinepatterns import InlineProcessor
 import xml.etree.ElementTree as etree
 from collections import deque
-from markdown import __version_info__
 from typing import Any, cast
-
-# TODO: Remove from main when Python Markdown releases https://github.com/Python-Markdown/markdown/commit/152a16f.
-MD_FAST = __version_info__[:3] > (3, 10, 3)
 
 # Unicode punctuation and symbols `\p{P}\p{S}`. These should be placed in regex character class `fr"[{PUNCT}]"`.
 # Python seems to be slowly adding Unicode Properties on Python main. It is possible that in the future, we can

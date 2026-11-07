@@ -214,7 +214,7 @@ class TestMagicLinkGFM(util.MdCase):
         self.check_email('foo@bar.baz', 'foo@bar.baz')
         self.check_markdown(
             "hello@mail+xyz.example isn't valid, but hello+xyz@mail.example is.",
-            f'<p>hello@mail+xyz.example isn\'t valid, but <a href="{self.encode_mail("mailto:hello+xyz@mail.example")}">'
+            f'<p>hello@mail+xyz.example isn\'t valid, but <a href="{self.encode_mail("mailto:hello+xyz@mail.example")}">'  # noqa: E501
             f'{self.encode_mail("hello+xyz@mail.example")}</a> is.</p>'
         )
         self.check_email('a.b-c_d@a.b', 'a.b-c_d@a.b')

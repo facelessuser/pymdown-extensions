@@ -5,6 +5,7 @@ icon: lucide/scroll-text
 
 ## 12.4
 
+-   **NEW**: Requrire at least Python Markdown 3.10.3 for performance improvements.
 -   **NEW**: Drop Python 3.10 and require Python >= 3.11.5 as possessive quantifiers are broken on lower versions.
 -   **FIX**: PathConverter, B64: Handle elements with unquoted attributes.
 -   **FIX**: Arithmatex: Fix `generic` mode output when `tex_inline_wrap` or `tex_block_wrap` contain braces.

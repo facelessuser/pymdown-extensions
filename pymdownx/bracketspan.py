@@ -2,7 +2,6 @@
 from markdown import Extension, Markdown
 from markdown.inlinepatterns import InlineProcessor
 from . import util
-from .delimiterprocessor import MD_FAST
 import re
 import xml.etree.ElementTree as etree
 from markdown.extensions import attr_list
@@ -71,11 +70,6 @@ class BracketSpanProcessor(InlineProcessor):
         # See if there is another span
         self.cache_pos = end
         self.span = self.get_next_entry()
-        # On earlier versions Python Markdown, we need another point
-        # that requires no updates to the offset as a minimum.
-        # The start of the replaced region is sufficient, and `cache_pos`
-        # should be right after it.
-        self.legacy_pos = start + offset
 
         # No more spans were found
         if self.span is None:
@@ -134,10 +128,6 @@ class BracketSpanProcessor(InlineProcessor):
         if not self.attr_list_enabled:
             return None, None, None
 
-        if not MD_FAST and self.legacy_pos >= 0 and m.start(0) < self.legacy_pos:
-            return None, m.start(0), m.end(0)
-        self.legacy_pos = -1
-
         if self.span is not None:
             return self.get_cached_result(m.start(0))
 
@@ -176,11 +166,6 @@ class BracketSpanProcessor(InlineProcessor):
             # See if there are more spans
             self.cache_pos = result[2]
             self.span = self.get_next_entry()
-            # On earlier versions Python Markdown, we need another point
-            # that requires no updates to the offset as a minimum.
-            # The start of the replaced region is sufficient, and `cache_pos`
-            # should be right after it.
-            self.legacy_pos = result[1]
 
             # There are no more results
             if self.span is None:
@@ -199,7 +184,6 @@ class BracketSpanProcessor(InlineProcessor):
         self.stack.clear()
         self.span = None
         self.cache_pos = 0
-        self.legacy_pos = -1
 
 
 class BracketSpanExtension(Extension):
@@ -235,4 +219,3 @@ def makeExtension(*args, **kwargs):
     """Return extension."""
 
     return BracketSpanExtension(*args, **kwargs)
-
