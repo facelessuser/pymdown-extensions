@@ -16,7 +16,12 @@ icon: lucide/scroll-text
 -   **FIX**: Quotes: Fix callouts in indented blockquotes.
 -   **FIX**: Details, Admonitions, SaneHeaders: Improve performance of header patterns.
 -   **FIX**: Blocks.HTML: Improve performance of HTML patterns.
--   **FIX**: MagicLink: Fix URLs with balanced parentheses losing their closing parenthesis.
+-   **NEW**: MagicLink: Bare `http://`, `https://`, and `www.` links now follow GFM's extended autolink rules for what
+    is considered the end of a link (trailing punctuation, entities, unbalanced `)` and `]`) and what a link can follow.
+    Links no longer start after arbitrary punctuation (quotes are still allowed), and `http://host` style links with a
+    short host are allowed.
+-   **FIX**: MagicLink: Fix URLs with balanced parentheses or brackets losing their closing character.
+-   **FIX**: MagicLink: Improve performance of link and email patterns by removing excessive backtracking.
 -   **FIX**: ProgressBar: Fix crash on malformed `100` percent values like `[=100,0%]`.
 -   **FIX**: BracketSpan: Fix text being dropped or misplaced when an unpaired `[` precedes a span that is returned from
     the cache, e.g. `[[]{#a}[b[]{#c}`.

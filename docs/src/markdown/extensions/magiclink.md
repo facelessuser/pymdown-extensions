@@ -42,6 +42,21 @@ auto-linked. There are some limitations placed on MagicLink to keep it from aggr
 part of links. If you have a link that cannot be detected, you can always use the old style angle bracketed link format:
 `#!md <https://www.link.com>`.
 
+Bare links follow the rules of [GitHub Flavored Markdown's extended autolinks][gfm-autolinks]:
+
+-   Links must start with `http://`, `https://`, or `www.` (`ftp://` and `ftps://` are supported as well), and must be
+    at the start of a line, or follow whitespace or one of `*`, `_`, `~`, `(`. As MagicLink runs before other inline
+    syntax is resolved, quotes, `[` and `^` are also allowed so that quoted links and links in Markdown links and Caret
+    syntax work.
+-   A link ends at whitespace or `<`.
+-   The following trailing characters are not considered part of the link: `?`, `!`, `.`, `,`, `:`, `*`, `_`, `~`, `^`,
+    `'`, `"`.
+-   A trailing `)` is only part of the link if it closes a `(` in the link. The same is applied to `]`.
+-   A trailing entity like reference, such as `&amp;`, is not part of the link.
+-   Domains cannot have underscores in the last two segments.
+
+[gfm-autolinks]: https://github.github.com/gfm/#autolinks-extension-
+
 ```text title="Auto-Linking"
 - Just paste links directly in the document like this: https://google.com.
 - Or even an email address: fake.email@email.com.

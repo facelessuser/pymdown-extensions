@@ -43,10 +43,10 @@ DEFAULT_EXCLUDES = {
     "x": ['i', 'messages', 'bookmarks', 'home']
 }
 
-# Bare link/email detection
+# Bare link/email detection.
 RE_MAIL = r'''(?xi)
 (?P<mail>
-    (?<![-/\+@a-z\d_])(?:[-+a-z\d_]([-a-z\d_+]|\.(?!\.))*)  # Local part
+    (?<![-/\+@a-z\d_])(?<![-+a-z\d_]\.)(?:[-+a-z\d_]([-a-z\d_+]|\.(?!\.))*)  # Local part
     (?<!\.)@(?:[-a-z\d_]+\.)                                # @domain part start
     (?:(?:[-a-z\d_]|(?<!\.)\.(?!\.))*)[a-z]\b               # @domain.end (allow multiple dot names)
     (?![-@])                                                # Don't allow last char to be followed by these
@@ -54,15 +54,23 @@ RE_MAIL = r'''(?xi)
 '''
 
 RE_LINK = r'''(?xi)
-(?P<link>
-    (?:(?<=\b)|(?<=_))(?:
-        (?:ht|f)tps?://[^_\W](?:[-\w]|\.(?!=$))*|           # (http|ftp)://host.name
-        (?P<www>w{3}\.)[^_\W](?:[-\w]|\.(?!=$))*            # www.host.name
-    )
-    /?[-\w.?,!'(){}\[\]/+&@%$#=:"|~;]*                      # url path, fragments, and query stuff
-    (?:[^_\W]|[-/#@$+=])                                    # allowed end chars
+(?<![^\s*_~^[('"\x03])(?:
+    (?:ht|f)tps?://|                                        # (http|ftp)://
+    (?P<www>w{3}\.)                                         # www.
 )
 '''
+
+# The domain of a link (underscores are validated afterwards)
+RE_LINK_DOMAIN = re.compile(r'[^_\W][-\w.]*')
+
+# Everything after the domain, a link ends at whitespace or `<`
+RE_LINK_PATH = re.compile(r'[^\s<]*')
+
+# Characters excluded from the end of a link (`;` and closing characters are handled separately)
+LINK_TRAILING = frozenset('?!.,:*_~^\'"')
+
+# Closing characters that can end a link only if there are as many opening characters in the link
+LINK_CLOSERS = {')': '(', ']': '['}
 
 RE_AUTOLINK = r'(?i)<((?:ht|f)tps?://[^<>]*)>'
 
@@ -842,14 +850,44 @@ class MagiclinkPattern(LinkInlineProcessor):
     def handleMatch(self, m, data):
         """Handle URL matches."""
 
-        link = m.group('link')
-        end = m.end(0)
-        # Keep a closing parenthesis that matches an opening one in the link
-        unclosed = link.count('(') - link.count(')')
-        while unclosed > 0 and data.startswith(')', end):
-            unclosed -= 1
-            end += 1
-        link = data[m.start(0):end]
+        start = m.start(0)
+
+        domain = RE_LINK_DOMAIN.match(data, m.end(0))
+        if domain is None:
+            return None, None, None
+
+        # Take everything up to whitespace or `<`, then exclude trailing characters that should not be in the link.
+        floor = domain.start(0)
+        end = RE_LINK_PATH.match(data, floor).end(0)
+        counts = None
+        while end > floor:
+            c = data[end - 1]
+            if c in LINK_TRAILING:
+                end -= 1
+            elif c == ';':
+                # Exclude entity like references (`&amp;`)
+                index = end - 2
+                while index >= floor and data[index].isalnum():
+                    index -= 1
+                end = index if index < end - 2 and index >= floor and data[index] == '&' else end - 1
+            elif c in LINK_CLOSERS:
+                # Only count when necessary, exclude the closing character unless it matches an opening one
+                if counts is None:
+                    link = data[start:end]
+                    counts = {k: [link.count(k), link.count(v)] for k, v in LINK_CLOSERS.items()}
+                counts_c = counts[c]
+                if counts_c[0] <= counts_c[1]:
+                    break
+                counts_c[0] -= 1
+                end -= 1
+            else:
+                break
+
+        # The domain can't have underscores in the last two segments.
+        if any('_' in segment for segment in data[floor:min(end, domain.end(0))].split('.')[-2:]):
+            return None, None, None
+
+        link = data[start:end]
 
         el = etree.Element("a")
         el.text = md_util.AtomicString(link)
@@ -864,7 +902,7 @@ class MagiclinkPattern(LinkInlineProcessor):
         if self.config.get('repo_url_shortener', False):
             el.set('magiclink', str(MAGIC_LINK))
 
-        return el, m.start(0), end
+        return el, start, end
 
 
 class MagiclinkAutoPattern(InlineProcessor):

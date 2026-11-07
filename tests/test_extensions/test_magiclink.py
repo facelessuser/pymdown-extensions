@@ -35,6 +35,193 @@ class TestMagicLink(util.MdCase):
             '<p><a href="http://www.example.com/blah_(wikipedia_(again))">www.example.com/blah_(wikipedia_(again))</a></p>'
         )
 
+    def test_balanced_brackets(self):
+        """Keep a matching closing bracket in the link."""
+
+        self.check_markdown(
+            '(see http://foo.com/blah_[1])',
+            '<p>(see <a href="http://foo.com/blah_[1]">http://foo.com/blah_[1]</a>)</p>'
+        )
+
+    def test_unmatched_closing_bracket(self):
+        """Keep an unmatched closing bracket outside the link."""
+
+        self.check_markdown(
+            '[see http://foo.com/blah_blah]',
+            '<p>[see <a href="http://foo.com/blah_blah">http://foo.com/blah_blah</a>]</p>'
+        )
+
+    def test_mixed_balanced_closers(self):
+        """Keep matching closing parentheses and brackets."""
+
+        self.check_markdown(
+            'http://foo.com/blah_[(1)]',
+            '<p><a href="http://foo.com/blah_[(1)]">http://foo.com/blah_[(1)]</a></p>'
+        )
+
+    def test_more_closers_than_openers(self):
+        """Only include as many closing characters as there are openers."""
+
+        self.check_markdown(
+            'http://foo.com/blah_(1))]',
+            '<p><a href="http://foo.com/blah_(1)">http://foo.com/blah_(1)</a>)]</p>'
+        )
+
+    def test_short_domain(self):
+        """Hosts without a period are allowed for protocol links, but a protocol alone is not a link."""
+
+        self.check_markdown(
+            'http://a http://',
+            '<p><a href="http://a">http://a</a> http://</p>'
+        )
+
+
+class TestMagicLinkGFM(util.MdCase):
+    """Test bare links against the GFM extended autolink rules."""
+
+    extension = [
+        'pymdownx.magiclink'
+    ]
+
+    @staticmethod
+    def encode_mail(email):
+        """Encode an email the way MagicLink does."""
+
+        return ''.join(f'&#{ord(c)};' for c in email)
+
+    def check_link(self, md, href, text=None, before='', after=''):
+        """Check a single link in a paragraph."""
+
+        text = href if text is None else text
+        self.check_markdown(md, f'<p>{before}<a href="{href}">{text}</a>{after}</p>')
+
+    def check_email(self, md, email, before='', after=''):
+        """Check a single email link in a paragraph."""
+
+        self.check_markdown(
+            md,
+            f'<p>{before}<a href="{self.encode_mail("mailto:" + email)}">{self.encode_mail(email)}</a>{after}</p>'
+        )
+
+    def test_www(self):
+        """Test `www` autolinks."""
+
+        self.check_link('www.commonmark.org', 'http://www.commonmark.org', 'www.commonmark.org')
+        self.check_link(
+            'Visit www.commonmark.org/help for more information.',
+            'http://www.commonmark.org/help',
+            'www.commonmark.org/help',
+            before='Visit ',
+            after=' for more information.'
+        )
+
+    def test_trailing_punctuation(self):
+        """Test trailing punctuation is not part of the link."""
+
+        self.check_link('Visit www.commonmark.org.', 'http://www.commonmark.org', 'www.commonmark.org', 'Visit ', '.')
+        self.check_link(
+            'Visit www.commonmark.org/a.b.', 'http://www.commonmark.org/a.b', 'www.commonmark.org/a.b', 'Visit ', '.'
+        )
+        for char in '?!.,:*_~':
+            self.check_link(
+                f'www.commonmark.org/a{char}', 'http://www.commonmark.org/a', 'www.commonmark.org/a', '', char
+            )
+        self.check_link('www.commonmark.org/a?b!', 'http://www.commonmark.org/a?b', 'www.commonmark.org/a?b', '', '!')
+
+    def test_parentheses(self):
+        """Test unbalanced trailing parentheses."""
+
+        url = 'www.google.com/search?q=Markup+(business)'
+        href = 'http://' + url
+        self.check_link(url, href, url)
+        self.check_link(url + '))', href, url, after='))')
+        self.check_link(f'({url})', href, url, '(', ')')
+        self.check_link(f'({url}', href, url, '(')
+        self.check_link(
+            'www.google.com/search?q=(business))+ok',
+            'http://www.google.com/search?q=(business))+ok',
+            'www.google.com/search?q=(business))+ok'
+        )
+        self.check_link('(Visit https://a.com/search?q=(b))', 'https://a.com/search?q=(b)', before='(Visit ', after=')')
+
+    def test_brackets(self):
+        """Test unbalanced trailing brackets."""
+
+        self.check_link('www.a.com/x[1]', 'http://www.a.com/x[1]', 'www.a.com/x[1]')
+        self.check_link('[www.a.com/x]', 'http://www.a.com/x', 'www.a.com/x', '[', ']')
+
+    def test_entity(self):
+        """Test entity like suffixes are not part of the link."""
+
+        self.check_link(
+            'www.google.com/search?q=commonmark&hl=en',
+            'http://www.google.com/search?q=commonmark&amp;hl=en',
+            'www.google.com/search?q=commonmark&amp;hl=en'
+        )
+        self.check_link(
+            'www.google.com/search?q=commonmark&hl;',
+            'http://www.google.com/search?q=commonmark',
+            'www.google.com/search?q=commonmark',
+            after='&hl;'
+        )
+
+    def test_less_than(self):
+        """Test `<` ends a link."""
+
+        self.check_link(
+            'www.commonmark.org/he<lp', 'http://www.commonmark.org/he', 'www.commonmark.org/he', '', '&lt;lp'
+        )
+
+    def test_protocol(self):
+        """Test protocol autolinks."""
+
+        self.check_link('http://commonmark.org', 'http://commonmark.org')
+        self.check_link('https://commonmark.org/a_b', 'https://commonmark.org/a_b')
+
+    def test_domain_underscores(self):
+        """Test underscores are not allowed in the last two segments of a domain."""
+
+        self.check_markdown('www.foo_bar.com', '<p>www.foo_bar.com</p>')
+        self.check_markdown('http://foo.bar_baz.com', '<p>http://foo.bar_baz.com</p>')
+        self.check_markdown('www.foo.bar_baz', '<p>www.foo.bar_baz</p>')
+        self.check_link('www.foo_bar.baz.com', 'http://www.foo_bar.baz.com', 'www.foo_bar.baz.com')
+
+    def test_boundaries(self):
+        """Test a link must follow the start of a line, whitespace, or one of `*_~(`."""
+
+        self.check_markdown('xwww.commonmark.org', '<p>xwww.commonmark.org</p>')
+        self.check_markdown('xwww.commonmark.org.x', '<p>xwww.commonmark.org.x</p>')
+        self.check_markdown('xhttp://commonmark.org', '<p>xhttp://commonmark.org</p>')
+        self.check_link('a\nwww.commonmark.org', 'http://www.commonmark.org', 'www.commonmark.org', 'a\n')
+        self.check_link('"www.commonmark.org"', 'http://www.commonmark.org', 'www.commonmark.org', '"', '"')
+        self.check_link("'http://commonmark.org/a'", 'http://commonmark.org/a', before="'", after="'")
+        self.check_link('~www.commonmark.org', 'http://www.commonmark.org', 'www.commonmark.org', '~')
+        self.check_link('`a`www.commonmark.org', 'http://www.commonmark.org', 'www.commonmark.org', '<code>a</code>')
+
+    def test_emphasis(self):
+        """Test links wrapped in emphasis."""
+
+        self.check_markdown(
+            '*www.commonmark.org* _www.commonmark.org_ **www.commonmark.org**',
+            '<p><em><a href="http://www.commonmark.org">www.commonmark.org</a></em> '
+            '<em><a href="http://www.commonmark.org">www.commonmark.org</a></em> '
+            '<strong><a href="http://www.commonmark.org">www.commonmark.org</a></strong></p>'
+        )
+
+    def test_email(self):
+        """Test emails."""
+
+        self.check_email('foo@bar.baz', 'foo@bar.baz')
+        self.check_markdown(
+            "hello@mail+xyz.example isn't valid, but hello+xyz@mail.example is.",
+            f'<p>hello@mail+xyz.example isn\'t valid, but <a href="{self.encode_mail("mailto:hello+xyz@mail.example")}">'
+            f'{self.encode_mail("hello+xyz@mail.example")}</a> is.</p>'
+        )
+        self.check_email('a.b-c_d@a.b', 'a.b-c_d@a.b')
+        self.check_email('a.b-c_d@a.b.', 'a.b-c_d@a.b', after='.')
+        self.check_markdown('a.b-c_d@a.b-', '<p>a.b-c_d@a.b-</p>')
+        self.check_markdown('a.b-c_d@a.b_', '<p>a.b-c_d@a.b_</p>')
+
 
 class TestMagicLinkShortner(util.MdCase):
     """Test cases for repo link shortening."""
