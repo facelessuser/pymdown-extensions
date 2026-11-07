@@ -7,6 +7,8 @@ icon: lucide/scroll-text
 
 -   **NEW**: Require at least Python Markdown 3.10.3 for performance improvements.
 -   **NEW**: Drop Python 3.10 and require Python >= 3.11.5 as possessive quantifiers are broken on lower versions.
+-   **FIX**: Critic: Fix quadratic (and cubic for substitutions) time complexity when parsing a large number of unclosed
+    CriticMarkup openers by replacing the regular expression with a linear time scanner.
 -   **FIX**: PathConverter, B64: Handle elements with unquoted attributes.
 -   **FIX**: Arithmatex: Fix `generic` mode output when `tex_inline_wrap` or `tex_block_wrap` contain braces.
 -   **FIX**: InlineHilite: Fix regression related to unmatched opening and closing.

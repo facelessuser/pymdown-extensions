@@ -46,41 +46,97 @@ CRITIC_PLACEHOLDERS = r'''(?x)
     key=CRITIC_PLACEHOLDER, single=SINGLE_CRITIC_PLACEHOLDER,
     stx=STX, etx=ETX
 )
-ALL_CRITICS = r'''(?x)
-((?P<critic>(?P<open>\{)
-    (?:
-        (?P<ins_open>\+{2})
-        (?P<ins_text>.*?)
-        (?P<ins_close>\+{2})
+# Critic mark types, identified by the two characters following the opening `{`.
+INS = '++'
+DEL = '--'
+MARK = '=='
+COMMENT = '>>'
+SUB = '~~'
 
-      | (?P<del_open>\-{2})
-        (?P<del_text>.*?)
-        (?P<del_close>\-{2})
+# The sequence that terminates each type of mark (the closing `}` included).
+CLOSERS = {
+    INS: '++}',
+    DEL: '--}',
+    MARK: '==}',
+    COMMENT: '<<}',
+    SUB: '~~}'
+}
 
-      | (?P<mark_open>\={2})
-        (?P<mark_text>.*?)
-        (?P<mark_close>\={2})
+# Separates the deleted and inserted text of a substitution.
+SUB_MID = '~>'
 
-      | (?P<comment>
-            (?P<com_open>\>{2})
-            (?P<com_text>.*?)
-            (?P<com_close>\<{2})
-        )
-
-      | (?P<sub_open>\~{2})
-        (?P<sub_del_text>.*?)
-        (?P<sub_mid>\~\>)
-        (?P<sub_ins_text>.*?)
-        (?P<sub_close>\~{2})
-    )
-(?P<close>\})))
-'''
-
-RE_CRITIC = re.compile(ALL_CRITICS, re.DOTALL)
 RE_CRITIC_PLACEHOLDER = re.compile(CRITIC_PLACEHOLDERS)
 RE_CRITIC_SUB_PLACEHOLDER = re.compile(SINGLE_CRITIC_PLACEHOLDER)
 RE_CRITIC_BLOCK = re.compile(r'((?:ins|del|mark)\s+)(class=([\'"]))(.*?)(\3)')
 RE_BLOCK_SEP = re.compile(r'^(?:\r?\n){2,}$')
+
+
+def find_critics(text):
+    """
+    Find critic marks in the text, yielding `(start, end, kind, text, sub_text)` for each.
+
+    `kind` is one of `INS`, `DEL`, `MARK`, `COMMENT`, or `SUB`. `sub_text` is only set for `SUB` (the inserted text,
+    with `text` being the deleted text).
+
+    A mark opens with `{` and a two character type, and closes with the first occurrence of the type's closer
+    (`SUB` uses the first `~>` and then the first `~~}` after it). Marks cannot nest, so the scan resumes after
+    each mark that is found.
+
+    This is intentionally not a regular expression. Searching for a closer that does not exist fails only after
+    scanning to the end of the text, and a regular expression would repeat that scan for every opener (and, for
+    substitutions, for every `~>` as well), resulting in quadratic or even cubic time on unclosed input.
+
+    Here, a closer is found with `str.find`, and if none exists after an opener, none can exist after any later
+    opener of the same kind. We record that and skip all further openers of that kind. Every character is therefore
+    scanned a bounded number of times: either it is consumed by a mark that was found, or it was scanned by the
+    single failed search made for its kind.
+    """
+
+    find = text.find
+    dead = set()
+    pos = 0
+
+    while True:
+        start = find('{', pos)
+        if start == -1:
+            break
+
+        kind = text[start + 1:start + 3]
+        if kind not in CLOSERS:
+            pos = start + 1
+            continue
+
+        # The opener is three characters long and can not contain the start of another opener.
+        pos = start + 3
+        if kind in dead:
+            continue
+
+        content = sub_text = None
+        end = -1
+
+        if kind == SUB:
+            mid = find(SUB_MID, pos)
+            if mid != -1:
+                close = find(CLOSERS[kind], mid + 2)
+                if close != -1:
+                    content = text[pos:mid]
+                    sub_text = text[mid + 2:close]
+                    end = close + 3
+        else:
+            close = find(CLOSERS[kind], pos)
+            if close != -1:
+                content = text[pos:close]
+                end = close + 3
+
+        if end == -1:
+            dead.add(kind)
+            # Nothing left that could possibly be found
+            if len(dead) == len(CLOSERS):
+                break
+            continue
+
+        yield start, end, kind, content, sub_text
+        pos = end
 
 
 class CriticStash:
@@ -226,41 +282,39 @@ class CriticViewPreprocessor(Preprocessor):
             )
         )
 
-    def critic_view(self, m):
+    def critic_view(self, kind, text, sub_text=None):
         """Insert appropriate HTML to tags to visualize Critic marks."""
 
-        if m.group('ins_open'):
-            return self._ins(m.group('ins_text'))
-        elif m.group('del_open'):
-            return self._del(m.group('del_text'))
-        elif m.group('sub_open'):
-            return (
-                self._del(m.group('sub_del_text')) +
-                self._ins(m.group('sub_ins_text'))
-            )
-        elif m.group('mark_open'):
-            return self._mark(m.group('mark_text'))
-        elif m.group('com_open'):
-            return self._comment(m.group('com_text'))
+        if kind == INS:
+            return self._ins(text)
+        elif kind == DEL:
+            return self._del(text)
+        elif kind == SUB:
+            return self._del(text) + self._ins(sub_text)
+        elif kind == MARK:
+            return self._mark(text)
+        else:
+            return self._comment(text)
 
-    def critic_parse(self, m):
+    def critic_parse(self, kind, text, sub_text=None):
         """
         Normal critic parser.
 
         Either removes accepted or rejected critic marks and replaces with the opposite.
         Comments are removed and marks are replaced with their content.
         """
+
         accept = self.config["mode"] == 'accept'
-        if m.group('ins_open'):
-            return m.group('ins_text') if accept else ''
-        elif m.group('del_open'):
-            return '' if accept else m.group('del_text')
-        elif m.group('mark_open'):
-            return m.group('mark_text')
-        elif m.group('com_open'):
+        if kind == INS:
+            return text if accept else ''
+        elif kind == DEL:
+            return '' if accept else text
+        elif kind == MARK:
+            return text
+        elif kind == COMMENT:
             return ''
-        elif m.group('sub_open'):
-            return m.group('sub_ins_text') if accept else m.group('sub_del_text')
+        else:
+            return sub_text if accept else text
 
     def html_escape(self, txt, strip_nl=False):
         """Basic html escaping."""
@@ -282,7 +336,15 @@ class CriticViewPreprocessor(Preprocessor):
             processor = self.critic_parse
 
         # Find and process critic marks
-        text = RE_CRITIC.sub(processor, '\n'.join(lines))
+        text = '\n'.join(lines)
+        result = []
+        last = 0
+        for start, end, kind, content, sub_text in find_critics(text):
+            result.append(text[last:start])
+            result.append(processor(kind, content, sub_text))
+            last = end
+        result.append(text[last:])
+        text = ''.join(result)
 
         return text.split('\n')
 

@@ -1,5 +1,6 @@
-"""Test caret."""
+"""Test critic."""
 from .. import util
+from pymdownx import critic
 
 class TestCriticViewMode(util.MdCase):
     """Test view mode."""
@@ -257,3 +258,94 @@ class TestCriticEscapeAll(util.MdCase):
             """,
             True
         )
+
+
+class TestCriticScanner(util.MdCase):
+    """Test the critic scanner."""
+
+    extension = [
+        'pymdownx.critic'
+    ]
+    extension_configs = {
+        "pymdownx.critic": {
+            "mode": 'view'
+        }
+    }
+
+    def scan(self, text):
+        """Scan text and return the found marks."""
+
+        return [(text[s:e], k, c, sc) for s, e, k, c, sc in critic.find_critics(text)]
+
+    def test_marks(self):
+        """Test that each mark type is found."""
+
+        self.assertEqual(
+            self.scan('a {++ins++} b {--del--} c {==mark==} d {>>com<<} e {~~old~>new~~} f'),
+            [
+                ('{++ins++}', critic.INS, 'ins', None),
+                ('{--del--}', critic.DEL, 'del', None),
+                ('{==mark==}', critic.MARK, 'mark', None),
+                ('{>>com<<}', critic.COMMENT, 'com', None),
+                ('{~~old~>new~~}', critic.SUB, 'old', 'new')
+            ]
+        )
+
+    def test_edge_cases(self):
+        """Test closers that overlap openers and other boundary cases."""
+
+        # The closer can't share characters with the opener
+        self.assertEqual(self.scan('{++}'), [])
+        self.assertEqual(self.scan('{+++}'), [])
+        self.assertEqual(self.scan('{++++}'), [('{++++}', critic.INS, '', None)])
+        self.assertEqual(self.scan('{~~~>~~}'), [('{~~~>~~}', critic.SUB, '', '')])
+        self.assertEqual(self.scan('{~~~~}'), [])
+        self.assertEqual(self.scan('{~~a~>b}'), [])
+        # Marks span lines and are not nested
+        self.assertEqual(self.scan('{++a\n{--b--}\nc++}'), [('{++a\n{--b--}\nc++}', critic.INS, 'a\n{--b--}\nc', None)])
+        # Braces that don't start a mark are skipped, including those directly before a real opener or at the end
+        self.assertEqual(self.scan('{ {+a+} {x {{++a++} {'), [('{++a++}', critic.INS, 'a', None)])
+        self.assertEqual(self.scan('{{{--a--}'), [('{--a--}', critic.DEL, 'a', None)])
+        self.assertEqual(self.scan('{'), [])
+        self.assertEqual(self.scan('{+'), [])
+        # An unclosed mark does not prevent later marks of other kinds, or of the same kind, from being found
+        self.assertEqual(
+            self.scan('{++ {--a--} {==b==}'),
+            [('{--a--}', critic.DEL, 'a', None), ('{==b==}', critic.MARK, 'b', None)]
+        )
+        self.assertEqual(self.scan('{~~a {++b++}'), [('{++b++}', critic.INS, 'b', None)])
+
+    def test_unclosed_output(self):
+        """Test that unclosed marks are left untouched."""
+
+        self.check_markdown(
+            "{++ a {-- b {== c {>> d {~~ e ~> f",
+            "<p>{++ a {-- b {== c {&gt;&gt; d {~~ e ~&gt; f</p>"
+        )
+
+    def test_unclosed_large(self):
+        """
+        Test large inputs with unclosed marks.
+
+        Previously, these would take quadratic (or in the case of substitutions, cubic) time and
+        inputs of this size would effectively never finish. We only check the results, not the time.
+        """
+
+        n = 100000
+        payloads = [
+            '{++' * n,
+            '{--' * n,
+            '{==' * n,
+            '{>>' * n,
+            '{~~' * n,
+            '{~~' + '~>' * n,
+            '{~~a~>b' * n,
+            '++}' + '{++' * n,
+            ''.join(m * n for m in ('{++', '{--', '{==', '{>>', '{~~a~>b'))
+        ]
+
+        for payload in payloads:
+            self.assertEqual(list(critic.find_critics(payload)), [])
+
+        # A large number of valid marks is also fine
+        self.assertEqual(len(list(critic.find_critics('{~~a~>b~~} {++a++} ' * n))), n * 2)
