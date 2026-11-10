@@ -394,6 +394,65 @@ class SnippetPreprocessor(Preprocessor):
                     continue
                 raise SnippetMissingError(f"Cannot download snippet '{url}' (HTTP Error {e.code})") from e
 
+    def parse_snippet_target(self, path):
+        """
+        Parse a snippet path specifier into a target.
+
+        Splits `file.md:1:5`, `file.md:1:2,8:9` or `file.md:section` into a dictionary
+        with the keys `path`, `start`, `end` and `section`. Returns `None` if no path is found.
+        """
+
+        start = []
+        end = []
+        section = None
+        parts = self.split_path(path)
+        path = '' if parts is None else parts[0].strip()
+        if not path:
+            return None
+        if parts[1]:
+            for nums in parts[1][1:].split(','):
+                span = nums.split(':')
+                st = int(span[0]) if span[0] else None
+                start.append(st if st is None or st < 0 else max(0, st - 1))
+                en = int(span[1]) if len(span) > 1 and span[1] else None
+                end.append(en)
+        elif parts[2]:
+            section = parts[2][1:]
+
+        return {'path': path, 'start': start, 'end': end, 'section': section}
+
+    def extract_lines(self, start, end, lines):
+        """Extract the specified line ranges from the lines."""
+
+        total = len(lines)
+        final_lines = []
+        for sel in zip(start, end, strict=True):
+            s_start = util.clamp(total + sel[0], 0, total) if sel[0] and sel[0] < 0 else sel[0]
+            s_end = util.clamp(total + 1 + sel[1], 0, total) if sel[1] and sel[1] < 0 else sel[1]
+            final_lines.extend(lines[slice(s_start, s_end, None)])
+        return self.dedent(final_lines) if self.dedent_subsections else final_lines
+
+    def select_snippet_lines(self, lines, target):
+        """Select the lines requested by the target (line ranges or section)."""
+
+        if not lines:
+            return lines
+        if target['start'] and target['end']:
+            return self.extract_lines(target['start'], target['end'], lines)
+        if target['section']:
+            return self.extract_section(target['section'], lines)
+        return lines
+
+    def process_snippet_lines(self, lines, target):
+        """
+        Post-process the snippet lines before nested snippets are parsed.
+
+        Called after `select_snippet_lines`. In addition to the keys returned by
+        `parse_snippet_target`, `target` contains `snippet` (the resolved file path or URL)
+        and `is_url`. Override to transform snippet content. Default returns `lines` unchanged.
+        """
+
+        return lines
 
     def parse_snippets(self, lines, file_name=None, is_url=False, is_section=False):
         """Parse snippets snippet."""
@@ -470,27 +529,15 @@ class SnippetPreprocessor(Preprocessor):
                 if path.startswith(';'):
                     continue
 
-                # Get line numbers (if specified)
-                end = []
-                start = []
-                section = None
-                parts = self.split_path(path)
-                path = '' if parts is None else parts[0].strip()
+                # Get path, line numbers and section (if specified)
+                target = self.parse_snippet_target(path)
                 # Looks like we have an empty file and only lines specified
-                if not path:
+                if target is None:
                     if self.check_paths:
-                        raise SnippetMissingError(f"Snippet at path '{path}' could not be found")
+                        raise SnippetMissingError("Snippet at path '' could not be found")
                     else:
                         continue
-                if parts[1]:
-                    for nums in parts[1][1:].split(','):
-                        span = nums.split(':')
-                        st = int(span[0]) if span[0] else None
-                        start.append(st if st is None or st < 0 else max(0, st - 1))
-                        en = int(span[1]) if len(span) > 1 and span[1] else None
-                        end.append(en)
-                elif parts[2]:
-                    section = parts[2][1:]
+                path = target['path']
 
                 # Ignore path links if we are in external, downloaded content
                 is_link = path.lower().startswith(('https://', 'http://'))
@@ -525,17 +572,10 @@ class SnippetPreprocessor(Preprocessor):
                                     raise
                                 self.failed.add(snippet)
 
-                    if s_lines:
-                        total = len(s_lines)
-                        if start and end:
-                            final_lines = []
-                            for sel in zip(start, end, strict=True):
-                                s_start = util.clamp(total + sel[0], 0, total) if sel[0] and sel[0] < 0 else sel[0]
-                                s_end = util.clamp(total + 1 + sel[1], 0, total) if sel[1] and sel[1] < 0 else sel[1]
-                                final_lines.extend(s_lines[slice(s_start, s_end, None)])
-                            s_lines = self.dedent(final_lines) if self.dedent_subsections else final_lines
-                        elif section:
-                            s_lines = self.extract_section(section, s_lines)
+                    target['snippet'] = snippet
+                    target['is_url'] = url
+                    s_lines = self.select_snippet_lines(s_lines, target)
+                    s_lines = self.process_snippet_lines(s_lines, target)
 
                     # Process lines looking for more snippets
                     new_lines.extend(
@@ -544,7 +584,7 @@ class SnippetPreprocessor(Preprocessor):
                                 s_lines,
                                 snippet,
                                 is_url=url,
-                                is_section=section is not None
+                                is_section=target['section'] is not None
                             )
                         ]
                     )

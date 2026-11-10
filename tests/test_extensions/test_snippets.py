@@ -7,7 +7,8 @@ import tempfile
 import markdown
 import datetime
 from types import SimpleNamespace
-from pymdownx.snippets import SnippetMissingError, SnippetPreprocessor
+from pymdownx.snippets import SnippetMissingError, SnippetExtension, SnippetPreprocessor
+import unittest
 from unittest.mock import patch, MagicMock
 import urllib.error
 from http.client import HTTPMessage
@@ -2215,3 +2216,129 @@ class TestSnippetReadLines(util.MdCase):
             with open(path, 'wb') as f:
                 f.write('caf\u00e9\nline'.encode('latin-1'))
             self.assertEqual(md.preprocessors['snippet'].read_lines(path), ['caf\u00e9', 'line'])
+
+
+class _HookPreprocessor(SnippetPreprocessor):
+    """Snippet preprocessor overriding the extension points."""
+
+    def parse_snippet_target(self, path):
+        """Support `path | upper`."""
+
+        path, sep, flt = path.partition('|')
+        target = super().parse_snippet_target(path.strip())
+        if target is not None:
+            target['upper'] = bool(sep) and flt.strip() == 'upper'
+        return target
+
+    def process_snippet_lines(self, lines, target):
+        """Record calls and optionally upper case the content."""
+
+        self.calls.append(dict(target, lines=list(lines)))
+        return [l.upper() for l in lines] if target['upper'] else lines
+
+    def run(self, lines):
+        """Reset recorded calls."""
+
+        self.calls = []
+        return super().run(lines)
+
+
+class _HookExtension(SnippetExtension):
+    """Snippet extension using `_HookPreprocessor`."""
+
+    def extendMarkdown(self, md):
+        """Register the extension."""
+
+        self.md = md
+        md.registerExtension(self)
+        md.preprocessors.register(_HookPreprocessor(self.getConfigs(), md), "snippet", 32)
+
+
+class TestSnippetsExtensionPoints(unittest.TestCase):
+    """Test the overridable steps of the snippet preprocessor."""
+
+    def setUp(self):
+        """Setup."""
+
+        self.md = markdown.Markdown(
+            extensions=[_HookExtension(base_path=[os.path.join(BASE, '_snippets')])]
+        )
+        self.processor = self.md.preprocessors['snippet']
+
+    def run_snippets(self, src):
+        """Run only the snippet preprocessor."""
+
+        return self.processor.run(src.split('\n'))
+
+    def test_parse_snippet_target_default(self):
+        """Test the default target parsing."""
+
+        parse = SnippetPreprocessor.parse_snippet_target
+        p = self.processor
+        self.assertEqual(
+            parse(p, 'lines.txt'),
+            {'path': 'lines.txt', 'start': [], 'end': [], 'section': None}
+        )
+        self.assertEqual(
+            parse(p, 'lines.txt:2:3,-2:'),
+            {'path': 'lines.txt', 'start': [1, -2], 'end': [3, None], 'section': None}
+        )
+        self.assertEqual(
+            parse(p, 'section.txt:css-section'),
+            {'path': 'section.txt', 'start': [], 'end': [], 'section': 'css-section'}
+        )
+        self.assertIsNone(parse(p, ':1:2'))
+
+    def test_process_receives_target(self):
+        """Test the post-process hook gets the parsed target and resolved path."""
+
+        self.run_snippets('--8<-- "lines.txt:1:2"')
+        call = self.processor.calls[0]
+        self.assertEqual(call['path'], 'lines.txt')
+        self.assertEqual(call['start'], [0])
+        self.assertEqual(call['end'], [2])
+        self.assertIsNone(call['section'])
+        self.assertEqual(call['snippet'], os.path.join(BASE, '_snippets', 'lines.txt'))
+        self.assertFalse(call['is_url'])
+        self.assertEqual(call['lines'], ['This is a multi-line', 'snippet.'])
+
+    def test_process_after_section_selection(self):
+        """Test the hook runs after the section is extracted."""
+
+        result = self.run_snippets('--8<-- "section.txt:css-section | upper"')
+        self.assertEqual(self.processor.calls[0]['section'], 'css-section')
+        self.assertEqual(result, ['DIV {', '    COLOR: RED;', '}'])
+
+    def test_process_line_ranges(self):
+        """Test the hook can transform line ranges."""
+
+        result = self.run_snippets('--8<-- "lines.txt:1:2 | upper"')
+        self.assertEqual(result, ['THIS IS A MULTI-LINE', 'SNIPPET.'])
+
+    def test_process_whole_file_strips_section_markers(self):
+        """Test whole files keep stripping section markers after the hook."""
+
+        result = self.run_snippets('--8<-- "section.txt | upper"')
+        self.assertNotIn('/* --8<-- [START: CSS-SECTION] */', result)
+        self.assertNotIn('/* --8<-- [start: css-section] */', result)
+        self.assertIn('DIV {', result)
+
+    def test_process_before_nested(self):
+        """Test the hook runs before nested snippets are expanded."""
+
+        result = self.run_snippets('--8<-- "a.txt"')
+        self.assertEqual([c['path'] for c in self.processor.calls], ['a.txt', 'b.txt'])
+        self.assertEqual(self.processor.calls[0]['lines'], ['---8<--- "b.txt"', ''])
+        self.assertEqual(result, ['Snippet', '', ''])
+
+    def test_default_behavior_unchanged(self):
+        """Test the default hook leaves content unchanged."""
+
+        md = markdown.Markdown(
+            extensions=[SnippetExtension(base_path=[os.path.join(BASE, '_snippets')])]
+        )
+        result = md.preprocessors['snippet'].run(['--8<-- "lines.txt:1:2,8:9"'])
+        self.assertEqual(
+            result,
+            ['This is a multi-line', 'snippet.', 'This is the end of the file.', 'There is no more.']
+        )
