@@ -445,14 +445,51 @@ class SnippetPreprocessor(Preprocessor):
 
     def process_snippet_lines(self, lines, target):
         """
-        Post-process the snippet lines before nested snippets are parsed.
+        Process the selected lines of a snippet. By default, the lines are returned unchanged.
 
-        Called after `select_snippet_lines`. In addition to the keys returned by
-        `parse_snippet_target`, `target` contains `snippet` (the resolved file path or URL)
-        and `is_url`. Override to transform snippet content. Default returns `lines` unchanged.
+        This is called after the lines (the whole file, line ranges, or a section) are selected, and *before* any
+        snippets nested in those lines are expanded. This means `lines` still contain snippet notation, and anything
+        that rewrites text, like a find and replace, can change the notation of a nested snippet and break it. Use
+        `get_syntax_mask` to leave the notation alone. It also means this does not see the content of nested
+        snippets, only the nested snippets themselves get their own call.
+
+        In addition to the keys returned by `parse_snippet_target`, `target` contains `snippet` (the resolved file
+        path or URL) and `is_url`.
+
+        Return the new lines, and do not modify `lines` in place.
         """
 
         return lines
+
+    def get_syntax_mask(self, lines, is_section=False):
+        """
+        Get which lines are snippet notation.
+
+        Returns a list with a boolean for each line, which is `True` if the line is part of the snippet notation
+        (inline snippets, block markers and the paths between them, and section markers) and will not end up in the
+        content as written. Escaped notation is content, so it is `False`. Pass `is_section` if the lines are a
+        section extracted from a file, as that is when section markers are not treated as notation.
+        """
+
+        mask = []
+        block = False
+        for line in lines:
+            m = self.RE_ALL_SNIPPETS.match(line)
+            if m:
+                if m.group('escape'):
+                    mask.append(False)
+                    continue
+                if not m.group('inline_marker'):
+                    block = not block
+                mask.append(True)
+            elif block:
+                mask.append(True)
+            elif is_section:
+                mask.append(False)
+            else:
+                m2 = self.match_section(line)
+                mask.append(m2 is not None and not m2.group('escape'))
+        return mask
 
     def parse_snippets(self, lines, file_name=None, is_url=False, is_section=False):
         """Parse snippets snippet."""
