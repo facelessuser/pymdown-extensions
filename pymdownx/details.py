@@ -23,9 +23,9 @@ DEALINGS IN THE SOFTWARE.
 """
 from markdown import Extension
 from markdown.blockprocessors import BlockProcessor
-from markdown.util import nearing_recursion_limit
 from .saneheaders import RE_HEADER, SaneHeadersProcessor
 import xml.etree.ElementTree as etree
+from .util import nearing_depth_limit
 import re
 
 RE_NORMAL_HEADING = re.compile(r'^(?P<level>#{1,6})(?P<header>(?:\\.|[^\\]|#+(?=[^#\n]))*?)#*$')
@@ -126,9 +126,9 @@ class DetailsProcessor(BlockProcessor):
 
         # Stop short of the recursion limit and let the content be handled by other processors.
         if self.START.search(block):
-            return not nearing_recursion_limit()
+            return not nearing_depth_limit(self.parser, parent)
         else:
-            return self.parse_content(parent, block)[0] is not None and not nearing_recursion_limit()
+            return self.parse_content(parent, block)[0] is not None and not nearing_depth_limit(self.parser, parent)
 
     def run(self, parent, blocks):
         """Convert to details/summary block."""

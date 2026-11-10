@@ -11,9 +11,11 @@ icon: lucide/scroll-text
 -   **FIX**: Fix an issue where only our test environment required Python Markdown 3.10.3. Installs must require this.
 -   **FIX**: Snippets: Fix quadratic time complexity when parsing very long runs of `;` or `-` in content, and very long
     snippet paths with line ranges.
--   **FIX**: Details (legacy), Tabbed (legacy), FancyLists, Blocks, and Snippets: Gracefully stop short of the recursion
-    limit when content is nested too deeply, instead of raising a `RecursionError`. Content past the limit is no longer
-    specially processed (Snippets skips includes past the limit, as it does for cyclic includes).
+-   **FIX**: Quotes, Details (legacy), Tabbed (legacy), FancyLists, Blocks, and Snippets: Gracefully stop short of the
+    recursion limit when content is nested too deeply, instead of raising a `RecursionError`. This includes content
+    nested inside of a document structure that is already deep, such as a quote or tab inside of many nested lists.
+    Content past the limit is no longer specially processed (Snippets skips includes past the limit, as it does for
+    cyclic includes).
 
 ## 13.0
 
