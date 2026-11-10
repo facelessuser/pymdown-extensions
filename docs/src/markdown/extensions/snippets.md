@@ -263,13 +263,29 @@ For example, with default settings, the retry sequence would be:
 - Second retry: 4 seconds
 - Third retry: 6 seconds
 
+If the server sends a `Retry-After` header (either a number of seconds or a date), that is used instead of the backoff
+for that retry, as retrying sooner would only be rejected again. If the server asks for longer than the longest we would
+wait on our own (`backoff_factor` times `max_retries`, 6 seconds with the default settings), there is no retry and the
+snippet fails right away instead of waiting. This means that if `backoff_factor` is `0`, which never waits, a
+`Retry-After` always fails right away.
+
+Retrying blocks the build while it waits. The longest total time spent waiting on a single URL is
+`backoff_factor * max_retries * (max_retries + 1) / 2` (12 seconds with the default settings). A URL that fails is only
+requested once while processing a document, no matter how many times it is included, but each different URL that is rate
+limited can wait this long. If that is too slow for your use case, lower `backoff_factor` or `max_retries`. Setting
+`max_retries` to `0` disables retrying altogether.
+
 /// warning | Nested Snippets
 One thing to note though, if a snippet is included via a URL, all nested snippets within it must also be URLs. URL
 snippets are not allowed to reference local snippet files.
 ///
 
 /// new | New 10.16
-`max_retries` and `backoff_retries` was introduced in 10.16.
+`max_retries` and `backoff_factor` were introduced in 10.16.
+///
+
+/// new | New 13.1
+`Retry-After` support was added in 13.1.
 ///
 
 /// new | New 9.5

@@ -25,6 +25,8 @@ DEALINGS IN THE SOFTWARE.
 from markdown import Extension
 from markdown.preprocessors import Preprocessor
 from markdown.util import nearing_recursion_limit
+from email.utils import parsedate_to_datetime
+import datetime
 import functools
 import urllib
 import re
@@ -67,9 +69,13 @@ class SnippetPreprocessor(Preprocessor):
         '''
     )
 
+    # The lazy `pre` tries every position, and the runs of `;` and `-` after it get re-scanned from each one.
+    # The lookarounds skip positions that cannot be the shortest match in constant time (it can't follow a `;`,
+    # and it can't split a run of `-` as the marker would have absorbed them), so we never re-scan a run.
     RE_SNIPPET_SECTION = re.compile(
         r'''(?xi)
         ^(?P<pre>.*?)
+        (?<!;)(?!(?<=-)-)
         (?P<escape>;*)
         (?P<inline_marker>-{1,}8<-{1,}[ \t]+)
         (?P<section>\[[ \t]*(?P<type>start|end)[ \t]*:[ \t]*(?P<name>[a-z][-_0-9a-z]*)[ \t]*\])
@@ -77,9 +83,14 @@ class SnippetPreprocessor(Preprocessor):
         '''
     )
 
+    # Reference for how a path is split into the path, line ranges, and section. This is not used directly, other
+    # than for paths with newlines, as backtracking makes it quadratic on long paths. See `split_path`.
     RE_SNIPPET_FILE = re.compile(
         r'(?i)(.*?)(?:((?::-?[0-9]*){1,2}(?:(?:,(?=[-0-9:])-?[0-9]*)(?::-?[0-9]*)?)*)|(:[a-z][-_0-9a-z]*))?$'
     )
+    RE_SECTION_CHAR = re.compile(r'(?i)[-_0-9a-z]')
+    RE_SECONDS = re.compile(r'[0-9]+')
+    RE_LETTER = re.compile(r'(?i)[a-z]')
 
     def __init__(self, config, md):
         """Initialize."""
@@ -88,6 +99,8 @@ class SnippetPreprocessor(Preprocessor):
         if isinstance(base, (str, os.PathLike)):
             base = [base]
         self.base_path = [os.path.abspath(b) for b in base]
+        self.bases = None
+        self.failed = set()
         self.restrict_base_path = config['restrict_base_path']
         self.encoding = config.get('encoding')
         self.check_paths = config.get('check_paths')
@@ -104,6 +117,78 @@ class SnippetPreprocessor(Preprocessor):
 
         self.download.cache_clear()
 
+    def match_section(self, line):
+        """Match a section marker in the line, if there is one."""
+
+        # Every section marker contains `8<-`. Checking for it is far cheaper than the regular expression, and
+        # nearly every line in a document does not have it.
+        return self.RE_SNIPPET_SECTION.match(line) if '8<-' in line else None
+
+    def split_path(self, path):
+        """
+        Split a snippet path into the path, the line ranges (`:1:5,10:`), and the section (`:name`).
+
+        This returns the same groups as `RE_SNIPPET_FILE.match(path).groups()`, but in linear time.
+
+        The path is everything before the first `:` that starts a valid specifier that runs to the end of the string.
+        Each part of a specifier is unambiguous (digits are never confused with `:` or `,`), so there is nothing
+        for the regular expression to backtrack into. We can therefore find which `:` are valid starts in a single
+        pass from the end instead of trying, and re-scanning the remainder for, each one.
+        """
+
+        if '\n' in path:
+            # Newlines are handled specially by `.` and `$`, so let the regular expression decide.
+            m = self.RE_SNIPPET_FILE.match(path)
+            return None if m is None else m.groups()
+
+        if ':' not in path:
+            return path, None, None
+
+        size = len(path)
+
+        # The end of the run of digits starting at each index
+        digits = [size] * (size + 1)
+        for i in range(size - 1, -1, -1):
+            digits[i] = digits[i + 1] if '0' <= path[i] <= '9' else i
+
+        def number_end(i):
+            """Get the end of an optionally negative number (`-?[0-9]*`) that starts at `i`."""
+
+            return digits[i + 1] if i < size and path[i] == '-' else digits[i]
+
+        # Is everything from each index a (possibly empty) series of `,N` or `,N:N` items?
+        # A comma has to be followed by something that can start a number.
+        tail = [False] * (size + 1)
+        tail[size] = True
+        for i in range(size - 1, -1, -1):
+            if path[i] == ',' and i + 1 < size and path[i + 1] in '-0123456789:':
+                j = number_end(i + 1)
+                if j < size and path[j] == ':':
+                    j = number_end(j + 1)
+                tail[i] = tail[j]
+
+        # Where the run of section name characters at the end of the path starts
+        name = size
+        while name > 0 and self.RE_SECTION_CHAR.fullmatch(path[name - 1]):
+            name -= 1
+
+        colon = path.find(':')
+        while colon != -1:
+            # Line ranges: `:N`, and an optional second `:N` (which is not optional if it is there), and then the tail
+            end = number_end(colon + 1)
+            if end < size and path[end] == ':':
+                end = number_end(end + 1)
+            if tail[end]:
+                return path[:colon], path[colon:], None
+
+            # Section: `:` and a letter, and then only name characters until the end
+            if name <= colon + 1 < size and self.RE_LETTER.fullmatch(path[colon + 1]):
+                return path[:colon], None, path[colon:]
+
+            colon = path.find(':', colon + 1)
+
+        return path, None, None
+
     def extract_section(self, section, lines):
         """Extract the specified section from the lines."""
 
@@ -113,7 +198,7 @@ class SnippetPreprocessor(Preprocessor):
         for l in lines:
 
             # Found a snippet section marker with our specified name
-            m = self.RE_SNIPPET_SECTION.match(l)
+            m = self.match_section(l)
 
             # Handle escaped line
             if m and m.group('escape'):
@@ -162,32 +247,81 @@ class SnippetPreprocessor(Preprocessor):
 
         return textwrap.dedent('\n'.join(lines)).split('\n')
 
+    def read_lines(self, path):
+        """
+        Read a file as a list of lines without line endings.
+
+        Opening the file in text mode already turns every kind of line ending into a plain newline, so we can split on
+        that. A file that ends with a line ending has a final empty line, and an empty file has no lines at all.
+        """
+
+        with open(path, 'r', encoding=self.encoding) as f:
+            text = f.read()
+        return text.split('\n') if text else []
+
+    def get_bases(self):
+        """
+        Get the base paths that exist, and whether each is a directory.
+
+        This is only checked once per run, instead of for every snippet, as it will not change while we process
+        a document.
+        """
+
+        if self.bases is None:
+            self.bases = [(base, os.path.isdir(base)) for base in self.base_path if os.path.exists(base)]
+        return self.bases
+
     def get_snippet_path(self, path):
         """Get snippet path."""
 
         snippet = None
-        for base in self.base_path:
-            if os.path.exists(base):
-                if os.path.isdir(base):
-                    if self.restrict_base_path:
-                        filename = os.path.abspath(os.path.join(base, path))
-                        # If the absolute path is no longer under the specified base path, reject the file
-                        # Append `os.sep` so a sibling directory whose name shares a prefix
-                        # (e.g. `/x/docs` vs `/x/docs_evil`) cannot satisfy the check.
-                        if not filename.startswith(base + os.sep if not base.endswith(os.sep) else base):
-                            continue
-                    else:
-                        filename = os.path.join(base, path)
-                    if os.path.exists(filename):
-                        snippet = filename
-                        break
+        for base, is_dir in self.get_bases():
+            if is_dir:
+                if self.restrict_base_path:
+                    filename = os.path.abspath(os.path.join(base, path))
+                    # If the absolute path is no longer under the specified base path, reject the file
+                    # Append `os.sep` so a sibling directory whose name shares a prefix
+                    # (e.g. `/x/docs` vs `/x/docs_evil`) cannot satisfy the check.
+                    if not filename.startswith(base + os.sep if not base.endswith(os.sep) else base):
+                        continue
                 else:
-                    dirname = os.path.dirname(base)
-                    filename = os.path.join(dirname, path)
-                    if os.path.exists(filename) and os.path.samefile(filename, base):
-                        snippet = filename
-                        break
+                    filename = os.path.join(base, path)
+                if os.path.exists(filename):
+                    snippet = filename
+                    break
+            else:
+                dirname = os.path.dirname(base)
+                filename = os.path.join(dirname, path)
+                if os.path.exists(filename) and os.path.samefile(filename, base):
+                    snippet = filename
+                    break
         return snippet
+
+    def get_retry_after(self, error):
+        """
+        Get how many seconds the server asked us to wait before trying again, if it did.
+
+        The `Retry-After` header is either a number of seconds or an HTTP date. If it is missing or we cannot
+        understand it, `None` is returned, and we fall back to our own backoff.
+        """
+
+        headers = getattr(error, 'headers', None)
+        value = headers.get('Retry-After') if headers is not None else None
+        if not isinstance(value, str):
+            return None
+
+        value = value.strip()
+        if self.RE_SECONDS.fullmatch(value):
+            return int(value)
+
+        try:
+            date = parsedate_to_datetime(value)
+        except (TypeError, ValueError, OverflowError):
+            return None
+
+        if date.tzinfo is None:
+            date = date.replace(tzinfo=datetime.timezone.utc)
+        return max(0, (date - datetime.datetime.now(datetime.timezone.utc)).total_seconds())
 
     @functools.lru_cache  # noqa: B019
     def download(self, url):
@@ -244,6 +378,18 @@ class SnippetPreprocessor(Preprocessor):
                 if e.code == 429 and retries:
                     retries -= 1
                     wait = self.backoff_factor * (self.max_retries - retries)
+
+                    # If the server told us how long to wait, respect that. Retrying sooner is pointless, so if it is
+                    # more than the longest we would wait on our own, give up now instead of failing after waiting.
+                    retry_after = self.get_retry_after(e)
+                    if retry_after is not None:
+                        if retry_after > self.backoff_factor * self.max_retries:
+                            raise SnippetMissingError(
+                                f"Cannot download snippet '{url}' (HTTP Error 429, "
+                                f"server asked to wait {retry_after:.0f} seconds before retrying)"
+                            ) from e
+                        wait = retry_after
+
                     time.sleep(wait)
                     continue
                 raise SnippetMissingError(f"Cannot download snippet '{url}' (HTTP Error {e.code})") from e
@@ -286,7 +432,7 @@ class SnippetPreprocessor(Preprocessor):
             elif not block:
                 if not is_section:
                     # Check for section line, if present remove, if escaped, reformat it
-                    m2 = self.RE_SNIPPET_SECTION.match(line)
+                    m2 = self.match_section(line)
                     if m2 and m2.group('escape'):
                         line = (
                             m2.group('pre') + m2.group('escape').replace(';', '', 1) + m2.group('inline_marker') +
@@ -328,23 +474,23 @@ class SnippetPreprocessor(Preprocessor):
                 end = []
                 start = []
                 section = None
-                m = self.RE_SNIPPET_FILE.match(path)
-                path = '' if m is None else m.group(1).strip()
+                parts = self.split_path(path)
+                path = '' if parts is None else parts[0].strip()
                 # Looks like we have an empty file and only lines specified
                 if not path:
                     if self.check_paths:
                         raise SnippetMissingError(f"Snippet at path '{path}' could not be found")
                     else:
                         continue
-                if m.group(2):
-                    for nums in m.group(2)[1:].split(','):
+                if parts[1]:
+                    for nums in parts[1][1:].split(','):
                         span = nums.split(':')
                         st = int(span[0]) if span[0] else None
                         start.append(st if st is None or st < 0 else max(0, st - 1))
                         en = int(span[1]) if len(span) > 1 and span[1] else None
                         end.append(en)
-                elif m.group(3):
-                    section = m.group(3)[1:]
+                elif parts[2]:
+                    section = parts[2][1:]
 
                 # Ignore path links if we are in external, downloaded content
                 is_link = path.lower().startswith(('https://', 'http://'))
@@ -365,22 +511,19 @@ class SnippetPreprocessor(Preprocessor):
 
                     if not url:
                         # Read file content
-                        with open(snippet, 'r', encoding=self.encoding) as f:
-                            last = False
-                            s_lines = []
-                            for l in f:
-                                last = l.endswith(('\r', '\n'))
-                                s_lines.append(l.strip('\r\n'))
-                            if last:
-                                s_lines.append('')
+                        s_lines = self.read_lines(snippet)
                     else:
                         # Read URL content
-                        try:
-                            s_lines = self.download(snippet)
-                        except SnippetMissingError:
-                            if self.check_paths:
-                                raise
-                            s_lines = []
+                        s_lines = []
+                        # Don't try a URL that already failed again, as each attempt can take a long time
+                        # (timeouts, retries, and backoff), but do try again the next time we run.
+                        if snippet not in self.failed:
+                            try:
+                                s_lines = self.download(snippet)
+                            except SnippetMissingError:
+                                if self.check_paths:
+                                    raise
+                                self.failed.add(snippet)
 
                     if s_lines:
                         total = len(s_lines)
@@ -419,6 +562,8 @@ class SnippetPreprocessor(Preprocessor):
         """Process snippets."""
 
         self.seen = set()
+        self.bases = None
+        self.failed = set()
         if self.auto_append:
             lines.extend("\n\n-8<-\n{}\n-8<-\n".format('\n\n'.join(self.auto_append)).split('\n'))
 

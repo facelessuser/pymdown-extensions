@@ -198,6 +198,7 @@ lexdotdev
 linkafies
 linter
 localhost
+lookarounds
 lowercased
 lowercases
 macOS
