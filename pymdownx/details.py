@@ -23,6 +23,7 @@ DEALINGS IN THE SOFTWARE.
 """
 from markdown import Extension
 from markdown.blockprocessors import BlockProcessor
+from markdown.util import nearing_recursion_limit
 from .saneheaders import RE_HEADER, SaneHeadersProcessor
 import xml.etree.ElementTree as etree
 import re
@@ -123,10 +124,11 @@ class DetailsProcessor(BlockProcessor):
     def test(self, parent, block):
         """Test block."""
 
+        # Stop short of the recursion limit and let the content be handled by other processors.
         if self.START.search(block):
-            return True
+            return not nearing_recursion_limit()
         else:
-            return self.parse_content(parent, block)[0] is not None
+            return self.parse_content(parent, block)[0] is not None and not nearing_recursion_limit()
 
     def run(self, parent, blocks):
         """Convert to details/summary block."""

@@ -21,6 +21,7 @@ Adapted to support "fancy" behavior by Copyright 2024 Isaac Muse.
 Work in progress, not fully tested.
 """
 from markdown.blockprocessors import BlockProcessor
+from .util import nearing_depth_limit
 from markdown.treeprocessors import Treeprocessor
 from .blocks.block import Block
 from .blocks import BlocksExtension
@@ -150,7 +151,8 @@ class FancyOListProcessor(BlockProcessor):
     def test(self, parent, block):
         """Test to see if block starts with a list."""
 
-        return bool(self.list_re.match(block))
+        # Stop short of the recursion limit and let the content be handled by other processors.
+        return bool(self.list_re.match(block)) and not nearing_depth_limit(self.parser, parent)
 
     def run(self, parent, blocks):
         """Process list items."""

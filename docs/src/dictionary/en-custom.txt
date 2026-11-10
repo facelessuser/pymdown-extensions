@@ -243,6 +243,7 @@ raphael
 rc
 reStructuredText
 rebranded
+recursing
 regex
 reindent
 reinstalling
@@ -257,6 +258,7 @@ scrollable
 scrollbar
 scrollbars
 selectable
+serializer
 shortener
 shortname
 shortnames

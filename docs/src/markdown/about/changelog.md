@@ -3,6 +3,13 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 13.0.1
+
+-   **FIX**: Fix an issue where only our test environment required Python Markdown 3.10.3. Installs must require this.
+-   **FIX**: Details (legacy), Tabbed (legacy), FancyLists, Blocks, and Snippets: Gracefully stop short of the recursion
+    limit when content is nested too deeply, instead of raising a `RecursionError`. Content past the limit is no longer
+    specially processed (Snippets skips includes past the limit, as it does for cyclic includes).
+
 ## 13.0
 
 -   **BREAK**: Arithmatex: Generic mode is now the default mode as the old MathJax script approach has not been

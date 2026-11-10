@@ -24,6 +24,7 @@ DEALINGS IN THE SOFTWARE.
 """
 from markdown import Extension
 from markdown.preprocessors import Preprocessor
+from markdown.util import nearing_recursion_limit
 import functools
 import urllib
 import re
@@ -358,7 +359,8 @@ class SnippetPreprocessor(Preprocessor):
                 if snippet:
 
                     # This is in the stack and we don't want an infinite loop!
-                    if snippet in self.seen:
+                    # Also, stop short of the recursion limit if the nested includes get too deep.
+                    if snippet in self.seen or nearing_recursion_limit():
                         continue
 
                     if not url:

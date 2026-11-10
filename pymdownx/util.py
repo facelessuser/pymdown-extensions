@@ -7,6 +7,9 @@ Copyright (c) 2017 Isaac Muse <isaacmuse@gmail.com>
 """
 from __future__ import annotations
 from markdown import Markdown
+from markdown.blockparser import BlockParser
+import xml.etree.ElementTree as etree
+from types import FrameType
 import sys
 import copy
 import re
@@ -26,6 +29,38 @@ else:
 
 PY39 = (3, 9) <= sys.version_info
 PY314 = (3, 14) <= sys.version_info
+
+# Stop this many levels short of the recursion limit (the same margin Python Markdown uses)
+RECURSION_MARGIN = 100
+
+
+def nearing_depth_limit(parser: BlockParser, parent: etree.Element | None = None) -> bool:
+    """
+    Check if we are nearing the recursion limit, either on the call stack or in the element tree.
+
+    Python Markdown's `nearing_recursion_limit` only considers the current call stack. Extensions that nest content
+    without recursing (e.g. by tracking nested blocks or lists via state) can build an element tree that is deeper than
+    the recursion limit even though the call stack stays shallow. The tree is later recursively walked by tree
+    processors and the serializer, which will raise a `RecursionError` if it is too deep.
+
+    Parsing is append only, so `parent` is always on the chain of last children from the root of the tree. We can
+    determine the depth of the tree at `parent` by following that chain. Both the depth of the call stack and the
+    depth of the tree are considered together, which is conservative as the tree gets walked from a shallower stack.
+    """
+
+    stack_depth = 0
+    frame: FrameType | None = sys._getframe(1)
+    while frame:
+        stack_depth += 1
+        frame = frame.f_back
+
+    tree_depth = 0
+    node = getattr(parser, 'root', None)
+    while node is not None and node is not parent:
+        tree_depth += 1
+        node = node[-1] if len(node) else None
+
+    return sys.getrecursionlimit() - (stack_depth + tree_depth) < RECURSION_MARGIN
 
 
 def clamp(value: float, mn: float, mx: float) -> float:

@@ -232,6 +232,11 @@ class BlocksProcessor(BlockProcessor):
 
         # Is this the start of a new block?
         m = self.start.search(block)
+
+        # Stop short of the recursion limit and let the content be handled by other processors.
+        if m and util.nearing_depth_limit(self.parser, parent):
+            return False
+
         if m:
 
             pre_text = block[:m.start()] if m.start() > 0 else None
