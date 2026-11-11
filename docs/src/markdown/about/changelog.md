@@ -8,6 +8,9 @@ icon: lucide/scroll-text
 -   **NEW**: Snippets: Respect the `Retry-After` header when a URL responds with a 429. The server's requested delay is
     used instead of our backoff, and the snippet fails right away if it is longer than the longest we would wait
     ourselves (`backoff_factor` times `max_retries`).
+-   **NEW**: Snippets: Split snippet processing into steps that an extension can override (`parse_snippet_target`,
+    `select_snippet_lines`, and `process_snippet_lines`) to add notation or change included content, and add
+    `get_syntax_mask` to find which lines are snippet notation so they can be left alone. (#3040)
 -   **FIX**: Fix an issue where only our test environment required Python Markdown 3.10.3. Installs must require this.
 -   **FIX**: Snippets: Fix quadratic time complexity when parsing very long runs of `;` or `-` in content, and very long
     snippet paths with line ranges.

@@ -7,7 +7,8 @@ import tempfile
 import markdown
 import datetime
 from types import SimpleNamespace
-from pymdownx.snippets import SnippetMissingError, SnippetPreprocessor
+from pymdownx.snippets import SnippetMissingError, SnippetExtension, SnippetPreprocessor
+import unittest
 from unittest.mock import patch, MagicMock
 import urllib.error
 from http.client import HTTPMessage
@@ -2215,3 +2216,295 @@ class TestSnippetReadLines(util.MdCase):
             with open(path, 'wb') as f:
                 f.write('caf\u00e9\nline'.encode('latin-1'))
             self.assertEqual(md.preprocessors['snippet'].read_lines(path), ['caf\u00e9', 'line'])
+
+
+class _HookPreprocessor(SnippetPreprocessor):
+    """Snippet preprocessor overriding the extension points."""
+
+    def parse_snippet_target(self, path):
+        """Support `path | upper`."""
+
+        path, sep, flt = path.partition('|')
+        target = super().parse_snippet_target(path.strip())
+        if target is not None:
+            target['upper'] = bool(sep) and flt.strip() == 'upper'
+        return target
+
+    def process_snippet_lines(self, lines, target):
+        """Record calls and optionally upper case the content."""
+
+        self.calls.append(dict(target, lines=list(lines)))
+        return [l.upper() for l in lines] if target['upper'] else lines
+
+    def run(self, lines):
+        """Reset recorded calls."""
+
+        self.calls = []
+        return super().run(lines)
+
+
+class _HookExtension(SnippetExtension):
+    """Snippet extension using `_HookPreprocessor`."""
+
+    def extendMarkdown(self, md):
+        """Register the extension."""
+
+        self.md = md
+        md.registerExtension(self)
+        md.preprocessors.register(_HookPreprocessor(self.getConfigs(), md), "snippet", 32)
+
+
+class TestSnippetsExtensionPoints(unittest.TestCase):
+    """Test the overridable steps of the snippet preprocessor."""
+
+    def setUp(self):
+        """Setup."""
+
+        self.md = markdown.Markdown(
+            extensions=[_HookExtension(base_path=[os.path.join(BASE, '_snippets')])]
+        )
+        self.processor = self.md.preprocessors['snippet']
+
+    def run_snippets(self, src):
+        """Run only the snippet preprocessor."""
+
+        return self.processor.run(src.split('\n'))
+
+    def test_parse_snippet_target_default(self):
+        """Test the default target parsing."""
+
+        parse = SnippetPreprocessor.parse_snippet_target
+        p = self.processor
+        self.assertEqual(
+            parse(p, 'lines.txt'),
+            {'path': 'lines.txt', 'start': [], 'end': [], 'section': None}
+        )
+        self.assertEqual(
+            parse(p, 'lines.txt:2:3,-2:'),
+            {'path': 'lines.txt', 'start': [1, -2], 'end': [3, None], 'section': None}
+        )
+        self.assertEqual(
+            parse(p, 'section.txt:css-section'),
+            {'path': 'section.txt', 'start': [], 'end': [], 'section': 'css-section'}
+        )
+        self.assertIsNone(parse(p, ':1:2'))
+
+    def test_process_receives_target(self):
+        """Test the post-process hook gets the parsed target and resolved path."""
+
+        self.run_snippets('--8<-- "lines.txt:1:2"')
+        call = self.processor.calls[0]
+        self.assertEqual(call['path'], 'lines.txt')
+        self.assertEqual(call['start'], [0])
+        self.assertEqual(call['end'], [2])
+        self.assertIsNone(call['section'])
+        self.assertEqual(call['snippet'], os.path.join(BASE, '_snippets', 'lines.txt'))
+        self.assertFalse(call['is_url'])
+        self.assertEqual(call['lines'], ['This is a multi-line', 'snippet.'])
+
+    def test_process_after_section_selection(self):
+        """Test the hook runs after the section is extracted."""
+
+        result = self.run_snippets('--8<-- "section.txt:css-section | upper"')
+        self.assertEqual(self.processor.calls[0]['section'], 'css-section')
+        self.assertEqual(result, ['DIV {', '    COLOR: RED;', '}'])
+
+    def test_process_line_ranges(self):
+        """Test the hook can transform line ranges."""
+
+        result = self.run_snippets('--8<-- "lines.txt:1:2 | upper"')
+        self.assertEqual(result, ['THIS IS A MULTI-LINE', 'SNIPPET.'])
+
+    def test_process_whole_file_strips_section_markers(self):
+        """Test whole files keep stripping section markers after the hook."""
+
+        result = self.run_snippets('--8<-- "section.txt | upper"')
+        self.assertNotIn('/* --8<-- [START: CSS-SECTION] */', result)
+        self.assertNotIn('/* --8<-- [start: css-section] */', result)
+        self.assertIn('DIV {', result)
+
+    def test_process_before_nested(self):
+        """Test the hook runs before nested snippets are expanded."""
+
+        result = self.run_snippets('--8<-- "a.txt"')
+        self.assertEqual([c['path'] for c in self.processor.calls], ['a.txt', 'b.txt'])
+        self.assertEqual(self.processor.calls[0]['lines'], ['---8<--- "b.txt"', ''])
+        self.assertEqual(result, ['Snippet', '', ''])
+
+    def test_default_behavior_unchanged(self):
+        """Test the default hook leaves content unchanged."""
+
+        md = markdown.Markdown(
+            extensions=[SnippetExtension(base_path=[os.path.join(BASE, '_snippets')])]
+        )
+        result = md.preprocessors['snippet'].run(['--8<-- "lines.txt:1:2,8:9"'])
+        self.assertEqual(
+            result,
+            ['This is a multi-line', 'snippet.', 'This is the end of the file.', 'There is no more.']
+        )
+
+
+class _RenamePreprocessor(SnippetPreprocessor):
+    """Rename a term in included content: `--8<-- "file.md | rename old new"`."""
+
+    protect = True
+
+    def parse_snippet_target(self, path):
+        """Parse the target and the rename."""
+
+        path, sep, spec = path.partition('|')
+        target = super().parse_snippet_target(path.strip())
+        if target is not None:
+            target['rename'] = spec.split()[1:] if sep else None
+        return target
+
+    def process_snippet_lines(self, lines, target):
+        """Rename the term, but not in the snippet notation."""
+
+        if not target['rename']:
+            return lines
+        old, new = target['rename']
+        if not self.protect:
+            return [line.replace(old, new) for line in lines]
+        mask = self.get_syntax_mask(lines, target['section'] is not None)
+        return [line if syntax else line.replace(old, new) for line, syntax in zip(lines, mask, strict=True)]
+
+
+class _RenameExtension(SnippetExtension):
+    """Snippets extension that uses `_RenamePreprocessor`."""
+
+    def extendMarkdown(self, md):
+        """Register the extension."""
+
+        self.md = md
+        md.registerExtension(self)
+        md.preprocessors.register(_RenamePreprocessor(self.getConfigs(), md), 'snippet', 32)
+
+
+class TestSnippetSyntaxMask(util.MdCase):
+    """Test finding which lines are snippet notation, so hooks can leave them alone."""
+
+    extension = ['pymdownx.snippets']
+
+    def setUp(self):
+        """Setup."""
+
+        super().setUp()
+        self.preprocessor = self.md.preprocessors['snippet']
+
+    def test_known(self):
+        """Test which lines are notation."""
+
+        lines = [
+            'content',                      # 0: content
+            '--8<-- "a.md"',                # 1: inline snippet
+            '-8<- "b.md:1:2"',              # 2: inline snippet
+            '--8<-- [start:name]',          # 3: section marker
+            '--8<-- [end:name]',            # 4: section marker
+            ';--8<-- "escaped.md"',         # 5: escaped, so content
+            ';--8<-- [start:name]',         # 6: escaped section marker, so content
+            '--8<--',                       # 7: start of block
+            'c.md',                         # 8: path in block
+            '',                             # 9: empty path in block
+            ';commented.md',                # 10: commented path in block
+            '--8<-- "ignored.md"',          # 11: inline notation under a block is ignored
+            ';--8<-- "escaped2.md"',        # 12: escaped, so content, even in a block
+            '--8<--',                       # 13: end of block
+            'after the block',              # 14: content
+            '    --8<-- "indented.md"',     # 15: indented inline snippet
+        ]
+        self.assertEqual(
+            self.preprocessor.get_syntax_mask(lines),
+            [False, True, True, True, True, False, False, True, True, True, True, True, False, True, False, True]
+        )
+
+    def test_section(self):
+        """Test section markers are only notation when the lines are not a section."""
+
+        lines = ['--8<-- [start:name]', 'content', '--8<-- "a.md"']
+        self.assertEqual(self.preprocessor.get_syntax_mask(lines), [True, False, True])
+        self.assertEqual(self.preprocessor.get_syntax_mask(lines, True), [False, False, True])
+
+    def test_matches_parser(self):
+        """Test the notation is exactly what the parser does not keep as content."""
+
+        rng = random.Random(5)
+        pieces = [
+            'text', 'more text', '', '   ', '--8<--', '-8<-', '--8<-- "none.md"', '-8<- "none.md:1:2"',
+            '--8<-- "none.md:section"', 'none.md', 'none.md:3:4', ';comment.md', '--8<-- [start:a]',
+            '--8<-- [end:a]', '--8<-- [Start : b-1 ]', 'x --8<-- [start:a] y', ';--8<-- "e.md"', ';--8<--',
+            ';;--8<-- [start:a]', 'a;b;--8<-- [end:c]', '  --8<-- "indented.md"', '\t--8<--'
+        ]
+        with tempfile.TemporaryDirectory() as d:
+            md = markdown.Markdown(
+                extensions=['pymdownx.snippets'], extension_configs={'pymdownx.snippets': {'base_path': [d]}}
+            )
+            preprocessor = md.preprocessors['snippet']
+            for _ in range(5000):
+                lines = [rng.choice(pieces) for _ in range(rng.randint(0, 8))]
+                for is_section in (False, True):
+                    mask = preprocessor.get_syntax_mask(lines, is_section)
+                    # None of the snippets exist, so what is left is only the content (and escaping is removed).
+                    # An empty path in a block is the one notation that adds a blank line, so we ignore blank lines.
+                    preprocessor.seen = set()
+                    result = preprocessor.parse_snippets(list(lines), is_section=is_section)
+                    expected = [line for line, syntax in zip(lines, mask, strict=True) if not syntax]
+                    self.assertEqual(
+                        [line.replace(';', '') for line in result if line],
+                        [line.replace(';', '') for line in expected if line],
+                        (lines, is_section)
+                    )
+
+
+class TestSnippetHookNotation(unittest.TestCase):
+    """Test that a hook sees notation, and can leave it alone."""
+
+    def make(self, d, protect, check_paths=False):
+        """Make a Markdown object that renames a term."""
+
+        extension = _RenameExtension(base_path=[d], check_paths=check_paths)
+        md = markdown.Markdown(extensions=[extension])
+        md.preprocessors['snippet'].protect = protect
+        return md
+
+    def write(self, d):
+        """Write snippets, one that nests another in both notations."""
+
+        for name, content in (
+            ('intro.md', 'Welcome\n\n--8<-- "details.md"\n\n--8<--\ndetails.md\n--8<--\n\nBye\n'),
+            ('details.md', 'here are the details\n')
+        ):
+            with open(os.path.join(d, name), 'w', encoding='utf-8') as f:
+                f.write(content)
+
+    def test_notation_can_be_left_alone(self):
+        """Test a hook that leaves notation alone does not break nested snippets."""
+
+        with tempfile.TemporaryDirectory() as d:
+            self.write(d)
+            md = self.make(d, True, True)
+            result = md.preprocessors['snippet'].run(['--8<-- "intro.md | rename details summary"'])
+
+        # Only content in the file with the hook is changed. Nested snippets have no hook, so are left as they are.
+        self.assertEqual(
+            result,
+            ['Welcome', '', 'here are the details', '', '', 'here are the details', '', '', 'Bye', '']
+        )
+
+    def test_notation_is_seen_by_the_hook(self):
+        """Test a hook that does not leave the notation alone changes it, as it is text before nested snippets."""
+
+        with tempfile.TemporaryDirectory() as d:
+            self.write(d)
+            md = self.make(d, False)
+
+            # The nested snippets are quietly lost
+            self.assertEqual(
+                md.preprocessors['snippet'].run(['--8<-- "intro.md | rename details summary"']),
+                ['Welcome', '', '', '', 'Bye', '']
+            )
+
+            # Or, if we are checking, it fails with the name that was changed
+            with self.assertRaises(SnippetMissingError) as cm:
+                self.make(d, False, True).preprocessors['snippet'].run(['--8<-- "intro.md | rename details summary"'])
+            self.assertIn("'summary.md'", str(cm.exception))

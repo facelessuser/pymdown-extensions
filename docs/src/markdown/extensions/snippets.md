@@ -320,6 +320,91 @@ is especially useful for including a page of reference links or abbreviations on
 Snippets provides an `auto_append` option that allows a user to specify a list of files that will be automatically
 appended to every Markdown content. Each entry in the list is searched for relative to the `base_path` entries.
 
+## Extending Snippets
+
+/// new | New 13.1
+///
+
+Snippets is meant to be simple and predictable, so it does not try to support every way you might want to transform
+included content. Instead, the preprocessor is split into steps that a third party extension can override to add its own
+notation, or to change content as it is included.
+
+For each snippet, the preprocessor does the following:
+
+1. `parse_snippet_target(path)` splits the text that was specified, such as `file.md:1:5`, `file.md:1:2,8:9`, or
+   `file.md:section`, into a target dictionary with the keys `path`, `start`, `end`, and `section`. It returns
+   `#!py None` if there is no path. Override this to parse extra notation.
+2. The snippet is found and read in. Before this happens, the dictionary is given two more keys, `snippet` (the path of
+   the file, or the URL) and `is_url`.
+3. `select_snippet_lines(lines, target)` picks out the requested lines or section (using `extract_lines` and
+   `extract_section`).
+4. `process_snippet_lines(lines, target)` is called with the selected lines. By default, it returns them unchanged.
+   Override this to change the content.
+5. Any snippets in those lines are then expanded in the same way, each getting its own turn through these steps.
+
+/// warning | Lines Still Contain Snippet Notation
+`process_snippet_lines` runs *before* snippets nested in the lines are expanded. This has two consequences:
+
+- The lines contain the notation of any nested snippets. A change that rewrites text, such as a find and replace, can
+  rewrite that notation, and the nested snippet will then be lost (or fail if `check_paths` is enabled), often with a
+  confusing path. For example, renaming `details` to `summary` would change `--8<-- "details.md"` to
+  `--8<-- "summary.md"`.
+- Changes are not applied to the content of nested snippets, only to the lines of the snippet that included them. A
+  nested snippet is changed only if it is given a change of its own.
+
+`get_syntax_mask(lines, is_section)` returns a list with a boolean for every line, which is `#!py True` if the line is
+snippet notation (including section markers, block markers, and the paths in between), so it can be skipped. Pass
+`is_section` as `#!py target['section'] is not None`.
+///
+
+The following is an extension that adds a `rename` change to a snippet, which is used as
+`--8<-- "file.md:section | rename old new"`. It leaves any notation alone.
+
+```py
+from pymdownx.snippets import SnippetExtension, SnippetPreprocessor
+
+
+class RenamePreprocessor(SnippetPreprocessor):
+    """Rename a term in included content."""
+
+    def parse_snippet_target(self, path):
+        """Parse the target, and the rename if there is one."""
+
+        path, sep, spec = path.partition('|')
+        target = super().parse_snippet_target(path.strip())
+        if target is not None:
+            target['rename'] = spec.split()[1:] if sep else None
+        return target
+
+    def process_snippet_lines(self, lines, target):
+        """Rename the term, but not in snippet notation."""
+
+        if not target['rename']:
+            return lines
+        old, new = target['rename']
+        mask = self.get_syntax_mask(lines, target['section'] is not None)
+        return [line if syntax else line.replace(old, new) for line, syntax in zip(lines, mask, strict=True)]
+
+
+class RenameExtension(SnippetExtension):
+    """Use the preprocessor that renames."""
+
+    def extendMarkdown(self, md):
+        """Register the extension."""
+
+        self.md = md
+        md.registerExtension(self)
+        md.preprocessors.register(RenamePreprocessor(self.getConfigs(), md), 'snippet', 32)
+
+
+def makeExtension(*args, **kwargs):
+    """Return extension."""
+
+    return RenameExtension(*args, **kwargs)
+```
+
+Hooks should return new lists, and should not modify the lines they are given in place.
+
 ## Security Considerations
 
 Snippets is designed for documentation workflows and static content generation. It is **not** intended for use in
