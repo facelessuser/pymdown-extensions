@@ -4,6 +4,8 @@ import sys
 import tempfile
 import unittest
 import markdown
+import xml.etree.ElementTree as etree
+from markdown import util as mutil
 
 # Number of nested levels to generate. Far more than the headroom we give the interpreter below.
 LEVELS = 400
@@ -80,14 +82,6 @@ class TestRecursion(unittest.TestCase):
             {'pymdownx.quotes': {'callouts': True}}
         )
 
-    def test_quotes_after_deep_lists(self):
-        """Test quotes that start after a list has already built a deep tree."""
-
-        self.check(
-            nest('- item', LEVELS // 4) + '    ' * (LEVELS // 4) + '> ' * LEVELS + 'x\n',
-            ['pymdownx.quotes', 'pymdownx.fancylists']
-        )
-
     def test_details(self):
         """Test legacy details."""
 
@@ -157,3 +151,81 @@ class TestRecursion(unittest.TestCase):
         self.assertIn('<details class="note">', html)
         self.assertIn('<div class="tabbed-set', html)
         self.assertIn('<ol', html)
+
+
+class TestDeepTree(unittest.TestCase):
+    """
+    Test constructs that recurse do not start when the element tree is already deep.
+
+    Lists and blocks nest without recursing, so the tree can be very deep while the call stack is shallow. The tree is
+    walked recursively later, so a construct that only looked at the call stack would keep nesting on top of it, and
+    the tree would become too deep. These need a limit that is large for the problem to be reachable, as the margin
+    we stop short of the limit hides it when the limit is small.
+    """
+
+    def deep_tree(self, md, depth):
+        """Make the parser think it has already built a tree of the given depth and return the deepest parent."""
+
+        root = etree.Element('div')
+        node = root
+        for _ in range(depth):
+            node = etree.SubElement(node, 'div')
+        md.parser.root = root
+        return node
+
+    def check_processor(self, extension, name, block):
+        """Check a processor starts normally, but not when the tree is deep and the call stack is not."""
+
+        md = markdown.Markdown(extensions=[extension])
+        processor = md.parser.blockprocessors[name]
+
+        self.assertTrue(processor.test(self.deep_tree(md, 10), block))
+
+        parent = self.deep_tree(md, sys.getrecursionlimit() - 100)
+        # The call stack alone says there is plenty of room, which is the problem
+        self.assertFalse(mutil.nearing_recursion_limit())
+        self.assertFalse(processor.test(parent, block))
+
+    def test_quotes(self):
+        """Test quotes."""
+
+        self.check_processor('pymdownx.quotes', 'quote', '> quote')
+
+    def test_details(self):
+        """Test legacy details."""
+
+        self.check_processor('pymdownx.details', 'details', '??? note "Title"')
+
+    def test_tabbed(self):
+        """Test legacy tabbed."""
+
+        self.check_processor('pymdownx.tabbed', 'tabbed', '=== "Title"')
+
+    def check_after_lists(self, source, extensions, configs=None):
+        """Convert content that builds a deep tree with lists, and then nests more, with a realistically large limit."""
+
+        limit = sys.getrecursionlimit()
+        sys.setrecursionlimit(stack_depth() + 800)
+        try:
+            markdown.Markdown(extensions=extensions, extension_configs=configs or {}).convert(source)
+        except RecursionError:  # pragma: no cover
+            self.fail('Recursion limit was reached')
+        finally:
+            sys.setrecursionlimit(limit)
+
+    def test_quotes_after_lists(self):
+        """Test quotes that start inside a list that is already deep."""
+
+        self.check_after_lists(
+            nest('- item', 320) + '    ' * 320 + '> ' * 300 + 'x\n',
+            ['pymdownx.quotes', 'pymdownx.fancylists']
+        )
+
+    def test_tabbed_after_lists(self):
+        """Test tabs that start inside a list that is already deep."""
+
+        self.check_after_lists(
+            nest('- item', 300) + ''.join(f'{"    " * (300 + i)}=== "Tab"\n\n' for i in range(150)) + 'x\n',
+            ['pymdownx.tabbed', 'pymdownx.fancylists'],
+            {'pymdownx.tabbed': {'alternate_style': True}}
+        )

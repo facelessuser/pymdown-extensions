@@ -245,6 +245,7 @@ raphael
 rc
 reStructuredText
 rebranded
+recurse
 recursing
 regex
 reindent

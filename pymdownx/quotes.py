@@ -10,10 +10,10 @@ import re
 import xml.etree.ElementTree as etree
 from markdown.blockprocessors import BlockProcessor
 from markdown.treeprocessors import Treeprocessor
-from markdown import util
 from markdown import Extension, Markdown
 from markdown.blockparser import BlockParser
 from typing import Any
+from .util import nearing_depth_limit
 
 
 class QuotesProcessor(BlockProcessor):
@@ -31,7 +31,7 @@ class QuotesProcessor(BlockProcessor):
     def test(self, parent: etree.Element, block: str) -> bool:
         """Test for block quote."""
 
-        return bool(self.RE.search(block)) and not util.nearing_recursion_limit()
+        return bool(self.RE.search(block)) and not nearing_depth_limit(self.parser, parent)
 
     def run(self, parent: etree.Element, blocks: list[str]) -> None:
         """Create blockquote."""
