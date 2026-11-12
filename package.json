@@ -42,7 +42,7 @@
     "postcss-scss": "^4.0.9",
     "postcss-sort-media-queries": "^6.7.1",
     "postcss-svgo": "^9.1.0",
-    "rollup": "^4.67.2",
+    "rollup": "^4.67.5",
     "rollup-plugin-output-manifest": "^2.0.0",
     "sass": "^1.107.1",
     "stylelint": "^17.16.0",
