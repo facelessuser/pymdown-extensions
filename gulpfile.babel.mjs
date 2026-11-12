@@ -3,7 +3,6 @@
    Minimize JavaScript.
    Convert SASS to CSS and minify.
 */
-import Promise from "promise"
 import yargs from "yargs"
 import {hideBin} from "yargs/helpers"
 import gulp from "gulp"
@@ -17,9 +16,9 @@ import gulpif from "gulp-if"
 import concat from "gulp-concat"
 import terser from '@rollup/plugin-terser'
 import {rollup} from "rollup"
-import {babel as rollupBabel, getBabelOutputPlugin} from "@rollup/plugin-babel"
+import {transformAsync} from "@babel/core"
 import gStylelintEsm from 'gulp-stylelint-esm'
-import eslint from "gulp-eslint"
+import {ESLint} from "eslint"
 import rev from "gulp-rev"
 import revReplace from "gulp-rev-replace"
 import vinylPaths from "vinyl-paths"
@@ -29,7 +28,6 @@ import inlineSvg from "postcss-inline-svg"
 import cssSvgo from "postcss-svgo"
 import replace from "gulp-replace"
 import outputManifest from "rollup-plugin-output-manifest"
-import sourcemaps from "gulp-sourcemaps"
 
 const sass = gulpSass(sassCompiler)
 
@@ -60,6 +58,7 @@ const config = {
       "./docs/theme/assets/pymdownx-extras/*.js.map"
     ],
     gulp: "gulpfile.babel.mjs",
+    eslint: "eslint.config.js",
     zensicalSrc: "./docs/src/zensical.yml"
   },
   folders: {
@@ -88,13 +87,37 @@ const config = {
   revision: args.revision
 }
 
+/* Transpile the generated bundle with Babel (replaces `@rollup/plugin-babel`, which doesn't support Babel 8). */
+const babelOutput = () => {
+  return {
+    name: "babel-output",
+    renderChunk: async(code, chunk, outputOptions) => {
+      const result = await transformAsync(code, {
+        babelrc: false,
+        configFile: false,
+        filename: chunk.fileName,
+        presets: ["@babel/preset-env"],
+        sourceType: "script",
+        sourceMaps: Boolean(outputOptions.sourcemap),
+        compact: false
+      })
+      return {code: result.code, map: result.map}
+    }
+  }
+}
+
 const rollupjs = async(sources, options) => {
 
-  const pluginModules = [rollupBabel({babelHelpers: "bundled"})]
+  const pluginModules = []
   if (options.revision) {
-    pluginModules.push(outputManifest.default({fileName: "manifest-js.json", isMerge: options.merge}))
+    pluginModules.push(outputManifest.default({
+      fileName: "manifest-js.json",
+      isMerge: options.merge,
+      // Sourcemaps have no origin name and shouldn't be in the manifest.
+      filter: chunk => !chunk.fileName.endsWith(".map")
+    }))
   }
-  const outputPlugins = [getBabelOutputPlugin({allowAllFormats: true, presets: ["@babel/preset-env"]})]
+  const outputPlugins = [babelOutput()]
   if (options.minify) {
     outputPlugins.push(terser())
   }
@@ -159,8 +182,7 @@ gulp.task("scss:build:sass", () => {
 
   deleteSync(`${config.folders.theme}/manifest-css.json`)
 
-  return gulp.src("./docs/src/scss/extra*.scss")
-    .pipe(sourcemaps.init())
+  return gulp.src("./docs/src/scss/extra*.scss", {sourcemaps: true})
     .pipe(sass({
       includePaths: [
         "node_modules/modularscale-sass/stylesheets",
@@ -178,8 +200,7 @@ gulp.task("scss:build:sass", () => {
 
     // Revisioning
     .pipe(gulpif(config.revision, rev()))
-    .pipe(sourcemaps.write("."))
-    .pipe(gulp.dest(config.folders.theme))
+    .pipe(gulp.dest(config.folders.theme, {sourcemaps: "."}))
     .pipe(
       gulpif(
         config.revision,
@@ -249,11 +270,18 @@ gulp.task("js:build", gulp.series("js:build:rollup", () => {
     .pipe(gulp.dest("./"))
 }))
 
-gulp.task("js:lint", () => {
-  return gulp.src([config.files.jsSrc, config.files.gulp])
-    .pipe(eslint())
-    .pipe(eslint.format())
-    .pipe(eslint.failAfterError())
+gulp.task("js:lint", async() => {
+  const linter = new ESLint()
+  const results = await linter.lintFiles([config.files.jsSrc, config.files.gulp, config.files.eslint])
+  const formatter = await linter.loadFormatter("stylish")
+  const output = await formatter.format(results)
+
+  if (output) {
+    process.stdout.write(`${output}\n`)
+  }
+  if (ESLint.getErrorResults(results).length) {
+    throw new Error("ESLint found errors")
+  }
 })
 
 gulp.task("js:clean", () => {

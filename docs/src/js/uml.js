@@ -86,12 +86,8 @@ export default async className => {
   }
   mermaid.mermaidAPI.globalReset()
   // Non Material themes should just use "default"
-  let scheme = null
-  try {
-    scheme = document.querySelector("[data-md-color-scheme]").getAttribute("data-md-color-scheme")
-  } catch (err) {
-    scheme = "slate"
-  }
+  const schemeEl = document.querySelector("[data-md-color-scheme]")
+  const scheme = schemeEl ? schemeEl.getAttribute("data-md-color-scheme") : "slate"
   const config = (typeof mermaidConfig === "undefined") ?
     defaultConfig :
     mermaidConfig[scheme] || (mermaidConfig.default || defaultConfig)

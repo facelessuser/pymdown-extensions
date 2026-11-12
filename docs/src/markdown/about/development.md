@@ -69,7 +69,7 @@ In order to get up and running, ensure you have a [`Node.js`](https://nodejs.org
 required modules with:
 
 ```console
-$ npm install --legacy-peer-deps
+$ npm install
 ```
 
 After that you can begin making changes. When ready, you can run the following commands to get a live preview while you

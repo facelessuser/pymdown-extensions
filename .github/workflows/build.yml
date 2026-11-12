@@ -104,7 +104,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip build hatch
-        npm install --legacy-peer-deps
+        npm install
     - name: Install Aspell
       run: |
         sudo apt-get install aspell aspell-en

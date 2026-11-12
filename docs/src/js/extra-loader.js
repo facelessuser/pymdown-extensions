@@ -10,10 +10,6 @@ import "./material-extra-3rdparty"
   const observer = new MutationObserver(mutations => {
     mutations.forEach(mutation => {
       if (mutation.type === "attributes") {
-        let scheme = mutation.target.getAttribute("data-md-color-scheme")
-        if (!scheme) {
-          scheme = "slate"
-        }
         if (typeof mermaid !== "undefined") {
           uml("diagram")
         }
