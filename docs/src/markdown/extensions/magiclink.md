@@ -218,6 +218,11 @@ To specify a repository under a non-default user, prefix both the user and repos
 
 Lastly, to reference an external provider, use the format `{provider}:{user}/{repo}#{num}`.
 
+For GitLab, including custom providers of type `gitlab`, a repository reference can include subgroups.
+For example, `gitlab:group/subgroup/project#42` links to issue 42 in `group/subgroup/project`.
+To use that project as the default, set `user` to `group/subgroup` and `repo` to `project`.
+Use inline code for literal paths that resemble a repository reference.
+
 The syntax was borrowed and adapted from GitLab as they use `!{num}` for pulls and `#{num}` for issues, `?{num}` is our
 own take for discussions. This syntax was
 mainly used to ensure we could provide context to the link generator. When rendering the actual links in your documents,
