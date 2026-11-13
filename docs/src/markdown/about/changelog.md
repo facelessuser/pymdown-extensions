@@ -3,6 +3,11 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 13.1.1
+
+-   **FIX**: PathConverter, B64: Treat links with a scheme but no network location, such as `magnet:?xt=...`,
+    `sms:+123`, or `xmpp:user@example.org`, as URLs instead of relative paths.
+
 ## 13.1
 
 -   **NEW**: Snippets: Respect the `Retry-After` header when a URL responds with a 429. The server's requested delay is
