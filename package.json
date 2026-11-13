@@ -44,7 +44,7 @@
     "postcss-svgo": "^9.1.0",
     "rollup": "^4.67.2",
     "rollup-plugin-output-manifest": "^2.0.0",
-    "sass": "^1.107.1",
+    "sass": "^1.108.0",
     "stylelint": "^17.16.0",
     "stylelint-config-recommended": "^18.0.0",
     "stylelint-order": "^8.1.2",
