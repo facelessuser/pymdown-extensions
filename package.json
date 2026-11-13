@@ -27,7 +27,7 @@
     "autoprefixer": "^10.6.2",
     "del": "^9.0.1",
     "eslint": "^10.14.0",
-    "eslint-plugin-jsdoc": "^63.3.3",
+    "eslint-plugin-jsdoc": "^65.4.4",
     "globals": "^17.14.0",
     "gulp": "^5.0.1",
     "gulp-concat": "^2.6.1",
