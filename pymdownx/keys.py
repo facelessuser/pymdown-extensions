@@ -107,7 +107,7 @@ RE_EARLY_KBD = r'''(?x)
 
 RE_KBD = r'\+{2}([\w\-]+(?:\+[\w\-]+)*?)\+{2}'
 
-ESCAPE_RE = re.compile(r'''(?<!\\)(?:\\\\)*\\(.)''')
+ESCAPE_RE = re.compile(r'''\\(.)''')
 UNESCAPED_PLUS = re.compile(r'''(?<!\\)(?:\\\\)*(\+)''')
 ESCAPED_BSLASH = '{}{}{}'.format(md_util.STX, ord('\\'), md_util.ETX)
 DOUBLE_BSLASH = '\\\\'

@@ -16,3 +16,11 @@ class TestKeys(util.MdCase):
             "![](data:image/png;base64,aaaaa++a++aaaa) ++ctrl+a++ ++ctrl+'custom'++",
             '<p><img alt="" src="data:image/png;base64,aaaaa++a++aaaa" /> <span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd class="key-a">A</kbd></span> <span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd>custom</kbd></span></p>'  # noqa: E501
         )
+
+    def test_quoted_escaped_backslashes(self):
+        """Test that each escaped backslash in a quoted key is kept."""
+
+        self.check_markdown(
+            r'++"a\\\\b"++ ++"\\\""++',
+            '<p><span class="keys"><kbd>a\\\\b</kbd></span> <span class="keys"><kbd>\\"</kbd></span></p>'
+        )

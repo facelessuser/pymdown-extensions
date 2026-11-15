@@ -3,6 +3,10 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 13.1.1
+
+-   **FIX**: Keys: Fix quoted keys dropping escaped backslashes that come before another escape.
+
 ## 13.1
 
 -   **NEW**: Snippets: Respect the `Retry-After` header when a URL responds with a 429. The server's requested delay is
