@@ -102,3 +102,55 @@ class TestStripHTMLCase(util.MdCase):
             r'''<SCRIPT ONLOAD="x" SRC="a.js">var s = '<a ONCLICK="y">';</script>''',
             r'''<SCRIPT SRC="a.js">var s = '<a ONCLICK="y">';</script>'''
         )
+
+
+class TestStripHTMLRaw(util.MdCase):
+    """Test stripping on raw HTML, including unclosed content that Markdown would normally escape."""
+
+    extension = ['pymdownx.striphtml']
+    extension_configs = {
+        'pymdownx.striphtml': {
+            'strip_attributes': ['class']
+        }
+    }
+
+    def check_raw(self, html, expected):
+        """Check the output of the post processor."""
+
+        self.assertEqual(self.md.postprocessors['strip-html'].run(html), expected)
+
+    def test_comment_whitespace(self):
+        """Test that whitespace around a comment is stripped only when the comment is followed by a newline."""
+
+        self.check_raw('<p>x</p>\n<!-- a -->\n<p>y</p>\n<!-- b -->  \n<p>z</p>', '<p>x</p>\n<p>y</p>\n<p>z</p>')
+        self.check_raw('<p>x</p>\n<!-- a --><p>y</p>', '<p>x</p>\n<p>y</p>')
+        self.check_raw('a  \n  <!-- a -->  \n<!-- b -->\n<p>c</p>', 'a\n<p>c</p>')
+
+    def test_unclosed_comment(self):
+        """Test that an unclosed comment is left alone and what follows is still processed."""
+
+        self.check_raw(
+            '<p>x</p>\n<!-- unclosed\n<p onclick="z" class="c">q</p>',
+            '<p>x</p>\n<!-- unclosed\n<p>q</p>'
+        )
+        self.check_raw('<!-- a -->\n<!-- unclosed <p onclick="z">', '\n<!-- unclosed <p>')
+
+    def test_unclosed_script(self):
+        """Test that an unclosed `script` or `style` has its attributes stripped and what follows is still processed."""
+
+        self.check_raw(
+            '<script onload="y" class="c">unclosed\n<p onclick="z">q</p>',
+            '<script>unclosed\n<p>q</p>'
+        )
+        self.check_raw(
+            '<style class="a">x</style>\n<style class="a">unclosed\n<p class="z">q</p>',
+            '<style>x</style>\n<style>unclosed\n<p>q</p>'
+        )
+
+    def test_script_content(self):
+        """Test that the content of a closed `script` is left alone, including anything that looks like a tag."""
+
+        self.check_raw(
+            '<script onload="y">var s = "<a onclick=\'x\'>"; <!-- c --></script><p onclick="z">q</p>',
+            '<script>var s = "<a onclick=\'x\'>"; <!-- c --></script><p>q</p>'
+        )
