@@ -5,6 +5,8 @@ icon: lucide/scroll-text
 
 ## 13.1.1
 
+-   **FIX**: StripHTML: Match HTML tag and attribute names case insensitively so that attributes such as `ONCLICK` are
+    stripped just like `onclick`.
 -   **FIX**: B64 and PathConverter: Match HTML tag and attribute names case insensitively (`<IMG SRC="...">`), and
     do not treat a tag that merely starts with `script` or `style` (`<scripty>`) as a `script` or `style` tag.
 -   **FIX**: Keys: Fix quoted keys dropping escaped backslashes that come before another escape.

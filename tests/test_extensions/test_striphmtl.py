@@ -75,3 +75,30 @@ class TestStripHTMLKeepComments(util.MdCase):
             ''',
             True
         )
+
+
+class TestStripHTMLCase(util.MdCase):
+    """Test that tag and attribute names are matched case insensitively."""
+
+    extension = ['pymdownx.striphtml']
+    extension_configs = {
+        'pymdownx.striphtml': {
+            'strip_attributes': ['class']
+        }
+    }
+
+    def test_attribute_case(self):
+        """Test that attributes are stripped regardless of case."""
+
+        self.check_markdown(
+            r'''<a ONCLICK="x" CLASS="y" OnLoad="z" href="#">text</a>''',
+            r'''<p><a href="#">text</a></p>'''
+        )
+
+    def test_script_case(self):
+        """Test that attributes on an uppercase `script` tag are stripped and the closing tag may differ in case."""
+
+        self.check_markdown(
+            r'''<SCRIPT ONLOAD="x" SRC="a.js">var s = '<a ONCLICK="y">';</script>''',
+            r'''<SCRIPT SRC="a.js">var s = '<a ONCLICK="y">';</script>'''
+        )

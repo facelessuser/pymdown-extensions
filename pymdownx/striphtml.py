@@ -43,7 +43,7 @@ RE_TAG_HTML = re.compile(
         (?P<close_tag></(?P<close_name>[\w\:\.\-]+)\s*>)
     )
     ''',
-    re.DOTALL | re.UNICODE
+    re.DOTALL | re.UNICODE | re.IGNORECASE
 )
 
 TAG_BAD_ATTR = r'''(?x)
@@ -70,7 +70,7 @@ class StripHtmlPostprocessor(Postprocessor):
         if attributes:
             self.re_attributes = re.compile(
                 TAG_BAD_ATTR % '|'.join(attributes),
-                re.DOTALL | re.UNICODE
+                re.DOTALL | re.UNICODE | re.IGNORECASE
             )
 
         super().__init__(md)
