@@ -6,6 +6,7 @@ icon: lucide/scroll-text
 ## 13.1.1
 
 -   **FIX**: Keys: Fix quoted keys dropping escaped backslashes that come before another escape.
+-   **FIX**: Keys: Fix a `+` inside a quoted key being treated as a key separator instead of content.
 
 ## 13.1
 

@@ -24,3 +24,23 @@ class TestKeys(util.MdCase):
             r'++"a\\\\b"++ ++"\\\""++',
             '<p><span class="keys"><kbd>a\\\\b</kbd></span> <span class="keys"><kbd>\\"</kbd></span></p>'
         )
+
+    def test_quoted_plus(self):
+        """Test that an unescaped `+` inside a quoted key is content, not a separator."""
+
+        self.check_markdown(
+            r'''++"a+b"++ ++"+"++ ++ctrl+"+"++ ++'a+b'+x++ ++"a\+b"++''',
+            '<p><span class="keys"><kbd>a+b</kbd></span> '
+            '<span class="keys"><kbd>+</kbd></span> '
+            '<span class="keys"><kbd class="key-control">Ctrl</kbd><span>+</span><kbd>+</kbd></span> '
+            '<span class="keys"><kbd>a+b</kbd><span>+</span><kbd class="key-x">X</kbd></span> '
+            '<span class="keys"><kbd>a+b</kbd></span></p>'
+        )
+
+    def test_quoted_plus_escaped_backslash(self):
+        """Test that escaped backslashes next to a `+` in a quoted key follow the pair rule."""
+
+        self.check_markdown(
+            r'''++"a\\+b"++ ++"a\\\+b"++''',
+            '<p><span class="keys"><kbd>a\\+b</kbd></span> <span class="keys"><kbd>a\\+b</kbd></span></p>'
+        )
