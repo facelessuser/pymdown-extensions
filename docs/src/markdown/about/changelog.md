@@ -7,6 +7,9 @@ icon: lucide/scroll-text
 
 -   **FIX**: Keys: Fix quoted keys dropping escaped backslashes that come before another escape.
 -   **FIX**: Keys: Fix a `+` inside a quoted key being treated as a key separator instead of content.
+-   **FIX**: B64: Improve scanning time caused by unclosed `script`, `style`, or comment tags and long runs of
+    whitespace. Unclosed `script`, `style`, and comment tags are now treated as running to the end of the content, as
+    browsers do, so images after them are no longer converted.
 
 ## 13.1
 

@@ -43,8 +43,8 @@ RE_TAG_HTML = re.compile(
     r'''(?xus)
     (?:
         (?P<avoid>
-            <\s*(?P<script_name>script|style)[^>]*>.*?</\s*(?P=script_name)\s*> |
-            (?:(\r?\n?\s*)<!--[\s\S]*?-->(\s*)(?=\r?\n)|<!--[\s\S]*?-->)
+            <\s*(?P<script_name>script|style)[^>]*>.*?(?:</\s*(?P=script_name)\s*>|\Z) |
+            <!--[\s\S]*?(?:-->|\Z)
         )|
         (?P<open><\s*(?P<tag>img))
         (?P<attr>(?:\s+[\w\-:]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'`=<>]+))?)*)

@@ -41,6 +41,19 @@ class TestB64(util.MdCase):
             True
         )
 
+    def test_unclosed_script(self):
+        """Test that an unclosed `script` or `style` is treated as running to the end, as browsers do."""
+
+        for tag in ('script', 'style'):
+            html = '<span><{}>a</span> <img alt="picture" src="_assets/bg.png">'.format(tag)
+            self.check_markdown(html, '<p>{}</p>'.format(html))
+
+    def test_unclosed_comment(self):
+        """Test that an unclosed comment is treated as running to the end, as browsers do."""
+
+        html = '<!-- unclosed <img alt="picture" src="_assets/bg.png">'
+        self.assertEqual(self.md.postprocessors['b64'].run(html), html)
+
     def test_relative_path(self):
         """Test relative path."""
 
