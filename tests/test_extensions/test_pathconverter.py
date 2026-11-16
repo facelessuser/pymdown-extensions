@@ -80,6 +80,30 @@ var str = '<img alt="picture" src="../test_extensions/_assets/bg.png" />'
             r'''<p><img alt=' src="../test_extensions/_assets/bg.png"' src="test_extensions/_assets/bg.png"></p>'''
         )
 
+    def test_uppercase_tags(self):
+        """Test that tag and attribute names are matched case insensitively."""
+
+        self.check_markdown(
+            '''<IMG SRC="../test_extensions/_assets/bg.png"> <A HREF="../test_extensions/_assets/bg.png">x</A>''',
+            '''<p><IMG SRC="test_extensions/_assets/bg.png"> <A HREF="test_extensions/_assets/bg.png">x</A></p>'''
+        )
+
+    def test_uppercase_script(self):
+        """Test that the content of an uppercase `script` is avoided, and the closing tag may differ in case."""
+
+        self.check_markdown(
+            '''<SCRIPT SRC="../test_extensions/_assets/bg.js">var s = '<img src="../x/bg.png">'</script>''',
+            '''<SCRIPT SRC="test_extensions/_assets/bg.js">var s = '<img src="../x/bg.png">'</script>'''
+        )
+
+    def test_tag_name_prefix(self):
+        """Test that a tag that merely starts with `script` is not treated as a `script`."""
+
+        self.check_markdown(
+            '''<scripty><img src="../test_extensions/_assets/bg.png"></scripty>''',
+            '''<p><scripty><img src="test_extensions/_assets/bg.png"></scripty></p>'''
+        )
+
     def test_unclosed_script(self):
         """Test that an unclosed `script` or `style` is treated as running to the end, as browsers do."""
 

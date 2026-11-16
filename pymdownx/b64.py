@@ -40,10 +40,10 @@ file_types = {
 }
 
 RE_TAG_HTML = re.compile(
-    r'''(?xus)
+    r'''(?xusi)
     (?:
         (?P<avoid>
-            <\s*(?P<script_name>script|style)(?:[^>]*\/>|[^>]*>.*?(?:</\s*(?P=script_name)\s*>|\Z)) |
+            <\s*(?P<script_name>script|style)(?=[\s\/>])(?:[^>]*\/>|[^>]*>.*?(?:</\s*(?P=script_name)\s*>|\Z)) |
             <!--[\s\S]*?(?:-->|\Z)
         )|
         (?P<open><\s*(?P<tag>img))
@@ -56,7 +56,7 @@ RE_TAG_HTML = re.compile(
 # Walk the attributes in order so that only a real `src` attribute is converted
 # and never something that merely looks like one inside another attribute's value.
 RE_TAG_LINK_ATTR = re.compile(
-    r'''(?xus)
+    r'''(?xusi)
     (?:
         (?P<attr>
             (?P<name>\s+src\s*=\s*)

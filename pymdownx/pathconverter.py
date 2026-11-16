@@ -40,10 +40,10 @@ import os
 import re
 from urllib.parse import urlunparse
 
-RE_TAG_HTML = r'''(?xus)
+RE_TAG_HTML = r'''(?xusi)
     (?:
         (?P<avoid>
-            (?P<script_open><\s*(?P<script_name>script|style))
+            (?P<script_open><\s*(?P<script_name>script|style))(?=[\s\/>])
             (?:
                 (?P<script_attr>(?:\s+[\w\-:]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'`=<>]+))?)*)
                 (?:
@@ -64,7 +64,7 @@ RE_TAG_HTML = r'''(?xus)
 # Walk the attributes in order so that only real `href`/`src` attributes are converted
 # and never something that merely looks like one inside another attribute's value.
 RE_TAG_LINK_ATTR = re.compile(
-    r'''(?xus)
+    r'''(?xusi)
     (?:
         (?P<attr>
             (?P<name>\s+(?:href|src)\s*=\s*)
@@ -145,7 +145,7 @@ def repl(m, base_path, rel_path=None, file_scheme=None, tags=()):
         tag = m.group('avoid')
         # Content of `script` and `style` tags and comments is not parsed, but the attributes
         # of the `script` or `style` tag itself are if they are one of the specified tags.
-        if m.group('script_attr') is not None and m.group('script_name') in tags:
+        if m.group('script_attr') is not None and m.group('script_name').lower() in tags:
             close = m.group('script_self_close') or m.group('script_close')
             start = len(m.group('script_open')) + len(m.group('script_attr')) + len(close)
             tag = (
@@ -187,7 +187,7 @@ class PathConverterPostprocessor(Postprocessor):
         filescheme = bool(self.config['file_scheme'])
         tag_names = self.config['tags'].split()
         tags = re.compile(RE_TAG_HTML % '|'.join(tag_names))
-        tag_set = frozenset(tag_names)
+        tag_set = frozenset(t.lower() for t in tag_names)
         if not absolute and basepath and relativepath:
             text = tags.sub(lambda m: repl(m, basepath, rel_path=relativepath, tags=tag_set), text)
         elif absolute and basepath:

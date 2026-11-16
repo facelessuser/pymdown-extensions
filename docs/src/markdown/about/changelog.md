@@ -5,6 +5,8 @@ icon: lucide/scroll-text
 
 ## 13.1.1
 
+-   **FIX**: B64 and PathConverter: Match HTML tag and attribute names case insensitively (`<IMG SRC="...">`), and
+    do not treat a tag that merely starts with `script` or `style` (`<scripty>`) as a `script` or `style` tag.
 -   **FIX**: Keys: Fix quoted keys dropping escaped backslashes that come before another escape.
 -   **FIX**: Keys: Fix a `+` inside a quoted key being treated as a key separator instead of content.
 -   **FIX**: B64: Improve scanning time caused by unclosed `script`, `style`, or comment tags and long runs of
