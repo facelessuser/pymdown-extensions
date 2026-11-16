@@ -10,6 +10,13 @@ icon: lucide/scroll-text
 -   **FIX**: B64: Improve scanning time caused by unclosed `script`, `style`, or comment tags and long runs of
     whitespace. Unclosed `script`, `style`, and comment tags are now treated as running to the end of the content, as
     browsers do, so images after them are no longer converted.
+-   **FIX**: PathConverter: Improve scanning time caused by unclosed `script`, `style`, or comment tags and long runs of
+    whitespace. Unclosed `script`, `style`, and comment tags are now treated as running to the end of the content, as
+    browsers do, so links after them are no longer converted.
+-   **FIX**: PathConverter: Fix `src` (and `href`) on `script` and `style` tags not being converted when the tag is
+    listed in `tags`. Only the content of these tags is now skipped.
+-   **FIX**: PathConverter and B64: Do not convert text that merely looks like a `src` or `href` attribute inside the
+    value of another attribute.
 
 ## 13.1
 

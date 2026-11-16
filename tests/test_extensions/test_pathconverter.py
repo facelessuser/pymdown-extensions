@@ -42,6 +42,63 @@ class TestRelative(util.MdCase):
             r'<!-- ![picture](../test_extensions/_assets/bg.png) -->'
         )
 
+    def test_script_src(self):
+        """Test that the `src` of a `script` tag is converted, but its content is not."""
+
+        self.check_markdown(
+            r'''<script src="../test_extensions/_assets/bg.js" async>
+var str = '<img alt="picture" src="../test_extensions/_assets/bg.png" />'
+</script> <img alt="picture" src="../test_extensions/_assets/bg.png">''',
+            r'''<script src="test_extensions/_assets/bg.js" async>
+var str = '<img alt="picture" src="../test_extensions/_assets/bg.png" />'
+</script>
+<p><img alt="picture" src="test_extensions/_assets/bg.png"></p>'''
+        )
+
+    def test_script_src_unclosed(self):
+        """Test that the `src` of an unclosed `script` tag is converted."""
+
+        self.check_markdown(
+            '<script src="../test_extensions/_assets/bg.js">',
+            '<script src="test_extensions/_assets/bg.js">'
+        )
+
+    def test_script_self_closed(self):
+        """Test that a self closed `script` tag is respected, so what follows is parsed as normal."""
+
+        self.check_markdown(
+            '''<script src="../test_extensions/_assets/bg.js" /> <img src="../test_extensions/_assets/bg.png">''',
+            '''<script src="test_extensions/_assets/bg.js" />
+<p><img src="test_extensions/_assets/bg.png"></p>'''
+        )
+
+    def test_attribute_value_looks_like_src(self):
+        """Test that something that looks like `src` inside another attribute's value is not converted."""
+
+        self.check_markdown(
+            r'''<img alt=' src="../test_extensions/_assets/bg.png"' src="../test_extensions/_assets/bg.png">''',
+            r'''<p><img alt=' src="../test_extensions/_assets/bg.png"' src="test_extensions/_assets/bg.png"></p>'''
+        )
+
+    def test_unclosed_script(self):
+        """Test that an unclosed `script` or `style` is treated as running to the end, as browsers do."""
+
+        for tag in ('script', 'style'):
+            html = '<span><{}>a</span> <img alt="picture" src="../test_extensions/_assets/bg.png">'.format(tag)
+            self.check_markdown(html, '<p>{}</p>'.format(html))
+
+    def test_unclosed_comment(self):
+        """Test that an unclosed comment is treated as running to the end, as browsers do."""
+
+        html = '<!-- unclosed <img alt="picture" src="../test_extensions/_assets/bg.png">'
+        self.assertEqual(self.md.postprocessors['path-converter'].run(html), html)
+
+    def test_whitespace_before_comment(self):
+        """Test that comments preceded by whitespace are still avoided."""
+
+        html = '<p>x</p>\n  \n<!-- <img alt="picture" src="../test_extensions/_assets/bg.png"> -->  \n<p>y</p>'
+        self.assertEqual(self.md.postprocessors['path-converter'].run(html), html)
+
     def test_relative_path(self):
         """Test relative path."""
 
@@ -395,3 +452,24 @@ class TestWindowsRel(util.MdCase):
                 r'![picture](./extensions/_assets/bg.png)',
                 r'<p><img alt="picture" src="../../fake/path/extensions/_assets/bg.png" /></p>'
             )
+
+
+class TestTags(util.MdCase):
+    """Test limiting which tags are converted."""
+
+    extension = ["pymdownx.pathconverter"]
+    extension_configs = {
+        "pymdownx.pathconverter": {
+            "base_path": "/Some/fake/path",
+            "absolute": True,
+            "tags": "img a link"
+        }
+    }
+
+    def test_script_not_in_tags(self):
+        """Test that `script` is not converted when it is not one of the tags."""
+
+        self.check_markdown(
+            '<script src="bg.js"></script>',
+            '<script src="bg.js"></script>'
+        )
