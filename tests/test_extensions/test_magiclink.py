@@ -343,6 +343,38 @@ class TestMagicLinkExternalShorthand(util.MdCase):
             r'<p>?1173</p>'
         )
 
+    def test_nested_gitlab_issue(self):
+        """Keep the full namespace of a GitLab issue reference."""
+        self.check_markdown(
+            'group/subgroup/team/project#42',
+            '<p><a class="magiclink magiclink-gitlab magiclink-issue" '
+            'href="https://gitlab.com/group/subgroup/team/project/-/issues/42" '
+            'title="GitLab Issue: group/subgroup/team/project #42">group/subgroup/team/project#42</a></p>'
+        )
+
+    def test_absolute_path_is_not_a_gitlab_reference(self):
+        """Keep an absolute path containing an issue-like suffix intact."""
+        self.check_markdown('/group/subgroup/project#42', '<p>/group/subgroup/project#42</p>')
+
+    def test_nested_gitlab_merge_request(self):
+        """Use the custom host for a qualified GitLab reference."""
+        html = markdown.markdown(
+            'forge:group/subgroup/project!7',
+            extensions=self.extension,
+            extension_configs={
+                'pymdownx.magiclink': {
+                    'repo_url_shorthand': True,
+                    'custom': {'forge': {'host': 'https://gitlab.example.com', 'label': 'Forge', 'type': 'gitlab'}}
+                }
+            }
+        )
+        self.assertEqual(
+            html,
+            '<p><a class="magiclink magiclink-forge magiclink-pull" '
+            'href="https://gitlab.example.com/group/subgroup/project/-/merge_requests/7" '
+            'title="Forge Pull Request: group/subgroup/project #7">group/subgroup/project!7</a></p>'
+        )
+
 
 class TestMagicLinkShortnerSocial(util.MdCase):
     """Test cases for social link shortener."""
