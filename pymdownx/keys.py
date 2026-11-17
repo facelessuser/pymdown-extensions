@@ -107,8 +107,8 @@ RE_EARLY_KBD = r'''(?x)
 
 RE_KBD = r'\+{2}([\w\-]+(?:\+[\w\-]+)*?)\+{2}'
 
-ESCAPE_RE = re.compile(r'''(?<!\\)(?:\\\\)*\\(.)''')
-UNESCAPED_PLUS = re.compile(r'''(?<!\\)(?:\\\\)*(\+)''')
+ESCAPE_RE = re.compile(r'''\\(.)''')
+KEY_TOKEN = re.compile(r"""[\w\-]+|"(?:\\.|[^\\"])+"|'(?:\\.|[^\\'])+'""")
 ESCAPED_BSLASH = '{}{}{}'.format(md_util.STX, ord('\\'), md_util.ETX)
 DOUBLE_BSLASH = '\\\\'
 
@@ -174,11 +174,11 @@ class KeysPattern(InlineProcessor):
                 return m.group('escapes').replace(DOUBLE_BSLASH, ESCAPED_BSLASH), m.start(0), m.end(0)
             quoted = 0
             content = []
-            for key in UNESCAPED_PLUS.split(m.group(2)):
-                if key != '+':
-                    if key.startswith(('"', "'")):
-                        quoted += 1
-                    content.append(self.process_key(key))
+            # Tokenize (instead of splitting on `+`) so a `+` inside quotes is content, not a separator
+            for key in KEY_TOKEN.findall(m.group(2)):
+                if key.startswith(('"', "'")):
+                    quoted += 1
+                content.append(self.process_key(key))
             # Defer unquoted cases until later to avoid parsing URLs
             if not quoted:
                 return None, None, None

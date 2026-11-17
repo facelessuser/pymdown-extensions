@@ -7,6 +7,24 @@ icon: lucide/scroll-text
 
 -   **FIX**: PathConverter, B64: Treat links with a scheme but no network location, such as `magnet:?xt=...`,
     `sms:+123`, or `xmpp:user@example.org`, as URLs instead of relative paths.
+-   **FIX**: StripHTML: Match HTML tag and attribute names case insensitively so that attributes such as `ONCLICK` are
+    stripped just like `onclick`.
+-   **FIX**: StripHTML: Improve scanning time caused by unclosed comments, `script`, or `style` tags and long runs of
+    whitespace. Output is unchanged.
+-   **FIX**: B64 and PathConverter: Match HTML tag and attribute names case insensitively (`<IMG SRC="...">`), and
+    do not treat a tag that merely starts with `script` or `style` (`<scripty>`) as a `script` or `style` tag.
+-   **FIX**: Keys: Fix quoted keys dropping escaped backslashes that come before another escape.
+-   **FIX**: Keys: Fix a `+` inside a quoted key being treated as a key separator instead of content.
+-   **FIX**: B64: Improve scanning time caused by unclosed `script`, `style`, or comment tags and long runs of
+    whitespace. Unclosed `script`, `style`, and comment tags are now treated as running to the end of the content, as
+    browsers do, so images after them are no longer converted.
+-   **FIX**: PathConverter: Improve scanning time caused by unclosed `script`, `style`, or comment tags and long runs of
+    whitespace. Unclosed `script`, `style`, and comment tags are now treated as running to the end of the content, as
+    browsers do, so links after them are no longer converted.
+-   **FIX**: PathConverter: Fix `src` (and `href`) on `script` and `style` tags not being converted when the tag is
+    listed in `tags`. Only the content of these tags is now skipped.
+-   **FIX**: PathConverter and B64: Do not convert text that merely looks like a `src` or `href` attribute inside the
+    value of another attribute.
 
 ## 13.1
 

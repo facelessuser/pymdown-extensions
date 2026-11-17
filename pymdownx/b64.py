@@ -40,11 +40,11 @@ file_types = {
 }
 
 RE_TAG_HTML = re.compile(
-    r'''(?xus)
+    r'''(?xusi)
     (?:
         (?P<avoid>
-            <\s*(?P<script_name>script|style)[^>]*>.*?</\s*(?P=script_name)\s*> |
-            (?:(\r?\n?\s*)<!--[\s\S]*?-->(\s*)(?=\r?\n)|<!--[\s\S]*?-->)
+            <\s*(?P<script_name>script|style)(?=[\s\/>])(?:[^>]*\/>|[^>]*>.*?(?:</\s*(?P=script_name)\s*>|\Z)) |
+            <!--[\s\S]*?(?:-->|\Z)
         )|
         (?P<open><\s*(?P<tag>img))
         (?P<attr>(?:\s+[\w\-:]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'`=<>]+))?)*)
@@ -53,13 +53,16 @@ RE_TAG_HTML = re.compile(
     '''
 )
 
+# Walk the attributes in order so that only a real `src` attribute is converted
+# and never something that merely looks like one inside another attribute's value.
 RE_TAG_LINK_ATTR = re.compile(
-    r'''(?xus)
-    (?P<attr>
-        (?:
+    r'''(?xusi)
+    (?:
+        (?P<attr>
             (?P<name>\s+src\s*=\s*)
             (?P<path>"[^"]*"|'[^']*')
-        )
+        )|
+        \s+[\w\-:]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'`=<>]+))?
     )
     '''
 )
@@ -112,7 +115,7 @@ def repl(m, base_path, root_path, restrict_path=True):
     else:
         tag = m.group('open')
         tag += RE_TAG_LINK_ATTR.sub(
-            lambda m2: repl_path(m2, base_path, root_path, restrict_path),
+            lambda m2: repl_path(m2, base_path, root_path, restrict_path) if m2.group('attr') else m2.group(0),
             m.group('attr')
         )
         tag += m.group('close')

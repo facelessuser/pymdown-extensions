@@ -41,6 +41,52 @@ class TestB64(util.MdCase):
             True
         )
 
+    def test_attribute_value_looks_like_src(self):
+        """Test that something that looks like `src` inside another attribute's value is not converted."""
+
+        html = self.md.postprocessors['b64'].run(
+            '<img alt=\' src="_assets/bg.png"\' src="_assets/bg.png">'
+        )
+        self.assertTrue(html.startswith('<img alt=\' src="_assets/bg.png"\' src="data:image/png;base64,'))
+        self.assertEqual(html.count('data:image/png;base64,'), 1)
+
+    def test_script_self_closed(self):
+        """Test that a self closed `script` tag is respected, so what follows is parsed as normal."""
+
+        html = self.md.postprocessors['b64'].run('<script src="bg.js" /> <img src="_assets/bg.png">')
+        self.assertTrue(html.startswith('<script src="bg.js" /> <img src="data:image/png;base64,'))
+
+    def test_uppercase_tags(self):
+        """Test that tag and attribute names are matched case insensitively."""
+
+        html = self.md.postprocessors['b64'].run('<IMG SRC="_assets/bg.png">')
+        self.assertTrue(html.startswith('<IMG src="data:image/png;base64,'))
+
+    def test_uppercase_script(self):
+        """Test that the content of an uppercase `script` is avoided, and the closing tag may differ in case."""
+
+        html = '<SCRIPT>var s = \'<img src="_assets/bg.png">\'</script>'
+        self.assertEqual(self.md.postprocessors['b64'].run(html), html)
+
+    def test_tag_name_prefix(self):
+        """Test that a tag that merely starts with `script` is not treated as a `script`."""
+
+        html = self.md.postprocessors['b64'].run('<scripty><img src="_assets/bg.png"></scripty>')
+        self.assertTrue(html.startswith('<scripty><img src="data:image/png;base64,'))
+
+    def test_unclosed_script(self):
+        """Test that an unclosed `script` or `style` is treated as running to the end, as browsers do."""
+
+        for tag in ('script', 'style'):
+            html = '<span><{}>a</span> <img alt="picture" src="_assets/bg.png">'.format(tag)
+            self.check_markdown(html, '<p>{}</p>'.format(html))
+
+    def test_unclosed_comment(self):
+        """Test that an unclosed comment is treated as running to the end, as browsers do."""
+
+        html = '<!-- unclosed <img alt="picture" src="_assets/bg.png">'
+        self.assertEqual(self.md.postprocessors['b64'].run(html), html)
+
     def test_relative_path(self):
         """Test relative path."""
 

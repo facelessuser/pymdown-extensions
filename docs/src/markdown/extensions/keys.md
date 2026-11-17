@@ -86,6 +86,17 @@ by quoting the content displayed instead of a key name. You can also enter HTML 
 ++cmd+alt+"&Uuml;"++
 ///
 
+A `+` inside quotes is treated as content, not as a key separator. This allows quotes to be used to display a
+literal `+`. Backslash escapes, such as `\"` or `\\`, are also processed inside quotes.
+
+```text title="Quoted Plus"
+++ctrl+"+"++
+```
+
+/// html | div.result
+++ctrl+"+"++
+///
+
 ## Strict `KBD` Output
 
 According to HTML5 spec on [`kbd`](https://dev.w3.org/html5/spec-preview/the-kbd-element.html), a literal key input, is

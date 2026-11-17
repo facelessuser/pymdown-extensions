@@ -28,14 +28,18 @@ from markdown.postprocessors import Postprocessor
 import re
 
 
+# Comments and the content of `script` and `style` tags are not matched in full by the regular expression, only their
+# start is. `StripHtmlPostprocessor.run` then looks for the end, which avoids the regular expression repeatedly scanning
+# to the end of the document for every unclosed start, and avoids it scanning whitespace in front of a comment more than
+# once, both of which can lead to quadratic behavior.
 RE_TAG_HTML = re.compile(
     r'''(?x)
     (?:
-        (?P<comments>(?:\r?\n?\s*)<!--(?:-(?!->)|[^-])*?-->(?:\s*)(?=\r?\n)|<!--[\s\S]*?-->)|
+        (?P<comments><!--)|
         (?P<scripts>
             (?P<script_open><(?P<script_name>style|script))
             (?P<script_attr>(?:\s+[\w\-:]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'`=<>]+))?)*)
-            (?P<script_rest>\s*>.*?</(?P=script_name)\s*>)
+            (?P<script_rest>\s*>)
         )|
         (?P<open><(?P<name>[\w\:\.\-]+))
         (?P<attr>(?:\s+[\w\-:]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'`=<>]+))?)*)
@@ -43,8 +47,16 @@ RE_TAG_HTML = re.compile(
         (?P<close_tag></(?P<close_name>[\w\:\.\-]+)\s*>)
     )
     ''',
-    re.DOTALL | re.UNICODE
+    re.DOTALL | re.UNICODE | re.IGNORECASE
 )
+
+# What can follow a comment for the whitespace around it to be stripped with it
+RE_COMMENT_TRAIL = re.compile(r'\s*(?=\r?\n)')
+
+RE_SCRIPT_CLOSE = {
+    'script': re.compile(r'</script\s*>', re.IGNORECASE),
+    'style': re.compile(r'</style\s*>', re.IGNORECASE)
+}
 
 TAG_BAD_ATTR = r'''(?x)
 (?P<attr>
@@ -70,40 +82,80 @@ class StripHtmlPostprocessor(Postprocessor):
         if attributes:
             self.re_attributes = re.compile(
                 TAG_BAD_ATTR % '|'.join(attributes),
-                re.DOTALL | re.UNICODE
+                re.DOTALL | re.UNICODE | re.IGNORECASE
             )
 
         super().__init__(md)
 
-    def repl(self, m):
-        """Replace comments and unwanted attributes."""
+    def strip_attributes(self, attributes):
+        """Strip unwanted attributes."""
 
-        if m.group('comments'):
-            tag = '' if self.strip_comments else m.group('comments')
-        else:
-            if m.group('scripts'):
-                tag = m.group('script_open')
-                if self.re_attributes is not None:
-                    tag += self.re_attributes.sub('', m.group('script_attr'))
-                else:
-                    tag += m.group('script_attr')
-                tag += m.group('script_rest')
-            elif m.group('close_tag'):
-                tag = m.group(0)
-            else:
-                tag = m.group('open')
-                if self.re_attributes is not None:
-                    tag += self.re_attributes.sub('', m.group('attr'))
-                else:
-                    tag += m.group('attr')
-                tag += m.group('close')
-        return tag
+        return attributes if self.re_attributes is None else self.re_attributes.sub('', attributes)
 
     def run(self, text):
-        """Strip out ids and classes for a simplified HTML output."""
+        """Strip out comments and unwanted attributes."""
 
-        strip = self.strip_comments or self.re_attributes
-        return RE_TAG_HTML.sub(self.repl, text) if strip else text
+        if not (self.strip_comments or self.re_attributes):
+            return text
+
+        out = []
+        # Everything before `last` has been handled, and `pos` is where we search from next
+        last = pos = 0
+        # Once we fail to find an end, there can't be one for anything that follows
+        can_close = {'comments': True, 'script': True, 'style': True}
+
+        while True:
+            m = RE_TAG_HTML.search(text, pos)
+            if m is None:
+                break
+
+            if m.group('comments'):
+                # Comments are stripped along with the whitespace that precedes them and follows them on
+                # a line, but only when the comment is followed by a newline.
+                end = text.find('-->', m.end()) if can_close['comments'] else -1
+                if end == -1:
+                    # Unclosed comments are left as is
+                    can_close['comments'] = False
+                    pos = m.end()
+                    continue
+                start = m.start()
+                end += 3
+                trail = RE_COMMENT_TRAIL.match(text, end)
+                if trail:
+                    end = trail.end()
+                    while start > last and text[start - 1].isspace():
+                        start -= 1
+                out.append(text[last:start])
+                if not self.strip_comments:
+                    out.append(text[start:end])
+                last = pos = end
+                continue
+
+            out.append(text[last:m.start()])
+            last = pos = m.end()
+
+            if m.group('scripts'):
+                out.append(m.group('script_open'))
+                out.append(self.strip_attributes(m.group('script_attr')))
+                out.append(m.group('script_rest'))
+                # The content is left alone, but an unclosed tag has no content to skip
+                name = m.group('script_name').lower()
+                if can_close[name]:
+                    close = RE_SCRIPT_CLOSE[name].search(text, last)
+                    if close is None:
+                        can_close[name] = False
+                    else:
+                        out.append(text[last:close.end()])
+                        last = pos = close.end()
+            elif m.group('close_tag'):
+                out.append(m.group(0))
+            else:
+                out.append(m.group('open'))
+                out.append(self.strip_attributes(m.group('attr')))
+                out.append(m.group('close'))
+
+        out.append(text[last:])
+        return ''.join(out)
 
 
 class StripHtmlExtension(Extension):
