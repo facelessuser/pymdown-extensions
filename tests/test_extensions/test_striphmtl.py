@@ -104,6 +104,36 @@ class TestStripHTMLCase(util.MdCase):
         )
 
 
+class TestStripHTMLNothing(util.MdCase):
+    """Test that nothing is stripped when everything is disabled."""
+
+    extension = ['pymdownx.striphtml']
+    extension_configs = {
+        'pymdownx.striphtml': {
+            'strip_comments': False,
+            'strip_js_on_attributes': False,
+            'strip_attributes': []
+        }
+    }
+
+    def test_nothing_to_strip(self):
+        """Test that comments and attributes are left alone."""
+
+        self.check_markdown(
+            r'''
+            <!-- comment -->
+
+            <div class="a" onclick="alert()">text</div>
+            ''',
+            r'''
+            <!-- comment -->
+
+            <div class="a" onclick="alert()">text</div>
+            ''',
+            True
+        )
+
+
 class TestStripHTMLRaw(util.MdCase):
     """Test stripping on raw HTML, including unclosed content that Markdown would normally escape."""
 
