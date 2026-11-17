@@ -201,8 +201,8 @@ def parse_url(url: str) -> tuple[str, str, str, str, str, str, bool, bool]:
         scheme = 'file'
         netloc = ''
         is_absolute = True
-    elif scheme != '' and netloc != '':
-        # A non-file path or strange URL
+    elif scheme != '':
+        # A non-file path or strange URL (`magnet:?xt=...`, `sms:+123`, etc.)
         is_url = True
     elif path.startswith(('/', '\\')):
         # /root path

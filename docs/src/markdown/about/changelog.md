@@ -5,6 +5,8 @@ icon: lucide/scroll-text
 
 ## 13.1.1
 
+-   **FIX**: PathConverter, B64: Treat links with a scheme but no network location, such as `magnet:?xt=...`,
+    `sms:+123`, or `xmpp:user@example.org`, as URLs instead of relative paths.
 -   **FIX**: StripHTML: Match HTML tag and attribute names case insensitively so that attributes such as `ONCLICK` are
     stripped just like `onclick`.
 -   **FIX**: StripHTML: Improve scanning time caused by unclosed comments, `script`, or `style` tags and long runs of

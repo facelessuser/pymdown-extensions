@@ -219,6 +219,15 @@ var str = '<img alt="picture" src="../test_extensions/_assets/bg.png" />'
             r'<p><a href="strange://www.odd.com/link/file.html">strange link 2</a></p>'
         )
 
+    def test_scheme_without_netloc(self):
+        """Test URLs with a scheme but no network location."""
+
+        self.check_markdown(
+            r'[magnet](magnet:?xt=urn:btih:abc) [sms](sms:+123) [xmpp](xmpp:me@example.org)',
+            r'<p><a href="magnet:?xt=urn:btih:abc">magnet</a> <a href="sms:+123">sms</a> '
+            r'<a href="xmpp:me@example.org">xmpp</a></p>'
+        )
+
     def test_mail(self):
         """Test mail link."""
 
@@ -359,6 +368,15 @@ class TestAbsolute(util.MdCase):
         self.check_markdown(
             r'[strange link 2](strange://www.odd.com/link/file.html)',
             r'<p><a href="strange://www.odd.com/link/file.html">strange link 2</a></p>'
+        )
+
+    def test_scheme_without_netloc(self):
+        """Test URLs with a scheme but no network location."""
+
+        self.check_markdown(
+            r'[magnet](magnet:?xt=urn:btih:abc) [sms](sms:+123) [xmpp](xmpp:me@example.org)',
+            r'<p><a href="magnet:?xt=urn:btih:abc">magnet</a> <a href="sms:+123">sms</a> '
+            r'<a href="xmpp:me@example.org">xmpp</a></p>'
         )
 
     def test_mail(self):
