@@ -1275,6 +1275,15 @@ class TestRuleOfThree(util.MdCase):
             '<p>*<em>a<em>b</em></em>: x</p>'
         )
 
+    def test_rule_of_3_many_unclosed_openers(self):
+        """Test that unclosed openers rejected by the rule of 3 are not searched again for every closer."""
+
+        count = 10000
+        self.check_markdown(
+            '*a **b*a **b' * count,
+            '<p>' + '<em>a **b</em>a **b' * count + '</p>'
+        )
+
 
 class TestNoPunctuationRules(util.MdCase):
     """Test no punctuation rules."""
@@ -1347,6 +1356,15 @@ class TestNoPunctuationRules(util.MdCase):
         self.check_markdown(
             '__*)a.* *ab_a_ _)_(*',
             '<p>_<em><em>)a.</em> *ab_a</em> <em>)</em>(*</p>'
+        )
+
+    def test_rule_of_3_many_unclosed_openers(self):
+        """Test that unclosed openers rejected by the rule of 3 are not searched again for every closer."""
+
+        count = 10000
+        self.check_markdown(
+            '*a **b*a **b' * count,
+            '<p>' + '<em>a **b</em>a **b' * count + '</p>'
         )
 
 
