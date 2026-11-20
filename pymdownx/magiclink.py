@@ -63,8 +63,8 @@ RE_LINK = r'''(?xi)
 # The domain of a link (underscores are validated afterwards)
 RE_LINK_DOMAIN = re.compile(r'[^_\W][-\w.]*')
 
-# Everything after the domain, a link ends at whitespace or `<`
-RE_LINK_PATH = re.compile(r'[^\s<]*')
+# Everything after the domain, a link ends at whitespace, `<`, or an inline placeholder (`STX`/`ETX`)
+RE_LINK_PATH = re.compile(r'[^\s<\x02\x03]*')
 
 # Characters excluded from the end of a link (`;` and closing characters are handled separately)
 LINK_TRAILING = frozenset('?!.,:*_~^\'"')

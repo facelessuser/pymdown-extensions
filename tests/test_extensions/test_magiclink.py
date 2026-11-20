@@ -67,6 +67,18 @@ class TestMagicLink(util.MdCase):
             '<p><a href="http://foo.com/blah_(1)">http://foo.com/blah_(1)</a>)]</p>'
         )
 
+    def test_inline_placeholders(self):
+        """A link must stop at inline placeholders such as hard breaks and code spans."""
+
+        self.check_markdown(
+            'https://example.com/abc  \nnext',
+            '<p><a href="https://example.com/abc">https://example.com/abc</a><br />\nnext</p>'
+        )
+        self.check_markdown(
+            'https://example.com/a`code`',
+            '<p><a href="https://example.com/a">https://example.com/a</a><code>code</code></p>'
+        )
+
     def test_short_domain(self):
         """Hosts without a period are allowed for protocol links, but a protocol alone is not a link."""
 
