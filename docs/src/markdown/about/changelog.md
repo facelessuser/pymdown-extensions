@@ -29,7 +29,7 @@ icon: lucide/scroll-text
     listed in `tags`. Only the content of these tags is now skipped.
 -   **FIX**: PathConverter and B64: Do not convert text that merely looks like a `src` or `href` attribute inside the
     value of another attribute.
--   **FIX**: Betterm: Fix quadratic processing time in emphasis handling for many unclosed openers which the rule of 3
+-   **FIX**: BetterEm: Fix quadratic processing time in emphasis handling for many unclosed openers which the rule of 3
     keeps an ambiguous closer from pairing with, such as `*a **b` repeated.
 
 ## 13.1
