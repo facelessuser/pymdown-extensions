@@ -32,6 +32,8 @@ export default {
     "value-keyword-case": "lower",
     "value-no-vendor-prefix": true,
     "function-no-unknown": null,
+    "declaration-property-value-no-unknown": null,
+    "selector-no-unmatchable": null,
     "annotation-no-unknown": [true, {"ignoreAnnotations": ["default"]}],
     "property-no-unknown": [true, {
       ignoreProperties: ["composes","@import","@extend","@mixin","@at-root"]
