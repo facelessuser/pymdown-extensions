@@ -100,7 +100,7 @@ def arithmatex_inline_format(**kwargs):
     if mode == 'generic':
         return partial(_inline_generic_format, tag=tag)
     elif mode == 'mathjax':
-        return partial(_inline_mathjax_format, preview=preview)
+        return partial(_inline_mathjax_format, tag=tag, preview=preview)
 
 
 def _fence_mathjax_format(
@@ -121,7 +121,7 @@ def _fence_mathjax_format(
         _escape(math) +
         '\n</script>\n'
     )
-    text += '</div>'
+    text += f'</{tag}>'
 
     return text
 

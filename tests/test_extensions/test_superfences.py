@@ -1356,14 +1356,14 @@ class TestSuperFencesCustomArithmatexPreview(util.MdCase):
                 {
                     'name': 'math',
                     'class': 'arithmatex',
-                    'format': arithmatex.arithmatex_fenced_format(mode='mathjax', preview=True)
+                    'format': arithmatex.arithmatex_fenced_format(mode='mathjax', tag='figure', preview=True)
                 }
             ]
         }
     }
 
     def test_arithmatex_preview(self):
-        """Test Arithmatex formatter with preview."""
+        """Test Arithmatex preview with a custom wrapper."""
 
         self.check_markdown(
             r'''
@@ -1372,14 +1372,14 @@ class TestSuperFencesCustomArithmatexPreview(util.MdCase):
             ```
             ''',
             r'''
-            <div class="arithmatex">
+            <figure class="arithmatex">
             <div class="MathJax_Preview">
             E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
             </div>
             <script type="math/tex; mode=display">
             E(\mathbf{v}, \mathbf{h}) = -\sum_{i,j}w_{ij}v_i h_j - \sum_i b_i v_i - \sum_j c_j h_j
             </script>
-            </div>
+            </figure>
             ''',
             True
         )

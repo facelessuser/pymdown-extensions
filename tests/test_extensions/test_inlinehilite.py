@@ -391,19 +391,19 @@ class TestInlineHiliteCustom2(util.MdCase):
                 {
                     'name': 'math',
                     'class': 'arithmatex',
-                    'format': arithmatex.arithmatex_inline_format(mode="mathjax", preview=True)
+                    'format': arithmatex.arithmatex_inline_format(mode="mathjax", tag="code", preview=True)
                 }
             ]
         }
     }
 
     def test_preview_arithmatex(self):
-        """Test preview Arithmatex."""
+        """Test Arithmatex preview with a custom wrapper."""
 
         self.check_markdown(
             r'`#!math 3 + 3`',
-            r'<p><span class="arithmatex"><span class="MathJax_Preview">3 + 3</span>'
-            r'<script type="math/tex">3 + 3</script></span></p>'
+            r'<p><code class="arithmatex"><span class="MathJax_Preview">3 + 3</span>'
+            r'<script type="math/tex">3 + 3</script></code></p>'
         )
 
 
