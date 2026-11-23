@@ -26,7 +26,7 @@
     "@stylistic/eslint-plugin": "^5.10.0",
     "autoprefixer": "^10.6.2",
     "del": "^9.0.1",
-    "eslint": "^10.14.0",
+    "eslint": "^10.15.0",
     "eslint-plugin-jsdoc": "^65.4.5",
     "globals": "^17.14.0",
     "gulp": "^5.0.1",
