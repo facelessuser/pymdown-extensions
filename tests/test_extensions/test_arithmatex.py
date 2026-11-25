@@ -1,5 +1,6 @@
 """Test cases for Arithmatex."""
 from .. import util
+from pymdownx.arithmatex import arithmatex_fenced_format
 
 
 class TestArithmatexLimit(util.MdCase):
@@ -217,5 +218,37 @@ class TestArithmatexGenericWrap(util.MdCase):
             1 + 2
             \end{equation}</div>
             """,
+            True
+        )
+
+
+class TestFencedArithmatexQuotedAttributes(util.MdCase):
+    """Preserve quoted fence attributes."""
+
+    extension = ['attr_list', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.superfences': {
+            'custom_fences': [{
+                'name': 'math',
+                'class': 'sample"custom',
+                'format': arithmatex_fenced_format()
+            }]
+        }
+    }
+
+    def test_quoted_attributes(self):
+        """Escape literal quotes and preserve existing character references."""
+
+        self.check_markdown(
+            r'''
+            ```math {.extra id='figure"part' data-json='{"x":1}' data-note='A &quot;B&quot; &amp; C'}
+            x
+            ```
+            ''',
+            r'''
+            <div id="figure&quot;part" class="sample&quot;custom extra" data-json="{&quot;x&quot;:1}" data-note="A &quot;B&quot; &amp; C">\[
+            x
+            \]</div>
+            ''',  # noqa: E501
             True
         )

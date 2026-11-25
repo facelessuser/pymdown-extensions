@@ -1758,3 +1758,63 @@ class TestHighlightRelaxedHeaders(util.MdCase):
             ''',
             True
         )
+
+
+class TestFenceCodeQuotedAttributes(util.MdCase):
+    """Preserve quoted fence attributes."""
+
+    extension = ['attr_list', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.superfences': {
+            'custom_fences': [{
+                'name': 'test',
+                'class': 'sample"custom',
+                'format': superfences.fence_code_format
+            }]
+        }
+    }
+
+    def test_quoted_attributes(self):
+        """Escape literal quotes and preserve existing character references."""
+
+        self.check_markdown(
+            r'''
+            ```test {.extra id='figure"part' data-json='{"x":1}' data-note='A &quot;B&quot; &amp; C'}
+            x
+            ```
+            ''',
+            r'''
+            <pre id="figure&quot;part" class="sample&quot;custom extra" data-json="{&quot;x&quot;:1}" data-note="A &quot;B&quot; &amp; C"><code>x</code></pre>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestFenceDivQuotedAttributes(util.MdCase):
+    """Preserve quoted fence attributes."""
+
+    extension = ['attr_list', 'pymdownx.superfences']
+    extension_configs = {
+        'pymdownx.superfences': {
+            'custom_fences': [{
+                'name': 'test',
+                'class': 'sample"custom',
+                'format': superfences.fence_div_format
+            }]
+        }
+    }
+
+    def test_quoted_attributes(self):
+        """Escape literal quotes and preserve existing character references."""
+
+        self.check_markdown(
+            r'''
+            ```test {.extra id='figure"part' data-json='{"x":1}' data-note='A &quot;B&quot; &amp; C'}
+            x
+            ```
+            ''',
+            r'''
+            <div id="figure&quot;part" class="sample&quot;custom extra" data-json="{&quot;x&quot;:1}" data-note="A &quot;B&quot; &amp; C">x</div>
+            ''',  # noqa: E501
+            True
+        )
