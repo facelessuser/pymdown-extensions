@@ -5,7 +5,7 @@ icon: lucide/scroll-text
 
 ## 13.1.3
 
--   **FIX**: FancyLists: Lists numbered lists only accept ASCII digits.
+-   **FIX**: FancyLists: Numbered lists should only accept ASCII digits.
 
 ## 13.1.2
 
