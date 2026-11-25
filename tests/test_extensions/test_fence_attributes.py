@@ -3,6 +3,7 @@ from html.parser import HTMLParser
 import markdown
 import pytest
 from pymdownx.superfences import fence_code_format, fence_div_format
+from pymdownx.arithmatex import arithmatex_fenced_format
 
 
 class AttributeParser(HTMLParser):
@@ -20,7 +21,9 @@ class AttributeParser(HTMLParser):
         self.tags.append((tag, dict(attrs)))
 
 
-@pytest.mark.parametrize('kind', ['custom-code', 'custom-div', 'pygments', 'js-code', 'js-pre', 'pygments-anchors'])
+@pytest.mark.parametrize(
+    'kind', ['custom-code', 'custom-div', 'arithmatex', 'pygments', 'js-code', 'js-pre', 'pygments-anchors']
+)
 def test_attributes_round_trip(kind):
     """Preserve complete values without creating stray attributes."""
 
@@ -30,12 +33,15 @@ print("hello")
     if kind.startswith('pygments'):
         pytest.importorskip('pygments')
     configs = {}
-    if kind.startswith('custom'):
+    if kind.startswith('custom') or kind == 'arithmatex':
         configs['pymdownx.superfences'] = {
             'custom_fences': [{
                 'name': 'sample',
                 'class': 'sample"custom',
-                'format': fence_code_format if kind == 'custom-code' else fence_div_format
+                'format': (
+                    arithmatex_fenced_format() if kind == 'arithmatex' else
+                    fence_code_format if kind == 'custom-code' else fence_div_format
+                )
             }]
         }
     elif kind.startswith('js'):
