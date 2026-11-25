@@ -81,6 +81,7 @@ RE_TWITTER_USER = r'\w{1,15}'
 RE_X_USER = r'\w{1,15}'
 RE_GITHUB_USER = r'[a-zA-Z\d](?:[-a-zA-Z\d_]{0,37}[a-zA-Z\d])?'
 RE_GITLAB_USER = r'[\.a-zA-Z\d_](?:[-a-zA-Z\d_\.]{0,37}[-a-zA-Z\d_])?'
+RE_GITLAB_NAMESPACE = fr'{RE_GITLAB_USER}(?:/{RE_GITLAB_USER})*'
 RE_BITBUCKET_USER = r'[-a-zA-Z\d_]{1,39}'
 
 # External mention patterns
@@ -94,13 +95,13 @@ RE_ALL_EXT_MENTIONS = r'''(?x)
 # Internal mention patterns
 RE_INT_MENTIONS = r'(?P<mention>(?<![a-zA-Z])@{})\b'
 
-def create_ext_mentions(name, provider_type):
+def create_ext_mentions(name, provider_type, *, namespace=False):
     """Create external mentions by provider type."""
 
     if provider_type == 'github':
         return fr'{name}:{RE_GITHUB_USER}'
     elif provider_type == 'gitlab':
-        return fr'{name}:{RE_GITLAB_USER}'
+        return fr'{name}:{RE_GITLAB_NAMESPACE if namespace else RE_GITLAB_USER}'
     elif provider_type == 'bitbucket':
         return fr'{name}:{RE_BITBUCKET_USER}'
 
@@ -127,14 +128,14 @@ RE_GIT_INT_REPO_MENTIONS = r'''(?x)
 
 # External reference patterns (issue, pull request, commit, compare)
 RE_GIT_EXT_REFS = r'''(?x)
-(?P<all>(?<![@/])(?:(?P<user>\b{})/)
+(?P<all>(?<![@/])(?:(?P<user>\b(?:{}))/)
 (?P<repo>[-._a-zA-Z\d]{{0,99}}[a-zA-Z\d])
 (?:(?P<issue>(?:\#|!|\?)[1-9][0-9]*)|(?P<commit>@[a-f\d]{{40}})(?:\.{{3}}(?P<diff>[a-f\d]{{40}}))?))\b
 '''
 
 # Internal reference patterns (issue, pull request, commit, compare)
 RE_GIT_INT_EXT_REFS = r'''(?x)
-(?P<all>(?<![@/])(?:(?P<user>\b{})/)?
+(?P<all>(?<!{})(?:(?P<user>\b{})/)?
 (?P<repo>[-._a-zA-Z\d]{{0,99}}[a-zA-Z\d])
 (?:(?P<issue>(?:\#|!|\?)[1-9][0-9]*)|(?P<commit>@[a-f\d]{{40}})(?:\.{{3}}(?P<diff>[a-f\d]{{40}}))?))\b
 '''
@@ -1235,8 +1236,12 @@ class MagiclinkExtension(Extension):
             )
             md.inlinePatterns.register(git_ext_refs, "magic-ext-refs", 79.5)
             if not self.is_social:
+                is_gitlab = self.provider_info[self.provider]['type'] == 'gitlab'
                 git_int_refs = MagiclinkExternalRefsPattern(
-                    RE_GIT_INT_EXT_REFS.format(self.int_mentions),
+                    RE_GIT_INT_EXT_REFS.format(
+                        r'[@/:\w.-]' if is_gitlab else r'[@/]',
+                        RE_GITLAB_NAMESPACE if is_gitlab else self.int_mentions
+                    ),
                     md,
                     self.user,
                     self.repo,
@@ -1319,6 +1324,9 @@ class MagiclinkExtension(Extension):
         excludes = config.get('shortener_user_exclude', {})
         self.custom_shortners = {}
         external_users = [RE_GITHUB_EXT_MENTIONS, RE_GITLAB_EXT_MENTIONS, RE_BITBUCKET_EXT_MENTIONS]
+        reference_users = [
+            RE_GITHUB_EXT_MENTIONS, create_ext_mentions('gitlab', 'gitlab', namespace=True), RE_BITBUCKET_EXT_MENTIONS
+        ]
         for custom, entry in custom_provider.items():
             if not RE_CUSTOM_NAME.match(custom):
                 raise ValueError(
@@ -1342,9 +1350,10 @@ class MagiclinkExtension(Extension):
                 if custom not in excludes:
                     excludes[custom] = excludes.get(entry['type'], [])
                 external_users.append(create_ext_mentions(custom, entry['type']))
+                reference_users.append(create_ext_mentions(custom, entry['type'], namespace=True))
 
         self.re_git_ext_repo_mentions = RE_GIT_EXT_REPO_MENTIONS.format('|'.join(external_users))
-        self.re_git_ext_refs = RE_GIT_EXT_REFS.format('|'.join(external_users))
+        self.re_git_ext_refs = RE_GIT_EXT_REFS.format('|'.join(reference_users))
 
         for key, value in config.get('shortener_user_exclude', {}).items():
             if key in self.provider_info and isinstance(value, (list, tuple, set)):
