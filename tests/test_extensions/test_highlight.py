@@ -788,3 +788,117 @@ class TestDefaultLangInline(util.MdCase):
             ''',  # noqa: E501
             True
         )
+
+
+class TestHighlightedQuotedAttributes(util.MdCase):
+    """Preserve quoted fence attributes."""
+
+    extension = ['attr_list', 'pymdownx.superfences', 'pymdownx.highlight']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'css_class': 'sample"custom',
+        }
+    }
+
+    def test_quoted_attributes(self):
+        """Escape literal quotes and preserve existing character references."""
+
+        self.check_markdown(
+            r'''
+            ```text {.extra id='figure"part' data-json='{"x":1}' data-note='A &quot;B&quot; &amp; C'}
+            x
+            ```
+            ''',
+            r'''
+            <div id="figure&quot;part" class="extra sample&quot;custom" data-json="{&quot;x&quot;:1}" data-note="A &quot;B&quot; &amp; C"><pre><span></span><code>x
+            </code></pre></div>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestUnhighlightedQuotedAttributes(util.MdCase):
+    """Preserve quoted fence attributes."""
+
+    extension = ['attr_list', 'pymdownx.superfences', 'pymdownx.highlight']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'use_pygments': False,
+            'code_attr_on_pre': False,
+            'css_class': 'sample"custom',
+        }
+    }
+
+    def test_quoted_attributes(self):
+        """Escape literal quotes and preserve existing character references."""
+
+        self.check_markdown(
+            r'''
+            ```text {.extra id='figure"part' data-json='{"x":1}' data-note='A &quot;B&quot; &amp; C'}
+            x
+            ```
+            ''',
+            r'''
+            <pre class="sample&quot;custom"><code id="figure&quot;part" class="language-text extra" data-json="{&quot;x&quot;:1}" data-note="A &quot;B&quot; &amp; C">x</code></pre>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestUnhighlightedPreQuotedAttributes(util.MdCase):
+    """Preserve quoted fence attributes."""
+
+    extension = ['attr_list', 'pymdownx.superfences', 'pymdownx.highlight']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'use_pygments': False,
+            'code_attr_on_pre': True,
+            'css_class': 'sample"custom',
+        }
+    }
+
+    def test_quoted_attributes(self):
+        """Escape literal quotes and preserve existing character references."""
+
+        self.check_markdown(
+            r'''
+            ```text {.extra id='figure"part' data-json='{"x":1}' data-note='A &quot;B&quot; &amp; C'}
+            x
+            ```
+            ''',
+            r'''
+            <pre id="figure&quot;part" class="language-text sample&quot;custom extra" data-json="{&quot;x&quot;:1}" data-note="A &quot;B&quot; &amp; C"><code>x</code></pre>
+            ''',  # noqa: E501
+            True
+        )
+
+
+class TestHighlightedAnchorQuotedAttributes(util.MdCase):
+    """Preserve quoted fence attributes."""
+
+    extension = ['attr_list', 'pymdownx.superfences', 'pymdownx.highlight']
+    extension_configs = {
+        'pymdownx.highlight': {
+            'css_class': 'sample"custom',
+            'line_spans': 'row',
+            'line_anchors': 'line',
+            'linenums': True,
+            'anchor_linenums': True,
+        }
+    }
+
+    def test_quoted_attributes(self):
+        """Escape literal quotes and preserve existing character references."""
+
+        self.check_markdown(
+            r'''
+            ```text {.extra id='figure"part' data-json='{"x":1}' data-note='A &quot;B&quot; &amp; C'}
+            x
+            ```
+            ''',
+            r'''
+            <div id="figure&quot;part" class="extra sample&quot;custom" data-json="{&quot;x&quot;:1}" data-note="A &quot;B&quot; &amp; C"><table class="sample&quot;customtable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#line-figure&quot;part-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="row-figure&quot;part-1"><a id="line-figure&quot;part-1" name="line-figure&quot;part-1"></a>x
+            </span></code></pre></div></td></tr></table></div>
+            ''',  # noqa: E501
+            True
+        )

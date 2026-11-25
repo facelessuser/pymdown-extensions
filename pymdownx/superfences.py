@@ -35,6 +35,7 @@ from markdown import util as md_util
 import functools
 import re
 from .quotes import QuotesExtension
+from .util import escape_attribute_quotes
 
 SOH = '\u0001'  # start
 EOT = '\u0004'  # end
@@ -144,9 +145,9 @@ def fence_code_format(source, language, class_name, options, md, **kwargs):
     if class_name:
         classes.insert(0, class_name)
 
-    id_value = f' id="{id_value}"' if id_value else ''
-    classes = ' class="{}"'.format(' '.join(classes)) if classes else ''
-    attrs = ' ' + ' '.join(f'{k}="{v}"' for k, v in attrs.items()) if attrs else ''
+    id_value = f' id="{escape_attribute_quotes(id_value)}"' if id_value else ''
+    classes = ' class="{}"'.format(escape_attribute_quotes(' '.join(classes))) if classes else ''
+    attrs = ' ' + ' '.join(f'{k}="{escape_attribute_quotes(v)}"' for k, v in attrs.items()) if attrs else ''
 
     return '<pre{}{}{}><code>{}</code></pre>'.format(id_value, classes, attrs, _escape(source))
 
@@ -161,9 +162,9 @@ def fence_div_format(source, language, class_name, options, md, **kwargs):
     if class_name:
         classes.insert(0, class_name)
 
-    id_value = f' id="{id_value}"' if id_value else ''
-    classes = ' class="{}"'.format(' '.join(classes)) if classes else ''
-    attrs = ' ' + ' '.join(f'{k}="{v}"' for k, v in attrs.items()) if attrs else ''
+    id_value = f' id="{escape_attribute_quotes(id_value)}"' if id_value else ''
+    classes = ' class="{}"'.format(escape_attribute_quotes(' '.join(classes))) if classes else ''
+    attrs = ' ' + ' '.join(f'{k}="{escape_attribute_quotes(v)}"' for k, v in attrs.items()) if attrs else ''
 
     return '<div{}{}{}>{}</div>'.format(id_value, classes, attrs, _escape(source))
 

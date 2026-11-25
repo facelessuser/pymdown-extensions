@@ -137,9 +137,9 @@ def _fence_generic_format(
 
     classes.insert(0, class_name)
 
-    id_value = f' id="{id_value}"' if id_value else ''
-    classes = ' class="{}"'.format(' '.join(classes))
-    attrs = ' ' + ' '.join(f'{k}="{v}"' for k, v in attrs.items()) if attrs else ''
+    id_value = f' id="{util.escape_attribute_quotes(id_value)}"' if id_value else ''
+    classes = ' class="{}"'.format(util.escape_attribute_quotes(' '.join(classes)))
+    attrs = ' ' + ' '.join(f'{k}="{util.escape_attribute_quotes(v)}"' for k, v in attrs.items()) if attrs else ''
 
     return f'<{tag}{id_value}{classes}{attrs}>{wrap.format(_escape(math))}</{tag}>'
 

@@ -26,6 +26,7 @@ from markdown import Extension
 from markdown.treeprocessors import Treeprocessor
 import xml.etree.ElementTree as etree
 import copy
+from .util import escape_attribute_quotes
 from collections import OrderedDict
 try:
     from pygments import highlight
@@ -367,7 +368,7 @@ class Highlight:
                     stripped = css_class.strip()
                     css_class = stripped
 
-            id_str = ID_ATTR.format(id_value) if id_value else ''
+            id_str = ID_ATTR.format(escape_attribute_quotes(id_value)) if id_value else ''
 
             lineno_id = id_value if id_value else str(code_block_count)
 
@@ -377,7 +378,7 @@ class Highlight:
                 temp = []
                 for k, v in attrs.items():
                     if k.startswith('data-'):
-                        temp.append(f'{k}="{v}"')
+                        temp.append(f'{k}="{escape_attribute_quotes(v)}"')
                 attr_str = ' ' + ' '.join(temp) if temp else ''
 
             # Setup line specific settings.
@@ -443,9 +444,11 @@ class Highlight:
                     start = m.start(0)
                     if class_names:
                         if m.group(2):
-                            classes = ' class="{} {}"'.format(' '.join(class_names), m.group(3).strip())
+                            classes = ' class="{} {}"'.format(
+                                escape_attribute_quotes(' '.join(class_names)), m.group(3).strip()
+                            )
                         else:
-                            classes = ' class="{}"'.format(' '.join(class_names))
+                            classes = ' class="{}"'.format(escape_attribute_quotes(' '.join(class_names)))
                     else:
                         classes = ' ' + m.group(2).lstrip() if m.group(2) else ''
 
@@ -466,11 +469,11 @@ class Highlight:
                 class_names.insert(0, css_class)
             if language:
                 class_names.insert(0, self.language_prefix + language)
-            class_str = CLASS_ATTR.format(' '.join(class_names)) if class_names else ''
-            id_str = ID_ATTR.format(id_value) if id_value else ''
-            attr_str = ' ' + ' '.join(f'{k}="{v}"' for k, v in attrs.items()) if attrs else ''
+            class_str = CLASS_ATTR.format(escape_attribute_quotes(' '.join(class_names))) if class_names else ''
+            id_str = ID_ATTR.format(escape_attribute_quotes(id_value)) if id_value else ''
+            attr_str = ' ' + ' '.join(f'{k}="{escape_attribute_quotes(v)}"' for k, v in attrs.items()) if attrs else ''
             if not self.code_attr_on_pre:
-                highlight_class = (CLASS_ATTR.format(css_class)) if css_class else ''
+                highlight_class = (CLASS_ATTR.format(escape_attribute_quotes(css_class))) if css_class else ''
                 code = CODE_WRAP.format(highlight_class, id_str, class_str, attr_str, self.escape(src))
             else:
                 code = CODE_WRAP_ON_PRE.format(id_str, class_str, attr_str, self.escape(src))

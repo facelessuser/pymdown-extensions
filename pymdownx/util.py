@@ -63,6 +63,12 @@ def nearing_depth_limit(parser: BlockParser, parent: etree.Element | None = None
     return sys.getrecursionlimit() - (stack_depth + tree_depth) < RECURSION_MARGIN
 
 
+def escape_attribute_quotes(value: Any) -> str:
+    """Escape double quotes without re-encoding existing character references."""
+
+    return str(value).replace('"', '&quot;')
+
+
 def clamp(value: float, mn: float, mx: float) -> float:
     """Clamp the value to the given minimum and maximum."""
 
