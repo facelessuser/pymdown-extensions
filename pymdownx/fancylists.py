@@ -130,19 +130,19 @@ class FancyOListProcessor(BlockProcessor):
 
         # Detect an item list item.
         self.list_re = re.compile(
-            r'^[ ]{0,%d}(?:(?:\d+%s)[).])[ ]+(.*)' % (self.tab_length - 1, formats),
+            fr'^[ ]{{0,{self.tab_length - 1}}}(?:(?:[0-9]+{formats})[).])[ ]+(.*)',
             re.VERBOSE
         )
 
         # Detect items on secondary lines which can be of any list type.
         self.child_re = re.compile(
-            r'^[ ]{0,%d}((?:(?:\d+%s)[).]|[-*+]))[ ]+(.*)' % (self.tab_length - 1, formats),
+            fr'^[ ]{{0,{self.tab_length - 1}}}((?:(?:[0-9]+{formats})[).]|[-*+]))[ ]+(.*)',
             re.VERBOSE
         )
 
         # Detect indented (nested) list items of any type.
         self.indent_re = re.compile(
-            r'^[ ]{%d,%d}(?:(?:\d+%s)[).]|[-*+])[ ]+.*' % (self.tab_length, self.tab_length * 2 - 1, formats),
+            fr'^[ ]{{{self.tab_length},{self.tab_length * 2 - 1}}}(?:(?:[0-9]+{formats})[).]|[-*+])[ ]+.*',
             re.VERBOSE
         )
 
@@ -487,7 +487,7 @@ class FancyUListProcessor(FancyOListProcessor):
         """Initialize."""
 
         super().__init__(parser, config)
-        self.list_re = re.compile(r'^[ ]{0,%d}[-+*][ ]+(.*)' % (self.tab_length - 1))
+        self.list_re = re.compile(fr'^[ ]{{0,{self.tab_length - 1}}}[-+*][ ]+(.*)')
 
 
 class FancyListTreeprocessor(Treeprocessor):

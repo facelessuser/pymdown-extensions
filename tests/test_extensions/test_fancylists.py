@@ -8,6 +8,15 @@ class TestFancyLists(util.MdCase):
     extension = ['pymdownx.fancylists', 'pymdownx.saneheaders']
     extension_configs = {}
 
+    def test_unicode_decimal_start(self):
+        """Serialize decimal markers as HTML integers."""
+
+        for marker in ('١٢.', '１２)'):  # noqa: RUF001
+            self.check_markdown(
+                f'{marker} Twelve',
+                f'<p>{marker} Twelve</p>'
+            )
+
     def test_fail_case(self):
         """Test failed case."""
 

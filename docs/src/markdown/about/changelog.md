@@ -3,6 +3,10 @@ icon: lucide/scroll-text
 ---
 # Changelog
 
+## 13.1.3
+
+-   **FIX**: FancyLists: Lists numbered lists only accept ASCII digits.
+
 ## 13.1.2
 
 -   **FIX**: MagicLink: Fix issue were new URL parser can consume Python Markdown placeholders unexpectedly (#3062).
