@@ -256,7 +256,9 @@ class FancyOListProcessor(BlockProcessor):
 
         t = fancy_type.split('-')[1].lower()
         if t == 'decimal':
-            return m.group(1)[:-1].lstrip('(')
+            digits = m.group(1)[:-1].lstrip('(')
+            # HTML integer attributes require ASCII digits.
+            return digits if digits.isascii() else ''.join(str(int(d)) for d in digits)
         elif t == 'roman':
             return str(roman2int(m.group(1)[:-1]))
         elif t == 'alpha':
