@@ -5,6 +5,9 @@ icon: lucide/scroll-text
 
 ## 13.1.3
 
+-   **FIX**: SuperFences, Highlight: Preserve double quotes in HTML attribute values, including custom fences, without
+    double-encoding existing character references.
+
 -   **FIX**: FancyLists: Numbered lists should only accept ASCII digits.
 
 ## 13.1.2
