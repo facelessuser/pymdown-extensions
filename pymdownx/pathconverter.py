@@ -38,6 +38,7 @@ from markdown.postprocessors import Postprocessor
 from . import util
 import os
 import re
+from html import escape
 from urllib.parse import urlunparse
 
 RE_TAG_HTML = r'''(?xusi)
@@ -97,7 +98,7 @@ def repl_relative(m, base_path, relative_path):
                 path = util.path2url(path)
                 link = '{}"{}"'.format(
                     m.group('name'),
-                    urlunparse((scheme, netloc, path, params, query, fragment))
+                    escape(urlunparse((scheme, netloc, path, params, query, fragment)), quote=True)
                 )
     except Exception:  # pragma: no cover
         # Parsing crashed and burned; no need to continue.
@@ -122,14 +123,14 @@ def repl_absolute(m, base_path, file_scheme):
                     path = '/' + path
                 link = '{}"{}"'.format(
                     m.group('name'),
-                    urlunparse(("file", netloc, path, params, query, fragment))
+                    escape(urlunparse(("file", netloc, path, params, query, fragment)), quote=True)
                 )
             else:
                 start = '/' if not path.startswith('/') else ''
                 link = '{}"{}{}"'.format(
                     m.group('name'),
                     start,
-                    urlunparse((scheme, netloc, path, params, query, fragment))
+                    escape(urlunparse((scheme, netloc, path, params, query, fragment)), quote=True)
                 )
     except Exception:  # pragma: no cover
         # Parsing crashed and burned; no need to continue.
