@@ -17,6 +17,14 @@ class TestRelative(util.MdCase):
         }
     }
 
+    def test_html_entities(self):
+        """Preserve literal entity references in the query and fragment."""
+
+        self.check_markdown(
+            '<a href="page.html?x=&amp;copy;#part&amp;copy;">link</a>',
+            '<p><a href="test_extensions/page.html?x=&amp;copy;#part&amp;copy;">link</a></p>'
+        )
+
     def test_in_script(self):
         """Test that we do not parse image in script."""
 
@@ -249,6 +257,14 @@ class TestAbsolute(util.MdCase):
         }
     }
 
+    def test_html_entities(self):
+        """Preserve literal entity references in the query and fragment."""
+
+        self.check_markdown(
+            '<a href="page.html?x=&amp;copy;#part&amp;copy;">link</a>',
+            '<p><a href="/Some/fake/path/page.html?x=&amp;copy;#part&amp;copy;">link</a></p>'
+        )
+
     def test_in_script(self):
         """Test that we do not parse image in script."""
 
@@ -400,6 +416,14 @@ class TestAbsoluteFileScheme(TestAbsolute):
             "file_scheme": True,
         }
     }
+
+    def test_html_entities(self):
+        """Preserve literal entity references in the query and fragment."""
+
+        self.check_markdown(
+            '<a href="page.html?x=&amp;copy;#part&amp;copy;">link</a>',
+            '<p><a href="file:///Some/fake/path/page.html?x=&amp;copy;#part&amp;copy;">link</a></p>'
+        )
 
     def test_relative_path(self):
         """Test relative path."""
