@@ -24,7 +24,7 @@
     "@primer/octicons": "^19.42.0",
     "@rollup/plugin-terser": "^1.0.2",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "autoprefixer": "^10.6.2",
+    "autoprefixer": "^10.7.0",
     "del": "^9.0.1",
     "eslint": "^10.14.0",
     "eslint-plugin-jsdoc": "^65.4.5",
