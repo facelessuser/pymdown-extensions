@@ -22,12 +22,15 @@ THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABI
 CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
-from markdown import Extension
+from __future__ import annotations
+from markdown import Extension, Markdown
 from markdown.inlinepatterns import InlineProcessor
 from markdown.postprocessors import Postprocessor
 from markdown import util as md_util
 import xml.etree.ElementTree as etree
 import copy
+import re
+from typing import Any, Callable, TypedDict
 from . import util
 
 RE_EMOJI = r'(:[+\-\w]+:)'
@@ -60,13 +63,26 @@ their name change, were removed, or have never existed.
 """
 
 
-def add_attributes(options, attributes):
+class EmojiIndex(TypedDict):
+    """Structure returned by an emoji index function."""
+
+    name: str
+    emoji: dict[str, dict[str, Any]]
+    aliases: dict[str, str]
+
+
+EmojiGenerator = Callable[
+    [str, str, str | None, str | None, str, str | None, str | None, dict[str, Any], Markdown],
+    etree.Element | str
+]
+
+
+def add_attributes(options: dict[str, Any], attributes: dict[str, str]) -> None:
     """Add additional attributes from options."""
 
     attr = options.get('attributes', {})
     if attr:
-        for k, v in attr.items():
-            attributes[k] = v
+        attributes.update(attr)
 
 
 # Exists for backwards compatibility as this function
@@ -74,7 +90,7 @@ def add_attributes(options, attributes):
 add_attriubtes = add_attributes
 
 
-def emojione(options, md):
+def emojione(options: dict[str, Any], md: Markdown) -> EmojiIndex:
     """The EmojiOne index."""
 
     from . import emoji1_db as emoji_map
@@ -85,7 +101,7 @@ def emojione(options, md):
     }
 
 
-def gemoji(options, md):
+def gemoji(options: dict[str, Any], md: Markdown) -> EmojiIndex:
     """The Gemoji index."""
 
     from . import gemoji_db as emoji_map
@@ -96,7 +112,7 @@ def gemoji(options, md):
     }
 
 
-def twemoji(options, md):
+def twemoji(options: dict[str, Any], md: Markdown) -> EmojiIndex:
     """The Twemoji index."""
 
     from . import twemoji_db as emoji_map
@@ -110,7 +126,17 @@ def twemoji(options, md):
 ###################
 # Converters
 ###################
-def to_png(index, shortname, alias, uc, alt, title, category, options, md):
+def to_png(
+    index: str,
+    shortname: str,
+    alias: str | None,
+    uc: str | None,
+    alt: str,
+    title: str | None,
+    category: str | None,
+    options: dict[str, Any],
+    md: Markdown
+) -> etree.Element:
     """Return PNG element."""
 
     if index == 'gemoji':
@@ -138,7 +164,7 @@ def to_png(index, shortname, alias, uc, alt, title, category, options, md):
         uc if is_unicode else shortname[1:-1]
     )
 
-    attributes = {
+    attributes: dict[str, str] = {
         "class": classes,
         "alt": alt,
         "src": src
@@ -152,7 +178,17 @@ def to_png(index, shortname, alias, uc, alt, title, category, options, md):
     return etree.Element("img", attributes)
 
 
-def to_svg(index, shortname, alias, uc, alt, title, category, options, md):
+def to_svg(
+    index: str,
+    shortname: str,
+    alias: str | None,
+    uc: str | None,
+    alt: str,
+    title: str | None,
+    category: str | None,
+    options: dict[str, Any],
+    md: Markdown
+) -> etree.Element:
     """Return SVG element."""
 
     if index == 'twemoji':
@@ -160,7 +196,7 @@ def to_svg(index, shortname, alias, uc, alt, title, category, options, md):
     else:
         svg_path = EMOJIONE_SVG_CDN
 
-    attributes = {
+    attributes: dict[str, str] = {
         "class": options.get('classes', index),
         "alt": alt,
         "src": "{}{}.svg".format(
@@ -177,10 +213,20 @@ def to_svg(index, shortname, alias, uc, alt, title, category, options, md):
     return etree.Element("img", attributes)
 
 
-def to_png_sprite(index, shortname, alias, uc, alt, title, category, options, md):
+def to_png_sprite(
+    index: str,
+    shortname: str,
+    alias: str | None,
+    uc: str | None,
+    alt: str,
+    title: str | None,
+    category: str | None,
+    options: dict[str, Any],
+    md: Markdown
+) -> etree.Element:
     """Return PNG sprite element."""
 
-    attributes = {
+    attributes: dict[str, str] = {
         "class": '%(class)s-%(size)s-%(category)s _%(unicode)s' % {
             "class": options.get('classes', index),
             "size": options.get('size', '64'),
@@ -200,7 +246,17 @@ def to_png_sprite(index, shortname, alias, uc, alt, title, category, options, md
     return el
 
 
-def to_svg_sprite(index, shortname, alias, uc, alt, title, category, options, md):
+def to_svg_sprite(
+    index: str,
+    shortname: str,
+    alias: str | None,
+    uc: str | None,
+    alt: str,
+    title: str | None,
+    category: str | None,
+    options: dict[str, Any],
+    md: Markdown
+) -> etree.Element:
     """
     Return SVG sprite element.
 
@@ -221,7 +277,17 @@ def to_svg_sprite(index, shortname, alias, uc, alt, title, category, options, md
     return svg
 
 
-def to_alt(index, shortname, alias, uc, alt, title, category, options, md):
+def to_alt(
+    index: str,
+    shortname: str,
+    alias: str | None,
+    uc: str | None,
+    alt: str,
+    title: str | None,
+    category: str | None,
+    options: dict[str, Any],
+    md: Markdown
+) -> str:
     """Return html entities."""
 
     return md.htmlStash.store(alt)
@@ -233,39 +299,39 @@ def to_alt(index, shortname, alias, uc, alt, title, category, options, md):
 class EmojiPattern(InlineProcessor):
     """Return element of type `tag` with a text attribute of group(2) of an `InlineProcessor`."""
 
-    def __init__(self, pattern, config, strict_mode, md):
+    def __init__(self, pattern: str, config: dict[str, Any], strict_mode: set[str], md: Markdown) -> None:
         """Initialize."""
 
         InlineProcessor.__init__(self, pattern, md)
 
         title = config['title']
         alt = config['alt']
-        self.options = config['options']
+        self.options: dict[str, Any] = config['options']
         self._set_index(config["emoji_index"])
         self.unicode_alt = alt in UNICODE_ALT
         self.encoded_alt = alt == UNICODE_ENTITY
-        self.remove_var_sel = config['remove_variation_selector']
-        self.title = title if title in VALID_TITLE else NO_TITLE
-        self.generator = config['emoji_generator']
-        self.strict = config['strict']
+        self.remove_var_sel: bool = config['remove_variation_selector']
+        self.title: str = title if title in VALID_TITLE else NO_TITLE
+        self.generator: EmojiGenerator = config['emoji_generator']
+        self.strict: bool = config['strict']
         self.strict_cache = strict_mode
 
-    def _set_index(self, index):
+    def _set_index(self, index: Callable[[dict[str, Any], Markdown], EmojiIndex]) -> None:
         """Set the index."""
 
-        self.emoji_index = index(self.options, self.md)
+        self.emoji_index: EmojiIndex = index(self.options, self.md)
 
-    def _remove_variation_selector(self, value):
+    def _remove_variation_selector(self, value: str) -> str:
         """Remove variation selectors."""
 
         return value.replace('-' + UNICODE_VARIATION_SELECTOR_16, '')
 
-    def _get_unicode_char(self, value):
+    def _get_unicode_char(self, value: str) -> str:
         """Get the Unicode char."""
 
         return ''.join([util.get_char(int(c, 16)) for c in value.split('-')])
 
-    def _get_unicode(self, emoji):
+    def _get_unicode(self, emoji: dict[str, Any]) -> tuple[str | None, str | None]:
         """
         Get Unicode and Unicode alt.
 
@@ -281,16 +347,17 @@ class EmojiPattern(InlineProcessor):
             'remove_variation_selector' option.
         """
 
-        uc = emoji.get('unicode')
-        uc_alt = emoji.get('unicode_alt', uc)
+        uc: str | None = emoji.get('unicode')
+        uc_alt: str | None = emoji.get('unicode_alt', uc)
         if uc_alt and self.remove_var_sel:
             uc_alt = self._remove_variation_selector(uc_alt)
 
         return uc, uc_alt
 
-    def _get_title(self, shortname, emoji):
+    def _get_title(self, shortname: str, emoji: dict[str, Any]) -> str | None:
         """Get the title."""
 
+        title: str | None
         if self.title == LONG_TITLE:
             title = emoji['name']
         elif self.title == SHORT_TITLE:
@@ -299,7 +366,7 @@ class EmojiPattern(InlineProcessor):
             title = None
         return title
 
-    def _get_alt(self, shortname, uc_alt):
+    def _get_alt(self, shortname: str, uc_alt: str | None) -> str:
         """Get alt form."""
 
         if uc_alt is None or not self.unicode_alt:
@@ -312,23 +379,27 @@ class EmojiPattern(InlineProcessor):
                 )
         return alt
 
-    def _get_category(self, emoji):
+    def _get_category(self, emoji: dict[str, Any]) -> str | None:
         """Get the category."""
 
-        return emoji.get('category')
+        category: str | None = emoji.get('category')
+        return category
 
-    def handleMatch(self, m, data):
+    def handleMatch(  # type: ignore[override]
+        self, m: re.Match[str], data: str
+    ) -> tuple[etree.Element | str | None, int | None, int | None]:
         """Handle emoji pattern matches."""
 
-        el = m.group(1)
+        text = m.group(1)
+        el: etree.Element | str = text
 
-        shortname = self.emoji_index['aliases'].get(el, el)
-        alias = None if shortname == el else el
-        emoji = self.emoji_index['emoji'].get(shortname, None)
+        shortname: str = self.emoji_index['aliases'].get(text, text)
+        alias = None if shortname == text else text
+        emoji: dict[str, Any] | None = self.emoji_index['emoji'].get(shortname, None)
         if emoji:
             uc, uc_alt = self._get_unicode(emoji)
-            title = self._get_title(el, emoji)
-            alt = self._get_alt(el, uc_alt)
+            title = self._get_title(text, emoji)
+            alt = self._get_alt(text, uc_alt)
             category = self._get_category(emoji)
             el = self.generator(
                 self.emoji_index['name'],
@@ -350,12 +421,12 @@ class EmojiPattern(InlineProcessor):
 class EmojiAlertPostprocessor(Postprocessor):
     """Post processor to strip out unwanted content."""
 
-    def __init__(self, strict_cache, md):
+    def __init__(self, strict_cache: set[str], md: Markdown) -> None:
         """Initialize."""
 
         self.strict_cache = strict_cache
 
-    def run(self, text):
+    def run(self, text: str) -> str:
         """Strip out ids and classes for a simplified HTML output."""
 
         if len(self.strict_cache):
@@ -368,7 +439,7 @@ class EmojiAlertPostprocessor(Postprocessor):
 class EmojiExtension(Extension):
     """Add emoji extension to Markdown class."""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         """Initialize."""
 
         self.config = {
@@ -407,12 +478,12 @@ class EmojiExtension(Extension):
         }
         super().__init__(*args, **kwargs)
 
-    def reset(self):
+    def reset(self) -> None:
         """Reset."""
 
         self.strict_cache.clear()
 
-    def extendMarkdown(self, md):
+    def extendMarkdown(self, md: Markdown) -> None:
         """Add support for emoji."""
 
         md.registerExtension(self)
@@ -421,7 +492,7 @@ class EmojiExtension(Extension):
 
         util.escape_chars(md, [':'])
 
-        self.strict_cache = set()
+        self.strict_cache: set[str] = set()
         md.inlinePatterns.register(EmojiPattern(RE_EMOJI, config, self.strict_cache, md), "emoji", 75)
         if config['strict']:
             md.postprocessors.register(EmojiAlertPostprocessor(self.strict_cache, md), "emoji-alert", 50)
@@ -430,7 +501,7 @@ class EmojiExtension(Extension):
 ###################
 # Make Available
 ###################
-def makeExtension(*args, **kwargs):
+def makeExtension(*args: Any, **kwargs: Any) -> EmojiExtension:
     """Return extension."""
 
     return EmojiExtension(*args, **kwargs)
