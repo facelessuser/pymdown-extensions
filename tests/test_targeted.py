@@ -1,7 +1,27 @@
 """Test `uniprops`."""
 from pymdownx import util
+from unittest import mock
+from urllib.parse import urlparse as _real_urlparse
 import unittest
 import pytest
+
+
+def _urlparse_py316(url):
+    """Emulate Python 3.16's `urlparse`, which rejects an invalid port (gh-88037)."""
+
+    parsed = _real_urlparse(url)
+    netloc = parsed.netloc
+    hostport = netloc.rsplit('@', 1)[-1]
+    port = ''
+    if hostport.startswith('['):
+        end = hostport.find(']')
+        if end != -1 and hostport[end + 1:end + 2] == ':':
+            port = hostport[end + 2:]
+    elif ':' in hostport:
+        port = hostport.rsplit(':', 1)[-1]
+    if port and (not port.isdigit() or not port.isascii() or not 0 <= int(port) <= 65535):
+        raise ValueError(f"Port could not be cast to integer value as {port!r}")
+    return parsed
 
 
 class TestUrlParse(unittest.TestCase):
@@ -57,6 +77,41 @@ class TestUrlParse(unittest.TestCase):
         self.assertEqual(path, '/c:/path')
         self.assertEqual(is_url, False)
         self.assertEqual(is_absolute, True)
+
+    def test_file_windows_start_backslash_py316(self):
+        """Test file windows start with backslash under Python 3.16 port validation."""
+
+        url = r'file://\c:\path'
+        with mock.patch('pymdownx.util.urlparse', _urlparse_py316):
+            scheme, _, path, _, _, _, is_url, is_absolute = util.parse_url(url)
+        self.assertEqual(scheme, 'file')
+        self.assertEqual(path, '/c:/path')
+        self.assertEqual(is_url, False)
+        self.assertEqual(is_absolute, True)
+
+    def test_url_template_port_py316(self):
+        """Test URL with a template port under Python 3.16 port validation."""
+
+        url = 'http://localhost:{port}/'
+        with mock.patch('pymdownx.util.urlparse', _urlparse_py316):
+            scheme, netloc, path, _, _, _, is_url, is_absolute = util.parse_url(url)
+        self.assertEqual(scheme, 'http')
+        self.assertEqual(netloc, 'localhost:{port}')
+        self.assertEqual(path, '/')
+        self.assertEqual(is_url, True)
+        self.assertEqual(is_absolute, False)
+
+    def test_scp_style_url_py316(self):
+        """Test SCP-style URL under Python 3.16 port validation."""
+
+        url = 'git+ssh://git@github.com:org/repo.git'
+        with mock.patch('pymdownx.util.urlparse', _urlparse_py316):
+            scheme, netloc, path, _, _, _, is_url, is_absolute = util.parse_url(url)
+        self.assertEqual(scheme, 'git+ssh')
+        self.assertEqual(netloc, 'git@github.com:org')
+        self.assertEqual(path, '/repo.git')
+        self.assertEqual(is_url, True)
+        self.assertEqual(is_absolute, False)
 
     def test_file_windows_netpath(self):
         """Test file windows netpath."""

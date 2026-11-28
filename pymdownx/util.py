@@ -152,6 +152,43 @@ def escape_chars(md: Markdown, echrs: Sequence[str]) -> None:
     md.ESCAPED_CHARS = escaped
 
 
+def _split_url(url: str) -> tuple[str, str, str, str, str, str]:
+    r"""
+    Split a URL into its parts without validating the port.
+
+    Python 3.16 raises `ValueError` in `urlparse` for URLs whose netloc holds an invalid port
+    (python/cpython#88037), e.g. `file://\c:\path`. Such inputs are not valid URLs under RFC 3986,
+    but `parse_url` must still classify them instead of crashing, so this mirrors what `urlparse`
+    returned before 3.16.
+    """
+
+    # Fragment
+    url, _, fragment = url.partition('#')
+    # Query
+    url, _, query = url.partition('?')
+    # Scheme
+    scheme = ''
+    match = re.match(r'([a-zA-Z][a-zA-Z0-9+.-]*):(.*)', url, re.DOTALL)
+    rest = url
+    if match is not None:
+        scheme = match.group(1).lower()
+        rest = match.group(2)
+    # Netloc and path
+    netloc = ''
+    path = rest
+    if rest.startswith('//'):
+        netloc, sep, path = rest[2:].partition('/')
+        if sep:
+            path = '/' + path
+    # Parameters (last path segment only, as `urlparse` does)
+    params = ''
+    if ';' in path:
+        head, _, tail = path.rpartition(';')
+        if '/' not in tail:
+            path, params = head, tail
+    return scheme, netloc, path, params, query, fragment
+
+
 def parse_url(url: str) -> tuple[str, str, str, str, str, str, bool, bool]:
     """
     Parse the URL.
@@ -168,7 +205,13 @@ def parse_url(url: str) -> tuple[str, str, str, str, str, str, bool, bool]:
 
     is_url = False
     is_absolute = False
-    scheme, netloc, path, params, query, fragment = urlparse(html.unescape(url))
+    unescaped = html.unescape(url)
+    try:
+        scheme, netloc, path, params, query, fragment = urlparse(unescaped)
+    except ValueError:
+        # Python 3.16 rejects URLs with an invalid port (e.g. `file://\c:\path`);
+        # split the URL manually so it is still classified instead of raising.
+        scheme, netloc, path, params, query, fragment = _split_url(unescaped)
 
     if RE_URL.match(scheme):
         # Clearly a URL
