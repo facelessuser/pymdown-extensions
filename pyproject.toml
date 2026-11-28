@@ -78,7 +78,8 @@ include = [
 
 [tool.mypy]
 files = [
-    "pymdownx/blocks/block.py"
+    "pymdownx/blocks/block.py",
+    "pymdownx/emoji.py"
 ]
 strict = true
 show_error_codes = true
